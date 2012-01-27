@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Ops", "Wonga.QA.Tests.Ops\Wonga.QA.Tests.Ops.csproj", "{8F4A4098-0384-4ACE-9E66-7E84F56E51EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Core", "Wonga.QA.Tests.Core\Wonga.QA.Tests.Core.csproj", "{36C48933-F3DA-468A-8529-212601FC0FA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Comms", "Wonga.QA.Tests.Comms\Wonga.QA.Tests.Comms.csproj", "{2FDDD73E-FD7D-41C2-9D8E-EEF260CCE0C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Payments", "Wonga.QA.Tests.Payments\Wonga.QA.Tests.Payments.csproj", "{FD73C73F-E2AE-4610-9A64-C024144F0A51}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8F4A4098-0384-4ACE-9E66-7E84F56E51EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F4A4098-0384-4ACE-9E66-7E84F56E51EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F4A4098-0384-4ACE-9E66-7E84F56E51EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F4A4098-0384-4ACE-9E66-7E84F56E51EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36C48933-F3DA-468A-8529-212601FC0FA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36C48933-F3DA-468A-8529-212601FC0FA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36C48933-F3DA-468A-8529-212601FC0FA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36C48933-F3DA-468A-8529-212601FC0FA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FDDD73E-FD7D-41C2-9D8E-EEF260CCE0C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FDDD73E-FD7D-41C2-9D8E-EEF260CCE0C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FDDD73E-FD7D-41C2-9D8E-EEF260CCE0C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FDDD73E-FD7D-41C2-9D8E-EEF260CCE0C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD73C73F-E2AE-4610-9A64-C024144F0A51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD73C73F-E2AE-4610-9A64-C024144F0A51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD73C73F-E2AE-4610-9A64-C024144F0A51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD73C73F-E2AE-4610-9A64-C024144F0A51}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

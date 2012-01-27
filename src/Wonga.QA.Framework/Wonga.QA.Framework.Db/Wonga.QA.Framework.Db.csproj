@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{06D44CDD-9AB7-47EC-8D7A-0E548465EF9D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Wonga.QA.Framework.Db</RootNamespace>
+    <AssemblyName>Wonga.QA.Framework.Db</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>$(SolutionDir)\..\..\bin\$(SolutionName)</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>$(SolutionDir)\..\..\bin\$(SolutionName)</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="DbDriver.cs" />
+    <Compile Include="DbEntity.cs" />
+    <Compile Include="DbExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Temp\OpsSagasDatabase.cs" />
+    <Compile Include="Databases\BankGatewayDatabase.cs" />
+    <Compile Include="Databases\BiDatabase.cs" />
+    <Compile Include="Databases\BlacklistDatabase.cs" />
+    <Compile Include="Databases\CallReportDatabase.cs" />
+    <Compile Include="Databases\CallValidateDatabase.cs" />
+    <Compile Include="Databases\CardPaymentDatabase.cs" />
+    <Compile Include="Databases\ColdStorageDatabase.cs" />
+    <Compile Include="Databases\CommsDatabase.cs" />
+    <Compile Include="Databases\ContactManagementDatabase.cs" />
+    <Compile Include="Databases\ExperianBulkDatabase.cs" />
+    <Compile Include="Databases\ExperianDatabase.cs" />
+    <Compile Include="Databases\FileStorageDatabase.cs" />
+    <Compile Include="Databases\HpiDatabase.cs" />
+    <Compile Include="Databases\IpLookupDatabase.cs" />
+    <Compile Include="Databases\OpsDatabase.cs" />
+    <Compile Include="Databases\OpsLogsDatabase.cs" />
+    <Compile Include="Databases\PaymentsDatabase.cs" />
+    <Compile Include="Databases\RiskDatabase.cs" />
+    <Compile Include="Databases\SalesforceDatabase.cs" />
+    <Compile Include="Databases\SchedulerDatabase.cs" />
+    <Compile Include="Databases\SmsDatabase.cs" />
+    <Compile Include="Databases\TimeZoneDatabase.cs" />
+    <Compile Include="Databases\TransUnionDatabase.cs" />
+    <Compile Include="Databases\UruDatabase.cs" />
+    <Compile Include="Databases\WongaPayDatabase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Wonga.QA.Framework.Core\Wonga.QA.Framework.Core.csproj">
+      <Project>{BACA1D90-F604-476F-ACDE-A9839E85147F}</Project>
+      <Name>Wonga.QA.Framework.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

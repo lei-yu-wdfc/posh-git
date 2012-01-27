@@ -1,0 +1,14 @@
+using System;
+using System.Collections.Generic;
+using System.Xml.Serialization;
+
+namespace Wonga.QA.Framework.Msmq.Sms
+{
+    [XmlRoot("HttpCallbackNotificationMessage", Namespace = "Wonga.Sms.InternalMessages.SagaMessages.HttpResponses", DataType = "Wonga.Sms.InternalMessages.SagaMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
+    public class HttpCallbackNotificationCommand : MsmqMessage<HttpCallbackNotificationCommand>
+    {
+        public SmsStatusEnum Status { get; set; }
+        public String ProviderStatus { get; set; }
+        public Guid SagaId { get; set; }
+    }
+}

@@ -1,0 +1,37 @@
+namespace Wonga.QA.Framework.Msmq
+{
+    public enum PaymentTransactionEnum
+    {
+        CashAdvance = 1,
+        Fee = 2,
+        LoanExtensionFee = 3,
+        Interest = 4,
+        DefaultCharge = 5,
+        CardPayment = 6,
+        WriteOff = 7,
+        DebtSale = 8,
+        DebtSaleProceeds = 9,
+        InterestWriteOff = 10,
+        AgencyFee = 11,
+        Adjustment = 12,
+        ArrearsLetterCharge = 13,
+        OutsourcedAgencyPayment = 14,
+        Refund = 15,
+        Chargeback = 16,
+        Cheque = 17,
+        DirectBankPayment = 18,
+        SuspendInterestAccrual = 19,
+        ResumeInterestAccrual = 20,
+        V2MigratedInsurance = 21,
+        V2MigratedWriteOff = 22,
+        V2MigratedCharge = 23,
+        V2MigratedPayment = 24,
+        V2Migratedadvance = 25,
+        ServiceFee = 26,
+        InitiationFee = 27,
+        InterestRate = 28,
+        InterestRateFee = 29,
+        InterestAdjustment = 30,
+        RegularCardPayment = 31,
+    }
+}

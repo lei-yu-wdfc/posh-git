@@ -1,0 +1,14 @@
+using System;
+using System.Collections.Generic;
+using System.Xml.Serialization;
+
+namespace Wonga.QA.Framework.Msmq.BankGateway
+{
+    [XmlRoot("BankServiceAvailableMessage", Namespace = "Wonga.BankGateway.InternalMessages", DataType = "")]
+    public class BankServiceAvailableCommand : MsmqMessage<BankServiceAvailableCommand>
+    {
+        public Int32 BankIntegrationId { get; set; }
+        public Int32 TransactionId { get; set; }
+        public Int32 DirectDebitId { get; set; }
+    }
+}

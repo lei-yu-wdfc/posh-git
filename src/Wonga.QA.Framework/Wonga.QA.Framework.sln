@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Framework.Core", "Wonga.QA.Framework.Core\Wonga.QA.Framework.Core.csproj", "{BACA1D90-F604-476F-ACDE-A9839E85147F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Framework.Api", "Wonga.QA.Framework.Api\Wonga.QA.Framework.Api.csproj", "{87FC18E9-2B6B-4B8C-BDA0-544E51AC8D96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Framework", "Wonga.QA.Framework\Wonga.QA.Framework.csproj", "{5D8AEAB2-EB00-45CA-86D1-A5B4A7C6ED2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Framework.Db", "Wonga.QA.Framework.Db\Wonga.QA.Framework.Db.csproj", "{06D44CDD-9AB7-47EC-8D7A-0E548465EF9D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Framework.Msmq", "Wonga.QA.Framework.Msmq\Wonga.QA.Framework.Msmq.csproj", "{87AAAAD5-5EAE-473C-9A05-7696E6853478}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BACA1D90-F604-476F-ACDE-A9839E85147F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BACA1D90-F604-476F-ACDE-A9839E85147F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BACA1D90-F604-476F-ACDE-A9839E85147F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BACA1D90-F604-476F-ACDE-A9839E85147F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87FC18E9-2B6B-4B8C-BDA0-544E51AC8D96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87FC18E9-2B6B-4B8C-BDA0-544E51AC8D96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87FC18E9-2B6B-4B8C-BDA0-544E51AC8D96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87FC18E9-2B6B-4B8C-BDA0-544E51AC8D96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D8AEAB2-EB00-45CA-86D1-A5B4A7C6ED2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D8AEAB2-EB00-45CA-86D1-A5B4A7C6ED2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D8AEAB2-EB00-45CA-86D1-A5B4A7C6ED2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D8AEAB2-EB00-45CA-86D1-A5B4A7C6ED2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06D44CDD-9AB7-47EC-8D7A-0E548465EF9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06D44CDD-9AB7-47EC-8D7A-0E548465EF9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06D44CDD-9AB7-47EC-8D7A-0E548465EF9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06D44CDD-9AB7-47EC-8D7A-0E548465EF9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87AAAAD5-5EAE-473C-9A05-7696E6853478}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87AAAAD5-5EAE-473C-9A05-7696E6853478}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87AAAAD5-5EAE-473C-9A05-7696E6853478}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87AAAAD5-5EAE-473C-9A05-7696E6853478}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

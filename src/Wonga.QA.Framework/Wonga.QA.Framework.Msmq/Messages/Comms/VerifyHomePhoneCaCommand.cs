@@ -1,0 +1,17 @@
+using System;
+using System.Collections.Generic;
+using System.Xml.Serialization;
+
+namespace Wonga.QA.Framework.Msmq.Comms
+{
+    [XmlRoot("VerifyHomePhoneMessage", Namespace = "Wonga.Comms.Commands.Ca", DataType = "")]
+    public class VerifyHomePhoneCaCommand : MsmqMessage<VerifyHomePhoneCaCommand>
+    {
+        public Guid VerificationId { get; set; }
+        public Guid AccountId { get; set; }
+        public String HomePhone { get; set; }
+        public String Forename { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public Guid? ClientId { get; set; }
+    }
+}
