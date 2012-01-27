@@ -31,9 +31,9 @@ namespace Wonga.QA.Framework.Db.Hpi
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertHPIActiveRequest(HPIActiveRequest instance);
-    partial void UpdateHPIActiveRequest(HPIActiveRequest instance);
-    partial void DeleteHPIActiveRequest(HPIActiveRequest instance);
+    partial void InsertHPIActiveRequestEntity(HPIActiveRequestEntity instance);
+    partial void UpdateHPIActiveRequestEntity(HPIActiveRequestEntity instance);
+    partial void DeleteHPIActiveRequestEntity(HPIActiveRequestEntity instance);
     partial void InsertMSSQLDeploy(MSSQLDeploy instance);
     partial void UpdateMSSQLDeploy(MSSQLDeploy instance);
     partial void DeleteMSSQLDeploy(MSSQLDeploy instance);
@@ -63,11 +63,11 @@ namespace Wonga.QA.Framework.Db.Hpi
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<HPIActiveRequest> HPIActiveRequests
+		public System.Data.Linq.Table<HPIActiveRequestEntity> HPIActiveRequests
 		{
 			get
 			{
-				return this.GetTable<HPIActiveRequest>().SetTable<HPIActiveRequest>();
+				return this.GetTable<HPIActiveRequestEntity>().SetTable<HPIActiveRequestEntity>();
 			}
 		}
 		
@@ -81,7 +81,7 @@ namespace Wonga.QA.Framework.Db.Hpi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="cache.HPIActiveRequest")]
-	public partial class HPIActiveRequest : DbEntity<HPIActiveRequest>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class HPIActiveRequestEntity : DbEntity<HPIActiveRequestEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -116,7 +116,7 @@ namespace Wonga.QA.Framework.Db.Hpi
     partial void OnTotalMillisecondsChanged();
     #endregion
 		
-		public HPIActiveRequest()
+		public HPIActiveRequestEntity()
 		{
 			OnCreated();
 		}

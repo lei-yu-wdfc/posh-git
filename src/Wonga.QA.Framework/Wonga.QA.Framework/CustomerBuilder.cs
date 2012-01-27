@@ -24,7 +24,7 @@ namespace Wonga.QA.Framework
             return new CustomerBuilder();
         }
 
-        public static CustomerBuilder WithId(Guid id)
+        public static CustomerBuilder New(Guid id)
         {
             return new CustomerBuilder { _id = id };
         }

@@ -31,42 +31,42 @@ namespace Wonga.QA.Framework.Db.Comms
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertAddress(Address instance);
-    partial void UpdateAddress(Address instance);
-    partial void DeleteAddress(Address instance);
-    partial void InsertAddressesCa(AddressesCa instance);
-    partial void UpdateAddressesCa(AddressesCa instance);
-    partial void DeleteAddressesCa(AddressesCa instance);
-    partial void InsertContactPreference(ContactPreference instance);
-    partial void UpdateContactPreference(ContactPreference instance);
-    partial void DeleteContactPreference(ContactPreference instance);
-    partial void InsertCustomerDetail(CustomerDetail instance);
-    partial void UpdateCustomerDetail(CustomerDetail instance);
-    partial void DeleteCustomerDetail(CustomerDetail instance);
-    partial void InsertCustomerDetailsZa(CustomerDetailsZa instance);
-    partial void UpdateCustomerDetailsZa(CustomerDetailsZa instance);
-    partial void DeleteCustomerDetailsZa(CustomerDetailsZa instance);
-    partial void InsertCustomerLead(CustomerLead instance);
-    partial void UpdateCustomerLead(CustomerLead instance);
-    partial void DeleteCustomerLead(CustomerLead instance);
-    partial void InsertExtensionReminderPreference(ExtensionReminderPreference instance);
-    partial void UpdateExtensionReminderPreference(ExtensionReminderPreference instance);
-    partial void DeleteExtensionReminderPreference(ExtensionReminderPreference instance);
-    partial void InsertLegalDocument(LegalDocument instance);
-    partial void UpdateLegalDocument(LegalDocument instance);
-    partial void DeleteLegalDocument(LegalDocument instance);
-    partial void InsertMobilePhoneVerification(MobilePhoneVerification instance);
-    partial void UpdateMobilePhoneVerification(MobilePhoneVerification instance);
-    partial void DeleteMobilePhoneVerification(MobilePhoneVerification instance);
+    partial void InsertAddressEntity(AddressEntity instance);
+    partial void UpdateAddressEntity(AddressEntity instance);
+    partial void DeleteAddressEntity(AddressEntity instance);
+    partial void InsertAddressesCaEntity(AddressesCaEntity instance);
+    partial void UpdateAddressesCaEntity(AddressesCaEntity instance);
+    partial void DeleteAddressesCaEntity(AddressesCaEntity instance);
+    partial void InsertContactPreferenceEntity(ContactPreferenceEntity instance);
+    partial void UpdateContactPreferenceEntity(ContactPreferenceEntity instance);
+    partial void DeleteContactPreferenceEntity(ContactPreferenceEntity instance);
+    partial void InsertCustomerDetailEntity(CustomerDetailEntity instance);
+    partial void UpdateCustomerDetailEntity(CustomerDetailEntity instance);
+    partial void DeleteCustomerDetailEntity(CustomerDetailEntity instance);
+    partial void InsertCustomerDetailsZaEntity(CustomerDetailsZaEntity instance);
+    partial void UpdateCustomerDetailsZaEntity(CustomerDetailsZaEntity instance);
+    partial void DeleteCustomerDetailsZaEntity(CustomerDetailsZaEntity instance);
+    partial void InsertCustomerLeadEntity(CustomerLeadEntity instance);
+    partial void UpdateCustomerLeadEntity(CustomerLeadEntity instance);
+    partial void DeleteCustomerLeadEntity(CustomerLeadEntity instance);
+    partial void InsertExtensionReminderPreferenceEntity(ExtensionReminderPreferenceEntity instance);
+    partial void UpdateExtensionReminderPreferenceEntity(ExtensionReminderPreferenceEntity instance);
+    partial void DeleteExtensionReminderPreferenceEntity(ExtensionReminderPreferenceEntity instance);
+    partial void InsertLegalDocumentEntity(LegalDocumentEntity instance);
+    partial void UpdateLegalDocumentEntity(LegalDocumentEntity instance);
+    partial void DeleteLegalDocumentEntity(LegalDocumentEntity instance);
+    partial void InsertMobilePhoneVerificationEntity(MobilePhoneVerificationEntity instance);
+    partial void UpdateMobilePhoneVerificationEntity(MobilePhoneVerificationEntity instance);
+    partial void DeleteMobilePhoneVerificationEntity(MobilePhoneVerificationEntity instance);
     partial void InsertMSSQLDeploy(MSSQLDeploy instance);
     partial void UpdateMSSQLDeploy(MSSQLDeploy instance);
     partial void DeleteMSSQLDeploy(MSSQLDeploy instance);
-    partial void InsertPhoneVerification(PhoneVerification instance);
-    partial void UpdatePhoneVerification(PhoneVerification instance);
-    partial void DeletePhoneVerification(PhoneVerification instance);
-    partial void InsertVerificationPin(VerificationPin instance);
-    partial void UpdateVerificationPin(VerificationPin instance);
-    partial void DeleteVerificationPin(VerificationPin instance);
+    partial void InsertPhoneVerificationEntity(PhoneVerificationEntity instance);
+    partial void UpdatePhoneVerificationEntity(PhoneVerificationEntity instance);
+    partial void DeletePhoneVerificationEntity(PhoneVerificationEntity instance);
+    partial void InsertVerificationPinEntity(VerificationPinEntity instance);
+    partial void UpdateVerificationPinEntity(VerificationPinEntity instance);
+    partial void DeleteVerificationPinEntity(VerificationPinEntity instance);
     #endregion
 		
 		public CommsDatabase(string connection) : 
@@ -93,75 +93,75 @@ namespace Wonga.QA.Framework.Db.Comms
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<Address> Addresses
+		public System.Data.Linq.Table<AddressEntity> Addresses
 		{
 			get
 			{
-				return this.GetTable<Address>().SetTable<Address>();
+				return this.GetTable<AddressEntity>().SetTable<AddressEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<AddressesCa> AddressesCas
+		public System.Data.Linq.Table<AddressesCaEntity> AddressesCas
 		{
 			get
 			{
-				return this.GetTable<AddressesCa>().SetTable<AddressesCa>();
+				return this.GetTable<AddressesCaEntity>().SetTable<AddressesCaEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<ContactPreference> ContactPreferences
+		public System.Data.Linq.Table<ContactPreferenceEntity> ContactPreferences
 		{
 			get
 			{
-				return this.GetTable<ContactPreference>().SetTable<ContactPreference>();
+				return this.GetTable<ContactPreferenceEntity>().SetTable<ContactPreferenceEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<CustomerDetail> CustomerDetails
+		public System.Data.Linq.Table<CustomerDetailEntity> CustomerDetails
 		{
 			get
 			{
-				return this.GetTable<CustomerDetail>().SetTable<CustomerDetail>();
+				return this.GetTable<CustomerDetailEntity>().SetTable<CustomerDetailEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<CustomerDetailsZa> CustomerDetailsZas
+		public System.Data.Linq.Table<CustomerDetailsZaEntity> CustomerDetailsZas
 		{
 			get
 			{
-				return this.GetTable<CustomerDetailsZa>().SetTable<CustomerDetailsZa>();
+				return this.GetTable<CustomerDetailsZaEntity>().SetTable<CustomerDetailsZaEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<CustomerLead> CustomerLeads
+		public System.Data.Linq.Table<CustomerLeadEntity> CustomerLeads
 		{
 			get
 			{
-				return this.GetTable<CustomerLead>().SetTable<CustomerLead>();
+				return this.GetTable<CustomerLeadEntity>().SetTable<CustomerLeadEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<ExtensionReminderPreference> ExtensionReminderPreferences
+		public System.Data.Linq.Table<ExtensionReminderPreferenceEntity> ExtensionReminderPreferences
 		{
 			get
 			{
-				return this.GetTable<ExtensionReminderPreference>().SetTable<ExtensionReminderPreference>();
+				return this.GetTable<ExtensionReminderPreferenceEntity>().SetTable<ExtensionReminderPreferenceEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<LegalDocument> LegalDocuments
+		public System.Data.Linq.Table<LegalDocumentEntity> LegalDocuments
 		{
 			get
 			{
-				return this.GetTable<LegalDocument>().SetTable<LegalDocument>();
+				return this.GetTable<LegalDocumentEntity>().SetTable<LegalDocumentEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<MobilePhoneVerification> MobilePhoneVerifications
+		public System.Data.Linq.Table<MobilePhoneVerificationEntity> MobilePhoneVerifications
 		{
 			get
 			{
-				return this.GetTable<MobilePhoneVerification>().SetTable<MobilePhoneVerification>();
+				return this.GetTable<MobilePhoneVerificationEntity>().SetTable<MobilePhoneVerificationEntity>();
 			}
 		}
 		
@@ -173,25 +173,25 @@ namespace Wonga.QA.Framework.Db.Comms
 			}
 		}
 		
-		public System.Data.Linq.Table<PhoneVerification> PhoneVerifications
+		public System.Data.Linq.Table<PhoneVerificationEntity> PhoneVerifications
 		{
 			get
 			{
-				return this.GetTable<PhoneVerification>().SetTable<PhoneVerification>();
+				return this.GetTable<PhoneVerificationEntity>().SetTable<PhoneVerificationEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<VerificationPin> VerificationPins
+		public System.Data.Linq.Table<VerificationPinEntity> VerificationPins
 		{
 			get
 			{
-				return this.GetTable<VerificationPin>().SetTable<VerificationPin>();
+				return this.GetTable<VerificationPinEntity>().SetTable<VerificationPinEntity>();
 			}
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="comms.Addresses")]
-	public partial class Address : DbEntity<Address>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class AddressEntity : DbEntity<AddressEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -228,7 +228,7 @@ namespace Wonga.QA.Framework.Db.Comms
 		
 		private string _Province;
 		
-		private EntitySet<AddressesCa> _AddressesCas;
+		private EntitySet<AddressesCaEntity> _Comms_AddressesCas;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -268,9 +268,9 @@ namespace Wonga.QA.Framework.Db.Comms
     partial void OnProvinceChanged();
     #endregion
 		
-		public Address()
+		public AddressEntity()
 		{
-			this._AddressesCas = new EntitySet<AddressesCa>(new Action<AddressesCa>(this.attach_AddressesCas), new Action<AddressesCa>(this.detach_AddressesCas));
+			this._Comms_AddressesCas = new EntitySet<AddressesCaEntity>(new Action<AddressesCaEntity>(this.attach_Comms_AddressesCas), new Action<AddressesCaEntity>(this.detach_Comms_AddressesCas));
 			OnCreated();
 		}
 		
@@ -594,16 +594,16 @@ namespace Wonga.QA.Framework.Db.Comms
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_AddressesCa_AddressId", Storage="_AddressesCas", ThisKey="AddressId", OtherKey="AddressId", DeleteRule="NO ACTION")]
-		public EntitySet<AddressesCa> AddressesCas
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_AddressesCa_AddressId", Storage="_Comms_AddressesCas", ThisKey="AddressId", OtherKey="AddressId", DeleteRule="NO ACTION")]
+		public EntitySet<AddressesCaEntity> Comms_AddressesCas
 		{
 			get
 			{
-				return this._AddressesCas;
+				return this._Comms_AddressesCas;
 			}
 			set
 			{
-				this._AddressesCas.Assign(value);
+				this._Comms_AddressesCas.Assign(value);
 			}
 		}
 		
@@ -627,21 +627,21 @@ namespace Wonga.QA.Framework.Db.Comms
 			}
 		}
 		
-		private void attach_AddressesCas(AddressesCa entity)
+		private void attach_Comms_AddressesCas(AddressesCaEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Address = this;
+			entity.AddressEntity = this;
 		}
 		
-		private void detach_AddressesCas(AddressesCa entity)
+		private void detach_Comms_AddressesCas(AddressesCaEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Address = null;
+			entity.AddressEntity = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="comms.AddressesCa")]
-	public partial class AddressesCa : DbEntity<AddressesCa>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class AddressesCaEntity : DbEntity<AddressesCaEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -654,7 +654,7 @@ namespace Wonga.QA.Framework.Db.Comms
 		
 		private System.Nullable<System.DateTime> _CreatedOn;
 		
-		private EntityRef<Address> _Address;
+		private EntityRef<AddressEntity> _AddressEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -670,9 +670,9 @@ namespace Wonga.QA.Framework.Db.Comms
     partial void OnCreatedOnChanged();
     #endregion
 		
-		public AddressesCa()
+		public AddressesCaEntity()
 		{
-			this._Address = default(EntityRef<Address>);
+			this._AddressEntity = default(EntityRef<AddressEntity>);
 			OnCreated();
 		}
 		
@@ -707,7 +707,7 @@ namespace Wonga.QA.Framework.Db.Comms
 			{
 				if ((this._AddressId != value))
 				{
-					if (this._Address.HasLoadedOrAssignedValue)
+					if (this._AddressEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -760,36 +760,36 @@ namespace Wonga.QA.Framework.Db.Comms
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_AddressesCa_AddressId", Storage="_Address", ThisKey="AddressId", OtherKey="AddressId", IsForeignKey=true)]
-		public Address Address
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_AddressesCa_AddressId", Storage="_AddressEntity", ThisKey="AddressId", OtherKey="AddressId", IsForeignKey=true)]
+		public AddressEntity AddressEntity
 		{
 			get
 			{
-				return this._Address.Entity;
+				return this._AddressEntity.Entity;
 			}
 			set
 			{
-				Address previousValue = this._Address.Entity;
+				AddressEntity previousValue = this._AddressEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Address.HasLoadedOrAssignedValue == false)))
+							|| (this._AddressEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Address.Entity = null;
-						previousValue.AddressesCas.Remove(this);
+						this._AddressEntity.Entity = null;
+						previousValue.Comms_AddressesCas.Remove(this);
 					}
-					this._Address.Entity = value;
+					this._AddressEntity.Entity = value;
 					if ((value != null))
 					{
-						value.AddressesCas.Add(this);
+						value.Comms_AddressesCas.Add(this);
 						this._AddressId = value.AddressId;
 					}
 					else
 					{
 						this._AddressId = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("Address");
+					this.SendPropertyChanged("AddressEntity");
 				}
 			}
 		}
@@ -816,7 +816,7 @@ namespace Wonga.QA.Framework.Db.Comms
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="comms.ContactPreferences")]
-	public partial class ContactPreference : DbEntity<ContactPreference>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class ContactPreferenceEntity : DbEntity<ContactPreferenceEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -843,7 +843,7 @@ namespace Wonga.QA.Framework.Db.Comms
     partial void OnCreatedOnChanged();
     #endregion
 		
-		public ContactPreference()
+		public ContactPreferenceEntity()
 		{
 			OnCreated();
 		}
@@ -950,7 +950,7 @@ namespace Wonga.QA.Framework.Db.Comms
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="comms.CustomerDetails")]
-	public partial class CustomerDetail : DbEntity<CustomerDetail>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class CustomerDetailEntity : DbEntity<CustomerDetailEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -989,7 +989,7 @@ namespace Wonga.QA.Framework.Db.Comms
 		
 		private string _MaidenName;
 		
-		private EntityRef<CustomerDetailsZa> _CustomerDetailsZa;
+		private EntityRef<CustomerDetailsZaEntity> _CustomerDetailsZaEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1031,9 +1031,9 @@ namespace Wonga.QA.Framework.Db.Comms
     partial void OnMaidenNameChanged();
     #endregion
 		
-		public CustomerDetail()
+		public CustomerDetailEntity()
 		{
-			this._CustomerDetailsZa = default(EntityRef<CustomerDetailsZa>);
+			this._CustomerDetailsZaEntity = default(EntityRef<CustomerDetailsZaEntity>);
 			OnCreated();
 		}
 		
@@ -1377,31 +1377,31 @@ namespace Wonga.QA.Framework.Db.Comms
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_CustomerDetailsZa_CustomerDetailId", Storage="_CustomerDetailsZa", ThisKey="CustomerDetailId", OtherKey="CustomerDetailId", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
-		public CustomerDetailsZa CustomerDetailsZa
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_CustomerDetailsZa_CustomerDetailId", Storage="_CustomerDetailsZaEntity", ThisKey="CustomerDetailId", OtherKey="CustomerDetailId", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
+		public CustomerDetailsZaEntity CustomerDetailsZaEntity
 		{
 			get
 			{
-				return this._CustomerDetailsZa.Entity;
+				return this._CustomerDetailsZaEntity.Entity;
 			}
 			set
 			{
-				CustomerDetailsZa previousValue = this._CustomerDetailsZa.Entity;
+				CustomerDetailsZaEntity previousValue = this._CustomerDetailsZaEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._CustomerDetailsZa.HasLoadedOrAssignedValue == false)))
+							|| (this._CustomerDetailsZaEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._CustomerDetailsZa.Entity = null;
-						previousValue.CustomerDetail = null;
+						this._CustomerDetailsZaEntity.Entity = null;
+						previousValue.CustomerDetailEntity = null;
 					}
-					this._CustomerDetailsZa.Entity = value;
+					this._CustomerDetailsZaEntity.Entity = value;
 					if ((value != null))
 					{
-						value.CustomerDetail = this;
+						value.CustomerDetailEntity = this;
 					}
-					this.SendPropertyChanged("CustomerDetailsZa");
+					this.SendPropertyChanged("CustomerDetailsZaEntity");
 				}
 			}
 		}
@@ -1428,7 +1428,7 @@ namespace Wonga.QA.Framework.Db.Comms
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="comms.CustomerDetailsZa")]
-	public partial class CustomerDetailsZa : DbEntity<CustomerDetailsZa>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class CustomerDetailsZaEntity : DbEntity<CustomerDetailsZaEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -1441,7 +1441,7 @@ namespace Wonga.QA.Framework.Db.Comms
 		
 		private System.DateTime _CreatedOn;
 		
-		private EntityRef<CustomerDetail> _CustomerDetail;
+		private EntityRef<CustomerDetailEntity> _CustomerDetailEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1457,9 +1457,9 @@ namespace Wonga.QA.Framework.Db.Comms
     partial void OnCreatedOnChanged();
     #endregion
 		
-		public CustomerDetailsZa()
+		public CustomerDetailsZaEntity()
 		{
-			this._CustomerDetail = default(EntityRef<CustomerDetail>);
+			this._CustomerDetailEntity = default(EntityRef<CustomerDetailEntity>);
 			OnCreated();
 		}
 		
@@ -1494,7 +1494,7 @@ namespace Wonga.QA.Framework.Db.Comms
 			{
 				if ((this._CustomerDetailId != value))
 				{
-					if (this._CustomerDetail.HasLoadedOrAssignedValue)
+					if (this._CustomerDetailEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -1547,36 +1547,36 @@ namespace Wonga.QA.Framework.Db.Comms
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_CustomerDetailsZa_CustomerDetailId", Storage="_CustomerDetail", ThisKey="CustomerDetailId", OtherKey="CustomerDetailId", IsForeignKey=true)]
-		public CustomerDetail CustomerDetail
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_CustomerDetailsZa_CustomerDetailId", Storage="_CustomerDetailEntity", ThisKey="CustomerDetailId", OtherKey="CustomerDetailId", IsForeignKey=true)]
+		public CustomerDetailEntity CustomerDetailEntity
 		{
 			get
 			{
-				return this._CustomerDetail.Entity;
+				return this._CustomerDetailEntity.Entity;
 			}
 			set
 			{
-				CustomerDetail previousValue = this._CustomerDetail.Entity;
+				CustomerDetailEntity previousValue = this._CustomerDetailEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._CustomerDetail.HasLoadedOrAssignedValue == false)))
+							|| (this._CustomerDetailEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._CustomerDetail.Entity = null;
-						previousValue.CustomerDetailsZa = null;
+						this._CustomerDetailEntity.Entity = null;
+						previousValue.CustomerDetailsZaEntity = null;
 					}
-					this._CustomerDetail.Entity = value;
+					this._CustomerDetailEntity.Entity = value;
 					if ((value != null))
 					{
-						value.CustomerDetailsZa = this;
+						value.CustomerDetailsZaEntity = this;
 						this._CustomerDetailId = value.CustomerDetailId;
 					}
 					else
 					{
 						this._CustomerDetailId = default(int);
 					}
-					this.SendPropertyChanged("CustomerDetail");
+					this.SendPropertyChanged("CustomerDetailEntity");
 				}
 			}
 		}
@@ -1603,7 +1603,7 @@ namespace Wonga.QA.Framework.Db.Comms
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="comms.CustomerLeads")]
-	public partial class CustomerLead : DbEntity<CustomerLead>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class CustomerLeadEntity : DbEntity<CustomerLeadEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -1650,7 +1650,7 @@ namespace Wonga.QA.Framework.Db.Comms
     partial void OnProvinceChanged();
     #endregion
 		
-		public CustomerLead()
+		public CustomerLeadEntity()
 		{
 			OnCreated();
 		}
@@ -1857,7 +1857,7 @@ namespace Wonga.QA.Framework.Db.Comms
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="comms.ExtensionReminderPreferences")]
-	public partial class ExtensionReminderPreference : DbEntity<ExtensionReminderPreference>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class ExtensionReminderPreferenceEntity : DbEntity<ExtensionReminderPreferenceEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -1868,7 +1868,7 @@ namespace Wonga.QA.Framework.Db.Comms
 		
 		private System.Guid _ApplicationId;
 		
-		private int _ExtensionReminderPreferenceColumn;
+		private int _ExtensionReminderPreference;
 		
 		private System.Nullable<System.DateTime> _CreatedOn;
 		
@@ -1882,13 +1882,13 @@ namespace Wonga.QA.Framework.Db.Comms
     partial void OnAccountIdChanged();
     partial void OnApplicationIdChanging(System.Guid value);
     partial void OnApplicationIdChanged();
-    partial void OnExtensionReminderPreferenceColumnChanging(int value);
-    partial void OnExtensionReminderPreferenceColumnChanged();
+    partial void OnExtensionReminderPreferenceChanging(int value);
+    partial void OnExtensionReminderPreferenceChanged();
     partial void OnCreatedOnChanging(System.Nullable<System.DateTime> value);
     partial void OnCreatedOnChanged();
     #endregion
 		
-		public ExtensionReminderPreference()
+		public ExtensionReminderPreferenceEntity()
 		{
 			OnCreated();
 		}
@@ -1953,22 +1953,22 @@ namespace Wonga.QA.Framework.Db.Comms
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ExtensionReminderPreferenceColumn", DbType="Int NOT NULL")]
-		public int ExtensionReminderPreferenceColumn
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ExtensionReminderPreference", DbType="Int NOT NULL")]
+		public int ExtensionReminderPreference
 		{
 			get
 			{
-				return this._ExtensionReminderPreferenceColumn;
+				return this._ExtensionReminderPreference;
 			}
 			set
 			{
-				if ((this._ExtensionReminderPreferenceColumn != value))
+				if ((this._ExtensionReminderPreference != value))
 				{
-					this.OnExtensionReminderPreferenceColumnChanging(value);
+					this.OnExtensionReminderPreferenceChanging(value);
 					this.SendPropertyChanging();
-					this._ExtensionReminderPreferenceColumn = value;
-					this.SendPropertyChanged("ExtensionReminderPreferenceColumn");
-					this.OnExtensionReminderPreferenceColumnChanged();
+					this._ExtensionReminderPreference = value;
+					this.SendPropertyChanged("ExtensionReminderPreference");
+					this.OnExtensionReminderPreferenceChanged();
 				}
 			}
 		}
@@ -2015,7 +2015,7 @@ namespace Wonga.QA.Framework.Db.Comms
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="comms.LegalDocuments")]
-	public partial class LegalDocument : DbEntity<LegalDocument>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class LegalDocumentEntity : DbEntity<LegalDocumentEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -2050,7 +2050,7 @@ namespace Wonga.QA.Framework.Db.Comms
     partial void OnCreatedOnChanged();
     #endregion
 		
-		public LegalDocument()
+		public LegalDocumentEntity()
 		{
 			OnCreated();
 		}
@@ -2197,7 +2197,7 @@ namespace Wonga.QA.Framework.Db.Comms
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="comms.MobilePhoneVerification")]
-	public partial class MobilePhoneVerification : DbEntity<MobilePhoneVerification>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class MobilePhoneVerificationEntity : DbEntity<MobilePhoneVerificationEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -2236,7 +2236,7 @@ namespace Wonga.QA.Framework.Db.Comms
     partial void OnCreatedOnChanged();
     #endregion
 		
-		public MobilePhoneVerification()
+		public MobilePhoneVerificationEntity()
 		{
 			OnCreated();
 		}
@@ -2561,7 +2561,7 @@ namespace Wonga.QA.Framework.Db.Comms
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="comms.PhoneVerification")]
-	public partial class PhoneVerification : DbEntity<PhoneVerification>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class PhoneVerificationEntity : DbEntity<PhoneVerificationEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -2600,7 +2600,7 @@ namespace Wonga.QA.Framework.Db.Comms
     partial void OnCreatedOnChanged();
     #endregion
 		
-		public PhoneVerification()
+		public PhoneVerificationEntity()
 		{
 			OnCreated();
 		}
@@ -2767,7 +2767,7 @@ namespace Wonga.QA.Framework.Db.Comms
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="comms.VerificationPins")]
-	public partial class VerificationPin : DbEntity<VerificationPin>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class VerificationPinEntity : DbEntity<VerificationPinEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -2798,7 +2798,7 @@ namespace Wonga.QA.Framework.Db.Comms
     partial void OnMobileVerifiedOnChanged();
     #endregion
 		
-		public VerificationPin()
+		public VerificationPinEntity()
 		{
 			OnCreated();
 		}

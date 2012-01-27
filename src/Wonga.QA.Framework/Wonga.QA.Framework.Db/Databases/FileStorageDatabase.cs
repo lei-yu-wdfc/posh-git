@@ -31,9 +31,9 @@ namespace Wonga.QA.Framework.Db.FileStorage
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertFile(File instance);
-    partial void UpdateFile(File instance);
-    partial void DeleteFile(File instance);
+    partial void InsertFileEntity(FileEntity instance);
+    partial void UpdateFileEntity(FileEntity instance);
+    partial void DeleteFileEntity(FileEntity instance);
     partial void InsertMSSQLDeploy(MSSQLDeploy instance);
     partial void UpdateMSSQLDeploy(MSSQLDeploy instance);
     partial void DeleteMSSQLDeploy(MSSQLDeploy instance);
@@ -63,11 +63,11 @@ namespace Wonga.QA.Framework.Db.FileStorage
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<File> Files
+		public System.Data.Linq.Table<FileEntity> Files
 		{
 			get
 			{
-				return this.GetTable<File>().SetTable<File>();
+				return this.GetTable<FileEntity>().SetTable<FileEntity>();
 			}
 		}
 		
@@ -81,7 +81,7 @@ namespace Wonga.QA.Framework.Db.FileStorage
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="fileStorage.Files")]
-	public partial class File : DbEntity<File>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FileEntity : DbEntity<FileEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -100,7 +100,7 @@ namespace Wonga.QA.Framework.Db.FileStorage
     partial void OnContentChanged();
     #endregion
 		
-		public File()
+		public FileEntity()
 		{
 			OnCreated();
 		}

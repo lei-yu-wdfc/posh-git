@@ -31,9 +31,9 @@ namespace Wonga.QA.Framework.Db.OpsLogs
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertLog(Log instance);
-    partial void UpdateLog(Log instance);
-    partial void DeleteLog(Log instance);
+    partial void InsertLogEntity(LogEntity instance);
+    partial void UpdateLogEntity(LogEntity instance);
+    partial void DeleteLogEntity(LogEntity instance);
     partial void InsertMSSQLDeploy(MSSQLDeploy instance);
     partial void UpdateMSSQLDeploy(MSSQLDeploy instance);
     partial void DeleteMSSQLDeploy(MSSQLDeploy instance);
@@ -63,11 +63,11 @@ namespace Wonga.QA.Framework.Db.OpsLogs
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<Log> Logs
+		public System.Data.Linq.Table<LogEntity> Logs
 		{
 			get
 			{
-				return this.GetTable<Log>().SetTable<Log>();
+				return this.GetTable<LogEntity>().SetTable<LogEntity>();
 			}
 		}
 		
@@ -81,7 +81,7 @@ namespace Wonga.QA.Framework.Db.OpsLogs
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="ops.Logs")]
-	public partial class Log : DbEntity<Log>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class LogEntity : DbEntity<LogEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -132,7 +132,7 @@ namespace Wonga.QA.Framework.Db.OpsLogs
     partial void OnApplicationIdChanged();
     #endregion
 		
-		public Log()
+		public LogEntity()
 		{
 			OnCreated();
 		}

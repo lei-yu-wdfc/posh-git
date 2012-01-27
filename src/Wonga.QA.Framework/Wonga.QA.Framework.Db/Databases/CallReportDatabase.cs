@@ -31,24 +31,24 @@ namespace Wonga.QA.Framework.Db.CallReport
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertCallReportActiveRequest(CallReportActiveRequest instance);
-    partial void UpdateCallReportActiveRequest(CallReportActiveRequest instance);
-    partial void DeleteCallReportActiveRequest(CallReportActiveRequest instance);
-    partial void InsertFactor(Factor instance);
-    partial void UpdateFactor(Factor instance);
-    partial void DeleteFactor(Factor instance);
+    partial void InsertCallReportActiveRequestEntity(CallReportActiveRequestEntity instance);
+    partial void UpdateCallReportActiveRequestEntity(CallReportActiveRequestEntity instance);
+    partial void DeleteCallReportActiveRequestEntity(CallReportActiveRequestEntity instance);
+    partial void InsertFactorEntity(FactorEntity instance);
+    partial void UpdateFactorEntity(FactorEntity instance);
+    partial void DeleteFactorEntity(FactorEntity instance);
     partial void InsertMSSQLDeploy(MSSQLDeploy instance);
     partial void UpdateMSSQLDeploy(MSSQLDeploy instance);
     partial void DeleteMSSQLDeploy(MSSQLDeploy instance);
-    partial void InsertParsedFactor(ParsedFactor instance);
-    partial void UpdateParsedFactor(ParsedFactor instance);
-    partial void DeleteParsedFactor(ParsedFactor instance);
-    partial void InsertParsedFactorsTemp(ParsedFactorsTemp instance);
-    partial void UpdateParsedFactorsTemp(ParsedFactorsTemp instance);
-    partial void DeleteParsedFactorsTemp(ParsedFactorsTemp instance);
-    partial void InsertType(Type instance);
-    partial void UpdateType(Type instance);
-    partial void DeleteType(Type instance);
+    partial void InsertParsedFactorEntity(ParsedFactorEntity instance);
+    partial void UpdateParsedFactorEntity(ParsedFactorEntity instance);
+    partial void DeleteParsedFactorEntity(ParsedFactorEntity instance);
+    partial void InsertParsedFactorsTempEntity(ParsedFactorsTempEntity instance);
+    partial void UpdateParsedFactorsTempEntity(ParsedFactorsTempEntity instance);
+    partial void DeleteParsedFactorsTempEntity(ParsedFactorsTempEntity instance);
+    partial void InsertTypeEntity(TypeEntity instance);
+    partial void UpdateTypeEntity(TypeEntity instance);
+    partial void DeleteTypeEntity(TypeEntity instance);
     #endregion
 		
 		public CallReportDatabase(string connection) : 
@@ -75,27 +75,27 @@ namespace Wonga.QA.Framework.Db.CallReport
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<AgreementRef> AgreementRefs
+		public System.Data.Linq.Table<AgreementRefEntity> AgreementRefs
 		{
 			get
 			{
-				return this.GetTable<AgreementRef>().SetTable<AgreementRef>();
+				return this.GetTable<AgreementRefEntity>().SetTable<AgreementRefEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<CallReportActiveRequest> CallReportActiveRequests
+		public System.Data.Linq.Table<CallReportActiveRequestEntity> CallReportActiveRequests
 		{
 			get
 			{
-				return this.GetTable<CallReportActiveRequest>().SetTable<CallReportActiveRequest>();
+				return this.GetTable<CallReportActiveRequestEntity>().SetTable<CallReportActiveRequestEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<Factor> Factors
+		public System.Data.Linq.Table<FactorEntity> Factors
 		{
 			get
 			{
-				return this.GetTable<Factor>().SetTable<Factor>();
+				return this.GetTable<FactorEntity>().SetTable<FactorEntity>();
 			}
 		}
 		
@@ -107,33 +107,33 @@ namespace Wonga.QA.Framework.Db.CallReport
 			}
 		}
 		
-		public System.Data.Linq.Table<ParsedFactor> ParsedFactors
+		public System.Data.Linq.Table<ParsedFactorEntity> ParsedFactors
 		{
 			get
 			{
-				return this.GetTable<ParsedFactor>().SetTable<ParsedFactor>();
+				return this.GetTable<ParsedFactorEntity>().SetTable<ParsedFactorEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<ParsedFactorsTemp> ParsedFactorsTemps
+		public System.Data.Linq.Table<ParsedFactorsTempEntity> ParsedFactorsTemps
 		{
 			get
 			{
-				return this.GetTable<ParsedFactorsTemp>().SetTable<ParsedFactorsTemp>();
+				return this.GetTable<ParsedFactorsTempEntity>().SetTable<ParsedFactorsTempEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<Type> Types
+		public System.Data.Linq.Table<TypeEntity> Types
 		{
 			get
 			{
-				return this.GetTable<Type>().SetTable<Type>();
+				return this.GetTable<TypeEntity>().SetTable<TypeEntity>();
 			}
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="callreport.AgreementRef")]
-	public partial class AgreementRef : DbEntity<AgreementRef>
+	public partial class AgreementRefEntity : DbEntity<AgreementRefEntity>
 	{
 		
 		private int _AgreementRefId;
@@ -142,7 +142,7 @@ namespace Wonga.QA.Framework.Db.CallReport
 		
 		private string _AgreementReference;
 		
-		public AgreementRef()
+		public AgreementRefEntity()
 		{
 		}
 		
@@ -196,7 +196,7 @@ namespace Wonga.QA.Framework.Db.CallReport
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="cache.CallReportActiveRequest")]
-	public partial class CallReportActiveRequest : DbEntity<CallReportActiveRequest>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class CallReportActiveRequestEntity : DbEntity<CallReportActiveRequestEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -231,7 +231,7 @@ namespace Wonga.QA.Framework.Db.CallReport
     partial void OnTotalMillisecondsChanged();
     #endregion
 		
-		public CallReportActiveRequest()
+		public CallReportActiveRequestEntity()
 		{
 			OnCreated();
 		}
@@ -378,7 +378,7 @@ namespace Wonga.QA.Framework.Db.CallReport
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="callreport.Factors")]
-	public partial class Factor : DbEntity<Factor>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FactorEntity : DbEntity<FactorEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -389,11 +389,11 @@ namespace Wonga.QA.Framework.Db.CallReport
 		
 		private int _DataTypeId;
 		
-		private EntityRef<Type> _Type;
+		private EntityRef<TypeEntity> _TypeEntity;
 		
-		private EntitySet<ParsedFactor> _ParsedFactors;
+		private EntitySet<ParsedFactorEntity> _Callreport_ParsedFactors;
 		
-		private EntitySet<ParsedFactorsTemp> _ParsedFactorsTemps;
+		private EntitySet<ParsedFactorsTempEntity> _Callreport_ParsedFactorsTemps;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -407,11 +407,11 @@ namespace Wonga.QA.Framework.Db.CallReport
     partial void OnDataTypeIdChanged();
     #endregion
 		
-		public Factor()
+		public FactorEntity()
 		{
-			this._Type = default(EntityRef<Type>);
-			this._ParsedFactors = new EntitySet<ParsedFactor>(new Action<ParsedFactor>(this.attach_ParsedFactors), new Action<ParsedFactor>(this.detach_ParsedFactors));
-			this._ParsedFactorsTemps = new EntitySet<ParsedFactorsTemp>(new Action<ParsedFactorsTemp>(this.attach_ParsedFactorsTemps), new Action<ParsedFactorsTemp>(this.detach_ParsedFactorsTemps));
+			this._TypeEntity = default(EntityRef<TypeEntity>);
+			this._Callreport_ParsedFactors = new EntitySet<ParsedFactorEntity>(new Action<ParsedFactorEntity>(this.attach_Callreport_ParsedFactors), new Action<ParsedFactorEntity>(this.detach_Callreport_ParsedFactors));
+			this._Callreport_ParsedFactorsTemps = new EntitySet<ParsedFactorsTempEntity>(new Action<ParsedFactorsTempEntity>(this.attach_Callreport_ParsedFactorsTemps), new Action<ParsedFactorsTempEntity>(this.detach_Callreport_ParsedFactorsTemps));
 			OnCreated();
 		}
 		
@@ -466,7 +466,7 @@ namespace Wonga.QA.Framework.Db.CallReport
 			{
 				if ((this._DataTypeId != value))
 				{
-					if (this._Type.HasLoadedOrAssignedValue)
+					if (this._TypeEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -479,63 +479,63 @@ namespace Wonga.QA.Framework.Db.CallReport
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Callreport_Factors_TypeId", Storage="_Type", ThisKey="DataTypeId", OtherKey="Id", IsForeignKey=true)]
-		public Type Type
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Callreport_Factors_TypeId", Storage="_TypeEntity", ThisKey="DataTypeId", OtherKey="Id", IsForeignKey=true)]
+		public TypeEntity TypeEntity
 		{
 			get
 			{
-				return this._Type.Entity;
+				return this._TypeEntity.Entity;
 			}
 			set
 			{
-				Type previousValue = this._Type.Entity;
+				TypeEntity previousValue = this._TypeEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Type.HasLoadedOrAssignedValue == false)))
+							|| (this._TypeEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Type.Entity = null;
-						previousValue.Factors.Remove(this);
+						this._TypeEntity.Entity = null;
+						previousValue.Callreport_Factors.Remove(this);
 					}
-					this._Type.Entity = value;
+					this._TypeEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Factors.Add(this);
+						value.Callreport_Factors.Add(this);
 						this._DataTypeId = value.Id;
 					}
 					else
 					{
 						this._DataTypeId = default(int);
 					}
-					this.SendPropertyChanged("Type");
+					this.SendPropertyChanged("TypeEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Callreport_ParsedFactors_FactorId", Storage="_ParsedFactors", ThisKey="FactorId", OtherKey="FactorId", DeleteRule="NO ACTION")]
-		public EntitySet<ParsedFactor> ParsedFactors
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Callreport_ParsedFactors_FactorId", Storage="_Callreport_ParsedFactors", ThisKey="FactorId", OtherKey="FactorId", DeleteRule="NO ACTION")]
+		public EntitySet<ParsedFactorEntity> Callreport_ParsedFactors
 		{
 			get
 			{
-				return this._ParsedFactors;
+				return this._Callreport_ParsedFactors;
 			}
 			set
 			{
-				this._ParsedFactors.Assign(value);
+				this._Callreport_ParsedFactors.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Callreport_TempParsedFactors_FactorId", Storage="_ParsedFactorsTemps", ThisKey="FactorId", OtherKey="FactorId", DeleteRule="NO ACTION")]
-		public EntitySet<ParsedFactorsTemp> ParsedFactorsTemps
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Callreport_TempParsedFactors_FactorId", Storage="_Callreport_ParsedFactorsTemps", ThisKey="FactorId", OtherKey="FactorId", DeleteRule="NO ACTION")]
+		public EntitySet<ParsedFactorsTempEntity> Callreport_ParsedFactorsTemps
 		{
 			get
 			{
-				return this._ParsedFactorsTemps;
+				return this._Callreport_ParsedFactorsTemps;
 			}
 			set
 			{
-				this._ParsedFactorsTemps.Assign(value);
+				this._Callreport_ParsedFactorsTemps.Assign(value);
 			}
 		}
 		
@@ -559,28 +559,28 @@ namespace Wonga.QA.Framework.Db.CallReport
 			}
 		}
 		
-		private void attach_ParsedFactors(ParsedFactor entity)
+		private void attach_Callreport_ParsedFactors(ParsedFactorEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Factor = this;
+			entity.FactorEntity = this;
 		}
 		
-		private void detach_ParsedFactors(ParsedFactor entity)
+		private void detach_Callreport_ParsedFactors(ParsedFactorEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Factor = null;
+			entity.FactorEntity = null;
 		}
 		
-		private void attach_ParsedFactorsTemps(ParsedFactorsTemp entity)
+		private void attach_Callreport_ParsedFactorsTemps(ParsedFactorsTempEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Factor = this;
+			entity.FactorEntity = this;
 		}
 		
-		private void detach_ParsedFactorsTemps(ParsedFactorsTemp entity)
+		private void detach_Callreport_ParsedFactorsTemps(ParsedFactorsTempEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Factor = null;
+			entity.FactorEntity = null;
 		}
 	}
 	
@@ -743,7 +743,7 @@ namespace Wonga.QA.Framework.Db.CallReport
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="callreport.ParsedFactors")]
-	public partial class ParsedFactor : DbEntity<ParsedFactor>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class ParsedFactorEntity : DbEntity<ParsedFactorEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -758,7 +758,7 @@ namespace Wonga.QA.Framework.Db.CallReport
 		
 		private System.Nullable<byte> _NumRecord;
 		
-		private EntityRef<Factor> _Factor;
+		private EntityRef<FactorEntity> _FactorEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -776,9 +776,9 @@ namespace Wonga.QA.Framework.Db.CallReport
     partial void OnNumRecordChanged();
     #endregion
 		
-		public ParsedFactor()
+		public ParsedFactorEntity()
 		{
-			this._Factor = default(EntityRef<Factor>);
+			this._FactorEntity = default(EntityRef<FactorEntity>);
 			OnCreated();
 		}
 		
@@ -833,7 +833,7 @@ namespace Wonga.QA.Framework.Db.CallReport
 			{
 				if ((this._FactorId != value))
 				{
-					if (this._Factor.HasLoadedOrAssignedValue)
+					if (this._FactorEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -886,36 +886,36 @@ namespace Wonga.QA.Framework.Db.CallReport
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Callreport_ParsedFactors_FactorId", Storage="_Factor", ThisKey="FactorId", OtherKey="FactorId", IsForeignKey=true)]
-		public Factor Factor
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Callreport_ParsedFactors_FactorId", Storage="_FactorEntity", ThisKey="FactorId", OtherKey="FactorId", IsForeignKey=true)]
+		public FactorEntity FactorEntity
 		{
 			get
 			{
-				return this._Factor.Entity;
+				return this._FactorEntity.Entity;
 			}
 			set
 			{
-				Factor previousValue = this._Factor.Entity;
+				FactorEntity previousValue = this._FactorEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Factor.HasLoadedOrAssignedValue == false)))
+							|| (this._FactorEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Factor.Entity = null;
-						previousValue.ParsedFactors.Remove(this);
+						this._FactorEntity.Entity = null;
+						previousValue.Callreport_ParsedFactors.Remove(this);
 					}
-					this._Factor.Entity = value;
+					this._FactorEntity.Entity = value;
 					if ((value != null))
 					{
-						value.ParsedFactors.Add(this);
+						value.Callreport_ParsedFactors.Add(this);
 						this._FactorId = value.FactorId;
 					}
 					else
 					{
 						this._FactorId = default(int);
 					}
-					this.SendPropertyChanged("Factor");
+					this.SendPropertyChanged("FactorEntity");
 				}
 			}
 		}
@@ -942,7 +942,7 @@ namespace Wonga.QA.Framework.Db.CallReport
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="callreport.ParsedFactorsTemp")]
-	public partial class ParsedFactorsTemp : DbEntity<ParsedFactorsTemp>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class ParsedFactorsTempEntity : DbEntity<ParsedFactorsTempEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -957,7 +957,7 @@ namespace Wonga.QA.Framework.Db.CallReport
 		
 		private System.Nullable<byte> _NumRecord;
 		
-		private EntityRef<Factor> _Factor;
+		private EntityRef<FactorEntity> _FactorEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -975,9 +975,9 @@ namespace Wonga.QA.Framework.Db.CallReport
     partial void OnNumRecordChanged();
     #endregion
 		
-		public ParsedFactorsTemp()
+		public ParsedFactorsTempEntity()
 		{
-			this._Factor = default(EntityRef<Factor>);
+			this._FactorEntity = default(EntityRef<FactorEntity>);
 			OnCreated();
 		}
 		
@@ -1032,7 +1032,7 @@ namespace Wonga.QA.Framework.Db.CallReport
 			{
 				if ((this._FactorId != value))
 				{
-					if (this._Factor.HasLoadedOrAssignedValue)
+					if (this._FactorEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -1085,36 +1085,36 @@ namespace Wonga.QA.Framework.Db.CallReport
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Callreport_TempParsedFactors_FactorId", Storage="_Factor", ThisKey="FactorId", OtherKey="FactorId", IsForeignKey=true)]
-		public Factor Factor
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Callreport_TempParsedFactors_FactorId", Storage="_FactorEntity", ThisKey="FactorId", OtherKey="FactorId", IsForeignKey=true)]
+		public FactorEntity FactorEntity
 		{
 			get
 			{
-				return this._Factor.Entity;
+				return this._FactorEntity.Entity;
 			}
 			set
 			{
-				Factor previousValue = this._Factor.Entity;
+				FactorEntity previousValue = this._FactorEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Factor.HasLoadedOrAssignedValue == false)))
+							|| (this._FactorEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Factor.Entity = null;
-						previousValue.ParsedFactorsTemps.Remove(this);
+						this._FactorEntity.Entity = null;
+						previousValue.Callreport_ParsedFactorsTemps.Remove(this);
 					}
-					this._Factor.Entity = value;
+					this._FactorEntity.Entity = value;
 					if ((value != null))
 					{
-						value.ParsedFactorsTemps.Add(this);
+						value.Callreport_ParsedFactorsTemps.Add(this);
 						this._FactorId = value.FactorId;
 					}
 					else
 					{
 						this._FactorId = default(int);
 					}
-					this.SendPropertyChanged("Factor");
+					this.SendPropertyChanged("FactorEntity");
 				}
 			}
 		}
@@ -1141,7 +1141,7 @@ namespace Wonga.QA.Framework.Db.CallReport
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="callreport.Types")]
-	public partial class Type : DbEntity<Type>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class TypeEntity : DbEntity<TypeEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -1150,7 +1150,7 @@ namespace Wonga.QA.Framework.Db.CallReport
 		
 		private string _Name;
 		
-		private EntitySet<Factor> _Factors;
+		private EntitySet<FactorEntity> _Callreport_Factors;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1162,9 +1162,9 @@ namespace Wonga.QA.Framework.Db.CallReport
     partial void OnNameChanged();
     #endregion
 		
-		public Type()
+		public TypeEntity()
 		{
-			this._Factors = new EntitySet<Factor>(new Action<Factor>(this.attach_Factors), new Action<Factor>(this.detach_Factors));
+			this._Callreport_Factors = new EntitySet<FactorEntity>(new Action<FactorEntity>(this.attach_Callreport_Factors), new Action<FactorEntity>(this.detach_Callreport_Factors));
 			OnCreated();
 		}
 		
@@ -1208,16 +1208,16 @@ namespace Wonga.QA.Framework.Db.CallReport
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Callreport_Factors_TypeId", Storage="_Factors", ThisKey="Id", OtherKey="DataTypeId", DeleteRule="NO ACTION")]
-		public EntitySet<Factor> Factors
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Callreport_Factors_TypeId", Storage="_Callreport_Factors", ThisKey="Id", OtherKey="DataTypeId", DeleteRule="NO ACTION")]
+		public EntitySet<FactorEntity> Callreport_Factors
 		{
 			get
 			{
-				return this._Factors;
+				return this._Callreport_Factors;
 			}
 			set
 			{
-				this._Factors.Assign(value);
+				this._Callreport_Factors.Assign(value);
 			}
 		}
 		
@@ -1241,16 +1241,16 @@ namespace Wonga.QA.Framework.Db.CallReport
 			}
 		}
 		
-		private void attach_Factors(Factor entity)
+		private void attach_Callreport_Factors(FactorEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Type = this;
+			entity.TypeEntity = this;
 		}
 		
-		private void detach_Factors(Factor entity)
+		private void detach_Callreport_Factors(FactorEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Type = null;
+			entity.TypeEntity = null;
 		}
 	}
 }

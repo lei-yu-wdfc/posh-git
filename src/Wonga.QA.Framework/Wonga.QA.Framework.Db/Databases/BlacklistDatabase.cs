@@ -31,9 +31,9 @@ namespace Wonga.QA.Framework.Db.Blacklist
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertBlackList(BlackList instance);
-    partial void UpdateBlackList(BlackList instance);
-    partial void DeleteBlackList(BlackList instance);
+    partial void InsertBlackListEntity(BlackListEntity instance);
+    partial void UpdateBlackListEntity(BlackListEntity instance);
+    partial void DeleteBlackListEntity(BlackListEntity instance);
     partial void InsertMSSQLDeploy(MSSQLDeploy instance);
     partial void UpdateMSSQLDeploy(MSSQLDeploy instance);
     partial void DeleteMSSQLDeploy(MSSQLDeploy instance);
@@ -63,11 +63,11 @@ namespace Wonga.QA.Framework.Db.Blacklist
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<BlackList> BlackLists
+		public System.Data.Linq.Table<BlackListEntity> BlackLists
 		{
 			get
 			{
-				return this.GetTable<BlackList>().SetTable<BlackList>();
+				return this.GetTable<BlackListEntity>().SetTable<BlackListEntity>();
 			}
 		}
 		
@@ -81,7 +81,7 @@ namespace Wonga.QA.Framework.Db.Blacklist
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="blacklist.BlackList")]
-	public partial class BlackList : DbEntity<BlackList>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class BlackListEntity : DbEntity<BlackListEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -144,7 +144,7 @@ namespace Wonga.QA.Framework.Db.Blacklist
     partial void OnExternalIdChanged();
     #endregion
 		
-		public BlackList()
+		public BlackListEntity()
 		{
 			OnCreated();
 		}

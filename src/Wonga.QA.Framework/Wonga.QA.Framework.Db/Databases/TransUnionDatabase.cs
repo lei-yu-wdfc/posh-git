@@ -31,9 +31,9 @@ namespace Wonga.QA.Framework.Db.TransUnion
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertLoanRegistration(LoanRegistration instance);
-    partial void UpdateLoanRegistration(LoanRegistration instance);
-    partial void DeleteLoanRegistration(LoanRegistration instance);
+    partial void InsertLoanRegistrationEntity(LoanRegistrationEntity instance);
+    partial void UpdateLoanRegistrationEntity(LoanRegistrationEntity instance);
+    partial void DeleteLoanRegistrationEntity(LoanRegistrationEntity instance);
     partial void InsertMSSQLDeploy(MSSQLDeploy instance);
     partial void UpdateMSSQLDeploy(MSSQLDeploy instance);
     partial void DeleteMSSQLDeploy(MSSQLDeploy instance);
@@ -63,11 +63,11 @@ namespace Wonga.QA.Framework.Db.TransUnion
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<LoanRegistration> LoanRegistrations
+		public System.Data.Linq.Table<LoanRegistrationEntity> LoanRegistrations
 		{
 			get
 			{
-				return this.GetTable<LoanRegistration>().SetTable<LoanRegistration>();
+				return this.GetTable<LoanRegistrationEntity>().SetTable<LoanRegistrationEntity>();
 			}
 		}
 		
@@ -81,7 +81,7 @@ namespace Wonga.QA.Framework.Db.TransUnion
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="transunion.LoanRegistration")]
-	public partial class LoanRegistration : DbEntity<LoanRegistration>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class LoanRegistrationEntity : DbEntity<LoanRegistrationEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -112,7 +112,7 @@ namespace Wonga.QA.Framework.Db.TransUnion
     partial void OnCreationDateChanged();
     #endregion
 		
-		public LoanRegistration()
+		public LoanRegistrationEntity()
 		{
 			OnCreated();
 		}

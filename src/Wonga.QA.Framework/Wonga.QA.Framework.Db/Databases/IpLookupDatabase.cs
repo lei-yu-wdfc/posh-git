@@ -31,9 +31,9 @@ namespace Wonga.QA.Framework.Db.IpLookup
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertIp2Location(Ip2Location instance);
-    partial void UpdateIp2Location(Ip2Location instance);
-    partial void DeleteIp2Location(Ip2Location instance);
+    partial void InsertIp2LocationEntity(Ip2LocationEntity instance);
+    partial void UpdateIp2LocationEntity(Ip2LocationEntity instance);
+    partial void DeleteIp2LocationEntity(Ip2LocationEntity instance);
     partial void InsertMSSQLDeploy(MSSQLDeploy instance);
     partial void UpdateMSSQLDeploy(MSSQLDeploy instance);
     partial void DeleteMSSQLDeploy(MSSQLDeploy instance);
@@ -63,11 +63,11 @@ namespace Wonga.QA.Framework.Db.IpLookup
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<Ip2Location> Ip2Locations
+		public System.Data.Linq.Table<Ip2LocationEntity> Ip2Locations
 		{
 			get
 			{
-				return this.GetTable<Ip2Location>().SetTable<Ip2Location>();
+				return this.GetTable<Ip2LocationEntity>().SetTable<Ip2LocationEntity>();
 			}
 		}
 		
@@ -81,7 +81,7 @@ namespace Wonga.QA.Framework.Db.IpLookup
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="lookup.Ip2Location")]
-	public partial class Ip2Location : DbEntity<Ip2Location>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class Ip2LocationEntity : DbEntity<Ip2LocationEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -120,7 +120,7 @@ namespace Wonga.QA.Framework.Db.IpLookup
     partial void OnCityChanged();
     #endregion
 		
-		public Ip2Location()
+		public Ip2LocationEntity()
 		{
 			OnCreated();
 		}

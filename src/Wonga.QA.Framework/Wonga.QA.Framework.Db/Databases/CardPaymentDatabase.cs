@@ -34,12 +34,12 @@ namespace Wonga.QA.Framework.Db.CardPayment
     partial void InsertMSSQLDeploy(MSSQLDeploy instance);
     partial void UpdateMSSQLDeploy(MSSQLDeploy instance);
     partial void DeleteMSSQLDeploy(MSSQLDeploy instance);
-    partial void InsertSchedule(Schedule instance);
-    partial void UpdateSchedule(Schedule instance);
-    partial void DeleteSchedule(Schedule instance);
-    partial void InsertServiceLogin(ServiceLogin instance);
-    partial void UpdateServiceLogin(ServiceLogin instance);
-    partial void DeleteServiceLogin(ServiceLogin instance);
+    partial void InsertScheduleEntity(ScheduleEntity instance);
+    partial void UpdateScheduleEntity(ScheduleEntity instance);
+    partial void DeleteScheduleEntity(ScheduleEntity instance);
+    partial void InsertServiceLoginEntity(ServiceLoginEntity instance);
+    partial void UpdateServiceLoginEntity(ServiceLoginEntity instance);
+    partial void DeleteServiceLoginEntity(ServiceLoginEntity instance);
     #endregion
 		
 		public CardPaymentDatabase(string connection) : 
@@ -74,19 +74,19 @@ namespace Wonga.QA.Framework.Db.CardPayment
 			}
 		}
 		
-		public System.Data.Linq.Table<Schedule> Schedules
+		public System.Data.Linq.Table<ScheduleEntity> Schedules
 		{
 			get
 			{
-				return this.GetTable<Schedule>().SetTable<Schedule>();
+				return this.GetTable<ScheduleEntity>().SetTable<ScheduleEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<ServiceLogin> ServiceLogins
+		public System.Data.Linq.Table<ServiceLoginEntity> ServiceLogins
 		{
 			get
 			{
-				return this.GetTable<ServiceLogin>().SetTable<ServiceLogin>();
+				return this.GetTable<ServiceLoginEntity>().SetTable<ServiceLoginEntity>();
 			}
 		}
 	}
@@ -250,7 +250,7 @@ namespace Wonga.QA.Framework.Db.CardPayment
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="cardpayment.Schedules")]
-	public partial class Schedule : DbEntity<Schedule>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class ScheduleEntity : DbEntity<ScheduleEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -265,7 +265,7 @@ namespace Wonga.QA.Framework.Db.CardPayment
 		
 		private System.DateTime _CreatedOn;
 		
-		private EntityRef<ServiceLogin> _ServiceLogin;
+		private EntityRef<ServiceLoginEntity> _ServiceLoginEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -283,9 +283,9 @@ namespace Wonga.QA.Framework.Db.CardPayment
     partial void OnCreatedOnChanged();
     #endregion
 		
-		public Schedule()
+		public ScheduleEntity()
 		{
-			this._ServiceLogin = default(EntityRef<ServiceLogin>);
+			this._ServiceLoginEntity = default(EntityRef<ServiceLoginEntity>);
 			OnCreated();
 		}
 		
@@ -360,7 +360,7 @@ namespace Wonga.QA.Framework.Db.CardPayment
 			{
 				if ((this._ServiceLoginId != value))
 				{
-					if (this._ServiceLogin.HasLoadedOrAssignedValue)
+					if (this._ServiceLoginEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -393,36 +393,36 @@ namespace Wonga.QA.Framework.Db.CardPayment
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Schedules_ServiceLogins", Storage="_ServiceLogin", ThisKey="ServiceLoginId", OtherKey="ServiceLoginId", IsForeignKey=true)]
-		public ServiceLogin ServiceLogin
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Schedules_ServiceLogins", Storage="_ServiceLoginEntity", ThisKey="ServiceLoginId", OtherKey="ServiceLoginId", IsForeignKey=true)]
+		public ServiceLoginEntity ServiceLoginEntity
 		{
 			get
 			{
-				return this._ServiceLogin.Entity;
+				return this._ServiceLoginEntity.Entity;
 			}
 			set
 			{
-				ServiceLogin previousValue = this._ServiceLogin.Entity;
+				ServiceLoginEntity previousValue = this._ServiceLoginEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._ServiceLogin.HasLoadedOrAssignedValue == false)))
+							|| (this._ServiceLoginEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._ServiceLogin.Entity = null;
-						previousValue.Schedules.Remove(this);
+						this._ServiceLoginEntity.Entity = null;
+						previousValue.Cardpayment_Schedules.Remove(this);
 					}
-					this._ServiceLogin.Entity = value;
+					this._ServiceLoginEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Schedules.Add(this);
+						value.Cardpayment_Schedules.Add(this);
 						this._ServiceLoginId = value.ServiceLoginId;
 					}
 					else
 					{
 						this._ServiceLoginId = default(int);
 					}
-					this.SendPropertyChanged("ServiceLogin");
+					this.SendPropertyChanged("ServiceLoginEntity");
 				}
 			}
 		}
@@ -449,7 +449,7 @@ namespace Wonga.QA.Framework.Db.CardPayment
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="cardpayment.ServiceLogins")]
-	public partial class ServiceLogin : DbEntity<ServiceLogin>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class ServiceLoginEntity : DbEntity<ServiceLoginEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -466,7 +466,7 @@ namespace Wonga.QA.Framework.Db.CardPayment
 		
 		private System.DateTime _CreatedOn;
 		
-		private EntitySet<Schedule> _Schedules;
+		private EntitySet<ScheduleEntity> _Cardpayment_Schedules;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -486,9 +486,9 @@ namespace Wonga.QA.Framework.Db.CardPayment
     partial void OnCreatedOnChanged();
     #endregion
 		
-		public ServiceLogin()
+		public ServiceLoginEntity()
 		{
-			this._Schedules = new EntitySet<Schedule>(new Action<Schedule>(this.attach_Schedules), new Action<Schedule>(this.detach_Schedules));
+			this._Cardpayment_Schedules = new EntitySet<ScheduleEntity>(new Action<ScheduleEntity>(this.attach_Cardpayment_Schedules), new Action<ScheduleEntity>(this.detach_Cardpayment_Schedules));
 			OnCreated();
 		}
 		
@@ -612,16 +612,16 @@ namespace Wonga.QA.Framework.Db.CardPayment
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Schedules_ServiceLogins", Storage="_Schedules", ThisKey="ServiceLoginId", OtherKey="ServiceLoginId", DeleteRule="NO ACTION")]
-		public EntitySet<Schedule> Schedules
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Schedules_ServiceLogins", Storage="_Cardpayment_Schedules", ThisKey="ServiceLoginId", OtherKey="ServiceLoginId", DeleteRule="NO ACTION")]
+		public EntitySet<ScheduleEntity> Cardpayment_Schedules
 		{
 			get
 			{
-				return this._Schedules;
+				return this._Cardpayment_Schedules;
 			}
 			set
 			{
-				this._Schedules.Assign(value);
+				this._Cardpayment_Schedules.Assign(value);
 			}
 		}
 		
@@ -645,16 +645,16 @@ namespace Wonga.QA.Framework.Db.CardPayment
 			}
 		}
 		
-		private void attach_Schedules(Schedule entity)
+		private void attach_Cardpayment_Schedules(ScheduleEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.ServiceLogin = this;
+			entity.ServiceLoginEntity = this;
 		}
 		
-		private void detach_Schedules(Schedule entity)
+		private void detach_Cardpayment_Schedules(ScheduleEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.ServiceLogin = null;
+			entity.ServiceLoginEntity = null;
 		}
 	}
 }

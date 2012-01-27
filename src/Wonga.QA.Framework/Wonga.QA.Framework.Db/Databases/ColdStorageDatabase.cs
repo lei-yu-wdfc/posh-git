@@ -34,9 +34,9 @@ namespace Wonga.QA.Framework.Db.ColdStorage
     partial void InsertMSSQLDeploy(MSSQLDeploy instance);
     partial void UpdateMSSQLDeploy(MSSQLDeploy instance);
     partial void DeleteMSSQLDeploy(MSSQLDeploy instance);
-    partial void InsertPaymentCard(PaymentCard instance);
-    partial void UpdatePaymentCard(PaymentCard instance);
-    partial void DeletePaymentCard(PaymentCard instance);
+    partial void InsertPaymentCardEntity(PaymentCardEntity instance);
+    partial void UpdatePaymentCardEntity(PaymentCardEntity instance);
+    partial void DeletePaymentCardEntity(PaymentCardEntity instance);
     #endregion
 		
 		public ColdStorageDatabase(string connection) : 
@@ -71,11 +71,11 @@ namespace Wonga.QA.Framework.Db.ColdStorage
 			}
 		}
 		
-		public System.Data.Linq.Table<PaymentCard> PaymentCards
+		public System.Data.Linq.Table<PaymentCardEntity> PaymentCards
 		{
 			get
 			{
-				return this.GetTable<PaymentCard>().SetTable<PaymentCard>();
+				return this.GetTable<PaymentCardEntity>().SetTable<PaymentCardEntity>();
 			}
 		}
 	}
@@ -239,7 +239,7 @@ namespace Wonga.QA.Framework.Db.ColdStorage
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="ColdStorage.PaymentCards")]
-	public partial class PaymentCard : DbEntity<PaymentCard>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class PaymentCardEntity : DbEntity<PaymentCardEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -270,7 +270,7 @@ namespace Wonga.QA.Framework.Db.ColdStorage
     partial void OnCreatedOnChanged();
     #endregion
 		
-		public PaymentCard()
+		public PaymentCardEntity()
 		{
 			OnCreated();
 		}

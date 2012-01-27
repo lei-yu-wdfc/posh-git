@@ -34,9 +34,9 @@ namespace Wonga.QA.Framework.Db.TimeZone
     partial void InsertMSSQLDeploy(MSSQLDeploy instance);
     partial void UpdateMSSQLDeploy(MSSQLDeploy instance);
     partial void DeleteMSSQLDeploy(MSSQLDeploy instance);
-    partial void InsertTimezone(Timezone instance);
-    partial void UpdateTimezone(Timezone instance);
-    partial void DeleteTimezone(Timezone instance);
+    partial void InsertTimezoneEntity(TimezoneEntity instance);
+    partial void UpdateTimezoneEntity(TimezoneEntity instance);
+    partial void DeleteTimezoneEntity(TimezoneEntity instance);
     #endregion
 		
 		public TimeZoneDatabase(string connection) : 
@@ -71,11 +71,11 @@ namespace Wonga.QA.Framework.Db.TimeZone
 			}
 		}
 		
-		public System.Data.Linq.Table<Timezone> Timezones
+		public System.Data.Linq.Table<TimezoneEntity> Timezones
 		{
 			get
 			{
-				return this.GetTable<Timezone>().SetTable<Timezone>();
+				return this.GetTable<TimezoneEntity>().SetTable<TimezoneEntity>();
 			}
 		}
 	}
@@ -239,7 +239,7 @@ namespace Wonga.QA.Framework.Db.TimeZone
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="timezone.Timezones")]
-	public partial class Timezone : DbEntity<Timezone>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class TimezoneEntity : DbEntity<TimezoneEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -248,7 +248,7 @@ namespace Wonga.QA.Framework.Db.TimeZone
 		
 		private string _AddressHash;
 		
-		private int _TimezoneColumn;
+		private int _Timezone;
 		
 		private System.DateTime _CreatedOn;
 		
@@ -260,13 +260,13 @@ namespace Wonga.QA.Framework.Db.TimeZone
     partial void OnIdChanged();
     partial void OnAddressHashChanging(string value);
     partial void OnAddressHashChanged();
-    partial void OnTimezoneColumnChanging(int value);
-    partial void OnTimezoneColumnChanged();
+    partial void OnTimezoneChanging(int value);
+    partial void OnTimezoneChanged();
     partial void OnCreatedOnChanging(System.DateTime value);
     partial void OnCreatedOnChanged();
     #endregion
 		
-		public Timezone()
+		public TimezoneEntity()
 		{
 			OnCreated();
 		}
@@ -311,22 +311,22 @@ namespace Wonga.QA.Framework.Db.TimeZone
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TimezoneColumn", DbType="Int NOT NULL")]
-		public int TimezoneColumn
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Timezone", DbType="Int NOT NULL")]
+		public int Timezone
 		{
 			get
 			{
-				return this._TimezoneColumn;
+				return this._Timezone;
 			}
 			set
 			{
-				if ((this._TimezoneColumn != value))
+				if ((this._Timezone != value))
 				{
-					this.OnTimezoneColumnChanging(value);
+					this.OnTimezoneChanging(value);
 					this.SendPropertyChanging();
-					this._TimezoneColumn = value;
-					this.SendPropertyChanged("TimezoneColumn");
-					this.OnTimezoneColumnChanged();
+					this._Timezone = value;
+					this.SendPropertyChanged("Timezone");
+					this.OnTimezoneChanged();
 				}
 			}
 		}

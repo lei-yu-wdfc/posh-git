@@ -32,11 +32,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="OpsApiTests.cs" />
+    <Compile Include="OpsMsmqDemo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
     <Reference Include="MbUnit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml" />
     <Reference Include="Wonga.QA.Framework">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.dll</HintPath>
@@ -46,6 +49,12 @@
     </Reference>
     <Reference Include="Wonga.QA.Framework.Core">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Wonga.QA.Framework.Db">
+      <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Db.dll</HintPath>
+    </Reference>
+    <Reference Include="Wonga.QA.Framework.Msmq">
+      <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Msmq.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

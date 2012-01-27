@@ -39,23 +39,27 @@ namespace Wonga.QA.Generators.Db
                     "/pluralize"
                 }, database, file.Dbml.FullName.Quote());
 
-                Dictionary<String, String> values = new Dictionary<String, String>();
                 XElement root = XDocument.Load(file.Dbml.FullName).Root;
-
-                foreach (XElement table in root.Elements(root.GetDefaultNamespace().GetName("Table")))
+                XNamespace ns = root.GetDefaultNamespace();
+                List<XAttribute> attributes = root.Descendants().SelectMany(d => d.Attributes()).ToList();
+                
+                foreach (XElement table in root.Descendants(ns.GetName("Table")))
                 {
-                    String schema = table.Attribute("Name").Value.Split('.').First().ToLower();
-                    foreach (String value in new[] { table.Attribute("Member").Value, table.Element(root.GetDefaultNamespace().GetName("Type")).Attribute("Name").Value }.Distinct().Where(v => v.Contains('_') && !values.ContainsKey(v)))
+                    String name = table.Attribute("Name").Value;
+                    String schema = name.Substring(0, name.IndexOf('.')).ToLower() + '_';
+
+                    XAttribute member = table.Attribute("Member");
+                    if (member.Value.ToLower().StartsWith(schema))
+                        member.SetValue(member.Value.Substring(schema.Length));
+
+                    XAttribute type = table.Element(ns.GetName("Type")).Attribute("Name");
+                    if (type.Value.ToLower().StartsWith(schema))
                     {
-                        String[] split = value.Split('_');
-                        if (split.First().ToLower() == schema)
-                            values.Add(value, String.Join(null, split.Skip(1)));
+                        String value = type.Value.Substring(schema.Length) + "Entity";
+                        attributes.Where(a => a.Value == type.Value).ForEach(a => a.SetValue(value));
                     }
                 }
 
-                List<XAttribute> attributes = root.Descendants().SelectMany(d => d.Attributes()).ToList();
-                attributes.Where(a => values.ContainsValue(a.Value)).ForEach(a => values.Add(a.Value, a.Value + a.Parent.Name.LocalName));
-                attributes.Where(a => values.ContainsKey(a.Value)).ForEach(a => a.Value = values[a.Value]);
                 root.Document.Save(file.Dbml.FullName);
 
                 Console.WriteLine("\t{0}", file.Code.Name);
@@ -76,6 +80,12 @@ namespace Wonga.QA.Generators.Db
             }
 
             Repo.Inject(bin.Code, Config.Db.Folder, Config.Db.Project);
+        }
+
+        private static String Trim(String value, String schema)
+        {
+            String[] split = value.Split('_');
+            return split.First().ToLower() == schema ? String.Join(null, split.Skip(1)) : value;
         }
     }
 }

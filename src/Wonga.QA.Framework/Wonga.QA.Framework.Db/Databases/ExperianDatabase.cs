@@ -31,9 +31,9 @@ namespace Wonga.QA.Framework.Db.Experian
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertExperianActiveRequest(ExperianActiveRequest instance);
-    partial void UpdateExperianActiveRequest(ExperianActiveRequest instance);
-    partial void DeleteExperianActiveRequest(ExperianActiveRequest instance);
+    partial void InsertExperianActiveRequestEntity(ExperianActiveRequestEntity instance);
+    partial void UpdateExperianActiveRequestEntity(ExperianActiveRequestEntity instance);
+    partial void DeleteExperianActiveRequestEntity(ExperianActiveRequestEntity instance);
     partial void InsertMSSQLDeploy(MSSQLDeploy instance);
     partial void UpdateMSSQLDeploy(MSSQLDeploy instance);
     partial void DeleteMSSQLDeploy(MSSQLDeploy instance);
@@ -63,11 +63,11 @@ namespace Wonga.QA.Framework.Db.Experian
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<ExperianActiveRequest> ExperianActiveRequests
+		public System.Data.Linq.Table<ExperianActiveRequestEntity> ExperianActiveRequests
 		{
 			get
 			{
-				return this.GetTable<ExperianActiveRequest>().SetTable<ExperianActiveRequest>();
+				return this.GetTable<ExperianActiveRequestEntity>().SetTable<ExperianActiveRequestEntity>();
 			}
 		}
 		
@@ -81,7 +81,7 @@ namespace Wonga.QA.Framework.Db.Experian
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="cache.ExperianActiveRequest")]
-	public partial class ExperianActiveRequest : DbEntity<ExperianActiveRequest>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class ExperianActiveRequestEntity : DbEntity<ExperianActiveRequestEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -116,7 +116,7 @@ namespace Wonga.QA.Framework.Db.Experian
     partial void OnTotalMillisecondsChanged();
     #endregion
 		
-		public ExperianActiveRequest()
+		public ExperianActiveRequestEntity()
 		{
 			OnCreated();
 		}

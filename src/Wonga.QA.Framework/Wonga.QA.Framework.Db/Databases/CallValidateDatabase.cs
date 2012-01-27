@@ -31,9 +31,9 @@ namespace Wonga.QA.Framework.Db.CallValidate
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertCallValidateActiveRequest(CallValidateActiveRequest instance);
-    partial void UpdateCallValidateActiveRequest(CallValidateActiveRequest instance);
-    partial void DeleteCallValidateActiveRequest(CallValidateActiveRequest instance);
+    partial void InsertCallValidateActiveRequestEntity(CallValidateActiveRequestEntity instance);
+    partial void UpdateCallValidateActiveRequestEntity(CallValidateActiveRequestEntity instance);
+    partial void DeleteCallValidateActiveRequestEntity(CallValidateActiveRequestEntity instance);
     partial void InsertMSSQLDeploy(MSSQLDeploy instance);
     partial void UpdateMSSQLDeploy(MSSQLDeploy instance);
     partial void DeleteMSSQLDeploy(MSSQLDeploy instance);
@@ -63,11 +63,11 @@ namespace Wonga.QA.Framework.Db.CallValidate
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<CallValidateActiveRequest> CallValidateActiveRequests
+		public System.Data.Linq.Table<CallValidateActiveRequestEntity> CallValidateActiveRequests
 		{
 			get
 			{
-				return this.GetTable<CallValidateActiveRequest>().SetTable<CallValidateActiveRequest>();
+				return this.GetTable<CallValidateActiveRequestEntity>().SetTable<CallValidateActiveRequestEntity>();
 			}
 		}
 		
@@ -81,7 +81,7 @@ namespace Wonga.QA.Framework.Db.CallValidate
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="cache.CallValidateActiveRequest")]
-	public partial class CallValidateActiveRequest : DbEntity<CallValidateActiveRequest>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class CallValidateActiveRequestEntity : DbEntity<CallValidateActiveRequestEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -116,7 +116,7 @@ namespace Wonga.QA.Framework.Db.CallValidate
     partial void OnTotalMillisecondsChanged();
     #endregion
 		
-		public CallValidateActiveRequest()
+		public CallValidateActiveRequestEntity()
 		{
 			OnCreated();
 		}

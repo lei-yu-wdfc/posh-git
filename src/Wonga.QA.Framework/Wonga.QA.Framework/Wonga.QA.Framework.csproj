@@ -51,6 +51,10 @@
       <Project>{06D44CDD-9AB7-47EC-8D7A-0E548465EF9D}</Project>
       <Name>Wonga.QA.Framework.Db</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Wonga.QA.Framework.Msmq\Wonga.QA.Framework.Msmq.csproj">
+      <Project>{87AAAAD5-5EAE-473C-9A05-7696E6853478}</Project>
+      <Name>Wonga.QA.Framework.Msmq</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

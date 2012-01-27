@@ -34,216 +34,216 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void Insert__RefactorLog(__RefactorLog instance);
     partial void Update__RefactorLog(__RefactorLog instance);
     partial void Delete__RefactorLog(__RefactorLog instance);
-    partial void InsertAccount(Account instance);
-    partial void UpdateAccount(Account instance);
-    partial void DeleteAccount(Account instance);
-    partial void InsertAffiliate(Affiliate instance);
-    partial void UpdateAffiliate(Affiliate instance);
-    partial void DeleteAffiliate(Affiliate instance);
-    partial void InsertAggregationBuildExecution(AggregationBuildExecution instance);
-    partial void UpdateAggregationBuildExecution(AggregationBuildExecution instance);
-    partial void DeleteAggregationBuildExecution(AggregationBuildExecution instance);
-    partial void InsertAggregationBuildLog(AggregationBuildLog instance);
-    partial void UpdateAggregationBuildLog(AggregationBuildLog instance);
-    partial void DeleteAggregationBuildLog(AggregationBuildLog instance);
-    partial void InsertAggregationBuildStep(AggregationBuildStep instance);
-    partial void UpdateAggregationBuildStep(AggregationBuildStep instance);
-    partial void DeleteAggregationBuildStep(AggregationBuildStep instance);
-    partial void InsertApiClient(ApiClient instance);
-    partial void UpdateApiClient(ApiClient instance);
-    partial void DeleteApiClient(ApiClient instance);
-    partial void InsertApplication(Application instance);
-    partial void UpdateApplication(Application instance);
-    partial void DeleteApplication(Application instance);
-    partial void InsertApplicationDeclinedReason(ApplicationDeclinedReason instance);
-    partial void UpdateApplicationDeclinedReason(ApplicationDeclinedReason instance);
-    partial void DeleteApplicationDeclinedReason(ApplicationDeclinedReason instance);
-    partial void InsertBankAccount(BankAccount instance);
-    partial void UpdateBankAccount(BankAccount instance);
-    partial void DeleteBankAccount(BankAccount instance);
-    partial void InsertBankGateWayTransaction(BankGateWayTransaction instance);
-    partial void UpdateBankGateWayTransaction(BankGateWayTransaction instance);
-    partial void DeleteBankGateWayTransaction(BankGateWayTransaction instance);
-    partial void InsertCollectionMethod(CollectionMethod instance);
-    partial void UpdateCollectionMethod(CollectionMethod instance);
-    partial void DeleteCollectionMethod(CollectionMethod instance);
-    partial void InsertCurrency(Currency instance);
-    partial void UpdateCurrency(Currency instance);
-    partial void DeleteCurrency(Currency instance);
-    partial void InsertDate(Date instance);
-    partial void UpdateDate(Date instance);
-    partial void DeleteDate(Date instance);
-    partial void InsertEquifaxSaga(EquifaxSaga instance);
-    partial void UpdateEquifaxSaga(EquifaxSaga instance);
-    partial void DeleteEquifaxSaga(EquifaxSaga instance);
-    partial void InsertFAddPaymentCard(FAddPaymentCard instance);
-    partial void UpdateFAddPaymentCard(FAddPaymentCard instance);
-    partial void DeleteFAddPaymentCard(FAddPaymentCard instance);
-    partial void InsertFAggApplication(FAggApplication instance);
-    partial void UpdateFAggApplication(FAggApplication instance);
-    partial void DeleteFAggApplication(FAggApplication instance);
-    partial void InsertFAggLoanNumber(FAggLoanNumber instance);
-    partial void UpdateFAggLoanNumber(FAggLoanNumber instance);
-    partial void DeleteFAggLoanNumber(FAggLoanNumber instance);
-    partial void InsertFAggTransactionAllocation(FAggTransactionAllocation instance);
-    partial void UpdateFAggTransactionAllocation(FAggTransactionAllocation instance);
-    partial void DeleteFAggTransactionAllocation(FAggTransactionAllocation instance);
-    partial void InsertFBankAccountVerification(FBankAccountVerification instance);
-    partial void UpdateFBankAccountVerification(FBankAccountVerification instance);
-    partial void DeleteFBankAccountVerification(FBankAccountVerification instance);
-    partial void InsertFCreateFixedTermLoanApplication(FCreateFixedTermLoanApplication instance);
-    partial void UpdateFCreateFixedTermLoanApplication(FCreateFixedTermLoanApplication instance);
-    partial void DeleteFCreateFixedTermLoanApplication(FCreateFixedTermLoanApplication instance);
-    partial void InsertFCreateFixedTermLoanExtension(FCreateFixedTermLoanExtension instance);
-    partial void UpdateFCreateFixedTermLoanExtension(FCreateFixedTermLoanExtension instance);
-    partial void DeleteFCreateFixedTermLoanExtension(FCreateFixedTermLoanExtension instance);
-    partial void InsertFCreateFixedTermLoanTopup(FCreateFixedTermLoanTopup instance);
-    partial void UpdateFCreateFixedTermLoanTopup(FCreateFixedTermLoanTopup instance);
-    partial void DeleteFCreateFixedTermLoanTopup(FCreateFixedTermLoanTopup instance);
-    partial void InsertFCreateTransaction(FCreateTransaction instance);
-    partial void UpdateFCreateTransaction(FCreateTransaction instance);
-    partial void DeleteFCreateTransaction(FCreateTransaction instance);
-    partial void InsertFEquifaxResponse(FEquifaxResponse instance);
-    partial void UpdateFEquifaxResponse(FEquifaxResponse instance);
-    partial void DeleteFEquifaxResponse(FEquifaxResponse instance);
-    partial void InsertFExtendLoan(FExtendLoan instance);
-    partial void UpdateFExtendLoan(FExtendLoan instance);
-    partial void DeleteFExtendLoan(FExtendLoan instance);
-    partial void InsertFIApplicationAccepted(FIApplicationAccepted instance);
-    partial void UpdateFIApplicationAccepted(FIApplicationAccepted instance);
-    partial void DeleteFIApplicationAccepted(FIApplicationAccepted instance);
-    partial void InsertFIApplicationClosed(FIApplicationClosed instance);
-    partial void UpdateFIApplicationClosed(FIApplicationClosed instance);
-    partial void DeleteFIApplicationClosed(FIApplicationClosed instance);
-    partial void InsertFIApplicationDeclined(FIApplicationDeclined instance);
-    partial void UpdateFIApplicationDeclined(FIApplicationDeclined instance);
-    partial void DeleteFIApplicationDeclined(FIApplicationDeclined instance);
-    partial void InsertFIFixedTermApplicationAdded(FIFixedTermApplicationAdded instance);
-    partial void UpdateFIFixedTermApplicationAdded(FIFixedTermApplicationAdded instance);
-    partial void DeleteFIFixedTermApplicationAdded(FIFixedTermApplicationAdded instance);
-    partial void InsertFixedTermLoanExtension(FixedTermLoanExtension instance);
-    partial void UpdateFixedTermLoanExtension(FixedTermLoanExtension instance);
-    partial void DeleteFixedTermLoanExtension(FixedTermLoanExtension instance);
-    partial void InsertFixedTermLoanTopUp(FixedTermLoanTopUp instance);
-    partial void UpdateFixedTermLoanTopUp(FixedTermLoanTopUp instance);
-    partial void DeleteFixedTermLoanTopUp(FixedTermLoanTopUp instance);
-    partial void InsertFMessageType(FMessageType instance);
-    partial void UpdateFMessageType(FMessageType instance);
-    partial void DeleteFMessageType(FMessageType instance);
-    partial void InsertFPaymentCollection(FPaymentCollection instance);
-    partial void UpdateFPaymentCollection(FPaymentCollection instance);
-    partial void DeleteFPaymentCollection(FPaymentCollection instance);
-    partial void InsertFPaymentSentMessage(FPaymentSentMessage instance);
-    partial void UpdateFPaymentSentMessage(FPaymentSentMessage instance);
-    partial void DeleteFPaymentSentMessage(FPaymentSentMessage instance);
-    partial void InsertFRepayLoan(FRepayLoan instance);
-    partial void UpdateFRepayLoan(FRepayLoan instance);
-    partial void DeleteFRepayLoan(FRepayLoan instance);
-    partial void InsertFSignApplication(FSignApplication instance);
-    partial void UpdateFSignApplication(FSignApplication instance);
-    partial void DeleteFSignApplication(FSignApplication instance);
-    partial void InsertFSignFixedTermLoanExtension(FSignFixedTermLoanExtension instance);
-    partial void UpdateFSignFixedTermLoanExtension(FSignFixedTermLoanExtension instance);
-    partial void DeleteFSignFixedTermLoanExtension(FSignFixedTermLoanExtension instance);
-    partial void InsertFSignFixedTermLoanTopup(FSignFixedTermLoanTopup instance);
-    partial void UpdateFSignFixedTermLoanTopup(FSignFixedTermLoanTopup instance);
-    partial void DeleteFSignFixedTermLoanTopup(FSignFixedTermLoanTopup instance);
-    partial void InsertFSubmitCounterOffer(FSubmitCounterOffer instance);
-    partial void UpdateFSubmitCounterOffer(FSubmitCounterOffer instance);
-    partial void DeleteFSubmitCounterOffer(FSubmitCounterOffer instance);
-    partial void InsertFTransactionLedger(FTransactionLedger instance);
-    partial void UpdateFTransactionLedger(FTransactionLedger instance);
-    partial void DeleteFTransactionLedger(FTransactionLedger instance);
-    partial void InsertFTransactionRequest(FTransactionRequest instance);
-    partial void UpdateFTransactionRequest(FTransactionRequest instance);
-    partial void DeleteFTransactionRequest(FTransactionRequest instance);
-    partial void InsertFTransactionRequestDetail(FTransactionRequestDetail instance);
-    partial void UpdateFTransactionRequestDetail(FTransactionRequestDetail instance);
-    partial void DeleteFTransactionRequestDetail(FTransactionRequestDetail instance);
-    partial void InsertFTransunionResponse(FTransunionResponse instance);
-    partial void UpdateFTransunionResponse(FTransunionResponse instance);
-    partial void DeleteFTransunionResponse(FTransunionResponse instance);
-    partial void InsertFUpdateDailyAccruedInterest(FUpdateDailyAccruedInterest instance);
-    partial void UpdateFUpdateDailyAccruedInterest(FUpdateDailyAccruedInterest instance);
-    partial void DeleteFUpdateDailyAccruedInterest(FUpdateDailyAccruedInterest instance);
-    partial void InsertLn(Ln instance);
-    partial void UpdateLn(Ln instance);
-    partial void DeleteLn(Ln instance);
-    partial void InsertLogMessageSource(LogMessageSource instance);
-    partial void UpdateLogMessageSource(LogMessageSource instance);
-    partial void DeleteLogMessageSource(LogMessageSource instance);
-    partial void InsertLogMessageType(LogMessageType instance);
-    partial void UpdateLogMessageType(LogMessageType instance);
-    partial void DeleteLogMessageType(LogMessageType instance);
-    partial void InsertMessageArchive(MessageArchive instance);
-    partial void UpdateMessageArchive(MessageArchive instance);
-    partial void DeleteMessageArchive(MessageArchive instance);
+    partial void InsertAccountEntity(AccountEntity instance);
+    partial void UpdateAccountEntity(AccountEntity instance);
+    partial void DeleteAccountEntity(AccountEntity instance);
+    partial void InsertAffiliateEntity(AffiliateEntity instance);
+    partial void UpdateAffiliateEntity(AffiliateEntity instance);
+    partial void DeleteAffiliateEntity(AffiliateEntity instance);
+    partial void InsertAggregationBuildExecutionEntity(AggregationBuildExecutionEntity instance);
+    partial void UpdateAggregationBuildExecutionEntity(AggregationBuildExecutionEntity instance);
+    partial void DeleteAggregationBuildExecutionEntity(AggregationBuildExecutionEntity instance);
+    partial void InsertAggregationBuildLogEntity(AggregationBuildLogEntity instance);
+    partial void UpdateAggregationBuildLogEntity(AggregationBuildLogEntity instance);
+    partial void DeleteAggregationBuildLogEntity(AggregationBuildLogEntity instance);
+    partial void InsertAggregationBuildStepEntity(AggregationBuildStepEntity instance);
+    partial void UpdateAggregationBuildStepEntity(AggregationBuildStepEntity instance);
+    partial void DeleteAggregationBuildStepEntity(AggregationBuildStepEntity instance);
+    partial void InsertApiClientEntity(ApiClientEntity instance);
+    partial void UpdateApiClientEntity(ApiClientEntity instance);
+    partial void DeleteApiClientEntity(ApiClientEntity instance);
+    partial void InsertApplicationEntity(ApplicationEntity instance);
+    partial void UpdateApplicationEntity(ApplicationEntity instance);
+    partial void DeleteApplicationEntity(ApplicationEntity instance);
+    partial void InsertApplicationDeclinedReasonEntity(ApplicationDeclinedReasonEntity instance);
+    partial void UpdateApplicationDeclinedReasonEntity(ApplicationDeclinedReasonEntity instance);
+    partial void DeleteApplicationDeclinedReasonEntity(ApplicationDeclinedReasonEntity instance);
+    partial void InsertBankAccountEntity(BankAccountEntity instance);
+    partial void UpdateBankAccountEntity(BankAccountEntity instance);
+    partial void DeleteBankAccountEntity(BankAccountEntity instance);
+    partial void InsertBankGateWayTransactionEntity(BankGateWayTransactionEntity instance);
+    partial void UpdateBankGateWayTransactionEntity(BankGateWayTransactionEntity instance);
+    partial void DeleteBankGateWayTransactionEntity(BankGateWayTransactionEntity instance);
+    partial void InsertCollectionMethodEntity(CollectionMethodEntity instance);
+    partial void UpdateCollectionMethodEntity(CollectionMethodEntity instance);
+    partial void DeleteCollectionMethodEntity(CollectionMethodEntity instance);
+    partial void InsertCurrencyEntity(CurrencyEntity instance);
+    partial void UpdateCurrencyEntity(CurrencyEntity instance);
+    partial void DeleteCurrencyEntity(CurrencyEntity instance);
+    partial void InsertDateEntity(DateEntity instance);
+    partial void UpdateDateEntity(DateEntity instance);
+    partial void DeleteDateEntity(DateEntity instance);
+    partial void InsertEquifaxSagaEntity(EquifaxSagaEntity instance);
+    partial void UpdateEquifaxSagaEntity(EquifaxSagaEntity instance);
+    partial void DeleteEquifaxSagaEntity(EquifaxSagaEntity instance);
+    partial void InsertFAddPaymentCardEntity(FAddPaymentCardEntity instance);
+    partial void UpdateFAddPaymentCardEntity(FAddPaymentCardEntity instance);
+    partial void DeleteFAddPaymentCardEntity(FAddPaymentCardEntity instance);
+    partial void InsertFAggApplicationEntity(FAggApplicationEntity instance);
+    partial void UpdateFAggApplicationEntity(FAggApplicationEntity instance);
+    partial void DeleteFAggApplicationEntity(FAggApplicationEntity instance);
+    partial void InsertFAggLoanNumberEntity(FAggLoanNumberEntity instance);
+    partial void UpdateFAggLoanNumberEntity(FAggLoanNumberEntity instance);
+    partial void DeleteFAggLoanNumberEntity(FAggLoanNumberEntity instance);
+    partial void InsertFAggTransactionAllocationEntity(FAggTransactionAllocationEntity instance);
+    partial void UpdateFAggTransactionAllocationEntity(FAggTransactionAllocationEntity instance);
+    partial void DeleteFAggTransactionAllocationEntity(FAggTransactionAllocationEntity instance);
+    partial void InsertFBankAccountVerificationEntity(FBankAccountVerificationEntity instance);
+    partial void UpdateFBankAccountVerificationEntity(FBankAccountVerificationEntity instance);
+    partial void DeleteFBankAccountVerificationEntity(FBankAccountVerificationEntity instance);
+    partial void InsertFCreateFixedTermLoanApplicationEntity(FCreateFixedTermLoanApplicationEntity instance);
+    partial void UpdateFCreateFixedTermLoanApplicationEntity(FCreateFixedTermLoanApplicationEntity instance);
+    partial void DeleteFCreateFixedTermLoanApplicationEntity(FCreateFixedTermLoanApplicationEntity instance);
+    partial void InsertFCreateFixedTermLoanExtensionEntity(FCreateFixedTermLoanExtensionEntity instance);
+    partial void UpdateFCreateFixedTermLoanExtensionEntity(FCreateFixedTermLoanExtensionEntity instance);
+    partial void DeleteFCreateFixedTermLoanExtensionEntity(FCreateFixedTermLoanExtensionEntity instance);
+    partial void InsertFCreateFixedTermLoanTopupEntity(FCreateFixedTermLoanTopupEntity instance);
+    partial void UpdateFCreateFixedTermLoanTopupEntity(FCreateFixedTermLoanTopupEntity instance);
+    partial void DeleteFCreateFixedTermLoanTopupEntity(FCreateFixedTermLoanTopupEntity instance);
+    partial void InsertFCreateTransactionEntity(FCreateTransactionEntity instance);
+    partial void UpdateFCreateTransactionEntity(FCreateTransactionEntity instance);
+    partial void DeleteFCreateTransactionEntity(FCreateTransactionEntity instance);
+    partial void InsertFEquifaxResponseEntity(FEquifaxResponseEntity instance);
+    partial void UpdateFEquifaxResponseEntity(FEquifaxResponseEntity instance);
+    partial void DeleteFEquifaxResponseEntity(FEquifaxResponseEntity instance);
+    partial void InsertFExtendLoanEntity(FExtendLoanEntity instance);
+    partial void UpdateFExtendLoanEntity(FExtendLoanEntity instance);
+    partial void DeleteFExtendLoanEntity(FExtendLoanEntity instance);
+    partial void InsertFIApplicationAcceptedEntity(FIApplicationAcceptedEntity instance);
+    partial void UpdateFIApplicationAcceptedEntity(FIApplicationAcceptedEntity instance);
+    partial void DeleteFIApplicationAcceptedEntity(FIApplicationAcceptedEntity instance);
+    partial void InsertFIApplicationClosedEntity(FIApplicationClosedEntity instance);
+    partial void UpdateFIApplicationClosedEntity(FIApplicationClosedEntity instance);
+    partial void DeleteFIApplicationClosedEntity(FIApplicationClosedEntity instance);
+    partial void InsertFIApplicationDeclinedEntity(FIApplicationDeclinedEntity instance);
+    partial void UpdateFIApplicationDeclinedEntity(FIApplicationDeclinedEntity instance);
+    partial void DeleteFIApplicationDeclinedEntity(FIApplicationDeclinedEntity instance);
+    partial void InsertFIFixedTermApplicationAddedEntity(FIFixedTermApplicationAddedEntity instance);
+    partial void UpdateFIFixedTermApplicationAddedEntity(FIFixedTermApplicationAddedEntity instance);
+    partial void DeleteFIFixedTermApplicationAddedEntity(FIFixedTermApplicationAddedEntity instance);
+    partial void InsertFixedTermLoanExtensionEntity(FixedTermLoanExtensionEntity instance);
+    partial void UpdateFixedTermLoanExtensionEntity(FixedTermLoanExtensionEntity instance);
+    partial void DeleteFixedTermLoanExtensionEntity(FixedTermLoanExtensionEntity instance);
+    partial void InsertFixedTermLoanTopUpEntity(FixedTermLoanTopUpEntity instance);
+    partial void UpdateFixedTermLoanTopUpEntity(FixedTermLoanTopUpEntity instance);
+    partial void DeleteFixedTermLoanTopUpEntity(FixedTermLoanTopUpEntity instance);
+    partial void InsertFMessageTypeEntity(FMessageTypeEntity instance);
+    partial void UpdateFMessageTypeEntity(FMessageTypeEntity instance);
+    partial void DeleteFMessageTypeEntity(FMessageTypeEntity instance);
+    partial void InsertFPaymentCollectionEntity(FPaymentCollectionEntity instance);
+    partial void UpdateFPaymentCollectionEntity(FPaymentCollectionEntity instance);
+    partial void DeleteFPaymentCollectionEntity(FPaymentCollectionEntity instance);
+    partial void InsertFPaymentSentMessageEntity(FPaymentSentMessageEntity instance);
+    partial void UpdateFPaymentSentMessageEntity(FPaymentSentMessageEntity instance);
+    partial void DeleteFPaymentSentMessageEntity(FPaymentSentMessageEntity instance);
+    partial void InsertFRepayLoanEntity(FRepayLoanEntity instance);
+    partial void UpdateFRepayLoanEntity(FRepayLoanEntity instance);
+    partial void DeleteFRepayLoanEntity(FRepayLoanEntity instance);
+    partial void InsertFSignApplicationEntity(FSignApplicationEntity instance);
+    partial void UpdateFSignApplicationEntity(FSignApplicationEntity instance);
+    partial void DeleteFSignApplicationEntity(FSignApplicationEntity instance);
+    partial void InsertFSignFixedTermLoanExtensionEntity(FSignFixedTermLoanExtensionEntity instance);
+    partial void UpdateFSignFixedTermLoanExtensionEntity(FSignFixedTermLoanExtensionEntity instance);
+    partial void DeleteFSignFixedTermLoanExtensionEntity(FSignFixedTermLoanExtensionEntity instance);
+    partial void InsertFSignFixedTermLoanTopupEntity(FSignFixedTermLoanTopupEntity instance);
+    partial void UpdateFSignFixedTermLoanTopupEntity(FSignFixedTermLoanTopupEntity instance);
+    partial void DeleteFSignFixedTermLoanTopupEntity(FSignFixedTermLoanTopupEntity instance);
+    partial void InsertFSubmitCounterOfferEntity(FSubmitCounterOfferEntity instance);
+    partial void UpdateFSubmitCounterOfferEntity(FSubmitCounterOfferEntity instance);
+    partial void DeleteFSubmitCounterOfferEntity(FSubmitCounterOfferEntity instance);
+    partial void InsertFTransactionLedgerEntity(FTransactionLedgerEntity instance);
+    partial void UpdateFTransactionLedgerEntity(FTransactionLedgerEntity instance);
+    partial void DeleteFTransactionLedgerEntity(FTransactionLedgerEntity instance);
+    partial void InsertFTransactionRequestEntity(FTransactionRequestEntity instance);
+    partial void UpdateFTransactionRequestEntity(FTransactionRequestEntity instance);
+    partial void DeleteFTransactionRequestEntity(FTransactionRequestEntity instance);
+    partial void InsertFTransactionRequestDetailEntity(FTransactionRequestDetailEntity instance);
+    partial void UpdateFTransactionRequestDetailEntity(FTransactionRequestDetailEntity instance);
+    partial void DeleteFTransactionRequestDetailEntity(FTransactionRequestDetailEntity instance);
+    partial void InsertFTransunionResponseEntity(FTransunionResponseEntity instance);
+    partial void UpdateFTransunionResponseEntity(FTransunionResponseEntity instance);
+    partial void DeleteFTransunionResponseEntity(FTransunionResponseEntity instance);
+    partial void InsertFUpdateDailyAccruedInterestEntity(FUpdateDailyAccruedInterestEntity instance);
+    partial void UpdateFUpdateDailyAccruedInterestEntity(FUpdateDailyAccruedInterestEntity instance);
+    partial void DeleteFUpdateDailyAccruedInterestEntity(FUpdateDailyAccruedInterestEntity instance);
+    partial void InsertLnEntity(LnEntity instance);
+    partial void UpdateLnEntity(LnEntity instance);
+    partial void DeleteLnEntity(LnEntity instance);
+    partial void InsertLogMessageSourceEntity(LogMessageSourceEntity instance);
+    partial void UpdateLogMessageSourceEntity(LogMessageSourceEntity instance);
+    partial void DeleteLogMessageSourceEntity(LogMessageSourceEntity instance);
+    partial void InsertLogMessageTypeEntity(LogMessageTypeEntity instance);
+    partial void UpdateLogMessageTypeEntity(LogMessageTypeEntity instance);
+    partial void DeleteLogMessageTypeEntity(LogMessageTypeEntity instance);
+    partial void InsertMessageArchiveEntity(MessageArchiveEntity instance);
+    partial void UpdateMessageArchiveEntity(MessageArchiveEntity instance);
+    partial void DeleteMessageArchiveEntity(MessageArchiveEntity instance);
     partial void InsertMSSQLDeploy(MSSQLDeploy instance);
     partial void UpdateMSSQLDeploy(MSSQLDeploy instance);
     partial void DeleteMSSQLDeploy(MSSQLDeploy instance);
-    partial void InsertPaymentCard(PaymentCard instance);
-    partial void UpdatePaymentCard(PaymentCard instance);
-    partial void DeletePaymentCard(PaymentCard instance);
-    partial void InsertPaymentCollection(PaymentCollection instance);
-    partial void UpdatePaymentCollection(PaymentCollection instance);
-    partial void DeletePaymentCollection(PaymentCollection instance);
-    partial void InsertPaymentCollectionAgency(PaymentCollectionAgency instance);
-    partial void UpdatePaymentCollectionAgency(PaymentCollectionAgency instance);
-    partial void DeletePaymentCollectionAgency(PaymentCollectionAgency instance);
-    partial void InsertPaymentCollectionStatus(PaymentCollectionStatus instance);
-    partial void UpdatePaymentCollectionStatus(PaymentCollectionStatus instance);
-    partial void DeletePaymentCollectionStatus(PaymentCollectionStatus instance);
-    partial void InsertPaymentCollectionType(PaymentCollectionType instance);
-    partial void UpdatePaymentCollectionType(PaymentCollectionType instance);
-    partial void DeletePaymentCollectionType(PaymentCollectionType instance);
-    partial void InsertProcessMessageLog(ProcessMessageLog instance);
-    partial void UpdateProcessMessageLog(ProcessMessageLog instance);
-    partial void DeleteProcessMessageLog(ProcessMessageLog instance);
-    partial void InsertPromoCode(PromoCode instance);
-    partial void UpdatePromoCode(PromoCode instance);
-    partial void DeletePromoCode(PromoCode instance);
-    partial void InsertRepaymentRequest(RepaymentRequest instance);
-    partial void UpdateRepaymentRequest(RepaymentRequest instance);
-    partial void DeleteRepaymentRequest(RepaymentRequest instance);
-    partial void InsertServiceBrokerLog(ServiceBrokerLog instance);
-    partial void UpdateServiceBrokerLog(ServiceBrokerLog instance);
-    partial void DeleteServiceBrokerLog(ServiceBrokerLog instance);
-    partial void InsertTime(Time instance);
-    partial void UpdateTime(Time instance);
-    partial void DeleteTime(Time instance);
-    partial void InsertTransaction(Transaction instance);
-    partial void UpdateTransaction(Transaction instance);
-    partial void DeleteTransaction(Transaction instance);
-    partial void InsertTransactionScope(TransactionScope instance);
-    partial void UpdateTransactionScope(TransactionScope instance);
-    partial void DeleteTransactionScope(TransactionScope instance);
-    partial void InsertTransactionStatus(TransactionStatus instance);
-    partial void UpdateTransactionStatus(TransactionStatus instance);
-    partial void DeleteTransactionStatus(TransactionStatus instance);
-    partial void InsertTransactionType(TransactionType instance);
-    partial void UpdateTransactionType(TransactionType instance);
-    partial void DeleteTransactionType(TransactionType instance);
-    partial void InsertTransunionConsumer(TransunionConsumer instance);
-    partial void UpdateTransunionConsumer(TransunionConsumer instance);
-    partial void DeleteTransunionConsumer(TransunionConsumer instance);
-    partial void InsertTransunionResponse(TransunionResponse instance);
-    partial void UpdateTransunionResponse(TransunionResponse instance);
-    partial void DeleteTransunionResponse(TransunionResponse instance);
-    partial void InsertTransunionResponseStatus(TransunionResponseStatus instance);
-    partial void UpdateTransunionResponseStatus(TransunionResponseStatus instance);
-    partial void DeleteTransunionResponseStatus(TransunionResponseStatus instance);
-    partial void InsertTransunionSaga(TransunionSaga instance);
-    partial void UpdateTransunionSaga(TransunionSaga instance);
-    partial void DeleteTransunionSaga(TransunionSaga instance);
-    partial void InsertUser(User instance);
-    partial void UpdateUser(User instance);
-    partial void DeleteUser(User instance);
-    partial void InsertUserAction(UserAction instance);
-    partial void UpdateUserAction(UserAction instance);
-    partial void DeleteUserAction(UserAction instance);
-    partial void InsertWongaMessage(WongaMessage instance);
-    partial void UpdateWongaMessage(WongaMessage instance);
-    partial void DeleteWongaMessage(WongaMessage instance);
+    partial void InsertPaymentCardEntity(PaymentCardEntity instance);
+    partial void UpdatePaymentCardEntity(PaymentCardEntity instance);
+    partial void DeletePaymentCardEntity(PaymentCardEntity instance);
+    partial void InsertPaymentCollectionEntity(PaymentCollectionEntity instance);
+    partial void UpdatePaymentCollectionEntity(PaymentCollectionEntity instance);
+    partial void DeletePaymentCollectionEntity(PaymentCollectionEntity instance);
+    partial void InsertPaymentCollectionAgencyEntity(PaymentCollectionAgencyEntity instance);
+    partial void UpdatePaymentCollectionAgencyEntity(PaymentCollectionAgencyEntity instance);
+    partial void DeletePaymentCollectionAgencyEntity(PaymentCollectionAgencyEntity instance);
+    partial void InsertPaymentCollectionStatusEntity(PaymentCollectionStatusEntity instance);
+    partial void UpdatePaymentCollectionStatusEntity(PaymentCollectionStatusEntity instance);
+    partial void DeletePaymentCollectionStatusEntity(PaymentCollectionStatusEntity instance);
+    partial void InsertPaymentCollectionTypeEntity(PaymentCollectionTypeEntity instance);
+    partial void UpdatePaymentCollectionTypeEntity(PaymentCollectionTypeEntity instance);
+    partial void DeletePaymentCollectionTypeEntity(PaymentCollectionTypeEntity instance);
+    partial void InsertProcessMessageLogEntity(ProcessMessageLogEntity instance);
+    partial void UpdateProcessMessageLogEntity(ProcessMessageLogEntity instance);
+    partial void DeleteProcessMessageLogEntity(ProcessMessageLogEntity instance);
+    partial void InsertPromoCodeEntity(PromoCodeEntity instance);
+    partial void UpdatePromoCodeEntity(PromoCodeEntity instance);
+    partial void DeletePromoCodeEntity(PromoCodeEntity instance);
+    partial void InsertRepaymentRequestEntity(RepaymentRequestEntity instance);
+    partial void UpdateRepaymentRequestEntity(RepaymentRequestEntity instance);
+    partial void DeleteRepaymentRequestEntity(RepaymentRequestEntity instance);
+    partial void InsertServiceBrokerLogEntity(ServiceBrokerLogEntity instance);
+    partial void UpdateServiceBrokerLogEntity(ServiceBrokerLogEntity instance);
+    partial void DeleteServiceBrokerLogEntity(ServiceBrokerLogEntity instance);
+    partial void InsertTimeEntity(TimeEntity instance);
+    partial void UpdateTimeEntity(TimeEntity instance);
+    partial void DeleteTimeEntity(TimeEntity instance);
+    partial void InsertTransactionEntity(TransactionEntity instance);
+    partial void UpdateTransactionEntity(TransactionEntity instance);
+    partial void DeleteTransactionEntity(TransactionEntity instance);
+    partial void InsertTransactionScopeEntity(TransactionScopeEntity instance);
+    partial void UpdateTransactionScopeEntity(TransactionScopeEntity instance);
+    partial void DeleteTransactionScopeEntity(TransactionScopeEntity instance);
+    partial void InsertTransactionStatusEntity(TransactionStatusEntity instance);
+    partial void UpdateTransactionStatusEntity(TransactionStatusEntity instance);
+    partial void DeleteTransactionStatusEntity(TransactionStatusEntity instance);
+    partial void InsertTransactionTypeEntity(TransactionTypeEntity instance);
+    partial void UpdateTransactionTypeEntity(TransactionTypeEntity instance);
+    partial void DeleteTransactionTypeEntity(TransactionTypeEntity instance);
+    partial void InsertTransunionConsumerEntity(TransunionConsumerEntity instance);
+    partial void UpdateTransunionConsumerEntity(TransunionConsumerEntity instance);
+    partial void DeleteTransunionConsumerEntity(TransunionConsumerEntity instance);
+    partial void InsertTransunionResponseEntity(TransunionResponseEntity instance);
+    partial void UpdateTransunionResponseEntity(TransunionResponseEntity instance);
+    partial void DeleteTransunionResponseEntity(TransunionResponseEntity instance);
+    partial void InsertTransunionResponseStatusEntity(TransunionResponseStatusEntity instance);
+    partial void UpdateTransunionResponseStatusEntity(TransunionResponseStatusEntity instance);
+    partial void DeleteTransunionResponseStatusEntity(TransunionResponseStatusEntity instance);
+    partial void InsertTransunionSagaEntity(TransunionSagaEntity instance);
+    partial void UpdateTransunionSagaEntity(TransunionSagaEntity instance);
+    partial void DeleteTransunionSagaEntity(TransunionSagaEntity instance);
+    partial void InsertUserEntity(UserEntity instance);
+    partial void UpdateUserEntity(UserEntity instance);
+    partial void DeleteUserEntity(UserEntity instance);
+    partial void InsertUserActionEntity(UserActionEntity instance);
+    partial void UpdateUserActionEntity(UserActionEntity instance);
+    partial void DeleteUserActionEntity(UserActionEntity instance);
+    partial void InsertWongaMessageEntity(WongaMessageEntity instance);
+    partial void UpdateWongaMessageEntity(WongaMessageEntity instance);
+    partial void DeleteWongaMessageEntity(WongaMessageEntity instance);
     #endregion
 		
 		public BiDatabase(string connection) : 
@@ -278,387 +278,387 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		public System.Data.Linq.Table<Account> Accounts
+		public System.Data.Linq.Table<AccountEntity> Accounts
 		{
 			get
 			{
-				return this.GetTable<Account>().SetTable<Account>();
+				return this.GetTable<AccountEntity>().SetTable<AccountEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<Affiliate> Affiliates
+		public System.Data.Linq.Table<AffiliateEntity> Affiliates
 		{
 			get
 			{
-				return this.GetTable<Affiliate>().SetTable<Affiliate>();
+				return this.GetTable<AffiliateEntity>().SetTable<AffiliateEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<AggregationBuildExecution> AggregationBuildExecutions
+		public System.Data.Linq.Table<AggregationBuildExecutionEntity> AggregationBuildExecutions
 		{
 			get
 			{
-				return this.GetTable<AggregationBuildExecution>().SetTable<AggregationBuildExecution>();
+				return this.GetTable<AggregationBuildExecutionEntity>().SetTable<AggregationBuildExecutionEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<AggregationBuildLog> AggregationBuildLogs
+		public System.Data.Linq.Table<AggregationBuildLogEntity> AggregationBuildLogs
 		{
 			get
 			{
-				return this.GetTable<AggregationBuildLog>().SetTable<AggregationBuildLog>();
+				return this.GetTable<AggregationBuildLogEntity>().SetTable<AggregationBuildLogEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<AggregationBuildStep> AggregationBuildSteps
+		public System.Data.Linq.Table<AggregationBuildStepEntity> AggregationBuildSteps
 		{
 			get
 			{
-				return this.GetTable<AggregationBuildStep>().SetTable<AggregationBuildStep>();
+				return this.GetTable<AggregationBuildStepEntity>().SetTable<AggregationBuildStepEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<ApiClient> ApiClients
+		public System.Data.Linq.Table<ApiClientEntity> ApiClients
 		{
 			get
 			{
-				return this.GetTable<ApiClient>().SetTable<ApiClient>();
+				return this.GetTable<ApiClientEntity>().SetTable<ApiClientEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<Application> Applications
+		public System.Data.Linq.Table<ApplicationEntity> Applications
 		{
 			get
 			{
-				return this.GetTable<Application>().SetTable<Application>();
+				return this.GetTable<ApplicationEntity>().SetTable<ApplicationEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<ApplicationDeclinedReason> ApplicationDeclinedReasons
+		public System.Data.Linq.Table<ApplicationDeclinedReasonEntity> ApplicationDeclinedReasons
 		{
 			get
 			{
-				return this.GetTable<ApplicationDeclinedReason>().SetTable<ApplicationDeclinedReason>();
+				return this.GetTable<ApplicationDeclinedReasonEntity>().SetTable<ApplicationDeclinedReasonEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<BankAccount> BankAccounts
+		public System.Data.Linq.Table<BankAccountEntity> BankAccounts
 		{
 			get
 			{
-				return this.GetTable<BankAccount>().SetTable<BankAccount>();
+				return this.GetTable<BankAccountEntity>().SetTable<BankAccountEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<BankGateWayTransaction> BankGateWayTransactions
+		public System.Data.Linq.Table<BankGateWayTransactionEntity> BankGateWayTransactions
 		{
 			get
 			{
-				return this.GetTable<BankGateWayTransaction>().SetTable<BankGateWayTransaction>();
+				return this.GetTable<BankGateWayTransactionEntity>().SetTable<BankGateWayTransactionEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<CollectionMethod> CollectionMethods
+		public System.Data.Linq.Table<CollectionMethodEntity> CollectionMethods
 		{
 			get
 			{
-				return this.GetTable<CollectionMethod>().SetTable<CollectionMethod>();
+				return this.GetTable<CollectionMethodEntity>().SetTable<CollectionMethodEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<Currency> Currencies
+		public System.Data.Linq.Table<CurrencyEntity> Currencies
 		{
 			get
 			{
-				return this.GetTable<Currency>().SetTable<Currency>();
+				return this.GetTable<CurrencyEntity>().SetTable<CurrencyEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<Date> Dates
+		public System.Data.Linq.Table<DateEntity> Dates
 		{
 			get
 			{
-				return this.GetTable<Date>().SetTable<Date>();
+				return this.GetTable<DateEntity>().SetTable<DateEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<EquifaxSaga> EquifaxSagas
+		public System.Data.Linq.Table<EquifaxSagaEntity> EquifaxSagas
 		{
 			get
 			{
-				return this.GetTable<EquifaxSaga>().SetTable<EquifaxSaga>();
+				return this.GetTable<EquifaxSagaEntity>().SetTable<EquifaxSagaEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FAddPaymentCard> FAddPaymentCards
+		public System.Data.Linq.Table<FAddPaymentCardEntity> FAddPaymentCards
 		{
 			get
 			{
-				return this.GetTable<FAddPaymentCard>().SetTable<FAddPaymentCard>();
+				return this.GetTable<FAddPaymentCardEntity>().SetTable<FAddPaymentCardEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FAggApplication> FAggApplications
+		public System.Data.Linq.Table<FAggApplicationEntity> FAggApplications
 		{
 			get
 			{
-				return this.GetTable<FAggApplication>().SetTable<FAggApplication>();
+				return this.GetTable<FAggApplicationEntity>().SetTable<FAggApplicationEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FAggLoanNumber> FAggLoanNumbers
+		public System.Data.Linq.Table<FAggLoanNumberEntity> FAggLoanNumbers
 		{
 			get
 			{
-				return this.GetTable<FAggLoanNumber>().SetTable<FAggLoanNumber>();
+				return this.GetTable<FAggLoanNumberEntity>().SetTable<FAggLoanNumberEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FAggTransactionAllocation> FAggTransactionAllocations
+		public System.Data.Linq.Table<FAggTransactionAllocationEntity> FAggTransactionAllocations
 		{
 			get
 			{
-				return this.GetTable<FAggTransactionAllocation>().SetTable<FAggTransactionAllocation>();
+				return this.GetTable<FAggTransactionAllocationEntity>().SetTable<FAggTransactionAllocationEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FBankAccountVerification> FBankAccountVerifications
+		public System.Data.Linq.Table<FBankAccountVerificationEntity> FBankAccountVerifications
 		{
 			get
 			{
-				return this.GetTable<FBankAccountVerification>().SetTable<FBankAccountVerification>();
+				return this.GetTable<FBankAccountVerificationEntity>().SetTable<FBankAccountVerificationEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FCreateFixedTermLoanApplication> FCreateFixedTermLoanApplications
+		public System.Data.Linq.Table<FCreateFixedTermLoanApplicationEntity> FCreateFixedTermLoanApplications
 		{
 			get
 			{
-				return this.GetTable<FCreateFixedTermLoanApplication>().SetTable<FCreateFixedTermLoanApplication>();
+				return this.GetTable<FCreateFixedTermLoanApplicationEntity>().SetTable<FCreateFixedTermLoanApplicationEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FCreateFixedTermLoanExtension> FCreateFixedTermLoanExtensions
+		public System.Data.Linq.Table<FCreateFixedTermLoanExtensionEntity> FCreateFixedTermLoanExtensions
 		{
 			get
 			{
-				return this.GetTable<FCreateFixedTermLoanExtension>().SetTable<FCreateFixedTermLoanExtension>();
+				return this.GetTable<FCreateFixedTermLoanExtensionEntity>().SetTable<FCreateFixedTermLoanExtensionEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FCreateFixedTermLoanTopup> FCreateFixedTermLoanTopups
+		public System.Data.Linq.Table<FCreateFixedTermLoanTopupEntity> FCreateFixedTermLoanTopups
 		{
 			get
 			{
-				return this.GetTable<FCreateFixedTermLoanTopup>().SetTable<FCreateFixedTermLoanTopup>();
+				return this.GetTable<FCreateFixedTermLoanTopupEntity>().SetTable<FCreateFixedTermLoanTopupEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FCreateTransaction> FCreateTransactions
+		public System.Data.Linq.Table<FCreateTransactionEntity> FCreateTransactions
 		{
 			get
 			{
-				return this.GetTable<FCreateTransaction>().SetTable<FCreateTransaction>();
+				return this.GetTable<FCreateTransactionEntity>().SetTable<FCreateTransactionEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FEquifaxResponse> FEquifaxResponses
+		public System.Data.Linq.Table<FEquifaxResponseEntity> FEquifaxResponses
 		{
 			get
 			{
-				return this.GetTable<FEquifaxResponse>().SetTable<FEquifaxResponse>();
+				return this.GetTable<FEquifaxResponseEntity>().SetTable<FEquifaxResponseEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FExtendLoan> FExtendLoans
+		public System.Data.Linq.Table<FExtendLoanEntity> FExtendLoans
 		{
 			get
 			{
-				return this.GetTable<FExtendLoan>().SetTable<FExtendLoan>();
+				return this.GetTable<FExtendLoanEntity>().SetTable<FExtendLoanEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FIApplicationAccepted> FIApplicationAccepteds
+		public System.Data.Linq.Table<FIApplicationAcceptedEntity> FIApplicationAccepteds
 		{
 			get
 			{
-				return this.GetTable<FIApplicationAccepted>().SetTable<FIApplicationAccepted>();
+				return this.GetTable<FIApplicationAcceptedEntity>().SetTable<FIApplicationAcceptedEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FIApplicationClosed> FIApplicationCloseds
+		public System.Data.Linq.Table<FIApplicationClosedEntity> FIApplicationCloseds
 		{
 			get
 			{
-				return this.GetTable<FIApplicationClosed>().SetTable<FIApplicationClosed>();
+				return this.GetTable<FIApplicationClosedEntity>().SetTable<FIApplicationClosedEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FIApplicationDeclined> FIApplicationDeclineds
+		public System.Data.Linq.Table<FIApplicationDeclinedEntity> FIApplicationDeclineds
 		{
 			get
 			{
-				return this.GetTable<FIApplicationDeclined>().SetTable<FIApplicationDeclined>();
+				return this.GetTable<FIApplicationDeclinedEntity>().SetTable<FIApplicationDeclinedEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FIFixedTermApplicationAdded> FIFixedTermApplicationAddeds
+		public System.Data.Linq.Table<FIFixedTermApplicationAddedEntity> FIFixedTermApplicationAddeds
 		{
 			get
 			{
-				return this.GetTable<FIFixedTermApplicationAdded>().SetTable<FIFixedTermApplicationAdded>();
+				return this.GetTable<FIFixedTermApplicationAddedEntity>().SetTable<FIFixedTermApplicationAddedEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FixedTermLoanExtension> FixedTermLoanExtensions
+		public System.Data.Linq.Table<FixedTermLoanExtensionEntity> FixedTermLoanExtensions
 		{
 			get
 			{
-				return this.GetTable<FixedTermLoanExtension>().SetTable<FixedTermLoanExtension>();
+				return this.GetTable<FixedTermLoanExtensionEntity>().SetTable<FixedTermLoanExtensionEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FixedTermLoanTopUp> FixedTermLoanTopUps
+		public System.Data.Linq.Table<FixedTermLoanTopUpEntity> FixedTermLoanTopUps
 		{
 			get
 			{
-				return this.GetTable<FixedTermLoanTopUp>().SetTable<FixedTermLoanTopUp>();
+				return this.GetTable<FixedTermLoanTopUpEntity>().SetTable<FixedTermLoanTopUpEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FMessageType> FMessageTypes
+		public System.Data.Linq.Table<FMessageTypeEntity> FMessageTypes
 		{
 			get
 			{
-				return this.GetTable<FMessageType>().SetTable<FMessageType>();
+				return this.GetTable<FMessageTypeEntity>().SetTable<FMessageTypeEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FPaymentCollection> FPaymentCollections
+		public System.Data.Linq.Table<FPaymentCollectionEntity> FPaymentCollections
 		{
 			get
 			{
-				return this.GetTable<FPaymentCollection>().SetTable<FPaymentCollection>();
+				return this.GetTable<FPaymentCollectionEntity>().SetTable<FPaymentCollectionEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FPaymentSentMessage> FPaymentSentMessages
+		public System.Data.Linq.Table<FPaymentSentMessageEntity> FPaymentSentMessages
 		{
 			get
 			{
-				return this.GetTable<FPaymentSentMessage>().SetTable<FPaymentSentMessage>();
+				return this.GetTable<FPaymentSentMessageEntity>().SetTable<FPaymentSentMessageEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FRepayLoan> FRepayLoans
+		public System.Data.Linq.Table<FRepayLoanEntity> FRepayLoans
 		{
 			get
 			{
-				return this.GetTable<FRepayLoan>().SetTable<FRepayLoan>();
+				return this.GetTable<FRepayLoanEntity>().SetTable<FRepayLoanEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FSignApplication> FSignApplications
+		public System.Data.Linq.Table<FSignApplicationEntity> FSignApplications
 		{
 			get
 			{
-				return this.GetTable<FSignApplication>().SetTable<FSignApplication>();
+				return this.GetTable<FSignApplicationEntity>().SetTable<FSignApplicationEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FSignFixedTermLoanExtension> FSignFixedTermLoanExtensions
+		public System.Data.Linq.Table<FSignFixedTermLoanExtensionEntity> FSignFixedTermLoanExtensions
 		{
 			get
 			{
-				return this.GetTable<FSignFixedTermLoanExtension>().SetTable<FSignFixedTermLoanExtension>();
+				return this.GetTable<FSignFixedTermLoanExtensionEntity>().SetTable<FSignFixedTermLoanExtensionEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FSignFixedTermLoanTopup> FSignFixedTermLoanTopups
+		public System.Data.Linq.Table<FSignFixedTermLoanTopupEntity> FSignFixedTermLoanTopups
 		{
 			get
 			{
-				return this.GetTable<FSignFixedTermLoanTopup>().SetTable<FSignFixedTermLoanTopup>();
+				return this.GetTable<FSignFixedTermLoanTopupEntity>().SetTable<FSignFixedTermLoanTopupEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FSubmitCounterOffer> FSubmitCounterOffers
+		public System.Data.Linq.Table<FSubmitCounterOfferEntity> FSubmitCounterOffers
 		{
 			get
 			{
-				return this.GetTable<FSubmitCounterOffer>().SetTable<FSubmitCounterOffer>();
+				return this.GetTable<FSubmitCounterOfferEntity>().SetTable<FSubmitCounterOfferEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FTransactionLedger> FTransactionLedgers
+		public System.Data.Linq.Table<FTransactionLedgerEntity> FTransactionLedgers
 		{
 			get
 			{
-				return this.GetTable<FTransactionLedger>().SetTable<FTransactionLedger>();
+				return this.GetTable<FTransactionLedgerEntity>().SetTable<FTransactionLedgerEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FTransactionRequest> FTransactionRequests
+		public System.Data.Linq.Table<FTransactionRequestEntity> FTransactionRequests
 		{
 			get
 			{
-				return this.GetTable<FTransactionRequest>().SetTable<FTransactionRequest>();
+				return this.GetTable<FTransactionRequestEntity>().SetTable<FTransactionRequestEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FTransactionRequestDetail> FTransactionRequestDetails
+		public System.Data.Linq.Table<FTransactionRequestDetailEntity> FTransactionRequestDetails
 		{
 			get
 			{
-				return this.GetTable<FTransactionRequestDetail>().SetTable<FTransactionRequestDetail>();
+				return this.GetTable<FTransactionRequestDetailEntity>().SetTable<FTransactionRequestDetailEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FTransunionResponse> FTransunionResponses
+		public System.Data.Linq.Table<FTransunionResponseEntity> FTransunionResponses
 		{
 			get
 			{
-				return this.GetTable<FTransunionResponse>().SetTable<FTransunionResponse>();
+				return this.GetTable<FTransunionResponseEntity>().SetTable<FTransunionResponseEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FUpdateDailyAccruedInterest> FUpdateDailyAccruedInterests
+		public System.Data.Linq.Table<FUpdateDailyAccruedInterestEntity> FUpdateDailyAccruedInterests
 		{
 			get
 			{
-				return this.GetTable<FUpdateDailyAccruedInterest>().SetTable<FUpdateDailyAccruedInterest>();
+				return this.GetTable<FUpdateDailyAccruedInterestEntity>().SetTable<FUpdateDailyAccruedInterestEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<Ln> Lns
+		public System.Data.Linq.Table<LnEntity> Lns
 		{
 			get
 			{
-				return this.GetTable<Ln>().SetTable<Ln>();
+				return this.GetTable<LnEntity>().SetTable<LnEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<LogMessageSource> LogMessageSources
+		public System.Data.Linq.Table<LogMessageSourceEntity> LogMessageSources
 		{
 			get
 			{
-				return this.GetTable<LogMessageSource>().SetTable<LogMessageSource>();
+				return this.GetTable<LogMessageSourceEntity>().SetTable<LogMessageSourceEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<LogMessageType> LogMessageTypes
+		public System.Data.Linq.Table<LogMessageTypeEntity> LogMessageTypes
 		{
 			get
 			{
-				return this.GetTable<LogMessageType>().SetTable<LogMessageType>();
+				return this.GetTable<LogMessageTypeEntity>().SetTable<LogMessageTypeEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<MessageArchive> MessageArchives
+		public System.Data.Linq.Table<MessageArchiveEntity> MessageArchives
 		{
 			get
 			{
-				return this.GetTable<MessageArchive>().SetTable<MessageArchive>();
+				return this.GetTable<MessageArchiveEntity>().SetTable<MessageArchiveEntity>();
 			}
 		}
 		
@@ -670,179 +670,179 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		public System.Data.Linq.Table<NationalHoliday> NationalHolidays
+		public System.Data.Linq.Table<NationalHolidayEntity> NationalHolidays
 		{
 			get
 			{
-				return this.GetTable<NationalHoliday>().SetTable<NationalHoliday>();
+				return this.GetTable<NationalHolidayEntity>().SetTable<NationalHolidayEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<PaymentCard> PaymentCards
+		public System.Data.Linq.Table<PaymentCardEntity> PaymentCards
 		{
 			get
 			{
-				return this.GetTable<PaymentCard>().SetTable<PaymentCard>();
+				return this.GetTable<PaymentCardEntity>().SetTable<PaymentCardEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<PaymentCollection> PaymentCollections
+		public System.Data.Linq.Table<PaymentCollectionEntity> PaymentCollections
 		{
 			get
 			{
-				return this.GetTable<PaymentCollection>().SetTable<PaymentCollection>();
+				return this.GetTable<PaymentCollectionEntity>().SetTable<PaymentCollectionEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<PaymentCollectionAgency> PaymentCollectionAgencies
+		public System.Data.Linq.Table<PaymentCollectionAgencyEntity> PaymentCollectionAgencies
 		{
 			get
 			{
-				return this.GetTable<PaymentCollectionAgency>().SetTable<PaymentCollectionAgency>();
+				return this.GetTable<PaymentCollectionAgencyEntity>().SetTable<PaymentCollectionAgencyEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<PaymentCollectionStatus> PaymentCollectionStatus
+		public System.Data.Linq.Table<PaymentCollectionStatusEntity> PaymentCollectionStatus
 		{
 			get
 			{
-				return this.GetTable<PaymentCollectionStatus>().SetTable<PaymentCollectionStatus>();
+				return this.GetTable<PaymentCollectionStatusEntity>().SetTable<PaymentCollectionStatusEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<PaymentCollectionType> PaymentCollectionTypes
+		public System.Data.Linq.Table<PaymentCollectionTypeEntity> PaymentCollectionTypes
 		{
 			get
 			{
-				return this.GetTable<PaymentCollectionType>().SetTable<PaymentCollectionType>();
+				return this.GetTable<PaymentCollectionTypeEntity>().SetTable<PaymentCollectionTypeEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<ProcessMessageLog> ProcessMessageLogs
+		public System.Data.Linq.Table<ProcessMessageLogEntity> ProcessMessageLogs
 		{
 			get
 			{
-				return this.GetTable<ProcessMessageLog>().SetTable<ProcessMessageLog>();
+				return this.GetTable<ProcessMessageLogEntity>().SetTable<ProcessMessageLogEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<PromoCode> PromoCodes
+		public System.Data.Linq.Table<PromoCodeEntity> PromoCodes
 		{
 			get
 			{
-				return this.GetTable<PromoCode>().SetTable<PromoCode>();
+				return this.GetTable<PromoCodeEntity>().SetTable<PromoCodeEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<RepaymentRequest> RepaymentRequests
+		public System.Data.Linq.Table<RepaymentRequestEntity> RepaymentRequests
 		{
 			get
 			{
-				return this.GetTable<RepaymentRequest>().SetTable<RepaymentRequest>();
+				return this.GetTable<RepaymentRequestEntity>().SetTable<RepaymentRequestEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<ServiceBrokerLog> ServiceBrokerLogs
+		public System.Data.Linq.Table<ServiceBrokerLogEntity> ServiceBrokerLogs
 		{
 			get
 			{
-				return this.GetTable<ServiceBrokerLog>().SetTable<ServiceBrokerLog>();
+				return this.GetTable<ServiceBrokerLogEntity>().SetTable<ServiceBrokerLogEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<Time> Times
+		public System.Data.Linq.Table<TimeEntity> Times
 		{
 			get
 			{
-				return this.GetTable<Time>().SetTable<Time>();
+				return this.GetTable<TimeEntity>().SetTable<TimeEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<Transaction> Transactions
+		public System.Data.Linq.Table<TransactionEntity> Transactions
 		{
 			get
 			{
-				return this.GetTable<Transaction>().SetTable<Transaction>();
+				return this.GetTable<TransactionEntity>().SetTable<TransactionEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<TransactionScope> TransactionScopes
+		public System.Data.Linq.Table<TransactionScopeEntity> TransactionScopes
 		{
 			get
 			{
-				return this.GetTable<TransactionScope>().SetTable<TransactionScope>();
+				return this.GetTable<TransactionScopeEntity>().SetTable<TransactionScopeEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<TransactionStatus> TransactionStatus
+		public System.Data.Linq.Table<TransactionStatusEntity> TransactionStatus
 		{
 			get
 			{
-				return this.GetTable<TransactionStatus>().SetTable<TransactionStatus>();
+				return this.GetTable<TransactionStatusEntity>().SetTable<TransactionStatusEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<TransactionType> TransactionTypes
+		public System.Data.Linq.Table<TransactionTypeEntity> TransactionTypes
 		{
 			get
 			{
-				return this.GetTable<TransactionType>().SetTable<TransactionType>();
+				return this.GetTable<TransactionTypeEntity>().SetTable<TransactionTypeEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<TransunionConsumer> TransunionConsumers
+		public System.Data.Linq.Table<TransunionConsumerEntity> TransunionConsumers
 		{
 			get
 			{
-				return this.GetTable<TransunionConsumer>().SetTable<TransunionConsumer>();
+				return this.GetTable<TransunionConsumerEntity>().SetTable<TransunionConsumerEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<TransunionResponse> TransunionResponses
+		public System.Data.Linq.Table<TransunionResponseEntity> TransunionResponses
 		{
 			get
 			{
-				return this.GetTable<TransunionResponse>().SetTable<TransunionResponse>();
+				return this.GetTable<TransunionResponseEntity>().SetTable<TransunionResponseEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<TransunionResponseStatus> TransunionResponseStatus
+		public System.Data.Linq.Table<TransunionResponseStatusEntity> TransunionResponseStatus
 		{
 			get
 			{
-				return this.GetTable<TransunionResponseStatus>().SetTable<TransunionResponseStatus>();
+				return this.GetTable<TransunionResponseStatusEntity>().SetTable<TransunionResponseStatusEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<TransunionSaga> TransunionSagas
+		public System.Data.Linq.Table<TransunionSagaEntity> TransunionSagas
 		{
 			get
 			{
-				return this.GetTable<TransunionSaga>().SetTable<TransunionSaga>();
+				return this.GetTable<TransunionSagaEntity>().SetTable<TransunionSagaEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<User> Users
+		public System.Data.Linq.Table<UserEntity> Users
 		{
 			get
 			{
-				return this.GetTable<User>().SetTable<User>();
+				return this.GetTable<UserEntity>().SetTable<UserEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<UserAction> UserActions
+		public System.Data.Linq.Table<UserActionEntity> UserActions
 		{
 			get
 			{
-				return this.GetTable<UserAction>().SetTable<UserAction>();
+				return this.GetTable<UserActionEntity>().SetTable<UserActionEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<WongaMessage> WongaMessages
+		public System.Data.Linq.Table<WongaMessageEntity> WongaMessages
 		{
 			get
 			{
-				return this.GetTable<WongaMessage>().SetTable<WongaMessage>();
+				return this.GetTable<WongaMessageEntity>().SetTable<WongaMessageEntity>();
 			}
 		}
 	}
@@ -910,7 +910,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.Account")]
-	public partial class Account : DbEntity<Account>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class AccountEntity : DbEntity<AccountEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -979,37 +979,37 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _UpdatedByMessageArchiveId;
 		
-		private EntitySet<FAddPaymentCard> _FAddPaymentCards;
+		private EntitySet<FAddPaymentCardEntity> _Bi_FAddPaymentCards;
 		
-		private EntitySet<FAggApplication> _FAggApplications;
+		private EntitySet<FAggApplicationEntity> _Bi_FAggApplications;
 		
-		private EntitySet<FAggLoanNumber> _FAggLoanNumbers;
+		private EntitySet<FAggLoanNumberEntity> _Bi_FAggLoanNumbers;
 		
-		private EntitySet<FCreateFixedTermLoanApplication> _FCreateFixedTermLoanApplications;
+		private EntitySet<FCreateFixedTermLoanApplicationEntity> _Bi_FCreateFixedTermLoanApplications;
 		
-		private EntitySet<FCreateFixedTermLoanExtension> _FCreateFixedTermLoanExtensions;
+		private EntitySet<FCreateFixedTermLoanExtensionEntity> _Bi_FCreateFixedTermLoanExtensions;
 		
-		private EntitySet<FCreateFixedTermLoanTopup> _FCreateFixedTermLoanTopups;
+		private EntitySet<FCreateFixedTermLoanTopupEntity> _Bi_FCreateFixedTermLoanTopups;
 		
-		private EntitySet<FEquifaxResponse> _FEquifaxResponses;
+		private EntitySet<FEquifaxResponseEntity> _Bi_FEquifaxResponses;
 		
-		private EntitySet<FIApplicationAccepted> _FIApplicationAccepteds;
+		private EntitySet<FIApplicationAcceptedEntity> _Bi_FIApplicationAccepteds;
 		
-		private EntitySet<FIApplicationClosed> _FIApplicationCloseds;
+		private EntitySet<FIApplicationClosedEntity> _Bi_FIApplicationCloseds;
 		
-		private EntitySet<FIApplicationDeclined> _FIApplicationDeclineds;
+		private EntitySet<FIApplicationDeclinedEntity> _Bi_FIApplicationDeclineds;
 		
-		private EntitySet<FIFixedTermApplicationAdded> _FIFixedTermApplicationAddeds;
+		private EntitySet<FIFixedTermApplicationAddedEntity> _Bi_FIFixedTermApplicationAddeds;
 		
-		private EntitySet<FSignApplication> _FSignApplications;
+		private EntitySet<FSignApplicationEntity> _Bi_FSignApplications;
 		
-		private EntitySet<FSignFixedTermLoanExtension> _FSignFixedTermLoanExtensions;
+		private EntitySet<FSignFixedTermLoanExtensionEntity> _Bi_FSignFixedTermLoanExtensions;
 		
-		private EntitySet<FSignFixedTermLoanTopup> _FSignFixedTermLoanTopups;
+		private EntitySet<FSignFixedTermLoanTopupEntity> _Bi_FSignFixedTermLoanTopups;
 		
-		private EntitySet<FSubmitCounterOffer> _FSubmitCounterOffers;
+		private EntitySet<FSubmitCounterOfferEntity> _Bi_FSubmitCounterOffers;
 		
-		private EntitySet<FTransunionResponse> _FTransunionResponses;
+		private EntitySet<FTransunionResponseEntity> _Bi_FTransunionResponses;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1081,24 +1081,24 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnUpdatedByMessageArchiveIdChanged();
     #endregion
 		
-		public Account()
+		public AccountEntity()
 		{
-			this._FAddPaymentCards = new EntitySet<FAddPaymentCard>(new Action<FAddPaymentCard>(this.attach_FAddPaymentCards), new Action<FAddPaymentCard>(this.detach_FAddPaymentCards));
-			this._FAggApplications = new EntitySet<FAggApplication>(new Action<FAggApplication>(this.attach_FAggApplications), new Action<FAggApplication>(this.detach_FAggApplications));
-			this._FAggLoanNumbers = new EntitySet<FAggLoanNumber>(new Action<FAggLoanNumber>(this.attach_FAggLoanNumbers), new Action<FAggLoanNumber>(this.detach_FAggLoanNumbers));
-			this._FCreateFixedTermLoanApplications = new EntitySet<FCreateFixedTermLoanApplication>(new Action<FCreateFixedTermLoanApplication>(this.attach_FCreateFixedTermLoanApplications), new Action<FCreateFixedTermLoanApplication>(this.detach_FCreateFixedTermLoanApplications));
-			this._FCreateFixedTermLoanExtensions = new EntitySet<FCreateFixedTermLoanExtension>(new Action<FCreateFixedTermLoanExtension>(this.attach_FCreateFixedTermLoanExtensions), new Action<FCreateFixedTermLoanExtension>(this.detach_FCreateFixedTermLoanExtensions));
-			this._FCreateFixedTermLoanTopups = new EntitySet<FCreateFixedTermLoanTopup>(new Action<FCreateFixedTermLoanTopup>(this.attach_FCreateFixedTermLoanTopups), new Action<FCreateFixedTermLoanTopup>(this.detach_FCreateFixedTermLoanTopups));
-			this._FEquifaxResponses = new EntitySet<FEquifaxResponse>(new Action<FEquifaxResponse>(this.attach_FEquifaxResponses), new Action<FEquifaxResponse>(this.detach_FEquifaxResponses));
-			this._FIApplicationAccepteds = new EntitySet<FIApplicationAccepted>(new Action<FIApplicationAccepted>(this.attach_FIApplicationAccepteds), new Action<FIApplicationAccepted>(this.detach_FIApplicationAccepteds));
-			this._FIApplicationCloseds = new EntitySet<FIApplicationClosed>(new Action<FIApplicationClosed>(this.attach_FIApplicationCloseds), new Action<FIApplicationClosed>(this.detach_FIApplicationCloseds));
-			this._FIApplicationDeclineds = new EntitySet<FIApplicationDeclined>(new Action<FIApplicationDeclined>(this.attach_FIApplicationDeclineds), new Action<FIApplicationDeclined>(this.detach_FIApplicationDeclineds));
-			this._FIFixedTermApplicationAddeds = new EntitySet<FIFixedTermApplicationAdded>(new Action<FIFixedTermApplicationAdded>(this.attach_FIFixedTermApplicationAddeds), new Action<FIFixedTermApplicationAdded>(this.detach_FIFixedTermApplicationAddeds));
-			this._FSignApplications = new EntitySet<FSignApplication>(new Action<FSignApplication>(this.attach_FSignApplications), new Action<FSignApplication>(this.detach_FSignApplications));
-			this._FSignFixedTermLoanExtensions = new EntitySet<FSignFixedTermLoanExtension>(new Action<FSignFixedTermLoanExtension>(this.attach_FSignFixedTermLoanExtensions), new Action<FSignFixedTermLoanExtension>(this.detach_FSignFixedTermLoanExtensions));
-			this._FSignFixedTermLoanTopups = new EntitySet<FSignFixedTermLoanTopup>(new Action<FSignFixedTermLoanTopup>(this.attach_FSignFixedTermLoanTopups), new Action<FSignFixedTermLoanTopup>(this.detach_FSignFixedTermLoanTopups));
-			this._FSubmitCounterOffers = new EntitySet<FSubmitCounterOffer>(new Action<FSubmitCounterOffer>(this.attach_FSubmitCounterOffers), new Action<FSubmitCounterOffer>(this.detach_FSubmitCounterOffers));
-			this._FTransunionResponses = new EntitySet<FTransunionResponse>(new Action<FTransunionResponse>(this.attach_FTransunionResponses), new Action<FTransunionResponse>(this.detach_FTransunionResponses));
+			this._Bi_FAddPaymentCards = new EntitySet<FAddPaymentCardEntity>(new Action<FAddPaymentCardEntity>(this.attach_Bi_FAddPaymentCards), new Action<FAddPaymentCardEntity>(this.detach_Bi_FAddPaymentCards));
+			this._Bi_FAggApplications = new EntitySet<FAggApplicationEntity>(new Action<FAggApplicationEntity>(this.attach_Bi_FAggApplications), new Action<FAggApplicationEntity>(this.detach_Bi_FAggApplications));
+			this._Bi_FAggLoanNumbers = new EntitySet<FAggLoanNumberEntity>(new Action<FAggLoanNumberEntity>(this.attach_Bi_FAggLoanNumbers), new Action<FAggLoanNumberEntity>(this.detach_Bi_FAggLoanNumbers));
+			this._Bi_FCreateFixedTermLoanApplications = new EntitySet<FCreateFixedTermLoanApplicationEntity>(new Action<FCreateFixedTermLoanApplicationEntity>(this.attach_Bi_FCreateFixedTermLoanApplications), new Action<FCreateFixedTermLoanApplicationEntity>(this.detach_Bi_FCreateFixedTermLoanApplications));
+			this._Bi_FCreateFixedTermLoanExtensions = new EntitySet<FCreateFixedTermLoanExtensionEntity>(new Action<FCreateFixedTermLoanExtensionEntity>(this.attach_Bi_FCreateFixedTermLoanExtensions), new Action<FCreateFixedTermLoanExtensionEntity>(this.detach_Bi_FCreateFixedTermLoanExtensions));
+			this._Bi_FCreateFixedTermLoanTopups = new EntitySet<FCreateFixedTermLoanTopupEntity>(new Action<FCreateFixedTermLoanTopupEntity>(this.attach_Bi_FCreateFixedTermLoanTopups), new Action<FCreateFixedTermLoanTopupEntity>(this.detach_Bi_FCreateFixedTermLoanTopups));
+			this._Bi_FEquifaxResponses = new EntitySet<FEquifaxResponseEntity>(new Action<FEquifaxResponseEntity>(this.attach_Bi_FEquifaxResponses), new Action<FEquifaxResponseEntity>(this.detach_Bi_FEquifaxResponses));
+			this._Bi_FIApplicationAccepteds = new EntitySet<FIApplicationAcceptedEntity>(new Action<FIApplicationAcceptedEntity>(this.attach_Bi_FIApplicationAccepteds), new Action<FIApplicationAcceptedEntity>(this.detach_Bi_FIApplicationAccepteds));
+			this._Bi_FIApplicationCloseds = new EntitySet<FIApplicationClosedEntity>(new Action<FIApplicationClosedEntity>(this.attach_Bi_FIApplicationCloseds), new Action<FIApplicationClosedEntity>(this.detach_Bi_FIApplicationCloseds));
+			this._Bi_FIApplicationDeclineds = new EntitySet<FIApplicationDeclinedEntity>(new Action<FIApplicationDeclinedEntity>(this.attach_Bi_FIApplicationDeclineds), new Action<FIApplicationDeclinedEntity>(this.detach_Bi_FIApplicationDeclineds));
+			this._Bi_FIFixedTermApplicationAddeds = new EntitySet<FIFixedTermApplicationAddedEntity>(new Action<FIFixedTermApplicationAddedEntity>(this.attach_Bi_FIFixedTermApplicationAddeds), new Action<FIFixedTermApplicationAddedEntity>(this.detach_Bi_FIFixedTermApplicationAddeds));
+			this._Bi_FSignApplications = new EntitySet<FSignApplicationEntity>(new Action<FSignApplicationEntity>(this.attach_Bi_FSignApplications), new Action<FSignApplicationEntity>(this.detach_Bi_FSignApplications));
+			this._Bi_FSignFixedTermLoanExtensions = new EntitySet<FSignFixedTermLoanExtensionEntity>(new Action<FSignFixedTermLoanExtensionEntity>(this.attach_Bi_FSignFixedTermLoanExtensions), new Action<FSignFixedTermLoanExtensionEntity>(this.detach_Bi_FSignFixedTermLoanExtensions));
+			this._Bi_FSignFixedTermLoanTopups = new EntitySet<FSignFixedTermLoanTopupEntity>(new Action<FSignFixedTermLoanTopupEntity>(this.attach_Bi_FSignFixedTermLoanTopups), new Action<FSignFixedTermLoanTopupEntity>(this.detach_Bi_FSignFixedTermLoanTopups));
+			this._Bi_FSubmitCounterOffers = new EntitySet<FSubmitCounterOfferEntity>(new Action<FSubmitCounterOfferEntity>(this.attach_Bi_FSubmitCounterOffers), new Action<FSubmitCounterOfferEntity>(this.detach_Bi_FSubmitCounterOffers));
+			this._Bi_FTransunionResponses = new EntitySet<FTransunionResponseEntity>(new Action<FTransunionResponseEntity>(this.attach_Bi_FTransunionResponses), new Action<FTransunionResponseEntity>(this.detach_Bi_FTransunionResponses));
 			OnCreated();
 		}
 		
@@ -1742,211 +1742,211 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAddPaymentCard_REF_biAccount", Storage="_FAddPaymentCards", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FAddPaymentCard> FAddPaymentCards
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAddPaymentCard_REF_biAccount", Storage="_Bi_FAddPaymentCards", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FAddPaymentCardEntity> Bi_FAddPaymentCards
 		{
 			get
 			{
-				return this._FAddPaymentCards;
+				return this._Bi_FAddPaymentCards;
 			}
 			set
 			{
-				this._FAddPaymentCards.Assign(value);
+				this._Bi_FAddPaymentCards.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggApplication_REF_biAccount", Storage="_FAggApplications", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FAggApplication> FAggApplications
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggApplication_REF_biAccount", Storage="_Bi_FAggApplications", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FAggApplicationEntity> Bi_FAggApplications
 		{
 			get
 			{
-				return this._FAggApplications;
+				return this._Bi_FAggApplications;
 			}
 			set
 			{
-				this._FAggApplications.Assign(value);
+				this._Bi_FAggApplications.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggLoanNumber_REF_biAccount", Storage="_FAggLoanNumbers", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FAggLoanNumber> FAggLoanNumbers
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggLoanNumber_REF_biAccount", Storage="_Bi_FAggLoanNumbers", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FAggLoanNumberEntity> Bi_FAggLoanNumbers
 		{
 			get
 			{
-				return this._FAggLoanNumbers;
+				return this._Bi_FAggLoanNumbers;
 			}
 			set
 			{
-				this._FAggLoanNumbers.Assign(value);
+				this._Bi_FAggLoanNumbers.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biAccount", Storage="_FCreateFixedTermLoanApplications", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FCreateFixedTermLoanApplication> FCreateFixedTermLoanApplications
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biAccount", Storage="_Bi_FCreateFixedTermLoanApplications", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FCreateFixedTermLoanApplicationEntity> Bi_FCreateFixedTermLoanApplications
 		{
 			get
 			{
-				return this._FCreateFixedTermLoanApplications;
+				return this._Bi_FCreateFixedTermLoanApplications;
 			}
 			set
 			{
-				this._FCreateFixedTermLoanApplications.Assign(value);
+				this._Bi_FCreateFixedTermLoanApplications.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanExtension_REF_biAccount", Storage="_FCreateFixedTermLoanExtensions", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FCreateFixedTermLoanExtension> FCreateFixedTermLoanExtensions
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanExtension_REF_biAccount", Storage="_Bi_FCreateFixedTermLoanExtensions", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FCreateFixedTermLoanExtensionEntity> Bi_FCreateFixedTermLoanExtensions
 		{
 			get
 			{
-				return this._FCreateFixedTermLoanExtensions;
+				return this._Bi_FCreateFixedTermLoanExtensions;
 			}
 			set
 			{
-				this._FCreateFixedTermLoanExtensions.Assign(value);
+				this._Bi_FCreateFixedTermLoanExtensions.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanTopup_REF_biAccount", Storage="_FCreateFixedTermLoanTopups", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FCreateFixedTermLoanTopup> FCreateFixedTermLoanTopups
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanTopup_REF_biAccount", Storage="_Bi_FCreateFixedTermLoanTopups", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FCreateFixedTermLoanTopupEntity> Bi_FCreateFixedTermLoanTopups
 		{
 			get
 			{
-				return this._FCreateFixedTermLoanTopups;
+				return this._Bi_FCreateFixedTermLoanTopups;
 			}
 			set
 			{
-				this._FCreateFixedTermLoanTopups.Assign(value);
+				this._Bi_FCreateFixedTermLoanTopups.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fk_bifEquifaxResponse_REF_biAccount", Storage="_FEquifaxResponses", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FEquifaxResponse> FEquifaxResponses
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fk_bifEquifaxResponse_REF_biAccount", Storage="_Bi_FEquifaxResponses", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FEquifaxResponseEntity> Bi_FEquifaxResponses
 		{
 			get
 			{
-				return this._FEquifaxResponses;
+				return this._Bi_FEquifaxResponses;
 			}
 			set
 			{
-				this._FEquifaxResponses.Assign(value);
+				this._Bi_FEquifaxResponses.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationAccepted_REF_biAccount", Storage="_FIApplicationAccepteds", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FIApplicationAccepted> FIApplicationAccepteds
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationAccepted_REF_biAccount", Storage="_Bi_FIApplicationAccepteds", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FIApplicationAcceptedEntity> Bi_FIApplicationAccepteds
 		{
 			get
 			{
-				return this._FIApplicationAccepteds;
+				return this._Bi_FIApplicationAccepteds;
 			}
 			set
 			{
-				this._FIApplicationAccepteds.Assign(value);
+				this._Bi_FIApplicationAccepteds.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationClosed_REF_biAccount", Storage="_FIApplicationCloseds", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FIApplicationClosed> FIApplicationCloseds
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationClosed_REF_biAccount", Storage="_Bi_FIApplicationCloseds", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FIApplicationClosedEntity> Bi_FIApplicationCloseds
 		{
 			get
 			{
-				return this._FIApplicationCloseds;
+				return this._Bi_FIApplicationCloseds;
 			}
 			set
 			{
-				this._FIApplicationCloseds.Assign(value);
+				this._Bi_FIApplicationCloseds.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationDeclined_REF_biAccount", Storage="_FIApplicationDeclineds", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FIApplicationDeclined> FIApplicationDeclineds
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationDeclined_REF_biAccount", Storage="_Bi_FIApplicationDeclineds", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FIApplicationDeclinedEntity> Bi_FIApplicationDeclineds
 		{
 			get
 			{
-				return this._FIApplicationDeclineds;
+				return this._Bi_FIApplicationDeclineds;
 			}
 			set
 			{
-				this._FIApplicationDeclineds.Assign(value);
+				this._Bi_FIApplicationDeclineds.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIFixedTermApplicationAdded_REF_biAccount", Storage="_FIFixedTermApplicationAddeds", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FIFixedTermApplicationAdded> FIFixedTermApplicationAddeds
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIFixedTermApplicationAdded_REF_biAccount", Storage="_Bi_FIFixedTermApplicationAddeds", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FIFixedTermApplicationAddedEntity> Bi_FIFixedTermApplicationAddeds
 		{
 			get
 			{
-				return this._FIFixedTermApplicationAddeds;
+				return this._Bi_FIFixedTermApplicationAddeds;
 			}
 			set
 			{
-				this._FIFixedTermApplicationAddeds.Assign(value);
+				this._Bi_FIFixedTermApplicationAddeds.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignApplication_REF_biAccount", Storage="_FSignApplications", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FSignApplication> FSignApplications
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignApplication_REF_biAccount", Storage="_Bi_FSignApplications", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FSignApplicationEntity> Bi_FSignApplications
 		{
 			get
 			{
-				return this._FSignApplications;
+				return this._Bi_FSignApplications;
 			}
 			set
 			{
-				this._FSignApplications.Assign(value);
+				this._Bi_FSignApplications.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanExtension_REF_biAccount", Storage="_FSignFixedTermLoanExtensions", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FSignFixedTermLoanExtension> FSignFixedTermLoanExtensions
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanExtension_REF_biAccount", Storage="_Bi_FSignFixedTermLoanExtensions", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FSignFixedTermLoanExtensionEntity> Bi_FSignFixedTermLoanExtensions
 		{
 			get
 			{
-				return this._FSignFixedTermLoanExtensions;
+				return this._Bi_FSignFixedTermLoanExtensions;
 			}
 			set
 			{
-				this._FSignFixedTermLoanExtensions.Assign(value);
+				this._Bi_FSignFixedTermLoanExtensions.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanTopup_REF_biAccount", Storage="_FSignFixedTermLoanTopups", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FSignFixedTermLoanTopup> FSignFixedTermLoanTopups
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanTopup_REF_biAccount", Storage="_Bi_FSignFixedTermLoanTopups", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FSignFixedTermLoanTopupEntity> Bi_FSignFixedTermLoanTopups
 		{
 			get
 			{
-				return this._FSignFixedTermLoanTopups;
+				return this._Bi_FSignFixedTermLoanTopups;
 			}
 			set
 			{
-				this._FSignFixedTermLoanTopups.Assign(value);
+				this._Bi_FSignFixedTermLoanTopups.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSubmitCounterOffer_REF_biAccount", Storage="_FSubmitCounterOffers", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FSubmitCounterOffer> FSubmitCounterOffers
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSubmitCounterOffer_REF_biAccount", Storage="_Bi_FSubmitCounterOffers", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FSubmitCounterOfferEntity> Bi_FSubmitCounterOffers
 		{
 			get
 			{
-				return this._FSubmitCounterOffers;
+				return this._Bi_FSubmitCounterOffers;
 			}
 			set
 			{
-				this._FSubmitCounterOffers.Assign(value);
+				this._Bi_FSubmitCounterOffers.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransunionResponse_REF_biAccount", Storage="_FTransunionResponses", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FTransunionResponse> FTransunionResponses
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransunionResponse_REF_biAccount", Storage="_Bi_FTransunionResponses", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FTransunionResponseEntity> Bi_FTransunionResponses
 		{
 			get
 			{
-				return this._FTransunionResponses;
+				return this._Bi_FTransunionResponses;
 			}
 			set
 			{
-				this._FTransunionResponses.Assign(value);
+				this._Bi_FTransunionResponses.Assign(value);
 			}
 		}
 		
@@ -1970,201 +1970,201 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		private void attach_FAddPaymentCards(FAddPaymentCard entity)
+		private void attach_Bi_FAddPaymentCards(FAddPaymentCardEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = this;
+			entity.AccountEntity = this;
 		}
 		
-		private void detach_FAddPaymentCards(FAddPaymentCard entity)
+		private void detach_Bi_FAddPaymentCards(FAddPaymentCardEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = null;
+			entity.AccountEntity = null;
 		}
 		
-		private void attach_FAggApplications(FAggApplication entity)
+		private void attach_Bi_FAggApplications(FAggApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = this;
+			entity.AccountEntity = this;
 		}
 		
-		private void detach_FAggApplications(FAggApplication entity)
+		private void detach_Bi_FAggApplications(FAggApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = null;
+			entity.AccountEntity = null;
 		}
 		
-		private void attach_FAggLoanNumbers(FAggLoanNumber entity)
+		private void attach_Bi_FAggLoanNumbers(FAggLoanNumberEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = this;
+			entity.AccountEntity = this;
 		}
 		
-		private void detach_FAggLoanNumbers(FAggLoanNumber entity)
+		private void detach_Bi_FAggLoanNumbers(FAggLoanNumberEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = null;
+			entity.AccountEntity = null;
 		}
 		
-		private void attach_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplication entity)
+		private void attach_Bi_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = this;
+			entity.AccountEntity = this;
 		}
 		
-		private void detach_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplication entity)
+		private void detach_Bi_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = null;
+			entity.AccountEntity = null;
 		}
 		
-		private void attach_FCreateFixedTermLoanExtensions(FCreateFixedTermLoanExtension entity)
+		private void attach_Bi_FCreateFixedTermLoanExtensions(FCreateFixedTermLoanExtensionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = this;
+			entity.AccountEntity = this;
 		}
 		
-		private void detach_FCreateFixedTermLoanExtensions(FCreateFixedTermLoanExtension entity)
+		private void detach_Bi_FCreateFixedTermLoanExtensions(FCreateFixedTermLoanExtensionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = null;
+			entity.AccountEntity = null;
 		}
 		
-		private void attach_FCreateFixedTermLoanTopups(FCreateFixedTermLoanTopup entity)
+		private void attach_Bi_FCreateFixedTermLoanTopups(FCreateFixedTermLoanTopupEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = this;
+			entity.AccountEntity = this;
 		}
 		
-		private void detach_FCreateFixedTermLoanTopups(FCreateFixedTermLoanTopup entity)
+		private void detach_Bi_FCreateFixedTermLoanTopups(FCreateFixedTermLoanTopupEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = null;
+			entity.AccountEntity = null;
 		}
 		
-		private void attach_FEquifaxResponses(FEquifaxResponse entity)
+		private void attach_Bi_FEquifaxResponses(FEquifaxResponseEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = this;
+			entity.AccountEntity = this;
 		}
 		
-		private void detach_FEquifaxResponses(FEquifaxResponse entity)
+		private void detach_Bi_FEquifaxResponses(FEquifaxResponseEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = null;
+			entity.AccountEntity = null;
 		}
 		
-		private void attach_FIApplicationAccepteds(FIApplicationAccepted entity)
+		private void attach_Bi_FIApplicationAccepteds(FIApplicationAcceptedEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = this;
+			entity.AccountEntity = this;
 		}
 		
-		private void detach_FIApplicationAccepteds(FIApplicationAccepted entity)
+		private void detach_Bi_FIApplicationAccepteds(FIApplicationAcceptedEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = null;
+			entity.AccountEntity = null;
 		}
 		
-		private void attach_FIApplicationCloseds(FIApplicationClosed entity)
+		private void attach_Bi_FIApplicationCloseds(FIApplicationClosedEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = this;
+			entity.AccountEntity = this;
 		}
 		
-		private void detach_FIApplicationCloseds(FIApplicationClosed entity)
+		private void detach_Bi_FIApplicationCloseds(FIApplicationClosedEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = null;
+			entity.AccountEntity = null;
 		}
 		
-		private void attach_FIApplicationDeclineds(FIApplicationDeclined entity)
+		private void attach_Bi_FIApplicationDeclineds(FIApplicationDeclinedEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = this;
+			entity.AccountEntity = this;
 		}
 		
-		private void detach_FIApplicationDeclineds(FIApplicationDeclined entity)
+		private void detach_Bi_FIApplicationDeclineds(FIApplicationDeclinedEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = null;
+			entity.AccountEntity = null;
 		}
 		
-		private void attach_FIFixedTermApplicationAddeds(FIFixedTermApplicationAdded entity)
+		private void attach_Bi_FIFixedTermApplicationAddeds(FIFixedTermApplicationAddedEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = this;
+			entity.AccountEntity = this;
 		}
 		
-		private void detach_FIFixedTermApplicationAddeds(FIFixedTermApplicationAdded entity)
+		private void detach_Bi_FIFixedTermApplicationAddeds(FIFixedTermApplicationAddedEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = null;
+			entity.AccountEntity = null;
 		}
 		
-		private void attach_FSignApplications(FSignApplication entity)
+		private void attach_Bi_FSignApplications(FSignApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = this;
+			entity.AccountEntity = this;
 		}
 		
-		private void detach_FSignApplications(FSignApplication entity)
+		private void detach_Bi_FSignApplications(FSignApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = null;
+			entity.AccountEntity = null;
 		}
 		
-		private void attach_FSignFixedTermLoanExtensions(FSignFixedTermLoanExtension entity)
+		private void attach_Bi_FSignFixedTermLoanExtensions(FSignFixedTermLoanExtensionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = this;
+			entity.AccountEntity = this;
 		}
 		
-		private void detach_FSignFixedTermLoanExtensions(FSignFixedTermLoanExtension entity)
+		private void detach_Bi_FSignFixedTermLoanExtensions(FSignFixedTermLoanExtensionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = null;
+			entity.AccountEntity = null;
 		}
 		
-		private void attach_FSignFixedTermLoanTopups(FSignFixedTermLoanTopup entity)
+		private void attach_Bi_FSignFixedTermLoanTopups(FSignFixedTermLoanTopupEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = this;
+			entity.AccountEntity = this;
 		}
 		
-		private void detach_FSignFixedTermLoanTopups(FSignFixedTermLoanTopup entity)
+		private void detach_Bi_FSignFixedTermLoanTopups(FSignFixedTermLoanTopupEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = null;
+			entity.AccountEntity = null;
 		}
 		
-		private void attach_FSubmitCounterOffers(FSubmitCounterOffer entity)
+		private void attach_Bi_FSubmitCounterOffers(FSubmitCounterOfferEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = this;
+			entity.AccountEntity = this;
 		}
 		
-		private void detach_FSubmitCounterOffers(FSubmitCounterOffer entity)
+		private void detach_Bi_FSubmitCounterOffers(FSubmitCounterOfferEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = null;
+			entity.AccountEntity = null;
 		}
 		
-		private void attach_FTransunionResponses(FTransunionResponse entity)
+		private void attach_Bi_FTransunionResponses(FTransunionResponseEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = this;
+			entity.AccountEntity = this;
 		}
 		
-		private void detach_FTransunionResponses(FTransunionResponse entity)
+		private void detach_Bi_FTransunionResponses(FTransunionResponseEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Account = null;
+			entity.AccountEntity = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.Affiliate")]
-	public partial class Affiliate : DbEntity<Affiliate>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class AffiliateEntity : DbEntity<AffiliateEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -2181,9 +2181,9 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _UpdatedByMessageArchiveId;
 		
-		private EntitySet<FAggApplication> _FAggApplications;
+		private EntitySet<FAggApplicationEntity> _Bi_FAggApplications;
 		
-		private EntitySet<FCreateFixedTermLoanApplication> _FCreateFixedTermLoanApplications;
+		private EntitySet<FCreateFixedTermLoanApplicationEntity> _Bi_FCreateFixedTermLoanApplications;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -2203,10 +2203,10 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnUpdatedByMessageArchiveIdChanged();
     #endregion
 		
-		public Affiliate()
+		public AffiliateEntity()
 		{
-			this._FAggApplications = new EntitySet<FAggApplication>(new Action<FAggApplication>(this.attach_FAggApplications), new Action<FAggApplication>(this.detach_FAggApplications));
-			this._FCreateFixedTermLoanApplications = new EntitySet<FCreateFixedTermLoanApplication>(new Action<FCreateFixedTermLoanApplication>(this.attach_FCreateFixedTermLoanApplications), new Action<FCreateFixedTermLoanApplication>(this.detach_FCreateFixedTermLoanApplications));
+			this._Bi_FAggApplications = new EntitySet<FAggApplicationEntity>(new Action<FAggApplicationEntity>(this.attach_Bi_FAggApplications), new Action<FAggApplicationEntity>(this.detach_Bi_FAggApplications));
+			this._Bi_FCreateFixedTermLoanApplications = new EntitySet<FCreateFixedTermLoanApplicationEntity>(new Action<FCreateFixedTermLoanApplicationEntity>(this.attach_Bi_FCreateFixedTermLoanApplications), new Action<FCreateFixedTermLoanApplicationEntity>(this.detach_Bi_FCreateFixedTermLoanApplications));
 			OnCreated();
 		}
 		
@@ -2330,29 +2330,29 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggApplication_REF_biAffiliate", Storage="_FAggApplications", ThisKey="AffiliateSKey", OtherKey="AffiliateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FAggApplication> FAggApplications
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggApplication_REF_biAffiliate", Storage="_Bi_FAggApplications", ThisKey="AffiliateSKey", OtherKey="AffiliateSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FAggApplicationEntity> Bi_FAggApplications
 		{
 			get
 			{
-				return this._FAggApplications;
+				return this._Bi_FAggApplications;
 			}
 			set
 			{
-				this._FAggApplications.Assign(value);
+				this._Bi_FAggApplications.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biAffiliate", Storage="_FCreateFixedTermLoanApplications", ThisKey="AffiliateSKey", OtherKey="AffiliateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FCreateFixedTermLoanApplication> FCreateFixedTermLoanApplications
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biAffiliate", Storage="_Bi_FCreateFixedTermLoanApplications", ThisKey="AffiliateSKey", OtherKey="AffiliateSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FCreateFixedTermLoanApplicationEntity> Bi_FCreateFixedTermLoanApplications
 		{
 			get
 			{
-				return this._FCreateFixedTermLoanApplications;
+				return this._Bi_FCreateFixedTermLoanApplications;
 			}
 			set
 			{
-				this._FCreateFixedTermLoanApplications.Assign(value);
+				this._Bi_FCreateFixedTermLoanApplications.Assign(value);
 			}
 		}
 		
@@ -2376,33 +2376,33 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		private void attach_FAggApplications(FAggApplication entity)
+		private void attach_Bi_FAggApplications(FAggApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Affiliate = this;
+			entity.AffiliateEntity = this;
 		}
 		
-		private void detach_FAggApplications(FAggApplication entity)
+		private void detach_Bi_FAggApplications(FAggApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Affiliate = null;
+			entity.AffiliateEntity = null;
 		}
 		
-		private void attach_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplication entity)
+		private void attach_Bi_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Affiliate = this;
+			entity.AffiliateEntity = this;
 		}
 		
-		private void detach_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplication entity)
+		private void detach_Bi_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Affiliate = null;
+			entity.AffiliateEntity = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.AggregationBuildExecution")]
-	public partial class AggregationBuildExecution : DbEntity<AggregationBuildExecution>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class AggregationBuildExecutionEntity : DbEntity<AggregationBuildExecutionEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -2413,7 +2413,7 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private System.Nullable<System.DateTime> _AggregationBuildExecutionEndTime;
 		
-		private EntitySet<AggregationBuildLog> _AggregationBuildLogs;
+		private EntitySet<AggregationBuildLogEntity> _Bi_AggregationBuildLogs;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -2427,9 +2427,9 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnAggregationBuildExecutionEndTimeChanged();
     #endregion
 		
-		public AggregationBuildExecution()
+		public AggregationBuildExecutionEntity()
 		{
-			this._AggregationBuildLogs = new EntitySet<AggregationBuildLog>(new Action<AggregationBuildLog>(this.attach_AggregationBuildLogs), new Action<AggregationBuildLog>(this.detach_AggregationBuildLogs));
+			this._Bi_AggregationBuildLogs = new EntitySet<AggregationBuildLogEntity>(new Action<AggregationBuildLogEntity>(this.attach_Bi_AggregationBuildLogs), new Action<AggregationBuildLogEntity>(this.detach_Bi_AggregationBuildLogs));
 			OnCreated();
 		}
 		
@@ -2493,16 +2493,16 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biAggregationBuildLog_REF_biAggregationBuildExecution", Storage="_AggregationBuildLogs", ThisKey="AggregationBuildExecutionId", OtherKey="AggregationBuildExecutionId", DeleteRule="NO ACTION")]
-		public EntitySet<AggregationBuildLog> AggregationBuildLogs
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biAggregationBuildLog_REF_biAggregationBuildExecution", Storage="_Bi_AggregationBuildLogs", ThisKey="AggregationBuildExecutionId", OtherKey="AggregationBuildExecutionId", DeleteRule="NO ACTION")]
+		public EntitySet<AggregationBuildLogEntity> Bi_AggregationBuildLogs
 		{
 			get
 			{
-				return this._AggregationBuildLogs;
+				return this._Bi_AggregationBuildLogs;
 			}
 			set
 			{
-				this._AggregationBuildLogs.Assign(value);
+				this._Bi_AggregationBuildLogs.Assign(value);
 			}
 		}
 		
@@ -2526,21 +2526,21 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		private void attach_AggregationBuildLogs(AggregationBuildLog entity)
+		private void attach_Bi_AggregationBuildLogs(AggregationBuildLogEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.AggregationBuildExecution = this;
+			entity.AggregationBuildExecutionEntity = this;
 		}
 		
-		private void detach_AggregationBuildLogs(AggregationBuildLog entity)
+		private void detach_Bi_AggregationBuildLogs(AggregationBuildLogEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.AggregationBuildExecution = null;
+			entity.AggregationBuildExecutionEntity = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.AggregationBuildLog")]
-	public partial class AggregationBuildLog : DbEntity<AggregationBuildLog>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class AggregationBuildLogEntity : DbEntity<AggregationBuildLogEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -2567,11 +2567,11 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private System.DateTime _LogTimestamp;
 		
-		private EntityRef<AggregationBuildExecution> _AggregationBuildExecution;
+		private EntityRef<AggregationBuildExecutionEntity> _AggregationBuildExecutionEntity;
 		
-		private EntityRef<LogMessageSource> _LogMessageSource;
+		private EntityRef<LogMessageSourceEntity> _LogMessageSourceEntity;
 		
-		private EntityRef<LogMessageType> _LogMessageType;
+		private EntityRef<LogMessageTypeEntity> _LogMessageTypeEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -2601,11 +2601,11 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnLogTimestampChanged();
     #endregion
 		
-		public AggregationBuildLog()
+		public AggregationBuildLogEntity()
 		{
-			this._AggregationBuildExecution = default(EntityRef<AggregationBuildExecution>);
-			this._LogMessageSource = default(EntityRef<LogMessageSource>);
-			this._LogMessageType = default(EntityRef<LogMessageType>);
+			this._AggregationBuildExecutionEntity = default(EntityRef<AggregationBuildExecutionEntity>);
+			this._LogMessageSourceEntity = default(EntityRef<LogMessageSourceEntity>);
+			this._LogMessageTypeEntity = default(EntityRef<LogMessageTypeEntity>);
 			OnCreated();
 		}
 		
@@ -2640,7 +2640,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._AggregationBuildExecutionId != value))
 				{
-					if (this._AggregationBuildExecution.HasLoadedOrAssignedValue)
+					if (this._AggregationBuildExecutionEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -2684,7 +2684,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._LogMessageSourceId != value))
 				{
-					if (this._LogMessageSource.HasLoadedOrAssignedValue)
+					if (this._LogMessageSourceEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -2708,7 +2708,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._LogMessageTypeId != value))
 				{
-					if (this._LogMessageType.HasLoadedOrAssignedValue)
+					if (this._LogMessageTypeEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -2841,104 +2841,104 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biAggregationBuildLog_REF_biAggregationBuildExecution", Storage="_AggregationBuildExecution", ThisKey="AggregationBuildExecutionId", OtherKey="AggregationBuildExecutionId", IsForeignKey=true)]
-		public AggregationBuildExecution AggregationBuildExecution
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biAggregationBuildLog_REF_biAggregationBuildExecution", Storage="_AggregationBuildExecutionEntity", ThisKey="AggregationBuildExecutionId", OtherKey="AggregationBuildExecutionId", IsForeignKey=true)]
+		public AggregationBuildExecutionEntity AggregationBuildExecutionEntity
 		{
 			get
 			{
-				return this._AggregationBuildExecution.Entity;
+				return this._AggregationBuildExecutionEntity.Entity;
 			}
 			set
 			{
-				AggregationBuildExecution previousValue = this._AggregationBuildExecution.Entity;
+				AggregationBuildExecutionEntity previousValue = this._AggregationBuildExecutionEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._AggregationBuildExecution.HasLoadedOrAssignedValue == false)))
+							|| (this._AggregationBuildExecutionEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._AggregationBuildExecution.Entity = null;
-						previousValue.AggregationBuildLogs.Remove(this);
+						this._AggregationBuildExecutionEntity.Entity = null;
+						previousValue.Bi_AggregationBuildLogs.Remove(this);
 					}
-					this._AggregationBuildExecution.Entity = value;
+					this._AggregationBuildExecutionEntity.Entity = value;
 					if ((value != null))
 					{
-						value.AggregationBuildLogs.Add(this);
+						value.Bi_AggregationBuildLogs.Add(this);
 						this._AggregationBuildExecutionId = value.AggregationBuildExecutionId;
 					}
 					else
 					{
 						this._AggregationBuildExecutionId = default(int);
 					}
-					this.SendPropertyChanged("AggregationBuildExecution");
+					this.SendPropertyChanged("AggregationBuildExecutionEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biAggregationBuildLog_REF_biLogMessageSource", Storage="_LogMessageSource", ThisKey="LogMessageSourceId", OtherKey="LogMessageSourceId", IsForeignKey=true)]
-		public LogMessageSource LogMessageSource
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biAggregationBuildLog_REF_biLogMessageSource", Storage="_LogMessageSourceEntity", ThisKey="LogMessageSourceId", OtherKey="LogMessageSourceId", IsForeignKey=true)]
+		public LogMessageSourceEntity LogMessageSourceEntity
 		{
 			get
 			{
-				return this._LogMessageSource.Entity;
+				return this._LogMessageSourceEntity.Entity;
 			}
 			set
 			{
-				LogMessageSource previousValue = this._LogMessageSource.Entity;
+				LogMessageSourceEntity previousValue = this._LogMessageSourceEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._LogMessageSource.HasLoadedOrAssignedValue == false)))
+							|| (this._LogMessageSourceEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._LogMessageSource.Entity = null;
-						previousValue.AggregationBuildLogs.Remove(this);
+						this._LogMessageSourceEntity.Entity = null;
+						previousValue.Bi_AggregationBuildLogs.Remove(this);
 					}
-					this._LogMessageSource.Entity = value;
+					this._LogMessageSourceEntity.Entity = value;
 					if ((value != null))
 					{
-						value.AggregationBuildLogs.Add(this);
+						value.Bi_AggregationBuildLogs.Add(this);
 						this._LogMessageSourceId = value.LogMessageSourceId;
 					}
 					else
 					{
 						this._LogMessageSourceId = default(short);
 					}
-					this.SendPropertyChanged("LogMessageSource");
+					this.SendPropertyChanged("LogMessageSourceEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biAggregationBuildLog_REF_biLogMessageType", Storage="_LogMessageType", ThisKey="LogMessageTypeId", OtherKey="LogMessageTypeId", IsForeignKey=true)]
-		public LogMessageType LogMessageType
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biAggregationBuildLog_REF_biLogMessageType", Storage="_LogMessageTypeEntity", ThisKey="LogMessageTypeId", OtherKey="LogMessageTypeId", IsForeignKey=true)]
+		public LogMessageTypeEntity LogMessageTypeEntity
 		{
 			get
 			{
-				return this._LogMessageType.Entity;
+				return this._LogMessageTypeEntity.Entity;
 			}
 			set
 			{
-				LogMessageType previousValue = this._LogMessageType.Entity;
+				LogMessageTypeEntity previousValue = this._LogMessageTypeEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._LogMessageType.HasLoadedOrAssignedValue == false)))
+							|| (this._LogMessageTypeEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._LogMessageType.Entity = null;
-						previousValue.AggregationBuildLogs.Remove(this);
+						this._LogMessageTypeEntity.Entity = null;
+						previousValue.Bi_AggregationBuildLogs.Remove(this);
 					}
-					this._LogMessageType.Entity = value;
+					this._LogMessageTypeEntity.Entity = value;
 					if ((value != null))
 					{
-						value.AggregationBuildLogs.Add(this);
+						value.Bi_AggregationBuildLogs.Add(this);
 						this._LogMessageTypeId = value.LogMessageTypeId;
 					}
 					else
 					{
 						this._LogMessageTypeId = default(byte);
 					}
-					this.SendPropertyChanged("LogMessageType");
+					this.SendPropertyChanged("LogMessageTypeEntity");
 				}
 			}
 		}
@@ -2965,7 +2965,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.AggregationBuildStep")]
-	public partial class AggregationBuildStep : DbEntity<AggregationBuildStep>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class AggregationBuildStepEntity : DbEntity<AggregationBuildStepEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -2992,7 +2992,7 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnAggregationBuildStepOrderChanged();
     #endregion
 		
-		public AggregationBuildStep()
+		public AggregationBuildStepEntity()
 		{
 			OnCreated();
 		}
@@ -3099,7 +3099,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.ApiClient")]
-	public partial class ApiClient : DbEntity<ApiClient>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class ApiClientEntity : DbEntity<ApiClientEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -3138,7 +3138,7 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnUpdatedByMessageArchiveIdChanged();
     #endregion
 		
-		public ApiClient()
+		public ApiClientEntity()
 		{
 			OnCreated();
 		}
@@ -3305,7 +3305,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.Application")]
-	public partial class Application : DbEntity<Application>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class ApplicationEntity : DbEntity<ApplicationEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -3322,47 +3322,47 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _UpdatedByMessageArchiveId;
 		
-		private EntitySet<BankGateWayTransaction> _BankGateWayTransactions;
+		private EntitySet<BankGateWayTransactionEntity> _Bi_BankGateWayTransactions;
 		
-		private EntitySet<FAggApplication> _FAggApplications;
+		private EntitySet<FAggApplicationEntity> _Bi_FAggApplications;
 		
-		private EntityRef<FBankAccountVerification> _FBankAccountVerification;
+		private EntityRef<FBankAccountVerificationEntity> _FBankAccountVerificationEntity;
 		
-		private EntityRef<FCreateFixedTermLoanApplication> _FCreateFixedTermLoanApplication;
+		private EntityRef<FCreateFixedTermLoanApplicationEntity> _FCreateFixedTermLoanApplicationEntity;
 		
-		private EntitySet<FCreateFixedTermLoanExtension> _FCreateFixedTermLoanExtensions;
+		private EntitySet<FCreateFixedTermLoanExtensionEntity> _Bi_FCreateFixedTermLoanExtensions;
 		
-		private EntitySet<FCreateFixedTermLoanTopup> _FCreateFixedTermLoanTopups;
+		private EntitySet<FCreateFixedTermLoanTopupEntity> _Bi_FCreateFixedTermLoanTopups;
 		
-		private EntitySet<FCreateTransaction> _FCreateTransactions;
+		private EntitySet<FCreateTransactionEntity> _Bi_FCreateTransactions;
 		
-		private EntitySet<FExtendLoan> _FExtendLoans;
+		private EntitySet<FExtendLoanEntity> _Bi_FExtendLoans;
 		
-		private EntityRef<FIApplicationAccepted> _FIApplicationAccepted;
+		private EntityRef<FIApplicationAcceptedEntity> _FIApplicationAcceptedEntity;
 		
-		private EntitySet<FIApplicationClosed> _FIApplicationCloseds;
+		private EntitySet<FIApplicationClosedEntity> _Bi_FIApplicationCloseds;
 		
-		private EntityRef<FIApplicationDeclined> _FIApplicationDeclined;
+		private EntityRef<FIApplicationDeclinedEntity> _FIApplicationDeclinedEntity;
 		
-		private EntityRef<FIFixedTermApplicationAdded> _FIFixedTermApplicationAdded;
+		private EntityRef<FIFixedTermApplicationAddedEntity> _FIFixedTermApplicationAddedEntity;
 		
-		private EntitySet<FPaymentCollection> _FPaymentCollections;
+		private EntitySet<FPaymentCollectionEntity> _Bi_FPaymentCollections;
 		
-		private EntitySet<FRepayLoan> _FRepayLoans;
+		private EntitySet<FRepayLoanEntity> _Bi_FRepayLoans;
 		
-		private EntitySet<FSignApplication> _FSignApplications;
+		private EntitySet<FSignApplicationEntity> _Bi_FSignApplications;
 		
-		private EntitySet<FSignFixedTermLoanExtension> _FSignFixedTermLoanExtensions;
+		private EntitySet<FSignFixedTermLoanExtensionEntity> _Bi_FSignFixedTermLoanExtensions;
 		
-		private EntitySet<FSignFixedTermLoanTopup> _FSignFixedTermLoanTopups;
+		private EntitySet<FSignFixedTermLoanTopupEntity> _Bi_FSignFixedTermLoanTopups;
 		
-		private EntityRef<FSubmitCounterOffer> _FSubmitCounterOffer;
+		private EntityRef<FSubmitCounterOfferEntity> _FSubmitCounterOfferEntity;
 		
-		private EntitySet<FTransactionLedger> _FTransactionLedgers;
+		private EntitySet<FTransactionLedgerEntity> _Bi_FTransactionLedgers;
 		
-		private EntitySet<FTransactionRequest> _FTransactionRequests;
+		private EntitySet<FTransactionRequestEntity> _Bi_FTransactionRequests;
 		
-		private EntitySet<FUpdateDailyAccruedInterest> _FUpdateDailyAccruedInterests;
+		private EntitySet<FUpdateDailyAccruedInterestEntity> _Bi_FUpdateDailyAccruedInterests;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -3382,29 +3382,29 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnUpdatedByMessageArchiveIdChanged();
     #endregion
 		
-		public Application()
+		public ApplicationEntity()
 		{
-			this._BankGateWayTransactions = new EntitySet<BankGateWayTransaction>(new Action<BankGateWayTransaction>(this.attach_BankGateWayTransactions), new Action<BankGateWayTransaction>(this.detach_BankGateWayTransactions));
-			this._FAggApplications = new EntitySet<FAggApplication>(new Action<FAggApplication>(this.attach_FAggApplications), new Action<FAggApplication>(this.detach_FAggApplications));
-			this._FBankAccountVerification = default(EntityRef<FBankAccountVerification>);
-			this._FCreateFixedTermLoanApplication = default(EntityRef<FCreateFixedTermLoanApplication>);
-			this._FCreateFixedTermLoanExtensions = new EntitySet<FCreateFixedTermLoanExtension>(new Action<FCreateFixedTermLoanExtension>(this.attach_FCreateFixedTermLoanExtensions), new Action<FCreateFixedTermLoanExtension>(this.detach_FCreateFixedTermLoanExtensions));
-			this._FCreateFixedTermLoanTopups = new EntitySet<FCreateFixedTermLoanTopup>(new Action<FCreateFixedTermLoanTopup>(this.attach_FCreateFixedTermLoanTopups), new Action<FCreateFixedTermLoanTopup>(this.detach_FCreateFixedTermLoanTopups));
-			this._FCreateTransactions = new EntitySet<FCreateTransaction>(new Action<FCreateTransaction>(this.attach_FCreateTransactions), new Action<FCreateTransaction>(this.detach_FCreateTransactions));
-			this._FExtendLoans = new EntitySet<FExtendLoan>(new Action<FExtendLoan>(this.attach_FExtendLoans), new Action<FExtendLoan>(this.detach_FExtendLoans));
-			this._FIApplicationAccepted = default(EntityRef<FIApplicationAccepted>);
-			this._FIApplicationCloseds = new EntitySet<FIApplicationClosed>(new Action<FIApplicationClosed>(this.attach_FIApplicationCloseds), new Action<FIApplicationClosed>(this.detach_FIApplicationCloseds));
-			this._FIApplicationDeclined = default(EntityRef<FIApplicationDeclined>);
-			this._FIFixedTermApplicationAdded = default(EntityRef<FIFixedTermApplicationAdded>);
-			this._FPaymentCollections = new EntitySet<FPaymentCollection>(new Action<FPaymentCollection>(this.attach_FPaymentCollections), new Action<FPaymentCollection>(this.detach_FPaymentCollections));
-			this._FRepayLoans = new EntitySet<FRepayLoan>(new Action<FRepayLoan>(this.attach_FRepayLoans), new Action<FRepayLoan>(this.detach_FRepayLoans));
-			this._FSignApplications = new EntitySet<FSignApplication>(new Action<FSignApplication>(this.attach_FSignApplications), new Action<FSignApplication>(this.detach_FSignApplications));
-			this._FSignFixedTermLoanExtensions = new EntitySet<FSignFixedTermLoanExtension>(new Action<FSignFixedTermLoanExtension>(this.attach_FSignFixedTermLoanExtensions), new Action<FSignFixedTermLoanExtension>(this.detach_FSignFixedTermLoanExtensions));
-			this._FSignFixedTermLoanTopups = new EntitySet<FSignFixedTermLoanTopup>(new Action<FSignFixedTermLoanTopup>(this.attach_FSignFixedTermLoanTopups), new Action<FSignFixedTermLoanTopup>(this.detach_FSignFixedTermLoanTopups));
-			this._FSubmitCounterOffer = default(EntityRef<FSubmitCounterOffer>);
-			this._FTransactionLedgers = new EntitySet<FTransactionLedger>(new Action<FTransactionLedger>(this.attach_FTransactionLedgers), new Action<FTransactionLedger>(this.detach_FTransactionLedgers));
-			this._FTransactionRequests = new EntitySet<FTransactionRequest>(new Action<FTransactionRequest>(this.attach_FTransactionRequests), new Action<FTransactionRequest>(this.detach_FTransactionRequests));
-			this._FUpdateDailyAccruedInterests = new EntitySet<FUpdateDailyAccruedInterest>(new Action<FUpdateDailyAccruedInterest>(this.attach_FUpdateDailyAccruedInterests), new Action<FUpdateDailyAccruedInterest>(this.detach_FUpdateDailyAccruedInterests));
+			this._Bi_BankGateWayTransactions = new EntitySet<BankGateWayTransactionEntity>(new Action<BankGateWayTransactionEntity>(this.attach_Bi_BankGateWayTransactions), new Action<BankGateWayTransactionEntity>(this.detach_Bi_BankGateWayTransactions));
+			this._Bi_FAggApplications = new EntitySet<FAggApplicationEntity>(new Action<FAggApplicationEntity>(this.attach_Bi_FAggApplications), new Action<FAggApplicationEntity>(this.detach_Bi_FAggApplications));
+			this._FBankAccountVerificationEntity = default(EntityRef<FBankAccountVerificationEntity>);
+			this._FCreateFixedTermLoanApplicationEntity = default(EntityRef<FCreateFixedTermLoanApplicationEntity>);
+			this._Bi_FCreateFixedTermLoanExtensions = new EntitySet<FCreateFixedTermLoanExtensionEntity>(new Action<FCreateFixedTermLoanExtensionEntity>(this.attach_Bi_FCreateFixedTermLoanExtensions), new Action<FCreateFixedTermLoanExtensionEntity>(this.detach_Bi_FCreateFixedTermLoanExtensions));
+			this._Bi_FCreateFixedTermLoanTopups = new EntitySet<FCreateFixedTermLoanTopupEntity>(new Action<FCreateFixedTermLoanTopupEntity>(this.attach_Bi_FCreateFixedTermLoanTopups), new Action<FCreateFixedTermLoanTopupEntity>(this.detach_Bi_FCreateFixedTermLoanTopups));
+			this._Bi_FCreateTransactions = new EntitySet<FCreateTransactionEntity>(new Action<FCreateTransactionEntity>(this.attach_Bi_FCreateTransactions), new Action<FCreateTransactionEntity>(this.detach_Bi_FCreateTransactions));
+			this._Bi_FExtendLoans = new EntitySet<FExtendLoanEntity>(new Action<FExtendLoanEntity>(this.attach_Bi_FExtendLoans), new Action<FExtendLoanEntity>(this.detach_Bi_FExtendLoans));
+			this._FIApplicationAcceptedEntity = default(EntityRef<FIApplicationAcceptedEntity>);
+			this._Bi_FIApplicationCloseds = new EntitySet<FIApplicationClosedEntity>(new Action<FIApplicationClosedEntity>(this.attach_Bi_FIApplicationCloseds), new Action<FIApplicationClosedEntity>(this.detach_Bi_FIApplicationCloseds));
+			this._FIApplicationDeclinedEntity = default(EntityRef<FIApplicationDeclinedEntity>);
+			this._FIFixedTermApplicationAddedEntity = default(EntityRef<FIFixedTermApplicationAddedEntity>);
+			this._Bi_FPaymentCollections = new EntitySet<FPaymentCollectionEntity>(new Action<FPaymentCollectionEntity>(this.attach_Bi_FPaymentCollections), new Action<FPaymentCollectionEntity>(this.detach_Bi_FPaymentCollections));
+			this._Bi_FRepayLoans = new EntitySet<FRepayLoanEntity>(new Action<FRepayLoanEntity>(this.attach_Bi_FRepayLoans), new Action<FRepayLoanEntity>(this.detach_Bi_FRepayLoans));
+			this._Bi_FSignApplications = new EntitySet<FSignApplicationEntity>(new Action<FSignApplicationEntity>(this.attach_Bi_FSignApplications), new Action<FSignApplicationEntity>(this.detach_Bi_FSignApplications));
+			this._Bi_FSignFixedTermLoanExtensions = new EntitySet<FSignFixedTermLoanExtensionEntity>(new Action<FSignFixedTermLoanExtensionEntity>(this.attach_Bi_FSignFixedTermLoanExtensions), new Action<FSignFixedTermLoanExtensionEntity>(this.detach_Bi_FSignFixedTermLoanExtensions));
+			this._Bi_FSignFixedTermLoanTopups = new EntitySet<FSignFixedTermLoanTopupEntity>(new Action<FSignFixedTermLoanTopupEntity>(this.attach_Bi_FSignFixedTermLoanTopups), new Action<FSignFixedTermLoanTopupEntity>(this.detach_Bi_FSignFixedTermLoanTopups));
+			this._FSubmitCounterOfferEntity = default(EntityRef<FSubmitCounterOfferEntity>);
+			this._Bi_FTransactionLedgers = new EntitySet<FTransactionLedgerEntity>(new Action<FTransactionLedgerEntity>(this.attach_Bi_FTransactionLedgers), new Action<FTransactionLedgerEntity>(this.detach_Bi_FTransactionLedgers));
+			this._Bi_FTransactionRequests = new EntitySet<FTransactionRequestEntity>(new Action<FTransactionRequestEntity>(this.attach_Bi_FTransactionRequests), new Action<FTransactionRequestEntity>(this.detach_Bi_FTransactionRequests));
+			this._Bi_FUpdateDailyAccruedInterests = new EntitySet<FUpdateDailyAccruedInterestEntity>(new Action<FUpdateDailyAccruedInterestEntity>(this.attach_Bi_FUpdateDailyAccruedInterests), new Action<FUpdateDailyAccruedInterestEntity>(this.detach_Bi_FUpdateDailyAccruedInterests));
 			OnCreated();
 		}
 		
@@ -3528,372 +3528,372 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biBankGatewayTranscation_REF_biApplication", Storage="_BankGateWayTransactions", ThisKey="ApplicationSKey", OtherKey="ApplicationSkey", DeleteRule="NO ACTION")]
-		public EntitySet<BankGateWayTransaction> BankGateWayTransactions
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biBankGatewayTranscation_REF_biApplication", Storage="_Bi_BankGateWayTransactions", ThisKey="ApplicationSKey", OtherKey="ApplicationSkey", DeleteRule="NO ACTION")]
+		public EntitySet<BankGateWayTransactionEntity> Bi_BankGateWayTransactions
 		{
 			get
 			{
-				return this._BankGateWayTransactions;
+				return this._Bi_BankGateWayTransactions;
 			}
 			set
 			{
-				this._BankGateWayTransactions.Assign(value);
+				this._Bi_BankGateWayTransactions.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggApplication_REF_biApplication", Storage="_FAggApplications", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FAggApplication> FAggApplications
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggApplication_REF_biApplication", Storage="_Bi_FAggApplications", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FAggApplicationEntity> Bi_FAggApplications
 		{
 			get
 			{
-				return this._FAggApplications;
+				return this._Bi_FAggApplications;
 			}
 			set
 			{
-				this._FAggApplications.Assign(value);
+				this._Bi_FAggApplications.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifBankAccountVerification_REF_biApplication", Storage="_FBankAccountVerification", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
-		public FBankAccountVerification FBankAccountVerification
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifBankAccountVerification_REF_biApplication", Storage="_FBankAccountVerificationEntity", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
+		public FBankAccountVerificationEntity FBankAccountVerificationEntity
 		{
 			get
 			{
-				return this._FBankAccountVerification.Entity;
+				return this._FBankAccountVerificationEntity.Entity;
 			}
 			set
 			{
-				FBankAccountVerification previousValue = this._FBankAccountVerification.Entity;
+				FBankAccountVerificationEntity previousValue = this._FBankAccountVerificationEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._FBankAccountVerification.HasLoadedOrAssignedValue == false)))
+							|| (this._FBankAccountVerificationEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._FBankAccountVerification.Entity = null;
-						previousValue.Application = null;
+						this._FBankAccountVerificationEntity.Entity = null;
+						previousValue.ApplicationEntity = null;
 					}
-					this._FBankAccountVerification.Entity = value;
+					this._FBankAccountVerificationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Application = this;
+						value.ApplicationEntity = this;
 					}
-					this.SendPropertyChanged("FBankAccountVerification");
+					this.SendPropertyChanged("FBankAccountVerificationEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biApplication", Storage="_FCreateFixedTermLoanApplication", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
-		public FCreateFixedTermLoanApplication FCreateFixedTermLoanApplication
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biApplication", Storage="_FCreateFixedTermLoanApplicationEntity", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
+		public FCreateFixedTermLoanApplicationEntity FCreateFixedTermLoanApplicationEntity
 		{
 			get
 			{
-				return this._FCreateFixedTermLoanApplication.Entity;
+				return this._FCreateFixedTermLoanApplicationEntity.Entity;
 			}
 			set
 			{
-				FCreateFixedTermLoanApplication previousValue = this._FCreateFixedTermLoanApplication.Entity;
+				FCreateFixedTermLoanApplicationEntity previousValue = this._FCreateFixedTermLoanApplicationEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._FCreateFixedTermLoanApplication.HasLoadedOrAssignedValue == false)))
+							|| (this._FCreateFixedTermLoanApplicationEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._FCreateFixedTermLoanApplication.Entity = null;
-						previousValue.Application = null;
+						this._FCreateFixedTermLoanApplicationEntity.Entity = null;
+						previousValue.ApplicationEntity = null;
 					}
-					this._FCreateFixedTermLoanApplication.Entity = value;
+					this._FCreateFixedTermLoanApplicationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Application = this;
+						value.ApplicationEntity = this;
 					}
-					this.SendPropertyChanged("FCreateFixedTermLoanApplication");
+					this.SendPropertyChanged("FCreateFixedTermLoanApplicationEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanExtension_REF_biApplication", Storage="_FCreateFixedTermLoanExtensions", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FCreateFixedTermLoanExtension> FCreateFixedTermLoanExtensions
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanExtension_REF_biApplication", Storage="_Bi_FCreateFixedTermLoanExtensions", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FCreateFixedTermLoanExtensionEntity> Bi_FCreateFixedTermLoanExtensions
 		{
 			get
 			{
-				return this._FCreateFixedTermLoanExtensions;
+				return this._Bi_FCreateFixedTermLoanExtensions;
 			}
 			set
 			{
-				this._FCreateFixedTermLoanExtensions.Assign(value);
+				this._Bi_FCreateFixedTermLoanExtensions.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanTopup_REF_biApplication", Storage="_FCreateFixedTermLoanTopups", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FCreateFixedTermLoanTopup> FCreateFixedTermLoanTopups
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanTopup_REF_biApplication", Storage="_Bi_FCreateFixedTermLoanTopups", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FCreateFixedTermLoanTopupEntity> Bi_FCreateFixedTermLoanTopups
 		{
 			get
 			{
-				return this._FCreateFixedTermLoanTopups;
+				return this._Bi_FCreateFixedTermLoanTopups;
 			}
 			set
 			{
-				this._FCreateFixedTermLoanTopups.Assign(value);
+				this._Bi_FCreateFixedTermLoanTopups.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateTransaction_REF_biApplication", Storage="_FCreateTransactions", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FCreateTransaction> FCreateTransactions
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateTransaction_REF_biApplication", Storage="_Bi_FCreateTransactions", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FCreateTransactionEntity> Bi_FCreateTransactions
 		{
 			get
 			{
-				return this._FCreateTransactions;
+				return this._Bi_FCreateTransactions;
 			}
 			set
 			{
-				this._FCreateTransactions.Assign(value);
+				this._Bi_FCreateTransactions.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifExtendLoan_REF_biApplication", Storage="_FExtendLoans", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FExtendLoan> FExtendLoans
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifExtendLoan_REF_biApplication", Storage="_Bi_FExtendLoans", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FExtendLoanEntity> Bi_FExtendLoans
 		{
 			get
 			{
-				return this._FExtendLoans;
+				return this._Bi_FExtendLoans;
 			}
 			set
 			{
-				this._FExtendLoans.Assign(value);
+				this._Bi_FExtendLoans.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationAccepted_REF_biApplication", Storage="_FIApplicationAccepted", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
-		public FIApplicationAccepted FIApplicationAccepted
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationAccepted_REF_biApplication", Storage="_FIApplicationAcceptedEntity", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
+		public FIApplicationAcceptedEntity FIApplicationAcceptedEntity
 		{
 			get
 			{
-				return this._FIApplicationAccepted.Entity;
+				return this._FIApplicationAcceptedEntity.Entity;
 			}
 			set
 			{
-				FIApplicationAccepted previousValue = this._FIApplicationAccepted.Entity;
+				FIApplicationAcceptedEntity previousValue = this._FIApplicationAcceptedEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._FIApplicationAccepted.HasLoadedOrAssignedValue == false)))
+							|| (this._FIApplicationAcceptedEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._FIApplicationAccepted.Entity = null;
-						previousValue.Application = null;
+						this._FIApplicationAcceptedEntity.Entity = null;
+						previousValue.ApplicationEntity = null;
 					}
-					this._FIApplicationAccepted.Entity = value;
+					this._FIApplicationAcceptedEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Application = this;
+						value.ApplicationEntity = this;
 					}
-					this.SendPropertyChanged("FIApplicationAccepted");
+					this.SendPropertyChanged("FIApplicationAcceptedEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationClosed_REF_biApplication", Storage="_FIApplicationCloseds", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FIApplicationClosed> FIApplicationCloseds
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationClosed_REF_biApplication", Storage="_Bi_FIApplicationCloseds", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FIApplicationClosedEntity> Bi_FIApplicationCloseds
 		{
 			get
 			{
-				return this._FIApplicationCloseds;
+				return this._Bi_FIApplicationCloseds;
 			}
 			set
 			{
-				this._FIApplicationCloseds.Assign(value);
+				this._Bi_FIApplicationCloseds.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationDeclined_REF_biApplication", Storage="_FIApplicationDeclined", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
-		public FIApplicationDeclined FIApplicationDeclined
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationDeclined_REF_biApplication", Storage="_FIApplicationDeclinedEntity", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
+		public FIApplicationDeclinedEntity FIApplicationDeclinedEntity
 		{
 			get
 			{
-				return this._FIApplicationDeclined.Entity;
+				return this._FIApplicationDeclinedEntity.Entity;
 			}
 			set
 			{
-				FIApplicationDeclined previousValue = this._FIApplicationDeclined.Entity;
+				FIApplicationDeclinedEntity previousValue = this._FIApplicationDeclinedEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._FIApplicationDeclined.HasLoadedOrAssignedValue == false)))
+							|| (this._FIApplicationDeclinedEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._FIApplicationDeclined.Entity = null;
-						previousValue.Application = null;
+						this._FIApplicationDeclinedEntity.Entity = null;
+						previousValue.ApplicationEntity = null;
 					}
-					this._FIApplicationDeclined.Entity = value;
+					this._FIApplicationDeclinedEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Application = this;
+						value.ApplicationEntity = this;
 					}
-					this.SendPropertyChanged("FIApplicationDeclined");
+					this.SendPropertyChanged("FIApplicationDeclinedEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIFixedTermApplicationAdded_REF_biApplication", Storage="_FIFixedTermApplicationAdded", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
-		public FIFixedTermApplicationAdded FIFixedTermApplicationAdded
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIFixedTermApplicationAdded_REF_biApplication", Storage="_FIFixedTermApplicationAddedEntity", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
+		public FIFixedTermApplicationAddedEntity FIFixedTermApplicationAddedEntity
 		{
 			get
 			{
-				return this._FIFixedTermApplicationAdded.Entity;
+				return this._FIFixedTermApplicationAddedEntity.Entity;
 			}
 			set
 			{
-				FIFixedTermApplicationAdded previousValue = this._FIFixedTermApplicationAdded.Entity;
+				FIFixedTermApplicationAddedEntity previousValue = this._FIFixedTermApplicationAddedEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._FIFixedTermApplicationAdded.HasLoadedOrAssignedValue == false)))
+							|| (this._FIFixedTermApplicationAddedEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._FIFixedTermApplicationAdded.Entity = null;
-						previousValue.Application = null;
+						this._FIFixedTermApplicationAddedEntity.Entity = null;
+						previousValue.ApplicationEntity = null;
 					}
-					this._FIFixedTermApplicationAdded.Entity = value;
+					this._FIFixedTermApplicationAddedEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Application = this;
+						value.ApplicationEntity = this;
 					}
-					this.SendPropertyChanged("FIFixedTermApplicationAdded");
+					this.SendPropertyChanged("FIFixedTermApplicationAddedEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentCollection_REF_biApplication", Storage="_FPaymentCollections", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FPaymentCollection> FPaymentCollections
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentCollection_REF_biApplication", Storage="_Bi_FPaymentCollections", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FPaymentCollectionEntity> Bi_FPaymentCollections
 		{
 			get
 			{
-				return this._FPaymentCollections;
+				return this._Bi_FPaymentCollections;
 			}
 			set
 			{
-				this._FPaymentCollections.Assign(value);
+				this._Bi_FPaymentCollections.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifRepayLoan_REF_biApplication", Storage="_FRepayLoans", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FRepayLoan> FRepayLoans
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifRepayLoan_REF_biApplication", Storage="_Bi_FRepayLoans", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FRepayLoanEntity> Bi_FRepayLoans
 		{
 			get
 			{
-				return this._FRepayLoans;
+				return this._Bi_FRepayLoans;
 			}
 			set
 			{
-				this._FRepayLoans.Assign(value);
+				this._Bi_FRepayLoans.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignApplication_REF_biApplication", Storage="_FSignApplications", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FSignApplication> FSignApplications
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignApplication_REF_biApplication", Storage="_Bi_FSignApplications", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FSignApplicationEntity> Bi_FSignApplications
 		{
 			get
 			{
-				return this._FSignApplications;
+				return this._Bi_FSignApplications;
 			}
 			set
 			{
-				this._FSignApplications.Assign(value);
+				this._Bi_FSignApplications.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanExtension_REF_biApplication", Storage="_FSignFixedTermLoanExtensions", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FSignFixedTermLoanExtension> FSignFixedTermLoanExtensions
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanExtension_REF_biApplication", Storage="_Bi_FSignFixedTermLoanExtensions", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FSignFixedTermLoanExtensionEntity> Bi_FSignFixedTermLoanExtensions
 		{
 			get
 			{
-				return this._FSignFixedTermLoanExtensions;
+				return this._Bi_FSignFixedTermLoanExtensions;
 			}
 			set
 			{
-				this._FSignFixedTermLoanExtensions.Assign(value);
+				this._Bi_FSignFixedTermLoanExtensions.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanTopup_REF_biApplication", Storage="_FSignFixedTermLoanTopups", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FSignFixedTermLoanTopup> FSignFixedTermLoanTopups
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanTopup_REF_biApplication", Storage="_Bi_FSignFixedTermLoanTopups", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FSignFixedTermLoanTopupEntity> Bi_FSignFixedTermLoanTopups
 		{
 			get
 			{
-				return this._FSignFixedTermLoanTopups;
+				return this._Bi_FSignFixedTermLoanTopups;
 			}
 			set
 			{
-				this._FSignFixedTermLoanTopups.Assign(value);
+				this._Bi_FSignFixedTermLoanTopups.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSubmitCounterOffer_REF_biApplication", Storage="_FSubmitCounterOffer", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
-		public FSubmitCounterOffer FSubmitCounterOffer
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSubmitCounterOffer_REF_biApplication", Storage="_FSubmitCounterOfferEntity", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
+		public FSubmitCounterOfferEntity FSubmitCounterOfferEntity
 		{
 			get
 			{
-				return this._FSubmitCounterOffer.Entity;
+				return this._FSubmitCounterOfferEntity.Entity;
 			}
 			set
 			{
-				FSubmitCounterOffer previousValue = this._FSubmitCounterOffer.Entity;
+				FSubmitCounterOfferEntity previousValue = this._FSubmitCounterOfferEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._FSubmitCounterOffer.HasLoadedOrAssignedValue == false)))
+							|| (this._FSubmitCounterOfferEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._FSubmitCounterOffer.Entity = null;
-						previousValue.Application = null;
+						this._FSubmitCounterOfferEntity.Entity = null;
+						previousValue.ApplicationEntity = null;
 					}
-					this._FSubmitCounterOffer.Entity = value;
+					this._FSubmitCounterOfferEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Application = this;
+						value.ApplicationEntity = this;
 					}
-					this.SendPropertyChanged("FSubmitCounterOffer");
+					this.SendPropertyChanged("FSubmitCounterOfferEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionLedger_REF_biApplication", Storage="_FTransactionLedgers", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FTransactionLedger> FTransactionLedgers
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionLedger_REF_biApplication", Storage="_Bi_FTransactionLedgers", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FTransactionLedgerEntity> Bi_FTransactionLedgers
 		{
 			get
 			{
-				return this._FTransactionLedgers;
+				return this._Bi_FTransactionLedgers;
 			}
 			set
 			{
-				this._FTransactionLedgers.Assign(value);
+				this._Bi_FTransactionLedgers.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biApplication", Storage="_FTransactionRequests", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FTransactionRequest> FTransactionRequests
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biApplication", Storage="_Bi_FTransactionRequests", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FTransactionRequestEntity> Bi_FTransactionRequests
 		{
 			get
 			{
-				return this._FTransactionRequests;
+				return this._Bi_FTransactionRequests;
 			}
 			set
 			{
-				this._FTransactionRequests.Assign(value);
+				this._Bi_FTransactionRequests.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifUpdateDailyAccruedInterest_REF_biApplication", Storage="_FUpdateDailyAccruedInterests", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FUpdateDailyAccruedInterest> FUpdateDailyAccruedInterests
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifUpdateDailyAccruedInterest_REF_biApplication", Storage="_Bi_FUpdateDailyAccruedInterests", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FUpdateDailyAccruedInterestEntity> Bi_FUpdateDailyAccruedInterests
 		{
 			get
 			{
-				return this._FUpdateDailyAccruedInterests;
+				return this._Bi_FUpdateDailyAccruedInterests;
 			}
 			set
 			{
-				this._FUpdateDailyAccruedInterests.Assign(value);
+				this._Bi_FUpdateDailyAccruedInterests.Assign(value);
 			}
 		}
 		
@@ -3917,189 +3917,189 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		private void attach_BankGateWayTransactions(BankGateWayTransaction entity)
+		private void attach_Bi_BankGateWayTransactions(BankGateWayTransactionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = this;
+			entity.ApplicationEntity = this;
 		}
 		
-		private void detach_BankGateWayTransactions(BankGateWayTransaction entity)
+		private void detach_Bi_BankGateWayTransactions(BankGateWayTransactionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = null;
+			entity.ApplicationEntity = null;
 		}
 		
-		private void attach_FAggApplications(FAggApplication entity)
+		private void attach_Bi_FAggApplications(FAggApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = this;
+			entity.ApplicationEntity = this;
 		}
 		
-		private void detach_FAggApplications(FAggApplication entity)
+		private void detach_Bi_FAggApplications(FAggApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = null;
+			entity.ApplicationEntity = null;
 		}
 		
-		private void attach_FCreateFixedTermLoanExtensions(FCreateFixedTermLoanExtension entity)
+		private void attach_Bi_FCreateFixedTermLoanExtensions(FCreateFixedTermLoanExtensionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = this;
+			entity.ApplicationEntity = this;
 		}
 		
-		private void detach_FCreateFixedTermLoanExtensions(FCreateFixedTermLoanExtension entity)
+		private void detach_Bi_FCreateFixedTermLoanExtensions(FCreateFixedTermLoanExtensionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = null;
+			entity.ApplicationEntity = null;
 		}
 		
-		private void attach_FCreateFixedTermLoanTopups(FCreateFixedTermLoanTopup entity)
+		private void attach_Bi_FCreateFixedTermLoanTopups(FCreateFixedTermLoanTopupEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = this;
+			entity.ApplicationEntity = this;
 		}
 		
-		private void detach_FCreateFixedTermLoanTopups(FCreateFixedTermLoanTopup entity)
+		private void detach_Bi_FCreateFixedTermLoanTopups(FCreateFixedTermLoanTopupEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = null;
+			entity.ApplicationEntity = null;
 		}
 		
-		private void attach_FCreateTransactions(FCreateTransaction entity)
+		private void attach_Bi_FCreateTransactions(FCreateTransactionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = this;
+			entity.ApplicationEntity = this;
 		}
 		
-		private void detach_FCreateTransactions(FCreateTransaction entity)
+		private void detach_Bi_FCreateTransactions(FCreateTransactionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = null;
+			entity.ApplicationEntity = null;
 		}
 		
-		private void attach_FExtendLoans(FExtendLoan entity)
+		private void attach_Bi_FExtendLoans(FExtendLoanEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = this;
+			entity.ApplicationEntity = this;
 		}
 		
-		private void detach_FExtendLoans(FExtendLoan entity)
+		private void detach_Bi_FExtendLoans(FExtendLoanEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = null;
+			entity.ApplicationEntity = null;
 		}
 		
-		private void attach_FIApplicationCloseds(FIApplicationClosed entity)
+		private void attach_Bi_FIApplicationCloseds(FIApplicationClosedEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = this;
+			entity.ApplicationEntity = this;
 		}
 		
-		private void detach_FIApplicationCloseds(FIApplicationClosed entity)
+		private void detach_Bi_FIApplicationCloseds(FIApplicationClosedEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = null;
+			entity.ApplicationEntity = null;
 		}
 		
-		private void attach_FPaymentCollections(FPaymentCollection entity)
+		private void attach_Bi_FPaymentCollections(FPaymentCollectionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = this;
+			entity.ApplicationEntity = this;
 		}
 		
-		private void detach_FPaymentCollections(FPaymentCollection entity)
+		private void detach_Bi_FPaymentCollections(FPaymentCollectionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = null;
+			entity.ApplicationEntity = null;
 		}
 		
-		private void attach_FRepayLoans(FRepayLoan entity)
+		private void attach_Bi_FRepayLoans(FRepayLoanEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = this;
+			entity.ApplicationEntity = this;
 		}
 		
-		private void detach_FRepayLoans(FRepayLoan entity)
+		private void detach_Bi_FRepayLoans(FRepayLoanEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = null;
+			entity.ApplicationEntity = null;
 		}
 		
-		private void attach_FSignApplications(FSignApplication entity)
+		private void attach_Bi_FSignApplications(FSignApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = this;
+			entity.ApplicationEntity = this;
 		}
 		
-		private void detach_FSignApplications(FSignApplication entity)
+		private void detach_Bi_FSignApplications(FSignApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = null;
+			entity.ApplicationEntity = null;
 		}
 		
-		private void attach_FSignFixedTermLoanExtensions(FSignFixedTermLoanExtension entity)
+		private void attach_Bi_FSignFixedTermLoanExtensions(FSignFixedTermLoanExtensionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = this;
+			entity.ApplicationEntity = this;
 		}
 		
-		private void detach_FSignFixedTermLoanExtensions(FSignFixedTermLoanExtension entity)
+		private void detach_Bi_FSignFixedTermLoanExtensions(FSignFixedTermLoanExtensionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = null;
+			entity.ApplicationEntity = null;
 		}
 		
-		private void attach_FSignFixedTermLoanTopups(FSignFixedTermLoanTopup entity)
+		private void attach_Bi_FSignFixedTermLoanTopups(FSignFixedTermLoanTopupEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = this;
+			entity.ApplicationEntity = this;
 		}
 		
-		private void detach_FSignFixedTermLoanTopups(FSignFixedTermLoanTopup entity)
+		private void detach_Bi_FSignFixedTermLoanTopups(FSignFixedTermLoanTopupEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = null;
+			entity.ApplicationEntity = null;
 		}
 		
-		private void attach_FTransactionLedgers(FTransactionLedger entity)
+		private void attach_Bi_FTransactionLedgers(FTransactionLedgerEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = this;
+			entity.ApplicationEntity = this;
 		}
 		
-		private void detach_FTransactionLedgers(FTransactionLedger entity)
+		private void detach_Bi_FTransactionLedgers(FTransactionLedgerEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = null;
+			entity.ApplicationEntity = null;
 		}
 		
-		private void attach_FTransactionRequests(FTransactionRequest entity)
+		private void attach_Bi_FTransactionRequests(FTransactionRequestEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = this;
+			entity.ApplicationEntity = this;
 		}
 		
-		private void detach_FTransactionRequests(FTransactionRequest entity)
+		private void detach_Bi_FTransactionRequests(FTransactionRequestEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = null;
+			entity.ApplicationEntity = null;
 		}
 		
-		private void attach_FUpdateDailyAccruedInterests(FUpdateDailyAccruedInterest entity)
+		private void attach_Bi_FUpdateDailyAccruedInterests(FUpdateDailyAccruedInterestEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = this;
+			entity.ApplicationEntity = this;
 		}
 		
-		private void detach_FUpdateDailyAccruedInterests(FUpdateDailyAccruedInterest entity)
+		private void detach_Bi_FUpdateDailyAccruedInterests(FUpdateDailyAccruedInterestEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Application = null;
+			entity.ApplicationEntity = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.ApplicationDeclinedReason")]
-	public partial class ApplicationDeclinedReason : DbEntity<ApplicationDeclinedReason>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class ApplicationDeclinedReasonEntity : DbEntity<ApplicationDeclinedReasonEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -4112,7 +4112,7 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _CreatedByMessageArchiveId;
 		
-		private EntitySet<FIApplicationDeclined> _FIApplicationDeclineds;
+		private EntitySet<FIApplicationDeclinedEntity> _Bi_FIApplicationDeclineds;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -4128,9 +4128,9 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnCreatedByMessageArchiveIdChanged();
     #endregion
 		
-		public ApplicationDeclinedReason()
+		public ApplicationDeclinedReasonEntity()
 		{
-			this._FIApplicationDeclineds = new EntitySet<FIApplicationDeclined>(new Action<FIApplicationDeclined>(this.attach_FIApplicationDeclineds), new Action<FIApplicationDeclined>(this.detach_FIApplicationDeclineds));
+			this._Bi_FIApplicationDeclineds = new EntitySet<FIApplicationDeclinedEntity>(new Action<FIApplicationDeclinedEntity>(this.attach_Bi_FIApplicationDeclineds), new Action<FIApplicationDeclinedEntity>(this.detach_Bi_FIApplicationDeclineds));
 			OnCreated();
 		}
 		
@@ -4214,16 +4214,16 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationDeclined_REF_biApplicationDeclinedReason", Storage="_FIApplicationDeclineds", ThisKey="ApplicationDeclinedReasonSKey", OtherKey="ApplicationDeclinedReasonSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FIApplicationDeclined> FIApplicationDeclineds
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationDeclined_REF_biApplicationDeclinedReason", Storage="_Bi_FIApplicationDeclineds", ThisKey="ApplicationDeclinedReasonSKey", OtherKey="ApplicationDeclinedReasonSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FIApplicationDeclinedEntity> Bi_FIApplicationDeclineds
 		{
 			get
 			{
-				return this._FIApplicationDeclineds;
+				return this._Bi_FIApplicationDeclineds;
 			}
 			set
 			{
-				this._FIApplicationDeclineds.Assign(value);
+				this._Bi_FIApplicationDeclineds.Assign(value);
 			}
 		}
 		
@@ -4247,21 +4247,21 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		private void attach_FIApplicationDeclineds(FIApplicationDeclined entity)
+		private void attach_Bi_FIApplicationDeclineds(FIApplicationDeclinedEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.ApplicationDeclinedReason = this;
+			entity.ApplicationDeclinedReasonEntity = this;
 		}
 		
-		private void detach_FIApplicationDeclineds(FIApplicationDeclined entity)
+		private void detach_Bi_FIApplicationDeclineds(FIApplicationDeclinedEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.ApplicationDeclinedReason = null;
+			entity.ApplicationDeclinedReasonEntity = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.BankAccount")]
-	public partial class BankAccount : DbEntity<BankAccount>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class BankAccountEntity : DbEntity<BankAccountEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -4292,9 +4292,9 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _UpdatedByMessageArchiveId;
 		
-		private EntitySet<FCreateFixedTermLoanApplication> _FCreateFixedTermLoanApplications;
+		private EntitySet<FCreateFixedTermLoanApplicationEntity> _Bi_FCreateFixedTermLoanApplications;
 		
-		private EntitySet<FTransactionRequest> _FTransactionRequests;
+		private EntitySet<FTransactionRequestEntity> _Bi_FTransactionRequests;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -4328,10 +4328,10 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnUpdatedByMessageArchiveIdChanged();
     #endregion
 		
-		public BankAccount()
+		public BankAccountEntity()
 		{
-			this._FCreateFixedTermLoanApplications = new EntitySet<FCreateFixedTermLoanApplication>(new Action<FCreateFixedTermLoanApplication>(this.attach_FCreateFixedTermLoanApplications), new Action<FCreateFixedTermLoanApplication>(this.detach_FCreateFixedTermLoanApplications));
-			this._FTransactionRequests = new EntitySet<FTransactionRequest>(new Action<FTransactionRequest>(this.attach_FTransactionRequests), new Action<FTransactionRequest>(this.detach_FTransactionRequests));
+			this._Bi_FCreateFixedTermLoanApplications = new EntitySet<FCreateFixedTermLoanApplicationEntity>(new Action<FCreateFixedTermLoanApplicationEntity>(this.attach_Bi_FCreateFixedTermLoanApplications), new Action<FCreateFixedTermLoanApplicationEntity>(this.detach_Bi_FCreateFixedTermLoanApplications));
+			this._Bi_FTransactionRequests = new EntitySet<FTransactionRequestEntity>(new Action<FTransactionRequestEntity>(this.attach_Bi_FTransactionRequests), new Action<FTransactionRequestEntity>(this.detach_Bi_FTransactionRequests));
 			OnCreated();
 		}
 		
@@ -4595,29 +4595,29 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biBankAccount", Storage="_FCreateFixedTermLoanApplications", ThisKey="BankAccountSKey", OtherKey="BankAccountSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FCreateFixedTermLoanApplication> FCreateFixedTermLoanApplications
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biBankAccount", Storage="_Bi_FCreateFixedTermLoanApplications", ThisKey="BankAccountSKey", OtherKey="BankAccountSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FCreateFixedTermLoanApplicationEntity> Bi_FCreateFixedTermLoanApplications
 		{
 			get
 			{
-				return this._FCreateFixedTermLoanApplications;
+				return this._Bi_FCreateFixedTermLoanApplications;
 			}
 			set
 			{
-				this._FCreateFixedTermLoanApplications.Assign(value);
+				this._Bi_FCreateFixedTermLoanApplications.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biBankAccount", Storage="_FTransactionRequests", ThisKey="BankAccountSKey", OtherKey="BankAccountSkey", DeleteRule="NO ACTION")]
-		public EntitySet<FTransactionRequest> FTransactionRequests
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biBankAccount", Storage="_Bi_FTransactionRequests", ThisKey="BankAccountSKey", OtherKey="BankAccountSkey", DeleteRule="NO ACTION")]
+		public EntitySet<FTransactionRequestEntity> Bi_FTransactionRequests
 		{
 			get
 			{
-				return this._FTransactionRequests;
+				return this._Bi_FTransactionRequests;
 			}
 			set
 			{
-				this._FTransactionRequests.Assign(value);
+				this._Bi_FTransactionRequests.Assign(value);
 			}
 		}
 		
@@ -4641,33 +4641,33 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		private void attach_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplication entity)
+		private void attach_Bi_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.BankAccount = this;
+			entity.BankAccountEntity = this;
 		}
 		
-		private void detach_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplication entity)
+		private void detach_Bi_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.BankAccount = null;
+			entity.BankAccountEntity = null;
 		}
 		
-		private void attach_FTransactionRequests(FTransactionRequest entity)
+		private void attach_Bi_FTransactionRequests(FTransactionRequestEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.BankAccount = this;
+			entity.BankAccountEntity = this;
 		}
 		
-		private void detach_FTransactionRequests(FTransactionRequest entity)
+		private void detach_Bi_FTransactionRequests(FTransactionRequestEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.BankAccount = null;
+			entity.BankAccountEntity = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.BankGateWayTransaction")]
-	public partial class BankGateWayTransaction : DbEntity<BankGateWayTransaction>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class BankGateWayTransactionEntity : DbEntity<BankGateWayTransactionEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -4698,9 +4698,9 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private System.Nullable<long> _UpdatedByMessageArchiveId;
 		
-		private EntityRef<Transaction> _Transaction;
+		private EntityRef<TransactionEntity> _TransactionEntity;
 		
-		private EntityRef<Application> _Application;
+		private EntityRef<ApplicationEntity> _ApplicationEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -4734,10 +4734,10 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnUpdatedByMessageArchiveIdChanged();
     #endregion
 		
-		public BankGateWayTransaction()
+		public BankGateWayTransactionEntity()
 		{
-			this._Transaction = default(EntityRef<Transaction>);
-			this._Application = default(EntityRef<Application>);
+			this._TransactionEntity = default(EntityRef<TransactionEntity>);
+			this._ApplicationEntity = default(EntityRef<ApplicationEntity>);
 			OnCreated();
 		}
 		
@@ -4752,7 +4752,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._TransactionSkey != value))
 				{
-					if (this._Transaction.HasLoadedOrAssignedValue)
+					if (this._TransactionEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -4916,7 +4916,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._ApplicationSkey != value))
 				{
-					if (this._Application.HasLoadedOrAssignedValue)
+					if (this._ApplicationEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -5009,70 +5009,70 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biBankGateWayTransaction_REF_biTransaction", Storage="_Transaction", ThisKey="TransactionSkey", OtherKey="TransactionSKey", IsForeignKey=true)]
-		public Transaction Transaction
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biBankGateWayTransaction_REF_biTransaction", Storage="_TransactionEntity", ThisKey="TransactionSkey", OtherKey="TransactionSKey", IsForeignKey=true)]
+		public TransactionEntity TransactionEntity
 		{
 			get
 			{
-				return this._Transaction.Entity;
+				return this._TransactionEntity.Entity;
 			}
 			set
 			{
-				Transaction previousValue = this._Transaction.Entity;
+				TransactionEntity previousValue = this._TransactionEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Transaction.HasLoadedOrAssignedValue == false)))
+							|| (this._TransactionEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Transaction.Entity = null;
-						previousValue.BankGateWayTransaction = null;
+						this._TransactionEntity.Entity = null;
+						previousValue.BankGateWayTransactionEntity = null;
 					}
-					this._Transaction.Entity = value;
+					this._TransactionEntity.Entity = value;
 					if ((value != null))
 					{
-						value.BankGateWayTransaction = this;
+						value.BankGateWayTransactionEntity = this;
 						this._TransactionSkey = value.TransactionSKey;
 					}
 					else
 					{
 						this._TransactionSkey = default(int);
 					}
-					this.SendPropertyChanged("Transaction");
+					this.SendPropertyChanged("TransactionEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biBankGatewayTranscation_REF_biApplication", Storage="_Application", ThisKey="ApplicationSkey", OtherKey="ApplicationSKey", IsForeignKey=true)]
-		public Application Application
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biBankGatewayTranscation_REF_biApplication", Storage="_ApplicationEntity", ThisKey="ApplicationSkey", OtherKey="ApplicationSKey", IsForeignKey=true)]
+		public ApplicationEntity ApplicationEntity
 		{
 			get
 			{
-				return this._Application.Entity;
+				return this._ApplicationEntity.Entity;
 			}
 			set
 			{
-				Application previousValue = this._Application.Entity;
+				ApplicationEntity previousValue = this._ApplicationEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Application.HasLoadedOrAssignedValue == false)))
+							|| (this._ApplicationEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Application.Entity = null;
-						previousValue.BankGateWayTransactions.Remove(this);
+						this._ApplicationEntity.Entity = null;
+						previousValue.Bi_BankGateWayTransactions.Remove(this);
 					}
-					this._Application.Entity = value;
+					this._ApplicationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.BankGateWayTransactions.Add(this);
+						value.Bi_BankGateWayTransactions.Add(this);
 						this._ApplicationSkey = value.ApplicationSKey;
 					}
 					else
 					{
 						this._ApplicationSkey = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("Application");
+					this.SendPropertyChanged("ApplicationEntity");
 				}
 			}
 		}
@@ -5099,7 +5099,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.CollectionMethod")]
-	public partial class CollectionMethod : DbEntity<CollectionMethod>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class CollectionMethodEntity : DbEntity<CollectionMethodEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -5118,7 +5118,7 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnCollectionMethodNKeyChanged();
     #endregion
 		
-		public CollectionMethod()
+		public CollectionMethodEntity()
 		{
 			OnCreated();
 		}
@@ -5185,7 +5185,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.Currency")]
-	public partial class Currency : DbEntity<Currency>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class CurrencyEntity : DbEntity<CurrencyEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -5194,13 +5194,13 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private string _CurrencyNKey;
 		
-		private EntitySet<FCreateFixedTermLoanApplication> _FCreateFixedTermLoanApplications;
+		private EntitySet<FCreateFixedTermLoanApplicationEntity> _Bi_FCreateFixedTermLoanApplications;
 		
-		private EntitySet<FCreateTransaction> _FCreateTransactions;
+		private EntitySet<FCreateTransactionEntity> _Bi_FCreateTransactions;
 		
-		private EntitySet<FTransactionLedger> _FTransactionLedgers;
+		private EntitySet<FTransactionLedgerEntity> _Bi_FTransactionLedgers;
 		
-		private EntitySet<FTransactionRequest> _FTransactionRequests;
+		private EntitySet<FTransactionRequestEntity> _Bi_FTransactionRequests;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -5212,12 +5212,12 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnCurrencyNKeyChanged();
     #endregion
 		
-		public Currency()
+		public CurrencyEntity()
 		{
-			this._FCreateFixedTermLoanApplications = new EntitySet<FCreateFixedTermLoanApplication>(new Action<FCreateFixedTermLoanApplication>(this.attach_FCreateFixedTermLoanApplications), new Action<FCreateFixedTermLoanApplication>(this.detach_FCreateFixedTermLoanApplications));
-			this._FCreateTransactions = new EntitySet<FCreateTransaction>(new Action<FCreateTransaction>(this.attach_FCreateTransactions), new Action<FCreateTransaction>(this.detach_FCreateTransactions));
-			this._FTransactionLedgers = new EntitySet<FTransactionLedger>(new Action<FTransactionLedger>(this.attach_FTransactionLedgers), new Action<FTransactionLedger>(this.detach_FTransactionLedgers));
-			this._FTransactionRequests = new EntitySet<FTransactionRequest>(new Action<FTransactionRequest>(this.attach_FTransactionRequests), new Action<FTransactionRequest>(this.detach_FTransactionRequests));
+			this._Bi_FCreateFixedTermLoanApplications = new EntitySet<FCreateFixedTermLoanApplicationEntity>(new Action<FCreateFixedTermLoanApplicationEntity>(this.attach_Bi_FCreateFixedTermLoanApplications), new Action<FCreateFixedTermLoanApplicationEntity>(this.detach_Bi_FCreateFixedTermLoanApplications));
+			this._Bi_FCreateTransactions = new EntitySet<FCreateTransactionEntity>(new Action<FCreateTransactionEntity>(this.attach_Bi_FCreateTransactions), new Action<FCreateTransactionEntity>(this.detach_Bi_FCreateTransactions));
+			this._Bi_FTransactionLedgers = new EntitySet<FTransactionLedgerEntity>(new Action<FTransactionLedgerEntity>(this.attach_Bi_FTransactionLedgers), new Action<FTransactionLedgerEntity>(this.detach_Bi_FTransactionLedgers));
+			this._Bi_FTransactionRequests = new EntitySet<FTransactionRequestEntity>(new Action<FTransactionRequestEntity>(this.attach_Bi_FTransactionRequests), new Action<FTransactionRequestEntity>(this.detach_Bi_FTransactionRequests));
 			OnCreated();
 		}
 		
@@ -5261,55 +5261,55 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biCurrency", Storage="_FCreateFixedTermLoanApplications", ThisKey="CurrencySKey", OtherKey="CurrencySKey", DeleteRule="NO ACTION")]
-		public EntitySet<FCreateFixedTermLoanApplication> FCreateFixedTermLoanApplications
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biCurrency", Storage="_Bi_FCreateFixedTermLoanApplications", ThisKey="CurrencySKey", OtherKey="CurrencySKey", DeleteRule="NO ACTION")]
+		public EntitySet<FCreateFixedTermLoanApplicationEntity> Bi_FCreateFixedTermLoanApplications
 		{
 			get
 			{
-				return this._FCreateFixedTermLoanApplications;
+				return this._Bi_FCreateFixedTermLoanApplications;
 			}
 			set
 			{
-				this._FCreateFixedTermLoanApplications.Assign(value);
+				this._Bi_FCreateFixedTermLoanApplications.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateTransaction_REF_biCurrency", Storage="_FCreateTransactions", ThisKey="CurrencySKey", OtherKey="CurrencySKey", DeleteRule="NO ACTION")]
-		public EntitySet<FCreateTransaction> FCreateTransactions
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateTransaction_REF_biCurrency", Storage="_Bi_FCreateTransactions", ThisKey="CurrencySKey", OtherKey="CurrencySKey", DeleteRule="NO ACTION")]
+		public EntitySet<FCreateTransactionEntity> Bi_FCreateTransactions
 		{
 			get
 			{
-				return this._FCreateTransactions;
+				return this._Bi_FCreateTransactions;
 			}
 			set
 			{
-				this._FCreateTransactions.Assign(value);
+				this._Bi_FCreateTransactions.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionLedger_REF_biCurrency", Storage="_FTransactionLedgers", ThisKey="CurrencySKey", OtherKey="CurrencySKey", DeleteRule="NO ACTION")]
-		public EntitySet<FTransactionLedger> FTransactionLedgers
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionLedger_REF_biCurrency", Storage="_Bi_FTransactionLedgers", ThisKey="CurrencySKey", OtherKey="CurrencySKey", DeleteRule="NO ACTION")]
+		public EntitySet<FTransactionLedgerEntity> Bi_FTransactionLedgers
 		{
 			get
 			{
-				return this._FTransactionLedgers;
+				return this._Bi_FTransactionLedgers;
 			}
 			set
 			{
-				this._FTransactionLedgers.Assign(value);
+				this._Bi_FTransactionLedgers.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biCurrency", Storage="_FTransactionRequests", ThisKey="CurrencySKey", OtherKey="CurrencySKey", DeleteRule="NO ACTION")]
-		public EntitySet<FTransactionRequest> FTransactionRequests
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biCurrency", Storage="_Bi_FTransactionRequests", ThisKey="CurrencySKey", OtherKey="CurrencySKey", DeleteRule="NO ACTION")]
+		public EntitySet<FTransactionRequestEntity> Bi_FTransactionRequests
 		{
 			get
 			{
-				return this._FTransactionRequests;
+				return this._Bi_FTransactionRequests;
 			}
 			set
 			{
-				this._FTransactionRequests.Assign(value);
+				this._Bi_FTransactionRequests.Assign(value);
 			}
 		}
 		
@@ -5333,57 +5333,57 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		private void attach_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplication entity)
+		private void attach_Bi_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Currency = this;
+			entity.CurrencyEntity = this;
 		}
 		
-		private void detach_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplication entity)
+		private void detach_Bi_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Currency = null;
+			entity.CurrencyEntity = null;
 		}
 		
-		private void attach_FCreateTransactions(FCreateTransaction entity)
+		private void attach_Bi_FCreateTransactions(FCreateTransactionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Currency = this;
+			entity.CurrencyEntity = this;
 		}
 		
-		private void detach_FCreateTransactions(FCreateTransaction entity)
+		private void detach_Bi_FCreateTransactions(FCreateTransactionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Currency = null;
+			entity.CurrencyEntity = null;
 		}
 		
-		private void attach_FTransactionLedgers(FTransactionLedger entity)
+		private void attach_Bi_FTransactionLedgers(FTransactionLedgerEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Currency = this;
+			entity.CurrencyEntity = this;
 		}
 		
-		private void detach_FTransactionLedgers(FTransactionLedger entity)
+		private void detach_Bi_FTransactionLedgers(FTransactionLedgerEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Currency = null;
+			entity.CurrencyEntity = null;
 		}
 		
-		private void attach_FTransactionRequests(FTransactionRequest entity)
+		private void attach_Bi_FTransactionRequests(FTransactionRequestEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Currency = this;
+			entity.CurrencyEntity = this;
 		}
 		
-		private void detach_FTransactionRequests(FTransactionRequest entity)
+		private void detach_Bi_FTransactionRequests(FTransactionRequestEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Currency = null;
+			entity.CurrencyEntity = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.Date")]
-	public partial class Date : DbEntity<Date>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class DateEntity : DbEntity<DateEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -5410,71 +5410,71 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private byte _Week;
 		
-		private EntitySet<FAddPaymentCard> _FAddPaymentCards;
+		private EntitySet<FAddPaymentCardEntity> _Bi_FAddPaymentCards;
 		
-		private EntitySet<FAggApplication> _FAggApplications;
+		private EntitySet<FAggApplicationEntity> _Bi_FAggApplications;
 		
-		private EntitySet<FAggLoanNumber> _FAggLoanNumbers;
+		private EntitySet<FAggLoanNumberEntity> _Bi_FAggLoanNumbers;
 		
-		private EntitySet<FAggTransactionAllocation> _FAggTransactionAllocations;
+		private EntitySet<FAggTransactionAllocationEntity> _Bi_FAggTransactionAllocations;
 		
-		private EntitySet<FCreateFixedTermLoanApplication> _FCreateFixedTermLoanApplications;
+		private EntitySet<FCreateFixedTermLoanApplicationEntity> _Bi_FCreateFixedTermLoanApplications;
 		
-		private EntitySet<FCreateFixedTermLoanApplication> _DateSKeyBi_FCreateFixedTermLoanApplications;
+		private EntitySet<FCreateFixedTermLoanApplicationEntity> _DateSKeyBi_FCreateFixedTermLoanApplications;
 		
-		private EntitySet<FCreateFixedTermLoanExtension> _FCreateFixedTermLoanExtensions;
+		private EntitySet<FCreateFixedTermLoanExtensionEntity> _Bi_FCreateFixedTermLoanExtensions;
 		
-		private EntitySet<FCreateFixedTermLoanExtension> _DateSKeyBi_FCreateFixedTermLoanExtensions;
+		private EntitySet<FCreateFixedTermLoanExtensionEntity> _DateSKeyBi_FCreateFixedTermLoanExtensions;
 		
-		private EntitySet<FCreateFixedTermLoanTopup> _FCreateFixedTermLoanTopups;
+		private EntitySet<FCreateFixedTermLoanTopupEntity> _Bi_FCreateFixedTermLoanTopups;
 		
-		private EntitySet<FCreateTransaction> _FCreateTransactions;
+		private EntitySet<FCreateTransactionEntity> _Bi_FCreateTransactions;
 		
-		private EntitySet<FEquifaxResponse> _FEquifaxResponses;
+		private EntitySet<FEquifaxResponseEntity> _Bi_FEquifaxResponses;
 		
-		private EntitySet<FExtendLoan> _FExtendLoans;
+		private EntitySet<FExtendLoanEntity> _Bi_FExtendLoans;
 		
-		private EntitySet<FExtendLoan> _DateSKeyBi_FExtendLoans;
+		private EntitySet<FExtendLoanEntity> _DateSKeyBi_FExtendLoans;
 		
-		private EntitySet<FIApplicationAccepted> _FIApplicationAccepteds;
+		private EntitySet<FIApplicationAcceptedEntity> _Bi_FIApplicationAccepteds;
 		
-		private EntitySet<FIApplicationClosed> _FIApplicationCloseds;
+		private EntitySet<FIApplicationClosedEntity> _Bi_FIApplicationCloseds;
 		
-		private EntitySet<FIApplicationDeclined> _FIApplicationDeclineds;
+		private EntitySet<FIApplicationDeclinedEntity> _Bi_FIApplicationDeclineds;
 		
-		private EntitySet<FIFixedTermApplicationAdded> _FIFixedTermApplicationAddeds;
+		private EntitySet<FIFixedTermApplicationAddedEntity> _Bi_FIFixedTermApplicationAddeds;
 		
-		private EntitySet<FPaymentCollection> _FPaymentCollections;
+		private EntitySet<FPaymentCollectionEntity> _Bi_FPaymentCollections;
 		
-		private EntitySet<FPaymentCollection> _DateSKeyBi_FPaymentCollections;
+		private EntitySet<FPaymentCollectionEntity> _DateSKeyBi_FPaymentCollections;
 		
-		private EntitySet<FPaymentCollection> _BifPaymentCollection_REF_bidate_2s;
+		private EntitySet<FPaymentCollectionEntity> _BifPaymentCollection_REF_bidate_2s;
 		
-		private EntitySet<FSignApplication> _FSignApplications;
+		private EntitySet<FSignApplicationEntity> _Bi_FSignApplications;
 		
-		private EntitySet<FSignFixedTermLoanExtension> _FSignFixedTermLoanExtensions;
+		private EntitySet<FSignFixedTermLoanExtensionEntity> _Bi_FSignFixedTermLoanExtensions;
 		
-		private EntitySet<FSignFixedTermLoanExtension> _DateSKeyBi_FSignFixedTermLoanExtensions;
+		private EntitySet<FSignFixedTermLoanExtensionEntity> _DateSKeyBi_FSignFixedTermLoanExtensions;
 		
-		private EntitySet<FSignFixedTermLoanTopup> _FSignFixedTermLoanTopups;
+		private EntitySet<FSignFixedTermLoanTopupEntity> _Bi_FSignFixedTermLoanTopups;
 		
-		private EntitySet<FTransactionLedger> _FTransactionLedgers;
+		private EntitySet<FTransactionLedgerEntity> _Bi_FTransactionLedgers;
 		
-		private EntitySet<FTransactionLedger> _DateSKeyBi_FTransactionLedgers;
+		private EntitySet<FTransactionLedgerEntity> _DateSKeyBi_FTransactionLedgers;
 		
-		private EntitySet<FTransactionRequest> _FTransactionRequests;
+		private EntitySet<FTransactionRequestEntity> _Bi_FTransactionRequests;
 		
-		private EntitySet<FTransactionRequest> _DateSKeyBi_FTransactionRequests;
+		private EntitySet<FTransactionRequestEntity> _DateSKeyBi_FTransactionRequests;
 		
-		private EntitySet<FTransactionRequest> _BifTransactionRequest_REF_biDate_2s;
+		private EntitySet<FTransactionRequestEntity> _BifTransactionRequest_REF_biDate_2s;
 		
-		private EntitySet<FTransactionRequestDetail> _FTransactionRequestDetails;
+		private EntitySet<FTransactionRequestDetailEntity> _Bi_FTransactionRequestDetails;
 		
-		private EntitySet<FTransunionResponse> _FTransunionResponses;
+		private EntitySet<FTransunionResponseEntity> _Bi_FTransunionResponses;
 		
-		private EntitySet<FTransunionResponse> _DateSKeyBi_FTransunionResponses;
+		private EntitySet<FTransunionResponseEntity> _DateSKeyBi_FTransunionResponses;
 		
-		private EntitySet<FUpdateDailyAccruedInterest> _FUpdateDailyAccruedInterests;
+		private EntitySet<FUpdateDailyAccruedInterestEntity> _Bi_FUpdateDailyAccruedInterests;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -5504,41 +5504,41 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnWeekChanged();
     #endregion
 		
-		public Date()
+		public DateEntity()
 		{
-			this._FAddPaymentCards = new EntitySet<FAddPaymentCard>(new Action<FAddPaymentCard>(this.attach_FAddPaymentCards), new Action<FAddPaymentCard>(this.detach_FAddPaymentCards));
-			this._FAggApplications = new EntitySet<FAggApplication>(new Action<FAggApplication>(this.attach_FAggApplications), new Action<FAggApplication>(this.detach_FAggApplications));
-			this._FAggLoanNumbers = new EntitySet<FAggLoanNumber>(new Action<FAggLoanNumber>(this.attach_FAggLoanNumbers), new Action<FAggLoanNumber>(this.detach_FAggLoanNumbers));
-			this._FAggTransactionAllocations = new EntitySet<FAggTransactionAllocation>(new Action<FAggTransactionAllocation>(this.attach_FAggTransactionAllocations), new Action<FAggTransactionAllocation>(this.detach_FAggTransactionAllocations));
-			this._FCreateFixedTermLoanApplications = new EntitySet<FCreateFixedTermLoanApplication>(new Action<FCreateFixedTermLoanApplication>(this.attach_FCreateFixedTermLoanApplications), new Action<FCreateFixedTermLoanApplication>(this.detach_FCreateFixedTermLoanApplications));
-			this._DateSKeyBi_FCreateFixedTermLoanApplications = new EntitySet<FCreateFixedTermLoanApplication>(new Action<FCreateFixedTermLoanApplication>(this.attach_DateSKeyBi_FCreateFixedTermLoanApplications), new Action<FCreateFixedTermLoanApplication>(this.detach_DateSKeyBi_FCreateFixedTermLoanApplications));
-			this._FCreateFixedTermLoanExtensions = new EntitySet<FCreateFixedTermLoanExtension>(new Action<FCreateFixedTermLoanExtension>(this.attach_FCreateFixedTermLoanExtensions), new Action<FCreateFixedTermLoanExtension>(this.detach_FCreateFixedTermLoanExtensions));
-			this._DateSKeyBi_FCreateFixedTermLoanExtensions = new EntitySet<FCreateFixedTermLoanExtension>(new Action<FCreateFixedTermLoanExtension>(this.attach_DateSKeyBi_FCreateFixedTermLoanExtensions), new Action<FCreateFixedTermLoanExtension>(this.detach_DateSKeyBi_FCreateFixedTermLoanExtensions));
-			this._FCreateFixedTermLoanTopups = new EntitySet<FCreateFixedTermLoanTopup>(new Action<FCreateFixedTermLoanTopup>(this.attach_FCreateFixedTermLoanTopups), new Action<FCreateFixedTermLoanTopup>(this.detach_FCreateFixedTermLoanTopups));
-			this._FCreateTransactions = new EntitySet<FCreateTransaction>(new Action<FCreateTransaction>(this.attach_FCreateTransactions), new Action<FCreateTransaction>(this.detach_FCreateTransactions));
-			this._FEquifaxResponses = new EntitySet<FEquifaxResponse>(new Action<FEquifaxResponse>(this.attach_FEquifaxResponses), new Action<FEquifaxResponse>(this.detach_FEquifaxResponses));
-			this._FExtendLoans = new EntitySet<FExtendLoan>(new Action<FExtendLoan>(this.attach_FExtendLoans), new Action<FExtendLoan>(this.detach_FExtendLoans));
-			this._DateSKeyBi_FExtendLoans = new EntitySet<FExtendLoan>(new Action<FExtendLoan>(this.attach_DateSKeyBi_FExtendLoans), new Action<FExtendLoan>(this.detach_DateSKeyBi_FExtendLoans));
-			this._FIApplicationAccepteds = new EntitySet<FIApplicationAccepted>(new Action<FIApplicationAccepted>(this.attach_FIApplicationAccepteds), new Action<FIApplicationAccepted>(this.detach_FIApplicationAccepteds));
-			this._FIApplicationCloseds = new EntitySet<FIApplicationClosed>(new Action<FIApplicationClosed>(this.attach_FIApplicationCloseds), new Action<FIApplicationClosed>(this.detach_FIApplicationCloseds));
-			this._FIApplicationDeclineds = new EntitySet<FIApplicationDeclined>(new Action<FIApplicationDeclined>(this.attach_FIApplicationDeclineds), new Action<FIApplicationDeclined>(this.detach_FIApplicationDeclineds));
-			this._FIFixedTermApplicationAddeds = new EntitySet<FIFixedTermApplicationAdded>(new Action<FIFixedTermApplicationAdded>(this.attach_FIFixedTermApplicationAddeds), new Action<FIFixedTermApplicationAdded>(this.detach_FIFixedTermApplicationAddeds));
-			this._FPaymentCollections = new EntitySet<FPaymentCollection>(new Action<FPaymentCollection>(this.attach_FPaymentCollections), new Action<FPaymentCollection>(this.detach_FPaymentCollections));
-			this._DateSKeyBi_FPaymentCollections = new EntitySet<FPaymentCollection>(new Action<FPaymentCollection>(this.attach_DateSKeyBi_FPaymentCollections), new Action<FPaymentCollection>(this.detach_DateSKeyBi_FPaymentCollections));
-			this._BifPaymentCollection_REF_bidate_2s = new EntitySet<FPaymentCollection>(new Action<FPaymentCollection>(this.attach_BifPaymentCollection_REF_bidate_2s), new Action<FPaymentCollection>(this.detach_BifPaymentCollection_REF_bidate_2s));
-			this._FSignApplications = new EntitySet<FSignApplication>(new Action<FSignApplication>(this.attach_FSignApplications), new Action<FSignApplication>(this.detach_FSignApplications));
-			this._FSignFixedTermLoanExtensions = new EntitySet<FSignFixedTermLoanExtension>(new Action<FSignFixedTermLoanExtension>(this.attach_FSignFixedTermLoanExtensions), new Action<FSignFixedTermLoanExtension>(this.detach_FSignFixedTermLoanExtensions));
-			this._DateSKeyBi_FSignFixedTermLoanExtensions = new EntitySet<FSignFixedTermLoanExtension>(new Action<FSignFixedTermLoanExtension>(this.attach_DateSKeyBi_FSignFixedTermLoanExtensions), new Action<FSignFixedTermLoanExtension>(this.detach_DateSKeyBi_FSignFixedTermLoanExtensions));
-			this._FSignFixedTermLoanTopups = new EntitySet<FSignFixedTermLoanTopup>(new Action<FSignFixedTermLoanTopup>(this.attach_FSignFixedTermLoanTopups), new Action<FSignFixedTermLoanTopup>(this.detach_FSignFixedTermLoanTopups));
-			this._FTransactionLedgers = new EntitySet<FTransactionLedger>(new Action<FTransactionLedger>(this.attach_FTransactionLedgers), new Action<FTransactionLedger>(this.detach_FTransactionLedgers));
-			this._DateSKeyBi_FTransactionLedgers = new EntitySet<FTransactionLedger>(new Action<FTransactionLedger>(this.attach_DateSKeyBi_FTransactionLedgers), new Action<FTransactionLedger>(this.detach_DateSKeyBi_FTransactionLedgers));
-			this._FTransactionRequests = new EntitySet<FTransactionRequest>(new Action<FTransactionRequest>(this.attach_FTransactionRequests), new Action<FTransactionRequest>(this.detach_FTransactionRequests));
-			this._DateSKeyBi_FTransactionRequests = new EntitySet<FTransactionRequest>(new Action<FTransactionRequest>(this.attach_DateSKeyBi_FTransactionRequests), new Action<FTransactionRequest>(this.detach_DateSKeyBi_FTransactionRequests));
-			this._BifTransactionRequest_REF_biDate_2s = new EntitySet<FTransactionRequest>(new Action<FTransactionRequest>(this.attach_BifTransactionRequest_REF_biDate_2s), new Action<FTransactionRequest>(this.detach_BifTransactionRequest_REF_biDate_2s));
-			this._FTransactionRequestDetails = new EntitySet<FTransactionRequestDetail>(new Action<FTransactionRequestDetail>(this.attach_FTransactionRequestDetails), new Action<FTransactionRequestDetail>(this.detach_FTransactionRequestDetails));
-			this._FTransunionResponses = new EntitySet<FTransunionResponse>(new Action<FTransunionResponse>(this.attach_FTransunionResponses), new Action<FTransunionResponse>(this.detach_FTransunionResponses));
-			this._DateSKeyBi_FTransunionResponses = new EntitySet<FTransunionResponse>(new Action<FTransunionResponse>(this.attach_DateSKeyBi_FTransunionResponses), new Action<FTransunionResponse>(this.detach_DateSKeyBi_FTransunionResponses));
-			this._FUpdateDailyAccruedInterests = new EntitySet<FUpdateDailyAccruedInterest>(new Action<FUpdateDailyAccruedInterest>(this.attach_FUpdateDailyAccruedInterests), new Action<FUpdateDailyAccruedInterest>(this.detach_FUpdateDailyAccruedInterests));
+			this._Bi_FAddPaymentCards = new EntitySet<FAddPaymentCardEntity>(new Action<FAddPaymentCardEntity>(this.attach_Bi_FAddPaymentCards), new Action<FAddPaymentCardEntity>(this.detach_Bi_FAddPaymentCards));
+			this._Bi_FAggApplications = new EntitySet<FAggApplicationEntity>(new Action<FAggApplicationEntity>(this.attach_Bi_FAggApplications), new Action<FAggApplicationEntity>(this.detach_Bi_FAggApplications));
+			this._Bi_FAggLoanNumbers = new EntitySet<FAggLoanNumberEntity>(new Action<FAggLoanNumberEntity>(this.attach_Bi_FAggLoanNumbers), new Action<FAggLoanNumberEntity>(this.detach_Bi_FAggLoanNumbers));
+			this._Bi_FAggTransactionAllocations = new EntitySet<FAggTransactionAllocationEntity>(new Action<FAggTransactionAllocationEntity>(this.attach_Bi_FAggTransactionAllocations), new Action<FAggTransactionAllocationEntity>(this.detach_Bi_FAggTransactionAllocations));
+			this._Bi_FCreateFixedTermLoanApplications = new EntitySet<FCreateFixedTermLoanApplicationEntity>(new Action<FCreateFixedTermLoanApplicationEntity>(this.attach_Bi_FCreateFixedTermLoanApplications), new Action<FCreateFixedTermLoanApplicationEntity>(this.detach_Bi_FCreateFixedTermLoanApplications));
+			this._DateSKeyBi_FCreateFixedTermLoanApplications = new EntitySet<FCreateFixedTermLoanApplicationEntity>(new Action<FCreateFixedTermLoanApplicationEntity>(this.attach_DateSKeyBi_FCreateFixedTermLoanApplications), new Action<FCreateFixedTermLoanApplicationEntity>(this.detach_DateSKeyBi_FCreateFixedTermLoanApplications));
+			this._Bi_FCreateFixedTermLoanExtensions = new EntitySet<FCreateFixedTermLoanExtensionEntity>(new Action<FCreateFixedTermLoanExtensionEntity>(this.attach_Bi_FCreateFixedTermLoanExtensions), new Action<FCreateFixedTermLoanExtensionEntity>(this.detach_Bi_FCreateFixedTermLoanExtensions));
+			this._DateSKeyBi_FCreateFixedTermLoanExtensions = new EntitySet<FCreateFixedTermLoanExtensionEntity>(new Action<FCreateFixedTermLoanExtensionEntity>(this.attach_DateSKeyBi_FCreateFixedTermLoanExtensions), new Action<FCreateFixedTermLoanExtensionEntity>(this.detach_DateSKeyBi_FCreateFixedTermLoanExtensions));
+			this._Bi_FCreateFixedTermLoanTopups = new EntitySet<FCreateFixedTermLoanTopupEntity>(new Action<FCreateFixedTermLoanTopupEntity>(this.attach_Bi_FCreateFixedTermLoanTopups), new Action<FCreateFixedTermLoanTopupEntity>(this.detach_Bi_FCreateFixedTermLoanTopups));
+			this._Bi_FCreateTransactions = new EntitySet<FCreateTransactionEntity>(new Action<FCreateTransactionEntity>(this.attach_Bi_FCreateTransactions), new Action<FCreateTransactionEntity>(this.detach_Bi_FCreateTransactions));
+			this._Bi_FEquifaxResponses = new EntitySet<FEquifaxResponseEntity>(new Action<FEquifaxResponseEntity>(this.attach_Bi_FEquifaxResponses), new Action<FEquifaxResponseEntity>(this.detach_Bi_FEquifaxResponses));
+			this._Bi_FExtendLoans = new EntitySet<FExtendLoanEntity>(new Action<FExtendLoanEntity>(this.attach_Bi_FExtendLoans), new Action<FExtendLoanEntity>(this.detach_Bi_FExtendLoans));
+			this._DateSKeyBi_FExtendLoans = new EntitySet<FExtendLoanEntity>(new Action<FExtendLoanEntity>(this.attach_DateSKeyBi_FExtendLoans), new Action<FExtendLoanEntity>(this.detach_DateSKeyBi_FExtendLoans));
+			this._Bi_FIApplicationAccepteds = new EntitySet<FIApplicationAcceptedEntity>(new Action<FIApplicationAcceptedEntity>(this.attach_Bi_FIApplicationAccepteds), new Action<FIApplicationAcceptedEntity>(this.detach_Bi_FIApplicationAccepteds));
+			this._Bi_FIApplicationCloseds = new EntitySet<FIApplicationClosedEntity>(new Action<FIApplicationClosedEntity>(this.attach_Bi_FIApplicationCloseds), new Action<FIApplicationClosedEntity>(this.detach_Bi_FIApplicationCloseds));
+			this._Bi_FIApplicationDeclineds = new EntitySet<FIApplicationDeclinedEntity>(new Action<FIApplicationDeclinedEntity>(this.attach_Bi_FIApplicationDeclineds), new Action<FIApplicationDeclinedEntity>(this.detach_Bi_FIApplicationDeclineds));
+			this._Bi_FIFixedTermApplicationAddeds = new EntitySet<FIFixedTermApplicationAddedEntity>(new Action<FIFixedTermApplicationAddedEntity>(this.attach_Bi_FIFixedTermApplicationAddeds), new Action<FIFixedTermApplicationAddedEntity>(this.detach_Bi_FIFixedTermApplicationAddeds));
+			this._Bi_FPaymentCollections = new EntitySet<FPaymentCollectionEntity>(new Action<FPaymentCollectionEntity>(this.attach_Bi_FPaymentCollections), new Action<FPaymentCollectionEntity>(this.detach_Bi_FPaymentCollections));
+			this._DateSKeyBi_FPaymentCollections = new EntitySet<FPaymentCollectionEntity>(new Action<FPaymentCollectionEntity>(this.attach_DateSKeyBi_FPaymentCollections), new Action<FPaymentCollectionEntity>(this.detach_DateSKeyBi_FPaymentCollections));
+			this._BifPaymentCollection_REF_bidate_2s = new EntitySet<FPaymentCollectionEntity>(new Action<FPaymentCollectionEntity>(this.attach_BifPaymentCollection_REF_bidate_2s), new Action<FPaymentCollectionEntity>(this.detach_BifPaymentCollection_REF_bidate_2s));
+			this._Bi_FSignApplications = new EntitySet<FSignApplicationEntity>(new Action<FSignApplicationEntity>(this.attach_Bi_FSignApplications), new Action<FSignApplicationEntity>(this.detach_Bi_FSignApplications));
+			this._Bi_FSignFixedTermLoanExtensions = new EntitySet<FSignFixedTermLoanExtensionEntity>(new Action<FSignFixedTermLoanExtensionEntity>(this.attach_Bi_FSignFixedTermLoanExtensions), new Action<FSignFixedTermLoanExtensionEntity>(this.detach_Bi_FSignFixedTermLoanExtensions));
+			this._DateSKeyBi_FSignFixedTermLoanExtensions = new EntitySet<FSignFixedTermLoanExtensionEntity>(new Action<FSignFixedTermLoanExtensionEntity>(this.attach_DateSKeyBi_FSignFixedTermLoanExtensions), new Action<FSignFixedTermLoanExtensionEntity>(this.detach_DateSKeyBi_FSignFixedTermLoanExtensions));
+			this._Bi_FSignFixedTermLoanTopups = new EntitySet<FSignFixedTermLoanTopupEntity>(new Action<FSignFixedTermLoanTopupEntity>(this.attach_Bi_FSignFixedTermLoanTopups), new Action<FSignFixedTermLoanTopupEntity>(this.detach_Bi_FSignFixedTermLoanTopups));
+			this._Bi_FTransactionLedgers = new EntitySet<FTransactionLedgerEntity>(new Action<FTransactionLedgerEntity>(this.attach_Bi_FTransactionLedgers), new Action<FTransactionLedgerEntity>(this.detach_Bi_FTransactionLedgers));
+			this._DateSKeyBi_FTransactionLedgers = new EntitySet<FTransactionLedgerEntity>(new Action<FTransactionLedgerEntity>(this.attach_DateSKeyBi_FTransactionLedgers), new Action<FTransactionLedgerEntity>(this.detach_DateSKeyBi_FTransactionLedgers));
+			this._Bi_FTransactionRequests = new EntitySet<FTransactionRequestEntity>(new Action<FTransactionRequestEntity>(this.attach_Bi_FTransactionRequests), new Action<FTransactionRequestEntity>(this.detach_Bi_FTransactionRequests));
+			this._DateSKeyBi_FTransactionRequests = new EntitySet<FTransactionRequestEntity>(new Action<FTransactionRequestEntity>(this.attach_DateSKeyBi_FTransactionRequests), new Action<FTransactionRequestEntity>(this.detach_DateSKeyBi_FTransactionRequests));
+			this._BifTransactionRequest_REF_biDate_2s = new EntitySet<FTransactionRequestEntity>(new Action<FTransactionRequestEntity>(this.attach_BifTransactionRequest_REF_biDate_2s), new Action<FTransactionRequestEntity>(this.detach_BifTransactionRequest_REF_biDate_2s));
+			this._Bi_FTransactionRequestDetails = new EntitySet<FTransactionRequestDetailEntity>(new Action<FTransactionRequestDetailEntity>(this.attach_Bi_FTransactionRequestDetails), new Action<FTransactionRequestDetailEntity>(this.detach_Bi_FTransactionRequestDetails));
+			this._Bi_FTransunionResponses = new EntitySet<FTransunionResponseEntity>(new Action<FTransunionResponseEntity>(this.attach_Bi_FTransunionResponses), new Action<FTransunionResponseEntity>(this.detach_Bi_FTransunionResponses));
+			this._DateSKeyBi_FTransunionResponses = new EntitySet<FTransunionResponseEntity>(new Action<FTransunionResponseEntity>(this.attach_DateSKeyBi_FTransunionResponses), new Action<FTransunionResponseEntity>(this.detach_DateSKeyBi_FTransunionResponses));
+			this._Bi_FUpdateDailyAccruedInterests = new EntitySet<FUpdateDailyAccruedInterestEntity>(new Action<FUpdateDailyAccruedInterestEntity>(this.attach_Bi_FUpdateDailyAccruedInterests), new Action<FUpdateDailyAccruedInterestEntity>(this.detach_Bi_FUpdateDailyAccruedInterests));
 			OnCreated();
 		}
 		
@@ -5762,73 +5762,73 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAddPaymentCard_REF_biDate", Storage="_FAddPaymentCards", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FAddPaymentCard> FAddPaymentCards
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAddPaymentCard_REF_biDate", Storage="_Bi_FAddPaymentCards", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FAddPaymentCardEntity> Bi_FAddPaymentCards
 		{
 			get
 			{
-				return this._FAddPaymentCards;
+				return this._Bi_FAddPaymentCards;
 			}
 			set
 			{
-				this._FAddPaymentCards.Assign(value);
+				this._Bi_FAddPaymentCards.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggApplication_REF_biDate", Storage="_FAggApplications", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FAggApplication> FAggApplications
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggApplication_REF_biDate", Storage="_Bi_FAggApplications", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FAggApplicationEntity> Bi_FAggApplications
 		{
 			get
 			{
-				return this._FAggApplications;
+				return this._Bi_FAggApplications;
 			}
 			set
 			{
-				this._FAggApplications.Assign(value);
+				this._Bi_FAggApplications.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggLoanNumber_REF_biDate", Storage="_FAggLoanNumbers", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FAggLoanNumber> FAggLoanNumbers
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggLoanNumber_REF_biDate", Storage="_Bi_FAggLoanNumbers", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FAggLoanNumberEntity> Bi_FAggLoanNumbers
 		{
 			get
 			{
-				return this._FAggLoanNumbers;
+				return this._Bi_FAggLoanNumbers;
 			}
 			set
 			{
-				this._FAggLoanNumbers.Assign(value);
+				this._Bi_FAggLoanNumbers.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggTransactionAllocation_REF_biDate", Storage="_FAggTransactionAllocations", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FAggTransactionAllocation> FAggTransactionAllocations
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggTransactionAllocation_REF_biDate", Storage="_Bi_FAggTransactionAllocations", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FAggTransactionAllocationEntity> Bi_FAggTransactionAllocations
 		{
 			get
 			{
-				return this._FAggTransactionAllocations;
+				return this._Bi_FAggTransactionAllocations;
 			}
 			set
 			{
-				this._FAggTransactionAllocations.Assign(value);
+				this._Bi_FAggTransactionAllocations.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biDate_1", Storage="_FCreateFixedTermLoanApplications", ThisKey="DateSKey", OtherKey="ApplicationDateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FCreateFixedTermLoanApplication> FCreateFixedTermLoanApplications
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biDate_1", Storage="_Bi_FCreateFixedTermLoanApplications", ThisKey="DateSKey", OtherKey="ApplicationDateSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FCreateFixedTermLoanApplicationEntity> Bi_FCreateFixedTermLoanApplications
 		{
 			get
 			{
-				return this._FCreateFixedTermLoanApplications;
+				return this._Bi_FCreateFixedTermLoanApplications;
 			}
 			set
 			{
-				this._FCreateFixedTermLoanApplications.Assign(value);
+				this._Bi_FCreateFixedTermLoanApplications.Assign(value);
 			}
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biDate_2", Storage="_DateSKeyBi_FCreateFixedTermLoanApplications", ThisKey="DateSKey", OtherKey="PromiseDateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FCreateFixedTermLoanApplication> DateSKeyBi_FCreateFixedTermLoanApplications
+		public EntitySet<FCreateFixedTermLoanApplicationEntity> DateSKeyBi_FCreateFixedTermLoanApplications
 		{
 			get
 			{
@@ -5840,21 +5840,21 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanExtension_REF_biDate", Storage="_FCreateFixedTermLoanExtensions", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FCreateFixedTermLoanExtension> FCreateFixedTermLoanExtensions
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanExtension_REF_biDate", Storage="_Bi_FCreateFixedTermLoanExtensions", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FCreateFixedTermLoanExtensionEntity> Bi_FCreateFixedTermLoanExtensions
 		{
 			get
 			{
-				return this._FCreateFixedTermLoanExtensions;
+				return this._Bi_FCreateFixedTermLoanExtensions;
 			}
 			set
 			{
-				this._FCreateFixedTermLoanExtensions.Assign(value);
+				this._Bi_FCreateFixedTermLoanExtensions.Assign(value);
 			}
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanExtension_REF_biDate_2", Storage="_DateSKeyBi_FCreateFixedTermLoanExtensions", ThisKey="DateSKey", OtherKey="ExtendDateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FCreateFixedTermLoanExtension> DateSKeyBi_FCreateFixedTermLoanExtensions
+		public EntitySet<FCreateFixedTermLoanExtensionEntity> DateSKeyBi_FCreateFixedTermLoanExtensions
 		{
 			get
 			{
@@ -5866,60 +5866,60 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanTopup_REF_biDateSKey", Storage="_FCreateFixedTermLoanTopups", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FCreateFixedTermLoanTopup> FCreateFixedTermLoanTopups
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanTopup_REF_biDateSKey", Storage="_Bi_FCreateFixedTermLoanTopups", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FCreateFixedTermLoanTopupEntity> Bi_FCreateFixedTermLoanTopups
 		{
 			get
 			{
-				return this._FCreateFixedTermLoanTopups;
+				return this._Bi_FCreateFixedTermLoanTopups;
 			}
 			set
 			{
-				this._FCreateFixedTermLoanTopups.Assign(value);
+				this._Bi_FCreateFixedTermLoanTopups.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateTransaction_REF_biDate", Storage="_FCreateTransactions", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FCreateTransaction> FCreateTransactions
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateTransaction_REF_biDate", Storage="_Bi_FCreateTransactions", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FCreateTransactionEntity> Bi_FCreateTransactions
 		{
 			get
 			{
-				return this._FCreateTransactions;
+				return this._Bi_FCreateTransactions;
 			}
 			set
 			{
-				this._FCreateTransactions.Assign(value);
+				this._Bi_FCreateTransactions.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fk_bifEquifaxResponse_REF_biDate", Storage="_FEquifaxResponses", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FEquifaxResponse> FEquifaxResponses
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fk_bifEquifaxResponse_REF_biDate", Storage="_Bi_FEquifaxResponses", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FEquifaxResponseEntity> Bi_FEquifaxResponses
 		{
 			get
 			{
-				return this._FEquifaxResponses;
+				return this._Bi_FEquifaxResponses;
 			}
 			set
 			{
-				this._FEquifaxResponses.Assign(value);
+				this._Bi_FEquifaxResponses.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifExtendLoan_REF_biDate_1", Storage="_FExtendLoans", ThisKey="DateSKey", OtherKey="RequestDateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FExtendLoan> FExtendLoans
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifExtendLoan_REF_biDate_1", Storage="_Bi_FExtendLoans", ThisKey="DateSKey", OtherKey="RequestDateSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FExtendLoanEntity> Bi_FExtendLoans
 		{
 			get
 			{
-				return this._FExtendLoans;
+				return this._Bi_FExtendLoans;
 			}
 			set
 			{
-				this._FExtendLoans.Assign(value);
+				this._Bi_FExtendLoans.Assign(value);
 			}
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifExtendLoan_REF_biDate_2", Storage="_DateSKeyBi_FExtendLoans", ThisKey="DateSKey", OtherKey="NextDueDateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FExtendLoan> DateSKeyBi_FExtendLoans
+		public EntitySet<FExtendLoanEntity> DateSKeyBi_FExtendLoans
 		{
 			get
 			{
@@ -5931,73 +5931,73 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationAccepted_REF_biDate", Storage="_FIApplicationAccepteds", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FIApplicationAccepted> FIApplicationAccepteds
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationAccepted_REF_biDate", Storage="_Bi_FIApplicationAccepteds", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FIApplicationAcceptedEntity> Bi_FIApplicationAccepteds
 		{
 			get
 			{
-				return this._FIApplicationAccepteds;
+				return this._Bi_FIApplicationAccepteds;
 			}
 			set
 			{
-				this._FIApplicationAccepteds.Assign(value);
+				this._Bi_FIApplicationAccepteds.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationClosed_REF_biDate", Storage="_FIApplicationCloseds", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FIApplicationClosed> FIApplicationCloseds
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationClosed_REF_biDate", Storage="_Bi_FIApplicationCloseds", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FIApplicationClosedEntity> Bi_FIApplicationCloseds
 		{
 			get
 			{
-				return this._FIApplicationCloseds;
+				return this._Bi_FIApplicationCloseds;
 			}
 			set
 			{
-				this._FIApplicationCloseds.Assign(value);
+				this._Bi_FIApplicationCloseds.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationDeclined_REF_biDate", Storage="_FIApplicationDeclineds", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FIApplicationDeclined> FIApplicationDeclineds
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationDeclined_REF_biDate", Storage="_Bi_FIApplicationDeclineds", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FIApplicationDeclinedEntity> Bi_FIApplicationDeclineds
 		{
 			get
 			{
-				return this._FIApplicationDeclineds;
+				return this._Bi_FIApplicationDeclineds;
 			}
 			set
 			{
-				this._FIApplicationDeclineds.Assign(value);
+				this._Bi_FIApplicationDeclineds.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIFixedTermApplicationAdded_REF_biDate", Storage="_FIFixedTermApplicationAddeds", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FIFixedTermApplicationAdded> FIFixedTermApplicationAddeds
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIFixedTermApplicationAdded_REF_biDate", Storage="_Bi_FIFixedTermApplicationAddeds", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FIFixedTermApplicationAddedEntity> Bi_FIFixedTermApplicationAddeds
 		{
 			get
 			{
-				return this._FIFixedTermApplicationAddeds;
+				return this._Bi_FIFixedTermApplicationAddeds;
 			}
 			set
 			{
-				this._FIFixedTermApplicationAddeds.Assign(value);
+				this._Bi_FIFixedTermApplicationAddeds.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentCollection_REF_biDate", Storage="_FPaymentCollections", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FPaymentCollection> FPaymentCollections
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentCollection_REF_biDate", Storage="_Bi_FPaymentCollections", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FPaymentCollectionEntity> Bi_FPaymentCollections
 		{
 			get
 			{
-				return this._FPaymentCollections;
+				return this._Bi_FPaymentCollections;
 			}
 			set
 			{
-				this._FPaymentCollections.Assign(value);
+				this._Bi_FPaymentCollections.Assign(value);
 			}
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentCollection_REF_biDate_1", Storage="_DateSKeyBi_FPaymentCollections", ThisKey="DateSKey", OtherKey="PaymentCollectionStartDateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FPaymentCollection> DateSKeyBi_FPaymentCollections
+		public EntitySet<FPaymentCollectionEntity> DateSKeyBi_FPaymentCollections
 		{
 			get
 			{
@@ -6010,7 +6010,7 @@ namespace Wonga.QA.Framework.Db.Bi
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentCollection_REF_bidate_2", Storage="_BifPaymentCollection_REF_bidate_2s", ThisKey="DateSKey", OtherKey="PaymentCollectionEndDateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FPaymentCollection> BifPaymentCollection_REF_bidate_2s
+		public EntitySet<FPaymentCollectionEntity> BifPaymentCollection_REF_bidate_2s
 		{
 			get
 			{
@@ -6022,34 +6022,34 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignApplication_REF_biDate", Storage="_FSignApplications", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FSignApplication> FSignApplications
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignApplication_REF_biDate", Storage="_Bi_FSignApplications", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FSignApplicationEntity> Bi_FSignApplications
 		{
 			get
 			{
-				return this._FSignApplications;
+				return this._Bi_FSignApplications;
 			}
 			set
 			{
-				this._FSignApplications.Assign(value);
+				this._Bi_FSignApplications.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanExtension_REF_biDate", Storage="_FSignFixedTermLoanExtensions", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FSignFixedTermLoanExtension> FSignFixedTermLoanExtensions
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanExtension_REF_biDate", Storage="_Bi_FSignFixedTermLoanExtensions", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FSignFixedTermLoanExtensionEntity> Bi_FSignFixedTermLoanExtensions
 		{
 			get
 			{
-				return this._FSignFixedTermLoanExtensions;
+				return this._Bi_FSignFixedTermLoanExtensions;
 			}
 			set
 			{
-				this._FSignFixedTermLoanExtensions.Assign(value);
+				this._Bi_FSignFixedTermLoanExtensions.Assign(value);
 			}
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanExtension_REF_biDate_2", Storage="_DateSKeyBi_FSignFixedTermLoanExtensions", ThisKey="DateSKey", OtherKey="ExtendDateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FSignFixedTermLoanExtension> DateSKeyBi_FSignFixedTermLoanExtensions
+		public EntitySet<FSignFixedTermLoanExtensionEntity> DateSKeyBi_FSignFixedTermLoanExtensions
 		{
 			get
 			{
@@ -6061,34 +6061,34 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanTopup_REF_biDate", Storage="_FSignFixedTermLoanTopups", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FSignFixedTermLoanTopup> FSignFixedTermLoanTopups
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanTopup_REF_biDate", Storage="_Bi_FSignFixedTermLoanTopups", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FSignFixedTermLoanTopupEntity> Bi_FSignFixedTermLoanTopups
 		{
 			get
 			{
-				return this._FSignFixedTermLoanTopups;
+				return this._Bi_FSignFixedTermLoanTopups;
 			}
 			set
 			{
-				this._FSignFixedTermLoanTopups.Assign(value);
+				this._Bi_FSignFixedTermLoanTopups.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionLedger_REF_biDate", Storage="_FTransactionLedgers", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FTransactionLedger> FTransactionLedgers
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionLedger_REF_biDate", Storage="_Bi_FTransactionLedgers", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FTransactionLedgerEntity> Bi_FTransactionLedgers
 		{
 			get
 			{
-				return this._FTransactionLedgers;
+				return this._Bi_FTransactionLedgers;
 			}
 			set
 			{
-				this._FTransactionLedgers.Assign(value);
+				this._Bi_FTransactionLedgers.Assign(value);
 			}
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionledger_REF_biDate_2", Storage="_DateSKeyBi_FTransactionLedgers", ThisKey="DateSKey", OtherKey="PostedDateSkey", DeleteRule="NO ACTION")]
-		public EntitySet<FTransactionLedger> DateSKeyBi_FTransactionLedgers
+		public EntitySet<FTransactionLedgerEntity> DateSKeyBi_FTransactionLedgers
 		{
 			get
 			{
@@ -6100,21 +6100,21 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biDate", Storage="_FTransactionRequests", ThisKey="DateSKey", OtherKey="TransactionDateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FTransactionRequest> FTransactionRequests
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biDate", Storage="_Bi_FTransactionRequests", ThisKey="DateSKey", OtherKey="TransactionDateSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FTransactionRequestEntity> Bi_FTransactionRequests
 		{
 			get
 			{
-				return this._FTransactionRequests;
+				return this._Bi_FTransactionRequests;
 			}
 			set
 			{
-				this._FTransactionRequests.Assign(value);
+				this._Bi_FTransactionRequests.Assign(value);
 			}
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biDate_1", Storage="_DateSKeyBi_FTransactionRequests", ThisKey="DateSKey", OtherKey="SuccessDateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FTransactionRequest> DateSKeyBi_FTransactionRequests
+		public EntitySet<FTransactionRequestEntity> DateSKeyBi_FTransactionRequests
 		{
 			get
 			{
@@ -6127,7 +6127,7 @@ namespace Wonga.QA.Framework.Db.Bi
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biDate_2", Storage="_BifTransactionRequest_REF_biDate_2s", ThisKey="DateSKey", OtherKey="PaymentCollectionEndDateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FTransactionRequest> BifTransactionRequest_REF_biDate_2s
+		public EntitySet<FTransactionRequestEntity> BifTransactionRequest_REF_biDate_2s
 		{
 			get
 			{
@@ -6139,34 +6139,34 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequestDetails_REF_biDate", Storage="_FTransactionRequestDetails", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FTransactionRequestDetail> FTransactionRequestDetails
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequestDetails_REF_biDate", Storage="_Bi_FTransactionRequestDetails", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FTransactionRequestDetailEntity> Bi_FTransactionRequestDetails
 		{
 			get
 			{
-				return this._FTransactionRequestDetails;
+				return this._Bi_FTransactionRequestDetails;
 			}
 			set
 			{
-				this._FTransactionRequestDetails.Assign(value);
+				this._Bi_FTransactionRequestDetails.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransunionResponse_REF_biDate", Storage="_FTransunionResponses", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FTransunionResponse> FTransunionResponses
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransunionResponse_REF_biDate", Storage="_Bi_FTransunionResponses", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FTransunionResponseEntity> Bi_FTransunionResponses
 		{
 			get
 			{
-				return this._FTransunionResponses;
+				return this._Bi_FTransunionResponses;
 			}
 			set
 			{
-				this._FTransunionResponses.Assign(value);
+				this._Bi_FTransunionResponses.Assign(value);
 			}
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransunionResponse_REF_biDate2", Storage="_DateSKeyBi_FTransunionResponses", ThisKey="DateSKey", OtherKey="ProcessingStartDateSkey", DeleteRule="NO ACTION")]
-		public EntitySet<FTransunionResponse> DateSKeyBi_FTransunionResponses
+		public EntitySet<FTransunionResponseEntity> DateSKeyBi_FTransunionResponses
 		{
 			get
 			{
@@ -6178,16 +6178,16 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifUpdateDailyAccruedInterest_REF_biDate", Storage="_FUpdateDailyAccruedInterests", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FUpdateDailyAccruedInterest> FUpdateDailyAccruedInterests
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifUpdateDailyAccruedInterest_REF_biDate", Storage="_Bi_FUpdateDailyAccruedInterests", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FUpdateDailyAccruedInterestEntity> Bi_FUpdateDailyAccruedInterests
 		{
 			get
 			{
-				return this._FUpdateDailyAccruedInterests;
+				return this._Bi_FUpdateDailyAccruedInterests;
 			}
 			set
 			{
-				this._FUpdateDailyAccruedInterests.Assign(value);
+				this._Bi_FUpdateDailyAccruedInterests.Assign(value);
 			}
 		}
 		
@@ -6211,405 +6211,405 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		private void attach_FAddPaymentCards(FAddPaymentCard entity)
+		private void attach_Bi_FAddPaymentCards(FAddPaymentCardEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = this;
+			entity.DateEntity = this;
 		}
 		
-		private void detach_FAddPaymentCards(FAddPaymentCard entity)
+		private void detach_Bi_FAddPaymentCards(FAddPaymentCardEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = null;
+			entity.DateEntity = null;
 		}
 		
-		private void attach_FAggApplications(FAggApplication entity)
+		private void attach_Bi_FAggApplications(FAggApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = this;
+			entity.DateEntity = this;
 		}
 		
-		private void detach_FAggApplications(FAggApplication entity)
+		private void detach_Bi_FAggApplications(FAggApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = null;
+			entity.DateEntity = null;
 		}
 		
-		private void attach_FAggLoanNumbers(FAggLoanNumber entity)
+		private void attach_Bi_FAggLoanNumbers(FAggLoanNumberEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = this;
+			entity.DateEntity = this;
 		}
 		
-		private void detach_FAggLoanNumbers(FAggLoanNumber entity)
+		private void detach_Bi_FAggLoanNumbers(FAggLoanNumberEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = null;
+			entity.DateEntity = null;
 		}
 		
-		private void attach_FAggTransactionAllocations(FAggTransactionAllocation entity)
+		private void attach_Bi_FAggTransactionAllocations(FAggTransactionAllocationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = this;
+			entity.DateEntity = this;
 		}
 		
-		private void detach_FAggTransactionAllocations(FAggTransactionAllocation entity)
+		private void detach_Bi_FAggTransactionAllocations(FAggTransactionAllocationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = null;
+			entity.DateEntity = null;
 		}
 		
-		private void attach_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplication entity)
+		private void attach_Bi_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = this;
+			entity.DateEntity = this;
 		}
 		
-		private void detach_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplication entity)
+		private void detach_Bi_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = null;
+			entity.DateEntity = null;
 		}
 		
-		private void attach_DateSKeyBi_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplication entity)
+		private void attach_DateSKeyBi_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.PromiseDateSKeyBi_Date = this;
 		}
 		
-		private void detach_DateSKeyBi_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplication entity)
+		private void detach_DateSKeyBi_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.PromiseDateSKeyBi_Date = null;
 		}
 		
-		private void attach_FCreateFixedTermLoanExtensions(FCreateFixedTermLoanExtension entity)
+		private void attach_Bi_FCreateFixedTermLoanExtensions(FCreateFixedTermLoanExtensionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = this;
+			entity.DateEntity = this;
 		}
 		
-		private void detach_FCreateFixedTermLoanExtensions(FCreateFixedTermLoanExtension entity)
+		private void detach_Bi_FCreateFixedTermLoanExtensions(FCreateFixedTermLoanExtensionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = null;
+			entity.DateEntity = null;
 		}
 		
-		private void attach_DateSKeyBi_FCreateFixedTermLoanExtensions(FCreateFixedTermLoanExtension entity)
+		private void attach_DateSKeyBi_FCreateFixedTermLoanExtensions(FCreateFixedTermLoanExtensionEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.ExtendDateSKeyBi_Date = this;
 		}
 		
-		private void detach_DateSKeyBi_FCreateFixedTermLoanExtensions(FCreateFixedTermLoanExtension entity)
+		private void detach_DateSKeyBi_FCreateFixedTermLoanExtensions(FCreateFixedTermLoanExtensionEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.ExtendDateSKeyBi_Date = null;
 		}
 		
-		private void attach_FCreateFixedTermLoanTopups(FCreateFixedTermLoanTopup entity)
+		private void attach_Bi_FCreateFixedTermLoanTopups(FCreateFixedTermLoanTopupEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = this;
+			entity.DateEntity = this;
 		}
 		
-		private void detach_FCreateFixedTermLoanTopups(FCreateFixedTermLoanTopup entity)
+		private void detach_Bi_FCreateFixedTermLoanTopups(FCreateFixedTermLoanTopupEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = null;
+			entity.DateEntity = null;
 		}
 		
-		private void attach_FCreateTransactions(FCreateTransaction entity)
+		private void attach_Bi_FCreateTransactions(FCreateTransactionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = this;
+			entity.DateEntity = this;
 		}
 		
-		private void detach_FCreateTransactions(FCreateTransaction entity)
+		private void detach_Bi_FCreateTransactions(FCreateTransactionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = null;
+			entity.DateEntity = null;
 		}
 		
-		private void attach_FEquifaxResponses(FEquifaxResponse entity)
+		private void attach_Bi_FEquifaxResponses(FEquifaxResponseEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = this;
+			entity.DateEntity = this;
 		}
 		
-		private void detach_FEquifaxResponses(FEquifaxResponse entity)
+		private void detach_Bi_FEquifaxResponses(FEquifaxResponseEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = null;
+			entity.DateEntity = null;
 		}
 		
-		private void attach_FExtendLoans(FExtendLoan entity)
+		private void attach_Bi_FExtendLoans(FExtendLoanEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = this;
+			entity.DateEntity = this;
 		}
 		
-		private void detach_FExtendLoans(FExtendLoan entity)
+		private void detach_Bi_FExtendLoans(FExtendLoanEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = null;
+			entity.DateEntity = null;
 		}
 		
-		private void attach_DateSKeyBi_FExtendLoans(FExtendLoan entity)
+		private void attach_DateSKeyBi_FExtendLoans(FExtendLoanEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.NextDueDateSKeyBi_Date = this;
 		}
 		
-		private void detach_DateSKeyBi_FExtendLoans(FExtendLoan entity)
+		private void detach_DateSKeyBi_FExtendLoans(FExtendLoanEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.NextDueDateSKeyBi_Date = null;
 		}
 		
-		private void attach_FIApplicationAccepteds(FIApplicationAccepted entity)
+		private void attach_Bi_FIApplicationAccepteds(FIApplicationAcceptedEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = this;
+			entity.DateEntity = this;
 		}
 		
-		private void detach_FIApplicationAccepteds(FIApplicationAccepted entity)
+		private void detach_Bi_FIApplicationAccepteds(FIApplicationAcceptedEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = null;
+			entity.DateEntity = null;
 		}
 		
-		private void attach_FIApplicationCloseds(FIApplicationClosed entity)
+		private void attach_Bi_FIApplicationCloseds(FIApplicationClosedEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = this;
+			entity.DateEntity = this;
 		}
 		
-		private void detach_FIApplicationCloseds(FIApplicationClosed entity)
+		private void detach_Bi_FIApplicationCloseds(FIApplicationClosedEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = null;
+			entity.DateEntity = null;
 		}
 		
-		private void attach_FIApplicationDeclineds(FIApplicationDeclined entity)
+		private void attach_Bi_FIApplicationDeclineds(FIApplicationDeclinedEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = this;
+			entity.DateEntity = this;
 		}
 		
-		private void detach_FIApplicationDeclineds(FIApplicationDeclined entity)
+		private void detach_Bi_FIApplicationDeclineds(FIApplicationDeclinedEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = null;
+			entity.DateEntity = null;
 		}
 		
-		private void attach_FIFixedTermApplicationAddeds(FIFixedTermApplicationAdded entity)
+		private void attach_Bi_FIFixedTermApplicationAddeds(FIFixedTermApplicationAddedEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = this;
+			entity.DateEntity = this;
 		}
 		
-		private void detach_FIFixedTermApplicationAddeds(FIFixedTermApplicationAdded entity)
+		private void detach_Bi_FIFixedTermApplicationAddeds(FIFixedTermApplicationAddedEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = null;
+			entity.DateEntity = null;
 		}
 		
-		private void attach_FPaymentCollections(FPaymentCollection entity)
+		private void attach_Bi_FPaymentCollections(FPaymentCollectionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = this;
+			entity.DateEntity = this;
 		}
 		
-		private void detach_FPaymentCollections(FPaymentCollection entity)
+		private void detach_Bi_FPaymentCollections(FPaymentCollectionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = null;
+			entity.DateEntity = null;
 		}
 		
-		private void attach_DateSKeyBi_FPaymentCollections(FPaymentCollection entity)
+		private void attach_DateSKeyBi_FPaymentCollections(FPaymentCollectionEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.PaymentCollectionStartDateSKeyBi_Date = this;
 		}
 		
-		private void detach_DateSKeyBi_FPaymentCollections(FPaymentCollection entity)
+		private void detach_DateSKeyBi_FPaymentCollections(FPaymentCollectionEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.PaymentCollectionStartDateSKeyBi_Date = null;
 		}
 		
-		private void attach_BifPaymentCollection_REF_bidate_2s(FPaymentCollection entity)
+		private void attach_BifPaymentCollection_REF_bidate_2s(FPaymentCollectionEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.PaymentCollectionEndDateSKeyBi_Date = this;
 		}
 		
-		private void detach_BifPaymentCollection_REF_bidate_2s(FPaymentCollection entity)
+		private void detach_BifPaymentCollection_REF_bidate_2s(FPaymentCollectionEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.PaymentCollectionEndDateSKeyBi_Date = null;
 		}
 		
-		private void attach_FSignApplications(FSignApplication entity)
+		private void attach_Bi_FSignApplications(FSignApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = this;
+			entity.DateEntity = this;
 		}
 		
-		private void detach_FSignApplications(FSignApplication entity)
+		private void detach_Bi_FSignApplications(FSignApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = null;
+			entity.DateEntity = null;
 		}
 		
-		private void attach_FSignFixedTermLoanExtensions(FSignFixedTermLoanExtension entity)
+		private void attach_Bi_FSignFixedTermLoanExtensions(FSignFixedTermLoanExtensionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = this;
+			entity.DateEntity = this;
 		}
 		
-		private void detach_FSignFixedTermLoanExtensions(FSignFixedTermLoanExtension entity)
+		private void detach_Bi_FSignFixedTermLoanExtensions(FSignFixedTermLoanExtensionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = null;
+			entity.DateEntity = null;
 		}
 		
-		private void attach_DateSKeyBi_FSignFixedTermLoanExtensions(FSignFixedTermLoanExtension entity)
+		private void attach_DateSKeyBi_FSignFixedTermLoanExtensions(FSignFixedTermLoanExtensionEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.ExtendDateSKeyBi_Date = this;
 		}
 		
-		private void detach_DateSKeyBi_FSignFixedTermLoanExtensions(FSignFixedTermLoanExtension entity)
+		private void detach_DateSKeyBi_FSignFixedTermLoanExtensions(FSignFixedTermLoanExtensionEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.ExtendDateSKeyBi_Date = null;
 		}
 		
-		private void attach_FSignFixedTermLoanTopups(FSignFixedTermLoanTopup entity)
+		private void attach_Bi_FSignFixedTermLoanTopups(FSignFixedTermLoanTopupEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = this;
+			entity.DateEntity = this;
 		}
 		
-		private void detach_FSignFixedTermLoanTopups(FSignFixedTermLoanTopup entity)
+		private void detach_Bi_FSignFixedTermLoanTopups(FSignFixedTermLoanTopupEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = null;
+			entity.DateEntity = null;
 		}
 		
-		private void attach_FTransactionLedgers(FTransactionLedger entity)
+		private void attach_Bi_FTransactionLedgers(FTransactionLedgerEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = this;
+			entity.DateEntity = this;
 		}
 		
-		private void detach_FTransactionLedgers(FTransactionLedger entity)
+		private void detach_Bi_FTransactionLedgers(FTransactionLedgerEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = null;
+			entity.DateEntity = null;
 		}
 		
-		private void attach_DateSKeyBi_FTransactionLedgers(FTransactionLedger entity)
+		private void attach_DateSKeyBi_FTransactionLedgers(FTransactionLedgerEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.PostedDateSkeyBi_Date = this;
 		}
 		
-		private void detach_DateSKeyBi_FTransactionLedgers(FTransactionLedger entity)
+		private void detach_DateSKeyBi_FTransactionLedgers(FTransactionLedgerEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.PostedDateSkeyBi_Date = null;
 		}
 		
-		private void attach_FTransactionRequests(FTransactionRequest entity)
+		private void attach_Bi_FTransactionRequests(FTransactionRequestEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = this;
+			entity.DateEntity = this;
 		}
 		
-		private void detach_FTransactionRequests(FTransactionRequest entity)
+		private void detach_Bi_FTransactionRequests(FTransactionRequestEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = null;
+			entity.DateEntity = null;
 		}
 		
-		private void attach_DateSKeyBi_FTransactionRequests(FTransactionRequest entity)
+		private void attach_DateSKeyBi_FTransactionRequests(FTransactionRequestEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.SuccessDateSKeyBi_Date = this;
 		}
 		
-		private void detach_DateSKeyBi_FTransactionRequests(FTransactionRequest entity)
+		private void detach_DateSKeyBi_FTransactionRequests(FTransactionRequestEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.SuccessDateSKeyBi_Date = null;
 		}
 		
-		private void attach_BifTransactionRequest_REF_biDate_2s(FTransactionRequest entity)
+		private void attach_BifTransactionRequest_REF_biDate_2s(FTransactionRequestEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.PaymentCollectionEndDateSKeyBi_Date = this;
 		}
 		
-		private void detach_BifTransactionRequest_REF_biDate_2s(FTransactionRequest entity)
+		private void detach_BifTransactionRequest_REF_biDate_2s(FTransactionRequestEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.PaymentCollectionEndDateSKeyBi_Date = null;
 		}
 		
-		private void attach_FTransactionRequestDetails(FTransactionRequestDetail entity)
+		private void attach_Bi_FTransactionRequestDetails(FTransactionRequestDetailEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = this;
+			entity.DateEntity = this;
 		}
 		
-		private void detach_FTransactionRequestDetails(FTransactionRequestDetail entity)
+		private void detach_Bi_FTransactionRequestDetails(FTransactionRequestDetailEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = null;
+			entity.DateEntity = null;
 		}
 		
-		private void attach_FTransunionResponses(FTransunionResponse entity)
+		private void attach_Bi_FTransunionResponses(FTransunionResponseEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = this;
+			entity.DateEntity = this;
 		}
 		
-		private void detach_FTransunionResponses(FTransunionResponse entity)
+		private void detach_Bi_FTransunionResponses(FTransunionResponseEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = null;
+			entity.DateEntity = null;
 		}
 		
-		private void attach_DateSKeyBi_FTransunionResponses(FTransunionResponse entity)
+		private void attach_DateSKeyBi_FTransunionResponses(FTransunionResponseEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.ProcessingStartDateSkeyBi_Date = this;
 		}
 		
-		private void detach_DateSKeyBi_FTransunionResponses(FTransunionResponse entity)
+		private void detach_DateSKeyBi_FTransunionResponses(FTransunionResponseEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.ProcessingStartDateSkeyBi_Date = null;
 		}
 		
-		private void attach_FUpdateDailyAccruedInterests(FUpdateDailyAccruedInterest entity)
+		private void attach_Bi_FUpdateDailyAccruedInterests(FUpdateDailyAccruedInterestEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = this;
+			entity.DateEntity = this;
 		}
 		
-		private void detach_FUpdateDailyAccruedInterests(FUpdateDailyAccruedInterest entity)
+		private void detach_Bi_FUpdateDailyAccruedInterests(FUpdateDailyAccruedInterestEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Date = null;
+			entity.DateEntity = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.EquifaxSaga")]
-	public partial class EquifaxSaga : DbEntity<EquifaxSaga>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class EquifaxSagaEntity : DbEntity<EquifaxSagaEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -6622,7 +6622,7 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _CreatedByMessageArchiveId;
 		
-		private EntityRef<FEquifaxResponse> _FEquifaxResponse;
+		private EntityRef<FEquifaxResponseEntity> _FEquifaxResponseEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -6638,9 +6638,9 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnCreatedByMessageArchiveIdChanged();
     #endregion
 		
-		public EquifaxSaga()
+		public EquifaxSagaEntity()
 		{
-			this._FEquifaxResponse = default(EntityRef<FEquifaxResponse>);
+			this._FEquifaxResponseEntity = default(EntityRef<FEquifaxResponseEntity>);
 			OnCreated();
 		}
 		
@@ -6724,31 +6724,31 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fk_bifEquifaxResponse_REF_biEquifaxSaga", Storage="_FEquifaxResponse", ThisKey="EquifaxSagaSKey", OtherKey="EquifaxSagaSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
-		public FEquifaxResponse FEquifaxResponse
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fk_bifEquifaxResponse_REF_biEquifaxSaga", Storage="_FEquifaxResponseEntity", ThisKey="EquifaxSagaSKey", OtherKey="EquifaxSagaSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
+		public FEquifaxResponseEntity FEquifaxResponseEntity
 		{
 			get
 			{
-				return this._FEquifaxResponse.Entity;
+				return this._FEquifaxResponseEntity.Entity;
 			}
 			set
 			{
-				FEquifaxResponse previousValue = this._FEquifaxResponse.Entity;
+				FEquifaxResponseEntity previousValue = this._FEquifaxResponseEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._FEquifaxResponse.HasLoadedOrAssignedValue == false)))
+							|| (this._FEquifaxResponseEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._FEquifaxResponse.Entity = null;
-						previousValue.EquifaxSaga = null;
+						this._FEquifaxResponseEntity.Entity = null;
+						previousValue.EquifaxSagaEntity = null;
 					}
-					this._FEquifaxResponse.Entity = value;
+					this._FEquifaxResponseEntity.Entity = value;
 					if ((value != null))
 					{
-						value.EquifaxSaga = this;
+						value.EquifaxSagaEntity = this;
 					}
-					this.SendPropertyChanged("FEquifaxResponse");
+					this.SendPropertyChanged("FEquifaxResponseEntity");
 				}
 			}
 		}
@@ -6775,7 +6775,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.fAddPaymentCard")]
-	public partial class FAddPaymentCard : DbEntity<FAddPaymentCard>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FAddPaymentCardEntity : DbEntity<FAddPaymentCardEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -6792,11 +6792,11 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _CreatedByMessageArchiveId;
 		
-		private EntityRef<Account> _Account;
+		private EntityRef<AccountEntity> _AccountEntity;
 		
-		private EntityRef<Date> _Date;
+		private EntityRef<DateEntity> _DateEntity;
 		
-		private EntityRef<PaymentCard> _PaymentCard;
+		private EntityRef<PaymentCardEntity> _PaymentCardEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -6816,11 +6816,11 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnCreatedByMessageArchiveIdChanged();
     #endregion
 		
-		public FAddPaymentCard()
+		public FAddPaymentCardEntity()
 		{
-			this._Account = default(EntityRef<Account>);
-			this._Date = default(EntityRef<Date>);
-			this._PaymentCard = default(EntityRef<PaymentCard>);
+			this._AccountEntity = default(EntityRef<AccountEntity>);
+			this._DateEntity = default(EntityRef<DateEntity>);
+			this._PaymentCardEntity = default(EntityRef<PaymentCardEntity>);
 			OnCreated();
 		}
 		
@@ -6835,7 +6835,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._AccountSKey != value))
 				{
-					if (this._Account.HasLoadedOrAssignedValue)
+					if (this._AccountEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -6859,7 +6859,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._PaymentCardSKey != value))
 				{
-					if (this._PaymentCard.HasLoadedOrAssignedValue)
+					if (this._PaymentCardEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -6883,7 +6883,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._DateSKey != value))
 				{
-					if (this._Date.HasLoadedOrAssignedValue)
+					if (this._DateEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -6956,104 +6956,104 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAddPaymentCard_REF_biAccount", Storage="_Account", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
-		public Account Account
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAddPaymentCard_REF_biAccount", Storage="_AccountEntity", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
+		public AccountEntity AccountEntity
 		{
 			get
 			{
-				return this._Account.Entity;
+				return this._AccountEntity.Entity;
 			}
 			set
 			{
-				Account previousValue = this._Account.Entity;
+				AccountEntity previousValue = this._AccountEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Account.HasLoadedOrAssignedValue == false)))
+							|| (this._AccountEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Account.Entity = null;
-						previousValue.FAddPaymentCards.Remove(this);
+						this._AccountEntity.Entity = null;
+						previousValue.Bi_FAddPaymentCards.Remove(this);
 					}
-					this._Account.Entity = value;
+					this._AccountEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FAddPaymentCards.Add(this);
+						value.Bi_FAddPaymentCards.Add(this);
 						this._AccountSKey = value.AccountSKey;
 					}
 					else
 					{
 						this._AccountSKey = default(int);
 					}
-					this.SendPropertyChanged("Account");
+					this.SendPropertyChanged("AccountEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAddPaymentCard_REF_biDate", Storage="_Date", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date Date
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAddPaymentCard_REF_biDate", Storage="_DateEntity", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
+		public DateEntity DateEntity
 		{
 			get
 			{
-				return this._Date.Entity;
+				return this._DateEntity.Entity;
 			}
 			set
 			{
-				Date previousValue = this._Date.Entity;
+				DateEntity previousValue = this._DateEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Date.HasLoadedOrAssignedValue == false)))
+							|| (this._DateEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Date.Entity = null;
-						previousValue.FAddPaymentCards.Remove(this);
+						this._DateEntity.Entity = null;
+						previousValue.Bi_FAddPaymentCards.Remove(this);
 					}
-					this._Date.Entity = value;
+					this._DateEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FAddPaymentCards.Add(this);
+						value.Bi_FAddPaymentCards.Add(this);
 						this._DateSKey = value.DateSKey;
 					}
 					else
 					{
 						this._DateSKey = default(int);
 					}
-					this.SendPropertyChanged("Date");
+					this.SendPropertyChanged("DateEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAddPaymentCard_REF_biPaymentCard", Storage="_PaymentCard", ThisKey="PaymentCardSKey", OtherKey="PaymentCardSKey", IsForeignKey=true)]
-		public PaymentCard PaymentCard
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAddPaymentCard_REF_biPaymentCard", Storage="_PaymentCardEntity", ThisKey="PaymentCardSKey", OtherKey="PaymentCardSKey", IsForeignKey=true)]
+		public PaymentCardEntity PaymentCardEntity
 		{
 			get
 			{
-				return this._PaymentCard.Entity;
+				return this._PaymentCardEntity.Entity;
 			}
 			set
 			{
-				PaymentCard previousValue = this._PaymentCard.Entity;
+				PaymentCardEntity previousValue = this._PaymentCardEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._PaymentCard.HasLoadedOrAssignedValue == false)))
+							|| (this._PaymentCardEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._PaymentCard.Entity = null;
-						previousValue.FAddPaymentCards.Remove(this);
+						this._PaymentCardEntity.Entity = null;
+						previousValue.Bi_FAddPaymentCards.Remove(this);
 					}
-					this._PaymentCard.Entity = value;
+					this._PaymentCardEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FAddPaymentCards.Add(this);
+						value.Bi_FAddPaymentCards.Add(this);
 						this._PaymentCardSKey = value.PaymentCardSKey;
 					}
 					else
 					{
 						this._PaymentCardSKey = default(int);
 					}
-					this.SendPropertyChanged("PaymentCard");
+					this.SendPropertyChanged("PaymentCardEntity");
 				}
 			}
 		}
@@ -7080,7 +7080,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.fAggApplication")]
-	public partial class FAggApplication : DbEntity<FAggApplication>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FAggApplicationEntity : DbEntity<FAggApplicationEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -7137,15 +7137,15 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _UpdatedByAggBuildId;
 		
-		private EntityRef<Account> _Account;
+		private EntityRef<AccountEntity> _AccountEntity;
 		
-		private EntityRef<Affiliate> _Affiliate;
+		private EntityRef<AffiliateEntity> _AffiliateEntity;
 		
-		private EntityRef<Application> _Application;
+		private EntityRef<ApplicationEntity> _ApplicationEntity;
 		
-		private EntityRef<Date> _Date;
+		private EntityRef<DateEntity> _DateEntity;
 		
-		private EntityRef<Ln> _Ln;
+		private EntityRef<LnEntity> _LnEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -7205,13 +7205,13 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnUpdatedByAggBuildIdChanged();
     #endregion
 		
-		public FAggApplication()
+		public FAggApplicationEntity()
 		{
-			this._Account = default(EntityRef<Account>);
-			this._Affiliate = default(EntityRef<Affiliate>);
-			this._Application = default(EntityRef<Application>);
-			this._Date = default(EntityRef<Date>);
-			this._Ln = default(EntityRef<Ln>);
+			this._AccountEntity = default(EntityRef<AccountEntity>);
+			this._AffiliateEntity = default(EntityRef<AffiliateEntity>);
+			this._ApplicationEntity = default(EntityRef<ApplicationEntity>);
+			this._DateEntity = default(EntityRef<DateEntity>);
+			this._LnEntity = default(EntityRef<LnEntity>);
 			OnCreated();
 		}
 		
@@ -7226,7 +7226,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._ApplicationSKey != value))
 				{
-					if (this._Application.HasLoadedOrAssignedValue)
+					if (this._ApplicationEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -7250,7 +7250,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._AccountSKey != value))
 				{
-					if (this._Account.HasLoadedOrAssignedValue)
+					if (this._AccountEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -7274,7 +7274,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._DateSKey != value))
 				{
-					if (this._Date.HasLoadedOrAssignedValue)
+					if (this._DateEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -7298,7 +7298,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._AffiliateSKey != value))
 				{
-					if (this._Affiliate.HasLoadedOrAssignedValue)
+					if (this._AffiliateEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -7322,7 +7322,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._LnSKey != value))
 				{
-					if (this._Ln.HasLoadedOrAssignedValue)
+					if (this._LnEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -7755,172 +7755,172 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggApplication_REF_biAccount", Storage="_Account", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
-		public Account Account
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggApplication_REF_biAccount", Storage="_AccountEntity", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
+		public AccountEntity AccountEntity
 		{
 			get
 			{
-				return this._Account.Entity;
+				return this._AccountEntity.Entity;
 			}
 			set
 			{
-				Account previousValue = this._Account.Entity;
+				AccountEntity previousValue = this._AccountEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Account.HasLoadedOrAssignedValue == false)))
+							|| (this._AccountEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Account.Entity = null;
-						previousValue.FAggApplications.Remove(this);
+						this._AccountEntity.Entity = null;
+						previousValue.Bi_FAggApplications.Remove(this);
 					}
-					this._Account.Entity = value;
+					this._AccountEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FAggApplications.Add(this);
+						value.Bi_FAggApplications.Add(this);
 						this._AccountSKey = value.AccountSKey;
 					}
 					else
 					{
 						this._AccountSKey = default(int);
 					}
-					this.SendPropertyChanged("Account");
+					this.SendPropertyChanged("AccountEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggApplication_REF_biAffiliate", Storage="_Affiliate", ThisKey="AffiliateSKey", OtherKey="AffiliateSKey", IsForeignKey=true)]
-		public Affiliate Affiliate
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggApplication_REF_biAffiliate", Storage="_AffiliateEntity", ThisKey="AffiliateSKey", OtherKey="AffiliateSKey", IsForeignKey=true)]
+		public AffiliateEntity AffiliateEntity
 		{
 			get
 			{
-				return this._Affiliate.Entity;
+				return this._AffiliateEntity.Entity;
 			}
 			set
 			{
-				Affiliate previousValue = this._Affiliate.Entity;
+				AffiliateEntity previousValue = this._AffiliateEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Affiliate.HasLoadedOrAssignedValue == false)))
+							|| (this._AffiliateEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Affiliate.Entity = null;
-						previousValue.FAggApplications.Remove(this);
+						this._AffiliateEntity.Entity = null;
+						previousValue.Bi_FAggApplications.Remove(this);
 					}
-					this._Affiliate.Entity = value;
+					this._AffiliateEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FAggApplications.Add(this);
+						value.Bi_FAggApplications.Add(this);
 						this._AffiliateSKey = value.AffiliateSKey;
 					}
 					else
 					{
 						this._AffiliateSKey = default(short);
 					}
-					this.SendPropertyChanged("Affiliate");
+					this.SendPropertyChanged("AffiliateEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggApplication_REF_biApplication", Storage="_Application", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
-		public Application Application
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggApplication_REF_biApplication", Storage="_ApplicationEntity", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
+		public ApplicationEntity ApplicationEntity
 		{
 			get
 			{
-				return this._Application.Entity;
+				return this._ApplicationEntity.Entity;
 			}
 			set
 			{
-				Application previousValue = this._Application.Entity;
+				ApplicationEntity previousValue = this._ApplicationEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Application.HasLoadedOrAssignedValue == false)))
+							|| (this._ApplicationEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Application.Entity = null;
-						previousValue.FAggApplications.Remove(this);
+						this._ApplicationEntity.Entity = null;
+						previousValue.Bi_FAggApplications.Remove(this);
 					}
-					this._Application.Entity = value;
+					this._ApplicationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FAggApplications.Add(this);
+						value.Bi_FAggApplications.Add(this);
 						this._ApplicationSKey = value.ApplicationSKey;
 					}
 					else
 					{
 						this._ApplicationSKey = default(int);
 					}
-					this.SendPropertyChanged("Application");
+					this.SendPropertyChanged("ApplicationEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggApplication_REF_biDate", Storage="_Date", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date Date
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggApplication_REF_biDate", Storage="_DateEntity", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
+		public DateEntity DateEntity
 		{
 			get
 			{
-				return this._Date.Entity;
+				return this._DateEntity.Entity;
 			}
 			set
 			{
-				Date previousValue = this._Date.Entity;
+				DateEntity previousValue = this._DateEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Date.HasLoadedOrAssignedValue == false)))
+							|| (this._DateEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Date.Entity = null;
-						previousValue.FAggApplications.Remove(this);
+						this._DateEntity.Entity = null;
+						previousValue.Bi_FAggApplications.Remove(this);
 					}
-					this._Date.Entity = value;
+					this._DateEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FAggApplications.Add(this);
+						value.Bi_FAggApplications.Add(this);
 						this._DateSKey = value.DateSKey;
 					}
 					else
 					{
 						this._DateSKey = default(int);
 					}
-					this.SendPropertyChanged("Date");
+					this.SendPropertyChanged("DateEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggApplication_REF_biLn", Storage="_Ln", ThisKey="LnSKey", OtherKey="LnSKey", IsForeignKey=true)]
-		public Ln Ln
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggApplication_REF_biLn", Storage="_LnEntity", ThisKey="LnSKey", OtherKey="LnSKey", IsForeignKey=true)]
+		public LnEntity LnEntity
 		{
 			get
 			{
-				return this._Ln.Entity;
+				return this._LnEntity.Entity;
 			}
 			set
 			{
-				Ln previousValue = this._Ln.Entity;
+				LnEntity previousValue = this._LnEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Ln.HasLoadedOrAssignedValue == false)))
+							|| (this._LnEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Ln.Entity = null;
-						previousValue.FAggApplications.Remove(this);
+						this._LnEntity.Entity = null;
+						previousValue.Bi_FAggApplications.Remove(this);
 					}
-					this._Ln.Entity = value;
+					this._LnEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FAggApplications.Add(this);
+						value.Bi_FAggApplications.Add(this);
 						this._LnSKey = value.LnSKey;
 					}
 					else
 					{
 						this._LnSKey = default(short);
 					}
-					this.SendPropertyChanged("Ln");
+					this.SendPropertyChanged("LnEntity");
 				}
 			}
 		}
@@ -7947,7 +7947,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.fAggLoanNumber")]
-	public partial class FAggLoanNumber : DbEntity<FAggLoanNumber>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FAggLoanNumberEntity : DbEntity<FAggLoanNumberEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -7966,9 +7966,9 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _UpdatedByAggBuildId;
 		
-		private EntityRef<Account> _Account;
+		private EntityRef<AccountEntity> _AccountEntity;
 		
-		private EntityRef<Date> _Date;
+		private EntityRef<DateEntity> _DateEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -7990,10 +7990,10 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnUpdatedByAggBuildIdChanged();
     #endregion
 		
-		public FAggLoanNumber()
+		public FAggLoanNumberEntity()
 		{
-			this._Account = default(EntityRef<Account>);
-			this._Date = default(EntityRef<Date>);
+			this._AccountEntity = default(EntityRef<AccountEntity>);
+			this._DateEntity = default(EntityRef<DateEntity>);
 			OnCreated();
 		}
 		
@@ -8008,7 +8008,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._AccountSKey != value))
 				{
-					if (this._Account.HasLoadedOrAssignedValue)
+					if (this._AccountEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -8032,7 +8032,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._DateSKey != value))
 				{
-					if (this._Date.HasLoadedOrAssignedValue)
+					if (this._DateEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -8145,70 +8145,70 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggLoanNumber_REF_biAccount", Storage="_Account", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
-		public Account Account
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggLoanNumber_REF_biAccount", Storage="_AccountEntity", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
+		public AccountEntity AccountEntity
 		{
 			get
 			{
-				return this._Account.Entity;
+				return this._AccountEntity.Entity;
 			}
 			set
 			{
-				Account previousValue = this._Account.Entity;
+				AccountEntity previousValue = this._AccountEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Account.HasLoadedOrAssignedValue == false)))
+							|| (this._AccountEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Account.Entity = null;
-						previousValue.FAggLoanNumbers.Remove(this);
+						this._AccountEntity.Entity = null;
+						previousValue.Bi_FAggLoanNumbers.Remove(this);
 					}
-					this._Account.Entity = value;
+					this._AccountEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FAggLoanNumbers.Add(this);
+						value.Bi_FAggLoanNumbers.Add(this);
 						this._AccountSKey = value.AccountSKey;
 					}
 					else
 					{
 						this._AccountSKey = default(int);
 					}
-					this.SendPropertyChanged("Account");
+					this.SendPropertyChanged("AccountEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggLoanNumber_REF_biDate", Storage="_Date", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date Date
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggLoanNumber_REF_biDate", Storage="_DateEntity", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
+		public DateEntity DateEntity
 		{
 			get
 			{
-				return this._Date.Entity;
+				return this._DateEntity.Entity;
 			}
 			set
 			{
-				Date previousValue = this._Date.Entity;
+				DateEntity previousValue = this._DateEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Date.HasLoadedOrAssignedValue == false)))
+							|| (this._DateEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Date.Entity = null;
-						previousValue.FAggLoanNumbers.Remove(this);
+						this._DateEntity.Entity = null;
+						previousValue.Bi_FAggLoanNumbers.Remove(this);
 					}
-					this._Date.Entity = value;
+					this._DateEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FAggLoanNumbers.Add(this);
+						value.Bi_FAggLoanNumbers.Add(this);
 						this._DateSKey = value.DateSKey;
 					}
 					else
 					{
 						this._DateSKey = default(int);
 					}
-					this.SendPropertyChanged("Date");
+					this.SendPropertyChanged("DateEntity");
 				}
 			}
 		}
@@ -8235,7 +8235,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.fAggTransactionAllocation")]
-	public partial class FAggTransactionAllocation : DbEntity<FAggTransactionAllocation>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FAggTransactionAllocationEntity : DbEntity<FAggTransactionAllocationEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -8280,11 +8280,11 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _UpdatedByAggBuildId;
 		
-		private EntityRef<Date> _Date;
+		private EntityRef<DateEntity> _DateEntity;
 		
-		private EntityRef<Transaction> _Transaction;
+		private EntityRef<TransactionEntity> _TransactionEntity;
 		
-		private EntityRef<TransactionType> _TransactionType;
+		private EntityRef<TransactionTypeEntity> _TransactionTypeEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -8332,11 +8332,11 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnUpdatedByAggBuildIdChanged();
     #endregion
 		
-		public FAggTransactionAllocation()
+		public FAggTransactionAllocationEntity()
 		{
-			this._Date = default(EntityRef<Date>);
-			this._Transaction = default(EntityRef<Transaction>);
-			this._TransactionType = default(EntityRef<TransactionType>);
+			this._DateEntity = default(EntityRef<DateEntity>);
+			this._TransactionEntity = default(EntityRef<TransactionEntity>);
+			this._TransactionTypeEntity = default(EntityRef<TransactionTypeEntity>);
 			OnCreated();
 		}
 		
@@ -8351,7 +8351,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._TransactionSKey != value))
 				{
-					if (this._Transaction.HasLoadedOrAssignedValue)
+					if (this._TransactionEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -8395,7 +8395,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._DateSKey != value))
 				{
-					if (this._Date.HasLoadedOrAssignedValue)
+					if (this._DateEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -8419,7 +8419,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._TransactionTypeSKey != value))
 				{
-					if (this._TransactionType.HasLoadedOrAssignedValue)
+					if (this._TransactionTypeEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -8752,104 +8752,104 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggTransactionAllocation_REF_biDate", Storage="_Date", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date Date
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggTransactionAllocation_REF_biDate", Storage="_DateEntity", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
+		public DateEntity DateEntity
 		{
 			get
 			{
-				return this._Date.Entity;
+				return this._DateEntity.Entity;
 			}
 			set
 			{
-				Date previousValue = this._Date.Entity;
+				DateEntity previousValue = this._DateEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Date.HasLoadedOrAssignedValue == false)))
+							|| (this._DateEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Date.Entity = null;
-						previousValue.FAggTransactionAllocations.Remove(this);
+						this._DateEntity.Entity = null;
+						previousValue.Bi_FAggTransactionAllocations.Remove(this);
 					}
-					this._Date.Entity = value;
+					this._DateEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FAggTransactionAllocations.Add(this);
+						value.Bi_FAggTransactionAllocations.Add(this);
 						this._DateSKey = value.DateSKey;
 					}
 					else
 					{
 						this._DateSKey = default(int);
 					}
-					this.SendPropertyChanged("Date");
+					this.SendPropertyChanged("DateEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggTransactionAllocation_REF_biTransaction", Storage="_Transaction", ThisKey="TransactionSKey", OtherKey="TransactionSKey", IsForeignKey=true)]
-		public Transaction Transaction
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggTransactionAllocation_REF_biTransaction", Storage="_TransactionEntity", ThisKey="TransactionSKey", OtherKey="TransactionSKey", IsForeignKey=true)]
+		public TransactionEntity TransactionEntity
 		{
 			get
 			{
-				return this._Transaction.Entity;
+				return this._TransactionEntity.Entity;
 			}
 			set
 			{
-				Transaction previousValue = this._Transaction.Entity;
+				TransactionEntity previousValue = this._TransactionEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Transaction.HasLoadedOrAssignedValue == false)))
+							|| (this._TransactionEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Transaction.Entity = null;
-						previousValue.FAggTransactionAllocation = null;
+						this._TransactionEntity.Entity = null;
+						previousValue.FAggTransactionAllocationEntity = null;
 					}
-					this._Transaction.Entity = value;
+					this._TransactionEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FAggTransactionAllocation = this;
+						value.FAggTransactionAllocationEntity = this;
 						this._TransactionSKey = value.TransactionSKey;
 					}
 					else
 					{
 						this._TransactionSKey = default(int);
 					}
-					this.SendPropertyChanged("Transaction");
+					this.SendPropertyChanged("TransactionEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggTransactionAllocation_REF_biTransactionType", Storage="_TransactionType", ThisKey="TransactionTypeSKey", OtherKey="TransactionTypeSKey", IsForeignKey=true)]
-		public TransactionType TransactionType
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggTransactionAllocation_REF_biTransactionType", Storage="_TransactionTypeEntity", ThisKey="TransactionTypeSKey", OtherKey="TransactionTypeSKey", IsForeignKey=true)]
+		public TransactionTypeEntity TransactionTypeEntity
 		{
 			get
 			{
-				return this._TransactionType.Entity;
+				return this._TransactionTypeEntity.Entity;
 			}
 			set
 			{
-				TransactionType previousValue = this._TransactionType.Entity;
+				TransactionTypeEntity previousValue = this._TransactionTypeEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._TransactionType.HasLoadedOrAssignedValue == false)))
+							|| (this._TransactionTypeEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._TransactionType.Entity = null;
-						previousValue.FAggTransactionAllocations.Remove(this);
+						this._TransactionTypeEntity.Entity = null;
+						previousValue.Bi_FAggTransactionAllocations.Remove(this);
 					}
-					this._TransactionType.Entity = value;
+					this._TransactionTypeEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FAggTransactionAllocations.Add(this);
+						value.Bi_FAggTransactionAllocations.Add(this);
 						this._TransactionTypeSKey = value.TransactionTypeSKey;
 					}
 					else
 					{
 						this._TransactionTypeSKey = default(short);
 					}
-					this.SendPropertyChanged("TransactionType");
+					this.SendPropertyChanged("TransactionTypeEntity");
 				}
 			}
 		}
@@ -8876,7 +8876,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.fBankAccountVerification")]
-	public partial class FBankAccountVerification : DbEntity<FBankAccountVerification>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FBankAccountVerificationEntity : DbEntity<FBankAccountVerificationEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -8895,7 +8895,7 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _UpdatedByMessageArchiveId;
 		
-		private EntityRef<Application> _Application;
+		private EntityRef<ApplicationEntity> _ApplicationEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -8917,9 +8917,9 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnUpdatedByMessageArchiveIdChanged();
     #endregion
 		
-		public FBankAccountVerification()
+		public FBankAccountVerificationEntity()
 		{
-			this._Application = default(EntityRef<Application>);
+			this._ApplicationEntity = default(EntityRef<ApplicationEntity>);
 			OnCreated();
 		}
 		
@@ -8934,7 +8934,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._ApplicationSKey != value))
 				{
-					if (this._Application.HasLoadedOrAssignedValue)
+					if (this._ApplicationEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -9067,36 +9067,36 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifBankAccountVerification_REF_biApplication", Storage="_Application", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
-		public Application Application
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifBankAccountVerification_REF_biApplication", Storage="_ApplicationEntity", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
+		public ApplicationEntity ApplicationEntity
 		{
 			get
 			{
-				return this._Application.Entity;
+				return this._ApplicationEntity.Entity;
 			}
 			set
 			{
-				Application previousValue = this._Application.Entity;
+				ApplicationEntity previousValue = this._ApplicationEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Application.HasLoadedOrAssignedValue == false)))
+							|| (this._ApplicationEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Application.Entity = null;
-						previousValue.FBankAccountVerification = null;
+						this._ApplicationEntity.Entity = null;
+						previousValue.FBankAccountVerificationEntity = null;
 					}
-					this._Application.Entity = value;
+					this._ApplicationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FBankAccountVerification = this;
+						value.FBankAccountVerificationEntity = this;
 						this._ApplicationSKey = value.ApplicationSKey;
 					}
 					else
 					{
 						this._ApplicationSKey = default(int);
 					}
-					this.SendPropertyChanged("Application");
+					this.SendPropertyChanged("ApplicationEntity");
 				}
 			}
 		}
@@ -9123,7 +9123,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.fCreateFixedTermLoanApplication")]
-	public partial class FCreateFixedTermLoanApplication : DbEntity<FCreateFixedTermLoanApplication>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FCreateFixedTermLoanApplicationEntity : DbEntity<FCreateFixedTermLoanApplicationEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -9162,23 +9162,23 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _UpdatedByMessageArchiveId;
 		
-		private EntityRef<Account> _Account;
+		private EntityRef<AccountEntity> _AccountEntity;
 		
-		private EntityRef<Affiliate> _Affiliate;
+		private EntityRef<AffiliateEntity> _AffiliateEntity;
 		
-		private EntityRef<Application> _Application;
+		private EntityRef<ApplicationEntity> _ApplicationEntity;
 		
-		private EntityRef<BankAccount> _BankAccount;
+		private EntityRef<BankAccountEntity> _BankAccountEntity;
 		
-		private EntityRef<Currency> _Currency;
+		private EntityRef<CurrencyEntity> _CurrencyEntity;
 		
-		private EntityRef<Date> _Date;
+		private EntityRef<DateEntity> _DateEntity;
 		
-		private EntityRef<Date> _PromiseDateSKeyBi_Date;
+		private EntityRef<DateEntity> _PromiseDateSKeyBi_Date;
 		
-		private EntityRef<PaymentCard> _PaymentCard;
+		private EntityRef<PaymentCardEntity> _PaymentCardEntity;
 		
-		private EntityRef<PromoCode> _PromoCode;
+		private EntityRef<PromoCodeEntity> _PromoCodeEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -9220,17 +9220,17 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnUpdatedByMessageArchiveIdChanged();
     #endregion
 		
-		public FCreateFixedTermLoanApplication()
+		public FCreateFixedTermLoanApplicationEntity()
 		{
-			this._Account = default(EntityRef<Account>);
-			this._Affiliate = default(EntityRef<Affiliate>);
-			this._Application = default(EntityRef<Application>);
-			this._BankAccount = default(EntityRef<BankAccount>);
-			this._Currency = default(EntityRef<Currency>);
-			this._Date = default(EntityRef<Date>);
-			this._PromiseDateSKeyBi_Date = default(EntityRef<Date>);
-			this._PaymentCard = default(EntityRef<PaymentCard>);
-			this._PromoCode = default(EntityRef<PromoCode>);
+			this._AccountEntity = default(EntityRef<AccountEntity>);
+			this._AffiliateEntity = default(EntityRef<AffiliateEntity>);
+			this._ApplicationEntity = default(EntityRef<ApplicationEntity>);
+			this._BankAccountEntity = default(EntityRef<BankAccountEntity>);
+			this._CurrencyEntity = default(EntityRef<CurrencyEntity>);
+			this._DateEntity = default(EntityRef<DateEntity>);
+			this._PromiseDateSKeyBi_Date = default(EntityRef<DateEntity>);
+			this._PaymentCardEntity = default(EntityRef<PaymentCardEntity>);
+			this._PromoCodeEntity = default(EntityRef<PromoCodeEntity>);
 			OnCreated();
 		}
 		
@@ -9245,7 +9245,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._AccountSKey != value))
 				{
-					if (this._Account.HasLoadedOrAssignedValue)
+					if (this._AccountEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -9269,7 +9269,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._AffiliateSKey != value))
 				{
-					if (this._Affiliate.HasLoadedOrAssignedValue)
+					if (this._AffiliateEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -9293,7 +9293,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._ApplicationSKey != value))
 				{
-					if (this._Application.HasLoadedOrAssignedValue)
+					if (this._ApplicationEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -9317,7 +9317,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._BankAccountSKey != value))
 				{
-					if (this._BankAccount.HasLoadedOrAssignedValue)
+					if (this._BankAccountEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -9341,7 +9341,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._CurrencySKey != value))
 				{
-					if (this._Currency.HasLoadedOrAssignedValue)
+					if (this._CurrencyEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -9365,7 +9365,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._PromoCodeSKey != value))
 				{
-					if (this._PromoCode.HasLoadedOrAssignedValue)
+					if (this._PromoCodeEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -9389,7 +9389,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._PaymentCardSKey != value))
 				{
-					if (this._PaymentCard.HasLoadedOrAssignedValue)
+					if (this._PaymentCardEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -9433,7 +9433,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._ApplicationDateSKey != value))
 				{
-					if (this._Date.HasLoadedOrAssignedValue)
+					if (this._DateEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -9610,212 +9610,212 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biAccount", Storage="_Account", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
-		public Account Account
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biAccount", Storage="_AccountEntity", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
+		public AccountEntity AccountEntity
 		{
 			get
 			{
-				return this._Account.Entity;
+				return this._AccountEntity.Entity;
 			}
 			set
 			{
-				Account previousValue = this._Account.Entity;
+				AccountEntity previousValue = this._AccountEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Account.HasLoadedOrAssignedValue == false)))
+							|| (this._AccountEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Account.Entity = null;
-						previousValue.FCreateFixedTermLoanApplications.Remove(this);
+						this._AccountEntity.Entity = null;
+						previousValue.Bi_FCreateFixedTermLoanApplications.Remove(this);
 					}
-					this._Account.Entity = value;
+					this._AccountEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FCreateFixedTermLoanApplications.Add(this);
+						value.Bi_FCreateFixedTermLoanApplications.Add(this);
 						this._AccountSKey = value.AccountSKey;
 					}
 					else
 					{
 						this._AccountSKey = default(int);
 					}
-					this.SendPropertyChanged("Account");
+					this.SendPropertyChanged("AccountEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biAffiliate", Storage="_Affiliate", ThisKey="AffiliateSKey", OtherKey="AffiliateSKey", IsForeignKey=true)]
-		public Affiliate Affiliate
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biAffiliate", Storage="_AffiliateEntity", ThisKey="AffiliateSKey", OtherKey="AffiliateSKey", IsForeignKey=true)]
+		public AffiliateEntity AffiliateEntity
 		{
 			get
 			{
-				return this._Affiliate.Entity;
+				return this._AffiliateEntity.Entity;
 			}
 			set
 			{
-				Affiliate previousValue = this._Affiliate.Entity;
+				AffiliateEntity previousValue = this._AffiliateEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Affiliate.HasLoadedOrAssignedValue == false)))
+							|| (this._AffiliateEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Affiliate.Entity = null;
-						previousValue.FCreateFixedTermLoanApplications.Remove(this);
+						this._AffiliateEntity.Entity = null;
+						previousValue.Bi_FCreateFixedTermLoanApplications.Remove(this);
 					}
-					this._Affiliate.Entity = value;
+					this._AffiliateEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FCreateFixedTermLoanApplications.Add(this);
+						value.Bi_FCreateFixedTermLoanApplications.Add(this);
 						this._AffiliateSKey = value.AffiliateSKey;
 					}
 					else
 					{
 						this._AffiliateSKey = default(short);
 					}
-					this.SendPropertyChanged("Affiliate");
+					this.SendPropertyChanged("AffiliateEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biApplication", Storage="_Application", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
-		public Application Application
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biApplication", Storage="_ApplicationEntity", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
+		public ApplicationEntity ApplicationEntity
 		{
 			get
 			{
-				return this._Application.Entity;
+				return this._ApplicationEntity.Entity;
 			}
 			set
 			{
-				Application previousValue = this._Application.Entity;
+				ApplicationEntity previousValue = this._ApplicationEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Application.HasLoadedOrAssignedValue == false)))
+							|| (this._ApplicationEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Application.Entity = null;
-						previousValue.FCreateFixedTermLoanApplication = null;
+						this._ApplicationEntity.Entity = null;
+						previousValue.FCreateFixedTermLoanApplicationEntity = null;
 					}
-					this._Application.Entity = value;
+					this._ApplicationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FCreateFixedTermLoanApplication = this;
+						value.FCreateFixedTermLoanApplicationEntity = this;
 						this._ApplicationSKey = value.ApplicationSKey;
 					}
 					else
 					{
 						this._ApplicationSKey = default(int);
 					}
-					this.SendPropertyChanged("Application");
+					this.SendPropertyChanged("ApplicationEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biBankAccount", Storage="_BankAccount", ThisKey="BankAccountSKey", OtherKey="BankAccountSKey", IsForeignKey=true)]
-		public BankAccount BankAccount
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biBankAccount", Storage="_BankAccountEntity", ThisKey="BankAccountSKey", OtherKey="BankAccountSKey", IsForeignKey=true)]
+		public BankAccountEntity BankAccountEntity
 		{
 			get
 			{
-				return this._BankAccount.Entity;
+				return this._BankAccountEntity.Entity;
 			}
 			set
 			{
-				BankAccount previousValue = this._BankAccount.Entity;
+				BankAccountEntity previousValue = this._BankAccountEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._BankAccount.HasLoadedOrAssignedValue == false)))
+							|| (this._BankAccountEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._BankAccount.Entity = null;
-						previousValue.FCreateFixedTermLoanApplications.Remove(this);
+						this._BankAccountEntity.Entity = null;
+						previousValue.Bi_FCreateFixedTermLoanApplications.Remove(this);
 					}
-					this._BankAccount.Entity = value;
+					this._BankAccountEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FCreateFixedTermLoanApplications.Add(this);
+						value.Bi_FCreateFixedTermLoanApplications.Add(this);
 						this._BankAccountSKey = value.BankAccountSKey;
 					}
 					else
 					{
 						this._BankAccountSKey = default(int);
 					}
-					this.SendPropertyChanged("BankAccount");
+					this.SendPropertyChanged("BankAccountEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biCurrency", Storage="_Currency", ThisKey="CurrencySKey", OtherKey="CurrencySKey", IsForeignKey=true)]
-		public Currency Currency
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biCurrency", Storage="_CurrencyEntity", ThisKey="CurrencySKey", OtherKey="CurrencySKey", IsForeignKey=true)]
+		public CurrencyEntity CurrencyEntity
 		{
 			get
 			{
-				return this._Currency.Entity;
+				return this._CurrencyEntity.Entity;
 			}
 			set
 			{
-				Currency previousValue = this._Currency.Entity;
+				CurrencyEntity previousValue = this._CurrencyEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Currency.HasLoadedOrAssignedValue == false)))
+							|| (this._CurrencyEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Currency.Entity = null;
-						previousValue.FCreateFixedTermLoanApplications.Remove(this);
+						this._CurrencyEntity.Entity = null;
+						previousValue.Bi_FCreateFixedTermLoanApplications.Remove(this);
 					}
-					this._Currency.Entity = value;
+					this._CurrencyEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FCreateFixedTermLoanApplications.Add(this);
+						value.Bi_FCreateFixedTermLoanApplications.Add(this);
 						this._CurrencySKey = value.CurrencySKey;
 					}
 					else
 					{
 						this._CurrencySKey = default(short);
 					}
-					this.SendPropertyChanged("Currency");
+					this.SendPropertyChanged("CurrencyEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biDate_1", Storage="_Date", ThisKey="ApplicationDateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date Date
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biDate_1", Storage="_DateEntity", ThisKey="ApplicationDateSKey", OtherKey="DateSKey", IsForeignKey=true)]
+		public DateEntity DateEntity
 		{
 			get
 			{
-				return this._Date.Entity;
+				return this._DateEntity.Entity;
 			}
 			set
 			{
-				Date previousValue = this._Date.Entity;
+				DateEntity previousValue = this._DateEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Date.HasLoadedOrAssignedValue == false)))
+							|| (this._DateEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Date.Entity = null;
-						previousValue.FCreateFixedTermLoanApplications.Remove(this);
+						this._DateEntity.Entity = null;
+						previousValue.Bi_FCreateFixedTermLoanApplications.Remove(this);
 					}
-					this._Date.Entity = value;
+					this._DateEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FCreateFixedTermLoanApplications.Add(this);
+						value.Bi_FCreateFixedTermLoanApplications.Add(this);
 						this._ApplicationDateSKey = value.DateSKey;
 					}
 					else
 					{
 						this._ApplicationDateSKey = default(int);
 					}
-					this.SendPropertyChanged("Date");
+					this.SendPropertyChanged("DateEntity");
 				}
 			}
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biDate_2", Storage="_PromiseDateSKeyBi_Date", ThisKey="PromiseDateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date PromiseDateSKeyBi_Date
+		public DateEntity PromiseDateSKeyBi_Date
 		{
 			get
 			{
@@ -9823,7 +9823,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 			set
 			{
-				Date previousValue = this._PromiseDateSKeyBi_Date.Entity;
+				DateEntity previousValue = this._PromiseDateSKeyBi_Date.Entity;
 				if (((previousValue != value) 
 							|| (this._PromiseDateSKeyBi_Date.HasLoadedOrAssignedValue == false)))
 				{
@@ -9848,70 +9848,70 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biPaymentCard", Storage="_PaymentCard", ThisKey="PaymentCardSKey", OtherKey="PaymentCardSKey", IsForeignKey=true)]
-		public PaymentCard PaymentCard
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biPaymentCard", Storage="_PaymentCardEntity", ThisKey="PaymentCardSKey", OtherKey="PaymentCardSKey", IsForeignKey=true)]
+		public PaymentCardEntity PaymentCardEntity
 		{
 			get
 			{
-				return this._PaymentCard.Entity;
+				return this._PaymentCardEntity.Entity;
 			}
 			set
 			{
-				PaymentCard previousValue = this._PaymentCard.Entity;
+				PaymentCardEntity previousValue = this._PaymentCardEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._PaymentCard.HasLoadedOrAssignedValue == false)))
+							|| (this._PaymentCardEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._PaymentCard.Entity = null;
-						previousValue.FCreateFixedTermLoanApplications.Remove(this);
+						this._PaymentCardEntity.Entity = null;
+						previousValue.Bi_FCreateFixedTermLoanApplications.Remove(this);
 					}
-					this._PaymentCard.Entity = value;
+					this._PaymentCardEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FCreateFixedTermLoanApplications.Add(this);
+						value.Bi_FCreateFixedTermLoanApplications.Add(this);
 						this._PaymentCardSKey = value.PaymentCardSKey;
 					}
 					else
 					{
 						this._PaymentCardSKey = default(int);
 					}
-					this.SendPropertyChanged("PaymentCard");
+					this.SendPropertyChanged("PaymentCardEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biPromoCode", Storage="_PromoCode", ThisKey="PromoCodeSKey", OtherKey="PromoCodeSKey", IsForeignKey=true)]
-		public PromoCode PromoCode
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biPromoCode", Storage="_PromoCodeEntity", ThisKey="PromoCodeSKey", OtherKey="PromoCodeSKey", IsForeignKey=true)]
+		public PromoCodeEntity PromoCodeEntity
 		{
 			get
 			{
-				return this._PromoCode.Entity;
+				return this._PromoCodeEntity.Entity;
 			}
 			set
 			{
-				PromoCode previousValue = this._PromoCode.Entity;
+				PromoCodeEntity previousValue = this._PromoCodeEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._PromoCode.HasLoadedOrAssignedValue == false)))
+							|| (this._PromoCodeEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._PromoCode.Entity = null;
-						previousValue.FCreateFixedTermLoanApplications.Remove(this);
+						this._PromoCodeEntity.Entity = null;
+						previousValue.Bi_FCreateFixedTermLoanApplications.Remove(this);
 					}
-					this._PromoCode.Entity = value;
+					this._PromoCodeEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FCreateFixedTermLoanApplications.Add(this);
+						value.Bi_FCreateFixedTermLoanApplications.Add(this);
 						this._PromoCodeSKey = value.PromoCodeSKey;
 					}
 					else
 					{
 						this._PromoCodeSKey = default(int);
 					}
-					this.SendPropertyChanged("PromoCode");
+					this.SendPropertyChanged("PromoCodeEntity");
 				}
 			}
 		}
@@ -9938,7 +9938,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.fCreateFixedTermLoanExtension")]
-	public partial class FCreateFixedTermLoanExtension : DbEntity<FCreateFixedTermLoanExtension>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FCreateFixedTermLoanExtensionEntity : DbEntity<FCreateFixedTermLoanExtensionEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -9961,17 +9961,17 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _CreatedByMessageArchiveId;
 		
-		private EntityRef<Account> _Account;
+		private EntityRef<AccountEntity> _AccountEntity;
 		
-		private EntityRef<Application> _Application;
+		private EntityRef<ApplicationEntity> _ApplicationEntity;
 		
-		private EntityRef<Date> _Date;
+		private EntityRef<DateEntity> _DateEntity;
 		
-		private EntityRef<Date> _ExtendDateSKeyBi_Date;
+		private EntityRef<DateEntity> _ExtendDateSKeyBi_Date;
 		
-		private EntityRef<FixedTermLoanExtension> _FixedTermLoanExtension;
+		private EntityRef<FixedTermLoanExtensionEntity> _FixedTermLoanExtensionEntity;
 		
-		private EntityRef<PaymentCard> _PaymentCard;
+		private EntityRef<PaymentCardEntity> _PaymentCardEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -9997,14 +9997,14 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnCreatedByMessageArchiveIdChanged();
     #endregion
 		
-		public FCreateFixedTermLoanExtension()
+		public FCreateFixedTermLoanExtensionEntity()
 		{
-			this._Account = default(EntityRef<Account>);
-			this._Application = default(EntityRef<Application>);
-			this._Date = default(EntityRef<Date>);
-			this._ExtendDateSKeyBi_Date = default(EntityRef<Date>);
-			this._FixedTermLoanExtension = default(EntityRef<FixedTermLoanExtension>);
-			this._PaymentCard = default(EntityRef<PaymentCard>);
+			this._AccountEntity = default(EntityRef<AccountEntity>);
+			this._ApplicationEntity = default(EntityRef<ApplicationEntity>);
+			this._DateEntity = default(EntityRef<DateEntity>);
+			this._ExtendDateSKeyBi_Date = default(EntityRef<DateEntity>);
+			this._FixedTermLoanExtensionEntity = default(EntityRef<FixedTermLoanExtensionEntity>);
+			this._PaymentCardEntity = default(EntityRef<PaymentCardEntity>);
 			OnCreated();
 		}
 		
@@ -10019,7 +10019,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._FixedTermLoanExtensionSKey != value))
 				{
-					if (this._FixedTermLoanExtension.HasLoadedOrAssignedValue)
+					if (this._FixedTermLoanExtensionEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -10043,7 +10043,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._ApplicationSKey != value))
 				{
-					if (this._Application.HasLoadedOrAssignedValue)
+					if (this._ApplicationEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -10067,7 +10067,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._AccountSKey != value))
 				{
-					if (this._Account.HasLoadedOrAssignedValue)
+					if (this._AccountEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -10091,7 +10091,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._PaymentCardSKey != value))
 				{
-					if (this._PaymentCard.HasLoadedOrAssignedValue)
+					if (this._PaymentCardEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -10115,7 +10115,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._DateSKey != value))
 				{
-					if (this._Date.HasLoadedOrAssignedValue)
+					if (this._DateEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -10212,110 +10212,110 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanExtension_REF_biAccount", Storage="_Account", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
-		public Account Account
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanExtension_REF_biAccount", Storage="_AccountEntity", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
+		public AccountEntity AccountEntity
 		{
 			get
 			{
-				return this._Account.Entity;
+				return this._AccountEntity.Entity;
 			}
 			set
 			{
-				Account previousValue = this._Account.Entity;
+				AccountEntity previousValue = this._AccountEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Account.HasLoadedOrAssignedValue == false)))
+							|| (this._AccountEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Account.Entity = null;
-						previousValue.FCreateFixedTermLoanExtensions.Remove(this);
+						this._AccountEntity.Entity = null;
+						previousValue.Bi_FCreateFixedTermLoanExtensions.Remove(this);
 					}
-					this._Account.Entity = value;
+					this._AccountEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FCreateFixedTermLoanExtensions.Add(this);
+						value.Bi_FCreateFixedTermLoanExtensions.Add(this);
 						this._AccountSKey = value.AccountSKey;
 					}
 					else
 					{
 						this._AccountSKey = default(int);
 					}
-					this.SendPropertyChanged("Account");
+					this.SendPropertyChanged("AccountEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanExtension_REF_biApplication", Storage="_Application", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
-		public Application Application
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanExtension_REF_biApplication", Storage="_ApplicationEntity", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
+		public ApplicationEntity ApplicationEntity
 		{
 			get
 			{
-				return this._Application.Entity;
+				return this._ApplicationEntity.Entity;
 			}
 			set
 			{
-				Application previousValue = this._Application.Entity;
+				ApplicationEntity previousValue = this._ApplicationEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Application.HasLoadedOrAssignedValue == false)))
+							|| (this._ApplicationEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Application.Entity = null;
-						previousValue.FCreateFixedTermLoanExtensions.Remove(this);
+						this._ApplicationEntity.Entity = null;
+						previousValue.Bi_FCreateFixedTermLoanExtensions.Remove(this);
 					}
-					this._Application.Entity = value;
+					this._ApplicationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FCreateFixedTermLoanExtensions.Add(this);
+						value.Bi_FCreateFixedTermLoanExtensions.Add(this);
 						this._ApplicationSKey = value.ApplicationSKey;
 					}
 					else
 					{
 						this._ApplicationSKey = default(int);
 					}
-					this.SendPropertyChanged("Application");
+					this.SendPropertyChanged("ApplicationEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanExtension_REF_biDate", Storage="_Date", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date Date
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanExtension_REF_biDate", Storage="_DateEntity", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
+		public DateEntity DateEntity
 		{
 			get
 			{
-				return this._Date.Entity;
+				return this._DateEntity.Entity;
 			}
 			set
 			{
-				Date previousValue = this._Date.Entity;
+				DateEntity previousValue = this._DateEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Date.HasLoadedOrAssignedValue == false)))
+							|| (this._DateEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Date.Entity = null;
-						previousValue.FCreateFixedTermLoanExtensions.Remove(this);
+						this._DateEntity.Entity = null;
+						previousValue.Bi_FCreateFixedTermLoanExtensions.Remove(this);
 					}
-					this._Date.Entity = value;
+					this._DateEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FCreateFixedTermLoanExtensions.Add(this);
+						value.Bi_FCreateFixedTermLoanExtensions.Add(this);
 						this._DateSKey = value.DateSKey;
 					}
 					else
 					{
 						this._DateSKey = default(int);
 					}
-					this.SendPropertyChanged("Date");
+					this.SendPropertyChanged("DateEntity");
 				}
 			}
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanExtension_REF_biDate_2", Storage="_ExtendDateSKeyBi_Date", ThisKey="ExtendDateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date ExtendDateSKeyBi_Date
+		public DateEntity ExtendDateSKeyBi_Date
 		{
 			get
 			{
@@ -10323,7 +10323,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 			set
 			{
-				Date previousValue = this._ExtendDateSKeyBi_Date.Entity;
+				DateEntity previousValue = this._ExtendDateSKeyBi_Date.Entity;
 				if (((previousValue != value) 
 							|| (this._ExtendDateSKeyBi_Date.HasLoadedOrAssignedValue == false)))
 				{
@@ -10348,70 +10348,70 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanExtension_REF_biFixedTermLoanExtension", Storage="_FixedTermLoanExtension", ThisKey="FixedTermLoanExtensionSKey", OtherKey="FixedTermLoanExtensionSKey", IsForeignKey=true)]
-		public FixedTermLoanExtension FixedTermLoanExtension
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanExtension_REF_biFixedTermLoanExtension", Storage="_FixedTermLoanExtensionEntity", ThisKey="FixedTermLoanExtensionSKey", OtherKey="FixedTermLoanExtensionSKey", IsForeignKey=true)]
+		public FixedTermLoanExtensionEntity FixedTermLoanExtensionEntity
 		{
 			get
 			{
-				return this._FixedTermLoanExtension.Entity;
+				return this._FixedTermLoanExtensionEntity.Entity;
 			}
 			set
 			{
-				FixedTermLoanExtension previousValue = this._FixedTermLoanExtension.Entity;
+				FixedTermLoanExtensionEntity previousValue = this._FixedTermLoanExtensionEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._FixedTermLoanExtension.HasLoadedOrAssignedValue == false)))
+							|| (this._FixedTermLoanExtensionEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._FixedTermLoanExtension.Entity = null;
-						previousValue.FCreateFixedTermLoanExtension = null;
+						this._FixedTermLoanExtensionEntity.Entity = null;
+						previousValue.FCreateFixedTermLoanExtensionEntity = null;
 					}
-					this._FixedTermLoanExtension.Entity = value;
+					this._FixedTermLoanExtensionEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FCreateFixedTermLoanExtension = this;
+						value.FCreateFixedTermLoanExtensionEntity = this;
 						this._FixedTermLoanExtensionSKey = value.FixedTermLoanExtensionSKey;
 					}
 					else
 					{
 						this._FixedTermLoanExtensionSKey = default(int);
 					}
-					this.SendPropertyChanged("FixedTermLoanExtension");
+					this.SendPropertyChanged("FixedTermLoanExtensionEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanExtension_REF_biPaymentCard", Storage="_PaymentCard", ThisKey="PaymentCardSKey", OtherKey="PaymentCardSKey", IsForeignKey=true)]
-		public PaymentCard PaymentCard
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanExtension_REF_biPaymentCard", Storage="_PaymentCardEntity", ThisKey="PaymentCardSKey", OtherKey="PaymentCardSKey", IsForeignKey=true)]
+		public PaymentCardEntity PaymentCardEntity
 		{
 			get
 			{
-				return this._PaymentCard.Entity;
+				return this._PaymentCardEntity.Entity;
 			}
 			set
 			{
-				PaymentCard previousValue = this._PaymentCard.Entity;
+				PaymentCardEntity previousValue = this._PaymentCardEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._PaymentCard.HasLoadedOrAssignedValue == false)))
+							|| (this._PaymentCardEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._PaymentCard.Entity = null;
-						previousValue.FCreateFixedTermLoanExtensions.Remove(this);
+						this._PaymentCardEntity.Entity = null;
+						previousValue.Bi_FCreateFixedTermLoanExtensions.Remove(this);
 					}
-					this._PaymentCard.Entity = value;
+					this._PaymentCardEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FCreateFixedTermLoanExtensions.Add(this);
+						value.Bi_FCreateFixedTermLoanExtensions.Add(this);
 						this._PaymentCardSKey = value.PaymentCardSKey;
 					}
 					else
 					{
 						this._PaymentCardSKey = default(int);
 					}
-					this.SendPropertyChanged("PaymentCard");
+					this.SendPropertyChanged("PaymentCardEntity");
 				}
 			}
 		}
@@ -10438,7 +10438,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.fCreateFixedTermLoanTopup")]
-	public partial class FCreateFixedTermLoanTopup : DbEntity<FCreateFixedTermLoanTopup>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FCreateFixedTermLoanTopupEntity : DbEntity<FCreateFixedTermLoanTopupEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -10457,13 +10457,13 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _CreatedByMessageArchiveId;
 		
-		private EntityRef<Account> _Account;
+		private EntityRef<AccountEntity> _AccountEntity;
 		
-		private EntityRef<Application> _Application;
+		private EntityRef<ApplicationEntity> _ApplicationEntity;
 		
-		private EntityRef<Date> _Date;
+		private EntityRef<DateEntity> _DateEntity;
 		
-		private EntityRef<FixedTermLoanTopUp> _FixedTermLoanTopUp;
+		private EntityRef<FixedTermLoanTopUpEntity> _FixedTermLoanTopUpEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -10485,12 +10485,12 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnCreatedByMessageArchiveIdChanged();
     #endregion
 		
-		public FCreateFixedTermLoanTopup()
+		public FCreateFixedTermLoanTopupEntity()
 		{
-			this._Account = default(EntityRef<Account>);
-			this._Application = default(EntityRef<Application>);
-			this._Date = default(EntityRef<Date>);
-			this._FixedTermLoanTopUp = default(EntityRef<FixedTermLoanTopUp>);
+			this._AccountEntity = default(EntityRef<AccountEntity>);
+			this._ApplicationEntity = default(EntityRef<ApplicationEntity>);
+			this._DateEntity = default(EntityRef<DateEntity>);
+			this._FixedTermLoanTopUpEntity = default(EntityRef<FixedTermLoanTopUpEntity>);
 			OnCreated();
 		}
 		
@@ -10505,7 +10505,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._FixedTermLoanTopupSKey != value))
 				{
-					if (this._FixedTermLoanTopUp.HasLoadedOrAssignedValue)
+					if (this._FixedTermLoanTopUpEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -10529,7 +10529,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._AccountSKey != value))
 				{
-					if (this._Account.HasLoadedOrAssignedValue)
+					if (this._AccountEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -10553,7 +10553,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._ApplicationSKey != value))
 				{
-					if (this._Application.HasLoadedOrAssignedValue)
+					if (this._ApplicationEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -10577,7 +10577,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._DateSKey != value))
 				{
-					if (this._Date.HasLoadedOrAssignedValue)
+					if (this._DateEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -10650,138 +10650,138 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanTopup_REF_biAccount", Storage="_Account", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
-		public Account Account
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanTopup_REF_biAccount", Storage="_AccountEntity", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
+		public AccountEntity AccountEntity
 		{
 			get
 			{
-				return this._Account.Entity;
+				return this._AccountEntity.Entity;
 			}
 			set
 			{
-				Account previousValue = this._Account.Entity;
+				AccountEntity previousValue = this._AccountEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Account.HasLoadedOrAssignedValue == false)))
+							|| (this._AccountEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Account.Entity = null;
-						previousValue.FCreateFixedTermLoanTopups.Remove(this);
+						this._AccountEntity.Entity = null;
+						previousValue.Bi_FCreateFixedTermLoanTopups.Remove(this);
 					}
-					this._Account.Entity = value;
+					this._AccountEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FCreateFixedTermLoanTopups.Add(this);
+						value.Bi_FCreateFixedTermLoanTopups.Add(this);
 						this._AccountSKey = value.AccountSKey;
 					}
 					else
 					{
 						this._AccountSKey = default(int);
 					}
-					this.SendPropertyChanged("Account");
+					this.SendPropertyChanged("AccountEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanTopup_REF_biApplication", Storage="_Application", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
-		public Application Application
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanTopup_REF_biApplication", Storage="_ApplicationEntity", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
+		public ApplicationEntity ApplicationEntity
 		{
 			get
 			{
-				return this._Application.Entity;
+				return this._ApplicationEntity.Entity;
 			}
 			set
 			{
-				Application previousValue = this._Application.Entity;
+				ApplicationEntity previousValue = this._ApplicationEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Application.HasLoadedOrAssignedValue == false)))
+							|| (this._ApplicationEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Application.Entity = null;
-						previousValue.FCreateFixedTermLoanTopups.Remove(this);
+						this._ApplicationEntity.Entity = null;
+						previousValue.Bi_FCreateFixedTermLoanTopups.Remove(this);
 					}
-					this._Application.Entity = value;
+					this._ApplicationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FCreateFixedTermLoanTopups.Add(this);
+						value.Bi_FCreateFixedTermLoanTopups.Add(this);
 						this._ApplicationSKey = value.ApplicationSKey;
 					}
 					else
 					{
 						this._ApplicationSKey = default(int);
 					}
-					this.SendPropertyChanged("Application");
+					this.SendPropertyChanged("ApplicationEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanTopup_REF_biDateSKey", Storage="_Date", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date Date
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanTopup_REF_biDateSKey", Storage="_DateEntity", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
+		public DateEntity DateEntity
 		{
 			get
 			{
-				return this._Date.Entity;
+				return this._DateEntity.Entity;
 			}
 			set
 			{
-				Date previousValue = this._Date.Entity;
+				DateEntity previousValue = this._DateEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Date.HasLoadedOrAssignedValue == false)))
+							|| (this._DateEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Date.Entity = null;
-						previousValue.FCreateFixedTermLoanTopups.Remove(this);
+						this._DateEntity.Entity = null;
+						previousValue.Bi_FCreateFixedTermLoanTopups.Remove(this);
 					}
-					this._Date.Entity = value;
+					this._DateEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FCreateFixedTermLoanTopups.Add(this);
+						value.Bi_FCreateFixedTermLoanTopups.Add(this);
 						this._DateSKey = value.DateSKey;
 					}
 					else
 					{
 						this._DateSKey = default(int);
 					}
-					this.SendPropertyChanged("Date");
+					this.SendPropertyChanged("DateEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanTopup_REF_biFixedTermLoanTopup", Storage="_FixedTermLoanTopUp", ThisKey="FixedTermLoanTopupSKey", OtherKey="FixedTermLoanTopupSKey", IsForeignKey=true)]
-		public FixedTermLoanTopUp FixedTermLoanTopUp
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanTopup_REF_biFixedTermLoanTopup", Storage="_FixedTermLoanTopUpEntity", ThisKey="FixedTermLoanTopupSKey", OtherKey="FixedTermLoanTopupSKey", IsForeignKey=true)]
+		public FixedTermLoanTopUpEntity FixedTermLoanTopUpEntity
 		{
 			get
 			{
-				return this._FixedTermLoanTopUp.Entity;
+				return this._FixedTermLoanTopUpEntity.Entity;
 			}
 			set
 			{
-				FixedTermLoanTopUp previousValue = this._FixedTermLoanTopUp.Entity;
+				FixedTermLoanTopUpEntity previousValue = this._FixedTermLoanTopUpEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._FixedTermLoanTopUp.HasLoadedOrAssignedValue == false)))
+							|| (this._FixedTermLoanTopUpEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._FixedTermLoanTopUp.Entity = null;
-						previousValue.FCreateFixedTermLoanTopup = null;
+						this._FixedTermLoanTopUpEntity.Entity = null;
+						previousValue.FCreateFixedTermLoanTopupEntity = null;
 					}
-					this._FixedTermLoanTopUp.Entity = value;
+					this._FixedTermLoanTopUpEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FCreateFixedTermLoanTopup = this;
+						value.FCreateFixedTermLoanTopupEntity = this;
 						this._FixedTermLoanTopupSKey = value.FixedTermLoanTopupSKey;
 					}
 					else
 					{
 						this._FixedTermLoanTopupSKey = default(int);
 					}
-					this.SendPropertyChanged("FixedTermLoanTopUp");
+					this.SendPropertyChanged("FixedTermLoanTopUpEntity");
 				}
 			}
 		}
@@ -10808,7 +10808,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.fCreateTransaction")]
-	public partial class FCreateTransaction : DbEntity<FCreateTransaction>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FCreateTransactionEntity : DbEntity<FCreateTransactionEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -10835,17 +10835,17 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _CreatedByMessageArchiveId;
 		
-		private EntityRef<Application> _Application;
+		private EntityRef<ApplicationEntity> _ApplicationEntity;
 		
-		private EntityRef<Currency> _Currency;
+		private EntityRef<CurrencyEntity> _CurrencyEntity;
 		
-		private EntityRef<Date> _Date;
+		private EntityRef<DateEntity> _DateEntity;
 		
-		private EntityRef<Transaction> _Transaction;
+		private EntityRef<TransactionEntity> _TransactionEntity;
 		
-		private EntityRef<TransactionScope> _TransactionScope;
+		private EntityRef<TransactionScopeEntity> _TransactionScopeEntity;
 		
-		private EntityRef<TransactionType> _TransactionType;
+		private EntityRef<TransactionTypeEntity> _TransactionTypeEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -10875,14 +10875,14 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnCreatedByMessageArchiveIdChanged();
     #endregion
 		
-		public FCreateTransaction()
+		public FCreateTransactionEntity()
 		{
-			this._Application = default(EntityRef<Application>);
-			this._Currency = default(EntityRef<Currency>);
-			this._Date = default(EntityRef<Date>);
-			this._Transaction = default(EntityRef<Transaction>);
-			this._TransactionScope = default(EntityRef<TransactionScope>);
-			this._TransactionType = default(EntityRef<TransactionType>);
+			this._ApplicationEntity = default(EntityRef<ApplicationEntity>);
+			this._CurrencyEntity = default(EntityRef<CurrencyEntity>);
+			this._DateEntity = default(EntityRef<DateEntity>);
+			this._TransactionEntity = default(EntityRef<TransactionEntity>);
+			this._TransactionScopeEntity = default(EntityRef<TransactionScopeEntity>);
+			this._TransactionTypeEntity = default(EntityRef<TransactionTypeEntity>);
 			OnCreated();
 		}
 		
@@ -10897,7 +10897,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._TransactionSKey != value))
 				{
-					if (this._Transaction.HasLoadedOrAssignedValue)
+					if (this._TransactionEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -10921,7 +10921,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._ApplicationSKey != value))
 				{
-					if (this._Application.HasLoadedOrAssignedValue)
+					if (this._ApplicationEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -10945,7 +10945,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._DateSKey != value))
 				{
-					if (this._Date.HasLoadedOrAssignedValue)
+					if (this._DateEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -10969,7 +10969,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._TransactionTypeSKey != value))
 				{
-					if (this._TransactionType.HasLoadedOrAssignedValue)
+					if (this._TransactionTypeEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -10993,7 +10993,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._TransactionScopeSKey != value))
 				{
-					if (this._TransactionScope.HasLoadedOrAssignedValue)
+					if (this._TransactionScopeEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -11017,7 +11017,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._CurrencySKey != value))
 				{
-					if (this._Currency.HasLoadedOrAssignedValue)
+					if (this._CurrencyEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -11130,206 +11130,206 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateTransaction_REF_biApplication", Storage="_Application", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
-		public Application Application
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateTransaction_REF_biApplication", Storage="_ApplicationEntity", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
+		public ApplicationEntity ApplicationEntity
 		{
 			get
 			{
-				return this._Application.Entity;
+				return this._ApplicationEntity.Entity;
 			}
 			set
 			{
-				Application previousValue = this._Application.Entity;
+				ApplicationEntity previousValue = this._ApplicationEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Application.HasLoadedOrAssignedValue == false)))
+							|| (this._ApplicationEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Application.Entity = null;
-						previousValue.FCreateTransactions.Remove(this);
+						this._ApplicationEntity.Entity = null;
+						previousValue.Bi_FCreateTransactions.Remove(this);
 					}
-					this._Application.Entity = value;
+					this._ApplicationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FCreateTransactions.Add(this);
+						value.Bi_FCreateTransactions.Add(this);
 						this._ApplicationSKey = value.ApplicationSKey;
 					}
 					else
 					{
 						this._ApplicationSKey = default(int);
 					}
-					this.SendPropertyChanged("Application");
+					this.SendPropertyChanged("ApplicationEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateTransaction_REF_biCurrency", Storage="_Currency", ThisKey="CurrencySKey", OtherKey="CurrencySKey", IsForeignKey=true)]
-		public Currency Currency
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateTransaction_REF_biCurrency", Storage="_CurrencyEntity", ThisKey="CurrencySKey", OtherKey="CurrencySKey", IsForeignKey=true)]
+		public CurrencyEntity CurrencyEntity
 		{
 			get
 			{
-				return this._Currency.Entity;
+				return this._CurrencyEntity.Entity;
 			}
 			set
 			{
-				Currency previousValue = this._Currency.Entity;
+				CurrencyEntity previousValue = this._CurrencyEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Currency.HasLoadedOrAssignedValue == false)))
+							|| (this._CurrencyEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Currency.Entity = null;
-						previousValue.FCreateTransactions.Remove(this);
+						this._CurrencyEntity.Entity = null;
+						previousValue.Bi_FCreateTransactions.Remove(this);
 					}
-					this._Currency.Entity = value;
+					this._CurrencyEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FCreateTransactions.Add(this);
+						value.Bi_FCreateTransactions.Add(this);
 						this._CurrencySKey = value.CurrencySKey;
 					}
 					else
 					{
 						this._CurrencySKey = default(short);
 					}
-					this.SendPropertyChanged("Currency");
+					this.SendPropertyChanged("CurrencyEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateTransaction_REF_biDate", Storage="_Date", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date Date
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateTransaction_REF_biDate", Storage="_DateEntity", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
+		public DateEntity DateEntity
 		{
 			get
 			{
-				return this._Date.Entity;
+				return this._DateEntity.Entity;
 			}
 			set
 			{
-				Date previousValue = this._Date.Entity;
+				DateEntity previousValue = this._DateEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Date.HasLoadedOrAssignedValue == false)))
+							|| (this._DateEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Date.Entity = null;
-						previousValue.FCreateTransactions.Remove(this);
+						this._DateEntity.Entity = null;
+						previousValue.Bi_FCreateTransactions.Remove(this);
 					}
-					this._Date.Entity = value;
+					this._DateEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FCreateTransactions.Add(this);
+						value.Bi_FCreateTransactions.Add(this);
 						this._DateSKey = value.DateSKey;
 					}
 					else
 					{
 						this._DateSKey = default(int);
 					}
-					this.SendPropertyChanged("Date");
+					this.SendPropertyChanged("DateEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateTransaction_REF_biTransaction", Storage="_Transaction", ThisKey="TransactionSKey", OtherKey="TransactionSKey", IsForeignKey=true)]
-		public Transaction Transaction
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateTransaction_REF_biTransaction", Storage="_TransactionEntity", ThisKey="TransactionSKey", OtherKey="TransactionSKey", IsForeignKey=true)]
+		public TransactionEntity TransactionEntity
 		{
 			get
 			{
-				return this._Transaction.Entity;
+				return this._TransactionEntity.Entity;
 			}
 			set
 			{
-				Transaction previousValue = this._Transaction.Entity;
+				TransactionEntity previousValue = this._TransactionEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Transaction.HasLoadedOrAssignedValue == false)))
+							|| (this._TransactionEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Transaction.Entity = null;
-						previousValue.FCreateTransaction = null;
+						this._TransactionEntity.Entity = null;
+						previousValue.FCreateTransactionEntity = null;
 					}
-					this._Transaction.Entity = value;
+					this._TransactionEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FCreateTransaction = this;
+						value.FCreateTransactionEntity = this;
 						this._TransactionSKey = value.TransactionSKey;
 					}
 					else
 					{
 						this._TransactionSKey = default(int);
 					}
-					this.SendPropertyChanged("Transaction");
+					this.SendPropertyChanged("TransactionEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateTransaction_REF_biTransactionScope", Storage="_TransactionScope", ThisKey="TransactionScopeSKey", OtherKey="TransactionScopeSKey", IsForeignKey=true)]
-		public TransactionScope TransactionScope
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateTransaction_REF_biTransactionScope", Storage="_TransactionScopeEntity", ThisKey="TransactionScopeSKey", OtherKey="TransactionScopeSKey", IsForeignKey=true)]
+		public TransactionScopeEntity TransactionScopeEntity
 		{
 			get
 			{
-				return this._TransactionScope.Entity;
+				return this._TransactionScopeEntity.Entity;
 			}
 			set
 			{
-				TransactionScope previousValue = this._TransactionScope.Entity;
+				TransactionScopeEntity previousValue = this._TransactionScopeEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._TransactionScope.HasLoadedOrAssignedValue == false)))
+							|| (this._TransactionScopeEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._TransactionScope.Entity = null;
-						previousValue.FCreateTransactions.Remove(this);
+						this._TransactionScopeEntity.Entity = null;
+						previousValue.Bi_FCreateTransactions.Remove(this);
 					}
-					this._TransactionScope.Entity = value;
+					this._TransactionScopeEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FCreateTransactions.Add(this);
+						value.Bi_FCreateTransactions.Add(this);
 						this._TransactionScopeSKey = value.TransactionScopeSKey;
 					}
 					else
 					{
 						this._TransactionScopeSKey = default(byte);
 					}
-					this.SendPropertyChanged("TransactionScope");
+					this.SendPropertyChanged("TransactionScopeEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateTransaction_REF_biTransactionType", Storage="_TransactionType", ThisKey="TransactionTypeSKey", OtherKey="TransactionTypeSKey", IsForeignKey=true)]
-		public TransactionType TransactionType
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateTransaction_REF_biTransactionType", Storage="_TransactionTypeEntity", ThisKey="TransactionTypeSKey", OtherKey="TransactionTypeSKey", IsForeignKey=true)]
+		public TransactionTypeEntity TransactionTypeEntity
 		{
 			get
 			{
-				return this._TransactionType.Entity;
+				return this._TransactionTypeEntity.Entity;
 			}
 			set
 			{
-				TransactionType previousValue = this._TransactionType.Entity;
+				TransactionTypeEntity previousValue = this._TransactionTypeEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._TransactionType.HasLoadedOrAssignedValue == false)))
+							|| (this._TransactionTypeEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._TransactionType.Entity = null;
-						previousValue.FCreateTransactions.Remove(this);
+						this._TransactionTypeEntity.Entity = null;
+						previousValue.Bi_FCreateTransactions.Remove(this);
 					}
-					this._TransactionType.Entity = value;
+					this._TransactionTypeEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FCreateTransactions.Add(this);
+						value.Bi_FCreateTransactions.Add(this);
 						this._TransactionTypeSKey = value.TransactionTypeSKey;
 					}
 					else
 					{
 						this._TransactionTypeSKey = default(short);
 					}
-					this.SendPropertyChanged("TransactionType");
+					this.SendPropertyChanged("TransactionTypeEntity");
 				}
 			}
 		}
@@ -11356,7 +11356,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.fEquifaxResponse")]
-	public partial class FEquifaxResponse : DbEntity<FEquifaxResponse>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FEquifaxResponseEntity : DbEntity<FEquifaxResponseEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -11373,11 +11373,11 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _CreatedByMessageArchiveId;
 		
-		private EntityRef<Account> _Account;
+		private EntityRef<AccountEntity> _AccountEntity;
 		
-		private EntityRef<Date> _Date;
+		private EntityRef<DateEntity> _DateEntity;
 		
-		private EntityRef<EquifaxSaga> _EquifaxSaga;
+		private EntityRef<EquifaxSagaEntity> _EquifaxSagaEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -11397,11 +11397,11 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnCreatedByMessageArchiveIdChanged();
     #endregion
 		
-		public FEquifaxResponse()
+		public FEquifaxResponseEntity()
 		{
-			this._Account = default(EntityRef<Account>);
-			this._Date = default(EntityRef<Date>);
-			this._EquifaxSaga = default(EntityRef<EquifaxSaga>);
+			this._AccountEntity = default(EntityRef<AccountEntity>);
+			this._DateEntity = default(EntityRef<DateEntity>);
+			this._EquifaxSagaEntity = default(EntityRef<EquifaxSagaEntity>);
 			OnCreated();
 		}
 		
@@ -11416,7 +11416,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._EquifaxSagaSKey != value))
 				{
-					if (this._EquifaxSaga.HasLoadedOrAssignedValue)
+					if (this._EquifaxSagaEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -11440,7 +11440,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._AccountSKey != value))
 				{
-					if (this._Account.HasLoadedOrAssignedValue)
+					if (this._AccountEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -11464,7 +11464,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._DateSKey != value))
 				{
-					if (this._Date.HasLoadedOrAssignedValue)
+					if (this._DateEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -11537,104 +11537,104 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fk_bifEquifaxResponse_REF_biAccount", Storage="_Account", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
-		public Account Account
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fk_bifEquifaxResponse_REF_biAccount", Storage="_AccountEntity", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
+		public AccountEntity AccountEntity
 		{
 			get
 			{
-				return this._Account.Entity;
+				return this._AccountEntity.Entity;
 			}
 			set
 			{
-				Account previousValue = this._Account.Entity;
+				AccountEntity previousValue = this._AccountEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Account.HasLoadedOrAssignedValue == false)))
+							|| (this._AccountEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Account.Entity = null;
-						previousValue.FEquifaxResponses.Remove(this);
+						this._AccountEntity.Entity = null;
+						previousValue.Bi_FEquifaxResponses.Remove(this);
 					}
-					this._Account.Entity = value;
+					this._AccountEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FEquifaxResponses.Add(this);
+						value.Bi_FEquifaxResponses.Add(this);
 						this._AccountSKey = value.AccountSKey;
 					}
 					else
 					{
 						this._AccountSKey = default(int);
 					}
-					this.SendPropertyChanged("Account");
+					this.SendPropertyChanged("AccountEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fk_bifEquifaxResponse_REF_biDate", Storage="_Date", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date Date
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fk_bifEquifaxResponse_REF_biDate", Storage="_DateEntity", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
+		public DateEntity DateEntity
 		{
 			get
 			{
-				return this._Date.Entity;
+				return this._DateEntity.Entity;
 			}
 			set
 			{
-				Date previousValue = this._Date.Entity;
+				DateEntity previousValue = this._DateEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Date.HasLoadedOrAssignedValue == false)))
+							|| (this._DateEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Date.Entity = null;
-						previousValue.FEquifaxResponses.Remove(this);
+						this._DateEntity.Entity = null;
+						previousValue.Bi_FEquifaxResponses.Remove(this);
 					}
-					this._Date.Entity = value;
+					this._DateEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FEquifaxResponses.Add(this);
+						value.Bi_FEquifaxResponses.Add(this);
 						this._DateSKey = value.DateSKey;
 					}
 					else
 					{
 						this._DateSKey = default(int);
 					}
-					this.SendPropertyChanged("Date");
+					this.SendPropertyChanged("DateEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fk_bifEquifaxResponse_REF_biEquifaxSaga", Storage="_EquifaxSaga", ThisKey="EquifaxSagaSKey", OtherKey="EquifaxSagaSKey", IsForeignKey=true)]
-		public EquifaxSaga EquifaxSaga
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fk_bifEquifaxResponse_REF_biEquifaxSaga", Storage="_EquifaxSagaEntity", ThisKey="EquifaxSagaSKey", OtherKey="EquifaxSagaSKey", IsForeignKey=true)]
+		public EquifaxSagaEntity EquifaxSagaEntity
 		{
 			get
 			{
-				return this._EquifaxSaga.Entity;
+				return this._EquifaxSagaEntity.Entity;
 			}
 			set
 			{
-				EquifaxSaga previousValue = this._EquifaxSaga.Entity;
+				EquifaxSagaEntity previousValue = this._EquifaxSagaEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._EquifaxSaga.HasLoadedOrAssignedValue == false)))
+							|| (this._EquifaxSagaEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._EquifaxSaga.Entity = null;
-						previousValue.FEquifaxResponse = null;
+						this._EquifaxSagaEntity.Entity = null;
+						previousValue.FEquifaxResponseEntity = null;
 					}
-					this._EquifaxSaga.Entity = value;
+					this._EquifaxSagaEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FEquifaxResponse = this;
+						value.FEquifaxResponseEntity = this;
 						this._EquifaxSagaSKey = value.EquifaxSagaSKey;
 					}
 					else
 					{
 						this._EquifaxSagaSKey = default(int);
 					}
-					this.SendPropertyChanged("EquifaxSaga");
+					this.SendPropertyChanged("EquifaxSagaEntity");
 				}
 			}
 		}
@@ -11661,7 +11661,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.fExtendLoan")]
-	public partial class FExtendLoan : DbEntity<FExtendLoan>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FExtendLoanEntity : DbEntity<FExtendLoanEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -11682,15 +11682,15 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _CreatedByMessageArchiveId;
 		
-		private EntityRef<Application> _Application;
+		private EntityRef<ApplicationEntity> _ApplicationEntity;
 		
-		private EntityRef<Date> _Date;
+		private EntityRef<DateEntity> _DateEntity;
 		
-		private EntityRef<Date> _NextDueDateSKeyBi_Date;
+		private EntityRef<DateEntity> _NextDueDateSKeyBi_Date;
 		
-		private EntityRef<PaymentCard> _PaymentCard;
+		private EntityRef<PaymentCardEntity> _PaymentCardEntity;
 		
-		private EntityRef<RepaymentRequest> _RepaymentRequest;
+		private EntityRef<RepaymentRequestEntity> _RepaymentRequestEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -11714,13 +11714,13 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnCreatedByMessageArchiveIdChanged();
     #endregion
 		
-		public FExtendLoan()
+		public FExtendLoanEntity()
 		{
-			this._Application = default(EntityRef<Application>);
-			this._Date = default(EntityRef<Date>);
-			this._NextDueDateSKeyBi_Date = default(EntityRef<Date>);
-			this._PaymentCard = default(EntityRef<PaymentCard>);
-			this._RepaymentRequest = default(EntityRef<RepaymentRequest>);
+			this._ApplicationEntity = default(EntityRef<ApplicationEntity>);
+			this._DateEntity = default(EntityRef<DateEntity>);
+			this._NextDueDateSKeyBi_Date = default(EntityRef<DateEntity>);
+			this._PaymentCardEntity = default(EntityRef<PaymentCardEntity>);
+			this._RepaymentRequestEntity = default(EntityRef<RepaymentRequestEntity>);
 			OnCreated();
 		}
 		
@@ -11735,7 +11735,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._ApplicationSKey != value))
 				{
-					if (this._Application.HasLoadedOrAssignedValue)
+					if (this._ApplicationEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -11759,7 +11759,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._PaymentCardSKey != value))
 				{
-					if (this._PaymentCard.HasLoadedOrAssignedValue)
+					if (this._PaymentCardEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -11783,7 +11783,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._RepaymentRequestSKey != value))
 				{
-					if (this._RepaymentRequest.HasLoadedOrAssignedValue)
+					if (this._RepaymentRequestEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -11807,7 +11807,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._RequestDateSKey != value))
 				{
-					if (this._Date.HasLoadedOrAssignedValue)
+					if (this._DateEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -11904,76 +11904,76 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifExtendLoan_REF_biApplication", Storage="_Application", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
-		public Application Application
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifExtendLoan_REF_biApplication", Storage="_ApplicationEntity", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
+		public ApplicationEntity ApplicationEntity
 		{
 			get
 			{
-				return this._Application.Entity;
+				return this._ApplicationEntity.Entity;
 			}
 			set
 			{
-				Application previousValue = this._Application.Entity;
+				ApplicationEntity previousValue = this._ApplicationEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Application.HasLoadedOrAssignedValue == false)))
+							|| (this._ApplicationEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Application.Entity = null;
-						previousValue.FExtendLoans.Remove(this);
+						this._ApplicationEntity.Entity = null;
+						previousValue.Bi_FExtendLoans.Remove(this);
 					}
-					this._Application.Entity = value;
+					this._ApplicationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FExtendLoans.Add(this);
+						value.Bi_FExtendLoans.Add(this);
 						this._ApplicationSKey = value.ApplicationSKey;
 					}
 					else
 					{
 						this._ApplicationSKey = default(int);
 					}
-					this.SendPropertyChanged("Application");
+					this.SendPropertyChanged("ApplicationEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifExtendLoan_REF_biDate_1", Storage="_Date", ThisKey="RequestDateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date Date
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifExtendLoan_REF_biDate_1", Storage="_DateEntity", ThisKey="RequestDateSKey", OtherKey="DateSKey", IsForeignKey=true)]
+		public DateEntity DateEntity
 		{
 			get
 			{
-				return this._Date.Entity;
+				return this._DateEntity.Entity;
 			}
 			set
 			{
-				Date previousValue = this._Date.Entity;
+				DateEntity previousValue = this._DateEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Date.HasLoadedOrAssignedValue == false)))
+							|| (this._DateEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Date.Entity = null;
-						previousValue.FExtendLoans.Remove(this);
+						this._DateEntity.Entity = null;
+						previousValue.Bi_FExtendLoans.Remove(this);
 					}
-					this._Date.Entity = value;
+					this._DateEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FExtendLoans.Add(this);
+						value.Bi_FExtendLoans.Add(this);
 						this._RequestDateSKey = value.DateSKey;
 					}
 					else
 					{
 						this._RequestDateSKey = default(int);
 					}
-					this.SendPropertyChanged("Date");
+					this.SendPropertyChanged("DateEntity");
 				}
 			}
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifExtendLoan_REF_biDate_2", Storage="_NextDueDateSKeyBi_Date", ThisKey="NextDueDateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date NextDueDateSKeyBi_Date
+		public DateEntity NextDueDateSKeyBi_Date
 		{
 			get
 			{
@@ -11981,7 +11981,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 			set
 			{
-				Date previousValue = this._NextDueDateSKeyBi_Date.Entity;
+				DateEntity previousValue = this._NextDueDateSKeyBi_Date.Entity;
 				if (((previousValue != value) 
 							|| (this._NextDueDateSKeyBi_Date.HasLoadedOrAssignedValue == false)))
 				{
@@ -12006,70 +12006,70 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifExtendLoan_REF_biPaymentCard", Storage="_PaymentCard", ThisKey="PaymentCardSKey", OtherKey="PaymentCardSKey", IsForeignKey=true)]
-		public PaymentCard PaymentCard
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifExtendLoan_REF_biPaymentCard", Storage="_PaymentCardEntity", ThisKey="PaymentCardSKey", OtherKey="PaymentCardSKey", IsForeignKey=true)]
+		public PaymentCardEntity PaymentCardEntity
 		{
 			get
 			{
-				return this._PaymentCard.Entity;
+				return this._PaymentCardEntity.Entity;
 			}
 			set
 			{
-				PaymentCard previousValue = this._PaymentCard.Entity;
+				PaymentCardEntity previousValue = this._PaymentCardEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._PaymentCard.HasLoadedOrAssignedValue == false)))
+							|| (this._PaymentCardEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._PaymentCard.Entity = null;
-						previousValue.FExtendLoans.Remove(this);
+						this._PaymentCardEntity.Entity = null;
+						previousValue.Bi_FExtendLoans.Remove(this);
 					}
-					this._PaymentCard.Entity = value;
+					this._PaymentCardEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FExtendLoans.Add(this);
+						value.Bi_FExtendLoans.Add(this);
 						this._PaymentCardSKey = value.PaymentCardSKey;
 					}
 					else
 					{
 						this._PaymentCardSKey = default(int);
 					}
-					this.SendPropertyChanged("PaymentCard");
+					this.SendPropertyChanged("PaymentCardEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifExtendLoan_REF_biRepaymentRequest", Storage="_RepaymentRequest", ThisKey="RepaymentRequestSKey", OtherKey="RepaymentRequestSKey", IsForeignKey=true)]
-		public RepaymentRequest RepaymentRequest
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifExtendLoan_REF_biRepaymentRequest", Storage="_RepaymentRequestEntity", ThisKey="RepaymentRequestSKey", OtherKey="RepaymentRequestSKey", IsForeignKey=true)]
+		public RepaymentRequestEntity RepaymentRequestEntity
 		{
 			get
 			{
-				return this._RepaymentRequest.Entity;
+				return this._RepaymentRequestEntity.Entity;
 			}
 			set
 			{
-				RepaymentRequest previousValue = this._RepaymentRequest.Entity;
+				RepaymentRequestEntity previousValue = this._RepaymentRequestEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._RepaymentRequest.HasLoadedOrAssignedValue == false)))
+							|| (this._RepaymentRequestEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._RepaymentRequest.Entity = null;
-						previousValue.FExtendLoans.Remove(this);
+						this._RepaymentRequestEntity.Entity = null;
+						previousValue.Bi_FExtendLoans.Remove(this);
 					}
-					this._RepaymentRequest.Entity = value;
+					this._RepaymentRequestEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FExtendLoans.Add(this);
+						value.Bi_FExtendLoans.Add(this);
 						this._RepaymentRequestSKey = value.RepaymentRequestSKey;
 					}
 					else
 					{
 						this._RepaymentRequestSKey = default(int);
 					}
-					this.SendPropertyChanged("RepaymentRequest");
+					this.SendPropertyChanged("RepaymentRequestEntity");
 				}
 			}
 		}
@@ -12096,7 +12096,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.fIApplicationAccepted")]
-	public partial class FIApplicationAccepted : DbEntity<FIApplicationAccepted>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FIApplicationAcceptedEntity : DbEntity<FIApplicationAcceptedEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -12113,11 +12113,11 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _CreatedByMessageArchiveId;
 		
-		private EntityRef<Account> _Account;
+		private EntityRef<AccountEntity> _AccountEntity;
 		
-		private EntityRef<Application> _Application;
+		private EntityRef<ApplicationEntity> _ApplicationEntity;
 		
-		private EntityRef<Date> _Date;
+		private EntityRef<DateEntity> _DateEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -12137,11 +12137,11 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnCreatedByMessageArchiveIdChanged();
     #endregion
 		
-		public FIApplicationAccepted()
+		public FIApplicationAcceptedEntity()
 		{
-			this._Account = default(EntityRef<Account>);
-			this._Application = default(EntityRef<Application>);
-			this._Date = default(EntityRef<Date>);
+			this._AccountEntity = default(EntityRef<AccountEntity>);
+			this._ApplicationEntity = default(EntityRef<ApplicationEntity>);
+			this._DateEntity = default(EntityRef<DateEntity>);
 			OnCreated();
 		}
 		
@@ -12156,7 +12156,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._ApplicationSKey != value))
 				{
-					if (this._Application.HasLoadedOrAssignedValue)
+					if (this._ApplicationEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -12180,7 +12180,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._AccountSKey != value))
 				{
-					if (this._Account.HasLoadedOrAssignedValue)
+					if (this._AccountEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -12204,7 +12204,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._DateSKey != value))
 				{
-					if (this._Date.HasLoadedOrAssignedValue)
+					if (this._DateEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -12277,104 +12277,104 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationAccepted_REF_biAccount", Storage="_Account", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
-		public Account Account
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationAccepted_REF_biAccount", Storage="_AccountEntity", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
+		public AccountEntity AccountEntity
 		{
 			get
 			{
-				return this._Account.Entity;
+				return this._AccountEntity.Entity;
 			}
 			set
 			{
-				Account previousValue = this._Account.Entity;
+				AccountEntity previousValue = this._AccountEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Account.HasLoadedOrAssignedValue == false)))
+							|| (this._AccountEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Account.Entity = null;
-						previousValue.FIApplicationAccepteds.Remove(this);
+						this._AccountEntity.Entity = null;
+						previousValue.Bi_FIApplicationAccepteds.Remove(this);
 					}
-					this._Account.Entity = value;
+					this._AccountEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FIApplicationAccepteds.Add(this);
+						value.Bi_FIApplicationAccepteds.Add(this);
 						this._AccountSKey = value.AccountSKey;
 					}
 					else
 					{
 						this._AccountSKey = default(int);
 					}
-					this.SendPropertyChanged("Account");
+					this.SendPropertyChanged("AccountEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationAccepted_REF_biApplication", Storage="_Application", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
-		public Application Application
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationAccepted_REF_biApplication", Storage="_ApplicationEntity", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
+		public ApplicationEntity ApplicationEntity
 		{
 			get
 			{
-				return this._Application.Entity;
+				return this._ApplicationEntity.Entity;
 			}
 			set
 			{
-				Application previousValue = this._Application.Entity;
+				ApplicationEntity previousValue = this._ApplicationEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Application.HasLoadedOrAssignedValue == false)))
+							|| (this._ApplicationEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Application.Entity = null;
-						previousValue.FIApplicationAccepted = null;
+						this._ApplicationEntity.Entity = null;
+						previousValue.FIApplicationAcceptedEntity = null;
 					}
-					this._Application.Entity = value;
+					this._ApplicationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FIApplicationAccepted = this;
+						value.FIApplicationAcceptedEntity = this;
 						this._ApplicationSKey = value.ApplicationSKey;
 					}
 					else
 					{
 						this._ApplicationSKey = default(int);
 					}
-					this.SendPropertyChanged("Application");
+					this.SendPropertyChanged("ApplicationEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationAccepted_REF_biDate", Storage="_Date", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date Date
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationAccepted_REF_biDate", Storage="_DateEntity", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
+		public DateEntity DateEntity
 		{
 			get
 			{
-				return this._Date.Entity;
+				return this._DateEntity.Entity;
 			}
 			set
 			{
-				Date previousValue = this._Date.Entity;
+				DateEntity previousValue = this._DateEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Date.HasLoadedOrAssignedValue == false)))
+							|| (this._DateEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Date.Entity = null;
-						previousValue.FIApplicationAccepteds.Remove(this);
+						this._DateEntity.Entity = null;
+						previousValue.Bi_FIApplicationAccepteds.Remove(this);
 					}
-					this._Date.Entity = value;
+					this._DateEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FIApplicationAccepteds.Add(this);
+						value.Bi_FIApplicationAccepteds.Add(this);
 						this._DateSKey = value.DateSKey;
 					}
 					else
 					{
 						this._DateSKey = default(int);
 					}
-					this.SendPropertyChanged("Date");
+					this.SendPropertyChanged("DateEntity");
 				}
 			}
 		}
@@ -12401,7 +12401,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.fIApplicationClosed")]
-	public partial class FIApplicationClosed : DbEntity<FIApplicationClosed>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FIApplicationClosedEntity : DbEntity<FIApplicationClosedEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -12422,11 +12422,11 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _UpdatedByMessageArchiveId;
 		
-		private EntityRef<Account> _Account;
+		private EntityRef<AccountEntity> _AccountEntity;
 		
-		private EntityRef<Application> _Application;
+		private EntityRef<ApplicationEntity> _ApplicationEntity;
 		
-		private EntityRef<Date> _Date;
+		private EntityRef<DateEntity> _DateEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -12450,11 +12450,11 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnUpdatedByMessageArchiveIdChanged();
     #endregion
 		
-		public FIApplicationClosed()
+		public FIApplicationClosedEntity()
 		{
-			this._Account = default(EntityRef<Account>);
-			this._Application = default(EntityRef<Application>);
-			this._Date = default(EntityRef<Date>);
+			this._AccountEntity = default(EntityRef<AccountEntity>);
+			this._ApplicationEntity = default(EntityRef<ApplicationEntity>);
+			this._DateEntity = default(EntityRef<DateEntity>);
 			OnCreated();
 		}
 		
@@ -12469,7 +12469,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._ApplicationSKey != value))
 				{
-					if (this._Application.HasLoadedOrAssignedValue)
+					if (this._ApplicationEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -12493,7 +12493,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._AccountSKey != value))
 				{
-					if (this._Account.HasLoadedOrAssignedValue)
+					if (this._AccountEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -12517,7 +12517,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._DateSKey != value))
 				{
-					if (this._Date.HasLoadedOrAssignedValue)
+					if (this._DateEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -12630,104 +12630,104 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationClosed_REF_biAccount", Storage="_Account", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
-		public Account Account
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationClosed_REF_biAccount", Storage="_AccountEntity", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
+		public AccountEntity AccountEntity
 		{
 			get
 			{
-				return this._Account.Entity;
+				return this._AccountEntity.Entity;
 			}
 			set
 			{
-				Account previousValue = this._Account.Entity;
+				AccountEntity previousValue = this._AccountEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Account.HasLoadedOrAssignedValue == false)))
+							|| (this._AccountEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Account.Entity = null;
-						previousValue.FIApplicationCloseds.Remove(this);
+						this._AccountEntity.Entity = null;
+						previousValue.Bi_FIApplicationCloseds.Remove(this);
 					}
-					this._Account.Entity = value;
+					this._AccountEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FIApplicationCloseds.Add(this);
+						value.Bi_FIApplicationCloseds.Add(this);
 						this._AccountSKey = value.AccountSKey;
 					}
 					else
 					{
 						this._AccountSKey = default(int);
 					}
-					this.SendPropertyChanged("Account");
+					this.SendPropertyChanged("AccountEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationClosed_REF_biApplication", Storage="_Application", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
-		public Application Application
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationClosed_REF_biApplication", Storage="_ApplicationEntity", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
+		public ApplicationEntity ApplicationEntity
 		{
 			get
 			{
-				return this._Application.Entity;
+				return this._ApplicationEntity.Entity;
 			}
 			set
 			{
-				Application previousValue = this._Application.Entity;
+				ApplicationEntity previousValue = this._ApplicationEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Application.HasLoadedOrAssignedValue == false)))
+							|| (this._ApplicationEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Application.Entity = null;
-						previousValue.FIApplicationCloseds.Remove(this);
+						this._ApplicationEntity.Entity = null;
+						previousValue.Bi_FIApplicationCloseds.Remove(this);
 					}
-					this._Application.Entity = value;
+					this._ApplicationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FIApplicationCloseds.Add(this);
+						value.Bi_FIApplicationCloseds.Add(this);
 						this._ApplicationSKey = value.ApplicationSKey;
 					}
 					else
 					{
 						this._ApplicationSKey = default(int);
 					}
-					this.SendPropertyChanged("Application");
+					this.SendPropertyChanged("ApplicationEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationClosed_REF_biDate", Storage="_Date", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date Date
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationClosed_REF_biDate", Storage="_DateEntity", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
+		public DateEntity DateEntity
 		{
 			get
 			{
-				return this._Date.Entity;
+				return this._DateEntity.Entity;
 			}
 			set
 			{
-				Date previousValue = this._Date.Entity;
+				DateEntity previousValue = this._DateEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Date.HasLoadedOrAssignedValue == false)))
+							|| (this._DateEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Date.Entity = null;
-						previousValue.FIApplicationCloseds.Remove(this);
+						this._DateEntity.Entity = null;
+						previousValue.Bi_FIApplicationCloseds.Remove(this);
 					}
-					this._Date.Entity = value;
+					this._DateEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FIApplicationCloseds.Add(this);
+						value.Bi_FIApplicationCloseds.Add(this);
 						this._DateSKey = value.DateSKey;
 					}
 					else
 					{
 						this._DateSKey = default(int);
 					}
-					this.SendPropertyChanged("Date");
+					this.SendPropertyChanged("DateEntity");
 				}
 			}
 		}
@@ -12754,7 +12754,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.fIApplicationDeclined")]
-	public partial class FIApplicationDeclined : DbEntity<FIApplicationDeclined>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FIApplicationDeclinedEntity : DbEntity<FIApplicationDeclinedEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -12773,13 +12773,13 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _CreatedByMessageArchiveId;
 		
-		private EntityRef<Account> _Account;
+		private EntityRef<AccountEntity> _AccountEntity;
 		
-		private EntityRef<Application> _Application;
+		private EntityRef<ApplicationEntity> _ApplicationEntity;
 		
-		private EntityRef<ApplicationDeclinedReason> _ApplicationDeclinedReason;
+		private EntityRef<ApplicationDeclinedReasonEntity> _ApplicationDeclinedReasonEntity;
 		
-		private EntityRef<Date> _Date;
+		private EntityRef<DateEntity> _DateEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -12801,12 +12801,12 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnCreatedByMessageArchiveIdChanged();
     #endregion
 		
-		public FIApplicationDeclined()
+		public FIApplicationDeclinedEntity()
 		{
-			this._Account = default(EntityRef<Account>);
-			this._Application = default(EntityRef<Application>);
-			this._ApplicationDeclinedReason = default(EntityRef<ApplicationDeclinedReason>);
-			this._Date = default(EntityRef<Date>);
+			this._AccountEntity = default(EntityRef<AccountEntity>);
+			this._ApplicationEntity = default(EntityRef<ApplicationEntity>);
+			this._ApplicationDeclinedReasonEntity = default(EntityRef<ApplicationDeclinedReasonEntity>);
+			this._DateEntity = default(EntityRef<DateEntity>);
 			OnCreated();
 		}
 		
@@ -12821,7 +12821,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._ApplicationSKey != value))
 				{
-					if (this._Application.HasLoadedOrAssignedValue)
+					if (this._ApplicationEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -12845,7 +12845,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._AccountSKey != value))
 				{
-					if (this._Account.HasLoadedOrAssignedValue)
+					if (this._AccountEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -12869,7 +12869,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._DateSKey != value))
 				{
-					if (this._Date.HasLoadedOrAssignedValue)
+					if (this._DateEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -12893,7 +12893,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._ApplicationDeclinedReasonSKey != value))
 				{
-					if (this._ApplicationDeclinedReason.HasLoadedOrAssignedValue)
+					if (this._ApplicationDeclinedReasonEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -12966,138 +12966,138 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationDeclined_REF_biAccount", Storage="_Account", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
-		public Account Account
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationDeclined_REF_biAccount", Storage="_AccountEntity", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
+		public AccountEntity AccountEntity
 		{
 			get
 			{
-				return this._Account.Entity;
+				return this._AccountEntity.Entity;
 			}
 			set
 			{
-				Account previousValue = this._Account.Entity;
+				AccountEntity previousValue = this._AccountEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Account.HasLoadedOrAssignedValue == false)))
+							|| (this._AccountEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Account.Entity = null;
-						previousValue.FIApplicationDeclineds.Remove(this);
+						this._AccountEntity.Entity = null;
+						previousValue.Bi_FIApplicationDeclineds.Remove(this);
 					}
-					this._Account.Entity = value;
+					this._AccountEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FIApplicationDeclineds.Add(this);
+						value.Bi_FIApplicationDeclineds.Add(this);
 						this._AccountSKey = value.AccountSKey;
 					}
 					else
 					{
 						this._AccountSKey = default(int);
 					}
-					this.SendPropertyChanged("Account");
+					this.SendPropertyChanged("AccountEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationDeclined_REF_biApplication", Storage="_Application", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
-		public Application Application
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationDeclined_REF_biApplication", Storage="_ApplicationEntity", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
+		public ApplicationEntity ApplicationEntity
 		{
 			get
 			{
-				return this._Application.Entity;
+				return this._ApplicationEntity.Entity;
 			}
 			set
 			{
-				Application previousValue = this._Application.Entity;
+				ApplicationEntity previousValue = this._ApplicationEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Application.HasLoadedOrAssignedValue == false)))
+							|| (this._ApplicationEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Application.Entity = null;
-						previousValue.FIApplicationDeclined = null;
+						this._ApplicationEntity.Entity = null;
+						previousValue.FIApplicationDeclinedEntity = null;
 					}
-					this._Application.Entity = value;
+					this._ApplicationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FIApplicationDeclined = this;
+						value.FIApplicationDeclinedEntity = this;
 						this._ApplicationSKey = value.ApplicationSKey;
 					}
 					else
 					{
 						this._ApplicationSKey = default(int);
 					}
-					this.SendPropertyChanged("Application");
+					this.SendPropertyChanged("ApplicationEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationDeclined_REF_biApplicationDeclinedReason", Storage="_ApplicationDeclinedReason", ThisKey="ApplicationDeclinedReasonSKey", OtherKey="ApplicationDeclinedReasonSKey", IsForeignKey=true)]
-		public ApplicationDeclinedReason ApplicationDeclinedReason
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationDeclined_REF_biApplicationDeclinedReason", Storage="_ApplicationDeclinedReasonEntity", ThisKey="ApplicationDeclinedReasonSKey", OtherKey="ApplicationDeclinedReasonSKey", IsForeignKey=true)]
+		public ApplicationDeclinedReasonEntity ApplicationDeclinedReasonEntity
 		{
 			get
 			{
-				return this._ApplicationDeclinedReason.Entity;
+				return this._ApplicationDeclinedReasonEntity.Entity;
 			}
 			set
 			{
-				ApplicationDeclinedReason previousValue = this._ApplicationDeclinedReason.Entity;
+				ApplicationDeclinedReasonEntity previousValue = this._ApplicationDeclinedReasonEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._ApplicationDeclinedReason.HasLoadedOrAssignedValue == false)))
+							|| (this._ApplicationDeclinedReasonEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._ApplicationDeclinedReason.Entity = null;
-						previousValue.FIApplicationDeclineds.Remove(this);
+						this._ApplicationDeclinedReasonEntity.Entity = null;
+						previousValue.Bi_FIApplicationDeclineds.Remove(this);
 					}
-					this._ApplicationDeclinedReason.Entity = value;
+					this._ApplicationDeclinedReasonEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FIApplicationDeclineds.Add(this);
+						value.Bi_FIApplicationDeclineds.Add(this);
 						this._ApplicationDeclinedReasonSKey = value.ApplicationDeclinedReasonSKey;
 					}
 					else
 					{
 						this._ApplicationDeclinedReasonSKey = default(byte);
 					}
-					this.SendPropertyChanged("ApplicationDeclinedReason");
+					this.SendPropertyChanged("ApplicationDeclinedReasonEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationDeclined_REF_biDate", Storage="_Date", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date Date
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIApplicationDeclined_REF_biDate", Storage="_DateEntity", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
+		public DateEntity DateEntity
 		{
 			get
 			{
-				return this._Date.Entity;
+				return this._DateEntity.Entity;
 			}
 			set
 			{
-				Date previousValue = this._Date.Entity;
+				DateEntity previousValue = this._DateEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Date.HasLoadedOrAssignedValue == false)))
+							|| (this._DateEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Date.Entity = null;
-						previousValue.FIApplicationDeclineds.Remove(this);
+						this._DateEntity.Entity = null;
+						previousValue.Bi_FIApplicationDeclineds.Remove(this);
 					}
-					this._Date.Entity = value;
+					this._DateEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FIApplicationDeclineds.Add(this);
+						value.Bi_FIApplicationDeclineds.Add(this);
 						this._DateSKey = value.DateSKey;
 					}
 					else
 					{
 						this._DateSKey = default(int);
 					}
-					this.SendPropertyChanged("Date");
+					this.SendPropertyChanged("DateEntity");
 				}
 			}
 		}
@@ -13124,7 +13124,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.fIFixedTermApplicationAdded")]
-	public partial class FIFixedTermApplicationAdded : DbEntity<FIFixedTermApplicationAdded>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FIFixedTermApplicationAddedEntity : DbEntity<FIFixedTermApplicationAddedEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -13135,17 +13135,17 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private int _DateSKey;
 		
-		private byte _FIFixedTermApplicationAddedColumn;
+		private byte _FIFixedTermApplicationAdded;
 		
 		private System.DateTime _CreatedAt;
 		
 		private long _CreatedByMessageArchiveId;
 		
-		private EntityRef<Account> _Account;
+		private EntityRef<AccountEntity> _AccountEntity;
 		
-		private EntityRef<Application> _Application;
+		private EntityRef<ApplicationEntity> _ApplicationEntity;
 		
-		private EntityRef<Date> _Date;
+		private EntityRef<DateEntity> _DateEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -13157,19 +13157,19 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnAccountSKeyChanged();
     partial void OnDateSKeyChanging(int value);
     partial void OnDateSKeyChanged();
-    partial void OnFIFixedTermApplicationAddedColumnChanging(byte value);
-    partial void OnFIFixedTermApplicationAddedColumnChanged();
+    partial void OnFIFixedTermApplicationAddedChanging(byte value);
+    partial void OnFIFixedTermApplicationAddedChanged();
     partial void OnCreatedAtChanging(System.DateTime value);
     partial void OnCreatedAtChanged();
     partial void OnCreatedByMessageArchiveIdChanging(long value);
     partial void OnCreatedByMessageArchiveIdChanged();
     #endregion
 		
-		public FIFixedTermApplicationAdded()
+		public FIFixedTermApplicationAddedEntity()
 		{
-			this._Account = default(EntityRef<Account>);
-			this._Application = default(EntityRef<Application>);
-			this._Date = default(EntityRef<Date>);
+			this._AccountEntity = default(EntityRef<AccountEntity>);
+			this._ApplicationEntity = default(EntityRef<ApplicationEntity>);
+			this._DateEntity = default(EntityRef<DateEntity>);
 			OnCreated();
 		}
 		
@@ -13184,7 +13184,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._ApplicationSKey != value))
 				{
-					if (this._Application.HasLoadedOrAssignedValue)
+					if (this._ApplicationEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -13208,7 +13208,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._AccountSKey != value))
 				{
-					if (this._Account.HasLoadedOrAssignedValue)
+					if (this._AccountEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -13232,7 +13232,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._DateSKey != value))
 				{
-					if (this._Date.HasLoadedOrAssignedValue)
+					if (this._DateEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -13245,22 +13245,22 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="fIFixedTermApplicationAdded", Storage="_FIFixedTermApplicationAddedColumn", DbType="TinyInt NOT NULL")]
-		public byte FIFixedTermApplicationAddedColumn
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="fIFixedTermApplicationAdded", Storage="_FIFixedTermApplicationAdded", DbType="TinyInt NOT NULL")]
+		public byte FIFixedTermApplicationAdded
 		{
 			get
 			{
-				return this._FIFixedTermApplicationAddedColumn;
+				return this._FIFixedTermApplicationAdded;
 			}
 			set
 			{
-				if ((this._FIFixedTermApplicationAddedColumn != value))
+				if ((this._FIFixedTermApplicationAdded != value))
 				{
-					this.OnFIFixedTermApplicationAddedColumnChanging(value);
+					this.OnFIFixedTermApplicationAddedChanging(value);
 					this.SendPropertyChanging();
-					this._FIFixedTermApplicationAddedColumn = value;
-					this.SendPropertyChanged("FIFixedTermApplicationAddedColumn");
-					this.OnFIFixedTermApplicationAddedColumnChanged();
+					this._FIFixedTermApplicationAdded = value;
+					this.SendPropertyChanged("FIFixedTermApplicationAdded");
+					this.OnFIFixedTermApplicationAddedChanged();
 				}
 			}
 		}
@@ -13305,104 +13305,104 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIFixedTermApplicationAdded_REF_biAccount", Storage="_Account", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
-		public Account Account
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIFixedTermApplicationAdded_REF_biAccount", Storage="_AccountEntity", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
+		public AccountEntity AccountEntity
 		{
 			get
 			{
-				return this._Account.Entity;
+				return this._AccountEntity.Entity;
 			}
 			set
 			{
-				Account previousValue = this._Account.Entity;
+				AccountEntity previousValue = this._AccountEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Account.HasLoadedOrAssignedValue == false)))
+							|| (this._AccountEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Account.Entity = null;
-						previousValue.FIFixedTermApplicationAddeds.Remove(this);
+						this._AccountEntity.Entity = null;
+						previousValue.Bi_FIFixedTermApplicationAddeds.Remove(this);
 					}
-					this._Account.Entity = value;
+					this._AccountEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FIFixedTermApplicationAddeds.Add(this);
+						value.Bi_FIFixedTermApplicationAddeds.Add(this);
 						this._AccountSKey = value.AccountSKey;
 					}
 					else
 					{
 						this._AccountSKey = default(int);
 					}
-					this.SendPropertyChanged("Account");
+					this.SendPropertyChanged("AccountEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIFixedTermApplicationAdded_REF_biApplication", Storage="_Application", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
-		public Application Application
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIFixedTermApplicationAdded_REF_biApplication", Storage="_ApplicationEntity", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
+		public ApplicationEntity ApplicationEntity
 		{
 			get
 			{
-				return this._Application.Entity;
+				return this._ApplicationEntity.Entity;
 			}
 			set
 			{
-				Application previousValue = this._Application.Entity;
+				ApplicationEntity previousValue = this._ApplicationEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Application.HasLoadedOrAssignedValue == false)))
+							|| (this._ApplicationEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Application.Entity = null;
-						previousValue.FIFixedTermApplicationAdded = null;
+						this._ApplicationEntity.Entity = null;
+						previousValue.FIFixedTermApplicationAddedEntity = null;
 					}
-					this._Application.Entity = value;
+					this._ApplicationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FIFixedTermApplicationAdded = this;
+						value.FIFixedTermApplicationAddedEntity = this;
 						this._ApplicationSKey = value.ApplicationSKey;
 					}
 					else
 					{
 						this._ApplicationSKey = default(int);
 					}
-					this.SendPropertyChanged("Application");
+					this.SendPropertyChanged("ApplicationEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIFixedTermApplicationAdded_REF_biDate", Storage="_Date", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date Date
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifIFixedTermApplicationAdded_REF_biDate", Storage="_DateEntity", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
+		public DateEntity DateEntity
 		{
 			get
 			{
-				return this._Date.Entity;
+				return this._DateEntity.Entity;
 			}
 			set
 			{
-				Date previousValue = this._Date.Entity;
+				DateEntity previousValue = this._DateEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Date.HasLoadedOrAssignedValue == false)))
+							|| (this._DateEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Date.Entity = null;
-						previousValue.FIFixedTermApplicationAddeds.Remove(this);
+						this._DateEntity.Entity = null;
+						previousValue.Bi_FIFixedTermApplicationAddeds.Remove(this);
 					}
-					this._Date.Entity = value;
+					this._DateEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FIFixedTermApplicationAddeds.Add(this);
+						value.Bi_FIFixedTermApplicationAddeds.Add(this);
 						this._DateSKey = value.DateSKey;
 					}
 					else
 					{
 						this._DateSKey = default(int);
 					}
-					this.SendPropertyChanged("Date");
+					this.SendPropertyChanged("DateEntity");
 				}
 			}
 		}
@@ -13429,7 +13429,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.FixedTermLoanExtension")]
-	public partial class FixedTermLoanExtension : DbEntity<FixedTermLoanExtension>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FixedTermLoanExtensionEntity : DbEntity<FixedTermLoanExtensionEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -13446,9 +13446,9 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _UpdatedByMessageArchiveId;
 		
-		private EntityRef<FCreateFixedTermLoanExtension> _FCreateFixedTermLoanExtension;
+		private EntityRef<FCreateFixedTermLoanExtensionEntity> _FCreateFixedTermLoanExtensionEntity;
 		
-		private EntityRef<FSignFixedTermLoanExtension> _FSignFixedTermLoanExtension;
+		private EntityRef<FSignFixedTermLoanExtensionEntity> _FSignFixedTermLoanExtensionEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -13468,10 +13468,10 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnUpdatedByMessageArchiveIdChanged();
     #endregion
 		
-		public FixedTermLoanExtension()
+		public FixedTermLoanExtensionEntity()
 		{
-			this._FCreateFixedTermLoanExtension = default(EntityRef<FCreateFixedTermLoanExtension>);
-			this._FSignFixedTermLoanExtension = default(EntityRef<FSignFixedTermLoanExtension>);
+			this._FCreateFixedTermLoanExtensionEntity = default(EntityRef<FCreateFixedTermLoanExtensionEntity>);
+			this._FSignFixedTermLoanExtensionEntity = default(EntityRef<FSignFixedTermLoanExtensionEntity>);
 			OnCreated();
 		}
 		
@@ -13595,60 +13595,60 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanExtension_REF_biFixedTermLoanExtension", Storage="_FCreateFixedTermLoanExtension", ThisKey="FixedTermLoanExtensionSKey", OtherKey="FixedTermLoanExtensionSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
-		public FCreateFixedTermLoanExtension FCreateFixedTermLoanExtension
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanExtension_REF_biFixedTermLoanExtension", Storage="_FCreateFixedTermLoanExtensionEntity", ThisKey="FixedTermLoanExtensionSKey", OtherKey="FixedTermLoanExtensionSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
+		public FCreateFixedTermLoanExtensionEntity FCreateFixedTermLoanExtensionEntity
 		{
 			get
 			{
-				return this._FCreateFixedTermLoanExtension.Entity;
+				return this._FCreateFixedTermLoanExtensionEntity.Entity;
 			}
 			set
 			{
-				FCreateFixedTermLoanExtension previousValue = this._FCreateFixedTermLoanExtension.Entity;
+				FCreateFixedTermLoanExtensionEntity previousValue = this._FCreateFixedTermLoanExtensionEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._FCreateFixedTermLoanExtension.HasLoadedOrAssignedValue == false)))
+							|| (this._FCreateFixedTermLoanExtensionEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._FCreateFixedTermLoanExtension.Entity = null;
-						previousValue.FixedTermLoanExtension = null;
+						this._FCreateFixedTermLoanExtensionEntity.Entity = null;
+						previousValue.FixedTermLoanExtensionEntity = null;
 					}
-					this._FCreateFixedTermLoanExtension.Entity = value;
+					this._FCreateFixedTermLoanExtensionEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FixedTermLoanExtension = this;
+						value.FixedTermLoanExtensionEntity = this;
 					}
-					this.SendPropertyChanged("FCreateFixedTermLoanExtension");
+					this.SendPropertyChanged("FCreateFixedTermLoanExtensionEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanExtension_REF_biFixedTermLoanExtension", Storage="_FSignFixedTermLoanExtension", ThisKey="FixedTermLoanExtensionSKey", OtherKey="FixedTermLoanExtensionSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
-		public FSignFixedTermLoanExtension FSignFixedTermLoanExtension
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanExtension_REF_biFixedTermLoanExtension", Storage="_FSignFixedTermLoanExtensionEntity", ThisKey="FixedTermLoanExtensionSKey", OtherKey="FixedTermLoanExtensionSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
+		public FSignFixedTermLoanExtensionEntity FSignFixedTermLoanExtensionEntity
 		{
 			get
 			{
-				return this._FSignFixedTermLoanExtension.Entity;
+				return this._FSignFixedTermLoanExtensionEntity.Entity;
 			}
 			set
 			{
-				FSignFixedTermLoanExtension previousValue = this._FSignFixedTermLoanExtension.Entity;
+				FSignFixedTermLoanExtensionEntity previousValue = this._FSignFixedTermLoanExtensionEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._FSignFixedTermLoanExtension.HasLoadedOrAssignedValue == false)))
+							|| (this._FSignFixedTermLoanExtensionEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._FSignFixedTermLoanExtension.Entity = null;
-						previousValue.FixedTermLoanExtension = null;
+						this._FSignFixedTermLoanExtensionEntity.Entity = null;
+						previousValue.FixedTermLoanExtensionEntity = null;
 					}
-					this._FSignFixedTermLoanExtension.Entity = value;
+					this._FSignFixedTermLoanExtensionEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FixedTermLoanExtension = this;
+						value.FixedTermLoanExtensionEntity = this;
 					}
-					this.SendPropertyChanged("FSignFixedTermLoanExtension");
+					this.SendPropertyChanged("FSignFixedTermLoanExtensionEntity");
 				}
 			}
 		}
@@ -13675,7 +13675,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.FixedTermLoanTopUp")]
-	public partial class FixedTermLoanTopUp : DbEntity<FixedTermLoanTopUp>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FixedTermLoanTopUpEntity : DbEntity<FixedTermLoanTopUpEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -13692,9 +13692,9 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _UpdatedByMessageArchiveId;
 		
-		private EntityRef<FCreateFixedTermLoanTopup> _FCreateFixedTermLoanTopup;
+		private EntityRef<FCreateFixedTermLoanTopupEntity> _FCreateFixedTermLoanTopupEntity;
 		
-		private EntityRef<FSignFixedTermLoanTopup> _FSignFixedTermLoanTopup;
+		private EntityRef<FSignFixedTermLoanTopupEntity> _FSignFixedTermLoanTopupEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -13714,10 +13714,10 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnUpdatedByMessageArchiveIdChanged();
     #endregion
 		
-		public FixedTermLoanTopUp()
+		public FixedTermLoanTopUpEntity()
 		{
-			this._FCreateFixedTermLoanTopup = default(EntityRef<FCreateFixedTermLoanTopup>);
-			this._FSignFixedTermLoanTopup = default(EntityRef<FSignFixedTermLoanTopup>);
+			this._FCreateFixedTermLoanTopupEntity = default(EntityRef<FCreateFixedTermLoanTopupEntity>);
+			this._FSignFixedTermLoanTopupEntity = default(EntityRef<FSignFixedTermLoanTopupEntity>);
 			OnCreated();
 		}
 		
@@ -13841,60 +13841,60 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanTopup_REF_biFixedTermLoanTopup", Storage="_FCreateFixedTermLoanTopup", ThisKey="FixedTermLoanTopupSKey", OtherKey="FixedTermLoanTopupSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
-		public FCreateFixedTermLoanTopup FCreateFixedTermLoanTopup
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanTopup_REF_biFixedTermLoanTopup", Storage="_FCreateFixedTermLoanTopupEntity", ThisKey="FixedTermLoanTopupSKey", OtherKey="FixedTermLoanTopupSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
+		public FCreateFixedTermLoanTopupEntity FCreateFixedTermLoanTopupEntity
 		{
 			get
 			{
-				return this._FCreateFixedTermLoanTopup.Entity;
+				return this._FCreateFixedTermLoanTopupEntity.Entity;
 			}
 			set
 			{
-				FCreateFixedTermLoanTopup previousValue = this._FCreateFixedTermLoanTopup.Entity;
+				FCreateFixedTermLoanTopupEntity previousValue = this._FCreateFixedTermLoanTopupEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._FCreateFixedTermLoanTopup.HasLoadedOrAssignedValue == false)))
+							|| (this._FCreateFixedTermLoanTopupEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._FCreateFixedTermLoanTopup.Entity = null;
-						previousValue.FixedTermLoanTopUp = null;
+						this._FCreateFixedTermLoanTopupEntity.Entity = null;
+						previousValue.FixedTermLoanTopUpEntity = null;
 					}
-					this._FCreateFixedTermLoanTopup.Entity = value;
+					this._FCreateFixedTermLoanTopupEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FixedTermLoanTopUp = this;
+						value.FixedTermLoanTopUpEntity = this;
 					}
-					this.SendPropertyChanged("FCreateFixedTermLoanTopup");
+					this.SendPropertyChanged("FCreateFixedTermLoanTopupEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanTopup_REF_biFixedTermLoanTopup", Storage="_FSignFixedTermLoanTopup", ThisKey="FixedTermLoanTopupSKey", OtherKey="FixedTermLoanTopupSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
-		public FSignFixedTermLoanTopup FSignFixedTermLoanTopup
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanTopup_REF_biFixedTermLoanTopup", Storage="_FSignFixedTermLoanTopupEntity", ThisKey="FixedTermLoanTopupSKey", OtherKey="FixedTermLoanTopupSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
+		public FSignFixedTermLoanTopupEntity FSignFixedTermLoanTopupEntity
 		{
 			get
 			{
-				return this._FSignFixedTermLoanTopup.Entity;
+				return this._FSignFixedTermLoanTopupEntity.Entity;
 			}
 			set
 			{
-				FSignFixedTermLoanTopup previousValue = this._FSignFixedTermLoanTopup.Entity;
+				FSignFixedTermLoanTopupEntity previousValue = this._FSignFixedTermLoanTopupEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._FSignFixedTermLoanTopup.HasLoadedOrAssignedValue == false)))
+							|| (this._FSignFixedTermLoanTopupEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._FSignFixedTermLoanTopup.Entity = null;
-						previousValue.FixedTermLoanTopUp = null;
+						this._FSignFixedTermLoanTopupEntity.Entity = null;
+						previousValue.FixedTermLoanTopUpEntity = null;
 					}
-					this._FSignFixedTermLoanTopup.Entity = value;
+					this._FSignFixedTermLoanTopupEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FixedTermLoanTopUp = this;
+						value.FixedTermLoanTopUpEntity = this;
 					}
-					this.SendPropertyChanged("FSignFixedTermLoanTopup");
+					this.SendPropertyChanged("FSignFixedTermLoanTopupEntity");
 				}
 			}
 		}
@@ -13921,7 +13921,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.fMessageType")]
-	public partial class FMessageType : DbEntity<FMessageType>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FMessageTypeEntity : DbEntity<FMessageTypeEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -13944,7 +13944,7 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnMessagesTallyChanged();
     #endregion
 		
-		public FMessageType()
+		public FMessageTypeEntity()
 		{
 			OnCreated();
 		}
@@ -14031,7 +14031,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.fPaymentCollection")]
-	public partial class FPaymentCollection : DbEntity<FPaymentCollection>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FPaymentCollectionEntity : DbEntity<FPaymentCollectionEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -14072,21 +14072,21 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private System.Nullable<long> _UpdatedByMessageArchiveId;
 		
-		private EntityRef<Application> _Application;
+		private EntityRef<ApplicationEntity> _ApplicationEntity;
 		
-		private EntityRef<Date> _Date;
+		private EntityRef<DateEntity> _DateEntity;
 		
-		private EntityRef<Date> _PaymentCollectionStartDateSKeyBi_Date;
+		private EntityRef<DateEntity> _PaymentCollectionStartDateSKeyBi_Date;
 		
-		private EntityRef<Date> _PaymentCollectionEndDateSKeyBi_Date;
+		private EntityRef<DateEntity> _PaymentCollectionEndDateSKeyBi_Date;
 		
-		private EntityRef<PaymentCollection> _PaymentCollection;
+		private EntityRef<PaymentCollectionEntity> _PaymentCollectionEntity;
 		
-		private EntityRef<PaymentCollectionAgency> _PaymentCollectionAgency;
+		private EntityRef<PaymentCollectionAgencyEntity> _PaymentCollectionAgencyEntity;
 		
-		private EntityRef<PaymentCollectionStatus> _PaymentCollectionStatus;
+		private EntityRef<PaymentCollectionStatusEntity> _PaymentCollectionStatusEntity;
 		
-		private EntityRef<PaymentCollectionType> _PaymentCollectionType;
+		private EntityRef<PaymentCollectionTypeEntity> _PaymentCollectionTypeEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -14130,16 +14130,16 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnUpdatedByMessageArchiveIdChanged();
     #endregion
 		
-		public FPaymentCollection()
+		public FPaymentCollectionEntity()
 		{
-			this._Application = default(EntityRef<Application>);
-			this._Date = default(EntityRef<Date>);
-			this._PaymentCollectionStartDateSKeyBi_Date = default(EntityRef<Date>);
-			this._PaymentCollectionEndDateSKeyBi_Date = default(EntityRef<Date>);
-			this._PaymentCollection = default(EntityRef<PaymentCollection>);
-			this._PaymentCollectionAgency = default(EntityRef<PaymentCollectionAgency>);
-			this._PaymentCollectionStatus = default(EntityRef<PaymentCollectionStatus>);
-			this._PaymentCollectionType = default(EntityRef<PaymentCollectionType>);
+			this._ApplicationEntity = default(EntityRef<ApplicationEntity>);
+			this._DateEntity = default(EntityRef<DateEntity>);
+			this._PaymentCollectionStartDateSKeyBi_Date = default(EntityRef<DateEntity>);
+			this._PaymentCollectionEndDateSKeyBi_Date = default(EntityRef<DateEntity>);
+			this._PaymentCollectionEntity = default(EntityRef<PaymentCollectionEntity>);
+			this._PaymentCollectionAgencyEntity = default(EntityRef<PaymentCollectionAgencyEntity>);
+			this._PaymentCollectionStatusEntity = default(EntityRef<PaymentCollectionStatusEntity>);
+			this._PaymentCollectionTypeEntity = default(EntityRef<PaymentCollectionTypeEntity>);
 			OnCreated();
 		}
 		
@@ -14154,7 +14154,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._PaymentCollectionSkey != value))
 				{
-					if (this._PaymentCollection.HasLoadedOrAssignedValue)
+					if (this._PaymentCollectionEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -14178,7 +14178,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._DateSKey != value))
 				{
-					if (this._Date.HasLoadedOrAssignedValue)
+					if (this._DateEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -14202,7 +14202,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._ApplicationSKey != value))
 				{
-					if (this._Application.HasLoadedOrAssignedValue)
+					if (this._ApplicationEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -14226,7 +14226,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._PaymentCollectionTypeSKey != value))
 				{
-					if (this._PaymentCollectionType.HasLoadedOrAssignedValue)
+					if (this._PaymentCollectionTypeEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -14250,7 +14250,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._PaymentCollectionAgencySKey != value))
 				{
-					if (this._PaymentCollectionAgency.HasLoadedOrAssignedValue)
+					if (this._PaymentCollectionAgencyEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -14298,7 +14298,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._PaymentCollectionStatusSKey != value))
 				{
-					if (this._PaymentCollectionStatus.HasLoadedOrAssignedValue)
+					if (this._PaymentCollectionStatusEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -14535,76 +14535,76 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentCollection_REF_biApplication", Storage="_Application", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
-		public Application Application
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentCollection_REF_biApplication", Storage="_ApplicationEntity", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
+		public ApplicationEntity ApplicationEntity
 		{
 			get
 			{
-				return this._Application.Entity;
+				return this._ApplicationEntity.Entity;
 			}
 			set
 			{
-				Application previousValue = this._Application.Entity;
+				ApplicationEntity previousValue = this._ApplicationEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Application.HasLoadedOrAssignedValue == false)))
+							|| (this._ApplicationEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Application.Entity = null;
-						previousValue.FPaymentCollections.Remove(this);
+						this._ApplicationEntity.Entity = null;
+						previousValue.Bi_FPaymentCollections.Remove(this);
 					}
-					this._Application.Entity = value;
+					this._ApplicationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FPaymentCollections.Add(this);
+						value.Bi_FPaymentCollections.Add(this);
 						this._ApplicationSKey = value.ApplicationSKey;
 					}
 					else
 					{
 						this._ApplicationSKey = default(int);
 					}
-					this.SendPropertyChanged("Application");
+					this.SendPropertyChanged("ApplicationEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentCollection_REF_biDate", Storage="_Date", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date Date
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentCollection_REF_biDate", Storage="_DateEntity", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
+		public DateEntity DateEntity
 		{
 			get
 			{
-				return this._Date.Entity;
+				return this._DateEntity.Entity;
 			}
 			set
 			{
-				Date previousValue = this._Date.Entity;
+				DateEntity previousValue = this._DateEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Date.HasLoadedOrAssignedValue == false)))
+							|| (this._DateEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Date.Entity = null;
-						previousValue.FPaymentCollections.Remove(this);
+						this._DateEntity.Entity = null;
+						previousValue.Bi_FPaymentCollections.Remove(this);
 					}
-					this._Date.Entity = value;
+					this._DateEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FPaymentCollections.Add(this);
+						value.Bi_FPaymentCollections.Add(this);
 						this._DateSKey = value.DateSKey;
 					}
 					else
 					{
 						this._DateSKey = default(int);
 					}
-					this.SendPropertyChanged("Date");
+					this.SendPropertyChanged("DateEntity");
 				}
 			}
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentCollection_REF_biDate_1", Storage="_PaymentCollectionStartDateSKeyBi_Date", ThisKey="PaymentCollectionStartDateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date PaymentCollectionStartDateSKeyBi_Date
+		public DateEntity PaymentCollectionStartDateSKeyBi_Date
 		{
 			get
 			{
@@ -14612,7 +14612,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 			set
 			{
-				Date previousValue = this._PaymentCollectionStartDateSKeyBi_Date.Entity;
+				DateEntity previousValue = this._PaymentCollectionStartDateSKeyBi_Date.Entity;
 				if (((previousValue != value) 
 							|| (this._PaymentCollectionStartDateSKeyBi_Date.HasLoadedOrAssignedValue == false)))
 				{
@@ -14638,7 +14638,7 @@ namespace Wonga.QA.Framework.Db.Bi
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentCollection_REF_bidate_2", Storage="_PaymentCollectionEndDateSKeyBi_Date", ThisKey="PaymentCollectionEndDateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date PaymentCollectionEndDateSKeyBi_Date
+		public DateEntity PaymentCollectionEndDateSKeyBi_Date
 		{
 			get
 			{
@@ -14646,7 +14646,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 			set
 			{
-				Date previousValue = this._PaymentCollectionEndDateSKeyBi_Date.Entity;
+				DateEntity previousValue = this._PaymentCollectionEndDateSKeyBi_Date.Entity;
 				if (((previousValue != value) 
 							|| (this._PaymentCollectionEndDateSKeyBi_Date.HasLoadedOrAssignedValue == false)))
 				{
@@ -14671,138 +14671,138 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentCollection_REF_biPaymentCollection", Storage="_PaymentCollection", ThisKey="PaymentCollectionSkey", OtherKey="PaymentCollectionSKey", IsForeignKey=true)]
-		public PaymentCollection PaymentCollection
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentCollection_REF_biPaymentCollection", Storage="_PaymentCollectionEntity", ThisKey="PaymentCollectionSkey", OtherKey="PaymentCollectionSKey", IsForeignKey=true)]
+		public PaymentCollectionEntity PaymentCollectionEntity
 		{
 			get
 			{
-				return this._PaymentCollection.Entity;
+				return this._PaymentCollectionEntity.Entity;
 			}
 			set
 			{
-				PaymentCollection previousValue = this._PaymentCollection.Entity;
+				PaymentCollectionEntity previousValue = this._PaymentCollectionEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._PaymentCollection.HasLoadedOrAssignedValue == false)))
+							|| (this._PaymentCollectionEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._PaymentCollection.Entity = null;
-						previousValue.FPaymentCollection = null;
+						this._PaymentCollectionEntity.Entity = null;
+						previousValue.FPaymentCollectionEntity = null;
 					}
-					this._PaymentCollection.Entity = value;
+					this._PaymentCollectionEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FPaymentCollection = this;
+						value.FPaymentCollectionEntity = this;
 						this._PaymentCollectionSkey = value.PaymentCollectionSKey;
 					}
 					else
 					{
 						this._PaymentCollectionSkey = default(int);
 					}
-					this.SendPropertyChanged("PaymentCollection");
+					this.SendPropertyChanged("PaymentCollectionEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentCollection_REF_biPaymentCollectionAgency", Storage="_PaymentCollectionAgency", ThisKey="PaymentCollectionAgencySKey", OtherKey="PaymentCollectionAgencySKey", IsForeignKey=true)]
-		public PaymentCollectionAgency PaymentCollectionAgency
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentCollection_REF_biPaymentCollectionAgency", Storage="_PaymentCollectionAgencyEntity", ThisKey="PaymentCollectionAgencySKey", OtherKey="PaymentCollectionAgencySKey", IsForeignKey=true)]
+		public PaymentCollectionAgencyEntity PaymentCollectionAgencyEntity
 		{
 			get
 			{
-				return this._PaymentCollectionAgency.Entity;
+				return this._PaymentCollectionAgencyEntity.Entity;
 			}
 			set
 			{
-				PaymentCollectionAgency previousValue = this._PaymentCollectionAgency.Entity;
+				PaymentCollectionAgencyEntity previousValue = this._PaymentCollectionAgencyEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._PaymentCollectionAgency.HasLoadedOrAssignedValue == false)))
+							|| (this._PaymentCollectionAgencyEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._PaymentCollectionAgency.Entity = null;
-						previousValue.FPaymentCollections.Remove(this);
+						this._PaymentCollectionAgencyEntity.Entity = null;
+						previousValue.Bi_FPaymentCollections.Remove(this);
 					}
-					this._PaymentCollectionAgency.Entity = value;
+					this._PaymentCollectionAgencyEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FPaymentCollections.Add(this);
+						value.Bi_FPaymentCollections.Add(this);
 						this._PaymentCollectionAgencySKey = value.PaymentCollectionAgencySKey;
 					}
 					else
 					{
 						this._PaymentCollectionAgencySKey = default(short);
 					}
-					this.SendPropertyChanged("PaymentCollectionAgency");
+					this.SendPropertyChanged("PaymentCollectionAgencyEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentCollection_REF_biPaymentCollectionStatus", Storage="_PaymentCollectionStatus", ThisKey="PaymentCollectionStatusSKey", OtherKey="PaymentCollectionStatusSKey", IsForeignKey=true)]
-		public PaymentCollectionStatus PaymentCollectionStatus
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentCollection_REF_biPaymentCollectionStatus", Storage="_PaymentCollectionStatusEntity", ThisKey="PaymentCollectionStatusSKey", OtherKey="PaymentCollectionStatusSKey", IsForeignKey=true)]
+		public PaymentCollectionStatusEntity PaymentCollectionStatusEntity
 		{
 			get
 			{
-				return this._PaymentCollectionStatus.Entity;
+				return this._PaymentCollectionStatusEntity.Entity;
 			}
 			set
 			{
-				PaymentCollectionStatus previousValue = this._PaymentCollectionStatus.Entity;
+				PaymentCollectionStatusEntity previousValue = this._PaymentCollectionStatusEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._PaymentCollectionStatus.HasLoadedOrAssignedValue == false)))
+							|| (this._PaymentCollectionStatusEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._PaymentCollectionStatus.Entity = null;
-						previousValue.FPaymentCollections.Remove(this);
+						this._PaymentCollectionStatusEntity.Entity = null;
+						previousValue.Bi_FPaymentCollections.Remove(this);
 					}
-					this._PaymentCollectionStatus.Entity = value;
+					this._PaymentCollectionStatusEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FPaymentCollections.Add(this);
+						value.Bi_FPaymentCollections.Add(this);
 						this._PaymentCollectionStatusSKey = value.PaymentCollectionStatusSKey;
 					}
 					else
 					{
 						this._PaymentCollectionStatusSKey = default(short);
 					}
-					this.SendPropertyChanged("PaymentCollectionStatus");
+					this.SendPropertyChanged("PaymentCollectionStatusEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentCollection_REF_biPaymentCollectionType", Storage="_PaymentCollectionType", ThisKey="PaymentCollectionTypeSKey", OtherKey="PaymentCollectionTypeSKey", IsForeignKey=true)]
-		public PaymentCollectionType PaymentCollectionType
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentCollection_REF_biPaymentCollectionType", Storage="_PaymentCollectionTypeEntity", ThisKey="PaymentCollectionTypeSKey", OtherKey="PaymentCollectionTypeSKey", IsForeignKey=true)]
+		public PaymentCollectionTypeEntity PaymentCollectionTypeEntity
 		{
 			get
 			{
-				return this._PaymentCollectionType.Entity;
+				return this._PaymentCollectionTypeEntity.Entity;
 			}
 			set
 			{
-				PaymentCollectionType previousValue = this._PaymentCollectionType.Entity;
+				PaymentCollectionTypeEntity previousValue = this._PaymentCollectionTypeEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._PaymentCollectionType.HasLoadedOrAssignedValue == false)))
+							|| (this._PaymentCollectionTypeEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._PaymentCollectionType.Entity = null;
-						previousValue.FPaymentCollections.Remove(this);
+						this._PaymentCollectionTypeEntity.Entity = null;
+						previousValue.Bi_FPaymentCollections.Remove(this);
 					}
-					this._PaymentCollectionType.Entity = value;
+					this._PaymentCollectionTypeEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FPaymentCollections.Add(this);
+						value.Bi_FPaymentCollections.Add(this);
 						this._PaymentCollectionTypeSKey = value.PaymentCollectionTypeSKey;
 					}
 					else
 					{
 						this._PaymentCollectionTypeSKey = default(short);
 					}
-					this.SendPropertyChanged("PaymentCollectionType");
+					this.SendPropertyChanged("PaymentCollectionTypeEntity");
 				}
 			}
 		}
@@ -14829,7 +14829,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.fPaymentSentMessage")]
-	public partial class FPaymentSentMessage : DbEntity<FPaymentSentMessage>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FPaymentSentMessageEntity : DbEntity<FPaymentSentMessageEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -14842,7 +14842,7 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _CreatedByMessageArchiveId;
 		
-		private EntityRef<Transaction> _Transaction;
+		private EntityRef<TransactionEntity> _TransactionEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -14858,9 +14858,9 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnCreatedByMessageArchiveIdChanged();
     #endregion
 		
-		public FPaymentSentMessage()
+		public FPaymentSentMessageEntity()
 		{
-			this._Transaction = default(EntityRef<Transaction>);
+			this._TransactionEntity = default(EntityRef<TransactionEntity>);
 			OnCreated();
 		}
 		
@@ -14875,7 +14875,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._TransactionSKey != value))
 				{
-					if (this._Transaction.HasLoadedOrAssignedValue)
+					if (this._TransactionEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -14948,36 +14948,36 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentSentMessage_REF_biTransaction", Storage="_Transaction", ThisKey="TransactionSKey", OtherKey="TransactionSKey", IsForeignKey=true)]
-		public Transaction Transaction
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentSentMessage_REF_biTransaction", Storage="_TransactionEntity", ThisKey="TransactionSKey", OtherKey="TransactionSKey", IsForeignKey=true)]
+		public TransactionEntity TransactionEntity
 		{
 			get
 			{
-				return this._Transaction.Entity;
+				return this._TransactionEntity.Entity;
 			}
 			set
 			{
-				Transaction previousValue = this._Transaction.Entity;
+				TransactionEntity previousValue = this._TransactionEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Transaction.HasLoadedOrAssignedValue == false)))
+							|| (this._TransactionEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Transaction.Entity = null;
-						previousValue.FPaymentSentMessage = null;
+						this._TransactionEntity.Entity = null;
+						previousValue.FPaymentSentMessageEntity = null;
 					}
-					this._Transaction.Entity = value;
+					this._TransactionEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FPaymentSentMessage = this;
+						value.FPaymentSentMessageEntity = this;
 						this._TransactionSKey = value.TransactionSKey;
 					}
 					else
 					{
 						this._TransactionSKey = default(int);
 					}
-					this.SendPropertyChanged("Transaction");
+					this.SendPropertyChanged("TransactionEntity");
 				}
 			}
 		}
@@ -15004,7 +15004,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.fRepayLoan")]
-	public partial class FRepayLoan : DbEntity<FRepayLoan>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FRepayLoanEntity : DbEntity<FRepayLoanEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -15023,11 +15023,11 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _CreatedByMessageArchiveId;
 		
-		private EntityRef<Application> _Application;
+		private EntityRef<ApplicationEntity> _ApplicationEntity;
 		
-		private EntityRef<PaymentCard> _PaymentCard;
+		private EntityRef<PaymentCardEntity> _PaymentCardEntity;
 		
-		private EntityRef<RepaymentRequest> _RepaymentRequest;
+		private EntityRef<RepaymentRequestEntity> _RepaymentRequestEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -15049,11 +15049,11 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnCreatedByMessageArchiveIdChanged();
     #endregion
 		
-		public FRepayLoan()
+		public FRepayLoanEntity()
 		{
-			this._Application = default(EntityRef<Application>);
-			this._PaymentCard = default(EntityRef<PaymentCard>);
-			this._RepaymentRequest = default(EntityRef<RepaymentRequest>);
+			this._ApplicationEntity = default(EntityRef<ApplicationEntity>);
+			this._PaymentCardEntity = default(EntityRef<PaymentCardEntity>);
+			this._RepaymentRequestEntity = default(EntityRef<RepaymentRequestEntity>);
 			OnCreated();
 		}
 		
@@ -15068,7 +15068,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._ApplicationSKey != value))
 				{
-					if (this._Application.HasLoadedOrAssignedValue)
+					if (this._ApplicationEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -15092,7 +15092,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._RepaymentRequestSKey != value))
 				{
-					if (this._RepaymentRequest.HasLoadedOrAssignedValue)
+					if (this._RepaymentRequestEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -15116,7 +15116,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._PaymentCardSKey != value))
 				{
-					if (this._PaymentCard.HasLoadedOrAssignedValue)
+					if (this._PaymentCardEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -15209,104 +15209,104 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifRepayLoan_REF_biApplication", Storage="_Application", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
-		public Application Application
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifRepayLoan_REF_biApplication", Storage="_ApplicationEntity", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
+		public ApplicationEntity ApplicationEntity
 		{
 			get
 			{
-				return this._Application.Entity;
+				return this._ApplicationEntity.Entity;
 			}
 			set
 			{
-				Application previousValue = this._Application.Entity;
+				ApplicationEntity previousValue = this._ApplicationEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Application.HasLoadedOrAssignedValue == false)))
+							|| (this._ApplicationEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Application.Entity = null;
-						previousValue.FRepayLoans.Remove(this);
+						this._ApplicationEntity.Entity = null;
+						previousValue.Bi_FRepayLoans.Remove(this);
 					}
-					this._Application.Entity = value;
+					this._ApplicationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FRepayLoans.Add(this);
+						value.Bi_FRepayLoans.Add(this);
 						this._ApplicationSKey = value.ApplicationSKey;
 					}
 					else
 					{
 						this._ApplicationSKey = default(int);
 					}
-					this.SendPropertyChanged("Application");
+					this.SendPropertyChanged("ApplicationEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifRepayLoan_REF_biPaymentCard", Storage="_PaymentCard", ThisKey="PaymentCardSKey", OtherKey="PaymentCardSKey", IsForeignKey=true)]
-		public PaymentCard PaymentCard
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifRepayLoan_REF_biPaymentCard", Storage="_PaymentCardEntity", ThisKey="PaymentCardSKey", OtherKey="PaymentCardSKey", IsForeignKey=true)]
+		public PaymentCardEntity PaymentCardEntity
 		{
 			get
 			{
-				return this._PaymentCard.Entity;
+				return this._PaymentCardEntity.Entity;
 			}
 			set
 			{
-				PaymentCard previousValue = this._PaymentCard.Entity;
+				PaymentCardEntity previousValue = this._PaymentCardEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._PaymentCard.HasLoadedOrAssignedValue == false)))
+							|| (this._PaymentCardEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._PaymentCard.Entity = null;
-						previousValue.FRepayLoans.Remove(this);
+						this._PaymentCardEntity.Entity = null;
+						previousValue.Bi_FRepayLoans.Remove(this);
 					}
-					this._PaymentCard.Entity = value;
+					this._PaymentCardEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FRepayLoans.Add(this);
+						value.Bi_FRepayLoans.Add(this);
 						this._PaymentCardSKey = value.PaymentCardSKey;
 					}
 					else
 					{
 						this._PaymentCardSKey = default(int);
 					}
-					this.SendPropertyChanged("PaymentCard");
+					this.SendPropertyChanged("PaymentCardEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifRepayLoan_REF_biRepaymentRequest", Storage="_RepaymentRequest", ThisKey="RepaymentRequestSKey", OtherKey="RepaymentRequestSKey", IsForeignKey=true)]
-		public RepaymentRequest RepaymentRequest
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifRepayLoan_REF_biRepaymentRequest", Storage="_RepaymentRequestEntity", ThisKey="RepaymentRequestSKey", OtherKey="RepaymentRequestSKey", IsForeignKey=true)]
+		public RepaymentRequestEntity RepaymentRequestEntity
 		{
 			get
 			{
-				return this._RepaymentRequest.Entity;
+				return this._RepaymentRequestEntity.Entity;
 			}
 			set
 			{
-				RepaymentRequest previousValue = this._RepaymentRequest.Entity;
+				RepaymentRequestEntity previousValue = this._RepaymentRequestEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._RepaymentRequest.HasLoadedOrAssignedValue == false)))
+							|| (this._RepaymentRequestEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._RepaymentRequest.Entity = null;
-						previousValue.FRepayLoans.Remove(this);
+						this._RepaymentRequestEntity.Entity = null;
+						previousValue.Bi_FRepayLoans.Remove(this);
 					}
-					this._RepaymentRequest.Entity = value;
+					this._RepaymentRequestEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FRepayLoans.Add(this);
+						value.Bi_FRepayLoans.Add(this);
 						this._RepaymentRequestSKey = value.RepaymentRequestSKey;
 					}
 					else
 					{
 						this._RepaymentRequestSKey = default(int);
 					}
-					this.SendPropertyChanged("RepaymentRequest");
+					this.SendPropertyChanged("RepaymentRequestEntity");
 				}
 			}
 		}
@@ -15333,7 +15333,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.fSignApplication")]
-	public partial class FSignApplication : DbEntity<FSignApplication>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FSignApplicationEntity : DbEntity<FSignApplicationEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -15344,17 +15344,17 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private int _DateSKey;
 		
-		private byte _FSignApplicationColumn;
+		private byte _FSignApplication;
 		
 		private System.DateTime _CreatedAt;
 		
 		private long _CreatedByMessageArchiveId;
 		
-		private EntityRef<Account> _Account;
+		private EntityRef<AccountEntity> _AccountEntity;
 		
-		private EntityRef<Application> _Application;
+		private EntityRef<ApplicationEntity> _ApplicationEntity;
 		
-		private EntityRef<Date> _Date;
+		private EntityRef<DateEntity> _DateEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -15366,19 +15366,19 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnAccountSKeyChanged();
     partial void OnDateSKeyChanging(int value);
     partial void OnDateSKeyChanged();
-    partial void OnFSignApplicationColumnChanging(byte value);
-    partial void OnFSignApplicationColumnChanged();
+    partial void OnFSignApplicationChanging(byte value);
+    partial void OnFSignApplicationChanged();
     partial void OnCreatedAtChanging(System.DateTime value);
     partial void OnCreatedAtChanged();
     partial void OnCreatedByMessageArchiveIdChanging(long value);
     partial void OnCreatedByMessageArchiveIdChanged();
     #endregion
 		
-		public FSignApplication()
+		public FSignApplicationEntity()
 		{
-			this._Account = default(EntityRef<Account>);
-			this._Application = default(EntityRef<Application>);
-			this._Date = default(EntityRef<Date>);
+			this._AccountEntity = default(EntityRef<AccountEntity>);
+			this._ApplicationEntity = default(EntityRef<ApplicationEntity>);
+			this._DateEntity = default(EntityRef<DateEntity>);
 			OnCreated();
 		}
 		
@@ -15393,7 +15393,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._ApplicationSKey != value))
 				{
-					if (this._Application.HasLoadedOrAssignedValue)
+					if (this._ApplicationEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -15417,7 +15417,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._AccountSKey != value))
 				{
-					if (this._Account.HasLoadedOrAssignedValue)
+					if (this._AccountEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -15441,7 +15441,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._DateSKey != value))
 				{
-					if (this._Date.HasLoadedOrAssignedValue)
+					if (this._DateEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -15454,22 +15454,22 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="fSignApplication", Storage="_FSignApplicationColumn", DbType="TinyInt NOT NULL")]
-		public byte FSignApplicationColumn
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="fSignApplication", Storage="_FSignApplication", DbType="TinyInt NOT NULL")]
+		public byte FSignApplication
 		{
 			get
 			{
-				return this._FSignApplicationColumn;
+				return this._FSignApplication;
 			}
 			set
 			{
-				if ((this._FSignApplicationColumn != value))
+				if ((this._FSignApplication != value))
 				{
-					this.OnFSignApplicationColumnChanging(value);
+					this.OnFSignApplicationChanging(value);
 					this.SendPropertyChanging();
-					this._FSignApplicationColumn = value;
-					this.SendPropertyChanged("FSignApplicationColumn");
-					this.OnFSignApplicationColumnChanged();
+					this._FSignApplication = value;
+					this.SendPropertyChanged("FSignApplication");
+					this.OnFSignApplicationChanged();
 				}
 			}
 		}
@@ -15514,104 +15514,104 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignApplication_REF_biAccount", Storage="_Account", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
-		public Account Account
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignApplication_REF_biAccount", Storage="_AccountEntity", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
+		public AccountEntity AccountEntity
 		{
 			get
 			{
-				return this._Account.Entity;
+				return this._AccountEntity.Entity;
 			}
 			set
 			{
-				Account previousValue = this._Account.Entity;
+				AccountEntity previousValue = this._AccountEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Account.HasLoadedOrAssignedValue == false)))
+							|| (this._AccountEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Account.Entity = null;
-						previousValue.FSignApplications.Remove(this);
+						this._AccountEntity.Entity = null;
+						previousValue.Bi_FSignApplications.Remove(this);
 					}
-					this._Account.Entity = value;
+					this._AccountEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FSignApplications.Add(this);
+						value.Bi_FSignApplications.Add(this);
 						this._AccountSKey = value.AccountSKey;
 					}
 					else
 					{
 						this._AccountSKey = default(int);
 					}
-					this.SendPropertyChanged("Account");
+					this.SendPropertyChanged("AccountEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignApplication_REF_biApplication", Storage="_Application", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
-		public Application Application
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignApplication_REF_biApplication", Storage="_ApplicationEntity", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
+		public ApplicationEntity ApplicationEntity
 		{
 			get
 			{
-				return this._Application.Entity;
+				return this._ApplicationEntity.Entity;
 			}
 			set
 			{
-				Application previousValue = this._Application.Entity;
+				ApplicationEntity previousValue = this._ApplicationEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Application.HasLoadedOrAssignedValue == false)))
+							|| (this._ApplicationEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Application.Entity = null;
-						previousValue.FSignApplications.Remove(this);
+						this._ApplicationEntity.Entity = null;
+						previousValue.Bi_FSignApplications.Remove(this);
 					}
-					this._Application.Entity = value;
+					this._ApplicationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FSignApplications.Add(this);
+						value.Bi_FSignApplications.Add(this);
 						this._ApplicationSKey = value.ApplicationSKey;
 					}
 					else
 					{
 						this._ApplicationSKey = default(int);
 					}
-					this.SendPropertyChanged("Application");
+					this.SendPropertyChanged("ApplicationEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignApplication_REF_biDate", Storage="_Date", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date Date
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignApplication_REF_biDate", Storage="_DateEntity", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
+		public DateEntity DateEntity
 		{
 			get
 			{
-				return this._Date.Entity;
+				return this._DateEntity.Entity;
 			}
 			set
 			{
-				Date previousValue = this._Date.Entity;
+				DateEntity previousValue = this._DateEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Date.HasLoadedOrAssignedValue == false)))
+							|| (this._DateEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Date.Entity = null;
-						previousValue.FSignApplications.Remove(this);
+						this._DateEntity.Entity = null;
+						previousValue.Bi_FSignApplications.Remove(this);
 					}
-					this._Date.Entity = value;
+					this._DateEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FSignApplications.Add(this);
+						value.Bi_FSignApplications.Add(this);
 						this._DateSKey = value.DateSKey;
 					}
 					else
 					{
 						this._DateSKey = default(int);
 					}
-					this.SendPropertyChanged("Date");
+					this.SendPropertyChanged("DateEntity");
 				}
 			}
 		}
@@ -15638,7 +15638,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.fSignFixedTermLoanExtension")]
-	public partial class FSignFixedTermLoanExtension : DbEntity<FSignFixedTermLoanExtension>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FSignFixedTermLoanExtensionEntity : DbEntity<FSignFixedTermLoanExtensionEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -15653,21 +15653,21 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private int _ExtendDateSKey;
 		
-		private byte _FSignFixedTermLoanExtensionColumn;
+		private byte _FSignFixedTermLoanExtension;
 		
 		private System.DateTime _CreatedAt;
 		
 		private long _CreatedByMessageArchiveId;
 		
-		private EntityRef<Account> _Account;
+		private EntityRef<AccountEntity> _AccountEntity;
 		
-		private EntityRef<Application> _Application;
+		private EntityRef<ApplicationEntity> _ApplicationEntity;
 		
-		private EntityRef<Date> _Date;
+		private EntityRef<DateEntity> _DateEntity;
 		
-		private EntityRef<Date> _ExtendDateSKeyBi_Date;
+		private EntityRef<DateEntity> _ExtendDateSKeyBi_Date;
 		
-		private EntityRef<FixedTermLoanExtension> _FixedTermLoanExtension;
+		private EntityRef<FixedTermLoanExtensionEntity> _FixedTermLoanExtensionEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -15683,21 +15683,21 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnDateSKeyChanged();
     partial void OnExtendDateSKeyChanging(int value);
     partial void OnExtendDateSKeyChanged();
-    partial void OnFSignFixedTermLoanExtensionColumnChanging(byte value);
-    partial void OnFSignFixedTermLoanExtensionColumnChanged();
+    partial void OnFSignFixedTermLoanExtensionChanging(byte value);
+    partial void OnFSignFixedTermLoanExtensionChanged();
     partial void OnCreatedAtChanging(System.DateTime value);
     partial void OnCreatedAtChanged();
     partial void OnCreatedByMessageArchiveIdChanging(long value);
     partial void OnCreatedByMessageArchiveIdChanged();
     #endregion
 		
-		public FSignFixedTermLoanExtension()
+		public FSignFixedTermLoanExtensionEntity()
 		{
-			this._Account = default(EntityRef<Account>);
-			this._Application = default(EntityRef<Application>);
-			this._Date = default(EntityRef<Date>);
-			this._ExtendDateSKeyBi_Date = default(EntityRef<Date>);
-			this._FixedTermLoanExtension = default(EntityRef<FixedTermLoanExtension>);
+			this._AccountEntity = default(EntityRef<AccountEntity>);
+			this._ApplicationEntity = default(EntityRef<ApplicationEntity>);
+			this._DateEntity = default(EntityRef<DateEntity>);
+			this._ExtendDateSKeyBi_Date = default(EntityRef<DateEntity>);
+			this._FixedTermLoanExtensionEntity = default(EntityRef<FixedTermLoanExtensionEntity>);
 			OnCreated();
 		}
 		
@@ -15712,7 +15712,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._FixedTermLoanExtensionSKey != value))
 				{
-					if (this._FixedTermLoanExtension.HasLoadedOrAssignedValue)
+					if (this._FixedTermLoanExtensionEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -15736,7 +15736,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._ApplicationSKey != value))
 				{
-					if (this._Application.HasLoadedOrAssignedValue)
+					if (this._ApplicationEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -15760,7 +15760,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._AccountSKey != value))
 				{
-					if (this._Account.HasLoadedOrAssignedValue)
+					if (this._AccountEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -15784,7 +15784,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._DateSKey != value))
 				{
-					if (this._Date.HasLoadedOrAssignedValue)
+					if (this._DateEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -15821,22 +15821,22 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="fSignFixedTermLoanExtension", Storage="_FSignFixedTermLoanExtensionColumn", DbType="TinyInt NOT NULL")]
-		public byte FSignFixedTermLoanExtensionColumn
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="fSignFixedTermLoanExtension", Storage="_FSignFixedTermLoanExtension", DbType="TinyInt NOT NULL")]
+		public byte FSignFixedTermLoanExtension
 		{
 			get
 			{
-				return this._FSignFixedTermLoanExtensionColumn;
+				return this._FSignFixedTermLoanExtension;
 			}
 			set
 			{
-				if ((this._FSignFixedTermLoanExtensionColumn != value))
+				if ((this._FSignFixedTermLoanExtension != value))
 				{
-					this.OnFSignFixedTermLoanExtensionColumnChanging(value);
+					this.OnFSignFixedTermLoanExtensionChanging(value);
 					this.SendPropertyChanging();
-					this._FSignFixedTermLoanExtensionColumn = value;
-					this.SendPropertyChanged("FSignFixedTermLoanExtensionColumn");
-					this.OnFSignFixedTermLoanExtensionColumnChanged();
+					this._FSignFixedTermLoanExtension = value;
+					this.SendPropertyChanged("FSignFixedTermLoanExtension");
+					this.OnFSignFixedTermLoanExtensionChanged();
 				}
 			}
 		}
@@ -15881,110 +15881,110 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanExtension_REF_biAccount", Storage="_Account", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
-		public Account Account
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanExtension_REF_biAccount", Storage="_AccountEntity", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
+		public AccountEntity AccountEntity
 		{
 			get
 			{
-				return this._Account.Entity;
+				return this._AccountEntity.Entity;
 			}
 			set
 			{
-				Account previousValue = this._Account.Entity;
+				AccountEntity previousValue = this._AccountEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Account.HasLoadedOrAssignedValue == false)))
+							|| (this._AccountEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Account.Entity = null;
-						previousValue.FSignFixedTermLoanExtensions.Remove(this);
+						this._AccountEntity.Entity = null;
+						previousValue.Bi_FSignFixedTermLoanExtensions.Remove(this);
 					}
-					this._Account.Entity = value;
+					this._AccountEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FSignFixedTermLoanExtensions.Add(this);
+						value.Bi_FSignFixedTermLoanExtensions.Add(this);
 						this._AccountSKey = value.AccountSKey;
 					}
 					else
 					{
 						this._AccountSKey = default(int);
 					}
-					this.SendPropertyChanged("Account");
+					this.SendPropertyChanged("AccountEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanExtension_REF_biApplication", Storage="_Application", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
-		public Application Application
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanExtension_REF_biApplication", Storage="_ApplicationEntity", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
+		public ApplicationEntity ApplicationEntity
 		{
 			get
 			{
-				return this._Application.Entity;
+				return this._ApplicationEntity.Entity;
 			}
 			set
 			{
-				Application previousValue = this._Application.Entity;
+				ApplicationEntity previousValue = this._ApplicationEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Application.HasLoadedOrAssignedValue == false)))
+							|| (this._ApplicationEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Application.Entity = null;
-						previousValue.FSignFixedTermLoanExtensions.Remove(this);
+						this._ApplicationEntity.Entity = null;
+						previousValue.Bi_FSignFixedTermLoanExtensions.Remove(this);
 					}
-					this._Application.Entity = value;
+					this._ApplicationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FSignFixedTermLoanExtensions.Add(this);
+						value.Bi_FSignFixedTermLoanExtensions.Add(this);
 						this._ApplicationSKey = value.ApplicationSKey;
 					}
 					else
 					{
 						this._ApplicationSKey = default(int);
 					}
-					this.SendPropertyChanged("Application");
+					this.SendPropertyChanged("ApplicationEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanExtension_REF_biDate", Storage="_Date", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date Date
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanExtension_REF_biDate", Storage="_DateEntity", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
+		public DateEntity DateEntity
 		{
 			get
 			{
-				return this._Date.Entity;
+				return this._DateEntity.Entity;
 			}
 			set
 			{
-				Date previousValue = this._Date.Entity;
+				DateEntity previousValue = this._DateEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Date.HasLoadedOrAssignedValue == false)))
+							|| (this._DateEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Date.Entity = null;
-						previousValue.FSignFixedTermLoanExtensions.Remove(this);
+						this._DateEntity.Entity = null;
+						previousValue.Bi_FSignFixedTermLoanExtensions.Remove(this);
 					}
-					this._Date.Entity = value;
+					this._DateEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FSignFixedTermLoanExtensions.Add(this);
+						value.Bi_FSignFixedTermLoanExtensions.Add(this);
 						this._DateSKey = value.DateSKey;
 					}
 					else
 					{
 						this._DateSKey = default(int);
 					}
-					this.SendPropertyChanged("Date");
+					this.SendPropertyChanged("DateEntity");
 				}
 			}
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanExtension_REF_biDate_2", Storage="_ExtendDateSKeyBi_Date", ThisKey="ExtendDateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date ExtendDateSKeyBi_Date
+		public DateEntity ExtendDateSKeyBi_Date
 		{
 			get
 			{
@@ -15992,7 +15992,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 			set
 			{
-				Date previousValue = this._ExtendDateSKeyBi_Date.Entity;
+				DateEntity previousValue = this._ExtendDateSKeyBi_Date.Entity;
 				if (((previousValue != value) 
 							|| (this._ExtendDateSKeyBi_Date.HasLoadedOrAssignedValue == false)))
 				{
@@ -16017,36 +16017,36 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanExtension_REF_biFixedTermLoanExtension", Storage="_FixedTermLoanExtension", ThisKey="FixedTermLoanExtensionSKey", OtherKey="FixedTermLoanExtensionSKey", IsForeignKey=true)]
-		public FixedTermLoanExtension FixedTermLoanExtension
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanExtension_REF_biFixedTermLoanExtension", Storage="_FixedTermLoanExtensionEntity", ThisKey="FixedTermLoanExtensionSKey", OtherKey="FixedTermLoanExtensionSKey", IsForeignKey=true)]
+		public FixedTermLoanExtensionEntity FixedTermLoanExtensionEntity
 		{
 			get
 			{
-				return this._FixedTermLoanExtension.Entity;
+				return this._FixedTermLoanExtensionEntity.Entity;
 			}
 			set
 			{
-				FixedTermLoanExtension previousValue = this._FixedTermLoanExtension.Entity;
+				FixedTermLoanExtensionEntity previousValue = this._FixedTermLoanExtensionEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._FixedTermLoanExtension.HasLoadedOrAssignedValue == false)))
+							|| (this._FixedTermLoanExtensionEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._FixedTermLoanExtension.Entity = null;
-						previousValue.FSignFixedTermLoanExtension = null;
+						this._FixedTermLoanExtensionEntity.Entity = null;
+						previousValue.FSignFixedTermLoanExtensionEntity = null;
 					}
-					this._FixedTermLoanExtension.Entity = value;
+					this._FixedTermLoanExtensionEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FSignFixedTermLoanExtension = this;
+						value.FSignFixedTermLoanExtensionEntity = this;
 						this._FixedTermLoanExtensionSKey = value.FixedTermLoanExtensionSKey;
 					}
 					else
 					{
 						this._FixedTermLoanExtensionSKey = default(int);
 					}
-					this.SendPropertyChanged("FixedTermLoanExtension");
+					this.SendPropertyChanged("FixedTermLoanExtensionEntity");
 				}
 			}
 		}
@@ -16073,7 +16073,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.fSignFixedTermLoanTopup")]
-	public partial class FSignFixedTermLoanTopup : DbEntity<FSignFixedTermLoanTopup>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FSignFixedTermLoanTopupEntity : DbEntity<FSignFixedTermLoanTopupEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -16086,19 +16086,19 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private int _DateSKey;
 		
-		private byte _FSignFixedTermLoanTopupColumn;
+		private byte _FSignFixedTermLoanTopup;
 		
 		private System.DateTime _CreatedAt;
 		
 		private long _CreatedByMessageArchiveId;
 		
-		private EntityRef<Account> _Account;
+		private EntityRef<AccountEntity> _AccountEntity;
 		
-		private EntityRef<Application> _Application;
+		private EntityRef<ApplicationEntity> _ApplicationEntity;
 		
-		private EntityRef<Date> _Date;
+		private EntityRef<DateEntity> _DateEntity;
 		
-		private EntityRef<FixedTermLoanTopUp> _FixedTermLoanTopUp;
+		private EntityRef<FixedTermLoanTopUpEntity> _FixedTermLoanTopUpEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -16112,20 +16112,20 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnAccountSKeyChanged();
     partial void OnDateSKeyChanging(int value);
     partial void OnDateSKeyChanged();
-    partial void OnFSignFixedTermLoanTopupColumnChanging(byte value);
-    partial void OnFSignFixedTermLoanTopupColumnChanged();
+    partial void OnFSignFixedTermLoanTopupChanging(byte value);
+    partial void OnFSignFixedTermLoanTopupChanged();
     partial void OnCreatedAtChanging(System.DateTime value);
     partial void OnCreatedAtChanged();
     partial void OnCreatedByMessageArchiveIdChanging(long value);
     partial void OnCreatedByMessageArchiveIdChanged();
     #endregion
 		
-		public FSignFixedTermLoanTopup()
+		public FSignFixedTermLoanTopupEntity()
 		{
-			this._Account = default(EntityRef<Account>);
-			this._Application = default(EntityRef<Application>);
-			this._Date = default(EntityRef<Date>);
-			this._FixedTermLoanTopUp = default(EntityRef<FixedTermLoanTopUp>);
+			this._AccountEntity = default(EntityRef<AccountEntity>);
+			this._ApplicationEntity = default(EntityRef<ApplicationEntity>);
+			this._DateEntity = default(EntityRef<DateEntity>);
+			this._FixedTermLoanTopUpEntity = default(EntityRef<FixedTermLoanTopUpEntity>);
 			OnCreated();
 		}
 		
@@ -16140,7 +16140,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._FixedTermLoanTopupSKey != value))
 				{
-					if (this._FixedTermLoanTopUp.HasLoadedOrAssignedValue)
+					if (this._FixedTermLoanTopUpEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -16164,7 +16164,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._ApplicationSKey != value))
 				{
-					if (this._Application.HasLoadedOrAssignedValue)
+					if (this._ApplicationEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -16188,7 +16188,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._AccountSKey != value))
 				{
-					if (this._Account.HasLoadedOrAssignedValue)
+					if (this._AccountEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -16212,7 +16212,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._DateSKey != value))
 				{
-					if (this._Date.HasLoadedOrAssignedValue)
+					if (this._DateEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -16225,22 +16225,22 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="fSignFixedTermLoanTopup", Storage="_FSignFixedTermLoanTopupColumn", DbType="TinyInt NOT NULL")]
-		public byte FSignFixedTermLoanTopupColumn
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="fSignFixedTermLoanTopup", Storage="_FSignFixedTermLoanTopup", DbType="TinyInt NOT NULL")]
+		public byte FSignFixedTermLoanTopup
 		{
 			get
 			{
-				return this._FSignFixedTermLoanTopupColumn;
+				return this._FSignFixedTermLoanTopup;
 			}
 			set
 			{
-				if ((this._FSignFixedTermLoanTopupColumn != value))
+				if ((this._FSignFixedTermLoanTopup != value))
 				{
-					this.OnFSignFixedTermLoanTopupColumnChanging(value);
+					this.OnFSignFixedTermLoanTopupChanging(value);
 					this.SendPropertyChanging();
-					this._FSignFixedTermLoanTopupColumn = value;
-					this.SendPropertyChanged("FSignFixedTermLoanTopupColumn");
-					this.OnFSignFixedTermLoanTopupColumnChanged();
+					this._FSignFixedTermLoanTopup = value;
+					this.SendPropertyChanged("FSignFixedTermLoanTopup");
+					this.OnFSignFixedTermLoanTopupChanged();
 				}
 			}
 		}
@@ -16285,138 +16285,138 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanTopup_REF_biAccount", Storage="_Account", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
-		public Account Account
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanTopup_REF_biAccount", Storage="_AccountEntity", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
+		public AccountEntity AccountEntity
 		{
 			get
 			{
-				return this._Account.Entity;
+				return this._AccountEntity.Entity;
 			}
 			set
 			{
-				Account previousValue = this._Account.Entity;
+				AccountEntity previousValue = this._AccountEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Account.HasLoadedOrAssignedValue == false)))
+							|| (this._AccountEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Account.Entity = null;
-						previousValue.FSignFixedTermLoanTopups.Remove(this);
+						this._AccountEntity.Entity = null;
+						previousValue.Bi_FSignFixedTermLoanTopups.Remove(this);
 					}
-					this._Account.Entity = value;
+					this._AccountEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FSignFixedTermLoanTopups.Add(this);
+						value.Bi_FSignFixedTermLoanTopups.Add(this);
 						this._AccountSKey = value.AccountSKey;
 					}
 					else
 					{
 						this._AccountSKey = default(int);
 					}
-					this.SendPropertyChanged("Account");
+					this.SendPropertyChanged("AccountEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanTopup_REF_biApplication", Storage="_Application", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
-		public Application Application
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanTopup_REF_biApplication", Storage="_ApplicationEntity", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
+		public ApplicationEntity ApplicationEntity
 		{
 			get
 			{
-				return this._Application.Entity;
+				return this._ApplicationEntity.Entity;
 			}
 			set
 			{
-				Application previousValue = this._Application.Entity;
+				ApplicationEntity previousValue = this._ApplicationEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Application.HasLoadedOrAssignedValue == false)))
+							|| (this._ApplicationEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Application.Entity = null;
-						previousValue.FSignFixedTermLoanTopups.Remove(this);
+						this._ApplicationEntity.Entity = null;
+						previousValue.Bi_FSignFixedTermLoanTopups.Remove(this);
 					}
-					this._Application.Entity = value;
+					this._ApplicationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FSignFixedTermLoanTopups.Add(this);
+						value.Bi_FSignFixedTermLoanTopups.Add(this);
 						this._ApplicationSKey = value.ApplicationSKey;
 					}
 					else
 					{
 						this._ApplicationSKey = default(int);
 					}
-					this.SendPropertyChanged("Application");
+					this.SendPropertyChanged("ApplicationEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanTopup_REF_biDate", Storage="_Date", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date Date
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanTopup_REF_biDate", Storage="_DateEntity", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
+		public DateEntity DateEntity
 		{
 			get
 			{
-				return this._Date.Entity;
+				return this._DateEntity.Entity;
 			}
 			set
 			{
-				Date previousValue = this._Date.Entity;
+				DateEntity previousValue = this._DateEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Date.HasLoadedOrAssignedValue == false)))
+							|| (this._DateEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Date.Entity = null;
-						previousValue.FSignFixedTermLoanTopups.Remove(this);
+						this._DateEntity.Entity = null;
+						previousValue.Bi_FSignFixedTermLoanTopups.Remove(this);
 					}
-					this._Date.Entity = value;
+					this._DateEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FSignFixedTermLoanTopups.Add(this);
+						value.Bi_FSignFixedTermLoanTopups.Add(this);
 						this._DateSKey = value.DateSKey;
 					}
 					else
 					{
 						this._DateSKey = default(int);
 					}
-					this.SendPropertyChanged("Date");
+					this.SendPropertyChanged("DateEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanTopup_REF_biFixedTermLoanTopup", Storage="_FixedTermLoanTopUp", ThisKey="FixedTermLoanTopupSKey", OtherKey="FixedTermLoanTopupSKey", IsForeignKey=true)]
-		public FixedTermLoanTopUp FixedTermLoanTopUp
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSignFixedTermLoanTopup_REF_biFixedTermLoanTopup", Storage="_FixedTermLoanTopUpEntity", ThisKey="FixedTermLoanTopupSKey", OtherKey="FixedTermLoanTopupSKey", IsForeignKey=true)]
+		public FixedTermLoanTopUpEntity FixedTermLoanTopUpEntity
 		{
 			get
 			{
-				return this._FixedTermLoanTopUp.Entity;
+				return this._FixedTermLoanTopUpEntity.Entity;
 			}
 			set
 			{
-				FixedTermLoanTopUp previousValue = this._FixedTermLoanTopUp.Entity;
+				FixedTermLoanTopUpEntity previousValue = this._FixedTermLoanTopUpEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._FixedTermLoanTopUp.HasLoadedOrAssignedValue == false)))
+							|| (this._FixedTermLoanTopUpEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._FixedTermLoanTopUp.Entity = null;
-						previousValue.FSignFixedTermLoanTopup = null;
+						this._FixedTermLoanTopUpEntity.Entity = null;
+						previousValue.FSignFixedTermLoanTopupEntity = null;
 					}
-					this._FixedTermLoanTopUp.Entity = value;
+					this._FixedTermLoanTopUpEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FSignFixedTermLoanTopup = this;
+						value.FSignFixedTermLoanTopupEntity = this;
 						this._FixedTermLoanTopupSKey = value.FixedTermLoanTopupSKey;
 					}
 					else
 					{
 						this._FixedTermLoanTopupSKey = default(int);
 					}
-					this.SendPropertyChanged("FixedTermLoanTopUp");
+					this.SendPropertyChanged("FixedTermLoanTopUpEntity");
 				}
 			}
 		}
@@ -16443,7 +16443,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.fSubmitCounterOffer")]
-	public partial class FSubmitCounterOffer : DbEntity<FSubmitCounterOffer>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FSubmitCounterOfferEntity : DbEntity<FSubmitCounterOfferEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -16462,11 +16462,11 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _CreatedByMessageArchiveId;
 		
-		private EntityRef<Account> _Account;
+		private EntityRef<AccountEntity> _AccountEntity;
 		
-		private EntityRef<Application> _Application;
+		private EntityRef<ApplicationEntity> _ApplicationEntity;
 		
-		private EntityRef<UserAction> _UserAction;
+		private EntityRef<UserActionEntity> _UserActionEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -16488,11 +16488,11 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnCreatedByMessageArchiveIdChanged();
     #endregion
 		
-		public FSubmitCounterOffer()
+		public FSubmitCounterOfferEntity()
 		{
-			this._Account = default(EntityRef<Account>);
-			this._Application = default(EntityRef<Application>);
-			this._UserAction = default(EntityRef<UserAction>);
+			this._AccountEntity = default(EntityRef<AccountEntity>);
+			this._ApplicationEntity = default(EntityRef<ApplicationEntity>);
+			this._UserActionEntity = default(EntityRef<UserActionEntity>);
 			OnCreated();
 		}
 		
@@ -16507,7 +16507,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._ApplicationSKey != value))
 				{
-					if (this._Application.HasLoadedOrAssignedValue)
+					if (this._ApplicationEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -16531,7 +16531,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._AccountSKey != value))
 				{
-					if (this._Account.HasLoadedOrAssignedValue)
+					if (this._AccountEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -16555,7 +16555,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._UserActionSKey != value))
 				{
-					if (this._UserAction.HasLoadedOrAssignedValue)
+					if (this._UserActionEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -16648,104 +16648,104 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSubmitCounterOffer_REF_biAccount", Storage="_Account", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
-		public Account Account
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSubmitCounterOffer_REF_biAccount", Storage="_AccountEntity", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
+		public AccountEntity AccountEntity
 		{
 			get
 			{
-				return this._Account.Entity;
+				return this._AccountEntity.Entity;
 			}
 			set
 			{
-				Account previousValue = this._Account.Entity;
+				AccountEntity previousValue = this._AccountEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Account.HasLoadedOrAssignedValue == false)))
+							|| (this._AccountEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Account.Entity = null;
-						previousValue.FSubmitCounterOffers.Remove(this);
+						this._AccountEntity.Entity = null;
+						previousValue.Bi_FSubmitCounterOffers.Remove(this);
 					}
-					this._Account.Entity = value;
+					this._AccountEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FSubmitCounterOffers.Add(this);
+						value.Bi_FSubmitCounterOffers.Add(this);
 						this._AccountSKey = value.AccountSKey;
 					}
 					else
 					{
 						this._AccountSKey = default(int);
 					}
-					this.SendPropertyChanged("Account");
+					this.SendPropertyChanged("AccountEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSubmitCounterOffer_REF_biApplication", Storage="_Application", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
-		public Application Application
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSubmitCounterOffer_REF_biApplication", Storage="_ApplicationEntity", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
+		public ApplicationEntity ApplicationEntity
 		{
 			get
 			{
-				return this._Application.Entity;
+				return this._ApplicationEntity.Entity;
 			}
 			set
 			{
-				Application previousValue = this._Application.Entity;
+				ApplicationEntity previousValue = this._ApplicationEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Application.HasLoadedOrAssignedValue == false)))
+							|| (this._ApplicationEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Application.Entity = null;
-						previousValue.FSubmitCounterOffer = null;
+						this._ApplicationEntity.Entity = null;
+						previousValue.FSubmitCounterOfferEntity = null;
 					}
-					this._Application.Entity = value;
+					this._ApplicationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FSubmitCounterOffer = this;
+						value.FSubmitCounterOfferEntity = this;
 						this._ApplicationSKey = value.ApplicationSKey;
 					}
 					else
 					{
 						this._ApplicationSKey = default(int);
 					}
-					this.SendPropertyChanged("Application");
+					this.SendPropertyChanged("ApplicationEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSubmitCounterOffer_REF_biUserAction", Storage="_UserAction", ThisKey="UserActionSKey", OtherKey="UserActionSKey", IsForeignKey=true)]
-		public UserAction UserAction
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSubmitCounterOffer_REF_biUserAction", Storage="_UserActionEntity", ThisKey="UserActionSKey", OtherKey="UserActionSKey", IsForeignKey=true)]
+		public UserActionEntity UserActionEntity
 		{
 			get
 			{
-				return this._UserAction.Entity;
+				return this._UserActionEntity.Entity;
 			}
 			set
 			{
-				UserAction previousValue = this._UserAction.Entity;
+				UserActionEntity previousValue = this._UserActionEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._UserAction.HasLoadedOrAssignedValue == false)))
+							|| (this._UserActionEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._UserAction.Entity = null;
-						previousValue.FSubmitCounterOffers.Remove(this);
+						this._UserActionEntity.Entity = null;
+						previousValue.Bi_FSubmitCounterOffers.Remove(this);
 					}
-					this._UserAction.Entity = value;
+					this._UserActionEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FSubmitCounterOffers.Add(this);
+						value.Bi_FSubmitCounterOffers.Add(this);
 						this._UserActionSKey = value.UserActionSKey;
 					}
 					else
 					{
 						this._UserActionSKey = default(int);
 					}
-					this.SendPropertyChanged("UserAction");
+					this.SendPropertyChanged("UserActionEntity");
 				}
 			}
 		}
@@ -16772,7 +16772,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.fTransactionLedger")]
-	public partial class FTransactionLedger : DbEntity<FTransactionLedger>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FTransactionLedgerEntity : DbEntity<FTransactionLedgerEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -16805,19 +16805,19 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _UpdatedByMessageArchiveId;
 		
-		private EntityRef<Application> _Application;
+		private EntityRef<ApplicationEntity> _ApplicationEntity;
 		
-		private EntityRef<Currency> _Currency;
+		private EntityRef<CurrencyEntity> _CurrencyEntity;
 		
-		private EntityRef<Date> _Date;
+		private EntityRef<DateEntity> _DateEntity;
 		
-		private EntityRef<Date> _PostedDateSkeyBi_Date;
+		private EntityRef<DateEntity> _PostedDateSkeyBi_Date;
 		
-		private EntityRef<Transaction> _Transaction;
+		private EntityRef<TransactionEntity> _TransactionEntity;
 		
-		private EntityRef<TransactionScope> _TransactionScope;
+		private EntityRef<TransactionScopeEntity> _TransactionScopeEntity;
 		
-		private EntityRef<TransactionType> _TransactionType;
+		private EntityRef<TransactionTypeEntity> _TransactionTypeEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -16853,15 +16853,15 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnUpdatedByMessageArchiveIdChanged();
     #endregion
 		
-		public FTransactionLedger()
+		public FTransactionLedgerEntity()
 		{
-			this._Application = default(EntityRef<Application>);
-			this._Currency = default(EntityRef<Currency>);
-			this._Date = default(EntityRef<Date>);
-			this._PostedDateSkeyBi_Date = default(EntityRef<Date>);
-			this._Transaction = default(EntityRef<Transaction>);
-			this._TransactionScope = default(EntityRef<TransactionScope>);
-			this._TransactionType = default(EntityRef<TransactionType>);
+			this._ApplicationEntity = default(EntityRef<ApplicationEntity>);
+			this._CurrencyEntity = default(EntityRef<CurrencyEntity>);
+			this._DateEntity = default(EntityRef<DateEntity>);
+			this._PostedDateSkeyBi_Date = default(EntityRef<DateEntity>);
+			this._TransactionEntity = default(EntityRef<TransactionEntity>);
+			this._TransactionScopeEntity = default(EntityRef<TransactionScopeEntity>);
+			this._TransactionTypeEntity = default(EntityRef<TransactionTypeEntity>);
 			OnCreated();
 		}
 		
@@ -16876,7 +16876,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._TransactionSKey != value))
 				{
-					if (this._Transaction.HasLoadedOrAssignedValue)
+					if (this._TransactionEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -16900,7 +16900,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._ApplicationSKey != value))
 				{
-					if (this._Application.HasLoadedOrAssignedValue)
+					if (this._ApplicationEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -16924,7 +16924,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._DateSKey != value))
 				{
-					if (this._Date.HasLoadedOrAssignedValue)
+					if (this._DateEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -16972,7 +16972,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._TransactionTypeSKey != value))
 				{
-					if (this._TransactionType.HasLoadedOrAssignedValue)
+					if (this._TransactionTypeEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -16996,7 +16996,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._TransactionScopeSKey != value))
 				{
-					if (this._TransactionScope.HasLoadedOrAssignedValue)
+					if (this._TransactionScopeEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -17020,7 +17020,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._CurrencySKey != value))
 				{
-					if (this._Currency.HasLoadedOrAssignedValue)
+					if (this._CurrencyEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -17173,110 +17173,110 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionLedger_REF_biApplication", Storage="_Application", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
-		public Application Application
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionLedger_REF_biApplication", Storage="_ApplicationEntity", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
+		public ApplicationEntity ApplicationEntity
 		{
 			get
 			{
-				return this._Application.Entity;
+				return this._ApplicationEntity.Entity;
 			}
 			set
 			{
-				Application previousValue = this._Application.Entity;
+				ApplicationEntity previousValue = this._ApplicationEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Application.HasLoadedOrAssignedValue == false)))
+							|| (this._ApplicationEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Application.Entity = null;
-						previousValue.FTransactionLedgers.Remove(this);
+						this._ApplicationEntity.Entity = null;
+						previousValue.Bi_FTransactionLedgers.Remove(this);
 					}
-					this._Application.Entity = value;
+					this._ApplicationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FTransactionLedgers.Add(this);
+						value.Bi_FTransactionLedgers.Add(this);
 						this._ApplicationSKey = value.ApplicationSKey;
 					}
 					else
 					{
 						this._ApplicationSKey = default(int);
 					}
-					this.SendPropertyChanged("Application");
+					this.SendPropertyChanged("ApplicationEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionLedger_REF_biCurrency", Storage="_Currency", ThisKey="CurrencySKey", OtherKey="CurrencySKey", IsForeignKey=true)]
-		public Currency Currency
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionLedger_REF_biCurrency", Storage="_CurrencyEntity", ThisKey="CurrencySKey", OtherKey="CurrencySKey", IsForeignKey=true)]
+		public CurrencyEntity CurrencyEntity
 		{
 			get
 			{
-				return this._Currency.Entity;
+				return this._CurrencyEntity.Entity;
 			}
 			set
 			{
-				Currency previousValue = this._Currency.Entity;
+				CurrencyEntity previousValue = this._CurrencyEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Currency.HasLoadedOrAssignedValue == false)))
+							|| (this._CurrencyEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Currency.Entity = null;
-						previousValue.FTransactionLedgers.Remove(this);
+						this._CurrencyEntity.Entity = null;
+						previousValue.Bi_FTransactionLedgers.Remove(this);
 					}
-					this._Currency.Entity = value;
+					this._CurrencyEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FTransactionLedgers.Add(this);
+						value.Bi_FTransactionLedgers.Add(this);
 						this._CurrencySKey = value.CurrencySKey;
 					}
 					else
 					{
 						this._CurrencySKey = default(short);
 					}
-					this.SendPropertyChanged("Currency");
+					this.SendPropertyChanged("CurrencyEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionLedger_REF_biDate", Storage="_Date", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date Date
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionLedger_REF_biDate", Storage="_DateEntity", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
+		public DateEntity DateEntity
 		{
 			get
 			{
-				return this._Date.Entity;
+				return this._DateEntity.Entity;
 			}
 			set
 			{
-				Date previousValue = this._Date.Entity;
+				DateEntity previousValue = this._DateEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Date.HasLoadedOrAssignedValue == false)))
+							|| (this._DateEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Date.Entity = null;
-						previousValue.FTransactionLedgers.Remove(this);
+						this._DateEntity.Entity = null;
+						previousValue.Bi_FTransactionLedgers.Remove(this);
 					}
-					this._Date.Entity = value;
+					this._DateEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FTransactionLedgers.Add(this);
+						value.Bi_FTransactionLedgers.Add(this);
 						this._DateSKey = value.DateSKey;
 					}
 					else
 					{
 						this._DateSKey = default(int);
 					}
-					this.SendPropertyChanged("Date");
+					this.SendPropertyChanged("DateEntity");
 				}
 			}
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionledger_REF_biDate_2", Storage="_PostedDateSkeyBi_Date", ThisKey="PostedDateSkey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date PostedDateSkeyBi_Date
+		public DateEntity PostedDateSkeyBi_Date
 		{
 			get
 			{
@@ -17284,7 +17284,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 			set
 			{
-				Date previousValue = this._PostedDateSkeyBi_Date.Entity;
+				DateEntity previousValue = this._PostedDateSkeyBi_Date.Entity;
 				if (((previousValue != value) 
 							|| (this._PostedDateSkeyBi_Date.HasLoadedOrAssignedValue == false)))
 				{
@@ -17309,104 +17309,104 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionLedger_REF_biTransaction", Storage="_Transaction", ThisKey="TransactionSKey", OtherKey="TransactionSKey", IsForeignKey=true)]
-		public Transaction Transaction
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionLedger_REF_biTransaction", Storage="_TransactionEntity", ThisKey="TransactionSKey", OtherKey="TransactionSKey", IsForeignKey=true)]
+		public TransactionEntity TransactionEntity
 		{
 			get
 			{
-				return this._Transaction.Entity;
+				return this._TransactionEntity.Entity;
 			}
 			set
 			{
-				Transaction previousValue = this._Transaction.Entity;
+				TransactionEntity previousValue = this._TransactionEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Transaction.HasLoadedOrAssignedValue == false)))
+							|| (this._TransactionEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Transaction.Entity = null;
-						previousValue.FTransactionLedger = null;
+						this._TransactionEntity.Entity = null;
+						previousValue.FTransactionLedgerEntity = null;
 					}
-					this._Transaction.Entity = value;
+					this._TransactionEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FTransactionLedger = this;
+						value.FTransactionLedgerEntity = this;
 						this._TransactionSKey = value.TransactionSKey;
 					}
 					else
 					{
 						this._TransactionSKey = default(int);
 					}
-					this.SendPropertyChanged("Transaction");
+					this.SendPropertyChanged("TransactionEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionLedger_REF_biTransactionScope", Storage="_TransactionScope", ThisKey="TransactionScopeSKey", OtherKey="TransactionScopeSKey", IsForeignKey=true)]
-		public TransactionScope TransactionScope
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionLedger_REF_biTransactionScope", Storage="_TransactionScopeEntity", ThisKey="TransactionScopeSKey", OtherKey="TransactionScopeSKey", IsForeignKey=true)]
+		public TransactionScopeEntity TransactionScopeEntity
 		{
 			get
 			{
-				return this._TransactionScope.Entity;
+				return this._TransactionScopeEntity.Entity;
 			}
 			set
 			{
-				TransactionScope previousValue = this._TransactionScope.Entity;
+				TransactionScopeEntity previousValue = this._TransactionScopeEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._TransactionScope.HasLoadedOrAssignedValue == false)))
+							|| (this._TransactionScopeEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._TransactionScope.Entity = null;
-						previousValue.FTransactionLedgers.Remove(this);
+						this._TransactionScopeEntity.Entity = null;
+						previousValue.Bi_FTransactionLedgers.Remove(this);
 					}
-					this._TransactionScope.Entity = value;
+					this._TransactionScopeEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FTransactionLedgers.Add(this);
+						value.Bi_FTransactionLedgers.Add(this);
 						this._TransactionScopeSKey = value.TransactionScopeSKey;
 					}
 					else
 					{
 						this._TransactionScopeSKey = default(byte);
 					}
-					this.SendPropertyChanged("TransactionScope");
+					this.SendPropertyChanged("TransactionScopeEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionLedger_REF_biTransactionType", Storage="_TransactionType", ThisKey="TransactionTypeSKey", OtherKey="TransactionTypeSKey", IsForeignKey=true)]
-		public TransactionType TransactionType
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionLedger_REF_biTransactionType", Storage="_TransactionTypeEntity", ThisKey="TransactionTypeSKey", OtherKey="TransactionTypeSKey", IsForeignKey=true)]
+		public TransactionTypeEntity TransactionTypeEntity
 		{
 			get
 			{
-				return this._TransactionType.Entity;
+				return this._TransactionTypeEntity.Entity;
 			}
 			set
 			{
-				TransactionType previousValue = this._TransactionType.Entity;
+				TransactionTypeEntity previousValue = this._TransactionTypeEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._TransactionType.HasLoadedOrAssignedValue == false)))
+							|| (this._TransactionTypeEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._TransactionType.Entity = null;
-						previousValue.FTransactionLedgers.Remove(this);
+						this._TransactionTypeEntity.Entity = null;
+						previousValue.Bi_FTransactionLedgers.Remove(this);
 					}
-					this._TransactionType.Entity = value;
+					this._TransactionTypeEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FTransactionLedgers.Add(this);
+						value.Bi_FTransactionLedgers.Add(this);
 						this._TransactionTypeSKey = value.TransactionTypeSKey;
 					}
 					else
 					{
 						this._TransactionTypeSKey = default(short);
 					}
-					this.SendPropertyChanged("TransactionType");
+					this.SendPropertyChanged("TransactionTypeEntity");
 				}
 			}
 		}
@@ -17433,7 +17433,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.fTransactionRequest")]
-	public partial class FTransactionRequest : DbEntity<FTransactionRequest>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FTransactionRequestEntity : DbEntity<FTransactionRequestEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -17476,27 +17476,27 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private System.Nullable<long> _UpdatedByMessageArchiveId;
 		
-		private EntityRef<Application> _Application;
+		private EntityRef<ApplicationEntity> _ApplicationEntity;
 		
-		private EntityRef<BankAccount> _BankAccount;
+		private EntityRef<BankAccountEntity> _BankAccountEntity;
 		
-		private EntityRef<Currency> _Currency;
+		private EntityRef<CurrencyEntity> _CurrencyEntity;
 		
-		private EntityRef<Date> _Date;
+		private EntityRef<DateEntity> _DateEntity;
 		
-		private EntityRef<Date> _SuccessDateSKeyBi_Date;
+		private EntityRef<DateEntity> _SuccessDateSKeyBi_Date;
 		
-		private EntityRef<Date> _PaymentCollectionEndDateSKeyBi_Date;
+		private EntityRef<DateEntity> _PaymentCollectionEndDateSKeyBi_Date;
 		
-		private EntityRef<PaymentCard> _PaymentCard;
+		private EntityRef<PaymentCardEntity> _PaymentCardEntity;
 		
-		private EntityRef<PaymentCollectionAgency> _PaymentCollectionAgency;
+		private EntityRef<PaymentCollectionAgencyEntity> _PaymentCollectionAgencyEntity;
 		
-		private EntityRef<PaymentCollectionType> _PaymentCollectionType;
+		private EntityRef<PaymentCollectionTypeEntity> _PaymentCollectionTypeEntity;
 		
-		private EntityRef<Transaction> _Transaction;
+		private EntityRef<TransactionEntity> _TransactionEntity;
 		
-		private EntityRef<TransactionStatus> _TransactionStatus;
+		private EntityRef<TransactionStatusEntity> _TransactionStatusEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -17542,19 +17542,19 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnUpdatedByMessageArchiveIdChanged();
     #endregion
 		
-		public FTransactionRequest()
+		public FTransactionRequestEntity()
 		{
-			this._Application = default(EntityRef<Application>);
-			this._BankAccount = default(EntityRef<BankAccount>);
-			this._Currency = default(EntityRef<Currency>);
-			this._Date = default(EntityRef<Date>);
-			this._SuccessDateSKeyBi_Date = default(EntityRef<Date>);
-			this._PaymentCollectionEndDateSKeyBi_Date = default(EntityRef<Date>);
-			this._PaymentCard = default(EntityRef<PaymentCard>);
-			this._PaymentCollectionAgency = default(EntityRef<PaymentCollectionAgency>);
-			this._PaymentCollectionType = default(EntityRef<PaymentCollectionType>);
-			this._Transaction = default(EntityRef<Transaction>);
-			this._TransactionStatus = default(EntityRef<TransactionStatus>);
+			this._ApplicationEntity = default(EntityRef<ApplicationEntity>);
+			this._BankAccountEntity = default(EntityRef<BankAccountEntity>);
+			this._CurrencyEntity = default(EntityRef<CurrencyEntity>);
+			this._DateEntity = default(EntityRef<DateEntity>);
+			this._SuccessDateSKeyBi_Date = default(EntityRef<DateEntity>);
+			this._PaymentCollectionEndDateSKeyBi_Date = default(EntityRef<DateEntity>);
+			this._PaymentCardEntity = default(EntityRef<PaymentCardEntity>);
+			this._PaymentCollectionAgencyEntity = default(EntityRef<PaymentCollectionAgencyEntity>);
+			this._PaymentCollectionTypeEntity = default(EntityRef<PaymentCollectionTypeEntity>);
+			this._TransactionEntity = default(EntityRef<TransactionEntity>);
+			this._TransactionStatusEntity = default(EntityRef<TransactionStatusEntity>);
 			OnCreated();
 		}
 		
@@ -17569,7 +17569,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._TransactionSkey != value))
 				{
-					if (this._Transaction.HasLoadedOrAssignedValue)
+					if (this._TransactionEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -17593,7 +17593,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._TransactionDateSKey != value))
 				{
-					if (this._Date.HasLoadedOrAssignedValue)
+					if (this._DateEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -17617,7 +17617,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._ApplicationSKey != value))
 				{
-					if (this._Application.HasLoadedOrAssignedValue)
+					if (this._ApplicationEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -17661,7 +17661,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._PaymentCollectionTypeSKey != value))
 				{
-					if (this._PaymentCollectionType.HasLoadedOrAssignedValue)
+					if (this._PaymentCollectionTypeEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -17685,7 +17685,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._PaymentCollectionAgencySKey != value))
 				{
-					if (this._PaymentCollectionAgency.HasLoadedOrAssignedValue)
+					if (this._PaymentCollectionAgencyEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -17709,7 +17709,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._TransactionStatusSKey != value))
 				{
-					if (this._TransactionStatus.HasLoadedOrAssignedValue)
+					if (this._TransactionStatusEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -17733,7 +17733,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._BankAccountSkey != value))
 				{
-					if (this._BankAccount.HasLoadedOrAssignedValue)
+					if (this._BankAccountEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -17757,7 +17757,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._PaymentCardSkey != value))
 				{
-					if (this._PaymentCard.HasLoadedOrAssignedValue)
+					if (this._PaymentCardEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -17781,7 +17781,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._CurrencySKey != value))
 				{
-					if (this._Currency.HasLoadedOrAssignedValue)
+					if (this._CurrencyEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -17982,144 +17982,144 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biApplication", Storage="_Application", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
-		public Application Application
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biApplication", Storage="_ApplicationEntity", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
+		public ApplicationEntity ApplicationEntity
 		{
 			get
 			{
-				return this._Application.Entity;
+				return this._ApplicationEntity.Entity;
 			}
 			set
 			{
-				Application previousValue = this._Application.Entity;
+				ApplicationEntity previousValue = this._ApplicationEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Application.HasLoadedOrAssignedValue == false)))
+							|| (this._ApplicationEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Application.Entity = null;
-						previousValue.FTransactionRequests.Remove(this);
+						this._ApplicationEntity.Entity = null;
+						previousValue.Bi_FTransactionRequests.Remove(this);
 					}
-					this._Application.Entity = value;
+					this._ApplicationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FTransactionRequests.Add(this);
+						value.Bi_FTransactionRequests.Add(this);
 						this._ApplicationSKey = value.ApplicationSKey;
 					}
 					else
 					{
 						this._ApplicationSKey = default(int);
 					}
-					this.SendPropertyChanged("Application");
+					this.SendPropertyChanged("ApplicationEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biBankAccount", Storage="_BankAccount", ThisKey="BankAccountSkey", OtherKey="BankAccountSKey", IsForeignKey=true)]
-		public BankAccount BankAccount
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biBankAccount", Storage="_BankAccountEntity", ThisKey="BankAccountSkey", OtherKey="BankAccountSKey", IsForeignKey=true)]
+		public BankAccountEntity BankAccountEntity
 		{
 			get
 			{
-				return this._BankAccount.Entity;
+				return this._BankAccountEntity.Entity;
 			}
 			set
 			{
-				BankAccount previousValue = this._BankAccount.Entity;
+				BankAccountEntity previousValue = this._BankAccountEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._BankAccount.HasLoadedOrAssignedValue == false)))
+							|| (this._BankAccountEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._BankAccount.Entity = null;
-						previousValue.FTransactionRequests.Remove(this);
+						this._BankAccountEntity.Entity = null;
+						previousValue.Bi_FTransactionRequests.Remove(this);
 					}
-					this._BankAccount.Entity = value;
+					this._BankAccountEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FTransactionRequests.Add(this);
+						value.Bi_FTransactionRequests.Add(this);
 						this._BankAccountSkey = value.BankAccountSKey;
 					}
 					else
 					{
 						this._BankAccountSkey = default(int);
 					}
-					this.SendPropertyChanged("BankAccount");
+					this.SendPropertyChanged("BankAccountEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biCurrency", Storage="_Currency", ThisKey="CurrencySKey", OtherKey="CurrencySKey", IsForeignKey=true)]
-		public Currency Currency
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biCurrency", Storage="_CurrencyEntity", ThisKey="CurrencySKey", OtherKey="CurrencySKey", IsForeignKey=true)]
+		public CurrencyEntity CurrencyEntity
 		{
 			get
 			{
-				return this._Currency.Entity;
+				return this._CurrencyEntity.Entity;
 			}
 			set
 			{
-				Currency previousValue = this._Currency.Entity;
+				CurrencyEntity previousValue = this._CurrencyEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Currency.HasLoadedOrAssignedValue == false)))
+							|| (this._CurrencyEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Currency.Entity = null;
-						previousValue.FTransactionRequests.Remove(this);
+						this._CurrencyEntity.Entity = null;
+						previousValue.Bi_FTransactionRequests.Remove(this);
 					}
-					this._Currency.Entity = value;
+					this._CurrencyEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FTransactionRequests.Add(this);
+						value.Bi_FTransactionRequests.Add(this);
 						this._CurrencySKey = value.CurrencySKey;
 					}
 					else
 					{
 						this._CurrencySKey = default(short);
 					}
-					this.SendPropertyChanged("Currency");
+					this.SendPropertyChanged("CurrencyEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biDate", Storage="_Date", ThisKey="TransactionDateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date Date
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biDate", Storage="_DateEntity", ThisKey="TransactionDateSKey", OtherKey="DateSKey", IsForeignKey=true)]
+		public DateEntity DateEntity
 		{
 			get
 			{
-				return this._Date.Entity;
+				return this._DateEntity.Entity;
 			}
 			set
 			{
-				Date previousValue = this._Date.Entity;
+				DateEntity previousValue = this._DateEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Date.HasLoadedOrAssignedValue == false)))
+							|| (this._DateEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Date.Entity = null;
-						previousValue.FTransactionRequests.Remove(this);
+						this._DateEntity.Entity = null;
+						previousValue.Bi_FTransactionRequests.Remove(this);
 					}
-					this._Date.Entity = value;
+					this._DateEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FTransactionRequests.Add(this);
+						value.Bi_FTransactionRequests.Add(this);
 						this._TransactionDateSKey = value.DateSKey;
 					}
 					else
 					{
 						this._TransactionDateSKey = default(int);
 					}
-					this.SendPropertyChanged("Date");
+					this.SendPropertyChanged("DateEntity");
 				}
 			}
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biDate_1", Storage="_SuccessDateSKeyBi_Date", ThisKey="SuccessDateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date SuccessDateSKeyBi_Date
+		public DateEntity SuccessDateSKeyBi_Date
 		{
 			get
 			{
@@ -18127,7 +18127,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 			set
 			{
-				Date previousValue = this._SuccessDateSKeyBi_Date.Entity;
+				DateEntity previousValue = this._SuccessDateSKeyBi_Date.Entity;
 				if (((previousValue != value) 
 							|| (this._SuccessDateSKeyBi_Date.HasLoadedOrAssignedValue == false)))
 				{
@@ -18153,7 +18153,7 @@ namespace Wonga.QA.Framework.Db.Bi
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biDate_2", Storage="_PaymentCollectionEndDateSKeyBi_Date", ThisKey="PaymentCollectionEndDateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date PaymentCollectionEndDateSKeyBi_Date
+		public DateEntity PaymentCollectionEndDateSKeyBi_Date
 		{
 			get
 			{
@@ -18161,7 +18161,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 			set
 			{
-				Date previousValue = this._PaymentCollectionEndDateSKeyBi_Date.Entity;
+				DateEntity previousValue = this._PaymentCollectionEndDateSKeyBi_Date.Entity;
 				if (((previousValue != value) 
 							|| (this._PaymentCollectionEndDateSKeyBi_Date.HasLoadedOrAssignedValue == false)))
 				{
@@ -18186,172 +18186,172 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biPaymentCard", Storage="_PaymentCard", ThisKey="PaymentCardSkey", OtherKey="PaymentCardSKey", IsForeignKey=true)]
-		public PaymentCard PaymentCard
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biPaymentCard", Storage="_PaymentCardEntity", ThisKey="PaymentCardSkey", OtherKey="PaymentCardSKey", IsForeignKey=true)]
+		public PaymentCardEntity PaymentCardEntity
 		{
 			get
 			{
-				return this._PaymentCard.Entity;
+				return this._PaymentCardEntity.Entity;
 			}
 			set
 			{
-				PaymentCard previousValue = this._PaymentCard.Entity;
+				PaymentCardEntity previousValue = this._PaymentCardEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._PaymentCard.HasLoadedOrAssignedValue == false)))
+							|| (this._PaymentCardEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._PaymentCard.Entity = null;
-						previousValue.FTransactionRequests.Remove(this);
+						this._PaymentCardEntity.Entity = null;
+						previousValue.Bi_FTransactionRequests.Remove(this);
 					}
-					this._PaymentCard.Entity = value;
+					this._PaymentCardEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FTransactionRequests.Add(this);
+						value.Bi_FTransactionRequests.Add(this);
 						this._PaymentCardSkey = value.PaymentCardSKey;
 					}
 					else
 					{
 						this._PaymentCardSkey = default(int);
 					}
-					this.SendPropertyChanged("PaymentCard");
+					this.SendPropertyChanged("PaymentCardEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biPaymentCollectionAgency", Storage="_PaymentCollectionAgency", ThisKey="PaymentCollectionAgencySKey", OtherKey="PaymentCollectionAgencySKey", IsForeignKey=true)]
-		public PaymentCollectionAgency PaymentCollectionAgency
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biPaymentCollectionAgency", Storage="_PaymentCollectionAgencyEntity", ThisKey="PaymentCollectionAgencySKey", OtherKey="PaymentCollectionAgencySKey", IsForeignKey=true)]
+		public PaymentCollectionAgencyEntity PaymentCollectionAgencyEntity
 		{
 			get
 			{
-				return this._PaymentCollectionAgency.Entity;
+				return this._PaymentCollectionAgencyEntity.Entity;
 			}
 			set
 			{
-				PaymentCollectionAgency previousValue = this._PaymentCollectionAgency.Entity;
+				PaymentCollectionAgencyEntity previousValue = this._PaymentCollectionAgencyEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._PaymentCollectionAgency.HasLoadedOrAssignedValue == false)))
+							|| (this._PaymentCollectionAgencyEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._PaymentCollectionAgency.Entity = null;
-						previousValue.FTransactionRequests.Remove(this);
+						this._PaymentCollectionAgencyEntity.Entity = null;
+						previousValue.Bi_FTransactionRequests.Remove(this);
 					}
-					this._PaymentCollectionAgency.Entity = value;
+					this._PaymentCollectionAgencyEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FTransactionRequests.Add(this);
+						value.Bi_FTransactionRequests.Add(this);
 						this._PaymentCollectionAgencySKey = value.PaymentCollectionAgencySKey;
 					}
 					else
 					{
 						this._PaymentCollectionAgencySKey = default(short);
 					}
-					this.SendPropertyChanged("PaymentCollectionAgency");
+					this.SendPropertyChanged("PaymentCollectionAgencyEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biPaymentCollectionType", Storage="_PaymentCollectionType", ThisKey="PaymentCollectionTypeSKey", OtherKey="PaymentCollectionTypeSKey", IsForeignKey=true)]
-		public PaymentCollectionType PaymentCollectionType
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biPaymentCollectionType", Storage="_PaymentCollectionTypeEntity", ThisKey="PaymentCollectionTypeSKey", OtherKey="PaymentCollectionTypeSKey", IsForeignKey=true)]
+		public PaymentCollectionTypeEntity PaymentCollectionTypeEntity
 		{
 			get
 			{
-				return this._PaymentCollectionType.Entity;
+				return this._PaymentCollectionTypeEntity.Entity;
 			}
 			set
 			{
-				PaymentCollectionType previousValue = this._PaymentCollectionType.Entity;
+				PaymentCollectionTypeEntity previousValue = this._PaymentCollectionTypeEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._PaymentCollectionType.HasLoadedOrAssignedValue == false)))
+							|| (this._PaymentCollectionTypeEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._PaymentCollectionType.Entity = null;
-						previousValue.FTransactionRequests.Remove(this);
+						this._PaymentCollectionTypeEntity.Entity = null;
+						previousValue.Bi_FTransactionRequests.Remove(this);
 					}
-					this._PaymentCollectionType.Entity = value;
+					this._PaymentCollectionTypeEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FTransactionRequests.Add(this);
+						value.Bi_FTransactionRequests.Add(this);
 						this._PaymentCollectionTypeSKey = value.PaymentCollectionTypeSKey;
 					}
 					else
 					{
 						this._PaymentCollectionTypeSKey = default(short);
 					}
-					this.SendPropertyChanged("PaymentCollectionType");
+					this.SendPropertyChanged("PaymentCollectionTypeEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biTransaction", Storage="_Transaction", ThisKey="TransactionSkey", OtherKey="TransactionSKey", IsForeignKey=true)]
-		public Transaction Transaction
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biTransaction", Storage="_TransactionEntity", ThisKey="TransactionSkey", OtherKey="TransactionSKey", IsForeignKey=true)]
+		public TransactionEntity TransactionEntity
 		{
 			get
 			{
-				return this._Transaction.Entity;
+				return this._TransactionEntity.Entity;
 			}
 			set
 			{
-				Transaction previousValue = this._Transaction.Entity;
+				TransactionEntity previousValue = this._TransactionEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Transaction.HasLoadedOrAssignedValue == false)))
+							|| (this._TransactionEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Transaction.Entity = null;
-						previousValue.FTransactionRequest = null;
+						this._TransactionEntity.Entity = null;
+						previousValue.FTransactionRequestEntity = null;
 					}
-					this._Transaction.Entity = value;
+					this._TransactionEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FTransactionRequest = this;
+						value.FTransactionRequestEntity = this;
 						this._TransactionSkey = value.TransactionSKey;
 					}
 					else
 					{
 						this._TransactionSkey = default(int);
 					}
-					this.SendPropertyChanged("Transaction");
+					this.SendPropertyChanged("TransactionEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biTransactionStatus", Storage="_TransactionStatus", ThisKey="TransactionStatusSKey", OtherKey="TransactionStatusSKey", IsForeignKey=true)]
-		public TransactionStatus TransactionStatus
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biTransactionStatus", Storage="_TransactionStatusEntity", ThisKey="TransactionStatusSKey", OtherKey="TransactionStatusSKey", IsForeignKey=true)]
+		public TransactionStatusEntity TransactionStatusEntity
 		{
 			get
 			{
-				return this._TransactionStatus.Entity;
+				return this._TransactionStatusEntity.Entity;
 			}
 			set
 			{
-				TransactionStatus previousValue = this._TransactionStatus.Entity;
+				TransactionStatusEntity previousValue = this._TransactionStatusEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._TransactionStatus.HasLoadedOrAssignedValue == false)))
+							|| (this._TransactionStatusEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._TransactionStatus.Entity = null;
-						previousValue.FTransactionRequests.Remove(this);
+						this._TransactionStatusEntity.Entity = null;
+						previousValue.Bi_FTransactionRequests.Remove(this);
 					}
-					this._TransactionStatus.Entity = value;
+					this._TransactionStatusEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FTransactionRequests.Add(this);
+						value.Bi_FTransactionRequests.Add(this);
 						this._TransactionStatusSKey = value.TransactionStatusSKey;
 					}
 					else
 					{
 						this._TransactionStatusSKey = default(short);
 					}
-					this.SendPropertyChanged("TransactionStatus");
+					this.SendPropertyChanged("TransactionStatusEntity");
 				}
 			}
 		}
@@ -18378,7 +18378,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.fTransactionRequestDetails")]
-	public partial class FTransactionRequestDetail : DbEntity<FTransactionRequestDetail>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FTransactionRequestDetailEntity : DbEntity<FTransactionRequestDetailEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -18399,11 +18399,11 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private System.Nullable<long> _UpdatedByMessageArchiveId;
 		
-		private EntityRef<Date> _Date;
+		private EntityRef<DateEntity> _DateEntity;
 		
-		private EntityRef<Transaction> _Transaction;
+		private EntityRef<TransactionEntity> _TransactionEntity;
 		
-		private EntityRef<TransactionStatus> _TransactionStatus;
+		private EntityRef<TransactionStatusEntity> _TransactionStatusEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -18427,11 +18427,11 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnUpdatedByMessageArchiveIdChanged();
     #endregion
 		
-		public FTransactionRequestDetail()
+		public FTransactionRequestDetailEntity()
 		{
-			this._Date = default(EntityRef<Date>);
-			this._Transaction = default(EntityRef<Transaction>);
-			this._TransactionStatus = default(EntityRef<TransactionStatus>);
+			this._DateEntity = default(EntityRef<DateEntity>);
+			this._TransactionEntity = default(EntityRef<TransactionEntity>);
+			this._TransactionStatusEntity = default(EntityRef<TransactionStatusEntity>);
 			OnCreated();
 		}
 		
@@ -18446,7 +18446,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._TransactionSkey != value))
 				{
-					if (this._Transaction.HasLoadedOrAssignedValue)
+					if (this._TransactionEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -18470,7 +18470,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._DateSKey != value))
 				{
-					if (this._Date.HasLoadedOrAssignedValue)
+					if (this._DateEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -18494,7 +18494,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._TransactionStatusSKey != value))
 				{
-					if (this._TransactionStatus.HasLoadedOrAssignedValue)
+					if (this._TransactionStatusEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -18607,104 +18607,104 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequestDetails_REF_biDate", Storage="_Date", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date Date
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequestDetails_REF_biDate", Storage="_DateEntity", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
+		public DateEntity DateEntity
 		{
 			get
 			{
-				return this._Date.Entity;
+				return this._DateEntity.Entity;
 			}
 			set
 			{
-				Date previousValue = this._Date.Entity;
+				DateEntity previousValue = this._DateEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Date.HasLoadedOrAssignedValue == false)))
+							|| (this._DateEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Date.Entity = null;
-						previousValue.FTransactionRequestDetails.Remove(this);
+						this._DateEntity.Entity = null;
+						previousValue.Bi_FTransactionRequestDetails.Remove(this);
 					}
-					this._Date.Entity = value;
+					this._DateEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FTransactionRequestDetails.Add(this);
+						value.Bi_FTransactionRequestDetails.Add(this);
 						this._DateSKey = value.DateSKey;
 					}
 					else
 					{
 						this._DateSKey = default(int);
 					}
-					this.SendPropertyChanged("Date");
+					this.SendPropertyChanged("DateEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequestDetails_REF_biTransaction", Storage="_Transaction", ThisKey="TransactionSkey", OtherKey="TransactionSKey", IsForeignKey=true)]
-		public Transaction Transaction
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequestDetails_REF_biTransaction", Storage="_TransactionEntity", ThisKey="TransactionSkey", OtherKey="TransactionSKey", IsForeignKey=true)]
+		public TransactionEntity TransactionEntity
 		{
 			get
 			{
-				return this._Transaction.Entity;
+				return this._TransactionEntity.Entity;
 			}
 			set
 			{
-				Transaction previousValue = this._Transaction.Entity;
+				TransactionEntity previousValue = this._TransactionEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Transaction.HasLoadedOrAssignedValue == false)))
+							|| (this._TransactionEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Transaction.Entity = null;
-						previousValue.FTransactionRequestDetails.Remove(this);
+						this._TransactionEntity.Entity = null;
+						previousValue.Bi_FTransactionRequestDetails.Remove(this);
 					}
-					this._Transaction.Entity = value;
+					this._TransactionEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FTransactionRequestDetails.Add(this);
+						value.Bi_FTransactionRequestDetails.Add(this);
 						this._TransactionSkey = value.TransactionSKey;
 					}
 					else
 					{
 						this._TransactionSkey = default(int);
 					}
-					this.SendPropertyChanged("Transaction");
+					this.SendPropertyChanged("TransactionEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequestDetails_REF_biTransactionStatus", Storage="_TransactionStatus", ThisKey="TransactionStatusSKey", OtherKey="TransactionStatusSKey", IsForeignKey=true)]
-		public TransactionStatus TransactionStatus
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequestDetails_REF_biTransactionStatus", Storage="_TransactionStatusEntity", ThisKey="TransactionStatusSKey", OtherKey="TransactionStatusSKey", IsForeignKey=true)]
+		public TransactionStatusEntity TransactionStatusEntity
 		{
 			get
 			{
-				return this._TransactionStatus.Entity;
+				return this._TransactionStatusEntity.Entity;
 			}
 			set
 			{
-				TransactionStatus previousValue = this._TransactionStatus.Entity;
+				TransactionStatusEntity previousValue = this._TransactionStatusEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._TransactionStatus.HasLoadedOrAssignedValue == false)))
+							|| (this._TransactionStatusEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._TransactionStatus.Entity = null;
-						previousValue.FTransactionRequestDetails.Remove(this);
+						this._TransactionStatusEntity.Entity = null;
+						previousValue.Bi_FTransactionRequestDetails.Remove(this);
 					}
-					this._TransactionStatus.Entity = value;
+					this._TransactionStatusEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FTransactionRequestDetails.Add(this);
+						value.Bi_FTransactionRequestDetails.Add(this);
 						this._TransactionStatusSKey = value.TransactionStatusSKey;
 					}
 					else
 					{
 						this._TransactionStatusSKey = default(short);
 					}
-					this.SendPropertyChanged("TransactionStatus");
+					this.SendPropertyChanged("TransactionStatusEntity");
 				}
 			}
 		}
@@ -18731,7 +18731,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.fTransunionResponse")]
-	public partial class FTransunionResponse : DbEntity<FTransunionResponse>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FTransunionResponseEntity : DbEntity<FTransunionResponseEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -18756,19 +18756,19 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _CreatedByMessageArchiveId;
 		
-		private EntityRef<Account> _Account;
+		private EntityRef<AccountEntity> _AccountEntity;
 		
-		private EntityRef<Date> _Date;
+		private EntityRef<DateEntity> _DateEntity;
 		
-		private EntityRef<Date> _ProcessingStartDateSkeyBi_Date;
+		private EntityRef<DateEntity> _ProcessingStartDateSkeyBi_Date;
 		
-		private EntityRef<TransunionConsumer> _TransunionConsumer;
+		private EntityRef<TransunionConsumerEntity> _TransunionConsumerEntity;
 		
-		private EntityRef<TransunionResponse> _TransunionResponse;
+		private EntityRef<TransunionResponseEntity> _TransunionResponseEntity;
 		
-		private EntityRef<TransunionResponseStatus> _TransunionResponseStatus;
+		private EntityRef<TransunionResponseStatusEntity> _TransunionResponseStatusEntity;
 		
-		private EntityRef<TransunionSaga> _TransunionSaga;
+		private EntityRef<TransunionSagaEntity> _TransunionSagaEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -18796,15 +18796,15 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnCreatedByMessageArchiveIdChanged();
     #endregion
 		
-		public FTransunionResponse()
+		public FTransunionResponseEntity()
 		{
-			this._Account = default(EntityRef<Account>);
-			this._Date = default(EntityRef<Date>);
-			this._ProcessingStartDateSkeyBi_Date = default(EntityRef<Date>);
-			this._TransunionConsumer = default(EntityRef<TransunionConsumer>);
-			this._TransunionResponse = default(EntityRef<TransunionResponse>);
-			this._TransunionResponseStatus = default(EntityRef<TransunionResponseStatus>);
-			this._TransunionSaga = default(EntityRef<TransunionSaga>);
+			this._AccountEntity = default(EntityRef<AccountEntity>);
+			this._DateEntity = default(EntityRef<DateEntity>);
+			this._ProcessingStartDateSkeyBi_Date = default(EntityRef<DateEntity>);
+			this._TransunionConsumerEntity = default(EntityRef<TransunionConsumerEntity>);
+			this._TransunionResponseEntity = default(EntityRef<TransunionResponseEntity>);
+			this._TransunionResponseStatusEntity = default(EntityRef<TransunionResponseStatusEntity>);
+			this._TransunionSagaEntity = default(EntityRef<TransunionSagaEntity>);
 			OnCreated();
 		}
 		
@@ -18819,7 +18819,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._TransunionResponseSKey != value))
 				{
-					if (this._TransunionResponse.HasLoadedOrAssignedValue)
+					if (this._TransunionResponseEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -18843,7 +18843,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._TransunionConsumerSKey != value))
 				{
-					if (this._TransunionConsumer.HasLoadedOrAssignedValue)
+					if (this._TransunionConsumerEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -18867,7 +18867,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._AccountSKey != value))
 				{
-					if (this._Account.HasLoadedOrAssignedValue)
+					if (this._AccountEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -18891,7 +18891,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._TransunionSagaSKey != value))
 				{
-					if (this._TransunionSaga.HasLoadedOrAssignedValue)
+					if (this._TransunionSagaEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -18915,7 +18915,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._DateSKey != value))
 				{
-					if (this._Date.HasLoadedOrAssignedValue)
+					if (this._DateEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -18939,7 +18939,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._TransunionResponseStatusSkey != value))
 				{
-					if (this._TransunionResponseStatus.HasLoadedOrAssignedValue)
+					if (this._TransunionResponseStatusEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -19036,76 +19036,76 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransunionResponse_REF_biAccount", Storage="_Account", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
-		public Account Account
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransunionResponse_REF_biAccount", Storage="_AccountEntity", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
+		public AccountEntity AccountEntity
 		{
 			get
 			{
-				return this._Account.Entity;
+				return this._AccountEntity.Entity;
 			}
 			set
 			{
-				Account previousValue = this._Account.Entity;
+				AccountEntity previousValue = this._AccountEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Account.HasLoadedOrAssignedValue == false)))
+							|| (this._AccountEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Account.Entity = null;
-						previousValue.FTransunionResponses.Remove(this);
+						this._AccountEntity.Entity = null;
+						previousValue.Bi_FTransunionResponses.Remove(this);
 					}
-					this._Account.Entity = value;
+					this._AccountEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FTransunionResponses.Add(this);
+						value.Bi_FTransunionResponses.Add(this);
 						this._AccountSKey = value.AccountSKey;
 					}
 					else
 					{
 						this._AccountSKey = default(int);
 					}
-					this.SendPropertyChanged("Account");
+					this.SendPropertyChanged("AccountEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransunionResponse_REF_biDate", Storage="_Date", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date Date
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransunionResponse_REF_biDate", Storage="_DateEntity", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
+		public DateEntity DateEntity
 		{
 			get
 			{
-				return this._Date.Entity;
+				return this._DateEntity.Entity;
 			}
 			set
 			{
-				Date previousValue = this._Date.Entity;
+				DateEntity previousValue = this._DateEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Date.HasLoadedOrAssignedValue == false)))
+							|| (this._DateEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Date.Entity = null;
-						previousValue.FTransunionResponses.Remove(this);
+						this._DateEntity.Entity = null;
+						previousValue.Bi_FTransunionResponses.Remove(this);
 					}
-					this._Date.Entity = value;
+					this._DateEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FTransunionResponses.Add(this);
+						value.Bi_FTransunionResponses.Add(this);
 						this._DateSKey = value.DateSKey;
 					}
 					else
 					{
 						this._DateSKey = default(int);
 					}
-					this.SendPropertyChanged("Date");
+					this.SendPropertyChanged("DateEntity");
 				}
 			}
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransunionResponse_REF_biDate2", Storage="_ProcessingStartDateSkeyBi_Date", ThisKey="ProcessingStartDateSkey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date ProcessingStartDateSkeyBi_Date
+		public DateEntity ProcessingStartDateSkeyBi_Date
 		{
 			get
 			{
@@ -19113,7 +19113,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 			set
 			{
-				Date previousValue = this._ProcessingStartDateSkeyBi_Date.Entity;
+				DateEntity previousValue = this._ProcessingStartDateSkeyBi_Date.Entity;
 				if (((previousValue != value) 
 							|| (this._ProcessingStartDateSkeyBi_Date.HasLoadedOrAssignedValue == false)))
 				{
@@ -19138,138 +19138,138 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransunionResponse_REF_biTransunionConsumer", Storage="_TransunionConsumer", ThisKey="TransunionConsumerSKey", OtherKey="TransunionConsumerSKey", IsForeignKey=true)]
-		public TransunionConsumer TransunionConsumer
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransunionResponse_REF_biTransunionConsumer", Storage="_TransunionConsumerEntity", ThisKey="TransunionConsumerSKey", OtherKey="TransunionConsumerSKey", IsForeignKey=true)]
+		public TransunionConsumerEntity TransunionConsumerEntity
 		{
 			get
 			{
-				return this._TransunionConsumer.Entity;
+				return this._TransunionConsumerEntity.Entity;
 			}
 			set
 			{
-				TransunionConsumer previousValue = this._TransunionConsumer.Entity;
+				TransunionConsumerEntity previousValue = this._TransunionConsumerEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._TransunionConsumer.HasLoadedOrAssignedValue == false)))
+							|| (this._TransunionConsumerEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._TransunionConsumer.Entity = null;
-						previousValue.FTransunionResponses.Remove(this);
+						this._TransunionConsumerEntity.Entity = null;
+						previousValue.Bi_FTransunionResponses.Remove(this);
 					}
-					this._TransunionConsumer.Entity = value;
+					this._TransunionConsumerEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FTransunionResponses.Add(this);
+						value.Bi_FTransunionResponses.Add(this);
 						this._TransunionConsumerSKey = value.TransunionConsumerSKey;
 					}
 					else
 					{
 						this._TransunionConsumerSKey = default(int);
 					}
-					this.SendPropertyChanged("TransunionConsumer");
+					this.SendPropertyChanged("TransunionConsumerEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransunionResponse_REF_biTransunionResponse", Storage="_TransunionResponse", ThisKey="TransunionResponseSKey", OtherKey="TransunionResponseSKey", IsForeignKey=true)]
-		public TransunionResponse TransunionResponse
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransunionResponse_REF_biTransunionResponse", Storage="_TransunionResponseEntity", ThisKey="TransunionResponseSKey", OtherKey="TransunionResponseSKey", IsForeignKey=true)]
+		public TransunionResponseEntity TransunionResponseEntity
 		{
 			get
 			{
-				return this._TransunionResponse.Entity;
+				return this._TransunionResponseEntity.Entity;
 			}
 			set
 			{
-				TransunionResponse previousValue = this._TransunionResponse.Entity;
+				TransunionResponseEntity previousValue = this._TransunionResponseEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._TransunionResponse.HasLoadedOrAssignedValue == false)))
+							|| (this._TransunionResponseEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._TransunionResponse.Entity = null;
-						previousValue.FTransunionResponse = null;
+						this._TransunionResponseEntity.Entity = null;
+						previousValue.FTransunionResponseEntity = null;
 					}
-					this._TransunionResponse.Entity = value;
+					this._TransunionResponseEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FTransunionResponse = this;
+						value.FTransunionResponseEntity = this;
 						this._TransunionResponseSKey = value.TransunionResponseSKey;
 					}
 					else
 					{
 						this._TransunionResponseSKey = default(int);
 					}
-					this.SendPropertyChanged("TransunionResponse");
+					this.SendPropertyChanged("TransunionResponseEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransunionResponse_REF_biTransunionResponseStatus", Storage="_TransunionResponseStatus", ThisKey="TransunionResponseStatusSkey", OtherKey="TransunionResponseStatusSKey", IsForeignKey=true)]
-		public TransunionResponseStatus TransunionResponseStatus
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransunionResponse_REF_biTransunionResponseStatus", Storage="_TransunionResponseStatusEntity", ThisKey="TransunionResponseStatusSkey", OtherKey="TransunionResponseStatusSKey", IsForeignKey=true)]
+		public TransunionResponseStatusEntity TransunionResponseStatusEntity
 		{
 			get
 			{
-				return this._TransunionResponseStatus.Entity;
+				return this._TransunionResponseStatusEntity.Entity;
 			}
 			set
 			{
-				TransunionResponseStatus previousValue = this._TransunionResponseStatus.Entity;
+				TransunionResponseStatusEntity previousValue = this._TransunionResponseStatusEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._TransunionResponseStatus.HasLoadedOrAssignedValue == false)))
+							|| (this._TransunionResponseStatusEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._TransunionResponseStatus.Entity = null;
-						previousValue.FTransunionResponses.Remove(this);
+						this._TransunionResponseStatusEntity.Entity = null;
+						previousValue.Bi_FTransunionResponses.Remove(this);
 					}
-					this._TransunionResponseStatus.Entity = value;
+					this._TransunionResponseStatusEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FTransunionResponses.Add(this);
+						value.Bi_FTransunionResponses.Add(this);
 						this._TransunionResponseStatusSkey = value.TransunionResponseStatusSKey;
 					}
 					else
 					{
 						this._TransunionResponseStatusSkey = default(int);
 					}
-					this.SendPropertyChanged("TransunionResponseStatus");
+					this.SendPropertyChanged("TransunionResponseStatusEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransunionResponse_REF_biTransunionSaga", Storage="_TransunionSaga", ThisKey="TransunionSagaSKey", OtherKey="TransunionSagaSKey", IsForeignKey=true)]
-		public TransunionSaga TransunionSaga
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransunionResponse_REF_biTransunionSaga", Storage="_TransunionSagaEntity", ThisKey="TransunionSagaSKey", OtherKey="TransunionSagaSKey", IsForeignKey=true)]
+		public TransunionSagaEntity TransunionSagaEntity
 		{
 			get
 			{
-				return this._TransunionSaga.Entity;
+				return this._TransunionSagaEntity.Entity;
 			}
 			set
 			{
-				TransunionSaga previousValue = this._TransunionSaga.Entity;
+				TransunionSagaEntity previousValue = this._TransunionSagaEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._TransunionSaga.HasLoadedOrAssignedValue == false)))
+							|| (this._TransunionSagaEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._TransunionSaga.Entity = null;
-						previousValue.FTransunionResponses.Remove(this);
+						this._TransunionSagaEntity.Entity = null;
+						previousValue.Bi_FTransunionResponses.Remove(this);
 					}
-					this._TransunionSaga.Entity = value;
+					this._TransunionSagaEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FTransunionResponses.Add(this);
+						value.Bi_FTransunionResponses.Add(this);
 						this._TransunionSagaSKey = value.TransunionSagaSKey;
 					}
 					else
 					{
 						this._TransunionSagaSKey = default(int);
 					}
-					this.SendPropertyChanged("TransunionSaga");
+					this.SendPropertyChanged("TransunionSagaEntity");
 				}
 			}
 		}
@@ -19296,7 +19296,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.fUpdateDailyAccruedInterest")]
-	public partial class FUpdateDailyAccruedInterest : DbEntity<FUpdateDailyAccruedInterest>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FUpdateDailyAccruedInterestEntity : DbEntity<FUpdateDailyAccruedInterestEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -19319,9 +19319,9 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _CreatedByMessageArchiveId;
 		
-		private EntityRef<Application> _Application;
+		private EntityRef<ApplicationEntity> _ApplicationEntity;
 		
-		private EntityRef<Date> _Date;
+		private EntityRef<DateEntity> _DateEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -19347,10 +19347,10 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnCreatedByMessageArchiveIdChanged();
     #endregion
 		
-		public FUpdateDailyAccruedInterest()
+		public FUpdateDailyAccruedInterestEntity()
 		{
-			this._Application = default(EntityRef<Application>);
-			this._Date = default(EntityRef<Date>);
+			this._ApplicationEntity = default(EntityRef<ApplicationEntity>);
+			this._DateEntity = default(EntityRef<DateEntity>);
 			OnCreated();
 		}
 		
@@ -19365,7 +19365,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._ApplicationSKey != value))
 				{
-					if (this._Application.HasLoadedOrAssignedValue)
+					if (this._ApplicationEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -19389,7 +19389,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._DateSKey != value))
 				{
-					if (this._Date.HasLoadedOrAssignedValue)
+					if (this._DateEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -19542,70 +19542,70 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifUpdateDailyAccruedInterest_REF_biApplication", Storage="_Application", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
-		public Application Application
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifUpdateDailyAccruedInterest_REF_biApplication", Storage="_ApplicationEntity", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
+		public ApplicationEntity ApplicationEntity
 		{
 			get
 			{
-				return this._Application.Entity;
+				return this._ApplicationEntity.Entity;
 			}
 			set
 			{
-				Application previousValue = this._Application.Entity;
+				ApplicationEntity previousValue = this._ApplicationEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Application.HasLoadedOrAssignedValue == false)))
+							|| (this._ApplicationEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Application.Entity = null;
-						previousValue.FUpdateDailyAccruedInterests.Remove(this);
+						this._ApplicationEntity.Entity = null;
+						previousValue.Bi_FUpdateDailyAccruedInterests.Remove(this);
 					}
-					this._Application.Entity = value;
+					this._ApplicationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FUpdateDailyAccruedInterests.Add(this);
+						value.Bi_FUpdateDailyAccruedInterests.Add(this);
 						this._ApplicationSKey = value.ApplicationSKey;
 					}
 					else
 					{
 						this._ApplicationSKey = default(int);
 					}
-					this.SendPropertyChanged("Application");
+					this.SendPropertyChanged("ApplicationEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifUpdateDailyAccruedInterest_REF_biDate", Storage="_Date", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
-		public Date Date
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifUpdateDailyAccruedInterest_REF_biDate", Storage="_DateEntity", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
+		public DateEntity DateEntity
 		{
 			get
 			{
-				return this._Date.Entity;
+				return this._DateEntity.Entity;
 			}
 			set
 			{
-				Date previousValue = this._Date.Entity;
+				DateEntity previousValue = this._DateEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Date.HasLoadedOrAssignedValue == false)))
+							|| (this._DateEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Date.Entity = null;
-						previousValue.FUpdateDailyAccruedInterests.Remove(this);
+						this._DateEntity.Entity = null;
+						previousValue.Bi_FUpdateDailyAccruedInterests.Remove(this);
 					}
-					this._Date.Entity = value;
+					this._DateEntity.Entity = value;
 					if ((value != null))
 					{
-						value.FUpdateDailyAccruedInterests.Add(this);
+						value.Bi_FUpdateDailyAccruedInterests.Add(this);
 						this._DateSKey = value.DateSKey;
 					}
 					else
 					{
 						this._DateSKey = default(int);
 					}
-					this.SendPropertyChanged("Date");
+					this.SendPropertyChanged("DateEntity");
 				}
 			}
 		}
@@ -19632,7 +19632,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.Ln")]
-	public partial class Ln : DbEntity<Ln>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class LnEntity : DbEntity<LnEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -19641,9 +19641,9 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private string _LnGroup;
 		
-		private string _LnColumn;
+		private string _Ln;
 		
-		private EntitySet<FAggApplication> _FAggApplications;
+		private EntitySet<FAggApplicationEntity> _Bi_FAggApplications;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -19653,13 +19653,13 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnLnSKeyChanged();
     partial void OnLnGroupChanging(string value);
     partial void OnLnGroupChanged();
-    partial void OnLnColumnChanging(string value);
-    partial void OnLnColumnChanged();
+    partial void OnLnChanging(string value);
+    partial void OnLnChanged();
     #endregion
 		
-		public Ln()
+		public LnEntity()
 		{
-			this._FAggApplications = new EntitySet<FAggApplication>(new Action<FAggApplication>(this.attach_FAggApplications), new Action<FAggApplication>(this.detach_FAggApplications));
+			this._Bi_FAggApplications = new EntitySet<FAggApplicationEntity>(new Action<FAggApplicationEntity>(this.attach_Bi_FAggApplications), new Action<FAggApplicationEntity>(this.detach_Bi_FAggApplications));
 			OnCreated();
 		}
 		
@@ -19703,36 +19703,36 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LnColumn", DbType="Char(2) NOT NULL", CanBeNull=false)]
-		public string LnColumn
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Ln", DbType="Char(2) NOT NULL", CanBeNull=false)]
+		public string Ln
 		{
 			get
 			{
-				return this._LnColumn;
+				return this._Ln;
 			}
 			set
 			{
-				if ((this._LnColumn != value))
+				if ((this._Ln != value))
 				{
-					this.OnLnColumnChanging(value);
+					this.OnLnChanging(value);
 					this.SendPropertyChanging();
-					this._LnColumn = value;
-					this.SendPropertyChanged("LnColumn");
-					this.OnLnColumnChanged();
+					this._Ln = value;
+					this.SendPropertyChanged("Ln");
+					this.OnLnChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggApplication_REF_biLn", Storage="_FAggApplications", ThisKey="LnSKey", OtherKey="LnSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FAggApplication> FAggApplications
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggApplication_REF_biLn", Storage="_Bi_FAggApplications", ThisKey="LnSKey", OtherKey="LnSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FAggApplicationEntity> Bi_FAggApplications
 		{
 			get
 			{
-				return this._FAggApplications;
+				return this._Bi_FAggApplications;
 			}
 			set
 			{
-				this._FAggApplications.Assign(value);
+				this._Bi_FAggApplications.Assign(value);
 			}
 		}
 		
@@ -19756,21 +19756,21 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		private void attach_FAggApplications(FAggApplication entity)
+		private void attach_Bi_FAggApplications(FAggApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Ln = this;
+			entity.LnEntity = this;
 		}
 		
-		private void detach_FAggApplications(FAggApplication entity)
+		private void detach_Bi_FAggApplications(FAggApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Ln = null;
+			entity.LnEntity = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.LogMessageSource")]
-	public partial class LogMessageSource : DbEntity<LogMessageSource>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class LogMessageSourceEntity : DbEntity<LogMessageSourceEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -19779,9 +19779,9 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private string _LogMessageSourceName;
 		
-		private EntitySet<AggregationBuildLog> _AggregationBuildLogs;
+		private EntitySet<AggregationBuildLogEntity> _Bi_AggregationBuildLogs;
 		
-		private EntitySet<ProcessMessageLog> _ProcessMessageLogs;
+		private EntitySet<ProcessMessageLogEntity> _Bi_ProcessMessageLogs;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -19793,10 +19793,10 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnLogMessageSourceNameChanged();
     #endregion
 		
-		public LogMessageSource()
+		public LogMessageSourceEntity()
 		{
-			this._AggregationBuildLogs = new EntitySet<AggregationBuildLog>(new Action<AggregationBuildLog>(this.attach_AggregationBuildLogs), new Action<AggregationBuildLog>(this.detach_AggregationBuildLogs));
-			this._ProcessMessageLogs = new EntitySet<ProcessMessageLog>(new Action<ProcessMessageLog>(this.attach_ProcessMessageLogs), new Action<ProcessMessageLog>(this.detach_ProcessMessageLogs));
+			this._Bi_AggregationBuildLogs = new EntitySet<AggregationBuildLogEntity>(new Action<AggregationBuildLogEntity>(this.attach_Bi_AggregationBuildLogs), new Action<AggregationBuildLogEntity>(this.detach_Bi_AggregationBuildLogs));
+			this._Bi_ProcessMessageLogs = new EntitySet<ProcessMessageLogEntity>(new Action<ProcessMessageLogEntity>(this.attach_Bi_ProcessMessageLogs), new Action<ProcessMessageLogEntity>(this.detach_Bi_ProcessMessageLogs));
 			OnCreated();
 		}
 		
@@ -19840,29 +19840,29 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biAggregationBuildLog_REF_biLogMessageSource", Storage="_AggregationBuildLogs", ThisKey="LogMessageSourceId", OtherKey="LogMessageSourceId", DeleteRule="NO ACTION")]
-		public EntitySet<AggregationBuildLog> AggregationBuildLogs
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biAggregationBuildLog_REF_biLogMessageSource", Storage="_Bi_AggregationBuildLogs", ThisKey="LogMessageSourceId", OtherKey="LogMessageSourceId", DeleteRule="NO ACTION")]
+		public EntitySet<AggregationBuildLogEntity> Bi_AggregationBuildLogs
 		{
 			get
 			{
-				return this._AggregationBuildLogs;
+				return this._Bi_AggregationBuildLogs;
 			}
 			set
 			{
-				this._AggregationBuildLogs.Assign(value);
+				this._Bi_AggregationBuildLogs.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biProcessMessageLog_REF_biLogMessageSource", Storage="_ProcessMessageLogs", ThisKey="LogMessageSourceId", OtherKey="LogMessageSourceId", DeleteRule="NO ACTION")]
-		public EntitySet<ProcessMessageLog> ProcessMessageLogs
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biProcessMessageLog_REF_biLogMessageSource", Storage="_Bi_ProcessMessageLogs", ThisKey="LogMessageSourceId", OtherKey="LogMessageSourceId", DeleteRule="NO ACTION")]
+		public EntitySet<ProcessMessageLogEntity> Bi_ProcessMessageLogs
 		{
 			get
 			{
-				return this._ProcessMessageLogs;
+				return this._Bi_ProcessMessageLogs;
 			}
 			set
 			{
-				this._ProcessMessageLogs.Assign(value);
+				this._Bi_ProcessMessageLogs.Assign(value);
 			}
 		}
 		
@@ -19886,33 +19886,33 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		private void attach_AggregationBuildLogs(AggregationBuildLog entity)
+		private void attach_Bi_AggregationBuildLogs(AggregationBuildLogEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.LogMessageSource = this;
+			entity.LogMessageSourceEntity = this;
 		}
 		
-		private void detach_AggregationBuildLogs(AggregationBuildLog entity)
+		private void detach_Bi_AggregationBuildLogs(AggregationBuildLogEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.LogMessageSource = null;
+			entity.LogMessageSourceEntity = null;
 		}
 		
-		private void attach_ProcessMessageLogs(ProcessMessageLog entity)
+		private void attach_Bi_ProcessMessageLogs(ProcessMessageLogEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.LogMessageSource = this;
+			entity.LogMessageSourceEntity = this;
 		}
 		
-		private void detach_ProcessMessageLogs(ProcessMessageLog entity)
+		private void detach_Bi_ProcessMessageLogs(ProcessMessageLogEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.LogMessageSource = null;
+			entity.LogMessageSourceEntity = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.LogMessageType")]
-	public partial class LogMessageType : DbEntity<LogMessageType>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class LogMessageTypeEntity : DbEntity<LogMessageTypeEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -19921,11 +19921,11 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private string _LogMessageTypeName;
 		
-		private EntitySet<AggregationBuildLog> _AggregationBuildLogs;
+		private EntitySet<AggregationBuildLogEntity> _Bi_AggregationBuildLogs;
 		
-		private EntitySet<ProcessMessageLog> _ProcessMessageLogs;
+		private EntitySet<ProcessMessageLogEntity> _Bi_ProcessMessageLogs;
 		
-		private EntitySet<ServiceBrokerLog> _ServiceBrokerLogs;
+		private EntitySet<ServiceBrokerLogEntity> _Bi_ServiceBrokerLogs;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -19937,11 +19937,11 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnLogMessageTypeNameChanged();
     #endregion
 		
-		public LogMessageType()
+		public LogMessageTypeEntity()
 		{
-			this._AggregationBuildLogs = new EntitySet<AggregationBuildLog>(new Action<AggregationBuildLog>(this.attach_AggregationBuildLogs), new Action<AggregationBuildLog>(this.detach_AggregationBuildLogs));
-			this._ProcessMessageLogs = new EntitySet<ProcessMessageLog>(new Action<ProcessMessageLog>(this.attach_ProcessMessageLogs), new Action<ProcessMessageLog>(this.detach_ProcessMessageLogs));
-			this._ServiceBrokerLogs = new EntitySet<ServiceBrokerLog>(new Action<ServiceBrokerLog>(this.attach_ServiceBrokerLogs), new Action<ServiceBrokerLog>(this.detach_ServiceBrokerLogs));
+			this._Bi_AggregationBuildLogs = new EntitySet<AggregationBuildLogEntity>(new Action<AggregationBuildLogEntity>(this.attach_Bi_AggregationBuildLogs), new Action<AggregationBuildLogEntity>(this.detach_Bi_AggregationBuildLogs));
+			this._Bi_ProcessMessageLogs = new EntitySet<ProcessMessageLogEntity>(new Action<ProcessMessageLogEntity>(this.attach_Bi_ProcessMessageLogs), new Action<ProcessMessageLogEntity>(this.detach_Bi_ProcessMessageLogs));
+			this._Bi_ServiceBrokerLogs = new EntitySet<ServiceBrokerLogEntity>(new Action<ServiceBrokerLogEntity>(this.attach_Bi_ServiceBrokerLogs), new Action<ServiceBrokerLogEntity>(this.detach_Bi_ServiceBrokerLogs));
 			OnCreated();
 		}
 		
@@ -19985,42 +19985,42 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biAggregationBuildLog_REF_biLogMessageType", Storage="_AggregationBuildLogs", ThisKey="LogMessageTypeId", OtherKey="LogMessageTypeId", DeleteRule="NO ACTION")]
-		public EntitySet<AggregationBuildLog> AggregationBuildLogs
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biAggregationBuildLog_REF_biLogMessageType", Storage="_Bi_AggregationBuildLogs", ThisKey="LogMessageTypeId", OtherKey="LogMessageTypeId", DeleteRule="NO ACTION")]
+		public EntitySet<AggregationBuildLogEntity> Bi_AggregationBuildLogs
 		{
 			get
 			{
-				return this._AggregationBuildLogs;
+				return this._Bi_AggregationBuildLogs;
 			}
 			set
 			{
-				this._AggregationBuildLogs.Assign(value);
+				this._Bi_AggregationBuildLogs.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biProcessMessageLog_REF_biLogMessageType", Storage="_ProcessMessageLogs", ThisKey="LogMessageTypeId", OtherKey="LogMessageTypeId", DeleteRule="NO ACTION")]
-		public EntitySet<ProcessMessageLog> ProcessMessageLogs
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biProcessMessageLog_REF_biLogMessageType", Storage="_Bi_ProcessMessageLogs", ThisKey="LogMessageTypeId", OtherKey="LogMessageTypeId", DeleteRule="NO ACTION")]
+		public EntitySet<ProcessMessageLogEntity> Bi_ProcessMessageLogs
 		{
 			get
 			{
-				return this._ProcessMessageLogs;
+				return this._Bi_ProcessMessageLogs;
 			}
 			set
 			{
-				this._ProcessMessageLogs.Assign(value);
+				this._Bi_ProcessMessageLogs.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biServiceBrokerLog_REF_biLogMessageType", Storage="_ServiceBrokerLogs", ThisKey="LogMessageTypeId", OtherKey="LogMessageTypeId", DeleteRule="NO ACTION")]
-		public EntitySet<ServiceBrokerLog> ServiceBrokerLogs
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biServiceBrokerLog_REF_biLogMessageType", Storage="_Bi_ServiceBrokerLogs", ThisKey="LogMessageTypeId", OtherKey="LogMessageTypeId", DeleteRule="NO ACTION")]
+		public EntitySet<ServiceBrokerLogEntity> Bi_ServiceBrokerLogs
 		{
 			get
 			{
-				return this._ServiceBrokerLogs;
+				return this._Bi_ServiceBrokerLogs;
 			}
 			set
 			{
-				this._ServiceBrokerLogs.Assign(value);
+				this._Bi_ServiceBrokerLogs.Assign(value);
 			}
 		}
 		
@@ -20044,45 +20044,45 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		private void attach_AggregationBuildLogs(AggregationBuildLog entity)
+		private void attach_Bi_AggregationBuildLogs(AggregationBuildLogEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.LogMessageType = this;
+			entity.LogMessageTypeEntity = this;
 		}
 		
-		private void detach_AggregationBuildLogs(AggregationBuildLog entity)
+		private void detach_Bi_AggregationBuildLogs(AggregationBuildLogEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.LogMessageType = null;
+			entity.LogMessageTypeEntity = null;
 		}
 		
-		private void attach_ProcessMessageLogs(ProcessMessageLog entity)
+		private void attach_Bi_ProcessMessageLogs(ProcessMessageLogEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.LogMessageType = this;
+			entity.LogMessageTypeEntity = this;
 		}
 		
-		private void detach_ProcessMessageLogs(ProcessMessageLog entity)
+		private void detach_Bi_ProcessMessageLogs(ProcessMessageLogEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.LogMessageType = null;
+			entity.LogMessageTypeEntity = null;
 		}
 		
-		private void attach_ServiceBrokerLogs(ServiceBrokerLog entity)
+		private void attach_Bi_ServiceBrokerLogs(ServiceBrokerLogEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.LogMessageType = this;
+			entity.LogMessageTypeEntity = this;
 		}
 		
-		private void detach_ServiceBrokerLogs(ServiceBrokerLog entity)
+		private void detach_Bi_ServiceBrokerLogs(ServiceBrokerLogEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.LogMessageType = null;
+			entity.LogMessageTypeEntity = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.MessageArchive")]
-	public partial class MessageArchive : DbEntity<MessageArchive>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class MessageArchiveEntity : DbEntity<MessageArchiveEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -20113,7 +20113,7 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnCreatedAtChanged();
     #endregion
 		
-		public MessageArchive()
+		public MessageArchiveEntity()
 		{
 			OnCreated();
 		}
@@ -20247,7 +20247,7 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private int _Id;
 		
-		private System.DateTime _DateColumn;
+		private System.DateTime _Date;
 		
 		private string _Revision;
 		
@@ -20257,8 +20257,8 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnCreated();
     partial void OnIdChanging(int value);
     partial void OnIdChanged();
-    partial void OnDateColumnChanging(System.DateTime value);
-    partial void OnDateColumnChanged();
+    partial void OnDateChanging(System.DateTime value);
+    partial void OnDateChanged();
     partial void OnRevisionChanging(string value);
     partial void OnRevisionChanged();
     #endregion
@@ -20288,22 +20288,22 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateColumn", DbType="DateTime NOT NULL")]
-		public System.DateTime DateColumn
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="DateTime NOT NULL")]
+		public System.DateTime Date
 		{
 			get
 			{
-				return this._DateColumn;
+				return this._Date;
 			}
 			set
 			{
-				if ((this._DateColumn != value))
+				if ((this._Date != value))
 				{
-					this.OnDateColumnChanging(value);
+					this.OnDateChanging(value);
 					this.SendPropertyChanging();
-					this._DateColumn = value;
-					this.SendPropertyChanged("DateColumn");
-					this.OnDateColumnChanged();
+					this._Date = value;
+					this.SendPropertyChanged("Date");
+					this.OnDateChanged();
 				}
 			}
 		}
@@ -20350,7 +20350,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.NationalHoliday")]
-	public partial class NationalHoliday : DbEntity<NationalHoliday>
+	public partial class NationalHolidayEntity : DbEntity<NationalHolidayEntity>
 	{
 		
 		private int _NationalHolidaySKey;
@@ -20359,7 +20359,7 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private bool _IsBankHoliday;
 		
-		public NationalHoliday()
+		public NationalHolidayEntity()
 		{
 		}
 		
@@ -20413,7 +20413,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.PaymentCard")]
-	public partial class PaymentCard : DbEntity<PaymentCard>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class PaymentCardEntity : DbEntity<PaymentCardEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -20450,17 +20450,17 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _UpdatedByMessageArchiveId;
 		
-		private EntitySet<FAddPaymentCard> _FAddPaymentCards;
+		private EntitySet<FAddPaymentCardEntity> _Bi_FAddPaymentCards;
 		
-		private EntitySet<FCreateFixedTermLoanApplication> _FCreateFixedTermLoanApplications;
+		private EntitySet<FCreateFixedTermLoanApplicationEntity> _Bi_FCreateFixedTermLoanApplications;
 		
-		private EntitySet<FCreateFixedTermLoanExtension> _FCreateFixedTermLoanExtensions;
+		private EntitySet<FCreateFixedTermLoanExtensionEntity> _Bi_FCreateFixedTermLoanExtensions;
 		
-		private EntitySet<FExtendLoan> _FExtendLoans;
+		private EntitySet<FExtendLoanEntity> _Bi_FExtendLoans;
 		
-		private EntitySet<FRepayLoan> _FRepayLoans;
+		private EntitySet<FRepayLoanEntity> _Bi_FRepayLoans;
 		
-		private EntitySet<FTransactionRequest> _FTransactionRequests;
+		private EntitySet<FTransactionRequestEntity> _Bi_FTransactionRequests;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -20500,14 +20500,14 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnUpdatedByMessageArchiveIdChanged();
     #endregion
 		
-		public PaymentCard()
+		public PaymentCardEntity()
 		{
-			this._FAddPaymentCards = new EntitySet<FAddPaymentCard>(new Action<FAddPaymentCard>(this.attach_FAddPaymentCards), new Action<FAddPaymentCard>(this.detach_FAddPaymentCards));
-			this._FCreateFixedTermLoanApplications = new EntitySet<FCreateFixedTermLoanApplication>(new Action<FCreateFixedTermLoanApplication>(this.attach_FCreateFixedTermLoanApplications), new Action<FCreateFixedTermLoanApplication>(this.detach_FCreateFixedTermLoanApplications));
-			this._FCreateFixedTermLoanExtensions = new EntitySet<FCreateFixedTermLoanExtension>(new Action<FCreateFixedTermLoanExtension>(this.attach_FCreateFixedTermLoanExtensions), new Action<FCreateFixedTermLoanExtension>(this.detach_FCreateFixedTermLoanExtensions));
-			this._FExtendLoans = new EntitySet<FExtendLoan>(new Action<FExtendLoan>(this.attach_FExtendLoans), new Action<FExtendLoan>(this.detach_FExtendLoans));
-			this._FRepayLoans = new EntitySet<FRepayLoan>(new Action<FRepayLoan>(this.attach_FRepayLoans), new Action<FRepayLoan>(this.detach_FRepayLoans));
-			this._FTransactionRequests = new EntitySet<FTransactionRequest>(new Action<FTransactionRequest>(this.attach_FTransactionRequests), new Action<FTransactionRequest>(this.detach_FTransactionRequests));
+			this._Bi_FAddPaymentCards = new EntitySet<FAddPaymentCardEntity>(new Action<FAddPaymentCardEntity>(this.attach_Bi_FAddPaymentCards), new Action<FAddPaymentCardEntity>(this.detach_Bi_FAddPaymentCards));
+			this._Bi_FCreateFixedTermLoanApplications = new EntitySet<FCreateFixedTermLoanApplicationEntity>(new Action<FCreateFixedTermLoanApplicationEntity>(this.attach_Bi_FCreateFixedTermLoanApplications), new Action<FCreateFixedTermLoanApplicationEntity>(this.detach_Bi_FCreateFixedTermLoanApplications));
+			this._Bi_FCreateFixedTermLoanExtensions = new EntitySet<FCreateFixedTermLoanExtensionEntity>(new Action<FCreateFixedTermLoanExtensionEntity>(this.attach_Bi_FCreateFixedTermLoanExtensions), new Action<FCreateFixedTermLoanExtensionEntity>(this.detach_Bi_FCreateFixedTermLoanExtensions));
+			this._Bi_FExtendLoans = new EntitySet<FExtendLoanEntity>(new Action<FExtendLoanEntity>(this.attach_Bi_FExtendLoans), new Action<FExtendLoanEntity>(this.detach_Bi_FExtendLoans));
+			this._Bi_FRepayLoans = new EntitySet<FRepayLoanEntity>(new Action<FRepayLoanEntity>(this.attach_Bi_FRepayLoans), new Action<FRepayLoanEntity>(this.detach_Bi_FRepayLoans));
+			this._Bi_FTransactionRequests = new EntitySet<FTransactionRequestEntity>(new Action<FTransactionRequestEntity>(this.attach_Bi_FTransactionRequests), new Action<FTransactionRequestEntity>(this.detach_Bi_FTransactionRequests));
 			OnCreated();
 		}
 		
@@ -20831,81 +20831,81 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAddPaymentCard_REF_biPaymentCard", Storage="_FAddPaymentCards", ThisKey="PaymentCardSKey", OtherKey="PaymentCardSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FAddPaymentCard> FAddPaymentCards
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAddPaymentCard_REF_biPaymentCard", Storage="_Bi_FAddPaymentCards", ThisKey="PaymentCardSKey", OtherKey="PaymentCardSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FAddPaymentCardEntity> Bi_FAddPaymentCards
 		{
 			get
 			{
-				return this._FAddPaymentCards;
+				return this._Bi_FAddPaymentCards;
 			}
 			set
 			{
-				this._FAddPaymentCards.Assign(value);
+				this._Bi_FAddPaymentCards.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biPaymentCard", Storage="_FCreateFixedTermLoanApplications", ThisKey="PaymentCardSKey", OtherKey="PaymentCardSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FCreateFixedTermLoanApplication> FCreateFixedTermLoanApplications
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biPaymentCard", Storage="_Bi_FCreateFixedTermLoanApplications", ThisKey="PaymentCardSKey", OtherKey="PaymentCardSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FCreateFixedTermLoanApplicationEntity> Bi_FCreateFixedTermLoanApplications
 		{
 			get
 			{
-				return this._FCreateFixedTermLoanApplications;
+				return this._Bi_FCreateFixedTermLoanApplications;
 			}
 			set
 			{
-				this._FCreateFixedTermLoanApplications.Assign(value);
+				this._Bi_FCreateFixedTermLoanApplications.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanExtension_REF_biPaymentCard", Storage="_FCreateFixedTermLoanExtensions", ThisKey="PaymentCardSKey", OtherKey="PaymentCardSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FCreateFixedTermLoanExtension> FCreateFixedTermLoanExtensions
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanExtension_REF_biPaymentCard", Storage="_Bi_FCreateFixedTermLoanExtensions", ThisKey="PaymentCardSKey", OtherKey="PaymentCardSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FCreateFixedTermLoanExtensionEntity> Bi_FCreateFixedTermLoanExtensions
 		{
 			get
 			{
-				return this._FCreateFixedTermLoanExtensions;
+				return this._Bi_FCreateFixedTermLoanExtensions;
 			}
 			set
 			{
-				this._FCreateFixedTermLoanExtensions.Assign(value);
+				this._Bi_FCreateFixedTermLoanExtensions.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifExtendLoan_REF_biPaymentCard", Storage="_FExtendLoans", ThisKey="PaymentCardSKey", OtherKey="PaymentCardSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FExtendLoan> FExtendLoans
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifExtendLoan_REF_biPaymentCard", Storage="_Bi_FExtendLoans", ThisKey="PaymentCardSKey", OtherKey="PaymentCardSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FExtendLoanEntity> Bi_FExtendLoans
 		{
 			get
 			{
-				return this._FExtendLoans;
+				return this._Bi_FExtendLoans;
 			}
 			set
 			{
-				this._FExtendLoans.Assign(value);
+				this._Bi_FExtendLoans.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifRepayLoan_REF_biPaymentCard", Storage="_FRepayLoans", ThisKey="PaymentCardSKey", OtherKey="PaymentCardSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FRepayLoan> FRepayLoans
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifRepayLoan_REF_biPaymentCard", Storage="_Bi_FRepayLoans", ThisKey="PaymentCardSKey", OtherKey="PaymentCardSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FRepayLoanEntity> Bi_FRepayLoans
 		{
 			get
 			{
-				return this._FRepayLoans;
+				return this._Bi_FRepayLoans;
 			}
 			set
 			{
-				this._FRepayLoans.Assign(value);
+				this._Bi_FRepayLoans.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biPaymentCard", Storage="_FTransactionRequests", ThisKey="PaymentCardSKey", OtherKey="PaymentCardSkey", DeleteRule="NO ACTION")]
-		public EntitySet<FTransactionRequest> FTransactionRequests
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biPaymentCard", Storage="_Bi_FTransactionRequests", ThisKey="PaymentCardSKey", OtherKey="PaymentCardSkey", DeleteRule="NO ACTION")]
+		public EntitySet<FTransactionRequestEntity> Bi_FTransactionRequests
 		{
 			get
 			{
-				return this._FTransactionRequests;
+				return this._Bi_FTransactionRequests;
 			}
 			set
 			{
-				this._FTransactionRequests.Assign(value);
+				this._Bi_FTransactionRequests.Assign(value);
 			}
 		}
 		
@@ -20929,81 +20929,81 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		private void attach_FAddPaymentCards(FAddPaymentCard entity)
+		private void attach_Bi_FAddPaymentCards(FAddPaymentCardEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.PaymentCard = this;
+			entity.PaymentCardEntity = this;
 		}
 		
-		private void detach_FAddPaymentCards(FAddPaymentCard entity)
+		private void detach_Bi_FAddPaymentCards(FAddPaymentCardEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.PaymentCard = null;
+			entity.PaymentCardEntity = null;
 		}
 		
-		private void attach_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplication entity)
+		private void attach_Bi_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.PaymentCard = this;
+			entity.PaymentCardEntity = this;
 		}
 		
-		private void detach_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplication entity)
+		private void detach_Bi_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.PaymentCard = null;
+			entity.PaymentCardEntity = null;
 		}
 		
-		private void attach_FCreateFixedTermLoanExtensions(FCreateFixedTermLoanExtension entity)
+		private void attach_Bi_FCreateFixedTermLoanExtensions(FCreateFixedTermLoanExtensionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.PaymentCard = this;
+			entity.PaymentCardEntity = this;
 		}
 		
-		private void detach_FCreateFixedTermLoanExtensions(FCreateFixedTermLoanExtension entity)
+		private void detach_Bi_FCreateFixedTermLoanExtensions(FCreateFixedTermLoanExtensionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.PaymentCard = null;
+			entity.PaymentCardEntity = null;
 		}
 		
-		private void attach_FExtendLoans(FExtendLoan entity)
+		private void attach_Bi_FExtendLoans(FExtendLoanEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.PaymentCard = this;
+			entity.PaymentCardEntity = this;
 		}
 		
-		private void detach_FExtendLoans(FExtendLoan entity)
+		private void detach_Bi_FExtendLoans(FExtendLoanEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.PaymentCard = null;
+			entity.PaymentCardEntity = null;
 		}
 		
-		private void attach_FRepayLoans(FRepayLoan entity)
+		private void attach_Bi_FRepayLoans(FRepayLoanEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.PaymentCard = this;
+			entity.PaymentCardEntity = this;
 		}
 		
-		private void detach_FRepayLoans(FRepayLoan entity)
+		private void detach_Bi_FRepayLoans(FRepayLoanEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.PaymentCard = null;
+			entity.PaymentCardEntity = null;
 		}
 		
-		private void attach_FTransactionRequests(FTransactionRequest entity)
+		private void attach_Bi_FTransactionRequests(FTransactionRequestEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.PaymentCard = this;
+			entity.PaymentCardEntity = this;
 		}
 		
-		private void detach_FTransactionRequests(FTransactionRequest entity)
+		private void detach_Bi_FTransactionRequests(FTransactionRequestEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.PaymentCard = null;
+			entity.PaymentCardEntity = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.PaymentCollection")]
-	public partial class PaymentCollection : DbEntity<PaymentCollection>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class PaymentCollectionEntity : DbEntity<PaymentCollectionEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -21020,7 +21020,7 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _UpdatedByMessageArchiveId;
 		
-		private EntityRef<FPaymentCollection> _FPaymentCollection;
+		private EntityRef<FPaymentCollectionEntity> _FPaymentCollectionEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -21040,9 +21040,9 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnUpdatedByMessageArchiveIdChanged();
     #endregion
 		
-		public PaymentCollection()
+		public PaymentCollectionEntity()
 		{
-			this._FPaymentCollection = default(EntityRef<FPaymentCollection>);
+			this._FPaymentCollectionEntity = default(EntityRef<FPaymentCollectionEntity>);
 			OnCreated();
 		}
 		
@@ -21166,31 +21166,31 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentCollection_REF_biPaymentCollection", Storage="_FPaymentCollection", ThisKey="PaymentCollectionSKey", OtherKey="PaymentCollectionSkey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
-		public FPaymentCollection FPaymentCollection
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentCollection_REF_biPaymentCollection", Storage="_FPaymentCollectionEntity", ThisKey="PaymentCollectionSKey", OtherKey="PaymentCollectionSkey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
+		public FPaymentCollectionEntity FPaymentCollectionEntity
 		{
 			get
 			{
-				return this._FPaymentCollection.Entity;
+				return this._FPaymentCollectionEntity.Entity;
 			}
 			set
 			{
-				FPaymentCollection previousValue = this._FPaymentCollection.Entity;
+				FPaymentCollectionEntity previousValue = this._FPaymentCollectionEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._FPaymentCollection.HasLoadedOrAssignedValue == false)))
+							|| (this._FPaymentCollectionEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._FPaymentCollection.Entity = null;
-						previousValue.PaymentCollection = null;
+						this._FPaymentCollectionEntity.Entity = null;
+						previousValue.PaymentCollectionEntity = null;
 					}
-					this._FPaymentCollection.Entity = value;
+					this._FPaymentCollectionEntity.Entity = value;
 					if ((value != null))
 					{
-						value.PaymentCollection = this;
+						value.PaymentCollectionEntity = this;
 					}
-					this.SendPropertyChanged("FPaymentCollection");
+					this.SendPropertyChanged("FPaymentCollectionEntity");
 				}
 			}
 		}
@@ -21217,7 +21217,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.PaymentCollectionAgency")]
-	public partial class PaymentCollectionAgency : DbEntity<PaymentCollectionAgency>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class PaymentCollectionAgencyEntity : DbEntity<PaymentCollectionAgencyEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -21230,9 +21230,9 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private short _NoOfAttempts;
 		
-		private EntitySet<FPaymentCollection> _FPaymentCollections;
+		private EntitySet<FPaymentCollectionEntity> _Bi_FPaymentCollections;
 		
-		private EntitySet<FTransactionRequest> _FTransactionRequests;
+		private EntitySet<FTransactionRequestEntity> _Bi_FTransactionRequests;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -21248,10 +21248,10 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnNoOfAttemptsChanged();
     #endregion
 		
-		public PaymentCollectionAgency()
+		public PaymentCollectionAgencyEntity()
 		{
-			this._FPaymentCollections = new EntitySet<FPaymentCollection>(new Action<FPaymentCollection>(this.attach_FPaymentCollections), new Action<FPaymentCollection>(this.detach_FPaymentCollections));
-			this._FTransactionRequests = new EntitySet<FTransactionRequest>(new Action<FTransactionRequest>(this.attach_FTransactionRequests), new Action<FTransactionRequest>(this.detach_FTransactionRequests));
+			this._Bi_FPaymentCollections = new EntitySet<FPaymentCollectionEntity>(new Action<FPaymentCollectionEntity>(this.attach_Bi_FPaymentCollections), new Action<FPaymentCollectionEntity>(this.detach_Bi_FPaymentCollections));
+			this._Bi_FTransactionRequests = new EntitySet<FTransactionRequestEntity>(new Action<FTransactionRequestEntity>(this.attach_Bi_FTransactionRequests), new Action<FTransactionRequestEntity>(this.detach_Bi_FTransactionRequests));
 			OnCreated();
 		}
 		
@@ -21335,29 +21335,29 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentCollection_REF_biPaymentCollectionAgency", Storage="_FPaymentCollections", ThisKey="PaymentCollectionAgencySKey", OtherKey="PaymentCollectionAgencySKey", DeleteRule="NO ACTION")]
-		public EntitySet<FPaymentCollection> FPaymentCollections
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentCollection_REF_biPaymentCollectionAgency", Storage="_Bi_FPaymentCollections", ThisKey="PaymentCollectionAgencySKey", OtherKey="PaymentCollectionAgencySKey", DeleteRule="NO ACTION")]
+		public EntitySet<FPaymentCollectionEntity> Bi_FPaymentCollections
 		{
 			get
 			{
-				return this._FPaymentCollections;
+				return this._Bi_FPaymentCollections;
 			}
 			set
 			{
-				this._FPaymentCollections.Assign(value);
+				this._Bi_FPaymentCollections.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biPaymentCollectionAgency", Storage="_FTransactionRequests", ThisKey="PaymentCollectionAgencySKey", OtherKey="PaymentCollectionAgencySKey", DeleteRule="NO ACTION")]
-		public EntitySet<FTransactionRequest> FTransactionRequests
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biPaymentCollectionAgency", Storage="_Bi_FTransactionRequests", ThisKey="PaymentCollectionAgencySKey", OtherKey="PaymentCollectionAgencySKey", DeleteRule="NO ACTION")]
+		public EntitySet<FTransactionRequestEntity> Bi_FTransactionRequests
 		{
 			get
 			{
-				return this._FTransactionRequests;
+				return this._Bi_FTransactionRequests;
 			}
 			set
 			{
-				this._FTransactionRequests.Assign(value);
+				this._Bi_FTransactionRequests.Assign(value);
 			}
 		}
 		
@@ -21381,33 +21381,33 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		private void attach_FPaymentCollections(FPaymentCollection entity)
+		private void attach_Bi_FPaymentCollections(FPaymentCollectionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.PaymentCollectionAgency = this;
+			entity.PaymentCollectionAgencyEntity = this;
 		}
 		
-		private void detach_FPaymentCollections(FPaymentCollection entity)
+		private void detach_Bi_FPaymentCollections(FPaymentCollectionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.PaymentCollectionAgency = null;
+			entity.PaymentCollectionAgencyEntity = null;
 		}
 		
-		private void attach_FTransactionRequests(FTransactionRequest entity)
+		private void attach_Bi_FTransactionRequests(FTransactionRequestEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.PaymentCollectionAgency = this;
+			entity.PaymentCollectionAgencyEntity = this;
 		}
 		
-		private void detach_FTransactionRequests(FTransactionRequest entity)
+		private void detach_Bi_FTransactionRequests(FTransactionRequestEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.PaymentCollectionAgency = null;
+			entity.PaymentCollectionAgencyEntity = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.PaymentCollectionStatus")]
-	public partial class PaymentCollectionStatus : DbEntity<PaymentCollectionStatus>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class PaymentCollectionStatusEntity : DbEntity<PaymentCollectionStatusEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -21416,7 +21416,7 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private string _PaymentCollectionStatusNKey;
 		
-		private EntitySet<FPaymentCollection> _FPaymentCollections;
+		private EntitySet<FPaymentCollectionEntity> _Bi_FPaymentCollections;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -21428,9 +21428,9 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnPaymentCollectionStatusNKeyChanged();
     #endregion
 		
-		public PaymentCollectionStatus()
+		public PaymentCollectionStatusEntity()
 		{
-			this._FPaymentCollections = new EntitySet<FPaymentCollection>(new Action<FPaymentCollection>(this.attach_FPaymentCollections), new Action<FPaymentCollection>(this.detach_FPaymentCollections));
+			this._Bi_FPaymentCollections = new EntitySet<FPaymentCollectionEntity>(new Action<FPaymentCollectionEntity>(this.attach_Bi_FPaymentCollections), new Action<FPaymentCollectionEntity>(this.detach_Bi_FPaymentCollections));
 			OnCreated();
 		}
 		
@@ -21474,16 +21474,16 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentCollection_REF_biPaymentCollectionStatus", Storage="_FPaymentCollections", ThisKey="PaymentCollectionStatusSKey", OtherKey="PaymentCollectionStatusSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FPaymentCollection> FPaymentCollections
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentCollection_REF_biPaymentCollectionStatus", Storage="_Bi_FPaymentCollections", ThisKey="PaymentCollectionStatusSKey", OtherKey="PaymentCollectionStatusSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FPaymentCollectionEntity> Bi_FPaymentCollections
 		{
 			get
 			{
-				return this._FPaymentCollections;
+				return this._Bi_FPaymentCollections;
 			}
 			set
 			{
-				this._FPaymentCollections.Assign(value);
+				this._Bi_FPaymentCollections.Assign(value);
 			}
 		}
 		
@@ -21507,21 +21507,21 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		private void attach_FPaymentCollections(FPaymentCollection entity)
+		private void attach_Bi_FPaymentCollections(FPaymentCollectionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.PaymentCollectionStatus = this;
+			entity.PaymentCollectionStatusEntity = this;
 		}
 		
-		private void detach_FPaymentCollections(FPaymentCollection entity)
+		private void detach_Bi_FPaymentCollections(FPaymentCollectionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.PaymentCollectionStatus = null;
+			entity.PaymentCollectionStatusEntity = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.PaymentCollectionType")]
-	public partial class PaymentCollectionType : DbEntity<PaymentCollectionType>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class PaymentCollectionTypeEntity : DbEntity<PaymentCollectionTypeEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -21530,9 +21530,9 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private string _PaymentCollectionTypeNKey;
 		
-		private EntitySet<FPaymentCollection> _FPaymentCollections;
+		private EntitySet<FPaymentCollectionEntity> _Bi_FPaymentCollections;
 		
-		private EntitySet<FTransactionRequest> _FTransactionRequests;
+		private EntitySet<FTransactionRequestEntity> _Bi_FTransactionRequests;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -21544,10 +21544,10 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnPaymentCollectionTypeNKeyChanged();
     #endregion
 		
-		public PaymentCollectionType()
+		public PaymentCollectionTypeEntity()
 		{
-			this._FPaymentCollections = new EntitySet<FPaymentCollection>(new Action<FPaymentCollection>(this.attach_FPaymentCollections), new Action<FPaymentCollection>(this.detach_FPaymentCollections));
-			this._FTransactionRequests = new EntitySet<FTransactionRequest>(new Action<FTransactionRequest>(this.attach_FTransactionRequests), new Action<FTransactionRequest>(this.detach_FTransactionRequests));
+			this._Bi_FPaymentCollections = new EntitySet<FPaymentCollectionEntity>(new Action<FPaymentCollectionEntity>(this.attach_Bi_FPaymentCollections), new Action<FPaymentCollectionEntity>(this.detach_Bi_FPaymentCollections));
+			this._Bi_FTransactionRequests = new EntitySet<FTransactionRequestEntity>(new Action<FTransactionRequestEntity>(this.attach_Bi_FTransactionRequests), new Action<FTransactionRequestEntity>(this.detach_Bi_FTransactionRequests));
 			OnCreated();
 		}
 		
@@ -21591,29 +21591,29 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentCollection_REF_biPaymentCollectionType", Storage="_FPaymentCollections", ThisKey="PaymentCollectionTypeSKey", OtherKey="PaymentCollectionTypeSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FPaymentCollection> FPaymentCollections
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentCollection_REF_biPaymentCollectionType", Storage="_Bi_FPaymentCollections", ThisKey="PaymentCollectionTypeSKey", OtherKey="PaymentCollectionTypeSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FPaymentCollectionEntity> Bi_FPaymentCollections
 		{
 			get
 			{
-				return this._FPaymentCollections;
+				return this._Bi_FPaymentCollections;
 			}
 			set
 			{
-				this._FPaymentCollections.Assign(value);
+				this._Bi_FPaymentCollections.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biPaymentCollectionType", Storage="_FTransactionRequests", ThisKey="PaymentCollectionTypeSKey", OtherKey="PaymentCollectionTypeSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FTransactionRequest> FTransactionRequests
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biPaymentCollectionType", Storage="_Bi_FTransactionRequests", ThisKey="PaymentCollectionTypeSKey", OtherKey="PaymentCollectionTypeSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FTransactionRequestEntity> Bi_FTransactionRequests
 		{
 			get
 			{
-				return this._FTransactionRequests;
+				return this._Bi_FTransactionRequests;
 			}
 			set
 			{
-				this._FTransactionRequests.Assign(value);
+				this._Bi_FTransactionRequests.Assign(value);
 			}
 		}
 		
@@ -21637,33 +21637,33 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		private void attach_FPaymentCollections(FPaymentCollection entity)
+		private void attach_Bi_FPaymentCollections(FPaymentCollectionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.PaymentCollectionType = this;
+			entity.PaymentCollectionTypeEntity = this;
 		}
 		
-		private void detach_FPaymentCollections(FPaymentCollection entity)
+		private void detach_Bi_FPaymentCollections(FPaymentCollectionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.PaymentCollectionType = null;
+			entity.PaymentCollectionTypeEntity = null;
 		}
 		
-		private void attach_FTransactionRequests(FTransactionRequest entity)
+		private void attach_Bi_FTransactionRequests(FTransactionRequestEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.PaymentCollectionType = this;
+			entity.PaymentCollectionTypeEntity = this;
 		}
 		
-		private void detach_FTransactionRequests(FTransactionRequest entity)
+		private void detach_Bi_FTransactionRequests(FTransactionRequestEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.PaymentCollectionType = null;
+			entity.PaymentCollectionTypeEntity = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.ProcessMessageLog")]
-	public partial class ProcessMessageLog : DbEntity<ProcessMessageLog>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class ProcessMessageLogEntity : DbEntity<ProcessMessageLogEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -21684,9 +21684,9 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private System.DateTime _LogTimestamp;
 		
-		private EntityRef<LogMessageSource> _LogMessageSource;
+		private EntityRef<LogMessageSourceEntity> _LogMessageSourceEntity;
 		
-		private EntityRef<LogMessageType> _LogMessageType;
+		private EntityRef<LogMessageTypeEntity> _LogMessageTypeEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -21710,10 +21710,10 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnLogTimestampChanged();
     #endregion
 		
-		public ProcessMessageLog()
+		public ProcessMessageLogEntity()
 		{
-			this._LogMessageSource = default(EntityRef<LogMessageSource>);
-			this._LogMessageType = default(EntityRef<LogMessageType>);
+			this._LogMessageSourceEntity = default(EntityRef<LogMessageSourceEntity>);
+			this._LogMessageTypeEntity = default(EntityRef<LogMessageTypeEntity>);
 			OnCreated();
 		}
 		
@@ -21768,7 +21768,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._LogMessageSourceId != value))
 				{
-					if (this._LogMessageSource.HasLoadedOrAssignedValue)
+					if (this._LogMessageSourceEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -21792,7 +21792,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._LogMessageTypeId != value))
 				{
-					if (this._LogMessageType.HasLoadedOrAssignedValue)
+					if (this._LogMessageTypeEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -21885,70 +21885,70 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biProcessMessageLog_REF_biLogMessageSource", Storage="_LogMessageSource", ThisKey="LogMessageSourceId", OtherKey="LogMessageSourceId", IsForeignKey=true)]
-		public LogMessageSource LogMessageSource
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biProcessMessageLog_REF_biLogMessageSource", Storage="_LogMessageSourceEntity", ThisKey="LogMessageSourceId", OtherKey="LogMessageSourceId", IsForeignKey=true)]
+		public LogMessageSourceEntity LogMessageSourceEntity
 		{
 			get
 			{
-				return this._LogMessageSource.Entity;
+				return this._LogMessageSourceEntity.Entity;
 			}
 			set
 			{
-				LogMessageSource previousValue = this._LogMessageSource.Entity;
+				LogMessageSourceEntity previousValue = this._LogMessageSourceEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._LogMessageSource.HasLoadedOrAssignedValue == false)))
+							|| (this._LogMessageSourceEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._LogMessageSource.Entity = null;
-						previousValue.ProcessMessageLogs.Remove(this);
+						this._LogMessageSourceEntity.Entity = null;
+						previousValue.Bi_ProcessMessageLogs.Remove(this);
 					}
-					this._LogMessageSource.Entity = value;
+					this._LogMessageSourceEntity.Entity = value;
 					if ((value != null))
 					{
-						value.ProcessMessageLogs.Add(this);
+						value.Bi_ProcessMessageLogs.Add(this);
 						this._LogMessageSourceId = value.LogMessageSourceId;
 					}
 					else
 					{
 						this._LogMessageSourceId = default(short);
 					}
-					this.SendPropertyChanged("LogMessageSource");
+					this.SendPropertyChanged("LogMessageSourceEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biProcessMessageLog_REF_biLogMessageType", Storage="_LogMessageType", ThisKey="LogMessageTypeId", OtherKey="LogMessageTypeId", IsForeignKey=true)]
-		public LogMessageType LogMessageType
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biProcessMessageLog_REF_biLogMessageType", Storage="_LogMessageTypeEntity", ThisKey="LogMessageTypeId", OtherKey="LogMessageTypeId", IsForeignKey=true)]
+		public LogMessageTypeEntity LogMessageTypeEntity
 		{
 			get
 			{
-				return this._LogMessageType.Entity;
+				return this._LogMessageTypeEntity.Entity;
 			}
 			set
 			{
-				LogMessageType previousValue = this._LogMessageType.Entity;
+				LogMessageTypeEntity previousValue = this._LogMessageTypeEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._LogMessageType.HasLoadedOrAssignedValue == false)))
+							|| (this._LogMessageTypeEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._LogMessageType.Entity = null;
-						previousValue.ProcessMessageLogs.Remove(this);
+						this._LogMessageTypeEntity.Entity = null;
+						previousValue.Bi_ProcessMessageLogs.Remove(this);
 					}
-					this._LogMessageType.Entity = value;
+					this._LogMessageTypeEntity.Entity = value;
 					if ((value != null))
 					{
-						value.ProcessMessageLogs.Add(this);
+						value.Bi_ProcessMessageLogs.Add(this);
 						this._LogMessageTypeId = value.LogMessageTypeId;
 					}
 					else
 					{
 						this._LogMessageTypeId = default(byte);
 					}
-					this.SendPropertyChanged("LogMessageType");
+					this.SendPropertyChanged("LogMessageTypeEntity");
 				}
 			}
 		}
@@ -21975,7 +21975,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.PromoCode")]
-	public partial class PromoCode : DbEntity<PromoCode>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class PromoCodeEntity : DbEntity<PromoCodeEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -21992,7 +21992,7 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _UpdatedByMessageArchiveId;
 		
-		private EntitySet<FCreateFixedTermLoanApplication> _FCreateFixedTermLoanApplications;
+		private EntitySet<FCreateFixedTermLoanApplicationEntity> _Bi_FCreateFixedTermLoanApplications;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -22012,9 +22012,9 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnUpdatedByMessageArchiveIdChanged();
     #endregion
 		
-		public PromoCode()
+		public PromoCodeEntity()
 		{
-			this._FCreateFixedTermLoanApplications = new EntitySet<FCreateFixedTermLoanApplication>(new Action<FCreateFixedTermLoanApplication>(this.attach_FCreateFixedTermLoanApplications), new Action<FCreateFixedTermLoanApplication>(this.detach_FCreateFixedTermLoanApplications));
+			this._Bi_FCreateFixedTermLoanApplications = new EntitySet<FCreateFixedTermLoanApplicationEntity>(new Action<FCreateFixedTermLoanApplicationEntity>(this.attach_Bi_FCreateFixedTermLoanApplications), new Action<FCreateFixedTermLoanApplicationEntity>(this.detach_Bi_FCreateFixedTermLoanApplications));
 			OnCreated();
 		}
 		
@@ -22138,16 +22138,16 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biPromoCode", Storage="_FCreateFixedTermLoanApplications", ThisKey="PromoCodeSKey", OtherKey="PromoCodeSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FCreateFixedTermLoanApplication> FCreateFixedTermLoanApplications
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateFixedTermLoanApplication_REF_biPromoCode", Storage="_Bi_FCreateFixedTermLoanApplications", ThisKey="PromoCodeSKey", OtherKey="PromoCodeSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FCreateFixedTermLoanApplicationEntity> Bi_FCreateFixedTermLoanApplications
 		{
 			get
 			{
-				return this._FCreateFixedTermLoanApplications;
+				return this._Bi_FCreateFixedTermLoanApplications;
 			}
 			set
 			{
-				this._FCreateFixedTermLoanApplications.Assign(value);
+				this._Bi_FCreateFixedTermLoanApplications.Assign(value);
 			}
 		}
 		
@@ -22171,21 +22171,21 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		private void attach_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplication entity)
+		private void attach_Bi_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.PromoCode = this;
+			entity.PromoCodeEntity = this;
 		}
 		
-		private void detach_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplication entity)
+		private void detach_Bi_FCreateFixedTermLoanApplications(FCreateFixedTermLoanApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.PromoCode = null;
+			entity.PromoCodeEntity = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.RepaymentRequest")]
-	public partial class RepaymentRequest : DbEntity<RepaymentRequest>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class RepaymentRequestEntity : DbEntity<RepaymentRequestEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -22202,9 +22202,9 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _UpdatedByMessageArchiveId;
 		
-		private EntitySet<FExtendLoan> _FExtendLoans;
+		private EntitySet<FExtendLoanEntity> _Bi_FExtendLoans;
 		
-		private EntitySet<FRepayLoan> _FRepayLoans;
+		private EntitySet<FRepayLoanEntity> _Bi_FRepayLoans;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -22224,10 +22224,10 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnUpdatedByMessageArchiveIdChanged();
     #endregion
 		
-		public RepaymentRequest()
+		public RepaymentRequestEntity()
 		{
-			this._FExtendLoans = new EntitySet<FExtendLoan>(new Action<FExtendLoan>(this.attach_FExtendLoans), new Action<FExtendLoan>(this.detach_FExtendLoans));
-			this._FRepayLoans = new EntitySet<FRepayLoan>(new Action<FRepayLoan>(this.attach_FRepayLoans), new Action<FRepayLoan>(this.detach_FRepayLoans));
+			this._Bi_FExtendLoans = new EntitySet<FExtendLoanEntity>(new Action<FExtendLoanEntity>(this.attach_Bi_FExtendLoans), new Action<FExtendLoanEntity>(this.detach_Bi_FExtendLoans));
+			this._Bi_FRepayLoans = new EntitySet<FRepayLoanEntity>(new Action<FRepayLoanEntity>(this.attach_Bi_FRepayLoans), new Action<FRepayLoanEntity>(this.detach_Bi_FRepayLoans));
 			OnCreated();
 		}
 		
@@ -22351,29 +22351,29 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifExtendLoan_REF_biRepaymentRequest", Storage="_FExtendLoans", ThisKey="RepaymentRequestSKey", OtherKey="RepaymentRequestSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FExtendLoan> FExtendLoans
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifExtendLoan_REF_biRepaymentRequest", Storage="_Bi_FExtendLoans", ThisKey="RepaymentRequestSKey", OtherKey="RepaymentRequestSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FExtendLoanEntity> Bi_FExtendLoans
 		{
 			get
 			{
-				return this._FExtendLoans;
+				return this._Bi_FExtendLoans;
 			}
 			set
 			{
-				this._FExtendLoans.Assign(value);
+				this._Bi_FExtendLoans.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifRepayLoan_REF_biRepaymentRequest", Storage="_FRepayLoans", ThisKey="RepaymentRequestSKey", OtherKey="RepaymentRequestSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FRepayLoan> FRepayLoans
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifRepayLoan_REF_biRepaymentRequest", Storage="_Bi_FRepayLoans", ThisKey="RepaymentRequestSKey", OtherKey="RepaymentRequestSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FRepayLoanEntity> Bi_FRepayLoans
 		{
 			get
 			{
-				return this._FRepayLoans;
+				return this._Bi_FRepayLoans;
 			}
 			set
 			{
-				this._FRepayLoans.Assign(value);
+				this._Bi_FRepayLoans.Assign(value);
 			}
 		}
 		
@@ -22397,33 +22397,33 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		private void attach_FExtendLoans(FExtendLoan entity)
+		private void attach_Bi_FExtendLoans(FExtendLoanEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.RepaymentRequest = this;
+			entity.RepaymentRequestEntity = this;
 		}
 		
-		private void detach_FExtendLoans(FExtendLoan entity)
+		private void detach_Bi_FExtendLoans(FExtendLoanEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.RepaymentRequest = null;
+			entity.RepaymentRequestEntity = null;
 		}
 		
-		private void attach_FRepayLoans(FRepayLoan entity)
+		private void attach_Bi_FRepayLoans(FRepayLoanEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.RepaymentRequest = this;
+			entity.RepaymentRequestEntity = this;
 		}
 		
-		private void detach_FRepayLoans(FRepayLoan entity)
+		private void detach_Bi_FRepayLoans(FRepayLoanEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.RepaymentRequest = null;
+			entity.RepaymentRequestEntity = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.ServiceBrokerLog")]
-	public partial class ServiceBrokerLog : DbEntity<ServiceBrokerLog>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class ServiceBrokerLogEntity : DbEntity<ServiceBrokerLogEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -22438,7 +22438,7 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private System.DateTime _LogTimestamp;
 		
-		private EntityRef<LogMessageType> _LogMessageType;
+		private EntityRef<LogMessageTypeEntity> _LogMessageTypeEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -22456,9 +22456,9 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnLogTimestampChanged();
     #endregion
 		
-		public ServiceBrokerLog()
+		public ServiceBrokerLogEntity()
 		{
-			this._LogMessageType = default(EntityRef<LogMessageType>);
+			this._LogMessageTypeEntity = default(EntityRef<LogMessageTypeEntity>);
 			OnCreated();
 		}
 		
@@ -22513,7 +22513,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			{
 				if ((this._LogMessageTypeId != value))
 				{
-					if (this._LogMessageType.HasLoadedOrAssignedValue)
+					if (this._LogMessageTypeEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -22566,36 +22566,36 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biServiceBrokerLog_REF_biLogMessageType", Storage="_LogMessageType", ThisKey="LogMessageTypeId", OtherKey="LogMessageTypeId", IsForeignKey=true)]
-		public LogMessageType LogMessageType
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biServiceBrokerLog_REF_biLogMessageType", Storage="_LogMessageTypeEntity", ThisKey="LogMessageTypeId", OtherKey="LogMessageTypeId", IsForeignKey=true)]
+		public LogMessageTypeEntity LogMessageTypeEntity
 		{
 			get
 			{
-				return this._LogMessageType.Entity;
+				return this._LogMessageTypeEntity.Entity;
 			}
 			set
 			{
-				LogMessageType previousValue = this._LogMessageType.Entity;
+				LogMessageTypeEntity previousValue = this._LogMessageTypeEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._LogMessageType.HasLoadedOrAssignedValue == false)))
+							|| (this._LogMessageTypeEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._LogMessageType.Entity = null;
-						previousValue.ServiceBrokerLogs.Remove(this);
+						this._LogMessageTypeEntity.Entity = null;
+						previousValue.Bi_ServiceBrokerLogs.Remove(this);
 					}
-					this._LogMessageType.Entity = value;
+					this._LogMessageTypeEntity.Entity = value;
 					if ((value != null))
 					{
-						value.ServiceBrokerLogs.Add(this);
+						value.Bi_ServiceBrokerLogs.Add(this);
 						this._LogMessageTypeId = value.LogMessageTypeId;
 					}
 					else
 					{
 						this._LogMessageTypeId = default(byte);
 					}
-					this.SendPropertyChanged("LogMessageType");
+					this.SendPropertyChanged("LogMessageTypeEntity");
 				}
 			}
 		}
@@ -22622,7 +22622,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.Time")]
-	public partial class Time : DbEntity<Time>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class TimeEntity : DbEntity<TimeEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -22653,7 +22653,7 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnSecondChanged();
     #endregion
 		
-		public Time()
+		public TimeEntity()
 		{
 			OnCreated();
 		}
@@ -22780,7 +22780,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.Transaction")]
-	public partial class Transaction : DbEntity<Transaction>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class TransactionEntity : DbEntity<TransactionEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -22799,19 +22799,19 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _UpdatedByMessageArchiveId;
 		
-		private EntityRef<BankGateWayTransaction> _BankGateWayTransaction;
+		private EntityRef<BankGateWayTransactionEntity> _BankGateWayTransactionEntity;
 		
-		private EntityRef<FAggTransactionAllocation> _FAggTransactionAllocation;
+		private EntityRef<FAggTransactionAllocationEntity> _FAggTransactionAllocationEntity;
 		
-		private EntityRef<FCreateTransaction> _FCreateTransaction;
+		private EntityRef<FCreateTransactionEntity> _FCreateTransactionEntity;
 		
-		private EntityRef<FPaymentSentMessage> _FPaymentSentMessage;
+		private EntityRef<FPaymentSentMessageEntity> _FPaymentSentMessageEntity;
 		
-		private EntityRef<FTransactionLedger> _FTransactionLedger;
+		private EntityRef<FTransactionLedgerEntity> _FTransactionLedgerEntity;
 		
-		private EntityRef<FTransactionRequest> _FTransactionRequest;
+		private EntityRef<FTransactionRequestEntity> _FTransactionRequestEntity;
 		
-		private EntitySet<FTransactionRequestDetail> _FTransactionRequestDetails;
+		private EntitySet<FTransactionRequestDetailEntity> _Bi_FTransactionRequestDetails;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -22833,15 +22833,15 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnUpdatedByMessageArchiveIdChanged();
     #endregion
 		
-		public Transaction()
+		public TransactionEntity()
 		{
-			this._BankGateWayTransaction = default(EntityRef<BankGateWayTransaction>);
-			this._FAggTransactionAllocation = default(EntityRef<FAggTransactionAllocation>);
-			this._FCreateTransaction = default(EntityRef<FCreateTransaction>);
-			this._FPaymentSentMessage = default(EntityRef<FPaymentSentMessage>);
-			this._FTransactionLedger = default(EntityRef<FTransactionLedger>);
-			this._FTransactionRequest = default(EntityRef<FTransactionRequest>);
-			this._FTransactionRequestDetails = new EntitySet<FTransactionRequestDetail>(new Action<FTransactionRequestDetail>(this.attach_FTransactionRequestDetails), new Action<FTransactionRequestDetail>(this.detach_FTransactionRequestDetails));
+			this._BankGateWayTransactionEntity = default(EntityRef<BankGateWayTransactionEntity>);
+			this._FAggTransactionAllocationEntity = default(EntityRef<FAggTransactionAllocationEntity>);
+			this._FCreateTransactionEntity = default(EntityRef<FCreateTransactionEntity>);
+			this._FPaymentSentMessageEntity = default(EntityRef<FPaymentSentMessageEntity>);
+			this._FTransactionLedgerEntity = default(EntityRef<FTransactionLedgerEntity>);
+			this._FTransactionRequestEntity = default(EntityRef<FTransactionRequestEntity>);
+			this._Bi_FTransactionRequestDetails = new EntitySet<FTransactionRequestDetailEntity>(new Action<FTransactionRequestDetailEntity>(this.attach_Bi_FTransactionRequestDetails), new Action<FTransactionRequestDetailEntity>(this.detach_Bi_FTransactionRequestDetails));
 			OnCreated();
 		}
 		
@@ -22985,190 +22985,190 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biBankGateWayTransaction_REF_biTransaction", Storage="_BankGateWayTransaction", ThisKey="TransactionSKey", OtherKey="TransactionSkey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
-		public BankGateWayTransaction BankGateWayTransaction
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_biBankGateWayTransaction_REF_biTransaction", Storage="_BankGateWayTransactionEntity", ThisKey="TransactionSKey", OtherKey="TransactionSkey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
+		public BankGateWayTransactionEntity BankGateWayTransactionEntity
 		{
 			get
 			{
-				return this._BankGateWayTransaction.Entity;
+				return this._BankGateWayTransactionEntity.Entity;
 			}
 			set
 			{
-				BankGateWayTransaction previousValue = this._BankGateWayTransaction.Entity;
+				BankGateWayTransactionEntity previousValue = this._BankGateWayTransactionEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._BankGateWayTransaction.HasLoadedOrAssignedValue == false)))
+							|| (this._BankGateWayTransactionEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._BankGateWayTransaction.Entity = null;
-						previousValue.Transaction = null;
+						this._BankGateWayTransactionEntity.Entity = null;
+						previousValue.TransactionEntity = null;
 					}
-					this._BankGateWayTransaction.Entity = value;
+					this._BankGateWayTransactionEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Transaction = this;
+						value.TransactionEntity = this;
 					}
-					this.SendPropertyChanged("BankGateWayTransaction");
+					this.SendPropertyChanged("BankGateWayTransactionEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggTransactionAllocation_REF_biTransaction", Storage="_FAggTransactionAllocation", ThisKey="TransactionSKey", OtherKey="TransactionSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
-		public FAggTransactionAllocation FAggTransactionAllocation
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggTransactionAllocation_REF_biTransaction", Storage="_FAggTransactionAllocationEntity", ThisKey="TransactionSKey", OtherKey="TransactionSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
+		public FAggTransactionAllocationEntity FAggTransactionAllocationEntity
 		{
 			get
 			{
-				return this._FAggTransactionAllocation.Entity;
+				return this._FAggTransactionAllocationEntity.Entity;
 			}
 			set
 			{
-				FAggTransactionAllocation previousValue = this._FAggTransactionAllocation.Entity;
+				FAggTransactionAllocationEntity previousValue = this._FAggTransactionAllocationEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._FAggTransactionAllocation.HasLoadedOrAssignedValue == false)))
+							|| (this._FAggTransactionAllocationEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._FAggTransactionAllocation.Entity = null;
-						previousValue.Transaction = null;
+						this._FAggTransactionAllocationEntity.Entity = null;
+						previousValue.TransactionEntity = null;
 					}
-					this._FAggTransactionAllocation.Entity = value;
+					this._FAggTransactionAllocationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Transaction = this;
+						value.TransactionEntity = this;
 					}
-					this.SendPropertyChanged("FAggTransactionAllocation");
+					this.SendPropertyChanged("FAggTransactionAllocationEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateTransaction_REF_biTransaction", Storage="_FCreateTransaction", ThisKey="TransactionSKey", OtherKey="TransactionSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
-		public FCreateTransaction FCreateTransaction
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateTransaction_REF_biTransaction", Storage="_FCreateTransactionEntity", ThisKey="TransactionSKey", OtherKey="TransactionSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
+		public FCreateTransactionEntity FCreateTransactionEntity
 		{
 			get
 			{
-				return this._FCreateTransaction.Entity;
+				return this._FCreateTransactionEntity.Entity;
 			}
 			set
 			{
-				FCreateTransaction previousValue = this._FCreateTransaction.Entity;
+				FCreateTransactionEntity previousValue = this._FCreateTransactionEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._FCreateTransaction.HasLoadedOrAssignedValue == false)))
+							|| (this._FCreateTransactionEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._FCreateTransaction.Entity = null;
-						previousValue.Transaction = null;
+						this._FCreateTransactionEntity.Entity = null;
+						previousValue.TransactionEntity = null;
 					}
-					this._FCreateTransaction.Entity = value;
+					this._FCreateTransactionEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Transaction = this;
+						value.TransactionEntity = this;
 					}
-					this.SendPropertyChanged("FCreateTransaction");
+					this.SendPropertyChanged("FCreateTransactionEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentSentMessage_REF_biTransaction", Storage="_FPaymentSentMessage", ThisKey="TransactionSKey", OtherKey="TransactionSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
-		public FPaymentSentMessage FPaymentSentMessage
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifPaymentSentMessage_REF_biTransaction", Storage="_FPaymentSentMessageEntity", ThisKey="TransactionSKey", OtherKey="TransactionSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
+		public FPaymentSentMessageEntity FPaymentSentMessageEntity
 		{
 			get
 			{
-				return this._FPaymentSentMessage.Entity;
+				return this._FPaymentSentMessageEntity.Entity;
 			}
 			set
 			{
-				FPaymentSentMessage previousValue = this._FPaymentSentMessage.Entity;
+				FPaymentSentMessageEntity previousValue = this._FPaymentSentMessageEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._FPaymentSentMessage.HasLoadedOrAssignedValue == false)))
+							|| (this._FPaymentSentMessageEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._FPaymentSentMessage.Entity = null;
-						previousValue.Transaction = null;
+						this._FPaymentSentMessageEntity.Entity = null;
+						previousValue.TransactionEntity = null;
 					}
-					this._FPaymentSentMessage.Entity = value;
+					this._FPaymentSentMessageEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Transaction = this;
+						value.TransactionEntity = this;
 					}
-					this.SendPropertyChanged("FPaymentSentMessage");
+					this.SendPropertyChanged("FPaymentSentMessageEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionLedger_REF_biTransaction", Storage="_FTransactionLedger", ThisKey="TransactionSKey", OtherKey="TransactionSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
-		public FTransactionLedger FTransactionLedger
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionLedger_REF_biTransaction", Storage="_FTransactionLedgerEntity", ThisKey="TransactionSKey", OtherKey="TransactionSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
+		public FTransactionLedgerEntity FTransactionLedgerEntity
 		{
 			get
 			{
-				return this._FTransactionLedger.Entity;
+				return this._FTransactionLedgerEntity.Entity;
 			}
 			set
 			{
-				FTransactionLedger previousValue = this._FTransactionLedger.Entity;
+				FTransactionLedgerEntity previousValue = this._FTransactionLedgerEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._FTransactionLedger.HasLoadedOrAssignedValue == false)))
+							|| (this._FTransactionLedgerEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._FTransactionLedger.Entity = null;
-						previousValue.Transaction = null;
+						this._FTransactionLedgerEntity.Entity = null;
+						previousValue.TransactionEntity = null;
 					}
-					this._FTransactionLedger.Entity = value;
+					this._FTransactionLedgerEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Transaction = this;
+						value.TransactionEntity = this;
 					}
-					this.SendPropertyChanged("FTransactionLedger");
+					this.SendPropertyChanged("FTransactionLedgerEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biTransaction", Storage="_FTransactionRequest", ThisKey="TransactionSKey", OtherKey="TransactionSkey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
-		public FTransactionRequest FTransactionRequest
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biTransaction", Storage="_FTransactionRequestEntity", ThisKey="TransactionSKey", OtherKey="TransactionSkey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
+		public FTransactionRequestEntity FTransactionRequestEntity
 		{
 			get
 			{
-				return this._FTransactionRequest.Entity;
+				return this._FTransactionRequestEntity.Entity;
 			}
 			set
 			{
-				FTransactionRequest previousValue = this._FTransactionRequest.Entity;
+				FTransactionRequestEntity previousValue = this._FTransactionRequestEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._FTransactionRequest.HasLoadedOrAssignedValue == false)))
+							|| (this._FTransactionRequestEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._FTransactionRequest.Entity = null;
-						previousValue.Transaction = null;
+						this._FTransactionRequestEntity.Entity = null;
+						previousValue.TransactionEntity = null;
 					}
-					this._FTransactionRequest.Entity = value;
+					this._FTransactionRequestEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Transaction = this;
+						value.TransactionEntity = this;
 					}
-					this.SendPropertyChanged("FTransactionRequest");
+					this.SendPropertyChanged("FTransactionRequestEntity");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequestDetails_REF_biTransaction", Storage="_FTransactionRequestDetails", ThisKey="TransactionSKey", OtherKey="TransactionSkey", DeleteRule="NO ACTION")]
-		public EntitySet<FTransactionRequestDetail> FTransactionRequestDetails
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequestDetails_REF_biTransaction", Storage="_Bi_FTransactionRequestDetails", ThisKey="TransactionSKey", OtherKey="TransactionSkey", DeleteRule="NO ACTION")]
+		public EntitySet<FTransactionRequestDetailEntity> Bi_FTransactionRequestDetails
 		{
 			get
 			{
-				return this._FTransactionRequestDetails;
+				return this._Bi_FTransactionRequestDetails;
 			}
 			set
 			{
-				this._FTransactionRequestDetails.Assign(value);
+				this._Bi_FTransactionRequestDetails.Assign(value);
 			}
 		}
 		
@@ -23192,21 +23192,21 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		private void attach_FTransactionRequestDetails(FTransactionRequestDetail entity)
+		private void attach_Bi_FTransactionRequestDetails(FTransactionRequestDetailEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Transaction = this;
+			entity.TransactionEntity = this;
 		}
 		
-		private void detach_FTransactionRequestDetails(FTransactionRequestDetail entity)
+		private void detach_Bi_FTransactionRequestDetails(FTransactionRequestDetailEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Transaction = null;
+			entity.TransactionEntity = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.TransactionScope")]
-	public partial class TransactionScope : DbEntity<TransactionScope>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class TransactionScopeEntity : DbEntity<TransactionScopeEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -23215,9 +23215,9 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private string _TransactionScopeNKey;
 		
-		private EntitySet<FCreateTransaction> _FCreateTransactions;
+		private EntitySet<FCreateTransactionEntity> _Bi_FCreateTransactions;
 		
-		private EntitySet<FTransactionLedger> _FTransactionLedgers;
+		private EntitySet<FTransactionLedgerEntity> _Bi_FTransactionLedgers;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -23229,10 +23229,10 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnTransactionScopeNKeyChanged();
     #endregion
 		
-		public TransactionScope()
+		public TransactionScopeEntity()
 		{
-			this._FCreateTransactions = new EntitySet<FCreateTransaction>(new Action<FCreateTransaction>(this.attach_FCreateTransactions), new Action<FCreateTransaction>(this.detach_FCreateTransactions));
-			this._FTransactionLedgers = new EntitySet<FTransactionLedger>(new Action<FTransactionLedger>(this.attach_FTransactionLedgers), new Action<FTransactionLedger>(this.detach_FTransactionLedgers));
+			this._Bi_FCreateTransactions = new EntitySet<FCreateTransactionEntity>(new Action<FCreateTransactionEntity>(this.attach_Bi_FCreateTransactions), new Action<FCreateTransactionEntity>(this.detach_Bi_FCreateTransactions));
+			this._Bi_FTransactionLedgers = new EntitySet<FTransactionLedgerEntity>(new Action<FTransactionLedgerEntity>(this.attach_Bi_FTransactionLedgers), new Action<FTransactionLedgerEntity>(this.detach_Bi_FTransactionLedgers));
 			OnCreated();
 		}
 		
@@ -23276,29 +23276,29 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateTransaction_REF_biTransactionScope", Storage="_FCreateTransactions", ThisKey="TransactionScopeSKey", OtherKey="TransactionScopeSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FCreateTransaction> FCreateTransactions
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateTransaction_REF_biTransactionScope", Storage="_Bi_FCreateTransactions", ThisKey="TransactionScopeSKey", OtherKey="TransactionScopeSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FCreateTransactionEntity> Bi_FCreateTransactions
 		{
 			get
 			{
-				return this._FCreateTransactions;
+				return this._Bi_FCreateTransactions;
 			}
 			set
 			{
-				this._FCreateTransactions.Assign(value);
+				this._Bi_FCreateTransactions.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionLedger_REF_biTransactionScope", Storage="_FTransactionLedgers", ThisKey="TransactionScopeSKey", OtherKey="TransactionScopeSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FTransactionLedger> FTransactionLedgers
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionLedger_REF_biTransactionScope", Storage="_Bi_FTransactionLedgers", ThisKey="TransactionScopeSKey", OtherKey="TransactionScopeSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FTransactionLedgerEntity> Bi_FTransactionLedgers
 		{
 			get
 			{
-				return this._FTransactionLedgers;
+				return this._Bi_FTransactionLedgers;
 			}
 			set
 			{
-				this._FTransactionLedgers.Assign(value);
+				this._Bi_FTransactionLedgers.Assign(value);
 			}
 		}
 		
@@ -23322,33 +23322,33 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		private void attach_FCreateTransactions(FCreateTransaction entity)
+		private void attach_Bi_FCreateTransactions(FCreateTransactionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.TransactionScope = this;
+			entity.TransactionScopeEntity = this;
 		}
 		
-		private void detach_FCreateTransactions(FCreateTransaction entity)
+		private void detach_Bi_FCreateTransactions(FCreateTransactionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.TransactionScope = null;
+			entity.TransactionScopeEntity = null;
 		}
 		
-		private void attach_FTransactionLedgers(FTransactionLedger entity)
+		private void attach_Bi_FTransactionLedgers(FTransactionLedgerEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.TransactionScope = this;
+			entity.TransactionScopeEntity = this;
 		}
 		
-		private void detach_FTransactionLedgers(FTransactionLedger entity)
+		private void detach_Bi_FTransactionLedgers(FTransactionLedgerEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.TransactionScope = null;
+			entity.TransactionScopeEntity = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.TransactionStatus")]
-	public partial class TransactionStatus : DbEntity<TransactionStatus>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class TransactionStatusEntity : DbEntity<TransactionStatusEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -23357,9 +23357,9 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private string _TransactionStatusNKey;
 		
-		private EntitySet<FTransactionRequest> _FTransactionRequests;
+		private EntitySet<FTransactionRequestEntity> _Bi_FTransactionRequests;
 		
-		private EntitySet<FTransactionRequestDetail> _FTransactionRequestDetails;
+		private EntitySet<FTransactionRequestDetailEntity> _Bi_FTransactionRequestDetails;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -23371,10 +23371,10 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnTransactionStatusNKeyChanged();
     #endregion
 		
-		public TransactionStatus()
+		public TransactionStatusEntity()
 		{
-			this._FTransactionRequests = new EntitySet<FTransactionRequest>(new Action<FTransactionRequest>(this.attach_FTransactionRequests), new Action<FTransactionRequest>(this.detach_FTransactionRequests));
-			this._FTransactionRequestDetails = new EntitySet<FTransactionRequestDetail>(new Action<FTransactionRequestDetail>(this.attach_FTransactionRequestDetails), new Action<FTransactionRequestDetail>(this.detach_FTransactionRequestDetails));
+			this._Bi_FTransactionRequests = new EntitySet<FTransactionRequestEntity>(new Action<FTransactionRequestEntity>(this.attach_Bi_FTransactionRequests), new Action<FTransactionRequestEntity>(this.detach_Bi_FTransactionRequests));
+			this._Bi_FTransactionRequestDetails = new EntitySet<FTransactionRequestDetailEntity>(new Action<FTransactionRequestDetailEntity>(this.attach_Bi_FTransactionRequestDetails), new Action<FTransactionRequestDetailEntity>(this.detach_Bi_FTransactionRequestDetails));
 			OnCreated();
 		}
 		
@@ -23418,29 +23418,29 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biTransactionStatus", Storage="_FTransactionRequests", ThisKey="TransactionStatusSKey", OtherKey="TransactionStatusSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FTransactionRequest> FTransactionRequests
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequest_REF_biTransactionStatus", Storage="_Bi_FTransactionRequests", ThisKey="TransactionStatusSKey", OtherKey="TransactionStatusSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FTransactionRequestEntity> Bi_FTransactionRequests
 		{
 			get
 			{
-				return this._FTransactionRequests;
+				return this._Bi_FTransactionRequests;
 			}
 			set
 			{
-				this._FTransactionRequests.Assign(value);
+				this._Bi_FTransactionRequests.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequestDetails_REF_biTransactionStatus", Storage="_FTransactionRequestDetails", ThisKey="TransactionStatusSKey", OtherKey="TransactionStatusSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FTransactionRequestDetail> FTransactionRequestDetails
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionRequestDetails_REF_biTransactionStatus", Storage="_Bi_FTransactionRequestDetails", ThisKey="TransactionStatusSKey", OtherKey="TransactionStatusSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FTransactionRequestDetailEntity> Bi_FTransactionRequestDetails
 		{
 			get
 			{
-				return this._FTransactionRequestDetails;
+				return this._Bi_FTransactionRequestDetails;
 			}
 			set
 			{
-				this._FTransactionRequestDetails.Assign(value);
+				this._Bi_FTransactionRequestDetails.Assign(value);
 			}
 		}
 		
@@ -23464,33 +23464,33 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		private void attach_FTransactionRequests(FTransactionRequest entity)
+		private void attach_Bi_FTransactionRequests(FTransactionRequestEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.TransactionStatus = this;
+			entity.TransactionStatusEntity = this;
 		}
 		
-		private void detach_FTransactionRequests(FTransactionRequest entity)
+		private void detach_Bi_FTransactionRequests(FTransactionRequestEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.TransactionStatus = null;
+			entity.TransactionStatusEntity = null;
 		}
 		
-		private void attach_FTransactionRequestDetails(FTransactionRequestDetail entity)
+		private void attach_Bi_FTransactionRequestDetails(FTransactionRequestDetailEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.TransactionStatus = this;
+			entity.TransactionStatusEntity = this;
 		}
 		
-		private void detach_FTransactionRequestDetails(FTransactionRequestDetail entity)
+		private void detach_Bi_FTransactionRequestDetails(FTransactionRequestDetailEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.TransactionStatus = null;
+			entity.TransactionStatusEntity = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.TransactionType")]
-	public partial class TransactionType : DbEntity<TransactionType>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class TransactionTypeEntity : DbEntity<TransactionTypeEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -23499,11 +23499,11 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private string _TransactionTypeNKey;
 		
-		private EntitySet<FAggTransactionAllocation> _FAggTransactionAllocations;
+		private EntitySet<FAggTransactionAllocationEntity> _Bi_FAggTransactionAllocations;
 		
-		private EntitySet<FCreateTransaction> _FCreateTransactions;
+		private EntitySet<FCreateTransactionEntity> _Bi_FCreateTransactions;
 		
-		private EntitySet<FTransactionLedger> _FTransactionLedgers;
+		private EntitySet<FTransactionLedgerEntity> _Bi_FTransactionLedgers;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -23515,11 +23515,11 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnTransactionTypeNKeyChanged();
     #endregion
 		
-		public TransactionType()
+		public TransactionTypeEntity()
 		{
-			this._FAggTransactionAllocations = new EntitySet<FAggTransactionAllocation>(new Action<FAggTransactionAllocation>(this.attach_FAggTransactionAllocations), new Action<FAggTransactionAllocation>(this.detach_FAggTransactionAllocations));
-			this._FCreateTransactions = new EntitySet<FCreateTransaction>(new Action<FCreateTransaction>(this.attach_FCreateTransactions), new Action<FCreateTransaction>(this.detach_FCreateTransactions));
-			this._FTransactionLedgers = new EntitySet<FTransactionLedger>(new Action<FTransactionLedger>(this.attach_FTransactionLedgers), new Action<FTransactionLedger>(this.detach_FTransactionLedgers));
+			this._Bi_FAggTransactionAllocations = new EntitySet<FAggTransactionAllocationEntity>(new Action<FAggTransactionAllocationEntity>(this.attach_Bi_FAggTransactionAllocations), new Action<FAggTransactionAllocationEntity>(this.detach_Bi_FAggTransactionAllocations));
+			this._Bi_FCreateTransactions = new EntitySet<FCreateTransactionEntity>(new Action<FCreateTransactionEntity>(this.attach_Bi_FCreateTransactions), new Action<FCreateTransactionEntity>(this.detach_Bi_FCreateTransactions));
+			this._Bi_FTransactionLedgers = new EntitySet<FTransactionLedgerEntity>(new Action<FTransactionLedgerEntity>(this.attach_Bi_FTransactionLedgers), new Action<FTransactionLedgerEntity>(this.detach_Bi_FTransactionLedgers));
 			OnCreated();
 		}
 		
@@ -23563,42 +23563,42 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggTransactionAllocation_REF_biTransactionType", Storage="_FAggTransactionAllocations", ThisKey="TransactionTypeSKey", OtherKey="TransactionTypeSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FAggTransactionAllocation> FAggTransactionAllocations
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifAggTransactionAllocation_REF_biTransactionType", Storage="_Bi_FAggTransactionAllocations", ThisKey="TransactionTypeSKey", OtherKey="TransactionTypeSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FAggTransactionAllocationEntity> Bi_FAggTransactionAllocations
 		{
 			get
 			{
-				return this._FAggTransactionAllocations;
+				return this._Bi_FAggTransactionAllocations;
 			}
 			set
 			{
-				this._FAggTransactionAllocations.Assign(value);
+				this._Bi_FAggTransactionAllocations.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateTransaction_REF_biTransactionType", Storage="_FCreateTransactions", ThisKey="TransactionTypeSKey", OtherKey="TransactionTypeSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FCreateTransaction> FCreateTransactions
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifCreateTransaction_REF_biTransactionType", Storage="_Bi_FCreateTransactions", ThisKey="TransactionTypeSKey", OtherKey="TransactionTypeSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FCreateTransactionEntity> Bi_FCreateTransactions
 		{
 			get
 			{
-				return this._FCreateTransactions;
+				return this._Bi_FCreateTransactions;
 			}
 			set
 			{
-				this._FCreateTransactions.Assign(value);
+				this._Bi_FCreateTransactions.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionLedger_REF_biTransactionType", Storage="_FTransactionLedgers", ThisKey="TransactionTypeSKey", OtherKey="TransactionTypeSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FTransactionLedger> FTransactionLedgers
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransactionLedger_REF_biTransactionType", Storage="_Bi_FTransactionLedgers", ThisKey="TransactionTypeSKey", OtherKey="TransactionTypeSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FTransactionLedgerEntity> Bi_FTransactionLedgers
 		{
 			get
 			{
-				return this._FTransactionLedgers;
+				return this._Bi_FTransactionLedgers;
 			}
 			set
 			{
-				this._FTransactionLedgers.Assign(value);
+				this._Bi_FTransactionLedgers.Assign(value);
 			}
 		}
 		
@@ -23622,45 +23622,45 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		private void attach_FAggTransactionAllocations(FAggTransactionAllocation entity)
+		private void attach_Bi_FAggTransactionAllocations(FAggTransactionAllocationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.TransactionType = this;
+			entity.TransactionTypeEntity = this;
 		}
 		
-		private void detach_FAggTransactionAllocations(FAggTransactionAllocation entity)
+		private void detach_Bi_FAggTransactionAllocations(FAggTransactionAllocationEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.TransactionType = null;
+			entity.TransactionTypeEntity = null;
 		}
 		
-		private void attach_FCreateTransactions(FCreateTransaction entity)
+		private void attach_Bi_FCreateTransactions(FCreateTransactionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.TransactionType = this;
+			entity.TransactionTypeEntity = this;
 		}
 		
-		private void detach_FCreateTransactions(FCreateTransaction entity)
+		private void detach_Bi_FCreateTransactions(FCreateTransactionEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.TransactionType = null;
+			entity.TransactionTypeEntity = null;
 		}
 		
-		private void attach_FTransactionLedgers(FTransactionLedger entity)
+		private void attach_Bi_FTransactionLedgers(FTransactionLedgerEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.TransactionType = this;
+			entity.TransactionTypeEntity = this;
 		}
 		
-		private void detach_FTransactionLedgers(FTransactionLedger entity)
+		private void detach_Bi_FTransactionLedgers(FTransactionLedgerEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.TransactionType = null;
+			entity.TransactionTypeEntity = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.TransunionConsumer")]
-	public partial class TransunionConsumer : DbEntity<TransunionConsumer>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class TransunionConsumerEntity : DbEntity<TransunionConsumerEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -23673,7 +23673,7 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _CreatedByMessageArchiveId;
 		
-		private EntitySet<FTransunionResponse> _FTransunionResponses;
+		private EntitySet<FTransunionResponseEntity> _Bi_FTransunionResponses;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -23689,9 +23689,9 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnCreatedByMessageArchiveIdChanged();
     #endregion
 		
-		public TransunionConsumer()
+		public TransunionConsumerEntity()
 		{
-			this._FTransunionResponses = new EntitySet<FTransunionResponse>(new Action<FTransunionResponse>(this.attach_FTransunionResponses), new Action<FTransunionResponse>(this.detach_FTransunionResponses));
+			this._Bi_FTransunionResponses = new EntitySet<FTransunionResponseEntity>(new Action<FTransunionResponseEntity>(this.attach_Bi_FTransunionResponses), new Action<FTransunionResponseEntity>(this.detach_Bi_FTransunionResponses));
 			OnCreated();
 		}
 		
@@ -23775,16 +23775,16 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransunionResponse_REF_biTransunionConsumer", Storage="_FTransunionResponses", ThisKey="TransunionConsumerSKey", OtherKey="TransunionConsumerSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FTransunionResponse> FTransunionResponses
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransunionResponse_REF_biTransunionConsumer", Storage="_Bi_FTransunionResponses", ThisKey="TransunionConsumerSKey", OtherKey="TransunionConsumerSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FTransunionResponseEntity> Bi_FTransunionResponses
 		{
 			get
 			{
-				return this._FTransunionResponses;
+				return this._Bi_FTransunionResponses;
 			}
 			set
 			{
-				this._FTransunionResponses.Assign(value);
+				this._Bi_FTransunionResponses.Assign(value);
 			}
 		}
 		
@@ -23808,21 +23808,21 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		private void attach_FTransunionResponses(FTransunionResponse entity)
+		private void attach_Bi_FTransunionResponses(FTransunionResponseEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.TransunionConsumer = this;
+			entity.TransunionConsumerEntity = this;
 		}
 		
-		private void detach_FTransunionResponses(FTransunionResponse entity)
+		private void detach_Bi_FTransunionResponses(FTransunionResponseEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.TransunionConsumer = null;
+			entity.TransunionConsumerEntity = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.TransunionResponse")]
-	public partial class TransunionResponse : DbEntity<TransunionResponse>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class TransunionResponseEntity : DbEntity<TransunionResponseEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -23835,7 +23835,7 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _CreatedByMessageArchiveId;
 		
-		private EntityRef<FTransunionResponse> _FTransunionResponse;
+		private EntityRef<FTransunionResponseEntity> _FTransunionResponseEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -23851,9 +23851,9 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnCreatedByMessageArchiveIdChanged();
     #endregion
 		
-		public TransunionResponse()
+		public TransunionResponseEntity()
 		{
-			this._FTransunionResponse = default(EntityRef<FTransunionResponse>);
+			this._FTransunionResponseEntity = default(EntityRef<FTransunionResponseEntity>);
 			OnCreated();
 		}
 		
@@ -23937,31 +23937,31 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransunionResponse_REF_biTransunionResponse", Storage="_FTransunionResponse", ThisKey="TransunionResponseSKey", OtherKey="TransunionResponseSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
-		public FTransunionResponse FTransunionResponse
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransunionResponse_REF_biTransunionResponse", Storage="_FTransunionResponseEntity", ThisKey="TransunionResponseSKey", OtherKey="TransunionResponseSKey", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
+		public FTransunionResponseEntity FTransunionResponseEntity
 		{
 			get
 			{
-				return this._FTransunionResponse.Entity;
+				return this._FTransunionResponseEntity.Entity;
 			}
 			set
 			{
-				FTransunionResponse previousValue = this._FTransunionResponse.Entity;
+				FTransunionResponseEntity previousValue = this._FTransunionResponseEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._FTransunionResponse.HasLoadedOrAssignedValue == false)))
+							|| (this._FTransunionResponseEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._FTransunionResponse.Entity = null;
-						previousValue.TransunionResponse = null;
+						this._FTransunionResponseEntity.Entity = null;
+						previousValue.TransunionResponseEntity = null;
 					}
-					this._FTransunionResponse.Entity = value;
+					this._FTransunionResponseEntity.Entity = value;
 					if ((value != null))
 					{
-						value.TransunionResponse = this;
+						value.TransunionResponseEntity = this;
 					}
-					this.SendPropertyChanged("FTransunionResponse");
+					this.SendPropertyChanged("FTransunionResponseEntity");
 				}
 			}
 		}
@@ -23988,7 +23988,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.TransunionResponseStatus")]
-	public partial class TransunionResponseStatus : DbEntity<TransunionResponseStatus>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class TransunionResponseStatusEntity : DbEntity<TransunionResponseStatusEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -23997,7 +23997,7 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private string _TransunionResponseStatusNKey;
 		
-		private EntitySet<FTransunionResponse> _FTransunionResponses;
+		private EntitySet<FTransunionResponseEntity> _Bi_FTransunionResponses;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -24009,9 +24009,9 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnTransunionResponseStatusNKeyChanged();
     #endregion
 		
-		public TransunionResponseStatus()
+		public TransunionResponseStatusEntity()
 		{
-			this._FTransunionResponses = new EntitySet<FTransunionResponse>(new Action<FTransunionResponse>(this.attach_FTransunionResponses), new Action<FTransunionResponse>(this.detach_FTransunionResponses));
+			this._Bi_FTransunionResponses = new EntitySet<FTransunionResponseEntity>(new Action<FTransunionResponseEntity>(this.attach_Bi_FTransunionResponses), new Action<FTransunionResponseEntity>(this.detach_Bi_FTransunionResponses));
 			OnCreated();
 		}
 		
@@ -24055,16 +24055,16 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransunionResponse_REF_biTransunionResponseStatus", Storage="_FTransunionResponses", ThisKey="TransunionResponseStatusSKey", OtherKey="TransunionResponseStatusSkey", DeleteRule="NO ACTION")]
-		public EntitySet<FTransunionResponse> FTransunionResponses
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransunionResponse_REF_biTransunionResponseStatus", Storage="_Bi_FTransunionResponses", ThisKey="TransunionResponseStatusSKey", OtherKey="TransunionResponseStatusSkey", DeleteRule="NO ACTION")]
+		public EntitySet<FTransunionResponseEntity> Bi_FTransunionResponses
 		{
 			get
 			{
-				return this._FTransunionResponses;
+				return this._Bi_FTransunionResponses;
 			}
 			set
 			{
-				this._FTransunionResponses.Assign(value);
+				this._Bi_FTransunionResponses.Assign(value);
 			}
 		}
 		
@@ -24088,21 +24088,21 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		private void attach_FTransunionResponses(FTransunionResponse entity)
+		private void attach_Bi_FTransunionResponses(FTransunionResponseEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.TransunionResponseStatus = this;
+			entity.TransunionResponseStatusEntity = this;
 		}
 		
-		private void detach_FTransunionResponses(FTransunionResponse entity)
+		private void detach_Bi_FTransunionResponses(FTransunionResponseEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.TransunionResponseStatus = null;
+			entity.TransunionResponseStatusEntity = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.TransunionSaga")]
-	public partial class TransunionSaga : DbEntity<TransunionSaga>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class TransunionSagaEntity : DbEntity<TransunionSagaEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -24115,7 +24115,7 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _CreatedByMessageArchiveId;
 		
-		private EntitySet<FTransunionResponse> _FTransunionResponses;
+		private EntitySet<FTransunionResponseEntity> _Bi_FTransunionResponses;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -24131,9 +24131,9 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnCreatedByMessageArchiveIdChanged();
     #endregion
 		
-		public TransunionSaga()
+		public TransunionSagaEntity()
 		{
-			this._FTransunionResponses = new EntitySet<FTransunionResponse>(new Action<FTransunionResponse>(this.attach_FTransunionResponses), new Action<FTransunionResponse>(this.detach_FTransunionResponses));
+			this._Bi_FTransunionResponses = new EntitySet<FTransunionResponseEntity>(new Action<FTransunionResponseEntity>(this.attach_Bi_FTransunionResponses), new Action<FTransunionResponseEntity>(this.detach_Bi_FTransunionResponses));
 			OnCreated();
 		}
 		
@@ -24217,16 +24217,16 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransunionResponse_REF_biTransunionSaga", Storage="_FTransunionResponses", ThisKey="TransunionSagaSKey", OtherKey="TransunionSagaSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FTransunionResponse> FTransunionResponses
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifTransunionResponse_REF_biTransunionSaga", Storage="_Bi_FTransunionResponses", ThisKey="TransunionSagaSKey", OtherKey="TransunionSagaSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FTransunionResponseEntity> Bi_FTransunionResponses
 		{
 			get
 			{
-				return this._FTransunionResponses;
+				return this._Bi_FTransunionResponses;
 			}
 			set
 			{
-				this._FTransunionResponses.Assign(value);
+				this._Bi_FTransunionResponses.Assign(value);
 			}
 		}
 		
@@ -24250,21 +24250,21 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		private void attach_FTransunionResponses(FTransunionResponse entity)
+		private void attach_Bi_FTransunionResponses(FTransunionResponseEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.TransunionSaga = this;
+			entity.TransunionSagaEntity = this;
 		}
 		
-		private void detach_FTransunionResponses(FTransunionResponse entity)
+		private void detach_Bi_FTransunionResponses(FTransunionResponseEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.TransunionSaga = null;
+			entity.TransunionSagaEntity = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.User")]
-	public partial class User : DbEntity<User>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class UserEntity : DbEntity<UserEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -24291,7 +24291,7 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnCreatedByMessageArchiveIdChanged();
     #endregion
 		
-		public User()
+		public UserEntity()
 		{
 			OnCreated();
 		}
@@ -24398,7 +24398,7 @@ namespace Wonga.QA.Framework.Db.Bi
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.UserAction")]
-	public partial class UserAction : DbEntity<UserAction>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class UserActionEntity : DbEntity<UserActionEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -24415,7 +24415,7 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private long _UpdatedByMessageArchiveId;
 		
-		private EntitySet<FSubmitCounterOffer> _FSubmitCounterOffers;
+		private EntitySet<FSubmitCounterOfferEntity> _Bi_FSubmitCounterOffers;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -24435,9 +24435,9 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnUpdatedByMessageArchiveIdChanged();
     #endregion
 		
-		public UserAction()
+		public UserActionEntity()
 		{
-			this._FSubmitCounterOffers = new EntitySet<FSubmitCounterOffer>(new Action<FSubmitCounterOffer>(this.attach_FSubmitCounterOffers), new Action<FSubmitCounterOffer>(this.detach_FSubmitCounterOffers));
+			this._Bi_FSubmitCounterOffers = new EntitySet<FSubmitCounterOfferEntity>(new Action<FSubmitCounterOfferEntity>(this.attach_Bi_FSubmitCounterOffers), new Action<FSubmitCounterOfferEntity>(this.detach_Bi_FSubmitCounterOffers));
 			OnCreated();
 		}
 		
@@ -24561,16 +24561,16 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSubmitCounterOffer_REF_biUserAction", Storage="_FSubmitCounterOffers", ThisKey="UserActionSKey", OtherKey="UserActionSKey", DeleteRule="NO ACTION")]
-		public EntitySet<FSubmitCounterOffer> FSubmitCounterOffers
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_bifSubmitCounterOffer_REF_biUserAction", Storage="_Bi_FSubmitCounterOffers", ThisKey="UserActionSKey", OtherKey="UserActionSKey", DeleteRule="NO ACTION")]
+		public EntitySet<FSubmitCounterOfferEntity> Bi_FSubmitCounterOffers
 		{
 			get
 			{
-				return this._FSubmitCounterOffers;
+				return this._Bi_FSubmitCounterOffers;
 			}
 			set
 			{
-				this._FSubmitCounterOffers.Assign(value);
+				this._Bi_FSubmitCounterOffers.Assign(value);
 			}
 		}
 		
@@ -24594,26 +24594,26 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
-		private void attach_FSubmitCounterOffers(FSubmitCounterOffer entity)
+		private void attach_Bi_FSubmitCounterOffers(FSubmitCounterOfferEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.UserAction = this;
+			entity.UserActionEntity = this;
 		}
 		
-		private void detach_FSubmitCounterOffers(FSubmitCounterOffer entity)
+		private void detach_Bi_FSubmitCounterOffers(FSubmitCounterOfferEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.UserAction = null;
+			entity.UserActionEntity = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.WongaMessage")]
-	public partial class WongaMessage : DbEntity<WongaMessage>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class WongaMessageEntity : DbEntity<WongaMessageEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private string _WongaMessageColumn;
+		private string _WongaMessage;
 		
 		private bool _ProcessMessageEnabled;
 		
@@ -24621,33 +24621,33 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnWongaMessageColumnChanging(string value);
-    partial void OnWongaMessageColumnChanged();
+    partial void OnWongaMessageChanging(string value);
+    partial void OnWongaMessageChanged();
     partial void OnProcessMessageEnabledChanging(bool value);
     partial void OnProcessMessageEnabledChanged();
     #endregion
 		
-		public WongaMessage()
+		public WongaMessageEntity()
 		{
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WongaMessageColumn", DbType="NVarChar(218) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string WongaMessageColumn
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WongaMessage", DbType="NVarChar(218) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string WongaMessage
 		{
 			get
 			{
-				return this._WongaMessageColumn;
+				return this._WongaMessage;
 			}
 			set
 			{
-				if ((this._WongaMessageColumn != value))
+				if ((this._WongaMessage != value))
 				{
-					this.OnWongaMessageColumnChanging(value);
+					this.OnWongaMessageChanging(value);
 					this.SendPropertyChanging();
-					this._WongaMessageColumn = value;
-					this.SendPropertyChanged("WongaMessageColumn");
-					this.OnWongaMessageColumnChanged();
+					this._WongaMessage = value;
+					this.SendPropertyChanged("WongaMessage");
+					this.OnWongaMessageChanged();
 				}
 			}
 		}

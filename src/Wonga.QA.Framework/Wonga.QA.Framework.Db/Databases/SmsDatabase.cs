@@ -34,9 +34,9 @@ namespace Wonga.QA.Framework.Db.Sms
     partial void InsertMSSQLDeploy(MSSQLDeploy instance);
     partial void UpdateMSSQLDeploy(MSSQLDeploy instance);
     partial void DeleteMSSQLDeploy(MSSQLDeploy instance);
-    partial void InsertSmsMessage(SmsMessage instance);
-    partial void UpdateSmsMessage(SmsMessage instance);
-    partial void DeleteSmsMessage(SmsMessage instance);
+    partial void InsertSmsMessageEntity(SmsMessageEntity instance);
+    partial void UpdateSmsMessageEntity(SmsMessageEntity instance);
+    partial void DeleteSmsMessageEntity(SmsMessageEntity instance);
     #endregion
 		
 		public SmsDatabase(string connection) : 
@@ -71,11 +71,11 @@ namespace Wonga.QA.Framework.Db.Sms
 			}
 		}
 		
-		public System.Data.Linq.Table<SmsMessage> SmsMessages
+		public System.Data.Linq.Table<SmsMessageEntity> SmsMessages
 		{
 			get
 			{
-				return this.GetTable<SmsMessage>().SetTable<SmsMessage>();
+				return this.GetTable<SmsMessageEntity>().SetTable<SmsMessageEntity>();
 			}
 		}
 	}
@@ -239,7 +239,7 @@ namespace Wonga.QA.Framework.Db.Sms
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="sms.SmsMessages")]
-	public partial class SmsMessage : DbEntity<SmsMessage>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class SmsMessageEntity : DbEntity<SmsMessageEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -286,7 +286,7 @@ namespace Wonga.QA.Framework.Db.Sms
     partial void OnServiceMsgIdChanged();
     #endregion
 		
-		public SmsMessage()
+		public SmsMessageEntity()
 		{
 			OnCreated();
 		}

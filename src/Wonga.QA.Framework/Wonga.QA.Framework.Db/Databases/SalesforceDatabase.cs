@@ -34,9 +34,9 @@ namespace Wonga.QA.Framework.Db.Salesforce
     partial void InsertMSSQLDeploy(MSSQLDeploy instance);
     partial void UpdateMSSQLDeploy(MSSQLDeploy instance);
     partial void DeleteMSSQLDeploy(MSSQLDeploy instance);
-    partial void InsertSalesforceAccount(SalesforceAccount instance);
-    partial void UpdateSalesforceAccount(SalesforceAccount instance);
-    partial void DeleteSalesforceAccount(SalesforceAccount instance);
+    partial void InsertSalesforceAccountEntity(SalesforceAccountEntity instance);
+    partial void UpdateSalesforceAccountEntity(SalesforceAccountEntity instance);
+    partial void DeleteSalesforceAccountEntity(SalesforceAccountEntity instance);
     #endregion
 		
 		public SalesforceDatabase(string connection) : 
@@ -71,11 +71,11 @@ namespace Wonga.QA.Framework.Db.Salesforce
 			}
 		}
 		
-		public System.Data.Linq.Table<SalesforceAccount> SalesforceAccounts
+		public System.Data.Linq.Table<SalesforceAccountEntity> SalesforceAccounts
 		{
 			get
 			{
-				return this.GetTable<SalesforceAccount>().SetTable<SalesforceAccount>();
+				return this.GetTable<SalesforceAccountEntity>().SetTable<SalesforceAccountEntity>();
 			}
 		}
 	}
@@ -239,7 +239,7 @@ namespace Wonga.QA.Framework.Db.Salesforce
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="salesforce.SalesforceAccounts")]
-	public partial class SalesforceAccount : DbEntity<SalesforceAccount>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class SalesforceAccountEntity : DbEntity<SalesforceAccountEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -262,7 +262,7 @@ namespace Wonga.QA.Framework.Db.Salesforce
     partial void OnSalesforceIdChanged();
     #endregion
 		
-		public SalesforceAccount()
+		public SalesforceAccountEntity()
 		{
 			OnCreated();
 		}

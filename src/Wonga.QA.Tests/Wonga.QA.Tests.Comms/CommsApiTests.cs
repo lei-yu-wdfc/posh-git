@@ -17,20 +17,20 @@ namespace Wonga.QA.Tests.Comms
             ApiRequest command;
             switch (Config.AUT)
             {
-                case AUT.Uk:
+                /*case AUT.Uk:
                     command = SaveCustomerDetailsUkCommand.Random(r => r.AccountId = id);
-                    break;
+                    break;*/
                 case AUT.Za:
                     command = SaveCustomerDetailsZaCommand.Random(r =>
                     {
                         r.AccountId = id;
-                        r.NationalNumber = Data.GetNIN((DateTime)r.DateOfBirth, (GenderEnum)r.Gender);
+                        r.NationalNumber = Data.GetNIN((Date)r.DateOfBirth, (GenderEnum)r.Gender == GenderEnum.Female);
                         r.MaidenName = (GenderEnum)r.Gender == GenderEnum.Female ? r.MaidenName : null;
                     });
                     break;
-                case AUT.Ca:
+                /*case AUT.Ca:
                     command = SaveCustomerDetailsCaCommand.Random(r => r.AccountId = id);
-                    break;
+                    break;*/
                 default:
                     throw new NotImplementedException();
             }

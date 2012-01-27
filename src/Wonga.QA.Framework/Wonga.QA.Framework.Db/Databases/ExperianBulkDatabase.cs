@@ -31,27 +31,27 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertCustomer(Customer instance);
-    partial void UpdateCustomer(Customer instance);
-    partial void DeleteCustomer(Customer instance);
-    partial void InsertFactor(Factor instance);
-    partial void UpdateFactor(Factor instance);
-    partial void DeleteFactor(Factor instance);
+    partial void InsertCustomerEntity(CustomerEntity instance);
+    partial void UpdateCustomerEntity(CustomerEntity instance);
+    partial void DeleteCustomerEntity(CustomerEntity instance);
+    partial void InsertFactorEntity(FactorEntity instance);
+    partial void UpdateFactorEntity(FactorEntity instance);
+    partial void DeleteFactorEntity(FactorEntity instance);
     partial void InsertMSSQLDeploy(MSSQLDeploy instance);
     partial void UpdateMSSQLDeploy(MSSQLDeploy instance);
     partial void DeleteMSSQLDeploy(MSSQLDeploy instance);
-    partial void InsertOperation(Operation instance);
-    partial void UpdateOperation(Operation instance);
-    partial void DeleteOperation(Operation instance);
-    partial void InsertParsedData(ParsedData instance);
-    partial void UpdateParsedData(ParsedData instance);
-    partial void DeleteParsedData(ParsedData instance);
-    partial void InsertParsedDataTemp(ParsedDataTemp instance);
-    partial void UpdateParsedDataTemp(ParsedDataTemp instance);
-    partial void DeleteParsedDataTemp(ParsedDataTemp instance);
-    partial void InsertType(Type instance);
-    partial void UpdateType(Type instance);
-    partial void DeleteType(Type instance);
+    partial void InsertOperationEntity(OperationEntity instance);
+    partial void UpdateOperationEntity(OperationEntity instance);
+    partial void DeleteOperationEntity(OperationEntity instance);
+    partial void InsertParsedDataEntity(ParsedDataEntity instance);
+    partial void UpdateParsedDataEntity(ParsedDataEntity instance);
+    partial void DeleteParsedDataEntity(ParsedDataEntity instance);
+    partial void InsertParsedDataTempEntity(ParsedDataTempEntity instance);
+    partial void UpdateParsedDataTempEntity(ParsedDataTempEntity instance);
+    partial void DeleteParsedDataTempEntity(ParsedDataTempEntity instance);
+    partial void InsertTypeEntity(TypeEntity instance);
+    partial void UpdateTypeEntity(TypeEntity instance);
+    partial void DeleteTypeEntity(TypeEntity instance);
     #endregion
 		
 		public ExperianBulkDatabase(string connection) : 
@@ -78,19 +78,19 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<Customer> Customers
+		public System.Data.Linq.Table<CustomerEntity> Customers
 		{
 			get
 			{
-				return this.GetTable<Customer>().SetTable<Customer>();
+				return this.GetTable<CustomerEntity>().SetTable<CustomerEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<Factor> Factors
+		public System.Data.Linq.Table<FactorEntity> Factors
 		{
 			get
 			{
-				return this.GetTable<Factor>().SetTable<Factor>();
+				return this.GetTable<FactorEntity>().SetTable<FactorEntity>();
 			}
 		}
 		
@@ -102,41 +102,41 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
 			}
 		}
 		
-		public System.Data.Linq.Table<Operation> Operations
+		public System.Data.Linq.Table<OperationEntity> Operations
 		{
 			get
 			{
-				return this.GetTable<Operation>().SetTable<Operation>();
+				return this.GetTable<OperationEntity>().SetTable<OperationEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<ParsedData> ParsedDatas
+		public System.Data.Linq.Table<ParsedDataEntity> ParsedDatas
 		{
 			get
 			{
-				return this.GetTable<ParsedData>().SetTable<ParsedData>();
+				return this.GetTable<ParsedDataEntity>().SetTable<ParsedDataEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<ParsedDataTemp> ParsedDataTemps
+		public System.Data.Linq.Table<ParsedDataTempEntity> ParsedDataTemps
 		{
 			get
 			{
-				return this.GetTable<ParsedDataTemp>().SetTable<ParsedDataTemp>();
+				return this.GetTable<ParsedDataTempEntity>().SetTable<ParsedDataTempEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<Type> Types
+		public System.Data.Linq.Table<TypeEntity> Types
 		{
 			get
 			{
-				return this.GetTable<Type>().SetTable<Type>();
+				return this.GetTable<TypeEntity>().SetTable<TypeEntity>();
 			}
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="experian.Customers")]
-	public partial class Customer : DbEntity<Customer>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class CustomerEntity : DbEntity<CustomerEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -191,7 +191,7 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
     partial void OnCreatedDateChanged();
     #endregion
 		
-		public Customer()
+		public CustomerEntity()
 		{
 			OnCreated();
 		}
@@ -438,7 +438,7 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="experian.Factors")]
-	public partial class Factor : DbEntity<Factor>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FactorEntity : DbEntity<FactorEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -449,7 +449,7 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
 		
 		private int _TypeId;
 		
-		private EntitySet<ParsedData> _ParsedDatas;
+		private EntitySet<ParsedDataEntity> _Experian_ParsedDatas;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -463,9 +463,9 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
     partial void OnTypeIdChanged();
     #endregion
 		
-		public Factor()
+		public FactorEntity()
 		{
-			this._ParsedDatas = new EntitySet<ParsedData>(new Action<ParsedData>(this.attach_ParsedDatas), new Action<ParsedData>(this.detach_ParsedDatas));
+			this._Experian_ParsedDatas = new EntitySet<ParsedDataEntity>(new Action<ParsedDataEntity>(this.attach_Experian_ParsedDatas), new Action<ParsedDataEntity>(this.detach_Experian_ParsedDatas));
 			OnCreated();
 		}
 		
@@ -529,16 +529,16 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Experian_ParsedData_Factors_FactorId", Storage="_ParsedDatas", ThisKey="FactorId", OtherKey="FactorId", DeleteRule="NO ACTION")]
-		public EntitySet<ParsedData> ParsedDatas
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Experian_ParsedData_Factors_FactorId", Storage="_Experian_ParsedDatas", ThisKey="FactorId", OtherKey="FactorId", DeleteRule="NO ACTION")]
+		public EntitySet<ParsedDataEntity> Experian_ParsedDatas
 		{
 			get
 			{
-				return this._ParsedDatas;
+				return this._Experian_ParsedDatas;
 			}
 			set
 			{
-				this._ParsedDatas.Assign(value);
+				this._Experian_ParsedDatas.Assign(value);
 			}
 		}
 		
@@ -562,16 +562,16 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
 			}
 		}
 		
-		private void attach_ParsedDatas(ParsedData entity)
+		private void attach_Experian_ParsedDatas(ParsedDataEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Factor = this;
+			entity.FactorEntity = this;
 		}
 		
-		private void detach_ParsedDatas(ParsedData entity)
+		private void detach_Experian_ParsedDatas(ParsedDataEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Factor = null;
+			entity.FactorEntity = null;
 		}
 	}
 	
@@ -734,7 +734,7 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="experian.Operations")]
-	public partial class Operation : DbEntity<Operation>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class OperationEntity : DbEntity<OperationEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -765,7 +765,7 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
     partial void OnDescriptionChanged();
     #endregion
 		
-		public Operation()
+		public OperationEntity()
 		{
 			OnCreated();
 		}
@@ -892,7 +892,7 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="experian.ParsedData")]
-	public partial class ParsedData : DbEntity<ParsedData>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class ParsedDataEntity : DbEntity<ParsedDataEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -905,7 +905,7 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
 		
 		private System.Guid _AccountId;
 		
-		private EntityRef<Factor> _Factor;
+		private EntityRef<FactorEntity> _FactorEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -921,9 +921,9 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
     partial void OnAccountIdChanged();
     #endregion
 		
-		public ParsedData()
+		public ParsedDataEntity()
 		{
-			this._Factor = default(EntityRef<Factor>);
+			this._FactorEntity = default(EntityRef<FactorEntity>);
 			OnCreated();
 		}
 		
@@ -958,7 +958,7 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
 			{
 				if ((this._FactorId != value))
 				{
-					if (this._Factor.HasLoadedOrAssignedValue)
+					if (this._FactorEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -1011,36 +1011,36 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Experian_ParsedData_Factors_FactorId", Storage="_Factor", ThisKey="FactorId", OtherKey="FactorId", IsForeignKey=true)]
-		public Factor Factor
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Experian_ParsedData_Factors_FactorId", Storage="_FactorEntity", ThisKey="FactorId", OtherKey="FactorId", IsForeignKey=true)]
+		public FactorEntity FactorEntity
 		{
 			get
 			{
-				return this._Factor.Entity;
+				return this._FactorEntity.Entity;
 			}
 			set
 			{
-				Factor previousValue = this._Factor.Entity;
+				FactorEntity previousValue = this._FactorEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Factor.HasLoadedOrAssignedValue == false)))
+							|| (this._FactorEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Factor.Entity = null;
-						previousValue.ParsedDatas.Remove(this);
+						this._FactorEntity.Entity = null;
+						previousValue.Experian_ParsedDatas.Remove(this);
 					}
-					this._Factor.Entity = value;
+					this._FactorEntity.Entity = value;
 					if ((value != null))
 					{
-						value.ParsedDatas.Add(this);
+						value.Experian_ParsedDatas.Add(this);
 						this._FactorId = value.FactorId;
 					}
 					else
 					{
 						this._FactorId = default(int);
 					}
-					this.SendPropertyChanged("Factor");
+					this.SendPropertyChanged("FactorEntity");
 				}
 			}
 		}
@@ -1067,7 +1067,7 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="experian.ParsedDataTemp")]
-	public partial class ParsedDataTemp : DbEntity<ParsedDataTemp>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class ParsedDataTempEntity : DbEntity<ParsedDataTempEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -1094,7 +1094,7 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
     partial void OnCustomerIdChanged();
     #endregion
 		
-		public ParsedDataTemp()
+		public ParsedDataTempEntity()
 		{
 			OnCreated();
 		}
@@ -1201,7 +1201,7 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="experian.Types")]
-	public partial class Type : DbEntity<Type>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class TypeEntity : DbEntity<TypeEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -1220,7 +1220,7 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
     partial void OnNameChanged();
     #endregion
 		
-		public Type()
+		public TypeEntity()
 		{
 			OnCreated();
 		}

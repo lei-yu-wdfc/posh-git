@@ -31,33 +31,33 @@ namespace Wonga.QA.Framework.Db.Ops
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertAccount(Account instance);
-    partial void UpdateAccount(Account instance);
-    partial void DeleteAccount(Account instance);
-    partial void InsertApiClient(ApiClient instance);
-    partial void UpdateApiClient(ApiClient instance);
-    partial void DeleteApiClient(ApiClient instance);
-    partial void InsertBinarySaga(BinarySaga instance);
-    partial void UpdateBinarySaga(BinarySaga instance);
-    partial void DeleteBinarySaga(BinarySaga instance);
-    partial void InsertEndpoint(Endpoint instance);
-    partial void UpdateEndpoint(Endpoint instance);
-    partial void DeleteEndpoint(Endpoint instance);
-    partial void InsertEndpointSetting(EndpointSetting instance);
-    partial void UpdateEndpointSetting(EndpointSetting instance);
-    partial void DeleteEndpointSetting(EndpointSetting instance);
+    partial void InsertAccountEntity(AccountEntity instance);
+    partial void UpdateAccountEntity(AccountEntity instance);
+    partial void DeleteAccountEntity(AccountEntity instance);
+    partial void InsertApiClientEntity(ApiClientEntity instance);
+    partial void UpdateApiClientEntity(ApiClientEntity instance);
+    partial void DeleteApiClientEntity(ApiClientEntity instance);
+    partial void InsertBinarySagaEntity(BinarySagaEntity instance);
+    partial void UpdateBinarySagaEntity(BinarySagaEntity instance);
+    partial void DeleteBinarySagaEntity(BinarySagaEntity instance);
+    partial void InsertEndpointEntity(EndpointEntity instance);
+    partial void UpdateEndpointEntity(EndpointEntity instance);
+    partial void DeleteEndpointEntity(EndpointEntity instance);
+    partial void InsertEndpointSettingEntity(EndpointSettingEntity instance);
+    partial void UpdateEndpointSettingEntity(EndpointSettingEntity instance);
+    partial void DeleteEndpointSettingEntity(EndpointSettingEntity instance);
     partial void InsertMSSQLDeploy(MSSQLDeploy instance);
     partial void UpdateMSSQLDeploy(MSSQLDeploy instance);
     partial void DeleteMSSQLDeploy(MSSQLDeploy instance);
-    partial void InsertPasswordRecoveryDetail(PasswordRecoveryDetail instance);
-    partial void UpdatePasswordRecoveryDetail(PasswordRecoveryDetail instance);
-    partial void DeletePasswordRecoveryDetail(PasswordRecoveryDetail instance);
-    partial void InsertPwdResetKey(PwdResetKey instance);
-    partial void UpdatePwdResetKey(PwdResetKey instance);
-    partial void DeletePwdResetKey(PwdResetKey instance);
-    partial void InsertServiceConfiguration(ServiceConfiguration instance);
-    partial void UpdateServiceConfiguration(ServiceConfiguration instance);
-    partial void DeleteServiceConfiguration(ServiceConfiguration instance);
+    partial void InsertPasswordRecoveryDetailEntity(PasswordRecoveryDetailEntity instance);
+    partial void UpdatePasswordRecoveryDetailEntity(PasswordRecoveryDetailEntity instance);
+    partial void DeletePasswordRecoveryDetailEntity(PasswordRecoveryDetailEntity instance);
+    partial void InsertPwdResetKeyEntity(PwdResetKeyEntity instance);
+    partial void UpdatePwdResetKeyEntity(PwdResetKeyEntity instance);
+    partial void DeletePwdResetKeyEntity(PwdResetKeyEntity instance);
+    partial void InsertServiceConfigurationEntity(ServiceConfigurationEntity instance);
+    partial void UpdateServiceConfigurationEntity(ServiceConfigurationEntity instance);
+    partial void DeleteServiceConfigurationEntity(ServiceConfigurationEntity instance);
     #endregion
 		
 		public OpsDatabase(string connection) : 
@@ -84,43 +84,43 @@ namespace Wonga.QA.Framework.Db.Ops
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<Account> Accounts
+		public System.Data.Linq.Table<AccountEntity> Accounts
 		{
 			get
 			{
-				return this.GetTable<Account>().SetTable<Account>();
+				return this.GetTable<AccountEntity>().SetTable<AccountEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<ApiClient> ApiClients
+		public System.Data.Linq.Table<ApiClientEntity> ApiClients
 		{
 			get
 			{
-				return this.GetTable<ApiClient>().SetTable<ApiClient>();
+				return this.GetTable<ApiClientEntity>().SetTable<ApiClientEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<BinarySaga> BinarySagas
+		public System.Data.Linq.Table<BinarySagaEntity> BinarySagas
 		{
 			get
 			{
-				return this.GetTable<BinarySaga>().SetTable<BinarySaga>();
+				return this.GetTable<BinarySagaEntity>().SetTable<BinarySagaEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<Endpoint> Endpoints
+		public System.Data.Linq.Table<EndpointEntity> Endpoints
 		{
 			get
 			{
-				return this.GetTable<Endpoint>().SetTable<Endpoint>();
+				return this.GetTable<EndpointEntity>().SetTable<EndpointEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<EndpointSetting> EndpointSettings
+		public System.Data.Linq.Table<EndpointSettingEntity> EndpointSettings
 		{
 			get
 			{
-				return this.GetTable<EndpointSetting>().SetTable<EndpointSetting>();
+				return this.GetTable<EndpointSettingEntity>().SetTable<EndpointSettingEntity>();
 			}
 		}
 		
@@ -132,33 +132,33 @@ namespace Wonga.QA.Framework.Db.Ops
 			}
 		}
 		
-		public System.Data.Linq.Table<PasswordRecoveryDetail> PasswordRecoveryDetails
+		public System.Data.Linq.Table<PasswordRecoveryDetailEntity> PasswordRecoveryDetails
 		{
 			get
 			{
-				return this.GetTable<PasswordRecoveryDetail>().SetTable<PasswordRecoveryDetail>();
+				return this.GetTable<PasswordRecoveryDetailEntity>().SetTable<PasswordRecoveryDetailEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<PwdResetKey> PwdResetKeys
+		public System.Data.Linq.Table<PwdResetKeyEntity> PwdResetKeys
 		{
 			get
 			{
-				return this.GetTable<PwdResetKey>().SetTable<PwdResetKey>();
+				return this.GetTable<PwdResetKeyEntity>().SetTable<PwdResetKeyEntity>();
 			}
 		}
 		
-		public System.Data.Linq.Table<ServiceConfiguration> ServiceConfigurations
+		public System.Data.Linq.Table<ServiceConfigurationEntity> ServiceConfigurations
 		{
 			get
 			{
-				return this.GetTable<ServiceConfiguration>().SetTable<ServiceConfiguration>();
+				return this.GetTable<ServiceConfigurationEntity>().SetTable<ServiceConfigurationEntity>();
 			}
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="ops.Accounts")]
-	public partial class Account : DbEntity<Account>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class AccountEntity : DbEntity<AccountEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -193,7 +193,7 @@ namespace Wonga.QA.Framework.Db.Ops
     partial void OnSaltChanged();
     #endregion
 		
-		public Account()
+		public AccountEntity()
 		{
 			OnCreated();
 		}
@@ -340,7 +340,7 @@ namespace Wonga.QA.Framework.Db.Ops
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="ops.ApiClients")]
-	public partial class ApiClient : DbEntity<ApiClient>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class ApiClientEntity : DbEntity<ApiClientEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -375,7 +375,7 @@ namespace Wonga.QA.Framework.Db.Ops
     partial void OnCreatedOnChanged();
     #endregion
 		
-		public ApiClient()
+		public ApiClientEntity()
 		{
 			OnCreated();
 		}
@@ -522,7 +522,7 @@ namespace Wonga.QA.Framework.Db.Ops
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="ops.BinarySagas")]
-	public partial class BinarySaga : DbEntity<BinarySaga>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class BinarySagaEntity : DbEntity<BinarySagaEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -549,7 +549,7 @@ namespace Wonga.QA.Framework.Db.Ops
     partial void OnDataChanged();
     #endregion
 		
-		public BinarySaga()
+		public BinarySagaEntity()
 		{
 			OnCreated();
 		}
@@ -656,7 +656,7 @@ namespace Wonga.QA.Framework.Db.Ops
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="ops.Endpoints")]
-	public partial class Endpoint : DbEntity<Endpoint>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class EndpointEntity : DbEntity<EndpointEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -665,7 +665,7 @@ namespace Wonga.QA.Framework.Db.Ops
 		
 		private string _Name;
 		
-		private EntitySet<EndpointSetting> _EndpointSettings;
+		private EntitySet<EndpointSettingEntity> _Ops_EndpointSettings;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -677,9 +677,9 @@ namespace Wonga.QA.Framework.Db.Ops
     partial void OnNameChanged();
     #endregion
 		
-		public Endpoint()
+		public EndpointEntity()
 		{
-			this._EndpointSettings = new EntitySet<EndpointSetting>(new Action<EndpointSetting>(this.attach_EndpointSettings), new Action<EndpointSetting>(this.detach_EndpointSettings));
+			this._Ops_EndpointSettings = new EntitySet<EndpointSettingEntity>(new Action<EndpointSettingEntity>(this.attach_Ops_EndpointSettings), new Action<EndpointSettingEntity>(this.detach_Ops_EndpointSettings));
 			OnCreated();
 		}
 		
@@ -723,16 +723,16 @@ namespace Wonga.QA.Framework.Db.Ops
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_ops_EndpointSettings_EndpointId", Storage="_EndpointSettings", ThisKey="EndpointId", OtherKey="EndpointId", DeleteRule="NO ACTION")]
-		public EntitySet<EndpointSetting> EndpointSettings
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_ops_EndpointSettings_EndpointId", Storage="_Ops_EndpointSettings", ThisKey="EndpointId", OtherKey="EndpointId", DeleteRule="NO ACTION")]
+		public EntitySet<EndpointSettingEntity> Ops_EndpointSettings
 		{
 			get
 			{
-				return this._EndpointSettings;
+				return this._Ops_EndpointSettings;
 			}
 			set
 			{
-				this._EndpointSettings.Assign(value);
+				this._Ops_EndpointSettings.Assign(value);
 			}
 		}
 		
@@ -756,21 +756,21 @@ namespace Wonga.QA.Framework.Db.Ops
 			}
 		}
 		
-		private void attach_EndpointSettings(EndpointSetting entity)
+		private void attach_Ops_EndpointSettings(EndpointSettingEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Endpoint = this;
+			entity.EndpointEntity = this;
 		}
 		
-		private void detach_EndpointSettings(EndpointSetting entity)
+		private void detach_Ops_EndpointSettings(EndpointSettingEntity entity)
 		{
 			this.SendPropertyChanging();
-			entity.Endpoint = null;
+			entity.EndpointEntity = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="ops.EndpointSettings")]
-	public partial class EndpointSetting : DbEntity<EndpointSetting>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class EndpointSettingEntity : DbEntity<EndpointSettingEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -783,7 +783,7 @@ namespace Wonga.QA.Framework.Db.Ops
 		
 		private string _Value;
 		
-		private EntityRef<Endpoint> _Endpoint;
+		private EntityRef<EndpointEntity> _EndpointEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -799,9 +799,9 @@ namespace Wonga.QA.Framework.Db.Ops
     partial void OnValueChanged();
     #endregion
 		
-		public EndpointSetting()
+		public EndpointSettingEntity()
 		{
-			this._Endpoint = default(EntityRef<Endpoint>);
+			this._EndpointEntity = default(EntityRef<EndpointEntity>);
 			OnCreated();
 		}
 		
@@ -836,7 +836,7 @@ namespace Wonga.QA.Framework.Db.Ops
 			{
 				if ((this._EndpointId != value))
 				{
-					if (this._Endpoint.HasLoadedOrAssignedValue)
+					if (this._EndpointEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -889,36 +889,36 @@ namespace Wonga.QA.Framework.Db.Ops
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_ops_EndpointSettings_EndpointId", Storage="_Endpoint", ThisKey="EndpointId", OtherKey="EndpointId", IsForeignKey=true)]
-		public Endpoint Endpoint
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_ops_EndpointSettings_EndpointId", Storage="_EndpointEntity", ThisKey="EndpointId", OtherKey="EndpointId", IsForeignKey=true)]
+		public EndpointEntity EndpointEntity
 		{
 			get
 			{
-				return this._Endpoint.Entity;
+				return this._EndpointEntity.Entity;
 			}
 			set
 			{
-				Endpoint previousValue = this._Endpoint.Entity;
+				EndpointEntity previousValue = this._EndpointEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._Endpoint.HasLoadedOrAssignedValue == false)))
+							|| (this._EndpointEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Endpoint.Entity = null;
-						previousValue.EndpointSettings.Remove(this);
+						this._EndpointEntity.Entity = null;
+						previousValue.Ops_EndpointSettings.Remove(this);
 					}
-					this._Endpoint.Entity = value;
+					this._EndpointEntity.Entity = value;
 					if ((value != null))
 					{
-						value.EndpointSettings.Add(this);
+						value.Ops_EndpointSettings.Add(this);
 						this._EndpointId = value.EndpointId;
 					}
 					else
 					{
 						this._EndpointId = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("Endpoint");
+					this.SendPropertyChanged("EndpointEntity");
 				}
 			}
 		}
@@ -1103,7 +1103,7 @@ namespace Wonga.QA.Framework.Db.Ops
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="ops.PasswordRecoveryDetails")]
-	public partial class PasswordRecoveryDetail : DbEntity<PasswordRecoveryDetail>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class PasswordRecoveryDetailEntity : DbEntity<PasswordRecoveryDetailEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -1142,7 +1142,7 @@ namespace Wonga.QA.Framework.Db.Ops
     partial void OnCreatedOnChanged();
     #endregion
 		
-		public PasswordRecoveryDetail()
+		public PasswordRecoveryDetailEntity()
 		{
 			OnCreated();
 		}
@@ -1309,7 +1309,7 @@ namespace Wonga.QA.Framework.Db.Ops
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="ops.PwdResetKeys")]
-	public partial class PwdResetKey : DbEntity<PwdResetKey>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class PwdResetKeyEntity : DbEntity<PwdResetKeyEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -1348,7 +1348,7 @@ namespace Wonga.QA.Framework.Db.Ops
     partial void OnCreatedOnChanged();
     #endregion
 		
-		public PwdResetKey()
+		public PwdResetKeyEntity()
 		{
 			OnCreated();
 		}
@@ -1515,7 +1515,7 @@ namespace Wonga.QA.Framework.Db.Ops
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="ops.ServiceConfigurations")]
-	public partial class ServiceConfiguration : DbEntity<ServiceConfiguration>, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class ServiceConfigurationEntity : DbEntity<ServiceConfigurationEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -1538,7 +1538,7 @@ namespace Wonga.QA.Framework.Db.Ops
     partial void OnValueChanged();
     #endregion
 		
-		public ServiceConfiguration()
+		public ServiceConfigurationEntity()
 		{
 			OnCreated();
 		}
