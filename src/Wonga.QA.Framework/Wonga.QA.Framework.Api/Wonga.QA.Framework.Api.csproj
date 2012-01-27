@@ -45,10 +45,7 @@
     <Compile Include="Requests\AddBusinessPaymentCardWbUkCommand.cs" />
     <Compile Include="Requests\AddPaymentCardCommand.cs" />
     <Compile Include="Requests\AddPrimaryOrganisationDirectorCommand.cs" />
-<<<<<<< HEAD
     <Compile Include="Requests\AddSecondaryOrganisationDirectorCommand.cs" />
-=======
->>>>>>> e05c73680b6a2b155903d2865704e529c4192b03
     <Compile Include="Requests\CancelUserActionCommand.cs" />
     <Compile Include="Requests\ChangePasswordCommand.cs" />
     <Compile Include="Requests\CompleteEmailVerificationCommand.cs" />
@@ -171,7 +168,6 @@
     <Compile Include="Requests\VerifyMobilePhoneCaCommand.cs" />
     <Compile Include="Requests\VerifyMobilePhoneUkCommand.cs" />
     <Compile Include="Requests\VerifyMobilePhoneZaCommand.cs" />
-<<<<<<< HEAD
     <Compile Include="Enums\AdditionalPaymentCardDetailsEnum.cs" />
     <Compile Include="Enums\CountryCodeEnum.cs" />
     <Compile Include="Enums\CurrencyCodeEnum.cs" />
@@ -191,8 +187,6 @@
     <Compile Include="Enums\ProvinceEnum.cs" />
     <Compile Include="Enums\SliderPositionEnum.cs" />
     <Compile Include="Enums\TitleEnum.cs" />
-=======
->>>>>>> e05c73680b6a2b155903d2865704e529c4192b03
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

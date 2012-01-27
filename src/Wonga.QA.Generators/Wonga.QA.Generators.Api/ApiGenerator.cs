@@ -21,7 +21,6 @@ namespace Wonga.QA.Generators.Api
             if (args.FirstOrDefault() != null)
                 Config.Origin = args.First();
 
-<<<<<<< HEAD
             var bin = new
             {
                 Requests = Repo.Directory("Requests"),
@@ -33,11 +32,6 @@ namespace Wonga.QA.Generators.Api
 
             Dictionary<String, String[]> enums = new Dictionary<String, String[]>();
 
-=======
-            DirectoryInfo bin = Repo.Directory("Requests");
-            ILookup<String, Type> requests = Origin.GetTypes().Where(t => t.IsRequest()).ToLookup(t => t.GetName());
-
->>>>>>> e05c73680b6a2b155903d2865704e529c4192b03
             foreach (FileInfo file in Origin.GetSchemas())
             {
                 Console.WriteLine(file.Name);
@@ -48,11 +42,8 @@ namespace Wonga.QA.Generators.Api
                 set.Add(schema);
                 set.Compile();
 
-<<<<<<< HEAD
                 XmlSchemaElement[] elements = schema.Items.OfType<XmlSchemaElement>().ToArray();
-=======
-                XmlSchemaElement[] elements = schema.Elements.Values.Cast<XmlSchemaElement>().Where(e => e.SourceUri == schema.SourceUri).ToArray();
->>>>>>> e05c73680b6a2b155903d2865704e529c4192b03
+
                 elements.Where(e => e.SchemaType == null && e.SchemaTypeName == XmlQualifiedName.Empty).ForEach(e => e.SchemaType = new XmlSchemaComplexType());
                 
                 DirectoryInfo code3 = Repo.Directory(file.GetName(), bin.Code);
@@ -62,7 +53,6 @@ namespace Wonga.QA.Generators.Api
                     if (!requests.Contains(element.Name))
                         continue;
 
-<<<<<<< HEAD
                     CodeNamespace ns = new CodeNamespace();
                     XmlCodeExporter exporter = new XmlCodeExporter(ns);
                     XmlSchemaImporter importer = new XmlSchemaImporter(new XmlSchemas { schema });
@@ -78,12 +68,6 @@ namespace Wonga.QA.Generators.Api
                     results.Output.Cast<String>().ForEach(Console.WriteLine);
                     if (results.Errors.HasErrors)
                         throw new Exception(String.Join(Environment.NewLine, results.Errors.Cast<CompilerError>()));
-=======
-                CodeCompileUnit unit = new CodeCompileUnit();
-                unit.Namespaces.Add(ns);
-                unit.ReferencedAssemblies.AddRange(new[] { "System.dll", "System.Xml.dll" });
-                Dictionary<String, Type> types = new CSharpCodeProvider().CompileAssemblyFromDom(new CompilerParameters { GenerateInMemory = true }, unit).CompiledAssembly.GetTypes().ToDictionary(t => t.GetName());
->>>>>>> e05c73680b6a2b155903d2865704e529c4192b03
 
                     Dictionary<String, Type> types = results.CompiledAssembly.GetTypes().ToDictionary(t => t.GetName());
 
@@ -110,7 +94,6 @@ namespace Wonga.QA.Generators.Api
                         writer.Write(builder1);
 
                     Console.WriteLine("\t{0} \u2192 {1}", element.Name, code.Name);
-<<<<<<< HEAD
 
                     foreach (Type type in results.CompiledAssembly.GetTypes().Where(t => t.IsEnum))
                     {
@@ -149,12 +132,7 @@ namespace Wonga.QA.Generators.Api
 
             Repo.Inject(bin.Requests, Config.Api.Folder, Config.Api.Project);
             Repo.Inject(bin.Enums, "Enums", Config.Api.Project);
-=======
-                }
-            }
-
-            Repo.Inject(bin, Config.Api.Folder, Config.Api.Project);
->>>>>>> e05c73680b6a2b155903d2865704e529c4192b03
+			
         }
     }
 }
