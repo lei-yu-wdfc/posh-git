@@ -18,6 +18,9 @@ namespace Wonga.QA.Framework.Core
         public static MsmqConfig Msmq { get; set; }
         public static DbConfig Db { get; set; }
 
+        //NOTE:Temporary fix so that Selenium works on new Framework
+        public static String UiHome { get; set; }
+
         static Config()
         {
             SUT = GetValue<SUT>();
@@ -29,9 +32,11 @@ namespace Wonga.QA.Framework.Core
                     Api = new ApiConfig("localhost");
                     Msmq = new MsmqConfig(".");
                     Db = new DbConfig(".");
+                    UiHome = "localhost";
                     break;
                 case SUT.WIP:
                     Api = new ApiConfig(String.Format("wip.api.{0}.wonga.com", AUT));
+                    UiHome = String.Format("http://wip.{0}.wonga.com", AUT);
                     Msmq =
                         AUT == AUT.Uk ? new MsmqConfig("WIP2") :
                         AUT == AUT.Za ? new MsmqConfig("WIP4") :
@@ -45,6 +50,7 @@ namespace Wonga.QA.Framework.Core
                     break;
                 case SUT.UAT:
                     Api = new ApiConfig(String.Format("uat.api.{0}.wonga.com", AUT));
+                    UiHome = String.Format("http://uat.{0}.wonga.com", AUT);
                     Msmq =
                         AUT == AUT.Uk ? new MsmqConfig("UAT2") :
                         AUT == AUT.Za ? new MsmqConfig("UAT4") :
@@ -58,6 +64,7 @@ namespace Wonga.QA.Framework.Core
                     break;
                 case SUT.RC:
                     Api = new ApiConfig(String.Format("rc.api.{0}.wonga.com", AUT));
+                    UiHome = String.Format("http://rc.{0}.wonga.com", AUT);
                     Msmq =
                         AUT == AUT.Uk ? new MsmqConfig("RC2") :
                         AUT == AUT.Za ? new MsmqConfig("RC4") :

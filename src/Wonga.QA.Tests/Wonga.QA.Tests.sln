@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Comms", "Won
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Payments", "Wonga.QA.Tests.Payments\Wonga.QA.Tests.Payments.csproj", "{FD73C73F-E2AE-4610-9A64-C024144F0A51}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.UI", "Wonga.QA.Tests.UI\Wonga.QA.Tests.UI.csproj", "{B29A97EF-5107-476B-A27A-688028CAAF54}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{FD73C73F-E2AE-4610-9A64-C024144F0A51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD73C73F-E2AE-4610-9A64-C024144F0A51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD73C73F-E2AE-4610-9A64-C024144F0A51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B29A97EF-5107-476B-A27A-688028CAAF54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B29A97EF-5107-476B-A27A-688028CAAF54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B29A97EF-5107-476B-A27A-688028CAAF54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B29A97EF-5107-476B-A27A-688028CAAF54}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

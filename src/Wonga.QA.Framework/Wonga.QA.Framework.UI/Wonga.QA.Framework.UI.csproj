@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0F724DF3-0849-4BE7-A5B8-FA23C55E3042}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Wonga.QA.Framework.UI</RootNamespace>
+    <AssemblyName>Wonga.QA.Framework.UI</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\bin\Wonga.QA.Framework\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Gallio\bin\Gallio.dll</HintPath>
+    </Reference>
+    <Reference Include="MbUnit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Gallio\bin\MbUnit.dll</HintPath>
+    </Reference>
+    <Reference Include="NHamcrest, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31c3ea0b6fcf8c4a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Gallio\bin\NHamcrest.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WebDriver, Version=2.12.0.0, Culture=neutral, PublicKeyToken=1c2bd1631853048f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Selenium\WebDriver.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Elements\BaseElement.cs" />
+    <Compile Include="Elements\Sections\BaseSection.cs" />
+    <Compile Include="Elements\Sections\ContactingYouSection.cs" />
+    <Compile Include="Elements\Sections\MobilePinVerificationSection.cs" />
+    <Compile Include="Elements\Sections\YourDetailsSection.cs" />
+    <Compile Include="Elements\Sections\YourNameSection.cs" />
+    <Compile Include="Elements\SlidersElement.cs" />
+    <Compile Include="Pages\BasePage.cs" />
+    <Compile Include="Pages\HomePage.cs" />
+    <Compile Include="Pages\Interfaces\IApplyPage.cs" />
+    <Compile Include="Pages\Interfaces\IDecisionPage.cs" />
+    <Compile Include="Pages\ProcessingPage.cs" />
+    <Compile Include="Pages\Wb\AcceptedPage.cs" />
+    <Compile Include="Pages\Wb\AddAditionalDirectorsPage.cs" />
+    <Compile Include="Pages\Wb\AdditionalDirectorsPage.cs" />
+    <Compile Include="Pages\Wb\AddressDetailsPage.cs" />
+    <Compile Include="Pages\Wb\BankAccountDetailsPage.cs" />
+    <Compile Include="Pages\Wb\BusinessAccountDetailsPage.cs" />
+    <Compile Include="Pages\Wb\BusinessDetailsPage.cs" />
+    <Compile Include="Pages\Wb\DebitCardDetailsPage.cs" />
+    <Compile Include="Pages\Wb\EligibilityQuestionsPage.cs" />
+    <Compile Include="Pages\Wb\MainBusinessBankAccountPage.cs" />
+    <Compile Include="Pages\Wb\PersonalDetailsPage.cs" />
+    <Compile Include="Selenium.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UiClient.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Wonga.QA.Framework.Core\Wonga.QA.Framework.Core.csproj">
+      <Project>{BACA1D90-F604-476F-ACDE-A9839E85147F}</Project>
+      <Name>Wonga.QA.Framework.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

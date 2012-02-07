@@ -1,0 +1,30 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Gallio.Framework;
+using MbUnit.Framework;
+using Wonga.QA.Framework.UI;
+
+namespace Wonga.QA.Tests.UI
+{
+    public abstract class UiTest
+    {
+        public UiClient Client;
+
+        [SetUp]
+        public void SetUp()
+        {
+            Client = new UiClient();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            String name = TestContext.CurrentContext.Test.Name;
+            TestLog.EmbedImage(name + ".Screen", Client.Screen());
+            TestLog.AttachHtml(name + ".Source", Client.Source());
+            Client.Dispose();
+        }
+    }
+}
