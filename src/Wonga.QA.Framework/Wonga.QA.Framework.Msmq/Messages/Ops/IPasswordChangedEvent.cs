@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Ops
 {
     [XmlRoot("IPasswordChanged", Namespace = "Wonga.Ops.PublicMessages", DataType = "")]
-    public class IPasswordChangedEvent : MsmqMessage<IPasswordChangedEvent>
+    public partial class IPasswordChangedEvent : MsmqMessage<IPasswordChangedEvent>
     {
         public Guid AccountId { get; set; }
     }

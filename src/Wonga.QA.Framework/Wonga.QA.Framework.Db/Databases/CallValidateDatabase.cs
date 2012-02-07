@@ -24,7 +24,7 @@ namespace Wonga.QA.Framework.Db.CallValidate
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="CallValidate")]
-	public partial class CallValidateDatabase : System.Data.Linq.DataContext
+	public partial class CallValidateDatabase : DbDatabase<CallValidateDatabase>
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -67,7 +67,7 @@ namespace Wonga.QA.Framework.Db.CallValidate
 		{
 			get
 			{
-				return this.GetTable<CallValidateActiveRequestEntity>().SetTable<CallValidateActiveRequestEntity>();
+				return this.GetTable<CallValidateActiveRequestEntity>();
 			}
 		}
 		
@@ -75,7 +75,7 @@ namespace Wonga.QA.Framework.Db.CallValidate
 		{
 			get
 			{
-				return this.GetTable<MSSQLDeploy>().SetTable<MSSQLDeploy>();
+				return this.GetTable<MSSQLDeploy>();
 			}
 		}
 	}

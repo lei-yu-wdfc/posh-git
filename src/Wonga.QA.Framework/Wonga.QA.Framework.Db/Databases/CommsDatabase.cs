@@ -24,7 +24,7 @@ namespace Wonga.QA.Framework.Db.Comms
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="Comms")]
-	public partial class CommsDatabase : System.Data.Linq.DataContext
+	public partial class CommsDatabase : DbDatabase<CommsDatabase>
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -97,7 +97,7 @@ namespace Wonga.QA.Framework.Db.Comms
 		{
 			get
 			{
-				return this.GetTable<AddressEntity>().SetTable<AddressEntity>();
+				return this.GetTable<AddressEntity>();
 			}
 		}
 		
@@ -105,7 +105,7 @@ namespace Wonga.QA.Framework.Db.Comms
 		{
 			get
 			{
-				return this.GetTable<AddressesCaEntity>().SetTable<AddressesCaEntity>();
+				return this.GetTable<AddressesCaEntity>();
 			}
 		}
 		
@@ -113,7 +113,7 @@ namespace Wonga.QA.Framework.Db.Comms
 		{
 			get
 			{
-				return this.GetTable<ContactPreferenceEntity>().SetTable<ContactPreferenceEntity>();
+				return this.GetTable<ContactPreferenceEntity>();
 			}
 		}
 		
@@ -121,7 +121,7 @@ namespace Wonga.QA.Framework.Db.Comms
 		{
 			get
 			{
-				return this.GetTable<CustomerDetailEntity>().SetTable<CustomerDetailEntity>();
+				return this.GetTable<CustomerDetailEntity>();
 			}
 		}
 		
@@ -129,7 +129,7 @@ namespace Wonga.QA.Framework.Db.Comms
 		{
 			get
 			{
-				return this.GetTable<CustomerDetailsZaEntity>().SetTable<CustomerDetailsZaEntity>();
+				return this.GetTable<CustomerDetailsZaEntity>();
 			}
 		}
 		
@@ -137,7 +137,7 @@ namespace Wonga.QA.Framework.Db.Comms
 		{
 			get
 			{
-				return this.GetTable<CustomerLeadEntity>().SetTable<CustomerLeadEntity>();
+				return this.GetTable<CustomerLeadEntity>();
 			}
 		}
 		
@@ -145,7 +145,7 @@ namespace Wonga.QA.Framework.Db.Comms
 		{
 			get
 			{
-				return this.GetTable<ExtensionReminderPreferenceEntity>().SetTable<ExtensionReminderPreferenceEntity>();
+				return this.GetTable<ExtensionReminderPreferenceEntity>();
 			}
 		}
 		
@@ -153,7 +153,7 @@ namespace Wonga.QA.Framework.Db.Comms
 		{
 			get
 			{
-				return this.GetTable<LegalDocumentEntity>().SetTable<LegalDocumentEntity>();
+				return this.GetTable<LegalDocumentEntity>();
 			}
 		}
 		
@@ -161,7 +161,7 @@ namespace Wonga.QA.Framework.Db.Comms
 		{
 			get
 			{
-				return this.GetTable<MobilePhoneVerificationEntity>().SetTable<MobilePhoneVerificationEntity>();
+				return this.GetTable<MobilePhoneVerificationEntity>();
 			}
 		}
 		
@@ -169,7 +169,7 @@ namespace Wonga.QA.Framework.Db.Comms
 		{
 			get
 			{
-				return this.GetTable<MSSQLDeploy>().SetTable<MSSQLDeploy>();
+				return this.GetTable<MSSQLDeploy>();
 			}
 		}
 		
@@ -177,7 +177,7 @@ namespace Wonga.QA.Framework.Db.Comms
 		{
 			get
 			{
-				return this.GetTable<PhoneVerificationEntity>().SetTable<PhoneVerificationEntity>();
+				return this.GetTable<PhoneVerificationEntity>();
 			}
 		}
 		
@@ -185,7 +185,7 @@ namespace Wonga.QA.Framework.Db.Comms
 		{
 			get
 			{
-				return this.GetTable<VerificationPinEntity>().SetTable<VerificationPinEntity>();
+				return this.GetTable<VerificationPinEntity>();
 			}
 		}
 	}

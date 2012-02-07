@@ -24,7 +24,7 @@ namespace Wonga.QA.Framework.Db.ColdStorage
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="ColdStorage")]
-	public partial class ColdStorageDatabase : System.Data.Linq.DataContext
+	public partial class ColdStorageDatabase : DbDatabase<ColdStorageDatabase>
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -67,7 +67,7 @@ namespace Wonga.QA.Framework.Db.ColdStorage
 		{
 			get
 			{
-				return this.GetTable<MSSQLDeploy>().SetTable<MSSQLDeploy>();
+				return this.GetTable<MSSQLDeploy>();
 			}
 		}
 		
@@ -75,7 +75,7 @@ namespace Wonga.QA.Framework.Db.ColdStorage
 		{
 			get
 			{
-				return this.GetTable<PaymentCardEntity>().SetTable<PaymentCardEntity>();
+				return this.GetTable<PaymentCardEntity>();
 			}
 		}
 	}

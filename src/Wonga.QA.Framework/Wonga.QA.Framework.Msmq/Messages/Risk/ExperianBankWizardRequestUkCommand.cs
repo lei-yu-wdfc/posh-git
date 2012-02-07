@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Risk
 {
     [XmlRoot("ExperianBankWizardRequestMessage", Namespace = "Wonga.Risk.Experian", DataType = "Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
-    public class ExperianBankWizardRequestUkCommand : MsmqMessage<ExperianBankWizardRequestUkCommand>
+    public partial class ExperianBankWizardRequestUkCommand : MsmqMessage<ExperianBankWizardRequestUkCommand>
     {
         public Guid AccountId { get; set; }
         public Guid ApplicationId { get; set; }

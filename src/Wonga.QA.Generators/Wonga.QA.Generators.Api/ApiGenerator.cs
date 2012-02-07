@@ -81,7 +81,7 @@ namespace Wonga.QA.Generators.Api
 			            "namespace {0}",
 			            "{{",
 			            "    [XmlRoot({1})]",
-			            "    public class {2} : ApiRequest<{2}>",
+			            "    public partial class {2} : ApiRequest<{2}>",
 			            "    {{",
 		            }, Config.Api.Project, element.Name.Quote(), name1);
 

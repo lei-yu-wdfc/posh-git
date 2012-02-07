@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Payments
 {
     [XmlRoot("SetAccountPreference", Namespace = "Wonga.Payments", DataType = "")]
-    public class SetAccountPreferenceCommand : MsmqMessage<SetAccountPreferenceCommand>
+    public partial class SetAccountPreferenceCommand : MsmqMessage<SetAccountPreferenceCommand>
     {
         public Guid AccountId { get; set; }
         public Boolean RemindBeforeEndLoan { get; set; }

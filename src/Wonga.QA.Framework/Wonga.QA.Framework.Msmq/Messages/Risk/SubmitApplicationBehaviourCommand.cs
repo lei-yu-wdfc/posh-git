@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Risk
 {
     [XmlRoot("SubmitApplicationBehaviourMessage", Namespace = "Wonga.Risk", DataType = "")]
-    public class SubmitApplicationBehaviourCommand : MsmqMessage<SubmitApplicationBehaviourCommand>
+    public partial class SubmitApplicationBehaviourCommand : MsmqMessage<SubmitApplicationBehaviourCommand>
     {
         public Guid ApplicationId { get; set; }
         public String TermSliderPosition { get; set; }

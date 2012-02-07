@@ -376,7 +376,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<AccountVerificationsToBeMade>().SetTable<AccountVerificationsToBeMade>();
+				return this.GetTable<AccountVerificationsToBeMade>();
 			}
 		}
 		
@@ -384,7 +384,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<AddPaymentCardSagaEntity>().SetTable<AddPaymentCardSagaEntity>();
+				return this.GetTable<AddPaymentCardSagaEntity>();
 			}
 		}
 		
@@ -392,7 +392,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<ApplicationDeclinedSagaEntity>().SetTable<ApplicationDeclinedSagaEntity>();
+				return this.GetTable<ApplicationDeclinedSagaEntity>();
 			}
 		}
 		
@@ -400,7 +400,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<ApplicationReferredEmailSagaEntity>().SetTable<ApplicationReferredEmailSagaEntity>();
+				return this.GetTable<ApplicationReferredEmailSagaEntity>();
 			}
 		}
 		
@@ -408,7 +408,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<ApplicationSagaEntity>().SetTable<ApplicationSagaEntity>();
+				return this.GetTable<ApplicationSagaEntity>();
 			}
 		}
 		
@@ -416,7 +416,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<ApplicationTimeOutSagaEntity>().SetTable<ApplicationTimeOutSagaEntity>();
+				return this.GetTable<ApplicationTimeOutSagaEntity>();
 			}
 		}
 		
@@ -424,7 +424,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<BankAccountVerificationSagaEntity>().SetTable<BankAccountVerificationSagaEntity>();
+				return this.GetTable<BankAccountVerificationSagaEntity>();
 			}
 		}
 		
@@ -432,7 +432,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<BaseSagaEntityCardPayment>().SetTable<BaseSagaEntityCardPayment>();
+				return this.GetTable<BaseSagaEntityCardPayment>();
 			}
 		}
 		
@@ -440,7 +440,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<BatchCashInEntity>().SetTable<BatchCashInEntity>();
+				return this.GetTable<BatchCashInEntity>();
 			}
 		}
 		
@@ -448,7 +448,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<BusinessFixedInstallmentLoanInitialAdvanceSagaEntity>().SetTable<BusinessFixedInstallmentLoanInitialAdvanceSagaEntity>();
+				return this.GetTable<BusinessFixedInstallmentLoanInitialAdvanceSagaEntity>();
 			}
 		}
 		
@@ -456,7 +456,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<BusinessLoanInitialAdvanceTriggeringSagaEntity>().SetTable<BusinessLoanInitialAdvanceTriggeringSagaEntity>();
+				return this.GetTable<BusinessLoanInitialAdvanceTriggeringSagaEntity>();
 			}
 		}
 		
@@ -464,7 +464,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<CallReportSagaData>().SetTable<CallReportSagaData>();
+				return this.GetTable<CallReportSagaData>();
 			}
 		}
 		
@@ -472,7 +472,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<CallValidateSagaData>().SetTable<CallValidateSagaData>();
+				return this.GetTable<CallValidateSagaData>();
 			}
 		}
 		
@@ -480,7 +480,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<CashInPaymentRequestsToBeMade>().SetTable<CashInPaymentRequestsToBeMade>();
+				return this.GetTable<CashInPaymentRequestsToBeMade>();
 			}
 		}
 		
@@ -488,7 +488,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<CashInPaymentsToBeMade>().SetTable<CashInPaymentsToBeMade>();
+				return this.GetTable<CashInPaymentsToBeMade>();
 			}
 		}
 		
@@ -496,7 +496,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<CashOutInstructionSentSagaEntity>().SetTable<CashOutInstructionSentSagaEntity>();
+				return this.GetTable<CashOutInstructionSentSagaEntity>();
 			}
 		}
 		
@@ -504,7 +504,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<CloseApplicationSagaEntity>().SetTable<CloseApplicationSagaEntity>();
+				return this.GetTable<CloseApplicationSagaEntity>();
 			}
 		}
 		
@@ -512,7 +512,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<CollectionsChaseSagaEntity>().SetTable<CollectionsChaseSagaEntity>();
+				return this.GetTable<CollectionsChaseSagaEntity>();
 			}
 		}
 		
@@ -520,7 +520,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<CreateCustomerSagaData>().SetTable<CreateCustomerSagaData>();
+				return this.GetTable<CreateCustomerSagaData>();
 			}
 		}
 		
@@ -528,7 +528,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<CreateDirectDebitFormSagaEntity>().SetTable<CreateDirectDebitFormSagaEntity>();
+				return this.GetTable<CreateDirectDebitFormSagaEntity>();
 			}
 		}
 		
@@ -536,7 +536,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<CreateExtendedRepaymentArrangementSagaEntity>().SetTable<CreateExtendedRepaymentArrangementSagaEntity>();
+				return this.GetTable<CreateExtendedRepaymentArrangementSagaEntity>();
 			}
 		}
 		
@@ -544,7 +544,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<CreateExtendSecciSagaEntity>().SetTable<CreateExtendSecciSagaEntity>();
+				return this.GetTable<CreateExtendSecciSagaEntity>();
 			}
 		}
 		
@@ -552,7 +552,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<CreateFixedTermLoanExtensionSagaEntity>().SetTable<CreateFixedTermLoanExtensionSagaEntity>();
+				return this.GetTable<CreateFixedTermLoanExtensionSagaEntity>();
 			}
 		}
 		
@@ -560,7 +560,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<CreateLoanAgreementSagaEntity>().SetTable<CreateLoanAgreementSagaEntity>();
+				return this.GetTable<CreateLoanAgreementSagaEntity>();
 			}
 		}
 		
@@ -568,7 +568,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<CreatePaymentPlanBankServiceAvailibility>().SetTable<CreatePaymentPlanBankServiceAvailibility>();
+				return this.GetTable<CreatePaymentPlanBankServiceAvailibility>();
 			}
 		}
 		
@@ -576,7 +576,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<CreatePaymentPlanSagaEntity>().SetTable<CreatePaymentPlanSagaEntity>();
+				return this.GetTable<CreatePaymentPlanSagaEntity>();
 			}
 		}
 		
@@ -584,7 +584,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<CreatePreAgreementDocumentSagaEntity>().SetTable<CreatePreAgreementDocumentSagaEntity>();
+				return this.GetTable<CreatePreAgreementDocumentSagaEntity>();
 			}
 		}
 		
@@ -592,7 +592,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<CreateRepaymentArrangementSagaEntity>().SetTable<CreateRepaymentArrangementSagaEntity>();
+				return this.GetTable<CreateRepaymentArrangementSagaEntity>();
 			}
 		}
 		
@@ -600,7 +600,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<CreateTopUpSecciSagaEntity>().SetTable<CreateTopUpSecciSagaEntity>();
+				return this.GetTable<CreateTopUpSecciSagaEntity>();
 			}
 		}
 		
@@ -608,7 +608,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<EmailExtensionAgreementEntity>().SetTable<EmailExtensionAgreementEntity>();
+				return this.GetTable<EmailExtensionAgreementEntity>();
 			}
 		}
 		
@@ -616,7 +616,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<EmailLoanAgreementEntity>().SetTable<EmailLoanAgreementEntity>();
+				return this.GetTable<EmailLoanAgreementEntity>();
 			}
 		}
 		
@@ -624,7 +624,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<EmailLoanAgreementZaEntity>().SetTable<EmailLoanAgreementZaEntity>();
+				return this.GetTable<EmailLoanAgreementZaEntity>();
 			}
 		}
 		
@@ -632,7 +632,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<EmailNotificationBeforeEndLoanSagaEntity>().SetTable<EmailNotificationBeforeEndLoanSagaEntity>();
+				return this.GetTable<EmailNotificationBeforeEndLoanSagaEntity>();
 			}
 		}
 		
@@ -640,7 +640,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<EmailTopUpAgreementEntity>().SetTable<EmailTopUpAgreementEntity>();
+				return this.GetTable<EmailTopUpAgreementEntity>();
 			}
 		}
 		
@@ -648,7 +648,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<ExperianBulkSagaData>().SetTable<ExperianBulkSagaData>();
+				return this.GetTable<ExperianBulkSagaData>();
 			}
 		}
 		
@@ -656,7 +656,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<ExperianSagaBankData>().SetTable<ExperianSagaBankData>();
+				return this.GetTable<ExperianSagaBankData>();
 			}
 		}
 		
@@ -664,7 +664,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<ExperianSagaBureauData>().SetTable<ExperianSagaBureauData>();
+				return this.GetTable<ExperianSagaBureauData>();
 			}
 		}
 		
@@ -672,7 +672,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<ExperianSagaCardData>().SetTable<ExperianSagaCardData>();
+				return this.GetTable<ExperianSagaCardData>();
 			}
 		}
 		
@@ -680,7 +680,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<ExtendLoanSagaEntity>().SetTable<ExtendLoanSagaEntity>();
+				return this.GetTable<ExtendLoanSagaEntity>();
 			}
 		}
 		
@@ -688,7 +688,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<ExtendSecciSagaEntity>().SetTable<ExtendSecciSagaEntity>();
+				return this.GetTable<ExtendSecciSagaEntity>();
 			}
 		}
 		
@@ -696,7 +696,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<ExtensionReminderPreferenceSagaEntity>().SetTable<ExtensionReminderPreferenceSagaEntity>();
+				return this.GetTable<ExtensionReminderPreferenceSagaEntity>();
 			}
 		}
 		
@@ -704,7 +704,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<ExtentionWindowOpenSagaEntity>().SetTable<ExtentionWindowOpenSagaEntity>();
+				return this.GetTable<ExtentionWindowOpenSagaEntity>();
 			}
 		}
 		
@@ -712,7 +712,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<FirstPingFailedSagaEntity>().SetTable<FirstPingFailedSagaEntity>();
+				return this.GetTable<FirstPingFailedSagaEntity>();
 			}
 		}
 		
@@ -720,7 +720,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<FixedTermAgreementSagaEntity>().SetTable<FixedTermAgreementSagaEntity>();
+				return this.GetTable<FixedTermAgreementSagaEntity>();
 			}
 		}
 		
@@ -728,7 +728,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<FixedTermExtensionAgreementSagaEntity>().SetTable<FixedTermExtensionAgreementSagaEntity>();
+				return this.GetTable<FixedTermExtensionAgreementSagaEntity>();
 			}
 		}
 		
@@ -736,7 +736,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<FixedTermLoanInitialAdvanceSagaEntity>().SetTable<FixedTermLoanInitialAdvanceSagaEntity>();
+				return this.GetTable<FixedTermLoanInitialAdvanceSagaEntity>();
 			}
 		}
 		
@@ -744,7 +744,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<FixedTermLoanSagaEntity>().SetTable<FixedTermLoanSagaEntity>();
+				return this.GetTable<FixedTermLoanSagaEntity>();
 			}
 		}
 		
@@ -752,7 +752,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<FixedTermLoanTopupAdvanceSagaEntity>().SetTable<FixedTermLoanTopupAdvanceSagaEntity>();
+				return this.GetTable<FixedTermLoanTopupAdvanceSagaEntity>();
 			}
 		}
 		
@@ -760,7 +760,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<FixedTermTopUpAgreementSagaEntity>().SetTable<FixedTermTopUpAgreementSagaEntity>();
+				return this.GetTable<FixedTermTopUpAgreementSagaEntity>();
 			}
 		}
 		
@@ -768,7 +768,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<FundsTransferredSagaEntity>().SetTable<FundsTransferredSagaEntity>();
+				return this.GetTable<FundsTransferredSagaEntity>();
 			}
 		}
 		
@@ -776,7 +776,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<HyphenAccountVerificationSagaEntity>().SetTable<HyphenAccountVerificationSagaEntity>();
+				return this.GetTable<HyphenAccountVerificationSagaEntity>();
 			}
 		}
 		
@@ -784,7 +784,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<HyphenBatchCashInEntity>().SetTable<HyphenBatchCashInEntity>();
+				return this.GetTable<HyphenBatchCashInEntity>();
 			}
 		}
 		
@@ -792,7 +792,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<HyphenBatchCashOutEntity>().SetTable<HyphenBatchCashOutEntity>();
+				return this.GetTable<HyphenBatchCashOutEntity>();
 			}
 		}
 		
@@ -800,7 +800,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<HyphenBatchPaymentsEntity>().SetTable<HyphenBatchPaymentsEntity>();
+				return this.GetTable<HyphenBatchPaymentsEntity>();
 			}
 		}
 		
@@ -808,7 +808,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<HyphenCashInEntity>().SetTable<HyphenCashInEntity>();
+				return this.GetTable<HyphenCashInEntity>();
 			}
 		}
 		
@@ -816,7 +816,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<HyphenPaymentEntity>().SetTable<HyphenPaymentEntity>();
+				return this.GetTable<HyphenPaymentEntity>();
 			}
 		}
 		
@@ -824,7 +824,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<HyphenServiceHeartbeatEntity>().SetTable<HyphenServiceHeartbeatEntity>();
+				return this.GetTable<HyphenServiceHeartbeatEntity>();
 			}
 		}
 		
@@ -832,7 +832,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<InitialAdvanceTriggeringSagaEntity>().SetTable<InitialAdvanceTriggeringSagaEntity>();
+				return this.GetTable<InitialAdvanceTriggeringSagaEntity>();
 			}
 		}
 		
@@ -840,7 +840,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<IovationSagaEntity>().SetTable<IovationSagaEntity>();
+				return this.GetTable<IovationSagaEntity>();
 			}
 		}
 		
@@ -848,7 +848,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<MSSQLDeploy>().SetTable<MSSQLDeploy>();
+				return this.GetTable<MSSQLDeploy>();
 			}
 		}
 		
@@ -856,7 +856,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<NewEmailSagaEntity>().SetTable<NewEmailSagaEntity>();
+				return this.GetTable<NewEmailSagaEntity>();
 			}
 		}
 		
@@ -864,7 +864,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<PasswordResetSagaEntity>().SetTable<PasswordResetSagaEntity>();
+				return this.GetTable<PasswordResetSagaEntity>();
 			}
 		}
 		
@@ -872,7 +872,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<PaymentsInArrearsSagaEntity>().SetTable<PaymentsInArrearsSagaEntity>();
+				return this.GetTable<PaymentsInArrearsSagaEntity>();
 			}
 		}
 		
@@ -880,7 +880,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<PaymentsRequestsToBeMade>().SetTable<PaymentsRequestsToBeMade>();
+				return this.GetTable<PaymentsRequestsToBeMade>();
 			}
 		}
 		
@@ -888,7 +888,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<PaymentsToBeMade>().SetTable<PaymentsToBeMade>();
+				return this.GetTable<PaymentsToBeMade>();
 			}
 		}
 		
@@ -896,7 +896,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<PendingScheduledPaymentSagaEntity>().SetTable<PendingScheduledPaymentSagaEntity>();
+				return this.GetTable<PendingScheduledPaymentSagaEntity>();
 			}
 		}
 		
@@ -904,7 +904,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<PreApprovedDeclineSagaEntity>().SetTable<PreApprovedDeclineSagaEntity>();
+				return this.GetTable<PreApprovedDeclineSagaEntity>();
 			}
 		}
 		
@@ -912,7 +912,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<PrimaryCardChangedSagaEntity>().SetTable<PrimaryCardChangedSagaEntity>();
+				return this.GetTable<PrimaryCardChangedSagaEntity>();
 			}
 		}
 		
@@ -920,7 +920,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<RecordActivitySagaEntity>().SetTable<RecordActivitySagaEntity>();
+				return this.GetTable<RecordActivitySagaEntity>();
 			}
 		}
 		
@@ -928,7 +928,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<RepayLoanSagaEntity>().SetTable<RepayLoanSagaEntity>();
+				return this.GetTable<RepayLoanSagaEntity>();
 			}
 		}
 		
@@ -936,7 +936,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<RepaymentArrangementCancelledSagaEntity>().SetTable<RepaymentArrangementCancelledSagaEntity>();
+				return this.GetTable<RepaymentArrangementCancelledSagaEntity>();
 			}
 		}
 		
@@ -944,7 +944,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<RepaymentArrangementClosedSagaEntity>().SetTable<RepaymentArrangementClosedSagaEntity>();
+				return this.GetTable<RepaymentArrangementClosedSagaEntity>();
 			}
 		}
 		
@@ -952,7 +952,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<RepaymentArrangementCreatedSagaEntity>().SetTable<RepaymentArrangementCreatedSagaEntity>();
+				return this.GetTable<RepaymentArrangementCreatedSagaEntity>();
 			}
 		}
 		
@@ -960,7 +960,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<RepaymentArrangementPartiallyRepaidSagaEntity>().SetTable<RepaymentArrangementPartiallyRepaidSagaEntity>();
+				return this.GetTable<RepaymentArrangementPartiallyRepaidSagaEntity>();
 			}
 		}
 		
@@ -968,7 +968,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<RepaymentArrangementPaymentMissedSagaEntity>().SetTable<RepaymentArrangementPaymentMissedSagaEntity>();
+				return this.GetTable<RepaymentArrangementPaymentMissedSagaEntity>();
 			}
 		}
 		
@@ -976,7 +976,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<RepaymentSagaEntity>().SetTable<RepaymentSagaEntity>();
+				return this.GetTable<RepaymentSagaEntity>();
 			}
 		}
 		
@@ -984,7 +984,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<RepaymentSmsSagaEntity>().SetTable<RepaymentSmsSagaEntity>();
+				return this.GetTable<RepaymentSmsSagaEntity>();
 			}
 		}
 		
@@ -992,7 +992,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<RiskApplicationSagaEntity>().SetTable<RiskApplicationSagaEntity>();
+				return this.GetTable<RiskApplicationSagaEntity>();
 			}
 		}
 		
@@ -1000,7 +1000,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<SaveAddressSagaEntity>().SetTable<SaveAddressSagaEntity>();
+				return this.GetTable<SaveAddressSagaEntity>();
 			}
 		}
 		
@@ -1008,7 +1008,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<SaveCaAddressSagaEntity>().SetTable<SaveCaAddressSagaEntity>();
+				return this.GetTable<SaveCaAddressSagaEntity>();
 			}
 		}
 		
@@ -1016,7 +1016,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<SaveContactPreferencesSagaEntity>().SetTable<SaveContactPreferencesSagaEntity>();
+				return this.GetTable<SaveContactPreferencesSagaEntity>();
 			}
 		}
 		
@@ -1024,7 +1024,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<SaveCustomerDetailsSagaEntity>().SetTable<SaveCustomerDetailsSagaEntity>();
+				return this.GetTable<SaveCustomerDetailsSagaEntity>();
 			}
 		}
 		
@@ -1032,7 +1032,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<SaveEmploymentDetailsSagaEntity>().SetTable<SaveEmploymentDetailsSagaEntity>();
+				return this.GetTable<SaveEmploymentDetailsSagaEntity>();
 			}
 		}
 		
@@ -1040,7 +1040,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<ScheduledPaymentSagaEntity>().SetTable<ScheduledPaymentSagaEntity>();
+				return this.GetTable<ScheduledPaymentSagaEntity>();
 			}
 		}
 		
@@ -1048,7 +1048,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<ScheduledPostAccruedInterestSagaEntity>().SetTable<ScheduledPostAccruedInterestSagaEntity>();
+				return this.GetTable<ScheduledPostAccruedInterestSagaEntity>();
 			}
 		}
 		
@@ -1056,7 +1056,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<ScheduledRepaymentSagaEntity>().SetTable<ScheduledRepaymentSagaEntity>();
+				return this.GetTable<ScheduledRepaymentSagaEntity>();
 			}
 		}
 		
@@ -1064,7 +1064,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<ScheduledSagaData>().SetTable<ScheduledSagaData>();
+				return this.GetTable<ScheduledSagaData>();
 			}
 		}
 		
@@ -1072,7 +1072,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<SecciSagaEntity>().SetTable<SecciSagaEntity>();
+				return this.GetTable<SecciSagaEntity>();
 			}
 		}
 		
@@ -1080,7 +1080,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<SendPaymentSagaEntity>().SetTable<SendPaymentSagaEntity>();
+				return this.GetTable<SendPaymentSagaEntity>();
 			}
 		}
 		
@@ -1088,7 +1088,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<SendPaymentsBankServiceAvailibility>().SetTable<SendPaymentsBankServiceAvailibility>();
+				return this.GetTable<SendPaymentsBankServiceAvailibility>();
 			}
 		}
 		
@@ -1096,7 +1096,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<SendSmsSagaEntity>().SetTable<SendSmsSagaEntity>();
+				return this.GetTable<SendSmsSagaEntity>();
 			}
 		}
 		
@@ -1104,7 +1104,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<SmsPinSagaEntity>().SetTable<SmsPinSagaEntity>();
+				return this.GetTable<SmsPinSagaEntity>();
 			}
 		}
 		
@@ -1112,7 +1112,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<TakeBankPaymentInternalSagaEntity>().SetTable<TakeBankPaymentInternalSagaEntity>();
+				return this.GetTable<TakeBankPaymentInternalSagaEntity>();
 			}
 		}
 		
@@ -1120,7 +1120,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<TakeBankPaymentSagaEntity>().SetTable<TakeBankPaymentSagaEntity>();
+				return this.GetTable<TakeBankPaymentSagaEntity>();
 			}
 		}
 		
@@ -1128,7 +1128,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<TakePaymentBankServiceAvailibility>().SetTable<TakePaymentBankServiceAvailibility>();
+				return this.GetTable<TakePaymentBankServiceAvailibility>();
 			}
 		}
 		
@@ -1136,7 +1136,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<TopUpSecciSagaEntity>().SetTable<TopUpSecciSagaEntity>();
+				return this.GetTable<TopUpSecciSagaEntity>();
 			}
 		}
 		
@@ -1144,7 +1144,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<TransunionLoanClosureSagaState>().SetTable<TransunionLoanClosureSagaState>();
+				return this.GetTable<TransunionLoanClosureSagaState>();
 			}
 		}
 		
@@ -1152,7 +1152,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<TransunionLoanRegistrationSagaState>().SetTable<TransunionLoanRegistrationSagaState>();
+				return this.GetTable<TransunionLoanRegistrationSagaState>();
 			}
 		}
 		
@@ -1160,7 +1160,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<TransunionSagaState>().SetTable<TransunionSagaState>();
+				return this.GetTable<TransunionSagaState>();
 			}
 		}
 		
@@ -1168,7 +1168,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<UpdateCaHomePhoneSagaEntity>().SetTable<UpdateCaHomePhoneSagaEntity>();
+				return this.GetTable<UpdateCaHomePhoneSagaEntity>();
 			}
 		}
 		
@@ -1176,7 +1176,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<UpdateFraudStatusSagaEntity>().SetTable<UpdateFraudStatusSagaEntity>();
+				return this.GetTable<UpdateFraudStatusSagaEntity>();
 			}
 		}
 		
@@ -1184,7 +1184,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<UpdateHomePhoneSagaEntity>().SetTable<UpdateHomePhoneSagaEntity>();
+				return this.GetTable<UpdateHomePhoneSagaEntity>();
 			}
 		}
 		
@@ -1192,7 +1192,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<UpdateMobilePhoneSagaEntity>().SetTable<UpdateMobilePhoneSagaEntity>();
+				return this.GetTable<UpdateMobilePhoneSagaEntity>();
 			}
 		}
 		
@@ -1200,7 +1200,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<UserActionSagaEntity>().SetTable<UserActionSagaEntity>();
+				return this.GetTable<UserActionSagaEntity>();
 			}
 		}
 		
@@ -1208,7 +1208,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<ValidateCardRequestHandlerSagaEntity>().SetTable<ValidateCardRequestHandlerSagaEntity>();
+				return this.GetTable<ValidateCardRequestHandlerSagaEntity>();
 			}
 		}
 		
@@ -1216,7 +1216,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<VerifyHomePhoneSagaEntity>().SetTable<VerifyHomePhoneSagaEntity>();
+				return this.GetTable<VerifyHomePhoneSagaEntity>();
 			}
 		}
 		
@@ -1224,7 +1224,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<VerifyMobilePhoneSagaEntity>().SetTable<VerifyMobilePhoneSagaEntity>();
+				return this.GetTable<VerifyMobilePhoneSagaEntity>();
 			}
 		}
 		
@@ -1232,7 +1232,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<WorkflowPrepareState>().SetTable<WorkflowPrepareState>();
+				return this.GetTable<WorkflowPrepareState>();
 			}
 		}
 		
@@ -1240,7 +1240,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<WorkflowPrepareStateBusiness>().SetTable<WorkflowPrepareStateBusiness>();
+				return this.GetTable<WorkflowPrepareStateBusiness>();
 			}
 		}
 		
@@ -1248,7 +1248,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		{
 			get
 			{
-				return this.GetTable<WorkflowState>().SetTable<WorkflowState>();
+				return this.GetTable<WorkflowState>();
 			}
 		}
 	}

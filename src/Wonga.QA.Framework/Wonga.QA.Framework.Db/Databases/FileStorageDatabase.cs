@@ -24,7 +24,7 @@ namespace Wonga.QA.Framework.Db.FileStorage
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="FileStorage")]
-	public partial class FileStorageDatabase : System.Data.Linq.DataContext
+	public partial class FileStorageDatabase : DbDatabase<FileStorageDatabase>
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -67,7 +67,7 @@ namespace Wonga.QA.Framework.Db.FileStorage
 		{
 			get
 			{
-				return this.GetTable<FileEntity>().SetTable<FileEntity>();
+				return this.GetTable<FileEntity>();
 			}
 		}
 		
@@ -75,7 +75,7 @@ namespace Wonga.QA.Framework.Db.FileStorage
 		{
 			get
 			{
-				return this.GetTable<MSSQLDeploy>().SetTable<MSSQLDeploy>();
+				return this.GetTable<MSSQLDeploy>();
 			}
 		}
 	}

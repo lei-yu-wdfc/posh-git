@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Api
 {
     [XmlRoot("GetCustomerSubRegion")]
-    public class GetCustomerSubRegionCaQuery : ApiRequest<GetCustomerSubRegionCaQuery>
+    public partial class GetCustomerSubRegionCaQuery : ApiRequest<GetCustomerSubRegionCaQuery>
     {
         public Object AccountId { get; set; }
     }

@@ -11,7 +11,7 @@ namespace Wonga.QA.Framework.Core
     public static class Data
     {
         private static String _alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        private static Random _random = new Random((Int32)DateTime.Now.Ticks);
+        private static Random _random = new Random(Guid.NewGuid().GetHashCode());
 
         public static Guid GetId()
         {
@@ -26,6 +26,7 @@ namespace Wonga.QA.Framework.Core
 
         public static String GetEmail()
         {
+
             return String.Format("qa.wonga.com+{0}@wonga.com", DateTime.Now.Ticks);
         }
 
@@ -155,14 +156,12 @@ namespace Wonga.QA.Framework.Core
                 Date date = (Date)value;
                 switch (date.DateFormat)
                 {
-                    case DateFormat.Date:
-                        return XmlConvert.ToString(date.DateTime, "yyyy-MM-dd");
                     case DateFormat.DateTime:
                         return ToString(date.DateTime);
+                    case DateFormat.Date:
+                        return XmlConvert.ToString(date.DateTime, "yyyy-MM-dd");
                     case DateFormat.YearMonth:
                         return XmlConvert.ToString(date.DateTime, "yyyy-MM");
-                    default:
-                        throw new NotImplementedException();
                 }
             }
 

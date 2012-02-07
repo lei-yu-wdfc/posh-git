@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Comms
 {
     [XmlRoot("SaveCustomerAddressToSalesforceMessage", Namespace = "Wonga.Comms.InternalMessages.Salesforce.Ca", DataType = "")]
-    public class SaveCustomerAddressToSalesforceCaCommand : MsmqMessage<SaveCustomerAddressToSalesforceCaCommand>
+    public partial class SaveCustomerAddressToSalesforceCaCommand : MsmqMessage<SaveCustomerAddressToSalesforceCaCommand>
     {
         public String PoBox { get; set; }
         public Guid AddressId { get; set; }

@@ -51,7 +51,7 @@ namespace Wonga.QA.Generators.Msmq
                         "namespace {0}.{1}",
                         "{{",
                         "    [XmlRoot({2}, Namespace = {3}, DataType = {4})]",
-                        "    public class {5} : MsmqMessage<{5  }>",
+                        "    public partial class {5} : MsmqMessage<{5}>",
                         "    {{"
                     }, Config.Msmq.Project, root, message.Name.Quote(), message.Namespace.Quote(), String.Join(",", message.GetTypes().Select(t => t.FullName)).Quote(), name);
 

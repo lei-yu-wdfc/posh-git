@@ -24,7 +24,7 @@ namespace Wonga.QA.Framework.Db.Experian
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="Experian")]
-	public partial class ExperianDatabase : System.Data.Linq.DataContext
+	public partial class ExperianDatabase : DbDatabase<ExperianDatabase>
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -67,7 +67,7 @@ namespace Wonga.QA.Framework.Db.Experian
 		{
 			get
 			{
-				return this.GetTable<ExperianActiveRequestEntity>().SetTable<ExperianActiveRequestEntity>();
+				return this.GetTable<ExperianActiveRequestEntity>();
 			}
 		}
 		
@@ -75,7 +75,7 @@ namespace Wonga.QA.Framework.Db.Experian
 		{
 			get
 			{
-				return this.GetTable<MSSQLDeploy>().SetTable<MSSQLDeploy>();
+				return this.GetTable<MSSQLDeploy>();
 			}
 		}
 	}

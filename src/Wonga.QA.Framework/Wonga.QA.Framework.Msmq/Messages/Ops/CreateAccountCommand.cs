@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Ops
 {
     [XmlRoot("CreateAccountMessage", Namespace = "Wonga.Ops", DataType = "")]
-    public class CreateAccountCommand : MsmqMessage<CreateAccountCommand>
+    public partial class CreateAccountCommand : MsmqMessage<CreateAccountCommand>
     {
         public Guid AccountId { get; set; }
         public String Login { get; set; }

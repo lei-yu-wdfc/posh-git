@@ -38,7 +38,7 @@ namespace Wonga.QA.Framework.Api
                 Response = (HttpWebResponse)e.Response;
                 exception = e;
             }
-            
+
             Status = (Int32)Response.StatusCode;
 
             using (StreamReader reader = new StreamReader(Response.GetResponseStream()))
@@ -60,8 +60,8 @@ namespace Wonga.QA.Framework.Api
                 if (errors.Any())
                 {
                     if (errors.Contains("Ops_RequestXmlInvalid"))
-                        throw new XsdException(errors, exception);
-                    throw new ApiException(errors, exception);
+                        throw new SchemaException(errors, exception);
+                    throw new ValidatorException(errors, exception);
                 }
             }
             else
@@ -70,13 +70,21 @@ namespace Wonga.QA.Framework.Api
             if (exception != null)
                 throw exception;
 
-            Values = Root.Descendants().Where(e => !e.HasElements).ToLookup(e => e.Name.LocalName, e => e.Value);
+            Values = Root.Descendants().Where(e => !e.HasElements).ToLookup(e => e.Name.LocalName, e => e.IsNull() ? null : e.Value);
         }
 
         public String[] GetErrors()
         {
             XNamespace ns = Root.GetDefaultNamespace();
             return Root.Descendants(ns.GetName("Error")).Select(e => e.Element(ns.GetName("Name")).Value).ToArray();
+        }
+    }
+
+    public static partial class Extensions
+    {
+        public static Boolean IsNull(this XElement element)
+        {
+            return String.IsNullOrEmpty(element.Value) && element.Attributes().Any(a => a.Name.LocalName == "nil" && a.Value == "true");
         }
     }
 }

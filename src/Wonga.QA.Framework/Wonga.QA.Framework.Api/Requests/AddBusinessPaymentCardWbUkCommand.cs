@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Api
 {
     [XmlRoot("AddBusinessPaymentCard")]
-    public class AddBusinessPaymentCardWbUkCommand : ApiRequest<AddBusinessPaymentCardWbUkCommand>
+    public partial class AddBusinessPaymentCardWbUkCommand : ApiRequest<AddBusinessPaymentCardWbUkCommand>
     {
         public Object OrganisationId { get; set; }
         public Object PaymentCardId { get; set; }

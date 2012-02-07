@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Risk
 {
     [XmlRoot("IRiskApplicationAdded", Namespace = "Wonga.Risk", DataType = "Wonga.Risk.IRiskEvent")]
-    public class IRiskApplicationAddedEvent : MsmqMessage<IRiskApplicationAddedEvent>
+    public partial class IRiskApplicationAddedEvent : MsmqMessage<IRiskApplicationAddedEvent>
     {
         public Guid AccountId { get; set; }
         public Guid ApplicationId { get; set; }

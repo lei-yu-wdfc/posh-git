@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Risk
 {
     [XmlRoot("TransunionRequestMessage", Namespace = "Wonga.Risk.InternalMessages.Transunion", DataType = "Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
-    public class TransunionRequestZaCommand : MsmqMessage<TransunionRequestZaCommand>
+    public partial class TransunionRequestZaCommand : MsmqMessage<TransunionRequestZaCommand>
     {
         public Guid AccountId { get; set; }
         public Guid SagaId { get; set; }

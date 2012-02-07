@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Comms
 {
     [XmlRoot("CreateFixedTermLoanAgreementMessage", Namespace = "Wonga.Comms.InternalMessages", DataType = "")]
-    public class CreateFixedTermLoanAgreementCommand : MsmqMessage<CreateFixedTermLoanAgreementCommand>
+    public partial class CreateFixedTermLoanAgreementCommand : MsmqMessage<CreateFixedTermLoanAgreementCommand>
     {
         public Guid ApplicationId { get; set; }
         public Guid AccountId { get; set; }

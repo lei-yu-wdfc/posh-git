@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Api
 {
     [XmlRoot("CreateBusinessFixedInstallmentLoanApplication")]
-    public class CreateBusinessFixedInstallmentLoanApplicationWbUkCommand : ApiRequest<CreateBusinessFixedInstallmentLoanApplicationWbUkCommand>
+    public partial class CreateBusinessFixedInstallmentLoanApplicationWbUkCommand : ApiRequest<CreateBusinessFixedInstallmentLoanApplicationWbUkCommand>
     {
         public Object AccountId { get; set; }
         public Object OrganisationId { get; set; }

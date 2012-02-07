@@ -21,8 +21,8 @@ namespace Wonga.QA.Framework.Core
 
     public enum DateFormat
     {
-        Date,
         DateTime,
+        Date,
         YearMonth
     }
 

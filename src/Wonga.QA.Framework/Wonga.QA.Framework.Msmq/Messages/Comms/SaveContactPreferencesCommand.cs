@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Comms
 {
     [XmlRoot("SaveContactPreferencesMessage", Namespace = "Wonga.Comms.Commands", DataType = "")]
-    public class SaveContactPreferencesCommand : MsmqMessage<SaveContactPreferencesCommand>
+    public partial class SaveContactPreferencesCommand : MsmqMessage<SaveContactPreferencesCommand>
     {
         public Guid AccountId { get; set; }
         public Boolean AcceptMarketingContact { get; set; }

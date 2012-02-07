@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.BankGateway
 {
     [XmlRoot("AHVResponseFileRecordMessage", Namespace = "Wonga.BankGateway.InternalMessages.Hyphen.Za", DataType = "")]
-    public class AhvResponseFileRecordZaCommand : MsmqMessage<AhvResponseFileRecordZaCommand>
+    public partial class AhvResponseFileRecordZaCommand : MsmqMessage<AhvResponseFileRecordZaCommand>
     {
         public String RawContent { get; set; }
         public String FileName { get; set; }

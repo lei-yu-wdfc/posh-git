@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Comms
 {
     [XmlRoot("UpdateCustomerGenderMessage", Namespace = "Wonga.Comms.Commands.Za", DataType = "")]
-    public class UpdateCustomerGenderZaCommand : MsmqMessage<UpdateCustomerGenderZaCommand>
+    public partial class UpdateCustomerGenderZaCommand : MsmqMessage<UpdateCustomerGenderZaCommand>
     {
         public Guid AccountId { get; set; }
         public GenderEnum Gender { get; set; }

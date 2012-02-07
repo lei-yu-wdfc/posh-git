@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Risk
 {
     [XmlRoot("EidErrorResponseMessage", Namespace = "Wonga.Risk.InternalMessages.Equifax", DataType = "Wonga.Risk.InternalMessages.Equifax.EidBaseResponseMessage,Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
-    public class EidErrorResponseCaCommand : MsmqMessage<EidErrorResponseCaCommand>
+    public partial class EidErrorResponseCaCommand : MsmqMessage<EidErrorResponseCaCommand>
     {
         public String[] ReasonCodes { get; set; }
         public String Text { get; set; }

@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Risk
 {
     [XmlRoot("BlackListRequestMessage", Namespace = "Wonga.Risk.BlackList", DataType = "Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
-    public class BlackListRequestCommand : MsmqMessage<BlackListRequestCommand>
+    public partial class BlackListRequestCommand : MsmqMessage<BlackListRequestCommand>
     {
         public Guid ApplicationId { get; set; }
         public String EmployerName { get; set; }

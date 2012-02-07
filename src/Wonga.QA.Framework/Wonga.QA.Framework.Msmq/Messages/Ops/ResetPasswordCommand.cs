@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Ops
 {
     [XmlRoot("ResetPasswordMessage", Namespace = "Wonga.Ops", DataType = "")]
-    public class ResetPasswordCommand : MsmqMessage<ResetPasswordCommand>
+    public partial class ResetPasswordCommand : MsmqMessage<ResetPasswordCommand>
     {
         public String PwdResetKey { get; set; }
         public String NewPassword { get; set; }

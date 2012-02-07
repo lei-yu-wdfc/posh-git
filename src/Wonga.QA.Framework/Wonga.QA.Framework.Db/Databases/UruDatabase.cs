@@ -24,7 +24,7 @@ namespace Wonga.QA.Framework.Db.Uru
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="Uru")]
-	public partial class UruDatabase : System.Data.Linq.DataContext
+	public partial class UruDatabase : DbDatabase<UruDatabase>
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -67,7 +67,7 @@ namespace Wonga.QA.Framework.Db.Uru
 		{
 			get
 			{
-				return this.GetTable<HPIActiveRequestEntity>().SetTable<HPIActiveRequestEntity>();
+				return this.GetTable<HPIActiveRequestEntity>();
 			}
 		}
 		
@@ -75,7 +75,7 @@ namespace Wonga.QA.Framework.Db.Uru
 		{
 			get
 			{
-				return this.GetTable<MSSQLDeploy>().SetTable<MSSQLDeploy>();
+				return this.GetTable<MSSQLDeploy>();
 			}
 		}
 	}

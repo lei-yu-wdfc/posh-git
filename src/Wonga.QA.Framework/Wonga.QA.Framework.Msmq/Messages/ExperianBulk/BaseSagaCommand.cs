@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.ExperianBulk
 {
     [XmlRoot("BaseSagaMessage", Namespace = "Wonga.ExperianBulk.InternalMessages", DataType = "NServiceBus.Saga.ISagaMessage")]
-    public class BaseSagaCommand : MsmqMessage<BaseSagaCommand>
+    public partial class BaseSagaCommand : MsmqMessage<BaseSagaCommand>
     {
         public Guid SagaId { get; set; }
     }

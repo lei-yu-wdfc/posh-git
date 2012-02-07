@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Bi
 {
     [XmlRoot("UpdateCollectionDate", Namespace = "Wonga.Bi.Messages", DataType = "")]
-    public class UpdateCollectionDateCommand : MsmqMessage<UpdateCollectionDateCommand>
+    public partial class UpdateCollectionDateCommand : MsmqMessage<UpdateCollectionDateCommand>
     {
         public Guid? ApplicationId { get; set; }
         public Guid AccountId { get; set; }

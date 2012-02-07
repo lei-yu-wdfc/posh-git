@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Payments
 {
     [XmlRoot("DirectDebitRegularPaymentTakenMessage", Namespace = "Wonga.Payments.InternalMessages.SagaMessages", DataType = "Wonga.Payments.InternalMessages.SagaMessages.BaseDirectDebitMessage,Wonga.Payments.InternalMessages.SagaMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
-    public class DirectDebitRegularPaymentTakenCommand : MsmqMessage<DirectDebitRegularPaymentTakenCommand>
+    public partial class DirectDebitRegularPaymentTakenCommand : MsmqMessage<DirectDebitRegularPaymentTakenCommand>
     {
         public Decimal Amount { get; set; }
         public CurrencyCodeIso4217Enum CurrencyCode { get; set; }

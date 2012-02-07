@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Comms
 {
     [XmlRoot("SendVerificationEmailSagaMessage", Namespace = "Wonga.Comms.InternalMessages.Email.SagaMessages", DataType = "Wonga.Comms.InternalMessages.SagaMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
-    public class SendVerificationEmailSagaCommand : MsmqMessage<SendVerificationEmailSagaCommand>
+    public partial class SendVerificationEmailSagaCommand : MsmqMessage<SendVerificationEmailSagaCommand>
     {
         public Guid AccountId { get; set; }
         public String Email { get; set; }

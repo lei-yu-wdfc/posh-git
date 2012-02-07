@@ -24,7 +24,7 @@ namespace Wonga.QA.Framework.Db.OpsLogs
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="OpsLogs")]
-	public partial class OpsLogsDatabase : System.Data.Linq.DataContext
+	public partial class OpsLogsDatabase : DbDatabase<OpsLogsDatabase>
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -67,7 +67,7 @@ namespace Wonga.QA.Framework.Db.OpsLogs
 		{
 			get
 			{
-				return this.GetTable<LogEntity>().SetTable<LogEntity>();
+				return this.GetTable<LogEntity>();
 			}
 		}
 		
@@ -75,7 +75,7 @@ namespace Wonga.QA.Framework.Db.OpsLogs
 		{
 			get
 			{
-				return this.GetTable<MSSQLDeploy>().SetTable<MSSQLDeploy>();
+				return this.GetTable<MSSQLDeploy>();
 			}
 		}
 	}

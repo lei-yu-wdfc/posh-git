@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Payments
 {
     [XmlRoot("ManualPaymentTakenMessage", Namespace = "Wonga.Payments.InternalMessages.SagaMessages", DataType = "")]
-    public class ManualPaymentTakenCommand : MsmqMessage<ManualPaymentTakenCommand>
+    public partial class ManualPaymentTakenCommand : MsmqMessage<ManualPaymentTakenCommand>
     {
         public DateTime CreatedOn { get; set; }
         public Int64 PaymentReference { get; set; }

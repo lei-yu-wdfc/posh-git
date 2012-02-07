@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Payments
 {
     [XmlRoot("BusinessFixedInstallmentApplicationAdded", Namespace = "Wonga.Payments.InternalMessages.Messages", DataType = "Wonga.Payments.PublicMessages.IBusinessApplicationAdded,Wonga.Payments.PublicMessages.IPaymentsEvent")]
-    public class BusinessFixedInstallmentApplicationAddedCommand : MsmqMessage<BusinessFixedInstallmentApplicationAddedCommand>
+    public partial class BusinessFixedInstallmentApplicationAddedCommand : MsmqMessage<BusinessFixedInstallmentApplicationAddedCommand>
     {
         public DateTime CreatedOn { get; set; }
         public Guid AccountId { get; set; }

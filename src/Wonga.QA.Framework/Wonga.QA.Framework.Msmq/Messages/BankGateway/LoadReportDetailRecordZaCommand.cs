@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.BankGateway
 {
     [XmlRoot("LoadReportDetailRecordMessage", Namespace = "Wonga.BankGateway.InternalMessages.Hyphen.Za", DataType = "")]
-    public class LoadReportDetailRecordZaCommand : MsmqMessage<LoadReportDetailRecordZaCommand>
+    public partial class LoadReportDetailRecordZaCommand : MsmqMessage<LoadReportDetailRecordZaCommand>
     {
         public String TransactionId { get; set; }
         public String Error { get; set; }

@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Payments
 {
     [XmlRoot("SignBusinessApplication", Namespace = "Wonga.Payments.Commands.Wb.Uk", DataType = "")]
-    public class SignBusinessApplicationWbUkCommand : MsmqMessage<SignBusinessApplicationWbUkCommand>
+    public partial class SignBusinessApplicationWbUkCommand : MsmqMessage<SignBusinessApplicationWbUkCommand>
     {
         public Guid AccountId { get; set; }
         public Guid ApplicationId { get; set; }

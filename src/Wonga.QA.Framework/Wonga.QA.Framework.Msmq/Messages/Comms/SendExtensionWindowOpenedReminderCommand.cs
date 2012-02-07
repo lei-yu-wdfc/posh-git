@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Comms
 {
     [XmlRoot("SendExtensionWindowOpenedReminderMessage", Namespace = "Wonga.Comms.Commands", DataType = "")]
-    public class SendExtensionWindowOpenedReminderCommand : MsmqMessage<SendExtensionWindowOpenedReminderCommand>
+    public partial class SendExtensionWindowOpenedReminderCommand : MsmqMessage<SendExtensionWindowOpenedReminderCommand>
     {
         public Guid AccountId { get; set; }
         public DateTime NotificationDate { get; set; }

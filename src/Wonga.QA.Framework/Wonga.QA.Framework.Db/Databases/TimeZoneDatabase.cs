@@ -24,7 +24,7 @@ namespace Wonga.QA.Framework.Db.TimeZone
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="TimeZone")]
-	public partial class TimeZoneDatabase : System.Data.Linq.DataContext
+	public partial class TimeZoneDatabase : DbDatabase<TimeZoneDatabase>
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -67,7 +67,7 @@ namespace Wonga.QA.Framework.Db.TimeZone
 		{
 			get
 			{
-				return this.GetTable<MSSQLDeploy>().SetTable<MSSQLDeploy>();
+				return this.GetTable<MSSQLDeploy>();
 			}
 		}
 		
@@ -75,7 +75,7 @@ namespace Wonga.QA.Framework.Db.TimeZone
 		{
 			get
 			{
-				return this.GetTable<TimezoneEntity>().SetTable<TimezoneEntity>();
+				return this.GetTable<TimezoneEntity>();
 			}
 		}
 	}

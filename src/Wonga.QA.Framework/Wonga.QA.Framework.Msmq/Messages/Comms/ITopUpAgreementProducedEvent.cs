@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Comms
 {
     [XmlRoot("ITopUpAgreementProduced", Namespace = "Wonga.Comms.PublicMessages", DataType = "")]
-    public class ITopUpAgreementProducedEvent : MsmqMessage<ITopUpAgreementProducedEvent>
+    public partial class ITopUpAgreementProducedEvent : MsmqMessage<ITopUpAgreementProducedEvent>
     {
         public Guid AccountId { get; set; }
         public Guid ApplicationId { get; set; }

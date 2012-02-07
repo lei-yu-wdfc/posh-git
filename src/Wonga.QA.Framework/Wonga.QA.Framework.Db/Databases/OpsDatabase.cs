@@ -24,7 +24,7 @@ namespace Wonga.QA.Framework.Db.Ops
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="Ops")]
-	public partial class OpsDatabase : System.Data.Linq.DataContext
+	public partial class OpsDatabase : DbDatabase<OpsDatabase>
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -88,7 +88,7 @@ namespace Wonga.QA.Framework.Db.Ops
 		{
 			get
 			{
-				return this.GetTable<AccountEntity>().SetTable<AccountEntity>();
+				return this.GetTable<AccountEntity>();
 			}
 		}
 		
@@ -96,7 +96,7 @@ namespace Wonga.QA.Framework.Db.Ops
 		{
 			get
 			{
-				return this.GetTable<ApiClientEntity>().SetTable<ApiClientEntity>();
+				return this.GetTable<ApiClientEntity>();
 			}
 		}
 		
@@ -104,7 +104,7 @@ namespace Wonga.QA.Framework.Db.Ops
 		{
 			get
 			{
-				return this.GetTable<BinarySagaEntity>().SetTable<BinarySagaEntity>();
+				return this.GetTable<BinarySagaEntity>();
 			}
 		}
 		
@@ -112,7 +112,7 @@ namespace Wonga.QA.Framework.Db.Ops
 		{
 			get
 			{
-				return this.GetTable<EndpointEntity>().SetTable<EndpointEntity>();
+				return this.GetTable<EndpointEntity>();
 			}
 		}
 		
@@ -120,7 +120,7 @@ namespace Wonga.QA.Framework.Db.Ops
 		{
 			get
 			{
-				return this.GetTable<EndpointSettingEntity>().SetTable<EndpointSettingEntity>();
+				return this.GetTable<EndpointSettingEntity>();
 			}
 		}
 		
@@ -128,7 +128,7 @@ namespace Wonga.QA.Framework.Db.Ops
 		{
 			get
 			{
-				return this.GetTable<MSSQLDeploy>().SetTable<MSSQLDeploy>();
+				return this.GetTable<MSSQLDeploy>();
 			}
 		}
 		
@@ -136,7 +136,7 @@ namespace Wonga.QA.Framework.Db.Ops
 		{
 			get
 			{
-				return this.GetTable<PasswordRecoveryDetailEntity>().SetTable<PasswordRecoveryDetailEntity>();
+				return this.GetTable<PasswordRecoveryDetailEntity>();
 			}
 		}
 		
@@ -144,7 +144,7 @@ namespace Wonga.QA.Framework.Db.Ops
 		{
 			get
 			{
-				return this.GetTable<PwdResetKeyEntity>().SetTable<PwdResetKeyEntity>();
+				return this.GetTable<PwdResetKeyEntity>();
 			}
 		}
 		
@@ -152,7 +152,7 @@ namespace Wonga.QA.Framework.Db.Ops
 		{
 			get
 			{
-				return this.GetTable<ServiceConfigurationEntity>().SetTable<ServiceConfigurationEntity>();
+				return this.GetTable<ServiceConfigurationEntity>();
 			}
 		}
 	}

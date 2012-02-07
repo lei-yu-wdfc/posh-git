@@ -24,7 +24,7 @@ namespace Wonga.QA.Framework.Db.Scheduler
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="Scheduler")]
-	public partial class SchedulerDatabase : System.Data.Linq.DataContext
+	public partial class SchedulerDatabase : DbDatabase<SchedulerDatabase>
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -97,7 +97,7 @@ namespace Wonga.QA.Framework.Db.Scheduler
 		{
 			get
 			{
-				return this.GetTable<MSSQLDeploy>().SetTable<MSSQLDeploy>();
+				return this.GetTable<MSSQLDeploy>();
 			}
 		}
 		
@@ -105,7 +105,7 @@ namespace Wonga.QA.Framework.Db.Scheduler
 		{
 			get
 			{
-				return this.GetTable<QRTZ_BLOB_TRIGGER>().SetTable<QRTZ_BLOB_TRIGGER>();
+				return this.GetTable<QRTZ_BLOB_TRIGGER>();
 			}
 		}
 		
@@ -113,7 +113,7 @@ namespace Wonga.QA.Framework.Db.Scheduler
 		{
 			get
 			{
-				return this.GetTable<QRTZ_CALENDAR>().SetTable<QRTZ_CALENDAR>();
+				return this.GetTable<QRTZ_CALENDAR>();
 			}
 		}
 		
@@ -121,7 +121,7 @@ namespace Wonga.QA.Framework.Db.Scheduler
 		{
 			get
 			{
-				return this.GetTable<QRTZ_CRON_TRIGGER>().SetTable<QRTZ_CRON_TRIGGER>();
+				return this.GetTable<QRTZ_CRON_TRIGGER>();
 			}
 		}
 		
@@ -129,7 +129,7 @@ namespace Wonga.QA.Framework.Db.Scheduler
 		{
 			get
 			{
-				return this.GetTable<QRTZ_FIRED_TRIGGER>().SetTable<QRTZ_FIRED_TRIGGER>();
+				return this.GetTable<QRTZ_FIRED_TRIGGER>();
 			}
 		}
 		
@@ -137,7 +137,7 @@ namespace Wonga.QA.Framework.Db.Scheduler
 		{
 			get
 			{
-				return this.GetTable<QRTZ_JOB_DETAIL>().SetTable<QRTZ_JOB_DETAIL>();
+				return this.GetTable<QRTZ_JOB_DETAIL>();
 			}
 		}
 		
@@ -145,7 +145,7 @@ namespace Wonga.QA.Framework.Db.Scheduler
 		{
 			get
 			{
-				return this.GetTable<QRTZ_JOB_LISTENER>().SetTable<QRTZ_JOB_LISTENER>();
+				return this.GetTable<QRTZ_JOB_LISTENER>();
 			}
 		}
 		
@@ -153,7 +153,7 @@ namespace Wonga.QA.Framework.Db.Scheduler
 		{
 			get
 			{
-				return this.GetTable<QRTZ_LOCK>().SetTable<QRTZ_LOCK>();
+				return this.GetTable<QRTZ_LOCK>();
 			}
 		}
 		
@@ -161,7 +161,7 @@ namespace Wonga.QA.Framework.Db.Scheduler
 		{
 			get
 			{
-				return this.GetTable<QRTZ_PAUSED_TRIGGER_GRP>().SetTable<QRTZ_PAUSED_TRIGGER_GRP>();
+				return this.GetTable<QRTZ_PAUSED_TRIGGER_GRP>();
 			}
 		}
 		
@@ -169,7 +169,7 @@ namespace Wonga.QA.Framework.Db.Scheduler
 		{
 			get
 			{
-				return this.GetTable<QRTZ_Scheduler_STATE>().SetTable<QRTZ_Scheduler_STATE>();
+				return this.GetTable<QRTZ_Scheduler_STATE>();
 			}
 		}
 		
@@ -177,7 +177,7 @@ namespace Wonga.QA.Framework.Db.Scheduler
 		{
 			get
 			{
-				return this.GetTable<QRTZ_SIMPLE_TRIGGER>().SetTable<QRTZ_SIMPLE_TRIGGER>();
+				return this.GetTable<QRTZ_SIMPLE_TRIGGER>();
 			}
 		}
 		
@@ -185,7 +185,7 @@ namespace Wonga.QA.Framework.Db.Scheduler
 		{
 			get
 			{
-				return this.GetTable<QRTZ_TRIGGER_LISTENER>().SetTable<QRTZ_TRIGGER_LISTENER>();
+				return this.GetTable<QRTZ_TRIGGER_LISTENER>();
 			}
 		}
 		
@@ -193,7 +193,7 @@ namespace Wonga.QA.Framework.Db.Scheduler
 		{
 			get
 			{
-				return this.GetTable<QRTZ_TRIGGER>().SetTable<QRTZ_TRIGGER>();
+				return this.GetTable<QRTZ_TRIGGER>();
 			}
 		}
 	}

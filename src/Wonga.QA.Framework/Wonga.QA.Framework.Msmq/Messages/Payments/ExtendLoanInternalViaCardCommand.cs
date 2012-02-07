@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Payments
 {
     [XmlRoot("ExtendLoanInternalViaCard", Namespace = "Wonga.Payments.InternalMessages.Messages", DataType = "")]
-    public class ExtendLoanInternalViaCardCommand : MsmqMessage<ExtendLoanInternalViaCardCommand>
+    public partial class ExtendLoanInternalViaCardCommand : MsmqMessage<ExtendLoanInternalViaCardCommand>
     {
         public Object PaymentCardCv2 { get; set; }
         public Guid ApplicationId { get; set; }

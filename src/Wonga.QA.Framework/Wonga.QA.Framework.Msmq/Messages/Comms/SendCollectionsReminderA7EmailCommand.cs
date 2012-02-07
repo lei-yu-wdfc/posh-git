@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Comms
 {
     [XmlRoot("SendCollectionsReminderA7Email", Namespace = "Wonga.Comms.InternalMessages.Email", DataType = "Wonga.Comms.InternalMessages.Email.SendCollectionsReminderBase,Wonga.Comms.InternalMessages.SagaMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
-    public class SendCollectionsReminderA7EmailCommand : MsmqMessage<SendCollectionsReminderA7EmailCommand>
+    public partial class SendCollectionsReminderA7EmailCommand : MsmqMessage<SendCollectionsReminderA7EmailCommand>
     {
         public String LastName { get; set; }
         public String NationalNumber { get; set; }

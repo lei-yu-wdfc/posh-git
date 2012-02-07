@@ -4,10 +4,9 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.CallReport
 {
-    [XmlRoot("UpdateScheduleMessage", Namespace = "Wonga.CallReport.InternalMessages", DataType = "")]
-    public class UpdateScheduleCommand : MsmqMessage<UpdateScheduleCommand>
+    [XmlRoot("UpdateScheduleMessage", Namespace = "Wonga.CallReport.Batch.Handlers.InternalMessages", DataType = "")]
+    public partial class UpdateScheduleCommand : MsmqMessage<UpdateScheduleCommand>
     {
         public String ScheduleName { get; set; }
-        public List<DateTime> ReferenceDates { get; set; }
     }
 }

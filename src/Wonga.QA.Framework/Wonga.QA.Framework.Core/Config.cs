@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
 using Microsoft.Win32;
 
 namespace Wonga.QA.Framework.Core
@@ -15,11 +17,11 @@ namespace Wonga.QA.Framework.Core
         public static ApiConfig Api { get; set; }
         public static MsmqConfig Msmq { get; set; }
         public static DbConfig Db { get; set; }
-        
+
         static Config()
         {
-            Trace.WriteLine(SUT = GetValue<SUT>(), typeof(Config).FullName);
-            Trace.WriteLine(AUT = GetValue<AUT>(), typeof(Config).FullName);
+            SUT = GetValue<SUT>();
+            AUT = GetValue<AUT>();
 
             switch (SUT)
             {
@@ -34,12 +36,12 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Uk ? new MsmqConfig("WIP2") :
                         AUT == AUT.Za ? new MsmqConfig("WIP4") :
                         AUT == AUT.Ca ? new MsmqConfig("WIP6") :
-                        AUT == AUT.Wb ? new MsmqConfig("WIP8") : E<MsmqConfig>();
+                        AUT == AUT.Wb ? new MsmqConfig("WIP8") : Throw<MsmqConfig>();
                     Db =
                         AUT == AUT.Uk ? new DbConfig("WIP2") :
                         AUT == AUT.Za ? new DbConfig("WIP4") :
                         AUT == AUT.Ca ? new DbConfig("WIP6") :
-                        AUT == AUT.Wb ? new DbConfig("WIP8") : E<DbConfig>();
+                        AUT == AUT.Wb ? new DbConfig("WIP8") : Throw<DbConfig>();
                     break;
                 case SUT.UAT:
                     Api = new ApiConfig(String.Format("uat.api.{0}.wonga.com", AUT));
@@ -47,12 +49,12 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Uk ? new MsmqConfig("UAT2") :
                         AUT == AUT.Za ? new MsmqConfig("UAT4") :
                         AUT == AUT.Ca ? new MsmqConfig("UAT6") :
-                        AUT == AUT.Wb ? new MsmqConfig("UAT8") : E<MsmqConfig>();
+                        AUT == AUT.Wb ? new MsmqConfig("UAT8") : Throw<MsmqConfig>();
                     Db =
                         AUT == AUT.Uk ? new DbConfig("UAT2") :
                         AUT == AUT.Za ? new DbConfig("UAT4") :
                         AUT == AUT.Ca ? new DbConfig("UAT6") :
-                        AUT == AUT.Wb ? new DbConfig("UAT8") : E<DbConfig>();
+                        AUT == AUT.Wb ? new DbConfig("UAT8") : Throw<DbConfig>();
                     break;
                 case SUT.RC:
                     Api = new ApiConfig(String.Format("rc.api.{0}.wonga.com", AUT));
@@ -60,19 +62,25 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Uk ? new MsmqConfig("RC2") :
                         AUT == AUT.Za ? new MsmqConfig("RC4") :
                         AUT == AUT.Ca ? new MsmqConfig("RC6") :
-                        AUT == AUT.Wb ? new MsmqConfig("RC9", "RC10") : E<MsmqConfig>();
+                        AUT == AUT.Wb ? new MsmqConfig("RC9", "RC10") : Throw<MsmqConfig>();
                     Db =
                         AUT == AUT.Uk ? new DbConfig("RC2") :
                         AUT == AUT.Za ? new DbConfig("RC4") :
                         AUT == AUT.Ca ? new DbConfig("RC6") :
-                        AUT == AUT.Wb ? new DbConfig("RC8") : E<DbConfig>();
+                        AUT == AUT.Wb ? new DbConfig("RC8") : Throw<DbConfig>();
                     break;
                 default:
                     throw new NotImplementedException();
             }
+
+            /*Trace.WriteLine(SUT, typeof(Config).FullName);
+            Trace.WriteLine(AUT, typeof(Config).FullName);
+            foreach (Object config in new Object[] { Api, Msmq, Db })
+                foreach (PropertyInfo property in config.GetType().GetProperties())
+                    Trace.WriteLine(String.Format("{0} = {1}", property.Name, property.GetValue(config, null)), config.GetType().FullName);*/
         }
 
-        private static T E<T>()
+        public static T Throw<T>()
         {
             throw new NotImplementedException();
         }

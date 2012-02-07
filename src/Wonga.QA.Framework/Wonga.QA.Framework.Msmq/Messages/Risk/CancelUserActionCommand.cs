@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Risk
 {
     [XmlRoot("CancelUserActionMessage", Namespace = "Wonga.Risk", DataType = "")]
-    public class CancelUserActionCommand : MsmqMessage<CancelUserActionCommand>
+    public partial class CancelUserActionCommand : MsmqMessage<CancelUserActionCommand>
     {
         public Guid UserActionId { get; set; }
         public DateTime CreatedOn { get; set; }

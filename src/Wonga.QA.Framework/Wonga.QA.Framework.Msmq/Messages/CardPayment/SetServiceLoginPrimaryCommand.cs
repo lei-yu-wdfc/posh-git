@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.CardPayment
 {
     [XmlRoot("SetServiceLoginPrimaryMessage", Namespace = "Wonga.CardPayment.InternalMessages", DataType = "")]
-    public class SetServiceLoginPrimaryCommand : MsmqMessage<SetServiceLoginPrimaryCommand>
+    public partial class SetServiceLoginPrimaryCommand : MsmqMessage<SetServiceLoginPrimaryCommand>
     {
         public Guid ServiceLoginId { get; set; }
     }

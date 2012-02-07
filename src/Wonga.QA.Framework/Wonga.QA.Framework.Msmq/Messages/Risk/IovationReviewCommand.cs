@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Risk
 {
     [XmlRoot("IovationReviewMessage", Namespace = "Wonga.Risk.InternalMessages.Salesforce", DataType = "Wonga.Risk.InternalMessages.Salesforce.NeedManualVerificationMessage,Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
-    public class IovationReviewCommand : MsmqMessage<IovationReviewCommand>
+    public partial class IovationReviewCommand : MsmqMessage<IovationReviewCommand>
     {
         public String Reason { get; set; }
         public String TrackingNumber { get; set; }

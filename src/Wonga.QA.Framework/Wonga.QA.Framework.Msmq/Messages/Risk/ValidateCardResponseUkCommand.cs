@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Risk
 {
     [XmlRoot("ValidateCardResponseMessage", Namespace = "Wonga.Risk.CardPayment", DataType = "Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage,Wonga.Risk.IResumeRiskWorkflow")]
-    public class ValidateCardResponseUkCommand : MsmqMessage<ValidateCardResponseUkCommand>
+    public partial class ValidateCardResponseUkCommand : MsmqMessage<ValidateCardResponseUkCommand>
     {
         public Object ValidateCardResponse { get; set; }
         public Guid SagaId { get; set; }

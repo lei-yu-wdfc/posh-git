@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Api
 {
     [XmlRoot("GetPasswordResetKey")]
-    public class GetPasswordResetKeyQuery : ApiRequest<GetPasswordResetKeyQuery>
+    public partial class GetPasswordResetKeyQuery : ApiRequest<GetPasswordResetKeyQuery>
     {
         public Object PwdResetKey { get; set; }
     }

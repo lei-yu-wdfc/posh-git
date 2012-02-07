@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Risk
 {
     [XmlRoot("AuthenticateUruRequestMessage", Namespace = "Wonga.Risk.URU", DataType = "Wonga.Risk.Uru.UruRequestMessage,Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
-    public class AuthenticateUruRequestUkCommand : MsmqMessage<AuthenticateUruRequestUkCommand>
+    public partial class AuthenticateUruRequestUkCommand : MsmqMessage<AuthenticateUruRequestUkCommand>
     {
         public Guid AccountId { get; set; }
         public String IpAddress { get; set; }

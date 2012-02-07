@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Risk
 {
     [XmlRoot("IovationResponseMessage", Namespace = "Wonga.Risk.Iovation", DataType = "Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage,Wonga.Risk.IResumeRiskWorkflow")]
-    public class IovationResponseCommand : MsmqMessage<IovationResponseCommand>
+    public partial class IovationResponseCommand : MsmqMessage<IovationResponseCommand>
     {
         public Guid AccountId { get; set; }
         public IovationAdviceEnum Result { get; set; }

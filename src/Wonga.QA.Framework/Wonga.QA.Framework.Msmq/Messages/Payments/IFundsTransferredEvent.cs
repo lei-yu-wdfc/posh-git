@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Payments
 {
     [XmlRoot("IFundsTransferred", Namespace = "Wonga.Payments.PublicMessages", DataType = "Wonga.Payments.PublicMessages.IPaymentsEvent")]
-    public class IFundsTransferredEvent : MsmqMessage<IFundsTransferredEvent>
+    public partial class IFundsTransferredEvent : MsmqMessage<IFundsTransferredEvent>
     {
         public Guid AccountId { get; set; }
         public Guid TransactionId { get; set; }

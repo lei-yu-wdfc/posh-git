@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Api
 {
     [XmlRoot("GetPromoCodeParameters")]
-    public class GetPromoCodeParametersQuery : ApiRequest<GetPromoCodeParametersQuery>
+    public partial class GetPromoCodeParametersQuery : ApiRequest<GetPromoCodeParametersQuery>
     {
         public Object AccountId { get; set; }
         public Object AffiliateId { get; set; }

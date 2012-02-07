@@ -24,7 +24,7 @@ namespace Wonga.QA.Framework.Db.Blacklist
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="Blacklist")]
-	public partial class BlacklistDatabase : System.Data.Linq.DataContext
+	public partial class BlacklistDatabase : DbDatabase<BlacklistDatabase>
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -67,7 +67,7 @@ namespace Wonga.QA.Framework.Db.Blacklist
 		{
 			get
 			{
-				return this.GetTable<BlackListEntity>().SetTable<BlackListEntity>();
+				return this.GetTable<BlackListEntity>();
 			}
 		}
 		
@@ -75,7 +75,7 @@ namespace Wonga.QA.Framework.Db.Blacklist
 		{
 			get
 			{
-				return this.GetTable<MSSQLDeploy>().SetTable<MSSQLDeploy>();
+				return this.GetTable<MSSQLDeploy>();
 			}
 		}
 	}

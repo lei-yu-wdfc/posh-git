@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Risk
 {
     [XmlRoot("BankAccountVerificationResponseMessage", Namespace = "Wonga.Risk.InternalMessages.Hyphen", DataType = "Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage,Wonga.Risk.IResumeRiskWorkflow")]
-    public class BankAccountVerificationResponseZaCommand : MsmqMessage<BankAccountVerificationResponseZaCommand>
+    public partial class BankAccountVerificationResponseZaCommand : MsmqMessage<BankAccountVerificationResponseZaCommand>
     {
         public Guid ApplicationId { get; set; }
         public Boolean IsTimeout { get; set; }

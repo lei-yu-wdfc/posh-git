@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.BankGateway
 {
     [XmlRoot("IAcknowledgeFileMessage", Namespace = "Wonga.BankGateway.Core.Interfaces", DataType = "")]
-    public class IAcknowledgeFileEvent : MsmqMessage<IAcknowledgeFileEvent>
+    public partial class IAcknowledgeFileEvent : MsmqMessage<IAcknowledgeFileEvent>
     {
         public String FileName { get; set; }
         public Byte[] FileContents { get; set; }

@@ -24,7 +24,7 @@ namespace Wonga.QA.Framework.Db.Sms
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="Sms")]
-	public partial class SmsDatabase : System.Data.Linq.DataContext
+	public partial class SmsDatabase : DbDatabase<SmsDatabase>
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -67,7 +67,7 @@ namespace Wonga.QA.Framework.Db.Sms
 		{
 			get
 			{
-				return this.GetTable<MSSQLDeploy>().SetTable<MSSQLDeploy>();
+				return this.GetTable<MSSQLDeploy>();
 			}
 		}
 		
@@ -75,7 +75,7 @@ namespace Wonga.QA.Framework.Db.Sms
 		{
 			get
 			{
-				return this.GetTable<SmsMessageEntity>().SetTable<SmsMessageEntity>();
+				return this.GetTable<SmsMessageEntity>();
 			}
 		}
 	}

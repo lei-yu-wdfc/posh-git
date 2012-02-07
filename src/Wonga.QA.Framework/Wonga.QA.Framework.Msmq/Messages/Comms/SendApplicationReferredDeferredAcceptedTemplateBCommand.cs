@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Comms
 {
     [XmlRoot("SendApplicationReferredDeferredAcceptedTemplateB", Namespace = "Wonga.Comms.InternalMessages.Email", DataType = "Wonga.Comms.InternalMessages.Email.BaseSimpleEmailMessage,Wonga.Comms.InternalMessages.SagaMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
-    public class SendApplicationReferredDeferredAcceptedTemplateBCommand : MsmqMessage<SendApplicationReferredDeferredAcceptedTemplateBCommand>
+    public partial class SendApplicationReferredDeferredAcceptedTemplateBCommand : MsmqMessage<SendApplicationReferredDeferredAcceptedTemplateBCommand>
     {
         public String FirstName { get; set; }
         public String ApplicationDate { get; set; }

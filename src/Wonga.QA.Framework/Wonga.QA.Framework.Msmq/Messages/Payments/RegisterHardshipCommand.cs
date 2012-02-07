@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Payments
 {
     [XmlRoot("RegisterHardshipMessage", Namespace = "Wonga.Payments.InternalMessages", DataType = "")]
-    public class RegisterHardshipCommand : MsmqMessage<RegisterHardshipCommand>
+    public partial class RegisterHardshipCommand : MsmqMessage<RegisterHardshipCommand>
     {
         public Guid AccountId { get; set; }
         public Boolean HasHardship { get; set; }

@@ -24,7 +24,7 @@ namespace Wonga.QA.Framework.Db.CallReport
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="CallReport")]
-	public partial class CallReportDatabase : System.Data.Linq.DataContext
+	public partial class CallReportDatabase : DbDatabase<CallReportDatabase>
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -79,7 +79,7 @@ namespace Wonga.QA.Framework.Db.CallReport
 		{
 			get
 			{
-				return this.GetTable<AgreementRefEntity>().SetTable<AgreementRefEntity>();
+				return this.GetTable<AgreementRefEntity>();
 			}
 		}
 		
@@ -87,7 +87,7 @@ namespace Wonga.QA.Framework.Db.CallReport
 		{
 			get
 			{
-				return this.GetTable<CallReportActiveRequestEntity>().SetTable<CallReportActiveRequestEntity>();
+				return this.GetTable<CallReportActiveRequestEntity>();
 			}
 		}
 		
@@ -95,7 +95,7 @@ namespace Wonga.QA.Framework.Db.CallReport
 		{
 			get
 			{
-				return this.GetTable<FactorEntity>().SetTable<FactorEntity>();
+				return this.GetTable<FactorEntity>();
 			}
 		}
 		
@@ -103,7 +103,7 @@ namespace Wonga.QA.Framework.Db.CallReport
 		{
 			get
 			{
-				return this.GetTable<MSSQLDeploy>().SetTable<MSSQLDeploy>();
+				return this.GetTable<MSSQLDeploy>();
 			}
 		}
 		
@@ -111,7 +111,7 @@ namespace Wonga.QA.Framework.Db.CallReport
 		{
 			get
 			{
-				return this.GetTable<ParsedFactorEntity>().SetTable<ParsedFactorEntity>();
+				return this.GetTable<ParsedFactorEntity>();
 			}
 		}
 		
@@ -119,7 +119,7 @@ namespace Wonga.QA.Framework.Db.CallReport
 		{
 			get
 			{
-				return this.GetTable<ParsedFactorsTempEntity>().SetTable<ParsedFactorsTempEntity>();
+				return this.GetTable<ParsedFactorsTempEntity>();
 			}
 		}
 		
@@ -127,7 +127,7 @@ namespace Wonga.QA.Framework.Db.CallReport
 		{
 			get
 			{
-				return this.GetTable<TypeEntity>().SetTable<TypeEntity>();
+				return this.GetTable<TypeEntity>();
 			}
 		}
 	}

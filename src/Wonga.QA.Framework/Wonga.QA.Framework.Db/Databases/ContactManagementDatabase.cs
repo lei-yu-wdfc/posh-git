@@ -24,7 +24,7 @@ namespace Wonga.QA.Framework.Db.ContactManagement
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="ContactManagement")]
-	public partial class ContactManagementDatabase : System.Data.Linq.DataContext
+	public partial class ContactManagementDatabase : DbDatabase<ContactManagementDatabase>
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -73,7 +73,7 @@ namespace Wonga.QA.Framework.Db.ContactManagement
 		{
 			get
 			{
-				return this.GetTable<BusinessAddressEntity>().SetTable<BusinessAddressEntity>();
+				return this.GetTable<BusinessAddressEntity>();
 			}
 		}
 		
@@ -81,7 +81,7 @@ namespace Wonga.QA.Framework.Db.ContactManagement
 		{
 			get
 			{
-				return this.GetTable<DirectorOrganisationMappingEntity>().SetTable<DirectorOrganisationMappingEntity>();
+				return this.GetTable<DirectorOrganisationMappingEntity>();
 			}
 		}
 		
@@ -89,7 +89,7 @@ namespace Wonga.QA.Framework.Db.ContactManagement
 		{
 			get
 			{
-				return this.GetTable<MSSQLDeploy>().SetTable<MSSQLDeploy>();
+				return this.GetTable<MSSQLDeploy>();
 			}
 		}
 		
@@ -97,7 +97,7 @@ namespace Wonga.QA.Framework.Db.ContactManagement
 		{
 			get
 			{
-				return this.GetTable<OrganisationDetailEntity>().SetTable<OrganisationDetailEntity>();
+				return this.GetTable<OrganisationDetailEntity>();
 			}
 		}
 	}
@@ -428,8 +428,6 @@ namespace Wonga.QA.Framework.Db.ContactManagement
 		
 		private string _Email;
 		
-		private EntityRef<OrganisationDetailEntity> _OrganisationDetailEntity;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -456,7 +454,6 @@ namespace Wonga.QA.Framework.Db.ContactManagement
 		
 		public DirectorOrganisationMappingEntity()
 		{
-			this._OrganisationDetailEntity = default(EntityRef<OrganisationDetailEntity>);
 			OnCreated();
 		}
 		
@@ -531,10 +528,6 @@ namespace Wonga.QA.Framework.Db.ContactManagement
 			{
 				if ((this._OrganisationId != value))
 				{
-					if (this._OrganisationDetailEntity.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
 					this.OnOrganisationIdChanging(value);
 					this.SendPropertyChanging();
 					this._OrganisationId = value;
@@ -640,40 +633,6 @@ namespace Wonga.QA.Framework.Db.ContactManagement
 					this._Email = value;
 					this.SendPropertyChanged("Email");
 					this.OnEmailChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_OrganisationDetails_OrganisationId", Storage="_OrganisationDetailEntity", ThisKey="OrganisationId", OtherKey="OrganisationId", IsForeignKey=true)]
-		public OrganisationDetailEntity OrganisationDetailEntity
-		{
-			get
-			{
-				return this._OrganisationDetailEntity.Entity;
-			}
-			set
-			{
-				OrganisationDetailEntity previousValue = this._OrganisationDetailEntity.Entity;
-				if (((previousValue != value) 
-							|| (this._OrganisationDetailEntity.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._OrganisationDetailEntity.Entity = null;
-						previousValue.ContactManagement_DirectorOrganisationMappings.Remove(this);
-					}
-					this._OrganisationDetailEntity.Entity = value;
-					if ((value != null))
-					{
-						value.ContactManagement_DirectorOrganisationMappings.Add(this);
-						this._OrganisationId = value.OrganisationId;
-					}
-					else
-					{
-						this._OrganisationId = default(System.Guid);
-					}
-					this.SendPropertyChanged("OrganisationDetailEntity");
 				}
 			}
 		}
@@ -875,8 +834,6 @@ namespace Wonga.QA.Framework.Db.ContactManagement
 		
 		private string _VatNumber;
 		
-		private EntitySet<DirectorOrganisationMappingEntity> _ContactManagement_DirectorOrganisationMappings;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -897,7 +854,6 @@ namespace Wonga.QA.Framework.Db.ContactManagement
 		
 		public OrganisationDetailEntity()
 		{
-			this._ContactManagement_DirectorOrganisationMappings = new EntitySet<DirectorOrganisationMappingEntity>(new Action<DirectorOrganisationMappingEntity>(this.attach_ContactManagement_DirectorOrganisationMappings), new Action<DirectorOrganisationMappingEntity>(this.detach_ContactManagement_DirectorOrganisationMappings));
 			OnCreated();
 		}
 		
@@ -1021,19 +977,6 @@ namespace Wonga.QA.Framework.Db.ContactManagement
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_OrganisationDetails_OrganisationId", Storage="_ContactManagement_DirectorOrganisationMappings", ThisKey="OrganisationId", OtherKey="OrganisationId", DeleteRule="NO ACTION")]
-		public EntitySet<DirectorOrganisationMappingEntity> ContactManagement_DirectorOrganisationMappings
-		{
-			get
-			{
-				return this._ContactManagement_DirectorOrganisationMappings;
-			}
-			set
-			{
-				this._ContactManagement_DirectorOrganisationMappings.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1052,18 +995,6 @@ namespace Wonga.QA.Framework.Db.ContactManagement
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_ContactManagement_DirectorOrganisationMappings(DirectorOrganisationMappingEntity entity)
-		{
-			this.SendPropertyChanging();
-			entity.OrganisationDetailEntity = this;
-		}
-		
-		private void detach_ContactManagement_DirectorOrganisationMappings(DirectorOrganisationMappingEntity entity)
-		{
-			this.SendPropertyChanging();
-			entity.OrganisationDetailEntity = null;
 		}
 	}
 }

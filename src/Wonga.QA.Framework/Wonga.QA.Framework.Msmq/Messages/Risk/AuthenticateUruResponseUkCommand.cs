@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Risk
 {
     [XmlRoot("AuthenticateUruResponseMessage", Namespace = "Wonga.Risk.Uru", DataType = "Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage,Wonga.Risk.IResumeRiskWorkflow")]
-    public class AuthenticateUruResponseUkCommand : MsmqMessage<AuthenticateUruResponseUkCommand>
+    public partial class AuthenticateUruResponseUkCommand : MsmqMessage<AuthenticateUruResponseUkCommand>
     {
         public Boolean IdentityMatched { get; set; }
         public Boolean ElectricMpanMatched { get; set; }

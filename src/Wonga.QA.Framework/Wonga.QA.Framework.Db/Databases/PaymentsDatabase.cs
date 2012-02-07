@@ -24,7 +24,7 @@ namespace Wonga.QA.Framework.Db.Payments
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="Payments")]
-	public partial class PaymentsDatabase : System.Data.Linq.DataContext
+	public partial class PaymentsDatabase : DbDatabase<PaymentsDatabase>
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -67,6 +67,9 @@ namespace Wonga.QA.Framework.Db.Payments
     partial void InsertFixedTermLoanApplicationEntity(FixedTermLoanApplicationEntity instance);
     partial void UpdateFixedTermLoanApplicationEntity(FixedTermLoanApplicationEntity instance);
     partial void DeleteFixedTermLoanApplicationEntity(FixedTermLoanApplicationEntity instance);
+    partial void InsertInstitutionBranchCodeEntity(InstitutionBranchCodeEntity instance);
+    partial void UpdateInstitutionBranchCodeEntity(InstitutionBranchCodeEntity instance);
+    partial void DeleteInstitutionBranchCodeEntity(InstitutionBranchCodeEntity instance);
     partial void InsertLoanExtensionEntity(LoanExtensionEntity instance);
     partial void UpdateLoanExtensionEntity(LoanExtensionEntity instance);
     partial void DeleteLoanExtensionEntity(LoanExtensionEntity instance);
@@ -172,7 +175,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<AccountPreferenceEntity>().SetTable<AccountPreferenceEntity>();
+				return this.GetTable<AccountPreferenceEntity>();
 			}
 		}
 		
@@ -180,7 +183,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<AccountsApplicationEntity>().SetTable<AccountsApplicationEntity>();
+				return this.GetTable<AccountsApplicationEntity>();
 			}
 		}
 		
@@ -188,7 +191,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<AffiliateEntity>().SetTable<AffiliateEntity>();
+				return this.GetTable<AffiliateEntity>();
 			}
 		}
 		
@@ -196,7 +199,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<ApplicationEntity>().SetTable<ApplicationEntity>();
+				return this.GetTable<ApplicationEntity>();
 			}
 		}
 		
@@ -204,7 +207,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<ArrearEntity>().SetTable<ArrearEntity>();
+				return this.GetTable<ArrearEntity>();
 			}
 		}
 		
@@ -212,7 +215,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<BankAccountsBaseEntity>().SetTable<BankAccountsBaseEntity>();
+				return this.GetTable<BankAccountsBaseEntity>();
 			}
 		}
 		
@@ -220,7 +223,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<BusinessBankAccountEntity>().SetTable<BusinessBankAccountEntity>();
+				return this.GetTable<BusinessBankAccountEntity>();
 			}
 		}
 		
@@ -228,7 +231,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<BusinessFixedInstallmentLoanApplicationEntity>().SetTable<BusinessFixedInstallmentLoanApplicationEntity>();
+				return this.GetTable<BusinessFixedInstallmentLoanApplicationEntity>();
 			}
 		}
 		
@@ -236,7 +239,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<BusinessPaymentCardEntity>().SetTable<BusinessPaymentCardEntity>();
+				return this.GetTable<BusinessPaymentCardEntity>();
 			}
 		}
 		
@@ -244,7 +247,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<CalendarDateEntity>().SetTable<CalendarDateEntity>();
+				return this.GetTable<CalendarDateEntity>();
 			}
 		}
 		
@@ -252,7 +255,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<ExternalPaymentCardEntity>().SetTable<ExternalPaymentCardEntity>();
+				return this.GetTable<ExternalPaymentCardEntity>();
 			}
 		}
 		
@@ -260,7 +263,15 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<FixedTermLoanApplicationEntity>().SetTable<FixedTermLoanApplicationEntity>();
+				return this.GetTable<FixedTermLoanApplicationEntity>();
+			}
+		}
+		
+		public System.Data.Linq.Table<InstitutionBranchCodeEntity> InstitutionBranchCodes
+		{
+			get
+			{
+				return this.GetTable<InstitutionBranchCodeEntity>();
 			}
 		}
 		
@@ -268,7 +279,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<LoanExtensionEntity>().SetTable<LoanExtensionEntity>();
+				return this.GetTable<LoanExtensionEntity>();
 			}
 		}
 		
@@ -276,7 +287,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<LoanLimitationEntity>().SetTable<LoanLimitationEntity>();
+				return this.GetTable<LoanLimitationEntity>();
 			}
 		}
 		
@@ -284,7 +295,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<LoanSignupEntity>().SetTable<LoanSignupEntity>();
+				return this.GetTable<LoanSignupEntity>();
 			}
 		}
 		
@@ -292,7 +303,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<LookupDictionaryEntity>().SetTable<LookupDictionaryEntity>();
+				return this.GetTable<LookupDictionaryEntity>();
 			}
 		}
 		
@@ -300,7 +311,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<MSSQLDeploy>().SetTable<MSSQLDeploy>();
+				return this.GetTable<MSSQLDeploy>();
 			}
 		}
 		
@@ -308,7 +319,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<PaymentCardHistoryDataEntity>().SetTable<PaymentCardHistoryDataEntity>();
+				return this.GetTable<PaymentCardHistoryDataEntity>();
 			}
 		}
 		
@@ -316,7 +327,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<PaymentCardHistoryItemEntity>().SetTable<PaymentCardHistoryItemEntity>();
+				return this.GetTable<PaymentCardHistoryItemEntity>();
 			}
 		}
 		
@@ -324,7 +335,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<PaymentCardEntity>().SetTable<PaymentCardEntity>();
+				return this.GetTable<PaymentCardEntity>();
 			}
 		}
 		
@@ -332,7 +343,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<PaymentCardsBaseEntity>().SetTable<PaymentCardsBaseEntity>();
+				return this.GetTable<PaymentCardsBaseEntity>();
 			}
 		}
 		
@@ -340,7 +351,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<PaymentPlanEntity>().SetTable<PaymentPlanEntity>();
+				return this.GetTable<PaymentPlanEntity>();
 			}
 		}
 		
@@ -348,7 +359,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<PersonalBankAccountEntity>().SetTable<PersonalBankAccountEntity>();
+				return this.GetTable<PersonalBankAccountEntity>();
 			}
 		}
 		
@@ -356,7 +367,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<PersonalPaymentCardEntity>().SetTable<PersonalPaymentCardEntity>();
+				return this.GetTable<PersonalPaymentCardEntity>();
 			}
 		}
 		
@@ -364,7 +375,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<ProductInterestRateEntity>().SetTable<ProductInterestRateEntity>();
+				return this.GetTable<ProductInterestRateEntity>();
 			}
 		}
 		
@@ -372,7 +383,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<ProductEntity>().SetTable<ProductEntity>();
+				return this.GetTable<ProductEntity>();
 			}
 		}
 		
@@ -380,7 +391,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<PromoCampaignEntity>().SetTable<PromoCampaignEntity>();
+				return this.GetTable<PromoCampaignEntity>();
 			}
 		}
 		
@@ -388,7 +399,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<PromoCodeEntity>().SetTable<PromoCodeEntity>();
+				return this.GetTable<PromoCodeEntity>();
 			}
 		}
 		
@@ -396,7 +407,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<PromoCodesUsageEntity>().SetTable<PromoCodesUsageEntity>();
+				return this.GetTable<PromoCodesUsageEntity>();
 			}
 		}
 		
@@ -404,7 +415,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<RepaymentArrangementDetailEntity>().SetTable<RepaymentArrangementDetailEntity>();
+				return this.GetTable<RepaymentArrangementDetailEntity>();
 			}
 		}
 		
@@ -412,7 +423,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<RepaymentArrangementEntity>().SetTable<RepaymentArrangementEntity>();
+				return this.GetTable<RepaymentArrangementEntity>();
 			}
 		}
 		
@@ -420,7 +431,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<RepaymentRequestDetailEntity>().SetTable<RepaymentRequestDetailEntity>();
+				return this.GetTable<RepaymentRequestDetailEntity>();
 			}
 		}
 		
@@ -428,7 +439,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<RepaymentRequestEntity>().SetTable<RepaymentRequestEntity>();
+				return this.GetTable<RepaymentRequestEntity>();
 			}
 		}
 		
@@ -436,7 +447,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<ScheduledPaymentEntity>().SetTable<ScheduledPaymentEntity>();
+				return this.GetTable<ScheduledPaymentEntity>();
 			}
 		}
 		
@@ -444,7 +455,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<TopupEntity>().SetTable<TopupEntity>();
+				return this.GetTable<TopupEntity>();
 			}
 		}
 		
@@ -452,7 +463,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<TransactionEntity>().SetTable<TransactionEntity>();
+				return this.GetTable<TransactionEntity>();
 			}
 		}
 		
@@ -460,7 +471,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			get
 			{
-				return this.GetTable<UserEntity>().SetTable<UserEntity>();
+				return this.GetTable<UserEntity>();
 			}
 		}
 	}
@@ -493,7 +504,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private EntityRef<BankAccountsBaseEntity> _BankAccountsBaseEntity;
 		
-		private EntityRef<PaymentCardEntity> _PaymentCardEntity;
+		private EntityRef<PaymentCardsBaseEntity> _PaymentCardsBaseEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -524,7 +535,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		public AccountPreferenceEntity()
 		{
 			this._BankAccountsBaseEntity = default(EntityRef<BankAccountsBaseEntity>);
-			this._PaymentCardEntity = default(EntityRef<PaymentCardEntity>);
+			this._PaymentCardsBaseEntity = default(EntityRef<PaymentCardsBaseEntity>);
 			OnCreated();
 		}
 		
@@ -603,7 +614,7 @@ namespace Wonga.QA.Framework.Db.Payments
 			{
 				if ((this._PrimaryPaymentCardId != value))
 				{
-					if (this._PaymentCardEntity.HasLoadedOrAssignedValue)
+					if (this._PaymentCardsBaseEntity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -770,26 +781,26 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_AccountPreferences_PaymentCards", Storage="_PaymentCardEntity", ThisKey="PrimaryPaymentCardId", OtherKey="PaymentCardId", IsForeignKey=true)]
-		public PaymentCardEntity PaymentCardEntity
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_AccountPreferences_PaymentCardsBase", Storage="_PaymentCardsBaseEntity", ThisKey="PrimaryPaymentCardId", OtherKey="PaymentCardId", IsForeignKey=true)]
+		public PaymentCardsBaseEntity PaymentCardsBaseEntity
 		{
 			get
 			{
-				return this._PaymentCardEntity.Entity;
+				return this._PaymentCardsBaseEntity.Entity;
 			}
 			set
 			{
-				PaymentCardEntity previousValue = this._PaymentCardEntity.Entity;
+				PaymentCardsBaseEntity previousValue = this._PaymentCardsBaseEntity.Entity;
 				if (((previousValue != value) 
-							|| (this._PaymentCardEntity.HasLoadedOrAssignedValue == false)))
+							|| (this._PaymentCardsBaseEntity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._PaymentCardEntity.Entity = null;
+						this._PaymentCardsBaseEntity.Entity = null;
 						previousValue.Payment_AccountPreferences.Remove(this);
 					}
-					this._PaymentCardEntity.Entity = value;
+					this._PaymentCardsBaseEntity.Entity = value;
 					if ((value != null))
 					{
 						value.Payment_AccountPreferences.Add(this);
@@ -799,7 +810,7 @@ namespace Wonga.QA.Framework.Db.Payments
 					{
 						this._PrimaryPaymentCardId = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("PaymentCardEntity");
+					this.SendPropertyChanged("PaymentCardsBaseEntity");
 				}
 			}
 		}
@@ -2848,7 +2859,7 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK__BusinessP__Payme__1F98B2C1", Storage="_PaymentCardsBaseEntity", ThisKey="PaymentCardId", OtherKey="PaymentCardId", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_BusinessPaymentCards_PaymentCardsBase", Storage="_PaymentCardsBaseEntity", ThisKey="PaymentCardId", OtherKey="PaymentCardId", IsForeignKey=true)]
 		public PaymentCardsBaseEntity PaymentCardsBaseEntity
 		{
 			get
@@ -3563,6 +3574,116 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			this.SendPropertyChanging();
 			entity.FixedTermLoanApplicationEntity = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="payment.InstitutionBranchCodes")]
+	public partial class InstitutionBranchCodeEntity : DbEntity<InstitutionBranchCodeEntity>, INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _InstitutionCode;
+		
+		private string _BranchCode;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnInstitutionCodeChanging(string value);
+    partial void OnInstitutionCodeChanged();
+    partial void OnBranchCodeChanging(string value);
+    partial void OnBranchCodeChanged();
+    #endregion
+		
+		public InstitutionBranchCodeEntity()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InstitutionCode", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string InstitutionCode
+		{
+			get
+			{
+				return this._InstitutionCode;
+			}
+			set
+			{
+				if ((this._InstitutionCode != value))
+				{
+					this.OnInstitutionCodeChanging(value);
+					this.SendPropertyChanging();
+					this._InstitutionCode = value;
+					this.SendPropertyChanged("InstitutionCode");
+					this.OnInstitutionCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BranchCode", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string BranchCode
+		{
+			get
+			{
+				return this._BranchCode;
+			}
+			set
+			{
+				if ((this._BranchCode != value))
+				{
+					this.OnBranchCodeChanging(value);
+					this.SendPropertyChanging();
+					this._BranchCode = value;
+					this.SendPropertyChanged("BranchCode");
+					this.OnBranchCodeChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	
@@ -5002,8 +5123,6 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private System.Nullable<int> _DeactivateReason;
 		
-		private EntitySet<AccountPreferenceEntity> _Payment_AccountPreferences;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -5048,7 +5167,6 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		public PaymentCardEntity()
 		{
-			this._Payment_AccountPreferences = new EntitySet<AccountPreferenceEntity>(new Action<AccountPreferenceEntity>(this.attach_Payment_AccountPreferences), new Action<AccountPreferenceEntity>(this.detach_Payment_AccountPreferences));
 			OnCreated();
 		}
 		
@@ -5412,19 +5530,6 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_AccountPreferences_PaymentCards", Storage="_Payment_AccountPreferences", ThisKey="PaymentCardId", OtherKey="PrimaryPaymentCardId", DeleteRule="NO ACTION")]
-		public EntitySet<AccountPreferenceEntity> Payment_AccountPreferences
-		{
-			get
-			{
-				return this._Payment_AccountPreferences;
-			}
-			set
-			{
-				this._Payment_AccountPreferences.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -5443,18 +5548,6 @@ namespace Wonga.QA.Framework.Db.Payments
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_Payment_AccountPreferences(AccountPreferenceEntity entity)
-		{
-			this.SendPropertyChanging();
-			entity.PaymentCardEntity = this;
-		}
-		
-		private void detach_Payment_AccountPreferences(AccountPreferenceEntity entity)
-		{
-			this.SendPropertyChanging();
-			entity.PaymentCardEntity = null;
 		}
 	}
 	
@@ -5497,6 +5590,8 @@ namespace Wonga.QA.Framework.Db.Payments
 		private System.Data.Linq.Binary _Version;
 		
 		private System.Nullable<int> _DeactivateReason;
+		
+		private EntitySet<AccountPreferenceEntity> _Payment_AccountPreferences;
 		
 		private EntityRef<BusinessPaymentCardEntity> _BusinessPaymentCardEntity;
 		
@@ -5544,6 +5639,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		public PaymentCardsBaseEntity()
 		{
+			this._Payment_AccountPreferences = new EntitySet<AccountPreferenceEntity>(new Action<AccountPreferenceEntity>(this.attach_Payment_AccountPreferences), new Action<AccountPreferenceEntity>(this.detach_Payment_AccountPreferences));
 			this._BusinessPaymentCardEntity = default(EntityRef<BusinessPaymentCardEntity>);
 			this._PersonalPaymentCardEntity = default(EntityRef<PersonalPaymentCardEntity>);
 			OnCreated();
@@ -5889,7 +5985,20 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK__BusinessP__Payme__1F98B2C1", Storage="_BusinessPaymentCardEntity", ThisKey="PaymentCardId", OtherKey="PaymentCardId", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_AccountPreferences_PaymentCardsBase", Storage="_Payment_AccountPreferences", ThisKey="PaymentCardId", OtherKey="PrimaryPaymentCardId", DeleteRule="NO ACTION")]
+		public EntitySet<AccountPreferenceEntity> Payment_AccountPreferences
+		{
+			get
+			{
+				return this._Payment_AccountPreferences;
+			}
+			set
+			{
+				this._Payment_AccountPreferences.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_BusinessPaymentCards_PaymentCardsBase", Storage="_BusinessPaymentCardEntity", ThisKey="PaymentCardId", OtherKey="PaymentCardId", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
 		public BusinessPaymentCardEntity BusinessPaymentCardEntity
 		{
 			get
@@ -5918,7 +6027,7 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK__PersonalP__Payme__1AD3FDA4", Storage="_PersonalPaymentCardEntity", ThisKey="PaymentCardId", OtherKey="PaymentCardId", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_PersonalPaymentCards_PaymentCardsBase", Storage="_PersonalPaymentCardEntity", ThisKey="PaymentCardId", OtherKey="PaymentCardId", IsUnique=true, IsForeignKey=false, DeleteRule="NO ACTION")]
 		public PersonalPaymentCardEntity PersonalPaymentCardEntity
 		{
 			get
@@ -5965,6 +6074,18 @@ namespace Wonga.QA.Framework.Db.Payments
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_Payment_AccountPreferences(AccountPreferenceEntity entity)
+		{
+			this.SendPropertyChanging();
+			entity.PaymentCardsBaseEntity = this;
+		}
+		
+		private void detach_Payment_AccountPreferences(AccountPreferenceEntity entity)
+		{
+			this.SendPropertyChanging();
+			entity.PaymentCardsBaseEntity = null;
 		}
 	}
 	
@@ -6493,7 +6614,7 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK__PersonalP__Payme__1AD3FDA4", Storage="_PaymentCardsBaseEntity", ThisKey="PaymentCardId", OtherKey="PaymentCardId", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_PersonalPaymentCards_PaymentCardsBase", Storage="_PaymentCardsBaseEntity", ThisKey="PaymentCardId", OtherKey="PaymentCardId", IsForeignKey=true)]
 		public PaymentCardsBaseEntity PaymentCardsBaseEntity
 		{
 			get
@@ -8094,6 +8215,8 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private decimal _AmountPaid;
 		
+		private System.Nullable<int> _TrackingDays;
+		
 		private EntityRef<RepaymentArrangementEntity> _RepaymentArrangementEntity;
 		
     #region Extensibility Method Definitions
@@ -8118,6 +8241,8 @@ namespace Wonga.QA.Framework.Db.Payments
     partial void OnCreatedOnChanged();
     partial void OnAmountPaidChanging(decimal value);
     partial void OnAmountPaidChanged();
+    partial void OnTrackingDaysChanging(System.Nullable<int> value);
+    partial void OnTrackingDaysChanged();
     #endregion
 		
 		public RepaymentArrangementDetailEntity()
@@ -8306,6 +8431,26 @@ namespace Wonga.QA.Framework.Db.Payments
 					this._AmountPaid = value;
 					this.SendPropertyChanged("AmountPaid");
 					this.OnAmountPaidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TrackingDays", DbType="Int")]
+		public System.Nullable<int> TrackingDays
+		{
+			get
+			{
+				return this._TrackingDays;
+			}
+			set
+			{
+				if ((this._TrackingDays != value))
+				{
+					this.OnTrackingDaysChanging(value);
+					this.SendPropertyChanging();
+					this._TrackingDays = value;
+					this.SendPropertyChanged("TrackingDays");
+					this.OnTrackingDaysChanged();
 				}
 			}
 		}

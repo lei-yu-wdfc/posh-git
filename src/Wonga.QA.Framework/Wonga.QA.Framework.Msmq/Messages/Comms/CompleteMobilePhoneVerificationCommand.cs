@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Comms
 {
     [XmlRoot("CompleteMobilePhoneVerificationMessage", Namespace = "Wonga.Comms.Commands", DataType = "")]
-    public class CompleteMobilePhoneVerificationCommand : MsmqMessage<CompleteMobilePhoneVerificationCommand>
+    public partial class CompleteMobilePhoneVerificationCommand : MsmqMessage<CompleteMobilePhoneVerificationCommand>
     {
         public Guid VerificationId { get; set; }
         public String Pin { get; set; }

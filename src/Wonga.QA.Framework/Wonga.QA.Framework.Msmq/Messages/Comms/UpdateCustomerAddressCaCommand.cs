@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Comms
 {
     [XmlRoot("UpdateCustomerAddressCaMessage", Namespace = "Wonga.Comms.Commands.Ca", DataType = "")]
-    public class UpdateCustomerAddressCaCommand : MsmqMessage<UpdateCustomerAddressCaCommand>
+    public partial class UpdateCustomerAddressCaCommand : MsmqMessage<UpdateCustomerAddressCaCommand>
     {
         public String PoBox { get; set; }
         public Guid AddressId { get; set; }

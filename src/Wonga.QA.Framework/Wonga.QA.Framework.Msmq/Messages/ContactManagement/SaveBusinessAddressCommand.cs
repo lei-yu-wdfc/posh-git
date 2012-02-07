@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.ContactManagement
 {
     [XmlRoot("SaveBusinessAddressMessage", Namespace = "Wonga.Comms.ContactManagement.InternalMessages", DataType = "")]
-    public class SaveBusinessAddressCommand : MsmqMessage<SaveBusinessAddressCommand>
+    public partial class SaveBusinessAddressCommand : MsmqMessage<SaveBusinessAddressCommand>
     {
         public Int32 Id { get; set; }
         public Guid ExternalId { get; set; }

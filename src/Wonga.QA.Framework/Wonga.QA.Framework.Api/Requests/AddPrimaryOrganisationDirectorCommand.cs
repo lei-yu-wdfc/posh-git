@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Api
 {
     [XmlRoot("AddPrimaryOrganisationDirector")]
-    public class AddPrimaryOrganisationDirectorCommand : ApiRequest<AddPrimaryOrganisationDirectorCommand>
+    public partial class AddPrimaryOrganisationDirectorCommand : ApiRequest<AddPrimaryOrganisationDirectorCommand>
     {
         public Object OrganisationId { get; set; }
         public Object AccountId { get; set; }

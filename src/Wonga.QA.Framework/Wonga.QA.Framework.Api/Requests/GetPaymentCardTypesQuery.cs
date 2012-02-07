@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Api
 {
     [XmlRoot("GetPaymentCardTypes")]
-    public class GetPaymentCardTypesQuery : ApiRequest<GetPaymentCardTypesQuery>
+    public partial class GetPaymentCardTypesQuery : ApiRequest<GetPaymentCardTypesQuery>
     {
     }
 }

@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Payments
 {
     [XmlRoot("CreateTransaction", Namespace = "Wonga.Payments.InternalMessages.Messages", DataType = "")]
-    public class CreateTransactionCommand : MsmqMessage<CreateTransactionCommand>
+    public partial class CreateTransactionCommand : MsmqMessage<CreateTransactionCommand>
     {
         public Guid ApplicationId { get; set; }
         public Guid ExternalId { get; set; }

@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <NoWarn />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,14 +30,35 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <NoWarn />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Defaults\AddBankAccountZaCommand.cs" />
+    <Compile Include="Defaults\AddBankAccountCaCommand.cs" />
+    <Compile Include="Defaults\VerifyMobilePhoneCaCommand.cs" />
+    <Compile Include="Defaults\SaveEmploymentDetailsCaCommand.cs" />
+    <Compile Include="Defaults\SaveCustomerAddressCaCommand.cs" />
+    <Compile Include="Defaults\SaveCustomerDetailsCaCommand.cs" />
+    <Compile Include="Defaults\CreateFixedTermLoanApplicationCommand.cs" />
+    <Compile Include="Defaults\SubmitApplicationBehaviourCommand.cs" />
+    <Compile Include="Defaults\SubmitClientWatermarkCommand.cs" />
+    <Compile Include="Defaults\VerifyFixedTermLoanCommand.cs" />
+    <Compile Include="Defaults\VerifyMobilePhoneZaCommand.cs" />
     <Compile Include="ApiDriver.cs" />
     <Compile Include="ApiEndpoint.cs" />
     <Compile Include="ApiRequest.cs" />
     <Compile Include="ApiResponse.cs" />
-    <Compile Include="Exceptions\ApiException.cs" />
-    <Compile Include="Exceptions\XsdException.cs" />
+    <Compile Include="Defaults\CompleteMobilePhoneVerificationCommand.cs" />
+    <Compile Include="Defaults\CreateAccountCommand.cs" />
+    <Compile Include="Defaults\SaveContactPreferencesCommand.cs" />
+    <Compile Include="Defaults\SaveCustomerAddressZaCommand.cs" />
+    <Compile Include="Defaults\SaveCustomerDetailsZaCommand.cs" />
+    <Compile Include="Defaults\SaveEmploymentDetailsZaCommand.cs" />
+    <Compile Include="Defaults\SavePasswordRecoveryDetailsCommand.cs" />
+    <Compile Include="Defaults\SaveSocialDetailsCommand.cs" />
+    <Compile Include="Exceptions\ValidatorException.cs" />
+    <Compile Include="Exceptions\NoDefaultException.cs" />
+    <Compile Include="Exceptions\SchemaException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\AddBankAccountCaCommand.cs" />
     <Compile Include="Requests\AddBankAccountUkCommand.cs" />
@@ -94,6 +116,7 @@
     <Compile Include="Requests\GetFixedTermLoanTopupOfferQuery.cs" />
     <Compile Include="Requests\GetFullDeclineAdviceQuery.cs" />
     <Compile Include="Requests\GetGuarantorAgreementWbUkQuery.cs" />
+    <Compile Include="Requests\GetInstitutionBranchCodeIsValidCaQuery.cs" />
     <Compile Include="Requests\GetLoanAgreementDataZaQuery.cs" />
     <Compile Include="Requests\GetLoanAgreementQuery.cs" />
     <Compile Include="Requests\GetLoanExtensionAgreementQuery.cs" />
@@ -123,6 +146,8 @@
     <Compile Include="Requests\ResendMobilePhonePinCommand.cs" />
     <Compile Include="Requests\ResendSmsPinUkCommand.cs" />
     <Compile Include="Requests\ResetPasswordCommand.cs" />
+    <Compile Include="Requests\SampleCommand.cs" />
+    <Compile Include="Requests\SampleQuery.cs" />
     <Compile Include="Requests\SaveContactPreferencesCommand.cs" />
     <Compile Include="Requests\SaveCustomerAddressCaCommand.cs" />
     <Compile Include="Requests\SaveCustomerAddressUkCommand.cs" />
@@ -139,6 +164,7 @@
     <Compile Include="Requests\SaveOrganisationDetailsCommand.cs" />
     <Compile Include="Requests\SavePasswordRecoveryDetailsCommand.cs" />
     <Compile Include="Requests\SaveSocialDetailsCommand.cs" />
+    <Compile Include="Requests\SaveTrackingDataCommand.cs" />
     <Compile Include="Requests\SendExtensionWindowOpenedReminderCommand.cs" />
     <Compile Include="Requests\SendPasswordResetEmailCommand.cs" />
     <Compile Include="Requests\SendVerificationEmailCommand.cs" />

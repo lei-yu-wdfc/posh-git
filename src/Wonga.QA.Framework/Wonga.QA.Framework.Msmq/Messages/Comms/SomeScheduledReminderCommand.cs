@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Comms
 {
     [XmlRoot("SomeScheduledReminder", Namespace = "Wonga.Comms.Handlers", DataType = "")]
-    public class SomeScheduledReminderCommand : MsmqMessage<SomeScheduledReminderCommand>
+    public partial class SomeScheduledReminderCommand : MsmqMessage<SomeScheduledReminderCommand>
     {
         public Guid AccountId { get; set; }
         public Guid ApplicationId { get; set; }

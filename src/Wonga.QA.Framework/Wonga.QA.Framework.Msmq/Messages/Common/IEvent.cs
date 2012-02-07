@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Common
 {
     [XmlRoot("IEventMessage", Namespace = "Wonga.Api", DataType = "")]
-    public class IEvent : MsmqMessage<IEvent>
+    public partial class IEvent : MsmqMessage<IEvent>
     {
         public DateTime CreatedOn { get; set; }
     }

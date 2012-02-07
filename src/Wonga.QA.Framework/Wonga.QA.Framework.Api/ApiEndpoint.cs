@@ -26,7 +26,7 @@ namespace Wonga.QA.Framework.Api
         {
             StringBuilder builder = new StringBuilder().AppendLine("<Messages xmlns=\"http://www.wonga.com/api/3.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">");
             foreach (ApiRequest request in requests)
-                builder.AppendLine(request.Serialize());
+                builder.AppendLine(request.ToString());
             return Post(builder.AppendLine("</Messages>").ToString());
         }
 

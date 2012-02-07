@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Comms
 {
     [XmlRoot("SendPasswordResetEmailMessage", Namespace = "Wonga.Comms.Commands", DataType = "")]
-    public class SendPasswordResetEmailCommand : MsmqMessage<SendPasswordResetEmailCommand>
+    public partial class SendPasswordResetEmailCommand : MsmqMessage<SendPasswordResetEmailCommand>
     {
         public Guid NotificationId { get; set; }
         public String UriMask { get; set; }

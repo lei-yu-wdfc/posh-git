@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Payments
 {
     [XmlRoot("PaymentSentMessage", Namespace = "Wonga.Payments.InternalMessages.SagaMessages", DataType = "Wonga.Payments.InternalMessages.SagaMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
-    public class PaymentSentCommand : MsmqMessage<PaymentSentCommand>
+    public partial class PaymentSentCommand : MsmqMessage<PaymentSentCommand>
     {
         public Int64 PaymentReference { get; set; }
         public Decimal TransactionAmount { get; set; }

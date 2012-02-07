@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Risk
 {
     [XmlRoot("IDisputeStatusChanged", Namespace = "Wonga.Risk", DataType = "Wonga.Risk.IRiskEvent")]
-    public class IDisputeStatusChangedEvent : MsmqMessage<IDisputeStatusChangedEvent>
+    public partial class IDisputeStatusChangedEvent : MsmqMessage<IDisputeStatusChangedEvent>
     {
         public Guid AccountId { get; set; }
         public Boolean HasDispute { get; set; }

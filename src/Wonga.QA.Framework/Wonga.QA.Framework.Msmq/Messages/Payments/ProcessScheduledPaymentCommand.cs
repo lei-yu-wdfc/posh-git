@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Payments
 {
     [XmlRoot("ProcessScheduledPaymentMessage", Namespace = "Wonga.Payments.InternalMessages.Messages", DataType = "")]
-    public class ProcessScheduledPaymentCommand : MsmqMessage<ProcessScheduledPaymentCommand>
+    public partial class ProcessScheduledPaymentCommand : MsmqMessage<ProcessScheduledPaymentCommand>
     {
         public Int32 ApplicationId { get; set; }
         public DateTime? CollectDate { get; set; }

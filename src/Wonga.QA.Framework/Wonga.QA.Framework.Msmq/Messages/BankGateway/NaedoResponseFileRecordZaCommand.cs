@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.BankGateway
 {
     [XmlRoot("NaedoResponseFileRecordMessage", Namespace = "Wonga.BankGateway.InternalMessages.Hyphen.Za", DataType = "")]
-    public class NaedoResponseFileRecordZaCommand : MsmqMessage<NaedoResponseFileRecordZaCommand>
+    public partial class NaedoResponseFileRecordZaCommand : MsmqMessage<NaedoResponseFileRecordZaCommand>
     {
         public String AccountName { get; set; }
         public Int64 AccountNumber { get; set; }

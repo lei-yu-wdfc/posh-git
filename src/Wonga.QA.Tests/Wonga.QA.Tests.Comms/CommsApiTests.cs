@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
@@ -9,9 +10,19 @@ namespace Wonga.QA.Tests.Comms
 {
     public class CommsApiTests
     {
+        [Test]
+        public void GetCustomerDetails()
+        {
+            Driver.Api.Queries.Post(new GetCustomerDetailsQuery
+            {
+                AccountId = Driver.Db.Comms.CustomerDetails.First().AccountId
+            });
+        }
+
         [Test, AUT(AUT.Uk, AUT.Za, AUT.Ca)]
         public void SaveAndGetCustomerDetails()
         {
+            ApiDriver api = new ApiDriver();
             Guid id = Guid.NewGuid();
 
             ApiRequest command;
@@ -21,7 +32,7 @@ namespace Wonga.QA.Tests.Comms
                     command = SaveCustomerDetailsUkCommand.Random(r => r.AccountId = id);
                     break;*/
                 case AUT.Za:
-                    command = SaveCustomerDetailsZaCommand.Random(r =>
+                    command = SaveCustomerDetailsZaCommand.New(r =>
                     {
                         r.AccountId = id;
                         r.NationalNumber = Data.GetNIN((Date)r.DateOfBirth, (GenderEnum)r.Gender == GenderEnum.Female);
@@ -35,8 +46,8 @@ namespace Wonga.QA.Tests.Comms
                     throw new NotImplementedException();
             }
 
-            Drivers.Api.Commands.Post(command);
-            Drivers.Api.Queries.Post(new GetCustomerDetailsQuery() { AccountId = id });
+            api.Commands.Post(command);
+            api.Queries.Post(new GetCustomerDetailsQuery() { AccountId = id });
         }
     }
 }

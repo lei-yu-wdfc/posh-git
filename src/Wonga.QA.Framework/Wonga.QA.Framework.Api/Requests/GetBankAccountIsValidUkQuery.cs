@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Api
 {
     [XmlRoot("GetBankAccountIsValid")]
-    public class GetBankAccountIsValidUkQuery : ApiRequest<GetBankAccountIsValidUkQuery>
+    public partial class GetBankAccountIsValidUkQuery : ApiRequest<GetBankAccountIsValidUkQuery>
     {
         public Object AccountId { get; set; }
         public Object BankName { get; set; }

@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Payments
 {
     [XmlRoot("IManualChargeBackSucceeded", Namespace = "Wonga.Payments.PublicMessages", DataType = "Wonga.Payments.PublicMessages.IPaymentsEvent")]
-    public class IManualChargeBackSucceededEvent : MsmqMessage<IManualChargeBackSucceededEvent>
+    public partial class IManualChargeBackSucceededEvent : MsmqMessage<IManualChargeBackSucceededEvent>
     {
         public Guid AccountId { get; set; }
         public Guid TransactionId { get; set; }

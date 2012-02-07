@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Comms
 {
     [XmlRoot("SaveCustomerLeadMessage", Namespace = "Wonga.Comms.Commands.Ca", DataType = "")]
-    public class SaveCustomerLeadCaCommand : MsmqMessage<SaveCustomerLeadCaCommand>
+    public partial class SaveCustomerLeadCaCommand : MsmqMessage<SaveCustomerLeadCaCommand>
     {
         public String Forename { get; set; }
         public String Surname { get; set; }

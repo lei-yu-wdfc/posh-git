@@ -24,7 +24,7 @@ namespace Wonga.QA.Framework.Db.Salesforce
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="Salesforce")]
-	public partial class SalesforceDatabase : System.Data.Linq.DataContext
+	public partial class SalesforceDatabase : DbDatabase<SalesforceDatabase>
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -67,7 +67,7 @@ namespace Wonga.QA.Framework.Db.Salesforce
 		{
 			get
 			{
-				return this.GetTable<MSSQLDeploy>().SetTable<MSSQLDeploy>();
+				return this.GetTable<MSSQLDeploy>();
 			}
 		}
 		
@@ -75,7 +75,7 @@ namespace Wonga.QA.Framework.Db.Salesforce
 		{
 			get
 			{
-				return this.GetTable<SalesforceAccountEntity>().SetTable<SalesforceAccountEntity>();
+				return this.GetTable<SalesforceAccountEntity>();
 			}
 		}
 	}

@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Api
 {
     [XmlRoot("SaveCustomerDetailsZa")]
-    public class SaveCustomerDetailsZaCommand : ApiRequest<SaveCustomerDetailsZaCommand>
+    public partial class SaveCustomerDetailsZaCommand : ApiRequest<SaveCustomerDetailsZaCommand>
     {
         public Object AccountId { get; set; }
         public Object DateOfBirth { get; set; }

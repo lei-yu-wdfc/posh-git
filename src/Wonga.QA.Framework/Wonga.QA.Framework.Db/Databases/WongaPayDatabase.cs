@@ -24,7 +24,7 @@ namespace Wonga.QA.Framework.Db.WongaPay
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="WongaPay")]
-	public partial class WongaPayDatabase : System.Data.Linq.DataContext
+	public partial class WongaPayDatabase : DbDatabase<WongaPayDatabase>
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -64,7 +64,7 @@ namespace Wonga.QA.Framework.Db.WongaPay
 		{
 			get
 			{
-				return this.GetTable<MSSQLDeploy>().SetTable<MSSQLDeploy>();
+				return this.GetTable<MSSQLDeploy>();
 			}
 		}
 	}

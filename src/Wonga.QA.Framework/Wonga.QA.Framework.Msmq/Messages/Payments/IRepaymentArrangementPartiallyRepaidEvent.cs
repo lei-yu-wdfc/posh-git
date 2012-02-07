@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Payments
 {
     [XmlRoot("IRepaymentArrangementPartiallyRepaid", Namespace = "Wonga.Payments.PublicMessages", DataType = "")]
-    public class IRepaymentArrangementPartiallyRepaidEvent : MsmqMessage<IRepaymentArrangementPartiallyRepaidEvent>
+    public partial class IRepaymentArrangementPartiallyRepaidEvent : MsmqMessage<IRepaymentArrangementPartiallyRepaidEvent>
     {
         public Boolean IsEarlyPayment { get; set; }
         public Guid ApplicationId { get; set; }

@@ -14,7 +14,12 @@ namespace Wonga.QA.Framework
 
         public Application[] GetApplications()
         {
-            return Drivers.Db.Payments.Applications.Where(a => a.AccountId == Id).Select(a => new Application(a.ExternalId)).ToArray();
+            return Driver.Db.Payments.Applications.Where(a => a.AccountId == Id).Select(a => new Application(a.ExternalId)).ToArray();
+        }
+
+        public Guid GetBankAccount()
+        {
+            return Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == Id).BankAccountsBaseEntity.ExternalId;
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Risk
 {
     [XmlRoot("StartRiskVerificationMessage", Namespace = "Wonga.Risk.Workflow.Messages", DataType = "")]
-    public class StartRiskVerificationCommand : MsmqMessage<StartRiskVerificationCommand>
+    public partial class StartRiskVerificationCommand : MsmqMessage<StartRiskVerificationCommand>
     {
         public Int32 RiskAccountId { get; set; }
         public Int32 RiskApplicationId { get; set; }

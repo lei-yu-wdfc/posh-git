@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Api
 {
     [XmlRoot("SubmitClientWatermark")]
-    public class SubmitClientWatermarkCommand : ApiRequest<SubmitClientWatermarkCommand>
+    public partial class SubmitClientWatermarkCommand : ApiRequest<SubmitClientWatermarkCommand>
     {
         public Object AccountId { get; set; }
         public Object ApplicationId { get; set; }

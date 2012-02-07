@@ -11,12 +11,14 @@ namespace Wonga.QA.Framework
         private Guid _id;
         private Guid _verification;
         private String _employerName;
+        private Drivers _drivers;
 
         private CustomerBuilder()
         {
             _id = Data.GetId();
             _verification = Data.GetId();
             _employerName = Data.GetEmployerName();
+            _drivers = new Drivers();
         }
 
         public static CustomerBuilder New()
@@ -39,11 +41,11 @@ namespace Wonga.QA.Framework
         {
             List<ApiRequest> requests = new List<ApiRequest>
             {
-                CreateAccountCommand.Random(r => r.AccountId = _id),
-                SaveSocialDetailsCommand.Random(r => r.AccountId = _id),
-                SavePasswordRecoveryDetailsCommand.Random(r => r.AccountId = _id),
-                SaveContactPreferencesCommand.Random(r => r.AccountId = _id),
-                CompleteMobilePhoneVerificationCommand.Random(r => r.VerificationId = _verification),
+                CreateAccountCommand.New(r => r.AccountId = _id),
+                SaveSocialDetailsCommand.New(r => r.AccountId = _id),
+                SavePasswordRecoveryDetailsCommand.New(r => r.AccountId = _id),
+                SaveContactPreferencesCommand.New(r => r.AccountId = _id),
+                CompleteMobilePhoneVerificationCommand.New(r => r.VerificationId = _verification),
             };
 
             switch (Config.AUT)
@@ -51,36 +53,50 @@ namespace Wonga.QA.Framework
                 case AUT.Za:
                     requests.AddRange(new ApiRequest[]
                     {
-                        SaveCustomerDetailsZaCommand.Random(r =>
-                        {
-                            r.AccountId = _id;
-                            r.NationalNumber = Data.GetNIN((Date) r.DateOfBirth, (GenderEnum) r.Gender == GenderEnum.Female);
-                            if ((GenderEnum)r.Gender != GenderEnum.Female)
-                                r.MaidenName = null;
-                        }),
-                        SaveCustomerAddressZaCommand.Random(r =>
-                        {
-                            r.AccountId = _id;
-                            r.CountryCode = CountryCodeEnum.ZA.ToString().ToUpper();
-                        }),
-                        AddBankAccountZaCommand.Random(r => r.AccountId = _id),
-                        SaveEmploymentDetailsZaCommand.Random(r =>
+                        SaveCustomerDetailsZaCommand.New(r => r.AccountId = _id ),
+                        SaveCustomerAddressZaCommand.New(r => r.AccountId = _id ),
+                        AddBankAccountZaCommand.New(r => r.AccountId = _id),
+                        SaveEmploymentDetailsZaCommand.New(r =>
                         {
                             r.AccountId = _id;
                             r.EmployerName = _employerName;
                         }),
-                        VerifyMobilePhoneZaCommand.Random(r =>
+                        VerifyMobilePhoneZaCommand.New(r =>
                         {
                             r.AccountId = _id;
                             r.VerificationId = _verification;
                         }),
                     });
                     break;
+
+                case AUT.Ca:
+                    requests.AddRange(new ApiRequest[]
+                    {
+                        SaveCustomerDetailsCaCommand.New(r => r.AccountId = _id ),
+                        SaveCustomerAddressCaCommand.New(r => r.AccountId = _id ),
+                        AddBankAccountCaCommand.New(r => r.AccountId = _id),
+                        SaveEmploymentDetailsCaCommand.New(r =>
+                        {
+                            r.AccountId = _id;
+                            r.EmployerName = _employerName;
+                        }),
+                        VerifyMobilePhoneCaCommand.New(r =>
+                        {
+                            r.AccountId = _id;
+                            r.VerificationId = _verification;
+                        })
+                    });
+                    break;
+
                 default:
                     throw new NotImplementedException();
             }
 
-            Drivers.Api.Commands.Post(requests);
+            _drivers.Api.Commands.Post(requests);
+
+            Do.Until(() => _drivers.Db.Payments.AccountPreferences.Single(a => a.AccountId == _id));
+            Do.Until(() => _drivers.Db.Risk.RiskAccounts.Single(a => a.AccountId == _id));
+
             return new Customer(_id);
         }
     }

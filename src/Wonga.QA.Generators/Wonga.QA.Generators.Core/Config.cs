@@ -85,6 +85,7 @@ namespace Wonga.QA.Generators.Core
                 {"integration", "Integration"},
                 {"ops", "Ops"},
                 {"comms", "Comms"},
+                {"marketing", "Marketing"},
                 {"payments", "Payments"},
                 {"risk", "Risk"},
                 {"bi", "Bi"},

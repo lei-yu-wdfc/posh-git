@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Comms
 {
     [XmlRoot("ILoanAgreementCancellationNoticeProduced", Namespace = "Wonga.Comms.PublicMessages.Ca", DataType = "")]
-    public class ILoanAgreementCancellationNoticeProducedCaEvent : MsmqMessage<ILoanAgreementCancellationNoticeProducedCaEvent>
+    public partial class ILoanAgreementCancellationNoticeProducedCaEvent : MsmqMessage<ILoanAgreementCancellationNoticeProducedCaEvent>
     {
         public Guid AccountId { get; set; }
         public Guid ApplicationId { get; set; }

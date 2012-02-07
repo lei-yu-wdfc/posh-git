@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Comms
 {
     [XmlRoot("ICurrentAddressUpdated", Namespace = "Wonga.Comms.PublicMessages", DataType = "")]
-    public class ICurrentAddressUpdatedEvent : MsmqMessage<ICurrentAddressUpdatedEvent>
+    public partial class ICurrentAddressUpdatedEvent : MsmqMessage<ICurrentAddressUpdatedEvent>
     {
         public Guid AccountId { get; set; }
     }

@@ -24,7 +24,7 @@ namespace Wonga.QA.Framework.Db.BankGateway
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="BankGateway")]
-	public partial class BankGatewayDatabase : System.Data.Linq.DataContext
+	public partial class BankGatewayDatabase : DbDatabase<BankGatewayDatabase>
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -121,7 +121,7 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		{
 			get
 			{
-				return this.GetTable<AcknowledgeEntity>().SetTable<AcknowledgeEntity>();
+				return this.GetTable<AcknowledgeEntity>();
 			}
 		}
 		
@@ -129,7 +129,7 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		{
 			get
 			{
-				return this.GetTable<AcknowledgeTypeEntity>().SetTable<AcknowledgeTypeEntity>();
+				return this.GetTable<AcknowledgeTypeEntity>();
 			}
 		}
 		
@@ -137,7 +137,7 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		{
 			get
 			{
-				return this.GetTable<AddressEntity>().SetTable<AddressEntity>();
+				return this.GetTable<AddressEntity>();
 			}
 		}
 		
@@ -145,7 +145,7 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		{
 			get
 			{
-				return this.GetTable<BankAccountDetailEntity>().SetTable<BankAccountDetailEntity>();
+				return this.GetTable<BankAccountDetailEntity>();
 			}
 		}
 		
@@ -153,7 +153,7 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		{
 			get
 			{
-				return this.GetTable<BankAccountVerificationEntity>().SetTable<BankAccountVerificationEntity>();
+				return this.GetTable<BankAccountVerificationEntity>();
 			}
 		}
 		
@@ -161,7 +161,7 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		{
 			get
 			{
-				return this.GetTable<BankAccountVerificationResponseEntity>().SetTable<BankAccountVerificationResponseEntity>();
+				return this.GetTable<BankAccountVerificationResponseEntity>();
 			}
 		}
 		
@@ -169,7 +169,7 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		{
 			get
 			{
-				return this.GetTable<BankIntegrationHolidayEntity>().SetTable<BankIntegrationHolidayEntity>();
+				return this.GetTable<BankIntegrationHolidayEntity>();
 			}
 		}
 		
@@ -177,7 +177,7 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		{
 			get
 			{
-				return this.GetTable<BankIntegrationEntity>().SetTable<BankIntegrationEntity>();
+				return this.GetTable<BankIntegrationEntity>();
 			}
 		}
 		
@@ -185,7 +185,7 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		{
 			get
 			{
-				return this.GetTable<BankEntity>().SetTable<BankEntity>();
+				return this.GetTable<BankEntity>();
 			}
 		}
 		
@@ -193,7 +193,7 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		{
 			get
 			{
-				return this.GetTable<DirectDebitEntity>().SetTable<DirectDebitEntity>();
+				return this.GetTable<DirectDebitEntity>();
 			}
 		}
 		
@@ -201,7 +201,7 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		{
 			get
 			{
-				return this.GetTable<ErrorEntity>().SetTable<ErrorEntity>();
+				return this.GetTable<ErrorEntity>();
 			}
 		}
 		
@@ -209,7 +209,7 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		{
 			get
 			{
-				return this.GetTable<FileEntity>().SetTable<FileEntity>();
+				return this.GetTable<FileEntity>();
 			}
 		}
 		
@@ -217,7 +217,7 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		{
 			get
 			{
-				return this.GetTable<MSSQLDeploy>().SetTable<MSSQLDeploy>();
+				return this.GetTable<MSSQLDeploy>();
 			}
 		}
 		
@@ -225,7 +225,7 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		{
 			get
 			{
-				return this.GetTable<NaedoDocTypeEntity>().SetTable<NaedoDocTypeEntity>();
+				return this.GetTable<NaedoDocTypeEntity>();
 			}
 		}
 		
@@ -233,7 +233,7 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		{
 			get
 			{
-				return this.GetTable<OrderingClientEntity>().SetTable<OrderingClientEntity>();
+				return this.GetTable<OrderingClientEntity>();
 			}
 		}
 		
@@ -241,7 +241,7 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		{
 			get
 			{
-				return this.GetTable<PaymentScheduleEntity>().SetTable<PaymentScheduleEntity>();
+				return this.GetTable<PaymentScheduleEntity>();
 			}
 		}
 		
@@ -249,7 +249,7 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		{
 			get
 			{
-				return this.GetTable<PaymentTypeEntity>().SetTable<PaymentTypeEntity>();
+				return this.GetTable<PaymentTypeEntity>();
 			}
 		}
 		
@@ -257,7 +257,7 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		{
 			get
 			{
-				return this.GetTable<ServiceTypeEntity>().SetTable<ServiceTypeEntity>();
+				return this.GetTable<ServiceTypeEntity>();
 			}
 		}
 		
@@ -265,7 +265,7 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		{
 			get
 			{
-				return this.GetTable<SortCodeEntity>().SetTable<SortCodeEntity>();
+				return this.GetTable<SortCodeEntity>();
 			}
 		}
 		
@@ -273,7 +273,7 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		{
 			get
 			{
-				return this.GetTable<TransactionEntity>().SetTable<TransactionEntity>();
+				return this.GetTable<TransactionEntity>();
 			}
 		}
 	}

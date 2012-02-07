@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Payments
 {
     [XmlRoot("SubmitCounterOffer", Namespace = "Wonga.Payments", DataType = "")]
-    public class SubmitCounterOfferCommand : MsmqMessage<SubmitCounterOfferCommand>
+    public partial class SubmitCounterOfferCommand : MsmqMessage<SubmitCounterOfferCommand>
     {
         public Guid ApplicationId { get; set; }
         public Guid UserActionId { get; set; }

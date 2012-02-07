@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Risk
 {
     [XmlRoot("IRiskEvent", Namespace = "Wonga.Risk", DataType = "")]
-    public class IRiskEvent : MsmqMessage<IRiskEvent>
+    public partial class IRiskEvent : MsmqMessage<IRiskEvent>
     {
         public DateTime CreatedOn { get; set; }
     }

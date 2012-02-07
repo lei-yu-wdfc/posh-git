@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Payments
 {
     [XmlRoot("IApplicationCanceled", Namespace = "Wonga.Payments.PublicMessages", DataType = "Wonga.Payments.PublicMessages.IPaymentsEvent")]
-    public class IApplicationCanceledEvent : MsmqMessage<IApplicationCanceledEvent>
+    public partial class IApplicationCanceledEvent : MsmqMessage<IApplicationCanceledEvent>
     {
         public Guid AccountId { get; set; }
         public Guid ApplicationId { get; set; }

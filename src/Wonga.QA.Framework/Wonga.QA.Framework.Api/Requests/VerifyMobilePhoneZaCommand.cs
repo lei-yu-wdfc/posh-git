@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Api
 {
     [XmlRoot("VerifyMobilePhoneZa")]
-    public class VerifyMobilePhoneZaCommand : ApiRequest<VerifyMobilePhoneZaCommand>
+    public partial class VerifyMobilePhoneZaCommand : ApiRequest<VerifyMobilePhoneZaCommand>
     {
         public Object VerificationId { get; set; }
         public Object AccountId { get; set; }

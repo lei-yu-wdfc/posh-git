@@ -42,7 +42,7 @@ namespace Wonga.QA.Generators.Db
                 XElement root = XDocument.Load(file.Dbml.FullName).Root;
                 XNamespace ns = root.GetDefaultNamespace();
                 List<XAttribute> attributes = root.Descendants().SelectMany(d => d.Attributes()).ToList();
-                
+
                 foreach (XElement table in root.Descendants(ns.GetName("Table")))
                 {
                     String name = table.Attribute("Name").Value;
@@ -74,8 +74,9 @@ namespace Wonga.QA.Generators.Db
 
                 String source = File.ReadAllText(file.Code.FullName);
                 source = source.Insert(source.IndexOf('{') + 1, String.Format("\n\tusing {0};", Config.Db.Project));
+                source = Regex.Replace(source, @"class ([@\w]+) : System.Data.Linq.DataContext", "class $1 : DbDatabase<$1>");
                 source = Regex.Replace(source, String.Format(@"class ([@\w]+) : {0}", Config.Db.Base), "$0<$1>");
-                source = Regex.Replace(source, @"GetTable<([@\w]+)>\(\)", "$0.SetTable<$1>()");
+                //source = Regex.Replace(source, @"GetTable<([@\w]+)>\(\)", "$0.SetTable<$1>()");
                 File.WriteAllText(file.Code.FullName, source);
             }
 

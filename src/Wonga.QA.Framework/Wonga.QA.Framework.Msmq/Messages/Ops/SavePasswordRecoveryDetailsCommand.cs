@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Ops
 {
     [XmlRoot("SavePasswordRecoveryDetailsMessage", Namespace = "Wonga.Ops", DataType = "")]
-    public class SavePasswordRecoveryDetailsCommand : MsmqMessage<SavePasswordRecoveryDetailsCommand>
+    public partial class SavePasswordRecoveryDetailsCommand : MsmqMessage<SavePasswordRecoveryDetailsCommand>
     {
         public Guid AccountId { get; set; }
         public String SecretQuestion { get; set; }

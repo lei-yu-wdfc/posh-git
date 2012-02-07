@@ -24,7 +24,7 @@ namespace Wonga.QA.Framework.Db.TransUnion
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="TransUnion")]
-	public partial class TransUnionDatabase : System.Data.Linq.DataContext
+	public partial class TransUnionDatabase : DbDatabase<TransUnionDatabase>
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -67,7 +67,7 @@ namespace Wonga.QA.Framework.Db.TransUnion
 		{
 			get
 			{
-				return this.GetTable<LoanRegistrationEntity>().SetTable<LoanRegistrationEntity>();
+				return this.GetTable<LoanRegistrationEntity>();
 			}
 		}
 		
@@ -75,7 +75,7 @@ namespace Wonga.QA.Framework.Db.TransUnion
 		{
 			get
 			{
-				return this.GetTable<MSSQLDeploy>().SetTable<MSSQLDeploy>();
+				return this.GetTable<MSSQLDeploy>();
 			}
 		}
 	}

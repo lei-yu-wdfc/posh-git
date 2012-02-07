@@ -24,7 +24,7 @@ namespace Wonga.QA.Framework.Db.Risk
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="Risk")]
-	public partial class RiskDatabase : System.Data.Linq.DataContext
+	public partial class RiskDatabase : DbDatabase<RiskDatabase>
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -145,7 +145,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		{
 			get
 			{
-				return this.GetTable<ApplicationBehaviourEntity>().SetTable<ApplicationBehaviourEntity>();
+				return this.GetTable<ApplicationBehaviourEntity>();
 			}
 		}
 		
@@ -153,7 +153,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		{
 			get
 			{
-				return this.GetTable<CheckpointDefinitionEntity>().SetTable<CheckpointDefinitionEntity>();
+				return this.GetTable<CheckpointDefinitionEntity>();
 			}
 		}
 		
@@ -161,7 +161,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		{
 			get
 			{
-				return this.GetTable<ConfigurationRecordEntity>().SetTable<ConfigurationRecordEntity>();
+				return this.GetTable<ConfigurationRecordEntity>();
 			}
 		}
 		
@@ -169,7 +169,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		{
 			get
 			{
-				return this.GetTable<CreditBureauDataCacheEntity>().SetTable<CreditBureauDataCacheEntity>();
+				return this.GetTable<CreditBureauDataCacheEntity>();
 			}
 		}
 		
@@ -177,7 +177,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		{
 			get
 			{
-				return this.GetTable<CreditBureauDataExtractedEntity>().SetTable<CreditBureauDataExtractedEntity>();
+				return this.GetTable<CreditBureauDataExtractedEntity>();
 			}
 		}
 		
@@ -185,7 +185,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		{
 			get
 			{
-				return this.GetTable<CustomerDetailChangeEntity>().SetTable<CustomerDetailChangeEntity>();
+				return this.GetTable<CustomerDetailChangeEntity>();
 			}
 		}
 		
@@ -193,7 +193,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		{
 			get
 			{
-				return this.GetTable<DecisionDataDefinitionEntity>().SetTable<DecisionDataDefinitionEntity>();
+				return this.GetTable<DecisionDataDefinitionEntity>();
 			}
 		}
 		
@@ -201,7 +201,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		{
 			get
 			{
-				return this.GetTable<EmploymentDetailEntity>().SetTable<EmploymentDetailEntity>();
+				return this.GetTable<EmploymentDetailEntity>();
 			}
 		}
 		
@@ -209,7 +209,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		{
 			get
 			{
-				return this.GetTable<FactorEntity>().SetTable<FactorEntity>();
+				return this.GetTable<FactorEntity>();
 			}
 		}
 		
@@ -217,7 +217,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		{
 			get
 			{
-				return this.GetTable<IovationDetailEntity>().SetTable<IovationDetailEntity>();
+				return this.GetTable<IovationDetailEntity>();
 			}
 		}
 		
@@ -225,7 +225,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		{
 			get
 			{
-				return this.GetTable<IovationResultEntity>().SetTable<IovationResultEntity>();
+				return this.GetTable<IovationResultEntity>();
 			}
 		}
 		
@@ -233,7 +233,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		{
 			get
 			{
-				return this.GetTable<MSSQLDeploy>().SetTable<MSSQLDeploy>();
+				return this.GetTable<MSSQLDeploy>();
 			}
 		}
 		
@@ -241,7 +241,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		{
 			get
 			{
-				return this.GetTable<PmmlFactorEntity>().SetTable<PmmlFactorEntity>();
+				return this.GetTable<PmmlFactorEntity>();
 			}
 		}
 		
@@ -249,7 +249,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		{
 			get
 			{
-				return this.GetTable<PostcodeUKEntity>().SetTable<PostcodeUKEntity>();
+				return this.GetTable<PostcodeUKEntity>();
 			}
 		}
 		
@@ -257,7 +257,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		{
 			get
 			{
-				return this.GetTable<RiskAccountHomePhoneEntity>().SetTable<RiskAccountHomePhoneEntity>();
+				return this.GetTable<RiskAccountHomePhoneEntity>();
 			}
 		}
 		
@@ -265,7 +265,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		{
 			get
 			{
-				return this.GetTable<RiskAccountMobilePhoneEntity>().SetTable<RiskAccountMobilePhoneEntity>();
+				return this.GetTable<RiskAccountMobilePhoneEntity>();
 			}
 		}
 		
@@ -273,7 +273,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		{
 			get
 			{
-				return this.GetTable<RiskAccountEntity>().SetTable<RiskAccountEntity>();
+				return this.GetTable<RiskAccountEntity>();
 			}
 		}
 		
@@ -281,7 +281,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		{
 			get
 			{
-				return this.GetTable<RiskApplicationEntity>().SetTable<RiskApplicationEntity>();
+				return this.GetTable<RiskApplicationEntity>();
 			}
 		}
 		
@@ -289,7 +289,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		{
 			get
 			{
-				return this.GetTable<RiskBankAccountEntity>().SetTable<RiskBankAccountEntity>();
+				return this.GetTable<RiskBankAccountEntity>();
 			}
 		}
 		
@@ -297,7 +297,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		{
 			get
 			{
-				return this.GetTable<RiskBusinessApplicationEntity>().SetTable<RiskBusinessApplicationEntity>();
+				return this.GetTable<RiskBusinessApplicationEntity>();
 			}
 		}
 		
@@ -305,7 +305,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		{
 			get
 			{
-				return this.GetTable<RiskDecisionDataEntity>().SetTable<RiskDecisionDataEntity>();
+				return this.GetTable<RiskDecisionDataEntity>();
 			}
 		}
 		
@@ -313,7 +313,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		{
 			get
 			{
-				return this.GetTable<RiskPaymentCardEntity>().SetTable<RiskPaymentCardEntity>();
+				return this.GetTable<RiskPaymentCardEntity>();
 			}
 		}
 		
@@ -321,7 +321,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		{
 			get
 			{
-				return this.GetTable<SocialDetailEntity>().SetTable<SocialDetailEntity>();
+				return this.GetTable<SocialDetailEntity>();
 			}
 		}
 		
@@ -329,7 +329,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		{
 			get
 			{
-				return this.GetTable<UserActionEntity>().SetTable<UserActionEntity>();
+				return this.GetTable<UserActionEntity>();
 			}
 		}
 		
@@ -337,7 +337,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		{
 			get
 			{
-				return this.GetTable<UserActionTypeEntity>().SetTable<UserActionTypeEntity>();
+				return this.GetTable<UserActionTypeEntity>();
 			}
 		}
 		
@@ -345,7 +345,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		{
 			get
 			{
-				return this.GetTable<VerificationDefinitionEntity>().SetTable<VerificationDefinitionEntity>();
+				return this.GetTable<VerificationDefinitionEntity>();
 			}
 		}
 		
@@ -353,7 +353,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		{
 			get
 			{
-				return this.GetTable<WorkflowCheckpointEntity>().SetTable<WorkflowCheckpointEntity>();
+				return this.GetTable<WorkflowCheckpointEntity>();
 			}
 		}
 		
@@ -361,7 +361,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		{
 			get
 			{
-				return this.GetTable<WorkflowVerificationEntity>().SetTable<WorkflowVerificationEntity>();
+				return this.GetTable<WorkflowVerificationEntity>();
 			}
 		}
 	}
@@ -5203,7 +5203,7 @@ namespace Wonga.QA.Framework.Db.Risk
 		
 		private int _RiskBusinessApplicationId;
 		
-		private string _GraydonCompanyIdentifier;
+		private System.Nullable<System.Guid> _OrganisationId;
 		
 		private EntityRef<RiskApplicationEntity> _RiskApplicationEntity;
 		
@@ -5213,8 +5213,8 @@ namespace Wonga.QA.Framework.Db.Risk
     partial void OnCreated();
     partial void OnRiskBusinessApplicationIdChanging(int value);
     partial void OnRiskBusinessApplicationIdChanged();
-    partial void OnGraydonCompanyIdentifierChanging(string value);
-    partial void OnGraydonCompanyIdentifierChanged();
+    partial void OnOrganisationIdChanging(System.Nullable<System.Guid> value);
+    partial void OnOrganisationIdChanged();
     #endregion
 		
 		public RiskBusinessApplicationEntity()
@@ -5247,22 +5247,22 @@ namespace Wonga.QA.Framework.Db.Risk
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GraydonCompanyIdentifier", DbType="NVarChar(80) NOT NULL", CanBeNull=false)]
-		public string GraydonCompanyIdentifier
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrganisationId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> OrganisationId
 		{
 			get
 			{
-				return this._GraydonCompanyIdentifier;
+				return this._OrganisationId;
 			}
 			set
 			{
-				if ((this._GraydonCompanyIdentifier != value))
+				if ((this._OrganisationId != value))
 				{
-					this.OnGraydonCompanyIdentifierChanging(value);
+					this.OnOrganisationIdChanging(value);
 					this.SendPropertyChanging();
-					this._GraydonCompanyIdentifier = value;
-					this.SendPropertyChanged("GraydonCompanyIdentifier");
-					this.OnGraydonCompanyIdentifierChanged();
+					this._OrganisationId = value;
+					this.SendPropertyChanged("OrganisationId");
+					this.OnOrganisationIdChanged();
 				}
 			}
 		}

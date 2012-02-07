@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.BankGateway
 {
     [XmlRoot("SendStandardPaymentToBatchMessage", Namespace = "Wonga.BankGateway.InternalMessages.Standard.Za.SagaMessages", DataType = "Wonga.BankGateway.InternalMessages.SagaMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage,Wonga.BankGateway.Core.Interfaces.ISendPaymentToBatchMessage")]
-    public class SendStandardPaymentToBatchZaCommand : MsmqMessage<SendStandardPaymentToBatchZaCommand>
+    public partial class SendStandardPaymentToBatchZaCommand : MsmqMessage<SendStandardPaymentToBatchZaCommand>
     {
         public Guid BatchQueueId { get; set; }
         public Int32 TransactionId { get; set; }

@@ -24,7 +24,7 @@ namespace Wonga.QA.Framework.Db.CardPayment
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="CardPayment")]
-	public partial class CardPaymentDatabase : System.Data.Linq.DataContext
+	public partial class CardPaymentDatabase : DbDatabase<CardPaymentDatabase>
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -70,7 +70,7 @@ namespace Wonga.QA.Framework.Db.CardPayment
 		{
 			get
 			{
-				return this.GetTable<MSSQLDeploy>().SetTable<MSSQLDeploy>();
+				return this.GetTable<MSSQLDeploy>();
 			}
 		}
 		
@@ -78,7 +78,7 @@ namespace Wonga.QA.Framework.Db.CardPayment
 		{
 			get
 			{
-				return this.GetTable<ScheduleEntity>().SetTable<ScheduleEntity>();
+				return this.GetTable<ScheduleEntity>();
 			}
 		}
 		
@@ -86,7 +86,7 @@ namespace Wonga.QA.Framework.Db.CardPayment
 		{
 			get
 			{
-				return this.GetTable<ServiceLoginEntity>().SetTable<ServiceLoginEntity>();
+				return this.GetTable<ServiceLoginEntity>();
 			}
 		}
 	}

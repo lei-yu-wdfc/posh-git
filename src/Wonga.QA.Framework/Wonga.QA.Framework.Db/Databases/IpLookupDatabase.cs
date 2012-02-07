@@ -24,7 +24,7 @@ namespace Wonga.QA.Framework.Db.IpLookup
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="IpLookup")]
-	public partial class IpLookupDatabase : System.Data.Linq.DataContext
+	public partial class IpLookupDatabase : DbDatabase<IpLookupDatabase>
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -67,7 +67,7 @@ namespace Wonga.QA.Framework.Db.IpLookup
 		{
 			get
 			{
-				return this.GetTable<Ip2LocationEntity>().SetTable<Ip2LocationEntity>();
+				return this.GetTable<Ip2LocationEntity>();
 			}
 		}
 		
@@ -75,7 +75,7 @@ namespace Wonga.QA.Framework.Db.IpLookup
 		{
 			get
 			{
-				return this.GetTable<MSSQLDeploy>().SetTable<MSSQLDeploy>();
+				return this.GetTable<MSSQLDeploy>();
 			}
 		}
 	}

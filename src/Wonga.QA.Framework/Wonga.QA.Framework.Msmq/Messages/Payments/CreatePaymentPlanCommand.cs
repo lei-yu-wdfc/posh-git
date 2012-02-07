@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Payments
 {
     [XmlRoot("CreatePaymentPlanMessage", Namespace = "Wonga.Payments.InternalMessages.Messages", DataType = "")]
-    public class CreatePaymentPlanCommand : MsmqMessage<CreatePaymentPlanCommand>
+    public partial class CreatePaymentPlanCommand : MsmqMessage<CreatePaymentPlanCommand>
     {
         public Guid AccountId { get; set; }
         public Guid ApplicationId { get; set; }

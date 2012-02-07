@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Risk
 {
     [XmlRoot("EidInitialRequestMessage", Namespace = "Wonga.Risk.InternalMessages.Equifax", DataType = "Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
-    public class EidInitialRequestCaCommand : MsmqMessage<EidInitialRequestCaCommand>
+    public partial class EidInitialRequestCaCommand : MsmqMessage<EidInitialRequestCaCommand>
     {
         public Guid AccountId { get; set; }
         public Guid SagaId { get; set; }

@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Payments
 {
     [XmlRoot("TakePaymentFailedMessage", Namespace = "Wonga.Payments.InternalMessages.SagaMessages", DataType = "Wonga.Payments.InternalMessages.SagaMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
-    public class TakePaymentFailedCommand : MsmqMessage<TakePaymentFailedCommand>
+    public partial class TakePaymentFailedCommand : MsmqMessage<TakePaymentFailedCommand>
     {
         public Guid AccountId { get; set; }
         public Guid PaymentCardId { get; set; }

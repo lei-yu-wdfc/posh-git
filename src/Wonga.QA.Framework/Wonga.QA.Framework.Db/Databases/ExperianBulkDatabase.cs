@@ -24,7 +24,7 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="ExperianBulk")]
-	public partial class ExperianBulkDatabase : System.Data.Linq.DataContext
+	public partial class ExperianBulkDatabase : DbDatabase<ExperianBulkDatabase>
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -82,7 +82,7 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
 		{
 			get
 			{
-				return this.GetTable<CustomerEntity>().SetTable<CustomerEntity>();
+				return this.GetTable<CustomerEntity>();
 			}
 		}
 		
@@ -90,7 +90,7 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
 		{
 			get
 			{
-				return this.GetTable<FactorEntity>().SetTable<FactorEntity>();
+				return this.GetTable<FactorEntity>();
 			}
 		}
 		
@@ -98,7 +98,7 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
 		{
 			get
 			{
-				return this.GetTable<MSSQLDeploy>().SetTable<MSSQLDeploy>();
+				return this.GetTable<MSSQLDeploy>();
 			}
 		}
 		
@@ -106,7 +106,7 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
 		{
 			get
 			{
-				return this.GetTable<OperationEntity>().SetTable<OperationEntity>();
+				return this.GetTable<OperationEntity>();
 			}
 		}
 		
@@ -114,7 +114,7 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
 		{
 			get
 			{
-				return this.GetTable<ParsedDataEntity>().SetTable<ParsedDataEntity>();
+				return this.GetTable<ParsedDataEntity>();
 			}
 		}
 		
@@ -122,7 +122,7 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
 		{
 			get
 			{
-				return this.GetTable<ParsedDataTempEntity>().SetTable<ParsedDataTempEntity>();
+				return this.GetTable<ParsedDataTempEntity>();
 			}
 		}
 		
@@ -130,7 +130,7 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
 		{
 			get
 			{
-				return this.GetTable<TypeEntity>().SetTable<TypeEntity>();
+				return this.GetTable<TypeEntity>();
 			}
 		}
 	}

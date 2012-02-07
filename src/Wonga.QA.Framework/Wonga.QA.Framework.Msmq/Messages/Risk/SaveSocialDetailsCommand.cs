@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Risk
 {
     [XmlRoot("SaveSocialDetailsMessage", Namespace = "Wonga.Risk", DataType = "")]
-    public class SaveSocialDetailsCommand : MsmqMessage<SaveSocialDetailsCommand>
+    public partial class SaveSocialDetailsCommand : MsmqMessage<SaveSocialDetailsCommand>
     {
         public Guid AccountId { get; set; }
         public MaritalStatusEnum MaritalStatus { get; set; }
