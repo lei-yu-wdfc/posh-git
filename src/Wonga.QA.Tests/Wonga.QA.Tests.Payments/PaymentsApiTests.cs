@@ -9,26 +9,18 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments
 {
-    public class FooFixture
-    {
-        [Test]
-        public void FooTest()
-        {
-            //new GetAccountQuery().Foo();
-            CreateAccountCommand.New();
-        }
-    }
-
     public class PaymentsApiTests
     {
         [Test, AUT(AUT.Uk, AUT.Za, AUT.Ca)]
         public void CreateFixTermLoanApplciation()
         {
+            Console.WriteLine(Driver.Db.OpsSagas.Log.GetType());
+            Console.WriteLine(Driver.Db.Payments.Log.GetType());
+            return;
+
             Customer customer = CustomerBuilder.New().Build();
             Application application = ApplicationBuilder.New(customer).Build();
-
-            //ApiResponse response = Driver.Api.Queries.Post(new GetAccountSummaryZaQuery { AccountId = customer.Id });
-            //Assert.AreEqual(application.Id, Guid.Parse(response.Values["ApplicationId"].Single()));
+            application.Repay();
         }
     }
 }

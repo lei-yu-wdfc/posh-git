@@ -11,7 +11,7 @@
 
 namespace Wonga.QA.Framework.Db.Payments
 {
-	using Wonga.QA.Framework.Db;
+	
 	using System.Data.Linq;
 	using System.Data.Linq.Mapping;
 	using System.Data;

@@ -3,5 +3,6 @@ obj/
 _ReSharper.*/
 
 *.dotCover
+*.ReSharper
 *.suo
 *.user
