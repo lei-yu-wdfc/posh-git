@@ -18,9 +18,7 @@ namespace Wonga.QA.Framework.Core
         public static ApiConfig Api { get; set; }
         public static MsmqConfig Msmq { get; set; }
         public static DbConfig Db { get; set; }
-
-        //NOTE:Temporary fix so that Selenium works on new Framework
-        public static String UiHome { get; set; }
+        public static UiConfig Ui { get; set; }
 
         static Config()
         {
@@ -31,13 +29,13 @@ namespace Wonga.QA.Framework.Core
             {
                 case SUT.Dev:
                     Api = new ApiConfig("localhost");
+                    Ui = new UiConfig("localhost");
                     Msmq = new MsmqConfig(".");
                     Db = new DbConfig(".");
-                    UiHome = "localhost";
                     break;
                 case SUT.WIP:
                     Api = new ApiConfig(String.Format("wip.api.{0}.wonga.com", AUT));
-                    UiHome = String.Format("http://wip.{0}.wonga.com", AUT);
+                    Ui = new UiConfig(String.Format("wip.{0}.wonga.com", AUT));
                     Msmq =
                         AUT == AUT.Uk ? new MsmqConfig("WIP2") :
                         AUT == AUT.Za ? new MsmqConfig("WIP4") :
@@ -51,7 +49,7 @@ namespace Wonga.QA.Framework.Core
                     break;
                 case SUT.UAT:
                     Api = new ApiConfig(String.Format("uat.api.{0}.wonga.com", AUT));
-                    UiHome = String.Format("http://uat.{0}.wonga.com", AUT);
+                    Ui = new UiConfig(String.Format("uat.{0}.wonga.com", AUT));
                     Msmq =
                         AUT == AUT.Uk ? new MsmqConfig("UAT2") :
                         AUT == AUT.Za ? new MsmqConfig("UAT4") :
@@ -65,7 +63,7 @@ namespace Wonga.QA.Framework.Core
                     break;
                 case SUT.RC:
                     Api = new ApiConfig(String.Format("rc.api.{0}.wonga.com", AUT));
-                    UiHome = String.Format("http://rc.{0}.wonga.com", AUT);
+                    Ui = new UiConfig(String.Format("rc.{0}.wonga.com", AUT));
                     Msmq =
                         AUT == AUT.Uk ? new MsmqConfig("RC2") :
                         AUT == AUT.Za ? new MsmqConfig("RC4") :
@@ -241,6 +239,16 @@ namespace Wonga.QA.Framework.Core
                 TransUnion = String.Format(format, server, "TransUnion");
                 Uru = String.Format(format, server, "Uru");
                 WongaPay = String.Format(format, server, "WongaPay");
+            }
+        }
+
+        public class UiConfig
+        {
+            public Uri Home { get; set; }
+
+            public UiConfig(String host)
+            {
+                Home = new UriBuilder { Host = host }.Uri;
             }
         }
     }

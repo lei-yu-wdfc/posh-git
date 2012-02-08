@@ -10,9 +10,9 @@ using OpenQA.Selenium.Firefox;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Pages;
 
-
 namespace Wonga.QA.Framework.UI
 {
+    [Obsolete]
     public class UiClient : IDisposable
     {
         public IWebDriver Driver;
@@ -32,7 +32,7 @@ namespace Wonga.QA.Framework.UI
 
         public HomePage Home()
         {
-            Driver.Navigate().GoToUrl(Config.UiHome);
+            Driver.Navigate().GoToUrl(Config.Ui.Home);
             return new HomePage(this);
         }
 
