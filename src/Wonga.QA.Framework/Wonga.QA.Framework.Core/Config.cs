@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -80,16 +81,16 @@ namespace Wonga.QA.Framework.Core
                     throw new NotImplementedException();
             }
 
-            /*Trace.WriteLine(SUT, typeof(Config).FullName);
+            Trace.WriteLine(SUT, typeof(Config).FullName);
             Trace.WriteLine(AUT, typeof(Config).FullName);
-            foreach (Object config in new Object[] { Api, Msmq, Db })
+            /*foreach (Object config in new Object[] { Api, Msmq, Db })
                 foreach (PropertyInfo property in config.GetType().GetProperties())
                     Trace.WriteLine(String.Format("{0} = {1}", property.Name, property.GetValue(config, null)), config.GetType().FullName);*/
         }
 
         public static T Throw<T>()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(typeof(T).FullName);
         }
 
         private static T GetValue<T>()

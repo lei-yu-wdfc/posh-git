@@ -37,7 +37,7 @@
     <Compile Include="ApplicationBuilder.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="CustomerBuilder.cs" />
-    <Compile Include="Drivers.cs" />
+    <Compile Include="Driver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -61,6 +61,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

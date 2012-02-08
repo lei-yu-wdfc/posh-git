@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Data.Linq;
+using System.Diagnostics;
 using System.Linq;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db.Payments;
 
 namespace Wonga.QA.Framework
 {
@@ -10,12 +13,9 @@ namespace Wonga.QA.Framework
         private Guid _id;
         private Customer _customer;
 
-        private Drivers _drivers;
-
         private ApplicationBuilder()
         {
             _id = Guid.NewGuid();
-            _drivers = new Drivers();
         }
 
         public static ApplicationBuilder New(Customer customer)
@@ -25,7 +25,7 @@ namespace Wonga.QA.Framework
 
         public Application Build()
         {
-            _drivers.Api.Commands.Post(new ApiRequest[]
+            Driver.Api.Commands.Post(new ApiRequest[]
             {
                 SubmitApplicationBehaviourCommand.New(r => r.ApplicationId = _id),
                 SubmitClientWatermarkCommand.New(r => { r.ApplicationId=_id; r.AccountId = _customer.Id; }),
@@ -38,15 +38,27 @@ namespace Wonga.QA.Framework
                 VerifyFixedTermLoanCommand.New(r => { r.ApplicationId = _id; r.AccountId=_customer.Id; })
             });
 
-            Do.Until(() => _drivers.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["ApplicationDecisionStatus"].Single() == "Accepted");
+            Do.Until(() => Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["ApplicationDecisionStatus"].Single() == "Accepted");
 
-            _drivers.Api.Commands.Post(new SignApplicationCommand
+            Driver.Api.Commands.Post(new SignApplicationCommand
             {
                 AccountId = _customer.Id,
                 ApplicationId = _id,
             });
 
-            Do.Until(() => _drivers.Api.Queries.Post(new GetAccountSummaryQuery { AccountId = _customer.Id }).Values["HasCurrentLoan"].Single() == "true");
+            ApiRequest summary = Config.AUT == AUT.Za ? (ApiRequest)new GetAccountSummaryZaQuery { AccountId = _customer.Id } : new GetAccountSummaryQuery { AccountId = _customer.Id };
+            Do.Until(() => Driver.Api.Queries.Post(summary).Values["HasCurrentLoan"].Single() == "true");
+
+            Int32 previous = 0;
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            Do.While(() =>
+            {
+                Int32 current = Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == _id).Transactions.Count);
+                if (previous != current)
+                    stopwatch.Restart();
+                previous = current;
+                return stopwatch.Elapsed < TimeSpan.FromSeconds(5);
+            });
 
             return new Application(_id);
         }

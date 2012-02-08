@@ -5,7 +5,7 @@ using Wonga.QA.Framework.Msmq;
 
 namespace Wonga.QA.Framework
 {
-    public class Drivers
+    /*public class Driver
     {
         private ApiDriver _api;
         private MsmqDriver _msmq;
@@ -28,7 +28,9 @@ namespace Wonga.QA.Framework
             get { return _db ?? (_db = new DbDriver()); }
             set { _db = value; }
         }
-    }
+
+        public static DbDriver Db { get; set; }
+    }*/
 
     public static class Driver
     {

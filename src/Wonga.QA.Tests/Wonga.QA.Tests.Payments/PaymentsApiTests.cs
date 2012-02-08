@@ -14,10 +14,6 @@ namespace Wonga.QA.Tests.Payments
         [Test, AUT(AUT.Uk, AUT.Za, AUT.Ca)]
         public void CreateFixTermLoanApplciation()
         {
-            Console.WriteLine(Driver.Db.OpsSagas.Log.GetType());
-            Console.WriteLine(Driver.Db.Payments.Log.GetType());
-            return;
-
             Customer customer = CustomerBuilder.New().Build();
             Application application = ApplicationBuilder.New(customer).Build();
             application.Repay();

@@ -50,7 +50,10 @@ namespace Wonga.QA.Generators.Db
 
                     XAttribute member = table.Attribute("Member");
                     if (member.Value.ToLower().StartsWith(schema))
-                        member.SetValue(member.Value.Substring(schema.Length));
+                    {
+                        String value = member.Value.Substring(schema.Length);
+                        attributes.Where(a => a.Value == member.Value).ForEach(a => a.SetValue(value));
+                    }
 
                     XAttribute type = table.Element(ns.GetName("Type")).Attribute("Name");
                     if (type.Value.ToLower().StartsWith(schema))

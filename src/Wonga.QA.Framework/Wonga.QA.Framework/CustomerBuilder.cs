@@ -11,14 +11,12 @@ namespace Wonga.QA.Framework
         private Guid _id;
         private Guid _verification;
         private String _employerName;
-        private Drivers _drivers;
 
         private CustomerBuilder()
         {
             _id = Data.GetId();
             _verification = Data.GetId();
             _employerName = Data.GetEmployerName();
-            _drivers = new Drivers();
         }
 
         public static CustomerBuilder New()
@@ -92,10 +90,10 @@ namespace Wonga.QA.Framework
                     throw new NotImplementedException();
             }
 
-            _drivers.Api.Commands.Post(requests);
+            Driver.Api.Commands.Post(requests);
 
-            Do.Until(() => _drivers.Db.Payments.AccountPreferences.Single(a => a.AccountId == _id));
-            Do.Until(() => _drivers.Db.Risk.RiskAccounts.Single(a => a.AccountId == _id));
+            Do.Until(() => Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == _id));
+            Do.Until(() => Driver.Db.Risk.RiskAccounts.Single(a => a.AccountId == _id));
 
             return new Customer(_id);
         }
