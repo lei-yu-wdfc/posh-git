@@ -8,6 +8,8 @@ namespace Wonga.QA.Framework.Core
     {
         //todo void actions
         //todo empty collections
+        //todo fluent instances
+        //todo track
         private static TimeSpan _timeout = TimeSpan.FromSeconds(30);
         private static TimeSpan _interval = TimeSpan.FromSeconds(1);
 
