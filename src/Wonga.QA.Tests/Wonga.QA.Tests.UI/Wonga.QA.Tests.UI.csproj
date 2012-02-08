@@ -58,7 +58,7 @@
   <ItemGroup>
     <Compile Include="UiTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Wb\L0HappyPath.cs" />
+    <Compile Include="Wb\SeleniumTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
