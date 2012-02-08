@@ -17,7 +17,19 @@ namespace Wonga.QA.Tests.Payments
             //new GetAccountQuery().Foo();
             CreateAccountCommand.New();
         }
+
+        [Test]
+        public void BarTEst()
+        {
+            var cust = CustomerBuilder.New().Build();
+            var company = CompanyBuilder.New(cust).Build();
+            var app = ApplicationBuilder.New(cust,company).Build();
+        }
     }
+
+    
+
+    
 
     public class PaymentsApiTests
     {

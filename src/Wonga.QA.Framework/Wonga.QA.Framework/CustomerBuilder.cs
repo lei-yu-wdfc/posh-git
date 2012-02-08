@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
@@ -11,6 +12,7 @@ namespace Wonga.QA.Framework
         private Guid _id;
         private Guid _verification;
         private String _employerName;
+        private String _middleName;
         private Drivers _drivers;
 
         private CustomerBuilder()
@@ -18,6 +20,7 @@ namespace Wonga.QA.Framework
             _id = Data.GetId();
             _verification = Data.GetId();
             _employerName = Data.GetEmployerName();
+            _middleName = "MiddleName";
             _drivers = new Drivers();
         }
 
@@ -34,6 +37,12 @@ namespace Wonga.QA.Framework
         public CustomerBuilder WithEmployer(String name)
         {
             _employerName = name;
+            return this;
+        }
+
+        public CustomerBuilder WithMiddleName(String name)
+        {
+            _middleName = name;
             return this;
         }
 
@@ -85,6 +94,15 @@ namespace Wonga.QA.Framework
                             r.AccountId = _id;
                             r.VerificationId = _verification;
                         })
+                    });
+                    break;
+
+                case AUT.Wb:
+                    requests.AddRange(new ApiRequest[]
+                    {
+                        SaveCustomerDetailsUkCommand.New(r=> { r.AccountId = _id; r.MiddleName = _middleName;}),
+                        SaveCustomerAddressUkCommand.New(r=>r.AccountId = _id),
+                        AddBankAccountUkCommand.New(r=>r.AccountId = _id)
                     });
                     break;
 

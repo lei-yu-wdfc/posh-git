@@ -33,8 +33,17 @@
     <NoWarn />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Defaults\AddBankAccountUkCommand.cs" />
     <Compile Include="Defaults\AddBankAccountZaCommand.cs" />
     <Compile Include="Defaults\AddBankAccountCaCommand.cs" />
+    <Compile Include="Defaults\AddBusinessBankAccountWbUkCommand.cs" />
+    <Compile Include="Defaults\AddBusinessPaymentCardWbUkCommand.cs" />
+    <Compile Include="Defaults\AddPrimaryOrganisationDirectorCommand.cs" />
+    <Compile Include="Defaults\AddSecondaryOrganisationDirectorCommand.cs" />
+    <Compile Include="Defaults\CreateBusinessFixedInstallmentLoanApplicationWbUkCommand.cs" />
+    <Compile Include="Defaults\SaveCustomerAddressUkCommand.cs" />
+    <Compile Include="Defaults\SaveCustomerDetailsUkCommand.cs" />
+    <Compile Include="Defaults\SaveOrganisationDetailsCommand.cs" />
     <Compile Include="Defaults\VerifyMobilePhoneCaCommand.cs" />
     <Compile Include="Defaults\SaveEmploymentDetailsCaCommand.cs" />
     <Compile Include="Defaults\SaveCustomerAddressCaCommand.cs" />
