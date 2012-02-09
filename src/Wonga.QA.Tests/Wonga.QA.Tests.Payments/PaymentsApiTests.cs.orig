@@ -17,6 +17,17 @@ namespace Wonga.QA.Tests.Payments
             Customer customer = CustomerBuilder.New().Build();
             Application application = ApplicationBuilder.New(customer).Build();
             application.Repay();
+<<<<<<< HEAD
+        }
+
+        [Test]
+        public void TESTE()
+        {
+            var cust = CustomerBuilder.New().Build();
+            var comp = CompanyBuilder.New(cust).Build();
+            var app = ApplicationBuilder.New(cust, comp).Build();
+=======
+>>>>>>> master
         }
     }
 }

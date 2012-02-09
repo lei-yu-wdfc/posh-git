@@ -1,0 +1,152 @@
+<<<<<<< HEAD
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5D8AEAB2-EB00-45CA-86D1-A5B4A7C6ED2F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Wonga.QA.Framework</RootNamespace>
+    <AssemblyName>Wonga.QA.Framework</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>$(SolutionDir)\..\..\bin\$(SolutionName)</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>$(SolutionDir)\..\..\bin\$(SolutionName)</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn />
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Application.cs" />
+    <Compile Include="ApplicationBuilder.cs" />
+    <Compile Include="Company.cs" />
+    <Compile Include="CompanyBuilder.cs" />
+    <Compile Include="Customer.cs" />
+    <Compile Include="CustomerBuilder.cs" />
+    <Compile Include="Driver.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Wonga.QA.Framework.Api\Wonga.QA.Framework.Api.csproj">
+      <Project>{87FC18E9-2B6B-4B8C-BDA0-544E51AC8D96}</Project>
+      <Name>Wonga.QA.Framework.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wonga.QA.Framework.Core\Wonga.QA.Framework.Core.csproj">
+      <Project>{BACA1D90-F604-476F-ACDE-A9839E85147F}</Project>
+      <Name>Wonga.QA.Framework.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wonga.QA.Framework.Db\Wonga.QA.Framework.Db.csproj">
+      <Project>{06D44CDD-9AB7-47EC-8D7A-0E548465EF9D}</Project>
+      <Name>Wonga.QA.Framework.Db</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wonga.QA.Framework.Msmq\Wonga.QA.Framework.Msmq.csproj">
+      <Project>{87AAAAD5-5EAE-473C-9A05-7696E6853478}</Project>
+      <Name>Wonga.QA.Framework.Msmq</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.XML" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+=======
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5D8AEAB2-EB00-45CA-86D1-A5B4A7C6ED2F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Wonga.QA.Framework</RootNamespace>
+    <AssemblyName>Wonga.QA.Framework</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>$(SolutionDir)\..\..\bin\$(SolutionName)</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>$(SolutionDir)\..\..\bin\$(SolutionName)</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn />
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Application.cs" />
+    <Compile Include="ApplicationBuilder.cs" />
+    <Compile Include="Customer.cs" />
+    <Compile Include="CustomerBuilder.cs" />
+    <Compile Include="Driver.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Wonga.QA.Framework.Api\Wonga.QA.Framework.Api.csproj">
+      <Project>{87FC18E9-2B6B-4B8C-BDA0-544E51AC8D96}</Project>
+      <Name>Wonga.QA.Framework.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wonga.QA.Framework.Core\Wonga.QA.Framework.Core.csproj">
+      <Project>{BACA1D90-F604-476F-ACDE-A9839E85147F}</Project>
+      <Name>Wonga.QA.Framework.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wonga.QA.Framework.Db\Wonga.QA.Framework.Db.csproj">
+      <Project>{06D44CDD-9AB7-47EC-8D7A-0E548465EF9D}</Project>
+      <Name>Wonga.QA.Framework.Db</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wonga.QA.Framework.Msmq\Wonga.QA.Framework.Msmq.csproj">
+      <Project>{87AAAAD5-5EAE-473C-9A05-7696E6853478}</Project>
+      <Name>Wonga.QA.Framework.Msmq</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.XML" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+>>>>>>> master
+</Project>

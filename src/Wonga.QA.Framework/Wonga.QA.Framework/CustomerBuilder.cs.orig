@@ -12,13 +12,20 @@ namespace Wonga.QA.Framework
         private Guid _id;
         private Guid _verification;
         private String _employerName;
+<<<<<<< HEAD
         private String _middleName;
+=======
+>>>>>>> master
 
         private CustomerBuilder()
         {
             _id = Data.GetId();
             _verification = Data.GetId();
+<<<<<<< HEAD
             _middleName = Data.WithMask();
+=======
+            _employerName = Data.GetEmployerName();
+>>>>>>> master
         }
 
         public static CustomerBuilder New()
