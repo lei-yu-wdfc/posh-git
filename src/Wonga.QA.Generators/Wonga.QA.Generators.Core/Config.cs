@@ -58,6 +58,7 @@ namespace Wonga.QA.Generators.Core
                 "Payments",
                 "Risk",
                 "Bi",
+                //"Marketing",
                 "BankGateway",
                 "Blacklist",
                 "CallReport",

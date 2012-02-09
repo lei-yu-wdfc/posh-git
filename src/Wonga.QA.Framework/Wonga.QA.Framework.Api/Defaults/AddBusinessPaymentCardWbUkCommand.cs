@@ -8,16 +8,16 @@ namespace Wonga.QA.Framework.Api
         public override void Default()
         {
             CardType = "VISA DEBIT";
-            ExpiryDate = DateTime.Now.AddYears(4).ToString("yyyy-MM");
+            ExpiryDate = DateTime.Now.AddYears(4).ToDate(DateFormat.YearMonth);
             HolderName = Data.GetName();
-            IsCreditCard = "0";
-            IsPrimary = "0";
-            IssueNo = "123";
-            Number = "4444333322221111";
+            IsCreditCard = false;
+            IsPrimary = false;
+            IssueNo = 123;
+            Number = 4444333322221111;
             OrganisationId = Data.GetId();
             PaymentCardId = Data.GetId();
-            SecurityCode = "123";
-            StartDate = DateTime.Now.AddYears(-2).ToString("yyyy-MM");
+            SecurityCode = 123;
+            StartDate = DateTime.Now.AddYears(-2).ToDate(DateFormat.YearMonth);
         }
     }
 }

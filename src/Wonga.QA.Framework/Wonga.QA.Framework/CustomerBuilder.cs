@@ -13,15 +13,12 @@ namespace Wonga.QA.Framework
         private Guid _verification;
         private String _employerName;
         private String _middleName;
-        private Drivers _drivers;
 
         private CustomerBuilder()
         {
             _id = Data.GetId();
             _verification = Data.GetId();
-            _employerName = Data.GetEmployerName();
-            _middleName = "MiddleName";
-            _drivers = new Drivers();
+            _middleName = Data.WithMask();
         }
 
         public static CustomerBuilder New()
@@ -34,18 +31,12 @@ namespace Wonga.QA.Framework
             return new CustomerBuilder { _id = id };
         }
 
-        public CustomerBuilder WithEmployer(String name)
+        public CustomerBuilder WithMask(String mask)
         {
-            _employerName = name;
+            _middleName = mask;
             return this;
         }
-
-        public CustomerBuilder WithMiddleName(String name)
-        {
-            _middleName = name;
-            return this;
-        }
-
+        
         public Customer Build()
         {
             List<ApiRequest> requests = new List<ApiRequest>
@@ -110,10 +101,10 @@ namespace Wonga.QA.Framework
                     throw new NotImplementedException();
             }
 
-            _drivers.Api.Commands.Post(requests);
+            Driver.Api.Commands.Post(requests);
 
-            Do.Until(() => _drivers.Db.Payments.AccountPreferences.Single(a => a.AccountId == _id));
-            Do.Until(() => _drivers.Db.Risk.RiskAccounts.Single(a => a.AccountId == _id));
+            Do.Until(() => Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == _id));
+            Do.Until(() => Driver.Db.Risk.RiskAccounts.Single(a => a.AccountId == _id));
 
             return new Customer(_id);
         }

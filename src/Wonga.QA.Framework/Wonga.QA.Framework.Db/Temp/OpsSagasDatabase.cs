@@ -24,7 +24,7 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 	
 	
 	[System.Data.Linq.Mapping.DatabaseAttribute(Name="OpsSagas")]
-	public partial class OpsSagasDatabase : System.Data.Linq.DataContext
+	public partial class OpsSagasDatabase : DbDatabase<OpsSagasDatabase>
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();

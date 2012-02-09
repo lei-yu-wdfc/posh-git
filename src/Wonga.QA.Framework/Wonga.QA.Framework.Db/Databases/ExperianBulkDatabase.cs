@@ -11,7 +11,6 @@
 
 namespace Wonga.QA.Framework.Db.ExperianBulk
 {
-	using Wonga.QA.Framework.Db;
 	using System.Data.Linq;
 	using System.Data.Linq.Mapping;
 	using System.Data;
@@ -449,7 +448,7 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
 		
 		private int _TypeId;
 		
-		private EntitySet<ParsedDataEntity> _Experian_ParsedDatas;
+		private EntitySet<ParsedDataEntity> _ParsedDatas;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -465,7 +464,7 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
 		
 		public FactorEntity()
 		{
-			this._Experian_ParsedDatas = new EntitySet<ParsedDataEntity>(new Action<ParsedDataEntity>(this.attach_Experian_ParsedDatas), new Action<ParsedDataEntity>(this.detach_Experian_ParsedDatas));
+			this._ParsedDatas = new EntitySet<ParsedDataEntity>(new Action<ParsedDataEntity>(this.attach_ParsedDatas), new Action<ParsedDataEntity>(this.detach_ParsedDatas));
 			OnCreated();
 		}
 		
@@ -529,16 +528,16 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Experian_ParsedData_Factors_FactorId", Storage="_Experian_ParsedDatas", ThisKey="FactorId", OtherKey="FactorId", DeleteRule="NO ACTION")]
-		public EntitySet<ParsedDataEntity> Experian_ParsedDatas
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Experian_ParsedData_Factors_FactorId", Storage="_ParsedDatas", ThisKey="FactorId", OtherKey="FactorId", DeleteRule="NO ACTION")]
+		public EntitySet<ParsedDataEntity> ParsedDatas
 		{
 			get
 			{
-				return this._Experian_ParsedDatas;
+				return this._ParsedDatas;
 			}
 			set
 			{
-				this._Experian_ParsedDatas.Assign(value);
+				this._ParsedDatas.Assign(value);
 			}
 		}
 		
@@ -562,13 +561,13 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
 			}
 		}
 		
-		private void attach_Experian_ParsedDatas(ParsedDataEntity entity)
+		private void attach_ParsedDatas(ParsedDataEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.FactorEntity = this;
 		}
 		
-		private void detach_Experian_ParsedDatas(ParsedDataEntity entity)
+		private void detach_ParsedDatas(ParsedDataEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.FactorEntity = null;
@@ -1028,12 +1027,12 @@ namespace Wonga.QA.Framework.Db.ExperianBulk
 					if ((previousValue != null))
 					{
 						this._FactorEntity.Entity = null;
-						previousValue.Experian_ParsedDatas.Remove(this);
+						previousValue.ParsedDatas.Remove(this);
 					}
 					this._FactorEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Experian_ParsedDatas.Add(this);
+						value.ParsedDatas.Add(this);
 						this._FactorId = value.FactorId;
 					}
 					else

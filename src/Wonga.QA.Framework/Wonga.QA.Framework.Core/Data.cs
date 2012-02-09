@@ -21,7 +21,6 @@ namespace Wonga.QA.Framework.Core
         public static Date GetDoB()
         {
             return RandomDate(new DateTime(1900, 1, 1), DateTime.Today.AddYears(-18));
-            //return new DateTime(1990, 1, 1);
         }
 
         public static String GetEmail()
@@ -30,25 +29,21 @@ namespace Wonga.QA.Framework.Core
             return String.Format("qa.wonga.com+{0}@wonga.com", DateTime.Now.Ticks);
         }
 
-        public static String GetEmployerName()
+        public static String WithMask()
         {
-            return "test:EmployedMask";
+            switch (Config.AUT)
+            {
+                case AUT.Wb:
+                    return "TESTNoCheck";
+                default:
+                    return "test:EmployedMask";
+            }
         }
 
         public static String GetPassword()
         {
             return "Passw0rd";
         }
-
-        /*public static TitleEnum GetTitle()
-        {
-            return RandomEnum<TitleEnum>();
-        }*/
-
-        /*public static GenderEnum GetGender()
-        {
-            return RandomEnum<GenderEnum>();
-        }*/
 
         public static String GetName()
         {

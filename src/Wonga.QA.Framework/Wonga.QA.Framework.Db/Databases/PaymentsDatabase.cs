@@ -11,7 +11,6 @@
 
 namespace Wonga.QA.Framework.Db.Payments
 {
-	using Wonga.QA.Framework.Db;
 	using System.Data.Linq;
 	using System.Data.Linq.Mapping;
 	using System.Data;
@@ -145,6 +144,12 @@ namespace Wonga.QA.Framework.Db.Payments
     partial void InsertUserEntity(UserEntity instance);
     partial void UpdateUserEntity(UserEntity instance);
     partial void DeleteUserEntity(UserEntity instance);
+    partial void InsertVariableInterestRateDetailEntity(VariableInterestRateDetailEntity instance);
+    partial void UpdateVariableInterestRateDetailEntity(VariableInterestRateDetailEntity instance);
+    partial void DeleteVariableInterestRateDetailEntity(VariableInterestRateDetailEntity instance);
+    partial void InsertVariableInterestRateEntity(VariableInterestRateEntity instance);
+    partial void UpdateVariableInterestRateEntity(VariableInterestRateEntity instance);
+    partial void DeleteVariableInterestRateEntity(VariableInterestRateEntity instance);
     #endregion
 		
 		public PaymentsDatabase(string connection) : 
@@ -474,6 +479,22 @@ namespace Wonga.QA.Framework.Db.Payments
 				return this.GetTable<UserEntity>();
 			}
 		}
+		
+		public System.Data.Linq.Table<VariableInterestRateDetailEntity> VariableInterestRateDetails
+		{
+			get
+			{
+				return this.GetTable<VariableInterestRateDetailEntity>();
+			}
+		}
+		
+		public System.Data.Linq.Table<VariableInterestRateEntity> VariableInterestRates
+		{
+			get
+			{
+				return this.GetTable<VariableInterestRateEntity>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="payment.AccountPreferences")]
@@ -764,12 +785,12 @@ namespace Wonga.QA.Framework.Db.Payments
 					if ((previousValue != null))
 					{
 						this._BankAccountsBaseEntity.Entity = null;
-						previousValue.Payment_AccountPreferences.Remove(this);
+						previousValue.AccountPreferences.Remove(this);
 					}
 					this._BankAccountsBaseEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Payment_AccountPreferences.Add(this);
+						value.AccountPreferences.Add(this);
 						this._PrimaryBankAccountId = value.BankAccountId;
 					}
 					else
@@ -798,12 +819,12 @@ namespace Wonga.QA.Framework.Db.Payments
 					if ((previousValue != null))
 					{
 						this._PaymentCardsBaseEntity.Entity = null;
-						previousValue.Payment_AccountPreferences.Remove(this);
+						previousValue.AccountPreferences.Remove(this);
 					}
 					this._PaymentCardsBaseEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Payment_AccountPreferences.Add(this);
+						value.AccountPreferences.Add(this);
 						this._PrimaryPaymentCardId = value.PaymentCardId;
 					}
 					else
@@ -973,12 +994,12 @@ namespace Wonga.QA.Framework.Db.Payments
 					if ((previousValue != null))
 					{
 						this._ApplicationEntity.Entity = null;
-						previousValue.Payment_AccountsApplications.Remove(this);
+						previousValue.AccountsApplications.Remove(this);
 					}
 					this._ApplicationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Payment_AccountsApplications.Add(this);
+						value.AccountsApplications.Add(this);
 						this._ApplicationId = value.ApplicationId;
 					}
 					else
@@ -1023,7 +1044,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private string _Name;
 		
-		private EntitySet<PromoCodeEntity> _Payment_PromoCodes;
+		private EntitySet<PromoCodeEntity> _PromoCodes;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1039,7 +1060,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		public AffiliateEntity()
 		{
-			this._Payment_PromoCodes = new EntitySet<PromoCodeEntity>(new Action<PromoCodeEntity>(this.attach_Payment_PromoCodes), new Action<PromoCodeEntity>(this.detach_Payment_PromoCodes));
+			this._PromoCodes = new EntitySet<PromoCodeEntity>(new Action<PromoCodeEntity>(this.attach_PromoCodes), new Action<PromoCodeEntity>(this.detach_PromoCodes));
 			OnCreated();
 		}
 		
@@ -1103,16 +1124,16 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_PromoCodes_Affiliates", Storage="_Payment_PromoCodes", ThisKey="AffiliateId", OtherKey="AffiliateId", DeleteRule="NO ACTION")]
-		public EntitySet<PromoCodeEntity> Payment_PromoCodes
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_PromoCodes_Affiliates", Storage="_PromoCodes", ThisKey="AffiliateId", OtherKey="AffiliateId", DeleteRule="NO ACTION")]
+		public EntitySet<PromoCodeEntity> PromoCodes
 		{
 			get
 			{
-				return this._Payment_PromoCodes;
+				return this._PromoCodes;
 			}
 			set
 			{
-				this._Payment_PromoCodes.Assign(value);
+				this._PromoCodes.Assign(value);
 			}
 		}
 		
@@ -1136,13 +1157,13 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		private void attach_Payment_PromoCodes(PromoCodeEntity entity)
+		private void attach_PromoCodes(PromoCodeEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.AffiliateEntity = this;
 		}
 		
-		private void detach_Payment_PromoCodes(PromoCodeEntity entity)
+		private void detach_PromoCodes(PromoCodeEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.AffiliateEntity = null;
@@ -1187,7 +1208,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private System.Nullable<System.DateTime> _DeclinedOn;
 		
-		private EntitySet<AccountsApplicationEntity> _Payment_AccountsApplications;
+		private EntitySet<AccountsApplicationEntity> _AccountsApplications;
 		
 		private EntityRef<ProductEntity> _ProductEntity;
 		
@@ -1197,11 +1218,13 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private EntityRef<FixedTermLoanApplicationEntity> _FixedTermLoanApplicationEntity;
 		
-		private EntitySet<RepaymentRequestDetailEntity> _Payment_RepaymentRequestDetails;
+		private EntitySet<PaymentPlanEntity> _PaymentPlans;
 		
-		private EntitySet<ScheduledPaymentEntity> _Payment_ScheduledPayments;
+		private EntitySet<RepaymentRequestDetailEntity> _RepaymentRequestDetails;
 		
-		private EntitySet<TransactionEntity> _Payment_Transactions;
+		private EntitySet<ScheduledPaymentEntity> _ScheduledPayments;
+		
+		private EntitySet<TransactionEntity> _Transactions;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1243,14 +1266,15 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		public ApplicationEntity()
 		{
-			this._Payment_AccountsApplications = new EntitySet<AccountsApplicationEntity>(new Action<AccountsApplicationEntity>(this.attach_Payment_AccountsApplications), new Action<AccountsApplicationEntity>(this.detach_Payment_AccountsApplications));
+			this._AccountsApplications = new EntitySet<AccountsApplicationEntity>(new Action<AccountsApplicationEntity>(this.attach_AccountsApplications), new Action<AccountsApplicationEntity>(this.detach_AccountsApplications));
 			this._ProductEntity = default(EntityRef<ProductEntity>);
 			this._ArrearEntity = default(EntityRef<ArrearEntity>);
 			this._BusinessFixedInstallmentLoanApplicationEntity = default(EntityRef<BusinessFixedInstallmentLoanApplicationEntity>);
 			this._FixedTermLoanApplicationEntity = default(EntityRef<FixedTermLoanApplicationEntity>);
-			this._Payment_RepaymentRequestDetails = new EntitySet<RepaymentRequestDetailEntity>(new Action<RepaymentRequestDetailEntity>(this.attach_Payment_RepaymentRequestDetails), new Action<RepaymentRequestDetailEntity>(this.detach_Payment_RepaymentRequestDetails));
-			this._Payment_ScheduledPayments = new EntitySet<ScheduledPaymentEntity>(new Action<ScheduledPaymentEntity>(this.attach_Payment_ScheduledPayments), new Action<ScheduledPaymentEntity>(this.detach_Payment_ScheduledPayments));
-			this._Payment_Transactions = new EntitySet<TransactionEntity>(new Action<TransactionEntity>(this.attach_Payment_Transactions), new Action<TransactionEntity>(this.detach_Payment_Transactions));
+			this._PaymentPlans = new EntitySet<PaymentPlanEntity>(new Action<PaymentPlanEntity>(this.attach_PaymentPlans), new Action<PaymentPlanEntity>(this.detach_PaymentPlans));
+			this._RepaymentRequestDetails = new EntitySet<RepaymentRequestDetailEntity>(new Action<RepaymentRequestDetailEntity>(this.attach_RepaymentRequestDetails), new Action<RepaymentRequestDetailEntity>(this.detach_RepaymentRequestDetails));
+			this._ScheduledPayments = new EntitySet<ScheduledPaymentEntity>(new Action<ScheduledPaymentEntity>(this.attach_ScheduledPayments), new Action<ScheduledPaymentEntity>(this.detach_ScheduledPayments));
+			this._Transactions = new EntitySet<TransactionEntity>(new Action<TransactionEntity>(this.attach_Transactions), new Action<TransactionEntity>(this.detach_Transactions));
 			OnCreated();
 		}
 		
@@ -1578,16 +1602,16 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_AccountsApplications_Applications", Storage="_Payment_AccountsApplications", ThisKey="ApplicationId", OtherKey="ApplicationId", DeleteRule="NO ACTION")]
-		public EntitySet<AccountsApplicationEntity> Payment_AccountsApplications
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_AccountsApplications_Applications", Storage="_AccountsApplications", ThisKey="ApplicationId", OtherKey="ApplicationId", DeleteRule="NO ACTION")]
+		public EntitySet<AccountsApplicationEntity> AccountsApplications
 		{
 			get
 			{
-				return this._Payment_AccountsApplications;
+				return this._AccountsApplications;
 			}
 			set
 			{
-				this._Payment_AccountsApplications.Assign(value);
+				this._AccountsApplications.Assign(value);
 			}
 		}
 		
@@ -1608,12 +1632,12 @@ namespace Wonga.QA.Framework.Db.Payments
 					if ((previousValue != null))
 					{
 						this._ProductEntity.Entity = null;
-						previousValue.Payment_Applications.Remove(this);
+						previousValue.Applications.Remove(this);
 					}
 					this._ProductEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Payment_Applications.Add(this);
+						value.Applications.Add(this);
 						this._ProductId = value.ProductId;
 					}
 					else
@@ -1712,42 +1736,55 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_RepaymentRequestDetails_Applications", Storage="_Payment_RepaymentRequestDetails", ThisKey="ApplicationId", OtherKey="ApplicationId", DeleteRule="NO ACTION")]
-		public EntitySet<RepaymentRequestDetailEntity> Payment_RepaymentRequestDetails
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_PaymentPlan_Applications", Storage="_PaymentPlans", ThisKey="ApplicationId", OtherKey="ApplicationId", DeleteRule="NO ACTION")]
+		public EntitySet<PaymentPlanEntity> PaymentPlans
 		{
 			get
 			{
-				return this._Payment_RepaymentRequestDetails;
+				return this._PaymentPlans;
 			}
 			set
 			{
-				this._Payment_RepaymentRequestDetails.Assign(value);
+				this._PaymentPlans.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_ScheduledPayments_Applications", Storage="_Payment_ScheduledPayments", ThisKey="ApplicationId", OtherKey="ApplicationId", DeleteRule="NO ACTION")]
-		public EntitySet<ScheduledPaymentEntity> Payment_ScheduledPayments
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_RepaymentRequestDetails_Applications", Storage="_RepaymentRequestDetails", ThisKey="ApplicationId", OtherKey="ApplicationId", DeleteRule="NO ACTION")]
+		public EntitySet<RepaymentRequestDetailEntity> RepaymentRequestDetails
 		{
 			get
 			{
-				return this._Payment_ScheduledPayments;
+				return this._RepaymentRequestDetails;
 			}
 			set
 			{
-				this._Payment_ScheduledPayments.Assign(value);
+				this._RepaymentRequestDetails.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Transactions_Applications", Storage="_Payment_Transactions", ThisKey="ApplicationId", OtherKey="ApplicationId", DeleteRule="NO ACTION")]
-		public EntitySet<TransactionEntity> Payment_Transactions
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_ScheduledPayments_Applications", Storage="_ScheduledPayments", ThisKey="ApplicationId", OtherKey="ApplicationId", DeleteRule="NO ACTION")]
+		public EntitySet<ScheduledPaymentEntity> ScheduledPayments
 		{
 			get
 			{
-				return this._Payment_Transactions;
+				return this._ScheduledPayments;
 			}
 			set
 			{
-				this._Payment_Transactions.Assign(value);
+				this._ScheduledPayments.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Transactions_Applications", Storage="_Transactions", ThisKey="ApplicationId", OtherKey="ApplicationId", DeleteRule="NO ACTION")]
+		public EntitySet<TransactionEntity> Transactions
+		{
+			get
+			{
+				return this._Transactions;
+			}
+			set
+			{
+				this._Transactions.Assign(value);
 			}
 		}
 		
@@ -1771,49 +1808,61 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		private void attach_Payment_AccountsApplications(AccountsApplicationEntity entity)
+		private void attach_AccountsApplications(AccountsApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.ApplicationEntity = this;
 		}
 		
-		private void detach_Payment_AccountsApplications(AccountsApplicationEntity entity)
+		private void detach_AccountsApplications(AccountsApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.ApplicationEntity = null;
 		}
 		
-		private void attach_Payment_RepaymentRequestDetails(RepaymentRequestDetailEntity entity)
+		private void attach_PaymentPlans(PaymentPlanEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.ApplicationEntity = this;
 		}
 		
-		private void detach_Payment_RepaymentRequestDetails(RepaymentRequestDetailEntity entity)
+		private void detach_PaymentPlans(PaymentPlanEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.ApplicationEntity = null;
 		}
 		
-		private void attach_Payment_ScheduledPayments(ScheduledPaymentEntity entity)
+		private void attach_RepaymentRequestDetails(RepaymentRequestDetailEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.ApplicationEntity = this;
 		}
 		
-		private void detach_Payment_ScheduledPayments(ScheduledPaymentEntity entity)
+		private void detach_RepaymentRequestDetails(RepaymentRequestDetailEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.ApplicationEntity = null;
 		}
 		
-		private void attach_Payment_Transactions(TransactionEntity entity)
+		private void attach_ScheduledPayments(ScheduledPaymentEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.ApplicationEntity = this;
 		}
 		
-		private void detach_Payment_Transactions(TransactionEntity entity)
+		private void detach_ScheduledPayments(ScheduledPaymentEntity entity)
+		{
+			this.SendPropertyChanging();
+			entity.ApplicationEntity = null;
+		}
+		
+		private void attach_Transactions(TransactionEntity entity)
+		{
+			this.SendPropertyChanging();
+			entity.ApplicationEntity = this;
+		}
+		
+		private void detach_Transactions(TransactionEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.ApplicationEntity = null;
@@ -2009,7 +2058,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private EntityRef<PersonalBankAccountEntity> _PersonalBankAccountEntity;
 		
-		private EntitySet<AccountPreferenceEntity> _Payment_AccountPreferences;
+		private EntitySet<AccountPreferenceEntity> _AccountPreferences;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -2049,7 +2098,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			this._BusinessBankAccountEntity = default(EntityRef<BusinessBankAccountEntity>);
 			this._PersonalBankAccountEntity = default(EntityRef<PersonalBankAccountEntity>);
-			this._Payment_AccountPreferences = new EntitySet<AccountPreferenceEntity>(new Action<AccountPreferenceEntity>(this.attach_Payment_AccountPreferences), new Action<AccountPreferenceEntity>(this.detach_Payment_AccountPreferences));
+			this._AccountPreferences = new EntitySet<AccountPreferenceEntity>(new Action<AccountPreferenceEntity>(this.attach_AccountPreferences), new Action<AccountPreferenceEntity>(this.detach_AccountPreferences));
 			OnCreated();
 		}
 		
@@ -2391,16 +2440,16 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_AccountPreferences_BankAccountsBase", Storage="_Payment_AccountPreferences", ThisKey="BankAccountId", OtherKey="PrimaryBankAccountId", DeleteRule="NO ACTION")]
-		public EntitySet<AccountPreferenceEntity> Payment_AccountPreferences
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_AccountPreferences_BankAccountsBase", Storage="_AccountPreferences", ThisKey="BankAccountId", OtherKey="PrimaryBankAccountId", DeleteRule="NO ACTION")]
+		public EntitySet<AccountPreferenceEntity> AccountPreferences
 		{
 			get
 			{
-				return this._Payment_AccountPreferences;
+				return this._AccountPreferences;
 			}
 			set
 			{
-				this._Payment_AccountPreferences.Assign(value);
+				this._AccountPreferences.Assign(value);
 			}
 		}
 		
@@ -2424,13 +2473,13 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		private void attach_Payment_AccountPreferences(AccountPreferenceEntity entity)
+		private void attach_AccountPreferences(AccountPreferenceEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.BankAccountsBaseEntity = this;
 		}
 		
-		private void detach_Payment_AccountPreferences(AccountPreferenceEntity entity)
+		private void detach_AccountPreferences(AccountPreferenceEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.BankAccountsBaseEntity = null;
@@ -2582,6 +2631,10 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private System.Guid _OrganisationId;
 		
+		private System.Guid _BusinessBankAccountGuid;
+		
+		private System.Guid _BusinessPaymentCardGuid;
+		
 		private EntityRef<ApplicationEntity> _ApplicationEntity;
 		
     #region Extensibility Method Definitions
@@ -2600,6 +2653,10 @@ namespace Wonga.QA.Framework.Db.Payments
     partial void OnNumberOfWeeksChanged();
     partial void OnOrganisationIdChanging(System.Guid value);
     partial void OnOrganisationIdChanged();
+    partial void OnBusinessBankAccountGuidChanging(System.Guid value);
+    partial void OnBusinessBankAccountGuidChanged();
+    partial void OnBusinessPaymentCardGuidChanging(System.Guid value);
+    partial void OnBusinessPaymentCardGuidChanged();
     #endregion
 		
 		public BusinessFixedInstallmentLoanApplicationEntity()
@@ -2728,6 +2785,46 @@ namespace Wonga.QA.Framework.Db.Payments
 					this._OrganisationId = value;
 					this.SendPropertyChanged("OrganisationId");
 					this.OnOrganisationIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BusinessBankAccountGuid", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid BusinessBankAccountGuid
+		{
+			get
+			{
+				return this._BusinessBankAccountGuid;
+			}
+			set
+			{
+				if ((this._BusinessBankAccountGuid != value))
+				{
+					this.OnBusinessBankAccountGuidChanging(value);
+					this.SendPropertyChanging();
+					this._BusinessBankAccountGuid = value;
+					this.SendPropertyChanged("BusinessBankAccountGuid");
+					this.OnBusinessBankAccountGuidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BusinessPaymentCardGuid", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid BusinessPaymentCardGuid
+		{
+			get
+			{
+				return this._BusinessPaymentCardGuid;
+			}
+			set
+			{
+				if ((this._BusinessPaymentCardGuid != value))
+				{
+					this.OnBusinessPaymentCardGuidChanging(value);
+					this.SendPropertyChanging();
+					this._BusinessPaymentCardGuid = value;
+					this.SendPropertyChanged("BusinessPaymentCardGuid");
+					this.OnBusinessPaymentCardGuidChanged();
 				}
 			}
 		}
@@ -3280,7 +3377,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private EntityRef<ApplicationEntity> _ApplicationEntity;
 		
-		private EntitySet<TopupEntity> _Payment_Topups;
+		private EntitySet<TopupEntity> _Topups;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -3309,7 +3406,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		public FixedTermLoanApplicationEntity()
 		{
 			this._ApplicationEntity = default(EntityRef<ApplicationEntity>);
-			this._Payment_Topups = new EntitySet<TopupEntity>(new Action<TopupEntity>(this.attach_Payment_Topups), new Action<TopupEntity>(this.detach_Payment_Topups));
+			this._Topups = new EntitySet<TopupEntity>(new Action<TopupEntity>(this.attach_Topups), new Action<TopupEntity>(this.detach_Topups));
 			OnCreated();
 		}
 		
@@ -3531,16 +3628,16 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Topups_FixedTermLoanApplications", Storage="_Payment_Topups", ThisKey="ApplicationId", OtherKey="ApplicationId", DeleteRule="NO ACTION")]
-		public EntitySet<TopupEntity> Payment_Topups
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Topups_FixedTermLoanApplications", Storage="_Topups", ThisKey="ApplicationId", OtherKey="ApplicationId", DeleteRule="NO ACTION")]
+		public EntitySet<TopupEntity> Topups
 		{
 			get
 			{
-				return this._Payment_Topups;
+				return this._Topups;
 			}
 			set
 			{
-				this._Payment_Topups.Assign(value);
+				this._Topups.Assign(value);
 			}
 		}
 		
@@ -3564,13 +3661,13 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		private void attach_Payment_Topups(TopupEntity entity)
+		private void attach_Topups(TopupEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.FixedTermLoanApplicationEntity = this;
 		}
 		
-		private void detach_Payment_Topups(TopupEntity entity)
+		private void detach_Topups(TopupEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.FixedTermLoanApplicationEntity = null;
@@ -5591,7 +5688,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private System.Nullable<int> _DeactivateReason;
 		
-		private EntitySet<AccountPreferenceEntity> _Payment_AccountPreferences;
+		private EntitySet<AccountPreferenceEntity> _AccountPreferences;
 		
 		private EntityRef<BusinessPaymentCardEntity> _BusinessPaymentCardEntity;
 		
@@ -5639,7 +5736,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		public PaymentCardsBaseEntity()
 		{
-			this._Payment_AccountPreferences = new EntitySet<AccountPreferenceEntity>(new Action<AccountPreferenceEntity>(this.attach_Payment_AccountPreferences), new Action<AccountPreferenceEntity>(this.detach_Payment_AccountPreferences));
+			this._AccountPreferences = new EntitySet<AccountPreferenceEntity>(new Action<AccountPreferenceEntity>(this.attach_AccountPreferences), new Action<AccountPreferenceEntity>(this.detach_AccountPreferences));
 			this._BusinessPaymentCardEntity = default(EntityRef<BusinessPaymentCardEntity>);
 			this._PersonalPaymentCardEntity = default(EntityRef<PersonalPaymentCardEntity>);
 			OnCreated();
@@ -5985,16 +6082,16 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_AccountPreferences_PaymentCardsBase", Storage="_Payment_AccountPreferences", ThisKey="PaymentCardId", OtherKey="PrimaryPaymentCardId", DeleteRule="NO ACTION")]
-		public EntitySet<AccountPreferenceEntity> Payment_AccountPreferences
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_AccountPreferences_PaymentCardsBase", Storage="_AccountPreferences", ThisKey="PaymentCardId", OtherKey="PrimaryPaymentCardId", DeleteRule="NO ACTION")]
+		public EntitySet<AccountPreferenceEntity> AccountPreferences
 		{
 			get
 			{
-				return this._Payment_AccountPreferences;
+				return this._AccountPreferences;
 			}
 			set
 			{
-				this._Payment_AccountPreferences.Assign(value);
+				this._AccountPreferences.Assign(value);
 			}
 		}
 		
@@ -6076,13 +6173,13 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		private void attach_Payment_AccountPreferences(AccountPreferenceEntity entity)
+		private void attach_AccountPreferences(AccountPreferenceEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.PaymentCardsBaseEntity = this;
 		}
 		
-		private void detach_Payment_AccountPreferences(AccountPreferenceEntity entity)
+		private void detach_AccountPreferences(AccountPreferenceEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.PaymentCardsBaseEntity = null;
@@ -6101,8 +6198,6 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private int _ApplicationId;
 		
-		private string _DayOfWeek;
-		
 		private System.DateTime _StartDate;
 		
 		private System.DateTime _EndDate;
@@ -6111,13 +6206,21 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private decimal _FinalAmount;
 		
-		private string _Frequency;
-		
 		private int _NumberOfPayments;
 		
 		private System.DateTime _CreatedOn;
 		
 		private System.Nullable<System.DateTime> _CanceledOn;
+		
+		private int _PaymentIntervalInDays;
+		
+		private decimal _OutstandingPrincipal;
+		
+		private decimal _OutstandingFees;
+		
+		private decimal _OutstandingInterest;
+		
+		private EntityRef<ApplicationEntity> _ApplicationEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -6129,8 +6232,6 @@ namespace Wonga.QA.Framework.Db.Payments
     partial void OnExternalIdChanged();
     partial void OnApplicationIdChanging(int value);
     partial void OnApplicationIdChanged();
-    partial void OnDayOfWeekChanging(string value);
-    partial void OnDayOfWeekChanged();
     partial void OnStartDateChanging(System.DateTime value);
     partial void OnStartDateChanged();
     partial void OnEndDateChanging(System.DateTime value);
@@ -6139,18 +6240,25 @@ namespace Wonga.QA.Framework.Db.Payments
     partial void OnRegularAmountChanged();
     partial void OnFinalAmountChanging(decimal value);
     partial void OnFinalAmountChanged();
-    partial void OnFrequencyChanging(string value);
-    partial void OnFrequencyChanged();
     partial void OnNumberOfPaymentsChanging(int value);
     partial void OnNumberOfPaymentsChanged();
     partial void OnCreatedOnChanging(System.DateTime value);
     partial void OnCreatedOnChanged();
     partial void OnCanceledOnChanging(System.Nullable<System.DateTime> value);
     partial void OnCanceledOnChanged();
+    partial void OnPaymentIntervalInDaysChanging(int value);
+    partial void OnPaymentIntervalInDaysChanged();
+    partial void OnOutstandingPrincipalChanging(decimal value);
+    partial void OnOutstandingPrincipalChanged();
+    partial void OnOutstandingFeesChanging(decimal value);
+    partial void OnOutstandingFeesChanged();
+    partial void OnOutstandingInterestChanging(decimal value);
+    partial void OnOutstandingInterestChanged();
     #endregion
 		
 		public PaymentPlanEntity()
 		{
+			this._ApplicationEntity = default(EntityRef<ApplicationEntity>);
 			OnCreated();
 		}
 		
@@ -6205,31 +6313,15 @@ namespace Wonga.QA.Framework.Db.Payments
 			{
 				if ((this._ApplicationId != value))
 				{
+					if (this._ApplicationEntity.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnApplicationIdChanging(value);
 					this.SendPropertyChanging();
 					this._ApplicationId = value;
 					this.SendPropertyChanged("ApplicationId");
 					this.OnApplicationIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DayOfWeek", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
-		public string DayOfWeek
-		{
-			get
-			{
-				return this._DayOfWeek;
-			}
-			set
-			{
-				if ((this._DayOfWeek != value))
-				{
-					this.OnDayOfWeekChanging(value);
-					this.SendPropertyChanging();
-					this._DayOfWeek = value;
-					this.SendPropertyChanged("DayOfWeek");
-					this.OnDayOfWeekChanged();
 				}
 			}
 		}
@@ -6314,26 +6406,6 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Frequency", DbType="VarChar(20) NOT NULL", CanBeNull=false)]
-		public string Frequency
-		{
-			get
-			{
-				return this._Frequency;
-			}
-			set
-			{
-				if ((this._Frequency != value))
-				{
-					this.OnFrequencyChanging(value);
-					this.SendPropertyChanging();
-					this._Frequency = value;
-					this.SendPropertyChanged("Frequency");
-					this.OnFrequencyChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NumberOfPayments", DbType="Int NOT NULL")]
 		public int NumberOfPayments
 		{
@@ -6390,6 +6462,120 @@ namespace Wonga.QA.Framework.Db.Payments
 					this._CanceledOn = value;
 					this.SendPropertyChanged("CanceledOn");
 					this.OnCanceledOnChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentIntervalInDays", DbType="Int NOT NULL")]
+		public int PaymentIntervalInDays
+		{
+			get
+			{
+				return this._PaymentIntervalInDays;
+			}
+			set
+			{
+				if ((this._PaymentIntervalInDays != value))
+				{
+					this.OnPaymentIntervalInDaysChanging(value);
+					this.SendPropertyChanging();
+					this._PaymentIntervalInDays = value;
+					this.SendPropertyChanged("PaymentIntervalInDays");
+					this.OnPaymentIntervalInDaysChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OutstandingPrincipal", DbType="Decimal(9,2) NOT NULL")]
+		public decimal OutstandingPrincipal
+		{
+			get
+			{
+				return this._OutstandingPrincipal;
+			}
+			set
+			{
+				if ((this._OutstandingPrincipal != value))
+				{
+					this.OnOutstandingPrincipalChanging(value);
+					this.SendPropertyChanging();
+					this._OutstandingPrincipal = value;
+					this.SendPropertyChanged("OutstandingPrincipal");
+					this.OnOutstandingPrincipalChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OutstandingFees", DbType="Decimal(9,2) NOT NULL")]
+		public decimal OutstandingFees
+		{
+			get
+			{
+				return this._OutstandingFees;
+			}
+			set
+			{
+				if ((this._OutstandingFees != value))
+				{
+					this.OnOutstandingFeesChanging(value);
+					this.SendPropertyChanging();
+					this._OutstandingFees = value;
+					this.SendPropertyChanged("OutstandingFees");
+					this.OnOutstandingFeesChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OutstandingInterest", DbType="Decimal(9,2) NOT NULL")]
+		public decimal OutstandingInterest
+		{
+			get
+			{
+				return this._OutstandingInterest;
+			}
+			set
+			{
+				if ((this._OutstandingInterest != value))
+				{
+					this.OnOutstandingInterestChanging(value);
+					this.SendPropertyChanging();
+					this._OutstandingInterest = value;
+					this.SendPropertyChanged("OutstandingInterest");
+					this.OnOutstandingInterestChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_PaymentPlan_Applications", Storage="_ApplicationEntity", ThisKey="ApplicationId", OtherKey="ApplicationId", IsForeignKey=true)]
+		public ApplicationEntity ApplicationEntity
+		{
+			get
+			{
+				return this._ApplicationEntity.Entity;
+			}
+			set
+			{
+				ApplicationEntity previousValue = this._ApplicationEntity.Entity;
+				if (((previousValue != value) 
+							|| (this._ApplicationEntity.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._ApplicationEntity.Entity = null;
+						previousValue.PaymentPlans.Remove(this);
+					}
+					this._ApplicationEntity.Entity = value;
+					if ((value != null))
+					{
+						value.PaymentPlans.Add(this);
+						this._ApplicationId = value.ApplicationId;
+					}
+					else
+					{
+						this._ApplicationId = default(int);
+					}
+					this.SendPropertyChanged("ApplicationEntity");
 				}
 			}
 		}
@@ -6689,7 +6875,11 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private System.Nullable<int> _LoanDayEnd;
 		
+		private System.Nullable<int> _VariableInterestRateId;
+		
 		private EntityRef<ProductEntity> _ProductEntity;
+		
+		private EntityRef<VariableInterestRateEntity> _VariableInterestRateEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -6709,11 +6899,14 @@ namespace Wonga.QA.Framework.Db.Payments
     partial void OnLoanDayStartChanged();
     partial void OnLoanDayEndChanging(System.Nullable<int> value);
     partial void OnLoanDayEndChanged();
+    partial void OnVariableInterestRateIdChanging(System.Nullable<int> value);
+    partial void OnVariableInterestRateIdChanged();
     #endregion
 		
 		public ProductInterestRateEntity()
 		{
 			this._ProductEntity = default(EntityRef<ProductEntity>);
+			this._VariableInterestRateEntity = default(EntityRef<VariableInterestRateEntity>);
 			OnCreated();
 		}
 		
@@ -6861,6 +7054,30 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VariableInterestRateId", DbType="Int")]
+		public System.Nullable<int> VariableInterestRateId
+		{
+			get
+			{
+				return this._VariableInterestRateId;
+			}
+			set
+			{
+				if ((this._VariableInterestRateId != value))
+				{
+					if (this._VariableInterestRateEntity.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnVariableInterestRateIdChanging(value);
+					this.SendPropertyChanging();
+					this._VariableInterestRateId = value;
+					this.SendPropertyChanged("VariableInterestRateId");
+					this.OnVariableInterestRateIdChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_ProductInterestRates_Products", Storage="_ProductEntity", ThisKey="ProductId", OtherKey="ProductId", IsForeignKey=true)]
 		public ProductEntity ProductEntity
 		{
@@ -6878,12 +7095,12 @@ namespace Wonga.QA.Framework.Db.Payments
 					if ((previousValue != null))
 					{
 						this._ProductEntity.Entity = null;
-						previousValue.Payment_ProductInterestRates.Remove(this);
+						previousValue.ProductInterestRates.Remove(this);
 					}
 					this._ProductEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Payment_ProductInterestRates.Add(this);
+						value.ProductInterestRates.Add(this);
 						this._ProductId = value.ProductId;
 					}
 					else
@@ -6891,6 +7108,40 @@ namespace Wonga.QA.Framework.Db.Payments
 						this._ProductId = default(int);
 					}
 					this.SendPropertyChanged("ProductEntity");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_ProductInterestRates_VariableInterestRates", Storage="_VariableInterestRateEntity", ThisKey="VariableInterestRateId", OtherKey="VariableInterestRateId", IsForeignKey=true)]
+		public VariableInterestRateEntity VariableInterestRateEntity
+		{
+			get
+			{
+				return this._VariableInterestRateEntity.Entity;
+			}
+			set
+			{
+				VariableInterestRateEntity previousValue = this._VariableInterestRateEntity.Entity;
+				if (((previousValue != value) 
+							|| (this._VariableInterestRateEntity.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._VariableInterestRateEntity.Entity = null;
+						previousValue.ProductInterestRates.Remove(this);
+					}
+					this._VariableInterestRateEntity.Entity = value;
+					if ((value != null))
+					{
+						value.ProductInterestRates.Add(this);
+						this._VariableInterestRateId = value.VariableInterestRateId;
+					}
+					else
+					{
+						this._VariableInterestRateId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("VariableInterestRateEntity");
 				}
 			}
 		}
@@ -6944,9 +7195,9 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private System.Nullable<decimal> _ServiceFee;
 		
-		private EntitySet<ApplicationEntity> _Payment_Applications;
+		private EntitySet<ApplicationEntity> _Applications;
 		
-		private EntitySet<ProductInterestRateEntity> _Payment_ProductInterestRates;
+		private EntitySet<ProductInterestRateEntity> _ProductInterestRates;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -6978,8 +7229,8 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		public ProductEntity()
 		{
-			this._Payment_Applications = new EntitySet<ApplicationEntity>(new Action<ApplicationEntity>(this.attach_Payment_Applications), new Action<ApplicationEntity>(this.detach_Payment_Applications));
-			this._Payment_ProductInterestRates = new EntitySet<ProductInterestRateEntity>(new Action<ProductInterestRateEntity>(this.attach_Payment_ProductInterestRates), new Action<ProductInterestRateEntity>(this.detach_Payment_ProductInterestRates));
+			this._Applications = new EntitySet<ApplicationEntity>(new Action<ApplicationEntity>(this.attach_Applications), new Action<ApplicationEntity>(this.detach_Applications));
+			this._ProductInterestRates = new EntitySet<ProductInterestRateEntity>(new Action<ProductInterestRateEntity>(this.attach_ProductInterestRates), new Action<ProductInterestRateEntity>(this.detach_ProductInterestRates));
 			OnCreated();
 		}
 		
@@ -7203,29 +7454,29 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Applications_Products", Storage="_Payment_Applications", ThisKey="ProductId", OtherKey="ProductId", DeleteRule="NO ACTION")]
-		public EntitySet<ApplicationEntity> Payment_Applications
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Applications_Products", Storage="_Applications", ThisKey="ProductId", OtherKey="ProductId", DeleteRule="NO ACTION")]
+		public EntitySet<ApplicationEntity> Applications
 		{
 			get
 			{
-				return this._Payment_Applications;
+				return this._Applications;
 			}
 			set
 			{
-				this._Payment_Applications.Assign(value);
+				this._Applications.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_ProductInterestRates_Products", Storage="_Payment_ProductInterestRates", ThisKey="ProductId", OtherKey="ProductId", DeleteRule="NO ACTION")]
-		public EntitySet<ProductInterestRateEntity> Payment_ProductInterestRates
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_ProductInterestRates_Products", Storage="_ProductInterestRates", ThisKey="ProductId", OtherKey="ProductId", DeleteRule="NO ACTION")]
+		public EntitySet<ProductInterestRateEntity> ProductInterestRates
 		{
 			get
 			{
-				return this._Payment_ProductInterestRates;
+				return this._ProductInterestRates;
 			}
 			set
 			{
-				this._Payment_ProductInterestRates.Assign(value);
+				this._ProductInterestRates.Assign(value);
 			}
 		}
 		
@@ -7249,25 +7500,25 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		private void attach_Payment_Applications(ApplicationEntity entity)
+		private void attach_Applications(ApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.ProductEntity = this;
 		}
 		
-		private void detach_Payment_Applications(ApplicationEntity entity)
+		private void detach_Applications(ApplicationEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.ProductEntity = null;
 		}
 		
-		private void attach_Payment_ProductInterestRates(ProductInterestRateEntity entity)
+		private void attach_ProductInterestRates(ProductInterestRateEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.ProductEntity = this;
 		}
 		
-		private void detach_Payment_ProductInterestRates(ProductInterestRateEntity entity)
+		private void detach_ProductInterestRates(ProductInterestRateEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.ProductEntity = null;
@@ -7302,7 +7553,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private System.Nullable<System.DateTime> _CreatedOn;
 		
-		private EntitySet<PromoCodeEntity> _Payment_PromoCodes;
+		private EntitySet<PromoCodeEntity> _PromoCodes;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -7334,7 +7585,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		public PromoCampaignEntity()
 		{
-			this._Payment_PromoCodes = new EntitySet<PromoCodeEntity>(new Action<PromoCodeEntity>(this.attach_Payment_PromoCodes), new Action<PromoCodeEntity>(this.detach_Payment_PromoCodes));
+			this._PromoCodes = new EntitySet<PromoCodeEntity>(new Action<PromoCodeEntity>(this.attach_PromoCodes), new Action<PromoCodeEntity>(this.detach_PromoCodes));
 			OnCreated();
 		}
 		
@@ -7558,16 +7809,16 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_PromoCodes_PromoCampaigns", Storage="_Payment_PromoCodes", ThisKey="PromoCampaignId", OtherKey="PromoCampaignId", DeleteRule="NO ACTION")]
-		public EntitySet<PromoCodeEntity> Payment_PromoCodes
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_PromoCodes_PromoCampaigns", Storage="_PromoCodes", ThisKey="PromoCampaignId", OtherKey="PromoCampaignId", DeleteRule="NO ACTION")]
+		public EntitySet<PromoCodeEntity> PromoCodes
 		{
 			get
 			{
-				return this._Payment_PromoCodes;
+				return this._PromoCodes;
 			}
 			set
 			{
-				this._Payment_PromoCodes.Assign(value);
+				this._PromoCodes.Assign(value);
 			}
 		}
 		
@@ -7591,13 +7842,13 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		private void attach_Payment_PromoCodes(PromoCodeEntity entity)
+		private void attach_PromoCodes(PromoCodeEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.PromoCampaignEntity = this;
 		}
 		
-		private void detach_Payment_PromoCodes(PromoCodeEntity entity)
+		private void detach_PromoCodes(PromoCodeEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.PromoCampaignEntity = null;
@@ -7636,7 +7887,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private EntityRef<PromoCampaignEntity> _PromoCampaignEntity;
 		
-		private EntitySet<PromoCodesUsageEntity> _Payment_PromoCodesUsages;
+		private EntitySet<PromoCodesUsageEntity> _PromoCodesUsages;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -7670,7 +7921,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			this._AffiliateEntity = default(EntityRef<AffiliateEntity>);
 			this._PromoCampaignEntity = default(EntityRef<PromoCampaignEntity>);
-			this._Payment_PromoCodesUsages = new EntitySet<PromoCodesUsageEntity>(new Action<PromoCodesUsageEntity>(this.attach_Payment_PromoCodesUsages), new Action<PromoCodesUsageEntity>(this.detach_Payment_PromoCodesUsages));
+			this._PromoCodesUsages = new EntitySet<PromoCodesUsageEntity>(new Action<PromoCodesUsageEntity>(this.attach_PromoCodesUsages), new Action<PromoCodesUsageEntity>(this.detach_PromoCodesUsages));
 			OnCreated();
 		}
 		
@@ -7919,12 +8170,12 @@ namespace Wonga.QA.Framework.Db.Payments
 					if ((previousValue != null))
 					{
 						this._AffiliateEntity.Entity = null;
-						previousValue.Payment_PromoCodes.Remove(this);
+						previousValue.PromoCodes.Remove(this);
 					}
 					this._AffiliateEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Payment_PromoCodes.Add(this);
+						value.PromoCodes.Add(this);
 						this._AffiliateId = value.AffiliateId;
 					}
 					else
@@ -7953,12 +8204,12 @@ namespace Wonga.QA.Framework.Db.Payments
 					if ((previousValue != null))
 					{
 						this._PromoCampaignEntity.Entity = null;
-						previousValue.Payment_PromoCodes.Remove(this);
+						previousValue.PromoCodes.Remove(this);
 					}
 					this._PromoCampaignEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Payment_PromoCodes.Add(this);
+						value.PromoCodes.Add(this);
 						this._PromoCampaignId = value.PromoCampaignId;
 					}
 					else
@@ -7970,16 +8221,16 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_PromoCodesUsage_PromoCodes", Storage="_Payment_PromoCodesUsages", ThisKey="PromoCodeId", OtherKey="PromoCodeId", DeleteRule="NO ACTION")]
-		public EntitySet<PromoCodesUsageEntity> Payment_PromoCodesUsages
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_PromoCodesUsage_PromoCodes", Storage="_PromoCodesUsages", ThisKey="PromoCodeId", OtherKey="PromoCodeId", DeleteRule="NO ACTION")]
+		public EntitySet<PromoCodesUsageEntity> PromoCodesUsages
 		{
 			get
 			{
-				return this._Payment_PromoCodesUsages;
+				return this._PromoCodesUsages;
 			}
 			set
 			{
-				this._Payment_PromoCodesUsages.Assign(value);
+				this._PromoCodesUsages.Assign(value);
 			}
 		}
 		
@@ -8003,13 +8254,13 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		private void attach_Payment_PromoCodesUsages(PromoCodesUsageEntity entity)
+		private void attach_PromoCodesUsages(PromoCodesUsageEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.PromoCodeEntity = this;
 		}
 		
-		private void detach_Payment_PromoCodesUsages(PromoCodesUsageEntity entity)
+		private void detach_PromoCodesUsages(PromoCodesUsageEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.PromoCodeEntity = null;
@@ -8153,12 +8404,12 @@ namespace Wonga.QA.Framework.Db.Payments
 					if ((previousValue != null))
 					{
 						this._PromoCodeEntity.Entity = null;
-						previousValue.Payment_PromoCodesUsages.Remove(this);
+						previousValue.PromoCodesUsages.Remove(this);
 					}
 					this._PromoCodeEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Payment_PromoCodesUsages.Add(this);
+						value.PromoCodesUsages.Add(this);
 						this._PromoCodeId = value.PromoCodeId;
 					}
 					else
@@ -8472,12 +8723,12 @@ namespace Wonga.QA.Framework.Db.Payments
 					if ((previousValue != null))
 					{
 						this._RepaymentArrangementEntity.Entity = null;
-						previousValue.Payment_RepaymentArrangementDetails.Remove(this);
+						previousValue.RepaymentArrangementDetails.Remove(this);
 					}
 					this._RepaymentArrangementEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Payment_RepaymentArrangementDetails.Add(this);
+						value.RepaymentArrangementDetails.Add(this);
 						this._RepaymentArrangementId = value.RepaymentArrangementId;
 					}
 					else
@@ -8534,7 +8785,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private System.Nullable<System.DateTime> _CanceledOn;
 		
-		private EntitySet<RepaymentArrangementDetailEntity> _Payment_RepaymentArrangementDetails;
+		private EntitySet<RepaymentArrangementDetailEntity> _RepaymentArrangementDetails;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -8562,7 +8813,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		public RepaymentArrangementEntity()
 		{
-			this._Payment_RepaymentArrangementDetails = new EntitySet<RepaymentArrangementDetailEntity>(new Action<RepaymentArrangementDetailEntity>(this.attach_Payment_RepaymentArrangementDetails), new Action<RepaymentArrangementDetailEntity>(this.detach_Payment_RepaymentArrangementDetails));
+			this._RepaymentArrangementDetails = new EntitySet<RepaymentArrangementDetailEntity>(new Action<RepaymentArrangementDetailEntity>(this.attach_RepaymentArrangementDetails), new Action<RepaymentArrangementDetailEntity>(this.detach_RepaymentArrangementDetails));
 			OnCreated();
 		}
 		
@@ -8746,16 +8997,16 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_RepaymentArrangementDetails_RepaymentArrangements", Storage="_Payment_RepaymentArrangementDetails", ThisKey="RepaymentArrangementId", OtherKey="RepaymentArrangementId", DeleteRule="NO ACTION")]
-		public EntitySet<RepaymentArrangementDetailEntity> Payment_RepaymentArrangementDetails
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_RepaymentArrangementDetails_RepaymentArrangements", Storage="_RepaymentArrangementDetails", ThisKey="RepaymentArrangementId", OtherKey="RepaymentArrangementId", DeleteRule="NO ACTION")]
+		public EntitySet<RepaymentArrangementDetailEntity> RepaymentArrangementDetails
 		{
 			get
 			{
-				return this._Payment_RepaymentArrangementDetails;
+				return this._RepaymentArrangementDetails;
 			}
 			set
 			{
-				this._Payment_RepaymentArrangementDetails.Assign(value);
+				this._RepaymentArrangementDetails.Assign(value);
 			}
 		}
 		
@@ -8779,13 +9030,13 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		private void attach_Payment_RepaymentArrangementDetails(RepaymentArrangementDetailEntity entity)
+		private void attach_RepaymentArrangementDetails(RepaymentArrangementDetailEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.RepaymentArrangementEntity = this;
 		}
 		
-		private void detach_Payment_RepaymentArrangementDetails(RepaymentArrangementDetailEntity entity)
+		private void detach_RepaymentArrangementDetails(RepaymentArrangementDetailEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.RepaymentArrangementEntity = null;
@@ -9032,12 +9283,12 @@ namespace Wonga.QA.Framework.Db.Payments
 					if ((previousValue != null))
 					{
 						this._ApplicationEntity.Entity = null;
-						previousValue.Payment_RepaymentRequestDetails.Remove(this);
+						previousValue.RepaymentRequestDetails.Remove(this);
 					}
 					this._ApplicationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Payment_RepaymentRequestDetails.Add(this);
+						value.RepaymentRequestDetails.Add(this);
 						this._ApplicationId = value.ApplicationId;
 					}
 					else
@@ -9066,12 +9317,12 @@ namespace Wonga.QA.Framework.Db.Payments
 					if ((previousValue != null))
 					{
 						this._RepaymentRequestEntity.Entity = null;
-						previousValue.Payment_RepaymentRequestDetails.Remove(this);
+						previousValue.RepaymentRequestDetails.Remove(this);
 					}
 					this._RepaymentRequestEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Payment_RepaymentRequestDetails.Add(this);
+						value.RepaymentRequestDetails.Add(this);
 						this._RepaymentRequestId = value.RepaymentRequestId;
 					}
 					else
@@ -9120,7 +9371,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private System.Nullable<System.Guid> _CashEntityId;
 		
-		private EntitySet<RepaymentRequestDetailEntity> _Payment_RepaymentRequestDetails;
+		private EntitySet<RepaymentRequestDetailEntity> _RepaymentRequestDetails;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -9140,7 +9391,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		public RepaymentRequestEntity()
 		{
-			this._Payment_RepaymentRequestDetails = new EntitySet<RepaymentRequestDetailEntity>(new Action<RepaymentRequestDetailEntity>(this.attach_Payment_RepaymentRequestDetails), new Action<RepaymentRequestDetailEntity>(this.detach_Payment_RepaymentRequestDetails));
+			this._RepaymentRequestDetails = new EntitySet<RepaymentRequestDetailEntity>(new Action<RepaymentRequestDetailEntity>(this.attach_RepaymentRequestDetails), new Action<RepaymentRequestDetailEntity>(this.detach_RepaymentRequestDetails));
 			OnCreated();
 		}
 		
@@ -9244,16 +9495,16 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_RepaymentRequestDetails_RepaymentRequests", Storage="_Payment_RepaymentRequestDetails", ThisKey="RepaymentRequestId", OtherKey="RepaymentRequestId", DeleteRule="NO ACTION")]
-		public EntitySet<RepaymentRequestDetailEntity> Payment_RepaymentRequestDetails
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_RepaymentRequestDetails_RepaymentRequests", Storage="_RepaymentRequestDetails", ThisKey="RepaymentRequestId", OtherKey="RepaymentRequestId", DeleteRule="NO ACTION")]
+		public EntitySet<RepaymentRequestDetailEntity> RepaymentRequestDetails
 		{
 			get
 			{
-				return this._Payment_RepaymentRequestDetails;
+				return this._RepaymentRequestDetails;
 			}
 			set
 			{
-				this._Payment_RepaymentRequestDetails.Assign(value);
+				this._RepaymentRequestDetails.Assign(value);
 			}
 		}
 		
@@ -9277,13 +9528,13 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		private void attach_Payment_RepaymentRequestDetails(RepaymentRequestDetailEntity entity)
+		private void attach_RepaymentRequestDetails(RepaymentRequestDetailEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.RepaymentRequestEntity = this;
 		}
 		
-		private void detach_Payment_RepaymentRequestDetails(RepaymentRequestDetailEntity entity)
+		private void detach_RepaymentRequestDetails(RepaymentRequestDetailEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.RepaymentRequestEntity = null;
@@ -9547,12 +9798,12 @@ namespace Wonga.QA.Framework.Db.Payments
 					if ((previousValue != null))
 					{
 						this._ApplicationEntity.Entity = null;
-						previousValue.Payment_ScheduledPayments.Remove(this);
+						previousValue.ScheduledPayments.Remove(this);
 					}
 					this._ApplicationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Payment_ScheduledPayments.Add(this);
+						value.ScheduledPayments.Add(this);
 						this._ApplicationId = value.ApplicationId;
 					}
 					else
@@ -9818,12 +10069,12 @@ namespace Wonga.QA.Framework.Db.Payments
 					if ((previousValue != null))
 					{
 						this._FixedTermLoanApplicationEntity.Entity = null;
-						previousValue.Payment_Topups.Remove(this);
+						previousValue.Topups.Remove(this);
 					}
 					this._FixedTermLoanApplicationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Payment_Topups.Add(this);
+						value.Topups.Add(this);
 						this._ApplicationId = value.ApplicationId;
 					}
 					else
@@ -10216,12 +10467,12 @@ namespace Wonga.QA.Framework.Db.Payments
 					if ((previousValue != null))
 					{
 						this._ApplicationEntity.Entity = null;
-						previousValue.Payment_Transactions.Remove(this);
+						previousValue.Transactions.Remove(this);
 					}
 					this._ApplicationEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Payment_Transactions.Add(this);
+						value.Transactions.Add(this);
 						this._ApplicationId = value.ApplicationId;
 					}
 					else
@@ -10250,12 +10501,12 @@ namespace Wonga.QA.Framework.Db.Payments
 					if ((previousValue != null))
 					{
 						this._UserEntity.Entity = null;
-						previousValue.Payment_Transactions.Remove(this);
+						previousValue.Transactions.Remove(this);
 					}
 					this._UserEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Payment_Transactions.Add(this);
+						value.Transactions.Add(this);
 						this._UserId = value.UserId;
 					}
 					else
@@ -10300,7 +10551,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private string _Name;
 		
-		private EntitySet<TransactionEntity> _Payment_Transactions;
+		private EntitySet<TransactionEntity> _Transactions;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -10316,7 +10567,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		public UserEntity()
 		{
-			this._Payment_Transactions = new EntitySet<TransactionEntity>(new Action<TransactionEntity>(this.attach_Payment_Transactions), new Action<TransactionEntity>(this.detach_Payment_Transactions));
+			this._Transactions = new EntitySet<TransactionEntity>(new Action<TransactionEntity>(this.attach_Transactions), new Action<TransactionEntity>(this.detach_Transactions));
 			OnCreated();
 		}
 		
@@ -10380,16 +10631,16 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Transactions_Users", Storage="_Payment_Transactions", ThisKey="UserId", OtherKey="UserId", DeleteRule="NO ACTION")]
-		public EntitySet<TransactionEntity> Payment_Transactions
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Transactions_Users", Storage="_Transactions", ThisKey="UserId", OtherKey="UserId", DeleteRule="NO ACTION")]
+		public EntitySet<TransactionEntity> Transactions
 		{
 			get
 			{
-				return this._Payment_Transactions;
+				return this._Transactions;
 			}
 			set
 			{
-				this._Payment_Transactions.Assign(value);
+				this._Transactions.Assign(value);
 			}
 		}
 		
@@ -10413,16 +10664,333 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		private void attach_Payment_Transactions(TransactionEntity entity)
+		private void attach_Transactions(TransactionEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.UserEntity = this;
 		}
 		
-		private void detach_Payment_Transactions(TransactionEntity entity)
+		private void detach_Transactions(TransactionEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.UserEntity = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="payment.VariableInterestRateDetails")]
+	public partial class VariableInterestRateDetailEntity : DbEntity<VariableInterestRateDetailEntity>, INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _VariableInterestRateDetailId;
+		
+		private int _VariableInterestRateId;
+		
+		private byte _Day;
+		
+		private decimal _MonthlyInterestRate;
+		
+		private EntityRef<VariableInterestRateEntity> _VariableInterestRateEntity;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnVariableInterestRateDetailIdChanging(int value);
+    partial void OnVariableInterestRateDetailIdChanged();
+    partial void OnVariableInterestRateIdChanging(int value);
+    partial void OnVariableInterestRateIdChanged();
+    partial void OnDayChanging(byte value);
+    partial void OnDayChanged();
+    partial void OnMonthlyInterestRateChanging(decimal value);
+    partial void OnMonthlyInterestRateChanged();
+    #endregion
+		
+		public VariableInterestRateDetailEntity()
+		{
+			this._VariableInterestRateEntity = default(EntityRef<VariableInterestRateEntity>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VariableInterestRateDetailId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int VariableInterestRateDetailId
+		{
+			get
+			{
+				return this._VariableInterestRateDetailId;
+			}
+			set
+			{
+				if ((this._VariableInterestRateDetailId != value))
+				{
+					this.OnVariableInterestRateDetailIdChanging(value);
+					this.SendPropertyChanging();
+					this._VariableInterestRateDetailId = value;
+					this.SendPropertyChanged("VariableInterestRateDetailId");
+					this.OnVariableInterestRateDetailIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VariableInterestRateId", DbType="Int NOT NULL")]
+		public int VariableInterestRateId
+		{
+			get
+			{
+				return this._VariableInterestRateId;
+			}
+			set
+			{
+				if ((this._VariableInterestRateId != value))
+				{
+					if (this._VariableInterestRateEntity.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnVariableInterestRateIdChanging(value);
+					this.SendPropertyChanging();
+					this._VariableInterestRateId = value;
+					this.SendPropertyChanged("VariableInterestRateId");
+					this.OnVariableInterestRateIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Day", DbType="TinyInt NOT NULL")]
+		public byte Day
+		{
+			get
+			{
+				return this._Day;
+			}
+			set
+			{
+				if ((this._Day != value))
+				{
+					this.OnDayChanging(value);
+					this.SendPropertyChanging();
+					this._Day = value;
+					this.SendPropertyChanged("Day");
+					this.OnDayChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MonthlyInterestRate", DbType="Decimal(9,6) NOT NULL")]
+		public decimal MonthlyInterestRate
+		{
+			get
+			{
+				return this._MonthlyInterestRate;
+			}
+			set
+			{
+				if ((this._MonthlyInterestRate != value))
+				{
+					this.OnMonthlyInterestRateChanging(value);
+					this.SendPropertyChanging();
+					this._MonthlyInterestRate = value;
+					this.SendPropertyChanged("MonthlyInterestRate");
+					this.OnMonthlyInterestRateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_VariableInterestRateDetails_VariableInterestRates", Storage="_VariableInterestRateEntity", ThisKey="VariableInterestRateId", OtherKey="VariableInterestRateId", IsForeignKey=true)]
+		public VariableInterestRateEntity VariableInterestRateEntity
+		{
+			get
+			{
+				return this._VariableInterestRateEntity.Entity;
+			}
+			set
+			{
+				VariableInterestRateEntity previousValue = this._VariableInterestRateEntity.Entity;
+				if (((previousValue != value) 
+							|| (this._VariableInterestRateEntity.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._VariableInterestRateEntity.Entity = null;
+						previousValue.VariableInterestRateDetails.Remove(this);
+					}
+					this._VariableInterestRateEntity.Entity = value;
+					if ((value != null))
+					{
+						value.VariableInterestRateDetails.Add(this);
+						this._VariableInterestRateId = value.VariableInterestRateId;
+					}
+					else
+					{
+						this._VariableInterestRateId = default(int);
+					}
+					this.SendPropertyChanged("VariableInterestRateEntity");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="payment.VariableInterestRates")]
+	public partial class VariableInterestRateEntity : DbEntity<VariableInterestRateEntity>, INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _VariableInterestRateId;
+		
+		private string _Description;
+		
+		private EntitySet<ProductInterestRateEntity> _ProductInterestRates;
+		
+		private EntitySet<VariableInterestRateDetailEntity> _VariableInterestRateDetails;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnVariableInterestRateIdChanging(int value);
+    partial void OnVariableInterestRateIdChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    #endregion
+		
+		public VariableInterestRateEntity()
+		{
+			this._ProductInterestRates = new EntitySet<ProductInterestRateEntity>(new Action<ProductInterestRateEntity>(this.attach_ProductInterestRates), new Action<ProductInterestRateEntity>(this.detach_ProductInterestRates));
+			this._VariableInterestRateDetails = new EntitySet<VariableInterestRateDetailEntity>(new Action<VariableInterestRateDetailEntity>(this.attach_VariableInterestRateDetails), new Action<VariableInterestRateDetailEntity>(this.detach_VariableInterestRateDetails));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VariableInterestRateId", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int VariableInterestRateId
+		{
+			get
+			{
+				return this._VariableInterestRateId;
+			}
+			set
+			{
+				if ((this._VariableInterestRateId != value))
+				{
+					this.OnVariableInterestRateIdChanging(value);
+					this.SendPropertyChanging();
+					this._VariableInterestRateId = value;
+					this.SendPropertyChanged("VariableInterestRateId");
+					this.OnVariableInterestRateIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(200)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_ProductInterestRates_VariableInterestRates", Storage="_ProductInterestRates", ThisKey="VariableInterestRateId", OtherKey="VariableInterestRateId", DeleteRule="NO ACTION")]
+		public EntitySet<ProductInterestRateEntity> ProductInterestRates
+		{
+			get
+			{
+				return this._ProductInterestRates;
+			}
+			set
+			{
+				this._ProductInterestRates.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_VariableInterestRateDetails_VariableInterestRates", Storage="_VariableInterestRateDetails", ThisKey="VariableInterestRateId", OtherKey="VariableInterestRateId", DeleteRule="NO ACTION")]
+		public EntitySet<VariableInterestRateDetailEntity> VariableInterestRateDetails
+		{
+			get
+			{
+				return this._VariableInterestRateDetails;
+			}
+			set
+			{
+				this._VariableInterestRateDetails.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_ProductInterestRates(ProductInterestRateEntity entity)
+		{
+			this.SendPropertyChanging();
+			entity.VariableInterestRateEntity = this;
+		}
+		
+		private void detach_ProductInterestRates(ProductInterestRateEntity entity)
+		{
+			this.SendPropertyChanging();
+			entity.VariableInterestRateEntity = null;
+		}
+		
+		private void attach_VariableInterestRateDetails(VariableInterestRateDetailEntity entity)
+		{
+			this.SendPropertyChanging();
+			entity.VariableInterestRateEntity = this;
+		}
+		
+		private void detach_VariableInterestRateDetails(VariableInterestRateDetailEntity entity)
+		{
+			this.SendPropertyChanging();
+			entity.VariableInterestRateEntity = null;
 		}
 	}
 }

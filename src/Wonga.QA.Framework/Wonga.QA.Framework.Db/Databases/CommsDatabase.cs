@@ -11,7 +11,6 @@
 
 namespace Wonga.QA.Framework.Db.Comms
 {
-	using Wonga.QA.Framework.Db;
 	using System.Data.Linq;
 	using System.Data.Linq.Mapping;
 	using System.Data;
@@ -228,7 +227,7 @@ namespace Wonga.QA.Framework.Db.Comms
 		
 		private string _Province;
 		
-		private EntitySet<AddressesCaEntity> _Comms_AddressesCas;
+		private EntitySet<AddressesCaEntity> _AddressesCas;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -270,7 +269,7 @@ namespace Wonga.QA.Framework.Db.Comms
 		
 		public AddressEntity()
 		{
-			this._Comms_AddressesCas = new EntitySet<AddressesCaEntity>(new Action<AddressesCaEntity>(this.attach_Comms_AddressesCas), new Action<AddressesCaEntity>(this.detach_Comms_AddressesCas));
+			this._AddressesCas = new EntitySet<AddressesCaEntity>(new Action<AddressesCaEntity>(this.attach_AddressesCas), new Action<AddressesCaEntity>(this.detach_AddressesCas));
 			OnCreated();
 		}
 		
@@ -594,16 +593,16 @@ namespace Wonga.QA.Framework.Db.Comms
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_AddressesCa_AddressId", Storage="_Comms_AddressesCas", ThisKey="AddressId", OtherKey="AddressId", DeleteRule="NO ACTION")]
-		public EntitySet<AddressesCaEntity> Comms_AddressesCas
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_AddressesCa_AddressId", Storage="_AddressesCas", ThisKey="AddressId", OtherKey="AddressId", DeleteRule="NO ACTION")]
+		public EntitySet<AddressesCaEntity> AddressesCas
 		{
 			get
 			{
-				return this._Comms_AddressesCas;
+				return this._AddressesCas;
 			}
 			set
 			{
-				this._Comms_AddressesCas.Assign(value);
+				this._AddressesCas.Assign(value);
 			}
 		}
 		
@@ -627,13 +626,13 @@ namespace Wonga.QA.Framework.Db.Comms
 			}
 		}
 		
-		private void attach_Comms_AddressesCas(AddressesCaEntity entity)
+		private void attach_AddressesCas(AddressesCaEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.AddressEntity = this;
 		}
 		
-		private void detach_Comms_AddressesCas(AddressesCaEntity entity)
+		private void detach_AddressesCas(AddressesCaEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.AddressEntity = null;
@@ -777,12 +776,12 @@ namespace Wonga.QA.Framework.Db.Comms
 					if ((previousValue != null))
 					{
 						this._AddressEntity.Entity = null;
-						previousValue.Comms_AddressesCas.Remove(this);
+						previousValue.AddressesCas.Remove(this);
 					}
 					this._AddressEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Comms_AddressesCas.Add(this);
+						value.AddressesCas.Add(this);
 						this._AddressId = value.AddressId;
 					}
 					else

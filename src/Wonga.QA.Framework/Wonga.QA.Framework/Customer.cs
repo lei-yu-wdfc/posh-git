@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework
 {
@@ -10,6 +12,11 @@ namespace Wonga.QA.Framework
         public Customer(Guid id)
         {
             Id = id;
+        }
+
+        public Application GetApplication()
+        {
+            return new Application(Guid.Parse(Driver.Api.Queries.Post(Config.AUT == AUT.Za ? (ApiRequest)new GetAccountSummaryZaQuery { AccountId = Id } : new GetAccountSummaryQuery { AccountId = Id }).Values["ApplicationId"].Single()));
         }
 
         public Application[] GetApplications()

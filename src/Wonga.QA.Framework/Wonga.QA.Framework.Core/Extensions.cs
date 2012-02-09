@@ -12,11 +12,11 @@ namespace Wonga.QA.Framework.Core
             return (T)member.GetCustomAttributes(typeof(T), false).SingleOrDefault();
         }
 
-        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
+        public static IList<T> ForEach<T>(this IList<T> list, Action<T> action)
         {
-            foreach (T t in enumerable)
+            foreach (T t in list)
                 action(t);
-            return enumerable;
+            return list;
         }
     }
 }

@@ -659,6 +659,7 @@
     <Compile Include="Enums\SchedulePeriodEnum.cs" />
     <Compile Include="Enums\SmsStatusEnum.cs" />
     <Compile Include="Enums\TitleEnum.cs" />
+    <Compile Include="Temp\TimeoutMessage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -672,6 +673,7 @@
       <Name>Wonga.QA.Framework.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

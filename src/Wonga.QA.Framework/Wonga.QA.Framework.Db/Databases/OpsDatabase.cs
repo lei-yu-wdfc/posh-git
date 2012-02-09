@@ -11,7 +11,6 @@
 
 namespace Wonga.QA.Framework.Db.Ops
 {
-	using Wonga.QA.Framework.Db;
 	using System.Data.Linq;
 	using System.Data.Linq.Mapping;
 	using System.Data;
@@ -665,7 +664,7 @@ namespace Wonga.QA.Framework.Db.Ops
 		
 		private string _Name;
 		
-		private EntitySet<EndpointSettingEntity> _Ops_EndpointSettings;
+		private EntitySet<EndpointSettingEntity> _EndpointSettings;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -679,7 +678,7 @@ namespace Wonga.QA.Framework.Db.Ops
 		
 		public EndpointEntity()
 		{
-			this._Ops_EndpointSettings = new EntitySet<EndpointSettingEntity>(new Action<EndpointSettingEntity>(this.attach_Ops_EndpointSettings), new Action<EndpointSettingEntity>(this.detach_Ops_EndpointSettings));
+			this._EndpointSettings = new EntitySet<EndpointSettingEntity>(new Action<EndpointSettingEntity>(this.attach_EndpointSettings), new Action<EndpointSettingEntity>(this.detach_EndpointSettings));
 			OnCreated();
 		}
 		
@@ -723,16 +722,16 @@ namespace Wonga.QA.Framework.Db.Ops
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_ops_EndpointSettings_EndpointId", Storage="_Ops_EndpointSettings", ThisKey="EndpointId", OtherKey="EndpointId", DeleteRule="NO ACTION")]
-		public EntitySet<EndpointSettingEntity> Ops_EndpointSettings
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_ops_EndpointSettings_EndpointId", Storage="_EndpointSettings", ThisKey="EndpointId", OtherKey="EndpointId", DeleteRule="NO ACTION")]
+		public EntitySet<EndpointSettingEntity> EndpointSettings
 		{
 			get
 			{
-				return this._Ops_EndpointSettings;
+				return this._EndpointSettings;
 			}
 			set
 			{
-				this._Ops_EndpointSettings.Assign(value);
+				this._EndpointSettings.Assign(value);
 			}
 		}
 		
@@ -756,13 +755,13 @@ namespace Wonga.QA.Framework.Db.Ops
 			}
 		}
 		
-		private void attach_Ops_EndpointSettings(EndpointSettingEntity entity)
+		private void attach_EndpointSettings(EndpointSettingEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.EndpointEntity = this;
 		}
 		
-		private void detach_Ops_EndpointSettings(EndpointSettingEntity entity)
+		private void detach_EndpointSettings(EndpointSettingEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.EndpointEntity = null;
@@ -906,12 +905,12 @@ namespace Wonga.QA.Framework.Db.Ops
 					if ((previousValue != null))
 					{
 						this._EndpointEntity.Entity = null;
-						previousValue.Ops_EndpointSettings.Remove(this);
+						previousValue.EndpointSettings.Remove(this);
 					}
 					this._EndpointEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Ops_EndpointSettings.Add(this);
+						value.EndpointSettings.Add(this);
 						this._EndpointId = value.EndpointId;
 					}
 					else

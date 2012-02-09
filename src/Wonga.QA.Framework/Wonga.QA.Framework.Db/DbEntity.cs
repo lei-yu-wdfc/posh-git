@@ -34,7 +34,7 @@ namespace Wonga.QA.Framework.Db
             return (T)this;
         }
 
-        public void Submit(Boolean force = true)
+        public void Submit(Boolean force = false)
         {
             try
             {

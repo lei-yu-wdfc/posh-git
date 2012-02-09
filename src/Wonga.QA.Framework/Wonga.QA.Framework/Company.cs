@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework
 {
@@ -12,14 +13,16 @@ namespace Wonga.QA.Framework
             Id = id;
         }
 
-        public int GetPaymentCard()
+        public Guid GetPaymentCard()
         {
-            return Driver.Db.Payments.BusinessPaymentCards.Single(a => a.OrganisationId == Id).PaymentCardId;
+            var paymentCardId = Do.Until(()=>Driver.Db.Payments.BusinessPaymentCards.Single(b => b.OrganisationId == Id).PaymentCardId);
+            return Driver.Db.Payments.PaymentCardsBases.Single(a=>a.PaymentCardId == paymentCardId).ExternalId;
         }
 
-        public int GetBankAccount()
+        public Guid GetBankAccount()
         {
-            return Driver.Db.Payments.BusinessBankAccounts.Single(a => a.OrganisationId == Id).BankAccountId;
+            var bankAccountId =Do.Until(()=>Driver.Db.Payments.BusinessBankAccounts.Single(b => b.OrganisationId == Id).BankAccountId);
+            return Driver.Db.Payments.BankAccountsBases.Single(a=>a.BankAccountId == bankAccountId).ExternalId;
         }
     }
 }

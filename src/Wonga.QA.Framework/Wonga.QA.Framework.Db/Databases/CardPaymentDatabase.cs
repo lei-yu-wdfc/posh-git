@@ -11,7 +11,6 @@
 
 namespace Wonga.QA.Framework.Db.CardPayment
 {
-	using Wonga.QA.Framework.Db;
 	using System.Data.Linq;
 	using System.Data.Linq.Mapping;
 	using System.Data;
@@ -410,12 +409,12 @@ namespace Wonga.QA.Framework.Db.CardPayment
 					if ((previousValue != null))
 					{
 						this._ServiceLoginEntity.Entity = null;
-						previousValue.Cardpayment_Schedules.Remove(this);
+						previousValue.Schedules.Remove(this);
 					}
 					this._ServiceLoginEntity.Entity = value;
 					if ((value != null))
 					{
-						value.Cardpayment_Schedules.Add(this);
+						value.Schedules.Add(this);
 						this._ServiceLoginId = value.ServiceLoginId;
 					}
 					else
@@ -466,7 +465,7 @@ namespace Wonga.QA.Framework.Db.CardPayment
 		
 		private System.DateTime _CreatedOn;
 		
-		private EntitySet<ScheduleEntity> _Cardpayment_Schedules;
+		private EntitySet<ScheduleEntity> _Schedules;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -488,7 +487,7 @@ namespace Wonga.QA.Framework.Db.CardPayment
 		
 		public ServiceLoginEntity()
 		{
-			this._Cardpayment_Schedules = new EntitySet<ScheduleEntity>(new Action<ScheduleEntity>(this.attach_Cardpayment_Schedules), new Action<ScheduleEntity>(this.detach_Cardpayment_Schedules));
+			this._Schedules = new EntitySet<ScheduleEntity>(new Action<ScheduleEntity>(this.attach_Schedules), new Action<ScheduleEntity>(this.detach_Schedules));
 			OnCreated();
 		}
 		
@@ -612,16 +611,16 @@ namespace Wonga.QA.Framework.Db.CardPayment
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Schedules_ServiceLogins", Storage="_Cardpayment_Schedules", ThisKey="ServiceLoginId", OtherKey="ServiceLoginId", DeleteRule="NO ACTION")]
-		public EntitySet<ScheduleEntity> Cardpayment_Schedules
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Schedules_ServiceLogins", Storage="_Schedules", ThisKey="ServiceLoginId", OtherKey="ServiceLoginId", DeleteRule="NO ACTION")]
+		public EntitySet<ScheduleEntity> Schedules
 		{
 			get
 			{
-				return this._Cardpayment_Schedules;
+				return this._Schedules;
 			}
 			set
 			{
-				this._Cardpayment_Schedules.Assign(value);
+				this._Schedules.Assign(value);
 			}
 		}
 		
@@ -645,13 +644,13 @@ namespace Wonga.QA.Framework.Db.CardPayment
 			}
 		}
 		
-		private void attach_Cardpayment_Schedules(ScheduleEntity entity)
+		private void attach_Schedules(ScheduleEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.ServiceLoginEntity = this;
 		}
 		
-		private void detach_Cardpayment_Schedules(ScheduleEntity entity)
+		private void detach_Schedules(ScheduleEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.ServiceLoginEntity = null;

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Messaging;
 using System.Text;
+using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework.Msmq
 {
@@ -24,14 +26,15 @@ namespace Wonga.QA.Framework.Msmq
             _queue = new MessageQueue(String.Format(format, path));
         }
 
-        public MsmqQueue Send(MsmqMessage message)
+        public void Send(MsmqMessage message)
         {
-            Byte[] bytes = Encoding.Default.GetBytes(message.ToString());
-            Message o = new Message();
-            o.BodyStream.Write(bytes, 0, bytes.Length);
-            _queue.Send(o, MessageQueueTransactionType.Single);
-            message.Id = o.Id;
-            return this;
+            String body = message.ToString();
+            Trace.WriteLine(Data.Indent(body), GetType().FullName);
+
+            Byte[] bytes = Encoding.Default.GetBytes(body);
+            Message m = new Message();
+            m.BodyStream.Write(bytes, 0, bytes.Length);
+            _queue.Send(m, MessageQueueTransactionType.Single);
         }
 
         public MsmqQueue Wait(MsmqMessage message)

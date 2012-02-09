@@ -9,13 +9,10 @@ namespace Wonga.QA.Framework
     {
         private Guid _id;
         private Customer _customer;
-
-        private Drivers _drivers;
-
+        
         private CompanyBuilder()
         {
             _id = Guid.NewGuid();
-            _drivers = new Drivers();
         }
 
         public static CompanyBuilder New(Customer customer)
@@ -25,7 +22,7 @@ namespace Wonga.QA.Framework
 
         public Company Build()
         {
-            _drivers.Api.Commands.Post(new ApiRequest[]
+            Driver.Api.Commands.Post(new ApiRequest[]
                                            {
                                                SaveOrganisationDetailsCommand.New(r=>r.OrganisationId = _id),
                                                AddBusinessBankAccountWbUkCommand.New(r=>r.OrganisationId = _id),
