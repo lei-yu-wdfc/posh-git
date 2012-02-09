@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Data.Linq;
 using System.Diagnostics;
 using System.Linq;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Db.Payments;
 
 namespace Wonga.QA.Framework
 {
