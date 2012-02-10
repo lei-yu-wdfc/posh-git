@@ -17,6 +17,20 @@ namespace Wonga.QA.Framework.Core
         {
             return date.DateTime;
         }
+
+        public override String ToString()
+        {
+            switch (DateFormat)
+            {
+                case DateFormat.DateTime:
+                    return DateTime.ToString("s");
+                case DateFormat.YearMonth:
+                    return DateTime.ToString("yyyy-MM");
+                case DateFormat.Date:
+                    return DateTime.ToString("yyyy-MM-dd");
+            }
+            throw new NotImplementedException();
+        }
     }
 
     public enum DateFormat
@@ -28,7 +42,7 @@ namespace Wonga.QA.Framework.Core
 
     public static partial class Extensions
     {
-        public static Date ToDate(this DateTime date, DateFormat format)
+        public static Date ToDate(this DateTime date, DateFormat format = DateFormat.DateTime)
         {
             return new Date(date, format);
         }
