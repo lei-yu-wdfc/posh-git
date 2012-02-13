@@ -1,0 +1,16 @@
+﻿using MbUnit.Framework;
+using Wonga.QA.Framework;
+using Wonga.QA.Tests.Core;
+
+namespace Wonga.QA.Tests.Sms
+{
+    [Parallelizable(TestScope.All)]
+    public class SmsServiceTests
+    {
+        [Test, AUT]
+        public void SmsServiceIsRunning()
+        {
+            Assert.IsTrue(Driver.Svc.Sms.IsRunning());
+        }
+    }
+}

@@ -35,7 +35,7 @@ namespace Wonga.QA.Framework.Svc
         private SvcService _scotia;
         private SvcService _sms;
         private SvcService _timeoutManager;
-        private SvcService _timezone;
+        private SvcService _timeZone;
         private SvcService _transUnion;
         private SvcService _uru;
         private SvcService _wongaPay;
@@ -220,10 +220,10 @@ namespace Wonga.QA.Framework.Svc
             set { _timeoutManager = value; }
         }
 
-        public SvcService Timezone
+        public SvcService TimeZone
         {
-            get { return _timezone ?? (_timezone = new SvcService(Config.Svc.Timezone.Key, Config.Svc.Timezone.Value)); }
-            set { _timezone = value; }
+            get { return _timeZone ?? (_timeZone = new SvcService(Config.Svc.TimeZone.Key, Config.Svc.TimeZone.Value)); }
+            set { _timeZone = value; }
         }
 
         public SvcService TransUnion

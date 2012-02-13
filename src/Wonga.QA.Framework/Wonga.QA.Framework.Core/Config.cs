@@ -157,7 +157,7 @@ namespace Wonga.QA.Framework.Core
             public KeyValuePair<String, String> Scotia { get; set; }
             public KeyValuePair<String, String> Sms { get; set; }
             public KeyValuePair<String, String> TimeoutManager { get; set; }
-            public KeyValuePair<String, String> Timezone { get; set; }
+            public KeyValuePair<String, String> TimeZone { get; set; }
             public KeyValuePair<String, String> TransUnion { get; set; }
             public KeyValuePair<String, String> Uru { get; set; }
             public KeyValuePair<String, String> WongaPay { get; set; }
@@ -197,7 +197,7 @@ namespace Wonga.QA.Framework.Core
                 Scotia = new KeyValuePair<String, String>("Wonga.BankGateway.Scotia.Handlers", component);
                 Sms = new KeyValuePair<String, String>("Wonga.Sms.Handlers", component);
                 TimeoutManager = new KeyValuePair<String, String>("Wonga.TimeoutManager.Handlers", component);
-                Timezone = new KeyValuePair<String, String>("Wonga.TimeZone.Handlers", component);
+                TimeZone = new KeyValuePair<String, String>("Wonga.TimeZone.Handlers", component);
                 TransUnion = new KeyValuePair<String, String>("Wonga.TransUnion.Handlers", component);
                 Uru = new KeyValuePair<String, String>("Wonga.URU.Handlers", component);
                 WongaPay = new KeyValuePair<String, String>("Wonga.WongaPay.Handlers", component);

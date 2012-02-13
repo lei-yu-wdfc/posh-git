@@ -25,9 +25,9 @@ namespace Wonga.QA.Framework.UI
 
         public UiClient()
         {
-            //Driver = new FirefoxDriver();
+            Driver = new FirefoxDriver();
             //Driver = new InternetExplorerDriver();
-            Driver = new ChromeDriver();
+            //Driver = new ChromeDriver();
         }
 
         public HomePage Home()

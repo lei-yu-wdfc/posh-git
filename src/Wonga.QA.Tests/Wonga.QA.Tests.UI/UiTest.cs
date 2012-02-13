@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Gallio.Framework;
+﻿using Gallio.Framework;
 using MbUnit.Framework;
 using Wonga.QA.Framework.UI;
 
-namespace Wonga.QA.Tests.UI
+namespace Wonga.QA.Tests.Ui
 {
     public abstract class UiTest
     {
