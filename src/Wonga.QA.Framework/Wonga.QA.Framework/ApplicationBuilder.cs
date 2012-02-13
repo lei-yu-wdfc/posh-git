@@ -27,18 +27,35 @@ namespace Wonga.QA.Framework
             {
                 SubmitApplicationBehaviourCommand.New(r => r.ApplicationId = _id),
                 SubmitClientWatermarkCommand.New(r => { r.ApplicationId=_id; r.AccountId = _customer.Id; }),
-                CreateFixedTermLoanApplicationCommand.New(r =>
-                {
-                    r.ApplicationId = _id;
-                    r.AccountId = _customer.Id;
-                    r.BankAccountId = _customer.GetBankAccount();
-                }),
-                VerifyFixedTermLoanCommand.New(r => { r.ApplicationId = _id; r.AccountId=_customer.Id; })
             });
 
             Do.Until(() => Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["ApplicationDecisionStatus"].Single() == "Accepted");
+				case AUT.Uk:
+					requests.Add(CreateFixedTermLoanApplicationCommand.New(r =>
+                    {
+                        r.ApplicationId = _id;
+                        r.AccountId = _customer.Id;
+                        r.BankAccountId = _customer.GetBankAccount();
+                    	r.PaymentCardId = _customer.GetPaymentCard();
+                    }));
+                    break;
+                default:
+                    requests.Add(CreateFixedTermLoanApplicationCommand.New(r =>
+                    {
+                        r.ApplicationId = _id;
+                        r.AccountId = _customer.Id;
+                        r.BankAccountId = _customer.GetBankAccount();
+                    }));
+                    break;
+            }
 
-            Driver.Api.Commands.Post(new SignApplicationCommand
+        	requests.Add(VerifyFixedTermLoanCommand.New(r =>{r.ApplicationId = _id;r.AccountId = _customer.Id;}));
+
+        	_drivers.Api.Commands.Post(requests);
+
+            Do.Until(() => _drivers.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["ApplicationDecisionStatus"].Single() == "Accepted");
+
+            _drivers.Api.Commands.Post(new SignApplicationCommand
             {
                 AccountId = _customer.Id,
                 ApplicationId = _id,
