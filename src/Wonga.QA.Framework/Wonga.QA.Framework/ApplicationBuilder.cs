@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Wonga.QA.Framework.Api;
@@ -29,33 +30,38 @@ namespace Wonga.QA.Framework
                 SubmitClientWatermarkCommand.New(r => { r.ApplicationId=_id; r.AccountId = _customer.Id; }),
             });
 
-            Do.Until(() => Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["ApplicationDecisionStatus"].Single() == "Accepted");
+            //Do.Until(() => Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["ApplicationDecisionStatus"].Single() == "Accepted");
+
+        	var requests = new List<ApiRequest>();
+
+			switch (Config.AUT)
+			{
 				case AUT.Uk:
 					requests.Add(CreateFixedTermLoanApplicationCommand.New(r =>
-                    {
-                        r.ApplicationId = _id;
-                        r.AccountId = _customer.Id;
-                        r.BankAccountId = _customer.GetBankAccount();
-                    	r.PaymentCardId = _customer.GetPaymentCard();
-                    }));
-                    break;
-                default:
-                    requests.Add(CreateFixedTermLoanApplicationCommand.New(r =>
-                    {
-                        r.ApplicationId = _id;
-                        r.AccountId = _customer.Id;
-                        r.BankAccountId = _customer.GetBankAccount();
-                    }));
-                    break;
-            }
+					                                                       	{
+					                                                       		r.ApplicationId = _id;
+					                                                       		r.AccountId = _customer.Id;
+					                                                       		r.BankAccountId = _customer.GetBankAccount();
+					                                                       		r.PaymentCardId = _customer.GetPaymentCard();
+					                                                       	}));
+					break;
+				default:
+					requests.Add(CreateFixedTermLoanApplicationCommand.New(r =>
+					                                                       	{
+					                                                       		r.ApplicationId = _id;
+					                                                       		r.AccountId = _customer.Id;
+					                                                       		r.BankAccountId = _customer.GetBankAccount();
+					                                                       	}));
+					break;
+			}
 
         	requests.Add(VerifyFixedTermLoanCommand.New(r =>{r.ApplicationId = _id;r.AccountId = _customer.Id;}));
 
-        	_drivers.Api.Commands.Post(requests);
+        	Driver.Api.Commands.Post(requests);
 
-            Do.Until(() => _drivers.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["ApplicationDecisionStatus"].Single() == "Accepted");
+            Do.Until(() => Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["ApplicationDecisionStatus"].Single() == "Accepted");
 
-            _drivers.Api.Commands.Post(new SignApplicationCommand
+            Driver.Api.Commands.Post(new SignApplicationCommand
             {
                 AccountId = _customer.Id,
                 ApplicationId = _id,

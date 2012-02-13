@@ -55,5 +55,35 @@ namespace Wonga.QA.Framework
 
             return this;
         }
+
+		public Application PutApplicationIntoArrears()
+		{
+			ApplicationEntity application = Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id);
+
+			TimeSpan span = application.FixedTermLoanApplicationEntity.NextDueDate.Value - DateTime.Today;
+			application.FixedTermLoanApplicationEntity.PromiseDate -= span;
+			application.FixedTermLoanApplicationEntity.NextDueDate -= span;
+			application.Submit();
+
+			if (Config.AUT == AUT.Uk)
+			{
+				Driver.Msmq.Payments.Send(new ProcessScheduledPaymentCommand { ApplicationId = application.ApplicationId });
+			}
+			else
+			{
+				FixedTermLoanSagaEntity ftl = Driver.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
+				Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
+				Do.While(ftl.Refresh);
+			}
+
+			ScheduledPaymentSagaEntity sp =
+				Do.Until(() => Driver.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationGuid == Id));
+			Driver.Msmq.Payments.Send(new TakePaymentFailedCommand { SagaId = sp.Id });
+			Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = sp.Id });
+
+			Do.Until(() => Driver.Db.Payments.Arrears.Single(s => s.ApplicationId == application.ApplicationId));
+
+			return this;
+		}
     }
 }

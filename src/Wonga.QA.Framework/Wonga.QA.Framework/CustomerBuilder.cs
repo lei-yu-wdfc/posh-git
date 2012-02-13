@@ -89,7 +89,7 @@ namespace Wonga.QA.Framework
                 case AUT.Wb:
                     requests.AddRange(new ApiRequest[]
                     {
-                        SaveCustomerDetailsUkCommand.New(r=> { r.AccountId = _id; r.MiddleName = _middleName;}),
+                        SaveCustomerDetailsUkCommand.New(r=> { r.AccountId = _id;}),
                         SaveCustomerAddressUkCommand.New(r=>r.AccountId = _id),
                         AddBankAccountUkCommand.New(r=>r.AccountId = _id)
                     });
@@ -97,7 +97,7 @@ namespace Wonga.QA.Framework
 				case AUT.Uk:
 					requests.AddRange(new ApiRequest[]
 					{
-						SaveCustomerDetailsUkCommand.New(r=> { r.AccountId = _id; r.MiddleName = _middleName;}),
+						SaveCustomerDetailsUkCommand.New(r=> { r.AccountId = _id;}),
 					    SaveCustomerAddressUkCommand.New(r => r.AccountId = _id),
 						AddBankAccountUkCommand.New(r => { r.AccountId = _id; }),
 						AddPaymentCardCommand.New(r => { r.AccountId = _id; }),
