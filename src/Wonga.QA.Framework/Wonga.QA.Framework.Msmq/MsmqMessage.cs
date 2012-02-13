@@ -47,7 +47,7 @@ namespace Wonga.QA.Framework.Msmq
                     else
                         foreach (Object element in value as IList)
                             if (element != null)
-                                if (element.GetType().IsPrimitive || element.GetType().IsEnum || element is String || element is Decimal || element is Guid || element is DateTime || element is TimeSpan)
+                                if (element.GetType().IsPrimitive || element.GetType().IsEnum || element is String || element is Decimal || element is Guid || element is DateTime || element is TimeSpan || element is DateTimeOffset)
                                     builder.AppendFormat("<{0}>{1}</{0}>\n", element.GetType().Name, Data.ToString(element));
                                 else
                                     builder.AppendFormat(ToString(element.GetType().Name, element));
@@ -62,8 +62,5 @@ namespace Wonga.QA.Framework.Msmq
         }
     }
 
-    public abstract class MsmqMessage<T> : MsmqMessage where T : MsmqMessage<T>
-    {
-
-    }
+    public abstract class MsmqMessage<T> : MsmqMessage where T : MsmqMessage<T> { }
 }

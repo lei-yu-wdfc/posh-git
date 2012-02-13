@@ -1,4 +1,4 @@
-<Project DefaultTargets="Test" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Test" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<UsingTask TaskName="Gallio" AssemblyFile="$(ProgramFiles)\Gallio\bin\Gallio.MsBuildTasks.dll" Condition="Exists('$(ProgramFiles)\Gallio\bin\Gallio.MsBuildTasks.dll')"/>
 	<UsingTask TaskName="Gallio" AssemblyFile="$(ProgramW6432)\Gallio\bin\Gallio.MsBuildTasks.dll" Condition="Exists('$(ProgramW6432)\Gallio\bin\Gallio.MsBuildTasks.dll')"/>
 	
@@ -27,15 +27,20 @@
 		<MSBuild Projects="@(Projects)" />
 	</Target>
 	
-	<Target Name="Test" DependsOnTargets="Config;Build">
+	<Target Name="Merge">
 		<ItemGroup>
-			<Files
-				Include="$(Bin)\$(Tests)\$(Tests).*.dll"
-				Exclude="$(Bin)\$(Tests)\$(Tests).Core.dll"
-			/>
+			<Command Include='"$(MSBuildProgramFiles32)\Microsoft\ILMerge\ILMerge.exe"' />
+			<Command Include='/targetplatform:v4,"$(MSBuildToolsPath)"' />
+			<Command Include='/wildcards' />
+			<Command Include='/out:"$(Bin)\$(Tests)\$(Tests).dll"' />
+			<Command Include='"$(Bin)\$(Tests)\$(Tests).*.dll"' />
 		</ItemGroup>
+		<Exec Command="@(Command, ' ')" />
+	</Target>
+	
+	<Target Name="Test" DependsOnTargets="Config;Build;Merge">
 		<Gallio
-			Files="@(Files)"
+			Files="$(Bin)\$(Tests)\$(Tests).dll"
 			Filter="Category: $(AUT)"
 			ReportTypes="xml"
 			ReportDirectory="$(Bin)\$(Tests).Report"

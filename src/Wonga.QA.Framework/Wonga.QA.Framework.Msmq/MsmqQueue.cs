@@ -12,7 +12,7 @@ namespace Wonga.QA.Framework.Msmq
         private MessageQueue _queue;
         private MessageQueue _journal;
         private MessageQueue _error;
-        private MessageQueue _subscription;
+        private MessageQueue _subscriptions;
 
         private MessageQueue _response;
         private MessageQueue _administration;
@@ -22,7 +22,7 @@ namespace Wonga.QA.Framework.Msmq
             _queue = new MessageQueue(path);
             _journal = new MessageQueue(String.Format("{0};journal", _queue.Path));
             _error = new MessageQueue(String.Format("{0}_error", _queue.Path));
-            _subscription = new MessageQueue(String.Format("{0}_subscription", _queue.Path));
+            _subscriptions = new MessageQueue(String.Format("{0}_subscriptions", _queue.Path));
 
             _response = new MessageQueue(String.Format("{0}\\qa.response", _queue.Path.Substring(0, _queue.Path.LastIndexOf('\\'))));
             _administration = new MessageQueue(String.Format("{0}\\qa.administration", _queue.Path.Substring(0, _queue.Path.LastIndexOf('\\'))));

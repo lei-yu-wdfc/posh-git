@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Win32;
 
@@ -13,6 +14,7 @@ namespace Wonga.QA.Framework.Core
         public static AUT AUT { get; set; }
 
         public static ApiConfig Api { get; set; }
+        public static SvcConfig Svc { get; set; }
         public static MsmqConfig Msmq { get; set; }
         public static DbConfig Db { get; set; }
         public static UiConfig Ui { get; set; }
@@ -26,13 +28,18 @@ namespace Wonga.QA.Framework.Core
             {
                 case SUT.Dev:
                     Api = new ApiConfig("localhost");
-                    Ui = new UiConfig("localhost");
+                    Svc = new SvcConfig(".");
                     Msmq = new MsmqConfig(".");
                     Db = new DbConfig(".");
+                    Ui = new UiConfig("localhost");
                     break;
                 case SUT.WIP:
                     Api = new ApiConfig(String.Format("wip.api.{0}.wonga.com", AUT));
-                    Ui = new UiConfig(String.Format("wip.{0}.wonga.com", AUT));
+                    Svc =
+                        AUT == AUT.Uk ? new SvcConfig("WIP2") :
+                        AUT == AUT.Za ? new SvcConfig("WIP4") :
+                        AUT == AUT.Ca ? new SvcConfig("WIP6") :
+                        AUT == AUT.Wb ? new SvcConfig("WIP8") : Throw<SvcConfig>();
                     Msmq =
                         AUT == AUT.Uk ? new MsmqConfig("WIP2") :
                         AUT == AUT.Za ? new MsmqConfig("WIP4") :
@@ -43,10 +50,15 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Za ? new DbConfig("WIP4") :
                         AUT == AUT.Ca ? new DbConfig("WIP6") :
                         AUT == AUT.Wb ? new DbConfig("WIP8") : Throw<DbConfig>();
+                    Ui = new UiConfig(String.Format("wip.{0}.wonga.com", AUT));
                     break;
                 case SUT.UAT:
                     Api = new ApiConfig(String.Format("uat.api.{0}.wonga.com", AUT));
-                    Ui = new UiConfig(String.Format("uat.{0}.wonga.com", AUT));
+                    Svc =
+                        AUT == AUT.Uk ? new SvcConfig("UAT2") :
+                        AUT == AUT.Za ? new SvcConfig("UAT4") :
+                        AUT == AUT.Ca ? new SvcConfig("UAT6") :
+                        AUT == AUT.Wb ? new SvcConfig("UAT8") : Throw<SvcConfig>();
                     Msmq =
                         AUT == AUT.Uk ? new MsmqConfig("UAT2") :
                         AUT == AUT.Za ? new MsmqConfig("UAT4") :
@@ -57,10 +69,15 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Za ? new DbConfig("UAT4") :
                         AUT == AUT.Ca ? new DbConfig("UAT6") :
                         AUT == AUT.Wb ? new DbConfig("UAT8") : Throw<DbConfig>();
+                    Ui = new UiConfig(String.Format("uat.{0}.wonga.com", AUT));
                     break;
                 case SUT.RC:
                     Api = new ApiConfig(String.Format("rc.api.{0}.wonga.com", AUT));
-                    Ui = new UiConfig(String.Format("rc.{0}.wonga.com", AUT));
+                    Svc =
+                        AUT == AUT.Uk ? new SvcConfig("RC2") :
+                        AUT == AUT.Za ? new SvcConfig("RC4") :
+                        AUT == AUT.Ca ? new SvcConfig("RC6") :
+                        AUT == AUT.Wb ? new SvcConfig("RC9", "RC10") : Throw<SvcConfig>();
                     Msmq =
                         AUT == AUT.Uk ? new MsmqConfig("RC2") :
                         AUT == AUT.Za ? new MsmqConfig("RC4") :
@@ -71,6 +88,7 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Za ? new DbConfig("RC4") :
                         AUT == AUT.Ca ? new DbConfig("RC6") :
                         AUT == AUT.Wb ? new DbConfig("RC8") : Throw<DbConfig>();
+                    Ui = new UiConfig(String.Format("rc.{0}.wonga.com", AUT));
                     break;
                 default:
                     throw new NotImplementedException();
@@ -106,6 +124,86 @@ namespace Wonga.QA.Framework.Core
             }
         }
 
+        public class SvcConfig
+        {
+            public KeyValuePair<String, String> Ops { get; set; }
+            public KeyValuePair<String, String> Comms { get; set; }
+            public KeyValuePair<String, String> Payments { get; set; }
+            public KeyValuePair<String, String> Marketing { get; set; }
+            public KeyValuePair<String, String> Risk { get; set; }
+            public KeyValuePair<String, String> Bi { get; set; }
+
+            public KeyValuePair<String, String> BankGateway { get; set; }
+            public KeyValuePair<String, String> Blacklist { get; set; }
+            public KeyValuePair<String, String> BottomLine { get; set; }
+            public KeyValuePair<String, String> CallReport { get; set; }
+            public KeyValuePair<String, String> CallValidate { get; set; }
+            public KeyValuePair<String, String> CardPayment { get; set; }
+            public KeyValuePair<String, String> ColdStorage { get; set; }
+            public KeyValuePair<String, String> ContactManagement { get; set; }
+            public KeyValuePair<String, String> DocumentGeneration { get; set; }
+            public KeyValuePair<String, String> Email { get; set; }
+            public KeyValuePair<String, String> Equifax { get; set; }
+            public KeyValuePair<String, String> Experian { get; set; }
+            public KeyValuePair<String, String> ExperianBulk { get; set; }
+            public KeyValuePair<String, String> FileStorage { get; set; }
+            public KeyValuePair<String, String> Graydon { get; set; }
+            public KeyValuePair<String, String> Hpi { get; set; }
+            public KeyValuePair<String, String> Hsbc { get; set; }
+            public KeyValuePair<String, String> Hyphen { get; set; }
+            public KeyValuePair<String, String> Iovation { get; set; }
+            public KeyValuePair<String, String> Salesforce { get; set; }
+            public KeyValuePair<String, String> Scheduler { get; set; }
+            public KeyValuePair<String, String> Scotia { get; set; }
+            public KeyValuePair<String, String> Sms { get; set; }
+            public KeyValuePair<String, String> TimeoutManager { get; set; }
+            public KeyValuePair<String, String> Timezone { get; set; }
+            public KeyValuePair<String, String> TransUnion { get; set; }
+            public KeyValuePair<String, String> Uru { get; set; }
+            public KeyValuePair<String, String> WongaPay { get; set; }
+
+            public SvcConfig(String server) : this(server, server) { }
+
+            public SvcConfig(String service, String component)
+            {
+                Ops = new KeyValuePair<String, String>("Wonga.Ops.Handlers", service);
+                Comms = new KeyValuePair<String, String>("Wonga.Comms.Handlers", service);
+                Payments = new KeyValuePair<String, String>("Wonga.Payments.Handlers", service);
+                Marketing = new KeyValuePair<String, String>("Wonga.Marketing.Handlers", service);
+                Risk = new KeyValuePair<String, String>("Wonga.Risk.Handlers", service);
+                Bi = new KeyValuePair<String, String>("Wonga.Bi.Handlers", service);
+
+                BankGateway = new KeyValuePair<String, String>("Wonga.BankGateway.Handlers", component);
+                Blacklist = new KeyValuePair<String, String>("Wonga.BlackList.Handlers", component);
+                BottomLine = new KeyValuePair<String, String>("Wonga.BankGateway.Bottomline.Handlers", component);
+                CallReport = new KeyValuePair<String, String>("Wonga.CallReport.Handlers", component);
+                CallValidate = new KeyValuePair<String, String>("Wonga.CallValidate.Handlers", component);
+                CardPayment = new KeyValuePair<String, String>("Wonga.CardPayment.Handlers", component);
+                ColdStorage = new KeyValuePair<String, String>("Wonga.ColdStorage.Handlers", component);
+                ContactManagement = new KeyValuePair<String, String>("Wonga.Comms.ContactManagement.Handlers", component);
+                DocumentGeneration = new KeyValuePair<String, String>("Wonga.Comms.DocumentGeneration.Handlers", component);
+                Email = new KeyValuePair<String, String>("Wonga.Email.Handlers", component);
+                Equifax = new KeyValuePair<String, String>("Wonga.Equifax.Handlers", component);
+                Experian = new KeyValuePair<String, String>("Wonga.Experian.Handlers", component);
+                ExperianBulk = new KeyValuePair<String, String>("Wonga.ExperianBulk.Handlers", component);
+                FileStorage = new KeyValuePair<String, String>("Wonga.FileStorage.Handlers", component);
+                Graydon = new KeyValuePair<String, String>("Wonga.Graydon.Handlers", component);
+                Hpi = new KeyValuePair<String, String>("Wonga.HPI.Handlers", component);
+                Hsbc = new KeyValuePair<String, String>("Wonga.BankGateway.HSBC.Handlers", component);
+                Hyphen = new KeyValuePair<String, String>("Wonga.BankGateway.Hyphen.Handlers", component);
+                Iovation = new KeyValuePair<String, String>("Wonga.Iovation.Handlers", component);
+                Salesforce = new KeyValuePair<String, String>("Wonga.Salesforce.Handlers", component);
+                Scheduler = new KeyValuePair<String, String>("Wonga.Scheduler.Handlers", component);
+                Scotia = new KeyValuePair<String, String>("Wonga.BankGateway.Scotia.Handlers", component);
+                Sms = new KeyValuePair<String, String>("Wonga.Sms.Handlers", component);
+                TimeoutManager = new KeyValuePair<String, String>("Wonga.TimeoutManager.Handlers", component);
+                Timezone = new KeyValuePair<String, String>("Wonga.TimeZone.Handlers", component);
+                TransUnion = new KeyValuePair<String, String>("Wonga.TransUnion.Handlers", component);
+                Uru = new KeyValuePair<String, String>("Wonga.URU.Handlers", component);
+                WongaPay = new KeyValuePair<String, String>("Wonga.WongaPay.Handlers", component);
+            }
+        }
+
         public class MsmqConfig
         {
             public String Ops { get; set; }
@@ -115,6 +213,8 @@ namespace Wonga.QA.Framework.Core
             public String Bi { get; set; }
 
             public String BankGateway { get; set; }
+            public String BottomLine { get; set; }
+            public String Hsbc { get; set; }
             public String Hyphen { get; set; }
             public String Scotia { get; set; }
             public String Blacklist { get; set; }
@@ -137,10 +237,7 @@ namespace Wonga.QA.Framework.Core
             public String Uru { get; set; }
             public String WongaPay { get; set; }
 
-            public MsmqConfig(String server)
-                : this(server, server)
-            {
-            }
+            public MsmqConfig(String server) : this(server, server) { }
 
             public MsmqConfig(String service, String component)
             {
@@ -153,9 +250,8 @@ namespace Wonga.QA.Framework.Core
                 Bi = String.Format(format, service, "biservice");
 
                 BankGateway = String.Format(format, component, "bankgatewaytc");
-                Hyphen = String.Format(format, component, "bankgatewayhyphentc");
-                Scotia = String.Format(format, component, "bankgatewayscotiatc");
                 Blacklist = String.Format(format, component, "blacklistcomponent");
+                BottomLine = String.Format(format, component, "bankgatewaybottomlinetc");
                 CallReport = String.Format(format, component, "callreportcomponent");
                 CallValidate = String.Format(format, component, "callvalidatecomponent");
                 CardPayment = String.Format(format, component, "cardpaymentcomponent");
@@ -167,8 +263,11 @@ namespace Wonga.QA.Framework.Core
                 FileStorage = String.Format(format, component, "filestoragecomponent");
                 Graydon = String.Format(format, component, "graydoncomponent");
                 Hpi = String.Format(format, component, "hpicomponent");
+                Hsbc = String.Format(format, component, "bankgatewayhsbctc");
+                Hyphen = String.Format(format, component, "bankgatewayhyphentc");
                 Iovation = String.Format(format, component, "iovationcomponent");
                 Salesforce = String.Format(format, component, "salesforcecomponent");
+                Scotia = String.Format(format, component, "bankgatewayscotiatc");
                 Sms = String.Format(format, component, "smscomponent");
                 Timezone = String.Format(format, component, "timezonecomponent");
                 TransUnion = String.Format(format, component, "transunioncomponent");
