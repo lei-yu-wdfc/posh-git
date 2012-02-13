@@ -42,12 +42,29 @@ namespace Wonga.QA.Framework
             switch (Config.AUT)
             {
                 case AUT.Wb:
-                    requests.Add(CreateBusinessFixedInstallmentLoanApplicationWbUkCommand.New(r =>
+                    requests.AddRange(new ApiRequest[]{
+                        CreateBusinessFixedInstallmentLoanApplicationWbUkCommand.New(r =>
+                        {   
+                            r.AccountId = _customer.Id; 
+                            r.OrganisationId = _company.Id;
+                            r.ApplicationId = _id;
+                            r.BusinessPaymentCardId = _company.GetPaymentCard();
+                            r.BusinessBankAccountId = _company.GetBankAccount();
+                            r.MainApplicantBankAccountId = _customer.GetBankAccount();
+                            r.MainApplicantPaymentCardId = _customer.GetPaymentCard();
+                        }),
+                        VerifyMainBusinessApplicantWbCommand.New(r => { r.AccountId = _customer.Id; r.ApplicationId = _id; })
+                    });
+                    
+                    break;
+
+                case AUT.Uk:
+                    requests.Add(CreateFixedTermLoanApplicationCommand.New(r =>
                     {
-                        r.AccountId = _customer.Id; 
-                        r.OrganisationId = _company.Id; 
-                        r.BusinessPaymentCardId = _company.GetPaymentCard();
-                        r.BusinessBankAccountId = _company.GetBankAccount();
+                        r.ApplicationId = _id;
+                        r.AccountId = _customer.Id;
+                        r.BankAccountId = _customer.GetBankAccount();
+                        r.PaymentCardId = _customer.GetPaymentCard();
                     }));
                     break;
 

@@ -11,8 +11,10 @@ namespace Wonga.QA.Framework.Api
         public Object ApplicationId { get; set; }
         public Object BusinessPaymentCardId { get; set; }
         public Object BusinessBankAccountId { get; set; }
+        public Object MainApplicantPaymentCardId { get; set; }
+        public Object MainApplicantBankAccountId { get; set; }
         public Object Currency { get; set; }
-        public Object NumberOfWeeks { get; set; }
+        public Object Term { get; set; }
         public Object LoanAmount { get; set; }
         public Object PromoCodeId { get; set; }
         public Object AffiliateId { get; set; }

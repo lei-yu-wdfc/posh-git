@@ -28,5 +28,10 @@ namespace Wonga.QA.Framework
         {
             return Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == Id).BankAccountsBaseEntity.ExternalId;
         }
+
+        public Guid GetPaymentCard()
+        {
+            return Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == Id).PaymentCardsBaseEntity.ExternalId;
+        }
     }
 }

@@ -29,15 +29,14 @@ namespace Wonga.QA.Framework.Core
             return String.Format("qa.wonga.com+{0}@wonga.com", DateTime.Now.Ticks);
         }
 
-        public static String WithMask()
+        public static String WithEmployerName()
         {
-            switch (Config.AUT)
-            {
-                case AUT.Wb:
-                    return "TESTNoCheck";
-                default:
-                    return "test:EmployedMask";
-            }
+            return "Test:EmployedMask";
+        }
+
+        public static String WithMiddleName()
+        {
+            return Config.AUT == AUT.Wb ? "TESTNoCheck": "";
         }
 
         public static String GetPassword()

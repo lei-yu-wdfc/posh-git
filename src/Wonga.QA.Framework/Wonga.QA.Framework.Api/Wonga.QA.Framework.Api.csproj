@@ -38,12 +38,15 @@
     <Compile Include="Defaults\AddBankAccountCaCommand.cs" />
     <Compile Include="Defaults\AddBusinessBankAccountWbUkCommand.cs" />
     <Compile Include="Defaults\AddBusinessPaymentCardWbUkCommand.cs" />
+    <Compile Include="Defaults\AddPaymentCardCommand.cs" />
     <Compile Include="Defaults\AddPrimaryOrganisationDirectorCommand.cs" />
     <Compile Include="Defaults\AddSecondaryOrganisationDirectorCommand.cs" />
     <Compile Include="Defaults\CreateBusinessFixedInstallmentLoanApplicationWbUkCommand.cs" />
     <Compile Include="Defaults\SaveCustomerAddressUkCommand.cs" />
     <Compile Include="Defaults\SaveCustomerDetailsUkCommand.cs" />
+    <Compile Include="Defaults\SaveEmploymentDetailsUkCommand.cs" />
     <Compile Include="Defaults\SaveOrganisationDetailsCommand.cs" />
+    <Compile Include="Defaults\VerifyMainBusinessApplicantWbCommand.cs" />
     <Compile Include="Defaults\VerifyMobilePhoneCaCommand.cs" />
     <Compile Include="Defaults\SaveEmploymentDetailsCaCommand.cs" />
     <Compile Include="Defaults\SaveCustomerAddressCaCommand.cs" />
@@ -52,6 +55,7 @@
     <Compile Include="Defaults\SubmitApplicationBehaviourCommand.cs" />
     <Compile Include="Defaults\SubmitClientWatermarkCommand.cs" />
     <Compile Include="Defaults\VerifyFixedTermLoanCommand.cs" />
+    <Compile Include="Defaults\VerifyMobilePhoneUkCommand.cs" />
     <Compile Include="Defaults\VerifyMobilePhoneZaCommand.cs" />
     <Compile Include="ApiDriver.cs" />
     <Compile Include="ApiEndpoint.cs" />
@@ -104,6 +108,7 @@
     <Compile Include="Requests\GetBankAccountTypesZaQuery.cs" />
     <Compile Include="Requests\GetBankHolidaysQuery.cs" />
     <Compile Include="Requests\GetBanksQuery.cs" />
+    <Compile Include="Requests\GetBusinessAccountSummaryWbUkQuery.cs" />
     <Compile Include="Requests\GetBusinessFixedInstallmentLoanCalculationWbUkQuery.cs" />
     <Compile Include="Requests\GetBusinessFixedInstallmentLoanOfferWbUkQuery.cs" />
     <Compile Include="Requests\GetContactPreferencesQuery.cs" />

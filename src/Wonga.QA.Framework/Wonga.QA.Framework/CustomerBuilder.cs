@@ -18,7 +18,8 @@ namespace Wonga.QA.Framework
         {
             _id = Data.GetId();
             _verification = Data.GetId();
-            _middleName = Data.WithMask();
+            _employerName = Data.WithEmployerName();
+            _middleName = Data.WithMiddleName();
         }
 
         public static CustomerBuilder New()
@@ -31,9 +32,15 @@ namespace Wonga.QA.Framework
             return new CustomerBuilder { _id = id };
         }
 
-        public CustomerBuilder WithMask(String mask)
+        public CustomerBuilder WithEmployerName(string name)
         {
-            _middleName = mask;
+            _employerName = name;
+            return this;
+        }
+
+        public CustomerBuilder WithMiddleName(string name)
+        {
+            _middleName = name;
             return this;
         }
         
@@ -53,7 +60,11 @@ namespace Wonga.QA.Framework
                 case AUT.Za:
                     requests.AddRange(new ApiRequest[]
                     {
-                        SaveCustomerDetailsZaCommand.New(r => r.AccountId = _id ),
+                        SaveCustomerDetailsZaCommand.New(r =>
+                        {
+                            r.AccountId = _id;
+                            r.MiddleName = _middleName;
+                        }),
                         SaveCustomerAddressZaCommand.New(r => r.AccountId = _id ),
                         AddBankAccountZaCommand.New(r => r.AccountId = _id),
                         SaveEmploymentDetailsZaCommand.New(r =>
@@ -72,7 +83,11 @@ namespace Wonga.QA.Framework
                 case AUT.Ca:
                     requests.AddRange(new ApiRequest[]
                     {
-                        SaveCustomerDetailsCaCommand.New(r => r.AccountId = _id ),
+                        SaveCustomerDetailsCaCommand.New(r => 
+                        { 
+                            r.AccountId = _id;
+                            r.MiddleName = _middleName;
+                        }),
                         SaveCustomerAddressCaCommand.New(r => r.AccountId = _id ),
                         AddBankAccountCaCommand.New(r => r.AccountId = _id),
                         SaveEmploymentDetailsCaCommand.New(r =>
@@ -88,12 +103,28 @@ namespace Wonga.QA.Framework
                     });
                     break;
 
+                case AUT.Uk:
+                    requests.AddRange(new ApiRequest[]
+                    {
+                        SaveCustomerDetailsUkCommand.New(r=>{r.AccountId = _id; r.MiddleName = _middleName;}),
+                        SaveCustomerAddressUkCommand.New(r=>r.AccountId = _id),
+                        AddBankAccountUkCommand.New(r=>r.AccountId = _id),
+                        AddPaymentCardCommand.New(r=>r.AccountId = _id),
+                        SaveEmploymentDetailsUkCommand.New(r=> { r.AccountId = _id; r.EmployerName = _employerName; }),
+                        VerifyMobilePhoneUkCommand.New(r=>r.AccountId = _id)
+                    });
+                    break;
+                    
                 case AUT.Wb:
                     requests.AddRange(new ApiRequest[]
                     {
                         SaveCustomerDetailsUkCommand.New(r=> { r.AccountId = _id; r.MiddleName = _middleName;}),
                         SaveCustomerAddressUkCommand.New(r=>r.AccountId = _id),
-                        AddBankAccountUkCommand.New(r=>r.AccountId = _id)
+                        AddBankAccountUkCommand.New(r=>r.AccountId = _id),
+
+                        //SaveEmploymentDetailsUkCommand.New(r=>r.AccountId = _id),
+
+                        AddPaymentCardCommand.New(r=>r.AccountId = _id)
                     });
                     break;
 

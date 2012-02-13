@@ -10,10 +10,11 @@ namespace Wonga.QA.Framework.Api
             ApplicationId = Data.GetId();
             Currency = CurrencyCodeEnum.GBP;
             LoanAmount = 10000;
-            BusinessBankAccountId = Data.RandomInt(9999);
-            BusinessPaymentCardId = Data.RandomInt(9999);
-            
-            NumberOfWeeks = 20;
+            BusinessBankAccountId = Data.GetId();
+            BusinessPaymentCardId = Data.GetId();
+            MainApplicantPaymentCardId = Data.GetId();
+            MainApplicantBankAccountId = Data.GetId();
+            Term = 20;
             OrganisationId = Data.GetId();
         }
     }
