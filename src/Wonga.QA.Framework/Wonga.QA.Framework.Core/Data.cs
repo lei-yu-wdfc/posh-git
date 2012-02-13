@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Xml;
 using System.Xml.Linq;
 
 namespace Wonga.QA.Framework.Core
@@ -126,39 +124,18 @@ namespace Wonga.QA.Framework.Core
 
         public static String Indent(String value)
         {
-            try
-            {
-                return XDocument.Parse(value).ToString();
-            }
-            catch (XmlException)
-            {
-                return value;
-            }
+            try { return XDocument.Parse(value).ToString(); }
+            catch { return value; }
         }
 
         public static String ToString(Object value)
         {
             if (value == null)
                 return null;
-
             if (value is Boolean)
-                return XmlConvert.ToString((Boolean)value);
+                return ((Boolean)value).ToString().ToLower();
             if (value is DateTime)
-                return XmlConvert.ToString((DateTime)value, XmlDateTimeSerializationMode.Unspecified);
-            if (value is Date)
-            {
-                Date date = (Date)value;
-                switch (date.DateFormat)
-                {
-                    case DateFormat.DateTime:
-                        return ToString(date.DateTime);
-                    case DateFormat.Date:
-                        return XmlConvert.ToString(date.DateTime, "yyyy-MM-dd");
-                    case DateFormat.YearMonth:
-                        return XmlConvert.ToString(date.DateTime, "yyyy-MM");
-                }
-            }
-
+                return ((DateTime)value).ToString("s");
             if (value is Byte[])
                 return Convert.ToBase64String((Byte[])value);
 

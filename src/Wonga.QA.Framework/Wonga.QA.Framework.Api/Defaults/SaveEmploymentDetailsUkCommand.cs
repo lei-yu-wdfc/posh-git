@@ -1,15 +1,14 @@
-﻿using System;
+using System;
 using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework.Api
 {
     public partial class SaveEmploymentDetailsUkCommand
     {
-
         public override void Default()
         {
             AccountId = Data.GetId();
-            EmployerName = "Wonga";
+            EmployerName = "test:EmployedMask";
             EmploymentIndustry = Data.RandomEnum<EmploymentIndustryEnum>();
             EmploymentPosition = Data.RandomEnum<EmploymentPositionEnum>();
             IncomeFrequency = Data.RandomEnum<IncomeFrequencyEnum>();

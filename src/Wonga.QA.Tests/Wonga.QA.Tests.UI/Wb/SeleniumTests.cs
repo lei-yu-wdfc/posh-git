@@ -8,7 +8,7 @@ using MbUnit.Framework;
 namespace Wonga.QA.Tests.UI.Wb
 {
     [Category("Wb")]
-    public class WbTests : UiTest
+    public class SeleniumTests : UiTest
     {
         [Test]
         public void SmeL0ApplicationProcessAccepted()
@@ -19,13 +19,26 @@ namespace Wonga.QA.Tests.UI.Wb
             acceptedPage.SignTermsGuarantor();
         }
 
-        private Wonga.QA.Framework.UI.Pages.ProcessingPage SmeL0Application()
+        [Test]
+        public void SmeL0ApplicationProcessDeclined()
         {
-            var page = Client.Home();
-            var emailAddress = String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
-            var random = new Random((Int32)DateTime.Now.Ticks);
-            const string graydonCompanyRegistrationNumberMask = "00000086";
+            var processingPage = SmeL0Application();
+            var acceptedPage = (Wonga.QA.Framework.UI.Pages.Wb.AcceptedPage)processingPage.WaitFor<Wonga.QA.Framework.UI.Pages.Wb.AcceptedPage>();
+            acceptedPage.SignTermsMainApplicant();
+            acceptedPage.SignTermsGuarantor();
+        }
 
+        private Wonga.QA.Framework.UI.Pages.ProcessingPage SmeL0Application(String middleNameMask = null)
+        {
+            const string graydonCompanyRegistrationNumberMask = "00000086";
+            var random = new Random((Int32)DateTime.Now.Ticks);
+            var middleName = GenerateRandomString();
+            var firstName = GenerateRandomString();
+            var emailAddress = String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
+            if (!String.IsNullOrEmpty(middleNameMask))
+                middleName = middleNameMask;
+
+            var page = Client.Home();
             page.Sliders.HowMuch = "5000";
             page.Sliders.HowLong = "30";
 
@@ -39,10 +52,8 @@ namespace Wonga.QA.Tests.UI.Wb
             eligibilityQuestionsPage.CheckVat = true;
 
             var personalDetailsPage = (Wonga.QA.Framework.UI.Pages.Wb.PersonalDetailsPage)eligibilityQuestionsPage.Submit();
-            var firstNameString = GenerateRandomString();
-
-            personalDetailsPage.YourName.FirstName = firstNameString;
-            personalDetailsPage.YourName.MiddleName = GenerateRandomString();
+            personalDetailsPage.YourName.FirstName = firstName;
+            personalDetailsPage.YourName.MiddleName = middleName;
             personalDetailsPage.YourName.LastName = GenerateRandomString();
             personalDetailsPage.YourName.Title = "Mr";
 
@@ -89,7 +100,7 @@ namespace Wonga.QA.Tests.UI.Wb
 
             var debitCardDetailsPage = (Wonga.QA.Framework.UI.Pages.Wb.DebitCardDetailsPage)bankAccountDetailsPage.Next();
             Thread.Sleep(1000);
-            debitCardDetailsPage.CardName = firstNameString;
+            debitCardDetailsPage.CardName = firstName;
             debitCardDetailsPage.CardNumber = "4444333322221111";
             debitCardDetailsPage.CardSecurity = "666";
             debitCardDetailsPage.CardType = "Visa Debit";

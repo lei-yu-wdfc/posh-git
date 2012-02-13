@@ -21,7 +21,7 @@ namespace Wonga.QA.Tests.UI
         [TearDown]
         public void TearDown()
         {
-            String name = TestContext.CurrentContext.Test.Name;
+            var name = TestContext.CurrentContext.Test.Name;
             TestLog.EmbedImage(name + ".Screen", Client.Screen());
             TestLog.AttachHtml(name + ".Source", Client.Source());
             Client.Dispose();

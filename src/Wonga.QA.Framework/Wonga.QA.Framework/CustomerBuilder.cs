@@ -32,7 +32,7 @@ namespace Wonga.QA.Framework
             return new CustomerBuilder { _id = id };
         }
 
-        public CustomerBuilder WithEmployerName(string name)
+        public CustomerBuilder WithEmployer(string name)
         {
             _employerName = name;
             return this;
@@ -103,30 +103,35 @@ namespace Wonga.QA.Framework
                     });
                     break;
 
-                case AUT.Uk:
-                    requests.AddRange(new ApiRequest[]
-                    {
-                        SaveCustomerDetailsUkCommand.New(r=>{r.AccountId = _id; r.MiddleName = _middleName;}),
-                        SaveCustomerAddressUkCommand.New(r=>r.AccountId = _id),
-                        AddBankAccountUkCommand.New(r=>r.AccountId = _id),
-                        AddPaymentCardCommand.New(r=>r.AccountId = _id),
-                        SaveEmploymentDetailsUkCommand.New(r=> { r.AccountId = _id; r.EmployerName = _employerName; }),
-                        VerifyMobilePhoneUkCommand.New(r=>r.AccountId = _id)
-                    });
-                    break;
-                    
                 case AUT.Wb:
                     requests.AddRange(new ApiRequest[]
                     {
                         SaveCustomerDetailsUkCommand.New(r=> { r.AccountId = _id; r.MiddleName = _middleName;}),
                         SaveCustomerAddressUkCommand.New(r=>r.AccountId = _id),
                         AddBankAccountUkCommand.New(r=>r.AccountId = _id),
-
-                        //SaveEmploymentDetailsUkCommand.New(r=>r.AccountId = _id),
-
                         AddPaymentCardCommand.New(r=>r.AccountId = _id)
                     });
                     break;
+
+				case AUT.Uk:
+					requests.AddRange(new ApiRequest[]
+					{
+						SaveCustomerDetailsUkCommand.New(r=> { r.AccountId = _id;}),
+					    SaveCustomerAddressUkCommand.New(r => r.AccountId = _id),
+						AddBankAccountUkCommand.New(r => { r.AccountId = _id; }),
+						AddPaymentCardCommand.New(r => { r.AccountId = _id; }),
+						SaveEmploymentDetailsUkCommand.New(r =>
+						{
+							r.AccountId = _id;
+							r.EmployerName = _employerName;
+						}),
+						VerifyMobilePhoneUkCommand.New(r =>
+						{
+						    r.AccountId = _id;
+						    r.VerificationId = _verification;
+						})
+					});
+            		break;
 
                 default:
                     throw new NotImplementedException();

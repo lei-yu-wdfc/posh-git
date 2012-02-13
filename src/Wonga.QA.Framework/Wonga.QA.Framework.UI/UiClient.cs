@@ -38,8 +38,8 @@ namespace Wonga.QA.Framework.UI
 
         public Image Screen()
         {
-            Screenshot screenshot = ((ITakesScreenshot)Driver).GetScreenshot();
-            MemoryStream stream = new MemoryStream(screenshot.AsByteArray);
+            var screenshot = ((ITakesScreenshot)Driver).GetScreenshot();
+            var stream = new MemoryStream(screenshot.AsByteArray);
             return Image.FromStream(stream);
         }
 

@@ -7,7 +7,7 @@ namespace Wonga.QA.Tests.Payments
 {
     public class PaymentsApiTests
     {
-        [Test, AUT(AUT.Uk, AUT.Za, AUT.Ca)]
+        [Test, AUT(AUT.Uk, AUT.Za, AUT.Ca), Parallelizable]
         public void CreateFixTermLoanApplciation()
         {
             Customer customer = CustomerBuilder.New().Build();
