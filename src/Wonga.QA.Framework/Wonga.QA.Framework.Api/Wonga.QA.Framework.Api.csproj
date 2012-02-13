@@ -95,6 +95,7 @@
     <Compile Include="Requests\GetBankAccountTypesZaQuery.cs" />
     <Compile Include="Requests\GetBankHolidaysQuery.cs" />
     <Compile Include="Requests\GetBanksQuery.cs" />
+    <Compile Include="Requests\GetBusinessAccountSummaryWbUkQuery.cs" />
     <Compile Include="Requests\GetBusinessFixedInstallmentLoanCalculationWbUkQuery.cs" />
     <Compile Include="Requests\GetBusinessFixedInstallmentLoanOfferWbUkQuery.cs" />
     <Compile Include="Requests\GetContactPreferencesQuery.cs" />
