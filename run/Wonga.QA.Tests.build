@@ -1,5 +1,7 @@
 <Project DefaultTargets="Test" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<UsingTask TaskName="Gallio" AssemblyFile="$(ProgramFiles)\Gallio\bin\Gallio.MsBuildTasks.dll" />
+	<UsingTask TaskName="Gallio" AssemblyFile="$(ProgramFiles)\Gallio\bin\Gallio.MsBuildTasks.dll" Condition="Exists('$(ProgramFiles)\Gallio\bin\Gallio.MsBuildTasks.dll')"/>
+	<UsingTask TaskName="Gallio" AssemblyFile="$(ProgramW6432)\Gallio\bin\Gallio.MsBuildTasks.dll" Condition="Exists('$(ProgramW6432)\Gallio\bin\Gallio.MsBuildTasks.dll')"/>
+	
 	
 	<PropertyGroup>
 		<Framework>Wonga.QA.Framework</Framework>
