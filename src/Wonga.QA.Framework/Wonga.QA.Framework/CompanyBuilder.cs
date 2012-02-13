@@ -28,7 +28,7 @@ namespace Wonga.QA.Framework
                                                AddBusinessBankAccountWbUkCommand.New(r=>r.OrganisationId = _id),
                                                AddBusinessPaymentCardWbUkCommand.New(r=>r.OrganisationId = _id),
                                                AddPrimaryOrganisationDirectorCommand.New(r=> { r.OrganisationId = _id; r.AccountId = _customer.Id; }),
-                                               //AddSecondaryOrganisationDirectorCommand.New(r=>r.OrganisationId = _id)
+                                               AddSecondaryOrganisationDirectorCommand.New(r=>r.OrganisationId = _id)
                                            });
             return new Company(_id);
         }

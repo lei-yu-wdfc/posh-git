@@ -59,36 +59,56 @@ namespace Wonga.QA.Framework
                     break;
 
                 case AUT.Uk:
-                    requests.Add(CreateFixedTermLoanApplicationCommand.New(r =>
-                    {
-                        r.ApplicationId = _id;
-                        r.AccountId = _customer.Id;
-                        r.BankAccountId = _customer.GetBankAccount();
-                        r.PaymentCardId = _customer.GetPaymentCard();
-                    }));
+                    requests.AddRange(new ApiRequest[]{
+                        CreateFixedTermLoanApplicationCommand.New(r =>
+                        {
+                            r.ApplicationId = _id;
+                            r.AccountId = _customer.Id;
+                            r.BankAccountId = _customer.GetBankAccount();
+                            r.PaymentCardId = _customer.GetPaymentCard();
+                        }),
+                        VerifyFixedTermLoanCommand.New(r=>
+                        {
+                            r.AccountId = _customer.Id; 
+                            r.ApplicationId = _id;
+                        })
+                    });
                     break;
 
                 default:
-                    requests.Add(CreateFixedTermLoanApplicationCommand.New(r =>
-                    {
-                        r.ApplicationId = _id;
-                        r.AccountId = _customer.Id;
-                        r.BankAccountId = _customer.GetBankAccount();
-                    }));
+                    requests.AddRange(new ApiRequest[]{
+                        CreateFixedTermLoanApplicationCommand.New(r =>
+                        {
+                            r.ApplicationId = _id;
+                            r.AccountId = _customer.Id;
+                            r.BankAccountId = _customer.GetBankAccount();
+                        }),
+                        VerifyFixedTermLoanCommand.New(r=>
+                        {
+                            r.AccountId = _customer.Id; 
+                            r.ApplicationId = _id;
+                        })
+                    });
                     break;
             }
-
+            
             Driver.Api.Commands.Post(requests);
 
             Do.Until(() => Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["ApplicationDecisionStatus"].Single() == "Accepted");
+            
+            Driver.Api.Commands.Post(Config.AUT == AUT.Wb
+                                  ? (ApiRequest)
+                                    new SignBusinessApplicationWbUkCommand { AccountId = _customer.Id, ApplicationId = _id }
+                                  : new SignApplicationCommand { AccountId = _customer.Id, ApplicationId = _id });
 
-            Driver.Api.Commands.Post(new SignApplicationCommand
-            {
-                AccountId = _customer.Id,
-                ApplicationId = _id,
-            });
+            ApiRequest summary = Config.AUT == AUT.Za
+                                     ? new GetAccountSummaryZaQuery {AccountId = _customer.Id}
+                                     : Config.AUT == AUT.Wb
+                                           ? (ApiRequest)
+                                             new GetBusinessAccountSummaryWbUkQuery
+                                                 {AccountId = _customer.Id, ApplicationId = _id}
+                                           : new GetAccountSummaryQuery {AccountId = _customer.Id};
 
-            ApiRequest summary = Config.AUT == AUT.Za ? (ApiRequest)new GetAccountSummaryZaQuery { AccountId = _customer.Id } : new GetAccountSummaryQuery { AccountId = _customer.Id };
             Do.Until(() => Driver.Api.Queries.Post(summary).Values["HasCurrentLoan"].Single() == "true");
 
             Int32 previous = 0;

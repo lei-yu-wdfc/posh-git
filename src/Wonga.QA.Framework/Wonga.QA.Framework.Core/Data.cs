@@ -36,7 +36,7 @@ namespace Wonga.QA.Framework.Core
 
         public static String WithMiddleName()
         {
-            return Config.AUT == AUT.Wb ? "TESTNoCheck": "";
+            return Config.AUT == AUT.Wb ? "TESTNoCheck": "MiddleName";
         }
 
         public static String GetPassword()
