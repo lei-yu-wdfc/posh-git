@@ -8,15 +8,15 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.UI.Pages;
+using Wonga.QA.Framework.UI.UiElements.Pages;
 
 namespace Wonga.QA.Framework.UI
 {
-    [Obsolete]
     public class UiClient : IDisposable
     {
         public IWebDriver Driver;
 
+        [Obsolete]
         public UiClient(String profileDir)
         {
             var firefoxProfile = new FirefoxProfile(profileDir);
