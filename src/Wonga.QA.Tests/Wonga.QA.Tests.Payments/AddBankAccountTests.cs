@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
@@ -10,29 +9,46 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments
 {
+	[TestFixture]
 	public class AddBankAccountTests
 	{
+		private static int _lastAccountNumber = 100000000;
+
 		[Test, AUT(AUT.Ca), Parallelizable]
-		public void AddBankAccountCa_Should_Add_Two_Accounts()
+		public void AddBankAccountCa_Should_Add_Two_Accounts_Of_The_Same_Branch_InstituationNr()
 		{
 			Customer customer = CustomerBuilder.New().Build();
 
-			AddBankAccountCaInternal(customer);
+			AddBankAccountCaCommand defaultBankAccount = new AddBankAccountCaCommand();
+			defaultBankAccount.Default();
+			
+			// Add another account at the branch of the default account created using the customer builder.
+			AddBankAccountCaInternal(customer.Id, defaultBankAccount.InstitutionNumber.ToString(), defaultBankAccount.BranchNumber.ToString());
 
 			Do.Until(() => Driver.Db.Payments.BankAccountsBases.Count(a => a.PersonalBankAccountEntity.AccountId == customer.Id) == 2);
 		}
 
 		[Test, AUT(AUT.Ca), Parallelizable]
-		[ExpectedException(typeof(Wonga.QA.Framework.Api.Exceptions.ValidatorException))]
+		public void AddBankAccountCa_Should_Add_Two_Accounts()
+		{
+			Customer customer = CustomerBuilder.New().Build();
+
+			AddBankAccountCaInternal(customer.Id);
+
+			Do.Until(() => Driver.Db.Payments.BankAccountsBases.Count(a => a.PersonalBankAccountEntity.AccountId == customer.Id) == 2);
+		}
+
+		[Test, AUT(AUT.Ca), Parallelizable]
+		[ExpectedException(typeof(Framework.Api.Exceptions.ValidatorException))]
 		public void AddBankAccountCa_Should_Return_An_Error_When_Adding_The_3rd_Account()
 		{
 			Customer customer = CustomerBuilder.New().Build();
 
-			AddBankAccountCaInternal(customer);
+			AddBankAccountCaInternal(customer.Id);
 
 			Do.Until(() => Driver.Db.Payments.BankAccountsBases.Count(a => a.PersonalBankAccountEntity.AccountId == customer.Id) == 2);
 
-			AddBankAccountCaInternal(customer);
+			AddBankAccountCaInternal(customer.Id);
 		}
 
 		[Test, AUT(AUT.Ca), Parallelizable]
@@ -57,36 +73,47 @@ namespace Wonga.QA.Tests.Payments
 			Customer customer = CustomerBuilder.New().Build();
 
 			var request = new GetBankAccountsQuery
-			{
-				AccountId = customer.Id
-			};
+			              	{
+			              		AccountId = customer.Id
+			              	};
 
-			// TODO: How can we parse the response back into the DTO?
 			var response = Driver.Api.Queries.Post(request);
+			Assert.IsTrue(response.Values.Contains("CanAddBankAccount"));
 			Assert.AreEqual("true", response.Values["CanAddBankAccount"].Single());
 
-			AddBankAccountCaInternal(customer);
+			AddBankAccountCaInternal(customer.Id);
 
-			Do.Until(() => Driver.Db.Payments.BankAccountsBases.Count(a => a.PersonalBankAccountEntity.AccountId == customer.Id) == 2);
+			Do.Until(
+				() => Driver.Db.Payments.BankAccountsBases.Count(a => a.PersonalBankAccountEntity.AccountId == customer.Id) == 2);
 
-			response = Driver.Api.Queries.Post(request);
-			Assert.AreEqual("false", response.Values["CanAddBankAccount"].Single());
+			Do.Until(() =>
+			         	{
+			         		response = Driver.Api.Queries.Post(request);
+			         		return response.Values.Contains("CanAddBankAccount") && "false" == response.Values["CanAddBankAccount"].Single();
+			         	});
 		}
 
-		private static void AddBankAccountCaInternal(Customer customer)
+		private static void AddBankAccountCaInternal(Guid accountId, string institutionNumber, string branchNumber, string accountNumber)
 		{
 			var requests = new List<ApiRequest>
     		               	{
     		               		AddBankAccountCaCommand.New(r =>
     		               		                            	{
-    		               		                            		r.AccountId = customer.Id;
-    		               		                            		r.AccountNumber = Environment.TickCount;
-    		               		                            		r.InstitutionNumber = "001";
-    		               		                            		r.BranchNumber = "01161";
+    		               		                            		r.AccountId = accountId;
+																	r.AccountNumber = accountNumber;
+    		               		                            		r.InstitutionNumber = institutionNumber;
+    		               		                            		r.BranchNumber = branchNumber;
     		               		                            	})
     		               	};
 
 			Driver.Api.Commands.Post(requests);
+		}
+
+		private static void AddBankAccountCaInternal(Guid accountId, string institutionNumber = "001", string branchNumber = "01161")
+		{
+			string accountNumber = _lastAccountNumber++.ToString();
+
+			AddBankAccountCaInternal(accountId, institutionNumber, branchNumber, accountNumber);
 		}
 	}
 }
