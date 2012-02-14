@@ -19,14 +19,23 @@ namespace Wonga.QA.Framework.Svc
 
         public Boolean IsRunning()
         {
-            Trace.WriteLine(String.Format("{0} is {1}", _controller.ServiceName, _controller.Status), GetType().FullName);
             Do.While(() => Status == ServiceControllerStatus.StartPending);
+            Trace.WriteLine(String.Format("{0} is {1}", _controller.ServiceName, _controller.Status), GetType().FullName);
             return _controller.Status == ServiceControllerStatus.Running;
         }
 
         public String GetPath()
         {
             return RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, _controller.MachineName).OpenSubKey("SYSTEM").OpenSubKey("CurrentControlSet").OpenSubKey("Services").OpenSubKey(_controller.ServiceName).GetValue("ImagePath") as String;
+        }
+
+        public SvcService Restart()
+        {
+            _controller.Stop();
+            _controller.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromMinutes(1));
+            _controller.Start();
+            Do.Until(IsRunning, TimeSpan.FromMinutes(1));
+            return this;
         }
     }
 }

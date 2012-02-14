@@ -28,8 +28,8 @@ namespace Wonga.QA.Framework
         {
             _id = Data.GetId();
             _verification = Data.GetId();
-            _employerName = Data.WithEmployerName();
-            _middleName = Data.WithMiddleName();
+            _employerName = Data.GetEmployerName();
+            _middleName = Data.GetMiddleName();
             _houseNumber = Data.RandomInt(1, 100).ToString(CultureInfo.InvariantCulture);
             _houseName = Data.RandomString(8);
             if (Config.AUT==AUT.Wb || Config.AUT==AUT.Uk)

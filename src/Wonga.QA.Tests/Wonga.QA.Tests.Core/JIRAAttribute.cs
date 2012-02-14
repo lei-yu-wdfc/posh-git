@@ -14,9 +14,9 @@ namespace Wonga.QA.Tests.Core
             _issue = issue;
         }
 
-        protected override IEnumerable<KeyValuePair<string, string>> GetMetadata()
+        protected override IEnumerable<KeyValuePair<String, String>> GetMetadata()
         {
-            yield return new KeyValuePair<String, String>("Issue", _issue);
+            yield return new KeyValuePair<String, String>("JIRA", _issue);
         }
     }
 }

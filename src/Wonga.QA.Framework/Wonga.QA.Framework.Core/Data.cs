@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
@@ -16,6 +17,11 @@ namespace Wonga.QA.Framework.Core
             return Guid.NewGuid();
         }
 
+        public static DateTime GetDateTimeMin()
+        {
+            return SqlDateTime.MinValue.Value;
+        }
+
         public static Date GetDoB()
         {
             return RandomDate(new DateTime(1900, 1, 1), DateTime.Today.AddYears(-18));
@@ -23,18 +29,17 @@ namespace Wonga.QA.Framework.Core
 
         public static String GetEmail()
         {
-
             return String.Format("qa.wonga.com+{0}@wonga.com", Guid.NewGuid());
         }
 
-        public static String WithEmployerName()
+        public static String GetEmployerName()
         {
             return "Test:EmployedMask";
         }
 
-        public static String WithMiddleName()
+        public static String GetMiddleName()
         {
-            return Config.AUT == AUT.Wb ? "TESTNoCheck": "MiddleName";
+            return Config.AUT == AUT.Wb ? "TESTNoCheck" : "MiddleName";
         }
 
         public static String GetPassword()
