@@ -4,6 +4,8 @@ Reports/
 _ReSharper.*/
 
 *.dotCover
+*.DotSettings
+*.orig
 *.ReSharper
 *.suo
 *.user
