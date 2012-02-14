@@ -4,11 +4,11 @@ using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework
 {
-    public class Company
+    public class Organisation
     {
         public Guid Id { get; set; }
 
-        public Company(Guid id)
+        public Organisation(Guid id)
         {
             Id = id;
         }

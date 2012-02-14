@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
@@ -13,6 +14,15 @@ namespace Wonga.QA.Framework
         private Guid _verification;
         private String _employerName;
         private String _middleName;
+        private String _houseNumber;
+        private String _houseName;
+        private String _postcode;
+        private String _street;
+        private String _flat;
+        private String _district;
+        private String _town;
+        private String _county;
+        private Date _atAddressFrom;
 
         private CustomerBuilder()
         {
@@ -20,6 +30,25 @@ namespace Wonga.QA.Framework
             _verification = Data.GetId();
             _employerName = Data.WithEmployerName();
             _middleName = Data.WithMiddleName();
+            _houseNumber = Data.RandomInt(1, 100).ToString(CultureInfo.InvariantCulture);
+            _houseName = Data.RandomString(8);
+            if (Config.AUT==AUT.Wb || Config.AUT==AUT.Uk)
+            {
+                _postcode = "SW6 6PN";
+            }
+            else if (Config.AUT==AUT.Za)
+            {
+                _postcode = "0300";
+            }
+            else if (Config.AUT==AUT.Ca)
+            {
+                _postcode = "K0A0A0";
+            }
+            _street = Data.RandomString(15);
+            _flat = Data.RandomString(4);
+            _district = Data.RandomString(15);
+            _town = Data.RandomString(15);
+            _county = Data.RandomString(15);            
         }
 
         public static CustomerBuilder New()
@@ -43,6 +72,54 @@ namespace Wonga.QA.Framework
             _middleName = name;
             return this;
         }
+
+        public CustomerBuilder WithHouseNumberInAddress(String houseNumber)
+        {
+            _houseNumber = houseNumber;
+            return this;
+        }
+
+        public CustomerBuilder WithHouseNameInAddress(String houseName)
+        {
+            _houseName = houseName;
+            return this;
+        }
+
+        public CustomerBuilder WithPostcodeInAddress(String postcode)
+        {
+            _postcode = postcode;
+            return this;
+        }
+
+        public CustomerBuilder WithStreetInAddress(String street)
+        {
+            _street = street;
+            return this;
+        }
+
+        public CustomerBuilder WithFlatInAddress(String flat)
+        {
+            _flat = flat;
+            return this;
+        }
+
+        public CustomerBuilder WithDistrictInAddress(String district)
+        {
+            _district = district;
+            return this;
+        }
+
+        public CustomerBuilder WithTownInAddress(String town)
+        {
+            _town = town;
+            return this;
+        }
+
+        public CustomerBuilder WithCountyInAddress(String county)
+        {
+            _county = county;
+            return this;
+        }
         
         public Customer Build()
         {
@@ -63,9 +140,20 @@ namespace Wonga.QA.Framework
                         SaveCustomerDetailsZaCommand.New(r =>
                         {
                             r.AccountId = _id;
-                            r.MiddleName = _middleName;
+                            r.MiddleName = _middleName;                            
                         }),
-                        SaveCustomerAddressZaCommand.New(r => r.AccountId = _id ),
+                        SaveCustomerAddressZaCommand.New(r =>
+                                                             {
+                                                                 r.AccountId = _id;
+                                                                 r.HouseNumber = _houseNumber;
+                                                                 r.HouseName = _houseName;
+                                                                 r.Postcode = _postcode;
+                                                                 r.Street = _street;
+                                                                 r.Flat = _flat;
+                                                                 r.District = _district;
+                                                                 r.Town = _town;
+                                                                 r.County = _county;
+                                                             } ),
                         AddBankAccountZaCommand.New(r => r.AccountId = _id),
                         SaveEmploymentDetailsZaCommand.New(r =>
                         {
@@ -88,7 +176,18 @@ namespace Wonga.QA.Framework
                             r.AccountId = _id;
                             r.MiddleName = _middleName;
                         }),
-                        SaveCustomerAddressCaCommand.New(r => r.AccountId = _id ),
+                        SaveCustomerAddressCaCommand.New(r =>
+                                                             {
+                                                                 r.AccountId = _id;
+                                                                 r.HouseNumber = _houseNumber;
+                                                                 r.HouseName = _houseName;
+                                                                 r.Postcode = _postcode;
+                                                                 r.Street = _street;
+                                                                 r.Flat = _flat;
+                                                                 r.District = _district;
+                                                                 r.Town = _town;
+                                                                 r.County = _county;
+                                                             } ),
                         AddBankAccountCaCommand.New(r => r.AccountId = _id),
                         SaveEmploymentDetailsCaCommand.New(r =>
                         {
@@ -107,7 +206,18 @@ namespace Wonga.QA.Framework
                     requests.AddRange(new ApiRequest[]
                     {
                         SaveCustomerDetailsUkCommand.New(r=> { r.AccountId = _id; r.MiddleName = _middleName;}),
-                        SaveCustomerAddressUkCommand.New(r=>r.AccountId = _id),
+                        SaveCustomerAddressUkCommand.New(r=>
+                                                             {
+                                                                 r.AccountId = _id;
+                                                                 r.HouseNumber = _houseNumber;
+                                                                 r.HouseName = _houseName;
+                                                                 r.Postcode = _postcode;
+                                                                 r.Street = _street;
+                                                                 r.Flat = _flat;
+                                                                 r.District = _district;
+                                                                 r.Town = _town;
+                                                                 r.County = _county;
+                                                             }),
                         AddBankAccountUkCommand.New(r=>r.AccountId = _id),
                         AddPaymentCardCommand.New(r=>r.AccountId = _id)
                     });
@@ -117,7 +227,18 @@ namespace Wonga.QA.Framework
 					requests.AddRange(new ApiRequest[]
 					{
 						SaveCustomerDetailsUkCommand.New(r=> { r.AccountId = _id;}),
-					    SaveCustomerAddressUkCommand.New(r => r.AccountId = _id),
+					    SaveCustomerAddressUkCommand.New(r =>
+					                                         {
+					                                             r.AccountId = _id;
+                                                                 r.HouseNumber = _houseNumber;
+                                                                 r.HouseName = _houseName;
+                                                                 r.Postcode = _postcode;
+                                                                 r.Street = _street;
+                                                                 r.Flat = _flat;
+                                                                 r.District = _district;
+                                                                 r.Town = _town;
+                                                                 r.County = _county;
+					                                         }),
 						AddBankAccountUkCommand.New(r => { r.AccountId = _id; }),
 						AddPaymentCardCommand.New(r => { r.AccountId = _id; }),
 						SaveEmploymentDetailsUkCommand.New(r =>

@@ -11,7 +11,7 @@ namespace Wonga.QA.Framework
     {
         private Guid _id;
         private Customer _customer;
-        private Company _company;
+        private Organisation _company;
 
         private ApplicationBuilder()
         {
@@ -23,7 +23,7 @@ namespace Wonga.QA.Framework
             return new ApplicationBuilder { _customer = customer};
         }
 
-        public static ApplicationBuilder New(Customer customer, Company company)
+        public static ApplicationBuilder New(Customer customer, Organisation company)
         {
             return new ApplicationBuilder{_customer = customer,_company = company};
         }

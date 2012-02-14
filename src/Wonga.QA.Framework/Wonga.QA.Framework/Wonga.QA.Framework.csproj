@@ -35,11 +35,13 @@
   <ItemGroup>
     <Compile Include="Application.cs" />
     <Compile Include="ApplicationBuilder.cs" />
-    <Compile Include="Company.cs" />
-    <Compile Include="CompanyBuilder.cs" />
+    <Compile Include="Organisation.cs" />
+    <Compile Include="OrganisationBuilder.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="CustomerBuilder.cs" />
     <Compile Include="Driver.cs" />
+    <Compile Include="OrganisationDirector.cs" />
+    <Compile Include="OrganisationDirectorBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
