@@ -17,6 +17,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
         private readonly IWebElement _vat;
         private readonly IWebElement _onlineAccess;
         private readonly IWebElement _guarantee;
+        private readonly IWebElement _debitCard;
         private readonly IWebElement _next;
 
         public Boolean CheckResident { set { _resident.Toggle(value); } }
@@ -26,6 +27,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
         public Boolean CheckVat { set { _vat.Toggle(value); } }
         public Boolean CheckOnlineAccess { set { _onlineAccess.Toggle(value); } }
         public Boolean CheckGuarantee { set { _guarantee.Toggle(value); } }
+        public Boolean CheckDebitCard{set{_debitCard.Toggle(value);}}
 
         public EligibilityQuestionsPage(UiClient client)
             : base(client)
@@ -39,6 +41,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
             _vat = _form.FindElement(By.Name(Elements.Get.WbEligibilityQuestionsPage.CheckVat));
             _onlineAccess = _form.FindElement(By.Name(Elements.Get.WbEligibilityQuestionsPage.CheckOnlineAccess));
             _guarantee = _form.FindElement(By.Name(Elements.Get.WbEligibilityQuestionsPage.CheckGuarantee));
+            _debitCard = _form.FindElement(By.Name(Elements.Get.WbEligibilityQuestionsPage.CheckDebitCard));
             _next = _form.FindElement(By.Name(Elements.Get.WbEligibilityQuestionsPage.NextButton));
         }
 

@@ -102,7 +102,8 @@ namespace Wonga.QA.Framework.UI.Mappings
                                                  CheckVat = "vat",
                                                  CheckOnlineAccess = "online_access",
                                                  CheckGuarantee = "guarantee",
-                                                 NextButton = "next"
+                                                 NextButton = "next",
+                                                 CheckDebitCard = "debit_card"
                                              };
 
             PersonalDetailsPage = new PersonalDetailsPage
@@ -174,12 +175,5 @@ namespace Wonga.QA.Framework.UI.Mappings
             #endregion
 
         }
-    }
-
-    public class Element
-    {
-        public string Name { get; set; }
-        public string Id { get; set; }
-        public string Content { get; set; }
     }
 }

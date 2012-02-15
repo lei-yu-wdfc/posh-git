@@ -13,7 +13,7 @@ namespace Wonga.QA.Tests.UI.Wb
     public class SeleniumTests : UiTest
     {
         [Test, AUT(AUT.Wb)]
-        public void SmeL0ApplicationProcessAccepted()
+        public void WbSeleniumL0ApplicationProcessAccepted()
         {
             //var processingPage = SmeL0Application();
             var processingPage = WbL0PathTest("TESTNoCheck");
@@ -24,8 +24,9 @@ namespace Wonga.QA.Tests.UI.Wb
             
         }
 
-        [Test, AUT(AUT.Wb), Explicit]
-        public void SmeL0ApplicationProcessDeclined()
+        //Note: This is not active yet
+        //[Test, Explicit]
+        public void WbSeleniumL0ApplicationProcessDeclined()
         {
             var processingPage = WbL0PathTest();
             //var acceptedPage = (Wonga.QA.Framework.UI.Pages.Wb.AcceptedPage)processingPage.WaitFor<Wonga.QA.Framework.UI.Pages.Wb.AcceptedPage>();
@@ -56,6 +57,7 @@ namespace Wonga.QA.Tests.UI.Wb
             eligibilityQuestionsPage.CheckResident = true;
             eligibilityQuestionsPage.CheckTurnover = true;
             eligibilityQuestionsPage.CheckVat = true;
+            eligibilityQuestionsPage.CheckDebitCard = true;
 
             var personalDetailsPage = (Wonga.QA.Framework.UI.UiElements.Pages.Common.PersonalDetailsPage)eligibilityQuestionsPage.Submit();
             personalDetailsPage.YourName.FirstName = firstName;

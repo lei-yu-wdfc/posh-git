@@ -13,6 +13,10 @@ namespace Wonga.QA.Framework.UI.Mappings
                 {
                     case(AUT.Wb):
                         return new WbElements();
+                    case (AUT.Za):
+                        return new ZaElements();
+                    case (AUT.Ca):
+                        return new CaElements();
                 }
                 throw new NotImplementedException();
             }

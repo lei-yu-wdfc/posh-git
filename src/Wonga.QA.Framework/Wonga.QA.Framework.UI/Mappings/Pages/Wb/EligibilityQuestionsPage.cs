@@ -16,5 +16,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages.Wb
         internal String CheckOnlineAccess { get; set; }
         internal String CheckGuarantee { get; set; }
         internal String NextButton { get; set; }
+        internal String CheckDebitCard { get; set; }
     }
 }
