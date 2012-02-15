@@ -103,7 +103,7 @@ namespace Wonga.QA.Framework
                                      : Config.AUT == AUT.Wb
                                            ? (ApiRequest)
                                              new GetBusinessAccountSummaryWbUkQuery
-                                                 {AccountId = _customer.Id, ApplicationId = _id}
+                                                 {AccountId = _customer.Id}
                                            : new GetAccountSummaryQuery {AccountId = _customer.Id};
 
             Do.Until(() => Driver.Api.Queries.Post(summary).Values["HasCurrentLoan"].Single() == "true");
