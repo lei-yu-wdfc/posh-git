@@ -83,10 +83,10 @@ namespace Wonga.QA.Tests.UI.Wb
             addressDetailsPage.PostCode = "SW6 6PN";
             Thread.Sleep(1000);
             addressDetailsPage.LookupByPostCode();
-            Thread.Sleep(6000);
+            Thread.Sleep(4000);
             addressDetailsPage.GetAddressesDropDown();
             addressDetailsPage.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN";
-            Thread.Sleep(3000);
+            Thread.Sleep(2000);
             addressDetailsPage.FlatNumber = "666";
             addressDetailsPage.District = "Central";
             addressDetailsPage.County = "South Wales";
