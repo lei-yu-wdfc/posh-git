@@ -172,6 +172,8 @@ namespace Wonga.QA.Framework.UI.Mappings
 
             DealDonePage = new DealDonePage {HeaderText = "Application success", ContinueButtonLinkText = "Continue to my account"};
 
+            DeclinedPage = new DeclinedPage { HeaderText = "Application declined" };
+
             #endregion
 
         }

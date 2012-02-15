@@ -33,6 +33,8 @@ namespace Wonga.QA.Framework.UI.Mappings
         internal virtual Pages.PersonalDetailsPage PersonalDetailsPage { get; set; }
         internal virtual Pages.ProcessingPage ProcessingPage { get; set; }
         internal virtual Pages.DealDonePage DealDonePage { get; set; }
+        internal virtual Pages.DeclinedPage DeclinedPage { get; set; }
+        
 
         #endregion
     }

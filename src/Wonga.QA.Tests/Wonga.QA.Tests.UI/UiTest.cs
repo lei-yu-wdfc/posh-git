@@ -17,8 +17,9 @@ namespace Wonga.QA.Tests.Ui
         [TearDown]
         public void TearDown()
         {
+            //Note - I will take these out for now since I dont know HOW to see the attachement
             var name = TestContext.CurrentContext.Test.Name;
-            TestLog.EmbedImage(name + ".Screen", Client.Screen());
+            //TestLog.EmbedImage(name + ".Screen", Client.Screen());
             TestLog.AttachHtml(name + ".Source", Client.Source());
             Client.Dispose();
         }

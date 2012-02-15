@@ -15,7 +15,6 @@ namespace Wonga.QA.Tests.UI.Wb
         [Test, AUT(AUT.Wb)]
         public void WbSeleniumL0ApplicationProcessAccepted()
         {
-            //var processingPage = SmeL0Application();
             var processingPage = WbL0PathTest("TESTNoCheck");
             var acceptedPage = (Wonga.QA.Framework.UI.UiElements.Pages.Wb.AcceptedPage)processingPage.WaitFor<Wonga.QA.Framework.UI.UiElements.Pages.Wb.AcceptedPage>();
             acceptedPage.SignTermsMainApplicant();
@@ -24,24 +23,19 @@ namespace Wonga.QA.Tests.UI.Wb
             
         }
 
-        //Note: This is not active yet
-        //[Test, Explicit]
+        [Test,AUT(AUT.Wb)]
         public void WbSeleniumL0ApplicationProcessDeclined()
         {
             var processingPage = WbL0PathTest();
-            //var acceptedPage = (Wonga.QA.Framework.UI.Pages.Wb.AcceptedPage)processingPage.WaitFor<Wonga.QA.Framework.UI.Pages.Wb.AcceptedPage>();
-            //acceptedPage.SignTermsMainApplicant();
-            //acceptedPage.SignTermsGuarantor();
+            var declinedPage = (Wonga.QA.Framework.UI.UiElements.Pages.Common.DeclinedPage)processingPage.WaitFor<Wonga.QA.Framework.UI.UiElements.Pages.Common.DeclinedPage>();
         }
 
         private Wonga.QA.Framework.UI.UiElements.Pages.Common.ProcessingPage WbL0PathTest(String middleNameMask = null)
         {
-            //Note:Use Data.Random
-            const string graydonCompanyRegistrationNumberMask = "00000086";
-            var random = new Random((Int32)DateTime.Now.Ticks);
-            var middleName = GenerateRandomString();
-            var firstName = GenerateRandomString();
-            var emailAddress = String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
+            const string specialCompanyRegistrationNumberMask = "00000086";
+            var middleName = Data.RandomString(3, 15);
+            var firstName = Data.RandomString(3, 15);
+            var emailAddress = Data.GetEmail();
             if (!String.IsNullOrEmpty(middleNameMask))
                 middleName = middleNameMask;
 
@@ -62,7 +56,7 @@ namespace Wonga.QA.Tests.UI.Wb
             var personalDetailsPage = (Wonga.QA.Framework.UI.UiElements.Pages.Common.PersonalDetailsPage)eligibilityQuestionsPage.Submit();
             personalDetailsPage.YourName.FirstName = firstName;
             personalDetailsPage.YourName.MiddleName = middleName;
-            personalDetailsPage.YourName.LastName = GenerateRandomString();
+            personalDetailsPage.YourName.LastName = Data.RandomString(3, 15);
             personalDetailsPage.YourName.Title = "Mr";
 
             personalDetailsPage.YourDetails.Gender = "Female";
@@ -118,8 +112,8 @@ namespace Wonga.QA.Tests.UI.Wb
 
             var businessDetailsPage = (Wonga.QA.Framework.UI.UiElements.Pages.Wb.BusinessDetailsPage)personalDebitCardPage.Next();
             Thread.Sleep(1000);
-            businessDetailsPage.BusinessName = GenerateRandomString();
-            businessDetailsPage.BusinessNumber = String.Join(null, "123456789".OrderBy(a => random.Next()).Take(7));
+            businessDetailsPage.BusinessName = Data.RandomString(3, 15);
+            businessDetailsPage.BusinessNumber = Data.RandomInt(9999999).ToString(); 
             //businessDetailsPage.BusinessNumber = graydonCompanyRegistrationNumberMask;
 
             var additionalDirectorsPage = (Wonga.QA.Framework.UI.UiElements.Pages.Wb.AdditionalDirectorsPage)businessDetailsPage.Next();
@@ -129,8 +123,8 @@ namespace Wonga.QA.Tests.UI.Wb
             Thread.Sleep(1000);
             var additionalDirectorEmail = String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
             addAdditionalDirectorPage.Title = "Mr";
-            addAdditionalDirectorPage.FirstName = GenerateRandomString();
-            addAdditionalDirectorPage.LastName = GenerateRandomString();
+            addAdditionalDirectorPage.FirstName = Data.RandomString(3,15);
+            addAdditionalDirectorPage.LastName = Data.RandomString(3, 15);
             addAdditionalDirectorPage.EmailAddress = additionalDirectorEmail;
             addAdditionalDirectorPage.ConfirmEmailAddress = additionalDirectorEmail;
 
@@ -151,11 +145,6 @@ namespace Wonga.QA.Tests.UI.Wb
 
             return businessPaymentCardPage.Next();
 
-        }
-        private static String GenerateRandomString()
-        {
-            var random = new Random((Int32)DateTime.Now.Ticks);
-            return String.Join(null, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".OrderBy(a => random.Next()).Take(random.Next(3, 15)));
         }
     }
 

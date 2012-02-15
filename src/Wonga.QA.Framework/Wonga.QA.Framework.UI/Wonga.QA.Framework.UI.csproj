@@ -8,8 +8,8 @@
     <ProjectGuid>{0F724DF3-0849-4BE7-A5B8-FA23C55E3042}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Wonga.QA.Framework.Ui</RootNamespace>
-    <AssemblyName>Wonga.QA.Framework.Ui</AssemblyName>
+    <RootNamespace>Wonga.QA.Framework.UI</RootNamespace>
+    <AssemblyName>Wonga.QA.Framework.UI</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -58,6 +58,7 @@
     <Compile Include="Mappings\CaElements.cs" />
     <Compile Include="Mappings\Elements.cs" />
     <Compile Include="Mappings\Pages\DealDonePage.cs" />
+    <Compile Include="Mappings\Pages\DeclinedPage.cs" />
     <Compile Include="Mappings\Pages\PersonalDetailsPage.cs" />
     <Compile Include="Mappings\Pages\ProcessingPage.cs" />
     <Compile Include="Mappings\Pages\Wb\AcceptedPage.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Mappings\ZaElements.cs" />
     <Compile Include="UiElements\BaseElement.cs" />
     <Compile Include="UiElements\Pages\Common\DealDonePage.cs" />
+    <Compile Include="UiElements\Pages\Common\DeclinedPage.cs" />
     <Compile Include="UiElements\Sections\AccountDetailsSection.cs" />
     <Compile Include="UiElements\Sections\BankAccountSection.cs" />
     <Compile Include="UiElements\Sections\BaseSection.cs" />
