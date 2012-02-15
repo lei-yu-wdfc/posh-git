@@ -25,7 +25,6 @@ namespace Wonga.QA.Tests.BankGateway
                     Assert.IsTrue(Driver.Svc.Scotia.IsRunning());
                     break;
                 case AUT.Wb:
-                    Assert.IsTrue(Driver.Svc.BottomLine.IsRunning());
                     break;
             }
         }
