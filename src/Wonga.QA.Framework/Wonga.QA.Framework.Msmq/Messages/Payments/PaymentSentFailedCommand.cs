@@ -10,8 +10,6 @@ namespace Wonga.QA.Framework.Msmq.Payments
         public Int64 PaymentReference { get; set; }
         public Decimal TransactionAmount { get; set; }
         public DateTime ValueDate { get; set; }
-        public Guid ApplicationExternalId { get; set; }
-        public String ErrorCode { get; set; }
         public Guid SagaId { get; set; }
         public DateTime CreatedOn { get; set; }
     }

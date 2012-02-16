@@ -78,16 +78,9 @@ namespace Wonga.QA.Generators.Core
             return Config.Regions.Intersect(@this.GetName().Split('.')).SingleOrDefault();
         }
 
-        public static DirectoryInfo GetSolution(this FileInfo @this)
+        public static String GetSolution(this FileInfo file)
         {
-            DirectoryInfo directory = @this.Directory;
-            while (directory.Parent != null && !directory.IsRoot())
-            {
-                if (Config.Roots.Contains(directory.Parent.Name))
-                    return directory;
-                directory = directory.Parent;
-            }
-            throw new DirectoryNotFoundException();
+            return Config.Solutions.OrderByDescending(p => p.Key.Length).First(p => file.Name.StartsWith(String.Format("Wonga.{0}.", p.Key), true, null)).Value;
         }
 
         public static String GetName(this Type @this)

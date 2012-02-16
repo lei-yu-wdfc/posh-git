@@ -1,5 +1,5 @@
 ﻿using Wonga.QA.Framework;
-using Wonga.QA.Framework.Common.Enums.Risk;
+using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using MbUnit.Framework;
 using Wonga.QA.Tests.Core;
@@ -35,7 +35,7 @@ namespace Wonga.QA.Tests.Journeys
 
             Organisation comp = OrganisationBuilder.New(Data.GetId()).WithPrimaryApplicant(cust).Build();
 
-            ApplicationBuilder.New(cust, comp).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+            ApplicationBuilder.New(cust, comp).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
         }
 
         [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
@@ -43,7 +43,7 @@ namespace Wonga.QA.Tests.Journeys
         {
             Customer cust = CustomerBuilder.New().WithEmployer("Wonga").Build();
 
-            ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+            ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
         }
     }
 }

@@ -227,6 +227,7 @@
     <Compile Include="Enums\ProvinceEnum.cs" />
     <Compile Include="Enums\SliderPositionEnum.cs" />
     <Compile Include="Enums\TitleEnum.cs" />
+    <Compile Include="Temp\ApplicationDecisionStatusEnum.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

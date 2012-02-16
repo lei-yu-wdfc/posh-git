@@ -40,7 +40,7 @@ namespace Wonga.QA.Generators.Msmq
                 foreach (Type message in assembly.GetTypes().Where(t => t.IsMessage() && t.IsInstantiatable()))
                 {
                     String name = String.Format("{0}{1}{2}{3}", message.GetClean(), file.GetProduct(), file.GetRegion(), message.GetSuffix());
-                    String root = Config.Solutions[file.GetSolution().Name];
+                    String root = file.GetSolution();
                     FileInfo code = Repo.File(String.Format("{0}.cs", name), Repo.Directory(root, bin.Messages));
 
                     StringBuilder builder = new StringBuilder().AppendFormatLine(new[]{

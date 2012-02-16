@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Wonga.QA.Framework.Api;
-using Wonga.QA.Framework.Common.Enums.Risk;
 using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework
@@ -13,7 +12,7 @@ namespace Wonga.QA.Framework
         private Guid _id;
         private Customer _customer;
         private Organisation _company;
-        private ApplicationDecisionStatus _decision = ApplicationDecisionStatus.Accepted;
+        private ApplicationDecisionStatusEnum _decision = ApplicationDecisionStatusEnum.Accepted;
 
         private ApplicationBuilder()
         {
@@ -30,7 +29,7 @@ namespace Wonga.QA.Framework
             return new ApplicationBuilder{_customer = customer,_company = company};
         }
 
-        public ApplicationBuilder WithExpectedDecision(ApplicationDecisionStatus decision)
+        public ApplicationBuilder WithExpectedDecision(ApplicationDecisionStatusEnum decision)
         {
             _decision = decision;
             return this;
@@ -99,9 +98,9 @@ namespace Wonga.QA.Framework
             
             Driver.Api.Commands.Post(requests);
 
-            Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["ApplicationDecisionStatus"].Single()) == _decision);
+            Do.Until(() => (ApplicationDecisionStatusEnum)Enum.Parse(typeof(ApplicationDecisionStatusEnum), Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["ApplicationDecisionStatus"].Single()) == _decision);
 
-            if (_decision == ApplicationDecisionStatus.Declined)
+            if (_decision == ApplicationDecisionStatusEnum.Declined)
                 return new Application(_id);
 
             Driver.Api.Commands.Post(Config.AUT == AUT.Wb

@@ -8,6 +8,7 @@ namespace Wonga.QA.Framework.Msmq.Payments
     public partial class IGuarantorBusinessApplicationTermsAgreedEvent : MsmqMessage<IGuarantorBusinessApplicationTermsAgreedEvent>
     {
         public Guid ApplicationId { get; set; }
+        public Guid AccountId { get; set; }
         public DateTime CreatedOn { get; set; }
     }
 }
