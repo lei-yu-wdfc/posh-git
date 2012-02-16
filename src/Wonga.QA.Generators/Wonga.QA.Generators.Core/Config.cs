@@ -77,7 +77,8 @@ namespace Wonga.QA.Generators.Core
                 "TimeZone",
                 "TransUnion",
                 "Uru",
-                "WongaPay"
+                "WongaPay",
+                "QAData"
             };
 
             Solutions = new Dictionary<String, String>

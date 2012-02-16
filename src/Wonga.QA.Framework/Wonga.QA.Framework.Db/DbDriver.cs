@@ -17,6 +17,7 @@ using Wonga.QA.Framework.Db.Ops;
 using Wonga.QA.Framework.Db.OpsLogs;
 using Wonga.QA.Framework.Db.OpsSagas;
 using Wonga.QA.Framework.Db.Payments;
+using Wonga.QA.Framework.Db.QAData;
 using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Framework.Db.Salesforce;
 using Wonga.QA.Framework.Db.Scheduler;
@@ -56,6 +57,7 @@ namespace Wonga.QA.Framework.Db
         private TransUnionDatabase _transUnion;
         private UruDatabase _uru;
         private WongaPayDatabase _wongaPay;
+        private QADataDatabase _qaData;
 
         public OpsDatabase Ops
         {
@@ -211,6 +213,12 @@ namespace Wonga.QA.Framework.Db
         {
             get { return _wongaPay ?? (_wongaPay = new WongaPayDatabase(Config.Db.WongaPay)); }
             set { _wongaPay = value; }
+        }
+
+        public QADataDatabase QAData
+        {
+            get { return _qaData ?? (_qaData = new QADataDatabase(Config.Db.QAData)); }
+            set { _qaData = value; }
         }
     }
 }

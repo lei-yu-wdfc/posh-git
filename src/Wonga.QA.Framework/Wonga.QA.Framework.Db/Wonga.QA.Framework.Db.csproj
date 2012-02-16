@@ -56,6 +56,7 @@
     <Compile Include="Databases\OpsDatabase.cs" />
     <Compile Include="Databases\OpsLogsDatabase.cs" />
     <Compile Include="Databases\PaymentsDatabase.cs" />
+    <Compile Include="Databases\QADataDatabase.cs" />
     <Compile Include="Databases\RiskDatabase.cs" />
     <Compile Include="Databases\SalesforceDatabase.cs" />
     <Compile Include="Databases\SchedulerDatabase.cs" />

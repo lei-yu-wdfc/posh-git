@@ -304,6 +304,7 @@ namespace Wonga.QA.Framework.Core
             public String TransUnion { get; set; }
             public String Uru { get; set; }
             public String WongaPay { get; set; }
+            public String QAData { get; set; }
 
             public DbConfig(String server)
             {
@@ -335,6 +336,7 @@ namespace Wonga.QA.Framework.Core
                 TransUnion = String.Format(format, server, "TransUnion");
                 Uru = String.Format(format, server, "Uru");
                 WongaPay = String.Format(format, server, "WongaPay");
+                QAData = String.Format(format, server, "QAData");
             }
         }
 
