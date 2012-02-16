@@ -55,11 +55,14 @@ namespace Wonga.QA.Framework.Core
                 case SUT.WIPRelease:
                     Api = new ApiConfig(String.Format("wip.release.api.{0}.wonga.com", AUT));
                     Svc =
-                        AUT == AUT.Ca ? new SvcConfig("ca-rel-wip-app") : Throw<SvcConfig>();
+                        AUT == AUT.Ca ? new SvcConfig("ca-rel-wip-app") : 
+                        AUT == AUT.Za ? new SvcConfig("za-rel-wip-app") : Throw<SvcConfig>();
                     Msmq =
-                        AUT == AUT.Ca ? new MsmqConfig("ca-rel-wip-app") : Throw<MsmqConfig>();
+                        AUT == AUT.Ca ? new MsmqConfig("ca-rel-wip-app") :
+                        AUT == AUT.Za ? new MsmqConfig("za-rel-wip-app") : Throw<MsmqConfig>();
                     Db =
-                        AUT == AUT.Ca ? new DbConfig("ca-rel-wip-app") : Throw<DbConfig>();
+                        AUT == AUT.Ca ? new DbConfig("ca-rel-wip-app") : 
+                        AUT == AUT.Za ? new DbConfig("za-rel-wip-app") : Throw<DbConfig>();
                     Ui = new UiConfig(String.Format("wip.release.{0}.wonga.com", AUT));
                     break;
                 case SUT.UAT:
@@ -103,11 +106,14 @@ namespace Wonga.QA.Framework.Core
                 case SUT.RCRelease:
                     Api = new ApiConfig(String.Format("rc.release.api.{0}.wonga.com", AUT));
                     Svc =
-                        AUT == AUT.Ca ? new SvcConfig("ca-rel-rc-app") : Throw<SvcConfig>();
+                        AUT == AUT.Ca ? new SvcConfig("ca-rel-rc-app") : 
+                        AUT == AUT.Za ? new SvcConfig("za-rel-rc-app") : Throw<SvcConfig>();
                     Msmq =
-                        AUT == AUT.Ca ? new MsmqConfig("ca-rel-rc-app") : Throw<MsmqConfig>();
+                        AUT == AUT.Ca ? new MsmqConfig("ca-rel-rc-app") : 
+                        AUT == AUT.Za ? new MsmqConfig("za-rel-rc-app") : Throw<MsmqConfig>();
                     Db =
-                        AUT == AUT.Ca ? new DbConfig("ca-rel-rc-app") : Throw<DbConfig>();
+                        AUT == AUT.Ca ? new DbConfig("ca-rel-rc-app") : 
+                        AUT == AUT.Za ? new DbConfig("za-rel-rc-app") : Throw<DbConfig>();
                     Ui = new UiConfig(String.Format("rc.release.{0}.wonga.com", AUT));
                     break;
                 default:
