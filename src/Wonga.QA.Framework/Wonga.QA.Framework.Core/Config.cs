@@ -6,7 +6,7 @@ using Microsoft.Win32;
 namespace Wonga.QA.Framework.Core
 {
     public enum AUT { Uk, Za, Ca, Wb }
-    public enum SUT { Dev, WIP, UAT, RC }
+    public enum SUT { Dev, WIP, UAT, RC, WIPRelease, RCRelease}
 
     public static class Config
     {
@@ -52,6 +52,16 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Wb ? new DbConfig("WIP8") : Throw<DbConfig>();
                     Ui = new UiConfig(String.Format("wip.{0}.wonga.com", AUT));
                     break;
+                case SUT.WIPRelease:
+                    Api = new ApiConfig(String.Format("wip.release.api.{0}.wonga.com", AUT));
+                    Svc =
+                        AUT == AUT.Ca ? new SvcConfig("ca-rel-wip-app") : Throw<SvcConfig>();
+                    Msmq =
+                        AUT == AUT.Ca ? new MsmqConfig("ca-rel-wip-app") : Throw<MsmqConfig>();
+                    Db =
+                        AUT == AUT.Ca ? new DbConfig("ca-rel-wip-app") : Throw<DbConfig>();
+                    Ui = new UiConfig(String.Format("wip.release.{0}.wonga.com", AUT));
+                    break;
                 case SUT.UAT:
                     Api = new ApiConfig(String.Format("uat.api.{0}.wonga.com", AUT));
                     Svc =
@@ -89,6 +99,16 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Ca ? new DbConfig("RC6") :
                         AUT == AUT.Wb ? new DbConfig("RC8") : Throw<DbConfig>();
                     Ui = new UiConfig(String.Format("rc.{0}.wonga.com", AUT));
+                    break;
+                case SUT.RCRelease:
+                    Api = new ApiConfig(String.Format("rc.release.api.{0}.wonga.com", AUT));
+                    Svc =
+                        AUT == AUT.Ca ? new SvcConfig("ca-rel-rc-app") : Throw<SvcConfig>();
+                    Msmq =
+                        AUT == AUT.Ca ? new MsmqConfig("ca-rel-rc-app") : Throw<MsmqConfig>();
+                    Db =
+                        AUT == AUT.Ca ? new DbConfig("ca-rel-rc-app") : Throw<DbConfig>();
+                    Ui = new UiConfig(String.Format("rc.release.{0}.wonga.com", AUT));
                     break;
                 default:
                     throw new NotImplementedException();
