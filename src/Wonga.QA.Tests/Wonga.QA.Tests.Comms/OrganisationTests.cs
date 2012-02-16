@@ -18,7 +18,8 @@ namespace Wonga.QA.Tests.Comms
     public class OrganisationTests
     {
         [Test, AUT(AUT.Wb)]
-        public void Test()
+        [Explicit]
+        public void TestOrganisationIsBuilt_DirectorsPersisted()
         {
             Guid orgId = Guid.NewGuid();
 
