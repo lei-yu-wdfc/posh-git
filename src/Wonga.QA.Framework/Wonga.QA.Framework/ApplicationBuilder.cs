@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Common.Enums.Risk;
 using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework
@@ -12,6 +13,7 @@ namespace Wonga.QA.Framework
         private Guid _id;
         private Customer _customer;
         private Organisation _company;
+        private ApplicationDecisionStatus _decision = ApplicationDecisionStatus.Accepted;
 
         private ApplicationBuilder()
         {
@@ -26,6 +28,12 @@ namespace Wonga.QA.Framework
         public static ApplicationBuilder New(Customer customer, Organisation company)
         {
             return new ApplicationBuilder{_customer = customer,_company = company};
+        }
+
+        public ApplicationBuilder WithExpectedDecision(ApplicationDecisionStatus decision)
+        {
+            _decision = decision;
+            return this;
         }
 
         public Application Build()
@@ -91,8 +99,11 @@ namespace Wonga.QA.Framework
             
             Driver.Api.Commands.Post(requests);
 
-            Do.Until(() => Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["ApplicationDecisionStatus"].Single() == "Accepted");
-            
+            Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["ApplicationDecisionStatus"].Single()) == _decision);
+
+            if (_decision == ApplicationDecisionStatus.Declined)
+                return new Application(_id);
+
             Driver.Api.Commands.Post(Config.AUT == AUT.Wb
                                   ? (ApiRequest)
                                     new SignBusinessApplicationWbUkCommand { AccountId = _customer.Id, ApplicationId = _id }
@@ -101,10 +112,14 @@ namespace Wonga.QA.Framework
             ApiRequest summary = Config.AUT == AUT.Za
                                      ? new GetAccountSummaryZaQuery {AccountId = _customer.Id}
                                      : Config.AUT == AUT.Wb
-                                           ? (ApiRequest)
-                                             new GetBusinessAccountSummaryWbUkQuery
-                                                 {AccountId = _customer.Id}
-                                           : new GetAccountSummaryQuery {AccountId = _customer.Id};
+                                           ?new GetBusinessAccountSummaryWbUkQuery {AccountId = _customer.Id}
+                                           : (ApiRequest)new GetAccountSummaryQuery { AccountId = _customer.Id };
+
+//****************************************************************************************
+//             WB Payments isn't working yet, delete as soon as payments is working   //**
+/*        */if (Config.AUT == AUT.Wb)                                                 //**
+/*        */    return null;                                                          //**
+//****************************************************************************************
 
             Do.Until(() => Driver.Api.Queries.Post(summary).Values["HasCurrentLoan"].Single() == "true");
 
