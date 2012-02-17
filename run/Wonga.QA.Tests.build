@@ -13,6 +13,14 @@
 		<Bin>$(Root)\bin</Bin>
 	</PropertyGroup>
 	
+	<PropertyGroup>
+		<TestDependencies>
+			Config;
+			Build;
+			Merge;
+		</TestDependencies>
+	</PropertyGroup>
+	
 	<Target Name="Config">
 		<Exec Command="SETX SUT $(SUT)" />
 		<Exec Command="SETX AUT $(AUT)" />
@@ -38,7 +46,7 @@
 		<Exec Command="@(Command, ' ')" />
 	</Target>
 	
-	<Target Name="Test" DependsOnTargets="Config;Build;Merge">
+	<Target Name="Test" DependsOnTargets="$(TestDependencies)">
 		<Gallio
 			Files="$(Bin)\$(Tests)\$(Tests).dll"
 			Filter="Category: $(AUT)"
