@@ -32,7 +32,7 @@ namespace Wonga.QA.Generators.Core
         static Config()
         {
             Origin = @"..\..\..\v3";
-            SqlMetal = new FileInfo(@"C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\NETFX 4.0 Tools\x64\SqlMetal.exe");
+            SqlMetal = new FileInfo(@"..\..\lib\SqlMetal.exe");
             Test = new Regex(@"\.Tests?(\.|$)");
 
             Message = "NServiceBus.IMessage";
