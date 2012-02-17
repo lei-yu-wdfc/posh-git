@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
@@ -14,12 +15,12 @@ namespace Wonga.QA.Tests.Payments
 	{
 		private static int _lastAccountNumber = 100000000;
 
-		[Test, AUT(AUT.Ca), Parallelizable]
-		public void AddBankAccountCa_Should_Add_Two_Accounts_Of_The_Same_Branch_InstituationNr()
+		[Test, AUT(AUT.Ca), Parallelizable, JIRA("CA-1682")]
+		public void AddBankAccountCaShouldAddTwoAccountsOfTheSameBranchInstituationNr()
 		{
 			Customer customer = CustomerBuilder.New().Build();
 
-			AddBankAccountCaCommand defaultBankAccount = new AddBankAccountCaCommand();
+			var defaultBankAccount = new AddBankAccountCaCommand();
 			defaultBankAccount.Default();
 			
 			// Add another account at the branch of the default account created using the customer builder.
@@ -28,8 +29,8 @@ namespace Wonga.QA.Tests.Payments
 			Do.Until(() => Driver.Db.Payments.BankAccountsBases.Count(a => a.PersonalBankAccountEntity.AccountId == customer.Id) == 2);
 		}
 
-		[Test, AUT(AUT.Ca), Parallelizable]
-		public void AddBankAccountCa_Should_Add_Two_Accounts()
+		[Test, AUT(AUT.Ca), Parallelizable, JIRA("CA-312")]
+		public void AddBankAccountCaShouldAddTwoAccounts()
 		{
 			Customer customer = CustomerBuilder.New().Build();
 
@@ -38,9 +39,9 @@ namespace Wonga.QA.Tests.Payments
 			Do.Until(() => Driver.Db.Payments.BankAccountsBases.Count(a => a.PersonalBankAccountEntity.AccountId == customer.Id) == 2);
 		}
 
-		[Test, AUT(AUT.Ca), Parallelizable]
+		[Test, AUT(AUT.Ca), Parallelizable, JIRA("CA-312")]
 		[ExpectedException(typeof(Framework.Api.Exceptions.ValidatorException))]
-		public void AddBankAccountCa_Should_Return_An_Error_When_Adding_The_3rd_Account()
+		public void AddBankAccountCaShouldReturnAnErrorWhenAddingThe3RdAccount()
 		{
 			Customer customer = CustomerBuilder.New().Build();
 
@@ -56,10 +57,12 @@ namespace Wonga.QA.Tests.Payments
 			AddBankAccountCaInternal(customer.Id);
 		}
 
-		[Test, AUT(AUT.Ca), Parallelizable]
-		public void GetBankAccounts_should_return_the_account()
+		[Test, AUT(AUT.Ca), Parallelizable, JIRA("CA-312")]
+		public void GetBankAccountsShouldReturnTheAccount()
 		{
 			Customer customer = CustomerBuilder.New().Build();
+
+			Do.Until(customer.GetBankAccount);
 
 			var request = new GetBankAccountsQuery
 			{
@@ -72,10 +75,12 @@ namespace Wonga.QA.Tests.Payments
 			Assert.AreEqual(customer.GetBankAccount().ToString(), response.Values["BankAccountId"].Single());
 		}
 
-		[Test, AUT(AUT.Ca), Parallelizable]
-		public void GetBankAccounts_ca_should_return_cannotaddbankaccounts_after_two_accounts_have_been_added()
+		[Test, AUT(AUT.Ca), Parallelizable, JIRA("CA-312")]
+		public void GetBankAccountsCaShouldReturnCannotAddBankAccountsAfterTwoAccountsHaveBeenAdded()
 		{
 			Customer customer = CustomerBuilder.New().Build();
+
+			Do.Until(customer.GetBankAccount);
 
 			var request = new GetBankAccountsQuery
 			              	{
@@ -116,7 +121,7 @@ namespace Wonga.QA.Tests.Payments
 
 		private static void AddBankAccountCaInternal(Guid accountId, string institutionNumber = "001", string branchNumber = "01161")
 		{
-			string accountNumber = _lastAccountNumber++.ToString();
+			string accountNumber = _lastAccountNumber++.ToString(CultureInfo.InvariantCulture);
 
 			AddBankAccountCaInternal(accountId, institutionNumber, branchNumber, accountNumber);
 		}
