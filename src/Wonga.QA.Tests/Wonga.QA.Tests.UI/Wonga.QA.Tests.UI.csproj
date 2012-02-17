@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5534EFFD-C4B0-44D1-8813-9FD18E24913A}</ProjectGuid>
+    <ProjectGuid>{B29A97EF-5107-476B-A27A-688028CAAF54}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Wonga.QA.Tests.Ui</RootNamespace>

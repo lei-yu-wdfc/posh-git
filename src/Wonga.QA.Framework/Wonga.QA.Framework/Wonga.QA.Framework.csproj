@@ -36,6 +36,7 @@
     <Compile Include="Application.cs" />
     <Compile Include="ApplicationBuilder.cs" />
     <Compile Include="BusineesAppicationBuilder.cs" />
+    <Compile Include="Helpers\DateHelper.cs" />
     <Compile Include="Organisation.cs" />
     <Compile Include="OrganisationBuilder.cs" />
     <Compile Include="Customer.cs" />
@@ -73,6 +74,10 @@
     <ProjectReference Include="..\Wonga.QA.Framework.Svc\Wonga.QA.Framework.Svc.csproj">
       <Project>{67DCDC23-920C-4B70-8F6B-E2F9F2F66A6D}</Project>
       <Name>Wonga.QA.Framework.Svc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wonga.QA.Framework.ThirdParties\Wonga.QA.Framework.ThirdParties.csproj">
+      <Project>{F8AC37A8-C53D-42D6-8B64-A068B8AB3984}</Project>
+      <Name>Wonga.QA.Framework.ThirdParties</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Framework.Msmq", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Framework.Ui", "Wonga.QA.Framework.UI\Wonga.QA.Framework.Ui.csproj", "{0F724DF3-0849-4BE7-A5B8-FA23C55E3042}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Framework.ThirdParties", "Wonga.QA.Framework.ThirdParties\Wonga.QA.Framework.ThirdParties.csproj", "{F8AC37A8-C53D-42D6-8B64-A068B8AB3984}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Framework.Svc", "Wonga.QA.Framework.Svc\Wonga.QA.Framework.Svc.csproj", "{67DCDC23-920C-4B70-8F6B-E2F9F2F66A6D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Framework.Common", "Wonga.QA.Framework.Common\Wonga.QA.Framework.Common.csproj", "{0DECB38F-0C7B-4924-BFF1-04871937EC45}"
@@ -47,6 +49,10 @@ Global
 		{0F724DF3-0849-4BE7-A5B8-FA23C55E3042}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F724DF3-0849-4BE7-A5B8-FA23C55E3042}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F724DF3-0849-4BE7-A5B8-FA23C55E3042}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8AC37A8-C53D-42D6-8B64-A068B8AB3984}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8AC37A8-C53D-42D6-8B64-A068B8AB3984}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8AC37A8-C53D-42D6-8B64-A068B8AB3984}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8AC37A8-C53D-42D6-8B64-A068B8AB3984}.Release|Any CPU.Build.0 = Release|Any CPU
 		{67DCDC23-920C-4B70-8F6B-E2F9F2F66A6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{67DCDC23-920C-4B70-8F6B-E2F9F2F66A6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67DCDC23-920C-4B70-8F6B-E2F9F2F66A6D}.Release|Any CPU.ActiveCfg = Release|Any CPU

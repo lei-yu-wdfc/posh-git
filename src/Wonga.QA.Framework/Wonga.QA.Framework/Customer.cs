@@ -8,10 +8,25 @@ namespace Wonga.QA.Framework
     public class Customer
     {
         public Guid Id { get; set; }
+        public string Email { get; set; }
+        public Guid BankAccountId { get; set; }
 
         public Customer(Guid id)
         {
             Id = id;
+        }
+
+        public Customer(Guid id, string email)
+        {
+            Id = id;
+            Email = email;
+        }
+
+        public Customer(Guid id, string email, Guid bankAccountId)
+        {
+            Id = id;
+            Email = email;
+            BankAccountId = bankAccountId;
         }
 
         public Application GetApplication()

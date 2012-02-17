@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{00680038-571C-4E99-A333-9026B3CE50AF}</ProjectGuid>
+    <ProjectGuid>{2FDDD73E-FD7D-41C2-9D8E-EEF260CCE0C6}</ProjectGuid>
 	<ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -33,6 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CommsServiceTests.cs" />
+    <Compile Include="Email\PaymentReminderEmailTests.cs" />
     <Compile Include="OrganisationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CustomerTests.cs" />
@@ -59,6 +60,9 @@
     <Reference Include="Wonga.QA.Framework.Msmq">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Msmq.dll</HintPath>
     </Reference>
+    <Reference Include="Wonga.QA.Framework.ThirdParties">
+      <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.ThirdParties.dll</HintPath>
+    </Reference>
     <Reference Include="Wonga.QA.Framework.Svc">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Svc.dll</HintPath>
     </Reference>
@@ -68,6 +72,9 @@
       <Project>{7243F3C0-71B0-4679-960A-687052AFFDAD}</Project>
       <Name>Wonga.QA.Tests.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

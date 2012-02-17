@@ -5,6 +5,7 @@ using System.Linq;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Common.Enums.Risk;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Helpers;
 
 namespace Wonga.QA.Framework
 {
@@ -15,12 +16,30 @@ namespace Wonga.QA.Framework
     	protected decimal _loanAmount;
     	protected Date _promiseDate;
         protected ApplicationDecisionStatusEnum _decision = ApplicationDecisionStatusEnum.Accepted;
+        protected int _loanTerm;
+        
+        private Action _setPromiseDateAndLoanTerm;
+        private Func<int> _getDaysUntilStartOfLoan;
 
         protected ApplicationBuilder()
         {
-            _id = Guid.NewGuid();
+            _id = Guid.NewGuid();            
         	_loanAmount = Data.GetLoanAmount();
-        	_promiseDate = Data.GetPromiseDate();
+
+            _setPromiseDateAndLoanTerm = () =>
+                                  {
+                                      _promiseDate = Data.GetPromiseDate();
+                                      _loanTerm = GetLoanTermFromPromiseDate();
+                                  };
+
+            _getDaysUntilStartOfLoan = GetDaysUntilStartOfLoan;
+        }
+
+        private int GetLoanTermFromPromiseDate()
+        {
+            return (int)
+                   (_promiseDate.DateTime.Subtract(DateTime.Today).TotalDays -
+                    _getDaysUntilStartOfLoan());
         }
 
         public static ApplicationBuilder New(Customer customer)
@@ -41,25 +60,48 @@ namespace Wonga.QA.Framework
 
 		public ApplicationBuilder WithPromiseDate(Date promiseDate)
 		{
-			_promiseDate = promiseDate;
+		    _setPromiseDateAndLoanTerm = () =>
+		                          {
+		                              _promiseDate = promiseDate;
+		                              _loanTerm = GetLoanTermFromPromiseDate();
+		                          };
+
 			return this;
 		}
+
+        public ApplicationBuilder WithLoanTerm(int loanTerm)
+        {
+            _setPromiseDateAndLoanTerm = () =>
+                                             {
+                                                 _loanTerm = loanTerm;
+                                                 _promiseDate = GetPromiseDateFromLoanTerm(loanTerm);
+                                             };
+
+            return this;
+        }
+
+        private Date GetPromiseDateFromLoanTerm(int loanTerm)
+        {
+            return DateTime.Today.AddDays(loanTerm + _getDaysUntilStartOfLoan()).
+                ToDate(DateFormat.Date);
+        }
 
         public ApplicationBuilder WithExpectedDecision(ApplicationDecisionStatusEnum decision)
         {
             _decision = decision;
             return this;
         }
-
+        
         public virtual Application Build()
         {
-			_promiseDate.DateFormat = DateFormat.Date;
-
             if (Config.AUT == AUT.Wb)
             {
                 throw new NotImplementedException(
                     "WB product should be using factory method with organization parameter");
             }
+
+            _promiseDate.DateFormat = DateFormat.Date;
+            _setPromiseDateAndLoanTerm();
 
             List<ApiRequest> requests = new List<ApiRequest>
             {
@@ -69,7 +111,9 @@ namespace Wonga.QA.Framework
 
             switch (Config.AUT)
             {
+
                 case AUT.Uk:
+
                     requests.AddRange(new ApiRequest[]{
                         CreateFixedTermLoanApplicationCommand.New(r =>
                         {
@@ -87,7 +131,28 @@ namespace Wonga.QA.Framework
                         })
                     });
                     break;
-			
+			    case AUT.Ca:
+
+                    // Start of Loan is different for CA
+                    _getDaysUntilStartOfLoan = GetDaysUntilStartOfLoanForCa;
+                    _setPromiseDateAndLoanTerm();
+
+                    requests.AddRange(new ApiRequest[]{
+                        CreateFixedTermLoanApplicationCommand.New(r =>
+                        {
+                            r.ApplicationId = _id;
+                            r.AccountId = _customer.Id;
+                            r.BankAccountId = _customer.GetBankAccount();
+                            r.LoanAmount = _loanAmount;
+                        	r.PromiseDate = _promiseDate;
+                        }),
+                        VerifyFixedTermLoanCommand.New(r=>
+                        {
+                            r.AccountId = _customer.Id; 
+                            r.ApplicationId = _id;
+                        })
+                    });
+                    break;
                 default:
                     requests.AddRange(new ApiRequest[]{
                         CreateFixedTermLoanApplicationCommand.New(r =>
@@ -135,7 +200,17 @@ namespace Wonga.QA.Framework
                 return stopwatch.Elapsed < TimeSpan.FromSeconds(5);
             });
 
-            return new Application(_id);
+            return new Application {Id = _id, BankAccountId = _customer.BankAccountId, LoanAmount = _loanAmount, LoanTerm = _loanTerm};
+        }
+
+        private int GetDaysUntilStartOfLoan()
+        {
+            return 0;
+        }
+
+        private int GetDaysUntilStartOfLoanForCa()
+        {
+            return DateHelper.GetNumberOfDaysUntilStartOfLoanForCa();
         }
     }
 }

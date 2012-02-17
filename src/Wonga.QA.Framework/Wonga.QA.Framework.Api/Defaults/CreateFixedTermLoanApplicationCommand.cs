@@ -17,7 +17,7 @@ namespace Wonga.QA.Framework.Api
                 Config.AUT == AUT.Ca ? CurrencyCodeEnum.CAD :
                 Config.AUT == AUT.Wb ? CurrencyCodeEnum.GBP : Config.Throw<CurrencyCodeEnum>();
             PromiseDate = DateTime.Today.AddDays(10).ToDate(DateFormat.Date);
-            LoanAmount = 100;
+            LoanAmount = 100.0m;
         }
     }
 }

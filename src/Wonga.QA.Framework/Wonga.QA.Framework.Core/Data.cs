@@ -31,7 +31,7 @@ namespace Wonga.QA.Framework.Core
 
         public static String GetEmail()
         {
-            return String.Format("qa.wonga.com+{0}@wonga.com", Guid.NewGuid());
+            return String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
         }
 
         public static String GetEmployerName()

@@ -16,6 +16,8 @@ namespace Wonga.QA.Framework
 		private Date _nextPayDate;
         private String _middleName;
         private String _houseNumber;
+        private ProvinceEnum _province;
+        private string _email;
         private String _houseName;
         private String _postcode;
         private String _street;
@@ -23,6 +25,7 @@ namespace Wonga.QA.Framework
         private String _district;
         private String _town;
         private String _county;
+        private Guid _bankAccountId;
 
         private CustomerBuilder()
         {
@@ -30,6 +33,7 @@ namespace Wonga.QA.Framework
             _verification = Data.GetId();
             _employerName = Data.GetEmployerName();
             _middleName = Data.GetMiddleName();
+            _province = ProvinceEnum.ON;
             _houseNumber = Data.RandomInt(1, 100).ToString(CultureInfo.InvariantCulture);
             _houseName = Data.RandomString(8);
             if (Config.AUT == AUT.Wb || Config.AUT == AUT.Uk)
@@ -50,6 +54,8 @@ namespace Wonga.QA.Framework
             _town = Data.RandomString(15);
             _county = Data.RandomString(15);
         	_nextPayDate = Data.GetNextPayDate();
+            _email = Data.GetEmail();
+            _bankAccountId = Data.GetId();
         }
 
         public static CustomerBuilder New()
@@ -79,6 +85,13 @@ namespace Wonga.QA.Framework
             _middleName = name;
             return this;
         }
+        
+        public CustomerBuilder ForProvince(ProvinceEnum province)
+        {
+            _province = province;
+            return this;
+        }
+
 
         public CustomerBuilder WithHouseNumberInAddress(String houseNumber)
         {
@@ -149,7 +162,8 @@ namespace Wonga.QA.Framework
                         SaveCustomerDetailsZaCommand.New(r =>
                         {
                             r.AccountId = _id;
-                            r.MiddleName = _middleName;                            
+                            r.MiddleName = _middleName;
+                            r.Email = _email;
                         }),
                         SaveCustomerAddressZaCommand.New(r =>
                                                              {
@@ -163,7 +177,9 @@ namespace Wonga.QA.Framework
                                                                  r.Town = _town;
                                                                  r.County = _county;
                                                              } ),
-                        AddBankAccountZaCommand.New(r => r.AccountId = _id),
+                        AddBankAccountZaCommand.New(r => { r.AccountId = _id;
+                                                             r.BankAccountId = _bankAccountId;
+                        }),
                         SaveEmploymentDetailsZaCommand.New(r =>
                         {
                             r.AccountId = _id;
@@ -185,9 +201,9 @@ namespace Wonga.QA.Framework
                         { 
                             r.AccountId = _id;
                             r.MiddleName = _middleName;
-                        }),
-                        SaveCustomerAddressCaCommand.New(r =>
-                                                             {
+                            r.Email = _email;
+                        }),                       
+                        SaveCustomerAddressCaCommand.New(r => {
                                                                  r.AccountId = _id;
                                                                  r.HouseNumber = _houseNumber;
                                                                  r.HouseName = _houseName;
@@ -198,7 +214,9 @@ namespace Wonga.QA.Framework
                                                                  r.Town = _town;
                                                                  r.County = _county;
                                                              } ),
-                        AddBankAccountCaCommand.New(r => r.AccountId = _id),
+                        AddBankAccountCaCommand.New(r => { r.AccountId = _id;
+                                                             r.BankAccountId = _bankAccountId;
+                        }),
                         SaveEmploymentDetailsCaCommand.New(r =>
                         {
                             r.AccountId = _id;
@@ -272,6 +290,7 @@ namespace Wonga.QA.Framework
 
             Do.Until(() => Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == _id));
             Do.Until(() => Driver.Db.Risk.RiskAccounts.Single(a => a.AccountId == _id));
+            
             switch (Config.AUT)
             {
                 case AUT.Wb:
@@ -280,7 +299,8 @@ namespace Wonga.QA.Framework
                         Driver.Db.Payments.AccountPreferences.Single(ap => ap.AccountId == _id).PaymentCardsBaseEntity);
                     break;
             }
-            return new Customer(_id);
+            
+            return new Customer(_id, _email, _bankAccountId);
         }
     }
 }
