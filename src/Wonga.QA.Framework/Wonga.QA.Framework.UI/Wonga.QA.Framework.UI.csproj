@@ -64,23 +64,27 @@
     <Compile Include="Mappings\Pages\Wb\AcceptedPage.cs" />
     <Compile Include="Mappings\Pages\Wb\AddAditionalDirectorsPage.cs" />
     <Compile Include="Mappings\Pages\Wb\AdditionalDirectorsPage.cs" />
-    <Compile Include="Mappings\Pages\Wb\AddressDetailsPage.cs" />
-    <Compile Include="Mappings\Pages\Wb\BusinessAccountPage.cs" />
-    <Compile Include="Mappings\Pages\Wb\BusinessBankAccountPage.cs" />
+    <Compile Include="Mappings\Pages\AddressDetailsPage.cs" />
+    <Compile Include="Mappings\Pages\AccountDetailsPage.cs" />
+    <Compile Include="Mappings\Pages\BankAccountPage.cs" />
     <Compile Include="Mappings\Pages\Wb\BusinessDebitCardPage.cs" />
     <Compile Include="Mappings\Pages\Wb\BusinessDetailsPage.cs" />
     <Compile Include="Mappings\Pages\Wb\EligibilityQuestionsPage.cs" />
     <Compile Include="Mappings\Pages\Wb\PersonalBankAccountPage.cs" />
+    <Compile Include="Mappings\Pages\DebitCardPage.cs" />
     <Compile Include="Mappings\Pages\Wb\PersonalDebitCardPage.cs" />
     <Compile Include="Mappings\Sections\AccountDetailsElement.cs" />
     <Compile Include="Mappings\Sections\BankAccountElement.cs" />
     <Compile Include="Mappings\Sections\DebitCardElement.cs" />
+    <Compile Include="Mappings\Sections\EmploymentDetailsElement.cs" />
     <Compile Include="Mappings\Sections\SliderElement.cs" />
     <Compile Include="Mappings\Sections\ContactingYouElement.cs" />
     <Compile Include="Mappings\Sections\MobilePinVerificationElement.cs" />
     <Compile Include="Mappings\Sections\YourDetailsElement.cs" />
     <Compile Include="Mappings\Sections\YourNameElement.cs" />
+    <Compile Include="Mappings\UkElements.cs" />
     <Compile Include="Mappings\WbElements.cs" />
+    <Compile Include="Mappings\XmlMapper.cs" />
     <Compile Include="Mappings\ZaElements.cs" />
     <Compile Include="UiElements\BaseElement.cs" />
     <Compile Include="UiElements\Pages\Common\DealDonePage.cs" />
@@ -90,6 +94,7 @@
     <Compile Include="UiElements\Sections\BaseSection.cs" />
     <Compile Include="UiElements\Sections\ContactingYouSection.cs" />
     <Compile Include="UiElements\Sections\DebitCardSection.cs" />
+    <Compile Include="UiElements\Sections\EmploymentDetailsSection.cs" />
     <Compile Include="UiElements\Sections\MobilePinVerificationSection.cs" />
     <Compile Include="UiElements\Sections\YourDetailsSection.cs" />
     <Compile Include="UiElements\Sections\YourNameSection.cs" />
@@ -126,6 +131,9 @@
     <Folder Include="Mappings\Pages\Ca\" />
     <Folder Include="Mappings\Pages\Uk\" />
     <Folder Include="Mappings\Pages\Za\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SeleniumMap.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

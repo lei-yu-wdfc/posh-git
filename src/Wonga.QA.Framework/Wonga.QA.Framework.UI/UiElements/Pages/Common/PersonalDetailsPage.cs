@@ -9,11 +9,12 @@ using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
 
 namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
-    public class PersonalDetailsPage : BasePage
+    public class PersonalDetailsPage : BasePage, IApplyPage
     {
         public YourNameSection YourName { get; set; }
         public YourDetailsSection YourDetails { get; set; }
         public ContactingYouSection ContactingYou { get; set; }
+
         public Boolean PrivacyPolicy { set { _privacy.Toggle(value); } }
         public Object CanContact
         {
@@ -51,6 +52,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             switch (Config.AUT)
             {
                 case (AUT.Wb):
+                    return new Wb.AddressDetailsPage(Client);
+                case (AUT.Uk):
                     return new Wb.AddressDetailsPage(Client);
                     
             }

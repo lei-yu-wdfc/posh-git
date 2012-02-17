@@ -48,6 +48,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
                 case (AUT.Wb):
                     _dependants = Section.FindElement(By.Name(Elements.Get.YourDetailsElement.Dependants));
                     break;
+                case(AUT.Uk):
+                    _dependants = Section.FindElement(By.Name(Elements.Get.YourDetailsElement.Dependants));
+                    break;
             }
 
             _gender = Section.FindElements(By.Name(Elements.Get.YourDetailsElement.Gender));

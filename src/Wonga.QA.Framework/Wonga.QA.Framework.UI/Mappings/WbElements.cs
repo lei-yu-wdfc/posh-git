@@ -14,78 +14,80 @@ namespace Wonga.QA.Framework.UI.Mappings
         {
             #region ElementsMappings
 
+            SliderElement = new SliderElement
+            {
+                FormId = XmlMapper.GetValue(() => SliderElement.FormId),
+                LoanAmount = XmlMapper.GetValue(() => SliderElement.LoanAmount),
+                LoanDuration = XmlMapper.GetValue(() => SliderElement.LoanDuration),
+                SubmitButton = XmlMapper.GetValue(() => SliderElement.SubmitButton),
+            };
+
             YourNameElement = new YourNameElement
                                   {
-                                      Legend = "Personal Details|Your name",
-                                      Title = "title",
-                                      FirstName = "first_name",
-                                      MiddleName = "middle_name",
-                                      LastName = "last_name"
+                                      Legend = XmlMapper.GetValue(()=>YourNameElement.Legend),
+                                      Title = XmlMapper.GetValue(() => YourNameElement.Title),
+                                      FirstName = XmlMapper.GetValue(() => YourNameElement.FirstName),
+                                      MiddleName = XmlMapper.GetValue(() => YourNameElement.MiddleName),
+                                      LastName = XmlMapper.GetValue(() => YourNameElement.LastName),
                                   };
 
             YourDetailsElement = new YourDetailsElement
                                      {
-                                         Legend = "Personal Details|Your details",
-                                         IdNumber = "id_number",
-                                         Dependants = "dependants",
-                                         Gender = "gender",
-                                         DateOfBirthDay = "date_of_birth[day]",
-                                         DateOfBirthMonth = "date_of_birth[month]",
-                                         DateOfBirthYear = "date_of_birth[year]",
-                                         HomeStatus = "home_status",
-                                         MaritalStatus = "marital_status"
+                                         Legend = XmlMapper.GetValue(() => YourDetailsElement.Legend),
+                                         IdNumber = XmlMapper.GetValue(() => YourDetailsElement.IdNumber),
+                                         Dependants = XmlMapper.GetValue(() => YourDetailsElement.Dependants),
+                                         Gender = XmlMapper.GetValue(() => YourDetailsElement.Gender),
+                                         DateOfBirthDay = XmlMapper.GetValue(() => YourDetailsElement.DateOfBirthDay),
+                                         DateOfBirthMonth = XmlMapper.GetValue(() => YourDetailsElement.DateOfBirthMonth),
+                                         DateOfBirthYear = XmlMapper.GetValue(() => YourDetailsElement.DateOfBirthYear),
+                                         HomeStatus = XmlMapper.GetValue(() => YourDetailsElement.HomeStatus),
+                                         MaritalStatus = XmlMapper.GetValue(() => YourDetailsElement.MaritalStatus),
                                      };
 
-            MobilePinVerificationElement = new MobilePinVerificationElement { Pin = "pin", Legend = "Mobile PIN verification" };
+            MobilePinVerificationElement = new MobilePinVerificationElement { Pin = XmlMapper.GetValue(() => MobilePinVerificationElement.Pin), Legend = XmlMapper.GetValue(() => MobilePinVerificationElement.Legend) };
 
             ContactingYouElement = new ContactingYouElement
                                        {
-                                           Legend = "Contacting you",
-                                           Email = "email",
-                                           EmailConfirm = "email_confirm",
-                                           HomePhone = "home_phone",
-                                           MobilePhone = "mobile_phone"
+                                           Legend = XmlMapper.GetValue(() => ContactingYouElement.Legend),
+                                           Email = XmlMapper.GetValue(() => ContactingYouElement.Email),
+                                           EmailConfirm = XmlMapper.GetValue(() => ContactingYouElement.EmailConfirm),
+                                           HomePhone = XmlMapper.GetValue(() => ContactingYouElement.HomePhone),
+                                           MobilePhone = XmlMapper.GetValue(() => ContactingYouElement.MobilePhone),
                                        };
 
             DebitCardElement = new DebitCardElement
                                           {
-                                              Legend = "Card details|card details",
-                                              CardType = "card_type",
-                                              CardNumber = "card_number",
-                                              CardName = "card_name",
-                                              CardExpiryDateMonth = "card_expiry_date[month]",
-                                              CardExpiryDateYear = "card_expiry_date[year]",
-                                              CardSecurityNumber = "card_security",
-                                              CardStartDateMonth = "card_start_date[month]",
-                                              CardStartDateYear = "card_start_date[year]"
+                                              Legend = XmlMapper.GetValue(() => DebitCardElement.Legend),
+                                              CardType = XmlMapper.GetValue(() => DebitCardElement.CardType),
+                                              CardNumber = XmlMapper.GetValue(() => DebitCardElement.CardNumber),
+                                              CardName = XmlMapper.GetValue(() => DebitCardElement.CardName),
+                                              CardExpiryDateMonth = XmlMapper.GetValue(() => DebitCardElement.CardExpiryDateMonth),
+                                              CardExpiryDateYear = XmlMapper.GetValue(() => DebitCardElement.CardExpiryDateYear),
+                                              CardSecurityNumber = XmlMapper.GetValue(() => DebitCardElement.CardSecurityNumber),
+                                              CardStartDateMonth = XmlMapper.GetValue(() => DebitCardElement.CardStartDateMonth),
+                                              CardStartDateYear = XmlMapper.GetValue(() => DebitCardElement.CardStartDateYear),
                                           };
 
             BankAccountElement = new BankAccountElement
                                             {
-                                                Legend = "your bank details|business bank account",
-                                                BankName = "bank_name",
-                                                SortCodePart1 = "sort_code[part1]",
-                                                SortCodePart2 = "sort_code[part2]",
-                                                SortCodePart3 = "sort_code[part3]",
-                                                AccountNumber = "account_number",
-                                                BankPeriod = "bank_period"
+                                                Legend = XmlMapper.GetValue(() => BankAccountElement.Legend),
+                                                BankName = XmlMapper.GetValue(() => BankAccountElement.BankName),
+                                                SortCodePart1 = XmlMapper.GetValue(() => BankAccountElement.SortCodePart1),
+                                                SortCodePart2 = XmlMapper.GetValue(() => BankAccountElement.SortCodePart2),
+                                                SortCodePart3 = XmlMapper.GetValue(() => BankAccountElement.SortCodePart3),
+                                                AccountNumber = XmlMapper.GetValue(() => BankAccountElement.AccountNumber),
+                                                BankPeriod = XmlMapper.GetValue(() => BankAccountElement.BankPeriod),
                                             };
 
-            SliderElement = new SliderElement
-                                {
-                                    FormId = "wonga-sliders-form",
-                                    LoanAmount = "loan_amount",
-                                    LoanDuration = "loan_duration",
-                                    SubmitButton = "op"
-                                };
+            
 
             AccountDetailsElement = new AccountDetailsElement
                                         {
-                                            Legend = "account setup",
-                                            Password = "password",
-                                            PasswordConfirm = "password_confirm",
-                                            SecretQuestion = "secret_question",
-                                            SecretAnswer = "secret_answer"
+                                            Legend = XmlMapper.GetValue(() => AccountDetailsElement.Legend),
+                                            Password = XmlMapper.GetValue(() => AccountDetailsElement.Password),
+                                            PasswordConfirm = XmlMapper.GetValue(() => AccountDetailsElement.PasswordConfirm),
+                                            SecretQuestion = XmlMapper.GetValue(() => AccountDetailsElement.SecretQuestion),
+                                            SecretAnswer = XmlMapper.GetValue(() => AccountDetailsElement.SecretAnswer),
                                         };
 
             #endregion
@@ -94,85 +96,85 @@ namespace Wonga.QA.Framework.UI.Mappings
 
             WbEligibilityQuestionsPage = new EligibilityQuestionsPage
                                              {
-                                                 FormId = "lzero-questions-form",
-                                                 CheckDirector = "director",
-                                                 CheckResident = "resident",
-                                                 CheckActiveCompany = "active_company",
-                                                 CheckTurnover = "turnover",
-                                                 CheckVat = "vat",
-                                                 CheckOnlineAccess = "online_access",
-                                                 CheckGuarantee = "guarantee",
-                                                 NextButton = "next",
-                                                 CheckDebitCard = "debit_card"
+                                                 FormId = XmlMapper.GetValue(() => WbEligibilityQuestionsPage.FormId),
+                                                 CheckDirector = XmlMapper.GetValue(() => WbEligibilityQuestionsPage.CheckDirector),
+                                                 CheckResident = XmlMapper.GetValue(() => WbEligibilityQuestionsPage.CheckResident),
+                                                 CheckActiveCompany = XmlMapper.GetValue(() => WbEligibilityQuestionsPage.CheckActiveCompany),
+                                                 CheckTurnover = XmlMapper.GetValue(() => WbEligibilityQuestionsPage.CheckTurnover),
+                                                 CheckVat = XmlMapper.GetValue(() => WbEligibilityQuestionsPage.CheckVat),
+                                                 CheckOnlineAccess = XmlMapper.GetValue(() => WbEligibilityQuestionsPage.CheckOnlineAccess),
+                                                 CheckGuarantee = XmlMapper.GetValue(() => WbEligibilityQuestionsPage.CheckGuarantee),
+                                                 NextButton = XmlMapper.GetValue(() => WbEligibilityQuestionsPage.NextButton),
+                                                 CheckDebitCard = XmlMapper.GetValue(() => WbEligibilityQuestionsPage.CheckDebitCard),
                                              };
 
             PersonalDetailsPage = new PersonalDetailsPage
                                       {
-                                          FormId = "lzero-personal-form",
-                                          CheckPrivacyPolicy = "privacy",
-                                          CheckCanContact = "update_option",
-                                          NextButton = "next"
+                                          FormId = XmlMapper.GetValue(() => PersonalDetailsPage.FormId),
+                                          CheckPrivacyPolicy = XmlMapper.GetValue(() => PersonalDetailsPage.CheckPrivacyPolicy),
+                                          CheckCanContact = XmlMapper.GetValue(() => PersonalDetailsPage.CheckCanContact),
+                                          NextButton = XmlMapper.GetValue(() => PersonalDetailsPage.NextButton),
                                       };
 
-            WbAddressDetailsPage = new AddressDetailsPage
+            AddressDetailsPage = new AddressDetailsPage
                                        {
-                                           FormId = "lzero-address-form",
-                                           LookupButton = "op",
-                                           PostCode = "postcode_lookup_uk",
-                                           District = "district",
-                                           FlatNumber = "flat",
-                                           County = "county",
-                                           AddressPeriod = "address_period",
-                                           NextButton = "next",
-                                           AddressOptions = "address_options"
+                                           FormId = XmlMapper.GetValue(() => AddressDetailsPage.FormId),
+                                           LookupButton = XmlMapper.GetValue(() => AddressDetailsPage.LookupButton),
+                                           PostCode = XmlMapper.GetValue(() => AddressDetailsPage.PostCode),
+                                           District = XmlMapper.GetValue(() => AddressDetailsPage.District),
+                                           FlatNumber = XmlMapper.GetValue(() => AddressDetailsPage.FlatNumber),
+                                           County = XmlMapper.GetValue(() => AddressDetailsPage.County),
+                                           AddressPeriod = XmlMapper.GetValue(() => AddressDetailsPage.AddressPeriod),
+                                           NextButton = XmlMapper.GetValue(() => AddressDetailsPage.NextButton),
+                                           AddressOptions = XmlMapper.GetValue(() => AddressDetailsPage.AddressOptions),
                                        };
 
-            WbBusinessAccountDetailsPage = new BusinessAccountPage { FormId = "lzero-account-setup-form", NextButton = "next" };
+            AccountDetailsPage = new AccountDetailsPage { FormId = XmlMapper.GetValue(() => AccountDetailsPage.FormId), NextButton = XmlMapper.GetValue(() => AccountDetailsPage.NextButton), };
 
-            WbPersonalBankAccountPage = new PersonalBankAccountDetailsPage {FormId = "lzero-bank-form", NextButton = "next"};
+            WbPersonalBankAccountPage = new PersonalBankAccountDetailsPage { FormId = XmlMapper.GetValue(() => WbPersonalBankAccountPage.FormId), NextButton = XmlMapper.GetValue(() => WbPersonalBankAccountPage.NextButton), };
 
-            WbPersonalDebitCardDetailsPage = new PersonalDebitCardPage {FormId = "lzero-card-form", NextButton = "next"};
+            WbPersonalDebitCardDetailsPage = new PersonalDebitCardPage { FormId = XmlMapper.GetValue(() => WbPersonalDebitCardDetailsPage.FormId), NextButton = XmlMapper.GetValue(() => WbPersonalDebitCardDetailsPage.NextButton), };
 
             WbBusinessDetailsPage = new BusinessDetailsPage
                                         {
-                                            FormId = "lzero-business-form",
-                                            NextButton = "next",
-                                            BusinessNumber = "biz_number",
-                                            BusinessName = "biz_name"
+                                            FormId = XmlMapper.GetValue(() => WbBusinessDetailsPage.FormId),
+                                            NextButton = XmlMapper.GetValue(() => WbBusinessDetailsPage.NextButton),
+                                            BusinessNumber = XmlMapper.GetValue(() => WbBusinessDetailsPage.BusinessNumber),
+                                            BusinessName = XmlMapper.GetValue(() => WbBusinessDetailsPage.BusinessName),
                                         };
 
             WbAdditionalDirectorsPage = new AdditionalDirectorsPage
                                             {
-                                                FormId = "lzero-directors-form",
-                                                DoneButton = "done",
-                                                AddAnotherDirector = "add"
+                                                FormId = XmlMapper.GetValue(() => WbAdditionalDirectorsPage.FormId),
+                                                DoneButton = XmlMapper.GetValue(() => WbAdditionalDirectorsPage.DoneButton),
+                                                AddAnotherDirector = XmlMapper.GetValue(() => WbAdditionalDirectorsPage.AddAnotherDirector),
                                             };
 
-            WbBusinessBankAccountPage = new BusinessBankAccountPage {FormId = "lzero-business-bank-form", NextButton = "next"};
+            BankAccountPage = new BankAccountPage { FormId = XmlMapper.GetValue(() => BankAccountPage.FormId), NextButton = XmlMapper.GetValue(() => BankAccountPage.NextButton), };
 
-            WbBusinessDebitCardPage = new BusinessDebitCardPage {FormId = "lzero-business-card-form", NextButton = "next"};
+            WbBusinessDebitCardPage = new BusinessDebitCardPage { FormId = XmlMapper.GetValue(() => WbBusinessDebitCardPage.FormId), NextButton = XmlMapper.GetValue(() => WbBusinessDebitCardPage.NextButton), };
 
             ProcessingPage = new ProcessingPage
                                  {
-                                     FormId = "wonga-processing",
-                                     Legend = "processing your application",
-                                     ProcessingImageTag = "img",
-                                     ProcessingImageAttributeName = "alt",
-                                     ProcessingImageAttributeText = "Processing"
+                                     FormId = XmlMapper.GetValue(() => ProcessingPage.FormId),
+                                     Legend = XmlMapper.GetValue(() => ProcessingPage.Legend),
+                                     ProcessingImageTag = XmlMapper.GetValue(() => ProcessingPage.ProcessingImageTag),
+                                     ProcessingImageAttributeName = XmlMapper.GetValue(() => ProcessingPage.ProcessingImageAttributeName),
+                                     ProcessingImageAttributeText = XmlMapper.GetValue(() => ProcessingPage.ProcessingImageAttributeText),
                                  };
 
             WbAcceptedPage = new AcceptedPage
                                  {
-                                     FormId = "wonga-loan-approve-form",
-                                     AcceptBusinessLoan = "terms-accept",
-                                     AcceptGuarantorLoan = "guarantor-accept",
-                                     SubmitButton = "op",
-                                     AcceptLinkText = "I Accept"
+                                     FormId = XmlMapper.GetValue(() => WbAcceptedPage.FormId),
+                                     AcceptBusinessLoan = XmlMapper.GetValue(() => WbAcceptedPage.AcceptBusinessLoan),
+                                     AcceptGuarantorLoan = XmlMapper.GetValue(() => WbAcceptedPage.AcceptGuarantorLoan),
+                                     SubmitButton = XmlMapper.GetValue(() => WbAcceptedPage.SubmitButton),
+                                     AcceptLinkText = XmlMapper.GetValue(() => WbAcceptedPage.AcceptLinkText),
                                  };
 
-            DealDonePage = new DealDonePage {HeaderText = "Application success", ContinueButtonLinkText = "Continue to my account"};
+            DealDonePage = new DealDonePage { HeaderText = XmlMapper.GetValue(() => DealDonePage.HeaderText), ContinueButtonLinkText = XmlMapper.GetValue(() => DealDonePage.ContinueButtonLinkText), };
 
-            DeclinedPage = new DeclinedPage { HeaderText = "Application declined" };
+            DeclinedPage = new DeclinedPage { HeaderText = XmlMapper.GetValue(() => DeclinedPage.HeaderText), };
 
             #endregion
 

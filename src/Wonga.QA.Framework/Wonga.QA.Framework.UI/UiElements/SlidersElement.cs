@@ -38,6 +38,8 @@ namespace Wonga.QA.Framework.UI.UiElements
             _submit.Click();
             if (Config.AUT == AUT.Wb)
                 return new Pages.Wb.EligibilityQuestionsPage(Page.Client);
+            if (Config.AUT == AUT.Uk)
+                return new Pages.Common.PersonalDetailsPage(Page.Client);
             return null;
         }
     }

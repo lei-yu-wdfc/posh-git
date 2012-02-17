@@ -1,9 +1,12 @@
 ﻿using Wonga.QA.Framework.UI.Mappings;
+using Wonga.QA.Framework.UI.Mappings.Pages;
 
 namespace Wonga.QA.Framework.UI.Mappings
 {
     internal abstract class BaseElements
     {
+        internal XmlMapper XmlMapper = new XmlMapper();
+
         internal virtual Sections.YourNameElement YourNameElement { get; set; }
         internal virtual Sections.YourDetailsElement YourDetailsElement { get; set; }
         internal virtual Sections.MobilePinVerificationElement MobilePinVerificationElement { get; set; }
@@ -12,17 +15,17 @@ namespace Wonga.QA.Framework.UI.Mappings
         internal virtual Sections.AccountDetailsElement AccountDetailsElement { get; set; }
         internal virtual Sections.DebitCardElement DebitCardElement { get; set; }
         internal virtual Sections.BankAccountElement BankAccountElement { get; set; }
+        internal virtual Sections.EmploymentDetailsElement EmploymentDetailsElement { get; set; }
 
         #region WbPages
 
         internal virtual Pages.Wb.EligibilityQuestionsPage WbEligibilityQuestionsPage { get; set; }
-        internal virtual Pages.Wb.AddressDetailsPage WbAddressDetailsPage { get; set; }
-        internal virtual Pages.Wb.BusinessAccountPage WbBusinessAccountDetailsPage { get; set; }
+        
         internal virtual Pages.Wb.PersonalBankAccountDetailsPage WbPersonalBankAccountPage { get; set; }
         internal virtual Pages.Wb.PersonalDebitCardPage WbPersonalDebitCardDetailsPage { get; set; }
         internal virtual Pages.Wb.BusinessDetailsPage WbBusinessDetailsPage { get; set; }
         internal virtual Pages.Wb.AdditionalDirectorsPage WbAdditionalDirectorsPage { get; set; }
-        internal virtual Pages.Wb.BusinessBankAccountPage WbBusinessBankAccountPage { get; set; }
+        
         internal virtual Pages.Wb.BusinessDebitCardPage WbBusinessDebitCardPage { get; set; }
         internal virtual Pages.Wb.AcceptedPage WbAcceptedPage { get; set; }
 
@@ -34,7 +37,10 @@ namespace Wonga.QA.Framework.UI.Mappings
         internal virtual Pages.ProcessingPage ProcessingPage { get; set; }
         internal virtual Pages.DealDonePage DealDonePage { get; set; }
         internal virtual Pages.DeclinedPage DeclinedPage { get; set; }
-        
+        internal virtual Pages.AddressDetailsPage AddressDetailsPage { get; set; }
+        internal virtual Pages.AccountDetailsPage AccountDetailsPage { get; set; }
+        internal virtual Pages.BankAccountPage BankAccountPage { get; set; }
+        internal virtual Pages.DebitCardPage DebitCardPage { get; set; }
 
         #endregion
     }

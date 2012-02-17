@@ -10,5 +10,4 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages.Wb
         internal String FormId { get; set; }
         internal String NextButton { get; set; }
     }
-
 }

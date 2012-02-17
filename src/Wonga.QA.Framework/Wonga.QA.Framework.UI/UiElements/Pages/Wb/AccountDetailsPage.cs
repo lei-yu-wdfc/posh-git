@@ -14,8 +14,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
         public AccountDetailsPage(UiClient client)
             : base(client)
         {
-            _form = Content.FindElement(By.Id(Elements.Get.WbBusinessAccountDetailsPage.FormId));
-            _next = _form.FindElement(By.Name(Elements.Get.WbBusinessAccountDetailsPage.NextButton));
+            _form = Content.FindElement(By.Id(Elements.Get.AccountDetailsPage.FormId));
+            _next = _form.FindElement(By.Name(Elements.Get.AccountDetailsPage.NextButton));
             AccountDetailsSection = new Sections.AccountDetailsSection(this);
         }
 

@@ -27,16 +27,16 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
         public AddressDetailsPage(UiClient client)
             : base(client)
         {
-            _form = Content.FindElement(By.Id(Elements.Get.WbAddressDetailsPage.FormId));
+            _form = Content.FindElement(By.Id(Elements.Get.AddressDetailsPage.FormId));
 
-            _postCode = _form.FindElement(By.Name(Elements.Get.WbAddressDetailsPage.PostCode));
-            _lookup = _form.FindElement(By.Name(Elements.Get.WbAddressDetailsPage.LookupButton));
+            _postCode = _form.FindElement(By.Name(Elements.Get.AddressDetailsPage.PostCode));
+            _lookup = _form.FindElement(By.Name(Elements.Get.AddressDetailsPage.LookupButton));
 
-            _flatNumber = _form.FindElement(By.Name(Elements.Get.WbAddressDetailsPage.FlatNumber));
-            _district = _form.FindElement(By.Name(Elements.Get.WbAddressDetailsPage.District));
-            _county = _form.FindElement(By.Name(Elements.Get.WbAddressDetailsPage.County));
-            _addressPeriod = _form.FindElement(By.Name(Elements.Get.WbAddressDetailsPage.AddressPeriod));
-            _next = _form.FindElement(By.Name(Elements.Get.WbAddressDetailsPage.NextButton));
+            _flatNumber = _form.FindElement(By.Name(Elements.Get.AddressDetailsPage.FlatNumber));
+            _district = _form.FindElement(By.Name(Elements.Get.AddressDetailsPage.District));
+            _county = _form.FindElement(By.Name(Elements.Get.AddressDetailsPage.County));
+            _addressPeriod = _form.FindElement(By.Name(Elements.Get.AddressDetailsPage.AddressPeriod));
+            _next = _form.FindElement(By.Name(Elements.Get.AddressDetailsPage.NextButton));
         }
 
         public void LookupByPostCode()
@@ -46,7 +46,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
 
         public void GetAddressesDropDown()
         {
-            _addressOptions = _form.FindElement(By.Name(Elements.Get.WbAddressDetailsPage.AddressOptions));
+            _addressOptions = _form.FindElement(By.Name(Elements.Get.AddressDetailsPage.AddressOptions));
         }
 
         public Wb.AccountDetailsPage Next()
