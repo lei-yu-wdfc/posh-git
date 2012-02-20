@@ -8,10 +8,9 @@ namespace Wonga.QA.Framework.Msmq
         private MsmqQueue _comms;
         private MsmqQueue _payments;
         private MsmqQueue _risk;
+        private MsmqQueue _marketing;
         private MsmqQueue _bi;
         private MsmqQueue _bankGateway;
-        private MsmqQueue _hyphen;
-        private MsmqQueue _scotia;
         private MsmqQueue _blacklist;
         private MsmqQueue _callReport;
         private MsmqQueue _callValidate;
@@ -24,10 +23,13 @@ namespace Wonga.QA.Framework.Msmq
         private MsmqQueue _fileStorage;
         private MsmqQueue _graydon;
         private MsmqQueue _hpi;
+        private MsmqQueue _hsbc;
+        private MsmqQueue _hyphen;
         private MsmqQueue _iovation;
         private MsmqQueue _salesforce;
+        private MsmqQueue _scotia;
         private MsmqQueue _sms;
-        private MsmqQueue _timezone;
+        private MsmqQueue _timeZone;
         private MsmqQueue _transUnion;
         private MsmqQueue _uru;
         private MsmqQueue _wongaPay;
@@ -56,6 +58,12 @@ namespace Wonga.QA.Framework.Msmq
             set { _risk = value; }
         }
 
+        public MsmqQueue Marketing
+        {
+            get { return _marketing ?? (_marketing = new MsmqQueue(Config.Msmq.Marketing)); }
+            set { _marketing = value; }
+        }
+
         public MsmqQueue Bi
         {
             get { return _bi ?? (_bi = new MsmqQueue(Config.Msmq.Bi)); }
@@ -66,18 +74,6 @@ namespace Wonga.QA.Framework.Msmq
         {
             get { return _bankGateway ?? (_bankGateway = new MsmqQueue(Config.Msmq.BankGateway)); }
             set { _bankGateway = value; }
-        }
-
-        public MsmqQueue Hyphen
-        {
-            get { return _hyphen ?? (_hyphen = new MsmqQueue(Config.Msmq.Hyphen)); }
-            set { _hyphen = value; }
-        }
-
-        public MsmqQueue Scotia
-        {
-            get { return _scotia ?? (_scotia = new MsmqQueue(Config.Msmq.Scotia)); }
-            set { _scotia = value; }
         }
 
         public MsmqQueue Blacklist
@@ -152,6 +148,18 @@ namespace Wonga.QA.Framework.Msmq
             set { _hpi = value; }
         }
 
+        public MsmqQueue Hsbc
+        {
+            get { return _hsbc ?? (_hsbc = new MsmqQueue(Config.Msmq.Hsbc)); }
+            set { _hsbc = value; }
+        }
+
+        public MsmqQueue Hyphen
+        {
+            get { return _hyphen ?? (_hyphen = new MsmqQueue(Config.Msmq.Hyphen)); }
+            set { _hyphen = value; }
+        }
+
         public MsmqQueue Iovation
         {
             get { return _iovation ?? (_iovation = new MsmqQueue(Config.Msmq.Iovation)); }
@@ -164,16 +172,22 @@ namespace Wonga.QA.Framework.Msmq
             set { _salesforce = value; }
         }
 
+        public MsmqQueue Scotia
+        {
+            get { return _scotia ?? (_scotia = new MsmqQueue(Config.Msmq.Scotia)); }
+            set { _scotia = value; }
+        }
+
         public MsmqQueue Sms
         {
             get { return _sms ?? (_sms = new MsmqQueue(Config.Msmq.Sms)); }
             set { _sms = value; }
         }
 
-        public MsmqQueue Timezone
+        public MsmqQueue TimeZone
         {
-            get { return _timezone ?? (_timezone = new MsmqQueue(Config.Msmq.Timezone)); }
-            set { _timezone = value; }
+            get { return _timeZone ?? (_timeZone = new MsmqQueue(Config.Msmq.Timezone)); }
+            set { _timeZone = value; }
         }
 
         public MsmqQueue TransUnion

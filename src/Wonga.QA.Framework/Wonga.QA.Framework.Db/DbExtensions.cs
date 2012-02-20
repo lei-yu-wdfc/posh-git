@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Data.Linq;
-using System.Diagnostics;
-using System.Linq;
-using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework.Db
 {
-    /*public static class DbExtensions
+    public static class DbExtensions
     {
-        public static Table<T> SetTable<T>(this Table<T> table) where T : DbEntity<T>
+        public static T Insert<T>(this Table<T> table, T entity) where T : DbEntity<T>
         {
-            //Console.WriteLine(table.Count());
-            //table.ToArray();
-
-            return table;
+            table.InsertOnSubmit(entity);
+            return entity;
         }
-    }*/
+
+        public static String GetName<T>(this Table<T> table) where T : DbEntity<T>
+        {
+            return table.Context.Mapping.GetTable(typeof(T)).TableName;
+        }
+    }
 }
