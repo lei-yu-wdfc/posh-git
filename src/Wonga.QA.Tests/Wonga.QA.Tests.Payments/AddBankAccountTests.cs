@@ -76,6 +76,7 @@ namespace Wonga.QA.Tests.Payments
 		}
 
 		[Test, AUT(AUT.Ca), Parallelizable, JIRA("CA-312")]
+		[Explicit("This has been rolled back and will be refactored as part of CA-1589")]
 		public void GetBankAccountsCaShouldReturnCannotAddBankAccountsAfterTwoAccountsHaveBeenAdded()
 		{
 			Customer customer = CustomerBuilder.New().Build();
