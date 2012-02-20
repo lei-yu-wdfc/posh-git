@@ -75,34 +75,36 @@ namespace Wonga.QA.Tests.Payments
 			Assert.AreEqual(customer.GetBankAccount().ToString(), response.Values["BankAccountId"].Single());
 		}
 
-		[Test, AUT(AUT.Ca), Parallelizable, JIRA("CA-312")]
-		[Explicit("This has been rolled back and will be refactored as part of CA-1589")]
-		public void GetBankAccountsCaShouldReturnCannotAddBankAccountsAfterTwoAccountsHaveBeenAdded()
-		{
-			Customer customer = CustomerBuilder.New().Build();
+		// Commented out as "explicit" has no effect in TC
+		//
+		//[Test, AUT(AUT.Ca), Parallelizable, JIRA("CA-312")]
+		//[Explicit("This has been rolled back and will be refactored as part of CA-1589")]
+		//public void GetBankAccountsCaShouldReturnCannotAddBankAccountsAfterTwoAccountsHaveBeenAdded()
+		//{
+		//    Customer customer = CustomerBuilder.New().Build();
 
-			Do.Until(customer.GetBankAccount);
+		//    Do.Until(customer.GetBankAccount);
 
-			var request = new GetBankAccountsQuery
-			              	{
-			              		AccountId = customer.Id
-			              	};
+		//    var request = new GetBankAccountsQuery
+		//                    {
+		//                        AccountId = customer.Id
+		//                    };
 
-			var response = Driver.Api.Queries.Post(request);
-			Assert.IsTrue(response.Values.Contains("CanAddBankAccount"));
-			Assert.AreEqual("true", response.Values["CanAddBankAccount"].Single());
+		//    var response = Driver.Api.Queries.Post(request);
+		//    Assert.IsTrue(response.Values.Contains("CanAddBankAccount"));
+		//    Assert.AreEqual("true", response.Values["CanAddBankAccount"].Single());
 
-			AddBankAccountCaInternal(customer.Id);
+		//    AddBankAccountCaInternal(customer.Id);
 
-			Do.Until(
-				() => Driver.Db.Payments.BankAccountsBases.Count(a => a.PersonalBankAccountEntity.AccountId == customer.Id) == 2);
+		//    Do.Until(
+		//        () => Driver.Db.Payments.BankAccountsBases.Count(a => a.PersonalBankAccountEntity.AccountId == customer.Id) == 2);
 
-			Do.Until(() =>
-			         	{
-			         		response = Driver.Api.Queries.Post(request);
-			         		return response.Values.Contains("CanAddBankAccount") && "false" == response.Values["CanAddBankAccount"].Single();
-			         	});
-		}
+		//    Do.Until(() =>
+		//                {
+		//                    response = Driver.Api.Queries.Post(request);
+		//                    return response.Values.Contains("CanAddBankAccount") && "false" == response.Values["CanAddBankAccount"].Single();
+		//                });
+		//}
 
 		private static void AddBankAccountCaInternal(Guid accountId, string institutionNumber, string branchNumber, string accountNumber)
 		{
