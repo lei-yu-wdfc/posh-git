@@ -14,7 +14,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         protected BaseSection(String legend, BasePage page)
         {
             Page = page;
-            Section = Page.Content.FindElements(By.TagName("fieldset")).Single(fieldset => fieldset.FindElements(By.TagName("legend")).Any(element => (Regex.Match(element.Text, legend)).Success));
+            Section = Page.Content.FindElement(By.CssSelector(legend));
+            //Section = Page.Content.FindElements(By.TagName("fieldset")).Single(fieldset => fieldset.FindElements(By.TagName("legend")).Any(element => (Regex.Match(element.Text, legend)).Success));
         }
     }
 }

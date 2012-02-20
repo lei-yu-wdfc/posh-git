@@ -133,7 +133,9 @@
     <Folder Include="Mappings\Pages\Za\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SeleniumMap.xml" />
+    <EmbeddedResource Include="SeleniumMap.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

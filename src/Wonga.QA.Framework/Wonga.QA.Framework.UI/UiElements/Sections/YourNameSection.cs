@@ -19,10 +19,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
 
         public YourNameSection(BasePage page) : base(Elements.Get.YourNameElement.Legend, page)
         {
-            _title = Section.FindElement(By.Name(Elements.Get.YourNameElement.Title));
-            _firstName = Section.FindElement(By.Name(Elements.Get.YourNameElement.FirstName));
-            _middleName = Section.FindElement(By.Name(Elements.Get.YourNameElement.MiddleName));
-            _lastName = Section.FindElement(By.Name(Elements.Get.YourNameElement.LastName));
+            _title = Section.FindElement(By.CssSelector(Elements.Get.YourNameElement.Title));
+            _firstName = Section.FindElement(By.CssSelector(Elements.Get.YourNameElement.FirstName));
+            _middleName = Section.FindElement(By.CssSelector(Elements.Get.YourNameElement.MiddleName));
+            _lastName = Section.FindElement(By.CssSelector(Elements.Get.YourNameElement.LastName));
         }
 
 

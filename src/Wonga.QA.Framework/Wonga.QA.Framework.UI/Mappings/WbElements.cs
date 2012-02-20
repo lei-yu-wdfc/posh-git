@@ -34,7 +34,6 @@ namespace Wonga.QA.Framework.UI.Mappings
             YourDetailsElement = new YourDetailsElement
                                      {
                                          Legend = XmlMapper.GetValue(() => YourDetailsElement.Legend),
-                                         IdNumber = XmlMapper.GetValue(() => YourDetailsElement.IdNumber),
                                          Dependants = XmlMapper.GetValue(() => YourDetailsElement.Dependants),
                                          Gender = XmlMapper.GetValue(() => YourDetailsElement.Gender),
                                          DateOfBirthDay = XmlMapper.GetValue(() => YourDetailsElement.DateOfBirthDay),
@@ -150,17 +149,26 @@ namespace Wonga.QA.Framework.UI.Mappings
                                                 AddAnotherDirector = XmlMapper.GetValue(() => WbAdditionalDirectorsPage.AddAnotherDirector),
                                             };
 
+            WbAddAditionalDirectorsPage = new AddAditionalDirectorsPage
+                                              {
+                                                  FormId = XmlMapper.GetValue(() => WbAddAditionalDirectorsPage.FormId),
+                                                  Title = XmlMapper.GetValue(() => WbAddAditionalDirectorsPage.Title),
+                                                  ConfirmEmailAddress = XmlMapper.GetValue(() => WbAddAditionalDirectorsPage.ConfirmEmailAddress),
+                                                  DoneButton = XmlMapper.GetValue(() => WbAddAditionalDirectorsPage.DoneButton),
+                                                  EmailAddress = XmlMapper.GetValue(() => WbAddAditionalDirectorsPage.EmailAddress),
+                                                  FirstName = XmlMapper.GetValue(() => WbAddAditionalDirectorsPage.FirstName),
+                                                  LastName = XmlMapper.GetValue(() => WbAddAditionalDirectorsPage.LastName),
+                                                  AddAnotherButton = XmlMapper.GetValue(() => WbAddAditionalDirectorsPage.AddAnotherButton),
+                                              };
+
             BankAccountPage = new BankAccountPage { FormId = XmlMapper.GetValue(() => BankAccountPage.FormId), NextButton = XmlMapper.GetValue(() => BankAccountPage.NextButton), };
 
             WbBusinessDebitCardPage = new BusinessDebitCardPage { FormId = XmlMapper.GetValue(() => WbBusinessDebitCardPage.FormId), NextButton = XmlMapper.GetValue(() => WbBusinessDebitCardPage.NextButton), };
 
             ProcessingPage = new ProcessingPage
                                  {
-                                     FormId = XmlMapper.GetValue(() => ProcessingPage.FormId),
-                                     Legend = XmlMapper.GetValue(() => ProcessingPage.Legend),
-                                     ProcessingImageTag = XmlMapper.GetValue(() => ProcessingPage.ProcessingImageTag),
-                                     ProcessingImageAttributeName = XmlMapper.GetValue(() => ProcessingPage.ProcessingImageAttributeName),
-                                     ProcessingImageAttributeText = XmlMapper.GetValue(() => ProcessingPage.ProcessingImageAttributeText),
+                                     ProcessingText = XmlMapper.GetValue(() => ProcessingPage.ProcessingText),
+                                     ProcessingTextContainer = XmlMapper.GetValue(() => ProcessingPage.ProcessingTextContainer),
                                  };
 
             WbAcceptedPage = new AcceptedPage
@@ -169,7 +177,6 @@ namespace Wonga.QA.Framework.UI.Mappings
                                      AcceptBusinessLoan = XmlMapper.GetValue(() => WbAcceptedPage.AcceptBusinessLoan),
                                      AcceptGuarantorLoan = XmlMapper.GetValue(() => WbAcceptedPage.AcceptGuarantorLoan),
                                      SubmitButton = XmlMapper.GetValue(() => WbAcceptedPage.SubmitButton),
-                                     AcceptLinkText = XmlMapper.GetValue(() => WbAcceptedPage.AcceptLinkText),
                                  };
 
             DealDonePage = new DealDonePage { HeaderText = XmlMapper.GetValue(() => DealDonePage.HeaderText), ContinueButtonLinkText = XmlMapper.GetValue(() => DealDonePage.ContinueButtonLinkText), };

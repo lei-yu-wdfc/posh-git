@@ -63,18 +63,18 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
 
         public ContactingYouSection(BasePage page) : base(Elements.Get.ContactingYouElement.Legend, page)
         {
-            _email = Section.FindElement(By.Name(Elements.Get.ContactingYouElement.Email));
-            _emailConfirm = Section.FindElement(By.Name(Elements.Get.ContactingYouElement.EmailConfirm));
-            _homePhone = Section.FindElement(By.Name(Elements.Get.ContactingYouElement.HomePhone));
-            _mobilePhone = Section.FindElement(By.Name(Elements.Get.ContactingYouElement.MobilePhone));
+            _email = Section.FindElement(By.CssSelector(Elements.Get.ContactingYouElement.Email));
+            _emailConfirm = Section.FindElement(By.CssSelector(Elements.Get.ContactingYouElement.EmailConfirm));
+            _homePhone = Section.FindElement(By.CssSelector(Elements.Get.ContactingYouElement.HomePhone));
+            _mobilePhone = Section.FindElement(By.CssSelector(Elements.Get.ContactingYouElement.MobilePhone));
 
             switch (Config.AUT)
             {
                 case (AUT.Ca):
-                    _homePhoneP2 = Section.FindElement(By.Name(Elements.Get.ContactingYouElement.HomePhoneP2));
-                    _homePhoneP3 = Section.FindElement(By.Name(Elements.Get.ContactingYouElement.HomePhoneP3));
-                    _mobilePhoneP2 = Section.FindElement(By.Name(Elements.Get.ContactingYouElement.MobilePhoneP2));
-                    _mobilePhoneP3 = Section.FindElement(By.Name(Elements.Get.ContactingYouElement.MobilePhoneP3));
+                    _homePhoneP2 = Section.FindElement(By.CssSelector(Elements.Get.ContactingYouElement.HomePhoneP2));
+                    _homePhoneP3 = Section.FindElement(By.CssSelector(Elements.Get.ContactingYouElement.HomePhoneP3));
+                    _mobilePhoneP2 = Section.FindElement(By.CssSelector(Elements.Get.ContactingYouElement.MobilePhoneP2));
+                    _mobilePhoneP3 = Section.FindElement(By.CssSelector(Elements.Get.ContactingYouElement.MobilePhoneP3));
                     break;
             }
         }

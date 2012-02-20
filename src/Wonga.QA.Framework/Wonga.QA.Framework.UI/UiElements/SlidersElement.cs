@@ -16,10 +16,10 @@ namespace Wonga.QA.Framework.UI.UiElements
 
         public SlidersElement(BasePage page) : base(page)
         {
-            _form = Page.Content.FindElement(By.Id(Elements.Get.SliderElement.FormId));
-            _loanAmount = _form.FindElement(By.Name(Elements.Get.SliderElement.LoanAmount));
-            _loanDuration = _form.FindElement(By.Name(Elements.Get.SliderElement.LoanDuration));
-            _submit = _form.FindElement(By.Name(Elements.Get.SliderElement.SubmitButton));
+            _form = Page.Content.FindElement(By.CssSelector(Elements.Get.SliderElement.FormId));
+            _loanAmount = _form.FindElement(By.CssSelector(Elements.Get.SliderElement.LoanAmount));
+            _loanDuration = _form.FindElement(By.CssSelector(Elements.Get.SliderElement.LoanDuration));
+            _submit = _form.FindElement(By.CssSelector(Elements.Get.SliderElement.SubmitButton));
         }
 
         public String HowMuch

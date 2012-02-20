@@ -10,7 +10,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages.Wb
         internal String FormId { get; set; }
         internal String AcceptBusinessLoan { get; set; }
         internal String AcceptGuarantorLoan { get; set; }
-        internal String AcceptLinkText { get; set; }
         internal String SubmitButton { get; set; }
     }
 }

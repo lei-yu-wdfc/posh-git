@@ -141,11 +141,8 @@ namespace Wonga.QA.Framework.UI.Mappings
 
             ProcessingPage = new ProcessingPage
                                  {
-                                     FormId = XmlMapper.GetValue(() => ProcessingPage.FormId),
-                                     Legend = XmlMapper.GetValue(() => ProcessingPage.Legend),
-                                     ProcessingImageTag = XmlMapper.GetValue(() => ProcessingPage.ProcessingImageTag),
-                                     ProcessingImageAttributeName = XmlMapper.GetValue(() => ProcessingPage.ProcessingImageAttributeName),
-                                     ProcessingImageAttributeText = XmlMapper.GetValue(() => ProcessingPage.ProcessingImageAttributeText),
+                                     ProcessingTextContainer = XmlMapper.GetValue(() => ProcessingPage.ProcessingTextContainer),
+                                     ProcessingText = XmlMapper.GetValue(() => ProcessingPage.ProcessingText),
                                  };
 
             DeclinedPage = new DeclinedPage { HeaderText = XmlMapper.GetValue(() => DeclinedPage.HeaderText), };

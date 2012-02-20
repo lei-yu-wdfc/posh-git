@@ -14,5 +14,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages.Wb
         internal String EmailAddress { get; set; }
         internal String ConfirmEmailAddress { get; set; }
         internal String DoneButton { get; set; }
+        internal String AddAnotherButton { get; set; }
     }
 }

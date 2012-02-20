@@ -22,10 +22,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
 
         public AccountDetailsSection(BasePage page) : base(Elements.Get.AccountDetailsElement.Legend, page)
         {
-            _password = Section.FindElement(By.Name(Elements.Get.AccountDetailsElement.Password));
-            _passwordConfirm = Section.FindElement(By.Name(Elements.Get.AccountDetailsElement.PasswordConfirm));
-            _secretQuestion = Section.FindElement(By.Name(Elements.Get.AccountDetailsElement.SecretQuestion));
-            _secretAnswer = Section.FindElement(By.Name(Elements.Get.AccountDetailsElement.SecretAnswer));
+            _password = Section.FindElement(By.CssSelector(Elements.Get.AccountDetailsElement.Password));
+            _passwordConfirm = Section.FindElement(By.CssSelector(Elements.Get.AccountDetailsElement.PasswordConfirm));
+            _secretQuestion = Section.FindElement(By.CssSelector(Elements.Get.AccountDetailsElement.SecretQuestion));
+            _secretAnswer = Section.FindElement(By.CssSelector(Elements.Get.AccountDetailsElement.SecretAnswer));
         }
     }
 }

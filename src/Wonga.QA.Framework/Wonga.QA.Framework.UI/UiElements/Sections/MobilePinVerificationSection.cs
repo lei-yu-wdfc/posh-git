@@ -1,6 +1,7 @@
 ﻿using System;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.UI.Mappings;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 
 namespace Wonga.QA.Framework.UI.UiElements.Sections
@@ -10,20 +11,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         private readonly IWebElement _pin;
 
         public MobilePinVerificationSection(BasePage page)
-            : base("Mobile PIN verification", page)
+            : base(Elements.Get.MobilePinVerificationElement.Legend, page)
         {
-            switch (Config.AUT)
-            {
-                case AUT.Za:
-                    _pin = Section.FindElement(By.Name("pin_za"));
-                    break;
-                case AUT.Ca:
-                    _pin = Section.FindElement(By.Name("pin_ca"));
-                    break;
-                case AUT.Wb:
-                    _pin = Section.FindElement(By.Name("pin"));
-                    break;
-            }
+            _pin = Section.FindElement(By.CssSelector(Elements.Get.MobilePinVerificationElement.Pin));
         }
         public String Pin { set { _pin.SendValue(value); } }
     }

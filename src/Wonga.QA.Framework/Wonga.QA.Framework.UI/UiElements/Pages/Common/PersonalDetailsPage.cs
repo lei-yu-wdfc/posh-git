@@ -14,7 +14,6 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public YourNameSection YourName { get; set; }
         public YourDetailsSection YourDetails { get; set; }
         public ContactingYouSection ContactingYou { get; set; }
-
         public Boolean PrivacyPolicy { set { _privacy.Toggle(value); } }
         public Object CanContact
         {
@@ -32,14 +31,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private readonly ReadOnlyCollection<IWebElement> _contact;
         private readonly IWebElement _next;
 
-        public PersonalDetailsPage(UiClient client)
-            : base(client)
+        public PersonalDetailsPage(UiClient client) : base(client)
         {
-            _form = Content.FindElement(By.Id(Elements.Get.PersonalDetailsPage.FormId));
-
-            _privacy = _form.FindElement(By.Name(Elements.Get.PersonalDetailsPage.CheckPrivacyPolicy));
-            _contact = _form.FindElements(By.Name(Elements.Get.PersonalDetailsPage.CheckCanContact));
-            _next = _form.FindElement(By.Name(Elements.Get.PersonalDetailsPage.NextButton));
+            _form = Content.FindElement(By.CssSelector(Elements.Get.PersonalDetailsPage.FormId));
+            _privacy = _form.FindElement(By.CssSelector(Elements.Get.PersonalDetailsPage.CheckPrivacyPolicy));
+            _contact = _form.FindElements(By.CssSelector(Elements.Get.PersonalDetailsPage.CheckCanContact));
+            _next = _form.FindElement(By.CssSelector(Elements.Get.PersonalDetailsPage.NextButton));
 
             YourName = new YourNameSection(this);
             YourDetails = new YourDetailsSection(this);
@@ -54,7 +51,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                 case (AUT.Wb):
                     return new Wb.AddressDetailsPage(Client);
                 case (AUT.Uk):
-                    return new Wb.AddressDetailsPage(Client);
+                    throw new NotImplementedException();
+                    //return new Wb.AddressDetailsPage(Client);
                     
             }
             throw new NotImplementedException();

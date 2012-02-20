@@ -25,7 +25,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         internal virtual Pages.Wb.PersonalDebitCardPage WbPersonalDebitCardDetailsPage { get; set; }
         internal virtual Pages.Wb.BusinessDetailsPage WbBusinessDetailsPage { get; set; }
         internal virtual Pages.Wb.AdditionalDirectorsPage WbAdditionalDirectorsPage { get; set; }
-        
+        internal virtual Pages.Wb.AddAditionalDirectorsPage WbAddAditionalDirectorsPage { get; set; }
         internal virtual Pages.Wb.BusinessDebitCardPage WbBusinessDebitCardPage { get; set; }
         internal virtual Pages.Wb.AcceptedPage WbAcceptedPage { get; set; }
 

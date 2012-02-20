@@ -7,10 +7,8 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
 {
     internal class ProcessingPage
     {
-        internal String FormId { get; set; }
-        internal String Legend { get; set; }
-        internal String ProcessingImageTag { get; set; }
-        internal String ProcessingImageAttributeText { get; set; }
-        internal String ProcessingImageAttributeName { get; set; }
+        //internal String ProcessingImage { get; set; }
+        internal String ProcessingText { get; set; }
+        internal String ProcessingTextContainer { get; set; }
     }
 }

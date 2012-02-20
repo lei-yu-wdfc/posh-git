@@ -10,18 +10,17 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
     public class ProcessingPage : BasePage
     {
-        public ProcessingPage(UiClient client)
-            : base(client)
+        public ProcessingPage(UiClient client) : base(client)
         {
-            var processing = Client.Driver.FindElement(By.Id(Elements.Get.ProcessingPage.FormId));
-            var img = processing.FindElement(By.TagName(Elements.Get.ProcessingPage.ProcessingImageTag));
-
-            Assert.That(img.GetAttribute(Elements.Get.ProcessingPage.ProcessingImageAttributeName), Is.EqualTo(Elements.Get.ProcessingPage.ProcessingImageAttributeText));
+            //var processing = Client.Driver.FindElement(By.Id(Elements.Get.ProcessingPage.FormId));
+            //var img = processing.FindElement(By.CssSelector(Elements.Get.ProcessingPage.ProcessingImageTag));
+            //Assert.That(img.GetAttribute(Elements.Get.ProcessingPage.ProcessingImageAttributeName), Is.EqualTo(Elements.Get.ProcessingPage.ProcessingImageAttributeText));
         }
 
         public IDecisionPage WaitFor<T>() where T : IDecisionPage
         {
-            Do.Until(() => !(Source.Contains(Elements.Get.ProcessingPage.Legend)), TimeSpan.FromMinutes(5));
+            //NOTE: Is this working??
+            Do.Until(() => !(Source.Contains(Elements.Get.ProcessingPage.ProcessingText)), TimeSpan.FromMinutes(5));
             switch (Config.AUT)
             {
                 case (AUT.Wb):

@@ -39,26 +39,26 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             switch (Config.AUT)
             {
                 case (AUT.Za):
-                    _idNumber = Section.FindElement(By.Name(Elements.Get.YourDetailsElement.IdNumber));
-                    _dependants = Section.FindElement(By.Name(Elements.Get.YourDetailsElement.Dependants));
+                    _idNumber = Section.FindElement(By.CssSelector(Elements.Get.YourDetailsElement.IdNumber));
+                    _dependants = Section.FindElement(By.CssSelector(Elements.Get.YourDetailsElement.Dependants));
                     break;
                 case (AUT.Ca):
-                    _idNumber = Section.FindElement(By.Name(Elements.Get.YourDetailsElement.IdNumber));
+                    _idNumber = Section.FindElement(By.CssSelector(Elements.Get.YourDetailsElement.IdNumber));
                     break;
                 case (AUT.Wb):
-                    _dependants = Section.FindElement(By.Name(Elements.Get.YourDetailsElement.Dependants));
+                    _dependants = Section.FindElement(By.CssSelector(Elements.Get.YourDetailsElement.Dependants));
                     break;
                 case(AUT.Uk):
-                    _dependants = Section.FindElement(By.Name(Elements.Get.YourDetailsElement.Dependants));
+                    _dependants = Section.FindElement(By.CssSelector(Elements.Get.YourDetailsElement.Dependants));
                     break;
             }
 
-            _gender = Section.FindElements(By.Name(Elements.Get.YourDetailsElement.Gender));
-            _dateOfBirthDay = Section.FindElement(By.Name(Elements.Get.YourDetailsElement.DateOfBirthDay));
-            _dateOfBirthMonth = Section.FindElement(By.Name(Elements.Get.YourDetailsElement.DateOfBirthMonth));
-            _dateOfBirthYear = Section.FindElement(By.Name(Elements.Get.YourDetailsElement.DateOfBirthYear));
-            _homeStatus = Section.FindElement(By.Name(Elements.Get.YourDetailsElement.HomeStatus));
-            _maritalStatus = Section.FindElement(By.Name(Elements.Get.YourDetailsElement.MaritalStatus));
+            _gender = Section.FindElements(By.CssSelector(Elements.Get.YourDetailsElement.Gender));
+            _dateOfBirthDay = Section.FindElement(By.CssSelector(Elements.Get.YourDetailsElement.DateOfBirthDay));
+            _dateOfBirthMonth = Section.FindElement(By.CssSelector(Elements.Get.YourDetailsElement.DateOfBirthMonth));
+            _dateOfBirthYear = Section.FindElement(By.CssSelector(Elements.Get.YourDetailsElement.DateOfBirthYear));
+            _homeStatus = Section.FindElement(By.CssSelector(Elements.Get.YourDetailsElement.HomeStatus));
+            _maritalStatus = Section.FindElement(By.CssSelector(Elements.Get.YourDetailsElement.MaritalStatus));
         }
     }
 }

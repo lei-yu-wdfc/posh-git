@@ -32,17 +32,17 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
         public EligibilityQuestionsPage(UiClient client)
             : base(client)
         {
-            _form = Content.FindElement(By.Id(Elements.Get.WbEligibilityQuestionsPage.FormId));
+            _form = Content.FindElement(By.CssSelector(Elements.Get.WbEligibilityQuestionsPage.FormId));
 
-            _director = _form.FindElement(By.Name(Elements.Get.WbEligibilityQuestionsPage.CheckDirector));
-            _resident = _form.FindElement(By.Name(Elements.Get.WbEligibilityQuestionsPage.CheckResident));
-            _activeCompany = _form.FindElement(By.Name(Elements.Get.WbEligibilityQuestionsPage.CheckActiveCompany));
-            _turnover = _form.FindElement(By.Name(Elements.Get.WbEligibilityQuestionsPage.CheckTurnover));
-            _vat = _form.FindElement(By.Name(Elements.Get.WbEligibilityQuestionsPage.CheckVat));
-            _onlineAccess = _form.FindElement(By.Name(Elements.Get.WbEligibilityQuestionsPage.CheckOnlineAccess));
-            _guarantee = _form.FindElement(By.Name(Elements.Get.WbEligibilityQuestionsPage.CheckGuarantee));
-            _debitCard = _form.FindElement(By.Name(Elements.Get.WbEligibilityQuestionsPage.CheckDebitCard));
-            _next = _form.FindElement(By.Name(Elements.Get.WbEligibilityQuestionsPage.NextButton));
+            _director = _form.FindElement(By.CssSelector(Elements.Get.WbEligibilityQuestionsPage.CheckDirector));
+            _resident = _form.FindElement(By.CssSelector(Elements.Get.WbEligibilityQuestionsPage.CheckResident));
+            _activeCompany = _form.FindElement(By.CssSelector(Elements.Get.WbEligibilityQuestionsPage.CheckActiveCompany));
+            _turnover = _form.FindElement(By.CssSelector(Elements.Get.WbEligibilityQuestionsPage.CheckTurnover));
+            _vat = _form.FindElement(By.CssSelector(Elements.Get.WbEligibilityQuestionsPage.CheckVat));
+            _onlineAccess = _form.FindElement(By.CssSelector(Elements.Get.WbEligibilityQuestionsPage.CheckOnlineAccess));
+            _guarantee = _form.FindElement(By.CssSelector(Elements.Get.WbEligibilityQuestionsPage.CheckGuarantee));
+            _debitCard = _form.FindElement(By.CssSelector(Elements.Get.WbEligibilityQuestionsPage.CheckDebitCard));
+            _next = _form.FindElement(By.CssSelector(Elements.Get.WbEligibilityQuestionsPage.NextButton));
         }
 
         public PersonalDetailsPage Submit()

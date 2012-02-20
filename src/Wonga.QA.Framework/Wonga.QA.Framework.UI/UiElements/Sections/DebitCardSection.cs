@@ -44,14 +44,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
 
         public DebitCardSection(BasePage page) : base(Elements.Get.DebitCardElement.Legend, page)
         {
-            _cardType = Section.FindElement(By.Name(Elements.Get.DebitCardElement.CardType));
-            _cardNumber = Section.FindElement(By.Name(Elements.Get.DebitCardElement.CardNumber));
-            _cardName = Section.FindElement(By.Name(Elements.Get.DebitCardElement.CardName));
-            _cardExpiryDateMonth = Section.FindElement(By.Name(Elements.Get.DebitCardElement.CardExpiryDateMonth));
-            _cardExpiryDateYear = Section.FindElement(By.Name(Elements.Get.DebitCardElement.CardExpiryDateYear));
-            _cardStartDateMonth = Section.FindElement(By.Name(Elements.Get.DebitCardElement.CardStartDateMonth));
-            _cardStartDateYear = Section.FindElement(By.Name(Elements.Get.DebitCardElement.CardStartDateYear));
-            _cardSecurity = Section.FindElement(By.Name(Elements.Get.DebitCardElement.CardSecurityNumber));
+            _cardType = Section.FindElement(By.CssSelector(Elements.Get.DebitCardElement.CardType));
+            _cardNumber = Section.FindElement(By.CssSelector(Elements.Get.DebitCardElement.CardNumber));
+            _cardName = Section.FindElement(By.CssSelector(Elements.Get.DebitCardElement.CardName));
+            _cardExpiryDateMonth = Section.FindElement(By.CssSelector(Elements.Get.DebitCardElement.CardExpiryDateMonth));
+            _cardExpiryDateYear = Section.FindElement(By.CssSelector(Elements.Get.DebitCardElement.CardExpiryDateYear));
+            _cardStartDateMonth = Section.FindElement(By.CssSelector(Elements.Get.DebitCardElement.CardStartDateMonth));
+            _cardStartDateYear = Section.FindElement(By.CssSelector(Elements.Get.DebitCardElement.CardStartDateYear));
+            _cardSecurity = Section.FindElement(By.CssSelector(Elements.Get.DebitCardElement.CardSecurityNumber));
         }
     }
 }

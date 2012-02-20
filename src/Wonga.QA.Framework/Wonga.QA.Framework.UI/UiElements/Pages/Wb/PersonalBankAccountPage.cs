@@ -11,11 +11,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
 
         public Sections.BankAccountSection BankAccountSection { get; set; }
 
-        public PersonalBankAccountPage(UiClient client)
-            : base(client)
+        public PersonalBankAccountPage(UiClient client) : base(client)
         {
-            _form = Content.FindElement(By.Id(Elements.Get.WbPersonalBankAccountPage.FormId));
-            _next = _form.FindElement(By.Name(Elements.Get.WbPersonalBankAccountPage.NextButton));
+            _form = Content.FindElement(By.CssSelector(Elements.Get.WbPersonalBankAccountPage.FormId));
+            _next = _form.FindElement(By.CssSelector(Elements.Get.WbPersonalBankAccountPage.NextButton));
             BankAccountSection = new Sections.BankAccountSection(this);
         }
 

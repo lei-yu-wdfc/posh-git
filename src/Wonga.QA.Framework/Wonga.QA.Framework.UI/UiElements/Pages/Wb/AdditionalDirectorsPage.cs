@@ -9,12 +9,11 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
         private readonly IWebElement _done;
         private readonly IWebElement _addAnother;
 
-        public AdditionalDirectorsPage(UiClient client)
-            : base(client)
+        public AdditionalDirectorsPage(UiClient client) : base(client)
         {
-            _form = Content.FindElement(By.Id(Elements.Get.WbAdditionalDirectorsPage.FormId));
-            _done = _form.FindElement(By.Name(Elements.Get.WbAdditionalDirectorsPage.DoneButton));
-            _addAnother = _form.FindElement(By.Name(Elements.Get.WbAdditionalDirectorsPage.AddAnotherDirector));
+            _form = Content.FindElement(By.CssSelector(Elements.Get.WbAdditionalDirectorsPage.FormId));
+            _done = _form.FindElement(By.CssSelector(Elements.Get.WbAdditionalDirectorsPage.DoneButton));
+            _addAnother = _form.FindElement(By.CssSelector(Elements.Get.WbAdditionalDirectorsPage.AddAnotherDirector));
         }
 
         public Wb.BusinessBankAccountPage Next()

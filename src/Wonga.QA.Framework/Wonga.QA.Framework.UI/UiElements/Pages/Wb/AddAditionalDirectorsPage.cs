@@ -1,5 +1,6 @@
 ﻿using System;
 using OpenQA.Selenium;
+using Wonga.QA.Framework.UI.Mappings;
 
 namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
 {
@@ -20,39 +21,34 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
             set { _title.SelectOption(value); }
             
         }
-
         public String FirstName
         {
             set { _firstName.SendValue(value); }
         }
-
         public String LastName
         {
             set { _lastName.SendValue(value); }
         }
-
         public String EmailAddress
         {
             set { _email.SendValue(value); }
         }
-
         public String ConfirmEmailAddress
         {
             set { _emailConfirm.SendValue(value); }
         }
 
-        public AddAditionalDirectorsPage(UiClient client)
-            : base(client)
+        public AddAditionalDirectorsPage(UiClient client) : base(client)
         {
-            _form = Content.FindElement(By.Id("lzero-directors-form"));
-            _done = _form.FindElement(By.Name("done"));
-            _addAnother = _form.FindElement(By.Name("add"));
+            _form = Content.FindElement(By.CssSelector(Elements.Get.WbAddAditionalDirectorsPage.FormId));
+            _done = _form.FindElement(By.CssSelector(Elements.Get.WbAddAditionalDirectorsPage.DoneButton));
+            _addAnother = _form.FindElement(By.CssSelector(Elements.Get.WbAddAditionalDirectorsPage.AddAnotherButton));
 
-            _title = _form.FindElement(By.Name("title"));
-            _firstName = _form.FindElement(By.Name("first_name"));
-            _lastName = _form.FindElement(By.Name("last_name"));
-            _email = _form.FindElement(By.Name("email"));
-            _emailConfirm = _form.FindElement(By.Name("email_confirm"));
+            _title = _form.FindElement(By.CssSelector(Elements.Get.WbAddAditionalDirectorsPage.Title));
+            _firstName = _form.FindElement(By.CssSelector(Elements.Get.WbAddAditionalDirectorsPage.FirstName));
+            _lastName = _form.FindElement(By.CssSelector(Elements.Get.WbAddAditionalDirectorsPage.LastName));
+            _email = _form.FindElement(By.CssSelector(Elements.Get.WbAddAditionalDirectorsPage.EmailAddress));
+            _emailConfirm = _form.FindElement(By.CssSelector(Elements.Get.WbAddAditionalDirectorsPage.ConfirmEmailAddress));
             
         }
 
