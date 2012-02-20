@@ -6,7 +6,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{9AA0E43E-CA6C-4D0A-A931-0CF09674B0C9}</ProjectGuid>
-	<ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Wonga.QA.Tests.Payments</RootNamespace>
@@ -33,9 +33,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AddBankAccountTests.cs" />
+    <Compile Include="Enums\PaymentTransactionType.cs" />
+    <Compile Include="Helpers\CreatePaymentFunctions.cs" />
+    <Compile Include="Helpers\Ca\CalculateFunctionsCa.cs" />
+    <Compile Include="Helpers\GetPaymentFunctions.cs" />
+    <Compile Include="Helpers\SendPaymentFunctions.cs" />
     <Compile Include="PaymentsServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepaymentArrangementTests.cs" />
+    <Compile Include="Helpers\SetPaymentFunctions.cs" />
+    <Compile Include="Helpers\TimeoutPaymentFunctions.cs" />
+    <Compile Include="VariablePricingTests.cs" />
+    <Compile Include="Helpers\VerifyPaymentFunctions.cs" />
+    <Compile Include="Helpers\WaitPaymentFunctions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />

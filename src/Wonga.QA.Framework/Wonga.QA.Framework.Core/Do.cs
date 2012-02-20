@@ -84,4 +84,13 @@ namespace Wonga.QA.Framework.Core
             throw new TimeoutException();
         }
     }
+
+    public static class Timeout
+    {
+        public static TimeSpan OneMinutes { get { return TimeSpan.FromMinutes(1); } }
+        public static TimeSpan TwoMinutes { get { return TimeSpan.FromMinutes(2); } }
+        public static TimeSpan ThreeMinutes { get { return TimeSpan.FromMinutes(3); } }
+        public static TimeSpan FiveMinutes { get { return TimeSpan.FromMinutes(5); } }
+        public static TimeSpan TenMinutes { get { return TimeSpan.FromMinutes(10); } }
+    }
 }
