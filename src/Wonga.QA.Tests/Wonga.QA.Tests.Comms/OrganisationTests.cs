@@ -21,19 +21,16 @@ namespace Wonga.QA.Tests.Comms
         [Explicit]
         public void TestOrganisationIsBuilt_DirectorsPersisted()
         {
-            Guid orgId = Guid.NewGuid();
-
             Customer primaryApplicant = CustomerBuilder.New().Build();
             OrganisationBuilder organisationBuilder =
-                OrganisationBuilder.New(orgId)
+                OrganisationBuilder.New()
                     .WithSoManySecondaryDirectors(2) //test is sufficient with more than one
                     .WithPrimaryApplicant(primaryApplicant);
 
             Organisation org = organisationBuilder.Build();
 
             Thread.Sleep(10000);
-            IEnumerable<DirectorOrganisationMappingEntity> list =
-                Driver.Db.ContactManagement.DirectorOrganisationMappings.Where(r => r.OrganisationId == orgId && r.DirectorLevel==1);
+            IEnumerable<DirectorOrganisationMappingEntity> list = org.GetSecondaryDirectors();
             
             Assert.IsTrue(list.Count()==2);
         }

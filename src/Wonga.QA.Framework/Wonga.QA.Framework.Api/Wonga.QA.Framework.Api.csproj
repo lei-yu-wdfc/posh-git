@@ -228,6 +228,8 @@
     <Compile Include="Enums\SliderPositionEnum.cs" />
     <Compile Include="Enums\TitleEnum.cs" />
     <Compile Include="Temp\ApplicationDecisionStatusEnum.cs" />
+    <Compile Include="Temp\CheckpointDefinitionEnum.cs" />
+    <Compile Include="Temp\CheckpointStatusEnum.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

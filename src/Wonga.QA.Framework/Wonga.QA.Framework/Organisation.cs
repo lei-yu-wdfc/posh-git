@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db.ContactManagement;
 
 namespace Wonga.QA.Framework
 {
@@ -23,6 +25,11 @@ namespace Wonga.QA.Framework
         {
             var bankAccountId =Do.Until(()=>Driver.Db.Payments.BusinessBankAccounts.Single(b => b.OrganisationId == Id).BankAccountId);
             return Driver.Db.Payments.BankAccountsBases.Single(a=>a.BankAccountId == bankAccountId).ExternalId;
+        }
+
+        public IEnumerable<DirectorOrganisationMappingEntity> GetSecondaryDirectors()
+        {
+            return Driver.Db.ContactManagement.DirectorOrganisationMappings.Where(r => r.OrganisationId == Id && r.DirectorLevel == 1);
         }
     }
 }

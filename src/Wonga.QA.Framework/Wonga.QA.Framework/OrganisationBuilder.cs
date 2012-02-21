@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
-
+using System.Linq;
+using Wonga.QA.Framework.Db;
 
 namespace Wonga.QA.Framework
 {
@@ -12,16 +12,18 @@ namespace Wonga.QA.Framework
         private Guid _id;
         private Customer _primaryApplicant;
         private int _numberOfSecondaryDirector;
+        private int _organisationNumber;
         
         private OrganisationBuilder()
         {
             _id = Guid.NewGuid();
             _numberOfSecondaryDirector = 1;
+            _organisationNumber = Data.RandomInt(1, 99999999); ;
         }
 
-        public static OrganisationBuilder New(Guid orgId)
+        public static OrganisationBuilder New()
         {
-            return new OrganisationBuilder {_id = orgId};
+            return new OrganisationBuilder();
         }
 
         public OrganisationBuilder WithPrimaryApplicant(Customer primaryApplicant)
@@ -36,13 +38,30 @@ namespace Wonga.QA.Framework
             return this;
         }
 
+        public OrganisationBuilder WithOrganisationNumber(int orgNo)
+        {
+            _organisationNumber = orgNo;
+
+            var Db = new DbDriver();
+
+            var existingOrg = Db.ContactManagement.OrganisationDetails.SingleOrDefault(o => o.RegisteredNumber == orgNo.ToString()) ;
+
+            if (existingOrg != null)
+            {
+                Db.ContactManagement.OrganisationDetails.DeleteOnSubmit(existingOrg);
+                existingOrg.Submit();
+            }
+            
+            return this;
+        }
+
         public Organisation Build()
         {
             List<ApiRequest> requests = new List<ApiRequest>();
 
             requests.AddRange(new ApiRequest[]
                                            {
-                                               SaveOrganisationDetailsCommand.New(r=>r.OrganisationId = _id),
+                                               SaveOrganisationDetailsCommand.New(r=>{r.OrganisationId = _id; r.RegisteredNumber = _organisationNumber;}),
                                                AddBusinessBankAccountWbUkCommand.New(r=>r.OrganisationId = _id),
                                                AddBusinessPaymentCardWbUkCommand.New(r=>r.OrganisationId = _id),
                                                AddPrimaryOrganisationDirectorCommand.New(r=> { r.OrganisationId = _id; r.AccountId = _primaryApplicant.Id; })                                               

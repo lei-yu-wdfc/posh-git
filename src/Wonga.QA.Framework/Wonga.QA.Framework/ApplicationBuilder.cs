@@ -99,7 +99,8 @@ namespace Wonga.QA.Framework
             
             Driver.Api.Commands.Post(requests);
 
-            Do.Until(() => (ApplicationDecisionStatusEnum)Enum.Parse(typeof(ApplicationDecisionStatusEnum), Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["ApplicationDecisionStatus"].Single()) == _decision);
+            Do.Until(() => (ApplicationDecisionStatusEnum)
+                Enum.Parse(typeof(ApplicationDecisionStatusEnum), Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["ApplicationDecisionStatus"].Single()) == _decision);
 
             if (_decision == ApplicationDecisionStatusEnum.Declined)
                 return new Application(_id);
@@ -118,7 +119,7 @@ namespace Wonga.QA.Framework
 //****************************************************************************************
 //             WB Payments isn't working yet, delete as soon as payments is working   //**
 /*        */if (Config.AUT == AUT.Wb)                                                 //**
-/*        */    return null;                                                          //**
+    /*        */    return new Application(_id);                                                          //**
 //****************************************************************************************
 
             Do.Until(() => Driver.Api.Queries.Post(summary).Values["HasCurrentLoan"].Single() == "true");
