@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Elements>
+  <!--These need to be updated to css selectors.-->
+  <AddressDetailsPage>
+    <FormId>lzero-address-form</FormId>
+    <LookupButton>op</LookupButton>
+    <PostCode>postcode_lookup_uk</PostCode>
+    <District>district</District>
+    <FlatNumber>flat</FlatNumber>
+    <County>county</County>
+    <AddressPeriod>address_period</AddressPeriod>
+    <NextButton>next</NextButton>
+    <AddressOptions>address_options</AddressOptions>
+  </AddressDetailsPage>
+
+  <PersonalDetailsPage>
+    <FormId>lzero-personal-form</FormId>
+    <CheckPrivacyPolicy>privacy</CheckPrivacyPolicy>
+    <CheckCanContact>update_option</CheckCanContact>
+    <NextButton>next</NextButton>
+  </PersonalDetailsPage>
+
+  <AccountDetailsPage>
+    <FormId>lzero-account-setup-form</FormId>
+    <NextButton>next</NextButton>
+  </AccountDetailsPage>
+
+  <BankAccountPage>
+    <FormId>lzero-bank-form</FormId>
+    <NextButton>next</NextButton>
+  </BankAccountPage>
+
+  <DebitCardPage>
+    <FormId>lzero-card-form</FormId>
+    <NextButton>next</NextButton>
+  </DebitCardPage>
+
+  <ProcessingPage>
+    <FormId>wonga-processing</FormId>
+    <Legend>processing your application</Legend>
+    <ProcessingImageTag>img</ProcessingImageTag>
+    <ProcessingImageAttributeName>alt</ProcessingImageAttributeName>
+    <ProcessingImageAttributeText>Processing</ProcessingImageAttributeText>
+  </ProcessingPage>
+
+  <DeclinedPage>
+    <HeaderText>Application declined</HeaderText>
+  </DeclinedPage>
+
+  <!--SectionS SECTION-->
+  <SliderSection>
+    <FormId>wonga-sliders-form</FormId>
+    <LoanAmount>loan_amount</LoanAmount>
+    <LoanDuration>loan_duration</LoanDuration>
+    <SubmitButton>op</SubmitButton>
+  </SliderSection>
+
+  <YourNameSection>
+    <Legend>Personal Details|Your name</Legend>
+    <Title>title</Title>
+    <FirstName>first_name</FirstName>
+    <MiddleName>middle_name</MiddleName>
+    <LastName>last_name</LastName>
+  </YourNameSection>
+
+  <YourDetailsSection>
+    <Legend>Personal Details|Your details</Legend>
+    <Gender>gender</Gender>
+    <DateOfBirthDay>date_of_birth[day]</DateOfBirthDay>
+    <DateOfBirthMonth>date_of_birth[month]</DateOfBirthMonth>
+    <DateOfBirthYear>date_of_birth[year]</DateOfBirthYear>
+    <HomeStatus>home_status</HomeStatus>
+    <MaritalStatus>marital_status</MaritalStatus>
+    <Dependants>dependants</Dependants>
+  </YourDetailsSection>
+
+  <EmploymentDetailsSection>
+    <Legend>Employment details</Legend>
+    <EmploymentStatus>employment_status</EmploymentStatus>
+    <EmployerIndustry>employer_industry</EmployerIndustry>
+    <EmployerName>employer_name</EmployerName>
+    <EmploymentPosition>employment_position</EmploymentPosition>
+    <TimeWithEmployerYears>employment_time_years</TimeWithEmployerYears>
+    <TimeWithEmployerMonths>employment_time_months</TimeWithEmployerMonths>
+    <MonthlyIncome>monthly_income</MonthlyIncome>
+    <NextPaydayDay>next_payday[day]</NextPaydayDay>
+    <NextPaydayMonth>next_payday[month]</NextPaydayMonth>
+    <NextPaydayYear>next_payday[year]</NextPaydayYear>
+    <WorkPhone>work_phone</WorkPhone>
+    <SalaryPaidToBank>salary_to_bank</SalaryPaidToBank>
+  </EmploymentDetailsSection>
+
+  <ContactingYouSection>
+    <Legend>Contacting you</Legend>
+    <HomePhone>home_phone</HomePhone>
+    <MobilePhone>mobile_phone</MobilePhone>
+    <Email>email</Email>
+    <EmailConfirm>email_confirm</EmailConfirm>
+  </ContactingYouSection>
+
+  <BankAccountSection>
+    <Legend>Bank details</Legend>
+    <BankName>bank_name</BankName>
+    <SortCodePart1>sort_code[part1]</SortCodePart1>
+    <SortCodePart2>sort_code[part2]</SortCodePart2>
+    <SortCodePart3>sort_code[part3]</SortCodePart3>
+    <AccountNumber>account_number</AccountNumber>
+    <BankPeriod>bank_period</BankPeriod>
+  </BankAccountSection>
+
+  <DebitCardSection>
+    <Legend>Card details|card details</Legend>
+    <CardType>card_type</CardType>
+    <CardNumber>card_number</CardNumber>
+    <CardName>card_name</CardName>
+    <CardExpiryDateMonth>card_expiry_date[month]</CardExpiryDateMonth>
+    <CardExpiryDateYear>card_expiry_date[year]</CardExpiryDateYear>
+    <CardSecurityNumber>card_security</CardSecurityNumber>
+    <CardStartDateMonth>card_start_date[month]</CardStartDateMonth>
+    <CardStartDateYear>card_start_date[year]</CardStartDateYear>
+  </DebitCardSection>
+
+  <MobilePinVerificationSection>
+    <Pin>pin</Pin>
+    <Legend>Mobile PIN verification</Legend>
+  </MobilePinVerificationSection>
+</Elements>

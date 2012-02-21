@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Wonga.QA.Framework.UI.Mappings.Pages
 {
-    internal class DealDonePage
+    public class DealDonePage
     {
-        internal String HeaderText { get; set; }
-        internal String ContinueButtonLinkText { get; set; }
+        public String HeaderText { get; set; }
+        public String ContinueButtonLinkText { get; set; }
     }
 }

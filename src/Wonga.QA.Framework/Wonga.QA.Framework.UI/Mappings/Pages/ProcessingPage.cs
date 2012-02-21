@@ -5,10 +5,10 @@ using System.Text;
 
 namespace Wonga.QA.Framework.UI.Mappings.Pages
 {
-    internal class ProcessingPage
+    public class ProcessingPage
     {
-        //internal String ProcessingImage { get; set; }
-        internal String ProcessingText { get; set; }
-        internal String ProcessingTextContainer { get; set; }
+        //public String ProcessingImage { get; set; }
+        public String ProcessingText { get; set; }
+        public String ProcessingTextContainer { get; set; }
     }
 }

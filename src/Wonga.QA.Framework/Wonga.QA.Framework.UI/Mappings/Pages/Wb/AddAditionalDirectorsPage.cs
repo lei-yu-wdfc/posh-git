@@ -5,15 +5,15 @@ using System.Text;
 
 namespace Wonga.QA.Framework.UI.Mappings.Pages.Wb
 {
-    internal class AddAditionalDirectorsPage
+    public class AddAditionalDirectorsPage
     {
-        internal String FormId { get; set; }
-        internal String Title { get; set; }
-        internal String FirstName { get; set; }
-        internal String LastName { get; set; }
-        internal String EmailAddress { get; set; }
-        internal String ConfirmEmailAddress { get; set; }
-        internal String DoneButton { get; set; }
-        internal String AddAnotherButton { get; set; }
+        public String FormId { get; set; }
+        public String Title { get; set; }
+        public String FirstName { get; set; }
+        public String LastName { get; set; }
+        public String EmailAddress { get; set; }
+        public String ConfirmEmailAddress { get; set; }
+        public String DoneButton { get; set; }
+        public String AddAnotherButton { get; set; }
     }
 }

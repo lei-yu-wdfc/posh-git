@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Products>
-  <Wb>
+<Elements>
     <!--PAGES SECTION-->
     <EligibilityQuestionsPage>
       <FormId>#lzero-questions-form</FormId>
@@ -106,19 +105,18 @@
       <HeaderText>Unfortunately we can’t approve your application</HeaderText>
     </DeclinedPage>
 
-    <!--ELEMENTS SECTION-->
+    <!--SectionS SECTION-->
 
-    <YourNameElement>
+    <YourNameSection>
       <Legend>fieldset[id="name"]</Legend>
       <Title>#edit-title</Title>
       <FirstName>#edit-first-name</FirstName>
       <MiddleName>#edit-middle-name</MiddleName>
       <LastName>#edit-last-name</LastName>
-    </YourNameElement>
+    </YourNameSection>
 
-    <YourDetailsElement>
+    <YourDetailsSection>
       <Legend>fieldset[id="details"]</Legend>
-      <!--<IdNumber>id_number</IdNumber>-->
       <Dependants>#edit-dependants</Dependants>
       <Gender>input[type="radio"][name="gender"]</Gender>
       <DateOfBirthDay>#edit-date-of-birth-day</DateOfBirthDay>
@@ -126,22 +124,22 @@
       <DateOfBirthYear>#edit-date-of-birth-year</DateOfBirthYear>
       <HomeStatus>#edit-home-status</HomeStatus>
       <MaritalStatus>#edit-marital-status</MaritalStatus>
-    </YourDetailsElement>
+    </YourDetailsSection>
 
-    <ContactingYouElement>
+    <ContactingYouSection>
       <Legend>fieldset[id="contact"]</Legend>
       <Email>#edit-email</Email>
       <EmailConfirm>#edit-email-confirm</EmailConfirm>
       <HomePhone>#edit-home-phone</HomePhone>
       <MobilePhone>#edit-mobile-phone</MobilePhone>
-    </ContactingYouElement>
+    </ContactingYouSection>
 
-    <MobilePinVerificationElement>
+    <MobilePinVerificationSection>
       <Legend>#pin-verification</Legend>
       <Pin>#edit-pin</Pin>
-    </MobilePinVerificationElement>
+    </MobilePinVerificationSection>
 
-    <DebitCardElement>
+    <DebitCardSection>
       <Legend>#card-details</Legend>
       <CardType>#edit-card-type</CardType>
       <CardNumber>#edit-card-number</CardNumber>
@@ -151,9 +149,9 @@
       <CardSecurityNumber>#edit-card-security</CardSecurityNumber>
       <CardStartDateMonth>#edit-card-start-date-month</CardStartDateMonth>
       <CardStartDateYear>#edit-card-start-date-year</CardStartDateYear>
-    </DebitCardElement>
+    </DebitCardSection>
 
-    <BankAccountElement>
+    <BankAccountSection>
       <Legend>#bank-1</Legend>
       <BankName>#edit-bank-name</BankName>
       <SortCodePart1>#edit-sort-code-part1</SortCodePart1>
@@ -161,147 +159,20 @@
       <SortCodePart3>#edit-sort-code-part3</SortCodePart3>
       <AccountNumber>#edit-account-number</AccountNumber>
       <BankPeriod>#edit-bank-period</BankPeriod>
-    </BankAccountElement>
+    </BankAccountSection>
 
-    <SliderElement>
+    <SliderSection>
       <FormId>#wonga-sliders-form</FormId>
       <LoanAmount>#edit-loan-amount</LoanAmount>
       <LoanDuration>#edit-loan-duration</LoanDuration>
       <SubmitButton>#edit-submit</SubmitButton>
-    </SliderElement>
+    </SliderSection>
 
-    <AccountDetailsElement>
+    <AccountDetailsSection>
       <Legend>#account-setup-1</Legend>
       <Password>#edit-password</Password>
       <PasswordConfirm>#edit-password-confirm</PasswordConfirm>
       <SecretQuestion>#edit-secret-question</SecretQuestion>
       <SecretAnswer>#edit-secret-answer</SecretAnswer>
-    </AccountDetailsElement>
-  </Wb>
-  <Uk>
-    <!--PAGES SECTION REMOVEME: THESE ARE OLD VALUES -> WILL NOT WORK-->
-    <AddressDetailsPage>
-      <FormId>lzero-address-form</FormId>
-      <LookupButton>op</LookupButton>
-      <PostCode>postcode_lookup_uk</PostCode>
-      <District>district</District>
-      <FlatNumber>flat</FlatNumber>
-      <County>county</County>
-      <AddressPeriod>address_period</AddressPeriod>
-      <NextButton>next</NextButton>
-      <AddressOptions>address_options</AddressOptions>
-    </AddressDetailsPage>
-
-    <PersonalDetailsPage>
-      <FormId>lzero-personal-form</FormId>
-      <CheckPrivacyPolicy>privacy</CheckPrivacyPolicy>
-      <CheckCanContact>update_option</CheckCanContact>
-      <NextButton>next</NextButton>
-    </PersonalDetailsPage>
-
-    <AccountDetailsPage>
-      <FormId>lzero-account-setup-form</FormId>
-      <NextButton>next</NextButton>
-    </AccountDetailsPage>
-
-    <BankAccountPage>
-      <FormId>lzero-bank-form</FormId>
-      <NextButton>next</NextButton>
-    </BankAccountPage>
-
-    <DebitCardPage>
-      <FormId>lzero-card-form</FormId>
-      <NextButton>next</NextButton>
-    </DebitCardPage>
-
-    <ProcessingPage>
-      <FormId>wonga-processing</FormId>
-      <Legend>processing your application</Legend>
-      <ProcessingImageTag>img</ProcessingImageTag>
-      <ProcessingImageAttributeName>alt</ProcessingImageAttributeName>
-      <ProcessingImageAttributeText>Processing</ProcessingImageAttributeText>
-    </ProcessingPage>
-
-    <DeclinedPage>
-      <HeaderText>Application declined</HeaderText>
-    </DeclinedPage>
-
-    <!--ELEMENTS SECTION-->
-    <SliderElement>
-      <FormId>wonga-sliders-form</FormId>
-      <LoanAmount>loan_amount</LoanAmount>
-      <LoanDuration>loan_duration</LoanDuration>
-      <SubmitButton>op</SubmitButton>
-    </SliderElement>
-
-    <YourNameElement>
-      <Legend>Personal Details|Your name</Legend>
-      <Title>title</Title>
-      <FirstName>first_name</FirstName>
-      <MiddleName>middle_name</MiddleName>
-      <LastName>last_name</LastName>
-    </YourNameElement>
-
-    <YourDetailsElement>
-      <Legend>Personal Details|Your details</Legend>
-      <Gender>gender</Gender>
-      <DateOfBirthDay>date_of_birth[day]</DateOfBirthDay>
-      <DateOfBirthMonth>date_of_birth[month]</DateOfBirthMonth>
-      <DateOfBirthYear>date_of_birth[year]</DateOfBirthYear>
-      <HomeStatus>home_status</HomeStatus>
-      <MaritalStatus>marital_status</MaritalStatus>
-      <Dependants>dependants</Dependants>
-    </YourDetailsElement>
-
-    <EmploymentDetailsElement>
-      <Legend>Employment details</Legend>
-      <EmploymentStatus>employment_status</EmploymentStatus>
-      <EmployerIndustry>employer_industry</EmployerIndustry>
-      <EmployerName>employer_name</EmployerName>
-      <EmploymentPosition>employment_position</EmploymentPosition>
-      <TimeWithEmployerYears>employment_time_years</TimeWithEmployerYears>
-      <TimeWithEmployerMonths>employment_time_months</TimeWithEmployerMonths>
-      <MonthlyIncome>monthly_income</MonthlyIncome>
-      <NextPaydayDay>next_payday[day]</NextPaydayDay>
-      <NextPaydayMonth>next_payday[month]</NextPaydayMonth>
-      <NextPaydayYear>next_payday[year]</NextPaydayYear>
-      <WorkPhone>work_phone</WorkPhone>
-      <SalaryPaidToBank>salary_to_bank</SalaryPaidToBank>
-    </EmploymentDetailsElement>
-
-    <ContactingYouElement>
-      <Legend>Contacting you</Legend>
-      <HomePhone>home_phone</HomePhone>
-      <MobilePhone>mobile_phone</MobilePhone>
-      <Email>email</Email>
-      <EmailConfirm>email_confirm</EmailConfirm>
-    </ContactingYouElement>
-
-    <BankAccountElement>
-      <Legend>Bank details</Legend>
-      <BankName>bank_name</BankName>
-      <SortCodePart1>sort_code[part1]</SortCodePart1>
-      <SortCodePart2>sort_code[part2]</SortCodePart2>
-      <SortCodePart3>sort_code[part3]</SortCodePart3>
-      <AccountNumber>account_number</AccountNumber>
-      <BankPeriod>bank_period</BankPeriod>
-    </BankAccountElement>
-
-    <DebitCardElement>
-      <Legend>Card details|card details</Legend>
-      <CardType>card_type</CardType>
-      <CardNumber>card_number</CardNumber>
-      <CardName>card_name</CardName>
-      <CardExpiryDateMonth>card_expiry_date[month]</CardExpiryDateMonth>
-      <CardExpiryDateYear>card_expiry_date[year]</CardExpiryDateYear>
-      <CardSecurityNumber>card_security</CardSecurityNumber>
-      <CardStartDateMonth>card_start_date[month]</CardStartDateMonth>
-      <CardStartDateYear>card_start_date[year]</CardStartDateYear>
-    </DebitCardElement>
-
-    <MobilePinVerificationElement>
-      <Pin>pin</Pin>
-      <Legend>Mobile PIN verification</Legend>
-    </MobilePinVerificationElement>
-  </Uk>
-</Products>
+    </AccountDetailsSection>
+</Elements>

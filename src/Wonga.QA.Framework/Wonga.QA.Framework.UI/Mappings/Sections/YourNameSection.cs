@@ -10,12 +10,12 @@ namespace Wonga.QA.Framework.UI.Mappings.Sections
     /// <summary>
     /// Your Name Section
     /// </summary>
-    internal class YourNameElement
+    public class YourNameSection
     {
-        internal String Legend { get; set; }
-        internal String Title { get; set; }
-        internal String FirstName { get; set; }
-        internal String LastName { get; set; }
-        internal String MiddleName { get; set; }
+        public String Legend { get; set; }
+        public String Title { get; set; }
+        public String FirstName { get; set; }
+        public String LastName { get; set; }
+        public String MiddleName { get; set; }
     }
 }

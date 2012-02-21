@@ -32,15 +32,15 @@ namespace Wonga.QA.Framework
             _middleName = Data.GetMiddleName();
             _houseNumber = Data.RandomInt(1, 100).ToString(CultureInfo.InvariantCulture);
             _houseName = Data.RandomString(8);
-            if (Config.AUT==AUT.Wb || Config.AUT==AUT.Uk)
+            if (Config.AUT == AUT.Wb || Config.AUT == AUT.Uk)
             {
                 _postcode = "SW6 6PN";
             }
-            else if (Config.AUT==AUT.Za)
+            else if (Config.AUT == AUT.Za)
             {
                 _postcode = "0300";
             }
-            else if (Config.AUT==AUT.Ca)
+            else if (Config.AUT == AUT.Ca)
             {
                 _postcode = "K0A0A0";
             }
@@ -48,7 +48,7 @@ namespace Wonga.QA.Framework
             _flat = Data.RandomString(4);
             _district = Data.RandomString(15);
             _town = Data.RandomString(15);
-            _county = Data.RandomString(15);            
+            _county = Data.RandomString(15);
         }
 
         public static CustomerBuilder New()
@@ -120,7 +120,7 @@ namespace Wonga.QA.Framework
             _county = county;
             return this;
         }
-        
+
         public Customer Build()
         {
             List<ApiRequest> requests = new List<ApiRequest>
@@ -223,8 +223,8 @@ namespace Wonga.QA.Framework
                     });
                     break;
 
-				case AUT.Uk:
-					requests.AddRange(new ApiRequest[]
+                case AUT.Uk:
+                    requests.AddRange(new ApiRequest[]
 					{
 						SaveCustomerDetailsUkCommand.New(r=> { r.AccountId = _id;}),
 					    SaveCustomerAddressUkCommand.New(r =>
@@ -252,7 +252,7 @@ namespace Wonga.QA.Framework
 						    r.VerificationId = _verification;
 						})
 					});
-            		break;
+                    break;
 
                 default:
                     throw new NotImplementedException();
@@ -262,7 +262,14 @@ namespace Wonga.QA.Framework
 
             Do.Until(() => Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == _id));
             Do.Until(() => Driver.Db.Risk.RiskAccounts.Single(a => a.AccountId == _id));
-
+            switch (Config.AUT)
+            {
+                case AUT.Wb:
+                    Do.Until(
+                        () =>
+                        Driver.Db.Payments.AccountPreferences.Single(ap => ap.AccountId == _id).PaymentCardsBaseEntity);
+                    break;
+            }
             return new Customer(_id);
         }
     }

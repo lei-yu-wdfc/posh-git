@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Wonga.QA.Framework.UI.Mappings.Pages
 {
-    internal class PersonalDetailsPage
+    public class PersonalDetailsPage
     {
-        internal String FormId { get; set; }
-        internal String CheckPrivacyPolicy { get; set; }
-        internal String CheckCanContact { get; set; }
-        internal String NextButton { get; set; }
+        public String FormId { get; set; }
+        public String CheckPrivacyPolicy { get; set; }
+        public String CheckCanContact { get; set; }
+        public String NextButton { get; set; }
     }
 }

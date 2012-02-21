@@ -35,6 +35,7 @@
   <ItemGroup>
     <Compile Include="Application.cs" />
     <Compile Include="ApplicationBuilder.cs" />
+    <Compile Include="BusineesAppicationBuilder.cs" />
     <Compile Include="Organisation.cs" />
     <Compile Include="OrganisationBuilder.cs" />
     <Compile Include="Customer.cs" />

@@ -5,10 +5,10 @@ using System.Text;
 
 namespace Wonga.QA.Framework.UI.Mappings.Pages
 {
-    internal class DebitCardPage
+    public class DebitCardPage
     {
-        internal String FormId { get; set; }
-        internal String NextButton { get; set; }
+        public String FormId { get; set; }
+        public String NextButton { get; set; }
     }
 
 }

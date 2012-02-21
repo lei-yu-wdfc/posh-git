@@ -2,17 +2,17 @@
 
 namespace Wonga.QA.Framework.UI.Mappings.Pages
 {
-    internal sealed class AddressDetailsPage
+    public sealed class AddressDetailsPage
     {
-        internal String FormId { get; set; }
-        internal String PostCode { get; set; }
-        internal String FlatNumber { get; set; }
-        internal String District { get; set; }
-        internal String County { get; set; }
-        internal String AddressPeriod { get; set; }
-        internal String AddressOptions { get; set; }
+        public String FormId { get; set; }
+        public String PostCode { get; set; }
+        public String FlatNumber { get; set; }
+        public String District { get; set; }
+        public String County { get; set; }
+        public String AddressPeriod { get; set; }
+        public String AddressOptions { get; set; }
 
-        internal String LookupButton { get; set; }
-        internal String NextButton { get; set; }
+        public String LookupButton { get; set; }
+        public String NextButton { get; set; }
     }
 }

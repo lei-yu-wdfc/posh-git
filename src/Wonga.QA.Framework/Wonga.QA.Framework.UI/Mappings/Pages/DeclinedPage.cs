@@ -5,8 +5,8 @@ using System.Text;
 
 namespace Wonga.QA.Framework.UI.Mappings.Pages
 {
-    internal class DeclinedPage
+    public class DeclinedPage
     {
-        internal String HeaderText { get; set; }
+        public String HeaderText { get; set; }
     }
 }

@@ -10,12 +10,11 @@ namespace Wonga.QA.Framework
 {
     public class ApplicationBuilder
     {
-        private Guid _id;
-        private Customer _customer;
-        private Organisation _company;
-        private ApplicationDecisionStatusEnum _decision = ApplicationDecisionStatusEnum.Accepted;
+        protected Guid _id;
+        protected Customer _customer;
+        protected ApplicationDecisionStatusEnum _decision = ApplicationDecisionStatusEnum.Accepted;
 
-        private ApplicationBuilder()
+        protected ApplicationBuilder()
         {
             _id = Guid.NewGuid();
         }
@@ -27,7 +26,7 @@ namespace Wonga.QA.Framework
 
         public static ApplicationBuilder New(Customer customer, Organisation company)
         {
-            return new ApplicationBuilder{_customer = customer,_company = company};
+            return new BusineesAppicationBuilder(customer, company);
         }
 
         public ApplicationBuilder WithExpectedDecision(ApplicationDecisionStatusEnum decision)
@@ -36,8 +35,14 @@ namespace Wonga.QA.Framework
             return this;
         }
 
-        public Application Build()
+        public virtual Application Build()
         {
+            if (Config.AUT == AUT.Wb)
+            {
+                throw new NotImplementedException(
+                    "WB product should be using factory method with organization parameter");
+            }
+
             List<ApiRequest> requests = new List<ApiRequest>
             {
                 SubmitApplicationBehaviourCommand.New(r => r.ApplicationId = _id),
@@ -46,23 +51,6 @@ namespace Wonga.QA.Framework
 
             switch (Config.AUT)
             {
-                case AUT.Wb:
-                    requests.AddRange(new ApiRequest[]{
-                        CreateBusinessFixedInstallmentLoanApplicationWbUkCommand.New(r =>
-                        {   
-                            r.AccountId = _customer.Id; 
-                            r.OrganisationId = _company.Id;
-                            r.ApplicationId = _id;
-                            r.BusinessPaymentCardId = _company.GetPaymentCard();
-                            r.BusinessBankAccountId = _company.GetBankAccount();
-                            r.MainApplicantBankAccountId = _customer.GetBankAccount();
-                            r.MainApplicantPaymentCardId = _customer.GetPaymentCard();
-                        }),
-                        VerifyMainBusinessApplicantWbCommand.New(r => { r.AccountId = _customer.Id; r.ApplicationId = _id; })
-                    });
-                    
-                    break;
-
                 case AUT.Uk:
                     requests.AddRange(new ApiRequest[]{
                         CreateFixedTermLoanApplicationCommand.New(r =>
@@ -105,22 +93,12 @@ namespace Wonga.QA.Framework
             if (_decision == ApplicationDecisionStatusEnum.Declined)
                 return new Application(_id);
 
-            Driver.Api.Commands.Post(Config.AUT == AUT.Wb
-                                  ? (ApiRequest)
-                                    new SignBusinessApplicationWbUkCommand { AccountId = _customer.Id, ApplicationId = _id }
-                                  : new SignApplicationCommand { AccountId = _customer.Id, ApplicationId = _id });
+            Driver.Api.Commands.Post(new SignApplicationCommand { AccountId = _customer.Id, ApplicationId = _id });
 
             ApiRequest summary = Config.AUT == AUT.Za
                                      ? new GetAccountSummaryZaQuery {AccountId = _customer.Id}
-                                     : Config.AUT == AUT.Wb
-                                           ?new GetBusinessAccountSummaryWbUkQuery {AccountId = _customer.Id}
-                                           : (ApiRequest)new GetAccountSummaryQuery { AccountId = _customer.Id };
+                                     :  (ApiRequest)new GetAccountSummaryQuery { AccountId = _customer.Id };
 
-//****************************************************************************************
-//             WB Payments isn't working yet, delete as soon as payments is working   //**
-/*        */if (Config.AUT == AUT.Wb)                                                 //**
-    /*        */    return new Application(_id);                                                          //**
-//****************************************************************************************
 
             Do.Until(() => Driver.Api.Queries.Post(summary).Values["HasCurrentLoan"].Single() == "true");
 

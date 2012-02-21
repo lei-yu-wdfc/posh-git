@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Content>
+  <YourDetails>Your Details</YourDetails>
+  <LoanAgreement>
+    <Header>Test Header</Header>
+    <Text>Test Text</Text>
+  </LoanAgreement>
+</Content>

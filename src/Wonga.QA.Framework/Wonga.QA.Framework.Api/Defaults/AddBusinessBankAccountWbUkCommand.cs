@@ -7,10 +7,10 @@ namespace Wonga.QA.Framework.Api
     {
         public override void Default()
         {
-            AccountNumber = "00000000";
+            AccountNumber = "00000190";
             AccountOpenDate = DateTime.Now.AddYears(-4);
             BankAccountId = Data.GetId();
-            BankCode = "000000";
+            BankCode = "180002";
             BankName = "FSB Business Banking";
             CountryCode = CountryCodeEnum.UK;
             HolderName = Data.GetName();

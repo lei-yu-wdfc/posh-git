@@ -15,7 +15,7 @@ namespace Wonga.QA.Framework.UI
         [Test]
         private void Initialize()
         {
-            var x = Mappings.Elements.Get.YourDetailsElement;
+            var x = Mappings.Elements.Get.YourDetailsSection;
         }
     }
 }

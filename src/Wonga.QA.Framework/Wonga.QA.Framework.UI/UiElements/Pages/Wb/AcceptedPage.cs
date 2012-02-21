@@ -13,10 +13,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
 
         public AcceptedPage(UiClient client) : base(client)
         {
-            _form = Content.FindElement(By.CssSelector(Elements.Get.WbAcceptedPage.FormId));
-            _acceptBusinessLoanLink = _form.FindElement(By.CssSelector(Elements.Get.WbAcceptedPage.AcceptBusinessLoan));
-            _acceptGuarantorLoanLink = _form.FindElement(By.CssSelector(Elements.Get.WbAcceptedPage.AcceptGuarantorLoan));
-            _submit = _form.FindElement(By.CssSelector(Elements.Get.WbAcceptedPage.SubmitButton));
+            _form = Content.FindElement(By.CssSelector(Elements.Get.AcceptedPage.FormId));
+            _acceptBusinessLoanLink = _form.FindElement(By.CssSelector(Elements.Get.AcceptedPage.AcceptBusinessLoan));
+            _acceptGuarantorLoanLink = _form.FindElement(By.CssSelector(Elements.Get.AcceptedPage.AcceptGuarantorLoan));
+            _submit = _form.FindElement(By.CssSelector(Elements.Get.AcceptedPage.SubmitButton));
         }
 
         public void SignTermsMainApplicant()

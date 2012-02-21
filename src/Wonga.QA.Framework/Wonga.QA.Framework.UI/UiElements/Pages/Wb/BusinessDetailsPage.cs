@@ -17,10 +17,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
         public BusinessDetailsPage(UiClient client)
             : base(client)
         {
-            _form = Content.FindElement(By.CssSelector(Elements.Get.WbBusinessDetailsPage.FormId));
-            _next = _form.FindElement(By.CssSelector(Elements.Get.WbBusinessDetailsPage.NextButton));
-            _bizName = _form.FindElement(By.CssSelector(Elements.Get.WbBusinessDetailsPage.BusinessName));
-            _bizNumber = _form.FindElement(By.CssSelector(Elements.Get.WbBusinessDetailsPage.BusinessNumber));
+            _form = Content.FindElement(By.CssSelector(Elements.Get.BusinessDetailsPage.FormId));
+            _next = _form.FindElement(By.CssSelector(Elements.Get.BusinessDetailsPage.NextButton));
+            _bizName = _form.FindElement(By.CssSelector(Elements.Get.BusinessDetailsPage.BusinessName));
+            _bizNumber = _form.FindElement(By.CssSelector(Elements.Get.BusinessDetailsPage.BusinessNumber));
         }
 
         public Wb.AdditionalDirectorsPage Next()
