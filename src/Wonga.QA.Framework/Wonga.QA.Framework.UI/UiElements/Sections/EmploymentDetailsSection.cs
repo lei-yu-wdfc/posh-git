@@ -25,20 +25,20 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         private readonly IWebElement _salaryPaidToBank;
 
 
-        public EmploymentDetailsSection(BasePage page) : base(Elements.Get.EmploymentDetailsElement.Legend, page)
+        public EmploymentDetailsSection(BasePage page) : base(Elements.Get.EmploymentDetailsSection.Legend, page)
         {
-            _employmentStatus = Section.FindElement(By.Name(Elements.Get.EmploymentDetailsElement.EmploymentStatus));
-            _employerIndustry = Section.FindElement(By.Name(Elements.Get.EmploymentDetailsElement.EmployerIndustry));
-            _employerName = Section.FindElement(By.Name(Elements.Get.EmploymentDetailsElement.EmployerName));
-            _employmentPosition = Section.FindElement(By.Name(Elements.Get.EmploymentDetailsElement.EmploymentPosition));
-            _timeWithEmployerYears = Section.FindElement(By.Name(Elements.Get.EmploymentDetailsElement.TimeWithEmployerYears));
-            _timeWithEmployerMonths = Section.FindElement(By.Name(Elements.Get.EmploymentDetailsElement.TimeWithEmployerMonths));
-            _monthlyIncome = Section.FindElement(By.Name(Elements.Get.EmploymentDetailsElement.MonthlyIncome));
-            _nextPaydayDay = Section.FindElement(By.Name(Elements.Get.EmploymentDetailsElement.NextPaydayDay));
-            _nextPaydayMonth = Section.FindElement(By.Name(Elements.Get.EmploymentDetailsElement.NextPaydayMonth));
-            _nextPaydayYear = Section.FindElement(By.Name(Elements.Get.EmploymentDetailsElement.NextPaydayYear));
-            _workPhone = Section.FindElement(By.Name(Elements.Get.EmploymentDetailsElement.WorkPhone));
-            _salaryPaidToBank = Section.FindElement(By.Name(Elements.Get.EmploymentDetailsElement.SalaryPaidToBank));
+            _employmentStatus = Section.FindElement(By.Name(Elements.Get.EmploymentDetailsSection.EmploymentStatus));
+            _employerIndustry = Section.FindElement(By.Name(Elements.Get.EmploymentDetailsSection.EmployerIndustry));
+            _employerName = Section.FindElement(By.Name(Elements.Get.EmploymentDetailsSection.EmployerName));
+            _employmentPosition = Section.FindElement(By.Name(Elements.Get.EmploymentDetailsSection.EmploymentPosition));
+            _timeWithEmployerYears = Section.FindElement(By.Name(Elements.Get.EmploymentDetailsSection.TimeWithEmployerYears));
+            _timeWithEmployerMonths = Section.FindElement(By.Name(Elements.Get.EmploymentDetailsSection.TimeWithEmployerMonths));
+            _monthlyIncome = Section.FindElement(By.Name(Elements.Get.EmploymentDetailsSection.MonthlyIncome));
+            _nextPaydayDay = Section.FindElement(By.Name(Elements.Get.EmploymentDetailsSection.NextPaydayDay));
+            _nextPaydayMonth = Section.FindElement(By.Name(Elements.Get.EmploymentDetailsSection.NextPaydayMonth));
+            _nextPaydayYear = Section.FindElement(By.Name(Elements.Get.EmploymentDetailsSection.NextPaydayYear));
+            _workPhone = Section.FindElement(By.Name(Elements.Get.EmploymentDetailsSection.WorkPhone));
+            _salaryPaidToBank = Section.FindElement(By.Name(Elements.Get.EmploymentDetailsSection.SalaryPaidToBank));
 
             //switch (Config.AUT)
             //{

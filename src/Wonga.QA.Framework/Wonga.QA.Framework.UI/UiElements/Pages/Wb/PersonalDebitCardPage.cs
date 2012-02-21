@@ -14,8 +14,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
 
         public PersonalDebitCardPage(UiClient client) : base(client)
         {
-            _form = Content.FindElement(By.CssSelector(Elements.Get.WbPersonalDebitCardDetailsPage.FormId));
-            _next = _form.FindElement(By.CssSelector(Elements.Get.WbPersonalDebitCardDetailsPage.NextButton));
+            _form = Content.FindElement(By.CssSelector(Elements.Get.PersonalDebitCardDetailsPage.FormId));
+            _next = _form.FindElement(By.CssSelector(Elements.Get.PersonalDebitCardDetailsPage.NextButton));
             MobilePinVerification = new Sections.MobilePinVerificationSection(this);
             DebitCardSection = new Sections.DebitCardSection(this);
         }

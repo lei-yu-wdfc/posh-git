@@ -8,9 +8,9 @@ namespace Wonga.QA.Framework.UI.Mappings.Sections
     /// <summary>
     /// Mobile PIN verification section
     /// </summary>
-    internal class MobilePinVerificationElement
+    public class MobilePinVerificationSection
     {
-        internal String Legend { get; set; }
-        internal String Pin { get; set; }
+        public String Legend { get; set; }
+        public String Pin { get; set; }
     }
 }

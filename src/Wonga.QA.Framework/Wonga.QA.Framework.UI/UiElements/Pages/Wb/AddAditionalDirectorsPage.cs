@@ -40,15 +40,15 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
 
         public AddAditionalDirectorsPage(UiClient client) : base(client)
         {
-            _form = Content.FindElement(By.CssSelector(Elements.Get.WbAddAditionalDirectorsPage.FormId));
-            _done = _form.FindElement(By.CssSelector(Elements.Get.WbAddAditionalDirectorsPage.DoneButton));
-            _addAnother = _form.FindElement(By.CssSelector(Elements.Get.WbAddAditionalDirectorsPage.AddAnotherButton));
+            _form = Content.FindElement(By.CssSelector(Elements.Get.AddAditionalDirectorsPage.FormId));
+            _done = _form.FindElement(By.CssSelector(Elements.Get.AddAditionalDirectorsPage.DoneButton));
+            _addAnother = _form.FindElement(By.CssSelector(Elements.Get.AddAditionalDirectorsPage.AddAnotherButton));
 
-            _title = _form.FindElement(By.CssSelector(Elements.Get.WbAddAditionalDirectorsPage.Title));
-            _firstName = _form.FindElement(By.CssSelector(Elements.Get.WbAddAditionalDirectorsPage.FirstName));
-            _lastName = _form.FindElement(By.CssSelector(Elements.Get.WbAddAditionalDirectorsPage.LastName));
-            _email = _form.FindElement(By.CssSelector(Elements.Get.WbAddAditionalDirectorsPage.EmailAddress));
-            _emailConfirm = _form.FindElement(By.CssSelector(Elements.Get.WbAddAditionalDirectorsPage.ConfirmEmailAddress));
+            _title = _form.FindElement(By.CssSelector(Elements.Get.AddAditionalDirectorsPage.Title));
+            _firstName = _form.FindElement(By.CssSelector(Elements.Get.AddAditionalDirectorsPage.FirstName));
+            _lastName = _form.FindElement(By.CssSelector(Elements.Get.AddAditionalDirectorsPage.LastName));
+            _email = _form.FindElement(By.CssSelector(Elements.Get.AddAditionalDirectorsPage.EmailAddress));
+            _emailConfirm = _form.FindElement(By.CssSelector(Elements.Get.AddAditionalDirectorsPage.ConfirmEmailAddress));
             
         }
 

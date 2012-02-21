@@ -11,9 +11,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
 
         public AdditionalDirectorsPage(UiClient client) : base(client)
         {
-            _form = Content.FindElement(By.CssSelector(Elements.Get.WbAdditionalDirectorsPage.FormId));
-            _done = _form.FindElement(By.CssSelector(Elements.Get.WbAdditionalDirectorsPage.DoneButton));
-            _addAnother = _form.FindElement(By.CssSelector(Elements.Get.WbAdditionalDirectorsPage.AddAnotherDirector));
+            _form = Content.FindElement(By.CssSelector(Elements.Get.AdditionalDirectorsPage.FormId));
+            _done = _form.FindElement(By.CssSelector(Elements.Get.AdditionalDirectorsPage.DoneButton));
+            _addAnother = _form.FindElement(By.CssSelector(Elements.Get.AdditionalDirectorsPage.AddAnotherDirector));
         }
 
         public Wb.BusinessBankAccountPage Next()

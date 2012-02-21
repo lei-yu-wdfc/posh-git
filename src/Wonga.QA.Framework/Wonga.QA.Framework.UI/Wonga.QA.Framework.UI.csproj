@@ -54,8 +54,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mappings\BaseElements.cs" />
-    <Compile Include="Mappings\CaElements.cs" />
     <Compile Include="Mappings\Elements.cs" />
     <Compile Include="Mappings\Pages\DealDonePage.cs" />
     <Compile Include="Mappings\Pages\DeclinedPage.cs" />
@@ -73,19 +71,16 @@
     <Compile Include="Mappings\Pages\Wb\PersonalBankAccountPage.cs" />
     <Compile Include="Mappings\Pages\DebitCardPage.cs" />
     <Compile Include="Mappings\Pages\Wb\PersonalDebitCardPage.cs" />
-    <Compile Include="Mappings\Sections\AccountDetailsElement.cs" />
-    <Compile Include="Mappings\Sections\BankAccountElement.cs" />
-    <Compile Include="Mappings\Sections\DebitCardElement.cs" />
-    <Compile Include="Mappings\Sections\EmploymentDetailsElement.cs" />
-    <Compile Include="Mappings\Sections\SliderElement.cs" />
-    <Compile Include="Mappings\Sections\ContactingYouElement.cs" />
-    <Compile Include="Mappings\Sections\MobilePinVerificationElement.cs" />
-    <Compile Include="Mappings\Sections\YourDetailsElement.cs" />
-    <Compile Include="Mappings\Sections\YourNameElement.cs" />
-    <Compile Include="Mappings\UkElements.cs" />
-    <Compile Include="Mappings\WbElements.cs" />
+    <Compile Include="Mappings\Sections\AccountDetailsSection.cs" />
+    <Compile Include="Mappings\Sections\BankAccountSection.cs" />
+    <Compile Include="Mappings\Sections\DebitCardSection.cs" />
+    <Compile Include="Mappings\Sections\EmploymentDetailsSection.cs" />
+    <Compile Include="Mappings\Sections\SliderSection.cs" />
+    <Compile Include="Mappings\Sections\ContactingYouSection.cs" />
+    <Compile Include="Mappings\Sections\MobilePinVerificationSection.cs" />
+    <Compile Include="Mappings\Sections\YourDetailsSection.cs" />
+    <Compile Include="Mappings\Sections\YourNameSection.cs" />
     <Compile Include="Mappings\XmlMapper.cs" />
-    <Compile Include="Mappings\ZaElements.cs" />
     <Compile Include="UiElements\BaseElement.cs" />
     <Compile Include="UiElements\Pages\Common\DealDonePage.cs" />
     <Compile Include="UiElements\Pages\Common\DeclinedPage.cs" />
@@ -133,7 +128,22 @@
     <Folder Include="Mappings\Pages\Za\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SeleniumMap.xml">
+    <EmbeddedResource Include="Mappings\Xml\Wb.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mappings\Xml\Uk.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mappings\Xml\Ca.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mappings\Xml\Za.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

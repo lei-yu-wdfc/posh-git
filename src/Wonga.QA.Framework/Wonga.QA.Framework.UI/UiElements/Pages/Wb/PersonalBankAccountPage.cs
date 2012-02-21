@@ -13,8 +13,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
 
         public PersonalBankAccountPage(UiClient client) : base(client)
         {
-            _form = Content.FindElement(By.CssSelector(Elements.Get.WbPersonalBankAccountPage.FormId));
-            _next = _form.FindElement(By.CssSelector(Elements.Get.WbPersonalBankAccountPage.NextButton));
+            _form = Content.FindElement(By.CssSelector(Elements.Get.PersonalBankAccountPage.FormId));
+            _next = _form.FindElement(By.CssSelector(Elements.Get.PersonalBankAccountPage.NextButton));
             BankAccountSection = new Sections.BankAccountSection(this);
         }
 

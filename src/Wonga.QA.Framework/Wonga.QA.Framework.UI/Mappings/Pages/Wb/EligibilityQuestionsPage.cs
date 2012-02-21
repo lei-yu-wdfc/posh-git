@@ -5,17 +5,17 @@ using System.Text;
 
 namespace Wonga.QA.Framework.UI.Mappings.Pages.Wb
 {
-    internal sealed class EligibilityQuestionsPage
+    public sealed class EligibilityQuestionsPage
     {
-        internal String FormId { get; set; }
-        internal String CheckResident { get; set; }
-        internal String CheckDirector { get; set; }
-        internal String CheckActiveCompany { get; set; }
-        internal String CheckTurnover { get; set; }
-        internal String CheckVat { get; set; }
-        internal String CheckOnlineAccess { get; set; }
-        internal String CheckGuarantee { get; set; }
-        internal String NextButton { get; set; }
-        internal String CheckDebitCard { get; set; }
+        public String FormId { get; set; }
+        public String CheckResident { get; set; }
+        public String CheckDirector { get; set; }
+        public String CheckActiveCompany { get; set; }
+        public String CheckTurnover { get; set; }
+        public String CheckVat { get; set; }
+        public String CheckOnlineAccess { get; set; }
+        public String CheckGuarantee { get; set; }
+        public String NextButton { get; set; }
+        public String CheckDebitCard { get; set; }
     }
 }

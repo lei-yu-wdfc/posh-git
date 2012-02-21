@@ -2,9 +2,9 @@
 
 namespace Wonga.QA.Framework.UI.Mappings.Pages
 {
-    internal class BankAccountPage
+    public class BankAccountPage
     {
-        internal String FormId { get; set; }
-        internal String NextButton { get; set; }
+        public String FormId { get; set; }
+        public String NextButton { get; set; }
     }
 }

@@ -20,12 +20,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         public String SecretQuestion { set { _secretQuestion.SendValue(value); } }
         public String SecretAnswer { set { _secretAnswer.SendValue(value); } }
 
-        public AccountDetailsSection(BasePage page) : base(Elements.Get.AccountDetailsElement.Legend, page)
+        public AccountDetailsSection(BasePage page) : base(Elements.Get.AccountDetailsSection.Legend, page)
         {
-            _password = Section.FindElement(By.CssSelector(Elements.Get.AccountDetailsElement.Password));
-            _passwordConfirm = Section.FindElement(By.CssSelector(Elements.Get.AccountDetailsElement.PasswordConfirm));
-            _secretQuestion = Section.FindElement(By.CssSelector(Elements.Get.AccountDetailsElement.SecretQuestion));
-            _secretAnswer = Section.FindElement(By.CssSelector(Elements.Get.AccountDetailsElement.SecretAnswer));
+            _password = Section.FindElement(By.CssSelector(Elements.Get.AccountDetailsSection.Password));
+            _passwordConfirm = Section.FindElement(By.CssSelector(Elements.Get.AccountDetailsSection.PasswordConfirm));
+            _secretQuestion = Section.FindElement(By.CssSelector(Elements.Get.AccountDetailsSection.SecretQuestion));
+            _secretAnswer = Section.FindElement(By.CssSelector(Elements.Get.AccountDetailsSection.SecretAnswer));
         }
     }
 }

@@ -42,16 +42,16 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             }
         }
 
-        public DebitCardSection(BasePage page) : base(Elements.Get.DebitCardElement.Legend, page)
+        public DebitCardSection(BasePage page) : base(Elements.Get.DebitCardSection.Legend, page)
         {
-            _cardType = Section.FindElement(By.CssSelector(Elements.Get.DebitCardElement.CardType));
-            _cardNumber = Section.FindElement(By.CssSelector(Elements.Get.DebitCardElement.CardNumber));
-            _cardName = Section.FindElement(By.CssSelector(Elements.Get.DebitCardElement.CardName));
-            _cardExpiryDateMonth = Section.FindElement(By.CssSelector(Elements.Get.DebitCardElement.CardExpiryDateMonth));
-            _cardExpiryDateYear = Section.FindElement(By.CssSelector(Elements.Get.DebitCardElement.CardExpiryDateYear));
-            _cardStartDateMonth = Section.FindElement(By.CssSelector(Elements.Get.DebitCardElement.CardStartDateMonth));
-            _cardStartDateYear = Section.FindElement(By.CssSelector(Elements.Get.DebitCardElement.CardStartDateYear));
-            _cardSecurity = Section.FindElement(By.CssSelector(Elements.Get.DebitCardElement.CardSecurityNumber));
+            _cardType = Section.FindElement(By.CssSelector(Elements.Get.DebitCardSection.CardType));
+            _cardNumber = Section.FindElement(By.CssSelector(Elements.Get.DebitCardSection.CardNumber));
+            _cardName = Section.FindElement(By.CssSelector(Elements.Get.DebitCardSection.CardName));
+            _cardExpiryDateMonth = Section.FindElement(By.CssSelector(Elements.Get.DebitCardSection.CardExpiryDateMonth));
+            _cardExpiryDateYear = Section.FindElement(By.CssSelector(Elements.Get.DebitCardSection.CardExpiryDateYear));
+            _cardStartDateMonth = Section.FindElement(By.CssSelector(Elements.Get.DebitCardSection.CardStartDateMonth));
+            _cardStartDateYear = Section.FindElement(By.CssSelector(Elements.Get.DebitCardSection.CardStartDateYear));
+            _cardSecurity = Section.FindElement(By.CssSelector(Elements.Get.DebitCardSection.CardSecurityNumber));
         }
     }
 }
