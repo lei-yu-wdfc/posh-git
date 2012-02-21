@@ -40,18 +40,23 @@
       <HintPath>..\..\..\bin\Wonga.QA.Framework\MbUnit.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="Wonga.QA.Framework">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Wonga.QA.Framework.Api">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Api.dll</HintPath>
     </Reference>
-    <Reference Include="Wonga.QA.Framework.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Wonga.QA.Framework.Common">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\bin\Wonga.QA.Framework.Common\Wonga.QA.Framework.Common.dll</HintPath>
     </Reference>
     <Reference Include="Wonga.QA.Framework.Core">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Wonga.QA.Framework.Db">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Db.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

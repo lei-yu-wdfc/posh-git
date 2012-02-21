@@ -1,7 +1,9 @@
-﻿using Wonga.QA.Framework;
+﻿using System.Linq;
+using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using MbUnit.Framework;
+using Wonga.QA.Framework.Db.ContactManagement;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Journeys
@@ -17,6 +19,7 @@ namespace Wonga.QA.Tests.Journeys
             Organisation comp = OrganisationBuilder.New().WithPrimaryApplicant(cust).Build();
 
             ApplicationBuilder.New(cust, comp).Build();
+            SignupSecondaryDirectors(comp);
         }
 
         [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
@@ -44,6 +47,16 @@ namespace Wonga.QA.Tests.Journeys
             Customer cust = CustomerBuilder.New().WithEmployer("Wonga").Build();
 
             ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
+        }
+
+        private void SignupSecondaryDirectors(Organisation org)
+        {
+            var guarantors = Driver.Db.ContactManagement.DirectorOrganisationMappings.Where(entity => entity.OrganisationId == org.Id && entity.DirectorLevel>0);
+            foreach (DirectorOrganisationMappingEntity guarantor in guarantors)
+            {
+                CustomerBuilder sd = CustomerBuilder.New(guarantor.AccountId);
+                sd.Build();
+            }
         }
     }
 }
