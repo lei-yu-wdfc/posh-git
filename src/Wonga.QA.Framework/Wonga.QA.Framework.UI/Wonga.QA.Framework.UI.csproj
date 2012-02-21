@@ -54,6 +54,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mappings\Content.cs" />
     <Compile Include="Mappings\Elements.cs" />
     <Compile Include="Mappings\Pages\DealDonePage.cs" />
     <Compile Include="Mappings\Pages\DeclinedPage.cs" />
@@ -128,22 +129,42 @@
     <Folder Include="Mappings\Pages\Za\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mappings\Xml\Wb.xml">
+    <EmbeddedResource Include="Mappings\Xml\Elements\Wb.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mappings\Xml\Uk.xml">
+    <EmbeddedResource Include="Mappings\Xml\Elements\Uk.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mappings\Xml\Ca.xml">
+    <EmbeddedResource Include="Mappings\Xml\Elements\Ca.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mappings\Xml\Za.xml">
+    <EmbeddedResource Include="Mappings\Xml\Elements\Za.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mappings\Xml\Content\Wb\en.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mappings\Xml\Content\Uk\en.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mappings\Xml\Content\Ca\en.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mappings\Xml\Content\Za\en.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

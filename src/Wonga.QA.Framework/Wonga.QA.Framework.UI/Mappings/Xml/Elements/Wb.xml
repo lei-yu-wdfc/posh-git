@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Mappings>
+<Elements>
     <!--PAGES SECTION-->
     <EligibilityQuestionsPage>
       <FormId>#lzero-questions-form</FormId>
@@ -175,4 +175,4 @@
       <SecretQuestion>#edit-secret-question</SecretQuestion>
       <SecretAnswer>#edit-secret-answer</SecretAnswer>
     </AccountDetailsSection>
-</Mappings>
+</Elements>

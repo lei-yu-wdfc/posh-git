@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Mappings>
+<Elements>
   <!--These need to be updated to css selectors.-->
   <AddressDetailsPage>
     <FormId>lzero-address-form</FormId>
@@ -124,4 +124,4 @@
     <Pin>pin</Pin>
     <Legend>Mobile PIN verification</Legend>
   </MobilePinVerificationSection>
-</Mappings>
+</Elements>

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Xml;
 using Wonga.QA.Framework.Core;
 using System.Xml.Linq;
 using System.Linq.Expressions;
@@ -17,59 +19,52 @@ namespace Wonga.QA.Framework.UI.Mappings
     /// </summary>
     public class XmlMapper
     {
-        private readonly XDocument _xmlDocument;
+        private readonly XmlDocument _xmlDocument = new XmlDocument();
         private string _xmlFile;
-        public XmlMapper()
+        public XmlMapper(string xmlFile)
         {
-            _xmlFile = string.Format("Wonga.QA.Framework.UI.Mappings.Xml.{0}.xml", Config.AUT);
-            _xmlDocument = XDocument.Load(System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(_xmlFile));
+            _xmlFile = xmlFile;
+            _xmlDocument.Load(System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(_xmlFile));
         }
 
-        public String GetValue<T>(Expression<Func<T>> containerName)
+        private String GetFieldValue(List<string> parents, String fieldName)
         {
-            /*NOTE: This strange and simple method uses reflection to get the TYPE and FIELD names given a field as input.
-             * You need to have the EXACT NAMES inside the XML.
-             * If in the mapper class we have WbEligibilityQuestionsPage.FormID => in the XML we need:
-             * <WbEligibilityQuestionsPage>
-             *      <FormId>THE_VALUE</FormId>
-             * </WbEligibilityQuestionsPage>
-             */
-            var typeFieldName = ((MemberExpression) containerName.Body).Member.Name;
-            var declaringTypeName = ((MemberExpression) containerName.Body).Member.DeclaringType.Name;
-            return GetFieldValue(declaringTypeName, typeFieldName);
-        }
+            string path = "//";
+            string myValueResult = null;
 
-        private String GetFieldValue(String containerName, String fieldName)
-        {
-            var myValueResult =_xmlDocument.Descendants(containerName).Descendants(fieldName).Select
-                    (containerFieldValue => containerFieldValue.Value).Select(p=>p.ToString()).SingleOrDefault();
-
+            foreach (string parent in parents)
+            {
+                path += parent + "/";
+            }
+            path += fieldName;
+            var node = _xmlDocument.DocumentElement.SelectSingleNode(path);
+            myValueResult = node == null ? null : node.InnerText;
             
             if (String.IsNullOrEmpty(myValueResult))
             {
-                Trace.TraceWarning("No mapping for element {0}, {1} in file {2}", containerName, fieldName, _xmlFile);
-                //throw new NotImplementedException(
-                //    String.Format("SELENIUM_XML_MAPPING_ERROR -> The value for pair << {0} - {1} >> in SeleniumMap.XML for << {2} >> is missing - PLEASE REVIEW", containerName,
-                //                  fieldName,Config.AUT.ToString()));
+                Trace.TraceWarning("No mapping for xml element {0} in file {1}", path, _xmlFile);
             }
             return myValueResult;
         }
 
-        public void GetValues(object obj)
+        public object GetValues(object obj, List<string> parents)
         {
             var properties = obj.GetType().GetProperties().Where(x => !x.GetGetMethod().IsStatic).ToList(); ;
-            foreach(var baseClass in properties)
+            parents = parents ?? new List<string>();
+            parents.Add(obj.GetType().Name);
+            foreach(var property in properties)
             {
-                var className = baseClass.Name;
-                var classValue = baseClass.GetValue(obj, null);
-                classValue = Activator.CreateInstance(baseClass.PropertyType);
-                var baseProperties = baseClass.PropertyType.GetProperties();
-                foreach(var baseElement in baseProperties)
+                if (property.PropertyType == typeof(string))
                 {
-                    baseElement.SetValue(classValue, GetFieldValue(className, baseElement.Name), null);
+                    property.SetValue(obj, GetFieldValue(parents, property.Name), null);
+                    continue;
                 }
-                baseClass.SetValue(obj,classValue, null);
+
+                var classValue = property.GetValue(obj, null);
+                classValue = Activator.CreateInstance(property.PropertyType);
+                property.SetValue(obj, GetValues(classValue, parents.ToList()), null);
             }
+            return obj;
         }
     }
 
@@ -79,8 +74,10 @@ namespace Wonga.QA.Framework.UI.Mappings
     //    public void Test()
     //    {
     //        Elements x = Elements.Get;
-    //        x.WbEligibilityQuestionsPage = new EligibilityQuestionsPage();
-    //        x.WbEligibilityQuestionsPage.FormId = x.XmlMapper.GetValue(() => x.WbEligibilityQuestionsPage.FormId);
+    //        x.EligibilityQuestionsPage = new EligibilityQuestionsPage();
+
+    //        Content c = Content.Get(new CultureInfo("en"));
     //    }
     //}
+
 }

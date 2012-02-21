@@ -25,10 +25,11 @@ namespace Wonga.QA.Framework.UI.Mappings
 
         protected Elements()
         {
-           XmlMapper.GetValues(this);
+           XmlMapper = new XmlMapper(string.Format("Wonga.QA.Framework.UI.Mappings.Xml.Elements.{0}.xml", Config.AUT));
+           XmlMapper.GetValues(this, null);
         }
 
-        public XmlMapper XmlMapper = new XmlMapper();
+        public XmlMapper XmlMapper = null;
 
         public virtual Sections.YourNameSection YourNameSection { get; set; }
         public virtual Sections.YourDetailsSection YourDetailsSection { get; set; }
