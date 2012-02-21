@@ -39,6 +39,7 @@
     <Compile Include="Helpers\GetPaymentFunctions.cs" />
     <Compile Include="Helpers\SendPaymentFunctions.cs" />
     <Compile Include="PaymentsServiceTests.cs" />
+    <Compile Include="PaymentTransactionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepaymentArrangementTests.cs" />
     <Compile Include="Helpers\SetPaymentFunctions.cs" />
@@ -51,7 +52,9 @@
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
     <Reference Include="MbUnit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Xml" />
     <Reference Include="Wonga.QA.Framework">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.dll</HintPath>
     </Reference>
