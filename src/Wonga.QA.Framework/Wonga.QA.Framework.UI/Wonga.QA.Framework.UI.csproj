@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mappings\Content.cs" />
+    <Compile Include="Mappings\ContentItems\LoanAgreement.cs" />
     <Compile Include="Mappings\Elements.cs" />
     <Compile Include="Mappings\Pages\DealDonePage.cs" />
     <Compile Include="Mappings\Pages\DeclinedPage.cs" />

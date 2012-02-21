@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Mappings;
+using Wonga.QA.Framework.UI.Mappings.ContentItems;
 
 namespace Wonga.QA.Framework.UI
 {
@@ -38,6 +39,7 @@ namespace Wonga.QA.Framework.UI
 
 #region Content
         public string YourDetails { get; set; }
+        public LoanAgreement LoanAgreement { get; set; }
 #endregion
     }
 }
