@@ -33,7 +33,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AddBankAccountTests.cs" />
-    <Compile Include="CollectionsTests.cs" />
     <Compile Include="Enums\PaymentTransactionType.cs" />
     <Compile Include="Helpers\CreatePaymentFunctions.cs" />
     <Compile Include="Helpers\Ca\CalculateFunctionsCa.cs" />

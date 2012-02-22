@@ -23,11 +23,6 @@ namespace Wonga.QA.Framework
         private String _district;
         private String _town;
         private String _county;
-<<<<<<< HEAD
-=======
-        private Date _atAddressFrom;
-    	
->>>>>>> Added LoanAmount and PromiseDate customisations to ApplicationBuilder
 
         private CustomerBuilder()
         {

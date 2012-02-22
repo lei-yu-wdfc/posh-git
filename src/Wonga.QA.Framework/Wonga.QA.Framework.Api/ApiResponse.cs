@@ -35,7 +35,7 @@ namespace Wonga.QA.Framework.Api
             {
                 if (e.Response == null)
                     throw;
-                ZOMG Response = (HttpWebResponse)e.Response;
+                Response = (HttpWebResponse)e.Response;
                 exception = e;
             }
 
