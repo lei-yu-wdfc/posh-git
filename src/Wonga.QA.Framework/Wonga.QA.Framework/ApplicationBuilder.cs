@@ -101,14 +101,15 @@ namespace Wonga.QA.Framework
         
         public virtual Application Build()
         {
+			
             if (Config.AUT == AUT.Wb)
             {
                 throw new NotImplementedException(
                     "WB product should be using factory method with organization parameter");
             }
 
-            _promiseDate.DateFormat = DateFormat.Date;
             _setPromiseDateAndLoanTerm();
+			_promiseDate.DateFormat = DateFormat.Date;
 
             List<ApiRequest> requests = new List<ApiRequest>
             {
@@ -120,7 +121,6 @@ namespace Wonga.QA.Framework
 
             switch (Config.AUT)
             {
-
                 case AUT.Uk:
 
                     requests.AddRange(new ApiRequest[]{
