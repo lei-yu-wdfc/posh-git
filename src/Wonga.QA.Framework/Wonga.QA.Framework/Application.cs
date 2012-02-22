@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Db.Ops;
 using Wonga.QA.Framework.Db.OpsSagas;
 using Wonga.QA.Framework.Db.Payments;
@@ -84,6 +85,13 @@ namespace Wonga.QA.Framework
 			Do.Until(() => Driver.Db.Payments.Arrears.Single(s => s.ApplicationId == application.ApplicationId));
 
 			return this;
+		}
+
+		public Decimal GetBalance()
+		{
+			return
+				new DbDriver().Payments.Applications.Single(a => a.ExternalId == Id).Transactions.Where(
+					a => a.Scope != (decimal) PaymentTransactionScopeEnum.Other).Sum(a => a.Amount);
 		}
     }
 }
