@@ -12,11 +12,15 @@ namespace Wonga.QA.Framework
     {
         protected Guid _id;
         protected Customer _customer;
+    	protected decimal _loanAmount;
+    	protected Date _promiseDate;
         protected ApplicationDecisionStatusEnum _decision = ApplicationDecisionStatusEnum.Accepted;
 
         protected ApplicationBuilder()
         {
             _id = Guid.NewGuid();
+        	_loanAmount = Data.GetLoanAmount();
+        	_promiseDate = Data.GetPromiseDate();
         }
 
         public static ApplicationBuilder New(Customer customer)
@@ -29,6 +33,18 @@ namespace Wonga.QA.Framework
             return new BusineesAppicationBuilder(customer, company);
         }
 
+		public ApplicationBuilder WithLoanAmount(decimal loanAmount)
+		{
+			_loanAmount = loanAmount;
+			return this;
+		}
+
+		public ApplicationBuilder WithPromiseDate(Date promiseDate)
+		{
+			_promiseDate = promiseDate;
+			return this;
+		}
+
         public ApplicationBuilder WithExpectedDecision(ApplicationDecisionStatusEnum decision)
         {
             _decision = decision;
@@ -37,6 +53,8 @@ namespace Wonga.QA.Framework
 
         public virtual Application Build()
         {
+			_promiseDate.DateFormat = DateFormat.Date;
+
             if (Config.AUT == AUT.Wb)
             {
                 throw new NotImplementedException(
@@ -59,6 +77,8 @@ namespace Wonga.QA.Framework
                             r.AccountId = _customer.Id;
                             r.BankAccountId = _customer.GetBankAccount();
                             r.PaymentCardId = _customer.GetPaymentCard();
+                        	r.LoanAmount = _loanAmount;
+                        	r.PromiseDate = _promiseDate;
                         }),
                         VerifyFixedTermLoanCommand.New(r=>
                         {
@@ -75,6 +95,8 @@ namespace Wonga.QA.Framework
                             r.ApplicationId = _id;
                             r.AccountId = _customer.Id;
                             r.BankAccountId = _customer.GetBankAccount();
+                        	r.LoanAmount = _loanAmount;
+                        	r.PromiseDate = _promiseDate;
                         }),
                         VerifyFixedTermLoanCommand.New(r=>
                         {

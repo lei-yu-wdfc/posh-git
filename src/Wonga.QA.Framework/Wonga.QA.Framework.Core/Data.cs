@@ -39,6 +39,11 @@ namespace Wonga.QA.Framework.Core
             return "Test:EmployedMask";
         }
 
+		public static Date GetNextPayDate()
+		{
+			return new Date(DateTime.UtcNow.AddDays(10), DateFormat.Date);
+		}
+
         public static String GetMiddleName()
         {
             return Config.AUT == AUT.Wb ? "TESTNoCheck" : "MiddleName";
@@ -58,6 +63,41 @@ namespace Wonga.QA.Framework.Core
         {
             return "0210000000";
         }
+
+		public static decimal GetLoanAmount()
+		{
+			switch (Config.AUT)
+			{
+					case AUT.Za:
+					{
+						return 500;
+
+					}
+					case AUT.Uk:
+					{
+						return 100;
+
+					}
+					case AUT.Ca:
+					{
+						return 100;
+					}
+					case AUT.Wb:
+					{
+						return 1000;
+					}
+
+				default:
+					{
+						throw new NotImplementedException(Config.AUT.ToString());
+					}
+			}
+		}
+
+		public static Date GetPromiseDate()
+		{
+			return new Date(DateTime.UtcNow.AddDays(10), DateFormat.Date);
+		}
 
         public static String GetNIN(DateTime dob, Boolean female)
         {

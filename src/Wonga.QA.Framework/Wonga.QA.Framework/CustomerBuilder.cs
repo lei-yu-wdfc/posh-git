@@ -13,6 +13,7 @@ namespace Wonga.QA.Framework
         private Guid _id;
         private Guid _verification;
         private String _employerName;
+		private Date _nextPayDate;
         private String _middleName;
         private String _houseNumber;
         private String _houseName;
@@ -22,6 +23,11 @@ namespace Wonga.QA.Framework
         private String _district;
         private String _town;
         private String _county;
+<<<<<<< HEAD
+=======
+        private Date _atAddressFrom;
+    	
+>>>>>>> Added LoanAmount and PromiseDate customisations to ApplicationBuilder
 
         private CustomerBuilder()
         {
@@ -48,6 +54,7 @@ namespace Wonga.QA.Framework
             _district = Data.RandomString(15);
             _town = Data.RandomString(15);
             _county = Data.RandomString(15);
+        	_nextPayDate = Data.GetNextPayDate();
         }
 
         public static CustomerBuilder New()
@@ -65,6 +72,12 @@ namespace Wonga.QA.Framework
             _employerName = name;
             return this;
         }
+
+		public CustomerBuilder WithNextPayDate(Date date)
+		{
+			_nextPayDate = date;
+			return this;
+		}
 
         public CustomerBuilder WithMiddleName(string name)
         {
@@ -122,6 +135,8 @@ namespace Wonga.QA.Framework
 
         public Customer Build()
         {
+			_nextPayDate.DateFormat = DateFormat.Date;;
+
             List<ApiRequest> requests = new List<ApiRequest>
             {
                 CreateAccountCommand.New(r => r.AccountId = _id),
@@ -158,6 +173,7 @@ namespace Wonga.QA.Framework
                         {
                             r.AccountId = _id;
                             r.EmployerName = _employerName;
+                        	r.NextPayDate = _nextPayDate;
                         }),
                         VerifyMobilePhoneZaCommand.New(r =>
                         {
