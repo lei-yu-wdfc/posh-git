@@ -33,7 +33,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AddBankAccountTests.cs" />
+    <Compile Include="CreateApplicationTests.cs" />
     <Compile Include="Enums\PaymentTransactionType.cs" />
+    <Compile Include="FixedTermLoanOfferTests.cs" />
     <Compile Include="Helpers\CreatePaymentFunctions.cs" />
     <Compile Include="Helpers\Ca\CalculateFunctionsCa.cs" />
     <Compile Include="Helpers\GetPaymentFunctions.cs" />
