@@ -18,7 +18,7 @@ namespace Wonga.QA.Tests.Payments
         {
             Guid appId = Guid.NewGuid();
             var customer = CustomerBuilder.New().Build();
-            var promisedDate = FindPromiseDateOfSaturday(DayOfWeek.Saturday);
+            var promisedDate = FindPromiseDateOfExpectedDayOfWeek(DayOfWeek.Saturday);
             Driver.Api.Commands.Post(new CreateFixedTermLoanApplicationCommand()
                                          {
                                              ApplicationId = appId,
@@ -33,9 +33,9 @@ namespace Wonga.QA.Tests.Payments
             Assert.AreEqual(promisedDate.Date, app.NextDueDate);
         }
 
-        private DateTime FindPromiseDateOfSaturday(DayOfWeek expectedDayOfWeek)
+        private DateTime FindPromiseDateOfExpectedDayOfWeek(DayOfWeek expectedDayOfWeek)
         {
-            Console.WriteLine("Looking for an promised date which is on Saturday...");
+            Console.WriteLine("Looking for an promised date which is on {0}...", expectedDayOfWeek);
             var promiseDate = DateTime.UtcNow.AddDays(15);
             while (promiseDate.DayOfWeek != expectedDayOfWeek) promiseDate = promiseDate.AddDays(1);
             Console.WriteLine("Use PromiseDate = {0}", promiseDate);
