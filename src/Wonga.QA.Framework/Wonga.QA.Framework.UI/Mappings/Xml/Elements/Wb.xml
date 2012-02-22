@@ -91,18 +91,18 @@
 
     <AcceptedPage>
       <FormId>#wonga-loan-approve-form</FormId>
-      <AcceptBusinessLoan>#terms-accept .default-large-button</AcceptBusinessLoan>
-      <AcceptGuarantorLoan>#guarantor-accept .default-large-button.tooltiptrigger</AcceptGuarantorLoan>
+      <AcceptBusinessLoan>#terms-accept .button</AcceptBusinessLoan>
+      <AcceptGuarantorLoan>#guarantor-accept .button</AcceptGuarantorLoan>
       <SubmitButton>#edit-accept</SubmitButton>
     </AcceptedPage>
 
     <DealDonePage>
       <HeaderText>Your application has been approved</HeaderText>
-      <ContinueButtonLinkText>.default-large-button.application-success-button</ContinueButtonLinkText>
+      <ContinueButtonLinkText>.application-success-button</ContinueButtonLinkText>
     </DealDonePage>
 
     <DeclinedPage>
-      <HeaderText>Unfortunately we can’t approve your application</HeaderText>
+      <HeaderText>Application declined</HeaderText>
     </DeclinedPage>
 
     <!--SectionS SECTION-->

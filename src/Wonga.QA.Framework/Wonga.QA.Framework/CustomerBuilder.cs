@@ -22,7 +22,6 @@ namespace Wonga.QA.Framework
         private String _district;
         private String _town;
         private String _county;
-        private Date _atAddressFrom;
 
         private CustomerBuilder()
         {

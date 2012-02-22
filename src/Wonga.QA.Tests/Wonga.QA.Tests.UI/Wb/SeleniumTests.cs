@@ -32,7 +32,7 @@ namespace Wonga.QA.Tests.UI.Wb
 
         private Wonga.QA.Framework.UI.UiElements.Pages.Common.ProcessingPage WbL0PathTest(String middleNameMask = null)
         {
-            const string specialCompanyRegistrationNumberMask = "00000086";
+            //const string specialCompanyRegistrationNumberMask = "00000086";
             var middleName = Data.RandomString(3, 15);
             var firstName = Data.RandomString(3, 15);
             var emailAddress = Data.GetEmail();
