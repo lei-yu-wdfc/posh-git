@@ -34,7 +34,9 @@ namespace Wonga.QA.Framework
             _id = Data.GetId();
             _verification = Data.GetId();
             _employerName = Data.GetEmployerName();
+            _surname = Data.GetName();
             _middleName = Data.GetMiddleName();
+            _foreName = Data.GetName();
             _province = ProvinceEnum.ON;
             _houseNumber = Data.RandomInt(1, 100).ToString(CultureInfo.InvariantCulture);
             _houseName = Data.RandomString(8);
