@@ -39,8 +39,8 @@ namespace Wonga.QA.Tests.Comms
                               }));
             var mobileVerificationEntity = Do.Until(() => Driver.Db.Comms.MobilePhoneVerifications.SingleOrDefault(p => p.VerificationId == verificationId));
             Assert.IsNotNull(mobileVerificationEntity);
-            Assert.AreEqual(mobileVerificationEntity.AccountId, accountId);
-            Assert.AreEqual(mobileVerificationEntity.MobilePhone, mobilePhone);
+            Assert.AreEqual(mobileVerificationEntity.AccountId, accountId, "These values should be equal");
+            Assert.AreEqual(mobileVerificationEntity.MobilePhone, mobilePhone, "These values should be equal");
         }
 
         [Test, AUT(AUT.Wb), JIRA("SME-563"), Description("This negative test attempts to send verification sms to invalid UK phone numbers and checks for expected failure")]
@@ -58,7 +58,7 @@ namespace Wonga.QA.Tests.Comms
                                                                                                  Guid.NewGuid()
                                                                                          }));
 
-            Assert.AreEqual(exceptionObject.Errors.ToList()[0], "Ops_RequestXmlInvalid");
+            Assert.AreEqual(exceptionObject.Errors.ToList()[0], "Ops_RequestXmlInvalid", "These values should be equal");
         }
 
         [Test, AUT(AUT.Wb), JIRA("SME-563"), Description("This test covers the process of creating a new customer details record, initiates mobile phone verification and completes it with correct PIN")]
@@ -113,7 +113,7 @@ namespace Wonga.QA.Tests.Comms
                                                                  VerificationId = Guid.NewGuid()
                                                              }));
 
-            Assert.AreEqual(exceptionObject.Errors.ToList()[0], "Ops_RequestXmlInvalid");
+            Assert.AreEqual(exceptionObject.Errors.ToList()[0], "Ops_RequestXmlInvalid", "These values should be equal");
         }
 
         [Test, AUT(AUT.Wb), JIRA("SME-563"), Description("This test initiates the resend pin feature for new customer details record")]

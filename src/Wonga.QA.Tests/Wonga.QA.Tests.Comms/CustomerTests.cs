@@ -39,13 +39,13 @@ namespace Wonga.QA.Tests.Comms
                  .WithTownInAddress("MyTown").Build();
 
             var addressEntity = Driver.Db.Comms.Addresses.Single(a => a.AccountId == customer.Id);
-            Assert.AreEqual(addressEntity.Street, "MyStreet");
-            Assert.AreEqual(addressEntity.County, "MyCounty");
-            Assert.AreEqual(addressEntity.District, "MyDistrict");
-            Assert.AreEqual(addressEntity.Flat, "MyFlat");
-            Assert.AreEqual(addressEntity.HouseName, "MyHouse");
-            Assert.AreEqual(addressEntity.HouseNumber, "MyHouseNumber");
-            Assert.AreEqual(addressEntity.Town, "MyTown");
+            Assert.AreEqual(addressEntity.Street, "MyStreet","These values should be equal");
+            Assert.AreEqual(addressEntity.County, "MyCounty", "These values should be equal");
+            Assert.AreEqual(addressEntity.District, "MyDistrict", "These values should be equal");
+            Assert.AreEqual(addressEntity.Flat, "MyFlat", "These values should be equal");
+            Assert.AreEqual(addressEntity.HouseName, "MyHouse", "These values should be equal");
+            Assert.AreEqual(addressEntity.HouseNumber, "MyHouseNumber", "These values should be equal");
+            Assert.AreEqual(addressEntity.Town, "MyTown", "These values should be equal");
         }
 
         [Test, AUT(AUT.Wb), JIRA("SME-561"), Description("This test verifies update customer address command by issuing a command and verifying its successful response and that the record in the repository has been changed")]
@@ -83,17 +83,17 @@ namespace Wonga.QA.Tests.Comms
 
             addressEntity = Driver.Db.Comms.Addresses.Single(a => a.AccountId == customer.Id);
 
-            Assert.AreEqual(addressEntity.AccountId, message.AccountId);
-            Assert.AreEqual(addressEntity.ExternalId, message.AddressId);
-            Assert.AreEqual(addressEntity.Flat, message.Flat);
-            Assert.AreEqual(addressEntity.HouseName, message.HouseName);
-            Assert.AreEqual(addressEntity.HouseNumber, message.HouseNumber);
-            Assert.AreEqual(addressEntity.District, message.District);
-            Assert.AreEqual(addressEntity.Street, message.Street);
-            Assert.AreEqual(addressEntity.Town, message.Town);
-            Assert.AreEqual(addressEntity.County, message.County);
+            Assert.AreEqual(addressEntity.AccountId, message.AccountId, "These values should be equal");
+            Assert.AreEqual(addressEntity.ExternalId, message.AddressId, "These values should be equal");
+            Assert.AreEqual(addressEntity.Flat, message.Flat, "These values should be equal");
+            Assert.AreEqual(addressEntity.HouseName, message.HouseName, "These values should be equal");
+            Assert.AreEqual(addressEntity.HouseNumber, message.HouseNumber, "These values should be equal");
+            Assert.AreEqual(addressEntity.District, message.District, "These values should be equal");
+            Assert.AreEqual(addressEntity.Street, message.Street, "These values should be equal");
+            Assert.AreEqual(addressEntity.Town, message.Town, "These values should be equal");
+            Assert.AreEqual(addressEntity.County, message.County, "These values should be equal");
             //Assert.AreEqual(addressEntity.CountryCode, message.CountryCode);
-            Assert.AreEqual(addressEntity.PostCode, message.Postcode);
+            Assert.AreEqual(addressEntity.PostCode, message.Postcode, "These values should be equal");
         }
 
         [Test, AUT(AUT.Wb), JIRA("SME-561"), Description("This test verifies get current address query by creating a new customer address, issuing a query and comparing the response to repository record")]
@@ -113,7 +113,7 @@ namespace Wonga.QA.Tests.Comms
             var query = new GetCurrentAddressQuery { AccountId = addressEntity.AccountId };
             var response = Driver.Api.Queries.Post(query);
             var specificFlatName = response.Values["Flat"].Single();
-            Assert.AreEqual(addressEntity.Flat, specificFlatName);
+            Assert.AreEqual(addressEntity.Flat, specificFlatName, "These values should be equal");
         }
 
         [Test, AUT(AUT.Wb), JIRA("SME-565"), Description("This test obtains address descriptors for all UK postcode variants and validates their content")]
@@ -129,13 +129,13 @@ namespace Wonga.QA.Tests.Comms
                 var responseDescriptionIdList = response.Values["Id"].ToList();
                 var responseDescriptorDescriptionList = response.Values["Description"].ToList();
 
-                Assert.IsNotEmpty(responseDescriptionIdList);
-                Assert.IsNotEmpty(responseDescriptorDescriptionList);
+                Assert.IsNotEmpty(responseDescriptionIdList,"This collection should not be empty");
+                Assert.IsNotEmpty(responseDescriptorDescriptionList, "This collection should not be empty");
 
                 foreach (var descriptionId in responseDescriptionIdList)
                 {
                     response = Driver.Api.Queries.Post(new GetAddressByDescriptorIdUkQuery { DescriptorId = descriptionId });
-                    Assert.IsNotEmpty(response.Values);
+                    Assert.IsNotEmpty(response.Values, "This collection should not be empty");
                 }
             }
         }
@@ -158,7 +158,7 @@ namespace Wonga.QA.Tests.Comms
                 //ASK JAMIE!
 
                 //Assert.IsNotNull(response);
-                Assert.IsNotEmpty(response.Values);
+                Assert.IsNotEmpty(response.Values, "This collection should not be empty");
             }
         }
 
@@ -182,10 +182,10 @@ namespace Wonga.QA.Tests.Comms
             var detailsEntity = Do.Until(() => Driver.Db.Comms.CustomerDetails.Single(p => p.AccountId == accountId));
 
             Assert.IsNotNull(detailsEntity);
-            Assert.AreEqual(message.Forename, detailsEntity.Forename);
-            Assert.AreEqual(message.Email, detailsEntity.Email);
-            Assert.AreEqual(message.HomePhone, detailsEntity.HomePhone);
-            Assert.AreEqual(message.WorkPhone, detailsEntity.WorkPhone);
+            Assert.AreEqual(message.Forename, detailsEntity.Forename, "These values should be equal");
+            Assert.AreEqual(message.Email, detailsEntity.Email, "These values should be equal");
+            Assert.AreEqual(message.HomePhone, detailsEntity.HomePhone, "These values should be equal");
+            Assert.AreEqual(message.WorkPhone, detailsEntity.WorkPhone, "These values should be equal");
         }
 
         //[Test,AUT(AUT.Wb), JIRA("SME-561"), Description("This negative test validates the scenario of saving personal and phone details of customer that is recognized, this test validates error code fron error response returned by the API call")]
@@ -233,7 +233,7 @@ namespace Wonga.QA.Tests.Comms
             };
 
             var error = Assert.Throws<ValidatorException>(() => Driver.Api.Commands.Post(message));
-            Assert.AreEqual(error.Errors.ToList()[0], "Comms_Age_BelowMinuimumAge");
+            Assert.AreEqual(error.Errors.ToList()[0], "Comms_Age_BelowMinuimumAge", "These values should be equal");
         }
 
         [Test, AUT(AUT.Wb), JIRA("SME-561"), Description("This test verifies GetCustomerDetails query by creating new customer details record, issuing the query, verifying its response and comparing the data it returns to repository record")]
@@ -262,7 +262,7 @@ namespace Wonga.QA.Tests.Comms
                                                             AccountId = accountId
                                                         });
 
-            Assert.AreEqual(response.Values["Email"].Single(), newEntity.Email);
+            Assert.AreEqual(response.Values["Email"].Single(), newEntity.Email, "These values should be equal");
         }
 
         [Test, AUT(AUT.Wb), JIRA("SME-561"), Description("This test verifies the SaveContactPreferences command by issuing it, checking its response and verifying that the repository record has been created and compare the data in the repository to expected values")]
@@ -277,8 +277,8 @@ namespace Wonga.QA.Tests.Comms
             Driver.Api.Commands.Post(message);
             var contactPreferenceEntity = Do.Until(() => Driver.Db.Comms.ContactPreferences.SingleOrDefault(p => p.AccountId == accountId));
             Assert.IsNotNull(contactPreferenceEntity);
-            Assert.AreEqual(contactPreferenceEntity.AccountId, message.AccountId);
-            Assert.AreEqual(contactPreferenceEntity.AcceptMarketingContact, message.AcceptMarketingContact);
+            Assert.AreEqual(contactPreferenceEntity.AccountId, message.AccountId, "These values should be equal");
+            Assert.AreEqual(contactPreferenceEntity.AcceptMarketingContact, message.AcceptMarketingContact, "These values should be equal");
         }
 
         [Test, AUT(AUT.Wb), JIRA("SME-561"), Description("This test verifies the GetContactPreferences query by saving customer contact preferences and then retrieving them via the query and verifying its response")]
@@ -298,8 +298,8 @@ namespace Wonga.QA.Tests.Comms
                                                        {
                                                            AccountId = accountId
                                                        });
-            Assert.AreEqual(response.Values["AccountId"].Single(), saveContactPreferencesEntity.AccountId.ToString());
-            Assert.AreEqual<Boolean>(bool.Parse(response.Values["AcceptMarketingContact"].Single()), saveContactPreferencesEntity.AcceptMarketingContact);
+            Assert.AreEqual(response.Values["AccountId"].Single(), saveContactPreferencesEntity.AccountId.ToString(), "These values should be equal");
+            Assert.AreEqual<Boolean>(bool.Parse(response.Values["AcceptMarketingContact"].Single()), saveContactPreferencesEntity.AcceptMarketingContact, "These values should be equal");
         }
 
         [Test, AUT(AUT.Wb), JIRA("SME-561"), Description("This test verifies Password reset email command to random email by issuing the command and checking its response")]
@@ -361,7 +361,7 @@ namespace Wonga.QA.Tests.Comms
             Driver.Api.Commands.Post(updateHomePhoneMessage);
             var detailsEntity = Do.Until(() => Driver.Db.Comms.CustomerDetails.SingleOrDefault(p => p.AccountId == accountId));
             Assert.IsNotNull(detailsEntity);
-            Assert.AreEqual(updateHomePhoneMessage.HomePhone, detailsEntity.HomePhone);
+            Assert.AreEqual(updateHomePhoneMessage.HomePhone, detailsEntity.HomePhone, "These values should be equal");
         }
 
         [Test, AUT(AUT.Wb), JIRA("SME-561"), Description("This test verifies email verification command by issuing it and checking its response")]
