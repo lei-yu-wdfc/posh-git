@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Wonga.QA.Framework.Api;
-using Wonga.QA.Framework.Common.Enums.Risk;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Helpers;
 

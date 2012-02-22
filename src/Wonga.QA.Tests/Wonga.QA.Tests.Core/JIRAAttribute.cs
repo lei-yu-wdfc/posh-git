@@ -7,16 +7,16 @@ namespace Wonga.QA.Tests.Core
     [AttributeUsage(PatternAttributeTargets.TestComponent, AllowMultiple = true)]
     public class JIRAAttribute : MetadataPatternAttribute
     {
-        private String _issue;
+        private String _key;
 
-        public JIRAAttribute(String issue)
+        public JIRAAttribute(String key)
         {
-            _issue = issue;
+            _key = key;
         }
 
         protected override IEnumerable<KeyValuePair<String, String>> GetMetadata()
         {
-            yield return new KeyValuePair<String, String>("JIRA", _issue);
+            yield return new KeyValuePair<String, String>("JIRA", String.Format("https://jira.wonga.com/browse/{0}", _key));
         }
     }
 }
