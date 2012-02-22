@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Wonga.QA.Framework.Db.Payments;
 
 namespace Wonga.QA.Tests.Payments.Helpers.Ca
 {
@@ -44,6 +46,27 @@ namespace Wonga.QA.Tests.Payments.Helpers.Ca
             return Decimal.Round(loanAmount*CalculateTotalDailyInterestRateCa(loanTerm, 1, true), 2,
                                  MidpointRounding.AwayFromZero);
 
+        }
+
+        public static decimal CalculateActualDailyInterestRateCa(List<TransactionEntity> actualRatesApplied)
+        {
+            decimal dailyInterestRate = 0;
+
+            foreach (var transaction in actualRatesApplied)
+            {
+
+                if (transaction.Reference == "Normal interest rate")
+                {
+                    dailyInterestRate = dailyInterestRate + (decimal)((transaction.Mir * 12) / 36500);
+                    dailyInterestRate = dailyInterestRate * 10;
+                }
+                else
+                {
+                    dailyInterestRate = dailyInterestRate + (decimal)((transaction.Mir * 12) / 36500);
+                }
+            }
+
+            return Decimal.Round(dailyInterestRate, 4, MidpointRounding.AwayFromZero); ;
         }
     }
 }

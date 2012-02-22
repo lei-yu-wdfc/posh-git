@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db;
 
 namespace Wonga.QA.Framework
 {
@@ -47,6 +48,22 @@ namespace Wonga.QA.Framework
         public Guid GetPaymentCard()
         {
             return Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == Id).PaymentCardsBaseEntity.ExternalId;
+        }
+
+        public void UpdateForename(String forename)
+        {
+            var db = new DbDriver();
+            var customerDetailsRow = db.Comms.CustomerDetails.Single(cd => cd.AccountId == Id);
+            customerDetailsRow.Forename = forename;
+            db.Comms.SubmitChanges();
+        }
+
+        public void UpdateSurname(String surname)
+        {
+            var db = new DbDriver();
+            var customerDetailsRow = db.Comms.CustomerDetails.Single(cd => cd.AccountId == Id);
+            customerDetailsRow.Surname = surname;
+            db.Comms.SubmitChanges();
         }
     }
 }

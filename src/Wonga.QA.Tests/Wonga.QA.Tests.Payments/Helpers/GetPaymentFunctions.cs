@@ -49,15 +49,15 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
             var actualVariableRates = new List<VariableInterestRateDetailEntity>();
 
-            //List<string> day = response.GetValues("Day").ToList();
-            //List<string> rate = response.GetValues("Rate").ToList();
+            List<string> day = response.Values["Day"].ToList();
+            List<string> rate = response.Values["Rate"].ToList();
 
-            //for (int counter = 0; counter < day.Count; counter++)
-            //{
-            //    actualVariableRates.Add(CreatePaymentFunctions.CreateRowOfTypeVariableInterestRateDetail());
-            //    actualVariableRates.Last().Day = Convert.ToByte(day[counter]);
-            //    actualVariableRates.Last().MonthlyInterestRate = Convert.ToDecimal(rate[counter]);
-            //}
+            for (int counter = 0; counter < day.Count; counter++)
+            {
+                actualVariableRates.Add(CreatePaymentFunctions.CreateRowOfTypeVariableInterestRateDetail());
+                actualVariableRates.Last().Day = Convert.ToByte(day[counter]);
+                actualVariableRates.Last().MonthlyInterestRate = Convert.ToDecimal(rate[counter]);
+            }
 
             return actualVariableRates;
         }
@@ -103,10 +103,10 @@ namespace Wonga.QA.Tests.Payments.Helpers
             return allInterestAmountsPosted.Last().Amount;
         }
 
-        public static ApiResponse GetFixedTermLoanOfferQuery()
+        public static ApiResponse GetFixedTermLoanOfferCaQuery()
         {
-            return Driver.Api.Queries.Post(new GetFixedTermLoanApplicationQuery());
-        }
+            return Driver.Api.Queries.Post(new GetFixedTermLoanOfferCaQuery());
+        } 
 
         private static bool GetIsBankGatewayTestMode()
         {

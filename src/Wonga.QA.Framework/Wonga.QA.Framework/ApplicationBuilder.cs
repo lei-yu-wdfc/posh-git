@@ -180,6 +180,11 @@ namespace Wonga.QA.Framework
             if (_decision == ApplicationDecisionStatusEnum.Declined)
                 return new Application(_id);
 
+            if (_decision == ApplicationDecisionStatusEnum.Pending)
+            {
+                int i;
+            }
+
             Driver.Api.Commands.Post(new SignApplicationCommand { AccountId = _customer.Id, ApplicationId = _id });
 
             ApiRequest summary = Config.AUT == AUT.Za
