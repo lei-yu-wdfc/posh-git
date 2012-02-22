@@ -48,11 +48,7 @@ namespace Wonga.QA.Tests.Payments
 			AddBankAccountCaInternal(customer.Id);
 
 			// Wait for view model to catch up, otherwise the validator in the API won't fire.
-			Do.Until(() =>
-			{
-				var response = Driver.Api.Queries.Post(new GetBankAccountsQuery {AccountId = customer.Id});
-				return response.Values.Contains("CanAddBankAccount") && "false" == response.Values["CanAddBankAccount"].Single();
-			});
+			Do.Until(() => Driver.Db.Payments.AccountPreferences.Single(p => p.AccountId == customer.Id && !p.CanAddBankAccount));
 
 			AddBankAccountCaInternal(customer.Id);
 		}
