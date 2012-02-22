@@ -13,8 +13,10 @@ namespace Wonga.QA.Framework
         private Guid _id;
         private Guid _verification;
         private String _employerName;
-		private Date _nextPayDate;
+        private String _foreName;
+	    private Date _nextPayDate;
         private String _middleName;
+        private String _surname;
         private String _houseNumber;
         private ProvinceEnum _province;
         private string _email;
@@ -68,9 +70,9 @@ namespace Wonga.QA.Framework
             return new CustomerBuilder { _id = id };
         }
 
-        public CustomerBuilder WithEmployer(string name)
+        public CustomerBuilder WithEmployer(string employerName)
         {
-            _employerName = name;
+            _employerName = employerName;
             return this;
         }
 
@@ -80,9 +82,21 @@ namespace Wonga.QA.Framework
 			return this;
 		}
 
-        public CustomerBuilder WithMiddleName(string name)
+        public CustomerBuilder WithForename(String foreName)
         {
-            _middleName = name;
+            _foreName = foreName;
+            return this;
+        }
+
+        public CustomerBuilder WithMiddleName(String middleName)
+        {
+            _middleName = middleName;
+            return this;
+        }
+
+        public CustomerBuilder WithSurname(String surname)
+        {
+            _surname = surname;
             return this;
         }
         
@@ -200,7 +214,9 @@ namespace Wonga.QA.Framework
                         SaveCustomerDetailsCaCommand.New(r => 
                         { 
                             r.AccountId = _id;
+                            r.Forename = _foreName;
                             r.MiddleName = _middleName;
+                            r.Surname = _surname;
                             r.Email = _email;
                         }),                       
                         SaveCustomerAddressCaCommand.New(r => {
