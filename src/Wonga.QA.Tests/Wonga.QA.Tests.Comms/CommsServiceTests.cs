@@ -7,7 +7,7 @@ namespace Wonga.QA.Tests.Comms
     [Parallelizable(TestScope.All)]
     public class CommsServiceTests
     {
-        [Test, AUT]
+        [Test]
         public void CommsServiceIsRunning()
         {
             Assert.IsTrue(Driver.Svc.Comms.IsRunning());

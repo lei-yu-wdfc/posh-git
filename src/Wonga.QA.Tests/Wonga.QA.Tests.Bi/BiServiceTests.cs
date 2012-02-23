@@ -7,7 +7,7 @@ namespace Wonga.QA.Tests.Bi
     [Parallelizable(TestScope.All)]
     public class BiServiceTests
     {
-        [Test, AUT]
+        [Test]
         public void BiServiceIsRunning()
         {
             Assert.IsTrue(Driver.Svc.Bi.IsRunning());

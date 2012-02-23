@@ -1,25 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using Gallio.Common.Reflection;
+using Gallio.Framework;
 using Gallio.Framework.Pattern;
 using Gallio.Model;
 using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Tests.Core
 {
-    [AttributeUsage(PatternAttributeTargets.TestComponent)]
-    public class AUTAttribute : MetadataPatternAttribute
+    [AttributeUsage(PatternAttributeTargets.Test)]
+    public class AUTAttribute : TestDecoratorPatternAttribute
     {
-        private IEnumerable<AUT> _aut;
+        private List<AUT> _auts;
 
-        public AUTAttribute(params AUT[] aut)
+        public AUTAttribute(AUT aut, params AUT[] auts)
         {
-            _aut = aut.Any() ? aut : Enum.GetValues(typeof(AUT)).Cast<AUT>();
+            _auts = new List<AUT>(auts) { aut };
         }
 
-        protected override IEnumerable<KeyValuePair<String, String>> GetMetadata()
+        protected override void DecorateTest(IPatternScope scope, ICodeElementInfo codeElement)
         {
-            return _aut.Select(aut => new KeyValuePair<String, String>(MetadataKeys.Category, aut.ToString()));
+            if (!_auts.Contains(Config.AUT)) scope.TestBuilder.TestActions.BeforeTestChain.Before(state => { throw new SilentTestException(TestOutcome.Skipped); });
         }
     }
 }

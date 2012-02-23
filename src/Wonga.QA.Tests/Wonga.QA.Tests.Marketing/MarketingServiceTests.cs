@@ -7,7 +7,7 @@ namespace Wonga.QA.Tests.Marketing
     [Parallelizable(TestScope.All)]
     public class MarketingServiceTests
     {
-        [Test, AUT]
+        [Test]
         public void MarketingServiceIsRunning()
         {
             Assert.IsTrue(Driver.Svc.Marketing.IsRunning());

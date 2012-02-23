@@ -7,7 +7,7 @@ namespace Wonga.QA.Tests.Iovation
     [Parallelizable(TestScope.All)]
     public class IovationServiceTests
     {
-        [Test, AUT]
+        [Test]
         public void IovationServiceIsRunning()
         {
             Assert.IsTrue(Driver.Svc.Iovation.IsRunning());

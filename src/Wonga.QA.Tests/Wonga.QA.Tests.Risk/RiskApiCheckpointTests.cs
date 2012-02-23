@@ -161,7 +161,7 @@ namespace Wonga.QA.Tests.Risk
         }
 
         [Test,
-        //AUT(AUT.Wb),
+        AUT(AUT.Wb),
         JIRA("SME-575"),
         Description("CallReport -> This test creates a loan for the customer that is dead according to call report, then checks the risk checkpoint"),
         Pending("Deadguy case not working properly - needs investigating what breaks it and how to fix - it times out at creating application")]
@@ -226,7 +226,7 @@ namespace Wonga.QA.Tests.Risk
         }
 
         [Test,
-        //AUT(AUT.Wb),
+        AUT(AUT.Wb),
         JIRA("SME-584"),
         Description("CallReport -> This test creates a loan for a customer that IS CIFAS flagged, then checks the risk checkpoint"),
         Pending("Laura Insolvent case not working properly - it times out at creating application")]
@@ -291,7 +291,7 @@ namespace Wonga.QA.Tests.Risk
         }
 
         [Test,
-        //AUT(AUT.Wb),
+        AUT(AUT.Wb),
         JIRA("SME-638"), 
         Description("CallReport -> This test creates a loan for the insolvent customer, then checks the risk checkpoint"),
         Pending("Laura Insolvent case not working properly - it times out at creating application")]
@@ -327,7 +327,7 @@ namespace Wonga.QA.Tests.Risk
 
         #region Experian
         [Test,
-        //AUT(AUT.Wb),
+        AUT(AUT.Wb),
         JIRA("SME-575"),
         Description("Experian -> This test creates a loan for the unknown customer that is alive and with no consumer bureau data, then checks the risk checkpoint"),
         Pending("Experian not implemented yet?")]
@@ -360,7 +360,7 @@ namespace Wonga.QA.Tests.Risk
         }
 
         [Test,
-        //AUT(AUT.Wb),
+        AUT(AUT.Wb),
         JIRA("SME-575"),
         Description("Experian -> This test creates a loan for the Kathleen customer that is alive, then checks the risk checkpoint"),
         Pending("Experian not implemented yet?")]
@@ -393,7 +393,7 @@ namespace Wonga.QA.Tests.Risk
         }
 
         [Test,
-        //AUT(AUT.Wb),
+        AUT(AUT.Wb),
         JIRA("SME-575"),
         Description("Experian -> This test creates a loan for the customer that is dead, then checks the risk checkpoint"),
         Pending("Experian not implemented yet?")]
@@ -426,7 +426,7 @@ namespace Wonga.QA.Tests.Risk
         }
 
         [Test,
-        //AUT(AUT.Wb),
+        AUT(AUT.Wb),
         JIRA("SME-584"),
         Description("Experian -> This test creates a loan for a customer that is not CIFAS flagged, then checks the risk checkpoint"),
         Pending("Experian not implemented yet?")]
@@ -459,7 +459,7 @@ namespace Wonga.QA.Tests.Risk
         }
 
         [Test,
-        //AUT(AUT.Wb),
+        AUT(AUT.Wb),
         JIRA("SME-584"),
         Description("Experian -> This test creates a loan for a customer that IS CIFAS flagged, then checks the risk checkpoint"),
         Pending("Experian not implemented yet?")]
@@ -492,7 +492,7 @@ namespace Wonga.QA.Tests.Risk
         }
 
         [Test, 
-        //AUT(AUT.Wb), 
+        AUT(AUT.Wb), 
         JIRA("SME-638"),
         Description("Experian -> This test creates a loan for the solvent customer, then checks the risk checkpoint"),
         Pending("Experian not implemented yet?")]
@@ -525,7 +525,7 @@ namespace Wonga.QA.Tests.Risk
         }
 
         [Test,
-        //AUT(AUT.Wb),
+        AUT(AUT.Wb),
         JIRA("SME-638"),
         Description("Experian -> This test creates a loan for the insolvent customer, then checks the risk checkpoint"),
         Pending("Experian not implemented yet?")]

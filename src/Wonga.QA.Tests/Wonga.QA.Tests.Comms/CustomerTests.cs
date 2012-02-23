@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Gallio.Framework;
 using MbUnit.Framework;
-using MbUnit.Framework.ContractVerifiers;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
@@ -197,7 +193,7 @@ namespace Wonga.QA.Tests.Comms
         }
 
         [Test,
-        //AUT(AUT.Wb), 
+        AUT(AUT.Wb), 
         JIRA("SME-561"),
         Description("This negative test validates the scenario of saving personal and phone details of customer that is recognized, this test validates error code fron error response returned by the API call"),
         Ignore("I cannot reproduce what this test needs. I will review later")]

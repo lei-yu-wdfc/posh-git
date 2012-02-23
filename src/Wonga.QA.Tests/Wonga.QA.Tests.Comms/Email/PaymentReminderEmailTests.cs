@@ -104,7 +104,7 @@ namespace Wonga.QA.Tests.Comms.Email
                 }
 
                 [Ignore("Ignored due to timing issues with exact target")]
-                [Test, /*AUT(AUT.Ca),*/ JIRA("CA-1149")]
+                [Test, AUT(AUT.Ca), JIRA("CA-1149")]
                 public void ThenAPaymentReminderEmailIsSent()
                 {
                     Assert.IsTrue(CheckPaymentReminderEmailSent());
@@ -130,7 +130,7 @@ namespace Wonga.QA.Tests.Comms.Email
                 }
 
                 [Ignore("Ignored due to timing issues with exact target")]
-                [Test, /*AUT(AUT.Ca),*/ JIRA("CA-1149")]
+                [Test, AUT(AUT.Ca), JIRA("CA-1149")]
                 public void ThenAPaymentReminderEmailIsSent()
                 {
                     Assert.IsTrue(CheckPaymentReminderEmailSent());
@@ -162,7 +162,7 @@ namespace Wonga.QA.Tests.Comms.Email
                 }
 
                 [Ignore("Ignored due to timing issues with exact target")]
-                [Test, /*AUT(AUT.Ca),*/ JIRA("CA-1149")]
+                [Test, AUT(AUT.Ca), JIRA("CA-1149")]
                 public void ThenAPaymentReminderEmailIsSent()
                 {
                     Assert.IsTrue(CheckPaymentReminderEmailSent());
@@ -188,7 +188,7 @@ namespace Wonga.QA.Tests.Comms.Email
                 }
 
                 [Ignore("Ignored due to timing issues with exact target")]
-                [Test, /*AUT(AUT.Ca),*/ JIRA("CA-1149")]
+                [Test, AUT(AUT.Ca), JIRA("CA-1149")]
                 public void ThenAPaymentReminderEmailIsSent()
                 {
                     Assert.IsTrue(CheckPaymentReminderEmailSent());
@@ -229,7 +229,7 @@ namespace Wonga.QA.Tests.Comms.Email
                 }
 
                 [Ignore("Ignored due to timing issues with exact target")]
-                [Test, /*AUT(AUT.Ca),*/ JIRA("CA-1149")]
+                [Test, AUT(AUT.Ca), JIRA("CA-1149")]
                 public void ThenAPaymentReminderEmailIsSent()
                 {
                     Assert.IsTrue(CheckPaymentReminderEmailSent());
@@ -255,7 +255,7 @@ namespace Wonga.QA.Tests.Comms.Email
                 }
 
                 [Ignore("Ignored due to timing issues with exact target")]
-                [Test, /*AUT(AUT.Ca),*/ JIRA("CA-1149")]
+                [Test, AUT(AUT.Ca), JIRA("CA-1149")]
                 public void ThenAPaymentReminderEmailIsNotSent()
                 {
                     Assert.IsFalse(CheckPaymentReminderEmailSent());

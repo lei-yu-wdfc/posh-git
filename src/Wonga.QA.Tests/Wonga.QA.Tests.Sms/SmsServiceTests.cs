@@ -7,7 +7,7 @@ namespace Wonga.QA.Tests.Sms
     [Parallelizable(TestScope.All)]
     public class SmsServiceTests
     {
-        [Test, AUT]
+        [Test]
         public void SmsServiceIsRunning()
         {
             Assert.IsTrue(Driver.Svc.Sms.IsRunning());

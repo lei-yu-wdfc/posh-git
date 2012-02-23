@@ -7,7 +7,7 @@ namespace Wonga.QA.Tests.Email
     [Parallelizable(TestScope.All)]
     public class EmailServiceTests
     {
-        [Test, AUT]
+        [Test]
         public void EmailServiceIsRunning()
         {
             Assert.IsTrue(Driver.Svc.Email.IsRunning());

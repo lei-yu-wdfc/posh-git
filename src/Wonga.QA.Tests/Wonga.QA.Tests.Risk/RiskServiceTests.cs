@@ -7,7 +7,7 @@ namespace Wonga.QA.Tests.Risk
     [Parallelizable(TestScope.All)]
     public class RiskServiceTests
     {
-        [Test, AUT]
+        [Test]
         public void RiskServiceIsRunning()
         {
             Assert.IsTrue(Driver.Svc.Risk.IsRunning());

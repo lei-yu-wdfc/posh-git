@@ -7,7 +7,7 @@ namespace Wonga.QA.Tests.Payments
     [Parallelizable(TestScope.All)]
     public class PaymentsServiceTests
     {
-        [Test, AUT]
+        [Test]
         public void PaymentsServiceIsRunning()
         {
             Assert.IsTrue(Driver.Svc.Payments.IsRunning());

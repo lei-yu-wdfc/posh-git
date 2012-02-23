@@ -7,7 +7,7 @@ namespace Wonga.QA.Tests.Ops
     [Parallelizable(TestScope.All)]
     public class OpsServiceTests
     {
-        [Test, AUT]
+        [Test]
         public void OpsServiceIsRunning()
         {
             Assert.IsTrue(Driver.Svc.Ops.IsRunning());

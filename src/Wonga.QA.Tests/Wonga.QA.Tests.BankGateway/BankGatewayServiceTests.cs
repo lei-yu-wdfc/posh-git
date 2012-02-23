@@ -8,7 +8,7 @@ namespace Wonga.QA.Tests.BankGateway
     [Parallelizable(TestScope.All)]
     public class BankGatewayServiceTests
     {
-        [Test, AUT]
+        [Test]
         public void BankGatewayServiceIsRunning()
         {
             Assert.IsTrue(Driver.Svc.BankGateway.IsRunning());

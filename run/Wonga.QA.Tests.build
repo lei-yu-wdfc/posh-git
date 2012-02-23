@@ -39,7 +39,6 @@
 	<Target Name="Test">
 		<Gallio
 			Files="$(Bin)\$(Tests)\$(Tests).dll"
-			Filter="Category: $(AUT)"
 			ReportTypes="xml"
 			ReportDirectory="$(Bin)\$(Tests).Report"
 		/>

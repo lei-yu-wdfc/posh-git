@@ -7,7 +7,7 @@ namespace Wonga.QA.Tests.FileStorage
     [Parallelizable(TestScope.All)]
     public class FileStorageServiceTests
     {
-        [Test, AUT]
+        [Test]
         public void FileStorageServiceIsRunning()
         {
             Assert.IsTrue(Driver.Svc.FileStorage.IsRunning());
