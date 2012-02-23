@@ -16,6 +16,9 @@ using Wonga.QA.Framework.Db.IpLookup;
 using Wonga.QA.Framework.Db.Ops;
 using Wonga.QA.Framework.Db.OpsLogs;
 using Wonga.QA.Framework.Db.OpsSagas;
+using Wonga.QA.Framework.Db.OpsSagasCa;
+using Wonga.QA.Framework.Db.OpsSagasUk;
+using Wonga.QA.Framework.Db.OpsSagasWb;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Db.QAData;
 using Wonga.QA.Framework.Db.Risk;
@@ -32,7 +35,6 @@ namespace Wonga.QA.Framework.Db
     public class DbDriver
     {
         private OpsDatabase _ops;
-        private OpsSagasDatabase _opsSagas;
         private OpsLogsDatabase _opsLogs;
         private CommsDatabase _comms;
         private PaymentsDatabase _payments;
@@ -59,16 +61,19 @@ namespace Wonga.QA.Framework.Db
         private WongaPayDatabase _wongaPay;
         private QADataDatabase _qaData;
 
+        private OpsSagasUkDatabase _opsSagasUk;
+        private OpsSagasDatabase _opsSagasZa;
+        private OpsSagasCaDatabase _opsSagasCa;
+        private OpsSagasWbDatabase _opsSagasWb;
+        public OpsSagasDatabase OpsSagas { get { return _opsSagasZa ?? (_opsSagasZa = new OpsSagasDatabase(Config.Db.OpsSagas)); } }
+        public OpsSagasUkDatabase OpsSagasUk { get { return _opsSagasUk ?? (_opsSagasUk = new OpsSagasUkDatabase(Config.Db.OpsSagas)); } }
+        public OpsSagasCaDatabase OpsSagasCa { get { return _opsSagasCa ?? (_opsSagasCa = new OpsSagasCaDatabase(Config.Db.OpsSagas)); } }
+        public OpsSagasWbDatabase OpsSagasWb { get { return _opsSagasWb ?? (_opsSagasWb = new OpsSagasWbDatabase(Config.Db.OpsSagas)); } }
+
         public OpsDatabase Ops
         {
             get { return _ops ?? (_ops = new OpsDatabase(Config.Db.Ops)); }
             set { _ops = value; }
-        }
-
-        public OpsSagasDatabase OpsSagas
-        {
-            get { return _opsSagas ?? (_opsSagas = new OpsSagasDatabase(Config.Db.OpsSagas)); }
-            set { _opsSagas = value; }
         }
 
         public OpsLogsDatabase OpsLogs

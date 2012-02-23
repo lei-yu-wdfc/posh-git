@@ -1,7 +1,7 @@
 @ECHO OFF
 CLS
 
-SET Root=%CD%\%0\..\..
+SET Root=%0\..\..
 SET Run=%Root%\run
 SET Src=%Root%\src
 SET Bin=%Root%\bin
@@ -30,6 +30,7 @@ IF ERRORLEVEL 4 GOTO 4
 IF ERRORLEVEL 3 GOTO 3
 IF ERRORLEVEL 2 GOTO 2
 IF ERRORLEVEL 1 GOTO 1
+GOTO EOF
 
 :1
 	CD %Root% && FOR /R %%0 IN (*.sln) DO %MSBuild% %%0 /v:m || PAUSE

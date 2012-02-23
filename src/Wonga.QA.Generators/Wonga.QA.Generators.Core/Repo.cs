@@ -13,6 +13,7 @@ namespace Wonga.QA.Generators.Core
         public static DirectoryInfo Root { get; set; }
         public static DirectoryInfo Src { get; set; }
         public static DirectoryInfo Bin { get; set; }
+        public static DirectoryInfo Lib { get; set; }
 
         static Repo()
         {
@@ -21,6 +22,7 @@ namespace Wonga.QA.Generators.Core
             Root = new FileInfo(assembly.Location).Directory.Parent.Parent;
             Src = Root.GetDirectories("src").Single();
             Bin = Root.GetDirectories("bin").Single();
+            Lib = Root.GetDirectories("lib").Single();
         }
 
         public static FileInfo File(String name, DirectoryInfo directory)

@@ -38,7 +38,6 @@
     <Compile Include="DbEntity.cs" />
     <Compile Include="DbExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Temp\OpsSagasDatabase.cs" />
     <Compile Include="Databases\BankGatewayDatabase.cs" />
     <Compile Include="Databases\BiDatabase.cs" />
     <Compile Include="Databases\BlacklistDatabase.cs" />
@@ -65,6 +64,10 @@
     <Compile Include="Databases\TransUnionDatabase.cs" />
     <Compile Include="Databases\UruDatabase.cs" />
     <Compile Include="Databases\WongaPayDatabase.cs" />
+    <Compile Include="Temp\OpsSagasCaDatabase.cs" />
+    <Compile Include="Temp\OpsSagasUkDatabase.cs" />
+    <Compile Include="Temp\OpsSagasWbDatabase.cs" />
+    <Compile Include="Temp\OpsSagasZaDatabase.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

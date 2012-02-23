@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Data.Linq;
 using System.Linq;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
