@@ -20,7 +20,10 @@ namespace Wonga.QA.Tests.Core
 
         protected override void DecorateTest(IPatternScope scope, ICodeElementInfo codeElement)
         {
-            if (!_auts.Contains(Config.AUT)) scope.TestBuilder.TestActions.BeforeTestChain.Before(state => { throw new SilentTestException(TestOutcome.Skipped); });
+            _auts.ForEach(aut => scope.TestBuilder.AddMetadata(MetadataKeys.Category, aut.ToString()));
+            
+            if (!_auts.Contains(Config.AUT))
+                scope.TestBuilder.TestActions.BeforeTestChain.Before(state => { throw new SilentTestException(TestOutcome.Skipped); });
         }
     }
 }
