@@ -16,10 +16,10 @@ namespace Wonga.QA.Tests.Comms
     [Parallelizable(TestScope.All)]
     public class MobilePhoneTests
     {
-        [SetUp, AUT]
-        public void Setup(){}
 
-        [Test, AUT(AUT.Wb),JIRA("SME-563"),
+        [Test,
+        AUT(AUT.Wb),
+        JIRA("SME-563"),
         Description("This test sends mobile phone verification message to predefined number")]
         public void TestVerifyMobilePhoneCommand()
         {
@@ -40,7 +40,9 @@ namespace Wonga.QA.Tests.Comms
             Assert.AreEqual(mobileVerificationEntity.MobilePhone, mobilePhone, "These values should be equal");
         }
 
-        [Test, AUT(AUT.Wb),JIRA("SME-563"),
+        [Test,
+        AUT(AUT.Wb),
+        JIRA("SME-563"),
         Description("This negative test attempts to send verification sms to invalid UK phone numbers and checks for expected failure")]
         public void TestVerifyMobilePhoneCommand_WithInvalidNumber()
         {
@@ -59,7 +61,9 @@ namespace Wonga.QA.Tests.Comms
             Assert.AreEqual(exceptionObject.Errors.ToList()[0], "Ops_RequestXmlInvalid", "These values should be equal");
         }
 
-        [Test, AUT(AUT.Wb),JIRA("SME-563"),
+        [Test,
+        AUT(AUT.Wb),
+        JIRA("SME-563"),
         Description("This test covers the process of creating a new customer details record, initiates mobile phone verification and completes it with correct PIN")]
         public void CompleteMobilePhoneVerification()
         {
@@ -103,7 +107,9 @@ namespace Wonga.QA.Tests.Comms
                                                                  }));
         }
 
-        [Test, AUT(AUT.Wb),JIRA("SME-563"),
+        [Test,
+        AUT(AUT.Wb),
+        JIRA("SME-563"),
         Description("This negative test covers the process of creating a new customer details record, initiates mobile phone verification and completes it with incorrect PIN, while checking for failure")]
         public void TestCompleteEmailVerificationCommand_WithInvalidPin()
         {
@@ -116,7 +122,9 @@ namespace Wonga.QA.Tests.Comms
             Assert.AreEqual(exceptionObject.Errors.ToList()[0], "Ops_RequestXmlInvalid", "These values should be equal");
         }
 
-        [Test, AUT(AUT.Wb),JIRA("SME-563"),
+        [Test,
+        AUT(AUT.Wb),
+        JIRA("SME-563"),
         Description("This test initiates the resend pin feature for new customer details record")]
         public void TestResendMobilePhonePin()
         {
