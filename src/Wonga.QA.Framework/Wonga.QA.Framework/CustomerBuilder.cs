@@ -251,7 +251,13 @@ namespace Wonga.QA.Framework
                 case AUT.Wb:
                     requests.AddRange(new ApiRequest[]
                     {
-                        SaveCustomerDetailsUkCommand.New(r=> { r.AccountId = _id; r.MiddleName = _middleName;}),
+                        SaveCustomerDetailsUkCommand.New(r=>
+                                                             {
+                                                                 r.AccountId = _id; 
+                                                                 r.MiddleName = _middleName;
+                                                                 r.Surname = _surname;
+                                                                 r.Forename = _foreName;
+                                                             }),
                         SaveCustomerAddressUkCommand.New(r=>
                                                              {
                                                                  r.AccountId = _id;

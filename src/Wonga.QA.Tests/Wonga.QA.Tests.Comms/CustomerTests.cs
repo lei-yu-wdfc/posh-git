@@ -25,7 +25,8 @@ namespace Wonga.QA.Tests.Comms
 
         }
 
-        [Test,AUT(AUT.Wb), JIRA("SME-561"), Description("This test verifies the save customer address command by verifying its response and verifying that the record has been created in the repository")]
+        //PLEASE PUT AUT ATTRIBUTE AFTER REVIEW
+        [Test, JIRA("SME-561"), Description("This test verifies the save customer address command by verifying its response and verifying that the record has been created in the repository")]
         public void TestAddressOverridesCorrectlySaved()
         {
             var customer = CustomerBuilder.New()
@@ -48,7 +49,8 @@ namespace Wonga.QA.Tests.Comms
             Assert.AreEqual(addressEntity.Town, "MyTown", "These values should be equal");
         }
 
-        [Test, AUT(AUT.Wb), JIRA("SME-561"), Description("This test verifies update customer address command by issuing a command and verifying its successful response and that the record in the repository has been changed")]
+        //PLEASE PUT AUT ATTRIBUTE AFTER REVIEW
+        [Test, JIRA("SME-561"), Description("This test verifies update customer address command by issuing a command and verifying its successful response and that the record in the repository has been changed")]
         public void TestUpdateCustomerAddressCommand()
         {
             var customer = CustomerBuilder.New()
@@ -96,7 +98,8 @@ namespace Wonga.QA.Tests.Comms
             Assert.AreEqual(addressEntity.PostCode, message.Postcode, "These values should be equal");
         }
 
-        [Test, AUT(AUT.Wb), JIRA("SME-561"), Description("This test verifies get current address query by creating a new customer address, issuing a query and comparing the response to repository record")]
+        //PLEASE PUT AUT ATTRIBUTE AFTER REVIEW
+        [Test, JIRA("SME-561"), Description("This test verifies get current address query by creating a new customer address, issuing a query and comparing the response to repository record")]
         public void TestGetCurrentAddressQuery()
         {
             var customer = CustomerBuilder.New()
@@ -116,7 +119,8 @@ namespace Wonga.QA.Tests.Comms
             Assert.AreEqual(addressEntity.Flat, specificFlatName, "These values should be equal");
         }
 
-        [Test, AUT(AUT.Wb), JIRA("SME-565"), Description("This test obtains address descriptors for all UK postcode variants and validates their content")]
+        //PLEASE PUT AUT ATTRIBUTE AFTER REVIEW
+        [Test, JIRA("SME-565"), Description("This test obtains address descriptors for all UK postcode variants and validates their content")]
         public void TestGetAddressByDescriptionId()
         {
             //var postCodes = new[] {"W1A 1HQ", "M1 1AA", "B33 8TH", "CR2 6XH", "DN55 1PT", "EC1A 1BB"};
@@ -140,7 +144,8 @@ namespace Wonga.QA.Tests.Comms
             }
         }
 
-        [Test, AUT(AUT.Wb), JIRA("SME-565"), Description("This test obtains address descriptors for all UK postcode variants")]
+        //PLEASE PUT AUT ATTRIBUTE AFTER REVIEW
+        [Test, JIRA("SME-565"), Description("This test obtains address descriptors for all UK postcode variants")]
         public void TestGetAddressDescriptorsByPostCode()
         {
             //var postCodes = new[] {"W1A 1HQ", "M1 1AA", "B33 8TH", "CR2 6XH", "DN55 1PT", "EC1A 1BB"};
@@ -162,7 +167,8 @@ namespace Wonga.QA.Tests.Comms
             }
         }
 
-        [Test, AUT(AUT.Wb), JIRA("SME-561"), Description("This test verifies Save customer personal and phone details by issuing and API call, verifying its response and locating the expected record in the DB")]
+        //PLEASE PUT AUT ATTRIBUTE AFTER REVIEW
+        [Test, JIRA("SME-561"), Description("This test verifies Save customer personal and phone details by issuing and API call, verifying its response and locating the expected record in the DB")]
         public void TestSaveCustomerDetailsCommand()
         {
             var accountId = Guid.NewGuid();
@@ -215,7 +221,9 @@ namespace Wonga.QA.Tests.Comms
         //    var x = response.GetErrors();
         //}
 
-        [Test, AUT(AUT.Wb), JIRA("SME-561"), Description("This test verifies minimum age validation by attempting to submit underage and verifies expected failure response")]
+
+        //PLEASE PUT AUT ATTRIBUTE AFTER REVIEW
+        [Test, JIRA("SME-561"), Description("This test verifies minimum age validation by attempting to submit underage and verifies expected failure response")]
         public void TestSaveCustomerDetailsCommand_Underage()
         {
             var accountId = Guid.NewGuid();
@@ -236,7 +244,8 @@ namespace Wonga.QA.Tests.Comms
             Assert.AreEqual(error.Errors.ToList()[0], "Comms_Age_BelowMinuimumAge", "These values should be equal");
         }
 
-        [Test, AUT(AUT.Wb), JIRA("SME-561"), Description("This test verifies GetCustomerDetails query by creating new customer details record, issuing the query, verifying its response and comparing the data it returns to repository record")]
+        //PLEASE PUT AUT ATTRIBUTE AFTER REVIEW
+        [Test, JIRA("SME-561"), Description("This test verifies GetCustomerDetails query by creating new customer details record, issuing the query, verifying its response and comparing the data it returns to repository record")]
         public void TestGetCustomerDetailsQuery()
         {
             var accountId = Guid.NewGuid();
@@ -265,7 +274,8 @@ namespace Wonga.QA.Tests.Comms
             Assert.AreEqual(response.Values["Email"].Single(), newEntity.Email, "These values should be equal");
         }
 
-        [Test, AUT(AUT.Wb), JIRA("SME-561"), Description("This test verifies the SaveContactPreferences command by issuing it, checking its response and verifying that the repository record has been created and compare the data in the repository to expected values")]
+        //PLEASE PUT AUT ATTRIBUTE AFTER REVIEW
+        [Test, JIRA("SME-561"), Description("This test verifies the SaveContactPreferences command by issuing it, checking its response and verifying that the repository record has been created and compare the data in the repository to expected values")]
         public void TestSaveContactPreferencesCommand()
         {
             var accountId = Guid.NewGuid();
@@ -281,7 +291,8 @@ namespace Wonga.QA.Tests.Comms
             Assert.AreEqual(contactPreferenceEntity.AcceptMarketingContact, message.AcceptMarketingContact, "These values should be equal");
         }
 
-        [Test, AUT(AUT.Wb), JIRA("SME-561"), Description("This test verifies the GetContactPreferences query by saving customer contact preferences and then retrieving them via the query and verifying its response")]
+        //PLEASE PUT AUT ATTRIBUTE AFTER REVIEW
+        [Test, JIRA("SME-561"), Description("This test verifies the GetContactPreferences query by saving customer contact preferences and then retrieving them via the query and verifying its response")]
         public void TestGetContactPreferencesQuery()
         {
             var accountId = Guid.NewGuid();
@@ -302,7 +313,8 @@ namespace Wonga.QA.Tests.Comms
             Assert.AreEqual<Boolean>(bool.Parse(response.Values["AcceptMarketingContact"].Single()), saveContactPreferencesEntity.AcceptMarketingContact, "These values should be equal");
         }
 
-        [Test, AUT(AUT.Wb), JIRA("SME-561"), Description("This test verifies Password reset email command to random email by issuing the command and checking its response")]
+        //PLEASE PUT AUT ATTRIBUTE AFTER REVIEW
+        [Test, JIRA("SME-561"), Description("This test verifies Password reset email command to random email by issuing the command and checking its response")]
         public void TestSendPasswordResetEmailCommand()
         {
             var accountId = Guid.NewGuid();
@@ -332,7 +344,8 @@ namespace Wonga.QA.Tests.Comms
                                                                    }));
         }
 
-        [Test, AUT(AUT.Wb), JIRA("SME-561"), Description("This test updates home phone details of the customer and checks that the repository record has been correctly updated")]
+        //PLEASE PUT AUT ATTRIBUTE AFTER REVIEW
+        [Test, JIRA("SME-561"), Description("This test updates home phone details of the customer and checks that the repository record has been correctly updated")]
         public void TestUpdateHomePhoneCommand()
         {
             var accountId = Guid.NewGuid();
@@ -364,7 +377,8 @@ namespace Wonga.QA.Tests.Comms
             Assert.AreEqual(updateHomePhoneMessage.HomePhone, detailsEntity.HomePhone, "These values should be equal");
         }
 
-        [Test, AUT(AUT.Wb), JIRA("SME-561"), Description("This test verifies email verification command by issuing it and checking its response")]
+        //PLEASE PUT AUT ATTRIBUTE AFTER REVIEW
+        [Test, JIRA("SME-561"), Description("This test verifies email verification command by issuing it and checking its response")]
         public void TestSendVerificationEmailCommand()
         {
             var accountId = Guid.NewGuid();
@@ -395,7 +409,8 @@ namespace Wonga.QA.Tests.Comms
                                                         }));
         }
 
-        [Test, AUT(AUT.Wb), JIRA("SME-561"), Description("This test verifies completion of email verification process by issuing the CompleteEmailVerification command and checking its response")]
+        //PLEASE PUT AUT ATTRIBUTE AFTER REVIEW
+        [Test, JIRA("SME-561"), Description("This test verifies completion of email verification process by issuing the CompleteEmailVerification command and checking its response")]
         public void TestCompleteEmailVerificationCommand()
         {
             var accountId = Guid.NewGuid();
