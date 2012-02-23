@@ -6,6 +6,7 @@ namespace Wonga.QA.Framework.Api
         WaitForData,
         Pending,
         Accepted,
-        Declined
+        Declined,
+		ReadyToSign
     }
 }

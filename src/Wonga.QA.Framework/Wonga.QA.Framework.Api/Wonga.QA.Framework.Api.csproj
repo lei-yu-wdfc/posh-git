@@ -73,6 +73,10 @@
     <Compile Include="Exceptions\NoDefaultException.cs" />
     <Compile Include="Exceptions\SchemaException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Temp\ApplicationDecisionStatusEnum.cs" />
+    <Compile Include="Temp\CheckpointDefinitionEnum.cs" />
+    <Compile Include="Temp\CheckpointStatusEnum.cs" />
+    <Compile Include="Temp\CreditBureauEnum.cs" />
     <Compile Include="Requests\AddBankAccountCaCommand.cs" />
     <Compile Include="Requests\AddBankAccountUkCommand.cs" />
     <Compile Include="Requests\AddBankAccountZaCommand.cs" />
@@ -227,10 +231,6 @@
     <Compile Include="Enums\ProvinceEnum.cs" />
     <Compile Include="Enums\SliderPositionEnum.cs" />
     <Compile Include="Enums\TitleEnum.cs" />
-    <Compile Include="Temp\ApplicationDecisionStatusEnum.cs" />
-    <Compile Include="Temp\CheckpointDefinitionEnum.cs" />
-    <Compile Include="Temp\CheckpointStatusEnum.cs" />
-    <Compile Include="Temp\CreditBureauEnum.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />

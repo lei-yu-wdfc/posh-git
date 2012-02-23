@@ -196,6 +196,8 @@ namespace Wonga.QA.Framework
 
             Driver.Api.Commands.Post(new SignApplicationCommand { AccountId = _customer.Id, ApplicationId = _id });
 
+
+
             ApiRequest summary = Config.AUT == AUT.Za
                                      ? new GetAccountSummaryZaQuery {AccountId = _customer.Id}
                                      :  (ApiRequest)new GetAccountSummaryQuery { AccountId = _customer.Id };
