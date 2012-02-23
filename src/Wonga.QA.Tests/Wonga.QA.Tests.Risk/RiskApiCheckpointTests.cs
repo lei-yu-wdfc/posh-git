@@ -15,6 +15,27 @@ namespace Wonga.QA.Tests.Risk
     [Parallelizable(TestScope.All)]
     class RiskApiCheckpointTests
     {
+        private Boolean SingleCheckPointVerification(Application application, CheckpointStatus expectedStatus, CheckpointDefinitionEnum checkpoint)
+        {
+            var db = new DbDriver();
+
+            int riskApp = db.Risk.RiskApplications.Single(r => r.ApplicationId == application.Id).RiskApplicationId;
+
+            var dbCheckpoint = db.Risk.WorkflowCheckpoints.Single(r => r.RiskApplicationId == riskApp);
+
+            return Data.EnumToString(checkpoint) ==
+                   db.Risk.CheckpointDefinitions.Single(r => r.CheckpointDefinitionId == dbCheckpoint.CheckpointDefinitionId).Name &&
+                   dbCheckpoint.CheckpointStatus == Convert.ToByte(expectedStatus);
+        }
+        private void AssertCreditBureauUsed(Application application, CreditBureauEnum creditBureauUsed)
+        {
+            var db = new DbDriver();
+            var riskApplicationEntity = db.Risk.RiskApplications.SingleOrDefault(r => r.ApplicationId == application.Id);
+            Assert.IsNotNull(riskApplicationEntity, "The risk application should exist");
+            Assert.IsNotNull(riskApplicationEntity.CreditBureauUsed, "One credit bureau should have been used");
+            Assert.AreEqual((CreditBureauEnum)riskApplicationEntity.CreditBureauUsed, creditBureauUsed, "The credit bureau used should be the same"); // <- Lol
+        }
+
         [SetUp, AUT]
         public void Setup() { }
 
@@ -77,7 +98,8 @@ namespace Wonga.QA.Tests.Risk
 
         #region CallReport
 
-        [Test, AUT(AUT.Wb), JIRA("SME-575"), Description("CallReport -> This test creates a loan for the unknown customer that is alive and with no consumer bureau data, then checks the risk checkpoint - ")]
+        [Test, AUT(AUT.Wb), JIRA("SME-575"),
+        Description("CallReport -> This test creates a loan for the unknown customer that is alive and with no consumer bureau data, then checks the risk checkpoint - ")]
         public void TestCallReportUnknownApplicant_LoanIsApproved()
         {
             const string maskName = "ApplicantIsNotDeceased";
@@ -106,7 +128,8 @@ namespace Wonga.QA.Tests.Risk
             AssertCreditBureauUsed(application, CreditBureauEnum.CallReport);
         }
 
-        [Test, AUT(AUT.Wb), JIRA("SME-575"), Description("CallReport -> This test creates a loan for the Kathleen customer that is alive according to call report, then checks the risk checkpoint")]
+        [Test, AUT(AUT.Wb), JIRA("SME-575"),
+        Description("CallReport -> This test creates a loan for the Kathleen customer that is alive according to call report, then checks the risk checkpoint")]
         public void TestCallReportApplicantIsNotDeceased_LoanIsApproved()
         {
             const String maskName = "ApplicantIsNotDeceased";
@@ -136,8 +159,9 @@ namespace Wonga.QA.Tests.Risk
             AssertCreditBureauUsed(application, CreditBureauEnum.CallReport);
         }
 
-        [Pending("Deadguy case not working properly - needs investigating what breaks it and how to fix - it times out at creating application")]
-        [Test, AUT(AUT.Wb), JIRA("SME-575"), Description("CallReport -> This test creates a loan for the customer that is dead according to call report, then checks the risk checkpoint")]
+        [Test, AUT(AUT.Wb),JIRA("SME-575"),
+        Description("CallReport -> This test creates a loan for the customer that is dead according to call report, then checks the risk checkpoint"),
+        Pending("Deadguy case not working properly - needs investigating what breaks it and how to fix - it times out at creating application")]
         public void TestCallReportApplicantIsDeceased_LoanIsDeclined()
         {
             const string maskName = "ApplicantIsNotDeceased";
@@ -195,8 +219,9 @@ namespace Wonga.QA.Tests.Risk
             AssertCreditBureauUsed(application, CreditBureauEnum.CallReport);
         }
 
-        [Pending("Laura Insolvent case not working properly - it times out at creating application")]
-        [Test, AUT(AUT.Wb),JIRA("SME-584"), Description("CallReport -> This test creates a loan for a customer that IS CIFAS flagged, then checks the risk checkpoint")]
+        [Test, AUT(AUT.Wb), JIRA("SME-584"),
+        Description("CallReport -> This test creates a loan for a customer that IS CIFAS flagged, then checks the risk checkpoint"),
+        Pending("Laura Insolvent case not working properly - it times out at creating application")]
         public void TestCallReportApplicantIsCifasFlagged_LoanIsDeclined()
         {
             const string maskName = "ApplicationElementNotCIFASFlagged";
@@ -225,7 +250,8 @@ namespace Wonga.QA.Tests.Risk
             AssertCreditBureauUsed(application, CreditBureauEnum.CallReport);
         }
 
-        [Test, AUT(AUT.Wb), JIRA("SME-638"), Description("CallReport -> This test creates a loan for the solvent customer, then checks the risk checkpoint")]
+        [Test, AUT(AUT.Wb), JIRA("SME-638"),
+        Description("CallReport -> This test creates a loan for the solvent customer, then checks the risk checkpoint")]
         public void TestCallReportApplicantIsSolvent_LoanIsApproved()
         {
             const string maskName = "ApplicantIsSolvent";
@@ -254,8 +280,9 @@ namespace Wonga.QA.Tests.Risk
             AssertCreditBureauUsed(application, CreditBureauEnum.CallReport);
         }
 
-        [Pending("Laura Insolvent case not working properly - it times out at creating application")]
-        [Test, AUT(AUT.Wb), JIRA("SME-638"), Description("CallReport -> This test creates a loan for the insolvent customer, then checks the risk checkpoint")]
+        [Test, AUT(AUT.Wb), JIRA("SME-638"), 
+        Description("CallReport -> This test creates a loan for the insolvent customer, then checks the risk checkpoint"),
+        Pending("Laura Insolvent case not working properly - it times out at creating application")]
         public void TestCallReportApplicantIsInsolvent_LoanIsDeclined()
         {
             const string maskName = "ApplicantIsSolvent";
@@ -288,8 +315,9 @@ namespace Wonga.QA.Tests.Risk
 
         #region Experian
 
-        [Pending("Experian not implemented yet?")]
-        [Test, AUT(AUT.Wb),JIRA("SME-575"), Description("Experian -> This test creates a loan for the unknown customer that is alive and with no consumer bureau data, then checks the risk checkpoint")]
+        [Test, AUT(AUT.Wb), JIRA("SME-575"),
+        Description("Experian -> This test creates a loan for the unknown customer that is alive and with no consumer bureau data, then checks the risk checkpoint"),
+        Pending("Experian not implemented yet?")]
         public void TestExperianUnknownApplicant_LoanIsApproved()
         {
             const string maskName = "ExperianApplicantIsNotDeceased";
@@ -318,8 +346,9 @@ namespace Wonga.QA.Tests.Risk
             AssertCreditBureauUsed(application, CreditBureauEnum.Experian);
         }
 
-        [Pending("Experian not implemented yet?")]
-        [Test, AUT(AUT.Wb), JIRA("SME-575"), Description("Experian -> This test creates a loan for the Kathleen customer that is alive, then checks the risk checkpoint")]
+        [Test, AUT(AUT.Wb), JIRA("SME-575"),
+        Description("Experian -> This test creates a loan for the Kathleen customer that is alive, then checks the risk checkpoint"),
+        Pending("Experian not implemented yet?")]
         public void TestExperianApplicantIsNotDeceased_LoanIsApproved()
         {
             const String maskName = "ExperianApplicantIsNotDeceased";
@@ -348,8 +377,9 @@ namespace Wonga.QA.Tests.Risk
             AssertCreditBureauUsed(application, CreditBureauEnum.Experian);
         }
 
-        [Pending("Experian not implemented yet?")]
-        [Test, AUT(AUT.Wb), JIRA("SME-575"), Description("Experian -> This test creates a loan for the customer that is dead, then checks the risk checkpoint")]
+        [Test, AUT(AUT.Wb), JIRA("SME-575"),
+        Description("Experian -> This test creates a loan for the customer that is dead, then checks the risk checkpoint"),
+        Pending("Experian not implemented yet?")]
         public void TestExperianApplicantIsDeceased_LoanIsDeclined()
         {
             const string maskName = "ExperianApplicantIsNotDeceased";
@@ -378,8 +408,9 @@ namespace Wonga.QA.Tests.Risk
             AssertCreditBureauUsed(application, CreditBureauEnum.Experian);
         }
 
-        [Pending("Experian not implemented yet?")]
-        [Test, AUT(AUT.Wb), JIRA("SME-584"), Description("Experian -> This test creates a loan for a customer that is not CIFAS flagged, then checks the risk checkpoint")]
+        [Test, AUT(AUT.Wb), JIRA("SME-584"),
+        Description("Experian -> This test creates a loan for a customer that is not CIFAS flagged, then checks the risk checkpoint"),
+        Pending("Experian not implemented yet?")]
         public void TestExperianApplicantIsNotCifasFlagged_LoanIsApproved()
         {
             const string maskName = "ExperianApplicationElementNotCIFASFlagged";
@@ -408,8 +439,9 @@ namespace Wonga.QA.Tests.Risk
             AssertCreditBureauUsed(application, CreditBureauEnum.Experian);
         }
 
-        [Pending("Experian not implemented yet?")]
-        [Test, JIRA("SME-584"), Description("Experian -> This test creates a loan for a customer that IS CIFAS flagged, then checks the risk checkpoint")]
+        [Test, JIRA("SME-584"),
+        Description("Experian -> This test creates a loan for a customer that IS CIFAS flagged, then checks the risk checkpoint"),
+        Pending("Experian not implemented yet?")]
         public void TestExperianApplicantIsCifasFlagged_LoanIsDeclined()
         {
             const string maskName = "ExperianApplicationElementNotCIFASFlagged";
@@ -438,8 +470,9 @@ namespace Wonga.QA.Tests.Risk
             AssertCreditBureauUsed(application, CreditBureauEnum.Experian);
         }
 
-        [Pending("Experian not implemented yet?")]
-        [Test, AUT(AUT.Wb), JIRA("SME-638"), Description("Experian -> This test creates a loan for the solvent customer, then checks the risk checkpoint")]
+        [Test, AUT(AUT.Wb), JIRA("SME-638"),
+        Description("Experian -> This test creates a loan for the solvent customer, then checks the risk checkpoint"),
+        Pending("Experian not implemented yet?")]
         public void TestExperianApplicantIsSolvent_LoanIsApproved()
         {
             const string maskName = "ExperianApplicantIsSolvent";
@@ -468,8 +501,9 @@ namespace Wonga.QA.Tests.Risk
             AssertCreditBureauUsed(application, CreditBureauEnum.Experian);
         }
 
-        [Pending("Experian not implemented yet?")]
-        [Test, AUT(AUT.Wb), JIRA("SME-638"), Description("Experian -> This test creates a loan for the insolvent customer, then checks the risk checkpoint")]
+        [Test, AUT(AUT.Wb), JIRA("SME-638"),
+        Description("Experian -> This test creates a loan for the insolvent customer, then checks the risk checkpoint"),
+        Pending("Experian not implemented yet?")]
         public void TestExperianApplicantIsInsolvent_LoanIsDeclined()
         {
             const string maskName = "ExperianApplicantIsSolvent";
@@ -500,28 +534,7 @@ namespace Wonga.QA.Tests.Risk
 
         #endregion
 
-        private Boolean SingleCheckPointVerification(Application application, CheckpointStatus expectedStatus, CheckpointDefinitionEnum checkpoint)
-        {
-            var db = new DbDriver();
-
-            int riskApp = db.Risk.RiskApplications.Single(r => r.ApplicationId == application.Id).RiskApplicationId;
-
-            var dbCheckpoint = db.Risk.WorkflowCheckpoints.Single(r => r.RiskApplicationId == riskApp);
-
-            return Data.EnumToString(checkpoint) ==
-                   db.Risk.CheckpointDefinitions.Single(r => r.CheckpointDefinitionId == dbCheckpoint.CheckpointDefinitionId).Name &&
-                   dbCheckpoint.CheckpointStatus == Convert.ToByte(expectedStatus);
-        }
-        private void AssertCreditBureauUsed(Application application, CreditBureauEnum creditBureauUsed)
-        {
-            var db = new DbDriver();
-            var riskApplicationEntity = db.Risk.RiskApplications.SingleOrDefault(r => r.ApplicationId == application.Id);
-            Assert.IsNotNull(riskApplicationEntity, "The risk application should exist");
-            Assert.IsNotNull(riskApplicationEntity.CreditBureauUsed, "One credit bureau should have been used");
-            Assert.AreEqual((CreditBureauEnum)riskApplicationEntity.CreditBureauUsed, creditBureauUsed, "The credit bureau used should be the same"); // <- Lol
-        }
-
-          [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk), JIRA("CA-1735")]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk), JIRA("CA-1735")]
         public void IovationBlackBoxDecline()
         {
             Customer cust = CustomerBuilder.New()
