@@ -1,25 +1,16 @@
-<Project DefaultTargets="Test" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Default" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<UsingTask TaskName="Gallio" AssemblyFile="$(ProgramW6432)\Gallio\bin\Gallio.MsBuildTasks.dll" />
 	
 	<PropertyGroup>
 		<Framework>Wonga.QA.Framework</Framework>
 		<Tests>Wonga.QA.Tests</Tests>
-		<Generators>Wonga.QA.Generators</Generators>
 	</PropertyGroup>
 	
 	<PropertyGroup>
 		<Root>$(MSBuildProjectDirectory)\..</Root>
 		<Src>$(Root)\src</Src>
 		<Bin>$(Root)\bin</Bin>
-	</PropertyGroup>
-	
-	<PropertyGroup>
-		<TestDependencies>
-			Config;
-			Build;
-			Merge;
-		</TestDependencies>
-	</PropertyGroup>
+	</PropertyGroup>	
 	
 	<Target Name="Config">
 		<Exec Command="SETX SUT $(SUT)" />
@@ -30,7 +21,6 @@
 		<ItemGroup>
 			<Projects Include="$(Src)\$(Framework)\$(Framework).sln" />
 			<Projects Include="$(Src)\$(Tests)\$(Tests).sln" />
-			<Projects Include="$(Src)\$(Generators)\$(Generators).sln" />
 		</ItemGroup>
 		<MSBuild Projects="@(Projects)" />
 	</Target>
@@ -53,5 +43,9 @@
 			ReportTypes="xml"
 			ReportDirectory="$(Bin)\$(Tests).Report"
 		/>
+	</Target>
+	
+	<Target Name="Default">
+		<CallTarget Targets="Config;Build;Merge;Test" />
 	</Target>
 </Project>

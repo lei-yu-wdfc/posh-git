@@ -31,7 +31,7 @@ namespace Wonga.QA.Generators.Core
 
         static Config()
         {
-            Origin = @"..\..\..\v3";
+            Origin = @"..\v3";
             SqlMetal = new FileInfo(@"..\..\lib\SqlMetal.exe");
             Test = new Regex(@"\.Tests?(\.|$)");
 

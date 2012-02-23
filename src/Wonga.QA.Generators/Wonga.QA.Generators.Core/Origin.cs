@@ -15,7 +15,7 @@ namespace Wonga.QA.Generators.Core
 
         static Origin()
         {
-            Root = new DirectoryInfo(Config.Origin);
+            Root = new DirectoryInfo(Path.Combine(Repo.Root.FullName, Config.Origin));
             Src = Root.GetDirectories("src").Single();
             Build = Root.GetDirectories("build").Single();
         }

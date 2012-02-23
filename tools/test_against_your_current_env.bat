@@ -1,1 +1,0 @@
-msbuild ../run/Wonga.QA.Tests.build /t:Test || pause

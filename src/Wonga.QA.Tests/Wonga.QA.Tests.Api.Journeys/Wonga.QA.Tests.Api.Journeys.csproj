@@ -47,10 +47,6 @@
     <Reference Include="Wonga.QA.Framework.Api">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Api.dll</HintPath>
     </Reference>
-    <Reference Include="Wonga.QA.Framework.Common">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Wonga.QA.Framework.Common\Wonga.QA.Framework.Common.dll</HintPath>
-    </Reference>
     <Reference Include="Wonga.QA.Framework.Core">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Core.dll</HintPath>
     </Reference>
