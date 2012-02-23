@@ -19,8 +19,7 @@ namespace Wonga.QA.Tests.Comms
         [SetUp, AUT]
         public void Setup(){}
 
-        //PLEASE PUT AUT ATTRIBUTE AFTER REVIEW
-        [Test, JIRA("SME-563"), Description("This test sends mobile phone verification message to predefined number")]
+        [Test, AUT(AUT.Wb),JIRA("SME-563"), Description("This test sends mobile phone verification message to predefined number")]
         public void TestVerifyMobilePhoneCommand()
         {
             var verificationId = Guid.NewGuid();
@@ -40,8 +39,7 @@ namespace Wonga.QA.Tests.Comms
             Assert.AreEqual(mobileVerificationEntity.MobilePhone, mobilePhone, "These values should be equal");
         }
 
-        //PLEASE PUT AUT ATTRIBUTE AFTER REVIEW
-        [Test, JIRA("SME-563"), Description("This negative test attempts to send verification sms to invalid UK phone numbers and checks for expected failure")]
+        [Test, AUT(AUT.Wb),JIRA("SME-563"), Description("This negative test attempts to send verification sms to invalid UK phone numbers and checks for expected failure")]
         public void TestVerifyMobilePhoneCommand_WithInvalidNumber()
         {
             const string invalidMobilePhone = "072000000000";
@@ -59,8 +57,7 @@ namespace Wonga.QA.Tests.Comms
             Assert.AreEqual(exceptionObject.Errors.ToList()[0], "Ops_RequestXmlInvalid", "These values should be equal");
         }
 
-        //PLEASE PUT AUT ATTRIBUTE AFTER REVIEW
-        [Test, JIRA("SME-563"), Description("This test covers the process of creating a new customer details record, initiates mobile phone verification and completes it with correct PIN")]
+        [Test, AUT(AUT.Wb),JIRA("SME-563"), Description("This test covers the process of creating a new customer details record, initiates mobile phone verification and completes it with correct PIN")]
         public void CompleteMobilePhoneVerification()
         {
             var accountId = Guid.NewGuid();
@@ -103,8 +100,7 @@ namespace Wonga.QA.Tests.Comms
                                                                  }));
         }
 
-        //PLEASE PUT AUT ATTRIBUTE AFTER REVIEW
-        [Test, JIRA("SME-563"), Description("This negative test covers the process of creating a new customer details record, initiates mobile phone verification and completes it with incorrect PIN, while checking for failure")]
+        [Test, AUT(AUT.Wb),JIRA("SME-563"), Description("This negative test covers the process of creating a new customer details record, initiates mobile phone verification and completes it with incorrect PIN, while checking for failure")]
         public void TestCompleteEmailVerificationCommand_WithInvalidPin()
         {
             var exceptionObject = Assert.Throws<ValidatorException>(() => Driver.Api.Commands.Post(new CompleteMobilePhoneVerificationCommand()
@@ -116,8 +112,7 @@ namespace Wonga.QA.Tests.Comms
             Assert.AreEqual(exceptionObject.Errors.ToList()[0], "Ops_RequestXmlInvalid", "These values should be equal");
         }
 
-        //PLEASE PUT AUT ATTRIBUTE AFTER REVIEW
-        [Test, JIRA("SME-563"), Description("This test initiates the resend pin feature for new customer details record")]
+        [Test, AUT(AUT.Wb),JIRA("SME-563"), Description("This test initiates the resend pin feature for new customer details record")]
         public void TestResendMobilePhonePin()
         {
             var accountId = Guid.NewGuid();

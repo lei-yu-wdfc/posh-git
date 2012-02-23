@@ -16,8 +16,8 @@ namespace Wonga.QA.Tests.Risk
     class RiskApiCheckpointTests
     {
         [SetUp, AUT]
-        public void Setup(){}
-        
+        public void Setup() { }
+
         [Test, AUT(AUT.Wb), JIRA("SME-160")]
         public void BusinessIsCurrentlyTrading()
         {
@@ -26,7 +26,7 @@ namespace Wonga.QA.Tests.Risk
             Organisation org = OrganisationBuilder.New().WithPrimaryApplicant(cust).Build();
 
             var app = ApplicationBuilder.New(cust, org).Build();
-            
+
             Assert.IsTrue(SingleCheckPointVerification(app, CheckpointStatus.Verified, CheckpointDefinitionEnum.BusinessIsCurrentlyTrading));
         }
 
@@ -75,10 +75,9 @@ namespace Wonga.QA.Tests.Risk
             Assert.IsTrue(SingleCheckPointVerification(app, CheckpointStatus.Failed, CheckpointDefinitionEnum.BusinessBureauDataIsAvailable));
         }
 
-        #region CallReport_CustomerIsAlive
+        #region CallReport
 
-        //PLEASE PUT AUT ATTRIBUTE AFTER REVIEW
-        [Test, JIRA("SME-575"), Description("This test creates a loan for the unknown customer that is alive and with no consumer bureau data, then checks the risk checkpoint - using CallReport")]
+        [Test, AUT(AUT.Wb), JIRA("SME-575"), Description("CallReport -> This test creates a loan for the unknown customer that is alive and with no consumer bureau data, then checks the risk checkpoint - ")]
         public void TestCallReportUnknownApplicant_LoanIsApproved()
         {
             const string maskName = "ApplicantIsNotDeceased";
@@ -107,14 +106,13 @@ namespace Wonga.QA.Tests.Risk
             AssertCreditBureauUsed(application, CreditBureauEnum.CallReport);
         }
 
-        //PLEASE PUT AUT ATTRIBUTE AFTER REVIEW
-        [Test, JIRA("SME-575"), Description("This test creates a loan for the Kathleen customer that is alive according to call report, then checks the risk checkpoint - using CallReport")]
+        [Test, AUT(AUT.Wb), JIRA("SME-575"), Description("CallReport -> This test creates a loan for the Kathleen customer that is alive according to call report, then checks the risk checkpoint")]
         public void TestCallReportApplicantIsNotDeceased_LoanIsApproved()
         {
             const String maskName = "ApplicantIsNotDeceased";
             const String forename = "kathleen";
             const String surname = "bridson";
-            
+
 
             var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).WithForename(forename).WithSurname(surname).Build();
             var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
@@ -138,43 +136,160 @@ namespace Wonga.QA.Tests.Risk
             AssertCreditBureauUsed(application, CreditBureauEnum.CallReport);
         }
 
-        //[Test, JIRA("SME-575"), AUT(AUT.Wb), Description("This test creates a loan for the customer that is dead according to call report, then checks the risk checkpoint - using CallReport")]
-        //public void TestCallReportApplicantIsDeceased_LoanIsDeclined()
-        //{
-        //    const string maskName = "ApplicantIsNotDeceased";
-        //    const String forename = "Johnny";
-        //    const String surname = "DeadGuy";
+        [Pending("Deadguy case not working properly - needs investigating what breaks it and how to fix - it times out at creating application")]
+        [Test, AUT(AUT.Wb), JIRA("SME-575"), Description("CallReport -> This test creates a loan for the customer that is dead according to call report, then checks the risk checkpoint")]
+        public void TestCallReportApplicantIsDeceased_LoanIsDeclined()
+        {
+            const string maskName = "ApplicantIsNotDeceased";
+            const String forename = "Johnny";
+            const String surname = "DeadGuy";
 
-        //    var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).WithForename(forename).WithSurname(surname).Build();
-        //    //var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).Build();
-        //    var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-        //    var application = ApplicationBuilder.New(customer, organization).Build();
-        //    Assert.IsNotNull(application);
+            var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).WithForename(forename).WithSurname(surname).Build();
+            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
+            var application = ApplicationBuilder.New(customer, organization).Build();
+            Assert.IsNotNull(application);
 
-        //    var riskDb = Driver.Db.Risk;
-        //    var riskApplicationEntity = Do.Until(() => riskDb.RiskApplications.SingleOrDefault(p => p.ApplicationId == application.Id));
-        //    Assert.IsNotNull(riskApplicationEntity, "Risk application should exist");
-        //    Assert.AreEqual(1, riskApplicationEntity.WorkflowCheckpoints.Count, "1 Checkpoint should exist");
+            var riskDb = Driver.Db.Risk;
+            var riskApplicationEntity = Do.Until(() => riskDb.RiskApplications.SingleOrDefault(p => p.ApplicationId == application.Id));
+            Assert.IsNotNull(riskApplicationEntity, "Risk application should exist");
+            Assert.AreEqual(1, riskApplicationEntity.WorkflowCheckpoints.Count, "1 Checkpoint should exist");
 
-        //    var riskAccountEntity = Do.Until(() => riskDb.RiskAccounts.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
-        //    Assert.IsNotNull(riskAccountEntity, "Risk account should exist");
+            var riskAccountEntity = Do.Until(() => riskDb.RiskAccounts.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
+            Assert.IsNotNull(riskAccountEntity, "Risk account should exist");
 
-        //    var socialDetailsEntity = Do.Until(() => riskDb.SocialDetails.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
-        //    Assert.IsNotNull(socialDetailsEntity, "Social details should exist");
+            var socialDetailsEntity = Do.Until(() => riskDb.SocialDetails.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
+            Assert.IsNotNull(socialDetailsEntity, "Social details should exist");
 
-        //    var checkpointDefinitionEntity = riskDb.CheckpointDefinitions.SingleOrDefault(p => p.Name == Data.EnumToString(CheckpointDefinitionEnum.ApplicantIsAlive));
-        //    Assert.IsNotNull(checkpointDefinitionEntity, "Risk checkpoint should exist");
-        //    Assert.IsTrue(SingleCheckPointVerification(application, CheckpointStatus.Failed, CheckpointDefinitionEnum.ApplicantIsAlive));
-        //    AssertCreditBureauUsed(application, CreditBureauEnum.CallReport);
-        //}
+            var checkpointDefinitionEntity = riskDb.CheckpointDefinitions.SingleOrDefault(p => p.Name == Data.EnumToString(CheckpointDefinitionEnum.ApplicantIsAlive));
+            Assert.IsNotNull(checkpointDefinitionEntity, "Risk checkpoint should exist");
+            Assert.IsTrue(SingleCheckPointVerification(application, CheckpointStatus.Failed, CheckpointDefinitionEnum.ApplicantIsAlive));
+            AssertCreditBureauUsed(application, CreditBureauEnum.CallReport);
+        }
+
+        [Test, AUT(AUT.Wb), JIRA("SME-584"), Description("CallReport -> This test creates a loan for a customer that is not CIFAS flagged, then checks the risk checkpoint")]
+        public void TestCallReportApplicantIsNotCifasFlagged_LoanIsApproved()
+        {
+            const string maskName = "ApplicationElementNotCIFASFlagged";
+            const String forename = "kathleen";
+            const String surname = "nicole";
+
+            var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).WithForename(forename).WithSurname(surname).Build();
+            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
+            var application = ApplicationBuilder.New(customer, organization).Build();
+            Assert.IsNotNull(application);
+
+            var riskDb = Driver.Db.Risk;
+            var riskApplicationEntity = Do.Until(() => riskDb.RiskApplications.SingleOrDefault(p => p.ApplicationId == application.Id));
+            Assert.IsNotNull(riskApplicationEntity, "Risk application should exist");
+            Assert.AreEqual(1, riskApplicationEntity.WorkflowCheckpoints.Count, "1 Checkpoint should exist");
+
+            var riskAccountEntity = Do.Until(() => riskDb.RiskAccounts.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
+            Assert.IsNotNull(riskAccountEntity, "Risk account should exist");
+
+            var socialDetailsEntity = Do.Until(() => riskDb.SocialDetails.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
+            Assert.IsNotNull(socialDetailsEntity, "Social details should exist");
+
+            var checkpointDefinitionEntity = riskDb.CheckpointDefinitions.SingleOrDefault(p => p.Name == Data.EnumToString(CheckpointDefinitionEnum.CIFASFraudCheck));
+            Assert.IsNotNull(checkpointDefinitionEntity, "Risk checkpoint should exist");
+            Assert.IsTrue(SingleCheckPointVerification(application, CheckpointStatus.Verified, CheckpointDefinitionEnum.CIFASFraudCheck));
+            AssertCreditBureauUsed(application, CreditBureauEnum.CallReport);
+        }
+
+        [Pending("Laura Insolvent case not working properly - it times out at creating application")]
+        [Test, AUT(AUT.Wb),JIRA("SME-584"), Description("CallReport -> This test creates a loan for a customer that IS CIFAS flagged, then checks the risk checkpoint")]
+        public void TestCallReportApplicantIsCifasFlagged_LoanIsDeclined()
+        {
+            const string maskName = "ApplicationElementNotCIFASFlagged";
+            const String forename = "laura";
+            const String surname = "insolvent";
+
+            var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).WithForename(forename).WithSurname(surname).Build();
+            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
+            var application = ApplicationBuilder.New(customer, organization).Build();
+            Assert.IsNotNull(application);
+
+            var riskDb = Driver.Db.Risk;
+            var riskApplicationEntity = Do.Until(() => riskDb.RiskApplications.SingleOrDefault(p => p.ApplicationId == application.Id));
+            Assert.IsNotNull(riskApplicationEntity, "Risk application should exist");
+            Assert.AreEqual(1, riskApplicationEntity.WorkflowCheckpoints.Count, "1 Checkpoint should exist");
+
+            var riskAccountEntity = Do.Until(() => riskDb.RiskAccounts.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
+            Assert.IsNotNull(riskAccountEntity, "Risk account should exist");
+
+            var socialDetailsEntity = Do.Until(() => riskDb.SocialDetails.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
+            Assert.IsNotNull(socialDetailsEntity, "Social details should exist");
+
+            var checkpointDefinitionEntity = riskDb.CheckpointDefinitions.SingleOrDefault(p => p.Name == Data.EnumToString(CheckpointDefinitionEnum.CIFASFraudCheck));
+            Assert.IsNotNull(checkpointDefinitionEntity, "Risk checkpoint should exist");
+            Assert.IsTrue(SingleCheckPointVerification(application, CheckpointStatus.Failed, CheckpointDefinitionEnum.CIFASFraudCheck));
+            AssertCreditBureauUsed(application, CreditBureauEnum.CallReport);
+        }
+
+        [Test, AUT(AUT.Wb), JIRA("SME-638"), Description("CallReport -> This test creates a loan for the solvent customer, then checks the risk checkpoint")]
+        public void TestCallReportApplicantIsSolvent_LoanIsApproved()
+        {
+            const string maskName = "ApplicantIsSolvent";
+            const String forename = "kathleen";
+            const String surname = "nicole";
+
+            var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).WithForename(forename).WithSurname(surname).Build();
+            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
+            var application = ApplicationBuilder.New(customer, organization).Build();
+            Assert.IsNotNull(application);
+
+            var riskDb = Driver.Db.Risk;
+            var riskApplicationEntity = Do.Until(() => riskDb.RiskApplications.SingleOrDefault(p => p.ApplicationId == application.Id));
+            Assert.IsNotNull(riskApplicationEntity, "Risk application should exist");
+            Assert.AreEqual(1, riskApplicationEntity.WorkflowCheckpoints.Count, "1 Checkpoint should exist");
+
+            var riskAccountEntity = Do.Until(() => riskDb.RiskAccounts.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
+            Assert.IsNotNull(riskAccountEntity, "Risk account should exist");
+
+            var socialDetailsEntity = Do.Until(() => riskDb.SocialDetails.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
+            Assert.IsNotNull(socialDetailsEntity, "Social details should exist");
+
+            var checkpointDefinitionEntity = riskDb.CheckpointDefinitions.SingleOrDefault(p => p.Name == Data.EnumToString(CheckpointDefinitionEnum.CustomerIsSolvent));
+            Assert.IsNotNull(checkpointDefinitionEntity, "Risk checkpoint should exist");
+            Assert.IsTrue(SingleCheckPointVerification(application, CheckpointStatus.Verified, CheckpointDefinitionEnum.CustomerIsSolvent));
+            AssertCreditBureauUsed(application, CreditBureauEnum.CallReport);
+        }
+
+        [Pending("Laura Insolvent case not working properly - it times out at creating application")]
+        [Test, AUT(AUT.Wb), JIRA("SME-638"), Description("CallReport -> This test creates a loan for the insolvent customer, then checks the risk checkpoint")]
+        public void TestCallReportApplicantIsInsolvent_LoanIsDeclined()
+        {
+            const string maskName = "ApplicantIsSolvent";
+            const String forename = "laura";
+            const String surname = "insolvent";
+
+            var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).WithForename(forename).WithSurname(surname).Build();
+            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
+            var application = ApplicationBuilder.New(customer, organization).Build();
+            Assert.IsNotNull(application);
+
+            var riskDb = Driver.Db.Risk;
+            var riskApplicationEntity = Do.Until(() => riskDb.RiskApplications.SingleOrDefault(p => p.ApplicationId == application.Id));
+            Assert.IsNotNull(riskApplicationEntity, "Risk application should exist");
+            Assert.AreEqual(1, riskApplicationEntity.WorkflowCheckpoints.Count, "1 Checkpoint should exist");
+
+            var riskAccountEntity = Do.Until(() => riskDb.RiskAccounts.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
+            Assert.IsNotNull(riskAccountEntity, "Risk account should exist");
+
+            var socialDetailsEntity = Do.Until(() => riskDb.SocialDetails.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
+            Assert.IsNotNull(socialDetailsEntity, "Social details should exist");
+
+            var checkpointDefinitionEntity = riskDb.CheckpointDefinitions.SingleOrDefault(p => p.Name == Data.EnumToString(CheckpointDefinitionEnum.CustomerIsSolvent));
+            Assert.IsNotNull(checkpointDefinitionEntity, "Risk checkpoint should exist");
+            Assert.IsTrue(SingleCheckPointVerification(application, CheckpointStatus.Failed, CheckpointDefinitionEnum.CustomerIsSolvent));
+            AssertCreditBureauUsed(application, CreditBureauEnum.CallReport);
+        }
 
         #endregion
 
-        #region Experian_CustomerIsAlive
+        #region Experian
 
-        [Ignore("Experian not integrated yet - Need to send empty employment details")]
-        //PLEASE PUT AUT ATTRIBUTE AFTER FIX
-        [Test, JIRA("SME-575"), Description("This test creates a loan for the unknown customer that is alive and with no consumer bureau data, then checks the risk checkpoint - using Experian")]
+        [Pending("Experian not implemented yet?")]
+        [Test, AUT(AUT.Wb),JIRA("SME-575"), Description("Experian -> This test creates a loan for the unknown customer that is alive and with no consumer bureau data, then checks the risk checkpoint")]
         public void TestExperianUnknownApplicant_LoanIsApproved()
         {
             const string maskName = "ExperianApplicantIsNotDeceased";
@@ -200,12 +315,11 @@ namespace Wonga.QA.Tests.Risk
             var checkpointDefinitionEntity = riskDb.CheckpointDefinitions.SingleOrDefault(p => p.Name == Data.EnumToString(CheckpointDefinitionEnum.ApplicantIsAlive));
             Assert.IsNotNull(checkpointDefinitionEntity, "Risk checkpoint should exist");
             Assert.IsTrue(SingleCheckPointVerification(application, CheckpointStatus.Verified, CheckpointDefinitionEnum.ApplicantIsAlive));
-            AssertCreditBureauUsed(application,CreditBureauEnum.Experian);
+            AssertCreditBureauUsed(application, CreditBureauEnum.Experian);
         }
 
-        [Ignore("Experian not integrated yet - Need to send empty employment details")]
-        //PLEASE PUT AUT ATTRIBUTE AFTER FIX
-        [Test, JIRA("SME-575"), Description("This test creates a loan for the Kathleen customer that is alive according to call report, then checks the risk checkpoint -  - using Experian")]
+        [Pending("Experian not implemented yet?")]
+        [Test, AUT(AUT.Wb), JIRA("SME-575"), Description("Experian -> This test creates a loan for the Kathleen customer that is alive, then checks the risk checkpoint")]
         public void TestExperianApplicantIsNotDeceased_LoanIsApproved()
         {
             const String maskName = "ExperianApplicantIsNotDeceased";
@@ -234,6 +348,156 @@ namespace Wonga.QA.Tests.Risk
             AssertCreditBureauUsed(application, CreditBureauEnum.Experian);
         }
 
+        [Pending("Experian not implemented yet?")]
+        [Test, AUT(AUT.Wb), JIRA("SME-575"), Description("Experian -> This test creates a loan for the customer that is dead, then checks the risk checkpoint")]
+        public void TestExperianApplicantIsDeceased_LoanIsDeclined()
+        {
+            const string maskName = "ExperianApplicantIsNotDeceased";
+            const String forename = "Johnny";
+            const String surname = "DeadGuy";
+
+            var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).WithForename(forename).WithSurname(surname).Build();
+            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
+            var application = ApplicationBuilder.New(customer, organization).Build();
+            Assert.IsNotNull(application);
+
+            var riskDb = Driver.Db.Risk;
+            var riskApplicationEntity = Do.Until(() => riskDb.RiskApplications.SingleOrDefault(p => p.ApplicationId == application.Id));
+            Assert.IsNotNull(riskApplicationEntity, "Risk application should exist");
+            Assert.AreEqual(1, riskApplicationEntity.WorkflowCheckpoints.Count, "1 Checkpoint should exist");
+
+            var riskAccountEntity = Do.Until(() => riskDb.RiskAccounts.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
+            Assert.IsNotNull(riskAccountEntity, "Risk account should exist");
+
+            var socialDetailsEntity = Do.Until(() => riskDb.SocialDetails.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
+            Assert.IsNotNull(socialDetailsEntity, "Social details should exist");
+
+            var checkpointDefinitionEntity = riskDb.CheckpointDefinitions.SingleOrDefault(p => p.Name == Data.EnumToString(CheckpointDefinitionEnum.ApplicantIsAlive));
+            Assert.IsNotNull(checkpointDefinitionEntity, "Risk checkpoint should exist");
+            Assert.IsTrue(SingleCheckPointVerification(application, CheckpointStatus.Failed, CheckpointDefinitionEnum.ApplicantIsAlive));
+            AssertCreditBureauUsed(application, CreditBureauEnum.Experian);
+        }
+
+        [Pending("Experian not implemented yet?")]
+        [Test, AUT(AUT.Wb), JIRA("SME-584"), Description("Experian -> This test creates a loan for a customer that is not CIFAS flagged, then checks the risk checkpoint")]
+        public void TestExperianApplicantIsNotCifasFlagged_LoanIsApproved()
+        {
+            const string maskName = "ExperianApplicationElementNotCIFASFlagged";
+            const String forename = "kathleen";
+            const String surname = "nicole";
+
+            var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).WithForename(forename).WithSurname(surname).Build();
+            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
+            var application = ApplicationBuilder.New(customer, organization).Build();
+            Assert.IsNotNull(application);
+
+            var riskDb = Driver.Db.Risk;
+            var riskApplicationEntity = Do.Until(() => riskDb.RiskApplications.SingleOrDefault(p => p.ApplicationId == application.Id));
+            Assert.IsNotNull(riskApplicationEntity, "Risk application should exist");
+            Assert.AreEqual(1, riskApplicationEntity.WorkflowCheckpoints.Count, "1 Checkpoint should exist");
+
+            var riskAccountEntity = Do.Until(() => riskDb.RiskAccounts.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
+            Assert.IsNotNull(riskAccountEntity, "Risk account should exist");
+
+            var socialDetailsEntity = Do.Until(() => riskDb.SocialDetails.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
+            Assert.IsNotNull(socialDetailsEntity, "Social details should exist");
+
+            var checkpointDefinitionEntity = riskDb.CheckpointDefinitions.SingleOrDefault(p => p.Name == Data.EnumToString(CheckpointDefinitionEnum.CIFASFraudCheck));
+            Assert.IsNotNull(checkpointDefinitionEntity, "Risk checkpoint should exist");
+            Assert.IsTrue(SingleCheckPointVerification(application, CheckpointStatus.Verified, CheckpointDefinitionEnum.CIFASFraudCheck));
+            AssertCreditBureauUsed(application, CreditBureauEnum.Experian);
+        }
+
+        [Pending("Experian not implemented yet?")]
+        [Test, JIRA("SME-584"), Description("Experian -> This test creates a loan for a customer that IS CIFAS flagged, then checks the risk checkpoint")]
+        public void TestExperianApplicantIsCifasFlagged_LoanIsDeclined()
+        {
+            const string maskName = "ExperianApplicationElementNotCIFASFlagged";
+            const String forename = "laura";
+            const String surname = "insolvent";
+
+            var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).WithForename(forename).WithSurname(surname).Build();
+            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
+            var application = ApplicationBuilder.New(customer, organization).Build();
+            Assert.IsNotNull(application);
+
+            var riskDb = Driver.Db.Risk;
+            var riskApplicationEntity = Do.Until(() => riskDb.RiskApplications.SingleOrDefault(p => p.ApplicationId == application.Id));
+            Assert.IsNotNull(riskApplicationEntity, "Risk application should exist");
+            Assert.AreEqual(1, riskApplicationEntity.WorkflowCheckpoints.Count, "1 Checkpoint should exist");
+
+            var riskAccountEntity = Do.Until(() => riskDb.RiskAccounts.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
+            Assert.IsNotNull(riskAccountEntity, "Risk account should exist");
+
+            var socialDetailsEntity = Do.Until(() => riskDb.SocialDetails.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
+            Assert.IsNotNull(socialDetailsEntity, "Social details should exist");
+
+            var checkpointDefinitionEntity = riskDb.CheckpointDefinitions.SingleOrDefault(p => p.Name == Data.EnumToString(CheckpointDefinitionEnum.CIFASFraudCheck));
+            Assert.IsNotNull(checkpointDefinitionEntity, "Risk checkpoint should exist");
+            Assert.IsTrue(SingleCheckPointVerification(application, CheckpointStatus.Failed, CheckpointDefinitionEnum.CIFASFraudCheck));
+            AssertCreditBureauUsed(application, CreditBureauEnum.Experian);
+        }
+
+        [Pending("Experian not implemented yet?")]
+        [Test, AUT(AUT.Wb), JIRA("SME-638"), Description("Experian -> This test creates a loan for the solvent customer, then checks the risk checkpoint")]
+        public void TestExperianApplicantIsSolvent_LoanIsApproved()
+        {
+            const string maskName = "ExperianApplicantIsSolvent";
+            const String forename = "kathleen";
+            const String surname = "nicole";
+
+            var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).WithForename(forename).WithSurname(surname).Build();
+            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
+            var application = ApplicationBuilder.New(customer, organization).Build();
+            Assert.IsNotNull(application);
+
+            var riskDb = Driver.Db.Risk;
+            var riskApplicationEntity = Do.Until(() => riskDb.RiskApplications.SingleOrDefault(p => p.ApplicationId == application.Id));
+            Assert.IsNotNull(riskApplicationEntity, "Risk application should exist");
+            Assert.AreEqual(1, riskApplicationEntity.WorkflowCheckpoints.Count, "1 Checkpoint should exist");
+
+            var riskAccountEntity = Do.Until(() => riskDb.RiskAccounts.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
+            Assert.IsNotNull(riskAccountEntity, "Risk account should exist");
+
+            var socialDetailsEntity = Do.Until(() => riskDb.SocialDetails.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
+            Assert.IsNotNull(socialDetailsEntity, "Social details should exist");
+
+            var checkpointDefinitionEntity = riskDb.CheckpointDefinitions.SingleOrDefault(p => p.Name == Data.EnumToString(CheckpointDefinitionEnum.CustomerIsSolvent));
+            Assert.IsNotNull(checkpointDefinitionEntity, "Risk checkpoint should exist");
+            Assert.IsTrue(SingleCheckPointVerification(application, CheckpointStatus.Verified, CheckpointDefinitionEnum.CustomerIsSolvent));
+            AssertCreditBureauUsed(application, CreditBureauEnum.Experian);
+        }
+
+        [Pending("Experian not implemented yet?")]
+        [Test, AUT(AUT.Wb), JIRA("SME-638"), Description("Experian -> This test creates a loan for the insolvent customer, then checks the risk checkpoint")]
+        public void TestExperianApplicantIsInsolvent_LoanIsDeclined()
+        {
+            const string maskName = "ExperianApplicantIsSolvent";
+            const String forename = "laura";
+            const String surname = "insolvent";
+
+            var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).WithForename(forename).WithSurname(surname).Build();
+            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
+            var application = ApplicationBuilder.New(customer, organization).Build();
+            Assert.IsNotNull(application);
+
+            var riskDb = Driver.Db.Risk;
+            var riskApplicationEntity = Do.Until(() => riskDb.RiskApplications.SingleOrDefault(p => p.ApplicationId == application.Id));
+            Assert.IsNotNull(riskApplicationEntity, "Risk application should exist");
+            Assert.AreEqual(1, riskApplicationEntity.WorkflowCheckpoints.Count, "1 Checkpoint should exist");
+
+            var riskAccountEntity = Do.Until(() => riskDb.RiskAccounts.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
+            Assert.IsNotNull(riskAccountEntity, "Risk account should exist");
+
+            var socialDetailsEntity = Do.Until(() => riskDb.SocialDetails.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
+            Assert.IsNotNull(socialDetailsEntity, "Social details should exist");
+
+            var checkpointDefinitionEntity = riskDb.CheckpointDefinitions.SingleOrDefault(p => p.Name == Data.EnumToString(CheckpointDefinitionEnum.CustomerIsSolvent));
+            Assert.IsNotNull(checkpointDefinitionEntity, "Risk checkpoint should exist");
+            Assert.IsTrue(SingleCheckPointVerification(application, CheckpointStatus.Failed, CheckpointDefinitionEnum.CustomerIsSolvent));
+            AssertCreditBureauUsed(application, CreditBureauEnum.Experian);
+        }
+
         #endregion
 
         private Boolean SingleCheckPointVerification(Application application, CheckpointStatus expectedStatus, CheckpointDefinitionEnum checkpoint)
@@ -248,13 +512,13 @@ namespace Wonga.QA.Tests.Risk
                    db.Risk.CheckpointDefinitions.Single(r => r.CheckpointDefinitionId == dbCheckpoint.CheckpointDefinitionId).Name &&
                    dbCheckpoint.CheckpointStatus == Convert.ToByte(expectedStatus);
         }
-        private void AssertCreditBureauUsed(Application application,CreditBureauEnum creditBureauUsed)
+        private void AssertCreditBureauUsed(Application application, CreditBureauEnum creditBureauUsed)
         {
             var db = new DbDriver();
             var riskApplicationEntity = db.Risk.RiskApplications.SingleOrDefault(r => r.ApplicationId == application.Id);
-            Assert.IsNotNull(riskApplicationEntity,"The risk application should exist");
-            Assert.IsNotNull(riskApplicationEntity.CreditBureauUsed,"One credit bureau should have been used");
-            Assert.AreEqual((CreditBureauEnum)riskApplicationEntity.CreditBureauUsed,creditBureauUsed,"The credit bureau used should be the same"); // <- Lol
+            Assert.IsNotNull(riskApplicationEntity, "The risk application should exist");
+            Assert.IsNotNull(riskApplicationEntity.CreditBureauUsed, "One credit bureau should have been used");
+            Assert.AreEqual((CreditBureauEnum)riskApplicationEntity.CreditBureauUsed, creditBureauUsed, "The credit bureau used should be the same"); // <- Lol
         }
 
           [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk), JIRA("CA-1735")]
