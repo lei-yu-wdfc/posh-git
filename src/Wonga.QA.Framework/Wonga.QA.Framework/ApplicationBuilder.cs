@@ -16,6 +16,7 @@ namespace Wonga.QA.Framework
     	protected Date _promiseDate;
         protected ApplicationDecisionStatusEnum _decision = ApplicationDecisionStatusEnum.Accepted;
         protected int _loanTerm;
+        protected string _iovationBlackBox;
         
         private Action _setPromiseDateAndLoanTerm;
         private Func<int> _getDaysUntilStartOfLoan;
@@ -24,6 +25,7 @@ namespace Wonga.QA.Framework
         {
             _id = Guid.NewGuid();            
         	_loanAmount = Data.GetLoanAmount();
+            _iovationBlackBox = "foobar";
 
             _setPromiseDateAndLoanTerm = () =>
                                   {
@@ -90,6 +92,12 @@ namespace Wonga.QA.Framework
             _decision = decision;
             return this;
         }
+
+        public ApplicationBuilder WithIovationBlackBox(string iovationBlackBox)
+        {
+            _iovationBlackBox = iovationBlackBox;
+            return this;
+        }
         
         public virtual Application Build()
         {
@@ -105,7 +113,9 @@ namespace Wonga.QA.Framework
             List<ApiRequest> requests = new List<ApiRequest>
             {
                 SubmitApplicationBehaviourCommand.New(r => r.ApplicationId = _id),
-                SubmitClientWatermarkCommand.New(r => { r.ApplicationId=_id; r.AccountId = _customer.Id; })
+                SubmitClientWatermarkCommand.New(r => { r.ApplicationId=_id; r.AccountId = _customer.Id;
+                                                          r.BlackboxData = _iovationBlackBox;
+                })
             };
 
             switch (Config.AUT)

@@ -6,6 +6,8 @@ using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using MbUnit.Framework;
 using Wonga.QA.Framework.Db;
+using Wonga.QA.Framework.Db.Comms;
+using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk
@@ -254,5 +256,53 @@ namespace Wonga.QA.Tests.Risk
             Assert.IsNotNull(riskApplicationEntity.CreditBureauUsed,"One credit bureau should have been used");
             Assert.AreEqual((CreditBureauEnum)riskApplicationEntity.CreditBureauUsed,creditBureauUsed,"The credit bureau used should be the same"); // <- Lol
         }
+
+          [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk), JIRA("CA-1735")]
+        public void IovationBlackBoxDecline()
+        {
+            Customer cust = CustomerBuilder.New()
+                .WithEmployer("test:DeviceNotOnBlacklist").Build();
+
+            Application app = ApplicationBuilder.New(cust).WithIovationBlackBox("Deny")
+                .WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
+
+            Assert.IsTrue(SingleCheckPointVerification(app, CheckpointStatus.Failed, CheckpointDefinitionEnum.Applicationdatablacklistcheck));
+        }
+
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk), JIRA("CA-1735")]
+        public void IovationBlackBoxAllow()
+        {
+            Customer cust = CustomerBuilder.New()
+                .WithEmployer("test:DeviceNotOnBlacklist").Build();
+
+            Application app = ApplicationBuilder.New(cust).WithIovationBlackBox("Allow")
+                .WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+
+            Assert.IsTrue(SingleCheckPointVerification(app, CheckpointStatus.Verified, CheckpointDefinitionEnum.Applicationdatablacklistcheck));
+        }
+
+        [Test, AUT(AUT.Ca), JIRA("CA-1743")]
+        public void LnShouldPassEidCheck()
+        {
+            Customer cust = CustomerBuilder.New()
+                .WithEmployer("test:DeviceNotOnBlacklist").Build();
+
+            Application l0App = ApplicationBuilder.New(cust).WithIovationBlackBox("Allow")
+                .WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+
+            Assert.IsTrue(SingleCheckPointVerification(l0App, CheckpointStatus.Verified, CheckpointDefinitionEnum.Applicationdatablacklistcheck));
+
+            l0App.Repay();
+
+            EmploymentDetailEntity employmentDetails = Driver.Db.Risk.EmploymentDetails.Single(cd => cd.AccountId == cust.Id);
+            employmentDetails.EmployerName = "test:DirectFraud";
+            employmentDetails.Submit();
+
+            Application lNApp = ApplicationBuilder.New(cust).WithIovationBlackBox("Allow")
+               .WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+
+            Assert.IsTrue(SingleCheckPointVerification(lNApp, CheckpointStatus.Verified, CheckpointDefinitionEnum.UserAssistedFraudCheck));
+        }
+
     }
 }

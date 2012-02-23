@@ -10,7 +10,7 @@ namespace Wonga.QA.Framework.Api
         [Description("Customer is solvent")] CustomerIsSolvent,
         [Description("Hardware blacklist check")] HardwareBlacklistCheck,
         [Description("CIFAS fraud check")] CIFASFraudCheck,
-        [Description("Application data blacklist check")] ApplicationDataBlacklistCheck,
+        [Description("Hardware blacklist check")] Applicationdatablacklistcheck,
         [Description("Fraud list check")] FraudListCheck,
         [Description("Bank account matches the applicant")] BankAccountMatchesTheApplicant,
         [Description("Credit bureau data is available")] CreditBureauDataIsAvailable,
