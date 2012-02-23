@@ -12,7 +12,7 @@ namespace Wonga.QA.Tests.Bi
 	class TransactionTests
 	{
 		[Test, AUT(AUT.Za)]
-		public void Transaction_StoredInTransactionTable_CashAdvance()
+		public void TransactionStoredInTableCashAdvance()
 		{
 			var typeName = "CashAdvance";
 
@@ -23,7 +23,7 @@ namespace Wonga.QA.Tests.Bi
 		}
 
 		[Test, AUT(AUT.Za)]
-		public void Transaction_StoredInTransactionTable_InitiationFee()
+		public void TransactionStoredInTableInitiationFee()
 		{
 			var typeName = "InitiationFee";
 
@@ -34,7 +34,7 @@ namespace Wonga.QA.Tests.Bi
 		}
 
 		[Test, AUT(AUT.Za)]
-		public void Transaction_StoredInTransactionTable_ServiceFee()
+		public void TransactionStoredInTable_ServiceFee()
 		{
 			var typeName = "ServiceFee";
 
@@ -45,7 +45,7 @@ namespace Wonga.QA.Tests.Bi
 		}
 
 		[Test, AUT(AUT.Za)]
-		public void Transaction_StoredInTransactionTable_SuspendInterestAccrual()
+		public void TransactionStoredInTableSuspendInterestAccrual()
 		{
 			var typeName = "SuspendInterestAccrual";
 
@@ -56,7 +56,7 @@ namespace Wonga.QA.Tests.Bi
 		}
 
 		[Test, AUT(AUT.Za)]
-		public void Transaction_StoredInTransactionTable_ResumeInterestAccrual()
+		public void TransactionStoredInTableResumeInterestAccrual()
 		{
 			var typeName = "ResumeInterestAccrual";
 

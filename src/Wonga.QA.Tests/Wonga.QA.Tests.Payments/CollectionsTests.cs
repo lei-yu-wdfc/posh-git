@@ -48,7 +48,7 @@ namespace Wonga.QA.Tests.Payments
 		}
 
 		[Test, AUT(AUT.Za)]
-		public void Collections_Naedo_Test()
+		public void CollectionsNaedoEntireWorkflowTest()
 		{
 			const int term = 25;
 			var promiseDate = new Date(DateTime.UtcNow.AddDays(term));
@@ -80,7 +80,7 @@ namespace Wonga.QA.Tests.Payments
 		}
 
 		[Test, AUT(AUT.Za)]
-		public void Collections_FullPaymentAfterTrackingEnds_Naedo_Test()
+		public void CollectionsNaedoFullPaymentAfterTrackingEndsClosesLoanTest()
 		{
 			const int term = 25;
 			var promiseDate = new Date(DateTime.UtcNow.AddDays(term));
@@ -101,17 +101,40 @@ namespace Wonga.QA.Tests.Payments
 			AttemptNaedoCollection(application, 0);
 			FailNaedoCollection(application, 0);
 
-			var amount = GetOutstandingBalance(application);
-			SendPaymentTaken(application, amount);
+			SendPaymentTaken(application, application.GetBalance());
 
-			Do.Until(() => new DbDriver().OpsSagas.ScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid != application.Id) == false);
+			Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == application.Id).ClosedOn != null, new TimeSpan(0,1,0));
+			Do.Until(() => new DbDriver().OpsSagas.ScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id) == false);
 			Do.Until(() => new DbDriver().OpsSagas.PendingScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id) == false);
 		}
 
 		[Test, AUT(AUT.Za)]
-		public void Collections_PartialPaymentAfterTrackingEnds_Naedo_Test()
+		public void CollectionsNaedoPartialPaymentAfterTrackingEndsContinuesTrackingTest()
 		{
+			const int term = 25;
+			var promiseDate = new Date(DateTime.UtcNow.AddDays(term));
+			const int loanAmount = 500;
 
+			var nextPayDate = new Date(DateTime.UtcNow.AddDays(term / 2));
+			nextPayDate.DateTime = GetNextWorkingDay(nextPayDate);
+
+			var customer = CustomerBuilder.New()
+				.WithNextPayDate(nextPayDate)
+				.Build();
+
+			var application = ApplicationBuilder.New(customer)
+				.WithLoanAmount(loanAmount)
+				.WithPromiseDate(promiseDate)
+				.Build();
+
+			AttemptNaedoCollection(application, 0);
+			FailNaedoCollection(application, 0);
+
+			SendPaymentTaken(application, application.GetBalance() / 2);
+
+			Assert.IsNull(Driver.Db.Payments.Applications.Single(a => a.ExternalId == application.Id).ClosedOn);
+			Assert.IsTrue(new DbDriver().OpsSagas.PendingScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id));
+			Assert.IsFalse(new DbDriver().OpsSagas.ScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id));
 		}
 
 		#region Helpers
@@ -128,6 +151,7 @@ namespace Wonga.QA.Tests.Payments
 				SetPaymentsUtcNow(now);
 
 				new MsmqDriver().Payments.Send(new ProcessScheduledPaymentCommand { ApplicationId = fixedTermLoanApplication.ApplicationId });
+				Do.Until(() => db.OpsSagas.ScheduledPaymentSagaEntities.Single(a => a.ApplicationGuid == application.Id), new TimeSpan(0, 1, 0));
 			}
 
 			else
@@ -141,7 +165,7 @@ namespace Wonga.QA.Tests.Payments
 				Do.Until(() => db.OpsSagas.ScheduledPaymentSagaEntities.Single(a => a.ApplicationGuid == application.Id).PaymentRequestDate != scheduledPaymentDate);
 			}
 
-			Do.Until(() => db.OpsSagas.ScheduledPaymentSagaEntities.Single(a => a.ApplicationGuid == application.Id), new TimeSpan(0, 1, 0));
+			
 			var scheduledPaymentSaga = db.OpsSagas.ScheduledPaymentSagaEntities.Single(a => a.ApplicationGuid == application.Id);
 
 			var expectedPaymentRequestDate = GetExpectedPaymentRequestDate(application, attempt, now);
@@ -199,7 +223,6 @@ namespace Wonga.QA.Tests.Payments
 			});
 
 			Do.Until(() => db.Payments.Transactions.Single(a => a.Amount == -amount && a.Scope == 2 && a.ApplicationId == fixedTermLoanApplication.ApplicationId));
-			Do.Until(() => new DbDriver().Payments.Applications.Single(a => a.ExternalId == application.Id).ClosedOn != null, new TimeSpan(0, 1, 0));
 		}
 
 		private DateTime GetExpectedPaymentRequestDate(Application application, uint attempt, DateTime now)
@@ -307,13 +330,6 @@ namespace Wonga.QA.Tests.Payments
 		{
 			var value = new DbDriver().Ops.ServiceConfigurations.Single(a => a.Key == "Payments.PayDayPerMonth").Value;
 			return value.Split(',').Select(Int32.Parse).ToArray();
-		}
-
-		public decimal GetOutstandingBalance(Application application)
-		{
-			var appId = GetFixedTermLoanApplicationEntity(application).ApplicationId;
-
-			return new DbDriver().Payments.Transactions.Where(a => a.ApplicationId == appId && a.Scope != 0).Sum(a => a.Amount);
 		}
 
 		#endregion
