@@ -10,6 +10,7 @@ using Wonga.QA.Framework.Db.Ops;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Framework.Msmq.Payments;
+using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments
 {
@@ -46,8 +47,8 @@ namespace Wonga.QA.Tests.Payments
 			db.Ops.SubmitChanges();
 		}
 
-		[Test]
-		public void Payments_Collections_Naedo_Test()
+		[Test, AUT(AUT.Za)]
+		public void Collections_Naedo_Test()
 		{
 			const int term = 25;
 			var promiseDate = new Date(DateTime.UtcNow.AddDays(term));
@@ -78,8 +79,8 @@ namespace Wonga.QA.Tests.Payments
 			FailNaedoCollection(application, 3);
 		}
 
-		[Test]
-		public void Payments_Collections_FullPaymentAfterTrackingEnds_Naedo_Test()
+		[Test, AUT(AUT.Za)]
+		public void Collections_FullPaymentAfterTrackingEnds_Naedo_Test()
 		{
 			const int term = 25;
 			var promiseDate = new Date(DateTime.UtcNow.AddDays(term));
@@ -107,8 +108,8 @@ namespace Wonga.QA.Tests.Payments
 			Do.Until(() => new DbDriver().OpsSagas.PendingScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id) == false);
 		}
 
-		[Test]
-		public void Payments_Collections_PartialPaymentAfterTrackingEnds_Naedo_Test()
+		[Test, AUT(AUT.Za)]
+		public void Collections_PartialPaymentAfterTrackingEnds_Naedo_Test()
 		{
 
 		}
@@ -132,10 +133,12 @@ namespace Wonga.QA.Tests.Payments
 			else
 			{
 				var pendingScheduledPayment = db.OpsSagas.PendingScheduledPaymentSagaEntities.Single(a => a.ApplicationGuid == application.Id);
+				var scheduledPaymentDate = db.OpsSagas.ScheduledPaymentSagaEntities.Single(a => a.ApplicationGuid == application.Id).PaymentRequestDate;
 
 				now = pendingScheduledPayment.PaymentRequestDate.Value;
 				SetPaymentsUtcNow(now);
 				new MsmqDriver().Payments.Send(new TimeoutMessage { SagaId = pendingScheduledPayment.Id });
+				Do.Until(() => db.OpsSagas.ScheduledPaymentSagaEntities.Single(a => a.ApplicationGuid == application.Id).PaymentRequestDate != scheduledPaymentDate);
 			}
 
 			Do.Until(() => db.OpsSagas.ScheduledPaymentSagaEntities.Single(a => a.ApplicationGuid == application.Id), new TimeSpan(0, 1, 0));
