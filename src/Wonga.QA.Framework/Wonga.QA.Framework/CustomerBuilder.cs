@@ -67,6 +67,7 @@ namespace Wonga.QA.Framework
             _email = Data.GetEmail();
             _bankAccountId = Data.GetId();
             _dateOfBirth = Data.GetDoB();
+            _province = ProvinceEnum.ON;
         }
 
         public static CustomerBuilder New()
@@ -189,7 +190,9 @@ namespace Wonga.QA.Framework
 
             List<ApiRequest> requests = new List<ApiRequest>
             {
-                CreateAccountCommand.New(r => r.AccountId = _id),
+                CreateAccountCommand.New(r => { r.AccountId = _id;
+                                                  r.Login = _email;
+                }),
                 SaveSocialDetailsCommand.New(r => r.AccountId = _id),
                 SavePasswordRecoveryDetailsCommand.New(r => r.AccountId = _id),
                 SaveContactPreferencesCommand.New(r => r.AccountId = _id),
@@ -263,7 +266,8 @@ namespace Wonga.QA.Framework
                                                                  r.District = _district;
                                                                  r.Town = _town;
                                                                  r.County = _county;
-                                                             } ),
+                                                                 r.Province = _province;
+                        } ),
                         AddBankAccountCaCommand.New(r => { r.AccountId = _id;
                                                              r.BankAccountId = _bankAccountId;
                         }),
@@ -290,6 +294,7 @@ namespace Wonga.QA.Framework
                                                                  r.Surname = _surname;
                                                                  r.Forename = _foreName;
                                                                  r.DateOfBirth = _dateOfBirth;
+                                                                 r.Email = _email;
                                                              }),
                         SaveCustomerAddressUkCommand.New(r=>
                                                              {
@@ -311,7 +316,7 @@ namespace Wonga.QA.Framework
                 case AUT.Uk:
                     requests.AddRange(new ApiRequest[]
 					{
-						SaveCustomerDetailsUkCommand.New(r=> { r.AccountId = _id;}),
+						SaveCustomerDetailsUkCommand.New(r=> { r.AccountId = _id;r.Email = _email;}),
 					    SaveCustomerAddressUkCommand.New(r =>
 					                                         {
 					                                             r.AccountId = _id;

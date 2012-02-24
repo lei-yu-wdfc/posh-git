@@ -27,9 +27,8 @@ namespace Wonga.QA.Tests.Journeys
         public void ApiL0JourneyAccepted()
         {
             Customer cust = CustomerBuilder.New().Build();
-            
-            ApplicationBuilder.New(cust).Build();
 
+            ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
         }
 
         [Test, AUT(AUT.Wb)]
@@ -78,8 +77,38 @@ namespace Wonga.QA.Tests.Journeys
 			ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
 
 		}
-		
 
+        public abstract class GivenAL0CustomerWithAnOpenLoan
+        {
+            protected Customer Customer;
+            protected Application Application;
+
+            [SetUp]
+            public virtual void SetUp()
+            {
+                Customer = CustomerBuilder.New().Build();
+
+                Application =
+                    ApplicationBuilder.New(Customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+            }
+
+            public class WhenTheyRepayTheLoanInFull : GivenAL0CustomerWithAnOpenLoan
+            {
+                [SetUp]
+                public override void SetUp()
+                {
+                    base.SetUp();
+
+                    Application.Repay();
+                }
+
+                [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
+                public void ThenTheLoanShouldClose()
+                {
+                    Assert.IsTrue(Application.IsClosed);
+                }
+            }
+        }
 
 		#region Helpers
 

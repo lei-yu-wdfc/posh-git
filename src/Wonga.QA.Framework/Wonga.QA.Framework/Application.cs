@@ -27,6 +27,11 @@ namespace Wonga.QA.Framework
             Id = id;
         }
 
+        public bool IsClosed
+        {
+            get { return Driver.Db.Payments.Applications.Single(a=> a.ExternalId == Id).ClosedOn.HasValue; }
+        }
+
         public Customer GetCustomer()
         {
             return new Customer(Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).AccountId);
