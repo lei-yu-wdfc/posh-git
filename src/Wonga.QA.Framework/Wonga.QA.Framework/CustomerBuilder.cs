@@ -31,6 +31,7 @@ namespace Wonga.QA.Framework
         private String _town;
         private String _county;
         private Guid _bankAccountId;
+        private Date _dateOfBirth;
 
         private CustomerBuilder()
         {
@@ -66,6 +67,7 @@ namespace Wonga.QA.Framework
         	_nextPayDate = Data.GetNextPayDate();
             _email = Data.GetEmail();
             _bankAccountId = Data.GetId();
+            _dateOfBirth = Data.GetDoB();
         }
 
         public static CustomerBuilder New()
@@ -84,11 +86,11 @@ namespace Wonga.QA.Framework
             return this;
         }
 
-		public CustomerBuilder WithDateOfBirth(Date dateOfBirth)
-		{
-			_dateOfBirth = dateOfBirth;
-			return this;
-		}
+        public CustomerBuilder WithDateOfBirth(Date dateOfBirth)
+        {
+            _dateOfBirth = dateOfBirth;
+            return this;
+        }
 
 		public CustomerBuilder WithGender(GenderEnum gender)
 		{
@@ -289,6 +291,7 @@ namespace Wonga.QA.Framework
                                                                  r.MiddleName = _middleName;
                                                                  r.Surname = _surname;
                                                                  r.Forename = _foreName;
+                                                                 r.DateOfBirth = _dateOfBirth;
                                                              }),
                         SaveCustomerAddressUkCommand.New(r=>
                                                              {
