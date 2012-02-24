@@ -14,7 +14,6 @@ namespace Wonga.QA.Framework
         private Guid _verification;
         private String _employerName;
 		private Decimal _netMonthlyIncome;
-    	private Date _dateOfBirth;
     	private GenderEnum _gender;
     	private String _nationalNumber;
         private String _foreName;
@@ -98,12 +97,7 @@ namespace Wonga.QA.Framework
 			_netMonthlyIncome = netMonthlyIncome;
 			return this;
 		}
-        public CustomerBuilder WithDateOfBirth(Date dateOfBirth)
-        {
-            _dateOfBirth = dateOfBirth;
-            return this;
-        }
-
+        
 		public CustomerBuilder WithGender(GenderEnum gender)
 		{
 			_gender = gender;
