@@ -252,7 +252,6 @@ namespace Wonga.QA.Framework
                             r.MiddleName = _middleName;
                             r.Surname = _surname;
                             r.Email = _email;
-							r.NationalNumber = _nationalNumber;
                         	r.DateOfBirth = _dateOfBirth;
                         	r.Gender = _gender;
                         }),                       

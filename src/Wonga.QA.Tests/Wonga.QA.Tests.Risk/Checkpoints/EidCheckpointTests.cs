@@ -15,8 +15,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
         {
             Customer cust = CustomerBuilder.New().Build();
 
-            Application l0App = ApplicationBuilder.New(cust).WithIovationBlackBox("Allow")
-                .WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+            Application l0App = ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
 
             l0App.Repay();
 
