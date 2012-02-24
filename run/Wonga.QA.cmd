@@ -10,14 +10,14 @@ SET MSBuild=%SystemRoot%\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe /nolog
 
 :MENU
 ECHO.
-ECHO 1. Build all solutions
-ECHO 2. Set SUT ^& AUT
-ECHO 3. Run Wonga.QA.Tests
-ECHO 4. Run Wonga.QA.Tests for all AUTs against RC
-ECHO 5. Run Wonga.QA.Generators.Api
-ECHO 6. Run Wonga.QA.Generators.Msmq
-ECHO 7. Run Wonga.QA.Generators.Db
-ECHO 0. Exit
+ECHO   1. Build all solutions
+ECHO   2. Set SUT ^& AUT
+ECHO   3. Run Wonga.QA.Tests
+ECHO   4. Run Wonga.QA.Tests for all AUTs against RC
+ECHO   5. Run Wonga.QA.Generators.Api
+ECHO   6. Run Wonga.QA.Generators.Msmq
+ECHO   7. Run Wonga.QA.Generators.Db
+ECHO   0. Exit
 ECHO.
 
 CHOICE /C 12345670 /M "But if you already know, how can I make a choice?" /N
@@ -37,8 +37,8 @@ GOTO EOF
 GOTO MENU
 
 :2
-	SET /P AUT=Enter AUT (E.g. Uk, Za, Ca, Wb): && SETX AUT %AUT% > NUL
-	SET /P SUT=Enter SUT (E.g. Dev, WIP, RC): && SETX SUT %SUT% > NUL
+	SET /P AUT=Enter AUT (E.g. Uk, Za, Ca, Wb): && SETX AUT %AUT%
+	SET /P SUT=Enter SUT (E.g. Dev, WIP, RC): && SETX SUT %SUT%
 GOTO MENU
 
 :3
