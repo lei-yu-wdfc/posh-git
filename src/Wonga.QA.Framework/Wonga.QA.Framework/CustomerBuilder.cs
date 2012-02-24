@@ -31,14 +31,13 @@ namespace Wonga.QA.Framework
         private String _town;
         private String _county;
         private Guid _bankAccountId;
-        private Date _dateOfBirth;
 
         private CustomerBuilder()
         {
             _id = Data.GetId();
             _verification = Data.GetId();
             _employerName = Data.GetEmployerName();
-			_dateOfBirth = new Date(DateTime.UtcNow.AddYears(-30));
+			//_dateOfBirth = new Date(DateTime.UtcNow.AddYears(-30));
 			_gender = GenderEnum.Female;
         	_nationalNumber = Data.GetNIN(_dateOfBirth.DateTime, _gender == GenderEnum.Female);
             _surname = Data.GetName();
@@ -107,7 +106,6 @@ namespace Wonga.QA.Framework
 		public CustomerBuilder WithNextPayDate(Date date)
 		{
 			_nextPayDate = date;
-			;
 			return this;
 		}
 
