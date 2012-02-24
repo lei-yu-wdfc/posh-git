@@ -3,16 +3,17 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using MbUnit.Framework;
+using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Db.ContactManagement;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Journeys
 {
-    [Parallelizable(TestScope.All)]
+    //[Parallelizable(TestScope.All)]
     public class ApiJourneys
     {
         [Test, AUT(AUT.Wb)]
-        public void WBApiL0Journey()
+        public void WBApiL0JourneyAccepted()
         {
             Customer cust = CustomerBuilder.New().Build();
             
@@ -23,7 +24,7 @@ namespace Wonga.QA.Tests.Journeys
         }
 
         [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
-        public void ApiL0Journey()
+        public void ApiL0JourneyAccepted()
         {
             Customer cust = CustomerBuilder.New().Build();
             
@@ -32,7 +33,7 @@ namespace Wonga.QA.Tests.Journeys
         }
 
         [Test, AUT(AUT.Wb)]
-        public void WBApiDeclinedL0()
+        public void WBApiDeclinedL0Accepted()
         {
             Customer cust = CustomerBuilder.New().WithMiddleName("Middle").Build();
 
@@ -42,14 +43,47 @@ namespace Wonga.QA.Tests.Journeys
         }
 
         [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
-        public void ApiDeclinedL0()
+        public void ApiDeclinedL0Accepted()
         {
             Customer cust = CustomerBuilder.New().WithEmployer("Wonga").Build();
 
             ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
         }
 
-        private void SignupSecondaryDirectors(Organisation org)
+		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
+		public void ApiLnJourneyAccepted()
+		{
+			Customer cust = CustomerBuilder.New().Build();
+
+			var applicationL0 = ApplicationBuilder.New(cust).Build();
+
+			applicationL0.Repay();
+
+			ApplicationBuilder.New(cust).Build();
+		}
+
+		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
+		public void ApiLnJourneyDeclined()
+		{
+			Customer cust = CustomerBuilder.New().Build();
+
+			var applicationL0 = ApplicationBuilder.New(cust).Build();
+
+			applicationL0.Repay();
+
+			var db = new DbDriver();
+			db.Risk.EmploymentDetails.Single(a => a.AccountId == cust.Id).EmployerName = "Wonga";
+			db.Risk.SubmitChanges();
+
+			ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
+
+		}
+		
+
+
+		#region Helpers
+
+		private void SignupSecondaryDirectors(Organisation org)
         {
             var guarantors = Driver.Db.ContactManagement.DirectorOrganisationMappings.Where(entity => entity.OrganisationId == org.Id && entity.DirectorLevel>0);
             foreach (DirectorOrganisationMappingEntity guarantor in guarantors)
@@ -57,6 +91,8 @@ namespace Wonga.QA.Tests.Journeys
                 CustomerBuilder sd = CustomerBuilder.New(guarantor.AccountId);
                 sd.Build();
             }
-        }
-    }
+		}
+
+		#endregion
+	}
 }
