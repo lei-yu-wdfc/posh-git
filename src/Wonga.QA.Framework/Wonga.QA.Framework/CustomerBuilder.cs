@@ -13,11 +13,13 @@ namespace Wonga.QA.Framework
         private Guid _id;
         private Guid _verification;
         private String _employerName;
+		private Decimal _netMonthlyIncome;
     	private Date _dateOfBirth;
     	private GenderEnum _gender;
     	private String _nationalNumber;
         private String _foreName;
 	    private Date _nextPayDate;
+    	private Date _dateOfBirth;
         private String _middleName;
         private String _surname;
         private String _houseNumber;
@@ -31,12 +33,14 @@ namespace Wonga.QA.Framework
         private String _town;
         private String _county;
         private Guid _bankAccountId;
+    	
 
         private CustomerBuilder()
         {
             _id = Data.GetId();
             _verification = Data.GetId();
             _employerName = Data.GetEmployerName();
+        	_netMonthlyIncome = Data.RandomInt(1000, 2000);
 			//_dateOfBirth = new Date(DateTime.UtcNow.AddYears(-30));
 			_gender = GenderEnum.Female;
         	_nationalNumber = Data.GetNIN(_dateOfBirth.DateTime, _gender == GenderEnum.Female);
@@ -57,15 +61,18 @@ namespace Wonga.QA.Framework
             else if (Config.AUT == AUT.Ca)
             {
                 _postcode = "K0A0A0";
+            	_province = ProvinceEnum.ON;
             }
             _street = Data.RandomString(15);
             _flat = Data.RandomString(4);
             _district = Data.RandomString(15);
             _town = Data.RandomString(15);
-            _county = Data.RandomString(15);
+            _county = Data.RandomString(15);			
         	_nextPayDate = Data.GetNextPayDate();
-            _email = Data.GetEmail();
+            _dateOfBirth = Data.GetDoB();
+			_email = Data.GetEmail();
             _bankAccountId = Data.GetId();
+        	
             _dateOfBirth = Data.GetDoB();
             _province = ProvinceEnum.ON;
         }
@@ -86,6 +93,11 @@ namespace Wonga.QA.Framework
             return this;
         }
 
+		public CustomerBuilder WithNetMonthlyIncome(decimal netMonthlyIncome)
+		{
+			_netMonthlyIncome = netMonthlyIncome;
+			return this;
+		}
         public CustomerBuilder WithDateOfBirth(Date dateOfBirth)
         {
             _dateOfBirth = dateOfBirth;
@@ -107,6 +119,12 @@ namespace Wonga.QA.Framework
 		public CustomerBuilder WithNextPayDate(Date date)
 		{
 			_nextPayDate = date;
+			return this;
+		}
+
+		public CustomerBuilder WithDateOfBirth(Date date)
+		{
+			_dateOfBirth = date;
 			return this;
 		}
 
@@ -183,8 +201,15 @@ namespace Wonga.QA.Framework
             return this;
         }
 
+		public CustomerBuilder WithProvinceInAddress(ProvinceEnum province)
+		{
+			_province = province;
+			return this;
+		}
         public Customer Build()
         {
+			_nextPayDate.DateFormat = DateFormat.Date;
+			_dateOfBirth.DateFormat = DateFormat.Date;
 			_dateOfBirth.DateFormat = DateFormat.Date;
 			_nextPayDate.DateFormat = DateFormat.Date;
 
@@ -265,6 +290,7 @@ namespace Wonga.QA.Framework
                                                                  r.District = _district;
                                                                  r.Town = _town;
                                                                  r.County = _county;
+																 r.Province = _province;
                                                                  r.Province = _province;
                         } ),
                         AddBankAccountCaCommand.New(r => { r.AccountId = _id;
@@ -274,6 +300,7 @@ namespace Wonga.QA.Framework
                         {
                             r.AccountId = _id;
                             r.EmployerName = _employerName;
+                        	r.NetMonthlyIncome = _netMonthlyIncome;
                         }),
                         VerifyMobilePhoneCaCommand.New(r =>
                         {

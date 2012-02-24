@@ -64,6 +64,6 @@ namespace Wonga.QA.Framework
             var customerDetailsRow = db.Comms.CustomerDetails.Single(cd => cd.AccountId == Id);
             customerDetailsRow.Surname = surname;
             db.Comms.SubmitChanges();
-        }
+        }		
     }
 }
