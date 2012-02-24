@@ -37,8 +37,10 @@ GOTO EOF
 GOTO MENU
 
 :2
-	SET /P AUT=Enter AUT (E.g. Uk, Za, Ca, Wb): && SETX AUT %AUT%
-	SET /P SUT=Enter SUT (E.g. Dev, WIP, RC): && SETX SUT %SUT%
+	SET /P AUT=Enter AUT (E.g. Uk, Za, Ca, Wb): 
+	SET /P SUT=Enter SUT (E.g. Dev, WIP, RC): 
+	SETX AUT %AUT% > NUL
+	SETX SUT %SUT% > NUL
 GOTO MENU
 
 :3
