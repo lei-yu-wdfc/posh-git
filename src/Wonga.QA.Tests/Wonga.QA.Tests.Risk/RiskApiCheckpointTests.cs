@@ -626,6 +626,7 @@ namespace Wonga.QA.Tests.Risk
 
         [Test,AUT(AUT.Wb)]
         [JIRA("SME-644"),Description("Experian -> This test creates a loan for a customer with the correct date of birth, then checks the risk checkpoint")]
+        [Pending("Experian not implemented yet?")]
         public void TestExperianDateOfBirthIsCorrect_LoanIsApproved()
         {
             const String maskName = "ExperianCustomerDateOfBirthIsCorrect";
@@ -657,6 +658,7 @@ namespace Wonga.QA.Tests.Risk
 
         [Test,AUT(AUT.Wb)]
         [JIRA("SME-644"),Description("Experian -> This test creates a loan for a customer with the incorrect date of birth, then checks the risk checkpoint")]
+        [Pending("Experian not implemented yet?")]
         public void TestExperianDateOfBirthIsIncorrect_LoanIsDeclined()
         {
             const String maskName = "ExperianCustomerDateOfBirthIsCorrect";
@@ -688,6 +690,7 @@ namespace Wonga.QA.Tests.Risk
 
         [Test,AUT(AUT.Wb)]
         [JIRA("SME-644"),Description("Experian -> This test creates a loan for a customer with the not provided date of birth, then checks the risk checkpoint")]
+        [Pending("Experian not implemented yet?")]
         public void TestExperianDateOfBirthIsNotProvided_LoanIsApproved()
         {
             const String maskName = "ExperianCustomerDateOfBirthIsCorrect";

@@ -180,8 +180,8 @@ namespace Wonga.QA.Tests.Comms
         }
 
         [Test,AUT(AUT.Wb)]
-        [JIRA("SME-561"),Description("This negative test validates the scenario of saving personal and phone details of customer that is recognized, this test validates error code fron error response returned by the API call"),
-        Ignore("I cannot reproduce what this test needs. I will review later")]
+        [JIRA("SME-561"),Description("This negative test validates the scenario of saving personal and phone details of customer that is recognized, this test validates error code fron error response returned by the API call")]
+        [Ignore("I cannot reproduce what this test needs. I will review later")]
         public void TestSaveCustomerDetailsCommand_DuplicateCustomer()
         {
             var accountId = Guid.NewGuid();
