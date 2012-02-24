@@ -13,6 +13,9 @@ namespace Wonga.QA.Framework
         private Guid _id;
         private Guid _verification;
         private String _employerName;
+    	private Date _dateOfBirth;
+    	private GenderEnum _gender;
+    	private String _nationalNumber;
         private String _foreName;
 	    private Date _nextPayDate;
         private String _middleName;
@@ -34,6 +37,9 @@ namespace Wonga.QA.Framework
             _id = Data.GetId();
             _verification = Data.GetId();
             _employerName = Data.GetEmployerName();
+			_dateOfBirth = new Date(DateTime.UtcNow.AddYears(-30));
+			_gender = GenderEnum.Female;
+        	_nationalNumber = Data.GetNIN(_dateOfBirth.DateTime, _gender == GenderEnum.Female);
             _surname = Data.GetName();
             _middleName = Data.GetMiddleName();
             _foreName = Data.GetName();
@@ -77,6 +83,24 @@ namespace Wonga.QA.Framework
             _employerName = employerName;
             return this;
         }
+
+		public CustomerBuilder WithDateOfBirth(Date dateOfBirth)
+		{
+			_dateOfBirth = dateOfBirth;
+			return this;
+		}
+
+		public CustomerBuilder WithGender(GenderEnum gender)
+		{
+			_gender = gender;
+			return this;
+		}
+
+		public CustomerBuilder WithNationalNumber(string nationalNumber)
+		{
+			_nationalNumber = nationalNumber;
+			return this;
+		}
 
 		public CustomerBuilder WithNextPayDate(Date date)
 		{
@@ -159,7 +183,8 @@ namespace Wonga.QA.Framework
 
         public Customer Build()
         {
-			_nextPayDate.DateFormat = DateFormat.Date;;
+			_nextPayDate.DateFormat = DateFormat.Date;
+        	_dateOfBirth.DateFormat = DateFormat.Date;
 
             List<ApiRequest> requests = new List<ApiRequest>
             {
@@ -180,6 +205,9 @@ namespace Wonga.QA.Framework
                             r.AccountId = _id;
                             r.MiddleName = _middleName;
                             r.Email = _email;
+                        	r.NationalNumber = _nationalNumber;
+                        	r.DateOfBirth = _dateOfBirth;
+                        	r.Gender = _gender;
                         }),
                         SaveCustomerAddressZaCommand.New(r =>
                                                              {
@@ -220,6 +248,9 @@ namespace Wonga.QA.Framework
                             r.MiddleName = _middleName;
                             r.Surname = _surname;
                             r.Email = _email;
+							r.NationalNumber = _nationalNumber;
+                        	r.DateOfBirth = _dateOfBirth;
+                        	r.Gender = _gender;
                         }),                       
                         SaveCustomerAddressCaCommand.New(r => {
                                                                  r.AccountId = _id;
