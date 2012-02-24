@@ -87,6 +87,7 @@ namespace Wonga.QA.Framework
 		public CustomerBuilder WithDateOfBirth(Date dateOfBirth)
 		{
 			_dateOfBirth = dateOfBirth;
+			_dateOfBirth.DateFormat = DateFormat.Date;
 			return this;
 		}
 
@@ -105,6 +106,8 @@ namespace Wonga.QA.Framework
 		public CustomerBuilder WithNextPayDate(Date date)
 		{
 			_nextPayDate = date;
+			_nextPayDate.DateFormat = DateFormat.Date;
+			;
 			return this;
 		}
 
@@ -183,9 +186,6 @@ namespace Wonga.QA.Framework
 
         public Customer Build()
         {
-			_nextPayDate.DateFormat = DateFormat.Date;
-        	_dateOfBirth.DateFormat = DateFormat.Date;
-
             List<ApiRequest> requests = new List<ApiRequest>
             {
                 CreateAccountCommand.New(r => r.AccountId = _id),
