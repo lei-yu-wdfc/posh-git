@@ -20,9 +20,11 @@ namespace Wonga.QA.Tests.Comms
         }
 
 		[Test, AUT(AUT.Uk)]
-		public void LoanExtensionSecciEmail()
+		public void LoanExtensionSecciEmailIsSent()
 		{
 			Customer cust = CustomerBuilder.New().Build();
+			Do.Until(cust.GetBankAccount);
+			Do.Until(cust.GetPaymentCard);
 			Application app = ApplicationBuilder.New(cust)
 				.WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted)
 				.Build();
@@ -42,6 +44,14 @@ namespace Wonga.QA.Tests.Comms
 			var secciDocument = Do.Until(() => Driver.Db.Comms.LegalDocuments.Single(ld => ld.ApplicationId == app.Id && ld.DocumentType == 2));//ExtensionSeccii
 			
 		}
+
+
+		[Test, AUT(AUT.Uk), JIRA("UK-598"), Description("Check that emails are received, when extension is not completed.")]
+		public void LoanExtensionNotCompleteEmailSent()
+		{
+
+		}
+
 
     }
 }
