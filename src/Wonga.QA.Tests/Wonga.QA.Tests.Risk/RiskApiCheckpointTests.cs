@@ -15,7 +15,6 @@ namespace Wonga.QA.Tests.Risk
     [Parallelizable(TestScope.All)]
     public class RiskApiCheckpointTests
     {
-        public static Boolean SingleCheckPointVerification(Application application, CheckpointStatus expectedStatus, CheckpointDefinitionEnum checkpoint)
         
         public static bool SingleCheckPointVerification(Application application, CheckpointStatus expectedStatus, CheckpointDefinitionEnum checkpoint)
         {
