@@ -9,14 +9,10 @@ namespace Wonga.QA.Framework.Api
         {
             AccountId = Data.GetId();
             BankAccountId = Data.GetId();
-            BankName = "AllianceLeicester";
-            BankCode = 134020;
             BankName = "ABBEY";
-			BankCode = "309894";
+            BankCode = 938600;
             HolderName = "FirstName LastName";
-            AccountNumber = 63849203;
-            AccountOpenDate = DateTime.Now.AddYears(-4).ToDate(DateFormat.DateTime);
-			AccountNumber = "14690568";
+			AccountNumber = 42368003;
             AccountOpenDate = DateTime.Now.AddYears(-4);
             CountryCode = CountryCodeEnum.UK;
             IsPrimary = true;

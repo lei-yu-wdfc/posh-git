@@ -19,10 +19,10 @@ namespace Wonga.QA.Tests.Risk
         {
             var db = new DbDriver();
 
-            int riskApp = db.Risk.RiskApplications.Single(r => r.ApplicationId == application.Id).RiskApplicationId;
+            int riskApp = db.Risk.RiskApplications.Single(r=>r.ApplicationId == application.Id).RiskApplicationId;
 
 			var dbCheckpoint = db.Risk.WorkflowCheckpoints.Single(r => r.RiskApplicationId == riskApp);
-
+            
             return Data.EnumToString(checkpoint) ==
                    db.Risk.CheckpointDefinitions.Single(r => r.CheckpointDefinitionId == dbCheckpoint.CheckpointDefinitionId).Name &&
                    dbCheckpoint.CheckpointStatus == Convert.ToByte(expectedStatus);
@@ -37,63 +37,84 @@ namespace Wonga.QA.Tests.Risk
             Assert.AreEqual((CreditBureauEnum)riskApplicationEntity.CreditBureauUsed, creditBureauUsed, "The credit bureau used should be the same"); // <- Lol
         }
 
-        [Test, AUT(AUT.Wb), JIRA("SME-160")]
-        public void BusinessIsCurrentlyTrading()
+        #region BusinessLoanNewCompanyCheckpoints
+        private void TestSingleBusinessCheckpoint(String riskMask, CheckpointStatus expectedResult, CheckpointDefinitionEnum checkpoint, int? orgNo = null)
         {
-            Customer cust = CustomerBuilder.New().WithMiddleName("TESTBusinessIsCurrentlyTrading").Build();
-
-            Organisation org = OrganisationBuilder.New().WithPrimaryApplicant(cust).Build();
-
-            var app = ApplicationBuilder.New(cust, org).Build();
-
-            Assert.IsTrue(SingleCheckPointVerification(app, CheckpointStatus.Verified, CheckpointDefinitionEnum.BusinessIsCurrentlyTrading));
-        }
-
-        [Test, AUT(AUT.Wb), JIRA("SME-160")]
-        public void BusinessIsCurrentlyNotTrading()
-        {
+            ApplicationDecisionStatusEnum appOutcome = expectedResult == CheckpointStatus.Verified
+                                                           ? ApplicationDecisionStatusEnum.Accepted
+                                                           : ApplicationDecisionStatusEnum.Declined;
+            
             Customer cust = CustomerBuilder.New()
-                .WithMiddleName("TESTBusinessIsCurrentlyTrading").Build();
+                .WithMiddleName(riskMask).Build();
 
-            Organisation org = OrganisationBuilder.New()
-                .WithOrganisationNumber(90000001)
-                .WithPrimaryApplicant(cust).Build();
+            var orgB = OrganisationBuilder.New().WithPrimaryApplicant(cust);
 
+            Organisation org = orgNo == null ? orgB.Build() : orgB.WithOrganisationNumber((int)orgNo).Build();
+            
             Application app = ApplicationBuilder.New(cust, org)
-                .WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
+                .WithExpectedDecision(appOutcome).Build();
 
-            Assert.IsTrue(SingleCheckPointVerification(app, CheckpointStatus.Failed, CheckpointDefinitionEnum.BusinessIsCurrentlyTrading));
+            Assert.IsTrue(SingleCheckPointVerification(app, expectedResult, checkpoint));
         }
-
+        
         [Test, AUT(AUT.Wb), JIRA("SME-156")]
         public void BusinessDataFound()
         {
-            Customer cust = CustomerBuilder.New().WithMiddleName("TESTBusinessBureauDataIsAvailable").Build();
-
-
-            Organisation org = OrganisationBuilder.New().WithPrimaryApplicant(cust).Build();
-
-            Application app = ApplicationBuilder.New(cust, org).Build();
-
-            Assert.IsTrue(SingleCheckPointVerification(app, CheckpointStatus.Verified, CheckpointDefinitionEnum.BusinessBureauDataIsAvailable));
+            TestSingleBusinessCheckpoint(BusinessBureauDataAvailable, CheckpointStatus.Verified, CheckpointDefinitionEnum.BusinessBureauDataIsAvailable);
         }
 
         [Test, AUT(AUT.Wb), JIRA("SME-156")]
         public void BusinessDataNotFound()
         {
-            Customer cust = CustomerBuilder.New()
-                .WithMiddleName("TESTBusinessBureauDataIsAvailable").Build();
-
-            Organisation org = OrganisationBuilder.New()
-                .WithOrganisationNumber(99999999)
-                .WithPrimaryApplicant(cust).Build();
-
-            Application app = ApplicationBuilder.New(cust, org)
-                .WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
-
-            Assert.IsTrue(SingleCheckPointVerification(app, CheckpointStatus.Failed, CheckpointDefinitionEnum.BusinessBureauDataIsAvailable));
+            TestSingleBusinessCheckpoint(BusinessBureauDataAvailable, CheckpointStatus.Failed, CheckpointDefinitionEnum.BusinessBureauDataIsAvailable, 99999999);
         }
 
+
+        [Test, AUT(AUT.Wb), JIRA("SME-159")]
+        public void BusinessPerformanceScoreIsAcceptable()
+        {
+            TestSingleBusinessCheckpoint(BusinessPerfScoreAcceptable, CheckpointStatus.Verified, CheckpointDefinitionEnum.BusinessPerformanceScoreIsAcceptaple);
+        }
+
+        [Test, AUT(AUT.Wb), JIRA("SME-159")]
+        public void BusinessPerformanceScoreIsNotAcceptable()
+        {
+            TestSingleBusinessCheckpoint(BusinessPerfScoreAcceptable, CheckpointStatus.Failed, CheckpointDefinitionEnum.BusinessPerformanceScoreIsAcceptaple, 99999902);
+        }
+
+
+        [Test, AUT(AUT.Wb), JIRA("SME-160")]
+        public void BusinessIsCurrentlyTrading()
+        {
+            TestSingleBusinessCheckpoint(BusinessIsTrading, CheckpointStatus.Verified, CheckpointDefinitionEnum.BusinessIsCurrentlyTrading);
+        }
+
+        [Test, AUT(AUT.Wb), JIRA("SME-160")]
+        public void BusinessIsCurrentlyNotTrading()
+        {
+            TestSingleBusinessCheckpoint(BusinessIsTrading, CheckpointStatus.Failed, CheckpointDefinitionEnum.BusinessIsCurrentlyTrading, 90000001);
+        }
+
+
+        [Test, AUT(AUT.Wb), JIRA("SME-162")]
+        public void BusinessPaymentScoreIsAcceptable()
+        {
+            TestSingleBusinessCheckpoint(BusinessPaymentScoreAcceptable, CheckpointStatus.Verified, CheckpointDefinitionEnum.BusinessPaymentScoreIsAcceptable);
+        }
+
+        [Test, AUT(AUT.Wb), JIRA("SME-162")]
+        public void BusinessPaymentScoreNotFound()
+        {
+            TestSingleBusinessCheckpoint(BusinessPaymentScoreAcceptable, CheckpointStatus.Verified, CheckpointDefinitionEnum.BusinessPaymentScoreIsAcceptable, 90000004);
+        }
+
+        [Test, AUT(AUT.Wb), JIRA("SME-162"), ExpectedException(typeof(TimeoutException))]
+        public void BusinessPaymentScoreIsNotAcceptable()
+        {
+            TestSingleBusinessCheckpoint(BusinessPaymentScoreAcceptable, CheckpointStatus.Failed, CheckpointDefinitionEnum.BusinessPaymentScoreIsAcceptable, 90000003);
+        }
+        #endregion
+        
         #region CallReport
 
         [Test,AUT(AUT.Wb)]

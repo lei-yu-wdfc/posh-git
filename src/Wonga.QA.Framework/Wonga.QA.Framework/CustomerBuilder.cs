@@ -23,7 +23,7 @@ namespace Wonga.QA.Framework
         private String _surname;
         private String _houseNumber;
         private ProvinceEnum _province;
-        private string _email;
+        private String _email;
         private String _houseName;
         private String _postcode;
         private String _street;
@@ -83,6 +83,12 @@ namespace Wonga.QA.Framework
         public static CustomerBuilder New(Guid id)
         {
             return new CustomerBuilder { _id = id };
+        }
+
+        public CustomerBuilder WithEmail(string email)
+        {
+            _email = email;
+            return this;
         }
 
         public CustomerBuilder WithEmployer(string employerName)
@@ -333,7 +339,14 @@ namespace Wonga.QA.Framework
                 case AUT.Uk:
                     requests.AddRange(new ApiRequest[]
 					{
-						SaveCustomerDetailsUkCommand.New(r=> { r.AccountId = _id;r.Email = _email;}),
+						SaveCustomerDetailsUkCommand.New(r=>
+						                                     {
+						                                         r.AccountId = _id;
+						                                         r.Forename = _foreName;
+						                                         r.Surname = _surname;
+						                                         r.Email = _email;
+						                                         r.DateOfBirth = _dateOfBirth;
+						                                     }),
 					    SaveCustomerAddressUkCommand.New(r =>
 					                                         {
 					                                             r.AccountId = _id;

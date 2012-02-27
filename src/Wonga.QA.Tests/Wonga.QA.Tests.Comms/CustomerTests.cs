@@ -433,5 +433,130 @@ namespace Wonga.QA.Tests.Comms
                                                                       ChangeId = emailVerificationEntity.ChangeId
                                                                   }));
         }
+
+        [Test, AUT(AUT.Uk, AUT.Ca), JIRA("UK-850")]
+        public void CreateCustomerTwice()
+        {
+            String forename = Data.RandomString(4, 8);
+            String surname = Data.RandomString(5, 10);
+            Date dob = Data.GetDoB();
+
+            CustomerBuilder.New()
+                .WithForename(forename)
+                .WithSurname(surname)
+                .WithDateOfBirth(dob)
+                .Build();
+
+            var error = Assert.Throws<ValidatorException>(() =>
+            CustomerBuilder.New()
+                .WithForename(forename)
+                .WithSurname(surname)
+                .WithDateOfBirth(dob)
+                .Build());
+
+            Assert.Contains(error.Message, "Comms_Customer_Recognised");
+        }
+
+        [Test, AUT(AUT.Uk, AUT.Ca), JIRA("UK-850")]
+        public void CreateSameCustomerTwiceInverseCaseOnSurnameAndForename()
+        {
+            String forename = Data.RandomString(4, 8);
+            String surname = Data.RandomString(5, 10);
+            Date dob = Data.GetDoB();
+
+            CustomerBuilder.New()
+                .WithForename(forename)
+                .WithSurname(surname)
+                .WithDateOfBirth(dob)
+                .Build();
+
+            var error = Assert.Throws<ValidatorException>(() =>
+            CustomerBuilder.New()
+                .WithForename(Data.InvertCase(forename))
+                .WithSurname(Data.InvertCase(surname))
+                .WithDateOfBirth(dob)
+                .Build());
+
+            Assert.Contains(error.Message, "Comms_Customer_Recognised");
+        }
+
+        [Test, AUT(AUT.Uk, AUT.Ca), JIRA("UK-850")]
+        public void CreateSimilarCustomerDiffForename()
+        {
+            String forename = Data.RandomString(4, 8);
+            String surname = Data.RandomString(5, 10);
+            Date dob = Data.GetDoB();
+
+            CustomerBuilder.New()
+                .WithForename(forename)
+                .WithSurname(surname)
+                .WithDateOfBirth(dob)
+                .Build();
+            
+            CustomerBuilder.New()
+                .WithForename("Bert")
+                .WithSurname(surname)
+                .WithDateOfBirth(dob)
+                .Build();
+        }
+
+        [Test, AUT(AUT.Uk, AUT.Ca), JIRA("UK-850")]
+        public void CreateSimilarCustomerSoundexOnSurname()
+        {
+            String forename = Data.RandomString(4, 8);
+            String random = Data.RandomString(5, 10);
+            String surname = "Zi" + random;
+            String soundexSurname = "Zy" + random;
+            Date dob = Data.GetDoB();
+
+            CustomerBuilder.New()
+                .WithForename(forename)
+                .WithSurname(surname)
+                .WithDateOfBirth(dob)
+                .Build();
+
+            var error = Assert.Throws<ValidatorException>(() =>
+            CustomerBuilder.New()
+                .WithForename(forename)
+                .WithSurname(soundexSurname)
+                .WithDateOfBirth(dob)
+                .Build());
+
+            Assert.Contains(error.Message, "Comms_Customer_Recognised");
+        }
+
+        [Test, AUT(AUT.Uk, AUT.Ca), JIRA("UK-850")]
+        public void CreateTwoCustomersSameEmail()
+        {
+            String email = Data.GetEmail();
+            
+            CustomerBuilder.New()
+                .WithEmail(email)
+                .Build();
+
+            var error = Assert.Throws<ValidatorException>(() =>
+            CustomerBuilder.New()
+                .WithEmail(email)
+                .Build());
+
+            Assert.Contains(error.Message, "Ops_Login_AlreadyExists,Comms_Email_Recognised");
+        }
+
+        [Test, AUT(AUT.Uk, AUT.Ca), JIRA("UK-850")]
+        public void CreateTwoCustomersSameEmailInvertedCase()
+        {
+            String email = Data.GetEmail();
+
+            CustomerBuilder.New()
+                .WithEmail(email)
+                .Build();
+
+            var error = Assert.Throws<ValidatorException>(() =>
+            CustomerBuilder.New()
+                .WithEmail(Data.InvertCase(email))
+                .Build());
+
+            Assert.Contains(error.Message, "Ops_Login_AlreadyExists,Comms_Email_Recognised");
+        }
     }
 }

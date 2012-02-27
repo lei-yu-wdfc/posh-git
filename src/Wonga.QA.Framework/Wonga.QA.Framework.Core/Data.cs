@@ -170,6 +170,11 @@ namespace Wonga.QA.Framework.Core
             return en.ToString();
         }
 
+        public static String InvertCase(String text)
+        {
+            return new string(text.Select(c => char.IsUpper(c) ? char.ToLower(c) : char.ToUpper(c)).ToArray());
+        }
+
         public static T RandomElement<T>(IList<T> enumerable)
         {
             return enumerable.ElementAt(_random.Next(enumerable.Count));
