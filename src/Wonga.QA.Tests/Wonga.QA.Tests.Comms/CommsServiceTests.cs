@@ -46,7 +46,11 @@ namespace Wonga.QA.Tests.Comms
 		}
 
 
-		[Test, AUT(AUT.Uk), JIRA("UK-598"), Description("Check that emails are received, when extension is not completed.")]
+		[Test, 
+			AUT(AUT.Uk), 
+			JIRA("UK-598"), 
+			Description("Check that emails are received, when extension is not completed."), 
+			Ignore("Not implemented in version 3.16.0")]
 		public void LoanExtensionNotCompleteEmailSent()
 		{
 

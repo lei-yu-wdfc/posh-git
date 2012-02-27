@@ -156,6 +156,12 @@ namespace Wonga.QA.Framework.Core
             return RandomElement((T[])Enum.GetValues(typeof(T)));
         }
 
+		public static T RandomEnum<T>(params T[] exclude)
+		{
+			return RandomElement(((T[])Enum.GetValues(typeof(T))).Where(t=>exclude == null || !exclude.Contains(t)).ToArray());
+		}
+
+
         public static string EnumToString(Enum en)
         {
             Type type = en.GetType();
