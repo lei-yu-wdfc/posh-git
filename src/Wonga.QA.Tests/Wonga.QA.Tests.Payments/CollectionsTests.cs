@@ -55,7 +55,7 @@ namespace Wonga.QA.Tests.Payments
 			const int loanAmount = 500;
 
 			var nextPayDate = new Date(DateTime.UtcNow.AddDays(term / 2));
-			nextPayDate.DateTime = GetNextWorkingDay(nextPayDate);
+			nextPayDate.DateTime = Driver.Db.GetNextWorkingDay(nextPayDate);
 
 			var customer = CustomerBuilder.New()
 				.WithNextPayDate(nextPayDate)
@@ -87,7 +87,7 @@ namespace Wonga.QA.Tests.Payments
 			const int loanAmount = 500;
 
 			var nextPayDate = new Date(DateTime.UtcNow.AddDays(term / 2));
-			nextPayDate.DateTime = GetNextWorkingDay(nextPayDate);
+			nextPayDate.DateTime = Driver.Db.GetNextWorkingDay(nextPayDate);
 
 			var customer = CustomerBuilder.New()
 				.WithNextPayDate(nextPayDate)
@@ -116,7 +116,7 @@ namespace Wonga.QA.Tests.Payments
 			const int loanAmount = 500;
 
 			var nextPayDate = new Date(DateTime.UtcNow.AddDays(term / 2));
-			nextPayDate.DateTime = GetNextWorkingDay(nextPayDate);
+			nextPayDate.DateTime = Driver.Db.GetNextWorkingDay(nextPayDate);
 
 			var customer = CustomerBuilder.New()
 				.WithNextPayDate(nextPayDate)
@@ -236,19 +236,18 @@ namespace Wonga.QA.Tests.Payments
 				case 1:
 					{
 						//Payday of month - 1
-						return GetPreviousWorkingDay(new DateTime(now.Year, now.Month, GetSelfReportedPayDayForApplication(application) - 1));
+						return Driver.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, now.Month, GetSelfReportedPayDayForApplication(application) - 1)));
 					}
 				case 2:
 					{
 						//Default payday - 1
-						return GetPreviousWorkingDay(new DateTime(now.Year, now.Month, GetDefaultPayDaysOfMonth()[now.Month - 1] - 1));
+						return Driver.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, now.Month, GetDefaultPayDaysOfMonth()[now.Month - 1] - 1)));
 					}
 				case 3:
 					{
 						//Default payday - 1
-						return GetPreviousWorkingDay(new DateTime(now.Year, now.Month, GetDefaultPayDaysOfMonth()[now.Month - 1] - 1));
+						return Driver.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, now.Month, GetDefaultPayDaysOfMonth()[now.Month - 1] - 1)));
 					}
-					break;
 				default:
 					{
 						throw new Exception(String.Format("We don't Naedo {0} times.", attempt));
@@ -302,28 +301,6 @@ namespace Wonga.QA.Tests.Payments
 			var dbEntry = db.Ops.ServiceConfigurations.Single(a => a.Key == NowServiceConfigKey);
 			dbEntry.Value = dateTime.ToString("yyyy-MM-dd hh:mm:ss");
 			db.Ops.SubmitChanges();
-		}
-
-		public bool IsHoliday(DateTime dateTime)
-		{
-			var date = dateTime.Date;
-			return new DbDriver().Payments.CalendarDates.Any(a => a.IsBankHoliday && a.Date == date);
-		}
-
-		public DateTime GetNextWorkingDay(DateTime dateTime)
-		{
-			//if (dateTime.DayOfWeek == DayOfWeek.Saturday) dateTime = dateTime.AddDays(2);
-			if (dateTime.DayOfWeek == DayOfWeek.Sunday) dateTime = dateTime.AddDays(1);
-			while (IsHoliday(dateTime)) dateTime = dateTime.AddDays(1);
-			return dateTime;
-		}
-
-		public DateTime GetPreviousWorkingDay(DateTime dateTime)
-		{
-			//if (dateTime.DayOfWeek == DayOfWeek.Saturday) dateTime = dateTime.AddDays(-1);
-			if (dateTime.DayOfWeek == DayOfWeek.Sunday) dateTime = dateTime.AddDays(1 - 2);
-			while (IsHoliday(dateTime)) dateTime = dateTime.AddDays(-1);
-			return dateTime;
 		}
 
 		public int[] GetDefaultPayDaysOfMonth()

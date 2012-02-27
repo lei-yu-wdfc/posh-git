@@ -25,18 +25,47 @@ namespace Wonga.QA.Framework.Db
 
 		public static Date GetNextWorkingDay(this DbDriver db, Date date)
 		{
-			if (date.DateTime.DayOfWeek == DayOfWeek.Saturday) date.DateTime = date.DateTime.AddDays(2);
-			if (date.DateTime.DayOfWeek == DayOfWeek.Sunday) date.DateTime = date.DateTime.AddDays(1);
-			while (db.IsHoliday(date)) date.DateTime = date.DateTime.AddDays(1);
-			return date;
+			switch (Config.AUT)
+			{
+					case AUT.Za:
+					{
+						if (date.DateTime.DayOfWeek == DayOfWeek.Sunday) date.DateTime = date.DateTime.AddDays(1);
+						while (db.IsHoliday(date)) date.DateTime = date.DateTime.AddDays(1);
+						return date;
+					}
+					
+				default:
+					{
+						if (date.DateTime.DayOfWeek == DayOfWeek.Saturday) date.DateTime = date.DateTime.AddDays(2);
+						if (date.DateTime.DayOfWeek == DayOfWeek.Sunday) date.DateTime = date.DateTime.AddDays(1);
+						while (db.IsHoliday(date)) date.DateTime = date.DateTime.AddDays(1);
+						return date;
+					}
+			}
 		}
 
 		public static Date GetPreviousWorkingDay(this DbDriver db, Date date)
 		{
-			if (date.DateTime.DayOfWeek == DayOfWeek.Saturday) date.DateTime = date.DateTime.AddDays(-1);
-			if (date.DateTime.DayOfWeek == DayOfWeek.Sunday) date.DateTime = date.DateTime.AddDays(1 - 2);
-			while (db.IsHoliday(date)) date.DateTime = date.DateTime.AddDays(-1);
-			return date;
+			switch (Config.AUT)
+			{
+				case AUT.Za:
+					{
+						if (date.DateTime.DayOfWeek == DayOfWeek.Sunday) date.DateTime = date.DateTime.AddDays(-1);
+						while (db.IsHoliday(date)) date.DateTime = date.DateTime.AddDays(-1);
+						if (date.DateTime.DayOfWeek == DayOfWeek.Sunday) date.DateTime = date.DateTime.AddDays(-1);
+						return date;
+					}
+				default:
+					{
+						if (date.DateTime.DayOfWeek == DayOfWeek.Saturday) date.DateTime = date.DateTime.AddDays(-1);
+						if (date.DateTime.DayOfWeek == DayOfWeek.Sunday) date.DateTime = date.DateTime.AddDays( -2);
+						while (db.IsHoliday(date)) date.DateTime = date.DateTime.AddDays(-1);
+						if (date.DateTime.DayOfWeek == DayOfWeek.Sunday) date.DateTime = date.DateTime.AddDays(-2);
+						if (date.DateTime.DayOfWeek == DayOfWeek.Saturday) date.DateTime = date.DateTime.AddDays(-1);
+						return date;
+					}
+			}
+
 		}
 
 		public static int[] GetDefaultPayDaysOfMonth(this DbDriver db)
