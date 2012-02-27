@@ -286,12 +286,9 @@ namespace Wonga.QA.Tests.Payments
 		private int GetSelfReportedPayDayForApplication(Application application)
 		{
 			var db = new DbDriver();
-
-			return (from ra in db.Risk.RiskApplications
-					join ed in db.Risk.EmploymentDetails
-						on ra.AccountId equals ed.AccountId
-					where ra.ApplicationId == application.Id
-					select ed.NextPayDate).Single().Value.Day;
+			return (db.Risk.RiskApplications.Join(db.Risk.EmploymentDetails, ra => ra.AccountId, ed => ed.AccountId,
+			                                      (ra, ed) => new {ra, ed}).Where(@t => @t.ra.ApplicationId == application.Id).
+				Select(@t => @t.ed.NextPayDate)).Single().Value.Day;
 
 		}
 
