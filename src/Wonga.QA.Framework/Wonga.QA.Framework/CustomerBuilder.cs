@@ -40,9 +40,10 @@ namespace Wonga.QA.Framework
             _verification = Data.GetId();
             _employerName = Data.GetEmployerName();
         	_netMonthlyIncome = Data.RandomInt(1000, 2000);
-			//_dateOfBirth = new Date(DateTime.UtcNow.AddYears(-30));
+			_dateOfBirth = Data.GetDoB();
 			_gender = GenderEnum.Female;
-        	_nationalNumber = Data.GetNIN(_dateOfBirth.DateTime, _gender == GenderEnum.Female);
+			if(Config.AUT == AUT.Za) //TODO implement nationalNumber generators for other regions
+        		_nationalNumber = Data.GetNIN(_dateOfBirth.DateTime, _gender == GenderEnum.Female);
             _surname = Data.GetName();
             _middleName = Data.GetMiddleName();
             _foreName = Data.GetName();
@@ -68,11 +69,9 @@ namespace Wonga.QA.Framework
             _town = Data.RandomString(15);
             _county = Data.RandomString(15);			
         	_nextPayDate = Data.GetNextPayDate();
-            _dateOfBirth = Data.GetDoB();
 			_email = Data.GetEmail();
             _bankAccountId = Data.GetId();
         	
-            _dateOfBirth = Data.GetDoB();
             _province = ProvinceEnum.ON;
         }
 
@@ -146,7 +145,6 @@ namespace Wonga.QA.Framework
             return this;
         }
 
-
         public CustomerBuilder WithHouseNumberInAddress(String houseNumber)
         {
             _houseNumber = houseNumber;
@@ -200,14 +198,13 @@ namespace Wonga.QA.Framework
 			_province = province;
 			return this;
 		}
+
         public Customer Build()
         {
 			_nextPayDate.DateFormat = DateFormat.Date;
 			_dateOfBirth.DateFormat = DateFormat.Date;
-			_dateOfBirth.DateFormat = DateFormat.Date;
-			_nextPayDate.DateFormat = DateFormat.Date;
 
-            List<ApiRequest> requests = new List<ApiRequest>
+            var requests = new List<ApiRequest>
             {
                 CreateAccountCommand.New(r => { r.AccountId = _id;
                                                   r.Login = _email;
