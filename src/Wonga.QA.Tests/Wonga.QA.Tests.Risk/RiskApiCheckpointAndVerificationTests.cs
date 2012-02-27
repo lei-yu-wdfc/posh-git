@@ -340,7 +340,6 @@ namespace Wonga.QA.Tests.Risk
 
 		private string GetEmployerNameMaskFromCheckpointDefinition(CheckpointDefinitionEnum checkpointDefinition)
 		{
-			//return String.Format("test:{0}", Data.EnumToString(checkpointDefinition));
 			//type name has this format:
 			//"Wonga.Risk.Checkpoints.ApplicationElementNotOnCSBlacklist, Wonga.Risk.Checkpoints, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
 			var checkpoint = new DbDriver().Risk.CheckpointDefinitions.SingleOrDefault(cd => cd.Name == Data.EnumToString(checkpointDefinition));
