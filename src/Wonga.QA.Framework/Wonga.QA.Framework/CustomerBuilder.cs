@@ -390,6 +390,12 @@ namespace Wonga.QA.Framework
                         () =>
                         Driver.Db.Payments.AccountPreferences.Single(ap => ap.AccountId == _id).PaymentCardsBaseEntity);
                     break;
+
+				case AUT.Ca:
+					Do.Until(
+						() =>
+						Driver.Db.Payments.AccountPreferences.Single(ap => ap.AccountId == _id).BankAccountsBaseEntity);
+					break;
             }
             
             return new Customer(_id, _email, _bankAccountId);
