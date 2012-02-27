@@ -5141,8 +5141,6 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		
 		private System.Guid _Id;
 		
-		private System.Nullable<int> _ApplicationId;
-		
 		private System.Nullable<decimal> _Amount;
 		
 		private System.Nullable<int> _PaymentsAttempted;
@@ -5161,8 +5159,6 @@ namespace Wonga.QA.Framework.Db.OpsSagas
     partial void OnCreated();
     partial void OnIdChanging(System.Guid value);
     partial void OnIdChanged();
-    partial void OnApplicationIdChanging(System.Nullable<int> value);
-    partial void OnApplicationIdChanged();
     partial void OnAmountChanging(System.Nullable<decimal> value);
     partial void OnAmountChanged();
     partial void OnPaymentsAttemptedChanging(System.Nullable<int> value);
@@ -5198,26 +5194,6 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 					this._Id = value;
 					this.SendPropertyChanged("Id");
 					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplicationId", DbType="Int")]
-		public System.Nullable<int> ApplicationId
-		{
-			get
-			{
-				return this._ApplicationId;
-			}
-			set
-			{
-				if ((this._ApplicationId != value))
-				{
-					this.OnApplicationIdChanging(value);
-					this.SendPropertyChanging();
-					this._ApplicationId = value;
-					this.SendPropertyChanged("ApplicationId");
-					this.OnApplicationIdChanged();
 				}
 			}
 		}
@@ -18952,8 +18928,6 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 		
 		private System.Nullable<int> _ApplicationId;
 		
-		private System.Nullable<System.DateTime> _ApplicationSignedOn;
-		
 		private System.Nullable<System.Guid> _ApplicationExternalId;
 		
 		private System.Nullable<System.Guid> _OrganisationId;
@@ -18976,8 +18950,6 @@ namespace Wonga.QA.Framework.Db.OpsSagas
     partial void OnIdChanged();
     partial void OnApplicationIdChanging(System.Nullable<int> value);
     partial void OnApplicationIdChanged();
-    partial void OnApplicationSignedOnChanging(System.Nullable<System.DateTime> value);
-    partial void OnApplicationSignedOnChanged();
     partial void OnApplicationExternalIdChanging(System.Nullable<System.Guid> value);
     partial void OnApplicationExternalIdChanged();
     partial void OnOrganisationIdChanging(System.Nullable<System.Guid> value);
@@ -19035,26 +19007,6 @@ namespace Wonga.QA.Framework.Db.OpsSagas
 					this._ApplicationId = value;
 					this.SendPropertyChanged("ApplicationId");
 					this.OnApplicationIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplicationSignedOn", DbType="DateTime")]
-		public System.Nullable<System.DateTime> ApplicationSignedOn
-		{
-			get
-			{
-				return this._ApplicationSignedOn;
-			}
-			set
-			{
-				if ((this._ApplicationSignedOn != value))
-				{
-					this.OnApplicationSignedOnChanging(value);
-					this.SendPropertyChanging();
-					this._ApplicationSignedOn = value;
-					this.SendPropertyChanged("ApplicationSignedOn");
-					this.OnApplicationSignedOnChanged();
 				}
 			}
 		}

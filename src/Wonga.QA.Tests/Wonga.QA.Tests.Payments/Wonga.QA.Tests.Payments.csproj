@@ -49,7 +49,7 @@
     <Compile Include="RepaymentArrangementTests.cs" />
     <Compile Include="Helpers\SetPaymentFunctions.cs" />
     <Compile Include="Helpers\TimeoutPaymentFunctions.cs" />
-    <Compile Include="TakePaymentTests.cs" />
+    <Compile Include="RepaymentTests.cs" />
     <Compile Include="VariablePricingTests.cs" />
     <Compile Include="Helpers\VerifyPaymentFunctions.cs" />
     <Compile Include="Helpers\WaitPaymentFunctions.cs" />
