@@ -21,7 +21,7 @@ namespace Wonga.QA.Tests.Risk
 
             int riskApp = db.Risk.RiskApplications.Single(r => r.ApplicationId == application.Id).RiskApplicationId;
 
-            var dbCheckpoint = db.Risk.WorkflowCheckpoints.Single(r => r.RiskApplicationId == riskApp);
+			var dbCheckpoint = db.Risk.WorkflowCheckpoints.Single(r => r.RiskApplicationId == riskApp);
 
             return Data.EnumToString(checkpoint) ==
                    db.Risk.CheckpointDefinitions.Single(r => r.CheckpointDefinitionId == dbCheckpoint.CheckpointDefinitionId).Name &&
