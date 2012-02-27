@@ -229,36 +229,7 @@ namespace Wonga.QA.Tests.Risk
 				"CreditBureauDataIsAvailableVerification");
 
 		}
-
-
-		[Test, AUT(AUT.Ca)]
-		public void GivenL0Applicant_WhenPaymentCardIsNotValid_ThenIsDeclined()
-		{
-			_builderConfig = new ApplicationBuilderConfig(ApplicationDecisionStatusEnum.Declined);
-
-			//no verifications ???
-			var expectedVerificationNames = new List<string>();
-
-			L0ApplicationWithSingleCheckPointAndVerifications(
-				CheckpointDefinitionEnum.PaymentCardIsValid,
-				expectedVerificationNames);
-
-		}
-
-		[Test, AUT(AUT.Ca)]
-		public void GivenL0Applicant_WhenApplicationElementNotCifasFlagged_ThenIsDeclined()
-		{
-			_builderConfig = new ApplicationBuilderConfig();
-
-			//no verifications ???
-			var expectedVerificationNames = new List<string>();
-
-			L0ApplicationWithSingleCheckPointAndVerifications(
-				CheckpointDefinitionEnum.CIFASFraudCheck,
-				expectedVerificationNames);
-		}
-
-
+		
 		#region helpers
 
 		private void AssertCheckpointAndVerifications(Application application, CheckpointStatus expectedStatus, IEnumerable<string> expectedVerificationNames, CheckpointDefinitionEnum checkpoint)
