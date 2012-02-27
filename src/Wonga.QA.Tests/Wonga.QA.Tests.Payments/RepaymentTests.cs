@@ -111,7 +111,7 @@ namespace Wonga.QA.Tests.Payments
             Do.Sleep(30);
         }
 
-        [Test, JIRA("SME-1018"), Pending("DefaultCharge transaction not being created yet")]
+        [Test, JIRA("SME-1018"), JIRA("SME-812"), Pending("DefaultCharge transaction not being created yet")]
         public void PaymentsShouldNowCreateNewTransacionWhenSecondCollectionAttemptFails()
         {
             // Setup application
@@ -139,7 +139,7 @@ namespace Wonga.QA.Tests.Payments
         }
 
         [Test, JIRA("SME-808")]
-        public void PaymentsShouldCreateRepayentPlanWhenLoanIsApproved()
+        public void PaymentsShouldCreateRepaymentPlanWhenLoanIsApproved()
         {
             // Setup application
             var customer = CustomerBuilder.New().Build();
@@ -160,7 +160,7 @@ namespace Wonga.QA.Tests.Payments
         /// Then update the account balance 
         /// </summary>
         [Test, JIRA("SME-808")]
-        public void PaymentsShouldUpdateAccountBalnaceWhenCollectionIsSuccessful()
+        public void PaymentsShouldUpdateAccountBalanceWhenCollectionIsSuccessful()
         {
             // Setup application
             var customer = CustomerBuilder.New().Build();
