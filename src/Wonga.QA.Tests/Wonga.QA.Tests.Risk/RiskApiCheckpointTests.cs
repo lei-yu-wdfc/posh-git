@@ -158,7 +158,7 @@ namespace Wonga.QA.Tests.Risk
 
             var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).WithForename(forename).WithSurname(surname).Build();
             var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var application = ApplicationBuilder.New(customer, organization).Build();
+            var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
             Assert.IsNotNull(application);
 
             var riskDb = Driver.Db.Risk;
@@ -180,7 +180,6 @@ namespace Wonga.QA.Tests.Risk
 
         [Test,AUT(AUT.Wb)]
         [JIRA("SME-575"),Description("CallReport -> This test creates a loan for the customer that is dead according to call report, then checks the risk checkpoint")]
-        [Pending("Deadguy case not working properly - needs investigating what breaks it and how to fix - it times out at creating application")]
         public void TestCallReportApplicantIsDeceased_LoanIsDeclined()
         {
             const string maskName = "ApplicantIsNotDeceased";
@@ -219,7 +218,7 @@ namespace Wonga.QA.Tests.Risk
 
             var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).WithForename(forename).WithSurname(surname).Build();
             var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var application = ApplicationBuilder.New(customer, organization).Build();
+            var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
             Assert.IsNotNull(application);
 
             var riskDb = Driver.Db.Risk;
@@ -241,7 +240,6 @@ namespace Wonga.QA.Tests.Risk
 
         [Test,AUT(AUT.Wb)]
         [JIRA("SME-584"),Description("CallReport -> This test creates a loan for a customer that IS CIFAS flagged, then checks the risk checkpoint")]
-        [Pending("Laura Insolvent case not working properly - it times out at creating application")]
         public void TestCallReportApplicantIsCifasFlagged_LoanIsDeclined()
         {
             const string maskName = "ApplicationElementNotCIFASFlagged";
@@ -280,7 +278,7 @@ namespace Wonga.QA.Tests.Risk
 
             var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).WithForename(forename).WithSurname(surname).Build();
             var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var application = ApplicationBuilder.New(customer, organization).Build();
+            var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
             Assert.IsNotNull(application);
 
             var riskDb = Driver.Db.Risk;
@@ -302,7 +300,6 @@ namespace Wonga.QA.Tests.Risk
 
         [Test,AUT(AUT.Wb)]
         [JIRA("SME-638"),Description("CallReport -> This test creates a loan for the insolvent customer, then checks the risk checkpoint")]
-        [Pending("Laura Insolvent case not working properly - it times out at creating application")]
         public void TestCallReportApplicantIsInsolvent_LoanIsDeclined()
         {
             const string maskName = "ApplicantIsSolvent";
@@ -342,7 +339,7 @@ namespace Wonga.QA.Tests.Risk
 
             var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).WithForename(forename).WithSurname(surname).WithDateOfBirth(dateOfBirth).Build();
             var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var application = ApplicationBuilder.New(customer, organization).Build();
+            var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
             Assert.IsNotNull(application);
 
             var riskDb = Driver.Db.Risk;
@@ -364,7 +361,6 @@ namespace Wonga.QA.Tests.Risk
 
         [Test,AUT(AUT.Wb)]
         [JIRA("SME-644"),Description("CallReport -> This test creates a loan for a customer with the incorrect date of birth, then checks the risk checkpoint")]
-        [Pending("Does not work - need investigation")]
         public void TestCallReportDateOfBirthIsIncorrect_LoanIsDeclined()
         {
             const String maskName = "CustomerDateOfBirthIsCorrect";
@@ -374,7 +370,7 @@ namespace Wonga.QA.Tests.Risk
 
             var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).WithForename(forename).WithSurname(surname).WithDateOfBirth(dateOfBirth).Build();
             var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var application = ApplicationBuilder.New(customer, organization).Build();
+            var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
             Assert.IsNotNull(application);
 
             var riskDb = Driver.Db.Risk;
@@ -396,7 +392,7 @@ namespace Wonga.QA.Tests.Risk
 
         [Test,AUT(AUT.Wb)]
         [JIRA("SME-644"),Description("CallReport -> This test creates a loan for a customer with the not provided date of birth, then checks the risk checkpoint")]
-        [Pending("Does not work")]
+        [Pending("IS THIS DECLINED OR APPROVED?? IfDateOfBirthIsNotProvidedByCallReport_LoanIsApproved() ")]
         public void TestCallReportDateOfBirthNotProvided_LoanIsApproved()
         {
             const String maskName = "CustomerDateOfBirthIsCorrect";
