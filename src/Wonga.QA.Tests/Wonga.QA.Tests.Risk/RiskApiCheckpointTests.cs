@@ -158,7 +158,7 @@ namespace Wonga.QA.Tests.Risk
 
             var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).WithForename(forename).WithSurname(surname).Build();
             var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
+            var application = ApplicationBuilder.New(customer, organization).Build();
             Assert.IsNotNull(application);
 
             var riskDb = Driver.Db.Risk;
@@ -188,7 +188,7 @@ namespace Wonga.QA.Tests.Risk
 
             var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).WithForename(forename).WithSurname(surname).Build();
             var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var application = ApplicationBuilder.New(customer, organization).Build();
+            var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
             Assert.IsNotNull(application);
 
             var riskDb = Driver.Db.Risk;
@@ -218,7 +218,7 @@ namespace Wonga.QA.Tests.Risk
 
             var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).WithForename(forename).WithSurname(surname).Build();
             var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
+            var application = ApplicationBuilder.New(customer, organization).Build();
             Assert.IsNotNull(application);
 
             var riskDb = Driver.Db.Risk;
@@ -248,7 +248,7 @@ namespace Wonga.QA.Tests.Risk
 
             var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).WithForename(forename).WithSurname(surname).Build();
             var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var application = ApplicationBuilder.New(customer, organization).Build();
+            var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
             Assert.IsNotNull(application);
 
             var riskDb = Driver.Db.Risk;
@@ -278,7 +278,7 @@ namespace Wonga.QA.Tests.Risk
 
             var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).WithForename(forename).WithSurname(surname).Build();
             var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
+            var application = ApplicationBuilder.New(customer, organization).Build();
             Assert.IsNotNull(application);
 
             var riskDb = Driver.Db.Risk;
@@ -308,7 +308,7 @@ namespace Wonga.QA.Tests.Risk
 
             var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).WithForename(forename).WithSurname(surname).Build();
             var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var application = ApplicationBuilder.New(customer, organization).Build();
+            var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
             Assert.IsNotNull(application);
 
             var riskDb = Driver.Db.Risk;
@@ -339,7 +339,7 @@ namespace Wonga.QA.Tests.Risk
 
             var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).WithForename(forename).WithSurname(surname).WithDateOfBirth(dateOfBirth).Build();
             var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
+            var application = ApplicationBuilder.New(customer, organization).Build();
             Assert.IsNotNull(application);
 
             var riskDb = Driver.Db.Risk;
@@ -498,7 +498,7 @@ namespace Wonga.QA.Tests.Risk
 
             var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).WithForename(forename).WithSurname(surname).Build();
             var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var application = ApplicationBuilder.New(customer, organization).Build();
+            var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
             Assert.IsNotNull(application);
 
             var riskDb = Driver.Db.Risk;
@@ -560,7 +560,7 @@ namespace Wonga.QA.Tests.Risk
 
             var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).WithForename(forename).WithSurname(surname).Build();
             var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var application = ApplicationBuilder.New(customer, organization).Build();
+            var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
             Assert.IsNotNull(application);
 
             var riskDb = Driver.Db.Risk;
@@ -622,7 +622,7 @@ namespace Wonga.QA.Tests.Risk
 
             var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).WithForename(forename).WithSurname(surname).Build();
             var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var application = ApplicationBuilder.New(customer, organization).Build();
+            var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
             Assert.IsNotNull(application);
 
             var riskDb = Driver.Db.Risk;
@@ -686,7 +686,7 @@ namespace Wonga.QA.Tests.Risk
 
             var customer = CustomerBuilder.New().WithMiddleName("TEST" + maskName).WithForename(forename).WithSurname(surname).WithDateOfBirth(dateOfBirth).Build();
             var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var application = ApplicationBuilder.New(customer, organization).Build();
+            var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
             Assert.IsNotNull(application);
 
             var riskDb = Driver.Db.Risk;
