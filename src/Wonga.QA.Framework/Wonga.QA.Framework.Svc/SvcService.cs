@@ -37,7 +37,7 @@ namespace Wonga.QA.Framework.Svc
                 _controller.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromMinutes(1));
             }
             _controller.Start();
-            Do.Until(IsRunning, TimeSpan.FromMinutes(1));
+            Do.With().Timeout(1).Until(IsRunning);
             return this;
         }
     }

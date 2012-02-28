@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
+using System.Threading;
 using Gallio.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
@@ -63,7 +64,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
                     TestLog.DebugTrace.WriteLine("VerifyApplicationClosed -> {0} -> true @ {1}\n", applicationGuid, row.ClosedOn);
                     return true;
                 }
-                Do.Sleep(new TimeSpan(0, 0, 0, 1));
+                Thread.Sleep(1000);
             }
             TestLog.DebugTrace.WriteLine("VerifyApplicationClosed -> {0} -> false\n", applicationGuid);
             return false;
@@ -71,13 +72,9 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
         public static bool VerifyApplicationInArrears(Guid applicationGuid)
         {
-            var waiting = new TimeSpan(0, 0, 2, 0);
-            var interval = new TimeSpan(0, 0, 0, 10);
-
             return
-                Do.Until(
-                    () => Driver.Db.OpsSagas.PaymentsInArrearsSagaEntities.Single(s => s.ApplicationId == applicationGuid),
-                    waiting, interval) != null;
+                Do.With().Timeout(2).Interval(10).Until(
+                    () => Driver.Db.OpsSagas.PaymentsInArrearsSagaEntities.Single(s => s.ApplicationId == applicationGuid)) != null;
         }
 
         public static bool VerifyVariableInterestRatesApplied(List<TransactionEntity> actual, List<TransactionEntity> expected)
@@ -112,12 +109,9 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
         public static bool VerifyDirectBankPaymentOfAmount(Guid applicationGuid, decimal amount)
         {
-            var waiting = new TimeSpan(0, 0, 3, 0);
-            var interval = new TimeSpan(0, 0, 0, 10);
-
             int appId = Driver.Db.Payments.Applications.Single(a => a.ExternalId == applicationGuid).ApplicationId;
 
-            Do.Until(() => Driver.Db.Payments.Transactions.Single(a => a.ApplicationId == appId & a.Type == PaymentTransactionType.DirectBankPayment.ToString() & a.Amount == amount), waiting, interval);
+            Do.With().Timeout(3).Interval(10).Until(() => Driver.Db.Payments.Transactions.Single(a => a.ApplicationId == appId & a.Type == PaymentTransactionType.DirectBankPayment.ToString() & a.Amount == amount));
 
             TestLog.DebugTrace.WriteLine("ActualDirectBankPaymentAmount => ExpectedDirectBankPayment {0} => {1}\n",
                                          Driver.Db.Payments.Transactions.Single(

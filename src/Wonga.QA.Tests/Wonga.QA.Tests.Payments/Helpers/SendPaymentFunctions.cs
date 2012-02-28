@@ -10,15 +10,11 @@ namespace Wonga.QA.Tests.Payments.Helpers
     {
         public static void SendPaymentTaken(Guid applicationGuid)
         {
-            var waiting = Timeout.FiveMinutes;
-            var interval = new TimeSpan(0, 0, 0, 10);
-
             var applicationid = GetPaymentFunctions.GetApplicationId(applicationGuid);
             var scheduledpaymentsaga =
-                Do.Until(
+                Do.With().Timeout(5).Interval(10).Until(
                     () =>
-                    Driver.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationId == applicationid).Id,
-                    waiting, interval);
+                    Driver.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationId == applicationid).Id);
             Driver.Msmq.Payments.Send(new PaymentTakenCommand
                                           {
                                               SagaId = scheduledpaymentsaga,

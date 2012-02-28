@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
@@ -86,7 +87,7 @@ namespace Wonga.QA.Tests.Payments
 			                         		AccountId = customer.Id,
 			                         		FixedTermLoanTopupId = topUp.ExternalId
 			                         	});
-			Do.Sleep(10);
+            Thread.Sleep(10000);
 			Do.Until(topUp.Refresh);
 
 			Assert.IsNotNull(topUp.SignedOn);

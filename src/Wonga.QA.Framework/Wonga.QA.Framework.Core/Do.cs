@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 
@@ -6,91 +7,127 @@ namespace Wonga.QA.Framework.Core
 {
     public static class Do
     {
-        private static TimeSpan _timeout = TimeSpan.FromSeconds(30);
-        private static TimeSpan _interval = TimeSpan.FromSeconds(1);
+        public static TimeSpan Timeout { get { return TimeSpan.FromSeconds(30); } }
+        public static TimeSpan Interval { get { return TimeSpan.FromSeconds(1); } }
 
-        public static void Sleep()
+        public static DoBuilder With()
         {
-            Thread.Sleep(_timeout);
+            return new DoBuilder(Timeout, Interval);
         }
 
-        public static void Sleep(Int32 seconds)
+        public static T Until<T>(Func<T> predicate)
         {
-            Thread.Sleep(TimeSpan.FromSeconds(seconds));
+            return With().Until(predicate);
         }
 
-        public static void Sleep(TimeSpan timeout)
+        public static void While<T>(Func<T> predicate)
         {
-            Thread.Sleep(timeout);
+            With().While(predicate);
         }
 
-        public static T Until<T>(Func<T> func)
+        public static T Watch<T>(Func<T> predicate) where T : struct
         {
-            return Until(func, _timeout, _interval);
-        }
-
-        public static T Until<T>(Func<T> func, TimeSpan timeout)
-        {
-            return Until(func, timeout, _interval);
-        }
-
-        public static T Until<T>(Func<T> func, TimeSpan timeout, TimeSpan interval)
-        {
-            Stopwatch stopwatch = Stopwatch.StartNew();
-            while (stopwatch.Elapsed < timeout)
-                try
-                {
-                    T t = func();
-                    Trace.WriteLine(t, typeof(Do).FullName);
-                    if (!Equals(t, default(T)))
-                        return t;
-                    Sleep(interval);
-                }
-                catch (Exception e)
-                {
-                    Trace.WriteLine(e, typeof(Do).FullName);
-                    Sleep(interval);
-                }
-             throw new TimeoutException();
-        }
-
-        public static void While<T>(Func<T> func)
-        {
-            While(func, _timeout, _interval);
-        }
-
-        public static void While<T>(Func<T> func, TimeSpan timeout)
-        {
-            While(func, timeout, _interval);
-        }
-
-        public static void While<T>(Func<T> func, TimeSpan timeout, TimeSpan interval)
-        {
-            Stopwatch stopwatch = Stopwatch.StartNew();
-            while (stopwatch.Elapsed < timeout)
-                try
-                {
-                    T t = func();
-                    Trace.WriteLine(t, typeof(Do).FullName);
-                    if (Equals(t, default(T)))
-                        return;
-                    Sleep(interval);
-                }
-                catch (Exception e)
-                {
-                    Trace.WriteLine(e, typeof(Do).FullName);
-                    return;
-                }
-            throw new TimeoutException();
+            return With().Watch(predicate);
         }
     }
 
-    public static class Timeout
+    public class DoBuilder
     {
-        public static TimeSpan OneMinutes { get { return TimeSpan.FromMinutes(1); } }
-        public static TimeSpan TwoMinutes { get { return TimeSpan.FromMinutes(2); } }
-        public static TimeSpan ThreeMinutes { get { return TimeSpan.FromMinutes(3); } }
-        public static TimeSpan FiveMinutes { get { return TimeSpan.FromMinutes(5); } }
-        public static TimeSpan TenMinutes { get { return TimeSpan.FromMinutes(10); } }
+        private TimeSpan _timeout;
+        private TimeSpan _interval;
+        private Func<String> _message;
+
+        public DoBuilder(TimeSpan timeout, TimeSpan interval)
+        {
+            _timeout = timeout;
+            _interval = interval;
+            _message = () => null;
+        }
+
+        public DoBuilder Timeout(Int32 minutes)
+        {
+            _timeout = TimeSpan.FromMinutes(minutes);
+            return this;
+        }
+
+        public DoBuilder Timeout(TimeSpan timeout)
+        {
+            _timeout = timeout;
+            return this;
+        }
+
+        public DoBuilder Interval(Int32 seconds)
+        {
+            _interval = TimeSpan.FromSeconds(seconds);
+            return this;
+        }
+
+        public DoBuilder Interval(TimeSpan interval)
+        {
+            _interval = interval;
+            return this;
+        }
+
+        public DoBuilder Message(String message, params Object[] arguments)
+        {
+            _message = () => String.Format(message, arguments);
+            return this;
+        }
+
+        public DoBuilder Message(Func<String> message)
+        {
+            _message = message;
+            return this;
+        }
+
+        public T Until<T>(Func<T> predicate)
+        {
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            while (stopwatch.Elapsed < _timeout)
+                try
+                {
+                    T t = predicate();
+                    if (!EqualityComparer<T>.Default.Equals(t, default(T)))
+                        return t;
+                    Thread.Sleep(_interval);
+                }
+                catch
+                {
+                    Thread.Sleep(_interval);
+                }
+            throw new TimeoutException(_message());
+        }
+
+        public void While<T>(Func<T> predicate)
+        {
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            while (stopwatch.Elapsed < _timeout)
+                try
+                {
+                    if (EqualityComparer<T>.Default.Equals(predicate(), default(T)))
+                        return;
+                    Thread.Sleep(_interval);
+                }
+                catch
+                {
+                    return;
+                }
+            throw new TimeoutException(_message());
+        }
+
+        public T Watch<T>(Func<T> predicate) where T : struct
+        {
+            T t = predicate();
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            while (stopwatch.Elapsed < _timeout)
+            {
+                Thread.Sleep(_interval);
+                T p = predicate();
+                if (!EqualityComparer<T>.Default.Equals(p, t))
+                    stopwatch.Restart();
+                t = p;
+            }
+            return t;
+        }
     }
 }

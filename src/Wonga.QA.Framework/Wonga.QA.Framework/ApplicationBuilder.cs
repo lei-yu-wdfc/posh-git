@@ -12,19 +12,19 @@ namespace Wonga.QA.Framework
     {
         protected Guid _id;
         protected Customer _customer;
-    	protected decimal _loanAmount;
-    	protected Date _promiseDate;
+        protected decimal _loanAmount;
+        protected Date _promiseDate;
         protected ApplicationDecisionStatusEnum _decision = ApplicationDecisionStatusEnum.Accepted;
         protected int _loanTerm;
         protected string _iovationBlackBox;
-        
+
         private Action _setPromiseDateAndLoanTerm;
         private Func<int> _getDaysUntilStartOfLoan;
 
         protected ApplicationBuilder()
         {
-            _id = Guid.NewGuid();            
-        	_loanAmount = Data.GetLoanAmount();
+            _id = Guid.NewGuid();
+            _loanAmount = Data.GetLoanAmount();
             _iovationBlackBox = "foobar";
 
             _setPromiseDateAndLoanTerm = () =>
@@ -45,7 +45,7 @@ namespace Wonga.QA.Framework
 
         public static ApplicationBuilder New(Customer customer)
         {
-            return new ApplicationBuilder { _customer = customer};
+            return new ApplicationBuilder { _customer = customer };
         }
 
         public static ApplicationBuilder New(Customer customer, Organisation company)
@@ -53,22 +53,22 @@ namespace Wonga.QA.Framework
             return new BusineesAppicationBuilder(customer, company);
         }
 
-		public ApplicationBuilder WithLoanAmount(decimal loanAmount)
-		{
-			_loanAmount = loanAmount;
-			return this;
-		}
+        public ApplicationBuilder WithLoanAmount(decimal loanAmount)
+        {
+            _loanAmount = loanAmount;
+            return this;
+        }
 
-		public ApplicationBuilder WithPromiseDate(Date promiseDate)
-		{
-		    _setPromiseDateAndLoanTerm = () =>
-		                          {
-		                              _promiseDate = promiseDate;
-		                              _loanTerm = GetLoanTermFromPromiseDate();
-		                          };
+        public ApplicationBuilder WithPromiseDate(Date promiseDate)
+        {
+            _setPromiseDateAndLoanTerm = () =>
+                                  {
+                                      _promiseDate = promiseDate;
+                                      _loanTerm = GetLoanTermFromPromiseDate();
+                                  };
 
-			return this;
-		}
+            return this;
+        }
 
         public ApplicationBuilder WithLoanTerm(int loanTerm)
         {
@@ -98,7 +98,7 @@ namespace Wonga.QA.Framework
             _iovationBlackBox = iovationBlackBox;
             return this;
         }
-        
+
         public virtual Application Build()
         {
 			
@@ -183,8 +183,8 @@ namespace Wonga.QA.Framework
             
             Driver.Api.Commands.Post(requests);
 
-            Do.Until(() => (ApplicationDecisionStatusEnum)
-                Enum.Parse(typeof(ApplicationDecisionStatusEnum), Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["ApplicationDecisionStatus"].Single()) == _decision,new TimeSpan(0,60,0));
+            Do.With().Timeout(60).Until(() => (ApplicationDecisionStatusEnum)
+                Enum.Parse(typeof(ApplicationDecisionStatusEnum), Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["ApplicationDecisionStatus"].Single()) == _decision);
 
             if (_decision == ApplicationDecisionStatusEnum.Declined)
                 return new Application(_id);
@@ -205,16 +205,7 @@ namespace Wonga.QA.Framework
 
             Do.Until(() => Driver.Api.Queries.Post(summary).Values["HasCurrentLoan"].Single() == "true");
 
-            Int32 previous = 0;
-            Stopwatch stopwatch = Stopwatch.StartNew();
-            Do.While(() =>
-            {
-                Int32 current = Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == _id).Transactions.Count);
-                if (previous != current)
-                    stopwatch.Restart();
-                previous = current;
-                return stopwatch.Elapsed < TimeSpan.FromSeconds(5);
-            });
+            Do.With().Timeout(TimeSpan.FromSeconds(10)).Watch(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == _id).Transactions.Count);
 
             return new Application {Id = _id, BankAccountId = _customer.BankAccountId, LoanAmount = _loanAmount, LoanTerm = _loanTerm};
         }

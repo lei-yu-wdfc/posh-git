@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
@@ -35,7 +36,7 @@ namespace Wonga.QA.Tests.Payments
 			                          	});
 
 			var dbApplication = Driver.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
-			Do.Sleep(10);
+			Thread.Sleep(10000);
 			var repaymentArrangement = Driver.Db.Payments.RepaymentArrangements.Single(x => x.ApplicationId == dbApplication.ApplicationId);
 			Assert.AreEqual(2, repaymentArrangement.RepaymentArrangementDetails.Count);
 		}

@@ -32,23 +32,23 @@ Then create cashadvance, fee and interest transactions on the application.
                 ApplicationBuilder.New(customer, organization).WithExpectedDecision(
                     ApplicationDecisionStatusEnum.Accepted).Build();
 
-            Assert.AreEqual(1,Do.Until(
+            Assert.AreEqual(1, Do.Until(
                 () =>
                 GetTransactionCount(t => app.Id == t.ApplicationEntity.ExternalId && t.Scope == (int)PaymentTransactionScopeEnum.Debit
                 && t.Type == PaymentTransactionEnum.Fee.ToString())));
 
-            Assert.AreEqual(1, Do.Until(
+            Assert.AreEqual(1, Do.With().Timeout(TimeSpan.FromSeconds(5)).Until(
                 () =>
                 GetTransactionCount(t => app.Id == t.ApplicationEntity.ExternalId && t.Scope == (int)PaymentTransactionScopeEnum.Debit
-                && t.Type == PaymentTransactionEnum.Interest.ToString()), TimeSpan.FromSeconds(5)));
+                && t.Type == PaymentTransactionEnum.Interest.ToString())));
 
-            Assert.AreEqual(1, Do.Until(
+            Assert.AreEqual(1, Do.With().Timeout(TimeSpan.FromSeconds(5)).Until(
                 () =>
                 GetTransactionCount(t => app.Id == t.ApplicationEntity.ExternalId && t.Scope == (int)PaymentTransactionScopeEnum.Debit
-                && t.Type == PaymentTransactionEnum.CashAdvance.ToString()), TimeSpan.FromSeconds(5)));
+                && t.Type == PaymentTransactionEnum.CashAdvance.ToString())));
         }
 
-        private int GetTransactionCount(Func<TransactionEntity,bool> func )
+        private int GetTransactionCount(Func<TransactionEntity, bool> func)
         {
             return Driver.Db.Payments.Transactions.Count(func);
         }

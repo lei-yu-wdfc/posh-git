@@ -6,7 +6,6 @@ using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
 using Wonga.QA.Framework.UI.Mappings;
-using Timeout = Wonga.QA.Framework.Core.Timeout;
 
 namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
@@ -25,10 +24,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             //Do.Until(() => !(Source.Contains(Elements.Get.ProcessingPage.ProcessingText)), TimeSpan.FromMinutes(5));
             
             if (typeof(T) == typeof(AcceptedPage))
-                return Do.Until(() => new AcceptedPage(Client), Timeout.TwoMinutes);
+                return Do.With().Timeout(2).Until(() => new AcceptedPage(Client));
 
             if (typeof(T) == typeof(DeclinedPage))
-                return Do.Until(() => new DeclinedPage(Client), Timeout.TwoMinutes);
+                return Do.With().Timeout(2).Until(() => new DeclinedPage(Client));
             throw new NotImplementedException();
         }
     }

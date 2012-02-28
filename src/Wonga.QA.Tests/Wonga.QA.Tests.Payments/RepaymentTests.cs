@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
@@ -37,7 +38,7 @@ namespace Wonga.QA.Tests.Payments
                 Driver.Db.OpsSagas.PaymentSchedulingSagaEntities.Single(
                     s => s.ApplicationExternalId == applicationInfo.Id);
 
-            Driver.Msmq.Payments.Send(new TimeoutMessage {SagaId = paymentSchedulingSaga.Id});
+            Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = paymentSchedulingSaga.Id });
 
             Do.Until(() => Driver.Db.Payments.Transactions.Single(t => t.ApplicationEntity.ExternalId == applicationInfo.Id
                                                                        && t.Amount == paymentPlan.RegularAmount
@@ -86,8 +87,8 @@ namespace Wonga.QA.Tests.Payments
             paymentSchedulingSaga.Submit();
 
             // Initialise repeated collection
-            Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = businessLoansScheduledPaymentsSaga.Id});
-            
+            Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = businessLoansScheduledPaymentsSaga.Id });
+
             // Check that only one transaction has occured
             Do.Until(() => Driver.Db.Payments.Transactions.Single(t => t.ApplicationEntity.ExternalId == applicationInfo.Id
                                                                     && t.Amount == 700
@@ -105,10 +106,10 @@ namespace Wonga.QA.Tests.Payments
             paymentPlan.Submit();
 
             // Start collection
-            Driver.Msmq.Payments.Send(new TimeoutMessage {SagaId = paymentSchedulingSaga.Id});
+            Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = paymentSchedulingSaga.Id });
 
             // Wait for the first attempt to fail
-            Do.Sleep(30);
+            Thread.Sleep(30000);
         }
 
         [Test, JIRA("SME-1018,SME-812"), Pending("DefaultCharge transaction not being created yet")]
@@ -131,7 +132,7 @@ namespace Wonga.QA.Tests.Payments
             Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = businessLoansScheduledPaymentsSaga.Id });
 
             // Check that no transactions have been written to DB
-            Do.Sleep(30);
+            Thread.Sleep(30000);
             Assert.IsNull(Driver.Db.Payments.Transactions.SingleOrDefault(t => t.ApplicationEntity.ExternalId == applicationInfo.Id
                                                                     && t.Type == PaymentTransactionEnum.CardPayment.ToString()));
             Assert.IsNotNull(Driver.Db.Payments.Transactions.SingleOrDefault(t => t.ApplicationEntity.ExternalId == applicationInfo.Id
@@ -173,11 +174,11 @@ namespace Wonga.QA.Tests.Payments
 
             var initialBalance = GetTotalOutstandingAmount(accountId);
 
-            SuccessfullyCollectMoney(paymentPlan,applicationInfo);
+            SuccessfullyCollectMoney(paymentPlan, applicationInfo);
 
             var balanceAfterTx = GetTotalOutstandingAmount(accountId);
 
-            Assert.LessThan(balanceAfterTx,initialBalance);
+            Assert.LessThan(balanceAfterTx, initialBalance);
         }
 
         private static double GetTotalOutstandingAmount(Guid accountId)
