@@ -20,38 +20,38 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		private readonly int ScoreCutoffExistingUsers = Int32.Parse(Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Risk.RepaymentScoreExistingUsersCutOff").Value);
 
 
-		[Test, AUT(AUT.Za)]
-		public void CheckpointRepaymentPredictionPositiveL0Accept()
-		{
-			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
-			var application = ApplicationBuilder.New(customer).Build();
+		//[Test, AUT(AUT.Za)]
+		//public void CheckpointRepaymentPredictionPositiveL0Accept()
+		//{
+		//    var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
+		//    var application = ApplicationBuilder.New(customer).Build();
 
-			var repaymentPredictionScore = GetRepaymentPredictionScore(application);
-			Assert.GreaterThan(ScoreCutoffNewUsers, repaymentPredictionScore);
-		}
+		//    var repaymentPredictionScore = GetRepaymentPredictionScore(application);
+		//    Assert.GreaterThan(ScoreCutoffNewUsers, repaymentPredictionScore);
+		//}
 
-		[Test, AUT(AUT.Za)]
-		public void CheckpointRepaymentPredictionPositiveL0Decline()
-		{
-			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
-			var application = ApplicationBuilder.New(customer).WithLoanTerm(30).WithLoanAmount(2000).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
+		//[Test, AUT(AUT.Za)]
+		//public void CheckpointRepaymentPredictionPositiveL0Decline()
+		//{
+		//    var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
+		//    var application = ApplicationBuilder.New(customer).WithLoanTerm(30).WithLoanAmount(2000).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
 
-			var repaymentPredictionScore = GetRepaymentPredictionScore(application);
-			Assert.LessThan(ScoreCutoffNewUsers, repaymentPredictionScore);
-		}
+		//    var repaymentPredictionScore = GetRepaymentPredictionScore(application);
+		//    Assert.LessThan(ScoreCutoffNewUsers, repaymentPredictionScore);
+		//}
 
-		[Test, AUT(AUT.Za)]
-		public void CheckpointRepaymentPredictionPositiveLnAccept()
-		{
-			var customer = CustomerBuilder.New().WithEmployer("test:IsEmployed").Build();
-			ApplicationBuilder.New(customer).Build().Repay();
+		//[Test, AUT(AUT.Za)]
+		//public void CheckpointRepaymentPredictionPositiveLnAccept()
+		//{
+		//    var customer = CustomerBuilder.New().WithEmployer("test:IsEmployed").Build();
+		//    ApplicationBuilder.New(customer).Build().RepayOnDueDate();
 
-		}
+		//}
 
-		[Test, AUT(AUT.Za)]
-		public void CheckpointRepaymentPredictionPositiveLnDecline()
-		{
-		}
+		//[Test, AUT(AUT.Za)]
+		//public void CheckpointRepaymentPredictionPositiveLnDecline()
+		//{
+		//}
 
 
 		#region Helpers

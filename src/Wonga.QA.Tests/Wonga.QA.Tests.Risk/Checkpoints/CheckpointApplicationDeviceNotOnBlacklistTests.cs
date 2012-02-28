@@ -23,7 +23,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
         }
 
         [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk), JIRA("CA-1735")]
-		public void CheckpointApplicationDeviceNotOnBlacklistAllow()
+		public void CheckpointApplicationDeviceNotOnBlacklistAccept()
         {
             Customer cust = CustomerBuilder.New()
 				.WithEmployer(TestMask).Build();
