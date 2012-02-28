@@ -33,7 +33,7 @@ namespace Wonga.QA.Framework
         private String _county;
         private Guid _bankAccountId;
         private String _phoneNumber;
-    	
+    	private Int64? _bankAccountNumber;
 
         private CustomerBuilder()
         {
@@ -75,6 +75,7 @@ namespace Wonga.QA.Framework
             _bankAccountId = Data.GetId();
         	
             _province = ProvinceEnum.ON;
+        	_bankAccountNumber = null;
         }
 
         public static CustomerBuilder New()
@@ -120,7 +121,7 @@ namespace Wonga.QA.Framework
 		public CustomerBuilder WithNextPayDate(Date date)
 		{
 			_nextPayDate = date;
-			return this;		
+			return this;
 		}
 
         public CustomerBuilder WithEmailAddress(String email)
@@ -220,6 +221,11 @@ namespace Wonga.QA.Framework
 		    return this;
 	    }
 
+		public CustomerBuilder WithBankAccountNumber(Int64 bankAccountNumber)
+		{
+			_bankAccountNumber = bankAccountNumber;
+			return this;
+		}
 
         public Customer Build()
         {
@@ -263,9 +269,15 @@ namespace Wonga.QA.Framework
                                                                  r.Town = _town;
                                                                  r.County = _county;
                                                              } ),
-                        AddBankAccountZaCommand.New(r => { r.AccountId = _id;
-                                                             r.BankAccountId = _bankAccountId;
-                        }),
+                        AddBankAccountZaCommand.New(r =>
+                                                    	{
+                                                    		r.AccountId = _id;
+                                                    		r.BankAccountId = _bankAccountId;
+                                                    		if (_bankAccountNumber.HasValue)
+                                                    		{
+                                                    			r.AccountNumber = _bankAccountNumber;
+                                                    		}
+                                                    	}),
                         SaveEmploymentDetailsZaCommand.New(r =>
                         {
                             r.AccountId = _id;
@@ -308,9 +320,15 @@ namespace Wonga.QA.Framework
 																 r.Province = _province;
                                                                  r.Province = _province;
                         } ),
-                        AddBankAccountCaCommand.New(r => { r.AccountId = _id;
-                                                             r.BankAccountId = _bankAccountId;
-                        }),
+                        AddBankAccountCaCommand.New(r =>
+                                                    	{
+                                                    		r.AccountId = _id;
+                                                    		r.BankAccountId = _bankAccountId;
+                                                    		if (_bankAccountNumber.HasValue)
+                                                    		{
+                                                    			r.AccountNumber = _bankAccountNumber;
+                                                    		}
+                                                    	}),
                         SaveEmploymentDetailsCaCommand.New(r =>
                         {
                             r.AccountId = _id;
@@ -349,7 +367,14 @@ namespace Wonga.QA.Framework
                                                                  r.Town = _town;
                                                                  r.County = _county;
                                                              }),
-                        AddBankAccountUkCommand.New(r=>r.AccountId = _id),
+                        AddBankAccountUkCommand.New(r=>
+                                                    	{
+                                                    		r.AccountId = _id;
+                                                    		if (_bankAccountNumber.HasValue)
+                                                    		{
+                                                    			r.AccountNumber = _bankAccountNumber;
+                                                    		}
+                                                    	}),
                         AddPaymentCardCommand.New(r=>r.AccountId = _id)
                     });
                     break;
@@ -377,7 +402,14 @@ namespace Wonga.QA.Framework
                                                                  r.Town = _town;
                                                                  r.County = _county;
 					                                         }),
-						AddBankAccountUkCommand.New(r => { r.AccountId = _id; }),
+						AddBankAccountUkCommand.New(r =>
+						                            	{
+						                            		r.AccountId = _id;
+						                            		if (_bankAccountNumber.HasValue)
+						                            		{
+						                            			r.AccountNumber = _bankAccountNumber;
+						                            		}
+						                            	}),
 						AddPaymentCardCommand.New(r => { r.AccountId = _id; }),
 						SaveEmploymentDetailsUkCommand.New(r =>
 						{

@@ -136,6 +136,16 @@ namespace Wonga.QA.Framework.Core
             return _random.Next(max);
         }
 
+		public static Int64 RandomLong(Int64 min, Int64 max)
+		{
+			if(min > max)
+			{
+				throw new ArgumentOutOfRangeException("min", "min is greater than max");
+			}
+
+			return min + Convert.ToInt64((max - min)*_random.NextDouble());
+		}
+
         public static Double Random()
         {
             return _random.NextDouble();
