@@ -219,8 +219,9 @@ namespace Wonga.QA.Tests.Risk
 
 		}
 
+		
 		[Test, AUT(AUT.Ca)]
-		[Explicit("need to investigate why fails on TC but runs locally")]
+		[Ignore("need to investigate why fails on TC but runs locally")]
 		public void GivenL0Applicant_WhenCreditBureauDataIsNotAvailable_ThenIsDeclined()
 		{
 			_builderConfig = new ApplicationBuilderConfig(ApplicationDecisionStatusEnum.Declined);
