@@ -21,18 +21,11 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             //NOTE: Is this working??
             Do.Until(() => !(Source.Contains(Elements.Get.ProcessingPage.ProcessingText)), TimeSpan.FromMinutes(5));
-            switch (Config.AUT)
-            {
-                case (AUT.Wb):
-                    {
-                        if (typeof(T) == typeof(Pages.Wb.AcceptedPage))
-                            return new Pages.Wb.AcceptedPage(Client);
+            if (typeof(T) == typeof(AcceptedPage))
+                return new AcceptedPage(Client);
 
-                        if (typeof(T) == typeof(Pages.Common.DeclinedPage))
-                            return new Pages.Common.DeclinedPage(Client);
-                    }
-                    break;
-            }
+            if (typeof(T) == typeof(DeclinedPage))
+                return new DeclinedPage(Client);
             throw new NotImplementedException();
         }
     }

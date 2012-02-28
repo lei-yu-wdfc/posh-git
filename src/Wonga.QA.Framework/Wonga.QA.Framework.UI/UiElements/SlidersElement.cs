@@ -38,7 +38,7 @@ namespace Wonga.QA.Framework.UI.UiElements
             _submit.Click();
             if (Config.AUT == AUT.Wb)
                 return new Pages.Wb.EligibilityQuestionsPage(Page.Client);
-            if (Config.AUT == AUT.Uk)
+            if (Config.AUT == AUT.Uk || Config.AUT == AUT.Za || Config.AUT == AUT.Ca)
                 return new Pages.Common.PersonalDetailsPage(Page.Client);
             return null;
         }

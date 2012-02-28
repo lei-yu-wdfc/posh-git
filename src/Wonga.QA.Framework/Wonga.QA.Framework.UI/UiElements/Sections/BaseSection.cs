@@ -11,10 +11,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         public BasePage Page;
         public IWebElement Section;
 
-        protected BaseSection(String legend, BasePage page)
+        protected BaseSection(String selector, BasePage page)
         {
             Page = page;
-            Section = Page.Content.FindElement(By.CssSelector(legend));
+            Section = Page.Content.FindElement(By.CssSelector(selector));
             //Section = Page.Content.FindElements(By.TagName("fieldset")).Single(fieldset => fieldset.FindElements(By.TagName("legend")).Any(element => (Regex.Match(element.Text, legend)).Success));
         }
     }

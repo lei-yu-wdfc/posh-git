@@ -2,7 +2,7 @@
 using OpenQA.Selenium;
 using Wonga.QA.Framework.UI.Mappings;
 
-namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
+namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
     public class AccountDetailsPage : BasePage
     {
@@ -19,10 +19,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
             AccountDetailsSection = new Sections.AccountDetailsSection(this);
         }
 
-        public Wb.PersonalBankAccountPage Next()
+        public PersonalBankAccountPage Next()
         {
             _next.Click();
-            return new Wb.PersonalBankAccountPage(Client);
+            return new PersonalBankAccountPage(Client);
         }
     }
 }

@@ -1,4 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Elements>
- 
+  <ContactingYouSection>
+    <HomePhone>#edit-home-phone-za</HomePhone>
+    <MobilePhone>#edit-mobile-phone-za</MobilePhone>
+  </ContactingYouSection>
+
+  <MobilePinVerificationSection>
+    <Pin>#edit-pin-za</Pin>
+  </MobilePinVerificationSection>
+  
+  <EmploymentDetailsSection>
+    <WorkPhone>#edit-work-phone-za</WorkPhone>
+  </EmploymentDetailsSection>
+
+  <PersonalDetailsPage>
+    <MarriedInCommunityProperty>input[type="radio"][name="married"]</MarriedInCommunityProperty>
+  </PersonalDetailsPage>
+  
+  <PersonalBankAccountDetailsPage>
+    <FormId>#wonga-apply-lzero-form</FormId>
+  </PersonalBankAccountDetailsPage>
+  
+  <AccountDetailsPage>
+    <FormId>#wonga-apply-lzero-form</FormId>
+    <NextButton>#edit-submit</NextButton>
+  </AccountDetailsPage>
+
+  <AccountDetailsSection>
+    <Legend>#account-setup</Legend>
+  </AccountDetailsSection>
+  
+  <AddressDetailsPage>
+    <FormId>#wonga-apply-lzero-form</FormId>
+    <District>#edit-district-za</District>
+    <FlatNumber>#edit-house-number-za</FlatNumber>
+    <Town>#edit-town-za</Town>
+    <County>#edit-county-za</County>
+    <AddressPeriod>#edit-address-period-za</AddressPeriod>
+    <Street>#edit-street-za</Street>
+    <Postcode>#edit-postcode-za</Postcode>
+  </AddressDetailsPage>
+
+  <BankAccountSection>
+    <Legend>#bank</Legend>
+    <AccountNumber>#edit-account-number-za</AccountNumber>
+  </BankAccountSection>
 </Elements>

@@ -61,7 +61,7 @@
     <Compile Include="Mappings\Pages\DeclinedPage.cs" />
     <Compile Include="Mappings\Pages\PersonalDetailsPage.cs" />
     <Compile Include="Mappings\Pages\ProcessingPage.cs" />
-    <Compile Include="Mappings\Pages\Wb\AcceptedPage.cs" />
+    <Compile Include="Mappings\Pages\AcceptedPage.cs" />
     <Compile Include="Mappings\Pages\Wb\AddAditionalDirectorsPage.cs" />
     <Compile Include="Mappings\Pages\Wb\AdditionalDirectorsPage.cs" />
     <Compile Include="Mappings\Pages\AddressDetailsPage.cs" />
@@ -70,9 +70,9 @@
     <Compile Include="Mappings\Pages\Wb\BusinessDebitCardPage.cs" />
     <Compile Include="Mappings\Pages\Wb\BusinessDetailsPage.cs" />
     <Compile Include="Mappings\Pages\Wb\EligibilityQuestionsPage.cs" />
-    <Compile Include="Mappings\Pages\Wb\PersonalBankAccountPage.cs" />
+    <Compile Include="Mappings\Pages\PersonalBankAccountPage.cs" />
     <Compile Include="Mappings\Pages\DebitCardPage.cs" />
-    <Compile Include="Mappings\Pages\Wb\PersonalDebitCardPage.cs" />
+    <Compile Include="Mappings\Pages\PersonalDebitCardPage.cs" />
     <Compile Include="Mappings\Sections\AccountDetailsSection.cs" />
     <Compile Include="Mappings\Sections\BankAccountSection.cs" />
     <Compile Include="Mappings\Sections\DebitCardSection.cs" />
@@ -101,14 +101,14 @@
     <Compile Include="UiElements\Pages\Interfaces\IApplyPage.cs" />
     <Compile Include="UiElements\Pages\Interfaces\IDecisionPage.cs" />
     <Compile Include="UiElements\Pages\Common\ProcessingPage.cs" />
-    <Compile Include="UiElements\Pages\Wb\AcceptedPage.cs" />
+    <Compile Include="UiElements\Pages\Common\AcceptedPage.cs" />
     <Compile Include="UiElements\Pages\Wb\AddAditionalDirectorsPage.cs" />
     <Compile Include="UiElements\Pages\Wb\AdditionalDirectorsPage.cs" />
-    <Compile Include="UiElements\Pages\Wb\AddressDetailsPage.cs" />
-    <Compile Include="UiElements\Pages\Wb\PersonalBankAccountPage.cs" />
-    <Compile Include="UiElements\Pages\Wb\AccountDetailsPage.cs" />
+    <Compile Include="UiElements\Pages\Common\AddressDetailsPage.cs" />
+    <Compile Include="UiElements\Pages\Common\PersonalBankAccountPage.cs" />
+    <Compile Include="UiElements\Pages\Common\AccountDetailsPage.cs" />
     <Compile Include="UiElements\Pages\Wb\BusinessDetailsPage.cs" />
-    <Compile Include="UiElements\Pages\Wb\PersonalDebitCardPage.cs" />
+    <Compile Include="UiElements\Pages\Common\PersonalDebitCardPage.cs" />
     <Compile Include="UiElements\Pages\Wb\EligibilityQuestionsPage.cs" />
     <Compile Include="UiElements\Pages\Wb\BusinessBankAccountPage.cs" />
     <Compile Include="UiElements\Pages\Wb\BusinessDebitCardPage.cs" />
@@ -166,6 +166,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mappings\Xml\Content\Za\en.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mappings\Xml\Elements\_base.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

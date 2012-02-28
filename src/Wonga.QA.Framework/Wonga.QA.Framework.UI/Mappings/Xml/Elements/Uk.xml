@@ -1,17 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Elements>
-  <!--These need to be updated to css selectors.-->
-  <AddressDetailsPage>
-    <FormId>lzero-address-form</FormId>
-    <LookupButton>op</LookupButton>
-    <PostCode>postcode_lookup_uk</PostCode>
-    <District>district</District>
-    <FlatNumber>flat</FlatNumber>
-    <County>county</County>
-    <AddressPeriod>address_period</AddressPeriod>
-    <NextButton>next</NextButton>
-    <AddressOptions>address_options</AddressOptions>
-  </AddressDetailsPage>
 
   <PersonalDetailsPage>
     <FormId>lzero-personal-form</FormId>

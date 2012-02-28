@@ -14,5 +14,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Sections
         public String SortCodePart3 { get; set; }
         public String AccountNumber { get; set; }
         public String BankPeriod { get; set; }
+        public String BankAccountType { get; set; }
     }
 }

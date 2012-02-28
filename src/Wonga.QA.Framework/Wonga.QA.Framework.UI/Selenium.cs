@@ -27,6 +27,12 @@ namespace Wonga.QA.Framework.UI
             labels.First(label => func(label.Text)).Click();
         }
 
+        public static void SelectValue(this ReadOnlyCollection<IWebElement> elements, string value)
+        {
+            List<IWebElement> labels = elements.Where(element => element.GetValue() == value).ToList();
+            labels.ForEach(x => x.Click());
+        }
+
         public static void SelectOption(this IWebElement element, String value)
         {
             element.SelectOption(option => option.Trim() == value);

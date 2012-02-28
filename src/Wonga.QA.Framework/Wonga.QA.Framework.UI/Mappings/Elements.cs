@@ -25,7 +25,7 @@ namespace Wonga.QA.Framework.UI.Mappings
 
         protected Elements()
         {
-           XmlMapper = new XmlMapper(string.Format("Wonga.QA.Framework.UI.Mappings.Xml.Elements.{0}.xml", Config.AUT));
+           XmlMapper = new XmlMapper("Wonga.QA.Framework.UI.Mappings.Xml.Elements._base.xml", string.Format("Wonga.QA.Framework.UI.Mappings.Xml.Elements.{0}.xml", Config.AUT));
            XmlMapper.GetValues(this, null);
         }
 
@@ -44,18 +44,17 @@ namespace Wonga.QA.Framework.UI.Mappings
         #region WbPages
 
         public virtual Pages.Wb.EligibilityQuestionsPage EligibilityQuestionsPage { get; set; }
-        public virtual Pages.Wb.PersonalBankAccountDetailsPage PersonalBankAccountPage { get; set; }
-        public virtual Pages.Wb.PersonalDebitCardPage PersonalDebitCardDetailsPage { get; set; }
         public virtual Pages.Wb.BusinessDetailsPage BusinessDetailsPage { get; set; }
         public virtual Pages.Wb.AdditionalDirectorsPage AdditionalDirectorsPage { get; set; }
         public virtual Pages.Wb.AddAditionalDirectorsPage AddAditionalDirectorsPage { get; set; }
         public virtual Pages.Wb.BusinessDebitCardPage BusinessDebitCardPage { get; set; }
-        public virtual Pages.Wb.AcceptedPage AcceptedPage { get; set; }
 
         #endregion
 
         #region CommomPages
-
+        public virtual Pages.PersonalBankAccountDetailsPage PersonalBankAccountPage { get; set; }
+        public virtual Pages.PersonalDebitCardPage PersonalDebitCardDetailsPage { get; set; }
+        public virtual Pages.AcceptedPage AcceptedPage { get; set; }
         public virtual Pages.PersonalDetailsPage PersonalDetailsPage { get; set; }
         public virtual Pages.ProcessingPage ProcessingPage { get; set; }
         public virtual Pages.DealDonePage DealDonePage { get; set; }

@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="HappyPath.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UiTest.cs" />
     <Compile Include="Wb\SeleniumTests.cs" />

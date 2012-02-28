@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading;
 using MbUnit.Framework;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.UI.UiElements.Pages;
+using Wonga.QA.Framework.UI.UiElements.Pages.Common;
+using Wonga.QA.Framework.UI.UiElements.Pages.Wb;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Ui;
 
@@ -16,18 +19,17 @@ namespace Wonga.QA.Tests.UI.Wb
         public void WbSeleniumL0ApplicationProcessAccepted()
         {
             var processingPage = WbL0PathTest("TESTNoCheck");
-            var acceptedPage = (Wonga.QA.Framework.UI.UiElements.Pages.Wb.AcceptedPage)processingPage.WaitFor<Wonga.QA.Framework.UI.UiElements.Pages.Wb.AcceptedPage>();
+            var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
             acceptedPage.SignTermsMainApplicant();
             acceptedPage.SignTermsGuarantor();
-            var dealDonePage = (Wonga.QA.Framework.UI.UiElements.Pages.Common.DealDonePage) acceptedPage.Submit();
-            
+            var dealDonePage = acceptedPage.Submit() as DealDonePage;
         }
 
         [Test,AUT(AUT.Wb)]
         public void WbSeleniumL0ApplicationProcessDeclined()
         {
             var processingPage = WbL0PathTest();
-            var declinedPage = (Wonga.QA.Framework.UI.UiElements.Pages.Common.DeclinedPage)processingPage.WaitFor<Wonga.QA.Framework.UI.UiElements.Pages.Common.DeclinedPage>();
+            var declinedPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
         }
 
         private Wonga.QA.Framework.UI.UiElements.Pages.Common.ProcessingPage WbL0PathTest(String middleNameMask = null)
@@ -43,7 +45,7 @@ namespace Wonga.QA.Tests.UI.Wb
             page.Sliders.HowMuch = "5550";
             page.Sliders.HowLong = "30";
 
-            var eligibilityQuestionsPage = (Wonga.QA.Framework.UI.UiElements.Pages.Wb.EligibilityQuestionsPage)page.Sliders.Apply();
+            var eligibilityQuestionsPage = page.Sliders.Apply() as EligibilityQuestionsPage;
             eligibilityQuestionsPage.CheckActiveCompany = true;
             eligibilityQuestionsPage.CheckDirector = true;
             eligibilityQuestionsPage.CheckGuarantee = true;
@@ -53,7 +55,7 @@ namespace Wonga.QA.Tests.UI.Wb
             eligibilityQuestionsPage.CheckVat = true;
             eligibilityQuestionsPage.CheckDebitCard = true;
 
-            var personalDetailsPage = (Wonga.QA.Framework.UI.UiElements.Pages.Common.PersonalDetailsPage)eligibilityQuestionsPage.Submit();
+            var personalDetailsPage = eligibilityQuestionsPage.Submit();
             personalDetailsPage.YourName.FirstName = firstName;
             personalDetailsPage.YourName.MiddleName = middleName;
             personalDetailsPage.YourName.LastName = Data.RandomString(3, 15);
@@ -73,34 +75,34 @@ namespace Wonga.QA.Tests.UI.Wb
             personalDetailsPage.CanContact = "No";
             personalDetailsPage.PrivacyPolicy = true;
 
-            var addressDetailsPage = (Wonga.QA.Framework.UI.UiElements.Pages.Wb.AddressDetailsPage)personalDetailsPage.Submit();
+            var addressDetailsPage = personalDetailsPage.Submit() as AddressDetailsPage;
             addressDetailsPage.PostCode = "SW6 6PN";
             Thread.Sleep(1000);
             addressDetailsPage.LookupByPostCode();
             Thread.Sleep(4000);
             addressDetailsPage.GetAddressesDropDown();
-            addressDetailsPage.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN";
+            addressDetailsPage.SelectedAddress = "93 Harbord Street SW6, London";
             Thread.Sleep(2000);
             addressDetailsPage.FlatNumber = "666";
             addressDetailsPage.District = "Central";
             addressDetailsPage.County = "South Wales";
             addressDetailsPage.AddressPeriod = "3 to 4 years";
 
-            var accountDetailsPage = (Wonga.QA.Framework.UI.UiElements.Pages.Wb.AccountDetailsPage)addressDetailsPage.Next();
+            var accountDetailsPage = addressDetailsPage.Next();
             Thread.Sleep(1000);
             accountDetailsPage.AccountDetailsSection.Password = "PassW0rd";
             accountDetailsPage.AccountDetailsSection.PasswordConfirm = "PassW0rd";
             accountDetailsPage.AccountDetailsSection.SecretQuestion = "How deep the rabbit hole goes?";
             accountDetailsPage.AccountDetailsSection.SecretAnswer = "Very";
 
-            var personalBankAccountPage = (Wonga.QA.Framework.UI.UiElements.Pages.Wb.PersonalBankAccountPage)accountDetailsPage.Next();
+            var personalBankAccountPage = accountDetailsPage.Next();
             Thread.Sleep(1000);
             personalBankAccountPage.BankAccountSection.BankName = "AIB";
             personalBankAccountPage.BankAccountSection.SortCode = "13-40-20";
             personalBankAccountPage.BankAccountSection.AccountNumber = "63849203";
             personalBankAccountPage.BankAccountSection.BankPeriod = "3 to 4 years";
 
-            var personalDebitCardPage = (Wonga.QA.Framework.UI.UiElements.Pages.Wb.PersonalDebitCardPage)personalBankAccountPage.Next();
+            var personalDebitCardPage = personalBankAccountPage.Next() as PersonalDebitCardPage;
             Thread.Sleep(1000);
             personalDebitCardPage.DebitCardSection.CardName = firstName;
             personalDebitCardPage.DebitCardSection.CardNumber = "4444333322221111";
@@ -110,16 +112,16 @@ namespace Wonga.QA.Tests.UI.Wb
             personalDebitCardPage.DebitCardSection.StartDate = "Jan/2007";
             personalDebitCardPage.MobilePinVerification.Pin = "0000";
 
-            var businessDetailsPage = (Wonga.QA.Framework.UI.UiElements.Pages.Wb.BusinessDetailsPage)personalDebitCardPage.Next();
+            var businessDetailsPage = personalDebitCardPage.Next() as BusinessDetailsPage;
             Thread.Sleep(1000);
             businessDetailsPage.BusinessName = Data.RandomString(3, 15);
             businessDetailsPage.BusinessNumber = Data.RandomInt(9999999).ToString(); 
             //businessDetailsPage.BusinessNumber = graydonCompanyRegistrationNumberMask;
 
-            var additionalDirectorsPage = (Wonga.QA.Framework.UI.UiElements.Pages.Wb.AdditionalDirectorsPage)businessDetailsPage.Next();
+            var additionalDirectorsPage = businessDetailsPage.Next();
             Thread.Sleep(1000);
 
-            var addAdditionalDirectorPage = (Wonga.QA.Framework.UI.UiElements.Pages.Wb.AddAditionalDirectorsPage)additionalDirectorsPage.AddAditionalDirector();
+            var addAdditionalDirectorPage = additionalDirectorsPage.AddAditionalDirector();
             Thread.Sleep(1000);
             var additionalDirectorEmail = String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
             addAdditionalDirectorPage.Title = "Mr";
@@ -128,14 +130,14 @@ namespace Wonga.QA.Tests.UI.Wb
             addAdditionalDirectorPage.EmailAddress = additionalDirectorEmail;
             addAdditionalDirectorPage.ConfirmEmailAddress = additionalDirectorEmail;
 
-            var businessBankAccountPage = (Wonga.QA.Framework.UI.UiElements.Pages.Wb.BusinessBankAccountPage)addAdditionalDirectorPage.Done();
+            var businessBankAccountPage = addAdditionalDirectorPage.Done();
             Thread.Sleep(1000);
             businessBankAccountPage.BankAccountSection.BankName = "Bank of Scotland Business Banking";
             businessBankAccountPage.BankAccountSection.SortCode = "93-86-11";
             businessBankAccountPage.BankAccountSection.AccountNumber = "07806039";
             businessBankAccountPage.BankAccountSection.BankPeriod = "2 to 3 years";
 
-            var businessPaymentCardPage = (Wonga.QA.Framework.UI.UiElements.Pages.Wb.BusinessDebitCardPage) businessBankAccountPage.Next();
+            var businessPaymentCardPage = businessBankAccountPage.Next();
             businessPaymentCardPage.DebitCardSection.CardName = firstName;
             businessPaymentCardPage.DebitCardSection.CardNumber = "4444333322221111";
             businessPaymentCardPage.DebitCardSection.CardSecurity = "666";

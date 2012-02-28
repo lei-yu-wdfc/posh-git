@@ -11,5 +11,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String CheckPrivacyPolicy { get; set; }
         public String CheckCanContact { get; set; }
         public String NextButton { get; set; }
+        public String MarriedInCommunityProperty { get; set; }
     }
 }

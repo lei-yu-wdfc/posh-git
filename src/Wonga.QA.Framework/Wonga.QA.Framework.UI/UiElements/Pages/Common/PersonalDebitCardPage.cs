@@ -1,8 +1,9 @@
 ﻿using System;
 using OpenQA.Selenium;
+using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Mappings;
 
-namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
+namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
     public class PersonalDebitCardPage : BasePage
     {
@@ -20,10 +21,16 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
             DebitCardSection = new Sections.DebitCardSection(this);
         }
 
-        public Wb.BusinessDetailsPage Next()
+        public BasePage Next()
         {
             _next.Click();
-            return new Wb.BusinessDetailsPage(Client);
+            switch(Config.AUT)
+            {
+                case(AUT.Wb):
+                    return new Wb.BusinessDetailsPage(Client);
+                default:
+                    throw new NotImplementedException();
+            }
         }
     }
 }

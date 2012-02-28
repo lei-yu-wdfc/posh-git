@@ -16,6 +16,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         private readonly IWebElement _dateOfBirthMonth;
         private readonly IWebElement _dateOfBirthYear;
         private readonly IWebElement _homeStatus;
+        private readonly IWebElement _homeLanguage;
         private readonly IWebElement _maritalStatus;
 
         public String Number { set { _idNumber.SendValue(value); } }
@@ -31,6 +32,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             }
         }
         public String HomeStatus { set { _homeStatus.SelectOption(value); } }
+        public String HomeLanguage { set { _homeLanguage.SelectOption(value); } }
         public String MaritalStatus { set { _maritalStatus.SelectOption(value); } }
         public String NumberOfDependants { set { _dependants.SelectOption(value); } }
 
@@ -41,6 +43,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
                 case (AUT.Za):
                     _idNumber = Section.FindElement(By.CssSelector(Elements.Get.YourDetailsSection.IdNumber));
                     _dependants = Section.FindElement(By.CssSelector(Elements.Get.YourDetailsSection.Dependants));
+                    _homeLanguage = Section.FindElement(By.CssSelector(Elements.Get.YourDetailsSection.HomeLanguage));
                     break;
                 case (AUT.Ca):
                     _idNumber = Section.FindElement(By.CssSelector(Elements.Get.YourDetailsSection.IdNumber));

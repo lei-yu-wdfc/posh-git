@@ -24,7 +24,7 @@
     <AddressDetailsPage>
       <FormId>#lzero-address-form</FormId>
       <LookupButton>#edit-submit-lookup</LookupButton>
-      <PostCode>#edit-postcode-lookup-uk</PostCode>
+      <Postcode>#edit-postcode-lookup-uk</Postcode>
       <District>#edit-district</District>
       <FlatNumber>#edit-flat</FlatNumber>
       <County>#edit-county</County>
@@ -32,21 +32,6 @@
       <NextButton>#edit-submit</NextButton>
       <AddressOptions>#edit-address-options</AddressOptions>
     </AddressDetailsPage>
-
-    <AccountDetailsPage>
-      <FormId>#lzero-account-setup-form</FormId>
-      <NextButton>#edit-submit</NextButton>
-    </AccountDetailsPage>
-
-    <PersonalBankAccountDetailsPage>
-      <FormId>#lzero-bank-form</FormId>
-      <NextButton>#edit-submit</NextButton>
-    </PersonalBankAccountDetailsPage>
-
-    <PersonalDebitCardPage>
-      <FormId>#lzero-card-form</FormId>
-      <NextButton>#edit-submit</NextButton>
-    </PersonalDebitCardPage>
 
     <BusinessDetailsPage>
       <FormId>#lzero-business-form</FormId>
@@ -81,13 +66,6 @@
       <FormId>#lzero-business-card-form</FormId>
       <NextButton>#edit-submit</NextButton>
     </BusinessDebitCardPage>
-
-    <ProcessingPage>
-      <!--<FormId>wonga-processing</FormId>-->
-      <!--<ProcessingImage>#wonga-processing>img</ProcessingImage>-->
-      <ProcessingText>We are processing your application</ProcessingText>
-      <ProcessingTextContainer>.processing-text</ProcessingTextContainer>
-    </ProcessingPage>
 
     <AcceptedPage>
       <FormId>#wonga-loan-approve-form</FormId>
@@ -134,11 +112,6 @@
       <MobilePhone>#edit-mobile-phone</MobilePhone>
     </ContactingYouSection>
 
-    <MobilePinVerificationSection>
-      <Legend>#pin-verification</Legend>
-      <Pin>#edit-pin</Pin>
-    </MobilePinVerificationSection>
-
     <DebitCardSection>
       <Legend>#card-details</Legend>
       <CardType>#edit-card-type</CardType>
@@ -150,29 +123,5 @@
       <CardStartDateMonth>#edit-card-start-date-month</CardStartDateMonth>
       <CardStartDateYear>#edit-card-start-date-year</CardStartDateYear>
     </DebitCardSection>
-
-    <BankAccountSection>
-      <Legend>#bank-1</Legend>
-      <BankName>#edit-bank-name</BankName>
-      <SortCodePart1>#edit-sort-code-part1</SortCodePart1>
-      <SortCodePart2>#edit-sort-code-part2</SortCodePart2>
-      <SortCodePart3>#edit-sort-code-part3</SortCodePart3>
-      <AccountNumber>#edit-account-number</AccountNumber>
-      <BankPeriod>#edit-bank-period</BankPeriod>
-    </BankAccountSection>
-
-    <SliderSection>
-      <FormId>#wonga-sliders-form</FormId>
-      <LoanAmount>#edit-loan-amount</LoanAmount>
-      <LoanDuration>#edit-loan-duration</LoanDuration>
-      <SubmitButton>#edit-submit</SubmitButton>
-    </SliderSection>
-
-    <AccountDetailsSection>
-      <Legend>#account-setup-1</Legend>
-      <Password>#edit-password</Password>
-      <PasswordConfirm>#edit-password-confirm</PasswordConfirm>
-      <SecretQuestion>#edit-secret-question</SecretQuestion>
-      <SecretAnswer>#edit-secret-answer</SecretAnswer>
-    </AccountDetailsSection>
+  
 </Elements>

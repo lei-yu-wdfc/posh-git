@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Elements>
+  <MobilePinVerificationSection>
+    <Legend>#pin-verification</Legend>
+    <Pin>#edit-pin</Pin>
+  </MobilePinVerificationSection>
+  
+  <AddressDetailsPage>
+    <FormId>#wonga-apply-lzero-form</FormId>
+    <District>#edit-district</District>
+    <FlatNumber>#edit-flat</FlatNumber>
+    <Town>#edit-town</Town>
+    <County>#edit-county</County>
+    <Street>#edit-street</Street>
+    <Postcode>#edit-postcode</Postcode>
+    <AddressPeriod>#edit-address-period</AddressPeriod>
+    <NextButton>#edit-submit</NextButton>
+  </AddressDetailsPage>
+  
+  <PersonalBankAccountDetailsPage>
+    <FormId>#lzero-bank-form</FormId>
+    <NextButton>#edit-submit</NextButton>
+  </PersonalBankAccountDetailsPage>
+
+  <DealDonePage>
+    <HeaderText>Your application has been approved</HeaderText>
+    <ContinueButtonLinkText>.application-success-button</ContinueButtonLinkText>
+  </DealDonePage>
+
+  <AcceptedPage>
+    <FormId>#wonga-loan-approve-form</FormId>
+    <AcceptBusinessLoan>#terms-accept .button</AcceptBusinessLoan>
+    <AcceptGuarantorLoan>#guarantor-accept .button</AcceptGuarantorLoan>
+    <AgreementConfirm>#edit-agreement-confirm</AgreementConfirm>
+    <DirectDebitConfirm>#edit-direct-debit-confirm</DirectDebitConfirm>
+    <SubmitButton>#edit-accept</SubmitButton>
+  </AcceptedPage>
+  
+  <BankAccountSection>
+    <Legend>#bank-1</Legend>
+    <BankName>#edit-bank-name</BankName>
+    <BankAccountType>#edit-bank-account-type</BankAccountType>
+    <SortCodePart1>#edit-sort-code-part1</SortCodePart1>
+    <SortCodePart2>#edit-sort-code-part2</SortCodePart2>
+    <SortCodePart3>#edit-sort-code-part3</SortCodePart3>
+    <AccountNumber>#edit-account-number</AccountNumber>
+    <BankPeriod>#edit-bank-period</BankPeriod>
+  </BankAccountSection>
+  
+  <PersonalDebitCardPage>
+    <FormId>#lzero-card-form</FormId>
+    <NextButton>#edit-submit</NextButton>
+  </PersonalDebitCardPage>
+  
+  <SliderSection>
+    <FormId>#wonga-sliders-form</FormId>
+    <LoanAmount>#edit-loan-amount</LoanAmount>
+    <LoanDuration>#edit-loan-duration</LoanDuration>
+    <SubmitButton>#edit-submit</SubmitButton>
+  </SliderSection>
+  
+  <PersonalDetailsPage>
+    <FormId>#wonga-apply-lzero-form</FormId>
+    <CheckPrivacyPolicy>#edit-privacy</CheckPrivacyPolicy>
+    <CheckCanContact>input[type="radio"][name="update_option"]</CheckCanContact>
+    <NextButton>#edit-submit</NextButton>
+  </PersonalDetailsPage>
+
+  <YourNameSection>
+    <Legend>fieldset[id="name"]</Legend>
+    <Title>#edit-title</Title>
+    <FirstName>#edit-first-name</FirstName>
+    <MiddleName>#edit-middle-name</MiddleName>
+    <LastName>#edit-last-name</LastName>
+  </YourNameSection>
+
+  <YourDetailsSection>
+    <IdNumber>#edit-id-number</IdNumber>
+    <Legend>fieldset[id="details"]</Legend>
+    <Dependants>#edit-dependants</Dependants>
+    <Gender>input[type="radio"][name="gender"]</Gender>
+    <DateOfBirthDay>#edit-date-of-birth-day</DateOfBirthDay>
+    <DateOfBirthMonth>#edit-date-of-birth-month</DateOfBirthMonth>
+    <DateOfBirthYear>#edit-date-of-birth-year</DateOfBirthYear>
+    <HomeStatus>#edit-home-status</HomeStatus>
+    <MaritalStatus>#edit-marital-status</MaritalStatus>
+    <HomeLanguage>#edit-home-language</HomeLanguage>
+  </YourDetailsSection>
+
+  <ContactingYouSection>
+    <Legend>fieldset[id="contact"]</Legend>
+    <Email>#edit-email</Email>
+    <EmailConfirm>#edit-email-confirm</EmailConfirm>
+    <HomePhone>#edit-home-phone</HomePhone>
+    <MobilePhone>#edit-mobile-phone</MobilePhone>
+  </ContactingYouSection>
+
+  <EmploymentDetailsSection>
+    <Fieldset>fieldset[id="employment"]</Fieldset>
+    <EmploymentStatus>#edit-employment-status</EmploymentStatus>
+    <EmployerIndustry>#edit-employer-industry</EmployerIndustry>
+    <EmployerName>#edit-employer-name</EmployerName>
+    <EmploymentPosition>#edit-employment-position</EmploymentPosition>
+    <TimeWithEmployerYears>#edit-employment-time-years</TimeWithEmployerYears>
+    <TimeWithEmployerMonths>#edit-employment-time-months</TimeWithEmployerMonths>
+    <MonthlyIncome>#edit-monthly-income</MonthlyIncome>
+    <NextPaydayDate>#edit-next-payday-datepicker-popup-0</NextPaydayDate>
+    <WorkPhone>#edit-work-phone</WorkPhone>
+    <SalaryPaidToBank>input[type="radio"][name="salary_to_bank"]</SalaryPaidToBank>
+  </EmploymentDetailsSection>
+
+  <AccountDetailsPage>
+    <FormId>#lzero-account-setup-form</FormId>
+    <NextButton>#edit-submit</NextButton>
+  </AccountDetailsPage>
+
+  <AccountDetailsSection>
+    <Legend>#account-setup-1</Legend>
+    <Password>#edit-password</Password>
+    <PasswordConfirm>#edit-password-confirm</PasswordConfirm>
+    <SecretQuestion>#edit-secret-question</SecretQuestion>
+    <SecretAnswer>#edit-secret-answer</SecretAnswer>
+  </AccountDetailsSection>
+
+  <ProcessingPage>
+    <!--<FormId>wonga-processing</FormId>-->
+    <!--<ProcessingImage>#wonga-processing>img</ProcessingImage>-->
+    <ProcessingText>We are processing your application</ProcessingText>
+    <ProcessingTextContainer>.processing-text</ProcessingTextContainer>
+  </ProcessingPage>
+</Elements>

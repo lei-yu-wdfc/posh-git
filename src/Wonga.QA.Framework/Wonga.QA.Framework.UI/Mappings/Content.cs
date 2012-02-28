@@ -33,7 +33,7 @@ namespace Wonga.QA.Framework.UI
             _xmlFileName =
                 string.Format(string.Format("Wonga.QA.Framework.UI.Mappings.Xml.Content.{0}.{1}.xml", Config.AUT,
                                             cultureInfo.TwoLetterISOLanguageName));
-            _xmlMapper = new XmlMapper(_xmlFileName);
+            _xmlMapper = new XmlMapper(null, _xmlFileName);
             _xmlMapper.GetValues(this, null);
         }
 

@@ -20,11 +20,17 @@ namespace Wonga.QA.Framework.UI.Mappings
     public class XmlMapper
     {
         private readonly XmlDocument _xmlDocument = new XmlDocument();
+        private readonly XmlDocument _baseXmlDocument = new XmlDocument();
         private string _xmlFile;
-        public XmlMapper(string xmlFile)
+        private string _baseXmlFile;
+
+        public XmlMapper(string baseXmlFile, string xmlFile)
         {
             _xmlFile = xmlFile;
-            _xmlDocument.Load(System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(_xmlFile));
+            _baseXmlFile = baseXmlFile;
+            _xmlDocument.Load(Assembly.GetExecutingAssembly().GetManifestResourceStream(_xmlFile));
+            if(!string.IsNullOrEmpty(_baseXmlFile))
+                _baseXmlDocument.Load(Assembly.GetExecutingAssembly().GetManifestResourceStream(_baseXmlFile));
         }
 
         private String GetFieldValue(List<string> parents, String fieldName)
@@ -37,7 +43,8 @@ namespace Wonga.QA.Framework.UI.Mappings
                 path += parent + "/";
             }
             path += fieldName;
-            var node = _xmlDocument.DocumentElement.SelectSingleNode(path);
+            var node = _xmlDocument.DocumentElement.SelectSingleNode(path) 
+                ?? _baseXmlDocument.DocumentElement.SelectSingleNode(path);
             myValueResult = node == null ? null : node.InnerText;
             
             if (String.IsNullOrEmpty(myValueResult))

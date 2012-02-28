@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.UI.UiElements.Pages.Wb;
 using Wonga.QA.Framework.UI.UiElements.Sections;
 using Wonga.QA.Framework.UI.Mappings;
 using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
@@ -12,6 +13,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
     public class PersonalDetailsPage : BasePage, IApplyPage
     {
         public YourNameSection YourName { get; set; }
+        public EmploymentDetailsSection EmploymentDetails { get; set; }
         public YourDetailsSection YourDetails { get; set; }
         public ContactingYouSection ContactingYou { get; set; }
         public Boolean PrivacyPolicy { set { _privacy.Toggle(value); } }
@@ -25,8 +27,15 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     _contact.SelectLabel((String)value);
             }
         }
-
+        public string MarriedInCommunityProperty
+        {
+            set
+            {
+                _marriedInCommunityProperty.SelectLabel(value);
+            }
+        }
         private readonly IWebElement _form;
+        private readonly ReadOnlyCollection<IWebElement> _marriedInCommunityProperty;
         private readonly IWebElement _privacy;
         private readonly ReadOnlyCollection<IWebElement> _contact;
         private readonly IWebElement _next;
@@ -41,6 +50,17 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             YourName = new YourNameSection(this);
             YourDetails = new YourDetailsSection(this);
             ContactingYou = new ContactingYouSection(this);
+
+            switch(Config.AUT)
+            {
+                case(AUT.Ca):
+                case (AUT.Uk):
+                case (AUT.Za):
+                    EmploymentDetails = new EmploymentDetailsSection(this);
+                    _marriedInCommunityProperty =
+                        _form.FindElements(By.CssSelector(Elements.Get.PersonalDetailsPage.MarriedInCommunityProperty));
+                    break;
+            }
         }
 
         public IApplyPage Submit()
@@ -49,9 +69,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             switch (Config.AUT)
             {
                 case (AUT.Wb):
-                    return new Wb.AddressDetailsPage(Client);
-                case (AUT.Uk):
-                    throw new NotImplementedException();
+                    return new AddressDetailsPage(Client);
+                case (AUT.Za):
+                    return new AddressDetailsPage(Client);
                     //return new Wb.AddressDetailsPage(Client);
                     
             }

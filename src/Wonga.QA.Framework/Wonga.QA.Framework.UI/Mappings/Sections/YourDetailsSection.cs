@@ -19,5 +19,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Sections
         public String DateOfBirthYear { get; set; }
         public String HomeStatus { get; set; }
         public String MaritalStatus { get; set; }
+        public String HomeLanguage { get; set; }
     }
 }
