@@ -28,7 +28,8 @@
 
   <DealDonePage>
     <HeaderText>Your application has been approved</HeaderText>
-    <ContinueButtonLinkText>.application-success-button</ContinueButtonLinkText>
+    <ContinueButtonLink>.application-success-button</ContinueButtonLink>
+    <ContinueButton>#edit-submit</ContinueButton>
   </DealDonePage>
 
   <AcceptedPage>
@@ -133,4 +134,9 @@
     <ProcessingText>We are processing your application</ProcessingText>
     <ProcessingTextContainer>.processing-text</ProcessingTextContainer>
   </ProcessingPage>
+
+  <ProvinceSection>
+    <Fieldset>fieldset#myprovince</Fieldset>
+    <Province>#edit-province</Province>
+  </ProvinceSection>
 </Elements>

@@ -16,6 +16,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public EmploymentDetailsSection EmploymentDetails { get; set; }
         public YourDetailsSection YourDetails { get; set; }
         public ContactingYouSection ContactingYou { get; set; }
+        public ProvinceSection ProvinceSection { get; set; }
         public Boolean PrivacyPolicy { set { _privacy.Toggle(value); } }
         public Object CanContact
         {
@@ -54,7 +55,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             switch(Config.AUT)
             {
                 case(AUT.Ca):
+                    EmploymentDetails = new EmploymentDetailsSection(this);
+                    ProvinceSection = new ProvinceSection(this);
+                    break;
                 case (AUT.Uk):
+                    EmploymentDetails = new EmploymentDetailsSection(this);
+                    break;
                 case (AUT.Za):
                     EmploymentDetails = new EmploymentDetailsSection(this);
                     _marriedInCommunityProperty =
@@ -66,16 +72,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public IApplyPage Submit()
         {
             _next.Click();
-            switch (Config.AUT)
-            {
-                case (AUT.Wb):
-                    return new AddressDetailsPage(Client);
-                case (AUT.Za):
-                    return new AddressDetailsPage(Client);
-                    //return new Wb.AddressDetailsPage(Client);
-                    
-            }
-            throw new NotImplementedException();
+            return new AddressDetailsPage(Client);
         }
     }
 }

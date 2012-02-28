@@ -76,7 +76,7 @@
 
     <DealDonePage>
       <HeaderText>Your application has been approved</HeaderText>
-      <ContinueButtonLinkText>.application-success-button</ContinueButtonLinkText>
+      <ContinueButtonLink>.application-success-button</ContinueButtonLink>
     </DealDonePage>
 
     <DeclinedPage>

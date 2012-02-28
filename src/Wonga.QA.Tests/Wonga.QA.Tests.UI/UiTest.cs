@@ -175,7 +175,7 @@ namespace Wonga.QA.Tests.Ui
             personalDetailsPage.EmploymentDetails.TimeWithEmployerMonths = "5";
             personalDetailsPage.EmploymentDetails.WorkPhone = "0123456789";
             personalDetailsPage.EmploymentDetails.SalaryPaidToBank = true;
-            personalDetailsPage.EmploymentDetails.NextPayDate = "29 Feb 2012";
+            personalDetailsPage.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("dd MMM yyyy");
             personalDetailsPage.EmploymentDetails.IncomeFrequency = "Monthly";
             personalDetailsPage.ContactingYou.CellPhoneNumber = "0720000098";
             personalDetailsPage.ContactingYou.EmailAddress = email;
@@ -184,6 +184,67 @@ namespace Wonga.QA.Tests.Ui
             personalDetailsPage.CanContact = "Yes";
             personalDetailsPage.MarriedInCommunityProperty =
                 "I am not married in community of property (I am single, married with antenuptial contract, divorced etc.)";
+
+            var addressPage = personalDetailsPage.Submit() as AddressDetailsPage;
+            addressPage.FlatNumber = "25";
+            addressPage.Street = "high road";
+            addressPage.Town = "Kuku";
+            addressPage.County = "Province";
+            addressPage.PostCode = "1234";
+            addressPage.AddressPeriod = "2 to 3 years";
+
+            var accountDetailsPage = addressPage.Next();
+            accountDetailsPage.AccountDetailsSection.Password = Data.GetPassword();
+            accountDetailsPage.AccountDetailsSection.PasswordConfirm = Data.GetPassword();
+            accountDetailsPage.AccountDetailsSection.SecretQuestion = "Secret question'-.";
+            accountDetailsPage.AccountDetailsSection.SecretAnswer = "Secret answer";
+
+            var bankDetailsPage = accountDetailsPage.Next();
+            bankDetailsPage.BankAccountSection.BankName = "Capitec";
+            bankDetailsPage.BankAccountSection.BankAccountType = "Current";
+            bankDetailsPage.BankAccountSection.AccountNumber = "1234567";
+            bankDetailsPage.BankAccountSection.BankPeriod = "2 to 3 years";
+            bankDetailsPage.PinVerificationSection.Pin = "0000";
+
+            return bankDetailsPage.Next() as ProcessingPage;
+        }
+
+        protected ProcessingPage CaL0Path(string employerNameMask = null)
+        {
+            var email = Data.GetEmail();
+            string employerName = employerNameMask ?? Data.GetMiddleName();
+
+            var homePage = Client.Home();
+
+            var page = Client.Home();
+            page.Sliders.HowMuch = "111";
+            page.Sliders.HowLong = "10";
+
+            var personalDetailsPage = page.Sliders.Apply() as PersonalDetailsPage;
+            personalDetailsPage.ProvinceSection.Province = "British Columbia";
+            personalDetailsPage.YourName.FirstName = "Monster";
+            personalDetailsPage.YourName.LastName = Data.RandomString(10);
+            personalDetailsPage.YourName.Title = "Mr";
+            personalDetailsPage.YourDetails.Number = "5710300020087";
+            personalDetailsPage.YourDetails.DateOfBirth = "30/Oct/1957";
+            personalDetailsPage.YourDetails.Gender = "Female";
+            personalDetailsPage.YourDetails.HomeStatus = "Owner Occupier";
+            personalDetailsPage.YourDetails.MaritalStatus = "Single";
+            personalDetailsPage.EmploymentDetails.EmploymentStatus = "Employed Full Time";
+            personalDetailsPage.EmploymentDetails.MonthlyIncome = "3000";
+            personalDetailsPage.EmploymentDetails.EmployerName = employerName;
+            personalDetailsPage.EmploymentDetails.EmployerIndustry = "Accountancy";
+            personalDetailsPage.EmploymentDetails.EmploymentPosition = "Professional (finance, accounting, legal, HR)";
+            personalDetailsPage.EmploymentDetails.TimeWithEmployerYears = "9";
+            personalDetailsPage.EmploymentDetails.TimeWithEmployerMonths = "5";
+            personalDetailsPage.EmploymentDetails.SalaryPaidToBank = true;
+            personalDetailsPage.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("dd MMM yyyy");
+            personalDetailsPage.EmploymentDetails.IncomeFrequency = "Monthly";
+            personalDetailsPage.ContactingYou.CellPhoneNumber = "0720000098";
+            personalDetailsPage.ContactingYou.EmailAddress = email;
+            personalDetailsPage.ContactingYou.ConfirmEmailAddress = email;
+            personalDetailsPage.PrivacyPolicy = true;
+            personalDetailsPage.CanContact = true;
 
             var addressPage = personalDetailsPage.Submit() as AddressDetailsPage;
             addressPage.FlatNumber = "25";

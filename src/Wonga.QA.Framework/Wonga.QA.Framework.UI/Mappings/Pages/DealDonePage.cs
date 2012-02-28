@@ -8,6 +8,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
     public class DealDonePage
     {
         public String HeaderText { get; set; }
-        public String ContinueButtonLinkText { get; set; }
+        public String ContinueButtonLink { get; set; }
+        public String ContinueButton { get; set; }
     }
 }

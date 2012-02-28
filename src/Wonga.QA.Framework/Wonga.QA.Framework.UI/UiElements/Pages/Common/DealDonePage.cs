@@ -18,7 +18,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public DealDonePage(UiClient client) : base(client)
         {
             Assert.That(Headers, Has.Item(Elements.Get.DealDonePage.HeaderText));
-            _continueButton = Content.FindElement(By.CssSelector(Elements.Get.DealDonePage.ContinueButtonLinkText));
+            _continueButton = Content.FirstOrDefaultElement(Elements.Get.DealDonePage.ContinueButtonLink) ??
+                              Content.FirstOrDefaultElement(Elements.Get.DealDonePage.ContinueButton);
         }
 
         public IApplyPage ContinueToMyAccount()

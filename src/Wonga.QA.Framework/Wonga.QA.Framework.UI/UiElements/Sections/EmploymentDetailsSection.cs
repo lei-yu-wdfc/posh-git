@@ -100,18 +100,17 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             _timeWithEmployerMonths = Section.FindElement(By.CssSelector(Elements.Get.EmploymentDetailsSection.TimeWithEmployerMonths));
             _monthlyIncome = Section.FindElement(By.CssSelector(Elements.Get.EmploymentDetailsSection.MonthlyIncome));
             _nextPaydayDate = Section.FindElement(By.CssSelector(Elements.Get.EmploymentDetailsSection.NextPaydayDate));
-            _workPhone = Section.FindElement(By.CssSelector(Elements.Get.EmploymentDetailsSection.WorkPhone));
             _salaryPaidToBank = Section.FindElements(By.CssSelector(Elements.Get.EmploymentDetailsSection.SalaryPaidToBank));
             _incomeFrequency = Section.FindElement(By.CssSelector(Elements.Get.EmploymentDetailsSection.IncomeFrequency));
-            //switch (Config.AUT)
-            //{
-            //    case (AUT.Uk):
-            //        {
+            switch (Config.AUT)
+            {
+                case (AUT.Za):
+                    {
+                        _workPhone = Section.FindElement(By.CssSelector(Elements.Get.EmploymentDetailsSection.WorkPhone));
+                        break;
+                    }
 
-            //            break;
-            //        }
-
-            //}
+            }
         }
     }
 }

@@ -31,7 +31,7 @@
   </AccountDetailsSection>
 
   <DealDonePage>
-    <HeaderText>Application success</HeaderText>
+    <HeaderText>Your application has been accepted, you’re almost there!</HeaderText>
   </DealDonePage>
   
   <AddressDetailsPage>

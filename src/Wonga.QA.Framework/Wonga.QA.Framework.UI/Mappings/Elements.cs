@@ -40,6 +40,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual Sections.DebitCardSection DebitCardSection { get; set; }
         public virtual Sections.BankAccountSection BankAccountSection { get; set; }
         public virtual Sections.EmploymentDetailsSection EmploymentDetailsSection { get; set; }
+        public virtual Sections.ProvinceSection ProvinceSection { get; set; }
 
         #region WbPages
 

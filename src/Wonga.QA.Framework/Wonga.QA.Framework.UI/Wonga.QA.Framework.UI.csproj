@@ -77,6 +77,7 @@
     <Compile Include="Mappings\Sections\BankAccountSection.cs" />
     <Compile Include="Mappings\Sections\DebitCardSection.cs" />
     <Compile Include="Mappings\Sections\EmploymentDetailsSection.cs" />
+    <Compile Include="Mappings\Sections\ProvinceSection.cs" />
     <Compile Include="Mappings\Sections\SliderSection.cs" />
     <Compile Include="Mappings\Sections\ContactingYouSection.cs" />
     <Compile Include="Mappings\Sections\MobilePinVerificationSection.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="UiElements\Sections\DebitCardSection.cs" />
     <Compile Include="UiElements\Sections\EmploymentDetailsSection.cs" />
     <Compile Include="UiElements\Sections\MobilePinVerificationSection.cs" />
+    <Compile Include="UiElements\Sections\ProvinceSection.cs" />
     <Compile Include="UiElements\Sections\YourDetailsSection.cs" />
     <Compile Include="UiElements\Sections\YourNameSection.cs" />
     <Compile Include="UiElements\SlidersElement.cs" />
