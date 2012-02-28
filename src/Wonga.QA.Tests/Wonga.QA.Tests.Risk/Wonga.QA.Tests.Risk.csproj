@@ -34,6 +34,7 @@
   <ItemGroup>
     <Compile Include="Checkpoints\CheckpointBankAccountIsValidTests.cs" />
     <Compile Include="Checkpoints\CheckpointCreditBureauDataIsAvailableTests.cs" />
+    <Compile Include="Checkpoints\CheckpointRepaymentPredictionPositiveTests.cs" />
     <Compile Include="Checkpoints\EidCheckpointTests.cs" />
     <Compile Include="Checkpoints\CheckpointApplicationDeviceNotOnBlacklistTests.cs" />
     <Compile Include="Enums\RiskDecisionStatus.cs" />
