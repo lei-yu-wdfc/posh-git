@@ -184,7 +184,7 @@ namespace Wonga.QA.Framework
             Driver.Api.Commands.Post(requests);
 
             Do.Until(() => (ApplicationDecisionStatusEnum)
-                Enum.Parse(typeof(ApplicationDecisionStatusEnum), Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["ApplicationDecisionStatus"].Single()) == _decision);
+                Enum.Parse(typeof(ApplicationDecisionStatusEnum), Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["ApplicationDecisionStatus"].Single()) == _decision,new TimeSpan(0,60,0));
 
             if (_decision == ApplicationDecisionStatusEnum.Declined)
                 return new Application(_id);
