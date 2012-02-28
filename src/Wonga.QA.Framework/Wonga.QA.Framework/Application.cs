@@ -32,9 +32,17 @@ namespace Wonga.QA.Framework
             get { return Driver.Db.Payments.Applications.Single(a=> a.ExternalId == Id).ClosedOn.HasValue; }
         }
 
+    	public Guid AccountId
+    	{
+    		get { return Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).AccountId; }
+    	}
+
         public Customer GetCustomer()
         {
-            return new Customer(Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).AccountId);
+        	return new Customer(
+				Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).AccountId,
+				Driver.Db.Comms.CustomerDetails.Single( cd => cd.AccountId == AccountId).Email,
+				Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == Id).BankAccountsBaseEntity.ExternalId);
         }
 
         public Application RepayOnDueDate()

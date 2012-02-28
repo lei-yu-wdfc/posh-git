@@ -17,12 +17,6 @@ namespace Wonga.QA.Framework
             Id = id;
         }
 
-        public Customer(Guid id, string email)
-        {
-            Id = id;
-            Email = email;
-        }
-
         public Customer(Guid id, string email, Guid bankAccountId)
         {
             Id = id;
@@ -42,7 +36,7 @@ namespace Wonga.QA.Framework
 
         public Guid GetBankAccount()
         {
-			return Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == Id).BankAccountsBaseEntity.ExternalId;
+        	return BankAccountId;
         }
 
         public Guid GetPaymentCard()
