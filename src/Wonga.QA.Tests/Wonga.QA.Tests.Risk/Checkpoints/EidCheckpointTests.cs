@@ -23,8 +23,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             employmentDetails.EmployerName = "test:DirectFraud";
             employmentDetails.Submit();
 
-            Application lNApp = ApplicationBuilder.New(cust).WithIovationBlackBox("Allow")
-               .WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+            Application lNApp = ApplicationBuilder.New(cust).Build();
 
             //Assert.IsTrue(RiskApiCheckpointTests.SingleCheckPointVerification(lNApp, CheckpointStatus.Verified,CheckpointDefinitionEnum.UserAssistedFraudCheck));
             Assert.Contains(Application.GetExecutedCheckpointDefinitions(lNApp.Id, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.UserAssistedFraudCheck));

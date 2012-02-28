@@ -119,10 +119,12 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
             var expectedRates = new List<TransactionEntity>();
             var counter = 1;
-            var startDate = DateTime.Today;
+            var loanCreatedDate = DateTime.Today;
+            int numberOfDaysUntilStartOfLoan = DateHelper.GetNumberOfDaysUntilStartOfLoanForCa();
+            var loanStartDate = DateTime.Today.AddDays(numberOfDaysUntilStartOfLoan);
 
             expectedRates.Add(CreatePaymentFunctions.CreateRowOfTypeTransaction());
-            expectedRates.Last().PostedOn = startDate;
+            expectedRates.Last().PostedOn = loanCreatedDate;
             expectedRates.Last().Mir = GetMonthlyInterestRateForGivenDay(counter);
 
             if (!GetVariableInterestRateEnabledValue()) return expectedRates;
@@ -132,7 +134,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             while (counter <= loanTerm)
             {
                 expectedRates.Add(CreatePaymentFunctions.CreateRowOfTypeTransaction());
-                expectedRates.Last().PostedOn = DateHelper.GetNextWorkingDay(DateTime.Today).AddDays(counter - 1);
+                expectedRates.Last().PostedOn = loanStartDate.AddDays(counter - 1);
                 expectedRates.Last().Mir = GetMonthlyInterestRateForGivenDay(counter);
                 counter++;
             }

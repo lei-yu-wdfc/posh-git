@@ -7,65 +7,68 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
 using Wonga.QA.Tests.Payments.Helpers.Ca;
 
 namespace Wonga.QA.Tests.Payments
 {
-    //[Category("CA")]
+    // Todo: These tests assume that the variable interest rates start on day 11 and end on day 30
+    // Todo: This assumption will cause the tests to break whenever the variable interest rate config in the DB changes
+    // Todo: Therefore these tests should be driven by the DB config and should not make any assumptions
     public class VariablePricingTests
     {
-        //[Test]
-        //public void VerifyFixedTermLoanOfferCaQueryRates()
-        //{
-        //    var response = GetPaymentFunctions.GetFixedTermLoanOfferCaQuery();
-        //    var actualVariableRates = GetPaymentFunctions.GetVariableRatesFromApiResponse(response);
-        //    var expectedVariableRates = GetPaymentFunctions.GetCurrentVariableInterestRates();
+        private const ProvinceEnum Province = ProvinceEnum.ON;
 
-        //    Assert.IsTrue(VerifyPaymentFunctions.VerifyFixedTermLoanOfferQueryRates(actualVariableRates, expectedVariableRates));
-        //}
+        [Test, AUT(AUT.Ca), JIRA("CA-1472")]
+        public void VerifyFixedTermLoanOfferCaQueryRates()
+        {
+            var response = GetPaymentFunctions.GetFixedTermLoanOfferCaQuery();
+            var actualVariableRates = GetPaymentFunctions.GetVariableRatesFromApiResponse(response);
+            var expectedVariableRates = GetPaymentFunctions.GetCurrentVariableInterestRates();
 
-        //[Test]
-        //[Row(11), Row(10), Row(11), Row(15), Row(19), Row(30)]
-        //public void VerifyVariableInterestPostedOnLoanCreation(int loanTerm)
-        //{
-        //    SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
-        //    const ProvinceEnum province = ProvinceEnum.ON;
+            Assert.IsTrue(VerifyPaymentFunctions.VerifyFixedTermLoanOfferQueryRates(actualVariableRates, expectedVariableRates));
+        }
 
-        //    var customer = CustomerBuilder.New().ForProvince(province).Build();
-        //    var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
-        //    var applicationId = application.Id;
+        [Test, AUT(AUT.Ca), JIRA("CA-1472")]
+        [Row(11), Row(10), Row(11), Row(15), Row(19), Row(30)]
+        public void VerifyVariableInterestPostedOnLoanCreation(int loanTerm)
+        {
+            SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
 
-        //    var actualRates = GetPaymentFunctions.GetInterestRatesForApplication(applicationId);
-        //    var expectedRates = GetPaymentFunctions.GetCurrentVariableInterestRates(loanTerm);
-        //    Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestRatesApplied(actualRates, expectedRates));
-        //}
+            var customer = CustomerBuilder.New().ForProvince(Province).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
+            var applicationId = application.Id;
+
+            var actualRates = GetPaymentFunctions.GetInterestRatesForApplication(applicationId);
+            var expectedRates = GetPaymentFunctions.GetCurrentVariableInterestRates(loanTerm);
+            Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestRatesApplied(actualRates, expectedRates));
+        }
 
 
-        //[Test]
-        //[Row(12)] //, Row(10), Row(11), Row(15), Row(19), Row(30)]
+        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
+        //[Row(12), Row(10), Row(11), Row(15), Row(19), Row(30)]
         //public void VerifyInterestAmountCharged(int term)
         //{
         //    var loanTerm = term;
         //    const decimal loanAmount = 100;
         //    SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
-        //    const ProvinceEnum province = ProvinceEnum.ON;
-
-        //    var customer = CustomerBuilder.New().ForProvince(province).Build();
+            
+        //    var customer = CustomerBuilder.New().ForProvince(Province).Build();
         //    var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
         //    var applicationId = application.Id;
 
-        //    application.Repay();
+        //    application.RepayOnDueDate();
 
         //    var actualInterestAmountApplied = GetPaymentFunctions.GetInterestAmountApplied(applicationId);
         //    var expectedInterestAmountApplied = CalculateFunctionsCa.CalculateExpectedVariableInterestAmountAppliedCa(loanAmount, loanTerm);
 
         //    Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestCharged(actualInterestAmountApplied, expectedInterestAmountApplied));
-        // }
+        //}
 
-        //[Test]
+        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
         //[Row(9), Row(15)]
-        //public void VerifyLoanClosedAfterPaymentRecieved(int term)
+        //public void VerifyLoanClosedAfterPaymenFulltRecieved(int term)
         //{
         //    var loanTerm = term;
         //    const decimal loanAmount = 100;
@@ -74,24 +77,19 @@ namespace Wonga.QA.Tests.Payments
         //    TestLog.DebugTrace.WriteLine("loanTerm -> {0}", loanTerm);
         //    TestLog.DebugTrace.WriteLine("loanAmount -> {0}", loanAmount);
 
-        //    var promiseDate = (GetPaymentFunctions.GetNextWorkingDate(DateTime.Today)).AddDays(loanTerm).ToDateString();
         //    SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
 
-        //    var application =
-        //        commonFunct.CreateL0Application(new Dictionary<string, string> { { "PromiseDate", promiseDate }, { "Amount", loanAmount.ToString() } });
-        //    var applicationId = application["ApplicationId"];
-        //    TestLog.DebugTrace.WriteLine("ApplicationId: {0}", applicationId);
+        //    var customer = CustomerBuilder.New().ForProvince(Province).Build();
+        //    var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
+        //    TestLog.DebugTrace.WriteLine("ApplicationId: {0}", application.Id);
 
-        //    commonFunct.RewindQuery(applicationId);
+        //    application.RepayOnDueDate();
 
-        //    TimeoutPaymentFunctions.TimeoutFixedTermLoanAndSchedInterest(applicationId);
-        //    SendPaymentFunctions.SendPaymentTaken(applicationId);
-
-        //    Assert.IsTrue(VerifyPaymentFunctions.VerifyApplicationClosed(applicationId));
+        //    Assert.IsTrue(application.IsClosed);
         //    TestLog.DebugTrace.WriteLine("END: VerifyL0LoanClosedAfterPaymentRecieved @ TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
         //}
 
-        //[Test]
+        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
         //public void VerifyFixedTermLoanOfferQueryRates()
         //{
         //    TestLog.DebugTrace.WriteLine("BEGIN: VerifyFixedTermLoanOfferQueryRates @ TimeStamp: {0}\n", DateTime.UtcNow.ToString("o"));
@@ -104,7 +102,7 @@ namespace Wonga.QA.Tests.Payments
         //    TestLog.DebugTrace.WriteLine("END: VerifyFixedTermLoanOfferQueryRates @ TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
         //}
 
-        //[Test]
+        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
         //public void VerifyFixedTermLoanOfferQueryRatesAfterRatesUpdated()
         //{
         //    TestLog.DebugTrace.WriteLine("BEGIN: VerifyFixedTermLoanOfferQueryRatesAfterRatesUpdated @ TimeStamp: {0}\n", DateTime.UtcNow.ToString("o"));
@@ -121,7 +119,7 @@ namespace Wonga.QA.Tests.Payments
         //    TestLog.DebugTrace.WriteLine("END: VerifyFixedTermLoanOfferQueryRatesAfterRatesUpdated @ TimeStamp: {0}\n", DateTime.UtcNow.ToString("o"));
         //}
 
-        //[Test]
+        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
         //[Row(1), Row(10), Row(11), Row(15), Row(19), Row(30)]
         //public void VerifyCurrentVariableInterestAppliedAfterRatesUpdated(int loanTerm)
         //{
@@ -130,32 +128,29 @@ namespace Wonga.QA.Tests.Payments
         //    TestLog.DebugTrace.WriteLine("BEGIN: VerifyCurrentVariableInterestAppliedAfterRatesUpdated TimeStamp: {0}\n", DateTime.UtcNow.ToString("o"));
         //    TestLog.DebugTrace.WriteLine("loanTerm -> {0}", loanTerm);
 
-        //    var promiseDate = (GetPaymentFunctions.GetNextWorkingDate(DateTime.Today)).AddDays(loanTerm).ToDateString();
         //    SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
         //    const decimal numberOfPoints = (decimal)0.3;
         //    TestLog.DebugTrace.WriteLine("numberOfPoints -> {0}\n", numberOfPoints);
 
-        //    var application =
-        //        commonFunct.CreateL0Application(new Dictionary<string, string> { { "PromiseDate", promiseDate }, { "Amount", loanAmount.ToString() } });
-        //    var applicationId = application["ApplicationId"];
-        //    TestLog.DebugTrace.WriteLine("VerifyInterestAmountCharged: {0}", applicationId);
+        //    var customer = CustomerBuilder.New().ForProvince(Province).Build();
+        //    var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
+
+        //    TestLog.DebugTrace.WriteLine("VerifyInterestAmountCharged: {0}", application.Id);
 
         //    var expectedInterestAmountApplied = CalculateFunctionsCa.CalculateExpectedVariableInterestAmountAppliedCa(loanAmount,
         //                                                                                               loanTerm);
         //    SetPaymentFunctions.SetVariableInterestRates(numberOfPoints);
 
-        //    commonFunct.RewindQuery(applicationId);
-        //    TimeoutPaymentFunctions.TimeoutFixedTermLoanAndSchedInterest(applicationId);
-        //    SendPaymentFunctions.SendPaymentTaken(applicationId);
+        //    application.RepayOnDueDate();
 
-        //    var actualInterestAmountApplied = GetPaymentFunctions.GetInterestAmountApplied(applicationId);
+        //    var actualInterestAmountApplied = GetPaymentFunctions.GetInterestAmountApplied(application.Id);
         //    Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestCharged(actualInterestAmountApplied, expectedInterestAmountApplied));
 
         //    SetPaymentFunctions.SetVariableInterestRates(numberOfPoints * -1);
         //    TestLog.DebugTrace.WriteLine("END: VerifyCurrentVariableInterestAppliedAfterRatesUpdated TimeStamp: {0}\n", DateTime.UtcNow.ToString("o"));
         //}
 
-        //[Test]
+        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
         //[Row(3), Row(10), Row(11), Row(15), Row(19), Row(30)]
         //public void VerifyUpdatedVariableInterestRateAppliedToLn(int loanTerm)
         //{
@@ -163,32 +158,26 @@ namespace Wonga.QA.Tests.Payments
         //    TestLog.DebugTrace.WriteLine("loanTerm -> {0}", loanTerm);
 
         //    const decimal loanAmount = 100;
-        //    var promiseDate = (GetPaymentFunctions.GetNextWorkingDate(DateTime.Today)).AddDays(loanTerm).ToDateString();
         //    SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
         //    const decimal numberOfPoints = (decimal)0.3;
         //    TestLog.DebugTrace.WriteLine("numberOfPoints -> {0}\n", numberOfPoints);
 
-        //    var l0Application =
-        //        commonFunct.CreateL0Application(new Dictionary<string, string> { { "PromiseDate", promiseDate }, { "Amount", loanAmount.ToString() } });
-        //    var l0ApplicationId = l0Application["ApplicationId"];
-        //    var accountId = l0Application["AccountId"];
-        //    TestLog.DebugTrace.WriteLine("l0ApplicationId: {0}", l0ApplicationId);
+        //    var customer = CustomerBuilder.New().ForProvince(Province).Build();
+        //    var l0Application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
 
-        //    commonFunct.RewindQuery(l0ApplicationId);
-        //    TimeoutPaymentFunctions.TimeoutFixedTermLoanAndSchedInterest(l0ApplicationId);
-        //    SendPaymentFunctions.SendPaymentTaken(l0ApplicationId);
+        //    TestLog.DebugTrace.WriteLine("l0ApplicationId: {0}", l0Application.Id);
+
+        //    l0Application.RepayOnDueDate();
 
         //    SetPaymentFunctions.SetVariableInterestRates(numberOfPoints);
 
-        //    var lNApplication = commonFunct.CreateLNLoan(accountId, loanTerm);
-        //    var lNApplicationId = lNApplication["ApplicationId"];
-        //    TestLog.DebugTrace.WriteLine("lNApplicationId: {0}", lNApplicationId);
+        //    var lNApplication = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
 
-        //    commonFunct.RewindQuery(lNApplicationId);
-        //    TimeoutPaymentFunctions.TimeoutFixedTermLoanAndSchedInterest(lNApplicationId);
-        //    SendPaymentFunctions.SendPaymentTaken(lNApplicationId);
+        //    TestLog.DebugTrace.WriteLine("lNApplicationId: {0}\n", lNApplication.Id);
 
-        //    var actualInterestAmountApplied = GetPaymentFunctions.GetInterestAmountApplied(lNApplicationId);
+        //    lNApplication.RepayOnDueDate();
+
+        //    var actualInterestAmountApplied = GetPaymentFunctions.GetInterestAmountApplied(lNApplication.Id);
         //    var expectedInterestAmountApplied = CalculateFunctionsCa.CalculateExpectedVariableInterestAmountAppliedCa(loanAmount, loanTerm);
 
         //    Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestCharged(actualInterestAmountApplied, expectedInterestAmountApplied));
@@ -197,62 +186,55 @@ namespace Wonga.QA.Tests.Payments
         //    TestLog.DebugTrace.WriteLine("END: VerifyUpdatedVariableInterestRateAppliedToLn TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
         //}
 
-        //[Test]
+        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
         //[Row(10), Row(15)]
         //public void VerifyLNLoanClosedAfterPaymentRecieved(int loanTerm)
         //{
         //    TestLog.DebugTrace.WriteLine("BEGIN: VerifyLNLoanClosedAfterPaymentRecieved TimeStamp: {0}\n", DateTime.UtcNow.ToString("o"));
         //    TestLog.DebugTrace.WriteLine("loanTerm -> {0}", loanTerm);
 
-        //    const decimal loanAmount = 100;
-        //    var promiseDate = (GetPaymentFunctions.GetNextWorkingDate(DateTime.Today)).AddDays(loanTerm).ToDateString();
         //    SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
 
-        //    var l0Application =
-        //        commonFunct.CreateL0Application(new Dictionary<string, string> { { "PromiseDate", promiseDate }, { "Amount", loanAmount.ToString() } });
-        //    var l0ApplicationId = l0Application["ApplicationId"];
-        //    var accountId = l0Application["AccountId"];
-        //    TestLog.DebugTrace.WriteLine("l0ApplicationId: {0}", l0ApplicationId);
+        //    var customer = CustomerBuilder.New().ForProvince(Province).Build();
+        //    var l0Application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
 
-        //    commonFunct.RewindQuery(l0ApplicationId);
-        //    TimeoutPaymentFunctions.TimeoutFixedTermLoanAndSchedInterest(l0ApplicationId);
-        //    SendPaymentFunctions.SendPaymentTaken(l0ApplicationId);
+        //    TestLog.DebugTrace.WriteLine("l0ApplicationId: {0}", l0Application.Id);
 
-        //    var lNApplication = commonFunct.CreateLNLoan(accountId, loanTerm);
-        //    var lNApplicationId = lNApplication["ApplicationId"];
-        //    TestLog.DebugTrace.WriteLine("lNApplicationId: {0}\n", lNApplicationId);
+        //    l0Application.RepayOnDueDate();
 
-        //    commonFunct.RewindQuery(lNApplicationId);
-        //    TimeoutPaymentFunctions.TimeoutFixedTermLoanAndSchedInterest(lNApplicationId);
-        //    SendPaymentFunctions.SendPaymentTaken(lNApplicationId);
+        //    var lNApplication = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
 
-        //    Assert.IsTrue(VerifyPaymentFunctions.VerifyApplicationClosed(lNApplicationId));
+        //    TestLog.DebugTrace.WriteLine("lNApplicationId: {0}\n", lNApplication.Id);
+
+        //    lNApplication.RepayOnDueDate();
+
+        //    Assert.IsTrue(VerifyPaymentFunctions.VerifyApplicationClosed(lNApplication.Id));
         //    TestLog.DebugTrace.WriteLine("END: VerifyLNLoanClosedAfterPaymentRecieved TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
         //}
 
-        //[Test]
+        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
         //public void VerifyMaxPercentageRateChargedOn30Days()
         //{
         //    TestLog.DebugTrace.WriteLine("BEGIN: VerifyMaxPercentageRateChargedOn30Days TimeStamp: {0}\n", DateTime.UtcNow.ToString("o"));
         //    const int loanTerm = 30;
         //    const decimal loanAmount = 100;
         //    const decimal maxRateOver30Days = (decimal)0.2100;
-        //    var promiseDate = (GetPaymentFunctions.GetNextWorkingDate(DateTime.Today)).AddDays(loanTerm).ToDateString();
+            
         //    SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
 
-        //    var l0Application =
-        //    commonFunct.CreateL0Application(new Dictionary<string, string> { { "PromiseDate", promiseDate }, { "Amount", loanAmount.ToString() } });
-        //    var l0ApplicationId = l0Application["ApplicationId"];
-        //    TestLog.DebugTrace.WriteLine("VerifyInterestAmountCharged: {0}", l0ApplicationId);
+        //    var customer = CustomerBuilder.New().ForProvince(Province).Build();
+        //    var l0Application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
 
-        //    var actualRatesApplied = GetPaymentFunctions.GetInterestRatesForApplication(l0ApplicationId);
+        //    TestLog.DebugTrace.WriteLine("l0ApplicationId: {0}", l0Application.Id);
+
+        //    var actualRatesApplied = GetPaymentFunctions.GetInterestRatesForApplication(l0Application.Id);
         //    var actualDailyRateApplied = CalculateFunctionsCa.CalculateActualDailyInterestRateCa(actualRatesApplied);
         //    TestLog.DebugTrace.WriteLine("actualDailyRateApplied: {0}\n", actualDailyRateApplied);
         //    Assert.IsTrue(actualDailyRateApplied == maxRateOver30Days);
         //    TestLog.DebugTrace.WriteLine("END: VerifyMaxPercentageRateChargedOn30Days TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
         //}
 
-        //[Test]
+        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
         //[Row(17)]
         //public void VerifyNoVariableInterestPostedWhenFeatureSwitchIsOff(int loanTerm)
         //{
@@ -277,7 +259,7 @@ namespace Wonga.QA.Tests.Payments
         //    SetPaymentFunctions.SetVariableInterestRateEnabled(true);
         //}
 
-        //[Test]
+        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
         //[Row(22)]
         //public void VerifyExistingLoansInterestRatesAreNotAffectedIfFeatureSwitchIsTurnedOn(int loanTerm)
         //{
@@ -309,7 +291,7 @@ namespace Wonga.QA.Tests.Payments
         //    TestLog.DebugTrace.WriteLine("END: VerifyExistingLoansInterestRatesAreNotAffectedIfFeatureSwitchIsTurnedOn @ TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
         //}
 
-        //[Test]
+        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
         //[Row(12, 4), Row(15, 11)]
         //public void VerifyVariableInterestAmountAppliedToPartialEarlyRepayment(int loanTerm, int earlyRepaymentTerm)
         //{
@@ -350,7 +332,7 @@ namespace Wonga.QA.Tests.Payments
         //    TestLog.DebugTrace.WriteLine("END: VerifyVariableInterestAmountAppliedToPartialEarlyRepayment @ TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
         //}
 
-        //[Test]
+        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
         //[Row(11, 5)] //, Row(25, 11)]
         //public void VerifyLoanClosedWithPartialEarlyRepayment(int loanTerm, int earlyRepaymentTerm)
         //{
@@ -386,7 +368,7 @@ namespace Wonga.QA.Tests.Payments
         //    TestLog.DebugTrace.WriteLine("END: VerifyL0LoanClosedWithPartialEarlyRepayment @ TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
         //}
 
-        //[Test]
+        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
         //[Row(11, 5)]
         //public void VerifyLoanClosedWithFullEarlyRepayment(int loanTerm, int earlyRepaymentTerm)
         //{
@@ -418,7 +400,7 @@ namespace Wonga.QA.Tests.Payments
         //    TestLog.DebugTrace.WriteLine("END: VerifyL0LoanClosedWithFullEarlyRepayment @ TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
         //}
 
-        //[Test]
+        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
         //[Row(11, 5)]
         //public void VerifyVariableInterestAmountPostForFullEarlyRepayment(int loanTerm, int earlyRepaymentTerm)
         //{
@@ -459,7 +441,7 @@ namespace Wonga.QA.Tests.Payments
         //    TestLog.DebugTrace.WriteLine("END: VerifyVariableInterestAmountPostForFullEarlyRepayment @ TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
         //}
 
-        //[Test]
+        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
         //[Row(15)]
         //public void VerifyLoanGoesIntoArrears(int loanTerm)
         //{
@@ -486,7 +468,7 @@ namespace Wonga.QA.Tests.Payments
         //    TestLog.DebugTrace.WriteLine("END: VerifyL0LoanGoesIntoArrears @ TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
         //}
 
-        //[Test]
+        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
         //[Row(13)]
         //public void VerifyVariableInterestAmountPostedOnLoanInArrears(int loanTerm)
         //{
@@ -519,7 +501,7 @@ namespace Wonga.QA.Tests.Payments
         //    TestLog.DebugTrace.WriteLine("END: VerifyVariableInterestAmountPostedOnLoanInArrears @ TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
         //}
 
-        //[Test]
+        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
         //[Row(25)]
         //public void VerifyArrearsInterestPostedToLoanInArrears(int loanTerm)
         //{
@@ -554,7 +536,7 @@ namespace Wonga.QA.Tests.Payments
         //    TestLog.DebugTrace.WriteLine("END: VerifyArrearsInterestPosted @ TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
         //}
 
-        //[Test]
+        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
         //[Row(17)]
         //public void VerifyDefaultChargeAppliedToLoanInArrears(int loanTerm)
         //{
@@ -588,7 +570,7 @@ namespace Wonga.QA.Tests.Payments
         //    TestLog.DebugTrace.WriteLine("END: VerifyDefaultChargedAppliedToLoanInArrears @ TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
         //}
 
-        //[Test]
+        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
         //[Row(17, 3)]
         //public void VerifyLoanInArrearsClosedAfterAllPaymentsRecieved(int loanTerm, int daysOverdue)
         //{
@@ -629,7 +611,7 @@ namespace Wonga.QA.Tests.Payments
         //    TestLog.DebugTrace.WriteLine("END: VerifyLoanInArrearsClosedAfterAllPaymentsRecieved @ TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
         //}
 
-        //[Test]
+        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
         //[Row(25, 9)]
         //public void VerifyArrearsInterestAmount(int loanTerm, int daysOverdue)
         //{
@@ -677,7 +659,7 @@ namespace Wonga.QA.Tests.Payments
         //    TestLog.DebugTrace.WriteLine("END: VerifyArrearsInterestAmount @ TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
         //}
 
-        //[Test]
+        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
         //[Row(15, 6)]
         //public void VerifyDefaultChargePlusArrearsInterestCollected(int loanTerm, int daysOverdue)
         //{
@@ -724,7 +706,7 @@ namespace Wonga.QA.Tests.Payments
         //    TestLog.DebugTrace.WriteLine("END: VerifyDefaultChargePlusArrearsInterestCollected @ TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
         //}
 
-        //[Test]
+        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
         //[Row(18, 12, 6)]
         //public void VerifyInterestChargedOnLoanInArrearsWithEarlyPaymentRecievedBeforeLoanDueDate(int loanTerm, int earlyRepaymentTerm, int daysOverdue)
         //{
@@ -772,14 +754,14 @@ namespace Wonga.QA.Tests.Payments
         //    TestLog.DebugTrace.WriteLine("END: VerifyInterestChargedOnLoanInArrearsWithEarlyPaymentRecievedBeforeLoanDueDate @ TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
         //}
 
-        //[Test]
+        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
         //[Row(12, 16, 4)]
         //public void VerifyInterestChargedOnLoanInArrearsWithEarlyPaymentRecievedAfterLoanDueDate(int loanTerm, int earlyRepaymentTerm, int daysOverdue)
         //{
 
         //}
 
-        //[Test]
+        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
         //[Row(18, 4)]
         //public void VerifyDefaultChargeNotAppliedToBcCustomer(int loanTerm, int daysOverdue)
         //{
@@ -810,7 +792,7 @@ namespace Wonga.QA.Tests.Payments
         //    TestLog.DebugTrace.WriteLine("END: VerifyDefaultChargeNotAppliedToBcCustomer @ TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
         //}
 
-        //[Test]
+        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
         //[Row(8, 2)]
         //public void VerifyArrearsNotChargedToBcCustomer(int loanTerm, int daysOverdue)
         //{
