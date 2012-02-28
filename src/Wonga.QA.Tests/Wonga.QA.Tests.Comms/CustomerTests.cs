@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
+using System.Xml;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
@@ -539,7 +541,7 @@ namespace Wonga.QA.Tests.Comms
                 .WithEmail(email)
                 .Build());
 
-            Assert.Contains(error.Message, "Ops_Login_AlreadyExists,Comms_Email_Recognised");
+            Assert.Contains(error.Message, "Ops_Login_AlreadyExists");
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-850")]
@@ -556,7 +558,7 @@ namespace Wonga.QA.Tests.Comms
                 .WithEmail(Data.InvertCase(email))
                 .Build());
 
-            Assert.Contains(error.Message, "Ops_Login_AlreadyExists,Comms_Email_Recognised");
+            Assert.Contains(error.Message, "Ops_Login_AlreadyExists");
         }
     }
 }
