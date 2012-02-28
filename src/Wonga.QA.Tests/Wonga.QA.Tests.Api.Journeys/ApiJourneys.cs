@@ -56,7 +56,7 @@ namespace Wonga.QA.Tests.Journeys
 
 			var applicationL0 = ApplicationBuilder.New(cust).Build();
 
-			applicationL0.Repay();
+			applicationL0.RepayOnDueDate();
 
 			ApplicationBuilder.New(cust).Build();
 		}
@@ -68,7 +68,7 @@ namespace Wonga.QA.Tests.Journeys
 
 			var applicationL0 = ApplicationBuilder.New(cust).Build();
 
-			applicationL0.Repay();
+            applicationL0.RepayOnDueDate();
 
 			var db = new DbDriver();
 			db.Risk.EmploymentDetails.Single(a => a.AccountId == cust.Id).EmployerName = "Wonga";
@@ -99,7 +99,7 @@ namespace Wonga.QA.Tests.Journeys
                 {
                     base.SetUp();
 
-                    Application.Repay();
+                    Application.RepayOnDueDate();
                 }
 
                 [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]

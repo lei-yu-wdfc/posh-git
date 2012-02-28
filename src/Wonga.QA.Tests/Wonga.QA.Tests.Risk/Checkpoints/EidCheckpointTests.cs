@@ -17,7 +17,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
             Application l0App = ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
 
-            l0App.Repay();
+            l0App.RepayOnDueDate();
 
             EmploymentDetailEntity employmentDetails = Driver.Db.Risk.EmploymentDetails.Single(cd => cd.AccountId == cust.Id);
             employmentDetails.EmployerName = "test:DirectFraud";

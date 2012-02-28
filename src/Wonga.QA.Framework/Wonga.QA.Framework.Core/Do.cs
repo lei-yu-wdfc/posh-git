@@ -51,7 +51,7 @@ namespace Wonga.QA.Framework.Core
                     Trace.WriteLine(e, typeof(Do).FullName);
                     Sleep(interval);
                 }
-            throw new TimeoutException();
+             throw new TimeoutException();
         }
 
         public static void While<T>(Func<T> func)
