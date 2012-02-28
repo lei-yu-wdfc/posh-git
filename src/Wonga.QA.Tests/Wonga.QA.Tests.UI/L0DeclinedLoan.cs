@@ -13,7 +13,7 @@ using Wonga.QA.Tests.Ui;
 
 namespace Wonga.QA.Tests.Ui
 {
-    public class SeleniumTests : UiTest
+    public class L0DeclinedLoan : UiTest
     {
         [Test,AUT(AUT.Wb)]
         public void WbDeclinedLoan()
