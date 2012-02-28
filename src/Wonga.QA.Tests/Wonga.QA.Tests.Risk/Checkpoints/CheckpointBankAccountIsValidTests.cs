@@ -28,5 +28,16 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 			Assert.AreEqual(expectedRiskDecisionStatus, actualRiskDecisionStatus);
 		}
+
+        [Test, AUT(AUT.Za)]
+        public void AhvCheckSuccessfulWhenBGInTestModeTest()
+        {
+            Customer cust = CustomerBuilder.New().WithEmployer(TestMask).Build();
+
+            Application app = ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.ReadyToSign).Build();
+
+            Do.Until(() => RiskApiCheckpointTests.SingleCheckPointVerification(app, CheckpointStatus.Verified, CheckpointDefinitionEnum.BankAccountMatchesTheApplicant)
+                , TimeSpan.FromMinutes(10));//BankGateway timeout after 5 minutes in test mode.
+        }
 	}
 }
