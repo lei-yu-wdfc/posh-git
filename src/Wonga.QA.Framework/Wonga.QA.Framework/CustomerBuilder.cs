@@ -395,9 +395,6 @@ namespace Wonga.QA.Framework
 					Do.Until(
 						() =>
 						Driver.Db.Payments.BankAccountsBases.Single(bab => bab.ExternalId == _bankAccountId));
-					Do.Until(
-						() => 
-						Driver.Db.Payments.AccountPreferences.Single(a => a.BankAccountsBaseEntity != null && a.BankAccountsBaseEntity.ExternalId == _bankAccountId));
 					break;
             }
             
