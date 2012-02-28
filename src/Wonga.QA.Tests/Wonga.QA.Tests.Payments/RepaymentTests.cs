@@ -19,7 +19,7 @@ namespace Wonga.QA.Tests.Payments
         /// http://jira.wonga.com/browse/SME-808
         /// SME-808 test 4
         /// </summary>
-        [Test, JIRA("SME-1018,SME-808")]
+        [Test, JIRA("SME-1018,SME-808,SME-809")]
         public void PaymentsShouldCreateNewTransacionWhenFirstCollectionAttemptSucceeds()
         {
             var customer = CustomerBuilder.New().Build();
@@ -55,7 +55,7 @@ namespace Wonga.QA.Tests.Payments
         /// http://jira.wonga.com/browse/SME-808
         /// SME-808 test 6
         /// </summary>
-        [Test, JIRA("SME-1018")]
+        [Test, JIRA("SME-1018,SME-809")]
         public void PaymentsShouldCreateNewTransacionWhenSecondCollectionAttemptSucceeds()
         {
             // Start application
@@ -112,7 +112,7 @@ namespace Wonga.QA.Tests.Payments
             Thread.Sleep(30000);
         }
 
-        [Test, JIRA("SME-1018,SME-812"), Pending("DefaultCharge transaction not being created yet")]
+        [Test, JIRA("SME-1018,SME-812,SME-809"), Pending("DefaultCharge transaction not being created yet")]
         public void PaymentsShouldNowCreateNewTransacionWhenSecondCollectionAttemptFails()
         {
             // Setup application
@@ -139,7 +139,7 @@ namespace Wonga.QA.Tests.Payments
                                                                     && t.Type == PaymentTransactionEnum.DefaultCharge.ToString()));
         }
 
-        [Test, JIRA("SME-808")]
+        [Test, JIRA("SME-808,SME-809")]
         public void PaymentsShouldCreateRepaymentPlanWhenLoanIsApproved()
         {
             // Setup application
@@ -160,7 +160,7 @@ namespace Wonga.QA.Tests.Payments
         /// When the money collection is successful 
         /// Then update the account balance 
         /// </summary>
-        [Test, JIRA("SME-808")]
+        [Test, JIRA("SME-808,SME-809")]
         public void PaymentsShouldUpdateAccountBalanceWhenCollectionIsSuccessful()
         {
             // Setup application
