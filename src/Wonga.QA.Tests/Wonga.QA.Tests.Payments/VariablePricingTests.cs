@@ -15,53 +15,53 @@ namespace Wonga.QA.Tests.Payments
     //[Category("CA")]
     public class VariablePricingTests
     {
-        [Test]
-        public void VerifyFixedTermLoanOfferCaQueryRates()
-        {
-            var response = GetPaymentFunctions.GetFixedTermLoanOfferCaQuery();
-            var actualVariableRates = GetPaymentFunctions.GetVariableRatesFromApiResponse(response);
-            var expectedVariableRates = GetPaymentFunctions.GetCurrentVariableInterestRates();
+        //[Test]
+        //public void VerifyFixedTermLoanOfferCaQueryRates()
+        //{
+        //    var response = GetPaymentFunctions.GetFixedTermLoanOfferCaQuery();
+        //    var actualVariableRates = GetPaymentFunctions.GetVariableRatesFromApiResponse(response);
+        //    var expectedVariableRates = GetPaymentFunctions.GetCurrentVariableInterestRates();
 
-            Assert.IsTrue(VerifyPaymentFunctions.VerifyFixedTermLoanOfferQueryRates(actualVariableRates, expectedVariableRates));
-        }
+        //    Assert.IsTrue(VerifyPaymentFunctions.VerifyFixedTermLoanOfferQueryRates(actualVariableRates, expectedVariableRates));
+        //}
 
-        [Test]
-        [Row(11), Row(10), Row(11), Row(15), Row(19), Row(30)]
-        public void VerifyVariableInterestPostedOnLoanCreation(int loanTerm)
-        {
-            SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
-            const ProvinceEnum province = ProvinceEnum.ON;
+        //[Test]
+        //[Row(11), Row(10), Row(11), Row(15), Row(19), Row(30)]
+        //public void VerifyVariableInterestPostedOnLoanCreation(int loanTerm)
+        //{
+        //    SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
+        //    const ProvinceEnum province = ProvinceEnum.ON;
 
-            var customer = CustomerBuilder.New().ForProvince(province).Build();
-            var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
-            var applicationId = application.Id;
+        //    var customer = CustomerBuilder.New().ForProvince(province).Build();
+        //    var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
+        //    var applicationId = application.Id;
 
-            var actualRates = GetPaymentFunctions.GetInterestRatesForApplication(applicationId);
-            var expectedRates = GetPaymentFunctions.GetCurrentVariableInterestRates(loanTerm);
-            Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestRatesApplied(actualRates, expectedRates));
-        }
+        //    var actualRates = GetPaymentFunctions.GetInterestRatesForApplication(applicationId);
+        //    var expectedRates = GetPaymentFunctions.GetCurrentVariableInterestRates(loanTerm);
+        //    Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestRatesApplied(actualRates, expectedRates));
+        //}
 
 
-        [Test]
-        [Row(12)] //, Row(10), Row(11), Row(15), Row(19), Row(30)]
-        public void VerifyInterestAmountCharged(int term)
-        {
-            var loanTerm = term;
-            const decimal loanAmount = 100;
-            SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
-            const ProvinceEnum province = ProvinceEnum.ON;
+        //[Test]
+        //[Row(12)] //, Row(10), Row(11), Row(15), Row(19), Row(30)]
+        //public void VerifyInterestAmountCharged(int term)
+        //{
+        //    var loanTerm = term;
+        //    const decimal loanAmount = 100;
+        //    SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
+        //    const ProvinceEnum province = ProvinceEnum.ON;
 
-            var customer = CustomerBuilder.New().ForProvince(province).Build();
-            var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
-            var applicationId = application.Id;
+        //    var customer = CustomerBuilder.New().ForProvince(province).Build();
+        //    var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
+        //    var applicationId = application.Id;
 
-            application.Repay();
+        //    application.Repay();
 
-            var actualInterestAmountApplied = GetPaymentFunctions.GetInterestAmountApplied(applicationId);
-            var expectedInterestAmountApplied = CalculateFunctionsCa.CalculateExpectedVariableInterestAmountAppliedCa(loanAmount, loanTerm);
+        //    var actualInterestAmountApplied = GetPaymentFunctions.GetInterestAmountApplied(applicationId);
+        //    var expectedInterestAmountApplied = CalculateFunctionsCa.CalculateExpectedVariableInterestAmountAppliedCa(loanAmount, loanTerm);
 
-            Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestCharged(actualInterestAmountApplied, expectedInterestAmountApplied));
-         }
+        //    Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestCharged(actualInterestAmountApplied, expectedInterestAmountApplied));
+        // }
 
         //[Test]
         //[Row(9), Row(15)]
