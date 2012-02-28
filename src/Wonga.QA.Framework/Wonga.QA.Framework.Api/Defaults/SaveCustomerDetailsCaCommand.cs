@@ -15,6 +15,7 @@ namespace Wonga.QA.Framework.Api
             Gender = Data.RandomEnum<GenderEnum>();
             HomePhone = "0210000000";
             WorkPhone = "0210000000";
+            NationalNumber = "000000000";
         }
     }
 }

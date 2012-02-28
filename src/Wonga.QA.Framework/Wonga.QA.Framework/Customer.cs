@@ -36,7 +36,7 @@ namespace Wonga.QA.Framework
 
         public Guid GetBankAccount()
         {
-        	return BankAccountId;
+			return Do.Until(()=> Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == Id).BankAccountsBaseEntity.ExternalId);
         }
 
         public Guid GetPaymentCard()

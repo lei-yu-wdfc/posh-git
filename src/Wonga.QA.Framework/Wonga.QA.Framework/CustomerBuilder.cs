@@ -32,6 +32,7 @@ namespace Wonga.QA.Framework
         private String _town;
         private String _county;
         private Guid _bankAccountId;
+        private String _phoneNumber;
     	
 
         private CustomerBuilder()
@@ -50,6 +51,7 @@ namespace Wonga.QA.Framework
             _province = ProvinceEnum.ON;
             _houseNumber = Data.RandomInt(1, 100).ToString(CultureInfo.InvariantCulture);
             _houseName = Data.RandomString(8);
+            _phoneNumber = Data.GetPhone();
             if (Config.AUT == AUT.Wb || Config.AUT == AUT.Uk)
             {
                 _postcode = "SW6 6PN";
@@ -118,14 +120,21 @@ namespace Wonga.QA.Framework
 		public CustomerBuilder WithNextPayDate(Date date)
 		{
 			_nextPayDate = date;
-			return this;
+			return this;		
 		}
 
-		public CustomerBuilder WithDateOfBirth(Date date)
-		{
-			_dateOfBirth = date;
-			return this;
-		}
+        public CustomerBuilder WithEmailAddress(String email)
+        {
+            _email = email;
+            return this;
+        }
+        
+        public CustomerBuilder WithDateOfBirth(Date date)
+	    {
+	       _dateOfBirth = date;
+	       return this;
+        }
+
 
         public CustomerBuilder WithForename(String foreName)
         {
@@ -199,11 +208,18 @@ namespace Wonga.QA.Framework
             return this;
         }
 
-		public CustomerBuilder WithProvinceInAddress(ProvinceEnum province)
-		{
-			_province = province;
-			return this;
-		}
+        public CustomerBuilder WithPhoneNumber(String phoneNumber)
+        {
+            _phoneNumber = phoneNumber;
+            return this;
+        }
+
+        public CustomerBuilder WithProvinceInAddress(ProvinceEnum province)
+	    {
+		    _province = province;
+		    return this;
+	    }
+
 
         public Customer Build()
         {
@@ -274,8 +290,10 @@ namespace Wonga.QA.Framework
                             r.MiddleName = _middleName;
                             r.Surname = _surname;
                             r.Email = _email;
-                        	r.DateOfBirth = _dateOfBirth;
-                        	r.Gender = _gender;
+                            r.DateOfBirth = _dateOfBirth;
+                            r.NationalNumber = _nationalNumber;
+                            r.HomePhone = _phoneNumber;
+                            r.Gender = _gender;
                         }),                       
                         SaveCustomerAddressCaCommand.New(r => {
                                                                  r.AccountId = _id;

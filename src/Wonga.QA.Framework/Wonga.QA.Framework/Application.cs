@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Xml;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Db.Ops;
@@ -81,7 +82,7 @@ namespace Wonga.QA.Framework
             return this;
         }
 
-        private void MakeDueToday(ApplicationEntity application)
+        public void MakeDueToday(ApplicationEntity application)
         {
             TimeSpan span = application.FixedTermLoanApplicationEntity.NextDueDate.Value - DateTime.Today;
 

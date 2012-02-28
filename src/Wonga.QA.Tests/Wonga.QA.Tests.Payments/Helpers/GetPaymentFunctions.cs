@@ -132,7 +132,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             while (counter <= loanTerm)
             {
                 expectedRates.Add(CreatePaymentFunctions.CreateRowOfTypeTransaction());
-                //expectedRates.Last().PostedOn = DateHelper.GetNextWorkingDay(DateTime.Today).AddDays(counter - 1);
+                expectedRates.Last().PostedOn = DateHelper.GetNextWorkingDay(DateTime.Today).AddDays(counter - 1);
                 expectedRates.Last().Mir = GetMonthlyInterestRateForGivenDay(counter);
                 counter++;
             }

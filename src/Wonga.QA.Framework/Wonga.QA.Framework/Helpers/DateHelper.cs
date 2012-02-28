@@ -18,7 +18,7 @@ namespace Wonga.QA.Framework.Helpers
             return (int)(nextWorkingDay.Subtract(fromDate.Value)).TotalDays;
         }
 
-        private static DateTime GetNextWorkingDay(DateTime date)
+        public static DateTime GetNextWorkingDay(DateTime date)
         {
             List<CalendarDateEntity> bankHolidays = GetBankHolidays(date, date.AddMonths(1));
 

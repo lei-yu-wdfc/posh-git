@@ -34,6 +34,11 @@ namespace Wonga.QA.Framework.Core
             return String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
         }
 
+        public static String GetEmailWithoutPlusChar()
+        {
+            return String.Format("qa.wonga.com{0}@gmail.com", Guid.NewGuid());
+        }
+
         public static String GetEmployerName()
         {
             return "Test:EmployedMask";
@@ -64,7 +69,12 @@ namespace Wonga.QA.Framework.Core
             return "0210000000";
         }
 
-		public static decimal GetLoanAmount()
+        public static String GetNationalNumber()
+        {
+            return "000000000";
+        }
+
+        public static decimal GetLoanAmount()
 		{
 			switch (Config.AUT)
 			{
