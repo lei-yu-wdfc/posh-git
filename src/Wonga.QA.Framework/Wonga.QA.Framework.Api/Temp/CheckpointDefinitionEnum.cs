@@ -12,7 +12,7 @@ namespace Wonga.QA.Framework.Api
         [Description("CIFAS fraud check")] CIFASFraudCheck,
         [Description("Hardware blacklist check")] Applicationdatablacklistcheck,
         [Description("Fraud list check")] FraudListCheck,
-        [Description("Bank account is valid")] BankAccountMatchesTheApplicant,
+		[Description("Bank account matches the applicant")]BankAccountMatchesTheApplicant,
         [Description("Credit bureau data is available")] CreditBureauDataIsAvailable,
         [Description("Date of birth is correct")] DateOfBirthIsCorrect,
         [Description("Applicant history is acceptable")] ApplicantHistoryIsAcceptable,
