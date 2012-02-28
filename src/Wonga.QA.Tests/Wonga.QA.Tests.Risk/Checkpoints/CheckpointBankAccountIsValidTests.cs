@@ -36,8 +36,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
             Application app = ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.ReadyToSign).Build();
 
-            Do.Until(() => RiskApiCheckpointTests.SingleCheckPointVerification(app, CheckpointStatus.Verified, CheckpointDefinitionEnum.BankAccountMatchesTheApplicant)
-                , TimeSpan.FromMinutes(10));//BankGateway timeout after 5 minutes in test mode.
+            Do.With().Timeout(10).Until(() => RiskApiCheckpointTests.SingleCheckPointVerification(app, CheckpointStatus.Verified, CheckpointDefinitionEnum.BankAccountMatchesTheApplicant));//BankGateway timeout after 5 minutes in test mode.
         }
 	}
 }
