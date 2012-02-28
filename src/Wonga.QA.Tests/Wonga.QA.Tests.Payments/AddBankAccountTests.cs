@@ -6,11 +6,13 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Msmq.Payments;
 using Wonga.QA.Tests.Core;
+using AddBankAccountCaCommand = Wonga.QA.Framework.Api.AddBankAccountCaCommand;
 
 namespace Wonga.QA.Tests.Payments
 {
-	[TestFixture]
+    [TestFixture]
 	public class AddBankAccountTests
 	{
 		private static int _lastAccountNumber = 100000000;
