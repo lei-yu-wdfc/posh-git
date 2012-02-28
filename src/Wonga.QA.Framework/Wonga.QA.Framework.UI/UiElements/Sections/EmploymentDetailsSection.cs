@@ -21,6 +21,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         private readonly IWebElement _monthlyIncome;
         private readonly IWebElement _nextPaydayDate;
         private readonly IWebElement _workPhone;
+        private readonly IWebElement _incomeFrequency;
         private readonly ReadOnlyCollection<IWebElement> _salaryPaidToBank;
 
         public string EmploymentStatus
@@ -31,6 +32,11 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         public string NextPayDate
         {
             set { _nextPaydayDate.SendValue(value); }
+        }
+
+        public string IncomeFrequency
+        {
+            set{_incomeFrequency.SelectOption(value);}
         }
 
         public bool SalaryPaidToBank
@@ -96,14 +102,15 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             _nextPaydayDate = Section.FindElement(By.CssSelector(Elements.Get.EmploymentDetailsSection.NextPaydayDate));
             _workPhone = Section.FindElement(By.CssSelector(Elements.Get.EmploymentDetailsSection.WorkPhone));
             _salaryPaidToBank = Section.FindElements(By.CssSelector(Elements.Get.EmploymentDetailsSection.SalaryPaidToBank));
+            _incomeFrequency = Section.FindElement(By.CssSelector(Elements.Get.EmploymentDetailsSection.IncomeFrequency));
             //switch (Config.AUT)
             //{
             //    case (AUT.Uk):
             //        {
-                        
+
             //            break;
             //        }
-                   
+
             //}
         }
     }

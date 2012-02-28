@@ -18,5 +18,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Sections
         public String NextPaydayDate { get; set; }
         public String WorkPhone { get; set; }
         public String SalaryPaidToBank { get; set; }
+        public String IncomeFrequency { get; set; }
     }
 }

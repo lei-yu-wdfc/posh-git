@@ -29,6 +29,10 @@
   <AccountDetailsSection>
     <Legend>#account-setup</Legend>
   </AccountDetailsSection>
+
+  <DealDonePage>
+    <HeaderText>Application success</HeaderText>
+  </DealDonePage>
   
   <AddressDetailsPage>
     <FormId>#wonga-apply-lzero-form</FormId>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using MbUnit.Framework;
 using NHamcrest.Core;
 using OpenQA.Selenium;
@@ -42,7 +43,6 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             Assert.That(Headers, Is.Not(Has.Item<String>(Starts.With("Error"))));
 
             Content = Do.Until(() => Client.Driver.FindElement(By.Id("content-area")));
-
         }
     }
 }

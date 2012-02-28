@@ -17,7 +17,6 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public AcceptedPage(UiClient client) : base(client)
         {
-            Thread.Sleep(3000);
             _form = Content.FindElement(By.CssSelector(Elements.Get.AcceptedPage.FormId));
             switch(Config.AUT)
             {

@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Threading;
 using MbUnit.Framework;
 using NHamcrest.Core;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
 using Wonga.QA.Framework.UI.Mappings;
+using Timeout = Wonga.QA.Framework.Core.Timeout;
 
 namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
@@ -20,12 +22,13 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public IDecisionPage WaitFor<T>() where T : IDecisionPage
         {
             //NOTE: Is this working??
-            Do.Until(() => !(Source.Contains(Elements.Get.ProcessingPage.ProcessingText)), TimeSpan.FromMinutes(5));
+            //Do.Until(() => !(Source.Contains(Elements.Get.ProcessingPage.ProcessingText)), TimeSpan.FromMinutes(5));
+            
             if (typeof(T) == typeof(AcceptedPage))
-                return new AcceptedPage(Client);
+                return Do.Until(() => new AcceptedPage(Client), Timeout.TwoMinutes);
 
             if (typeof(T) == typeof(DeclinedPage))
-                return new DeclinedPage(Client);
+                return Do.Until(() => new DeclinedPage(Client), Timeout.TwoMinutes);
             throw new NotImplementedException();
         }
     }

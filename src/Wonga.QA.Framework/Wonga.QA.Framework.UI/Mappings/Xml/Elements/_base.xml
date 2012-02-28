@@ -4,6 +4,10 @@
     <Legend>#pin-verification</Legend>
     <Pin>#edit-pin</Pin>
   </MobilePinVerificationSection>
+
+  <DeclinedPage>
+    <HeaderText>Application declined</HeaderText>
+  </DeclinedPage>
   
   <AddressDetailsPage>
     <FormId>#wonga-apply-lzero-form</FormId>
@@ -106,6 +110,7 @@
     <MonthlyIncome>#edit-monthly-income</MonthlyIncome>
     <NextPaydayDate>#edit-next-payday-datepicker-popup-0</NextPaydayDate>
     <WorkPhone>#edit-work-phone</WorkPhone>
+    <IncomeFrequency>#edit-income-frequency</IncomeFrequency>
     <SalaryPaidToBank>input[type="radio"][name="salary_to_bank"]</SalaryPaidToBank>
   </EmploymentDetailsSection>
 
