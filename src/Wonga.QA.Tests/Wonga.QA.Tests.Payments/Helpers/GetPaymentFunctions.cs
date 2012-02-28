@@ -4,12 +4,14 @@ using System.Linq;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Db.Payments;
+using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Tests.Payments.Enums;
 
 namespace Wonga.QA.Tests.Payments.Helpers
 {
     public static class GetPaymentFunctions
     {
+        private const string VariableInterestRateEnabled = "Payments.VariableInterestRateEnabled";
 
         public static decimal GetMonthlyInterestRateForGivenDay(int day, bool loanInArrears = false)
         {
@@ -42,7 +44,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
             return
                 Convert.ToBoolean(
-                    Driver.Db.Ops.ServiceConfigurations.Single(v => v.Key == "VariableInterestRateEnabled").Value);
+                    Driver.Db.Ops.ServiceConfigurations.Single(v => v.Key == VariableInterestRateEnabled).Value);
         }
 
         public static List<VariableInterestRateDetailEntity> GetVariableRatesFromApiResponse(ApiResponse response)
@@ -77,7 +79,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             var applicationId = GetApplicationId(applicationGuid);
             return
                 Driver.Db.Payments.Transactions.Where(
-                    a => a.ApplicationId == applicationId && a.Type == PaymentTransactionType.Interest.ToString()).ToList();
+                    a => a.ApplicationId == applicationId && a.Type == PaymentTransactionType.InterestRate.ToString()).ToList();
         }
 
         public static int GetApplicationId(Guid applicationGuid)
@@ -130,7 +132,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             while (counter <= loanTerm)
             {
                 expectedRates.Add(CreatePaymentFunctions.CreateRowOfTypeTransaction());
-                //expectedRates.Last().PostedOn = GetNextWorkingDate(DateTime.Today).AddDays(counter - 1);
+                expectedRates.Last().PostedOn = DateHelper.GetNextWorkingDay(DateTime.Today).AddDays(counter - 1);
                 expectedRates.Last().Mir = GetMonthlyInterestRateForGivenDay(counter);
                 counter++;
             }

@@ -9,21 +9,6 @@ namespace Wonga.QA.Tests.Payments.Helpers
 {
     public static class TimeoutPaymentFunctions
     {
-        public static void TimeoutFixedTermLoanAndSchedInterest(Guid applicationGuid)
-        {
-            //Timeout ScheduledPostAccruedInterestSaga to calculate the interest
-            var accruedInterest = Driver.Db.OpsSagas.ScheduledPostAccruedInterestSagaEntities.Single(a => a.ApplicationGuid == applicationGuid).Id;
-            Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = accruedInterest });
-
-            var app = Driver.Db.Payments.Applications.Single(a => a.ExternalId == applicationGuid).ApplicationId;
-            Do.With().Timeout(10).Until(() => Driver.Db.Payments.Transactions.Single(a => (a.Type == PaymentTransactionType.Interest.ToString() && a.ApplicationId == app)));
-
-            // Timout FixedTerm Loan Saga
-            var sagaId = Driver.Db.OpsSagas.FixedTermLoanSagaEntities.Single(a => a.ApplicationGuid == applicationGuid).Id;
-            Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = sagaId, Expires = DateTime.Today });
-
-        }
-
         public static Guid TimeoutScheduledPayment(Guid applicationGuid)
         {
             var sagaId = Driver.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(a => a.ApplicationGuid == applicationGuid);
