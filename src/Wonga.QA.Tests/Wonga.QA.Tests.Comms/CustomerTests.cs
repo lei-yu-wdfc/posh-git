@@ -434,7 +434,7 @@ namespace Wonga.QA.Tests.Comms
                                                                   }));
         }
 
-        [Test, AUT(AUT.Uk, AUT.Ca), JIRA("UK-850")]
+        [Test, AUT(AUT.Uk), JIRA("UK-850")]
         public void CreateCustomerTwice()
         {
             String forename = Data.RandomString(4, 8);
@@ -457,7 +457,7 @@ namespace Wonga.QA.Tests.Comms
             Assert.Contains(error.Message, "Comms_Customer_Recognised");
         }
 
-        [Test, AUT(AUT.Uk, AUT.Ca), JIRA("UK-850")]
+        [Test, AUT(AUT.Uk), JIRA("UK-850")]
         public void CreateSameCustomerTwiceInverseCaseOnSurnameAndForename()
         {
             String forename = Data.RandomString(4, 8);
@@ -480,7 +480,7 @@ namespace Wonga.QA.Tests.Comms
             Assert.Contains(error.Message, "Comms_Customer_Recognised");
         }
 
-        [Test, AUT(AUT.Uk, AUT.Ca), JIRA("UK-850")]
+        [Test, AUT(AUT.Uk), JIRA("UK-850")]
         public void CreateSimilarCustomerDiffForename()
         {
             String forename = Data.RandomString(4, 8);
@@ -500,7 +500,7 @@ namespace Wonga.QA.Tests.Comms
                 .Build();
         }
 
-        [Test, AUT(AUT.Uk, AUT.Ca), JIRA("UK-850")]
+        [Test, AUT(AUT.Uk), JIRA("UK-850")]
         public void CreateSimilarCustomerSoundexOnSurname()
         {
             String forename = Data.RandomString(4, 8);
@@ -525,7 +525,7 @@ namespace Wonga.QA.Tests.Comms
             Assert.Contains(error.Message, "Comms_Customer_Recognised");
         }
 
-        [Test, AUT(AUT.Uk, AUT.Ca), JIRA("UK-850")]
+        [Test, AUT(AUT.Uk), JIRA("UK-850")]
         public void CreateTwoCustomersSameEmail()
         {
             String email = Data.GetEmail();
@@ -542,7 +542,7 @@ namespace Wonga.QA.Tests.Comms
             Assert.Contains(error.Message, "Ops_Login_AlreadyExists,Comms_Email_Recognised");
         }
 
-        [Test, AUT(AUT.Uk, AUT.Ca), JIRA("UK-850")]
+        [Test, AUT(AUT.Uk), JIRA("UK-850")]
         public void CreateTwoCustomersSameEmailInvertedCase()
         {
             String email = Data.GetEmail();
