@@ -38,6 +38,7 @@
     <Compile Include="FixedTermLoanExtensionTests.cs" />
     <Compile Include="FixedTermLoanOfferTests.cs" />
     <Compile Include="FixedTermLoanTopUpTests.cs" />
+    <Compile Include="GetApplicationSummaryTests.cs" />
     <Compile Include="Helpers\ConfigurationFunctions.cs" />
     <Compile Include="BusinessAccountSummaryTests.cs" />
     <Compile Include="Helpers\CreatePaymentFunctions.cs" />
