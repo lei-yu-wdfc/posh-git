@@ -35,6 +35,7 @@
     <Compile Include="AddBankAccountTests.cs" />
     <Compile Include="CreateApplicationTests.cs" />
     <Compile Include="Enums\PaymentTransactionType.cs" />
+    <Compile Include="ExtraPaymentsTests.cs" />
     <Compile Include="FixedTermLoanExtensionTests.cs" />
     <Compile Include="FixedTermLoanOfferTests.cs" />
     <Compile Include="FixedTermLoanTopUpTests.cs" />

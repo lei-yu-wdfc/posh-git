@@ -5,7 +5,6 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Db.OpsSagas;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
@@ -15,76 +14,41 @@ namespace Wonga.QA.Tests.Payments
     [TestFixture, AUT(AUT.Wb)]
     public class RepaymentTests
     {
+        private BusinessApplication applicationInfo;
+        [SetUp]
+        public void Setup()
+        {
+            var customer = CustomerBuilder.New().Build();
+            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
+            applicationInfo = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build() as BusinessApplication;
+        }
+
         /// <summary>
         /// http://jira.wonga.com/browse/SME-808
         /// SME-808 test 4
         /// </summary>
-        [Test, JIRA("SME-1018,SME-808,SME-809")]
-        public void PaymentsShouldCreateNewTransacionWhenFirstCollectionAttemptSucceeds()
+        [Test, JIRA("SME-1018","SME-808", "SME-809")]
+        public void PaymentsShouldCreateNewTransactionWhenFirstCollectionAttemptSucceeds()
         {
-            var customer = CustomerBuilder.New().Build();
-            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
+            var paymentPlan = applicationInfo.GetPaymentPlan();
 
-            var applicationInfo = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
-
-            var paymentPlan = GetPaymentPlan(applicationInfo);
-
-            SuccessfullyCollectMoney(paymentPlan, applicationInfo);
-        }
-
-        private static void SuccessfullyCollectMoney(PaymentPlanEntity paymentPlan, Application applicationInfo)
-        {
-            var paymentSchedulingSaga =
-                Driver.Db.OpsSagas.PaymentSchedulingSagaEntities.Single(
-                    s => s.ApplicationExternalId == applicationInfo.Id);
-
-            Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = paymentSchedulingSaga.Id });
-
-            Do.Until(() => Driver.Db.Payments.Transactions.Single(t => t.ApplicationEntity.ExternalId == applicationInfo.Id
-                                                                       && t.Amount == paymentPlan.RegularAmount
-                                                                       &&
-                                                                       t.Type == PaymentTransactionEnum.CardPayment.ToString()));
-        }
-
-        private static PaymentPlanEntity GetPaymentPlan(Application applicationInfo)
-        {
-            return Do.Until(() => Driver.Db.Payments.PaymentPlans.Single(pp => pp.ApplicationEntity.ExternalId == applicationInfo.Id));
+            applicationInfo.SuccessfullyCollectMoney(paymentPlan);
         }
 
         /// <summary>
         /// http://jira.wonga.com/browse/SME-808
         /// SME-808 test 6
         /// </summary>
-        [Test, JIRA("SME-1018,SME-809")]
-        public void PaymentsShouldCreateNewTransacionWhenSecondCollectionAttemptSucceeds()
+        [Test, JIRA("SME-1018","SME-809")]
+        public void PaymentsShouldCreateNewTransactionWhenSecondCollectionAttemptSucceeds()
         {
-            // Start application
-            var customer = CustomerBuilder.New().Build();
-            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var applicationInfo = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+            applicationInfo.GetPaymentPlan();
 
-            var paymentPlan = GetPaymentPlan(applicationInfo);
+            applicationInfo.FailToCollectMoney();
 
-            PaymentSchedulingSagaEntity paymentSchedulingSaga;
-
-            FailToCollectMoney(paymentPlan, applicationInfo);
-
-            // Change amount back to 700, both for the payent plan and both sagas
             var businessLoansScheduledPaymentsSaga =
                 Do.Until(() => Driver.Db.OpsSagas.BusinessLoanScheduledPaymentSagaEntities.Single(
                     s => s.ApplicationGuid == applicationInfo.Id));
-
-            businessLoansScheduledPaymentsSaga.Amount = 700;
-            businessLoansScheduledPaymentsSaga.Submit();
-            paymentPlan.RegularAmount = 700;
-            paymentPlan.Submit();
-
-            paymentSchedulingSaga =
-                Driver.Db.OpsSagas.PaymentSchedulingSagaEntities.Single(
-                    s => s.ApplicationExternalId == applicationInfo.Id);
-
-            paymentSchedulingSaga.RequestedAmount = 700;
-            paymentSchedulingSaga.Submit();
 
             // Initialise repeated collection
             Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = businessLoansScheduledPaymentsSaga.Id });
@@ -95,59 +59,26 @@ namespace Wonga.QA.Tests.Payments
                                                                     && t.Type == PaymentTransactionEnum.CardPayment.ToString()));
         }
 
-        private static void FailToCollectMoney(PaymentPlanEntity paymentPlan, Application applicationInfo)
+        [Test, JIRA("SME-1018","SME-812","SME-809")]
+        public void PaymentsShouldNotCreateNewTransactionWhenSecondCollectionAttemptFails()
         {
-            var paymentSchedulingSaga =
-                Driver.Db.OpsSagas.PaymentSchedulingSagaEntities.Single(
-                    s => s.ApplicationExternalId == applicationInfo.Id);
+            applicationInfo.GetPaymentPlan();
+            applicationInfo.FailToCollectMoney(false);
 
-            // Change amount to 13, which will be refused by the mock
-            paymentPlan.RegularAmount = 13;
-            paymentPlan.Submit();
-
-            // Start collection
-            Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = paymentSchedulingSaga.Id });
-
-            // Wait for the first attempt to fail
-            Thread.Sleep(30000);
-        }
-
-        [Test, JIRA("SME-1018,SME-812,SME-809"), Pending("DefaultCharge transaction not being created yet")]
-        public void PaymentsShouldNowCreateNewTransacionWhenSecondCollectionAttemptFails()
-        {
-            // Setup application
-            var customer = CustomerBuilder.New().Build();
-            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var applicationInfo = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
-
-            // Change the amout to 13, which will be refused by the mock
-            var paymentPlan = GetPaymentPlan(applicationInfo);
-            FailToCollectMoney(paymentPlan, applicationInfo);
-
-            var businessLoansScheduledPaymentsSaga =
-                Do.Until(() => Driver.Db.OpsSagas.BusinessLoanScheduledPaymentSagaEntities.Single(
-                    s => s.ApplicationGuid == applicationInfo.Id));
-
-            // Trigger repeated collection
-            Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = businessLoansScheduledPaymentsSaga.Id });
+            applicationInfo.SecondCollectionAttempt();
 
             // Check that no transactions have been written to DB
-            Thread.Sleep(30000);
+            Thread.Sleep(15000);
             Assert.IsNull(Driver.Db.Payments.Transactions.SingleOrDefault(t => t.ApplicationEntity.ExternalId == applicationInfo.Id
                                                                     && t.Type == PaymentTransactionEnum.CardPayment.ToString()));
             Assert.IsNotNull(Driver.Db.Payments.Transactions.SingleOrDefault(t => t.ApplicationEntity.ExternalId == applicationInfo.Id
                                                                     && t.Type == PaymentTransactionEnum.DefaultCharge.ToString()));
         }
 
-        [Test, JIRA("SME-808,SME-809")]
+        [Test, JIRA("SME-808","SME-809")]
         public void PaymentsShouldCreateRepaymentPlanWhenLoanIsApproved()
         {
-            // Setup application
-            var customer = CustomerBuilder.New().Build();
-            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var applicationInfo = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
-
-            GetPaymentPlan(applicationInfo);
+            applicationInfo.GetPaymentPlan();
         }
 
         /// <summary>
@@ -160,21 +91,16 @@ namespace Wonga.QA.Tests.Payments
         /// When the money collection is successful 
         /// Then update the account balance 
         /// </summary>
-        [Test, JIRA("SME-808,SME-809")]
+        [Test, JIRA("SME-808","SME-809")]
         public void PaymentsShouldUpdateAccountBalanceWhenCollectionIsSuccessful()
         {
-            // Setup application
-            var customer = CustomerBuilder.New().Build();
-            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var applicationInfo = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
-
-            var paymentPlan = GetPaymentPlan(applicationInfo);
+            var paymentPlan = applicationInfo.GetPaymentPlan();
 
             var accountId = Do.Until(() => Driver.Db.Payments.AccountsApplications.Single(a => a.ApplicationEntity.ExternalId == applicationInfo.Id).AccountId);
 
             var initialBalance = GetTotalOutstandingAmount(accountId);
 
-            SuccessfullyCollectMoney(paymentPlan, applicationInfo);
+            applicationInfo.SuccessfullyCollectMoney(paymentPlan);
 
             var balanceAfterTx = GetTotalOutstandingAmount(accountId);
 

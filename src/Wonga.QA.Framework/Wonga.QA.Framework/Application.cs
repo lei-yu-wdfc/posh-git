@@ -98,7 +98,7 @@ namespace Wonga.QA.Framework
 			Do.While(ftl.Refresh);
 		}
 
-		public Application PutApplicationIntoArrears()
+        public virtual Application PutApplicationIntoArrears()
 		{
 			ApplicationEntity application = Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id);
 
@@ -111,12 +111,12 @@ namespace Wonga.QA.Framework
 			{
 				Driver.Msmq.Payments.Send(new ProcessScheduledPaymentCommand { ApplicationId = application.ApplicationId });
 			}
-			else
-			{
-				FixedTermLoanSagaEntity ftl = Driver.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
-				Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
-				Do.While(ftl.Refresh);
-			}
+            else
+            {
+                FixedTermLoanSagaEntity ftl = Driver.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
+                Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
+                Do.While(ftl.Refresh);
+            }
 
 			ScheduledPaymentSagaEntity sp =
 				Do.Until(() => Driver.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationGuid == Id));
@@ -217,6 +217,11 @@ namespace Wonga.QA.Framework
 			var duration = new TimeSpan(absoluteDays, 0, 0, 0);
 
 			RewindApplicationDates(application, duration);
+        }
+
+        public PaymentPlanEntity GetPaymentPlan()
+        {
+            return Do.Until(() => Driver.Db.Payments.PaymentPlans.Single(pp => pp.ApplicationEntity.ExternalId == Id && pp.CanceledOn == null));
 		}
 		private static void RewindApplicationDates(ApplicationEntity application, TimeSpan span)
 		{
