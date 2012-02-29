@@ -23,14 +23,15 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		}
 
         [Test, AUT(AUT.Za)]
-        [Explicit]
+        [Ignore("Timeout too big - 10 minutes")]
         public void AhvCheckSuccessfulWhenBGInTestModeTest()
         {
             Customer cust = CustomerBuilder.New().WithEmployer(TestMask).Build();
-
             Application app = ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.ReadyToSign).Build();
 
-            Do.With().Timeout(10).Until(() => RiskApiCheckpointTests.SingleCheckPointVerification(app, CheckpointStatus.Verified, CheckpointDefinitionEnum.BankAccountIsValid));//BankGateway timeout after 5 minutes in test mode.
+            //Do.With().Timeout(10).Until(() => RiskApiCheckpointTests.SingleCheckPointVerification(app, CheckpointStatus.Verified, CheckpointDefinitionEnum.BankAccountIsValid));//BankGateway timeout after 5 minutes in test mode.
+            var listOfCheckpoints = Do.With().Timeout(10).Until(() =>Application.GetExecutedCheckpointDefinitions(app.Id, CheckpointStatus.Verified));
+            Assert.Contains(listOfCheckpoints, Data.EnumToString(CheckpointDefinitionEnum.UserAssistedFraudCheck));
         }
 	}
 }

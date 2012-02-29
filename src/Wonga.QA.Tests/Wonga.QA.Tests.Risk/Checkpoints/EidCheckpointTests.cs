@@ -26,9 +26,8 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             Application lNApp = ApplicationBuilder.New(cust).WithIovationBlackBox("Allow")
                .WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
 
-            Assert.IsTrue(RiskApiCheckpointTests.SingleCheckPointVerification(lNApp, CheckpointStatus.Verified,
-                                                                              CheckpointDefinitionEnum.
-                                                                                  UserAssistedFraudCheck));
+            //Assert.IsTrue(RiskApiCheckpointTests.SingleCheckPointVerification(lNApp, CheckpointStatus.Verified,CheckpointDefinitionEnum.UserAssistedFraudCheck));
+            Assert.Contains(Application.GetExecutedCheckpointDefinitions(lNApp.Id, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.UserAssistedFraudCheck));
         }
     }
 }

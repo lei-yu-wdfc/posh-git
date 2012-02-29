@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
+using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Db.Ops;
@@ -9,105 +11,94 @@ using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Framework.Msmq.Payments;
+using Wonga.QA.Framework.Db.Risk;
 
 namespace Wonga.QA.Framework
 {
-    public class Application
-    {
-        public Guid Id { get; set; }
-        public Guid BankAccountId { get; set; }
-        public decimal LoanAmount { get; set; }
-        public int LoanTerm { get; set; }
+	public class Application
+	{
+		public Guid Id { get; set; }
+		public Guid BankAccountId { get; set; }
+		public decimal LoanAmount { get; set; }
+		public int LoanTerm { get; set; }
 
-        public Application()
-        {
-        }
+		public Application()
+		{
+		}
 
-        public Application(Guid id)
-        {
-            Id = id;
-        }
+		public Application(Guid id)
+		{
+			Id = id;
+		}
 
-        public bool IsClosed
-        {
-            get { return Driver.Db.Payments.Applications.Single(a=> a.ExternalId == Id).ClosedOn.HasValue; }
-        }
+		public bool IsClosed
+		{
+			get { return Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).ClosedOn.HasValue; }
+		}
 
-    	public Guid AccountId
-    	{
-    		get { return Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).AccountId; }
-    	}
+		public Guid AccountId
+		{
+			get { return Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).AccountId; }
+		}
 
-        public Customer GetCustomer()
-        {
-        	return new Customer(
+		public Customer GetCustomer()
+		{
+			return new Customer(
 				Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).AccountId,
-				Driver.Db.Comms.CustomerDetails.Single( cd => cd.AccountId == AccountId).Email,
+				Driver.Db.Comms.CustomerDetails.Single(cd => cd.AccountId == AccountId).Email,
 				Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == Id).BankAccountsBaseEntity.ExternalId);
-        }
+		}
 
-        public Application RepayOnDueDate()
-        {
-            ApplicationEntity application = Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id);
+		public Application RepayOnDueDate()
+		{
+			ApplicationEntity application = Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id);
 
-            MakeDueToday(application);
+			MakeDueToday(application);
 
         	var transactionAmount = GetBalance();
 
-            ServiceConfigurationEntity testmode = Driver.Db.Ops.ServiceConfigurations.SingleOrDefault(e => e.Key == "BankGateway.IsTestMode");
-            if (testmode == null || !Boolean.Parse(testmode.Value))
-            {
-                var utcNow = DateTime.UtcNow;
+			ServiceConfigurationEntity testmode = Driver.Db.Ops.ServiceConfigurations.SingleOrDefault(e => e.Key == "BankGateway.IsTestMode");
+			if (testmode == null || !Boolean.Parse(testmode.Value))
+			{
+				var utcNow = DateTime.UtcNow;
 
-                ScheduledPaymentSagaEntity sp = Do.Until(() => Driver.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationGuid == Id));
+				ScheduledPaymentSagaEntity sp = Do.Until(() => Driver.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationGuid == Id));
                 Driver.Msmq.Payments.Send(new PaymentTakenCommand { SagaId = sp.Id, ValueDate = utcNow, CreatedOn = utcNow,  ApplicationId = Id, TransactionAmount = GetBalance()});
-                Do.While(sp.Refresh);
-            }
+				Do.While(sp.Refresh);
+			}
 
             TransactionEntity transaction = Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).Transactions.Single(t => (PaymentTransactionScopeEnum)t.Scope == PaymentTransactionScopeEnum.Credit && t.Amount == -transactionAmount));
 
-            CloseApplicationSagaEntity ca = Do.Until(() => Driver.Db.OpsSagas.CloseApplicationSagaEntities.Single(s => s.TransactionId == transaction.ExternalId));
-            Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = ca.Id});
-            Do.While(ca.Refresh);
+			CloseApplicationSagaEntity ca = Do.Until(() => Driver.Db.OpsSagas.CloseApplicationSagaEntities.Single(s => s.TransactionId == transaction.ExternalId));
+			Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = ca.Id });
+			Do.While(ca.Refresh);
 
-            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).ClosedOn);
+			Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).ClosedOn);
 
-            return this;
-        }
+			return this;
+		}
 
-        public Application MakeDueToday()
-        {
-            ApplicationEntity application = Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id);
+		public Application MakeDueToday()
+		{
+			ApplicationEntity application = Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id);
 
-            MakeDueToday(application);
+			MakeDueToday(application);
 
-            return this;
-        }
+			return this;
+		}
 
-        public void MakeDueToday(ApplicationEntity application)
-        {
-            TimeSpan span = application.FixedTermLoanApplicationEntity.NextDueDate.Value - DateTime.Today;
+		public void MakeDueToday(ApplicationEntity application)
+		{
+			TimeSpan span = application.FixedTermLoanApplicationEntity.NextDueDate.Value - DateTime.Today;
 
-            RewindApplicationDates(application, span);
+			RewindApplicationDates(application, span);
 
-            FixedTermLoanSagaEntity ftl = Driver.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
-            Driver.Msmq.Payments.Send(new TimeoutMessage {SagaId = ftl.Id});
-            Do.While(ftl.Refresh);
-        }
+			FixedTermLoanSagaEntity ftl = Driver.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
+			Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
+			Do.While(ftl.Refresh);
+		}
 
-        private static void RewindApplicationDates(ApplicationEntity application, TimeSpan span)
-        {
-            application.ApplicationDate -= span;
-            application.SignedOn -= span;
-            application.CreatedOn -= span;
-            application.AcceptedOn -= span;
-            application.FixedTermLoanApplicationEntity.PromiseDate -= span;
-            application.FixedTermLoanApplicationEntity.NextDueDate -= span;
-            application.Transactions.ForEach(t => t.PostedOn -= span);
-            application.Submit();
-        }
-
-        public Application PutApplicationIntoArrears()
+		public Application PutApplicationIntoArrears()
 		{
 			ApplicationEntity application = Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id);
 
@@ -116,7 +107,7 @@ namespace Wonga.QA.Framework
 			application.FixedTermLoanApplicationEntity.NextDueDate -= span;
 			application.Submit();
 
-            if (Config.AUT == AUT.Uk)
+			if (Config.AUT == AUT.Uk)
 			{
 				Driver.Msmq.Payments.Send(new ProcessScheduledPaymentCommand { ApplicationId = application.ApplicationId });
 			}
@@ -141,62 +132,102 @@ namespace Wonga.QA.Framework
 		{
 			return
 				new DbDriver().Payments.Applications.Single(a => a.ExternalId == Id).Transactions.Where(
-					a => a.Scope != (decimal) PaymentTransactionScopeEnum.Other).Sum(a => a.Amount);
+					a => a.Scope != (decimal)PaymentTransactionScopeEnum.Other).Sum(a => a.Amount);
 		}
 
-        public Application RepayEarly(decimal amount, int dayOfLoanToMakeRepayment)
-        {
-            int daysUntilStartOfLoan = 0;
+		public Application RepayEarly(decimal amount, int dayOfLoanToMakeRepayment)
+		{
+			int daysUntilStartOfLoan = 0;
 
-            if (Config.AUT == AUT.Ca)
-            {
-                daysUntilStartOfLoan = DateHelper.GetNumberOfDaysUntilStartOfLoanForCa();
-            }
+			if (Config.AUT == AUT.Ca)
+			{
+				daysUntilStartOfLoan = DateHelper.GetNumberOfDaysUntilStartOfLoanForCa();
+			}
 
-            int daysToRewind = daysUntilStartOfLoan + dayOfLoanToMakeRepayment - 1;
+			int daysToRewind = daysUntilStartOfLoan + dayOfLoanToMakeRepayment - 1;
 
-            Rewind(daysToRewind);
+			Rewind(daysToRewind);
 
-            Guid repaymentRequestId = Guid.NewGuid();
+			Guid repaymentRequestId = Guid.NewGuid();
 
-            Driver.Msmq.Payments.Send(new RepayLoanInternalViaBankCommand
-            {
-                Amount = amount,
-                ApplicationId = Id,
-                CashEntityId = BankAccountId,
-                RepaymentRequestId = repaymentRequestId
-            });
+			Driver.Msmq.Payments.Send(new RepayLoanInternalViaBankCommand
+			{
+				Amount = amount,
+				ApplicationId = Id,
+				CashEntityId = BankAccountId,
+				RepaymentRequestId = repaymentRequestId
+			});
 
-            ServiceConfigurationEntity testmode = Driver.Db.Ops.ServiceConfigurations.SingleOrDefault(e => e.Key == "BankGateway.IsTestMode");
+			ServiceConfigurationEntity testmode = Driver.Db.Ops.ServiceConfigurations.SingleOrDefault(e => e.Key == "BankGateway.IsTestMode");
 
-            if (testmode == null || !Boolean.Parse(testmode.Value))
-            {
-                var utcNow = DateTime.UtcNow;
+			if (testmode == null || !Boolean.Parse(testmode.Value))
+			{
+				var utcNow = DateTime.UtcNow;
 
-                Int32 applicationid =
-                    Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).ApplicationId;
+				Int32 applicationid =
+					Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).ApplicationId;
 
-                RepaymentSagaEntity sp = Do.Until(() => Driver.Db.OpsSagas.RepaymentSagaEntities.Single(s => s.ApplicationId == applicationid));
-                Driver.Msmq.Payments.Send(new PaymentTakenCommand { SagaId = sp.Id, ValueDate = utcNow, CreatedOn = utcNow });
-                Do.While(sp.Refresh);
-            }
+				RepaymentSagaEntity sp = Do.Until(() => Driver.Db.OpsSagas.RepaymentSagaEntities.Single(s => s.ApplicationId == applicationid));
+				Driver.Msmq.Payments.Send(new PaymentTakenCommand { SagaId = sp.Id, ValueDate = utcNow, CreatedOn = utcNow });
+				Do.While(sp.Refresh);
+			}
 
-            return this;
-        }
+			return this;
+		}
 
-        private void Rewind(int absoluteDays)
-        {
-            // Rewinds a Loans Dates
-            ApplicationEntity application = Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id);
+		/// <summary>
+		/// This method returns a list of checkpoints that were executed for a given applicationid and an optional array of statuses.
+		/// </summary>
+		/// <param name="applicationId">The GUID of the application</param>
+		/// <param name="expectedStatus">Optional:The expected status</param>
+		/// <returns>Returns a list of CheckpointDefinitions.Name</returns>
+		public static List<String> GetExecutedCheckpointDefinitions(Guid applicationId, params CheckpointStatus[] expectedStatus)
+		{
+			var db = new DbDriver();
+			var riskApplicationEntity = db.Risk.RiskApplications.SingleOrDefault(r => r.ApplicationId == applicationId);
+			var executedCheckpoints = new List<string>();
 
-            if (application.FixedTermLoanApplicationEntity.NextDueDate == null)
-            {
-                throw new Exception("Rewind: FixedTermLoanApplication.NextDueDate is null");
-            }
+			if (riskApplicationEntity != null)
+			{
+				var executedCheckpointIds = expectedStatus.Any()
+												 ? db.Risk.WorkflowCheckpoints.Where(
+													 p =>
+													 p.RiskApplicationId == riskApplicationEntity.RiskApplicationId &&
+													 expectedStatus.Contains((CheckpointStatus) p.CheckpointStatus)).Select(
+														 p => p.CheckpointDefinitionId).ToList()
+												 : db.Risk.WorkflowCheckpoints.Where(
+													 p => p.RiskApplicationId == riskApplicationEntity.RiskApplicationId).
+													   Select(p => p.CheckpointDefinitionId).ToList();
+				executedCheckpoints.AddRange(db.Risk.CheckpointDefinitions.Where(p => executedCheckpointIds.Contains(p.CheckpointDefinitionId)).Select(p => p.Name));
+				return executedCheckpoints;
+			}
+			return executedCheckpoints;
+		}
 
-            var duration = new TimeSpan(absoluteDays, 0, 0, 0);
+		private void Rewind(int absoluteDays)
+		{
+			// Rewinds a Loans Dates
+			ApplicationEntity application = Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id);
 
-            RewindApplicationDates(application, duration);
-        }
-    }
+			if (application.FixedTermLoanApplicationEntity.NextDueDate == null)
+			{
+				throw new Exception("Rewind: FixedTermLoanApplication.NextDueDate is null");
+			}
+
+			var duration = new TimeSpan(absoluteDays, 0, 0, 0);
+
+			RewindApplicationDates(application, duration);
+		}
+		private static void RewindApplicationDates(ApplicationEntity application, TimeSpan span)
+		{
+			application.ApplicationDate -= span;
+			application.SignedOn -= span;
+			application.CreatedOn -= span;
+			application.AcceptedOn -= span;
+			application.FixedTermLoanApplicationEntity.PromiseDate -= span;
+			application.FixedTermLoanApplicationEntity.NextDueDate -= span;
+			application.Transactions.ForEach(t => t.PostedOn -= span);
+			application.Submit();
+		}
+	}
 }
