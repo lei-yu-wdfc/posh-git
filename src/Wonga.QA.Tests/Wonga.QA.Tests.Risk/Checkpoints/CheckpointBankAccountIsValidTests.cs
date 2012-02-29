@@ -19,13 +19,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		public void CheckpointBankAccountIsValidShouldReturnReadyToSignStatus()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
-
-			var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.ReadyToSign).Build();
-
-			var expectedRiskDecisionStatus = RiskDecisionStatus.Pending;
-			var actualRiskDecisionStatus = (RiskDecisionStatus) Driver.Db.Risk.RiskApplications.Single(a => a.ApplicationId == application.Id).Decision;
-
-			Assert.AreEqual(expectedRiskDecisionStatus, actualRiskDecisionStatus);
+			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.ReadyToSign).Build();
 		}
 
         [Test, AUT(AUT.Za)]

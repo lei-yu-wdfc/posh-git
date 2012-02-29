@@ -66,6 +66,16 @@ namespace Wonga.QA.Tests.Bi
 			WaitForTransactionExistsInBi(transaction);
 		}
 
+		[Test, AUT(AUT.Za)]
+		public void TransactionStoredInTableDirectBankPayment()
+		{
+			var typeName = "DirectBankPayment";
+			var customer = CustomerBuilder.New().Build();
+			var application = ApplicationBuilder.New(customer).Build().RepayOnDueDate();
+			var transaction = GetTransactionFromPayments(application, typeName);
+			WaitForTransactionExistsInBi(transaction);
+		}
+
 		#region Helpers
 
 		private TransactionEntity GetTransactionFromPayments(Application application, string type)
