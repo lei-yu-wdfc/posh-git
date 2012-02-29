@@ -23,8 +23,8 @@ namespace Wonga.QA.Tests.Comms
             var application = businessApplicationBuilder.Build();
 
             DoBuilder _do = new DoBuilder(new TimeSpan(0,2,0), new TimeSpan(0,0,20));
-            var emailCorrelationRecords = _do.Until(() => Driver.Db.Comms.EmailReturnLinkCorrelationWbUks.Count(p => p.OrganisationId == comp.Id) != 2);
-            var guarantorGuaranteesDocs = _do.Until(() => Driver.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.DocumentType == 12) != 2);
+            var emailCorrelationRecords = _do.Until(() => Driver.Db.Comms.EmailReturnLinkCorrelationWbUks.Count(p => p.OrganisationId == comp.Id) == 2);
+            var guarantorGuaranteesDocs = _do.Until(() => Driver.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.DocumentType == 2) != 2);
         }
     }
 }
