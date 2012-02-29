@@ -218,11 +218,6 @@ namespace Wonga.QA.Framework
 
 			RewindApplicationDates(application, duration);
         }
-
-        public PaymentPlanEntity GetPaymentPlan()
-        {
-            return Do.Until(() => Driver.Db.Payments.PaymentPlans.Single(pp => pp.ApplicationEntity.ExternalId == Id && pp.CanceledOn == null));
-		}
 		private static void RewindApplicationDates(ApplicationEntity application, TimeSpan span)
 		{
 			application.ApplicationDate -= span;

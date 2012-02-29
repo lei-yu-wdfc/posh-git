@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Db.ContactManagement;
 
 namespace Wonga.QA.Framework
 {
@@ -21,8 +20,6 @@ namespace Wonga.QA.Framework
 
         public override Application Build()
         {
-            SignupSecondaryDirectors();
-
             var requests = new List<ApiRequest>
             {
                 SubmitApplicationBehaviourCommand.New(r => r.ApplicationId = _id),
@@ -55,7 +52,7 @@ namespace Wonga.QA.Framework
             Do.Until(() => (ApplicationDecisionStatusEnum)Enum.Parse(typeof(ApplicationDecisionStatusEnum), Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["ApplicationDecisionStatus"].Single()) == _decision);
 
             if (_decision == ApplicationDecisionStatusEnum.Declined)
-                return new Application(_id);
+                return new BusinessApplication(_id);
 
             Driver.Api.Commands.Post( new SignBusinessApplicationWbUkCommand { AccountId = _customer.Id, ApplicationId = _id });
 
@@ -70,21 +67,7 @@ namespace Wonga.QA.Framework
                 return stopwatch.Elapsed < TimeSpan.FromSeconds(5);
             });
 
-            return new Application(_id);
+            return new BusinessApplication(_id);
         }
-
-        #region Helpers
-
-        public void SignupSecondaryDirectors()
-        {
-            var guarantors = Driver.Db.ContactManagement.DirectorOrganisationMappings.Where(entity => entity.OrganisationId == _company.Id && entity.DirectorLevel > 0);
-            foreach (DirectorOrganisationMappingEntity guarantor in guarantors)
-            {
-                CustomerBuilder sd = CustomerBuilder.New(guarantor.AccountId);
-                sd.Build();
-            }
-        }
-
-        #endregion
     }
 }

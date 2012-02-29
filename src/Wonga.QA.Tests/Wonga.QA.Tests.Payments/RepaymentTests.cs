@@ -32,7 +32,7 @@ namespace Wonga.QA.Tests.Payments
         {
             var paymentPlan = applicationInfo.GetPaymentPlan();
 
-            applicationInfo.SuccessfullyCollectMoney(paymentPlan);
+            applicationInfo.FirstCollectionAttempt(paymentPlan,false,true);
         }
 
         /// <summary>
@@ -44,14 +44,9 @@ namespace Wonga.QA.Tests.Payments
         {
             applicationInfo.GetPaymentPlan();
 
-            applicationInfo.FailToCollectMoney();
+            applicationInfo.FirstCollectionAttempt(null, false,false);
 
-            var businessLoansScheduledPaymentsSaga =
-                Do.Until(() => Driver.Db.OpsSagas.BusinessLoanScheduledPaymentSagaEntities.Single(
-                    s => s.ApplicationGuid == applicationInfo.Id));
-
-            // Initialise repeated collection
-            Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = businessLoansScheduledPaymentsSaga.Id });
+            applicationInfo.SecondCollectionAttempt(true);
 
             // Check that only one transaction has occured
             Do.Until(() => Driver.Db.Payments.Transactions.Single(t => t.ApplicationEntity.ExternalId == applicationInfo.Id
@@ -63,22 +58,22 @@ namespace Wonga.QA.Tests.Payments
         public void PaymentsShouldNotCreateNewTransactionWhenSecondCollectionAttemptFails()
         {
             applicationInfo.GetPaymentPlan();
-            applicationInfo.FailToCollectMoney(false);
+            applicationInfo.FirstCollectionAttempt(null, false,false);
 
-            applicationInfo.SecondCollectionAttempt();
+            applicationInfo.SecondCollectionAttempt(false);
 
-            // Check that no transactions have been written to DB
-            Thread.Sleep(15000);
+            // Check we have a default charge and that no transactions have been written to DB
+            Do.Until( () => Driver.Db.Payments.Transactions.SingleOrDefault(
+                    t => t.ApplicationEntity.ExternalId == applicationInfo.Id
+                         && t.Type == PaymentTransactionEnum.DefaultCharge.ToString()));
             Assert.IsNull(Driver.Db.Payments.Transactions.SingleOrDefault(t => t.ApplicationEntity.ExternalId == applicationInfo.Id
                                                                     && t.Type == PaymentTransactionEnum.CardPayment.ToString()));
-            Assert.IsNotNull(Driver.Db.Payments.Transactions.SingleOrDefault(t => t.ApplicationEntity.ExternalId == applicationInfo.Id
-                                                                    && t.Type == PaymentTransactionEnum.DefaultCharge.ToString()));
         }
 
         [Test, JIRA("SME-808","SME-809")]
         public void PaymentsShouldCreateRepaymentPlanWhenLoanIsApproved()
         {
-            applicationInfo.GetPaymentPlan();
+            Assert.IsNotNull(applicationInfo.GetPaymentPlan());
         }
 
         /// <summary>
@@ -100,7 +95,7 @@ namespace Wonga.QA.Tests.Payments
 
             var initialBalance = GetTotalOutstandingAmount(accountId);
 
-            applicationInfo.SuccessfullyCollectMoney(paymentPlan);
+            applicationInfo.FirstCollectionAttempt(paymentPlan,false,true);
 
             var balanceAfterTx = GetTotalOutstandingAmount(accountId);
 
