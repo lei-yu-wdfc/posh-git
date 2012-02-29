@@ -11,7 +11,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         private readonly IWebElement _pin;
 
         public MobilePinVerificationSection(BasePage page)
-            : base(Elements.Get.MobilePinVerificationSection.Legend, page)
+            : base(Elements.Get.MobilePinVerificationSection.Fieldset, page)
         {
             _pin = Section.FindElement(By.CssSelector(Elements.Get.MobilePinVerificationSection.Pin));
         }

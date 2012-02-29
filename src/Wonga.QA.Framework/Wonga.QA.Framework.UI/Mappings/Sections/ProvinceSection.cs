@@ -9,5 +9,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Sections
     {
         public string Fieldset { get; set; }
         public string Province { get; set; }
+        public string PopupCloseLink { get; set; }
     }
 }

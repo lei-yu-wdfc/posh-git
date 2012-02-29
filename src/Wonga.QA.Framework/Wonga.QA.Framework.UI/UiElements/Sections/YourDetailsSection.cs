@@ -36,7 +36,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         public String MaritalStatus { set { _maritalStatus.SelectOption(value); } }
         public String NumberOfDependants { set { _dependants.SelectOption(value); } }
 
-        public YourDetailsSection(BasePage page) : base(Elements.Get.YourDetailsSection.Legend, page)
+        public YourDetailsSection(BasePage page) : base(Elements.Get.YourDetailsSection.Fieldset, page)
         {
             switch (Config.AUT)
             {

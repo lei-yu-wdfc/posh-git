@@ -18,11 +18,16 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         private readonly IWebElement _accountNumber;
         private readonly IWebElement _bankPeriod;
         private readonly IWebElement _bankAccountType;
+        private readonly IWebElement _institutionNumber;
+        private readonly IWebElement _branchNumber;
 
         public String BankName { set { _bankName.SelectOption(value); } }
         public String AccountNumber { set { _accountNumber.SendValue(value); } }
         public String BankPeriod { set { _bankPeriod.SelectOption(value); } }
         public String BankAccountType { set { _bankAccountType.SelectOption(value); } }
+        public String InstitutionNumber{set{_institutionNumber.SendValue(value);}}
+        public String BranchNumber{set{_branchNumber.SendValue(value);}}
+
         public String SortCode
         {
             set
@@ -34,7 +39,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             }
         }
 
-        public BankAccountSection(BasePage page) : base(Elements.Get.BankAccountSection.Legend, page)
+        public BankAccountSection(BasePage page) : base(Elements.Get.BankAccountSection.Fieldset, page)
         {
             _bankName = Section.FindElement(By.CssSelector(Elements.Get.BankAccountSection.BankName));
             _accountNumber = Section.FindElement(By.CssSelector(Elements.Get.BankAccountSection.AccountNumber));
@@ -49,6 +54,11 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
                 case(AUT.Za):
                     _bankAccountType = Section.FindElement(By.CssSelector(Elements.Get.BankAccountSection.BankAccountType));
                     break;
+                case (AUT.Ca):
+                    _institutionNumber = Section.FindElement(By.CssSelector(Elements.Get.BankAccountSection.InstitutionNumber));
+                    _branchNumber = Section.FindElement(By.CssSelector(Elements.Get.BankAccountSection.BranchNumber));
+                    break;
+
             }
             
         }

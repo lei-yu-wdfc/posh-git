@@ -68,7 +68,7 @@
     </BusinessDebitCardPage>
 
     <AcceptedPage>
-      <FormId>#wonga-loan-approve-form</FormId>
+      <FormId>#vanilla-agreement-form</FormId>
       <AcceptBusinessLoan>#terms-accept .button</AcceptBusinessLoan>
       <AcceptGuarantorLoan>#guarantor-accept .button</AcceptGuarantorLoan>
       <SubmitButton>#edit-accept</SubmitButton>
@@ -86,7 +86,7 @@
     <!--SectionS SECTION-->
 
     <YourNameSection>
-      <Legend>fieldset[id="name"]</Legend>
+      <Fieldset>fieldset[id="name"]</Fieldset>
       <Title>#edit-title</Title>
       <FirstName>#edit-first-name</FirstName>
       <MiddleName>#edit-middle-name</MiddleName>
@@ -94,7 +94,7 @@
     </YourNameSection>
 
     <YourDetailsSection>
-      <Legend>fieldset[id="details"]</Legend>
+      <Fieldset>fieldset[id="details"]</Fieldset>
       <Dependants>#edit-dependants</Dependants>
       <Gender>input[type="radio"][name="gender"]</Gender>
       <DateOfBirthDay>#edit-date-of-birth-day</DateOfBirthDay>
@@ -105,7 +105,7 @@
     </YourDetailsSection>
 
     <ContactingYouSection>
-      <Legend>fieldset[id="contact"]</Legend>
+      <Fieldset>fieldset[id="contact"]</Fieldset>
       <Email>#edit-email</Email>
       <EmailConfirm>#edit-email-confirm</EmailConfirm>
       <HomePhone>#edit-home-phone</HomePhone>
@@ -113,7 +113,7 @@
     </ContactingYouSection>
 
     <DebitCardSection>
-      <Legend>#card-details</Legend>
+      <Fieldset>#card-details</Fieldset>
       <CardType>#edit-card-type</CardType>
       <CardNumber>#edit-card-number</CardNumber>
       <CardName>#edit-card-name</CardName>

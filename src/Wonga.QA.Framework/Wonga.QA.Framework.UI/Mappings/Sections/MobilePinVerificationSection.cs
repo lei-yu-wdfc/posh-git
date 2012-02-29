@@ -10,7 +10,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Sections
     /// </summary>
     public class MobilePinVerificationSection
     {
-        public String Legend { get; set; }
+        public String Fieldset { get; set; }
         public String Pin { get; set; }
     }
 }

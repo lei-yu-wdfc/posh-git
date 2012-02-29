@@ -17,7 +17,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         public String MiddleName { set { _middleName.SendValue(value); } }
         public String LastName { set { _lastName.SendValue(value); } }
 
-        public YourNameSection(BasePage page) : base(Elements.Get.YourNameSection.Legend, page)
+        public YourNameSection(BasePage page) : base(Elements.Get.YourNameSection.Fieldset, page)
         {
             _title = Section.FindElement(By.CssSelector(Elements.Get.YourNameSection.Title));
             _firstName = Section.FindElement(By.CssSelector(Elements.Get.YourNameSection.FirstName));

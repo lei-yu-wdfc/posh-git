@@ -10,7 +10,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Sections
     /// </summary>
     public class YourDetailsSection
     {
-        public String Legend { get; set; }
+        public String Fieldset { get; set; }
         public String IdNumber { get; set; }
         public String Dependants { get; set; }
         public String Gender { get; set; }

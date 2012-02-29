@@ -22,6 +22,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             switch(Config.AUT)
             {
                 case(AUT.Za):
+                case (AUT.Ca):
                     PinVerificationSection = new MobilePinVerificationSection(this);
                     break;
             }
@@ -35,6 +36,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                 case(AUT.Wb):
                     return new PersonalDebitCardPage(Client);
                 case(AUT.Za):
+                case (AUT.Ca):
                     return new ProcessingPage(Client);
                 default:
                     throw new NotImplementedException();

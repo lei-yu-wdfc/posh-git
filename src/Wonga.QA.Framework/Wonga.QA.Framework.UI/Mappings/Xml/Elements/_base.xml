@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Elements>
   <MobilePinVerificationSection>
-    <Legend>#pin-verification</Legend>
+    <Fieldset>#pin-verification</Fieldset>
     <Pin>#edit-pin</Pin>
   </MobilePinVerificationSection>
 
@@ -19,6 +19,7 @@
     <Postcode>#edit-postcode</Postcode>
     <AddressPeriod>#edit-address-period</AddressPeriod>
     <NextButton>#edit-submit</NextButton>
+    <PostOfficeBox>#edit-pobox-ca</PostOfficeBox>
   </AddressDetailsPage>
   
   <PersonalBankAccountDetailsPage>
@@ -39,17 +40,26 @@
     <AgreementConfirm>#edit-agreement-confirm</AgreementConfirm>
     <DirectDebitConfirm>#edit-direct-debit-confirm</DirectDebitConfirm>
     <SubmitButton>#edit-accept</SubmitButton>
+    <Initials1>#edit-initials</Initials1>
+    <Initials2>#edit-initials2</Initials2>
+    <Initials3>#edit-initials3</Initials3>
+    <Signature>#edit-signature</Signature>
+    <DateOfAgreement>#edit-date-of-agreement-ca-datepicker-popup-0</DateOfAgreement>
+    <ContinueTermsButton>#edit-continue-terms</ContinueTermsButton>
+    <ContinueDirectDebitButton>#edit-continue-debit</ContinueDirectDebitButton>
   </AcceptedPage>
   
   <BankAccountSection>
-    <Legend>#bank-1</Legend>
+    <Fieldset>#bank-1</Fieldset>
     <BankName>#edit-bank-name</BankName>
+    <BranchNumber>#edit-branch-number</BranchNumber>
     <BankAccountType>#edit-bank-account-type</BankAccountType>
     <SortCodePart1>#edit-sort-code-part1</SortCodePart1>
     <SortCodePart2>#edit-sort-code-part2</SortCodePart2>
     <SortCodePart3>#edit-sort-code-part3</SortCodePart3>
     <AccountNumber>#edit-account-number</AccountNumber>
     <BankPeriod>#edit-bank-period</BankPeriod>
+    <InstitutionNumber>#edit-institution-number</InstitutionNumber>
   </BankAccountSection>
   
   <PersonalDebitCardPage>
@@ -72,7 +82,7 @@
   </PersonalDetailsPage>
 
   <YourNameSection>
-    <Legend>fieldset[id="name"]</Legend>
+    <Fieldset>fieldset[id="name"]</Fieldset>
     <Title>#edit-title</Title>
     <FirstName>#edit-first-name</FirstName>
     <MiddleName>#edit-middle-name</MiddleName>
@@ -81,7 +91,7 @@
 
   <YourDetailsSection>
     <IdNumber>#edit-id-number</IdNumber>
-    <Legend>fieldset[id="details"]</Legend>
+    <Fieldset>fieldset[id="details"]</Fieldset>
     <Dependants>#edit-dependants</Dependants>
     <Gender>input[type="radio"][name="gender"]</Gender>
     <DateOfBirthDay>#edit-date-of-birth-day</DateOfBirthDay>
@@ -93,7 +103,7 @@
   </YourDetailsSection>
 
   <ContactingYouSection>
-    <Legend>fieldset[id="contact"]</Legend>
+    <Fieldset>fieldset[id="contact"]</Fieldset>
     <Email>#edit-email</Email>
     <EmailConfirm>#edit-email-confirm</EmailConfirm>
     <HomePhone>#edit-home-phone</HomePhone>
@@ -121,7 +131,7 @@
   </AccountDetailsPage>
 
   <AccountDetailsSection>
-    <Legend>#account-setup-1</Legend>
+    <Fieldset>#account-setup-1</Fieldset>
     <Password>#edit-password</Password>
     <PasswordConfirm>#edit-password-confirm</PasswordConfirm>
     <SecretQuestion>#edit-secret-question</SecretQuestion>
@@ -138,5 +148,6 @@
   <ProvinceSection>
     <Fieldset>fieldset#myprovince</Fieldset>
     <Province>#edit-province</Province>
+    <PopupCloseLink>a#fancybox-close</PopupCloseLink>
   </ProvinceSection>
 </Elements>

@@ -42,7 +42,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             }
         }
 
-        public DebitCardSection(BasePage page) : base(Elements.Get.DebitCardSection.Legend, page)
+        public DebitCardSection(BasePage page) : base(Elements.Get.DebitCardSection.Fieldset, page)
         {
             _cardType = Section.FindElement(By.CssSelector(Elements.Get.DebitCardSection.CardType));
             _cardNumber = Section.FindElement(By.CssSelector(Elements.Get.DebitCardSection.CardNumber));

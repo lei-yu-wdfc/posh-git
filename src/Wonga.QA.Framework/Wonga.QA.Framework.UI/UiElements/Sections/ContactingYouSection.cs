@@ -61,7 +61,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         public String EmailAddress { set { _email.SendValue(value); } }
         public String ConfirmEmailAddress { set { _emailConfirm.SendValue(value); } }
 
-        public ContactingYouSection(BasePage page) : base(Elements.Get.ContactingYouSection.Legend, page)
+        public ContactingYouSection(BasePage page) : base(Elements.Get.ContactingYouSection.Fieldset, page)
         {
             _email = Section.FindElement(By.CssSelector(Elements.Get.ContactingYouSection.Email));
             _emailConfirm = Section.FindElement(By.CssSelector(Elements.Get.ContactingYouSection.EmailConfirm));

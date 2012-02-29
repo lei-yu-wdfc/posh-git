@@ -12,11 +12,15 @@ namespace Wonga.QA.Tests.Ui
     public abstract class UiTest
     {
         public UiClient Client;
+        protected String _firstName;
+        protected String _lastName;
 
         [SetUp]
         public void SetUp()
         {
             Client = new UiClient();
+            _firstName = Data.GetName();
+            _lastName = Data.RandomString(10);
         }
 
         [TearDown]
@@ -51,9 +55,9 @@ namespace Wonga.QA.Tests.Ui
             eligibilityQuestionsPage.CheckDebitCard = true;
 
             var personalDetailsPage = eligibilityQuestionsPage.Submit();
-            personalDetailsPage.YourName.FirstName = firstName;
+            personalDetailsPage.YourName.FirstName = _firstName;
             personalDetailsPage.YourName.MiddleName = middleName;
-            personalDetailsPage.YourName.LastName = Data.RandomString(3, 15);
+            personalDetailsPage.YourName.LastName = _lastName;
             personalDetailsPage.YourName.Title = "Mr";
 
             personalDetailsPage.YourDetails.Gender = "Female";
@@ -76,14 +80,13 @@ namespace Wonga.QA.Tests.Ui
             addressDetailsPage.LookupByPostCode();
             Thread.Sleep(4000);
             addressDetailsPage.GetAddressesDropDown();
-            addressDetailsPage.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN";
-            Thread.Sleep(2000);
-            addressDetailsPage.FlatNumber = "666";
+            Do.Until(() => addressDetailsPage.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN");
+            Do.Until(() => addressDetailsPage.FlatNumber = "666");
             addressDetailsPage.District = "Central";
             addressDetailsPage.County = "South Wales";
             addressDetailsPage.AddressPeriod = "3 to 4 years";
 
-            var accountDetailsPage = addressDetailsPage.Next();
+            var accountDetailsPage = addressDetailsPage.Next() as AccountDetailsPage;
             Thread.Sleep(1000);
             accountDetailsPage.AccountDetailsSection.Password = "PassW0rd";
             accountDetailsPage.AccountDetailsSection.PasswordConfirm = "PassW0rd";
@@ -156,8 +159,8 @@ namespace Wonga.QA.Tests.Ui
             page.Sliders.HowLong = "20";
 
             var personalDetailsPage = page.Sliders.Apply() as PersonalDetailsPage;
-            personalDetailsPage.YourName.FirstName = "Monster";
-            personalDetailsPage.YourName.LastName = Data.RandomString(10);
+            personalDetailsPage.YourName.FirstName = _firstName;
+            personalDetailsPage.YourName.LastName = _lastName;
             personalDetailsPage.YourName.Title = "Mr";
             personalDetailsPage.YourDetails.Number = "5710300020087";
             personalDetailsPage.YourDetails.DateOfBirth = "30/Oct/1957";
@@ -193,7 +196,7 @@ namespace Wonga.QA.Tests.Ui
             addressPage.PostCode = "1234";
             addressPage.AddressPeriod = "2 to 3 years";
 
-            var accountDetailsPage = addressPage.Next();
+            var accountDetailsPage = addressPage.Next() as AccountDetailsPage;
             accountDetailsPage.AccountDetailsSection.Password = Data.GetPassword();
             accountDetailsPage.AccountDetailsSection.PasswordConfirm = Data.GetPassword();
             accountDetailsPage.AccountDetailsSection.SecretQuestion = "Secret question'-.";
@@ -214,57 +217,57 @@ namespace Wonga.QA.Tests.Ui
             var email = Data.GetEmail();
             string employerName = employerNameMask ?? Data.GetMiddleName();
 
-            var homePage = Client.Home();
-
             var page = Client.Home();
             page.Sliders.HowMuch = "111";
-            page.Sliders.HowLong = "10";
+            page.Sliders.HowLong = "10"; 
 
             var personalDetailsPage = page.Sliders.Apply() as PersonalDetailsPage;
             personalDetailsPage.ProvinceSection.Province = "British Columbia";
-            personalDetailsPage.YourName.FirstName = "Monster";
-            personalDetailsPage.YourName.LastName = Data.RandomString(10);
+            Do.Until(() => personalDetailsPage.ProvinceSection.ClosePopup());
+
+            personalDetailsPage.YourName.FirstName = _firstName;
+            personalDetailsPage.YourName.MiddleName = Data.GetMiddleName();
+            personalDetailsPage.YourName.LastName = _lastName;
             personalDetailsPage.YourName.Title = "Mr";
-            personalDetailsPage.YourDetails.Number = "5710300020087";
-            personalDetailsPage.YourDetails.DateOfBirth = "30/Oct/1957";
-            personalDetailsPage.YourDetails.Gender = "Female";
-            personalDetailsPage.YourDetails.HomeStatus = "Owner Occupier";
+            personalDetailsPage.YourDetails.Number = "123213126";
+            personalDetailsPage.YourDetails.DateOfBirth = "1/Jan/1980";
+            personalDetailsPage.YourDetails.Gender = "Male";
+            personalDetailsPage.YourDetails.HomeStatus = "Tenant Furnished";
             personalDetailsPage.YourDetails.MaritalStatus = "Single";
             personalDetailsPage.EmploymentDetails.EmploymentStatus = "Employed Full Time";
-            personalDetailsPage.EmploymentDetails.MonthlyIncome = "3000";
+            personalDetailsPage.EmploymentDetails.MonthlyIncome = "1000";
             personalDetailsPage.EmploymentDetails.EmployerName = employerName;
-            personalDetailsPage.EmploymentDetails.EmployerIndustry = "Accountancy";
+            personalDetailsPage.EmploymentDetails.EmployerIndustry = "Finance";
             personalDetailsPage.EmploymentDetails.EmploymentPosition = "Professional (finance, accounting, legal, HR)";
-            personalDetailsPage.EmploymentDetails.TimeWithEmployerYears = "9";
-            personalDetailsPage.EmploymentDetails.TimeWithEmployerMonths = "5";
+            personalDetailsPage.EmploymentDetails.TimeWithEmployerYears = "1";
+            personalDetailsPage.EmploymentDetails.TimeWithEmployerMonths = "0";
             personalDetailsPage.EmploymentDetails.SalaryPaidToBank = true;
             personalDetailsPage.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("dd MMM yyyy");
             personalDetailsPage.EmploymentDetails.IncomeFrequency = "Monthly";
-            personalDetailsPage.ContactingYou.CellPhoneNumber = "0720000098";
+            personalDetailsPage.ContactingYou.CellPhoneNumber = "9876543210";
             personalDetailsPage.ContactingYou.EmailAddress = email;
             personalDetailsPage.ContactingYou.ConfirmEmailAddress = email;
             personalDetailsPage.PrivacyPolicy = true;
             personalDetailsPage.CanContact = true;
 
             var addressPage = personalDetailsPage.Submit() as AddressDetailsPage;
-            addressPage.FlatNumber = "25";
-            addressPage.Street = "high road";
-            addressPage.Town = "Kuku";
-            addressPage.County = "Province";
-            addressPage.PostCode = "1234";
+            addressPage.FlatNumber = "1403";
+            addressPage.Street = "Edward";
+            addressPage.Town = "Hearst";
+            addressPage.PostCode = "V4F3A9";
             addressPage.AddressPeriod = "2 to 3 years";
+            addressPage.PostOfficeBox = "C12345";
 
-            var accountDetailsPage = addressPage.Next();
-            accountDetailsPage.AccountDetailsSection.Password = Data.GetPassword();
-            accountDetailsPage.AccountDetailsSection.PasswordConfirm = Data.GetPassword();
-            accountDetailsPage.AccountDetailsSection.SecretQuestion = "Secret question'-.";
-            accountDetailsPage.AccountDetailsSection.SecretAnswer = "Secret answer";
+            addressPage.AccountDetailsSection.Password = Data.GetPassword();
+            addressPage.AccountDetailsSection.PasswordConfirm = Data.GetPassword();
+            addressPage.AccountDetailsSection.SecretQuestion = "Secret question'-.";
+            addressPage.AccountDetailsSection.SecretAnswer = "Secret answer";
 
-            var bankDetailsPage = accountDetailsPage.Next();
-            bankDetailsPage.BankAccountSection.BankName = "Capitec";
-            bankDetailsPage.BankAccountSection.BankAccountType = "Current";
-            bankDetailsPage.BankAccountSection.AccountNumber = "1234567";
-            bankDetailsPage.BankAccountSection.BankPeriod = "2 to 3 years";
+            var bankDetailsPage = addressPage.Next() as PersonalBankAccountPage;
+            bankDetailsPage.BankAccountSection.BankName = "Bank of Montreal";
+            bankDetailsPage.BankAccountSection.BranchNumber = "00011";
+            bankDetailsPage.BankAccountSection.AccountNumber = "3023423";
+            bankDetailsPage.BankAccountSection.BankPeriod = "More than 4 years";
             bankDetailsPage.PinVerificationSection.Pin = "0000";
 
             return bankDetailsPage.Next() as ProcessingPage;

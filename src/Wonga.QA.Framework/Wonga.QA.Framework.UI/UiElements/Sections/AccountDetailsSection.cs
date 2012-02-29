@@ -20,7 +20,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         public String SecretQuestion { set { _secretQuestion.SendValue(value); } }
         public String SecretAnswer { set { _secretAnswer.SendValue(value); } }
 
-        public AccountDetailsSection(BasePage page) : base(Elements.Get.AccountDetailsSection.Legend, page)
+        public AccountDetailsSection(BasePage page) : base(Elements.Get.AccountDetailsSection.Fieldset, page)
         {
             _password = Section.FindElement(By.CssSelector(Elements.Get.AccountDetailsSection.Password));
             _passwordConfirm = Section.FindElement(By.CssSelector(Elements.Get.AccountDetailsSection.PasswordConfirm));

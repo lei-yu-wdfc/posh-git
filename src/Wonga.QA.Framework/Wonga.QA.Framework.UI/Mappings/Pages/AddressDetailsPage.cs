@@ -13,6 +13,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String Town { get; set; }
         public String AddressPeriod { get; set; }
         public String AddressOptions { get; set; }
+        public String PostOfficeBox { get; set; }
 
         public String LookupButton { get; set; }
         public String NextButton { get; set; }

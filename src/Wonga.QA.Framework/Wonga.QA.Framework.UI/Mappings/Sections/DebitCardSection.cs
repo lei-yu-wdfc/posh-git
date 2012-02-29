@@ -7,7 +7,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Sections
 {
     public class DebitCardSection
     {
-        public String Legend { get; set; }
+        public String Fieldset { get; set; }
         public String CardType { get; set; }
         public String CardNumber { get; set; }
         public String CardName { get; set; }

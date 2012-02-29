@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Elements>
   <YourNameSection>
-    <Legend>fieldset#personal-details</Legend>
+    <Fieldset>fieldset#personal-details</Fieldset>
   </YourNameSection>
 
   <YourDetailsSection>
-    <Legend>fieldset#personal-details</Legend>
+    <Fieldset>fieldset#personal-details</Fieldset>
     <IdNumber>#edit-id-number-ca</IdNumber>
   </YourDetailsSection>
 
@@ -27,4 +27,52 @@
   <PersonalDetailsPage>
     <CheckCanContact>#edit-contact-options</CheckCanContact>
   </PersonalDetailsPage>
+  
+  <DealDonePage>
+    <HeaderText>Your application has been accepted</HeaderText>
+  </DealDonePage>
+  
+  <AddressDetailsPage>
+    <Postcode>#edit-postcode-ca</Postcode>
+    <FlatNumber>#edit-street-number-ca</FlatNumber>
+    <Street>#edit-street-ca</Street>
+    <PostOfficeBox>#edit-pobox-ca</PostOfficeBox>
+    <Town>#edit-town-ca</Town>
+    <AddressPeriod>#edit-address-period-ca</AddressPeriod>
+  </AddressDetailsPage>
+
+  <AccountDetailsSection>
+    <Fieldset>fieldset#account-setup</Fieldset>
+  </AccountDetailsSection>
+
+  <PersonalBankAccountDetailsPage>
+    <FormId>#wonga-apply-lzero-form</FormId>
+  </PersonalBankAccountDetailsPage>
+
+
+  <BankAccountSection>
+    <Fieldset>fieldset#bank</Fieldset>
+    <InstitutionNumber>#edit-institution-number</InstitutionNumber>
+    <AccountNumber>#edit-account-number-ca</AccountNumber>
+    <BankName>#edit-bank-name-ca</BankName>
+  </BankAccountSection>
+
+  <MobilePinVerificationSection>
+    <Pin>#edit-pin-ca</Pin>
+  </MobilePinVerificationSection>
+
+  <AcceptedPage>
+    <FormId>#wonga-loan-approve-form</FormId>
+    <AgreementConfirm>#edit-loan-terms-confirm</AgreementConfirm>
+    <DirectDebitConfirm>#edit-direct-debit-confirm</DirectDebitConfirm>
+    <SubmitButton>#edit-accept</SubmitButton>
+    <Initials1>#edit-initials-ca1</Initials1>
+    <Initials2>#edit-initials-ca2</Initials2>
+    <Initials3>#edit-initials-ca3</Initials3>
+    <Signature>#edit-signature-ca</Signature>
+    <DateOfAgreement>#edit-date-of-agreement-ca-datepicker-popup-0</DateOfAgreement>
+    <ContinueTermsButton>#edit-continue-terms</ContinueTermsButton>
+    <ContinueDirectDebitButton>#edit-continue-debit</ContinueDirectDebitButton>
+  </AcceptedPage>
+  
 </Elements>

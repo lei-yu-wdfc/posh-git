@@ -38,9 +38,9 @@ namespace Wonga.QA.Framework.UI
             element.SelectOption(option => option.Trim() == value);
         }
 
-        public static IWebElement FirstOrDefaultElement(this IWebElement element, String cssSelector)
+        public static IWebElement FirstOrDefaultElement(this IWebElement element, By by)
         {
-            return element.FindElements(By.CssSelector(cssSelector)).FirstOrDefault();
+            return element.FindElements(by).FirstOrDefault();
         }
 
         public static void SelectOption(this IWebElement element, Func<String, Boolean> func)

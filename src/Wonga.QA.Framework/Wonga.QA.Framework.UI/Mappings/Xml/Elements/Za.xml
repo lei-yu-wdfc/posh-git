@@ -27,7 +27,7 @@
   </AccountDetailsPage>
 
   <AccountDetailsSection>
-    <Legend>#account-setup</Legend>
+    <Fieldset>#account-setup</Fieldset>
   </AccountDetailsSection>
 
   <DealDonePage>
@@ -46,7 +46,7 @@
   </AddressDetailsPage>
 
   <BankAccountSection>
-    <Legend>#bank</Legend>
+    <Fieldset>#bank</Fieldset>
     <AccountNumber>#edit-account-number-za</AccountNumber>
   </BankAccountSection>
 </Elements>

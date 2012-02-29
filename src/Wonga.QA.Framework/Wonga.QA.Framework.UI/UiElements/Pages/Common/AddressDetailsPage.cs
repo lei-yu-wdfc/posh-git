@@ -3,11 +3,13 @@ using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
 using Wonga.QA.Framework.UI.Mappings;
+using Wonga.QA.Framework.UI.UiElements.Sections;
 
 namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
     public class AddressDetailsPage : BasePage,IApplyPage
     {
+        public AccountDetailsSection AccountDetailsSection { get; set; }
         private readonly IWebElement _postCode;
         private readonly IWebElement _form;
         private readonly IWebElement _lookup;
@@ -18,6 +20,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private readonly IWebElement _town;
         private readonly IWebElement _street;
         private readonly IWebElement _addressPeriod;
+        private readonly IWebElement _postOfficeBox;
+
         private IWebElement _addressOptions;
 
         public String PostCode { set { _postCode.SendValue(value); } }
@@ -28,26 +32,35 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public String Town { set { _town.SendValue(value); } }
         public String Street { set { _street.SendValue(value); } }
         public String AddressPeriod { set { _addressPeriod.SelectOption(value); } }
+        public String PostOfficeBox {set {_postOfficeBox.SendValue(value);}}
 
         public AddressDetailsPage(UiClient client) : base(client)
         {
 
-            _form = Content.FindElement(By.CssSelector(Elements.Get.AddressDetailsPage.FormId));
-            _postCode = _form.FindElement(By.CssSelector(Elements.Get.AddressDetailsPage.Postcode));
-            _flatNumber = _form.FindElement(By.CssSelector(Elements.Get.AddressDetailsPage.FlatNumber));
-            _district = _form.FindElement(By.CssSelector(Elements.Get.AddressDetailsPage.District));
-            _county = _form.FindElement(By.CssSelector(Elements.Get.AddressDetailsPage.County));
-            _addressPeriod = _form.FindElement(By.CssSelector(Elements.Get.AddressDetailsPage.AddressPeriod));
-            _next = _form.FindElement(By.CssSelector(Elements.Get.AddressDetailsPage.NextButton));
+            _form = Content.FirstOrDefaultElement(By.CssSelector(Elements.Get.AddressDetailsPage.FormId));
+            _postCode = _form.FirstOrDefaultElement(By.CssSelector(Elements.Get.AddressDetailsPage.Postcode));
+            _flatNumber = _form.FirstOrDefaultElement(By.CssSelector(Elements.Get.AddressDetailsPage.FlatNumber));
+            _addressPeriod = _form.FirstOrDefaultElement(By.CssSelector(Elements.Get.AddressDetailsPage.AddressPeriod));
+            _next = _form.FirstOrDefaultElement(By.CssSelector(Elements.Get.AddressDetailsPage.NextButton));
 
             switch (Config.AUT)
             {
                 case(AUT.Wb):
-                    _lookup = _form.FindElement(By.CssSelector(Elements.Get.AddressDetailsPage.LookupButton));
+                    _county = _form.FirstOrDefaultElement(By.CssSelector(Elements.Get.AddressDetailsPage.County));
+                    _district = _form.FirstOrDefaultElement(By.CssSelector(Elements.Get.AddressDetailsPage.District));
+                    _lookup = _form.FirstOrDefaultElement(By.CssSelector(Elements.Get.AddressDetailsPage.LookupButton));
                     break;
                 case(AUT.Za):
-                    _street = _form.FindElement(By.CssSelector(Elements.Get.AddressDetailsPage.Street));
-                    _town = _form.FindElement(By.CssSelector(Elements.Get.AddressDetailsPage.Town));
+                    _county = _form.FirstOrDefaultElement(By.CssSelector(Elements.Get.AddressDetailsPage.County));
+                    _district = _form.FirstOrDefaultElement(By.CssSelector(Elements.Get.AddressDetailsPage.District));
+                    _street = _form.FirstOrDefaultElement(By.CssSelector(Elements.Get.AddressDetailsPage.Street));
+                    _town = _form.FirstOrDefaultElement(By.CssSelector(Elements.Get.AddressDetailsPage.Town));
+                    break;
+                case (AUT.Ca):
+                    _street = _form.FirstOrDefaultElement(By.CssSelector(Elements.Get.AddressDetailsPage.Street));
+                    _town = _form.FirstOrDefaultElement(By.CssSelector(Elements.Get.AddressDetailsPage.Town));
+                    _postOfficeBox = _form.FindElement(By.CssSelector(Elements.Get.AddressDetailsPage.PostOfficeBox));
+                    AccountDetailsSection = new AccountDetailsSection(this);
                     break;
             }
         }
@@ -62,10 +75,17 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _addressOptions = _form.FindElement(By.CssSelector(Elements.Get.AddressDetailsPage.AddressOptions));
         }
 
-        public AccountDetailsPage Next()
+        public BasePage Next()
         {
             _next.Click();
-            return new AccountDetailsPage(Client);
+            switch(Config.AUT)
+            {
+                case(AUT.Ca):
+                    return new PersonalBankAccountPage(Client);
+                default:
+                    return new AccountDetailsPage(Client);
+                
+            }
         }
 
     }

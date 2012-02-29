@@ -7,7 +7,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Sections
 {
     public class BankAccountSection
     {
-        public String Legend { get; set; }
+        public String Fieldset { get; set; }
         public String BankName { get; set; }
         public String SortCodePart1 { get; set; }
         public String SortCodePart2 { get; set; }
@@ -15,5 +15,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Sections
         public String AccountNumber { get; set; }
         public String BankPeriod { get; set; }
         public String BankAccountType { get; set; }
+        public String InstitutionNumber { get; set; }
+        public String BranchNumber { get; set; }
     }
 }

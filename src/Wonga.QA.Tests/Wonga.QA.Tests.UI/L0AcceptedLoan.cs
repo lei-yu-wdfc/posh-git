@@ -25,14 +25,14 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        //[Test, AUT(AUT.Ca)]
+       //WIP [Test, AUT(AUT.Ca)]
         public void CaAcceptedLoan()
         {
             var processingPage = CaL0Path("test:EmployedMask");
 
             var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
-            acceptedPage.SignAgreementConfirm();
-            acceptedPage.SignDirectDebitConfirm();
+            
+            acceptedPage.SignConfirmCA(DateTime.Now.ToString("dd MMM yyyy"), _firstName, _lastName);
             var dealDone = acceptedPage.Submit();
 
         }
