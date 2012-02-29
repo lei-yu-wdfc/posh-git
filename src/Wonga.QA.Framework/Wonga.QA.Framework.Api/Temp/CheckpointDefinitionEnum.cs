@@ -13,6 +13,7 @@ namespace Wonga.QA.Framework.Api
         [Description("Hardware blacklist check")] Applicationdatablacklistcheck,
         [Description("Fraud list check")] FraudListCheck,
 		[Description("Bank account matches the applicant")]BankAccountMatchesTheApplicant,
+        [Description("Bank account is valid")]BankAccountIsValid,
         [Description("Credit bureau data is available")] CreditBureauDataIsAvailable,
         [Description("Date of birth is correct")] DateOfBirthIsCorrect,
         [Description("Applicant history is acceptable")] ApplicantHistoryIsAcceptable,
