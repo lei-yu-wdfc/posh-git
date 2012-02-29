@@ -73,5 +73,11 @@ namespace Wonga.QA.Framework.Db
 			var value = db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.PayDayPerMonth").Value;
 			return value.Split(',').Select(Int32.Parse).ToArray();
 		}
+
+		public static void UpdateEmployerName(this DbDriver db, Guid accountId, string employerName)
+		{
+			db.Risk.EmploymentDetails.Single(a => a.AccountId == accountId).EmployerName = employerName;
+			db.Risk.SubmitChanges();
+		}
     }
 }

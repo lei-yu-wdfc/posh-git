@@ -259,7 +259,9 @@ namespace Wonga.QA.Framework
                         SaveCustomerDetailsZaCommand.New(r =>
                         {
                             r.AccountId = _id;
+                        	r.Forename = _foreName;
                             r.MiddleName = _middleName;
+                        	r.Surname = _surname;
                             r.Email = _email;
                         	r.NationalNumber = _nationalNumber;
                         	r.DateOfBirth = _dateOfBirth;
