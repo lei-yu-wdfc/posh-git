@@ -35,7 +35,6 @@
     <Compile Include="BankGatewayServiceTests.cs" />
     <Compile Include="HsbcCashOutTests.cs" />
     <Compile Include="HsbcSortCodesTests.cs" />
-    <Compile Include="HyphenAHVWebServiceTests.cs" />
     <Compile Include="AccountHolderVerificationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

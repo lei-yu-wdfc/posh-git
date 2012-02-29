@@ -15,7 +15,7 @@ namespace Wonga.QA.Framework.Api
             BankName = "ABSA";
             CountryCode = CountryCodeEnum.ZA;
             HolderName = "First Name Last Name";
-            IsPrimary = true;
+        	IsPrimary = true;
         }
     }
 }

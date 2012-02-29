@@ -84,12 +84,19 @@ namespace Wonga.QA.Framework.Db
 
 		public static ServiceConfigurationEntity GetServiceConfiguration(this DbDriver db, string key)
 		{
-			return db.Ops.ServiceConfigurations.Single(a => a.Key == key);
+			return db.Ops.ServiceConfigurations.SingleOrDefault(a => a.Key == key);
 		}
 
 		public static void SetServiceConfiguration(this DbDriver db, string key, string value)
 		{
 			var serviceConfig = db.GetServiceConfiguration(key);
+
+			if( serviceConfig == null)
+			{
+				db.Ops.ServiceConfigurations.Insert(new ServiceConfigurationEntity {Key = key, Value = value});
+				return;
+			}
+
 			serviceConfig.Value = value;
 			serviceConfig.Submit();
 		}

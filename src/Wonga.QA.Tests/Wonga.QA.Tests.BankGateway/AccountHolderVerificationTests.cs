@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 using MbUnit.Framework;
+using NHamcrest.Core;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
+using Wonga.QA.Framework.Db.BankGateway;
 using Wonga.QA.Framework.Msmq.Risk;
 using Wonga.QA.Tests.Core;
 
@@ -16,38 +19,84 @@ namespace Wonga.QA.Tests.BankGateway
 	{
 		private const string TestMask = "test:BankAccountIsValid";
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2061")]
-		public void AccountHolderVerificationFeatureSwitchTurnedOn()
+		private readonly Dictionary<string, string> _testModesToSetup = new Dictionary<string, string>
+		                                                              	{
+		                                                              		{"BankGateway.IsTestMode", "false"},
+		                                                              		{"BankGateway.IsAccountVerificationTestMode", "false"},
+		                                                              		{"Mocks.HyphenAHVWebServiceEnabled", "true"}
+		                                                              	};
+
+		[FixtureSetUp]
+		public void FixtureSetUp()
 		{
-			Assert.IsTrue(IsFeatureSwitchTurnedOn());
+			
+			
+			Driver.Db.SetServiceConfigurations(_testModesToSetup);
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-2061")]
-		public void AccountHolderVerificationResponseRecievedImmediately()
+		public void AccountHolderVerificationFeatureSwitchTurnedOn()
+		{
+			var featureSwitchOn = Boolean.Parse(Driver.Db.GetServiceConfiguration("FeatureSwitch.ZA.UseHyphenAHVWebService").Value);
+			Assert.IsTrue(featureSwitchOn);
+		}
+
+		[Test, AUT(AUT.Za), JIRA("ZA-2061")]
+		public void AccountHolderVerificationRequestForSingleApplication()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
 			var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.ReadyToSign).Build();
 
-			var saga = Do.Until(() => Driver.Db.OpsSagas.BankAccountVerificationSagaEntities.Single(a => a.ApplicationId == application.Id));
+			var response = WaitForAccountHolderVerificationResponse(application);
+
+			var requestUsedWebService = AccountHolderVerificationResponseIsXml(response);
+			Assert.IsTrue(requestUsedWebService);
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-2061")]
 		public void AccountHolderVerificationWhenBankAccountChanged()
 		{
+			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
+			ApplicationBuilder.New(customer).Build().RepayOnDueDate();
+
+			var primaryAccountId = Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == customer.Id).PrimaryBankAccountId;
+
+			Driver.Api.Commands.Post(AddBankAccountZaCommand.New(r =>
+			                                                     	{
+			                                                     		r.AccountId = customer.Id;
+			                                                     		r.AccountNumber = 12345678902;
+			                                                     	}));
+
+			//Account has changed
+			Do.Until(() => Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == customer.Id).PrimaryBankAccountId != primaryAccountId);
+
+			var application = ApplicationBuilder.New(customer).Build();
+
+			var response = WaitForAccountHolderVerificationResponse(application);
+
+			var requestUsedWebService = AccountHolderVerificationResponseIsXml(response);
+			Assert.IsTrue(requestUsedWebService);
 		}
 
 		#region Helpers
 
-		public void SetFeatureSwitch(bool switchOn)
+		private BankAccountVerificationResponseEntity WaitForAccountHolderVerificationResponse(Application application)
 		{
-			var db = new DbDriver();
-			db.Ops.ServiceConfigurations.Single(a => a.Key == "FeatureSwitch.ZA.UseHyphenAHVWebService").Value = switchOn.ToString();
-			db.Ops.SubmitChanges();
+			BankAccountVerificationEntity verification =
+				Do.Until(() => Driver.Db.BankGateway.BankAccountVerifications
+								.First(e => e.SenderReference == application.Id.ToString().ToLower()));
+
+			BankAccountVerificationResponseEntity response =
+				Do.Until(() => Driver.Db.BankGateway.BankAccountVerificationResponses
+								.First(r => r.BankAccountVerificationId == verification.BankAccountVerificationId));
+
+			return response;
 		}
 
-		public bool IsFeatureSwitchTurnedOn()
+		private bool AccountHolderVerificationResponseIsXml(BankAccountVerificationResponseEntity response)
 		{
-			return bool.Parse(Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "FeatureSwitch.ZA.UseHyphenAHVWebService").Value);
+			XDocument doc = XDocument.Parse(response.RawResponse);
+			return doc != null;
 		}
 
 		#endregion
