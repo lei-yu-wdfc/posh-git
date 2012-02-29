@@ -15,7 +15,7 @@ namespace Wonga.QA.Tests.Payments
 	[TestFixture]
 	public class FixedTermLoanExtensionTests
 	{
-		[Test, AUT(AUT.Uk), JIRA("UK-598"), 
+		[Test, AUT(AUT.Uk), JIRA("UK-598"), Ignore("API tests should be unignored when Extend Functionality will be implemented"),
 			Description("Check that customer can extend, when 7 days (or more) left to repayment date"),
 			Description("Check that customer can't extend when less than 7 days left to reapyment date"),
 			Description("Check that customer can't extend to earlier date than his reapayment date")]
@@ -71,7 +71,9 @@ namespace Wonga.QA.Tests.Payments
 
 		}
 
-		[Test, AUT(AUT.Uk), JIRA("UK-598"), Description("Check that extend is not done when invalid data used")]
+		[Test, AUT(AUT.Uk), JIRA("UK-598"), 
+		Description("Check that extend is not done when invalid data used"), 
+		Ignore("API tests should be unignored when Extend Functionality will be implemented")]
 		[Row(true, true, false, true, Order = 0)]//has valid loan data
 		[Row(false, false, false, false, Order = 1)]//no application exists
 		[Row(true, false, false, false, Order = 2)]//no active loan

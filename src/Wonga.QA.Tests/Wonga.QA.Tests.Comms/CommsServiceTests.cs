@@ -41,7 +41,8 @@ namespace Wonga.QA.Tests.Comms
 											NewFinalBalance = ftApp.LoanAmount
 			                           	});
 
-			var secciDocument = Do.Until(() => Driver.Db.Comms.LegalDocuments.Single(ld => ld.ApplicationId == app.Id && ld.DocumentType == 2));//ExtensionSeccii
+			var secciDocument = new DoBuilder(TimeSpan.FromMinutes(2), TimeSpan.FromSeconds(1))
+								.Until(() => Driver.Db.Comms.LegalDocuments.Single(ld => ld.ApplicationId == app.Id && ld.DocumentType == 2));//ExtensionSeccii
 			
 		}
 
