@@ -44,6 +44,11 @@ namespace Wonga.QA.Framework.Core
             return "Test:EmployedMask";
         }
 
+        public static String GetEmploymentStatus()
+        {
+            return "EmployedFullTime";
+        }
+
 		public static Date GetNextPayDate()
 		{
 			return new Date(DateTime.UtcNow.AddDays(10), DateFormat.Date);

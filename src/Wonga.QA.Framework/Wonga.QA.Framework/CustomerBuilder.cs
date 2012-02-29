@@ -13,6 +13,7 @@ namespace Wonga.QA.Framework
         private Guid _id;
         private Guid _verification;
         private String _employerName;
+        private String _employerStatus;
 		private Decimal _netMonthlyIncome;
     	private GenderEnum _gender;
     	private String _nationalNumber;
@@ -40,6 +41,7 @@ namespace Wonga.QA.Framework
             _id = Data.GetId();
             _verification = Data.GetId();
             _employerName = Data.GetEmployerName();
+            _employerStatus = Data.GetEmploymentStatus();
         	_netMonthlyIncome = Data.RandomInt(1000, 2000);
 			_dateOfBirth = Data.GetDoB();
 			_gender = GenderEnum.Female;
@@ -97,6 +99,12 @@ namespace Wonga.QA.Framework
         public CustomerBuilder WithEmployer(string employerName)
         {
             _employerName = employerName;
+            return this;
+        }
+
+        public CustomerBuilder WithEmployerStatus(string employerStatus)
+        {
+            _employerStatus = employerStatus;
             return this;
         }
 
@@ -415,6 +423,7 @@ namespace Wonga.QA.Framework
 						{
 							r.AccountId = _id;
 							r.EmployerName = _employerName;
+						    r.Status = _employerStatus;
 						}),
 						VerifyMobilePhoneUkCommand.New(r =>
 						{
