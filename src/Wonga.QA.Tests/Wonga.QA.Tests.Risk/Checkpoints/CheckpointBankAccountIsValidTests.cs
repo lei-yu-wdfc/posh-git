@@ -30,6 +30,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		}
 
         [Test, AUT(AUT.Za)]
+        [Explicit]
         public void AhvCheckSuccessfulWhenBGInTestModeTest()
         {
             Customer cust = CustomerBuilder.New().WithEmployer(TestMask).Build();
