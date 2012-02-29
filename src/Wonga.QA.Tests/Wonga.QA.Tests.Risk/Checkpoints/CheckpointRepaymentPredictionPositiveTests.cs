@@ -32,8 +32,8 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 		private const string ScorecardNameL0Za = "ZARiskScorecard_v_1_2_L0";
 		private const string ScorecardNameLnZa = "v_1_0_Ln";
-		private const int ScoreCutoffNewUsersZa = 610;
-		private const int ScoreCutoffExistingUsersZa = 550;
+		private const int ScoreCutoffNewUsersZa = 600;
+		private const int ScoreCutoffExistingUsersZa = 610;
 
 
 		[FixtureSetUp]
@@ -73,7 +73,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test, AUT(AUT.Za)]
 		public void CheckpointRepaymentPredictionPositiveCorrectCutoffL0()
 		{
-			Assert.AreEqual(ExpectedScoreCutoffNewUsers, ScoreCutoffNewUsers);
+			Assert.AreEqual(_expectedScoreCutoffNewUsers, ScoreCutoffNewUsers);
 		}
 
 		[Test, AUT(AUT.Za)]

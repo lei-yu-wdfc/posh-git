@@ -20,8 +20,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
 
-			var application =
-				ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.ReadyToSign).Build();
+			var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.ReadyToSign).Build();
 
 			var expectedRiskDecisionStatus = RiskDecisionStatus.Pending;
 			var actualRiskDecisionStatus = (RiskDecisionStatus) Driver.Db.Risk.RiskApplications.Single(a => a.ApplicationId == application.Id).Decision;
