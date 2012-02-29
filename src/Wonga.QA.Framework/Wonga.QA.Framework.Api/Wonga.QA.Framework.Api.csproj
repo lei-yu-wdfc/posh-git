@@ -87,7 +87,6 @@
     <Compile Include="Requests\AddPaymentCardCommand.cs" />
     <Compile Include="Requests\AddPrimaryOrganisationDirectorCommand.cs" />
     <Compile Include="Requests\AddSecondaryOrganisationDirectorCommand.cs" />
-    <Compile Include="Requests\CancelRepaymentArrangementCsapiCommand.cs" />
     <Compile Include="Requests\CancelUserActionCommand.cs" />
     <Compile Include="Requests\ChangePasswordCommand.cs" />
     <Compile Include="Requests\CompleteEmailVerificationCommand.cs" />
@@ -159,7 +158,6 @@
     <Compile Include="Requests\GetRepaymentArrangementCalculationQuery.cs" />
     <Compile Include="Requests\GetRepaymentArrangementParametersQuery.cs" />
     <Compile Include="Requests\GetRepaymentArrangementQuery.cs" />
-    <Compile Include="Requests\GetRepaymentArrangementsQuery.cs" />
     <Compile Include="Requests\GetSecciQuery.cs" />
     <Compile Include="Requests\GetSocialDetailsQuery.cs" />
     <Compile Include="Requests\GetUserLocationQuery.cs" />
