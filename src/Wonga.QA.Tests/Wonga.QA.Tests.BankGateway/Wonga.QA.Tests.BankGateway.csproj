@@ -32,32 +32,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Compile Include="BankGatewayServiceTests.cs" />
     <Compile Include="HsbcCashOutTests.cs" />
     <Compile Include="HsbcSortCodesTests.cs" />
     <Compile Include="HyphenAHVWebServiceTests.cs" />
-=======
     <Compile Include="AccountHolderVerificationTests.cs" />
-    <Compile Include="BankGatewayServiceTests.cs" />
-    <Compile Include="HsbcCashOutTests.cs" />
-    <Compile Include="HsbcSortCodesTests.cs" />
->>>>>>> Added BankGateway.AccountHolderVerificationTests
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
     <Reference Include="MbUnit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
-<<<<<<< HEAD
     <Reference Include="NHamcrest, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31c3ea0b6fcf8c4a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-=======
-    <Reference Include="System" />
-    <Reference Include="System.Data.Linq" />
->>>>>>> Added BankGateway.AccountHolderVerificationTests
     <Reference Include="Wonga.QA.Framework">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.dll</HintPath>
     </Reference>

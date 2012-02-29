@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db.Ops;
 
 namespace Wonga.QA.Framework.Db
 {
@@ -78,6 +80,26 @@ namespace Wonga.QA.Framework.Db
 		{
 			db.Risk.EmploymentDetails.Single(a => a.AccountId == accountId).EmployerName = employerName;
 			db.Risk.SubmitChanges();
+		}
+
+		public static ServiceConfigurationEntity GetServiceConfiguration(this DbDriver db, string key)
+		{
+			return db.Ops.ServiceConfigurations.Single(a => a.Key == key);
+		}
+
+		public static void SetServiceConfiguration(this DbDriver db, string key, string value)
+		{
+			var serviceConfig = db.GetServiceConfiguration(key);
+			serviceConfig.Value = value;
+			serviceConfig.Submit();
+		}
+
+		public static void SetServiceConfigurations(this DbDriver db, Dictionary<string, string> keyValuePairs)
+		{
+			foreach (var keyValuePair in keyValuePairs)
+			{
+				db.SetServiceConfiguration(keyValuePair.Key, keyValuePair.Value);
+			}
 		}
     }
 }
