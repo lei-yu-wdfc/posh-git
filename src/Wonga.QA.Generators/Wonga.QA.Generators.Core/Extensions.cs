@@ -14,14 +14,14 @@ namespace Wonga.QA.Generators.Core
 {
     public static class Extensions
     {
-        public static Boolean IsRoot(this DirectoryInfo @this)
+        public static Boolean IsRoot(this DirectoryInfo directory)
         {
-            return @this.EnumerateDirectories(".git").Any();
+            return directory.EnumerateDirectories(".git").Any();
         }
 
-        public static String GetName(this FileInfo @this)
+        public static String GetName(this FileInfo file)
         {
-            return Path.GetFileNameWithoutExtension(@this.Name);
+            return Path.GetFileNameWithoutExtension(file.Name);
         }
 
         public static FileInfo ChangeExtension(this FileInfo file, String extension)
@@ -29,10 +29,10 @@ namespace Wonga.QA.Generators.Core
             return new FileInfo(Path.ChangeExtension(file.FullName, extension));
         }
 
-        public static IEnumerable<string> GetTree(this FileInfo @this)
+        public static IEnumerable<string> GetTree(this FileInfo file)
         {
-            yield return @this.Name;
-            DirectoryInfo directory = @this.Directory;
+            yield return file.Name;
+            DirectoryInfo directory = file.Directory;
             while (directory != null && !directory.IsRoot())
             {
                 yield return directory.Name;
@@ -40,42 +40,52 @@ namespace Wonga.QA.Generators.Core
             }
         }
 
-        public static Boolean IsTest(this FileInfo @this)
+        public static Boolean IsTest(this FileInfo file)
         {
-            return @this.GetTree().Any(Config.Test.IsMatch);
+            return file.GetTree().Any(Config.Test.IsMatch);
         }
 
-        public static XmlSchema GetSchema(this FileInfo @this)
+        public static Boolean IsArtifact(this FileInfo file)
         {
-            using (XmlReader reader = XmlReader.Create(@this.FullName))
+            return file.GetTree().Any(Config.Artifact.IsMatch);
+        }
+
+        public static Boolean IsCs(this FileInfo file)
+        {
+            return Config.Cs.IsMatch(file.Name);
+        }
+
+        public static XmlSchema GetSchema(this FileInfo file)
+        {
+            using (XmlReader reader = XmlReader.Create(file.FullName))
                 return XmlSchema.Read(reader, (s, a) => { throw a.Exception; });
         }
 
-        public static IEnumerable<Type> GetTypes(this FileInfo @this)
+        public static IEnumerable<Type> GetTypes(this FileInfo file)
         {
-            return Assembly.LoadFrom(@this.FullName).GetTypes();
+            return Assembly.LoadFrom(file.FullName).GetTypes();
         }
 
-        public static String GetAssembly(this FileInfo @this)
+        public static String GetAssembly(this FileInfo file)
         {
-            XElement root = XDocument.Load(@this.FullName).Root;
+            XElement root = XDocument.Load(file.FullName).Root;
             return root.Descendants(root.GetDefaultNamespace().GetName("AssemblyName")).Select(e => e.Value).Distinct().Single();
         }
 
-        public static FileInfo GetAssembly(this FileInfo @this, DirectoryInfo directory)
+        public static FileInfo GetAssembly(this FileInfo file, DirectoryInfo directory)
         {
-            directory = directory.GetDirectories(@this.GetName()).SingleOrDefault();
-            return directory == null ? null : directory.GetFiles(String.Format("{0}.dll", @this.GetAssembly())).SingleOrDefault();
+            directory = directory.GetDirectories(file.GetName()).SingleOrDefault();
+            return directory == null ? null : directory.GetFiles(String.Format("{0}.dll", file.GetAssembly())).SingleOrDefault();
         }
 
-        public static String GetProduct(this FileInfo @this)
+        public static String GetProduct(this FileInfo file)
         {
-            return Config.Products.Intersect(@this.GetName().Split('.')).SingleOrDefault();
+            return Config.Products.Intersect(file.GetName().Split('.')).SingleOrDefault();
         }
 
-        public static String GetRegion(this FileInfo @this)
+        public static String GetRegion(this FileInfo file)
         {
-            return Config.Regions.Intersect(@this.GetName().Split('.')).SingleOrDefault();
+            return Config.Regions.Intersect(file.GetName().Split('.')).SingleOrDefault();
         }
 
         public static String GetSolution(this FileInfo file)
@@ -83,122 +93,122 @@ namespace Wonga.QA.Generators.Core
             return Config.Solutions.OrderByDescending(p => p.Key.Length).First(p => file.Name.StartsWith(String.Format("Wonga.{0}.", p.Key), true, null)).Value;
         }
 
-        public static String GetName(this Type @this)
+        public static String GetName(this Type type)
         {
-            XmlRootAttribute root = @this.GetAttribute<XmlRootAttribute>();
-            XmlTypeAttribute type = @this.GetAttribute<XmlTypeAttribute>();
-            return (root == null || String.IsNullOrEmpty(root.ElementName) ? null : root.ElementName) ?? (type == null || String.IsNullOrEmpty(type.TypeName) ? null : type.TypeName) ?? @this.Name;
+            XmlRootAttribute root = type.GetAttribute<XmlRootAttribute>();
+            XmlTypeAttribute xtype = type.GetAttribute<XmlTypeAttribute>();
+            return (root == null || String.IsNullOrEmpty(root.ElementName) ? null : root.ElementName) ?? (xtype == null || String.IsNullOrEmpty(xtype.TypeName) ? null : xtype.TypeName) ?? type.Name;
         }
 
-        public static Boolean IsRequest(this Type @this)
+        public static Boolean IsRequest(this Type type)
         {
-            return @this.GetInterfaces().Any(i => i.FullName == Config.Request);
+            return type.GetInterfaces().Any(i => i.FullName == Config.Request);
         }
 
-        public static String GetClean(this Type @this)
+        public static String GetClean(this Type type)
         {
-            return String.Join(null, @this.GetName().GetCamel().Select(s => s.ToTitle()).Except(Config.Products).Except(Config.Regions).Except(Config.Suffixes));
+            return String.Join(null, type.GetName().GetCamel().Select(s => s.ToTitle()).Except(Config.Products).Except(Config.Regions).Except(Config.Suffixes));
         }
 
-        public static String GetSuffix(this Type @this)
+        public static String GetSuffix(this Type type)
         {
-            if (@this.IsRequest())
+            if (type.IsRequest())
             {
-                if (@this.IsCommand())
+                if (type.IsCommand())
                     return "Command";
-                if (@this.IsQuery())
+                if (type.IsQuery())
                     return "Query";
             }
-            if (@this.IsMessage())
+            if (type.IsMessage())
             {
-                if (@this.IsClass)
+                if (type.IsClass)
                     return "Command";
-                if (@this.IsInterface)
+                if (type.IsInterface)
                     return "Event";
             }
             throw new NotImplementedException();
         }
 
-        public static Boolean IsCommand(this Type @this)
+        public static Boolean IsCommand(this Type type)
         {
-            return @this.GetBase().Any(t => t.FullName == Config.Command);
+            return type.GetBase().Any(t => t.FullName == Config.Command);
         }
 
-        public static Boolean IsQuery(this Type @this)
+        public static Boolean IsQuery(this Type type)
         {
-            return @this.GetInterfaces().Any(t => t.FullName == Config.Query);
+            return type.GetInterfaces().Any(t => t.FullName == Config.Query);
         }
 
-        public static Boolean IsMessage(this Type @this)
+        public static Boolean IsMessage(this Type type)
         {
-            return @this.GetInterfaces().Any(t => t.FullName == Config.Message);
+            return type.GetInterfaces().Any(t => t.FullName == Config.Message);
         }
 
-        public static IEnumerable<Type> GetBase(this Type @this, Boolean self = false)
+        public static IEnumerable<Type> GetBase(this Type type, Boolean self = false)
         {
             if (self)
-                yield return @this;
-            if (@this.BaseType != null)
-                foreach (Type super in @this.BaseType.GetBase(true))
+                yield return type;
+            if (type.BaseType != null)
+                foreach (Type super in type.BaseType.GetBase(true))
                     yield return super;
         }
 
-        public static List<Type> GetTypes(this Type @this)
+        public static List<Type> GetTypes(this Type type)
         {
             List<Type> types = new List<Type>();
 
-            Type type = @this.BaseType;
-            while (type != null && type != typeof(Object))
+            Type super = type.BaseType;
+            while (super != null && super != typeof(Object))
             {
-                if (type.GetInterfaces().Any(i => i.IsMessage()))
-                    types.Add(type);
-                type = type.BaseType;
+                if (super.GetInterfaces().Any(i => i.IsMessage()))
+                    types.Add(super);
+                super = super.BaseType;
             }
 
-            types.AddRange(@this.GetInterfaces().Where(t => t.GetInterfaces().Any(i => i.FullName == Config.Message)));
+            types.AddRange(type.GetInterfaces().Where(t => t.GetInterfaces().Any(i => i.FullName == Config.Message)));
 
             return types;
         }
 
-        public static Dictionary<string, Type> GetMessageMembers(this Type @this)
+        public static Dictionary<string, Type> GetMessageMembers(this Type type)
         {
-            return @this.GetMessageProperties().Select(p => new KeyValuePair<string, Type>(p.Name, p.PropertyType)).Union(@this.GetMessageFields().Select(f => new KeyValuePair<string, Type>(f.Name, f.FieldType))).DistinctBy(m => m.Key).ToDictionary(m => m.Key, m => m.Value);
+            return type.GetMessageProperties().Select(p => new KeyValuePair<string, Type>(p.Name, p.PropertyType)).Union(type.GetMessageFields().Select(f => new KeyValuePair<string, Type>(f.Name, f.FieldType))).DistinctBy(m => m.Key).ToDictionary(m => m.Key, m => m.Value);
         }
 
-        public static IEnumerable<PropertyInfo> GetMessageProperties(this Type @this)
+        public static IEnumerable<PropertyInfo> GetMessageProperties(this Type type)
         {
-            List<PropertyInfo> properties = @this.GetProperties().Where(p => p.CanWrite && !p.IsIgnore()).ToList();
-            if (@this.IsInterface)
-                properties.AddRange(@this.GetInterfaces().SelectMany(i => i.GetMessageProperties()));
+            List<PropertyInfo> properties = type.GetProperties().Where(p => p.CanWrite && !p.IsIgnore()).ToList();
+            if (type.IsInterface)
+                properties.AddRange(type.GetInterfaces().SelectMany(i => i.GetMessageProperties()));
             return properties;
         }
 
-        public static IEnumerable<FieldInfo> GetMessageFields(this Type @this)
+        public static IEnumerable<FieldInfo> GetMessageFields(this Type type)
         {
-            return @this.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
+            return type.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
         }
 
-        public static String ToEnum(this String @this)
+        public static String ToEnum(this String value)
         {
-            return String.Format("{0}Enum", String.Join(null, @this.GetCamel().Except(new[] { "Type" })));
+            return String.Format("{0}Enum", String.Join(null, value.GetCamel().Except(new[] { "Type" })));
         }
 
-        public static String GetDeclaration(this Type @this)
+        public static String GetDeclaration(this Type type)
         {
             String name = typeof(Object).Name;
-            String ns = @this.Namespace.Split('.').First();
+            String ns = type.Namespace.Split('.').First();
 
             if (ns != "System")
             {
-                if (@this.IsEnum && ns == "Wonga")
-                    return @this.Name.ToEnum();
+                if (type.IsEnum && ns == "Wonga")
+                    return type.Name.ToEnum();
                 return name;
             }
 
-            if (@this.IsGenericType)
+            if (type.IsGenericType)
             {
-                Type definition = @this.GetGenericTypeDefinition();
-                Type[] arguments = @this.GetGenericArguments();
+                Type definition = type.GetGenericTypeDefinition();
+                Type[] arguments = type.GetGenericArguments();
 
                 if (arguments.Length > 1)
                     return name;
@@ -214,32 +224,32 @@ namespace Wonga.QA.Generators.Core
                 return String.Format("{0}<{1}>", definition.Name.Split('`').First(), argument);
             }
 
-            if (@this.IsArray)
-                return String.Format("{0}[]", @this.GetElementType().GetDeclaration());
+            if (type.IsArray)
+                return String.Format("{0}[]", type.GetElementType().GetDeclaration());
 
-            return @this.Name;
+            return type.Name;
         }
 
-        public static Boolean IsInstantiatable(this Type @this)
+        public static Boolean IsInstantiatable(this Type type)
         {
-            return @this.IsInterface || @this.IsClass && !@this.IsAbstract;
+            return type.IsInterface || type.IsClass && !type.IsAbstract;
         }
 
-        public static List<T> ForEach<T>(this IEnumerable<T> @this, Action<T> action)
+        public static List<T> ForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
         {
-            List<T> list = @this.ToList();
+            List<T> list = enumerable.ToList();
             list.ForEach(action);
             return list;
         }
 
-        public static IEnumerable<T> DistinctBy<T, TT>(this IEnumerable<T> @this, Func<T, TT> func)
+        public static IEnumerable<T> DistinctBy<T, TT>(this IEnumerable<T> enumerable, Func<T, TT> func)
         {
-            return @this.GroupBy(func).Select(g => g.First());
+            return enumerable.GroupBy(func).Select(g => g.First());
         }
 
-        public static String[] GetCamel(this String @this)
+        public static String[] GetCamel(this String value)
         {
-            return Regex.Split(@this, "(?<=[^A-Z])(?=[A-Z])|(?<=[^^])(?=[A-Z][^A-Z])");
+            return Regex.Split(value, "(?<=[^A-Z])(?=[A-Z])|(?<=[^^])(?=[A-Z][^A-Z])");
         }
 
         public static String ToCamel(this String value)
@@ -252,35 +262,35 @@ namespace Wonga.QA.Generators.Core
             return value[0].ToString().ToUpper() + value.Substring(1).ToLower();
         }
 
-        public static String Quote(this String @this)
+        public static String Quote(this String value)
         {
-            return String.Format("\"{0}\"", @this);
+            return String.Format("\"{0}\"", value);
         }
 
-        public static StringBuilder AppendFormatLine(this StringBuilder @this, String format, params Object[] args)
+        public static StringBuilder AppendFormatLine(this StringBuilder builder, String format, params Object[] args)
         {
-            return @this.AppendFormat(format, args).AppendLine();
+            return builder.AppendFormat(format, args).AppendLine();
         }
 
-        public static StringBuilder AppendFormatLine(this StringBuilder @this, IEnumerable<string> format, params Object[] args)
+        public static StringBuilder AppendFormatLine(this StringBuilder builder, IEnumerable<string> format, params Object[] args)
         {
-            return @this.AppendFormatLine(String.Join(Environment.NewLine, format), args);
+            return builder.AppendFormatLine(String.Join(Environment.NewLine, format), args);
         }
 
-        public static T GetAttribute<T>(this MemberInfo @this) where T : Attribute
+        public static T GetAttribute<T>(this MemberInfo member) where T : Attribute
         {
-            return (T)@this.GetCustomAttributes(typeof(T), false).SingleOrDefault();
+            return (T)member.GetCustomAttributes(typeof(T), false).SingleOrDefault();
         }
 
-        public static Boolean IsIgnore(this MemberInfo @this)
+        public static Boolean IsIgnore(this MemberInfo member)
         {
-            return @this.GetAttribute<XmlIgnoreAttribute>() != null;
+            return member.GetAttribute<XmlIgnoreAttribute>() != null;
         }
 
-        public static String GetName(this MemberInfo @this)
+        public static String GetName(this MemberInfo member)
         {
-            XmlElementAttribute element = @this.GetAttribute<XmlElementAttribute>();
-            return element == null || String.IsNullOrEmpty(element.ElementName) ? @this.Name : element.ElementName;
+            XmlElementAttribute element = member.GetAttribute<XmlElementAttribute>();
+            return element == null || String.IsNullOrEmpty(element.ElementName) ? member.Name : element.ElementName;
         }
 
         public static String GetEnum(this FieldInfo field)

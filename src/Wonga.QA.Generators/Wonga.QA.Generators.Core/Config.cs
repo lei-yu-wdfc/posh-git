@@ -10,6 +10,8 @@ namespace Wonga.QA.Generators.Core
         public static String Origin { get; set; }
         public static FileInfo SqlMetal { get; set; }
         public static Regex Test { get; set; }
+        public static Regex Artifact { get; set; }
+        public static Regex Cs { get; set; }
 
         public static String[] Databases { get; set; }
         public static String[] Roots { get; set; }
@@ -33,7 +35,9 @@ namespace Wonga.QA.Generators.Core
         {
             Origin = @"..\v3";
             SqlMetal = new FileInfo(Path.Combine(Repo.Lib.FullName, "SqlMetal\\SqlMetal.exe"));
-            Test = new Regex(@"\.Tests?(\.|$)");
+            Test = new Regex(@"\.Tests?(\.|$)", RegexOptions.IgnoreCase);
+            Artifact = new Regex(@"bin|obj");
+            Cs = new Regex(@"\.Csapi\.", RegexOptions.IgnoreCase);
 
             Message = "NServiceBus.IMessage";
             Request = "Wonga.Api.IApiRequest";

@@ -32,7 +32,7 @@ namespace Wonga.QA.Generators.Api
 
             Dictionary<String, String[]> enums = new Dictionary<String, String[]>();
 
-            foreach (FileInfo file in Origin.GetSchemas())
+            foreach (FileInfo file in Origin.GetSchemas().Where(f => !f.IsCs()))
             {
                 Console.WriteLine(file.Name);
 
@@ -45,7 +45,7 @@ namespace Wonga.QA.Generators.Api
                 XmlSchemaElement[] elements = schema.Items.OfType<XmlSchemaElement>().ToArray();
 
                 elements.Where(e => e.SchemaType == null && e.SchemaTypeName == XmlQualifiedName.Empty).ForEach(e => e.SchemaType = new XmlSchemaComplexType());
-                
+
                 DirectoryInfo code3 = Repo.Directory(file.GetName(), bin.Code);
 
                 foreach (XmlSchemaElement element in elements)
@@ -132,7 +132,7 @@ namespace Wonga.QA.Generators.Api
 
             Repo.Inject(bin.Requests, Config.Api.Folder, Config.Api.Project);
             Repo.Inject(bin.Enums, "Enums", Config.Api.Project);
-			
+
         }
     }
 }

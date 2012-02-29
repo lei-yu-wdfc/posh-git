@@ -37,7 +37,7 @@ namespace Wonga.QA.Generators.Core
 
         public static IEnumerable<FileInfo> GetSchemas()
         {
-            return Src.GetFiles("Wonga.*.xsd", SearchOption.AllDirectories).Where(f => !f.IsTest());
+            return Src.GetFiles("Wonga.*.xsd", SearchOption.AllDirectories).Where(f => !f.IsTest() && !f.IsArtifact());
         }
     }
 }
