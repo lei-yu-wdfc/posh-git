@@ -77,6 +77,8 @@
     <Compile Include="Temp\CheckpointDefinitionEnum.cs" />
     <Compile Include="Temp\CheckpointStatusEnum.cs" />
     <Compile Include="Temp\CreditBureauEnum.cs" />
+    <Compile Include="Temp\IovationMockResponse.cs" />
+    <Compile Include="Temp\RiskMiddlenameMask.cs" />
     <Compile Include="Requests\AddBankAccountCaCommand.cs" />
     <Compile Include="Requests\AddBankAccountUkCommand.cs" />
     <Compile Include="Requests\AddBankAccountZaCommand.cs" />
@@ -85,6 +87,7 @@
     <Compile Include="Requests\AddPaymentCardCommand.cs" />
     <Compile Include="Requests\AddPrimaryOrganisationDirectorCommand.cs" />
     <Compile Include="Requests\AddSecondaryOrganisationDirectorCommand.cs" />
+    <Compile Include="Requests\CancelRepaymentArrangementCsapiCommand.cs" />
     <Compile Include="Requests\CancelUserActionCommand.cs" />
     <Compile Include="Requests\ChangePasswordCommand.cs" />
     <Compile Include="Requests\CompleteEmailVerificationCommand.cs" />
@@ -120,6 +123,7 @@
     <Compile Include="Requests\GetCustomerDetailsQuery.cs" />
     <Compile Include="Requests\GetCustomerSubRegionCaQuery.cs" />
     <Compile Include="Requests\GetDirectDebitFormZaQuery.cs" />
+    <Compile Include="Requests\GetEmailReturnLinkCorrelationRecordWbUkQuery.cs" />
     <Compile Include="Requests\GetFixedInstallmentAgreementWbUkQuery.cs" />
     <Compile Include="Requests\GetFixedTermLoanApplicationQuery.cs" />
     <Compile Include="Requests\GetFixedTermLoanApplicationZaQuery.cs" />
@@ -155,6 +159,7 @@
     <Compile Include="Requests\GetRepaymentArrangementCalculationQuery.cs" />
     <Compile Include="Requests\GetRepaymentArrangementParametersQuery.cs" />
     <Compile Include="Requests\GetRepaymentArrangementQuery.cs" />
+    <Compile Include="Requests\GetRepaymentArrangementsQuery.cs" />
     <Compile Include="Requests\GetSecciQuery.cs" />
     <Compile Include="Requests\GetSocialDetailsQuery.cs" />
     <Compile Include="Requests\GetUserLocationQuery.cs" />
@@ -231,8 +236,6 @@
     <Compile Include="Enums\ProvinceEnum.cs" />
     <Compile Include="Enums\SliderPositionEnum.cs" />
     <Compile Include="Enums\TitleEnum.cs" />
-    <Compile Include="Temp\IovationMockResponse.cs" />
-    <Compile Include="Temp\RiskMiddlenameMask.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />

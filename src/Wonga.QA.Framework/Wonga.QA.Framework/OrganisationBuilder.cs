@@ -72,9 +72,17 @@ namespace Wonga.QA.Framework
                 requests.Add(AddSecondaryOrganisationDirectorCommand.New(r => r.OrganisationId = _id));
             }
             
-            Driver.Api.Commands.Post(requests);            
+            Driver.Api.Commands.Post(requests);
+
+            Do.Until(
+                () =>
+                Driver.Db.ContactManagement.DirectorOrganisationMappings.Count(
+                    director => director.OrganisationId == _id && director.DirectorLevel > 0) == _numberOfSecondaryDirector);
+
+
+
 
             return new Organisation(_id);
-        }
+        }      
     }
 }

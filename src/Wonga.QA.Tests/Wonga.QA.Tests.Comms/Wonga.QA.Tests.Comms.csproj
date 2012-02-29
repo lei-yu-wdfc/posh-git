@@ -33,6 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CommsServiceTests.cs" />
+    <Compile Include="EmailReturnLinkCorrelationRecordTests.cs" />
     <Compile Include="Email\PaymentReminderEmailTests.cs" />
     <Compile Include="MobilePhoneTests.cs" />
     <Compile Include="OrganisationTests.cs" />

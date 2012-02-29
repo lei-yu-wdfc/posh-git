@@ -19,8 +19,7 @@ namespace Wonga.QA.Tests.Journeys
             
             Organisation comp = OrganisationBuilder.New().WithPrimaryApplicant(cust).Build();
 
-            ApplicationBuilder.New(cust, comp).Build();
-            SignupSecondaryDirectors(comp);
+            ApplicationBuilder.New(cust, comp).Build();            
         }
 
         [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
@@ -109,19 +108,5 @@ namespace Wonga.QA.Tests.Journeys
                 }
             }
         }
-
-		#region Helpers
-
-		private void SignupSecondaryDirectors(Organisation org)
-        {
-            var guarantors = Driver.Db.ContactManagement.DirectorOrganisationMappings.Where(entity => entity.OrganisationId == org.Id && entity.DirectorLevel>0);
-            foreach (DirectorOrganisationMappingEntity guarantor in guarantors)
-            {
-                CustomerBuilder sd = CustomerBuilder.New(guarantor.AccountId);
-                sd.Build();
-            }
-		}
-
-		#endregion
 	}
 }

@@ -5,14 +5,15 @@ using System.Linq;
 using System.Text;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db.ContactManagement;
 
 namespace Wonga.QA.Framework
 {
-    public class BusineesAppicationBuilder : ApplicationBuilder
+    public class BusinessApplicationBuilder : ApplicationBuilder
     {
         protected Organisation _company;
 
-        public BusineesAppicationBuilder(Customer customer, Organisation company)
+        public BusinessApplicationBuilder(Customer customer, Organisation company)
         {
             _company = company;
             _customer = customer;
@@ -20,6 +21,8 @@ namespace Wonga.QA.Framework
 
         public override Application Build()
         {
+            SignupSecondaryDirectors();
+
             var requests = new List<ApiRequest>
             {
                 SubmitApplicationBehaviourCommand.New(r => r.ApplicationId = _id),
@@ -69,5 +72,19 @@ namespace Wonga.QA.Framework
 
             return new Application(_id);
         }
+
+        #region Helpers
+
+        public void SignupSecondaryDirectors()
+        {
+            var guarantors = Driver.Db.ContactManagement.DirectorOrganisationMappings.Where(entity => entity.OrganisationId == _company.Id && entity.DirectorLevel > 0);
+            foreach (DirectorOrganisationMappingEntity guarantor in guarantors)
+            {
+                CustomerBuilder sd = CustomerBuilder.New(guarantor.AccountId);
+                sd.Build();
+            }
+        }
+
+        #endregion
     }
 }

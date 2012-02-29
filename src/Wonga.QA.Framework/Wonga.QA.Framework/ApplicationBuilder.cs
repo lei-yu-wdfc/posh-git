@@ -50,7 +50,7 @@ namespace Wonga.QA.Framework
 
         public static ApplicationBuilder New(Customer customer, Organisation company)
         {
-            return new BusineesAppicationBuilder(customer, company);
+            return new BusinessApplicationBuilder(customer, company);
         }
 
         public ApplicationBuilder WithLoanAmount(decimal loanAmount)
