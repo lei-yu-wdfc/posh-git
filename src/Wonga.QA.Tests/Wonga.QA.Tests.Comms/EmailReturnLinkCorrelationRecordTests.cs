@@ -12,7 +12,7 @@ namespace Wonga.QA.Tests.Comms
     [TestFixture]
     public class EmailReturnLinkCorrelationRecordTests
     {
-        [Test, JIRA("SME-976"), Description("This test verifies documents being generated as part of L0 process, which is a key prerequisite for emails to be sent (this last step involves 3rd party)")]
+        [Test,AUT(AUT.Wb), JIRA("SME-976"), Description("This test verifies documents being generated as part of L0 process, which is a key prerequisite for emails to be sent (this last step involves 3rd party)")]
         public void Test()
         {
             Customer cust = CustomerBuilder.New().Build();
