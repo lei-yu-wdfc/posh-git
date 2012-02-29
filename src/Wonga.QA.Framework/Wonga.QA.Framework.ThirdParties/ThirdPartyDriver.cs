@@ -10,8 +10,12 @@ namespace Wonga.QA.Framework.ThirdParties
         public ThirdPartyDriver()
         {
             ExactTarget = new ExactTarget();
+
+			Salesforce = new Salesforce();
         }
 
-        public ExactTarget ExactTarget { get; private set; }    
+        public ExactTarget ExactTarget { get; private set; }
+
+		public Salesforce Salesforce { get; private set; }
     }
 }
