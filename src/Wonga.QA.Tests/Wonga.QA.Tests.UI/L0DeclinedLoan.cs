@@ -28,6 +28,13 @@ namespace Wonga.QA.Tests.Ui
             var processingPage = ZaL0Path();
             var declinedPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
         }
+
+        [Test, AUT(AUT.Ca), Pending("CA WIP,RC FE seems broken - postponing the push of the selenium tests")]
+        public void CaDeclinedLoan()
+        {
+            var processingPage = CaL0Path();
+            var declinedPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
+        }
     }
 
 }

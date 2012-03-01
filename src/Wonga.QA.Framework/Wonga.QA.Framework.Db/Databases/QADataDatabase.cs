@@ -30,6 +30,27 @@ namespace Wonga.QA.Framework.Db.QAData
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
+    partial void InsertCallReportResponse(CallReportResponse instance);
+    partial void UpdateCallReportResponse(CallReportResponse instance);
+    partial void DeleteCallReportResponse(CallReportResponse instance);
+    partial void InsertCallValidateOutput(CallValidateOutput instance);
+    partial void UpdateCallValidateOutput(CallValidateOutput instance);
+    partial void DeleteCallValidateOutput(CallValidateOutput instance);
+    partial void InsertExperianBWCardResponse(ExperianBWCardResponse instance);
+    partial void UpdateExperianBWCardResponse(ExperianBWCardResponse instance);
+    partial void DeleteExperianBWCardResponse(ExperianBWCardResponse instance);
+    partial void InsertExperianBWVerifyResponse(ExperianBWVerifyResponse instance);
+    partial void UpdateExperianBWVerifyResponse(ExperianBWVerifyResponse instance);
+    partial void DeleteExperianBWVerifyResponse(ExperianBWVerifyResponse instance);
+    partial void InsertExperianResponse(ExperianResponse instance);
+    partial void UpdateExperianResponse(ExperianResponse instance);
+    partial void DeleteExperianResponse(ExperianResponse instance);
+    partial void InsertGraydonCompanyReport(GraydonCompanyReport instance);
+    partial void UpdateGraydonCompanyReport(GraydonCompanyReport instance);
+    partial void DeleteGraydonCompanyReport(GraydonCompanyReport instance);
+    partial void InsertIovationDataOutput(IovationDataOutput instance);
+    partial void UpdateIovationDataOutput(IovationDataOutput instance);
+    partial void DeleteIovationDataOutput(IovationDataOutput instance);
     partial void InsertMSSQLDeploy(MSSQLDeploy instance);
     partial void UpdateMSSQLDeploy(MSSQLDeploy instance);
     partial void DeleteMSSQLDeploy(MSSQLDeploy instance);
@@ -125,8 +146,10 @@ namespace Wonga.QA.Framework.Db.QAData
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CallReportResponse")]
-	public partial class CallReportResponse : DbEntity<CallReportResponse>
+	public partial class CallReportResponse : DbEntity<CallReportResponse>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private int _CallReportResponseId;
 		
@@ -138,11 +161,28 @@ namespace Wonga.QA.Framework.Db.QAData
 		
 		private string _Response;
 		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnCallReportResponseIdChanging(int value);
+    partial void OnCallReportResponseIdChanged();
+    partial void OnWaitTimeInSecondsChanging(int value);
+    partial void OnWaitTimeInSecondsChanged();
+    partial void OnForenameChanging(string value);
+    partial void OnForenameChanged();
+    partial void OnSurnameChanging(string value);
+    partial void OnSurnameChanged();
+    partial void OnResponseChanging(string value);
+    partial void OnResponseChanged();
+    #endregion
+		
 		public CallReportResponse()
 		{
+			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CallReportResponseId", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CallReportResponseId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int CallReportResponseId
 		{
 			get
@@ -153,7 +193,11 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._CallReportResponseId != value))
 				{
+					this.OnCallReportResponseIdChanging(value);
+					this.SendPropertyChanging();
 					this._CallReportResponseId = value;
+					this.SendPropertyChanged("CallReportResponseId");
+					this.OnCallReportResponseIdChanged();
 				}
 			}
 		}
@@ -169,7 +213,11 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._WaitTimeInSeconds != value))
 				{
+					this.OnWaitTimeInSecondsChanging(value);
+					this.SendPropertyChanging();
 					this._WaitTimeInSeconds = value;
+					this.SendPropertyChanged("WaitTimeInSeconds");
+					this.OnWaitTimeInSecondsChanged();
 				}
 			}
 		}
@@ -185,7 +233,11 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._Forename != value))
 				{
+					this.OnForenameChanging(value);
+					this.SendPropertyChanging();
 					this._Forename = value;
+					this.SendPropertyChanged("Forename");
+					this.OnForenameChanged();
 				}
 			}
 		}
@@ -201,7 +253,11 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._Surname != value))
 				{
+					this.OnSurnameChanging(value);
+					this.SendPropertyChanging();
 					this._Surname = value;
+					this.SendPropertyChanged("Surname");
+					this.OnSurnameChanged();
 				}
 			}
 		}
@@ -217,15 +273,41 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._Response != value))
 				{
+					this.OnResponseChanging(value);
+					this.SendPropertyChanging();
 					this._Response = value;
+					this.SendPropertyChanged("Response");
+					this.OnResponseChanged();
 				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CallValidateOutput")]
-	public partial class CallValidateOutput : DbEntity<CallValidateOutput>
+	public partial class CallValidateOutput : DbEntity<CallValidateOutput>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private int _CallValidateOutputId;
 		
@@ -235,11 +317,26 @@ namespace Wonga.QA.Framework.Db.QAData
 		
 		private string _Response;
 		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnCallValidateOutputIdChanging(int value);
+    partial void OnCallValidateOutputIdChanged();
+    partial void OnWaitTimeInSecondsChanging(int value);
+    partial void OnWaitTimeInSecondsChanged();
+    partial void OnResponseTypeChanging(string value);
+    partial void OnResponseTypeChanged();
+    partial void OnResponseChanging(string value);
+    partial void OnResponseChanged();
+    #endregion
+		
 		public CallValidateOutput()
 		{
+			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CallValidateOutputId", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CallValidateOutputId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int CallValidateOutputId
 		{
 			get
@@ -250,7 +347,11 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._CallValidateOutputId != value))
 				{
+					this.OnCallValidateOutputIdChanging(value);
+					this.SendPropertyChanging();
 					this._CallValidateOutputId = value;
+					this.SendPropertyChanged("CallValidateOutputId");
+					this.OnCallValidateOutputIdChanged();
 				}
 			}
 		}
@@ -266,7 +367,11 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._WaitTimeInSeconds != value))
 				{
+					this.OnWaitTimeInSecondsChanging(value);
+					this.SendPropertyChanging();
 					this._WaitTimeInSeconds = value;
+					this.SendPropertyChanged("WaitTimeInSeconds");
+					this.OnWaitTimeInSecondsChanged();
 				}
 			}
 		}
@@ -282,7 +387,11 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._ResponseType != value))
 				{
+					this.OnResponseTypeChanging(value);
+					this.SendPropertyChanging();
 					this._ResponseType = value;
+					this.SendPropertyChanged("ResponseType");
+					this.OnResponseTypeChanged();
 				}
 			}
 		}
@@ -298,15 +407,41 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._Response != value))
 				{
+					this.OnResponseChanging(value);
+					this.SendPropertyChanging();
 					this._Response = value;
+					this.SendPropertyChanged("Response");
+					this.OnResponseChanged();
 				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ExperianBWCardResponse")]
-	public partial class ExperianBWCardResponse : DbEntity<ExperianBWCardResponse>
+	public partial class ExperianBWCardResponse : DbEntity<ExperianBWCardResponse>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private int _ExperianBWCardResponseId;
 		
@@ -316,11 +451,26 @@ namespace Wonga.QA.Framework.Db.QAData
 		
 		private string _Response;
 		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnExperianBWCardResponseIdChanging(int value);
+    partial void OnExperianBWCardResponseIdChanged();
+    partial void OnWaitTimeInSecondsChanging(int value);
+    partial void OnWaitTimeInSecondsChanged();
+    partial void OnCVVChanging(string value);
+    partial void OnCVVChanged();
+    partial void OnResponseChanging(string value);
+    partial void OnResponseChanged();
+    #endregion
+		
 		public ExperianBWCardResponse()
 		{
+			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ExperianBWCardResponseId", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ExperianBWCardResponseId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int ExperianBWCardResponseId
 		{
 			get
@@ -331,7 +481,11 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._ExperianBWCardResponseId != value))
 				{
+					this.OnExperianBWCardResponseIdChanging(value);
+					this.SendPropertyChanging();
 					this._ExperianBWCardResponseId = value;
+					this.SendPropertyChanged("ExperianBWCardResponseId");
+					this.OnExperianBWCardResponseIdChanged();
 				}
 			}
 		}
@@ -347,7 +501,11 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._WaitTimeInSeconds != value))
 				{
+					this.OnWaitTimeInSecondsChanging(value);
+					this.SendPropertyChanging();
 					this._WaitTimeInSeconds = value;
+					this.SendPropertyChanged("WaitTimeInSeconds");
+					this.OnWaitTimeInSecondsChanged();
 				}
 			}
 		}
@@ -363,7 +521,11 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._CVV != value))
 				{
+					this.OnCVVChanging(value);
+					this.SendPropertyChanging();
 					this._CVV = value;
+					this.SendPropertyChanged("CVV");
+					this.OnCVVChanged();
 				}
 			}
 		}
@@ -379,15 +541,41 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._Response != value))
 				{
+					this.OnResponseChanging(value);
+					this.SendPropertyChanging();
 					this._Response = value;
+					this.SendPropertyChanged("Response");
+					this.OnResponseChanged();
 				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ExperianBWVerifyResponse")]
-	public partial class ExperianBWVerifyResponse : DbEntity<ExperianBWVerifyResponse>
+	public partial class ExperianBWVerifyResponse : DbEntity<ExperianBWVerifyResponse>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private int _ExperianBWVerifyResponseId;
 		
@@ -397,11 +585,26 @@ namespace Wonga.QA.Framework.Db.QAData
 		
 		private string _Response;
 		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnExperianBWVerifyResponseIdChanging(int value);
+    partial void OnExperianBWVerifyResponseIdChanged();
+    partial void OnWaitTimeInSecondsChanging(int value);
+    partial void OnWaitTimeInSecondsChanged();
+    partial void OnAccountNumberChanging(string value);
+    partial void OnAccountNumberChanged();
+    partial void OnResponseChanging(string value);
+    partial void OnResponseChanged();
+    #endregion
+		
 		public ExperianBWVerifyResponse()
 		{
+			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ExperianBWVerifyResponseId", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ExperianBWVerifyResponseId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int ExperianBWVerifyResponseId
 		{
 			get
@@ -412,7 +615,11 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._ExperianBWVerifyResponseId != value))
 				{
+					this.OnExperianBWVerifyResponseIdChanging(value);
+					this.SendPropertyChanging();
 					this._ExperianBWVerifyResponseId = value;
+					this.SendPropertyChanged("ExperianBWVerifyResponseId");
+					this.OnExperianBWVerifyResponseIdChanged();
 				}
 			}
 		}
@@ -428,7 +635,11 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._WaitTimeInSeconds != value))
 				{
+					this.OnWaitTimeInSecondsChanging(value);
+					this.SendPropertyChanging();
 					this._WaitTimeInSeconds = value;
+					this.SendPropertyChanged("WaitTimeInSeconds");
+					this.OnWaitTimeInSecondsChanged();
 				}
 			}
 		}
@@ -444,7 +655,11 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._AccountNumber != value))
 				{
+					this.OnAccountNumberChanging(value);
+					this.SendPropertyChanging();
 					this._AccountNumber = value;
+					this.SendPropertyChanged("AccountNumber");
+					this.OnAccountNumberChanged();
 				}
 			}
 		}
@@ -460,15 +675,41 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._Response != value))
 				{
+					this.OnResponseChanging(value);
+					this.SendPropertyChanging();
 					this._Response = value;
+					this.SendPropertyChanged("Response");
+					this.OnResponseChanged();
 				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ExperianResponse")]
-	public partial class ExperianResponse : DbEntity<ExperianResponse>
+	public partial class ExperianResponse : DbEntity<ExperianResponse>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private int _ExperianResponseId;
 		
@@ -480,11 +721,28 @@ namespace Wonga.QA.Framework.Db.QAData
 		
 		private string _Response;
 		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnExperianResponseIdChanging(int value);
+    partial void OnExperianResponseIdChanged();
+    partial void OnWaitTimeInSecondsChanging(int value);
+    partial void OnWaitTimeInSecondsChanged();
+    partial void OnForenameChanging(string value);
+    partial void OnForenameChanged();
+    partial void OnSurnameChanging(string value);
+    partial void OnSurnameChanged();
+    partial void OnResponseChanging(string value);
+    partial void OnResponseChanged();
+    #endregion
+		
 		public ExperianResponse()
 		{
+			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ExperianResponseId", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ExperianResponseId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int ExperianResponseId
 		{
 			get
@@ -495,7 +753,11 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._ExperianResponseId != value))
 				{
+					this.OnExperianResponseIdChanging(value);
+					this.SendPropertyChanging();
 					this._ExperianResponseId = value;
+					this.SendPropertyChanged("ExperianResponseId");
+					this.OnExperianResponseIdChanged();
 				}
 			}
 		}
@@ -511,7 +773,11 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._WaitTimeInSeconds != value))
 				{
+					this.OnWaitTimeInSecondsChanging(value);
+					this.SendPropertyChanging();
 					this._WaitTimeInSeconds = value;
+					this.SendPropertyChanged("WaitTimeInSeconds");
+					this.OnWaitTimeInSecondsChanged();
 				}
 			}
 		}
@@ -527,7 +793,11 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._Forename != value))
 				{
+					this.OnForenameChanging(value);
+					this.SendPropertyChanging();
 					this._Forename = value;
+					this.SendPropertyChanged("Forename");
+					this.OnForenameChanged();
 				}
 			}
 		}
@@ -543,7 +813,11 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._Surname != value))
 				{
+					this.OnSurnameChanging(value);
+					this.SendPropertyChanging();
 					this._Surname = value;
+					this.SendPropertyChanged("Surname");
+					this.OnSurnameChanged();
 				}
 			}
 		}
@@ -559,15 +833,41 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._Response != value))
 				{
+					this.OnResponseChanging(value);
+					this.SendPropertyChanging();
 					this._Response = value;
+					this.SendPropertyChanged("Response");
+					this.OnResponseChanged();
 				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.GraydonCompanyReport")]
-	public partial class GraydonCompanyReport : DbEntity<GraydonCompanyReport>
+	public partial class GraydonCompanyReport : DbEntity<GraydonCompanyReport>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private int _GraydonCompanyReportId;
 		
@@ -583,11 +883,32 @@ namespace Wonga.QA.Framework.Db.QAData
 		
 		private string _CompanyProducts;
 		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnGraydonCompanyReportIdChanging(int value);
+    partial void OnGraydonCompanyReportIdChanged();
+    partial void OnWaitTimeInSecondsChanging(int value);
+    partial void OnWaitTimeInSecondsChanged();
+    partial void OnOrderReferenceChanging(int value);
+    partial void OnOrderReferenceChanged();
+    partial void OnCompanyMatchIdentifierChanging(string value);
+    partial void OnCompanyMatchIdentifierChanged();
+    partial void OnCompanyProductIdentifierChanging(string value);
+    partial void OnCompanyProductIdentifierChanged();
+    partial void OnCompanyReportChanging(string value);
+    partial void OnCompanyReportChanged();
+    partial void OnCompanyProductsChanging(string value);
+    partial void OnCompanyProductsChanged();
+    #endregion
+		
 		public GraydonCompanyReport()
 		{
+			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GraydonCompanyReportId", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GraydonCompanyReportId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int GraydonCompanyReportId
 		{
 			get
@@ -598,7 +919,11 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._GraydonCompanyReportId != value))
 				{
+					this.OnGraydonCompanyReportIdChanging(value);
+					this.SendPropertyChanging();
 					this._GraydonCompanyReportId = value;
+					this.SendPropertyChanged("GraydonCompanyReportId");
+					this.OnGraydonCompanyReportIdChanged();
 				}
 			}
 		}
@@ -614,7 +939,11 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._WaitTimeInSeconds != value))
 				{
+					this.OnWaitTimeInSecondsChanging(value);
+					this.SendPropertyChanging();
 					this._WaitTimeInSeconds = value;
+					this.SendPropertyChanged("WaitTimeInSeconds");
+					this.OnWaitTimeInSecondsChanged();
 				}
 			}
 		}
@@ -630,7 +959,11 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._OrderReference != value))
 				{
+					this.OnOrderReferenceChanging(value);
+					this.SendPropertyChanging();
 					this._OrderReference = value;
+					this.SendPropertyChanged("OrderReference");
+					this.OnOrderReferenceChanged();
 				}
 			}
 		}
@@ -646,7 +979,11 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._CompanyMatchIdentifier != value))
 				{
+					this.OnCompanyMatchIdentifierChanging(value);
+					this.SendPropertyChanging();
 					this._CompanyMatchIdentifier = value;
+					this.SendPropertyChanged("CompanyMatchIdentifier");
+					this.OnCompanyMatchIdentifierChanged();
 				}
 			}
 		}
@@ -662,7 +999,11 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._CompanyProductIdentifier != value))
 				{
+					this.OnCompanyProductIdentifierChanging(value);
+					this.SendPropertyChanging();
 					this._CompanyProductIdentifier = value;
+					this.SendPropertyChanged("CompanyProductIdentifier");
+					this.OnCompanyProductIdentifierChanged();
 				}
 			}
 		}
@@ -678,7 +1019,11 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._CompanyReport != value))
 				{
+					this.OnCompanyReportChanging(value);
+					this.SendPropertyChanging();
 					this._CompanyReport = value;
+					this.SendPropertyChanged("CompanyReport");
+					this.OnCompanyReportChanged();
 				}
 			}
 		}
@@ -694,15 +1039,41 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._CompanyProducts != value))
 				{
+					this.OnCompanyProductsChanging(value);
+					this.SendPropertyChanging();
 					this._CompanyProducts = value;
+					this.SendPropertyChanged("CompanyProducts");
+					this.OnCompanyProductsChanged();
 				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.IovationDataOutput")]
-	public partial class IovationDataOutput : DbEntity<IovationDataOutput>
+	public partial class IovationDataOutput : DbEntity<IovationDataOutput>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private int _IovationDataOutputId;
 		
@@ -712,11 +1083,26 @@ namespace Wonga.QA.Framework.Db.QAData
 		
 		private string _Response;
 		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIovationDataOutputIdChanging(int value);
+    partial void OnIovationDataOutputIdChanged();
+    partial void OnWaitTimeInSecondsChanging(int value);
+    partial void OnWaitTimeInSecondsChanged();
+    partial void OnTypeChanging(string value);
+    partial void OnTypeChanged();
+    partial void OnResponseChanging(string value);
+    partial void OnResponseChanged();
+    #endregion
+		
 		public IovationDataOutput()
 		{
+			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IovationDataOutputId", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IovationDataOutputId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int IovationDataOutputId
 		{
 			get
@@ -727,7 +1113,11 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._IovationDataOutputId != value))
 				{
+					this.OnIovationDataOutputIdChanging(value);
+					this.SendPropertyChanging();
 					this._IovationDataOutputId = value;
+					this.SendPropertyChanged("IovationDataOutputId");
+					this.OnIovationDataOutputIdChanged();
 				}
 			}
 		}
@@ -743,7 +1133,11 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._WaitTimeInSeconds != value))
 				{
+					this.OnWaitTimeInSecondsChanging(value);
+					this.SendPropertyChanging();
 					this._WaitTimeInSeconds = value;
+					this.SendPropertyChanged("WaitTimeInSeconds");
+					this.OnWaitTimeInSecondsChanged();
 				}
 			}
 		}
@@ -759,7 +1153,11 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._Type != value))
 				{
+					this.OnTypeChanging(value);
+					this.SendPropertyChanging();
 					this._Type = value;
+					this.SendPropertyChanged("Type");
+					this.OnTypeChanged();
 				}
 			}
 		}
@@ -775,8 +1173,32 @@ namespace Wonga.QA.Framework.Db.QAData
 			{
 				if ((this._Response != value))
 				{
+					this.OnResponseChanging(value);
+					this.SendPropertyChanging();
 					this._Response = value;
+					this.SendPropertyChanged("Response");
+					this.OnResponseChanged();
 				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}

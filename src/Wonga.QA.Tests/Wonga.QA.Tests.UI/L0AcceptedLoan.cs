@@ -25,16 +25,13 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-       //WIP [Test, AUT(AUT.Ca)]
+       [Test, AUT(AUT.Ca), Pending("CA WIP,RC FE seems broken - postponing the push of the selenium tests")]
         public void CaAcceptedLoan()
         {
             var processingPage = CaL0Path("test:EmployedMask");
-
             var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
-            
-            acceptedPage.SignConfirmCA(DateTime.Now.ToString("dd MMM yyyy"), _firstName, _lastName);
+            acceptedPage.SignConfirmCA(DateTime.Now.ToString("d MMM yyyy"), _firstName, _lastName);
             var dealDone = acceptedPage.Submit();
-
         }
 
         [Test, AUT(AUT.Wb)]
