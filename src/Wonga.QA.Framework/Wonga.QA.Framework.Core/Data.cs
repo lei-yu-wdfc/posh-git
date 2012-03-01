@@ -75,6 +75,11 @@ namespace Wonga.QA.Framework.Core
 			return "021" + new Random().Next(1000000, 9999999).ToString(CultureInfo.InvariantCulture);
         }
 
+        public static string GetMobilePhone()
+        {
+            return "07500000000";
+        }
+
         public static String GetNationalNumber()
         {
             return "000000000";

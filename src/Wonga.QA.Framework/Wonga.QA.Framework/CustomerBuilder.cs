@@ -36,6 +36,7 @@ namespace Wonga.QA.Framework
         private Guid _bankAccountId;
         private String _phoneNumber;
     	private Int64? _bankAccountNumber;
+        private String _mobileNumber;
 
         private CustomerBuilder()
         {
@@ -80,6 +81,7 @@ namespace Wonga.QA.Framework
         	
             _province = ProvinceEnum.ON;
         	_bankAccountNumber = null;
+            _mobileNumber = Data.GetMobilePhone();
         }
 
         public static CustomerBuilder New()
@@ -243,6 +245,12 @@ namespace Wonga.QA.Framework
 			return this;
 		}
 
+        public CustomerBuilder WithMobileNumber(String mobileNumber)
+        {
+            _mobileNumber = mobileNumber;
+            return this;
+        }
+
         public Customer Build()
         {
 			_nextPayDate.DateFormat = DateFormat.Date;
@@ -395,7 +403,15 @@ namespace Wonga.QA.Framework
                                                     			r.AccountNumber = _bankAccountNumber;
                                                     		}
                                                     	}),
-                        AddPaymentCardCommand.New(r=>r.AccountId = _id)
+                        AddPaymentCardCommand.New(r=>r.AccountId = _id),
+                        VerifyMobilePhoneUkCommand.New(r=>
+                                                           {
+                                                               r.AccountId = _id;
+                                                               r.Forename = _foreName;
+                                                               r.VerificationId = _verification;
+                                                               r.MobilePhone = _mobileNumber;
+                                                           }),
+                        CompleteMobilePhoneVerificationCommand.New(r=> r.VerificationId = _verification)
                     });
                     break;
 
