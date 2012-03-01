@@ -67,7 +67,9 @@ namespace Wonga.QA.Tests.Payments
 			Assert.AreEqual("0", response.Values["RemainingNumberOfPayments"].SingleOrDefault());
 			Assert.AreEqual("0", response.Values["TotalOutstandingAmount"].SingleOrDefault());
 			Assert.AreEqual("0", response.Values["OutstandingPrincipalAmount"].SingleOrDefault());
-			Assert.AreEqual("0", response.Values["OutstandingCharges"].SingleOrDefault()); Assert.AreEqual("0", response.Values["Arrears"].SingleOrDefault());
+			Assert.AreEqual("0", response.Values["OutstandingFees"].SingleOrDefault());
+			Assert.AreEqual("0", response.Values["OutstandingInterest"].SingleOrDefault());
+			Assert.AreEqual("0", response.Values["Arrears"].SingleOrDefault());
 		}
 
 		/// <summary>
@@ -132,7 +134,9 @@ namespace Wonga.QA.Tests.Payments
 			Assert.AreEqual("0", response.Values["RemainingNumberOfPayments"].SingleOrDefault());
 			Assert.AreEqual("0", response.Values["TotalOutstandingAmount"].SingleOrDefault());
 			Assert.AreEqual("0", response.Values["OutstandingPrincipalAmount"].SingleOrDefault());
-			Assert.AreEqual("0", response.Values["OutstandingCharges"].SingleOrDefault()); Assert.AreEqual("0", response.Values["Arrears"].SingleOrDefault());
+			Assert.AreEqual("0", response.Values["OutstandingFees"].SingleOrDefault());
+			Assert.AreEqual("0", response.Values["OutstandingInterest"].SingleOrDefault());
+			Assert.AreEqual("0", response.Values["Arrears"].SingleOrDefault());
 		}
 
 		/// <summary>
@@ -148,7 +152,22 @@ namespace Wonga.QA.Tests.Payments
 			var organisation = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
 			var application = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
 
-			PerformInitialLoanAdvance(application);
+			Do.Until(() =>
+				GetTransactionCount(
+				t => application.Id == t.ApplicationEntity.ExternalId && t.Scope == (int)PaymentTransactionScopeEnum.Debit
+						&& t.Type == PaymentTransactionEnum.Fee.ToString()));
+
+			Do.Until(() =>
+				GetTransactionCount(
+					t => application.Id == t.ApplicationEntity.ExternalId && t.Scope == (int)PaymentTransactionScopeEnum.Debit
+						 && t.Type == PaymentTransactionEnum.Interest.ToString()));
+
+			Do.Until(() =>
+				GetTransactionCount(
+					t => application.Id == t.ApplicationEntity.ExternalId && t.Scope == (int)PaymentTransactionScopeEnum.Debit
+						 && t.Type == PaymentTransactionEnum.CashAdvance.ToString()));
+
+			Do.Until(() => Driver.Db.Payments.PaymentPlans.Single(pp => pp.ApplicationEntity.ExternalId == application.Id));
 
 			var response = Driver.Api.Queries.Post(new GetBusinessAccountSummaryWbUkQuery
 			{
@@ -167,26 +186,8 @@ namespace Wonga.QA.Tests.Payments
 			Assert.AreEqual("20", response.Values["RemainingNumberOfPayments"].SingleOrDefault());
 			Assert.AreEqual("14000.00", response.Values["TotalOutstandingAmount"].SingleOrDefault());
 			Assert.AreEqual("10000.00", response.Values["OutstandingPrincipalAmount"].SingleOrDefault());
-			Assert.AreEqual("4000.00", response.Values["OutstandingCharges"].SingleOrDefault());
-		}
-
-		private void PerformInitialLoanAdvance(Application application)
-		{
-			//Initial Advance
-			Do.Until(() =>
-				GetTransactionCount(
-				t => application.Id == t.ApplicationEntity.ExternalId && t.Scope == (int)PaymentTransactionScopeEnum.Debit
-						&& t.Type == PaymentTransactionEnum.Fee.ToString()));
-
-            Do.With().Timeout(TimeSpan.FromSeconds(5)).Until(() =>
-				GetTransactionCount(
-					t => application.Id == t.ApplicationEntity.ExternalId && t.Scope == (int)PaymentTransactionScopeEnum.Debit
-						 && t.Type == PaymentTransactionEnum.Interest.ToString()));
-
-			Do.With().Timeout(TimeSpan.FromSeconds(5)).Until(() =>
-				GetTransactionCount(
-					t => application.Id == t.ApplicationEntity.ExternalId && t.Scope == (int)PaymentTransactionScopeEnum.Debit
-						 && t.Type == PaymentTransactionEnum.CashAdvance.ToString()));
+			Assert.AreEqual("500.00", response.Values["OutstandingFees"].SingleOrDefault());
+			Assert.AreEqual("3500.00", response.Values["OutstandingInterest"].SingleOrDefault());
 		}
 
 		private int GetTransactionCount(Func<TransactionEntity, bool> func)
