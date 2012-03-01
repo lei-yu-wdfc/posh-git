@@ -18,8 +18,7 @@ namespace Wonga.QA.Tests.Journeys
             Customer cust = CustomerBuilder.New().Build();
             
             Organisation comp = OrganisationBuilder.New().WithPrimaryApplicant(cust).Build();
-            Do.Until(cust.GetBankAccount);
-            Do.Until(cust.GetPaymentCard);
+
             ApplicationBuilder.New(cust, comp).Build();            
         }
 
@@ -27,8 +26,7 @@ namespace Wonga.QA.Tests.Journeys
         public void ApiL0JourneyAccepted()
         {
             Customer cust = CustomerBuilder.New().Build();
-            Do.Until(cust.GetBankAccount);
-            Do.Until(cust.GetPaymentCard);
+
             ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
         }
 
@@ -38,8 +36,6 @@ namespace Wonga.QA.Tests.Journeys
             Customer cust = CustomerBuilder.New().WithMiddleName("Middle").Build();
 
             Organisation comp = OrganisationBuilder.New().WithPrimaryApplicant(cust).Build();
-            Do.Until(cust.GetBankAccount);
-            Do.Until(cust.GetPaymentCard);
             ApplicationBuilder.New(cust, comp).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
         }
 
@@ -47,8 +43,6 @@ namespace Wonga.QA.Tests.Journeys
         public void ApiDeclinedL0Accepted()
         {
             Customer cust = CustomerBuilder.New().WithEmployer("Wonga").Build();
-            Do.Until(cust.GetBankAccount);
-            Do.Until(cust.GetPaymentCard);
             ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
         }
 
@@ -56,8 +50,6 @@ namespace Wonga.QA.Tests.Journeys
 		public void ApiLnJourneyAccepted()
 		{
 			Customer cust = CustomerBuilder.New().Build();
-            Do.Until(cust.GetBankAccount);
-            Do.Until(cust.GetPaymentCard);
 			var applicationL0 = ApplicationBuilder.New(cust).Build();
 
 			applicationL0.RepayOnDueDate();
@@ -69,8 +61,6 @@ namespace Wonga.QA.Tests.Journeys
 		public void ApiLnJourneyDeclined()
 		{
 			Customer cust = CustomerBuilder.New().Build();
-            Do.Until(cust.GetBankAccount);
-            Do.Until(cust.GetPaymentCard);
 			var applicationL0 = ApplicationBuilder.New(cust).Build();
 
             applicationL0.RepayOnDueDate();
@@ -92,8 +82,6 @@ namespace Wonga.QA.Tests.Journeys
             public virtual void SetUp()
             {
                 Customer = CustomerBuilder.New().Build();
-                Do.Until(Customer.GetBankAccount);
-                Do.Until(Customer.GetPaymentCard);
                 Application =
                     ApplicationBuilder.New(Customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
             }

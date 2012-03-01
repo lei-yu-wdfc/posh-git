@@ -15,8 +15,6 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
         {
             Customer cust = CustomerBuilder.New()
 				.WithEmployer(TestMask).Build();
-            Do.Until(cust.GetBankAccount);
-            Do.Until(cust.GetPaymentCard);
             Application app = ApplicationBuilder.New(cust).WithIovationBlackBox("Deny")
                 .WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
 
@@ -29,8 +27,6 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
         {
             Customer cust = CustomerBuilder.New()
 				.WithEmployer(TestMask).Build();
-            Do.Until(cust.GetBankAccount);
-            Do.Until(cust.GetPaymentCard);
             Application app = ApplicationBuilder.New(cust).WithIovationBlackBox("Allow")
                 .WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
 
