@@ -29,18 +29,19 @@ namespace Wonga.QA.Tests.BankGateway
 		[FixtureSetUp]
 		public void FixtureSetUp()
 		{
-			Driver.Db.SetServiceConfigurations(_testModesToSetup);
+			//Driver.Db.SetServiceConfigurations(_testModesToSetup);
 		}
 
-		//Active this test once the feature goes live
-		//[Test, AUT(AUT.Za), JIRA("ZA-2061")]
-		//public void AccountHolderVerificationFeatureSwitchTurnedOn()
-		//{
-		//    var featureSwitchOn = Boolean.Parse(Driver.Db.GetServiceConfiguration("FeatureSwitch.ZA.UseHyphenAHVWebService").Value);
-		//    Assert.IsTrue(featureSwitchOn);
-		//}
+		[Test, AUT(AUT.Za), JIRA("ZA-2061")]
+		[Ignore("Feature not turned on in live")]
+		public void AccountHolderVerificationFeatureSwitchTurnedOn()
+		{
+		    var featureSwitchOn = Boolean.Parse(Driver.Db.GetServiceConfiguration("FeatureSwitch.ZA.UseHyphenAHVWebService").Value);
+		    Assert.IsTrue(featureSwitchOn);
+		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-2061")]
+		[Ignore("Feature not turned on in live")]
 		public void AccountHolderVerificationRequestForSingleApplication()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
@@ -53,6 +54,7 @@ namespace Wonga.QA.Tests.BankGateway
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-2061")]
+		[Ignore("Feature not turned on in live")]
 		public void AccountHolderVerificationWhenBankAccountChanged()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
