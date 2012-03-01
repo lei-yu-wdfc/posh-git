@@ -47,6 +47,11 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 						_expectedScorecardNameLn = ScorecardNameLnZa;
 						_expectedScoreCutoffNewUsers = ScoreCutoffNewUsersZa;
 						_expectedScoreCutoffExistingUsers = ScoreCutoffExistingUsersZa;
+
+						_forename = "ANITHA";
+						_surname = "ESSACK";
+						_dateOfBirth = new Date(new DateTime(1957, 12, 19));
+						_nationalNumber = "5712190106083";
 					}
 					break;
 				default:

@@ -23,7 +23,7 @@ namespace Wonga.QA.Tests.BankGateway
 		                                                              	{
 		                                                              		{"BankGateway.IsTestMode", "false"},
 		                                                              		{"BankGateway.IsAccountVerificationTestMode", "false"},
-		                                                              		{"Mocks.HyphenAHVWebServiceEnabled", "true"}
+		                                                              		{"Mocks.HyphenAHVWebServiceEnabled", "false"}
 		                                                              	};
 
 		[FixtureSetUp]

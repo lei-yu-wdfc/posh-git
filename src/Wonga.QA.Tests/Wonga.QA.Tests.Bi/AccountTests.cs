@@ -15,8 +15,7 @@ namespace Wonga.QA.Tests.Bi
 		public void AccountDetailsStoredInTable()
 		{
 			var customer = CustomerBuilder.New().Build();
-
-			Do.Until(() => Driver.Db.Bi.Accounts.Single(a => a.AccountNKey == customer.Id));
+			Do.Until(() => Driver.Db.Bi.Accounts.Any(a => a.AccountNKey == customer.Id));
 		}
 	}
 }
