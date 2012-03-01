@@ -9,6 +9,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Bi
 {
     [TestFixture]
+    [AUT(AUT.Uk)]
     public class ApplicationStatusChangedTests
     {
         [Test]
