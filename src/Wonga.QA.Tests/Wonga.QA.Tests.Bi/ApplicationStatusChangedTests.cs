@@ -3,6 +3,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Ops;
+using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Bi
@@ -11,8 +12,7 @@ namespace Wonga.QA.Tests.Bi
     public class ApplicationStatusChangedTests
     {
         [Test, AUT(AUT.Uk)]
-        [Ignore]
-        public void FundsTransferred_SubmitsApplicactionStatusChange_ToSalesforce()
+        public void FundsTransferred_SubmitsApplicactionStatusLive_ToSalesforce()
         {
             Customer customer = CustomerBuilder.New().Build();
             const decimal loanAmount = 222.22m;
@@ -26,10 +26,17 @@ namespace Wonga.QA.Tests.Bi
             ServiceConfigurationEntity sfUsername = Driver.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == "Salesforce.UserName");
             ServiceConfigurationEntity sfPassword = Driver.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == "Salesforce.Password");
             ServiceConfigurationEntity sfUrl = Driver.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == "Salesforce.Url");
-            Driver.ThirdParties.Salesforce.SalesforceUsername = sfUsername.Value;
-            Driver.ThirdParties.Salesforce.SalesforcePassword = sfPassword.Value;
-            Driver.ThirdParties.Salesforce.SalesforceUrl = sfUrl.Value;
-            Do.Until(() => Driver.ThirdParties.Salesforce.ApplicationExists(application.Id));
+            var sales = Driver.ThirdParties.Salesforce;
+            sales.SalesforceUsername = sfUsername.Value;
+            sales.SalesforcePassword = sfPassword.Value;
+            sales.SalesforceUrl = sfUrl.Value;
+            Do.Until(() =>
+                         {
+                             var app = sales.GetApplicationById(application.Id);
+                             return app != null && app.Status__c == "Live";
+                         });
+
+
 
         }
     }
