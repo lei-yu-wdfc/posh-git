@@ -33,6 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AccountTests.cs" />
+    <Compile Include="ApplicationStatusChangedTests.cs" />
     <Compile Include="BiServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TransactionTests.cs" />
@@ -60,6 +61,7 @@
     <Reference Include="Wonga.QA.Framework.Svc">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Svc.dll</HintPath>
     </Reference>
+    <Reference Include="Wonga.QA.Framework.ThirdParties, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Wonga.QA.Tests.Core\Wonga.QA.Tests.Core.csproj">
