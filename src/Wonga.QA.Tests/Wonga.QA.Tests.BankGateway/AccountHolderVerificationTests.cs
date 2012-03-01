@@ -15,6 +15,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.BankGateway
 {
+	[Parallelizable(TestScope.All)]
 	class AccountHolderVerificationTests
 	{
 		private const string TestMask = "test:BankAccountIsValid";

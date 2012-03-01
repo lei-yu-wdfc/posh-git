@@ -64,7 +64,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.WithEmployer(TestMask)
 				.WithForename(_forename)
 				.WithMiddleName(_middleName)
-				.WithSurname("Smithee")
+				.WithSurname(Data.GetName())
 				.WithDateOfBirth(_dateOfBirth)
 				.WithNationalNumber(_nationalNumber)
 				.Build();

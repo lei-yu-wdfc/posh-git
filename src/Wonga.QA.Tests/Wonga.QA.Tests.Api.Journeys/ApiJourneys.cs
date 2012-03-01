@@ -18,7 +18,6 @@ namespace Wonga.QA.Tests.Journeys
             Customer cust = CustomerBuilder.New().Build();
             
             Organisation comp = OrganisationBuilder.New().WithPrimaryApplicant(cust).Build();
-
             ApplicationBuilder.New(cust, comp).Build();            
         }
 
@@ -26,7 +25,6 @@ namespace Wonga.QA.Tests.Journeys
         public void ApiL0JourneyAccepted()
         {
             Customer cust = CustomerBuilder.New().Build();
-
             ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
         }
 
