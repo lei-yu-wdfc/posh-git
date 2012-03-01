@@ -45,10 +45,6 @@ namespace Wonga.QA.Framework
 
         public static ApplicationBuilder New(Customer customer)
         {
-            if(Config.AutRequiresPaymentCard)
-            {
-                Do.Until(customer.GetPaymentCard);
-            }
             return new ApplicationBuilder { _customer = customer };
         }
 
@@ -112,6 +108,11 @@ namespace Wonga.QA.Framework
             {
                 throw new NotImplementedException(
                     "WB product should be using factory method with organization parameter");
+            }
+
+            if (Config.AutRequiresPaymentCard)
+            {
+                Do.Until(_customer.GetPaymentCard);
             }
 
             _setPromiseDateAndLoanTerm();

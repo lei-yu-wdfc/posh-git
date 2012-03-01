@@ -17,7 +17,6 @@ namespace Wonga.QA.Tests.Payments
             int loanTerm = 12;
             Customer customer = CustomerBuilder.New().Build();
             Do.Until(customer.GetBankAccount);
-            Do.Until(customer.GetPaymentCard);
             Application application = ApplicationBuilder.New(customer)
                 .WithLoanTerm(loanTerm)
                 .WithLoanAmount(loanAmount).Build();
@@ -37,7 +36,6 @@ namespace Wonga.QA.Tests.Payments
             int loanTerm = 12;
             Customer customer = CustomerBuilder.New().Build();
             Do.Until(customer.GetBankAccount);
-            Do.Until(customer.GetPaymentCard);
             Application application = ApplicationBuilder.New(customer)
                 .WithLoanTerm(loanTerm)
                 .WithLoanAmount(loanAmount).Build();
