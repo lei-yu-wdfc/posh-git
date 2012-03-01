@@ -101,6 +101,14 @@ namespace Wonga.QA.Framework
             return this;
         }
 
+        private static bool AutRequiresPaymentCard
+        {
+            get
+            {
+                return Config.AUT == AUT.Uk;
+            }
+        }
+
         public virtual Application Build()
         {
 			
@@ -110,7 +118,7 @@ namespace Wonga.QA.Framework
                     "WB product should be using factory method with organization parameter");
             }
 
-            if (Config.AutRequiresPaymentCard)
+            if (AutRequiresPaymentCard)
             {
                 Do.Until(_customer.GetPaymentCard);
             }
