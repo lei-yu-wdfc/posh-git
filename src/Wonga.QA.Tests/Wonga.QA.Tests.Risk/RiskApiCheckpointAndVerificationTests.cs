@@ -10,6 +10,8 @@ using Wonga.QA.Framework.Core;
 using MbUnit.Framework;
 using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Db.Comms;
+using Wonga.QA.Framework.Db.Ops;
+using Wonga.QA.Framework.Db.QAData;
 using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Tests.Core;
 
@@ -23,23 +25,25 @@ namespace Wonga.QA.Tests.Risk
         /// </summary>
         private class ApplicationBuilderConfig
         {
-            public string IovationBlackBox { get; private set; }
+			public IovationMockResponse IovationBlackBox { get; private set; }
 
             public ApplicationDecisionStatusEnum ExpectedDecisionStatus { get; private set; }
 
-            public ApplicationBuilderConfig(string iovationBlackBox = "Allow", ApplicationDecisionStatusEnum expectedDecisionStatus = ApplicationDecisionStatusEnum.Accepted)
+			public ApplicationBuilderConfig(IovationMockResponse iovationBlackBox = IovationMockResponse.Allow, ApplicationDecisionStatusEnum expectedDecisionStatus = ApplicationDecisionStatusEnum.Accepted)
             {
                 IovationBlackBox = iovationBlackBox;
                 ExpectedDecisionStatus = expectedDecisionStatus;
             }
 
             public ApplicationBuilderConfig(ApplicationDecisionStatusEnum expectedDecisionStatus)
-                : this("Allow", expectedDecisionStatus)
+				: this(IovationMockResponse.Allow, expectedDecisionStatus)
             {
 
             }
         }
 
+
+		const string RiskIovationResponseTimeoutSecondsKeyName = "Risk.IovationResponseTimeoutSeconds";
 
         private ApplicationBuilderConfig _builderConfig;
 
@@ -111,17 +115,52 @@ namespace Wonga.QA.Tests.Risk
         }
 
         [Test, AUT(AUT.Ca)]
-        public void GivenL0Applicant_WhenApplicationDevicIsOnBlacklist_ThenDeclined()
+        public void GivenL0Applicant_WhenApplicationDeviceIsOnBlacklist_ThenDeclined()
         {
             //TODO: to test timeout need to change this : update qadata.dbo.IovationDataOutput set WaitTimeInSeconds = 80
 
-            _builderConfig = new ApplicationBuilderConfig("Deny", ApplicationDecisionStatusEnum.Declined);
+            _builderConfig = new ApplicationBuilderConfig(IovationMockResponse.Deny, ApplicationDecisionStatusEnum.Declined);
 
             var expectedVerifications = new List<string> { "IovationVerification", "IovationAutoReviewVerification" };
 
             L0ApplicationWithSingleCheckPointAndVerifications(CheckpointDefinitionEnum.HardwareBlacklistCheck, expectedVerifications);
         }
 
+		//COMMENTED UNTIL BUG IN FW IS FIXED (but works locally when IovationDataOutput has PK)
+		[Test, AUT(AUT.Ca)]
+		[Row(IovationMockResponse.Allow)]
+		[Row(IovationMockResponse.Deny)]
+		public void GivenL0Applicant_WhenApplicationDeviceBlacklistTimesout_ThenIsAccepted(IovationMockResponse iovationMockResponse)
+		{
+			int ? currentMockIovationWaitSeconds = null;
+			int ? currentRiskIovationResponseTimeoutSeconds = null;
+			try
+			{
+				// make sure the mocked iovation takes longer to respond than risk to timeout
+				currentMockIovationWaitSeconds = SetIovationMockWaitTimeSecondsForMockResponse(iovationMockResponse, 30);
+				currentRiskIovationResponseTimeoutSeconds = SetRiskIovationResponseTimeoutSeconds(5);
+
+				_builderConfig = new ApplicationBuilderConfig(iovationMockResponse);
+
+				var expectedVerifications = new List<string> {"IovationVerification", "IovationAutoReviewVerification"};
+
+				L0ApplicationWithSingleCheckPointAndVerifications(CheckpointDefinitionEnum.HardwareBlacklistCheck, expectedVerifications);
+			}
+			finally
+			{
+				//allways revert to previous values
+				if(currentMockIovationWaitSeconds.HasValue)
+				{
+					SetIovationMockWaitTimeSecondsForMockResponse(iovationMockResponse, currentMockIovationWaitSeconds.Value);
+				}
+
+				if(currentRiskIovationResponseTimeoutSeconds.HasValue)
+				{
+					SetRiskIovationResponseTimeoutSeconds(currentRiskIovationResponseTimeoutSeconds.Value);
+				}				
+			}
+		}
+		
         [Test, AUT(AUT.Ca)]
         public void GivenL0Applicant_WhenMonthlyIncomeEnoughForRepayment_ThenIsAccepted()
         {
@@ -273,28 +312,117 @@ namespace Wonga.QA.Tests.Risk
 
         #region helpers
 
-        private void AssertCheckpointAndVerifications(Application application, CheckpointStatus expectedStatus, IEnumerable<string> expectedVerificationNames, CheckpointDefinitionEnum checkpoint)
+		/// <summary>
+		/// changes configuration for iovation timeout and returns current value
+		/// </summary>
+		/// <param name="seconds">new value for timeout in secs</param>
+		/// <returns>current timeout value in secs</returns>
+		private static int SetRiskIovationResponseTimeoutSeconds(int seconds)
+		{
+			var dbDriver = new DbDriver();
+			var serviceConfigurationEntity = dbDriver.Ops.ServiceConfigurations.Single(sc => sc.Key == RiskIovationResponseTimeoutSecondsKeyName);
+			var currentValue = serviceConfigurationEntity.Value;
+			var newValue = seconds.ToString();
+			if (currentValue != newValue)
+			{
+				serviceConfigurationEntity.Value = newValue;
+				dbDriver.Ops.SubmitChanges();
+			}
+			return Int32.Parse(currentValue);
+		}
+
+		private static int SetIovationMockWaitTimeSecondsForMockResponse(IovationMockResponse response, int seconds)
+		{			
+			string iovationType = response.ToString();
+			var iovationDataOutput = Driver.Db.QAData.IovationDataOutputs.Single(io => io.Type == iovationType);
+			var currentValue = iovationDataOutput.WaitTimeInSeconds;
+			iovationDataOutput.WaitTimeInSeconds = seconds;
+			iovationDataOutput.Submit();
+
+			return currentValue;
+		}
+		
+
+		private Application LNTest()
+		{
+			Customer cust = CustomerBuilder.New().Build();
+
+			Application l0App = ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+
+			l0App.RepayOnDueDate();
+
+			EmploymentDetailEntity employmentDetails = Driver.Db.Risk.EmploymentDetails.Single(cd => cd.AccountId == cust.Id);
+			employmentDetails.EmployerName = "test:DirectFraud";
+			employmentDetails.Submit();
+
+			Application lNApp = ApplicationBuilder.New(cust).WithIovationBlackBox("Allow")
+			   .WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+
+			//Assert.IsTrue(RiskApiCheckpointTests.SingleCheckPointVerification(lNApp, CheckpointStatus.Verified,CheckpointDefinitionEnum.UserAssistedFraudCheck));
+			Assert.Contains(Application.GetExecutedCheckpointDefinitions(lNApp.Id, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.UserAssistedFraudCheck));
+		}
+
+		private void AssertCheckpointAndVerifications(CheckpointStatus expectedStatus, IEnumerable<string> expectedVerificationNames, CheckpointDefinitionEnum checkpoint, Application application)
         {
-            var db = new DbDriver();
+			//first check what was the failed checkpoint if expected status is declined			
+			AssertFailedCheckpointOnApplication(application, expectedStatus, checkpoint);
 
-            RiskApplicationEntity riskApplication = db.Risk.RiskApplications.Single(r => r.ApplicationId == application.Id);
+        	RiskApplicationEntity riskApplication = new DbDriver().Risk.RiskApplications.Single(r => r.ApplicationId == application.Id);
 
-            var dbCheckpoint = db.Risk.WorkflowCheckpoints.Single(r => r.RiskApplicationId == riskApplication.RiskApplicationId);
+            AssertCheckpointOnApplicationDbEntity(expectedStatus, checkpoint, riskApplication);
 
-            Assert.AreEqual(Convert.ToByte(expectedStatus), dbCheckpoint.CheckpointStatus);
-
-            string checkpointName =
-                db.Risk.CheckpointDefinitions.Single(r => r.CheckpointDefinitionId == dbCheckpoint.CheckpointDefinitionId).Name;
-
-            Assert.AreEqual(Data.EnumToString(checkpoint), checkpointName);
-
-            var verifications = riskApplication.WorkflowVerifications.ToList();
-
-            AssertVerifications(expectedVerificationNames, verifications);
-            
+        	AssertVerificationsOnApplicationDbEntity(expectedVerificationNames, riskApplication);
         }
-        
-        private Application L0ApplicationWithSingleCheckPointAndVerifications(CustomerBuilder customerBuilder, CheckpointDefinitionEnum checkpointDefinition, IEnumerable<string> expectedVerificationNames)
+
+    	private void AssertVerificationsOnApplicationDbEntity(IEnumerable<string> expectedVerificationNames, RiskApplicationEntity riskApplication)
+    	{
+    		Assert.AreEqual(expectedVerificationNames.Count(), riskApplication.WorkflowVerifications.Count());
+
+    		foreach (string expectedVerificationName in expectedVerificationNames)
+    		{
+    			Assert.IsTrue(
+					riskApplication.WorkflowVerifications.Any(v => v.VerificationDefinitionEntity.Name == expectedVerificationName),
+    				String.Format("Verification name should be {0}", expectedVerificationName));
+    		}
+    	}
+
+    	private static void AssertCheckpointOnApplicationDbEntity(CheckpointStatus expectedStatus, CheckpointDefinitionEnum checkpoint, RiskApplicationEntity riskApplication)
+    	{
+    		var dbCheckpoint = riskApplication.WorkflowCheckpoints.Single(r => r.RiskApplicationId == riskApplication.RiskApplicationId);
+
+    		Assert.AreEqual(Convert.ToByte(expectedStatus), dbCheckpoint.CheckpointStatus);
+
+    		string checkpointName = dbCheckpoint.CheckpointDefinitionEntity.Name;
+
+    		Assert.AreEqual(Data.EnumToString(checkpoint), checkpointName);
+    	}
+
+    	/// <summary>
+		/// this method asserts on what was returned on the API call for the failed checkpoit. Only applicable for declined applications.
+		/// </summary>
+		/// <param name="application">the application object</param>
+		/// <param name="expectedFailedCheckpoint">the expected checkpoint to fail</param>
+    	private static void AssertFailedCheckpointOnApplication(Application application, CheckpointDefinitionEnum ? expectedFailedCheckpoint)
+    	{
+			if (expectedFailedCheckpoint.HasValue)
+    		{
+    			Assert.AreEqual(Data.EnumToString(expectedFailedCheckpoint), application.FailedCheckpoint);
+    		}
+    		else
+    		{
+    			Assert.IsTrue(string.IsNullOrEmpty(application.FailedCheckpoint));
+    		}
+    	}
+
+		private static void AssertFailedCheckpointOnApplication(Application application, CheckpointStatus expectedStatus, CheckpointDefinitionEnum checkpoint)
+		{
+			AssertFailedCheckpointOnApplication(application,
+			                                    expectedStatus == CheckpointStatus.Failed 
+													? checkpoint 
+													: (CheckpointDefinitionEnum ?)null);			
+		}
+
+    	private Application L0ApplicationWithSingleCheckPointAndVerifications(CustomerBuilder customerBuilder, CheckpointDefinitionEnum checkpointDefinition, IEnumerable<string> expectedVerificationNames)
         {
             if (_builderConfig == null)
             {
@@ -307,10 +435,10 @@ namespace Wonga.QA.Tests.Risk
             Customer cust = customerBuilder.Build();
 
             Application app = ApplicationBuilder.New(cust)
-                .WithIovationBlackBox(_builderConfig.IovationBlackBox)
+                .WithIovationBlackBox(_builderConfig.IovationBlackBox.ToString())
                 .WithExpectedDecision(_builderConfig.ExpectedDecisionStatus).Build();
 
-            AssertCheckpointAndVerifications(app, expectedStatus, expectedVerificationNames, checkpointDefinition);
+            AssertCheckpointAndVerifications(expectedStatus, expectedVerificationNames, checkpointDefinition, app);
 
             return app;	
         }
@@ -320,18 +448,9 @@ namespace Wonga.QA.Tests.Risk
             return L0ApplicationWithSingleCheckPointAndVerifications(customerBuilder, checkpointDefinition, new[] { expectedVerificationName });
         }
 
-        private Application L0ApplicationWithSingleCheckPointAndSingleVerification(CheckpointDefinitionEnum checkpointDefinition, string expectedVerificationName, string employerNameTestMask)
-        {
-            return L0ApplicationWithSingleCheckPointAndSingleVerification(
-                CustomerBuilder.New().WithEmployer(employerNameTestMask),
-                checkpointDefinition, expectedVerificationName);
-        }
-
         private Application L0ApplicationWithSingleCheckPointAndSingleVerification(CheckpointDefinitionEnum checkpointDefinition, string expectedVerificationName)
         {
-            return L0ApplicationWithSingleCheckPointAndSingleVerification(
-                checkpointDefinition, expectedVerificationName,
-                GetEmployerNameMaskFromCheckpointDefinition(checkpointDefinition));
+			return L0ApplicationWithSingleCheckPointAndVerifications(checkpointDefinition, new List<string> {expectedVerificationName});
         }
 
         private Application L0ApplicationWithSingleCheckPointAndVerifications(CheckpointDefinitionEnum checkpointDefinition, IEnumerable<string> expectedVerificationNames, string employerNameTestMask)
@@ -352,34 +471,49 @@ namespace Wonga.QA.Tests.Risk
 
         private string GetEmployerNameMaskFromCheckpointDefinition(CheckpointDefinitionEnum checkpointDefinition)
         {
-            //type name has this format:
-            //"Wonga.Risk.Checkpoints.ApplicationElementNotOnCSBlacklist, Wonga.Risk.Checkpoints, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
-            var checkpoint = new DbDriver().Risk.CheckpointDefinitions.SingleOrDefault(cd => cd.Name == Data.EnumToString(checkpointDefinition));
-            if(checkpoint == null)
-            {
-                throw new ArgumentOutOfRangeException("checkpointDefinition", checkpointDefinition, "Not found in DB");
-            }
+        	var className = GetCheckpointClassName(checkpointDefinition);
 
-            string [] assemblyTokens = checkpoint.TypeName.Split(',');
-            if(assemblyTokens.Length < 1)
-            {
-                throw new ArgumentOutOfRangeException("checkpointDefinition", checkpointDefinition, string.Format("Invalid Checkpoint TypeName in DB: {0}", checkpoint.TypeName));
-            }
-
-            //1st elem is the full namespace of type
-            string typeFullName = assemblyTokens[0];
-            string[] namespaceTokens = typeFullName.Split('.');
-            
-            //last elem is the className... mask is Test:className
-            string className = 
-                namespaceTokens.Length == 0
-                    ? typeFullName
-                    : namespaceTokens.Last();
-
-            return string.Format("test:{0}", className);									
+        	return string.Format("test:{0}", className);
         }
 
-        private static CheckpointStatus GetExpectedCheckpointStatus(ApplicationDecisionStatusEnum decision)
+		//TODO: check why this does not work for middle name???
+		private string GetMiddleNameMaskFromCheckpointDefinition(CheckpointDefinitionEnum checkpointDefinition)
+		{
+			var className = GetCheckpointClassName(checkpointDefinition);
+
+			return string.Format("TEST{0}", className);
+		}
+
+    	private static string GetCheckpointClassName(CheckpointDefinitionEnum checkpointDefinition)
+    	{
+			//type name has this format:
+    		//"Wonga.Risk.Checkpoints.ApplicationElementNotOnCSBlacklist, Wonga.Risk.Checkpoints, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+    		var checkpoint = new DbDriver().Risk.CheckpointDefinitions.SingleOrDefault(cd => cd.Name == Data.EnumToString(checkpointDefinition));
+    		if (checkpoint == null)
+    		{
+    			throw new ArgumentOutOfRangeException("checkpointDefinition", checkpointDefinition, "Not found in DB");
+    		}
+
+    		string[] assemblyTokens = checkpoint.TypeName.Split(',');
+    		if (assemblyTokens.Length < 1)
+    		{
+    			throw new ArgumentOutOfRangeException("checkpointDefinition", checkpointDefinition,
+    			                                      string.Format("Invalid Checkpoint TypeName in DB: {0}", checkpoint.TypeName));
+    		}
+
+    		//1st elem is the full namespace of type
+    		string typeFullName = assemblyTokens[0];
+    		string[] namespaceTokens = typeFullName.Split('.');
+
+    		//last elem is the className... mask is Test:className
+    		string className =
+    			namespaceTokens.Length == 0
+    				? typeFullName
+    				: namespaceTokens.Last();
+    		return className;
+    	}
+
+    	private static CheckpointStatus GetExpectedCheckpointStatus(ApplicationDecisionStatusEnum decision)
         {
             switch (decision)
             {
@@ -400,18 +534,7 @@ namespace Wonga.QA.Tests.Risk
             }
         }
 
-        private void AssertVerifications(IEnumerable<string> expectedVerificationNames, IEnumerable<WorkflowVerificationEntity> actualVerifications)
-        {
-            Assert.AreEqual(expectedVerificationNames.Count(), actualVerifications.Count());
-
-            foreach (string expectedVerificationName in expectedVerificationNames)
-            {
-                Assert.IsTrue(
-                    actualVerifications.Any(v => v.VerificationDefinitionEntity.Name == expectedVerificationName),
-                    String.Format("Verification name should be {0}", expectedVerificationName));
-            }
-        }
-        #endregion
+    	#endregion
 
     }
 }

@@ -21,6 +21,7 @@ namespace Wonga.QA.Framework
 		public Guid BankAccountId { get; set; }
 		public decimal LoanAmount { get; set; }
 		public int LoanTerm { get; set; }
+		public string FailedCheckpoint { get; set; }
 
 		public Application()
 		{
@@ -29,6 +30,12 @@ namespace Wonga.QA.Framework
 		public Application(Guid id)
 		{
 			Id = id;
+		}
+
+		public Application(Guid id, string failedCheckpoint)
+		{
+			Id = id;
+			FailedCheckpoint = failedCheckpoint;
 		}
 
 		public bool IsClosed

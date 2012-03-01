@@ -198,13 +198,16 @@ namespace Wonga.QA.Framework
             
             Driver.Api.Commands.Post(requests);
 
+        	ApiResponse response = null;
             Do.With().Timeout(3).Until(() => (ApplicationDecisionStatusEnum)
-                Enum.Parse(typeof(ApplicationDecisionStatusEnum), Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["ApplicationDecisionStatus"].Single()) == _decision);
+				Enum.Parse(typeof(ApplicationDecisionStatusEnum), (response = Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id })).Values["ApplicationDecisionStatus"].Single()) == _decision);
 
-            if (_decision == ApplicationDecisionStatusEnum.Declined)
-                return new Application(_id);
+			if (_decision == ApplicationDecisionStatusEnum.Declined)
+			{
+				return new Application(_id, response != null ? response.Values["FailedCheckpoint"].FirstOrDefault() : string.Empty);
+			}
 
-            if (_decision == ApplicationDecisionStatusEnum.Pending)
+        	if (_decision == ApplicationDecisionStatusEnum.Pending)
             {
                 int i;
             }
