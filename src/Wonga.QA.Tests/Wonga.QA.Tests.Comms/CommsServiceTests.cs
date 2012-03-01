@@ -26,7 +26,8 @@ namespace Wonga.QA.Tests.Comms
 			Do.Until(cust.GetBankAccount);
 			Do.Until(cust.GetPaymentCard);
 			Application app = ApplicationBuilder.New(cust)
-				.WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted)
+				.WithPromiseDate(new Date(DateTime.Now.AddDays(6), DateFormat.Date))
+				.WithLoanAmount(100)
 				.Build();
 			var ftApp = Driver.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationEntity.ExternalId == app.Id);
 			Assert.IsTrue(Driver.Svc.DocumentGeneration.IsRunning());
@@ -41,9 +42,13 @@ namespace Wonga.QA.Tests.Comms
 											NewFinalBalance = ftApp.LoanAmount
 			                           	});
 
-			var secciDocument = new DoBuilder(TimeSpan.FromMinutes(2), TimeSpan.FromSeconds(1))
+			new DoBuilder(TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(1))
 								.Until(() => Driver.Db.Comms.LegalDocuments.Single(ld => ld.ApplicationId == app.Id && ld.DocumentType == 2));//ExtensionSeccii
-			
+
+			new DoBuilder(TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(1))
+								.Until(() => Driver.Db.Comms.LegalDocuments.Single(ld => ld.ApplicationId == app.Id && ld.DocumentType == 3));//Pre Agreement
+
+
 		}
 
 
