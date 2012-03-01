@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
-using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
-using Wonga.QA.Tests.Risk.Enums;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
@@ -17,10 +13,10 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	{
 		private const string TestMask = "test:RepaymentPredictionPositive";
 
-		private string _forename;// = "ANITHA";
-		private string _surname;// = "ESSACK";
-		private Date _dateOfBirth;// = new Date(new DateTime(1957, 12, 19));
-		private string _nationalNumber;// = "5712190106083";
+		private string _forename;
+		private string _surname;
+		private Date _dateOfBirth;
+		private string _nationalNumber;
 
 		private readonly int ScoreCutoffNewUsers = Int32.Parse(Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Risk.RepaymentScoreNewUsersCutOff").Value);
 		private readonly int ScoreCutoffExistingUsers = Int32.Parse(Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Risk.RepaymentScoreExistingUsersCutOff").Value);
@@ -65,14 +61,14 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		public void CheckpointRepaymentPredictionPositiveCorrectScorecardUsedL0()
 		{
 			var scorecardName = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Risk.RepaymentModelForNewUsers").Value;
-			Assert.AreEqual(ScorecardNameL0Za, scorecardName);
+			Assert.AreEqual(_expectedScorecardNameL0, scorecardName);
 		}
 
 		[Test, AUT(AUT.Za)]
 		public void CheckpointRepaymentPredictionPositiveCorrectScorecardUsedLn()
 		{
 			var scorecardName = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Risk.RepaymentModelForExistingUsers").Value;
-			Assert.AreEqual(ScorecardNameLnZa, scorecardName);
+			Assert.AreEqual(_expectedScorecardNameLn, scorecardName);
 		}
 
 		[Test, AUT(AUT.Za)]

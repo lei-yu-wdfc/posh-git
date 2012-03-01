@@ -24,7 +24,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
         [Test, AUT(AUT.Za)]
         [Ignore("Timeout too big - 10 minutes")]
-        public void AhvCheckSuccessfulWhenBGInTestModeTest()
+		public void CheckpointBankAccountIsValidPassesWhenBankGatewayInTestMode()
         {
             Customer cust = CustomerBuilder.New().WithEmployer(TestMask).Build();
             Application app = ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.ReadyToSign).Build();

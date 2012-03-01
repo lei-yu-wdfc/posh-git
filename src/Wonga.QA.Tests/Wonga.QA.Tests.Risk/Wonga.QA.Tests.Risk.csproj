@@ -35,6 +35,7 @@
     <Compile Include="Checkpoints\CheckpointApplicationElementNotOnCSBlacklistTests.cs" />
     <Compile Include="Checkpoints\CheckpointBankAccountIsValidTests.cs" />
     <Compile Include="Checkpoints\CheckpointCreditBureauDataIsAvailableTests.cs" />
+    <Compile Include="Checkpoints\CheckpointCustomerNameIsCorrectTests.cs" />
     <Compile Include="Checkpoints\CheckpointRepaymentPredictionPositiveTests.cs" />
     <Compile Include="Checkpoints\EidCheckpointTests.cs" />
     <Compile Include="Checkpoints\CheckpointApplicationDeviceNotOnBlacklistTests.cs" />

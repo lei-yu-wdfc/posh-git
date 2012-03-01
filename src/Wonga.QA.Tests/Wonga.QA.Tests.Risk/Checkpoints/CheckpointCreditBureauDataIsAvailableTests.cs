@@ -21,7 +21,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		private string _nationalNumber = "5712190106083";
 
 		[Test, AUT(AUT.Za), JIRA("ZA-1910")]
-		public void CheckpointCreditBureauDataIsAvailablePassed()
+		public void CheckpointCreditBureauDataIsAvailableAccepted()
 		{
 			var customer =
 				CustomerBuilder.New()
