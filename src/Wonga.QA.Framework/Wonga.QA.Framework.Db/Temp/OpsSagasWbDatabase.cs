@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Wonga.QA.Framework.Db.OpsSagas
+namespace Wonga.QA.Framework.Db.OpsSagasWb
 {
 	using System.Data.Linq;
 	using System.Data.Linq.Mapping;
