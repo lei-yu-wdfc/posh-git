@@ -11,7 +11,7 @@ namespace Wonga.QA.Tests.Salesforce
 	[TestFixture, AUT(AUT.Uk), Parallelizable(TestScope.All)]
 	public class SalesforcePushFixedTermLoanApplicationDataTest
 	{
-		[Test, Ignore("needs work.")]
+		[Test]
         [AUT(AUT.Uk), JIRA("UK-808")]
 		[Description("Verify that the application data has been pushed to SF")]
 		public void FixedTermLoanApplicationDataPushedToSalesforce()
@@ -32,9 +32,7 @@ namespace Wonga.QA.Tests.Salesforce
 			salesforce.SalesforcePassword = sfPassword.Value;
 			salesforce.SalesforceUrl = sfUrl.Value;
 
-			//Do.Until(() => salesforce.ApplicationExists(app.Id));
-			//Assert.IsTrue(salesforce.ApplicationExists(app.Id));
-			Assert.IsTrue(salesforce.ApplicationExists(Guid.Parse("f505d320-50fd-48a6-9915-95af4ad8072d")));
+			Do.Until(() => salesforce.ApplicationExists(app.Id));
 		}
 	}
 }
