@@ -10,7 +10,8 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	class CheckpointCustomerNameIsCorrectTests
+	[Parallelizable(TestScope.All)]
+	public class CheckpointCustomerNameIsCorrectTests
 	{
 		private const string TestMask = "test:CustomerNameIsCorrect";
 
@@ -47,6 +48,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			var customer = CustomerBuilder.New()
 				.WithEmployer(TestMask)
 				.WithForename(_forename)
+				.WithMiddleName(_middleName)
 				.WithSurname(_surname)
 				.WithDateOfBirth(_dateOfBirth)
 				.WithNationalNumber(_nationalNumber)
@@ -61,6 +63,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			var customer = CustomerBuilder.New()
 				.WithEmployer(TestMask)
 				.WithForename(_forename)
+				.WithMiddleName(_middleName)
 				.WithSurname("Smithee")
 				.WithDateOfBirth(_dateOfBirth)
 				.WithNationalNumber(_nationalNumber)
@@ -81,6 +84,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			var customer = CustomerBuilder.New()
 				.WithEmployer(TestMask)
 				.WithForename(incorrectForename)
+				.WithMiddleName(_middleName)
 				.WithSurname(_surname)
 				.WithDateOfBirth(_dateOfBirth)
 				.WithNationalNumber(_nationalNumber)
@@ -95,6 +99,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			var customer = CustomerBuilder.New()
 				.WithEmployer(TestMask)
 				.WithForename(_forename)
+				.WithMiddleName(_middleName)
 				.WithSurname(_surname)
 				.WithDateOfBirth(_dateOfBirth)
 				.WithNationalNumber(Data.GetNIN(_dateOfBirth, true))
@@ -112,6 +117,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			var customer = CustomerBuilder.New()
 				.WithEmployer(TestMask)
 				.WithForename(incorrectForename)
+				.WithMiddleName(_middleName)
 				.WithSurname(_surname)
 				.WithDateOfBirth(_dateOfBirth)
 				.WithNationalNumber(_nationalNumber)
@@ -123,25 +129,64 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test, AUT(AUT.Za)]
 		public void CheckpointCustomerNameIsCorrectForenameAndMiddleNameSwappedAccepts()
 		{
+			var customer = CustomerBuilder.New()
+				.WithEmployer(TestMask)
+				.WithForename(_middleName)
+				.WithMiddleName(_forename)
+				.WithSurname(_surname)
+				.WithDateOfBirth(_dateOfBirth)
+				.WithNationalNumber(_nationalNumber)
+				.Build();
 
+			ApplicationBuilder.New(customer).Build();
 		}
 
 		[Test, AUT(AUT.Za)]
 		public void CheckpointCustomerNameIsCorrectMaidenNameMatchedAccepts()
 		{
+			var customer = CustomerBuilder.New()
+				.WithEmployer(TestMask)
+				.WithForename(_forename)
+				.WithMiddleName(_middleName)
+				.WithSurname(Data.GetName())
+				.WithMaidenName(_surname)
+				.WithDateOfBirth(_dateOfBirth)
+				.WithNationalNumber(_nationalNumber)
+				.Build();
 
+			ApplicationBuilder.New(customer).Build();
 		}
 
 		[Test, AUT(AUT.Za)]
 		public void CheckpointCustomerNameIsCorrectIncorrectSurnameAndMaidenNameDeclines()
 		{
+			var customer = CustomerBuilder.New()
+				.WithEmployer(TestMask)
+				.WithForename(_forename)
+				.WithMiddleName(_middleName)
+				.WithSurname(Data.GetName())
+				.WithMaidenName(Data.GetName())
+				.WithDateOfBirth(_dateOfBirth)
+				.WithNationalNumber(_nationalNumber)
+				.Build();
 
+			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
 		}
 
 		[Test, AUT(AUT.Za)]
 		public void CheckpointCustomerNameIsCorrectMaidenNameMatchedAndForenameAndSurnameSwappedDeclines()
 		{
+			var customer = CustomerBuilder.New()
+				.WithEmployer(TestMask)
+				.WithForename(_middleName)
+				.WithMiddleName(_forename)
+				.WithSurname(Data.GetName())
+				.WithMaidenName(_surname)
+				.WithDateOfBirth(_dateOfBirth)
+				.WithNationalNumber(_nationalNumber)
+				.Build();
 
+			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
 		}
 		
 	}

@@ -22,6 +22,7 @@ namespace Wonga.QA.Framework
     	private Date _dateOfBirth;
         private String _middleName;
         private String _surname;
+    	private String _maidenName;
         private String _houseNumber;
         private ProvinceEnum _province;
         private String _email;
@@ -49,6 +50,7 @@ namespace Wonga.QA.Framework
         		_nationalNumber = Data.GetNIN(_dateOfBirth.DateTime, _gender == GenderEnum.Female);
             _surname = Data.GetName();
             _middleName = Data.GetMiddleName();
+        	_maidenName = Data.GetName();
             _foreName = Data.GetName();
             _province = ProvinceEnum.ON;
             _houseNumber = Data.RandomInt(1, 100).ToString(CultureInfo.InvariantCulture);
@@ -162,6 +164,12 @@ namespace Wonga.QA.Framework
             _surname = surname;
             return this;
         }
+
+		public CustomerBuilder WithMaidenName(String maidenName)
+		{
+			_maidenName = maidenName;
+			return this;
+		}
         
         public CustomerBuilder ForProvince(ProvinceEnum province)
         {
@@ -266,6 +274,7 @@ namespace Wonga.QA.Framework
                         	r.NationalNumber = _nationalNumber;
                         	r.DateOfBirth = _dateOfBirth;
                         	r.Gender = _gender;
+                        	r.MaidenName = _gender == GenderEnum.Female ? _maidenName : null;
                         }),
                         SaveCustomerAddressZaCommand.New(r =>
                                                              {
