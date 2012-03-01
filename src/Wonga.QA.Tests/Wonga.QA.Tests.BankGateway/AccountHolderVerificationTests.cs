@@ -23,23 +23,22 @@ namespace Wonga.QA.Tests.BankGateway
 		                                                              	{
 		                                                              		{"BankGateway.IsTestMode", "false"},
 		                                                              		{"BankGateway.IsAccountVerificationTestMode", "false"},
-		                                                              		{"Mocks.HyphenAHVWebServiceEnabled", "false"}
+		                                                              		{"Mocks.HyphenAHVWebServiceEnabled", "true"}
 		                                                              	};
 
 		[FixtureSetUp]
 		public void FixtureSetUp()
 		{
-			
-			
 			Driver.Db.SetServiceConfigurations(_testModesToSetup);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2061")]
-		public void AccountHolderVerificationFeatureSwitchTurnedOn()
-		{
-			var featureSwitchOn = Boolean.Parse(Driver.Db.GetServiceConfiguration("FeatureSwitch.ZA.UseHyphenAHVWebService").Value);
-			Assert.IsTrue(featureSwitchOn);
-		}
+		//Active this test once the feature goes live
+		//[Test, AUT(AUT.Za), JIRA("ZA-2061")]
+		//public void AccountHolderVerificationFeatureSwitchTurnedOn()
+		//{
+		//    var featureSwitchOn = Boolean.Parse(Driver.Db.GetServiceConfiguration("FeatureSwitch.ZA.UseHyphenAHVWebService").Value);
+		//    Assert.IsTrue(featureSwitchOn);
+		//}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-2061")]
 		public void AccountHolderVerificationRequestForSingleApplication()
