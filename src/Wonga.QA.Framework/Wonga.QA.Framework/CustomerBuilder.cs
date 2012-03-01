@@ -307,6 +307,7 @@ namespace Wonga.QA.Framework
                         {
                             r.AccountId = _id;
                             r.VerificationId = _verification;
+                        	r.MobilePhone = Data.GetPhone();
                         }),
                     });
                     break;
@@ -466,6 +467,19 @@ namespace Wonga.QA.Framework
 						() =>
 						Driver.Db.Payments.BankAccountsBases.Single(bab => bab.ExternalId == _bankAccountId));
 					break;
+
+				case AUT.Za:
+            		{
+						var mobilePhoneVerification = Do.Until(() => Driver.Db.Comms.MobilePhoneVerifications.Single(a => a.AccountId == _id));
+
+            			Driver.Api.Commands.Post(new CompleteMobilePhoneVerificationCommand
+            			                         	{
+            			                         		Pin = mobilePhoneVerification.Pin,
+            			                         		VerificationId = mobilePhoneVerification.VerificationId
+            			                         	});
+            			Do.Until(() => Driver.Db.Comms.CustomerDetails.Single(a => a.AccountId == _id).MobilePhone);
+            		}
+            		break;
             }
             
             return new Customer(_id, _email, _bankAccountId);

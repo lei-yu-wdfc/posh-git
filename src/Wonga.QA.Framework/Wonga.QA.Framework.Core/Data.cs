@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.SqlTypes;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -71,7 +72,7 @@ namespace Wonga.QA.Framework.Core
 
         public static String GetPhone()
         {
-            return "0210000000";
+			return "021" + new Random().Next(1000000, 9999999).ToString(CultureInfo.InvariantCulture);
         }
 
         public static String GetNationalNumber()
