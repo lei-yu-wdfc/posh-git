@@ -11,7 +11,9 @@ namespace Wonga.QA.Tests.Bi
     [TestFixture]
     public class ApplicationStatusChangedTests
     {
-        [Test, AUT(AUT.Uk)]
+        [Test]
+        [AUT(AUT.Uk), JIRA("UK-819")]
+        [Description("Verifies that after funds have been transferred to the customer application status 'Live' will be set in salesforce")]
         public void FundsTransferred_SubmitsApplicactionStatusLive_ToSalesforce()
         {
             Customer customer = CustomerBuilder.New().Build();
@@ -35,9 +37,6 @@ namespace Wonga.QA.Tests.Bi
                              var app = sales.GetApplicationById(application.Id);
                              return app != null && app.Status__c == "Live";
                          });
-
-
-
         }
     }
 }
