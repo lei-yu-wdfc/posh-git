@@ -17,6 +17,8 @@ namespace Wonga.QA.Tests.Bi
         public void FundsTransferred_SubmitsApplicactionStatusLive_ToSalesforce()
         {
             Customer customer = CustomerBuilder.New().Build();
+            Do.Until(customer.GetBankAccount);
+            Do.Until(customer.GetPaymentCard);
             const decimal loanAmount = 222.22m;
             Application application = ApplicationBuilder.New(customer).WithLoanAmount(loanAmount).Build();
 
