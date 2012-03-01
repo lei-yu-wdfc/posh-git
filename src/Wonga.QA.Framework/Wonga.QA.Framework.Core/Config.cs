@@ -127,6 +127,14 @@ namespace Wonga.QA.Framework.Core
                     Trace.WriteLine(String.Format("{0} = {1}", property.Name, property.GetValue(config, null)), config.GetType().FullName);*/
         }
 
+        public static bool AutRequiresPaymentCard
+        {
+            get
+            {
+                return Config.AUT == AUT.Uk;
+            }
+        }
+
         public static T Throw<T>()
         {
             throw new NotImplementedException(typeof(T).FullName);

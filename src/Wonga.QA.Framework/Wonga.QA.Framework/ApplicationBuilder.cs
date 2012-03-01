@@ -45,8 +45,14 @@ namespace Wonga.QA.Framework
 
         public static ApplicationBuilder New(Customer customer)
         {
+            if(Config.AutRequiresPaymentCard)
+            {
+                Do.Until(customer.GetPaymentCard);
+            }
             return new ApplicationBuilder { _customer = customer };
         }
+
+        
 
         public static ApplicationBuilder New(Customer customer, Organisation company)
         {
