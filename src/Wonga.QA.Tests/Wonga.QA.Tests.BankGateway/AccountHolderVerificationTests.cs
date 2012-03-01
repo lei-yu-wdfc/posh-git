@@ -33,11 +33,10 @@ namespace Wonga.QA.Tests.BankGateway
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-2061")]
-		[Ignore("Feature not turned on in live")]
-		public void AccountHolderVerificationFeatureSwitchTurnedOn()
+		public void AccountHolderVerificationFeatureSwitchTurnedOff()
 		{
 		    var featureSwitchOn = Boolean.Parse(Driver.Db.GetServiceConfiguration("FeatureSwitch.ZA.UseHyphenAHVWebService").Value);
-		    Assert.IsTrue(featureSwitchOn);
+		    Assert.IsFalse(featureSwitchOn);
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-2061")]
