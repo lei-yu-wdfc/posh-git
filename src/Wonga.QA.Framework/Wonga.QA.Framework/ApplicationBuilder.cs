@@ -101,14 +101,6 @@ namespace Wonga.QA.Framework
             return this;
         }
 
-        private static bool AutRequiresPaymentCard
-        {
-            get
-            {
-                return Config.AUT == AUT.Uk;
-            }
-        }
-
         public virtual Application Build()
         {
 			
@@ -116,11 +108,6 @@ namespace Wonga.QA.Framework
             {
                 throw new NotImplementedException(
                     "WB product should be using factory method with organization parameter");
-            }
-
-            if (AutRequiresPaymentCard)
-            {
-                Do.Until(_customer.GetPaymentCard);
             }
 
             _setPromiseDateAndLoanTerm();
@@ -137,7 +124,8 @@ namespace Wonga.QA.Framework
             switch (Config.AUT)
             {
                 case AUT.Uk:
-
+                    //wait for the card to be ready
+                    Do.Until(_customer.GetPaymentCard);
                     requests.AddRange(new ApiRequest[]{
                         CreateFixedTermLoanApplicationCommand.New(r =>
                         {
