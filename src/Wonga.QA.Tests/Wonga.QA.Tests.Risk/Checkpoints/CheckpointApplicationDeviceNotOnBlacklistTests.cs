@@ -6,10 +6,10 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[Parallelizable(TestScope.All), AUT(AUT.Za)]
+	[Parallelizable(TestScope.All)]
     public class CheckpointApplicationDeviceNotOnBlacklistTests
     {
-    	private const string TestMask = "test:ApplicationDeviceNotOnBlacklist";
+        private const string TestMask = "test:DeviceNotOnBlacklist";
 
         [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk), JIRA("CA-1735")]
 		public void CheckpointApplicationDeviceNotOnBlacklistDecline()
@@ -19,7 +19,6 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             Application app = ApplicationBuilder.New(cust).WithIovationBlackBox("Deny")
                 .WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
 
-            //Assert.IsTrue(RiskApiCheckpointTests.SingleCheckPointVerification(app, CheckpointStatus.Failed, CheckpointDefinitionEnum.Applicationdatablacklistcheck));
             Assert.Contains(Application.GetExecutedCheckpointDefinitions(app.Id, CheckpointStatus.Failed), Data.EnumToString(CheckpointDefinitionEnum.Applicationdatablacklistcheck));
         }
 
@@ -31,7 +30,6 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             Application app = ApplicationBuilder.New(cust).WithIovationBlackBox("Allow")
                 .WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
 
-            //Assert.IsTrue(RiskApiCheckpointTests.SingleCheckPointVerification(app, CheckpointStatus.Verified, CheckpointDefinitionEnum.Applicationdatablacklistcheck));
             Assert.Contains(Application.GetExecutedCheckpointDefinitions(app.Id, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.Applicationdatablacklistcheck));
         }
 
