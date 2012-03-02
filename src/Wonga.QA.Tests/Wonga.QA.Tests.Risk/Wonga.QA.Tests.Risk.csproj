@@ -41,10 +41,17 @@
     <Compile Include="Checkpoints\CheckpointRepaymentPredictionPositiveTests.cs" />
     <Compile Include="Checkpoints\EidCheckpointTests.cs" />
     <Compile Include="Checkpoints\CheckpointApplicationDeviceNotOnBlacklistTests.cs" />
-    <Compile Include="RiskApiCheckpointAndVerificationTests.cs" />
+    <Compile Include="Enums\RiskDecisionStatus.cs" />
+    <Compile Include="RiskApiTests\ApplicationBuilderConfig.cs" />
+    <Compile Include="RiskApiTests\BaseL0RiskApiCheckpointAndVerificationTests.cs" />
+    <Compile Include="RiskApiTests\BaseLnRiskApiCheckpointAndVerificationTests.cs" />
+    <Compile Include="RiskApiTests\BaseRiskApiCheckpointAndVerificationTests.cs" />
+    <Compile Include="RiskApiTests\L0RiskApiCheckpointAndVerificationTestsForCa.cs" />
+    <Compile Include="RiskApiTests\L0RiskApiCheckpointAndVerificationTestsForUk.cs" />
+    <Compile Include="RiskApiTests\LnRiskApiCheckpointAndVerificationTestsForCa.cs" />
     <Compile Include="RiskServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RiskApiCheckpointTests.cs" />
+    <Compile Include="RiskApiTests\RiskApiCheckpointTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
