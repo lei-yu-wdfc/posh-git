@@ -1,7 +1,7 @@
 @ECHO OFF
 CLS
 
-SET Root=%0\..\..
+SET Root=%~dp0\..
 SET Run=%Root%\run
 SET Src=%Root%\src
 SET Bin=%Root%\bin
