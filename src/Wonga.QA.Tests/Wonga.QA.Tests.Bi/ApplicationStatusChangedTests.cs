@@ -4,6 +4,7 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Ops;
 using Wonga.QA.Framework.Db.Payments;
+using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Bi
@@ -39,7 +40,7 @@ namespace Wonga.QA.Tests.Bi
                          {
                              var app = sales.GetApplicationById(application.Id);
                              int status = int.Parse(app.Status__c);
-                             return status == 9;
+                             return status == (int)ApplicationStatusEnum.Live;
                          });
         }
     }
