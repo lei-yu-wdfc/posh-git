@@ -10,7 +10,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[Parallelizable(TestScope.All)]
+	[Parallelizable(TestScope.All), AUT(AUT.Za)]
 	public class CheckpointCustomerNameIsCorrectTests
 	{
 		private const string TestMask = "test:CustomerNameIsCorrect";

@@ -11,6 +11,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
+	[Parallelizable(TestScope.All), AUT(AUT.Za)]
 	class CheckpointApplicationElementNotOnBlacklistTests
 	{
 		private const string TestMask = "test:Blacklist";

@@ -9,7 +9,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[Parallelizable(TestScope.All)]
+	[Parallelizable(TestScope.All), AUT(AUT.Za)]
 	public class CheckpointRepaymentPredictionPositiveTests
 	{
 		private const string TestMask = "test:RepaymentPredictionPositive";

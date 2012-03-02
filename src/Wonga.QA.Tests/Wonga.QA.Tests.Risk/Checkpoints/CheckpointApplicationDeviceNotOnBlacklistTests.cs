@@ -6,6 +6,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
+	[Parallelizable(TestScope.All), AUT(AUT.Za)]
     public class CheckpointApplicationDeviceNotOnBlacklistTests
     {
     	private const string TestMask = "test:ApplicationDeviceNotOnBlacklist";
