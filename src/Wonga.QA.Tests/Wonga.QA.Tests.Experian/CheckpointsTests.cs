@@ -21,21 +21,8 @@ namespace Wonga.QA.Tests.Experian
         {
             const String forename = "Unknown";
             const String surname = "Customer";
-
-            var customer = CustomerBuilder.New().WithMiddleName(RiskMiddlenameMask.TESTExperianApplicantIsNotDeceased.ToString()).WithForename(forename).WithSurname(surname).Build();
-            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var application = ApplicationBuilder.New(customer, organization).Build();
-            Assert.IsNotNull(application);
-
-            var riskDb = Driver.Db.Risk;
-            var riskApplicationEntity = Do.Until(() => riskDb.RiskApplications.SingleOrDefault(p => p.ApplicationId == application.Id));
-            Assert.IsNotNull(riskApplicationEntity, "Risk application should exist");
-
-            var riskAccountEntity = Do.Until(() => riskDb.RiskAccounts.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
-            Assert.IsNotNull(riskAccountEntity, "Risk account should exist");
-
-            var socialDetailsEntity = Do.Until(() => riskDb.SocialDetails.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
-            Assert.IsNotNull(socialDetailsEntity, "Social details should exist");
+            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTExperianApplicantIsNotDeceased, forename,
+                                                           surname, Data.GetDoB());
 
             Assert.Contains(Application.GetExecutedCheckpointDefinitions(application.Id, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.ApplicantIsAlive));
             AssertCreditBureauUsed(application, CreditBureauEnum.Experian);
@@ -48,22 +35,8 @@ namespace Wonga.QA.Tests.Experian
         {
             const String forename = "kathleen";
             const String surname = "bridson";
-
-            var customer = CustomerBuilder.New().WithMiddleName(RiskMiddlenameMask.TESTExperianApplicantIsNotDeceased.ToString()).WithForename(forename).WithSurname(surname).Build();
-            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var application = ApplicationBuilder.New(customer, organization).Build();
-            Assert.IsNotNull(application);
-
-            var riskDb = Driver.Db.Risk;
-            var riskApplicationEntity = Do.Until(() => riskDb.RiskApplications.SingleOrDefault(p => p.ApplicationId == application.Id));
-            Assert.IsNotNull(riskApplicationEntity, "Risk application should exist");
-
-            var riskAccountEntity = Do.Until(() => riskDb.RiskAccounts.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
-            Assert.IsNotNull(riskAccountEntity, "Risk account should exist");
-
-            var socialDetailsEntity = Do.Until(() => riskDb.SocialDetails.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
-            Assert.IsNotNull(socialDetailsEntity, "Social details should exist");
-
+            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTExperianApplicantIsNotDeceased, forename,
+                                                           surname, Data.GetDoB());
             Assert.Contains(Application.GetExecutedCheckpointDefinitions(application.Id, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.ApplicantIsAlive));
             AssertCreditBureauUsed(application, CreditBureauEnum.Experian);
         }
@@ -75,22 +48,8 @@ namespace Wonga.QA.Tests.Experian
         {
             const String forename = "Johnny";
             const String surname = "DeadGuy";
-
-            var customer = CustomerBuilder.New().WithMiddleName(RiskMiddlenameMask.TESTExperianApplicantIsNotDeceased.ToString()).WithForename(forename).WithSurname(surname).Build();
-            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
-            Assert.IsNotNull(application);
-
-            var riskDb = Driver.Db.Risk;
-            var riskApplicationEntity = Do.Until(() => riskDb.RiskApplications.SingleOrDefault(p => p.ApplicationId == application.Id));
-            Assert.IsNotNull(riskApplicationEntity, "Risk application should exist");
-
-            var riskAccountEntity = Do.Until(() => riskDb.RiskAccounts.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
-            Assert.IsNotNull(riskAccountEntity, "Risk account should exist");
-
-            var socialDetailsEntity = Do.Until(() => riskDb.SocialDetails.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
-            Assert.IsNotNull(socialDetailsEntity, "Social details should exist");
-
+            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTExperianApplicantIsNotDeceased, forename,
+                                                           surname, Data.GetDoB());
             Assert.Contains(Application.GetExecutedCheckpointDefinitions(application.Id, CheckpointStatus.Failed), Data.EnumToString(CheckpointDefinitionEnum.ApplicantIsAlive));
             AssertCreditBureauUsed(application, CreditBureauEnum.Experian);
         }
@@ -102,22 +61,8 @@ namespace Wonga.QA.Tests.Experian
         {
             const String forename = "kathleen";
             const String surname = "nicole";
-
-            var customer = CustomerBuilder.New().WithMiddleName(RiskMiddlenameMask.TESTExperianApplicationElementNotCIFASFlagged.ToString()).WithForename(forename).WithSurname(surname).Build();
-            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var application = ApplicationBuilder.New(customer, organization).Build();
-            Assert.IsNotNull(application);
-
-            var riskDb = Driver.Db.Risk;
-            var riskApplicationEntity = Do.Until(() => riskDb.RiskApplications.SingleOrDefault(p => p.ApplicationId == application.Id));
-            Assert.IsNotNull(riskApplicationEntity, "Risk application should exist");
-
-            var riskAccountEntity = Do.Until(() => riskDb.RiskAccounts.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
-            Assert.IsNotNull(riskAccountEntity, "Risk account should exist");
-
-            var socialDetailsEntity = Do.Until(() => riskDb.SocialDetails.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
-            Assert.IsNotNull(socialDetailsEntity, "Social details should exist");
-
+            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTExperianApplicationElementNotCIFASFlagged, forename,
+                                                           surname, Data.GetDoB());
             Assert.Contains(Application.GetExecutedCheckpointDefinitions(application.Id, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.CIFASFraudCheck));
             AssertCreditBureauUsed(application, CreditBureauEnum.Experian);
         }
@@ -129,22 +74,8 @@ namespace Wonga.QA.Tests.Experian
         {
             const String forename = "laura";
             const String surname = "insolvent";
-
-            var customer = CustomerBuilder.New().WithMiddleName(RiskMiddlenameMask.TESTExperianApplicationElementNotCIFASFlagged.ToString()).WithForename(forename).WithSurname(surname).Build();
-            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
-            Assert.IsNotNull(application);
-
-            var riskDb = Driver.Db.Risk;
-            var riskApplicationEntity = Do.Until(() => riskDb.RiskApplications.SingleOrDefault(p => p.ApplicationId == application.Id));
-            Assert.IsNotNull(riskApplicationEntity, "Risk application should exist");
-
-            var riskAccountEntity = Do.Until(() => riskDb.RiskAccounts.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
-            Assert.IsNotNull(riskAccountEntity, "Risk account should exist");
-
-            var socialDetailsEntity = Do.Until(() => riskDb.SocialDetails.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
-            Assert.IsNotNull(socialDetailsEntity, "Social details should exist");
-
+            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTExperianApplicationElementNotCIFASFlagged, forename,
+                                                           surname, Data.GetDoB());
             Assert.Contains(Application.GetExecutedCheckpointDefinitions(application.Id, CheckpointStatus.Failed), Data.EnumToString(CheckpointDefinitionEnum.CIFASFraudCheck));
             AssertCreditBureauUsed(application, CreditBureauEnum.Experian);
         }
@@ -156,22 +87,8 @@ namespace Wonga.QA.Tests.Experian
         {
             const String forename = "kathleen";
             const String surname = "nicole";
-
-            var customer = CustomerBuilder.New().WithMiddleName(RiskMiddlenameMask.TESTExperianApplicantIsSolvent.ToString()).WithForename(forename).WithSurname(surname).Build();
-            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var application = ApplicationBuilder.New(customer, organization).Build();
-            Assert.IsNotNull(application);
-
-            var riskDb = Driver.Db.Risk;
-            var riskApplicationEntity = Do.Until(() => riskDb.RiskApplications.SingleOrDefault(p => p.ApplicationId == application.Id));
-            Assert.IsNotNull(riskApplicationEntity, "Risk application should exist");
-
-            var riskAccountEntity = Do.Until(() => riskDb.RiskAccounts.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
-            Assert.IsNotNull(riskAccountEntity, "Risk account should exist");
-
-            var socialDetailsEntity = Do.Until(() => riskDb.SocialDetails.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
-            Assert.IsNotNull(socialDetailsEntity, "Social details should exist");
-
+            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTExperianApplicantIsSolvent, forename,
+                                                           surname, Data.GetDoB());
             Assert.Contains(Application.GetExecutedCheckpointDefinitions(application.Id, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.CustomerIsSolvent));
             AssertCreditBureauUsed(application, CreditBureauEnum.Experian);
         }
@@ -183,22 +100,8 @@ namespace Wonga.QA.Tests.Experian
         {
             const String forename = "laura";
             const String surname = "insolvent";
-
-            var customer = CustomerBuilder.New().WithMiddleName(RiskMiddlenameMask.TESTExperianApplicantIsSolvent.ToString()).WithForename(forename).WithSurname(surname).Build();
-            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
-            Assert.IsNotNull(application);
-
-            var riskDb = Driver.Db.Risk;
-            var riskApplicationEntity = Do.Until(() => riskDb.RiskApplications.SingleOrDefault(p => p.ApplicationId == application.Id));
-            Assert.IsNotNull(riskApplicationEntity, "Risk application should exist");
-
-            var riskAccountEntity = Do.Until(() => riskDb.RiskAccounts.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
-            Assert.IsNotNull(riskAccountEntity, "Risk account should exist");
-
-            var socialDetailsEntity = Do.Until(() => riskDb.SocialDetails.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
-            Assert.IsNotNull(socialDetailsEntity, "Social details should exist");
-
+            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTExperianApplicantIsSolvent, forename,
+                                                           surname, Data.GetDoB());
             Assert.Contains(Application.GetExecutedCheckpointDefinitions(application.Id, CheckpointStatus.Failed), Data.EnumToString(CheckpointDefinitionEnum.CustomerIsSolvent));
             AssertCreditBureauUsed(application, CreditBureauEnum.Experian);
         }
@@ -211,22 +114,8 @@ namespace Wonga.QA.Tests.Experian
             const String forename = "kathleen";
             const String surname = "bridson";
             var dateOfBirth = new Date(new DateTime(1992, 1, 24), DateFormat.Date);
-
-            var customer = CustomerBuilder.New().WithMiddleName(RiskMiddlenameMask.TESTExperianCustomerDateOfBirthIsCorrect.ToString()).WithForename(forename).WithSurname(surname).WithDateOfBirth(dateOfBirth).Build();
-            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var application = ApplicationBuilder.New(customer, organization).Build();
-            Assert.IsNotNull(application);
-
-            var riskDb = Driver.Db.Risk;
-            var riskApplicationEntity = Do.Until(() => riskDb.RiskApplications.SingleOrDefault(p => p.ApplicationId == application.Id));
-            Assert.IsNotNull(riskApplicationEntity, "Risk application should exist");
-
-            var riskAccountEntity = Do.Until(() => riskDb.RiskAccounts.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
-            Assert.IsNotNull(riskAccountEntity, "Risk account should exist");
-
-            var socialDetailsEntity = Do.Until(() => riskDb.SocialDetails.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
-            Assert.IsNotNull(socialDetailsEntity, "Social details should exist");
-
+            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTExperianCustomerDateOfBirthIsCorrect, forename,
+                                                           surname, dateOfBirth);
             Assert.Contains(Application.GetExecutedCheckpointDefinitions(application.Id, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.DateOfBirthIsCorrect));
             AssertCreditBureauUsed(application, CreditBureauEnum.Experian);
         }
@@ -239,22 +128,8 @@ namespace Wonga.QA.Tests.Experian
             const String forename = "kathleen";
             const String surname = "bridson";
             var dateOfBirth = new Date(new DateTime(1990, 3, 21), DateFormat.Date);
-
-            var customer = CustomerBuilder.New().WithMiddleName(RiskMiddlenameMask.TESTExperianCustomerDateOfBirthIsCorrect.ToString()).WithForename(forename).WithSurname(surname).WithDateOfBirth(dateOfBirth).Build();
-            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
-            Assert.IsNotNull(application);
-
-            var riskDb = Driver.Db.Risk;
-            var riskApplicationEntity = Do.Until(() => riskDb.RiskApplications.SingleOrDefault(p => p.ApplicationId == application.Id));
-            Assert.IsNotNull(riskApplicationEntity, "Risk application should exist");
-
-            var riskAccountEntity = Do.Until(() => riskDb.RiskAccounts.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
-            Assert.IsNotNull(riskAccountEntity, "Risk account should exist");
-
-            var socialDetailsEntity = Do.Until(() => riskDb.SocialDetails.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
-            Assert.IsNotNull(socialDetailsEntity, "Social details should exist");
-
+            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTExperianCustomerDateOfBirthIsCorrect, forename,
+                                                           surname, dateOfBirth);
             Assert.Contains(Application.GetExecutedCheckpointDefinitions(application.Id, CheckpointStatus.Failed), Data.EnumToString(CheckpointDefinitionEnum.DateOfBirthIsCorrect));
             AssertCreditBureauUsed(application, CreditBureauEnum.Experian);
         }
@@ -267,8 +142,24 @@ namespace Wonga.QA.Tests.Experian
             const String forename = "kathleen";
             const String surname = "bridson";
             var dateOfBirth = new Date(new DateTime(1973, 5, 11), DateFormat.Date);
+            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTExperianCustomerDateOfBirthIsCorrect, forename,
+                                                           surname, dateOfBirth);
+            Assert.Contains(Application.GetExecutedCheckpointDefinitions(application.Id, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.DateOfBirthIsCorrect));
+            AssertCreditBureauUsed(application, CreditBureauEnum.Experian);
+        }
 
-            var customer = CustomerBuilder.New().WithMiddleName(RiskMiddlenameMask.TESTExperianCustomerDateOfBirthIsCorrect.ToString()).WithForename(forename).WithSurname(surname).WithDateOfBirth(dateOfBirth).Build();
+        private static void AssertCreditBureauUsed(Application application, CreditBureauEnum creditBureauUsed)
+        {
+            var db = new DbDriver();
+            var riskApplicationEntity = db.Risk.RiskApplications.SingleOrDefault(r => r.ApplicationId == application.Id);
+            Assert.IsNotNull(riskApplicationEntity, "The risk application should exist");
+            Assert.IsNotNull(riskApplicationEntity.CreditBureauUsed, "One credit bureau should have been used");
+            Assert.AreEqual((CreditBureauEnum)riskApplicationEntity.CreditBureauUsed, creditBureauUsed, "The credit bureau used should be the same");
+        }
+        private static Application CreateApplicationWithAsserts(RiskMiddlenameMask middlenameMask, String forename, String surname, Date dateOfBirth)
+        {
+            var customer = CustomerBuilder.New().WithMiddleName(middlenameMask.ToString()).WithForename(forename).
+                                     WithSurname(surname).WithDateOfBirth(dateOfBirth).Build();
             var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
             var application = ApplicationBuilder.New(customer, organization).Build();
             Assert.IsNotNull(application);
@@ -281,19 +172,9 @@ namespace Wonga.QA.Tests.Experian
             Assert.IsNotNull(riskAccountEntity, "Risk account should exist");
 
             var socialDetailsEntity = Do.Until(() => riskDb.SocialDetails.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
-            Assert.IsNotNull(socialDetailsEntity, "Social details should exist");
+            Assert.IsNotNull(socialDetailsEntity, "Risk Social details should exist");
 
-            Assert.Contains(Application.GetExecutedCheckpointDefinitions(application.Id, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.DateOfBirthIsCorrect));
-            AssertCreditBureauUsed(application, CreditBureauEnum.Experian);
-        }
-
-        private void AssertCreditBureauUsed(Application application, CreditBureauEnum creditBureauUsed)
-        {
-            var db = new DbDriver();
-            var riskApplicationEntity = db.Risk.RiskApplications.SingleOrDefault(r => r.ApplicationId == application.Id);
-            Assert.IsNotNull(riskApplicationEntity, "The risk application should exist");
-            Assert.IsNotNull(riskApplicationEntity.CreditBureauUsed, "One credit bureau should have been used");
-            Assert.AreEqual((CreditBureauEnum)riskApplicationEntity.CreditBureauUsed, creditBureauUsed, "The credit bureau used should be the same");
+            return application;
         }
     }
 }

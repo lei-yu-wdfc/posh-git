@@ -34,8 +34,6 @@ namespace Wonga.QA.Tests.Risk
                 .WithExpectedDecision(appOutcome).Build();
 
             Assert.Contains(Application.GetExecutedCheckpointDefinitions(app.Id, expectedResult), Data.EnumToString(checkpoint));
-
-            //Assert.IsTrue(SingleCheckPointVerification(app, expectedResult, checkpoint));
         }
         
         [Test, AUT(AUT.Wb), JIRA("SME-156")]
