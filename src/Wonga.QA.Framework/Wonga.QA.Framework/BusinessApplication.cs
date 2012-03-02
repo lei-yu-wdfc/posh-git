@@ -105,6 +105,11 @@ namespace Wonga.QA.Framework
             Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = businessLoansScheduledPaymentsSaga.Id });
         }
 
+        public void RestorePaymentCardExpiryDate()
+        {
+            SetCardExpirationDate(true);
+        }
+
         private void SetCardExpirationDate(bool cardIsValid)
         {
             if ((!cardIsValid && _originalExpiryDate == null)

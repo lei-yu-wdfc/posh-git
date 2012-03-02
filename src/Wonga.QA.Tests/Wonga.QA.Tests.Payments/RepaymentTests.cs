@@ -7,6 +7,7 @@ using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Msmq;
+using Wonga.QA.Framework.Msmq.Payments;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments
@@ -152,7 +153,7 @@ namespace Wonga.QA.Tests.Payments
         /// When succsessful 
         /// Then try to collect the outstandign arrears 
         /// </summary>
-        [Test, JIRA("SME-808"), Pending("Paymests are first collecting fees and then arrears and overpayments are first allocated to arrears, so collected fee reduces arrears.")]
+        [Test, JIRA("SME-808", "SME-812"), Pending("Paymests are first collecting fees and then arrears and overpayments are first allocated to arrears, so collected fee reduces arrears.")]
         public void PaymentsShouldCollectFeesAndArrearsWhenNextCollectionIsSuccessful()
         {
             var paymentPlan = applicationInfo.GetPaymentPlan();
@@ -164,7 +165,7 @@ namespace Wonga.QA.Tests.Payments
                                                                     && t.Scope == (int)PaymentTransactionScopeEnum.Debit
                                                                     && t.Type == PaymentTransactionEnum.DefaultCharge.ToString()));
 
-            MoveBackInTime(7,true);
+            MoveBackInTime(7, true);
 
             applicationInfo.FirstCollectionAttempt(paymentPlan, false, true);
 
@@ -190,12 +191,48 @@ namespace Wonga.QA.Tests.Payments
             for (int i = 0; i < paymentPlan.NumberOfPayments; i++)
             {
                 applicationInfo.FirstCollectionAttempt(paymentPlan, (i + 1) == paymentPlan.NumberOfPayments, true);
-                MoveBackInTime(7,true);
+                MoveBackInTime(7, true);
             }
 
             var totalOutstandingAmount = GetTotalOutstandingAmount(accountId);
 
             Assert.AreEqual(0, totalOutstandingAmount);
+        }
+
+        /// <summary>
+        /// Test 2 
+        /// Given a loan has been advanced and a payment plan in place 
+        /// When we try to collect a weekly payment 
+        /// When this collection fails at both the 5am and again at the 5pm collection time 
+        /// And overpayment has been made on the account to cover this payment 
+        /// Then do not charge the account £10 for a failed collection 
+        /// </summary>
+        [Test, JIRA("SME-812")]
+        public void DefaultChargeShouldNotBeCollectedWhenAnOverpaymentHasBeenMadeAndBothCollectionAttemptsFail()
+        {
+            var paymentPlan = applicationInfo.GetPaymentPlan();
+            applicationInfo.FirstCollectionAttempt(paymentPlan, false, false);
+            Driver.Msmq.Payments.Send(new CreateTransactionCommand
+            {
+                Amount = paymentPlan.RegularAmount,
+                ApplicationId = applicationInfo.Id,
+                Currency = CurrencyCodeIso4217Enum.GBP,
+                ExternalId = Guid.NewGuid(),
+                ComponentTransactionId = Guid.Empty,
+                PostedOn = DateTime.Now,
+                Scope = PaymentTransactionScopeEnum.Credit,
+                Source = PaymentTransactionSourceEnum.System,
+                Type = PaymentTransactionEnum.Cheque
+            });
+
+            // Wait for the TX to be processed
+            Thread.Sleep(15000);
+            applicationInfo.SecondCollectionAttempt(false);
+            // Wait for collection atempt to fail
+            Thread.Sleep(15000);
+
+            Assert.IsNull(Driver.Db.Payments.Transactions.SingleOrDefault(t => t.ApplicationEntity.ExternalId == applicationInfo.Id
+                && t.Type == PaymentTransactionEnum.DefaultCharge.ToString()));
         }
 
         private void MoveBackInTime(int days, bool movePaymentPlans)
