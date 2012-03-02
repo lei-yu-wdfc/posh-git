@@ -5,17 +5,35 @@ using System.Text;
 
 namespace Wonga.QA.Framework.ThirdParties
 {
+    /// <summary>
+    /// Third party driver
+    /// </summary>
     public class ThirdPartyDriver
     {
-        public ThirdPartyDriver()
-        {
-            ExactTarget = new ExactTarget();
+        /// <summary>
+        /// Lazy ExactTarget object
+        /// </summary>
+        private readonly Lazy<ExactTarget> _exactTarget = new Lazy<ExactTarget>();
 
-			Salesforce = new Salesforce();
+        /// <summary>
+        /// Lazy Salesforce object
+        /// </summary>
+        private readonly Lazy<Salesforce> _salesforce = new Lazy<Salesforce>();
+
+        /// <summary>
+        /// ExactTarget. Instantiated lazily.
+        /// </summary>
+        public ExactTarget ExactTarget
+        {
+            get { return _exactTarget.Value; }
         }
 
-        public ExactTarget ExactTarget { get; private set; }
-
-		public Salesforce Salesforce { get; private set; }
+        /// <summary>
+        /// Salesforce. Instantiated lazily.
+        /// </summary>
+        public Salesforce Salesforce
+        {
+            get { return _salesforce.Value; }
+        }
     }
 }
