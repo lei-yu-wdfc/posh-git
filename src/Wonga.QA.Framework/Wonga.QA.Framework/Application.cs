@@ -64,8 +64,6 @@ namespace Wonga.QA.Framework
 
 			MakeDueToday(application);
 
-        	var transactionAmount = GetBalance();
-
 			ServiceConfigurationEntity testmode = Driver.Db.Ops.ServiceConfigurations.SingleOrDefault(e => e.Key == "BankGateway.IsTestMode");
 			if (testmode == null || !Boolean.Parse(testmode.Value))
 			{
@@ -76,7 +74,7 @@ namespace Wonga.QA.Framework
 				Do.While(sp.Refresh);
 			}
 
-            TransactionEntity transaction = Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).Transactions.Single(t => (PaymentTransactionScopeEnum)t.Scope == PaymentTransactionScopeEnum.Credit && t.Amount == -transactionAmount));
+            TransactionEntity transaction = Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).Transactions.Single(t => (PaymentTransactionScopeEnum)t.Scope == PaymentTransactionScopeEnum.Credit));
 
 			CloseApplicationSagaEntity ca = Do.Until(() => Driver.Db.OpsSagas.CloseApplicationSagaEntities.Single(s => s.TransactionId == transaction.ExternalId));
 			Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = ca.Id });
