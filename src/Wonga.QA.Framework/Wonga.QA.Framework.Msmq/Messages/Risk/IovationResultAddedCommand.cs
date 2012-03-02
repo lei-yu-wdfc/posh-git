@@ -4,10 +4,11 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Risk
 {
-    [XmlRoot("IovationResponseMessage", Namespace = "Wonga.Risk.Iovation", DataType = "Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
-    public partial class IovationResponseCommand : MsmqMessage<IovationResponseCommand>
+    [XmlRoot("IovationResultAddedMessage", Namespace = "Wonga.Risk.Iovation", DataType = "Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage,Wonga.Risk.IResumeRiskWorkflow")]
+    public partial class IovationResultAddedCommand : MsmqMessage<IovationResultAddedCommand>
     {
         public Guid AccountId { get; set; }
+        public Guid ApplicationId { get; set; }
         public IovationAdviceEnum Result { get; set; }
         public String Reason { get; set; }
         public Object Details { get; set; }

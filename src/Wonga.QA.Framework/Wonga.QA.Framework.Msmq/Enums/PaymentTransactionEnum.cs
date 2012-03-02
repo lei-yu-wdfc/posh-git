@@ -33,5 +33,12 @@ namespace Wonga.QA.Framework.Msmq
         InterestRateFee = 29,
         InterestAdjustment = 30,
         RegularCardPayment = 31,
+        Dispute = 32,
+        DirectDeposit = 33,
+        InteresetRevereal = 34,
+        ServiceFeeWriteOff = 35,
+        ServiceFeeReversal = 36,
+        InitiationFeeWriteOff = 37,
+        InitiationFeeReversal = 38,
     }
 }

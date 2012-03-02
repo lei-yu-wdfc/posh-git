@@ -87,7 +87,6 @@ namespace Wonga.QA.Generators.Core
 
             Solutions = new Dictionary<String, String>
             {
-                { "Api", "Common" },
                 { "Ops", "Ops" },
                 { "Comms", "Comms" },
                 { "Payments", "Payments" },
@@ -119,7 +118,11 @@ namespace Wonga.QA.Generators.Core
                 { "TimeZone", "TimeZone" },
                 { "Transunion", "TransUnion" },
                 { "URU", "Uru" },
-                { "WongaPay", "WongaPay" }
+                { "WongaPay", "WongaPay" },
+
+                //Anomalies
+                { "Api", "Common" },
+                {"PublicMessages.Bi", "Bi"},
             };
         }
 
