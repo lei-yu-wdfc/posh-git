@@ -55,6 +55,7 @@ namespace Wonga.QA.Framework
                                                                            && t.Amount == (isFinalPayment
                                                                                 ? paymentPlan.FinalAmount
                                                                                 : paymentPlan.RegularAmount)
+                                                                           && t.PostedOn.Date == DateTime.Today
                                                                            && t.Type == PaymentTransactionEnum.CardPayment.ToString()));
             }
             else
