@@ -38,7 +38,8 @@ namespace Wonga.QA.Tests.Bi
             Do.Until(() =>
                          {
                              var app = sales.GetApplicationById(application.Id);
-                             return app != null && app.Status__c == "Live";
+                             int status = int.Parse(app.Status__c);
+                             return status == 9;
                          });
         }
     }
