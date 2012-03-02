@@ -72,21 +72,22 @@ namespace Wonga.QA.Tests.Risk
                 "ApplicantIsNotMinorVerification");
 
         }
-
-		[Test, AUT(AUT.Ca)]
-		public void GivenLNApplicant_WhenIsNotMinor_ThenIsAccepted()
-		{
-			LNApplicationWithSingleCheckPointAndSingleVerification(CheckpointDefinitionEnum.ApplicantIsNotMinor, "ApplicantIsNotMinorVerification");
-		}
-
-
+		
         [Test, AUT(AUT.Ca)]
-        public void GivenL0Applicant_WhenIsIsEmployed_ThenIsAccepted()
+        public void GivenL0Applicant_WhenIsEmployed_ThenIsAccepted()
         {
             _builderConfig = new ApplicationBuilderConfig();
 
             L0ApplicationWithSingleCheckPointAndSingleVerification(CheckpointDefinitionEnum.CustomerIsEmployed, "CustomerIsEmployedVerification");
         }
+
+		[Test, AUT(AUT.Ca)]
+		public void GivenLNApplicant_WhenIsEmployed_ThenIsAccepted()
+		{
+			_builderConfig = new ApplicationBuilderConfig();
+
+			LNApplicationWithSingleCheckPointAndSingleVerification(CheckpointDefinitionEnum.CustomerIsEmployed, "CustomerIsEmployedVerification");
+		}
 
         //TODO:
         /*
@@ -107,31 +108,27 @@ namespace Wonga.QA.Tests.Risk
 
             L0ApplicationWithSingleCheckPointAndSingleVerification(CheckpointDefinitionEnum.FraudListCheck, "FraudBlacklistVerification");
         }
+		
 
         [Test, AUT(AUT.Ca)]
         public void GivenL0Applicant_WhenApplicationDeviceNotOnBlacklist_ThenIsAccepted()
         {
-            //TODO: to test timeout need to change this : update qadata.dbo.IovationDataOutput set WaitTimeInSeconds = 80
-
             _builderConfig = new ApplicationBuilderConfig();
 
             var expectedVerifications = new List<string> { "IovationVerification", "IovationAutoReviewVerification" };
 
             L0ApplicationWithSingleCheckPointAndVerifications(CheckpointDefinitionEnum.HardwareBlacklistCheck, expectedVerifications);
         }
-
+		
         [Test, AUT(AUT.Ca)]
         public void GivenL0Applicant_WhenApplicationDeviceIsOnBlacklist_ThenDeclined()
         {
-            //TODO: to test timeout need to change this : update qadata.dbo.IovationDataOutput set WaitTimeInSeconds = 80
-
             _builderConfig = new ApplicationBuilderConfig(IovationMockResponse.Deny, ApplicationDecisionStatusEnum.Declined);
 
             var expectedVerifications = new List<string> { "IovationVerification", "IovationAutoReviewVerification" };
 
             L0ApplicationWithSingleCheckPointAndVerifications(CheckpointDefinitionEnum.HardwareBlacklistCheck, expectedVerifications);
         }
-
 
 		[Test, AUT(AUT.Ca)]
 		[Row(IovationMockResponse.Allow)]
@@ -195,8 +192,6 @@ namespace Wonga.QA.Tests.Risk
 
         }
 
-
-
         [Test, AUT(AUT.Ca)]
         public void GivenL0Applicant_WhenNoSuspiciousApplicationActivity_ThenIsAccepted()
         {
@@ -205,7 +200,6 @@ namespace Wonga.QA.Tests.Risk
             L0ApplicationWithSingleCheckPointAndSingleVerification(
                 CheckpointDefinitionEnum.SuspiciousActivityCheck, "SuspiciousActivityVerification");
         }
-
 
         [Test, AUT(AUT.Ca)]
         public void GivenL0Applicant_WhenDirectFraudCheck_ThenIsDeclined()
@@ -229,7 +223,6 @@ namespace Wonga.QA.Tests.Risk
                 CheckpointDefinitionEnum.BankAccountMatchesTheApplicant, 
                 expectedVerificationNames);
         }
-
 
         [Test, AUT(AUT.Ca)]
         public void GivenL0Applicant_WhenIsNotDeceased_ThenIsAccepted()
@@ -277,9 +270,138 @@ namespace Wonga.QA.Tests.Risk
 
         }
 
-        #region UKTests
+		#region LN Tests
 
-        [Test, AUT(AUT.Uk)]
+		[Test, AUT(AUT.Ca)]
+		public void GivenLNApplicant_WhenIsNotMinor_ThenIsAccepted()
+		{
+			_builderConfig = new ApplicationBuilderConfig();
+
+			LNApplicationWithSingleCheckPointAndSingleVerification(CheckpointDefinitionEnum.ApplicantIsNotMinor, "ApplicantIsNotMinorVerification");
+		}
+
+		[Test, AUT(AUT.Ca)]
+		public void GivenLNApplicant_WhenElementNotOnCsBlacklist_ThenIsAccepted()
+		{
+			_builderConfig = new ApplicationBuilderConfig();
+
+			LNApplicationWithSingleCheckPointAndSingleVerification(CheckpointDefinitionEnum.FraudListCheck, "FraudBlacklistVerification");
+		}
+
+		[Test, AUT(AUT.Ca)]
+		public void GivenLNApplicant_WhenApplicationDeviceNotOnBlacklist_ThenIsAccepted()
+		{
+			_builderConfig = new ApplicationBuilderConfig();
+
+			var expectedVerifications = new List<string> { "IovationVerification", "IovationAutoReviewVerification" };
+
+			LNApplicationWithSingleCheckPointAndVerifications(CheckpointDefinitionEnum.HardwareBlacklistCheck, expectedVerifications);
+		}
+
+		[Test, AUT(AUT.Ca)]
+		public void GivenLNApplicant_WhenApplicationDeviceIsOnBlacklist_ThenDeclined()
+		{
+			_builderConfig = new ApplicationBuilderConfig(IovationMockResponse.Deny, ApplicationDecisionStatusEnum.Declined);
+
+			var expectedVerifications = new List<string> { "IovationVerification", "IovationAutoReviewVerification" };
+
+			LNApplicationWithSingleCheckPointAndVerifications(CheckpointDefinitionEnum.HardwareBlacklistCheck, expectedVerifications);
+		}
+
+		[Test, AUT(AUT.Ca)]
+		public void GivenLNApplicant_WhenMonthlyIncomeEnoughForRepayment_ThenIsAccepted()
+		{
+			_builderConfig = new ApplicationBuilderConfig();
+
+			var expectedVerificationNames = new List<string> { "MonthlyIncomeVerification", "MonthlyIncomeBCVerification" };
+
+			LNApplicationWithSingleCheckPointAndVerifications(CheckpointDefinitionEnum.MonthlyIncomeLimitCheck, expectedVerificationNames);
+
+		}
+
+		[Test, AUT(AUT.Ca)]
+		public void GivenLNApplicant_WhenNoSuspiciousApplicationActivity_ThenIsAccepted()
+		{
+			_builderConfig = new ApplicationBuilderConfig();
+
+			LNApplicationWithSingleCheckPointAndSingleVerification(
+				CheckpointDefinitionEnum.SuspiciousActivityCheck, "SuspiciousActivityVerification");
+		}
+
+		[Test, AUT(AUT.Ca)]
+		public void GivenLNApplicant_WhenDirectFraudCheck_ThenIsDeclined()
+		{
+			_builderConfig = new ApplicationBuilderConfig(ApplicationDecisionStatusEnum.Declined);
+
+			LNApplicationWithSingleCheckPointAndSingleVerification(
+				CheckpointDefinitionEnum.UserAssistedFraudCheck,
+				"DirectFraudCheckVerification");
+		}
+
+		[Test, AUT(AUT.Ca)]
+		public void GivenLNApplicant_WhenBankAccountDoesNotMatchApplicant_ThenIsDeclined()
+		{
+			_builderConfig = new ApplicationBuilderConfig(ApplicationDecisionStatusEnum.Declined);
+
+			//no verifications???
+			var expectedVerificationNames = new List<string>();
+
+			LNApplicationWithSingleCheckPointAndVerifications(
+				CheckpointDefinitionEnum.BankAccountMatchesTheApplicant,
+				expectedVerificationNames);
+		}
+
+
+		[Test, AUT(AUT.Ca)]
+		public void GivenLNApplicant_WhenIsNotDeceased_ThenIsAccepted()
+		{
+			_builderConfig = new ApplicationBuilderConfig();
+
+			LNApplicationWithSingleCheckPointAndSingleVerification(
+				CheckpointDefinitionEnum.ApplicantIsAlive,
+				"CreditBureauCustomerIsAliveVerification");
+
+		}
+
+		[Test, AUT(AUT.Ca)]
+		public void GivenLNApplicant_WhenIsSolvent_ThenIsAccepted()
+		{
+			_builderConfig = new ApplicationBuilderConfig();
+
+			LNApplicationWithSingleCheckPointAndSingleVerification(
+				CheckpointDefinitionEnum.CustomerIsSolvent,
+				"CreditBureauCustomerIsSolventVerification");
+
+		}
+
+		[Test, AUT(AUT.Ca)]
+		public void GivenLNApplicant_WhenCustomerDateOfBirthIsCorrect_ThenIsAccepted()
+		{
+			_builderConfig = new ApplicationBuilderConfig();
+
+			LNApplicationWithSingleCheckPointAndSingleVerification(
+				CheckpointDefinitionEnum.DateOfBirthIsCorrect,
+				"DateOfBirthIsCorrectVerification");
+
+		}
+
+		[Test, AUT(AUT.Ca)]
+		public void GivenLNApplicant_WhenCreditBureauDataIsNotAvailable_ThenIsDeclined()
+		{
+			_builderConfig = new ApplicationBuilderConfig(ApplicationDecisionStatusEnum.Declined);
+
+			LNApplicationWithSingleCheckPointAndSingleVerification(
+				CheckpointDefinitionEnum.CreditBureauDataIsAvailable,
+				"CreditBureauDataIsAvailableVerification");
+
+		}
+
+		#endregion
+
+
+		#region UKTests
+
+		[Test, AUT(AUT.Uk)]
         public void GivenL0Applicant_WhenCustomerIsUnEmployed_ThenIsDeclined()
         {
             _builderConfig = new ApplicationBuilderConfig(ApplicationDecisionStatusEnum.Declined);
