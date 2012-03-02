@@ -9,7 +9,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Journeys
 {
-    [Parallelizable(TestScope.All)]
+    //[Parallelizable(TestScope.All)]
     public class ApiJourneys
     {
         [Test, AUT(AUT.Wb)]

@@ -74,7 +74,7 @@ namespace Wonga.QA.Framework
 				Do.While(sp.Refresh);
 			}
 
-            TransactionEntity transaction = Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).Transactions.Single(t => (PaymentTransactionScopeEnum)t.Scope == PaymentTransactionScopeEnum.Credit));
+			TransactionEntity transaction = Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).Transactions.Single(t => (PaymentTransactionScopeEnum)t.Scope == PaymentTransactionScopeEnum.Credit && t.Type == "DirectBankPayment"));
 
 			CloseApplicationSagaEntity ca = Do.Until(() => Driver.Db.OpsSagas.CloseApplicationSagaEntities.Single(s => s.TransactionId == transaction.ExternalId));
 			Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = ca.Id });
@@ -225,6 +225,7 @@ namespace Wonga.QA.Framework
 
 			RewindApplicationDates(application, duration);
         }
+
 		private static void RewindApplicationDates(ApplicationEntity application, TimeSpan span)
 		{
 			application.ApplicationDate -= span;
