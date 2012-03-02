@@ -21,7 +21,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		private string _nationalNumber;
 		private Date _dateOfBirth;
 
-		[FixtureSetUp]
+        [FixtureSetUp]
 		public void FixtureSetUp()
 		{
 			switch (Config.AUT)
