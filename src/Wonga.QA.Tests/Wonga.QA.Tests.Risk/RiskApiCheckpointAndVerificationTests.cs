@@ -73,6 +73,12 @@ namespace Wonga.QA.Tests.Risk
 
         }
 
+		[Test, AUT(AUT.Ca)]
+		public void GivenLNApplicant_WhenIsNotMinor_ThenIsAccepted()
+		{
+			LNApplicationWithSingleCheckPointAndSingleVerification(CheckpointDefinitionEnum.ApplicantIsNotMinor, "ApplicantIsNotMinorVerification");
+		}
+
 
         [Test, AUT(AUT.Ca)]
         public void GivenL0Applicant_WhenIsIsEmployed_ThenIsAccepted()
@@ -126,10 +132,10 @@ namespace Wonga.QA.Tests.Risk
             L0ApplicationWithSingleCheckPointAndVerifications(CheckpointDefinitionEnum.HardwareBlacklistCheck, expectedVerifications);
         }
 
-		//COMMENTED UNTIL BUG IN FW IS FIXED (but works locally when IovationDataOutput has PK)
+
 		[Test, AUT(AUT.Ca)]
 		[Row(IovationMockResponse.Allow)]
-		[Row(IovationMockResponse.Deny)]
+		[Row(IovationMockResponse.Deny)]		
 		public void GivenL0Applicant_WhenApplicationDeviceBlacklistTimesout_ThenIsAccepted(IovationMockResponse iovationMockResponse)
 		{
 			int ? currentMockIovationWaitSeconds = null;
@@ -319,15 +325,10 @@ namespace Wonga.QA.Tests.Risk
 		/// <returns>current timeout value in secs</returns>
 		private static int SetRiskIovationResponseTimeoutSeconds(int seconds)
 		{
-			var dbDriver = new DbDriver();
-			var serviceConfigurationEntity = dbDriver.Ops.ServiceConfigurations.Single(sc => sc.Key == RiskIovationResponseTimeoutSecondsKeyName);
+			var serviceConfigurationEntity = Driver.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == RiskIovationResponseTimeoutSecondsKeyName);
 			var currentValue = serviceConfigurationEntity.Value;
-			var newValue = seconds.ToString();
-			if (currentValue != newValue)
-			{
-				serviceConfigurationEntity.Value = newValue;
-				dbDriver.Ops.SubmitChanges();
-			}
+			serviceConfigurationEntity.Value = seconds.ToString();
+			serviceConfigurationEntity.Submit();
 			return Int32.Parse(currentValue);
 		}
 
@@ -341,25 +342,62 @@ namespace Wonga.QA.Tests.Risk
 
 			return currentValue;
 		}
-		
 
-		private Application LNTest()
+		private Application LNApplicationWithSingleCheckPointAndSingleVerification(CheckpointDefinitionEnum checkpointDefinition, string expectedVerificationName)
 		{
-			Customer cust = CustomerBuilder.New().Build();
+			return LNApplicationWithSingleCheckPointAndSingleVerification(
+						checkpointDefinition, expectedVerificationName,
+						GetEmployerNameMaskFromCheckpointDefinition(checkpointDefinition));
+		}    	
 
-			Application l0App = ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+		private Application LNApplicationWithSingleCheckPointAndSingleVerification(CheckpointDefinitionEnum checkpointDefinition, string expectedVerificationName, string employerNameTestMask)
+		{
+			return LNApplicationWithSingleCheckPointAndVerifications(checkpointDefinition, new[] {expectedVerificationName}, employerNameTestMask);
+		}
 
-			l0App.RepayOnDueDate();
+		private Application LNApplicationWithSingleCheckPointAndVerifications(CheckpointDefinitionEnum checkpointDefinition, IEnumerable<string> expectedVerificationNames)
+		{
+			return LNApplicationWithSingleCheckPointAndVerifications(
+						checkpointDefinition, expectedVerificationNames,
+						GetEmployerNameMaskFromCheckpointDefinition(checkpointDefinition));
+		}
 
-			EmploymentDetailEntity employmentDetails = Driver.Db.Risk.EmploymentDetails.Single(cd => cd.AccountId == cust.Id);
-			employmentDetails.EmployerName = "test:DirectFraud";
+    	private Application LNApplicationWithSingleCheckPointAndVerifications(CheckpointDefinitionEnum checkpointDefinition, IEnumerable<string> expectedVerificationNames, string employerNameTestMask)       
+		{
+			if(_builderConfig == null)
+			{
+				//use default
+				_builderConfig = new ApplicationBuilderConfig();
+			}
+
+
+			Application firstApplication = MakeFirstLNApplicationAndRepay();
+			
+			//tweak the test mask
+			EmploymentDetailEntity employmentDetails = Driver.Db.Risk.EmploymentDetails.Single(cd => cd.AccountId == firstApplication.GetCustomer().Id);
+			employmentDetails.EmployerName = employerNameTestMask;
 			employmentDetails.Submit();
 
-			Application lNApp = ApplicationBuilder.New(cust).WithIovationBlackBox("Allow")
-			   .WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+			CheckpointStatus expectedStatus = GetExpectedCheckpointStatus(_builderConfig.ExpectedDecisionStatus);
 
-			//Assert.IsTrue(RiskApiCheckpointTests.SingleCheckPointVerification(lNApp, CheckpointStatus.Verified,CheckpointDefinitionEnum.UserAssistedFraudCheck));
-			Assert.Contains(Application.GetExecutedCheckpointDefinitions(lNApp.Id, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.UserAssistedFraudCheck));
+			Application secondApplication = ApplicationBuilder.New(firstApplication.GetCustomer())
+				.WithIovationBlackBox(_builderConfig.IovationBlackBox.ToString())
+				.WithExpectedDecision(_builderConfig.ExpectedDecisionStatus).Build();
+
+			AssertCheckpointAndVerifications(expectedStatus, expectedVerificationNames, checkpointDefinition, secondApplication);
+
+			return secondApplication;
+		}
+
+		private Application MakeFirstLNApplicationAndRepay()
+		{
+			Customer customer = CustomerBuilder.New().Build();
+
+			Application application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+
+			application.RepayEarly(application.LoanAmount, 1);
+
+			return application;
 		}
 
 		private void AssertCheckpointAndVerifications(CheckpointStatus expectedStatus, IEnumerable<string> expectedVerificationNames, CheckpointDefinitionEnum checkpoint, Application application)
@@ -410,7 +448,7 @@ namespace Wonga.QA.Tests.Risk
     		}
     		else
     		{
-    			Assert.IsTrue(string.IsNullOrEmpty(application.FailedCheckpoint));
+    			Assert.IsNull(application.FailedCheckpoint);
     		}
     	}
 

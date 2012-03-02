@@ -204,7 +204,7 @@ namespace Wonga.QA.Framework
 
 			if (_decision == ApplicationDecisionStatusEnum.Declined)
 			{
-				return new Application(_id, response != null ? response.Values["FailedCheckpoint"].FirstOrDefault() : string.Empty);
+				return new Application(_id, GetFailedCheckpointFromApplicationDecisionResponse(response));
 			}
 
         	if (_decision == ApplicationDecisionStatusEnum.Pending)
@@ -228,7 +228,12 @@ namespace Wonga.QA.Framework
             return new Application {Id = _id, BankAccountId = _customer.BankAccountId, LoanAmount = _loanAmount, LoanTerm = _loanTerm};
         }
 
-        private int GetDaysUntilStartOfLoan()
+    	private static string GetFailedCheckpointFromApplicationDecisionResponse(ApiResponse response)
+    	{
+    		return response != null ? response.Values["FailedCheckpoint"].FirstOrDefault() : null;
+    	}
+
+    	private int GetDaysUntilStartOfLoan()
         {
             return 0;
         }

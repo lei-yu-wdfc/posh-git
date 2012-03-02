@@ -50,10 +50,12 @@ namespace Wonga.QA.Framework
 
 		public Customer GetCustomer()
 		{
+			//avoid going to the DB twice
+			Guid currentAccountId = AccountId;
 			return new Customer(
 				Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).AccountId,
-				Driver.Db.Comms.CustomerDetails.Single(cd => cd.AccountId == AccountId).Email,
-				Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == Id).BankAccountsBaseEntity.ExternalId);
+				Driver.Db.Comms.CustomerDetails.Single(cd => cd.AccountId == currentAccountId).Email,
+				Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == currentAccountId).BankAccountsBaseEntity.ExternalId);
 		}
 
 		public Application RepayOnDueDate()
