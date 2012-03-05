@@ -18,14 +18,12 @@ namespace Wonga.QA.Tests.Comms
     public class OrganisationTests
     {
         [Test, AUT(AUT.Wb)]
-        [Explicit]
+        [Ignore]
         public void TestOrganisationIsBuilt_DirectorsPersisted()
         {
             Customer primaryApplicant = CustomerBuilder.New().Build();
             OrganisationBuilder organisationBuilder =
-                OrganisationBuilder.New()
-                    .WithSoManySecondaryDirectors(2) //test is sufficient with more than one
-                    .WithPrimaryApplicant(primaryApplicant);
+                OrganisationBuilder.New(primaryApplicant).WithSoManySecondaryDirectors(2);
 
             Organisation org = organisationBuilder.Build();
 

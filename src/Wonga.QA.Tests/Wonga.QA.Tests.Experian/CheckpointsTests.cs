@@ -160,7 +160,7 @@ namespace Wonga.QA.Tests.Experian
         {
             var customer = CustomerBuilder.New().WithMiddleName(middlenameMask.ToString()).WithForename(forename).
                                      WithSurname(surname).WithDateOfBirth(dateOfBirth).Build();
-            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
+            var organization = OrganisationBuilder.New(customer).Build();
             var application = ApplicationBuilder.New(customer, organization).Build();
             Assert.IsNotNull(application);
 

@@ -94,11 +94,11 @@ namespace Wonga.QA.Framework
             return new CustomerBuilder { _id = id };
         }
 
-        public CustomerBuilder WithEmail(string email)
-        {
-            _email = email;
-            return this;
-        }
+        //public CustomerBuilder WithEmail(string email)
+        //{
+        //    _email = email;
+        //    return this;
+        //}
 
         public CustomerBuilder WithEmployer(string employerName)
         {

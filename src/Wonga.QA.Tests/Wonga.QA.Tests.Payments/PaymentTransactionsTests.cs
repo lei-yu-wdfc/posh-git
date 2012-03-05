@@ -27,7 +27,7 @@ Then create cashadvance, fee and interest transactions on the application.
         public void PaymentsShouldCreateTransactionsWhenLoanInitialAdvanceTransfered()
         {
             var customer = CustomerBuilder.New().Build();
-            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
+            var organization = OrganisationBuilder.New(customer).Build();
             var app =
                 ApplicationBuilder.New(customer, organization).WithExpectedDecision(
                     ApplicationDecisionStatusEnum.Accepted).Build();

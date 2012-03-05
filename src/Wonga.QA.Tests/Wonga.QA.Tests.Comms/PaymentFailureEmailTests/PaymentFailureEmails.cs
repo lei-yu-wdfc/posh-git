@@ -16,27 +16,25 @@ namespace Wonga.QA.Tests.Comms.PaymentFailureEmailTests
     [TestFixture, AUT(AUT.Wb)]    
     class PaymentFailureEmails
     {
-        private static Guid orgId = Guid.Empty;
-        private BusinessApplication applicationInfo;
+        private BusinessApplication _applicationInfo;
         [SetUp]
         public void Setup()
         {
             var customer = CustomerBuilder.New().Build();
-            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            orgId = organization.Id;
-            applicationInfo = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build() as BusinessApplication;
+            var organization = OrganisationBuilder.New(customer).Build();
+            _applicationInfo = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build() as BusinessApplication;
         }
 
         [Test, JIRA("SME-810")]
         public void EmailIsSentToCustomerOnCollectionFailure()
         {
-            applicationInfo.GetPaymentPlan();
-            applicationInfo.FirstCollectionAttempt(null, false, false);
-            applicationInfo.SecondCollectionAttempt(false);
-                        
-            Do.Until(() => Driver.Db.OpsSagasWb.FirstPaymentRequestFailedSagaEntities.Single(t => t.ApplicationId == applicationInfo.Id
+            Assert.IsNotNull(_applicationInfo.GetPaymentPlan());
+            _applicationInfo.FirstCollectionAttempt(null, false, false);
+            _applicationInfo.SecondCollectionAttempt(false);
+
+            Do.Until(() => Driver.Db.OpsSagasWb.FirstPaymentRequestFailedSagaEntities.Single(t => t.ApplicationId == _applicationInfo.Id
                                                                                                    && t.EmailSent == true));
-            Do.Until(() => Driver.Db.OpsSagasWb.SecondPaymentRequestFailedSagaEntities.Single(t => t.ApplicationId == applicationInfo.Id
+            Do.Until(() => Driver.Db.OpsSagasWb.SecondPaymentRequestFailedSagaEntities.Single(t => t.ApplicationId == _applicationInfo.Id
                                                                                                    && t.EmailSent == true));
         }
     }

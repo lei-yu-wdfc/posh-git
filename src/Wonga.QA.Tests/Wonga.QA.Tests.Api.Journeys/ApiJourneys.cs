@@ -16,8 +16,7 @@ namespace Wonga.QA.Tests.Journeys
         public void WBApiL0JourneyAccepted()
         {
             Customer cust = CustomerBuilder.New().Build();
-            
-            Organisation comp = OrganisationBuilder.New().WithPrimaryApplicant(cust).Build();
+            Organisation comp = OrganisationBuilder.New(cust).Build();
             ApplicationBuilder.New(cust, comp).Build();            
         }
 
@@ -33,7 +32,7 @@ namespace Wonga.QA.Tests.Journeys
         {
             Customer cust = CustomerBuilder.New().WithMiddleName("Middle").Build();
 
-            Organisation comp = OrganisationBuilder.New().WithPrimaryApplicant(cust).Build();
+            Organisation comp = OrganisationBuilder.New(cust).Build();
             ApplicationBuilder.New(cust, comp).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
         }
 

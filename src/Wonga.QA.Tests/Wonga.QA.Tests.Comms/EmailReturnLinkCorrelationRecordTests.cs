@@ -17,8 +17,7 @@ namespace Wonga.QA.Tests.Comms
         {
             Customer cust = CustomerBuilder.New().Build();
 
-            var organisationBuilder = OrganisationBuilder.New();
-            Organisation comp = organisationBuilder.WithPrimaryApplicant(cust).WithSoManySecondaryDirectors(2).Build();
+            Organisation comp = OrganisationBuilder.New(cust).WithSoManySecondaryDirectors(2).Build();
 
             var businessApplicationBuilder = ApplicationBuilder.New(cust, comp) as BusinessApplicationBuilder;
             var application = businessApplicationBuilder.Build();

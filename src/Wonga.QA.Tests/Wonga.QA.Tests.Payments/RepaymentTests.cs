@@ -15,13 +15,13 @@ namespace Wonga.QA.Tests.Payments
     [TestFixture, AUT(AUT.Wb)]
     public class RepaymentTests
     {
-        private BusinessApplication applicationInfo;
+        private BusinessApplication _applicationInfo;
         [SetUp]
         public void Setup()
         {
             var customer = CustomerBuilder.New().Build();
-            var organization = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
-            applicationInfo = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build() as BusinessApplication;
+            var organization = OrganisationBuilder.New(customer).Build();
+            _applicationInfo = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build() as BusinessApplication;
         }
 
         /// <summary>
@@ -31,9 +31,9 @@ namespace Wonga.QA.Tests.Payments
         [Test, JIRA("SME-1018", "SME-808", "SME-809")]
         public void PaymentsShouldCreateNewTransactionWhenFirstCollectionAttemptSucceeds()
         {
-            var paymentPlan = applicationInfo.GetPaymentPlan();
+            var paymentPlan = _applicationInfo.GetPaymentPlan();
 
-            applicationInfo.FirstCollectionAttempt(paymentPlan, false, true);
+            _applicationInfo.FirstCollectionAttempt(paymentPlan, false, true);
         }
 
         /// <summary>
@@ -43,14 +43,14 @@ namespace Wonga.QA.Tests.Payments
         [Test, JIRA("SME-1018", "SME-809")]
         public void PaymentsShouldCreateNewTransactionWhenSecondCollectionAttemptSucceeds()
         {
-            applicationInfo.GetPaymentPlan();
+            _applicationInfo.GetPaymentPlan();
 
-            applicationInfo.FirstCollectionAttempt(null, false, false);
+            _applicationInfo.FirstCollectionAttempt(null, false, false);
 
-            applicationInfo.SecondCollectionAttempt(true);
+            _applicationInfo.SecondCollectionAttempt(true);
 
             // Check that only one transaction has occured
-            Do.Until(() => Driver.Db.Payments.Transactions.Single(t => t.ApplicationEntity.ExternalId == applicationInfo.Id
+            Do.Until(() => Driver.Db.Payments.Transactions.Single(t => t.ApplicationEntity.ExternalId == _applicationInfo.Id
                                                                     && t.Scope == (int)PaymentTransactionScopeEnum.Credit
                                                                     && t.Type == PaymentTransactionEnum.CardPayment.ToString()));
         }
@@ -58,16 +58,16 @@ namespace Wonga.QA.Tests.Payments
         [Test, JIRA("SME-1018", "SME-812", "SME-809")]
         public void PaymentsShouldNotCreateNewTransactionWhenSecondCollectionAttemptFails()
         {
-            applicationInfo.GetPaymentPlan();
-            applicationInfo.FirstCollectionAttempt(null, false, false);
+            _applicationInfo.GetPaymentPlan();
+            _applicationInfo.FirstCollectionAttempt(null, false, false);
 
-            applicationInfo.SecondCollectionAttempt(false);
+            _applicationInfo.SecondCollectionAttempt(false);
 
             // Check we have a default charge and that no transactions have been written to DB
             Do.Until(() => Driver.Db.Payments.Transactions.SingleOrDefault(
-                    t => t.ApplicationEntity.ExternalId == applicationInfo.Id
+                    t => t.ApplicationEntity.ExternalId == _applicationInfo.Id
                          && t.Type == PaymentTransactionEnum.DefaultCharge.ToString()));
-            Assert.IsNull(Driver.Db.Payments.Transactions.SingleOrDefault(t => t.ApplicationEntity.ExternalId == applicationInfo.Id
+            Assert.IsNull(Driver.Db.Payments.Transactions.SingleOrDefault(t => t.ApplicationEntity.ExternalId == _applicationInfo.Id
                                                                     && t.Scope == (int)PaymentTransactionScopeEnum.Credit
                                                                     && t.Type == PaymentTransactionEnum.CardPayment.ToString()));
         }
@@ -75,7 +75,7 @@ namespace Wonga.QA.Tests.Payments
         [Test, JIRA("SME-808", "SME-809")]
         public void PaymentsShouldCreateRepaymentPlanWhenLoanIsApproved()
         {
-            Assert.IsNotNull(applicationInfo.GetPaymentPlan());
+            Assert.IsNotNull(_applicationInfo.GetPaymentPlan());
         }
 
         /// <summary>
@@ -91,13 +91,13 @@ namespace Wonga.QA.Tests.Payments
         [Test, JIRA("SME-808", "SME-809")]
         public void PaymentsShouldUpdateAccountBalanceWhenCollectionIsSuccessful()
         {
-            var paymentPlan = applicationInfo.GetPaymentPlan();
+            var paymentPlan = _applicationInfo.GetPaymentPlan();
 
-            var accountId = Do.Until(() => Driver.Db.Payments.AccountsApplications.Single(a => a.ApplicationEntity.ExternalId == applicationInfo.Id).AccountId);
+            var accountId = Do.Until(() => Driver.Db.Payments.AccountsApplications.Single(a => a.ApplicationEntity.ExternalId == _applicationInfo.Id).AccountId);
 
             var initialBalance = GetTotalOutstandingAmount(accountId);
 
-            applicationInfo.FirstCollectionAttempt(paymentPlan, false, true);
+            _applicationInfo.FirstCollectionAttempt(paymentPlan, false, true);
 
             var balanceAfterTx = GetTotalOutstandingAmount(accountId);
 
@@ -119,16 +119,16 @@ namespace Wonga.QA.Tests.Payments
         [Test, JIRA("SME-808")]
         public void PaymentsShouldUpdateAccountBalanceWhenSecondCollectionIsSuccessful()
         {
-            var paymentPlan = applicationInfo.GetPaymentPlan();
+            var paymentPlan = _applicationInfo.GetPaymentPlan();
 
-            var accountId = Do.Until(() => Driver.Db.Payments.AccountsApplications.Single(a => a.ApplicationEntity.ExternalId == applicationInfo.Id).AccountId);
+            var accountId = Do.Until(() => Driver.Db.Payments.AccountsApplications.Single(a => a.ApplicationEntity.ExternalId == _applicationInfo.Id).AccountId);
 
             var initialBalance = GetTotalOutstandingAmount(accountId);
 
-            applicationInfo.FirstCollectionAttempt(paymentPlan, false, false);
-            applicationInfo.SecondCollectionAttempt(true);
+            _applicationInfo.FirstCollectionAttempt(paymentPlan, false, false);
+            _applicationInfo.SecondCollectionAttempt(true);
             // Wait for he second payment to succeed
-            Do.Until(() => Driver.Db.Payments.Transactions.Single(t => t.ApplicationEntity.ExternalId == applicationInfo.Id
+            Do.Until(() => Driver.Db.Payments.Transactions.Single(t => t.ApplicationEntity.ExternalId == _applicationInfo.Id
                                                                     && t.Amount == paymentPlan.RegularAmount
                                                                     && t.Scope == (int)PaymentTransactionScopeEnum.Credit
                                                                     && t.Type == PaymentTransactionEnum.CardPayment.ToString()));
@@ -156,26 +156,26 @@ namespace Wonga.QA.Tests.Payments
         [Test, JIRA("SME-808", "SME-812")]
         public void PaymentsShouldCollectFeesAndArrearsWhenNextCollectionIsSuccessful()
         {
-            var paymentPlan = applicationInfo.GetPaymentPlan();
+            var paymentPlan = _applicationInfo.GetPaymentPlan();
 
-            applicationInfo.FirstCollectionAttempt(paymentPlan, false, false);
-            applicationInfo.SecondCollectionAttempt(false);
+            _applicationInfo.FirstCollectionAttempt(paymentPlan, false, false);
+            _applicationInfo.SecondCollectionAttempt(false);
             // Wait for he second payment to succeed
-            Do.Until(() => Driver.Db.Payments.Transactions.Single(t => t.ApplicationEntity.ExternalId == applicationInfo.Id
+            Do.Until(() => Driver.Db.Payments.Transactions.Single(t => t.ApplicationEntity.ExternalId == _applicationInfo.Id
                                                                     && t.Scope == (int)PaymentTransactionScopeEnum.Debit
                                                                     && t.Type == PaymentTransactionEnum.DefaultCharge.ToString()));
 
             MoveBackInTime(7, true);
 
-            applicationInfo.FirstCollectionAttempt(paymentPlan, false, true);
+            _applicationInfo.FirstCollectionAttempt(paymentPlan, false, true);
 
-            Do.Until(() => Driver.Db.Payments.Transactions.Count(t => t.ApplicationEntity.ExternalId == applicationInfo.Id
+            Do.Until(() => Driver.Db.Payments.Transactions.Count(t => t.ApplicationEntity.ExternalId == _applicationInfo.Id
                                                                  &&
                                                                  t.Type == PaymentTransactionEnum.CardPayment.ToString()
                                                                  && t.Amount == paymentPlan.RegularAmount
                                                                  && t.Scope == (int)PaymentTransactionScopeEnum.Credit) == 2);
 
-            Do.Until(() => Driver.Db.Payments.Transactions.SingleOrDefault(t => t.ApplicationEntity.ExternalId == applicationInfo.Id
+            Do.Until(() => Driver.Db.Payments.Transactions.SingleOrDefault(t => t.ApplicationEntity.ExternalId == _applicationInfo.Id
                                                      &&
                                                      t.Type == PaymentTransactionEnum.CardPayment.ToString()
                                                      && t.Amount == 10
@@ -211,12 +211,12 @@ namespace Wonga.QA.Tests.Payments
         [Test, JIRA("SME-808")]
         public void BalanceShouldBeZeroAfterAllCollectionAttemptsAreSuccessfull()
         {
-            var paymentPlan = applicationInfo.GetPaymentPlan();
-            var accountId = Do.Until(() => Driver.Db.Payments.AccountsApplications.Single(a => a.ApplicationEntity.ExternalId == applicationInfo.Id).AccountId);
+            var paymentPlan = _applicationInfo.GetPaymentPlan();
+            var accountId = Do.Until(() => Driver.Db.Payments.AccountsApplications.Single(a => a.ApplicationEntity.ExternalId == _applicationInfo.Id).AccountId);
             MoveBackInTime(7, false);
             for (int i = 0; i < paymentPlan.NumberOfPayments; i++)
             {
-                applicationInfo.FirstCollectionAttempt(paymentPlan, (i + 1) == paymentPlan.NumberOfPayments, true);
+                _applicationInfo.FirstCollectionAttempt(paymentPlan, (i + 1) == paymentPlan.NumberOfPayments, true);
                 MoveBackInTime(7, true);
             }
 
@@ -270,7 +270,7 @@ namespace Wonga.QA.Tests.Payments
                              {
                                  var paymentPlans =
                                      Driver.Db.Payments.PaymentPlans.Where(
-                                         pp => pp.ApplicationEntity.ExternalId == applicationInfo.Id);
+                                         pp => pp.ApplicationEntity.ExternalId == _applicationInfo.Id);
                                  foreach (var paymentPlan in paymentPlans)
                                  {
                                      paymentPlan.StartDate = paymentPlan.StartDate.AddDays(days);
@@ -286,7 +286,7 @@ namespace Wonga.QA.Tests.Payments
                              });
             }
 
-            var transactionEntities = Driver.Db.Payments.Transactions.Where(t => t.ApplicationEntity.ExternalId == applicationInfo.Id);
+            var transactionEntities = Driver.Db.Payments.Transactions.Where(t => t.ApplicationEntity.ExternalId == _applicationInfo.Id);
             foreach (var transaction in transactionEntities)
             {
                 transaction.CreatedOn = transaction.CreatedOn.AddDays(days);

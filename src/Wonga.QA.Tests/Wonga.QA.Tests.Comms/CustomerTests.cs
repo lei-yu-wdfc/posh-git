@@ -533,12 +533,12 @@ namespace Wonga.QA.Tests.Comms
             String email = Data.GetEmail();
             
             CustomerBuilder.New()
-                .WithEmail(email)
+                .WithEmailAddress(email)
                 .Build();
 
             var error = Assert.Throws<ValidatorException>(() =>
             CustomerBuilder.New()
-                .WithEmail(email)
+                .WithEmailAddress(email)
                 .Build());
 
             Assert.Contains(error.Message, "Ops_Login_AlreadyExists");
@@ -550,12 +550,12 @@ namespace Wonga.QA.Tests.Comms
             String email = Data.GetEmail();
 
             CustomerBuilder.New()
-                .WithEmail(email)
+                .WithEmailAddress(email)
                 .Build();
 
             var error = Assert.Throws<ValidatorException>(() =>
             CustomerBuilder.New()
-                .WithEmail(Data.InvertCase(email))
+                .WithEmailAddress(Data.InvertCase(email))
                 .Build());
 
             Assert.Contains(error.Message, "Ops_Login_AlreadyExists");

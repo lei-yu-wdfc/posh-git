@@ -149,7 +149,7 @@ namespace Wonga.QA.Tests.Payments
 		public void GetBusinessAccountSummary_ShouldReturnAccountDetails_WhenLoanIsInProgress()
 		{
 			var customer = CustomerBuilder.New().Build();
-			var organisation = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
+            var organisation = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
 
 			Do.Until(() =>

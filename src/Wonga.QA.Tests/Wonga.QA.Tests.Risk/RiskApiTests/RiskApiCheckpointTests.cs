@@ -26,7 +26,7 @@ namespace Wonga.QA.Tests.Risk
             Customer cust = CustomerBuilder.New()
                 .WithMiddleName(Data.EnumToString(riskMask)).Build();
 
-            var orgB = OrganisationBuilder.New().WithPrimaryApplicant(cust);
+            var orgB = OrganisationBuilder.New(cust);
 
             Organisation org = orgNo == null ? orgB.Build() : orgB.WithOrganisationNumber((int)orgNo).Build();
             

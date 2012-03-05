@@ -48,8 +48,6 @@ namespace Wonga.QA.Framework
             return new ApplicationBuilder { _customer = customer };
         }
 
-        
-
         public static ApplicationBuilder New(Customer customer, Organisation company)
         {
             return new BusinessApplicationBuilder(customer, company);
