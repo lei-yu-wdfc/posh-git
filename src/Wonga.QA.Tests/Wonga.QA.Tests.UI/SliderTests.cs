@@ -101,14 +101,16 @@ namespace Wonga.QA.Tests.Ui
         public void VariableInterestisCalculatedCorrectly()
         {
             var homePage = Client.Home();
-            homePage.Sliders.HowMuch = "200";
-            homePage.Sliders.HowLong = "21";
+            homePage.Sliders.HowMuch = "100";
+            homePage.Sliders.HowLong = "30";
             Console.WriteLine("Sliders: {0} for {1}", homePage.Sliders.HowLong, homePage.Sliders.HowLong);
             Thread.Sleep(500);
-            Assert.AreEqual(homePage.Sliders.GetTotalToRepay, "$235.07");
+            //0.5 sec pause
+            
+            Assert.AreEqual(homePage.Sliders.GetTotalToRepay, "$121.00");
+            //maximum charge is 21$ for each 100$ borrowed for 30 days.
+
         }
-
-
 
     }
 }
