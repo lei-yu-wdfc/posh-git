@@ -51,12 +51,12 @@ namespace Wonga.QA.Framework
 
             if (shouldSucceed)
             {
-                Do.Until(() => Driver.Db.Payments.Transactions.Single(t => t.ApplicationEntity.ExternalId == Id
+                Do.Until(() => Driver.Db.Payments.Transactions.Count(t => t.ApplicationEntity.ExternalId == Id
                                                                            && t.Amount == (isFinalPayment
                                                                                 ? paymentPlan.FinalAmount
                                                                                 : paymentPlan.RegularAmount)
                                                                            && t.PostedOn.Date == DateTime.Today
-                                                                           && t.Type == PaymentTransactionEnum.CardPayment.ToString()));
+                                                                           && t.Type == PaymentTransactionEnum.CardPayment.ToString()) > 0);
             }
             else
             {

@@ -153,7 +153,7 @@ namespace Wonga.QA.Tests.Payments
         /// When succsessful 
         /// Then try to collect the outstandign arrears 
         /// </summary>
-        [Test, JIRA("SME-808", "SME-812"), Pending("Paymests are first collecting fees and then arrears and overpayments are first allocated to arrears, so collected fee reduces arrears.")]
+        [Test, JIRA("SME-808", "SME-812")]
         public void PaymentsShouldCollectFeesAndArrearsWhenNextCollectionIsSuccessful()
         {
             var paymentPlan = applicationInfo.GetPaymentPlan();
@@ -180,6 +180,32 @@ namespace Wonga.QA.Tests.Payments
                                                      t.Type == PaymentTransactionEnum.CardPayment.ToString()
                                                      && t.Amount == 10
                                                      && t.Scope == (int)PaymentTransactionScopeEnum.Credit));
+        }
+
+        [Test, JIRA("SME-808")]
+        public void BalanceShouldBeZeroAfterAllCollectionAttemptsAreSuccessfullWithOneFailedIntermediateCollection()
+        {
+            var paymentPlan = applicationInfo.GetPaymentPlan();
+            var accountId = Do.Until(() => Driver.Db.Payments.AccountsApplications.Single(a => a.ApplicationEntity.ExternalId == applicationInfo.Id).AccountId);
+            MoveBackInTime(7, false);
+            for (int i = 0; i < paymentPlan.NumberOfPayments; i++)
+            {
+                if (i == paymentPlan.NumberOfPayments - 2)
+                {
+                    applicationInfo.FirstCollectionAttempt(paymentPlan, false, false);
+                    applicationInfo.SecondCollectionAttempt(false);
+                    Thread.Sleep(15000);
+                }
+                else
+                {
+                    applicationInfo.FirstCollectionAttempt(paymentPlan, (i + 1) == paymentPlan.NumberOfPayments, true);
+                }
+                MoveBackInTime(7, true);
+            }
+
+            var totalOutstandingAmount = GetTotalOutstandingAmount(accountId);
+
+            Assert.AreEqual(0, totalOutstandingAmount);
         }
 
         [Test, JIRA("SME-808")]
