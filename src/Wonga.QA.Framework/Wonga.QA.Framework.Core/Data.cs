@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.SqlTypes;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Core
 {
@@ -50,10 +53,10 @@ namespace Wonga.QA.Framework.Core
             return "EmployedFullTime";
         }
 
-		public static Date GetNextPayDate()
-		{
-			return new Date(DateTime.UtcNow.AddDays(10), DateFormat.Date);
-		}
+        public static Date GetNextPayDate()
+        {
+            return new Date(DateTime.UtcNow.AddDays(10), DateFormat.Date);
+        }
 
         public static String GetMiddleName()
         {
@@ -72,7 +75,7 @@ namespace Wonga.QA.Framework.Core
 
         public static String GetPhone()
         {
-			return "021" + new Random().Next(1000000, 9999999).ToString(CultureInfo.InvariantCulture);
+            return "021" + new Random().Next(1000000, 9999999).ToString(CultureInfo.InvariantCulture);
         }
 
         public static string GetMobilePhone()
@@ -86,55 +89,55 @@ namespace Wonga.QA.Framework.Core
         }
 
         public static decimal GetLoanAmount()
-		{
-			switch (Config.AUT)
-			{
-					case AUT.Za:
-					{
-						return 500;
+        {
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    {
+                        return 500;
 
-					}
-					case AUT.Uk:
-					{
-						return 100;
+                    }
+                case AUT.Uk:
+                    {
+                        return 100;
 
-					}
-					case AUT.Ca:
-					{
-						return 100;
-					}
-					case AUT.Wb:
-					{
-						return 1000;
-					}
+                    }
+                case AUT.Ca:
+                    {
+                        return 100;
+                    }
+                case AUT.Wb:
+                    {
+                        return 1000;
+                    }
 
-				default:
-					{
-						throw new NotImplementedException(Config.AUT.ToString());
-					}
-			}
-		}
+                default:
+                    {
+                        throw new NotImplementedException(Config.AUT.ToString());
+                    }
+            }
+        }
 
-		public static Date GetPromiseDate()
-		{
-			return new Date(DateTime.UtcNow.AddDays(10), DateFormat.Date);
-		}
+        public static Date GetPromiseDate()
+        {
+            return new Date(DateTime.UtcNow.AddDays(10), DateFormat.Date);
+        }
 
         public static String GetNIN(DateTime dob, Boolean female)
         {
-			switch (Config.AUT)
-        	{
-				case AUT.Za:
-        			{
-						Int32[] nin = String.Format("{0:yyMMdd}{1:D4}{2}{3}", dob, female ? _random.Next(5000) : _random.Next(5000, 10000), _random.Next(2), _random.Next(10)).Select(c => Int32.Parse(c.ToString())).ToArray();
-						Int32 z = 10 - (((nin.Where((n, i) => i % 2 == 0).Sum()) + ((2 * (Int32.Parse(String.Join(null, nin.Where((n, i) => i % 2 == 1))))).ToString().Select(c => Int32.Parse(c.ToString())).Sum())) % 10);
-						return String.Format("{0}{1}", String.Join(null, nin), z == 10 ? 0 : z);
-        			}
-				default:
-        			{
-        				throw new NotImplementedException(Config.AUT.ToString());
-        			}
-        	}
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    {
+                        Int32[] nin = String.Format("{0:yyMMdd}{1:D4}{2}{3}", dob, female ? _random.Next(5000) : _random.Next(5000, 10000), _random.Next(2), _random.Next(10)).Select(c => Int32.Parse(c.ToString())).ToArray();
+                        Int32 z = 10 - (((nin.Where((n, i) => i % 2 == 0).Sum()) + ((2 * (Int32.Parse(String.Join(null, nin.Where((n, i) => i % 2 == 1))))).ToString().Select(c => Int32.Parse(c.ToString())).Sum())) % 10);
+                        return String.Format("{0}{1}", String.Join(null, nin), z == 10 ? 0 : z);
+                    }
+                default:
+                    {
+                        throw new NotImplementedException(Config.AUT.ToString());
+                    }
+            }
         }
 
         public static Int32 RandomInt(Int32 min, Int32 max)
@@ -147,15 +150,15 @@ namespace Wonga.QA.Framework.Core
             return _random.Next(max);
         }
 
-		public static Int64 RandomLong(Int64 min, Int64 max)
-		{
-			if(min > max)
-			{
-				throw new ArgumentOutOfRangeException("min", "min is greater than max");
-			}
+        public static Int64 RandomLong(Int64 min, Int64 max)
+        {
+            if (min > max)
+            {
+                throw new ArgumentOutOfRangeException("min", "min is greater than max");
+            }
 
-			return min + Convert.ToInt64((max - min)*_random.NextDouble());
-		}
+            return min + Convert.ToInt64((max - min) * _random.NextDouble());
+        }
 
         public static Double Random()
         {
@@ -187,10 +190,10 @@ namespace Wonga.QA.Framework.Core
             return RandomElement((T[])Enum.GetValues(typeof(T)));
         }
 
-		public static T RandomEnum<T>(params T[] exclude)
-		{
-			return RandomElement(((T[])Enum.GetValues(typeof(T))).Where(t=>exclude == null || !exclude.Contains(t)).ToArray());
-		}
+        public static T RandomEnum<T>(params T[] exclude)
+        {
+            return RandomElement(((T[])Enum.GetValues(typeof(T))).Where(t => exclude == null || !exclude.Contains(t)).ToArray());
+        }
 
 
         public static string EnumToString(Enum en)
@@ -237,7 +240,7 @@ namespace Wonga.QA.Framework.Core
 
         public static String Indent(String value)
         {
-            try { return XDocument.Parse(value).ToString(); }
+            try { return XElement.Parse(value).ToString(); }
             catch { return value; }
         }
 
@@ -251,6 +254,18 @@ namespace Wonga.QA.Framework.Core
                 return ((DateTime)value).ToString("s");
             if (value is Byte[])
                 return Convert.ToBase64String((Byte[])value);
+
+            //todo
+            if (value is Array)
+            {
+                XmlSerializer serializer = new XmlSerializer(value.GetType());
+                StringWriter writer = new StringWriter();
+                serializer.Serialize(writer, value);
+
+                XElement element = XElement.Parse(writer.ToString());
+                element.Attributes().ToList().ForEach(a => a.Remove());
+                return element.ToString();
+            }
 
             return value.ToString();
         }
