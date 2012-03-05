@@ -51,6 +51,7 @@ namespace Wonga.QA.Tests.Ui
             _amountMin = (int)Decimal.Parse(_response.Values["AmountMin"].Single());
             _termMax = Int32.Parse(_response.Values["TermMax"].Single());
             _termMin = Int32.Parse(_response.Values["TermMin"].Single());
+
         }
 
         [Test, AUT(AUT.Za), JIRA("QA-149")]
@@ -101,10 +102,10 @@ namespace Wonga.QA.Tests.Ui
         {
             var homePage = Client.Home();
             homePage.Sliders.HowMuch = "200";
-            homePage.Sliders.HowLong = "10";
+            homePage.Sliders.HowLong = "21";
             Console.WriteLine("Sliders: {0} for {1}", homePage.Sliders.HowLong, homePage.Sliders.HowLong);
             Thread.Sleep(500);
-            Assert.AreEqual(homePage.Sliders.GetTotalToRepay, "$220.00");
+            Assert.AreEqual(homePage.Sliders.GetTotalToRepay, "$235.07");
         }
 
 
