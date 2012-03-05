@@ -77,6 +77,9 @@
     <Compile Include="Mappings\Sections\BankAccountSection.cs" />
     <Compile Include="Mappings\Sections\DebitCardSection.cs" />
     <Compile Include="Mappings\Sections\EmploymentDetailsSection.cs" />
+    <Compile Include="Mappings\Sections\FAQSection.cs" />
+    <Compile Include="Mappings\Sections\HelpSection.cs" />
+    <Compile Include="Mappings\Sections\InternationalSection.cs" />
     <Compile Include="Mappings\Sections\ProvinceSection.cs" />
     <Compile Include="Mappings\Sections\SliderSection.cs" />
     <Compile Include="Mappings\Sections\ContactingYouSection.cs" />
@@ -85,8 +88,12 @@
     <Compile Include="Mappings\Sections\YourNameSection.cs" />
     <Compile Include="Mappings\XmlMapper.cs" />
     <Compile Include="UiElements\BaseElement.cs" />
+    <Compile Include="UiElements\FAQElements.cs" />
+    <Compile Include="UiElements\HelpElements.cs" />
+    <Compile Include="UiElements\InternationalElements.cs" />
     <Compile Include="UiElements\Pages\Common\DealDonePage.cs" />
     <Compile Include="UiElements\Pages\Common\DeclinedPage.cs" />
+    <Compile Include="UiElements\Pages\Common\FAQPage.cs" />
     <Compile Include="UiElements\Sections\AccountDetailsSection.cs" />
     <Compile Include="UiElements\Sections\BankAccountSection.cs" />
     <Compile Include="UiElements\Sections\BaseSection.cs" />

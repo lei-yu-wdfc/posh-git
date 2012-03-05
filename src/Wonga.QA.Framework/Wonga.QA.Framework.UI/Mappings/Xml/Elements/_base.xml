@@ -77,6 +77,25 @@
     <TotalToRepay>span.loan-total</TotalToRepay>
     <RepaymentDate>span.repayment-date</RepaymentDate>
   </SliderSection>
+
+  <!--Mihail-->
+  <HelpSection>
+    <HelpTrigger>help-trigger</HelpTrigger>
+    <HelplistQuestions>#listQuestions</HelplistQuestions>
+  </HelpSection>
+
+  <!--Mihail-->
+  <FAQSection>
+    <SelectQuestion>.//*[@id='faqQuestions']/option[@selected='selected']</SelectQuestion>
+    <AnswerQuestion>.//*[@id='containerAnswer']/h2</AnswerQuestion>
+  </FAQSection>
+
+  <!--Mihail-->
+  <InternationalSection>
+    <InternationalTrigger>.//*[@id='international-trigger']</InternationalTrigger>
+    <InternationalPanelZa>.//*[@id='international-panel']/div/ul/li[1]/a</InternationalPanelZa>
+    <InternationalPanelUk>.//*[@id='international-panel']/div/ul/li[2]/a</InternationalPanelUk>
+  </InternationalSection>
   
   <PersonalDetailsPage>
     <FormId>#wonga-apply-lzero-form</FormId>

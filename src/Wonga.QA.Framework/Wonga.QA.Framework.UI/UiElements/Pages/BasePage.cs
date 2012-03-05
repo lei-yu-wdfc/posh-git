@@ -14,6 +14,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
     {
         public String Title { get { return Client.Driver.Title; } }
         public String Source { get { return Client.Driver.PageSource; } }
+        public String Url { get { return Client.Driver.Url; } }
 
         public UiClient Client;
         public String Error;
