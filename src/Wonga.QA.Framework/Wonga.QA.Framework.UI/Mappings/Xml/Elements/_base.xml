@@ -72,6 +72,10 @@
     <LoanAmount>#edit-loan-amount</LoanAmount>
     <LoanDuration>#edit-loan-duration</LoanDuration>
     <SubmitButton>#edit-submit</SubmitButton>
+    <TotalAmount>span.loan-amount</TotalAmount>
+    <TotalFees>span.loan-fees</TotalFees>
+    <TotalToRepay>span.loan-total</TotalToRepay>
+    <RepaymentDate>span.repayment-date</RepaymentDate>
   </SliderSection>
   
   <PersonalDetailsPage>

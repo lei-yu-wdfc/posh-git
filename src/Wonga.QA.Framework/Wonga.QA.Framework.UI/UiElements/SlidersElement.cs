@@ -13,6 +13,10 @@ namespace Wonga.QA.Framework.UI.UiElements
         private readonly IWebElement _loanAmount;
         private readonly IWebElement _loanDuration;
         private readonly IWebElement _submit;
+        private readonly IWebElement _totalAmount;
+        private readonly IWebElement _totalFees;
+        private readonly IWebElement _totalToRepay;
+        private readonly IWebElement _repaymentDate;
 
         public SlidersElement(BasePage page) : base(page)
         {
@@ -20,6 +24,10 @@ namespace Wonga.QA.Framework.UI.UiElements
             _loanAmount = _form.FindElement(By.CssSelector(Elements.Get.SliderSection.LoanAmount));
             _loanDuration = _form.FindElement(By.CssSelector(Elements.Get.SliderSection.LoanDuration));
             _submit = _form.FindElement(By.CssSelector(Elements.Get.SliderSection.SubmitButton));
+            _totalAmount = _form.FindElement(By.CssSelector(Elements.Get.SliderSection.TotalAmount));
+            _totalFees = _form.FindElement(By.CssSelector(Elements.Get.SliderSection.TotalFees));
+            _totalToRepay = _form.FindElement(By.CssSelector(Elements.Get.SliderSection.TotalToRepay));
+            _repaymentDate = _form.FindElement(By.CssSelector(Elements.Get.SliderSection.RepaymentDate));
         }
 
         public String HowMuch
@@ -32,6 +40,23 @@ namespace Wonga.QA.Framework.UI.UiElements
             get { return _loanDuration.GetValue(); }
             set { _loanDuration.SendValue(value); }
         }
+        public String GetTotalAmount
+        {
+            get { return _totalAmount.Text; }
+        }
+        public String GetTotalFees
+        {
+            get { return _totalFees.Text; }
+        }
+        public String GetTotalToRepay
+        {
+            get { return _totalToRepay.Text; }
+        }
+        public String GetRepaymentDate
+        {
+            get { return _repaymentDate.Text; }
+        }
+
 
         public IApplyPage Apply()
         {
