@@ -61,9 +61,6 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\ExactTargetService\etframework.wsdl" />
     <None Include="Service References\ExactTargetService\ETFrameworkFault.xsd">
       <SubType>Designer</SubType>

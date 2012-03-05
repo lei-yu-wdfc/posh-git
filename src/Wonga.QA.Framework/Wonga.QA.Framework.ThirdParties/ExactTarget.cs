@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
 using Wonga.QA.Framework.ThirdParties.ExactTargetService;
 
 namespace Wonga.QA.Framework.ThirdParties
@@ -8,11 +10,41 @@ namespace Wonga.QA.Framework.ThirdParties
     {
         private SoapClient _soapClient;
 
+        private const string ExactTargetServiceUrlString = "https://webservice.test.exacttarget.com/Service.asmx";
+        private readonly Uri _exactTargetServiceUrl;
         public ExactTarget()
         {
-            _soapClient = new SoapClient();
+            Binding binding = ConstructBinding();
+            _exactTargetServiceUrl = new Uri(ExactTargetServiceUrlString);
+            _soapClient = new SoapClient(binding, new EndpointAddress(_exactTargetServiceUrl));
             _soapClient.ClientCredentials.UserName.UserName = "x188167_Admin";
             _soapClient.ClientCredentials.UserName.Password = "welcome@1";
+        }
+
+        private Binding ConstructBinding()
+        {
+            var elementCollection = new BindingElementCollection();
+            var httpsTransport = new HttpsTransportBindingElement();
+            elementCollection.Add(httpsTransport);
+
+            var textMessageEncoding = new TextMessageEncodingBindingElement();
+            textMessageEncoding.MessageVersion = MessageVersion.Soap12WSAddressingAugust2004;
+            elementCollection.Add(textMessageEncoding);
+
+            SecurityBindingElement security =
+                SecurityBindingElement.CreateSecureConversationBindingElement(
+                    SecurityBindingElement.CreateUserNameOverTransportBindingElement());
+
+            elementCollection.Add(security);
+
+            var result = new CustomBinding(elementCollection)
+                             {
+                                 CloseTimeout = TimeSpan.FromMinutes(1),
+                                 OpenTimeout = TimeSpan.FromMinutes(1),
+                                 ReceiveTimeout = TimeSpan.FromMinutes(10),
+                                 SendTimeout = TimeSpan.FromMinutes(4)
+                             };
+            return result;
         }
 
         public bool CheckPaymentReminderEmailSent(string emailAddress)

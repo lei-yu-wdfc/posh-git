@@ -2,6 +2,8 @@
 using System.ServiceModel;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Channels;
+using System.ServiceModel.Security;
 using System.Text;
 using Wonga.QA.Framework.ThirdParties.SalesforceApi;
 
@@ -22,17 +24,62 @@ namespace Wonga.QA.Framework.ThirdParties
             SalesforceUrl = "https://test.salesforce.com/services/Soap/c/22.0/0DFL00000004CC7";
         }
 
+        /// <summary>
+        /// Constructs binding instance to be used with salesforce soap client.
+        /// We do this imperatively to avoid complex .config file management in Tests.
+        /// </summary>
+        /// <returns></returns>
+        private Binding ConstructBinding()
+        {
+            const double closeTimeout = 1.0;
+            const double openTimeout = 1.0;
+            const double receiveTimeout = 10.0;
+            const double sendTimeout = 1.0;
+            const int maxBufferSize = 65536;
+            const int maxBufferPoolSize = 524288;
+            const int maxReceivedMessageSize = 65536;
+            const int readerQuotasMaxDepth = 32;
+
+            var result = new BasicHttpBinding(BasicHttpSecurityMode.Transport);
+
+            result.CloseTimeout = TimeSpan.FromMinutes(closeTimeout);
+            result.OpenTimeout = TimeSpan.FromMinutes(openTimeout);
+            result.ReceiveTimeout = TimeSpan.FromMinutes(receiveTimeout);
+            result.SendTimeout = TimeSpan.FromMinutes(sendTimeout);
+            result.AllowCookies = false;
+            result.BypassProxyOnLocal = false;
+            result.HostNameComparisonMode = HostNameComparisonMode.StrongWildcard;
+            result.MaxBufferSize = maxBufferSize;
+            result.MaxBufferPoolSize = maxBufferPoolSize;
+            result.MaxReceivedMessageSize = maxReceivedMessageSize;
+            result.MessageEncoding = WSMessageEncoding.Text;
+            result.TextEncoding = Encoding.UTF8;
+            result.TransferMode = TransferMode.Buffered;
+            result.UseDefaultWebProxy = true;
+            result.ReaderQuotas.MaxDepth = readerQuotasMaxDepth;
+            result.ReaderQuotas.MaxStringContentLength = 8192;
+            result.ReaderQuotas.MaxArrayLength = 16384;
+            result.ReaderQuotas.MaxBytesPerRead = 4096;
+            result.ReaderQuotas.MaxNameTableCharCount = 261384;
+            result.Security.Transport.ClientCredentialType = HttpClientCredentialType.None;
+            result.Security.Transport.ProxyCredentialType = HttpProxyCredentialType.None;
+            result.Security.Transport.Realm = "";
+            result.Security.Message.ClientCredentialType = BasicHttpMessageCredentialType.UserName;
+            result.Security.Message.AlgorithmSuite = SecurityAlgorithmSuite.Default;
+
+            return result;
+        }
+
         private SoapClient Login(out string sessionId)
         {
             sessionId = null;
-            var client = new SoapClient();
+            Binding binding = ConstructBinding();
+            var client = new SoapClient(binding, new EndpointAddress(SalesforceUrl));
             LoginResult loginResult;
-
             try
             {
                 string username = SalesforceUsername;
                 string password = SalesforcePassword;
-                client.Endpoint.Address = new EndpointAddress(SalesforceUrl);
                 loginResult = client.login(null, username, password);
             }
             catch (Exception e)
