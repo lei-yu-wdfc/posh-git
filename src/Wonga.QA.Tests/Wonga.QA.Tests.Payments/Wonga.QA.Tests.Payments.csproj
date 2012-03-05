@@ -51,6 +51,7 @@
     <Compile Include="PaymentsServiceTests.cs" />
     <Compile Include="PaymentTransactionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Queries\GetAccountOptionsTests.cs" />
     <Compile Include="RepaymentArrangementTests.cs" />
     <Compile Include="Helpers\SetPaymentFunctions.cs" />
     <Compile Include="Helpers\TimeoutPaymentFunctions.cs" />
