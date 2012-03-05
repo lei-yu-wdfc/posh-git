@@ -818,6 +818,8 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		
 		private EntitySet<ErrorEntity> _Errors;
 		
+		private EntityRef<BankIntegrationEntity> _BankIntegrationEntity;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -838,6 +840,7 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		{
 			this._Acknowledges = new EntitySet<AcknowledgeEntity>(new Action<AcknowledgeEntity>(this.attach_Acknowledges), new Action<AcknowledgeEntity>(this.detach_Acknowledges));
 			this._Errors = new EntitySet<ErrorEntity>(new Action<ErrorEntity>(this.attach_Errors), new Action<ErrorEntity>(this.detach_Errors));
+			this._BankIntegrationEntity = default(EntityRef<BankIntegrationEntity>);
 			OnCreated();
 		}
 		
@@ -912,6 +915,10 @@ namespace Wonga.QA.Framework.Db.BankGateway
 			{
 				if ((this._BankIntegrationId != value))
 				{
+					if (this._BankIntegrationEntity.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnBankIntegrationIdChanging(value);
 					this.SendPropertyChanging();
 					this._BankIntegrationId = value;
@@ -964,6 +971,40 @@ namespace Wonga.QA.Framework.Db.BankGateway
 			set
 			{
 				this._Errors.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_AcknowledgeTypes_BankIntegrations", Storage="_BankIntegrationEntity", ThisKey="BankIntegrationId", OtherKey="BankIntegrationId", IsForeignKey=true)]
+		public BankIntegrationEntity BankIntegrationEntity
+		{
+			get
+			{
+				return this._BankIntegrationEntity.Entity;
+			}
+			set
+			{
+				BankIntegrationEntity previousValue = this._BankIntegrationEntity.Entity;
+				if (((previousValue != value) 
+							|| (this._BankIntegrationEntity.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._BankIntegrationEntity.Entity = null;
+						previousValue.AcknowledgeTypes.Remove(this);
+					}
+					this._BankIntegrationEntity.Entity = value;
+					if ((value != null))
+					{
+						value.AcknowledgeTypes.Add(this);
+						this._BankIntegrationId = value.BankIntegrationId;
+					}
+					else
+					{
+						this._BankIntegrationId = default(int);
+					}
+					this.SendPropertyChanged("BankIntegrationEntity");
+				}
 			}
 		}
 		
@@ -2237,7 +2278,7 @@ namespace Wonga.QA.Framework.Db.BankGateway
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ErrorMessage", DbType="NVarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ErrorMessage", DbType="NVarChar(120)")]
 		public string ErrorMessage
 		{
 			get
@@ -2257,7 +2298,7 @@ namespace Wonga.QA.Framework.Db.BankGateway
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RawResponse", DbType="NVarChar(300)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RawResponse", DbType="NVarChar(4000)")]
 		public string RawResponse
 		{
 			get
@@ -2594,6 +2635,8 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		
 		private string _BatchMessageType;
 		
+		private EntitySet<AcknowledgeTypeEntity> _AcknowledgeTypes;
+		
 		private EntitySet<BankIntegrationHolidayEntity> _BankIntegrationHolidays;
 		
     #region Extensibility Method Definitions
@@ -2628,6 +2671,7 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		
 		public BankIntegrationEntity()
 		{
+			this._AcknowledgeTypes = new EntitySet<AcknowledgeTypeEntity>(new Action<AcknowledgeTypeEntity>(this.attach_AcknowledgeTypes), new Action<AcknowledgeTypeEntity>(this.detach_AcknowledgeTypes));
 			this._BankIntegrationHolidays = new EntitySet<BankIntegrationHolidayEntity>(new Action<BankIntegrationHolidayEntity>(this.attach_BankIntegrationHolidays), new Action<BankIntegrationHolidayEntity>(this.detach_BankIntegrationHolidays));
 			OnCreated();
 		}
@@ -2872,6 +2916,19 @@ namespace Wonga.QA.Framework.Db.BankGateway
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_AcknowledgeTypes_BankIntegrations", Storage="_AcknowledgeTypes", ThisKey="BankIntegrationId", OtherKey="BankIntegrationId", DeleteRule="NO ACTION")]
+		public EntitySet<AcknowledgeTypeEntity> AcknowledgeTypes
+		{
+			get
+			{
+				return this._AcknowledgeTypes;
+			}
+			set
+			{
+				this._AcknowledgeTypes.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_BankIntegrationHolidays_BankIntegrations", Storage="_BankIntegrationHolidays", ThisKey="BankIntegrationId", OtherKey="BankIntegrationId", DeleteRule="NO ACTION")]
 		public EntitySet<BankIntegrationHolidayEntity> BankIntegrationHolidays
 		{
@@ -2903,6 +2960,18 @@ namespace Wonga.QA.Framework.Db.BankGateway
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_AcknowledgeTypes(AcknowledgeTypeEntity entity)
+		{
+			this.SendPropertyChanging();
+			entity.BankIntegrationEntity = this;
+		}
+		
+		private void detach_AcknowledgeTypes(AcknowledgeTypeEntity entity)
+		{
+			this.SendPropertyChanging();
+			entity.BankIntegrationEntity = null;
 		}
 		
 		private void attach_BankIntegrationHolidays(BankIntegrationHolidayEntity entity)

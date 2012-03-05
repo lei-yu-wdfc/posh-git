@@ -264,6 +264,7 @@ namespace Wonga.QA.Tests.Comms.Email
         }
     }
 
+    [Obsolete("Cannot find any usages?.")]
     public class InterestRateCalculator
     {
         public int LoanTerm { get; set; }

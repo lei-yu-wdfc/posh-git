@@ -57,6 +57,9 @@ namespace Wonga.QA.Framework.Db.Risk
     partial void InsertFactorEntity(FactorEntity instance);
     partial void UpdateFactorEntity(FactorEntity instance);
     partial void DeleteFactorEntity(FactorEntity instance);
+    partial void InsertInternalSubscriptionEntity(InternalSubscriptionEntity instance);
+    partial void UpdateInternalSubscriptionEntity(InternalSubscriptionEntity instance);
+    partial void DeleteInternalSubscriptionEntity(InternalSubscriptionEntity instance);
     partial void InsertIovationDetailEntity(IovationDetailEntity instance);
     partial void UpdateIovationDetailEntity(IovationDetailEntity instance);
     partial void DeleteIovationDetailEntity(IovationDetailEntity instance);
@@ -96,6 +99,9 @@ namespace Wonga.QA.Framework.Db.Risk
     partial void InsertRiskPaymentCardEntity(RiskPaymentCardEntity instance);
     partial void UpdateRiskPaymentCardEntity(RiskPaymentCardEntity instance);
     partial void DeleteRiskPaymentCardEntity(RiskPaymentCardEntity instance);
+    partial void InsertRiskWorkflowEntity(RiskWorkflowEntity instance);
+    partial void UpdateRiskWorkflowEntity(RiskWorkflowEntity instance);
+    partial void DeleteRiskWorkflowEntity(RiskWorkflowEntity instance);
     partial void InsertSocialDetailEntity(SocialDetailEntity instance);
     partial void UpdateSocialDetailEntity(SocialDetailEntity instance);
     partial void DeleteSocialDetailEntity(SocialDetailEntity instance);
@@ -212,6 +218,14 @@ namespace Wonga.QA.Framework.Db.Risk
 			}
 		}
 		
+		public System.Data.Linq.Table<InternalSubscriptionEntity> InternalSubscriptions
+		{
+			get
+			{
+				return this.GetTable<InternalSubscriptionEntity>();
+			}
+		}
+		
 		public System.Data.Linq.Table<IovationDetailEntity> IovationDetails
 		{
 			get
@@ -313,6 +327,14 @@ namespace Wonga.QA.Framework.Db.Risk
 			get
 			{
 				return this.GetTable<RiskPaymentCardEntity>();
+			}
+		}
+		
+		public System.Data.Linq.Table<RiskWorkflowEntity> RiskWorkflows
+		{
+			get
+			{
+				return this.GetTable<RiskWorkflowEntity>();
 			}
 		}
 		
@@ -2211,6 +2233,140 @@ namespace Wonga.QA.Framework.Db.Risk
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="risk.InternalSubscriptions")]
+	public partial class InternalSubscriptionEntity : DbEntity<InternalSubscriptionEntity>, INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _InternalSubscriptionId;
+		
+		private string _EventType;
+		
+		private System.Guid _SubjectId;
+		
+		private System.Guid _SubscriberId;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnInternalSubscriptionIdChanging(int value);
+    partial void OnInternalSubscriptionIdChanged();
+    partial void OnEventTypeChanging(string value);
+    partial void OnEventTypeChanged();
+    partial void OnSubjectIdChanging(System.Guid value);
+    partial void OnSubjectIdChanged();
+    partial void OnSubscriberIdChanging(System.Guid value);
+    partial void OnSubscriberIdChanged();
+    #endregion
+		
+		public InternalSubscriptionEntity()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InternalSubscriptionId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int InternalSubscriptionId
+		{
+			get
+			{
+				return this._InternalSubscriptionId;
+			}
+			set
+			{
+				if ((this._InternalSubscriptionId != value))
+				{
+					this.OnInternalSubscriptionIdChanging(value);
+					this.SendPropertyChanging();
+					this._InternalSubscriptionId = value;
+					this.SendPropertyChanged("InternalSubscriptionId");
+					this.OnInternalSubscriptionIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EventType", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
+		public string EventType
+		{
+			get
+			{
+				return this._EventType;
+			}
+			set
+			{
+				if ((this._EventType != value))
+				{
+					this.OnEventTypeChanging(value);
+					this.SendPropertyChanging();
+					this._EventType = value;
+					this.SendPropertyChanged("EventType");
+					this.OnEventTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SubjectId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid SubjectId
+		{
+			get
+			{
+				return this._SubjectId;
+			}
+			set
+			{
+				if ((this._SubjectId != value))
+				{
+					this.OnSubjectIdChanging(value);
+					this.SendPropertyChanging();
+					this._SubjectId = value;
+					this.SendPropertyChanged("SubjectId");
+					this.OnSubjectIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SubscriberId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid SubscriberId
+		{
+			get
+			{
+				return this._SubscriberId;
+			}
+			set
+			{
+				if ((this._SubscriberId != value))
+				{
+					this.OnSubscriberIdChanging(value);
+					this.SendPropertyChanging();
+					this._SubscriberId = value;
+					this.SendPropertyChanged("SubscriberId");
+					this.OnSubscriberIdChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="risk.IovationDetails")]
 	public partial class IovationDetailEntity : DbEntity<IovationDetailEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -4029,13 +4185,11 @@ namespace Wonga.QA.Framework.Db.Risk
 		
 		private System.Nullable<System.DateTime> _EstimatedCompletionDate;
 		
-		private System.Nullable<byte> _CreditBureauUsed;
-		
 		private System.Nullable<int> _ApplicationBehaviourId;
 		
-		private System.Nullable<double> _FICOScore;
-		
 		private System.Nullable<double> _MainCardRepayRate;
+		
+		private System.Nullable<byte> _PriceTier;
 		
 		private EntityRef<ApplicationBehaviourEntity> _ApplicationBehaviourEntity;
 		
@@ -4046,10 +4200,6 @@ namespace Wonga.QA.Framework.Db.Risk
 		private EntitySet<PmmlFactorEntity> _PmmlFactors;
 		
 		private EntitySet<RiskDecisionDataEntity> _RiskDecisionDatas;
-		
-		private EntitySet<WorkflowCheckpointEntity> _WorkflowCheckpoints;
-		
-		private EntitySet<WorkflowVerificationEntity> _WorkflowVerifications;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -4109,14 +4259,12 @@ namespace Wonga.QA.Framework.Db.Risk
     partial void OnDecisionChanged();
     partial void OnEstimatedCompletionDateChanging(System.Nullable<System.DateTime> value);
     partial void OnEstimatedCompletionDateChanged();
-    partial void OnCreditBureauUsedChanging(System.Nullable<byte> value);
-    partial void OnCreditBureauUsedChanged();
     partial void OnApplicationBehaviourIdChanging(System.Nullable<int> value);
     partial void OnApplicationBehaviourIdChanged();
-    partial void OnFICOScoreChanging(System.Nullable<double> value);
-    partial void OnFICOScoreChanged();
     partial void OnMainCardRepayRateChanging(System.Nullable<double> value);
     partial void OnMainCardRepayRateChanged();
+    partial void OnPriceTierChanging(System.Nullable<byte> value);
+    partial void OnPriceTierChanged();
     #endregion
 		
 		public RiskApplicationEntity()
@@ -4126,8 +4274,6 @@ namespace Wonga.QA.Framework.Db.Risk
 			this._UserActions = new EntitySet<UserActionEntity>(new Action<UserActionEntity>(this.attach_UserActions), new Action<UserActionEntity>(this.detach_UserActions));
 			this._PmmlFactors = new EntitySet<PmmlFactorEntity>(new Action<PmmlFactorEntity>(this.attach_PmmlFactors), new Action<PmmlFactorEntity>(this.detach_PmmlFactors));
 			this._RiskDecisionDatas = new EntitySet<RiskDecisionDataEntity>(new Action<RiskDecisionDataEntity>(this.attach_RiskDecisionDatas), new Action<RiskDecisionDataEntity>(this.detach_RiskDecisionDatas));
-			this._WorkflowCheckpoints = new EntitySet<WorkflowCheckpointEntity>(new Action<WorkflowCheckpointEntity>(this.attach_WorkflowCheckpoints), new Action<WorkflowCheckpointEntity>(this.detach_WorkflowCheckpoints));
-			this._WorkflowVerifications = new EntitySet<WorkflowVerificationEntity>(new Action<WorkflowVerificationEntity>(this.attach_WorkflowVerifications), new Action<WorkflowVerificationEntity>(this.detach_WorkflowVerifications));
 			OnCreated();
 		}
 		
@@ -4671,26 +4817,6 @@ namespace Wonga.QA.Framework.Db.Risk
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreditBureauUsed", DbType="TinyInt")]
-		public System.Nullable<byte> CreditBureauUsed
-		{
-			get
-			{
-				return this._CreditBureauUsed;
-			}
-			set
-			{
-				if ((this._CreditBureauUsed != value))
-				{
-					this.OnCreditBureauUsedChanging(value);
-					this.SendPropertyChanging();
-					this._CreditBureauUsed = value;
-					this.SendPropertyChanged("CreditBureauUsed");
-					this.OnCreditBureauUsedChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplicationBehaviourId", DbType="Int")]
 		public System.Nullable<int> ApplicationBehaviourId
 		{
@@ -4715,26 +4841,6 @@ namespace Wonga.QA.Framework.Db.Risk
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FICOScore", DbType="Float")]
-		public System.Nullable<double> FICOScore
-		{
-			get
-			{
-				return this._FICOScore;
-			}
-			set
-			{
-				if ((this._FICOScore != value))
-				{
-					this.OnFICOScoreChanging(value);
-					this.SendPropertyChanging();
-					this._FICOScore = value;
-					this.SendPropertyChanged("FICOScore");
-					this.OnFICOScoreChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MainCardRepayRate", DbType="Float")]
 		public System.Nullable<double> MainCardRepayRate
 		{
@@ -4751,6 +4857,26 @@ namespace Wonga.QA.Framework.Db.Risk
 					this._MainCardRepayRate = value;
 					this.SendPropertyChanged("MainCardRepayRate");
 					this.OnMainCardRepayRateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PriceTier", DbType="TinyInt")]
+		public System.Nullable<byte> PriceTier
+		{
+			get
+			{
+				return this._PriceTier;
+			}
+			set
+			{
+				if ((this._PriceTier != value))
+				{
+					this.OnPriceTierChanging(value);
+					this.SendPropertyChanging();
+					this._PriceTier = value;
+					this.SendPropertyChanged("PriceTier");
+					this.OnPriceTierChanged();
 				}
 			}
 		}
@@ -4857,32 +4983,6 @@ namespace Wonga.QA.Framework.Db.Risk
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PK_WorkflowCheckpoints_RiskApplications", Storage="_WorkflowCheckpoints", ThisKey="RiskApplicationId", OtherKey="RiskApplicationId", DeleteRule="NO ACTION")]
-		public EntitySet<WorkflowCheckpointEntity> WorkflowCheckpoints
-		{
-			get
-			{
-				return this._WorkflowCheckpoints;
-			}
-			set
-			{
-				this._WorkflowCheckpoints.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PK_WorkflowVerifications_RiskApplications", Storage="_WorkflowVerifications", ThisKey="RiskApplicationId", OtherKey="RiskApplicationId", DeleteRule="NO ACTION")]
-		public EntitySet<WorkflowVerificationEntity> WorkflowVerifications
-		{
-			get
-			{
-				return this._WorkflowVerifications;
-			}
-			set
-			{
-				this._WorkflowVerifications.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -4934,30 +5034,6 @@ namespace Wonga.QA.Framework.Db.Risk
 		}
 		
 		private void detach_RiskDecisionDatas(RiskDecisionDataEntity entity)
-		{
-			this.SendPropertyChanging();
-			entity.RiskApplicationEntity = null;
-		}
-		
-		private void attach_WorkflowCheckpoints(WorkflowCheckpointEntity entity)
-		{
-			this.SendPropertyChanging();
-			entity.RiskApplicationEntity = this;
-		}
-		
-		private void detach_WorkflowCheckpoints(WorkflowCheckpointEntity entity)
-		{
-			this.SendPropertyChanging();
-			entity.RiskApplicationEntity = null;
-		}
-		
-		private void attach_WorkflowVerifications(WorkflowVerificationEntity entity)
-		{
-			this.SendPropertyChanging();
-			entity.RiskApplicationEntity = this;
-		}
-		
-		private void detach_WorkflowVerifications(WorkflowVerificationEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.RiskApplicationEntity = null;
@@ -5863,6 +5939,244 @@ namespace Wonga.QA.Framework.Db.Risk
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="risk.RiskWorkflows")]
+	public partial class RiskWorkflowEntity : DbEntity<RiskWorkflowEntity>, INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _RiskWorkflowId;
+		
+		private System.Guid _WorkflowId;
+		
+		private byte _Decision;
+		
+		private System.Guid _ApplicationId;
+		
+		private System.Nullable<double> _FICOScore;
+		
+		private System.Nullable<byte> _CreditBureauUsed;
+		
+		private EntitySet<WorkflowCheckpointEntity> _WorkflowCheckpoints;
+		
+		private EntitySet<WorkflowVerificationEntity> _WorkflowVerifications;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnRiskWorkflowIdChanging(int value);
+    partial void OnRiskWorkflowIdChanged();
+    partial void OnWorkflowIdChanging(System.Guid value);
+    partial void OnWorkflowIdChanged();
+    partial void OnDecisionChanging(byte value);
+    partial void OnDecisionChanged();
+    partial void OnApplicationIdChanging(System.Guid value);
+    partial void OnApplicationIdChanged();
+    partial void OnFICOScoreChanging(System.Nullable<double> value);
+    partial void OnFICOScoreChanged();
+    partial void OnCreditBureauUsedChanging(System.Nullable<byte> value);
+    partial void OnCreditBureauUsedChanged();
+    #endregion
+		
+		public RiskWorkflowEntity()
+		{
+			this._WorkflowCheckpoints = new EntitySet<WorkflowCheckpointEntity>(new Action<WorkflowCheckpointEntity>(this.attach_WorkflowCheckpoints), new Action<WorkflowCheckpointEntity>(this.detach_WorkflowCheckpoints));
+			this._WorkflowVerifications = new EntitySet<WorkflowVerificationEntity>(new Action<WorkflowVerificationEntity>(this.attach_WorkflowVerifications), new Action<WorkflowVerificationEntity>(this.detach_WorkflowVerifications));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RiskWorkflowId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int RiskWorkflowId
+		{
+			get
+			{
+				return this._RiskWorkflowId;
+			}
+			set
+			{
+				if ((this._RiskWorkflowId != value))
+				{
+					this.OnRiskWorkflowIdChanging(value);
+					this.SendPropertyChanging();
+					this._RiskWorkflowId = value;
+					this.SendPropertyChanged("RiskWorkflowId");
+					this.OnRiskWorkflowIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkflowId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid WorkflowId
+		{
+			get
+			{
+				return this._WorkflowId;
+			}
+			set
+			{
+				if ((this._WorkflowId != value))
+				{
+					this.OnWorkflowIdChanging(value);
+					this.SendPropertyChanging();
+					this._WorkflowId = value;
+					this.SendPropertyChanged("WorkflowId");
+					this.OnWorkflowIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Decision", DbType="TinyInt NOT NULL")]
+		public byte Decision
+		{
+			get
+			{
+				return this._Decision;
+			}
+			set
+			{
+				if ((this._Decision != value))
+				{
+					this.OnDecisionChanging(value);
+					this.SendPropertyChanging();
+					this._Decision = value;
+					this.SendPropertyChanged("Decision");
+					this.OnDecisionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplicationId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid ApplicationId
+		{
+			get
+			{
+				return this._ApplicationId;
+			}
+			set
+			{
+				if ((this._ApplicationId != value))
+				{
+					this.OnApplicationIdChanging(value);
+					this.SendPropertyChanging();
+					this._ApplicationId = value;
+					this.SendPropertyChanged("ApplicationId");
+					this.OnApplicationIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FICOScore", DbType="Float")]
+		public System.Nullable<double> FICOScore
+		{
+			get
+			{
+				return this._FICOScore;
+			}
+			set
+			{
+				if ((this._FICOScore != value))
+				{
+					this.OnFICOScoreChanging(value);
+					this.SendPropertyChanging();
+					this._FICOScore = value;
+					this.SendPropertyChanged("FICOScore");
+					this.OnFICOScoreChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreditBureauUsed", DbType="TinyInt")]
+		public System.Nullable<byte> CreditBureauUsed
+		{
+			get
+			{
+				return this._CreditBureauUsed;
+			}
+			set
+			{
+				if ((this._CreditBureauUsed != value))
+				{
+					this.OnCreditBureauUsedChanging(value);
+					this.SendPropertyChanging();
+					this._CreditBureauUsed = value;
+					this.SendPropertyChanged("CreditBureauUsed");
+					this.OnCreditBureauUsedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK__WorkflowC__RiskW__208CD6FA", Storage="_WorkflowCheckpoints", ThisKey="RiskWorkflowId", OtherKey="RiskWorkflowId", DeleteRule="NO ACTION")]
+		public EntitySet<WorkflowCheckpointEntity> WorkflowCheckpoints
+		{
+			get
+			{
+				return this._WorkflowCheckpoints;
+			}
+			set
+			{
+				this._WorkflowCheckpoints.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK__WorkflowV__RiskW__2180FB33", Storage="_WorkflowVerifications", ThisKey="RiskWorkflowId", OtherKey="RiskWorkflowId", DeleteRule="NO ACTION")]
+		public EntitySet<WorkflowVerificationEntity> WorkflowVerifications
+		{
+			get
+			{
+				return this._WorkflowVerifications;
+			}
+			set
+			{
+				this._WorkflowVerifications.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_WorkflowCheckpoints(WorkflowCheckpointEntity entity)
+		{
+			this.SendPropertyChanging();
+			entity.RiskWorkflowEntity = this;
+		}
+		
+		private void detach_WorkflowCheckpoints(WorkflowCheckpointEntity entity)
+		{
+			this.SendPropertyChanging();
+			entity.RiskWorkflowEntity = null;
+		}
+		
+		private void attach_WorkflowVerifications(WorkflowVerificationEntity entity)
+		{
+			this.SendPropertyChanging();
+			entity.RiskWorkflowEntity = this;
+		}
+		
+		private void detach_WorkflowVerifications(WorkflowVerificationEntity entity)
+		{
+			this.SendPropertyChanging();
+			entity.RiskWorkflowEntity = null;
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="risk.SocialDetails")]
 	public partial class SocialDetailEntity : DbEntity<SocialDetailEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -6643,19 +6957,19 @@ namespace Wonga.QA.Framework.Db.Risk
 		
 		private int _CheckpointDefinitionId;
 		
-		private System.Nullable<int> _RiskApplicationId;
-		
 		private byte _CheckpointStatus;
 		
 		private System.Nullable<int> _ResponsibleVerificationId;
+		
+		private System.Nullable<int> _RiskWorkflowId;
+		
+		private EntityRef<RiskWorkflowEntity> _RiskWorkflowEntity;
 		
 		private EntityRef<CheckpointDefinitionEntity> _CheckpointDefinitionEntity;
 		
 		private EntityRef<WorkflowVerificationEntity> _WorkflowVerificationEntity;
 		
 		private EntitySet<WorkflowVerificationEntity> _WorkflowVerifications;
-		
-		private EntityRef<RiskApplicationEntity> _RiskApplicationEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -6665,20 +6979,20 @@ namespace Wonga.QA.Framework.Db.Risk
     partial void OnWorkflowCheckpointIdChanged();
     partial void OnCheckpointDefinitionIdChanging(int value);
     partial void OnCheckpointDefinitionIdChanged();
-    partial void OnRiskApplicationIdChanging(System.Nullable<int> value);
-    partial void OnRiskApplicationIdChanged();
     partial void OnCheckpointStatusChanging(byte value);
     partial void OnCheckpointStatusChanged();
     partial void OnResponsibleVerificationIdChanging(System.Nullable<int> value);
     partial void OnResponsibleVerificationIdChanged();
+    partial void OnRiskWorkflowIdChanging(System.Nullable<int> value);
+    partial void OnRiskWorkflowIdChanged();
     #endregion
 		
 		public WorkflowCheckpointEntity()
 		{
+			this._RiskWorkflowEntity = default(EntityRef<RiskWorkflowEntity>);
 			this._CheckpointDefinitionEntity = default(EntityRef<CheckpointDefinitionEntity>);
 			this._WorkflowVerificationEntity = default(EntityRef<WorkflowVerificationEntity>);
 			this._WorkflowVerifications = new EntitySet<WorkflowVerificationEntity>(new Action<WorkflowVerificationEntity>(this.attach_WorkflowVerifications), new Action<WorkflowVerificationEntity>(this.detach_WorkflowVerifications));
-			this._RiskApplicationEntity = default(EntityRef<RiskApplicationEntity>);
 			OnCreated();
 		}
 		
@@ -6726,30 +7040,6 @@ namespace Wonga.QA.Framework.Db.Risk
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RiskApplicationId", DbType="Int")]
-		public System.Nullable<int> RiskApplicationId
-		{
-			get
-			{
-				return this._RiskApplicationId;
-			}
-			set
-			{
-				if ((this._RiskApplicationId != value))
-				{
-					if (this._RiskApplicationEntity.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnRiskApplicationIdChanging(value);
-					this.SendPropertyChanging();
-					this._RiskApplicationId = value;
-					this.SendPropertyChanged("RiskApplicationId");
-					this.OnRiskApplicationIdChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CheckpointStatus", DbType="TinyInt NOT NULL")]
 		public byte CheckpointStatus
 		{
@@ -6790,6 +7080,64 @@ namespace Wonga.QA.Framework.Db.Risk
 					this._ResponsibleVerificationId = value;
 					this.SendPropertyChanged("ResponsibleVerificationId");
 					this.OnResponsibleVerificationIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RiskWorkflowId", DbType="Int")]
+		public System.Nullable<int> RiskWorkflowId
+		{
+			get
+			{
+				return this._RiskWorkflowId;
+			}
+			set
+			{
+				if ((this._RiskWorkflowId != value))
+				{
+					if (this._RiskWorkflowEntity.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnRiskWorkflowIdChanging(value);
+					this.SendPropertyChanging();
+					this._RiskWorkflowId = value;
+					this.SendPropertyChanged("RiskWorkflowId");
+					this.OnRiskWorkflowIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK__WorkflowC__RiskW__208CD6FA", Storage="_RiskWorkflowEntity", ThisKey="RiskWorkflowId", OtherKey="RiskWorkflowId", IsForeignKey=true)]
+		public RiskWorkflowEntity RiskWorkflowEntity
+		{
+			get
+			{
+				return this._RiskWorkflowEntity.Entity;
+			}
+			set
+			{
+				RiskWorkflowEntity previousValue = this._RiskWorkflowEntity.Entity;
+				if (((previousValue != value) 
+							|| (this._RiskWorkflowEntity.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._RiskWorkflowEntity.Entity = null;
+						previousValue.WorkflowCheckpoints.Remove(this);
+					}
+					this._RiskWorkflowEntity.Entity = value;
+					if ((value != null))
+					{
+						value.WorkflowCheckpoints.Add(this);
+						this._RiskWorkflowId = value.RiskWorkflowId;
+					}
+					else
+					{
+						this._RiskWorkflowId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("RiskWorkflowEntity");
 				}
 			}
 		}
@@ -6875,40 +7223,6 @@ namespace Wonga.QA.Framework.Db.Risk
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PK_WorkflowCheckpoints_RiskApplications", Storage="_RiskApplicationEntity", ThisKey="RiskApplicationId", OtherKey="RiskApplicationId", IsForeignKey=true)]
-		public RiskApplicationEntity RiskApplicationEntity
-		{
-			get
-			{
-				return this._RiskApplicationEntity.Entity;
-			}
-			set
-			{
-				RiskApplicationEntity previousValue = this._RiskApplicationEntity.Entity;
-				if (((previousValue != value) 
-							|| (this._RiskApplicationEntity.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._RiskApplicationEntity.Entity = null;
-						previousValue.WorkflowCheckpoints.Remove(this);
-					}
-					this._RiskApplicationEntity.Entity = value;
-					if ((value != null))
-					{
-						value.WorkflowCheckpoints.Add(this);
-						this._RiskApplicationId = value.RiskApplicationId;
-					}
-					else
-					{
-						this._RiskApplicationId = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("RiskApplicationEntity");
-				}
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -6952,8 +7266,6 @@ namespace Wonga.QA.Framework.Db.Risk
 		
 		private int _VerificationDefinitionId;
 		
-		private System.Nullable<int> _RiskApplicationId;
-		
 		private int _SortOrder;
 		
 		private bool _Executed;
@@ -6961,6 +7273,10 @@ namespace Wonga.QA.Framework.Db.Risk
 		private System.Nullable<int> _ConfigurationRecordId;
 		
 		private System.Nullable<int> _WorkflowCheckpointId;
+		
+		private System.Nullable<int> _RiskWorkflowId;
+		
+		private EntityRef<RiskWorkflowEntity> _RiskWorkflowEntity;
 		
 		private EntitySet<WorkflowCheckpointEntity> _WorkflowCheckpoints;
 		
@@ -6970,8 +7286,6 @@ namespace Wonga.QA.Framework.Db.Risk
 		
 		private EntityRef<WorkflowCheckpointEntity> _WorkflowCheckpointEntity;
 		
-		private EntityRef<RiskApplicationEntity> _RiskApplicationEntity;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -6980,8 +7294,6 @@ namespace Wonga.QA.Framework.Db.Risk
     partial void OnWorkflowVerificationIdChanged();
     partial void OnVerificationDefinitionIdChanging(int value);
     partial void OnVerificationDefinitionIdChanged();
-    partial void OnRiskApplicationIdChanging(System.Nullable<int> value);
-    partial void OnRiskApplicationIdChanged();
     partial void OnSortOrderChanging(int value);
     partial void OnSortOrderChanged();
     partial void OnExecutedChanging(bool value);
@@ -6990,15 +7302,17 @@ namespace Wonga.QA.Framework.Db.Risk
     partial void OnConfigurationRecordIdChanged();
     partial void OnWorkflowCheckpointIdChanging(System.Nullable<int> value);
     partial void OnWorkflowCheckpointIdChanged();
+    partial void OnRiskWorkflowIdChanging(System.Nullable<int> value);
+    partial void OnRiskWorkflowIdChanged();
     #endregion
 		
 		public WorkflowVerificationEntity()
 		{
+			this._RiskWorkflowEntity = default(EntityRef<RiskWorkflowEntity>);
 			this._WorkflowCheckpoints = new EntitySet<WorkflowCheckpointEntity>(new Action<WorkflowCheckpointEntity>(this.attach_WorkflowCheckpoints), new Action<WorkflowCheckpointEntity>(this.detach_WorkflowCheckpoints));
 			this._ConfigurationRecordEntity = default(EntityRef<ConfigurationRecordEntity>);
 			this._VerificationDefinitionEntity = default(EntityRef<VerificationDefinitionEntity>);
 			this._WorkflowCheckpointEntity = default(EntityRef<WorkflowCheckpointEntity>);
-			this._RiskApplicationEntity = default(EntityRef<RiskApplicationEntity>);
 			OnCreated();
 		}
 		
@@ -7042,30 +7356,6 @@ namespace Wonga.QA.Framework.Db.Risk
 					this._VerificationDefinitionId = value;
 					this.SendPropertyChanged("VerificationDefinitionId");
 					this.OnVerificationDefinitionIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RiskApplicationId", DbType="Int")]
-		public System.Nullable<int> RiskApplicationId
-		{
-			get
-			{
-				return this._RiskApplicationId;
-			}
-			set
-			{
-				if ((this._RiskApplicationId != value))
-				{
-					if (this._RiskApplicationEntity.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnRiskApplicationIdChanging(value);
-					this.SendPropertyChanging();
-					this._RiskApplicationId = value;
-					this.SendPropertyChanged("RiskApplicationId");
-					this.OnRiskApplicationIdChanged();
 				}
 			}
 		}
@@ -7154,6 +7444,64 @@ namespace Wonga.QA.Framework.Db.Risk
 					this._WorkflowCheckpointId = value;
 					this.SendPropertyChanged("WorkflowCheckpointId");
 					this.OnWorkflowCheckpointIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RiskWorkflowId", DbType="Int")]
+		public System.Nullable<int> RiskWorkflowId
+		{
+			get
+			{
+				return this._RiskWorkflowId;
+			}
+			set
+			{
+				if ((this._RiskWorkflowId != value))
+				{
+					if (this._RiskWorkflowEntity.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnRiskWorkflowIdChanging(value);
+					this.SendPropertyChanging();
+					this._RiskWorkflowId = value;
+					this.SendPropertyChanged("RiskWorkflowId");
+					this.OnRiskWorkflowIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK__WorkflowV__RiskW__2180FB33", Storage="_RiskWorkflowEntity", ThisKey="RiskWorkflowId", OtherKey="RiskWorkflowId", IsForeignKey=true)]
+		public RiskWorkflowEntity RiskWorkflowEntity
+		{
+			get
+			{
+				return this._RiskWorkflowEntity.Entity;
+			}
+			set
+			{
+				RiskWorkflowEntity previousValue = this._RiskWorkflowEntity.Entity;
+				if (((previousValue != value) 
+							|| (this._RiskWorkflowEntity.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._RiskWorkflowEntity.Entity = null;
+						previousValue.WorkflowVerifications.Remove(this);
+					}
+					this._RiskWorkflowEntity.Entity = value;
+					if ((value != null))
+					{
+						value.WorkflowVerifications.Add(this);
+						this._RiskWorkflowId = value.RiskWorkflowId;
+					}
+					else
+					{
+						this._RiskWorkflowId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("RiskWorkflowEntity");
 				}
 			}
 		}
@@ -7269,40 +7617,6 @@ namespace Wonga.QA.Framework.Db.Risk
 						this._WorkflowCheckpointId = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("WorkflowCheckpointEntity");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PK_WorkflowVerifications_RiskApplications", Storage="_RiskApplicationEntity", ThisKey="RiskApplicationId", OtherKey="RiskApplicationId", IsForeignKey=true)]
-		public RiskApplicationEntity RiskApplicationEntity
-		{
-			get
-			{
-				return this._RiskApplicationEntity.Entity;
-			}
-			set
-			{
-				RiskApplicationEntity previousValue = this._RiskApplicationEntity.Entity;
-				if (((previousValue != value) 
-							|| (this._RiskApplicationEntity.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._RiskApplicationEntity.Entity = null;
-						previousValue.WorkflowVerifications.Remove(this);
-					}
-					this._RiskApplicationEntity.Entity = value;
-					if ((value != null))
-					{
-						value.WorkflowVerifications.Add(this);
-						this._RiskApplicationId = value.RiskApplicationId;
-					}
-					else
-					{
-						this._RiskApplicationId = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("RiskApplicationEntity");
 				}
 			}
 		}
