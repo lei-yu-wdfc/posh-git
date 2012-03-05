@@ -197,7 +197,7 @@ namespace Wonga.QA.Framework
 
         	if (_decision == ApplicationDecisionStatusEnum.Pending)
             {
-                int i;
+                //int i;
             }
 
             Driver.Api.Commands.Post(new SignApplicationCommand { AccountId = _customer.Id, ApplicationId = _id });

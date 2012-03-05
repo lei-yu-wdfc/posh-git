@@ -24,7 +24,7 @@ namespace Wonga.QA.Tests.Ui
         {
             const string ukUrl = "www.wonga.com";
             const string zaUrl = "www.wonga.co.za";
-            const string caUrl = "www.wonga.co.ca";
+            //const string caUrl = "www.wonga.co.ca";
             switch (Config.AUT)
             {
                 case (AUT.Ca):
