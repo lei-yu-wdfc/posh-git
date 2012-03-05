@@ -1,4 +1,5 @@
-﻿using MbUnit.Framework;
+﻿using System.Threading;
+using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
@@ -12,6 +13,7 @@ namespace Wonga.QA.Tests.Ui
     /// <summary>
     /// Slider tests for Za
     /// </summary>
+    /// 
     class SliderTests : UiTest
     {
         private int _amountMax;
@@ -22,12 +24,29 @@ namespace Wonga.QA.Tests.Ui
         private ApiResponse _response;
         private DateTime _actualDate;
 
-        
-        [SetUp, AUT(AUT.Za), JIRA("QA-149")]
+
+        [SetUp, JIRA("QA-149")]
         public void GetInitialValues()
         {
+            ApiRequest request;
+            switch (Config.AUT)
+            {
+                case AUT.Uk:
+                    request = new GetFixedTermLoanOfferUkQuery();
+                    break;
+                case AUT.Za:
+                    request = new GetFixedTermLoanOfferZaQuery();
+                    break;
+                case AUT.Ca:
+                    request =new GetFixedTermLoanOfferCaQuery();
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
 
-            _response = Driver.Api.Queries.Post(new GetFixedTermLoanOfferZaQuery());
+
+            _response = Driver.Api.Queries.Post(request);
+
             _amountMax = (int)Decimal.Parse(_response.Values["AmountMax"].Single());
             _amountMin = (int)Decimal.Parse(_response.Values["AmountMin"].Single());
             _termMax = Int32.Parse(_response.Values["TermMax"].Single());
@@ -46,7 +65,7 @@ namespace Wonga.QA.Tests.Ui
             string day = Char.IsDigit(dateArray[1].ElementAt(1)) ? dateArray[1].Remove(2, 2) : dateArray[1].Remove(1, 2);
             _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
             //---
-           
+
             _actualDate = DateTime.Now.AddDays(randomDuration);
             Assert.AreEqual(_repaymentDate, String.Format("{0:d MMM yyyy}", _actualDate));
         }
@@ -62,7 +81,7 @@ namespace Wonga.QA.Tests.Ui
             page.Sliders.HowLong = randomDuration.ToString();
 
             _response = Driver.Api.Queries.Post(new GetFixedTermLoanCalculationZaQuery { LoanAmount = randomAmount, Term = randomDuration });
-                  
+
             string totalRepayable = _response.Values["TotalRepayable"].Single();
             Assert.AreEqual(page.Sliders.GetTotalToRepay.Remove(0, 1), totalRepayable);
 
@@ -76,5 +95,19 @@ namespace Wonga.QA.Tests.Ui
             page.Sliders.HowMuch = amountBiggerThanMax.ToString();
             Assert.AreEqual(_amountMax.ToString(), page.Sliders.GetTotalAmount.Remove(0, 1));
         }
+
+        [Test, AUT(AUT.Ca)]
+        public void VariableInterestisCalculatedCorrectly()
+        {
+            var homePage = Client.Home();
+            homePage.Sliders.HowMuch = "200";
+            homePage.Sliders.HowLong = "10";
+            Console.WriteLine("Sliders: {0} for {1}", homePage.Sliders.HowLong, homePage.Sliders.HowLong);
+            Thread.Sleep(500);
+            Assert.AreEqual(homePage.Sliders.GetTotalToRepay, "$220.00");
+        }
+
+
+
     }
 }
