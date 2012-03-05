@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework.UI.UiElements.Pages
 {
@@ -14,8 +15,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             : base(client)
         {
             Sliders = new SlidersElement(this);
-            Help = new HelpElements(this);
-            InternationalElements = new InternationalElements(this);
+            switch (Config.AUT)
+            {
+                case(AUT.Ca):
+                case (AUT.Za):
+                    Help = new HelpElements(this);
+                    InternationalElements = new InternationalElements(this);
+                break;
+            }
             //Tabs = new TabsElement(this);
             
         }

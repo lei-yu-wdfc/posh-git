@@ -24,10 +24,16 @@ namespace Wonga.QA.Framework.UI.UiElements
             _loanAmount = _form.FindElement(By.CssSelector(Elements.Get.SliderSection.LoanAmount));
             _loanDuration = _form.FindElement(By.CssSelector(Elements.Get.SliderSection.LoanDuration));
             _submit = _form.FindElement(By.CssSelector(Elements.Get.SliderSection.SubmitButton));
-            _totalAmount = _form.FindElement(By.CssSelector(Elements.Get.SliderSection.TotalAmount));
-            _totalFees = _form.FindElement(By.CssSelector(Elements.Get.SliderSection.TotalFees));
-            _totalToRepay = _form.FindElement(By.CssSelector(Elements.Get.SliderSection.TotalToRepay));
-            _repaymentDate = _form.FindElement(By.CssSelector(Elements.Get.SliderSection.RepaymentDate));
+            switch(Config.AUT)
+            {
+                case(AUT.Ca):
+                case(AUT.Za):
+                    _totalAmount = _form.FindElement(By.CssSelector(Elements.Get.SliderSection.TotalAmount));
+                    _totalFees = _form.FindElement(By.CssSelector(Elements.Get.SliderSection.TotalFees));
+                    _totalToRepay = _form.FindElement(By.CssSelector(Elements.Get.SliderSection.TotalToRepay));
+                    _repaymentDate = _form.FindElement(By.CssSelector(Elements.Get.SliderSection.RepaymentDate));
+                    break;
+            }
         }
 
         public String HowMuch

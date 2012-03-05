@@ -15,7 +15,7 @@ namespace Wonga.QA.Tests.Ui
 {
     public class L0DeclinedLoan : UiTest
     {
-        [Test,AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb), Pending("Broken, waiting for FE to stabilize changes..")]
         public void WbDeclinedLoan()
         {
             var processingPage = WbL0Path();
