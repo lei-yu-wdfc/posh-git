@@ -9,29 +9,29 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
     public class LoginPage : BasePage
     {
-        
+
         private readonly IWebElement _username;
         private readonly IWebElement _password;
         private readonly IWebElement _buttonLogin;
 
 
-        public LoginPage(UiClient client) : base(client)
+        public LoginPage(UiClient client)
+            : base(client)
         {
-            
-            _username = Content.FindElement(By.CssSelector(Elements.Get.LoginPage.LoginButton));
+
+            _username = Content.FindElement(By.CssSelector(Elements.Get.LoginPage.Username));
             _password = Content.FindElement(By.CssSelector(Elements.Get.LoginPage.Password));
             _buttonLogin = Content.FindElement(By.CssSelector(Elements.Get.LoginPage.LoginButton));
 
         }
 
-        public void LoginAs(string email, string pass)
+        public MySummary LoginAs(string email, string pass)
         {
 
             _username.SendKeys(email);
             _password.SendKeys(pass);
             _buttonLogin.Click();
+            return new MySummary(Client);
         }
-
-
     }
 }

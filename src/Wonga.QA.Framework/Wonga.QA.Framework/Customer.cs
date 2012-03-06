@@ -17,6 +17,11 @@ namespace Wonga.QA.Framework
             Id = id;
         }
 
+        public String GetEmail()
+        {
+            return Driver.Db.Ops.Accounts.Single(c => c.ExternalId == Id).Login;
+        }
+
         public Customer(Guid id, string email, Guid bankAccountId)
         {
             Id = id;
@@ -36,7 +41,7 @@ namespace Wonga.QA.Framework
 
         public Guid GetBankAccount()
         {
-			return Do.Until(()=> Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == Id).BankAccountsBaseEntity.ExternalId);
+            return Do.Until(() => Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == Id).BankAccountsBaseEntity.ExternalId);
         }
 
         public Guid GetPaymentCard()
@@ -58,6 +63,6 @@ namespace Wonga.QA.Framework
             var customerDetailsRow = db.Comms.CustomerDetails.Single(cd => cd.AccountId == Id);
             customerDetailsRow.Surname = surname;
             db.Comms.SubmitChanges();
-        }		
+        }
     }
 }

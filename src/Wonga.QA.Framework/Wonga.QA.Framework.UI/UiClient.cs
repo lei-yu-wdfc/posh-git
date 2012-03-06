@@ -9,6 +9,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.UiElements.Pages;
+using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 
 namespace Wonga.QA.Framework.UI
 {
@@ -34,6 +35,12 @@ namespace Wonga.QA.Framework.UI
         {
             Driver.Navigate().GoToUrl(Config.Ui.Home);
             return new HomePage(this);
+        }
+
+        public LoginPage Login()
+        {
+            Driver.Navigate().GoToUrl(Config.Ui.Home + "/login");
+            return new LoginPage(this);
         }
 
         public Image Screen()
