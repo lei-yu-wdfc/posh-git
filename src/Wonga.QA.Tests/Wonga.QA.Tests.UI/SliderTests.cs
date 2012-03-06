@@ -113,23 +113,6 @@ namespace Wonga.QA.Tests.Ui
             //maximum charge is 21$ for each 100$ borrowed for 30 days.
 
         }
-        [Test]
-        public void helloasdasdsa()
-        {
-            var loginPage = Client.Login();
-
-            string email = Data.GetEmail();
-            
-            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-           
-            var summary = loginPage.LoginAs(email,Data.GetPassword());
-            Console.WriteLine(summary.Title);
-        }
-
-
-
-
-
 
     }
 }
