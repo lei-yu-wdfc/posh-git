@@ -120,7 +120,7 @@ namespace Wonga.QA.Tests.Ui
 
             string email = Data.GetEmail();
             
-            var customer = CustomerBuilder.New().WithEmail(email).Build();
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
            
             var summary = loginPage.LoginAs(email,Data.GetPassword());
             Console.WriteLine(summary.Title);
