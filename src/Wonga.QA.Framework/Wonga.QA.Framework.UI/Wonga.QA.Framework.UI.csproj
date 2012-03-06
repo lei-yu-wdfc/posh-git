@@ -59,6 +59,7 @@
     <Compile Include="Mappings\Elements.cs" />
     <Compile Include="Mappings\Pages\DealDonePage.cs" />
     <Compile Include="Mappings\Pages\DeclinedPage.cs" />
+    <Compile Include="Mappings\Pages\LoginPage.cs" />
     <Compile Include="Mappings\Pages\PersonalDetailsPage.cs" />
     <Compile Include="Mappings\Pages\ProcessingPage.cs" />
     <Compile Include="Mappings\Pages\AcceptedPage.cs" />
