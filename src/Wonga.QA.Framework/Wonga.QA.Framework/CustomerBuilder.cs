@@ -5,6 +5,8 @@ using System.Globalization;
 using System.Linq;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db;
+using Wonga.QA.Framework.Db.Comms;
 
 namespace Wonga.QA.Framework
 {
@@ -499,6 +501,28 @@ namespace Wonga.QA.Framework
             }
             
             return new Customer(_id, _email, _bankAccountId);
+        }
+
+        public void ScrubForename(String forename)
+        {
+            var db = new DbDriver();
+            var customerDetailEntities = db.Comms.CustomerDetails.Where(cd => cd.Forename == forename).ToList();
+            foreach (CustomerDetailEntity customerDetailEntity in customerDetailEntities)
+            {
+                customerDetailEntity.Forename = Data.GetName();
+            }
+            db.Comms.SubmitChanges();
+        }
+
+        public void ScrubSurname(String surname)
+        {
+            var db = new DbDriver();
+            var customerDetailEntities = db.Comms.CustomerDetails.Where(cd => cd.Surname == surname).ToList();
+            foreach (CustomerDetailEntity customerDetailEntity in customerDetailEntities)
+            {
+                customerDetailEntity.Surname = Data.GetName();
+            }
+            db.Comms.SubmitChanges();
         }
     }
 }

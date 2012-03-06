@@ -38,6 +38,7 @@
     <Compile Include="BusinessApplicationBuilder.cs" />
     <Compile Include="BusinessApplication.cs" />
     <Compile Include="Helpers\DateHelper.cs" />
+    <Compile Include="Helpers\EidAnswers.cs" />
     <Compile Include="Organisation.cs" />
     <Compile Include="OrganisationBuilder.cs" />
     <Compile Include="Customer.cs" />
@@ -81,6 +82,10 @@
     <Reference Include="System" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

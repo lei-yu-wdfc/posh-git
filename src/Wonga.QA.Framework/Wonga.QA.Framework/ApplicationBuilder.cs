@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Xml;
+using System.Xml.Linq;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Helpers;
@@ -17,6 +21,7 @@ namespace Wonga.QA.Framework
         protected ApplicationDecisionStatusEnum _decision = ApplicationDecisionStatusEnum.Accepted;
         protected int _loanTerm;
         protected string _iovationBlackBox;
+        protected Dictionary<int, List<bool>> _eidSessionInteraction = new Dictionary<int, List<bool>>();
 
         private Action _setPromiseDateAndLoanTerm;
         private Func<int> _getDaysUntilStartOfLoan;
@@ -78,6 +83,12 @@ namespace Wonga.QA.Framework
                                                  _promiseDate = GetPromiseDateFromLoanTerm(loanTerm);
                                              };
 
+            return this;
+        }
+
+        public ApplicationBuilder WithEidSessionInteraction(Dictionary<int, List<bool>> EidSessionInteraction)
+        {
+            _eidSessionInteraction = EidSessionInteraction;
             return this;
         }
 
@@ -184,19 +195,45 @@ namespace Wonga.QA.Framework
             
             Driver.Api.Commands.Post(requests);
 
-        	ApiResponse response = null;
-            Do.With().Timeout(3).Until(() => (ApplicationDecisionStatusEnum)
-				Enum.Parse(typeof(ApplicationDecisionStatusEnum), (response = Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id })).Values["ApplicationDecisionStatus"].Single()) == _decision);
+            switch (Config.AUT)
+            {
+                case AUT.Ca:
+                    foreach (var keyValuePair in _eidSessionInteraction)
+                    {
+                        Do.Until(
+                            () =>
+                            (ApplicationDecisionStatusEnum)
+                            Enum.Parse(typeof(ApplicationDecisionStatusEnum),
+                                        Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).
+                                            Values
+                                            ["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatusEnum.Pending);
 
-			if (_decision == ApplicationDecisionStatusEnum.Declined)
-			{
+                        Do.Until(() => Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["AnswerId"].Count() != 0);
 				return new Application(_id, GetFailedCheckpointFromApplicationDecisionResponse(response));
 			}
 
-        	if (_decision == ApplicationDecisionStatusEnum.Pending)
-            {
-                //int i;
+                        var xmlString =
+                            (Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Body);
+                        xmlString = xmlString.Replace("xmlns=\"http://www.wonga.com/api/3.0\"", "");
+
+                        var userActionId = UserActionId(xmlString);
+
+                        var eidAnswers = AnswerEidQuestionsAccordingToEidSessionInteraction(xmlString, keyValuePair.Key, _eidSessionInteraction);
+
+                        Driver.Api.Commands.Post(new SubmitUidAnswersCommand { Answers = eidAnswers, UserActionId = userActionId });
+                    }
+                    break;
             }
+
+            Do.Until(
+                () =>
+                (ApplicationDecisionStatusEnum)
+                Enum.Parse(typeof (ApplicationDecisionStatusEnum),
+                           Driver.Api.Queries.Post(new GetApplicationDecisionQuery {ApplicationId = _id}).Values
+                               ["ApplicationDecisionStatus"].Single()) == _decision);
+
+            if(_decision == ApplicationDecisionStatusEnum.Declined)
+                return new Application(_id);
 
             Driver.Api.Commands.Post(new SignApplicationCommand { AccountId = _customer.Id, ApplicationId = _id });
 
@@ -227,6 +264,61 @@ namespace Wonga.QA.Framework
         private int GetDaysUntilStartOfLoanForCa()
         {
             return DateHelper.GetNumberOfDaysUntilStartOfLoanForCa();
+        }
+
+        private static String UserActionId(String xmlString)
+        {
+            var xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(xmlString);
+
+            var findUserActionId = xmlDoc.SelectNodes(string.Format("//UserActionId"));
+            return findUserActionId[0].FirstChild.Value;
+        }
+
+        private static String AnswerEidQuestionsAccordingToEidSessionInteraction(String xmlString, int eidSessionNumber, Dictionary<int, List<bool>> eidSessionInteraction)
+        {
+            var xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(xmlString);
+            var eidAnswers = string.Empty;
+
+            var allUidQuestions = xmlDoc.SelectNodes(string.Format("//UidQuestion"));
+
+            for (var questionNumber = 1; questionNumber <= allUidQuestions.Count; questionNumber++)
+            {
+                var question = xmlDoc.SelectNodes(string.Format("//UidQuestion[Id={0}]/Text", questionNumber));
+                var answer = EidAnswers.GetEidAnswer(question[0].InnerText);
+
+                var allAnswers = xmlDoc.SelectNodes(string.Format("//UidQuestion[Id={0}]/Answers/UidAnswer", questionNumber));
+
+                for (var answerNumber = 1; answerNumber <= allAnswers.Count; answerNumber++)
+                {
+                    var possibleAnswer = xmlDoc.SelectNodes(string.Format("//UidQuestion[Id={0}]/Answers/UidAnswer[AnswerId={1}]/Text", questionNumber, answerNumber));
+                    if ((possibleAnswer[0].InnerText).Equals(answer) || (possibleAnswer[0].InnerText).Equals("NONE OF THE ABOVE"))
+                    {
+                        if (eidSessionInteraction[eidSessionNumber][questionNumber-1])
+                            eidAnswers = eidAnswers + ParseAnswerToXmlString(questionNumber, answerNumber);
+                        else
+                            eidAnswers = eidAnswers + ParseAnswerToXmlString(questionNumber, getWrongAnswer(answerNumber));
+                        break;
+                    }
+                }
+            }
+
+            return eidAnswers;
+        }
+
+        private static int getWrongAnswer(int answerNumber)
+        {
+            return answerNumber < 5 ? answerNumber + 1 : answerNumber - 1;
+        }
+
+        private static String ParseAnswerToXmlString(int questionNumber, int answerNumber)
+        {
+           return 
+                @"<UidQuestionAnswer>
+                            <QuestionId>"+questionNumber+"</QuestionId>" +
+                            "<AnswerId>"+answerNumber+"</AnswerId>"+
+                        "</UidQuestionAnswer> ";
         }
     }
 }

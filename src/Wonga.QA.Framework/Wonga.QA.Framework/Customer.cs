@@ -3,6 +3,7 @@ using System.Linq;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
+using Wonga.QA.Framework.Db.Comms;
 
 namespace Wonga.QA.Framework
 {
