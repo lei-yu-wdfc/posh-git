@@ -3,6 +3,7 @@
   <LoginPage>
     <Username>#edit-name</Username>
     <Password>#edit-pass</Password>
+    <LoginButton>#edit-login</LoginButton>
   </LoginPage>
   
   <MobilePinVerificationSection>

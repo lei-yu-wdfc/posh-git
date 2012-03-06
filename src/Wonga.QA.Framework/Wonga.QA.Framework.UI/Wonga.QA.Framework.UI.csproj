@@ -95,6 +95,7 @@
     <Compile Include="UiElements\Pages\Common\DealDonePage.cs" />
     <Compile Include="UiElements\Pages\Common\DeclinedPage.cs" />
     <Compile Include="UiElements\Pages\Common\FAQPage.cs" />
+    <Compile Include="UiElements\Pages\Common\LoginPage.cs" />
     <Compile Include="UiElements\Sections\AccountDetailsSection.cs" />
     <Compile Include="UiElements\Sections\BankAccountSection.cs" />
     <Compile Include="UiElements\Sections\BaseSection.cs" />
