@@ -16,17 +16,16 @@ namespace Wonga.QA.Tests.Comms
         public void RunPartialL0AndCheckForGuarantorDocumentsAndEmailGenerated()
         {
             Customer cust = CustomerBuilder.New().Build();
+            var organisationBuilder = OrganisationBuilder.New(cust);
+            var company = organisationBuilder.WithSoManySecondaryDirectors(2).Build();
 
-            Organisation comp = OrganisationBuilder.New(cust).WithSoManySecondaryDirectors(2).Build();
-
-            var businessApplicationBuilder = ApplicationBuilder.New(cust, comp) as BusinessApplicationBuilder;
+            var businessApplicationBuilder = ApplicationBuilder.New(cust, company) as BusinessApplicationBuilder;
             var application = businessApplicationBuilder.Build();
             organisationBuilder.BuildSecondaryDirectors();
             businessApplicationBuilder.BuildForSecondaryDirectors();
 
-
             DoBuilder _do = new DoBuilder(new TimeSpan(0,2,0), new TimeSpan(0,0,20));
-            var emailCorrelationRecords = _do.Until(() => Driver.Db.Comms.EmailReturnLinkCorrelationWbUks.Count(p => p.OrganisationId == comp.Id) == 2);
+            var emailCorrelationRecords = _do.Until(() => Driver.Db.Comms.EmailReturnLinkCorrelationWbUks.Count(p => p.OrganisationId == company.Id) == 2);
             var guarantorGuaranteesDocs = _do.Until(() => Driver.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.DocumentType == 12) == 2);
         }
     }
