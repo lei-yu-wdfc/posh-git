@@ -1,5 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Elements>
+  <LoginPage>
+    <Username>#edit-name</Username>
+    <Password>#edit-pass</Password>
+  </LoginPage>
+  
   <MobilePinVerificationSection>
     <Fieldset>#pin-verification</Fieldset>
     <Pin>#edit-pin</Pin>

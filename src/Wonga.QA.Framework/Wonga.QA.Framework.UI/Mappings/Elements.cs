@@ -67,7 +67,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual Pages.AccountDetailsPage AccountDetailsPage { get; set; }
         public virtual Pages.BankAccountPage BankAccountPage { get; set; }
         public virtual Pages.DebitCardPage DebitCardPage { get; set; }
-
+        public virtual Pages.LoginPage LoginPage { get; set; }
         #endregion
     }
 }
