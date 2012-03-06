@@ -36,6 +36,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual Sections.MobilePinVerificationSection MobilePinVerificationSection { get; set; }
         public virtual Sections.ContactingYouSection ContactingYouSection { get; set; }
         public virtual Sections.SliderSection SliderSection { get; set; }
+        public virtual Sections.LoginSection LoginSection { get; set; }
         public virtual Sections.HelpSection HelpSection { get; set; }
         public virtual Sections.InternationalSection InternationalSection { get; set; }
         public virtual Sections.FAQSection FaqSection { get; set; }

@@ -9,6 +9,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
         public SlidersElement Sliders { get; set; }
         public HelpElements Help { get; set; }
         public InternationalElements InternationalElements { get; set; }
+        public LoginElement Login { get; set; }
         //public TabsElement Tabs { get; set; }
 
         public HomePage(UiClient client)
@@ -17,14 +18,15 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             Sliders = new SlidersElement(this);
             switch (Config.AUT)
             {
-                case(AUT.Ca):
+                case (AUT.Ca):
                 case (AUT.Za):
                     Help = new HelpElements(this);
                     InternationalElements = new InternationalElements(this);
-                break;
+                    Login = new LoginElement(this);
+                    break;
             }
             //Tabs = new TabsElement(this);
-            
+
         }
     }
 }

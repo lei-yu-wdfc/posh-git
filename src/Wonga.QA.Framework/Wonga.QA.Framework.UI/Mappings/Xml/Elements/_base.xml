@@ -84,6 +84,14 @@
     <RepaymentDate>span.repayment-date</RepaymentDate>
   </SliderSection>
 
+  <LoginSection>
+    <LoginTrigger>#login-trigger</LoginTrigger>
+    <FormId>#wonga-login-form</FormId>
+    <Email>#edit-name</Email>
+    <Password>#edit-pass</Password>
+    <LoginButton>#edit-login</LoginButton>
+  </LoginSection>
+
   <!--Mihail-->
   <HelpSection>
     <HelpTrigger>help-trigger</HelpTrigger>

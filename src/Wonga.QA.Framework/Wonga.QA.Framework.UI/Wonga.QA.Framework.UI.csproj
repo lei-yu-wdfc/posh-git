@@ -81,6 +81,7 @@
     <Compile Include="Mappings\Sections\FAQSection.cs" />
     <Compile Include="Mappings\Sections\HelpSection.cs" />
     <Compile Include="Mappings\Sections\InternationalSection.cs" />
+    <Compile Include="Mappings\Sections\LoginSection.cs" />
     <Compile Include="Mappings\Sections\ProvinceSection.cs" />
     <Compile Include="Mappings\Sections\SliderSection.cs" />
     <Compile Include="Mappings\Sections\ContactingYouSection.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="UiElements\FAQElements.cs" />
     <Compile Include="UiElements\HelpElements.cs" />
     <Compile Include="UiElements\InternationalElements.cs" />
+    <Compile Include="UiElements\LoginElement.cs" />
     <Compile Include="UiElements\Pages\Common\DealDonePage.cs" />
     <Compile Include="UiElements\Pages\Common\DeclinedPage.cs" />
     <Compile Include="UiElements\Pages\Common\FAQPage.cs" />
