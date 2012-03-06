@@ -15,51 +15,80 @@ namespace Wonga.QA.Tests.Payments
 {
     public class FixedTermLoanOfferTests
     {
-        private const string FixedTermLoanOfferHandler = "Payments.FixedTermLoanOfferHandler.DateTime.UtcNow";
+        private const string DateOverrideKey = "Payments.DateOverrideKey.DateTime.UtcNow";
+		private static readonly int[] _payDayPerMonth = Driver.Db.GetServiceConfiguration("Payments.PayDayPerMonth").Value.Split(',').Select(Int32.Parse).ToArray();
+		private static readonly int[] _payDayPlusToMaxTerm = Driver.Db.GetServiceConfiguration("Payments.PayDayPlusToMaxTerm").Value.Split(',').Select(Int32.Parse).ToArray();
+		private static readonly int _sliderTermAddDays = Int32.Parse(Driver.Db.GetServiceConfiguration("Payments.SliderTermAddDays").Value);
+    	private const int MaxDefaultTerm = 30;
+
+		[FixtureTearDown]
+		public void TearDownOverride()
+		{
+			var driver = new DbDriver();
+			var scEntry = driver.Ops.ServiceConfigurations.SingleOrDefault(x => x.Key == DateOverrideKey);
+			if (scEntry != null)
+			{
+				driver.Ops.ServiceConfigurations.DeleteOnSubmit(scEntry);
+				driver.Ops.SubmitChanges();
+			}
+		}
 
         [Test, AUT(AUT.Za), JIRA("ZA-2024")]
         [Row("2012-2-23", 30, 36, Order = 0)]
         [Row("2012-3-1", 23, 30, Order = 1)]
         [Row("2012-8-1", 24, 30, Order = 2)]
-        public void GetOfferTest(DateTime today, int defaultTerm, int maxTerm)
+        public void GetFixedTermLoanOfferTest(DateTime today, int defaultTerm, int maxTerm)
         {
-            SetupQaUtcNowOverride(today);
+			Driver.Db.SetServiceConfiguration(DateOverrideKey, new Date(today, DateFormat.Date).ToString());
+
             var response = Driver.Api.Queries.Post(new GetFixedTermLoanOfferZaQuery());
             
             Assert.AreEqual(defaultTerm, int.Parse(response.Values["TermDefault"].Single()));
             Assert.AreEqual(maxTerm, int.Parse(response.Values["TermMax"].Single()));
         }
 
-        private void SetupQaUtcNowOverride(DateTime now)
-        {
-            var driver = new DbDriver();
-            var scEntry = driver.Ops.ServiceConfigurations.SingleOrDefault(x => x.Key == FixedTermLoanOfferHandler);
-            if (scEntry == null)
-            {
-                driver.Ops.ServiceConfigurations.InsertOnSubmit(new ServiceConfigurationEntity()
-                                                                       {
-                                                                           Key = FixedTermLoanOfferHandler,
-                                                                           Value = now.Date.ToString("yyyy-MM-dd")
-                                                                       });
-            }
-            else
-            {
-                scEntry.Value = now.Date.ToString("yyyy-MM-dd");
-            }
+		[Test, AUT(AUT.Za)]
+		public void PromiseDateSetToDefaultPayday()
+		{
+			const int numDaysToTest = 1;
 
-            driver.Ops.SubmitChanges();
-        }
+			for (int i = 0; i < numDaysToTest; i++)
+			{
+				var now = new Date(DateTime.UtcNow.AddDays(i), DateFormat.Date);
+				Driver.Db.SetServiceConfiguration(DateOverrideKey, new Date(now, DateFormat.Date).ToString());
 
-        [FixtureTearDown]
-        public void TearDownOverride()
-        {
-            var driver = new DbDriver();
-            var scEntry = driver.Ops.ServiceConfigurations.SingleOrDefault(x => x.Key == FixedTermLoanOfferHandler);
-            if (scEntry != null)
-            {
-                driver.Ops.ServiceConfigurations.DeleteOnSubmit(scEntry);
-                driver.Ops.SubmitChanges();
-            }
-        }
-    }
+				var iMonth = now.DateTime.Month - 1;
+				var payDayPerMonth = _payDayPerMonth[i];
+				var payDayPlusToMaxTerm = _payDayPlusToMaxTerm[i];
+				var defaultPromiseDate = new DateTime(now.DateTime.Year, now.DateTime.Month, payDayPerMonth);
+				var expectedTermDefault = defaultPromiseDate.Subtract(now).Days;
+
+				//Check if we should snap to the next month's payday
+				if (expectedTermDefault < _sliderTermAddDays)
+				{
+					iMonth = iMonth + 1 >= 12 ? 1 : iMonth + 1;
+					payDayPerMonth = _payDayPerMonth[iMonth];
+					payDayPlusToMaxTerm = _payDayPlusToMaxTerm[iMonth];
+					defaultPromiseDate = defaultPromiseDate.AddMonths(1);
+					defaultPromiseDate = new DateTime(defaultPromiseDate.Year, defaultPromiseDate.Month, payDayPerMonth);
+				}
+
+				defaultPromiseDate = Driver.Db.GetPreviousWorkingDay(new Date(defaultPromiseDate, DateFormat.Date));
+
+				var defaultMaxDate = defaultPromiseDate.AddDays(payDayPlusToMaxTerm);
+
+				expectedTermDefault = defaultPromiseDate.Subtract(now).Days;
+				var expectedTermMax = defaultMaxDate.Subtract(now).Days;
+
+				if (expectedTermMax < MaxDefaultTerm) expectedTermMax = MaxDefaultTerm;
+
+				var response = Driver.Api.Queries.Post(new GetFixedTermLoanOfferZaQuery{ AccountId = Guid.NewGuid().ToString() });
+				var actualTermMax = Int32.Parse(response.Values["TermMax"].Single());
+				var actualTermDefault = Int32.Parse(response.Values["TermDefault"].Single());
+
+				Assert.AreEqual(expectedTermMax, actualTermMax);
+				Assert.AreEqual(expectedTermDefault, actualTermDefault);
+			}
+		}
+	}
 }
