@@ -17,12 +17,14 @@ ECHO   4. Run Wonga.QA.Tests for all AUTs against RC
 ECHO   5. Run Wonga.QA.Generators.Api
 ECHO   6. Run Wonga.QA.Generators.Msmq
 ECHO   7. Run Wonga.QA.Generators.Db
+ECHO   8. Set ProxyMode
 ECHO   0. Exit
 ECHO.
 
-CHOICE /C 12345670 /M "But if you already know, how can I make a choice?" /N
+CHOICE /C 123456780 /M "But if you already know, how can I make a choice?" /N
 
-IF ERRORLEVEL 8 GOTO EOF
+IF ERRORLEVEL 9 GOTO EOF
+IF ERRORLEVEL 8 GOTO 8
 IF ERRORLEVEL 7 GOTO 7
 IF ERRORLEVEL 6 GOTO 6
 IF ERRORLEVEL 5 GOTO 5
@@ -65,6 +67,11 @@ GOTO MENU
 
 :7
 	CALL :GENERATE Db
+GOTO MENU
+
+:8
+	SET /P ProxyMode=Are you working through a proxy?(true or false):
+	SETX ProxyMode %ProxyMode% > NUL
 GOTO MENU
 
 :TEST

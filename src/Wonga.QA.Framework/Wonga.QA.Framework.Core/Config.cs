@@ -18,6 +18,15 @@ namespace Wonga.QA.Framework.Core
         public static MsmqConfig Msmq { get; set; }
         public static DbConfig Db { get; set; }
         public static UiConfig Ui { get; set; }
+        public static bool ProxyMode
+        {
+            get
+            {
+                var proxyModeVal = ReadEnvVar("ProxyMode");
+                return !string.IsNullOrEmpty(proxyModeVal)  &&
+                       proxyModeVal.Equals("true", StringComparison.InvariantCultureIgnoreCase);
+            }
+        }
 
         static Config()
         {
@@ -46,10 +55,10 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Ca ? new MsmqConfig("WIP6") :
                         AUT == AUT.Wb ? new MsmqConfig("WIP8") : Throw<MsmqConfig>();
                     Db =
-                        AUT == AUT.Uk ? new DbConfig("WIP2") :
-                        AUT == AUT.Za ? new DbConfig("WIP4") :
-                        AUT == AUT.Ca ? new DbConfig("WIP6") :
-                        AUT == AUT.Wb ? new DbConfig("WIP8") : Throw<DbConfig>();
+                        AUT == AUT.Uk ? new DbConfig(Connections.GetDbConn("WIP2", ProxyMode)) :
+                        AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("WIP4", ProxyMode)) :
+                        AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("WIP6", ProxyMode)) :
+                        AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn("WIP8", ProxyMode)) : Throw<DbConfig>();
                     Ui = new UiConfig(String.Format("wip.{0}.wonga.com", AUT));
                     break;
                 case SUT.WIPRelease:
@@ -61,8 +70,8 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Ca ? new MsmqConfig("ca-rel-wip-app") :
                         AUT == AUT.Za ? new MsmqConfig("za-rel-wip-app") : Throw<MsmqConfig>();
                     Db =
-                        AUT == AUT.Ca ? new DbConfig("ca-rel-wip-app") :
-                        AUT == AUT.Za ? new DbConfig("za-rel-wip-app") : Throw<DbConfig>();
+                        AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("ca-rel-wip-app", ProxyMode)) :
+                        AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("za-rel-wip-app", ProxyMode)) : Throw<DbConfig>();
                     Ui = new UiConfig(String.Format("wip.release.{0}.wonga.com", AUT));
                     break;
                 case SUT.UAT:
@@ -78,10 +87,10 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Ca ? new MsmqConfig("UAT6") :
                         AUT == AUT.Wb ? new MsmqConfig("UAT8") : Throw<MsmqConfig>();
                     Db =
-                        AUT == AUT.Uk ? new DbConfig("UAT2") :
-                        AUT == AUT.Za ? new DbConfig("UAT4") :
-                        AUT == AUT.Ca ? new DbConfig("UAT6") :
-                        AUT == AUT.Wb ? new DbConfig("UAT8") : Throw<DbConfig>();
+                        AUT == AUT.Uk ? new DbConfig(Connections.GetDbConn("UAT2", ProxyMode)) :
+                        AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("UAT4", ProxyMode)) :
+                        AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("UAT6", ProxyMode)) :
+                        AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn("UAT8", ProxyMode)) : Throw<DbConfig>();
                     Ui = new UiConfig(String.Format("uat.{0}.wonga.com", AUT));
                     break;
                 case SUT.RC:
@@ -97,10 +106,10 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Ca ? new MsmqConfig("RC6") :
                         AUT == AUT.Wb ? new MsmqConfig("RC9", "RC10") : Throw<MsmqConfig>();
                     Db =
-                        AUT == AUT.Uk ? new DbConfig("RC2") :
-                        AUT == AUT.Za ? new DbConfig("RC4") :
-                        AUT == AUT.Ca ? new DbConfig("RC6") :
-                        AUT == AUT.Wb ? new DbConfig("RC8") : Throw<DbConfig>();
+                        AUT == AUT.Uk ? new DbConfig(Connections.GetDbConn("RC2", ProxyMode)) :
+                        AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("RC4", ProxyMode)) :
+                        AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("RC6", ProxyMode)) :
+                        AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn("RC8", ProxyMode)) : Throw<DbConfig>();
                     Ui = new UiConfig(String.Format("rc.{0}.wonga.com", AUT));
                     break;
                 case SUT.RCRelease:
@@ -112,8 +121,8 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Ca ? new MsmqConfig("ca-rel-rc-app") :
                         AUT == AUT.Za ? new MsmqConfig("za-rel-rc-app") : Throw<MsmqConfig>();
                     Db =
-                        AUT == AUT.Ca ? new DbConfig("ca-rel-rc-app") :
-                        AUT == AUT.Za ? new DbConfig("za-rel-rc-app") : Throw<DbConfig>();
+                        AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("ca-rel-rc-app", ProxyMode)) :
+                        AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("za-rel-rc-app", ProxyMode)) : Throw<DbConfig>();
                     Ui = new UiConfig(String.Format("rc.release.{0}.wonga.com", AUT));
                     break;
                 default:
@@ -134,7 +143,19 @@ namespace Wonga.QA.Framework.Core
 
         private static T GetValue<T>()
         {
-            return (T)Enum.Parse(typeof(T), (String)Registry.CurrentUser.OpenSubKey("Environment").GetValue(typeof(T).Name), true);
+            return (T)Enum.Parse(typeof(T), ReadEnvVar(typeof(T).Name), true);
+        }
+
+        private static String ReadEnvVar(string name)
+        {
+            try
+            {
+                return (String)Registry.CurrentUser.OpenSubKey("Environment").GetValue(name);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public class ApiConfig
@@ -376,6 +397,31 @@ namespace Wonga.QA.Framework.Core
             {
                 Home = new UriBuilder { Host = host }.Uri;
             }
+        }
+    }
+
+    public static class Connections
+    {
+        private static Dictionary<string, string> DbPortMappings = new Dictionary<string, string>();
+
+        static Connections()
+        {
+            DbPortMappings.Add("WIP2", "8201");
+            DbPortMappings.Add("UAT2", "8202");
+            DbPortMappings.Add("RC2", "8203");
+            DbPortMappings.Add("WIP4", "8204");
+            DbPortMappings.Add("UAT4", "8205");
+            DbPortMappings.Add("RC4", "8206");
+            DbPortMappings.Add("WIP6", "8207");
+            DbPortMappings.Add("UAT6", "8208");
+            DbPortMappings.Add("RC6", "8209");
+        }
+
+        public static string GetDbConn(string server, bool proxyMode)
+        {
+            if (proxyMode && DbPortMappings.ContainsKey(server))
+                return string.Format("{0},{1}", server, DbPortMappings[server]);
+            return server;
         }
     }
 }

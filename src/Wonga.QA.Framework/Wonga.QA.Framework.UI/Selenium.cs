@@ -6,6 +6,8 @@ using System.Text;
 using Gallio.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Remote;
+using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Interactions.Internal;
 
 namespace Wonga.QA.Framework.UI
 {
@@ -13,11 +15,12 @@ namespace Wonga.QA.Framework.UI
     {
         public static IWebDriver Driver(this IWebElement element)
         {
-            return ((RemoteWebElement)element).WrappedDriver;
+            return ((RemoteWebElement)element).WrappedDriver; 
         }
 
         public static void SelectLabel(this ReadOnlyCollection<IWebElement> elements, String value)
         {
+            
             elements.SelectLabel(label => label.Trim() == value);
         }
 
@@ -72,6 +75,12 @@ namespace Wonga.QA.Framework.UI
         {
             if (element.Selected != value)
                 element.Click();
+        }
+
+        public static void MouseOver(this IWebElement element)
+        {
+            Actions actions = new Actions(element.Driver());
+            actions.MoveToElement(element);
         }
     }
 }
