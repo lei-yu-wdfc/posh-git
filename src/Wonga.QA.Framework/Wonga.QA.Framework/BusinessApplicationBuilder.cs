@@ -19,7 +19,7 @@ namespace Wonga.QA.Framework
         }
 
         public override Application Build()
-        {
+        {            
             var requests = new List<ApiRequest>
             {
                 SubmitApplicationBehaviourCommand.New(r => r.ApplicationId = _id),
@@ -53,8 +53,9 @@ namespace Wonga.QA.Framework
 
             if (_decision == ApplicationDecisionStatusEnum.Declined)
                 return new BusinessApplication(_id);
+            
 
-            Driver.Api.Commands.Post( new SignBusinessApplicationWbUkCommand { AccountId = _customer.Id, ApplicationId = _id });
+            Driver.Api.Commands.Post(new SignBusinessApplicationWbUkCommand { AccountId = _customer.Id, ApplicationId = _id });
 
             Int32 previous = 0;
             Stopwatch stopwatch = Stopwatch.StartNew();
@@ -68,6 +69,23 @@ namespace Wonga.QA.Framework
             });
 
             return new BusinessApplication(_id);
+        }
+
+        public void BuildForSecondaryDirectors()
+        {
+            var guarantors = Driver.Db.ContactManagement.DirectorOrganisationMappings.Where(
+                director => director.OrganisationId == _company.Id && director.DirectorLevel > 0);
+
+
+            var requests = new List<ApiRequest>();
+
+            foreach (var guarantor in guarantors)
+            {
+                requests.Add(new SignBusinessApplicationWbUkCommand
+                                             {AccountId = guarantor.AccountId, ApplicationId = _id});
+            }
+
+            Driver.Api.Commands.Post(requests);
         }
     }
 }

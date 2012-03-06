@@ -67,11 +67,30 @@ namespace Wonga.QA.Framework
                                                AddPrimaryOrganisationDirectorCommand.New(r=> { r.OrganisationId = _id; r.AccountId = _primaryApplicant.Id; })                                               
                                            });
 
-            for (int x = 0; x < _numberOfSecondaryDirector; x++ )
-            {
-                requests.Add(AddSecondaryOrganisationDirectorCommand.New(r => r.OrganisationId = _id));
-            }
+           
             
+            Driver.Api.Commands.Post(requests);            
+
+            return new Organisation(_id);
+        }    
+  
+        public void BuildSecondaryDirectors()
+        {
+            List<ApiRequest> requests = new List<ApiRequest>();
+
+            for (int x = 0; x < _numberOfSecondaryDirector; x++)
+            {
+                Guid guarantorAccountId = Guid.NewGuid();
+                CustomerBuilder.New(guarantorAccountId).Build();
+                requests.Add(AddSecondaryOrganisationDirectorCommand.New(r =>
+                                                                             {
+                                                                                 r.OrganisationId = _id;
+                                                                                 r.AccountId = guarantorAccountId;
+                                                                             }));   
+             
+                
+            }
+
             Driver.Api.Commands.Post(requests);
 
             Do.Until(
@@ -81,8 +100,6 @@ namespace Wonga.QA.Framework
 
 
 
-
-            return new Organisation(_id);
-        }      
+        }
     }
 }
