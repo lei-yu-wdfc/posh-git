@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using MbUnit.Framework;
+using OpenQA.Selenium;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
@@ -18,14 +19,22 @@ namespace Wonga.QA.Tests.Ui
         public void IsRepaymentWarningAvailableForLn()
         {
             var loginPage = Client.Login();
-
             string email = Data.GetEmail();
+            CustomerBuilder.New().WithEmailAddress(email).Build();
+            var summary = loginPage.LoginAs(email);
 
-            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-
-            var summary = loginPage.LoginAs(email, Data.GetPassword());
-            Console.WriteLine(summary.Title);
+            summary.Client.Driver.Navigate().GoToUrl(Config.Ui.Home + "/repay-canada");
+            var xpath = summary.Client.Driver.FindElement(By.XPath("//div[@id='content-area']/p[1]"));
+            Assert.IsTrue(xpath.Text.Contains("via online banking"));
         }
+
+        [Test, AUT(AUT.Ca)]
+        public void ThisIsTestSoBuggerOff()
+        {
+
+            
+        }
+
 
     }
 }
