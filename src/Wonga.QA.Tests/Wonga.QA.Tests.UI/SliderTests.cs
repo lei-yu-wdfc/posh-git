@@ -3,8 +3,6 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Helpers;
-using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
 using System.Linq;
 using System;
@@ -47,7 +45,6 @@ namespace Wonga.QA.Tests.Ui
 
 
             _response = Driver.Api.Queries.Post(request);
-
             _amountMax = (int)Decimal.Parse(_response.Values["AmountMax"].Single());
             _amountMin = (int)Decimal.Parse(_response.Values["AmountMin"].Single());
             _termMax = Int32.Parse(_response.Values["TermMax"].Single());
@@ -101,7 +98,6 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Ca)]
         public void VariableInterestisCalculatedCorrectly()
         {
-            //var homePage = Client.Home();
             var homePage = Client.Home();
             homePage.Sliders.HowMuch = "100";
             homePage.Sliders.HowLong = "30";
@@ -112,6 +108,12 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(homePage.Sliders.GetTotalToRepay, "$121.00");
             //maximum charge is 21$ for each 100$ borrowed for 30 days.
 
+        }
+        [Test, AUT(AUT.Za), JIRA("QA-156")]
+        public void L0DefaultAmountSliderValueShouldBeCorrect()
+        {
+            var page = Client.Home();
+            Assert.AreEqual(page.Sliders.HowMuch, "1335");
         }
 
     }
