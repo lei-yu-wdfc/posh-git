@@ -4,10 +4,10 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk
 {
-    //[Category("CA")]
     public class EidTests
     {
         CustomerBuilder _customerBuilder;
@@ -57,7 +57,7 @@ namespace Wonga.QA.Tests.Risk
             _customer = _customerBuilder.Build();
         }
 
-        [Test]
+        [Test, AUT(AUT.Ca), JIRA("CA-1647")]
         public void Eid_TwoCorrectAnswers_Accepted()
         {
             var eidSessionInteraction = new Dictionary<int, List<bool>>
@@ -70,7 +70,7 @@ namespace Wonga.QA.Tests.Risk
 
         }
 
-        [Test]
+        [Test, AUT(AUT.Ca), JIRA("CA-1647")]
         public void Eid_OneCorrectAnswer_TwoCorrectAnswers_Accepted()
         {
             var eidSessionInteraction = new Dictionary<int, List<bool>>
@@ -85,7 +85,7 @@ namespace Wonga.QA.Tests.Risk
             applicationBuilder.Build();
         }
 
-        [Test]
+        [Test, AUT(AUT.Ca), JIRA("CA-1647")]
         public void Eid_OneCorrectAnswer_OneCorrectAnswer_TwoCorrectAnswers_Accepted()
         {
             var eidSessionInteraction = new Dictionary<int, List<bool>>
@@ -101,7 +101,7 @@ namespace Wonga.QA.Tests.Risk
             applicationBuilder.Build();
         }
 
-        [Test]
+        [Test, AUT(AUT.Ca), JIRA("CA-1647")]
         public void Eid_OneCorrectAnswer_ZeroCorrectAnswers_OneCorrectAnswer_Declined()
         {
             var eidSessionInteraction = new Dictionary<int, List<bool>>
@@ -117,7 +117,7 @@ namespace Wonga.QA.Tests.Risk
             applicationBuilder.Build();
         }
 
-        [Test]
+        [Test, AUT(AUT.Ca), JIRA("CA-1647")]
         public void Eid_OneCorrectAnswer_ZeroCorrectAnswers_ZeroCorrectAnswers_Declined()
         {
             var eidSessionInteraction = new Dictionary<int, List<bool>>
@@ -133,7 +133,7 @@ namespace Wonga.QA.Tests.Risk
             applicationBuilder.Build();
         }
 
-        [Test]
+        [Test, AUT(AUT.Ca), JIRA("CA-1647")]
         public void Eid_ZeroCorrectAnswers_ThreeCorrectAnswers_Accepted()
         {
             var eidSessionInteraction = new Dictionary<int, List<bool>>
@@ -148,7 +148,7 @@ namespace Wonga.QA.Tests.Risk
             applicationBuilder.Build();
         }
 
-        [Test]
+        [Test, AUT(AUT.Ca), JIRA("CA-1647")]
         public void Eid_ZeroCorrectAnswers_TwoCorrectAnswers_Declined()
         {
             var eidSessionInteraction = new Dictionary<int, List<bool>>
@@ -163,7 +163,7 @@ namespace Wonga.QA.Tests.Risk
             applicationBuilder.Build();
         }
 
-        [Test]
+        [Test, AUT(AUT.Ca), JIRA("CA-1647")]
         public void Eid_ZeroCorrectAnswers_OneCorrectAnswer_Declined()
         {
             var eidSessionInteraction = new Dictionary<int, List<bool>>
@@ -178,7 +178,7 @@ namespace Wonga.QA.Tests.Risk
             applicationBuilder.Build();
         }
 
-        [Test]
+        [Test, AUT(AUT.Ca), JIRA("CA-1647")]
         public void Eid_ZeroCorrectAnswers_ZeroCorrectAnswers_Declined()
         {
             var eidSessionInteraction = new Dictionary<int, List<bool>>

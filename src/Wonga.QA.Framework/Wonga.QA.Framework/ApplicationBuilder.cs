@@ -152,8 +152,8 @@ namespace Wonga.QA.Framework
                         })
                     });
                     break;
-			    case AUT.Ca:
 
+			    case AUT.Ca:
                     // Start of Loan is different for CA
                     _getDaysUntilStartOfLoan = GetDaysUntilStartOfLoanForCa;
                     _setPromiseDateAndLoanTerm();
@@ -174,6 +174,7 @@ namespace Wonga.QA.Framework
                         })
                     });
                     break;
+
                 default:
                     requests.AddRange(new ApiRequest[]{
                         CreateFixedTermLoanApplicationCommand.New(r =>
@@ -195,6 +196,9 @@ namespace Wonga.QA.Framework
             
             Driver.Api.Commands.Post(requests);
 
+
+
+
             switch (Config.AUT)
             {
                 case AUT.Ca:
@@ -209,8 +213,7 @@ namespace Wonga.QA.Framework
                                             ["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatusEnum.Pending);
 
                         Do.Until(() => Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["AnswerId"].Count() != 0);
-				return new Application(_id, GetFailedCheckpointFromApplicationDecisionResponse(response));
-			}
+			
 
                         var xmlString =
                             (Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Body);
@@ -225,15 +228,14 @@ namespace Wonga.QA.Framework
                     break;
             }
 
-            Do.Until(
-                () =>
-                (ApplicationDecisionStatusEnum)
-                Enum.Parse(typeof (ApplicationDecisionStatusEnum),
-                           Driver.Api.Queries.Post(new GetApplicationDecisionQuery {ApplicationId = _id}).Values
-                               ["ApplicationDecisionStatus"].Single()) == _decision);
+            ApiResponse response = null;
+            Do.With().Timeout(3).Until(() => (ApplicationDecisionStatusEnum)
+                Enum.Parse(typeof(ApplicationDecisionStatusEnum), (response = Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id })).Values["ApplicationDecisionStatus"].Single()) == _decision);
 
-            if(_decision == ApplicationDecisionStatusEnum.Declined)
-                return new Application(_id);
+            if (_decision == ApplicationDecisionStatusEnum.Declined)
+            {
+                return new Application(_id, GetFailedCheckpointFromApplicationDecisionResponse(response));
+            }
 
             Driver.Api.Commands.Post(new SignApplicationCommand { AccountId = _customer.Id, ApplicationId = _id });
 
