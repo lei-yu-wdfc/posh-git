@@ -150,7 +150,6 @@ namespace Wonga.QA.Framework
 	       return this;
         }
 
-
         public CustomerBuilder WithForename(String foreName)
         {
             _foreName = foreName;
@@ -266,7 +265,6 @@ namespace Wonga.QA.Framework
                 SaveSocialDetailsCommand.New(r => r.AccountId = _id),
                 SavePasswordRecoveryDetailsCommand.New(r => r.AccountId = _id),
                 SaveContactPreferencesCommand.New(r => r.AccountId = _id),
-                CompleteMobilePhoneVerificationCommand.New(r => r.VerificationId = _verification),
             };
 
             switch (Config.AUT)
