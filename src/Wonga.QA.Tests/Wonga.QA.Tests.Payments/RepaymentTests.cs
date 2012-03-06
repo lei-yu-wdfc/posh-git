@@ -185,20 +185,20 @@ namespace Wonga.QA.Tests.Payments
         [Test, JIRA("SME-808")]
         public void BalanceShouldBeZeroAfterAllCollectionAttemptsAreSuccessfullWithOneFailedIntermediateCollection()
         {
-            var paymentPlan = applicationInfo.GetPaymentPlan();
-            var accountId = Do.Until(() => Driver.Db.Payments.AccountsApplications.Single(a => a.ApplicationEntity.ExternalId == applicationInfo.Id).AccountId);
+            var paymentPlan = _applicationInfo.GetPaymentPlan();
+            var accountId = Do.Until(() => Driver.Db.Payments.AccountsApplications.Single(a => a.ApplicationEntity.ExternalId == _applicationInfo.Id).AccountId);
             MoveBackInTime(7, false);
             for (int i = 0; i < paymentPlan.NumberOfPayments; i++)
             {
                 if (i == paymentPlan.NumberOfPayments - 2)
                 {
-                    applicationInfo.FirstCollectionAttempt(paymentPlan, false, false);
-                    applicationInfo.SecondCollectionAttempt(false);
+                    _applicationInfo.FirstCollectionAttempt(paymentPlan, false, false);
+                    _applicationInfo.SecondCollectionAttempt(false);
                     Thread.Sleep(15000);
                 }
                 else
                 {
-                    applicationInfo.FirstCollectionAttempt(paymentPlan, (i + 1) == paymentPlan.NumberOfPayments, true);
+                    _applicationInfo.FirstCollectionAttempt(paymentPlan, (i + 1) == paymentPlan.NumberOfPayments, true);
                 }
                 MoveBackInTime(7, true);
             }
@@ -236,12 +236,12 @@ namespace Wonga.QA.Tests.Payments
         [Test, JIRA("SME-812")]
         public void DefaultChargeShouldNotBeCollectedWhenAnOverpaymentHasBeenMadeAndBothCollectionAttemptsFail()
         {
-            var paymentPlan = applicationInfo.GetPaymentPlan();
-            applicationInfo.FirstCollectionAttempt(paymentPlan, false, false);
+            var paymentPlan = _applicationInfo.GetPaymentPlan();
+            _applicationInfo.FirstCollectionAttempt(paymentPlan, false, false);
             Driver.Msmq.Payments.Send(new CreateTransactionCommand
             {
                 Amount = paymentPlan.RegularAmount,
-                ApplicationId = applicationInfo.Id,
+                ApplicationId = _applicationInfo.Id,
                 Currency = CurrencyCodeIso4217Enum.GBP,
                 ExternalId = Guid.NewGuid(),
                 ComponentTransactionId = Guid.Empty,
@@ -253,11 +253,11 @@ namespace Wonga.QA.Tests.Payments
 
             // Wait for the TX to be processed
             Thread.Sleep(15000);
-            applicationInfo.SecondCollectionAttempt(false);
+            _applicationInfo.SecondCollectionAttempt(false);
             // Wait for collection atempt to fail
             Thread.Sleep(15000);
 
-            Assert.IsNull(Driver.Db.Payments.Transactions.SingleOrDefault(t => t.ApplicationEntity.ExternalId == applicationInfo.Id
+            Assert.IsNull(Driver.Db.Payments.Transactions.SingleOrDefault(t => t.ApplicationEntity.ExternalId == _applicationInfo.Id
                 && t.Type == PaymentTransactionEnum.DefaultCharge.ToString()));
         }
 
