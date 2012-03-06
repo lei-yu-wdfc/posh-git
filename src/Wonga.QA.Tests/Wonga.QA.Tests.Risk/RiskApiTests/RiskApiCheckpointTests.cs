@@ -23,17 +23,15 @@ namespace Wonga.QA.Tests.Risk
                                                            ? ApplicationDecisionStatusEnum.Accepted
                                                            : ApplicationDecisionStatusEnum.Declined;
             
-            Customer cust = CustomerBuilder.New()
-                .WithMiddleName(Data.EnumToString(riskMask)).Build();
+            Customer customer = CustomerBuilder.New().WithMiddleName(Data.EnumToString(riskMask)).Build();
+            var orgB = OrganisationBuilder.New(customer);
+            Organisation organization = orgNo == null ? orgB.Build() : orgB.WithOrganisationNumber((int)orgNo).Build();
+            Application application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(appOutcome).Build();
+            var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
+            Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
+            Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, expectedResult), Data.EnumToString(checkpoint));
 
-            var orgB = OrganisationBuilder.New(cust);
-
-            Organisation org = orgNo == null ? orgB.Build() : orgB.WithOrganisationNumber((int)orgNo).Build();
-            
-            Application app = ApplicationBuilder.New(cust, org)
-                .WithExpectedDecision(appOutcome).Build();
-
-            Assert.Contains(Application.GetExecutedCheckpointDefinitions(app.Id, expectedResult), Data.EnumToString(checkpoint));
+            //Assert.Contains(Application.GetExecutedCheckpointDefinitions(application.Id, expectedResult), Data.EnumToString(checkpoint));
         }
         
         [Test, AUT(AUT.Wb), JIRA("SME-156")]

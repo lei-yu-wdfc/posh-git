@@ -13,19 +13,20 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
         [Test, AUT(AUT.Ca), JIRA("CA-1743")]
         public void LnShouldPassEidCheck()
         {
-            Customer cust = CustomerBuilder.New().Build();
+            var customer = CustomerBuilder.New().Build();
+            var l0app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
 
-            Application l0App = ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+            l0app.RepayOnDueDate();
 
-            l0App.RepayOnDueDate();
-
-            EmploymentDetailEntity employmentDetails = Driver.Db.Risk.EmploymentDetails.Single(cd => cd.AccountId == cust.Id);
+            EmploymentDetailEntity employmentDetails = Driver.Db.Risk.EmploymentDetails.Single(cd => cd.AccountId == customer.Id);
             employmentDetails.EmployerName = "test:DirectFraud";
             employmentDetails.Submit();
 
-            Application lNApp = ApplicationBuilder.New(cust).Build();
-
-            Assert.Contains(Application.GetExecutedCheckpointDefinitions(lNApp.Id, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.UserAssistedFraudCheck));
+            Application lNApp = ApplicationBuilder.New(customer).Build();
+            var riskWorkflows = Application.GetWorkflowsForApplication(lNApp.Id);
+            Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
+            Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.UserAssistedFraudCheck));
+            //Assert.Contains(Application.GetExecutedCheckpointDefinitions(lNApp.Id, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.UserAssistedFraudCheck));
         }
     }
 }

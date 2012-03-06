@@ -182,34 +182,75 @@ namespace Wonga.QA.Framework
 			return this;
 		}
 
+        /// <summary>
+        /// This metod ASSUMES that there is only one workflow for an application and returns a list of executed checkpoints for it
+        /// </summary>
+        /// <param name="applicationId">The GUID of the application</param>
+        /// <param name="expectedStatus">Optional:The expected status</param>
+        /// <returns>Returns a list of CheckpointDefinitions.Name</returns>
+        public static List<String> GetExecutedCheckpointsDefinitionsForApplicationId(Guid applicationId, params CheckpointStatus[] expectedStatus)
+        {
+            var db = new DbDriver();
+            var riskWorkflowEntity = db.Risk.RiskWorkflows.SingleOrDefault(r => r.ApplicationId == applicationId);
+            var executedCheckpoints = new List<string>();
+
+            if (riskWorkflowEntity != null)
+            {
+                var executedCheckpointIds = expectedStatus.Any()
+                                                 ? db.Risk.WorkflowCheckpoints.Where(
+                                                     p =>
+                                                     p.RiskWorkflowId == riskWorkflowEntity.RiskWorkflowId &&
+                                                     expectedStatus.Contains((CheckpointStatus)p.CheckpointStatus)).Select(
+                                                         p => p.CheckpointDefinitionId).ToList()
+                                                 : db.Risk.WorkflowCheckpoints.Where(
+                                                     p => p.RiskWorkflowId == riskWorkflowEntity.RiskWorkflowId).
+                                                       Select(p => p.CheckpointDefinitionId).ToList();
+                executedCheckpoints.AddRange(db.Risk.CheckpointDefinitions.Where(p => executedCheckpointIds.Contains(p.CheckpointDefinitionId)).Select(p => p.Name));
+                return executedCheckpoints;
+            }
+            return executedCheckpoints;
+        }
+
 		/// <summary>
-		/// This method returns a list of checkpoints that were executed for a given applicationid and an optional array of statuses.
+		/// This method returns a list of checkpoints that were executed for a given Risk Workflow id and an optional array of statuses.
 		/// </summary>
-		/// <param name="applicationId">The GUID of the application</param>
+		/// <param name="workflowId">The GUID of the application</param>
 		/// <param name="expectedStatus">Optional:The expected status</param>
 		/// <returns>Returns a list of CheckpointDefinitions.Name</returns>
-		public static List<String> GetExecutedCheckpointDefinitions(Guid applicationId, params CheckpointStatus[] expectedStatus)
+		public static List<String> GetExecutedCheckpointDefinitionsForRiskWorkflow(Guid workflowId, params CheckpointStatus[] expectedStatus)
 		{
 			var db = new DbDriver();
-			var riskApplicationEntity = db.Risk.RiskApplications.SingleOrDefault(r => r.ApplicationId == applicationId);
+		    var riskWorkflowEntity = db.Risk.RiskWorkflows.SingleOrDefault(r => r.WorkflowId == workflowId);
 			var executedCheckpoints = new List<string>();
 
-			if (riskApplicationEntity != null)
-			{
-				var executedCheckpointIds = expectedStatus.Any()
-												 ? db.Risk.WorkflowCheckpoints.Where(
-													 p =>
-													 p.RiskApplicationId == riskApplicationEntity.RiskApplicationId &&
-													 expectedStatus.Contains((CheckpointStatus) p.CheckpointStatus)).Select(
-														 p => p.CheckpointDefinitionId).ToList()
-												 : db.Risk.WorkflowCheckpoints.Where(
-													 p => p.RiskApplicationId == riskApplicationEntity.RiskApplicationId).
-													   Select(p => p.CheckpointDefinitionId).ToList();
-				executedCheckpoints.AddRange(db.Risk.CheckpointDefinitions.Where(p => executedCheckpointIds.Contains(p.CheckpointDefinitionId)).Select(p => p.Name));
-				return executedCheckpoints;
-			}
+            if (riskWorkflowEntity != null)
+            {
+                var executedCheckpointIds = expectedStatus.Any()
+                                                 ? db.Risk.WorkflowCheckpoints.Where(
+                                                     p =>
+                                                     p.RiskWorkflowId == riskWorkflowEntity.RiskWorkflowId &&
+                                                     expectedStatus.Contains((CheckpointStatus)p.CheckpointStatus)).Select(
+                                                         p => p.CheckpointDefinitionId).ToList()
+                                                 : db.Risk.WorkflowCheckpoints.Where(
+                                                     p => p.RiskWorkflowId == riskWorkflowEntity.RiskWorkflowId).
+                                                       Select(p => p.CheckpointDefinitionId).ToList();
+                executedCheckpoints.AddRange(db.Risk.CheckpointDefinitions.Where(p => executedCheckpointIds.Contains(p.CheckpointDefinitionId)).Select(p => p.Name));
+                return executedCheckpoints;
+            }
 			return executedCheckpoints;
 		}
+
+
+        /// <summary>
+        /// This function returns a list of Workflow entities for a given ApplicationId
+        /// </summary>
+        /// <param name="applicationId">The GUID of the application</param>
+        /// <returns></returns>
+        public static  List<RiskWorkflowEntity> GetWorkflowsForApplication(Guid applicationId)
+        {
+            var db = new DbDriver();
+            return db.Risk.RiskWorkflows.Where(p => p.ApplicationId == applicationId).ToList();
+        }
 
 		private void Rewind(int absoluteDays)
 		{
