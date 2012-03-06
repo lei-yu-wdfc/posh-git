@@ -80,7 +80,7 @@ namespace Wonga.QA.Tests.Payments
 				expectedTermDefault = defaultPromiseDate.Subtract(now).Days;
 				var expectedTermMax = defaultMaxDate.Subtract(now).Days;
 
-				if (expectedTermMax < MaxDefaultTerm) expectedTermMax = MaxDefaultTerm;
+				if (expectedTermMax > MaxDefaultTerm) expectedTermMax = MaxDefaultTerm;
 
 				var response = Driver.Api.Queries.Post(new GetFixedTermLoanOfferZaQuery{ AccountId = Guid.NewGuid().ToString() });
 				var actualTermMax = Int32.Parse(response.Values["TermMax"].Single());
