@@ -261,10 +261,10 @@ namespace Wonga.QA.Framework.Core
                 XmlSerializer serializer = new XmlSerializer(value.GetType());
                 StringWriter writer = new StringWriter();
                 serializer.Serialize(writer, value);
-
                 XElement element = XElement.Parse(writer.ToString());
-                element.Attributes().ToList().ForEach(a => a.Remove());
-                return element.ToString();
+                StringBuilder builder = new StringBuilder();
+                element.Elements().ToList().ForEach(e => builder.AppendLine(e.ToString()));
+                return builder.ToString();
             }
 
             return value.ToString();
