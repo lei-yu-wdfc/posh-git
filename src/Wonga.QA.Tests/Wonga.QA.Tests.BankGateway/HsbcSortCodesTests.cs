@@ -6,7 +6,7 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Db.BankGateway;
-using Wonga.QA.Framework.Msmq.BankGateway;
+using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.BankGateway

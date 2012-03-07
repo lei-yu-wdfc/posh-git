@@ -2,7 +2,7 @@
 using System.Linq;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Msmq.Payments;
+using Wonga.QA.Framework.Msmq;
 
 namespace Wonga.QA.Tests.Payments.Helpers
 {

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
@@ -10,7 +9,6 @@ using Wonga.QA.Framework.Db.OpsSagas;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Framework.Msmq;
-using Wonga.QA.Framework.Msmq.Payments;
 using Wonga.QA.Framework.Db.Risk;
 
 namespace Wonga.QA.Framework

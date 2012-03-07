@@ -39,22 +39,22 @@ namespace Wonga.QA.Generators.Msmq
 
                 foreach (Type message in assembly.GetTypes().Where(t => t.IsMessage() && t.IsInstantiatable()))
                 {
-                    String name = String.Format("{0}{1}{2}{3}", message.GetClean(), file.GetProduct(), file.GetRegion(), message.GetSuffix());
-                    String root = file.GetSolution();
-                    FileInfo code = Repo.File(String.Format("{0}.cs", name), Repo.Directory(root, bin.Messages));
+                    String name = String.Format("{0}{1}{2}{3}{4}", message.GetClean(), GetCollision(message), file.GetProduct(), file.GetRegion(), message.GetSuffix());
+                    //String root = file.GetSolution();
+                    FileInfo code = Repo.File(String.Format("{0}.cs", name), bin.Messages);
 
                     StringBuilder builder = new StringBuilder().AppendFormatLine(new[]{
                         "using System;",
                         "using System.Collections.Generic;",
                         "using System.Xml.Serialization;",
                         "",
-                        "namespace {0}.{1}",
+                        "namespace {0}",
                         "{{",
-                        "    /// <summary> {2} </summary>",
-                        "    [XmlRoot({3}, Namespace = {4}, DataType = {5})]",
-                        "    public partial class {6} : MsmqMessage<{6}>",
+                        "    /// <summary> {1} </summary>",
+                        "    [XmlRoot({2}, Namespace = {3}, DataType = {4})]",
+                        "    public partial class {5} : MsmqMessage<{5}>",
                         "    {{"
-                    }, Config.Msmq.Project, root, message.FullName, message.Name.Quote(), message.Namespace.Quote(), String.Join(",", message.GetTypes().Select(t => t.FullName)).Quote(), name);
+                    }, Config.Msmq.Project,message.FullName, message.Name.Quote(), message.Namespace.Quote(), String.Join(",", message.GetTypes().Select(t => t.FullName)).Quote(), name);
 
                     foreach (KeyValuePair<String, Type> member in message.GetMessageMembers())
                     {
@@ -112,6 +112,45 @@ namespace Wonga.QA.Generators.Msmq
 
             Repo.Inject(bin.Messages, Config.Msmq.Folder, Config.Msmq.Project);
             Repo.Inject(bin.Enums, "Enums", Config.Msmq.Project);
+        }
+
+        private static String GetCollision(Type type)
+        {
+            switch (type.FullName)
+            {
+                case "Wonga.ExperianBulk.InternalMessages.BaseSagaMessage":
+                    return "ExperianBulk";
+                case "Wonga.Payments.InternalMessages.SagaMessages.BaseSagaMessage":
+                    return "Payments";
+
+                case "Wonga.Comms.ContactManagement.PublicMessages.ICommsEvent":
+                    return "ContactManagement";
+                case "Wonga.Comms.PublicMessages.ICommsEvent":
+                    return "Comms";
+
+                case "Wonga.Risk.WorkflowDecisions.IWorkflowDecision":
+                    return "Internal";
+                case "Wonga.Risk.IWorkflowDecision":
+                    return "Public";
+
+                case "Wonga.Comms.InternalMessages.FileStorage.SaveFileMessage":
+                    return "Comms";
+                case "Wonga.FileStorage.PublicMessages.SaveFileMessage":
+                    return "FileStorage";
+
+                case "Wonga.Payments.SubmitCounterOffer":
+                    return "Payments";
+                case "Wonga.Risk.SubmitCounterOfferMessage":
+                    return "Risk";
+
+                case "Wonga.CallReport.Batch.Handlers.InternalMessages.UpdateScheduleMessage":
+                    return "CallReport";
+                case "Wonga.ExperianBulk.InternalMessages.UpdateScheduleMessage":
+                    return "ExperianBulk";
+
+                default:
+                    return null;
+            }
         }
     }
 }

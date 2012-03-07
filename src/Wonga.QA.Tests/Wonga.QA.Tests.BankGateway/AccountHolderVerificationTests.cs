@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 using MbUnit.Framework;
-using NHamcrest.Core;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Db.BankGateway;
-using Wonga.QA.Framework.Msmq.Risk;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.BankGateway
