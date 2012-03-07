@@ -10,21 +10,21 @@ namespace Wonga.QA.Framework
     public class OrganisationBuilder
     {
         private readonly Guid _id;
-        private Customer _primaryApplicant;
+        private readonly Customer _primaryApplicant;
         private int _numberOfSecondaryDirector;
         private int _organisationNumber;
         
-        private OrganisationBuilder(Customer customer)
+        private OrganisationBuilder(Customer primaryApplicant)
         {
             _id = Guid.NewGuid();
             _numberOfSecondaryDirector = 1;
             _organisationNumber = Data.RandomInt(1, 99999999);
-            _primaryApplicant = customer;
+            _primaryApplicant = primaryApplicant;
         }
 
-        public static OrganisationBuilder New(Customer customer)
+        public static OrganisationBuilder New(Customer primaryApplicant)
         {
-            return new OrganisationBuilder(customer);
+            return new OrganisationBuilder(primaryApplicant);
         }
 
         public OrganisationBuilder WithSoManySecondaryDirectors(int number)
