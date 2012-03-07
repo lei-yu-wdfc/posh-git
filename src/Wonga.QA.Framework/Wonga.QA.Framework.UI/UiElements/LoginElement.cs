@@ -1,9 +1,8 @@
 ﻿using System;
 using OpenQA.Selenium;
-using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.UiElements.Pages;
-using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
 using Wonga.QA.Framework.UI.Mappings;
+using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 
 namespace Wonga.QA.Framework.UI.UiElements
 {
@@ -26,17 +25,13 @@ namespace Wonga.QA.Framework.UI.UiElements
             _loginButton = _form.FindElement(By.CssSelector(Elements.Get.LoginSection.LoginButton));
         }
 
-        public String SetEmail
+        public MySummary LoginAs(string email, string password)
         {
-            set { _email.SendKeys(value); }
-        }
-        public String SetPassword
-        {
-            set { _password.SendKeys(value); }
-        }
-        public void MouseOverLoginTrigger()
-        {
-           _loginTrigger.MouseOver();
+            //Mouse to _loginTrigger to make email and pass fields visible
+            _email.SendKeys(email);
+            _password.SendKeys(password);
+            _loginButton.Click();
+            return new MySummary(Page.Client);
         }
     }
 }
