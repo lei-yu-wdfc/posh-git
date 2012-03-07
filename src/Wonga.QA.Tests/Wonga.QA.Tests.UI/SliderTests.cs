@@ -117,15 +117,17 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(page.Sliders.HowMuch, "1335");
         }
 
-        [Test, AUT(AUT.Ca), JIRA("QA-237")]
+        [Test, AUT(AUT.Ca,AUT.Za), JIRA("QA-237", "QA-153")]
         public void ChangingAmountBeyondMinIsNotAllowedByFrontEnd()
         {
-            string _minAmountValue = "100"; //Must be taken from DB
-            string _setAmountValue = (Int32.Parse(_minAmountValue) - 1).ToString();
+            var product = Driver.Db.Payments.Products.FirstOrDefault();
+            int _minAmountValue = (int)product.AmountMin;
+            int _setAmountValue = _minAmountValue - 1;
             var page = Client.Home();
-            page.Sliders.HowMuch = _setAmountValue;
+            page.Sliders.HowMuch = _setAmountValue.ToString();
+            page.Sliders.HowLong = "10"; //To lost focus
             page.Help.HelpTriggerClick();
-            Assert.AreEqual(_minAmountValue, page.Sliders.HowMuch);
+            Assert.AreEqual(_minAmountValue.ToString(), page.Sliders.HowMuch);
         }
 
     }

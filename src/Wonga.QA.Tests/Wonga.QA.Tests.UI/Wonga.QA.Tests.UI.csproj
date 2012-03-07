@@ -45,6 +45,7 @@
     <Reference Include="MbUnit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="WebDriver, Version=2.18.0.0, Culture=neutral, PublicKeyToken=1c2bd1631853048f, processorArchitecture=MSIL" />
     <Reference Include="Wonga.QA.Framework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -56,6 +57,7 @@
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Api.dll</HintPath>
     </Reference>
     <Reference Include="Wonga.QA.Framework.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Wonga.QA.Framework.Db, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Wonga.QA.Framework.Ui">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Ui.dll</HintPath>
     </Reference>
