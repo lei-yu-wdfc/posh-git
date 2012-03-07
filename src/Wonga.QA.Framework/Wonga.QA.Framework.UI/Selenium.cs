@@ -77,10 +77,11 @@ namespace Wonga.QA.Framework.UI
                 element.Click();
         }
 
-        public static void MouseOver(this IWebElement element)
-        {
-            Actions actions = new Actions(element.Driver());
-            actions.MoveToElement(element);
-        }
+        //Does not work in Firefox and IE only Chrome atm.
+        //public static void MouseOver(this IWebElement element)
+        //{
+        //    Actions actions = new Actions(element.Driver());
+        //    actions.MoveToElement(element);
+        //}
     }
 }
