@@ -109,11 +109,23 @@ namespace Wonga.QA.Tests.Ui
             //maximum charge is 21$ for each 100$ borrowed for 30 days.
 
         }
+
         [Test, AUT(AUT.Za), JIRA("QA-156")]
         public void L0DefaultAmountSliderValueShouldBeCorrect()
         {
             var page = Client.Home();
             Assert.AreEqual(page.Sliders.HowMuch, "1335");
+        }
+
+        [Test, AUT(AUT.Ca), JIRA("QA-237")]
+        public void ChangingAmountBeyondMinIsNotAllowedByFrontEnd()
+        {
+            string _minAmountValue = "100"; //Must be taken from DB
+            string _setAmountValue = (Int32.Parse(_minAmountValue) - 1).ToString();
+            var page = Client.Home();
+            page.Sliders.HowMuch = _setAmountValue;
+            page.Help.HelpTriggerClick();
+            Assert.AreEqual(_minAmountValue, page.Sliders.HowMuch);
         }
 
     }
