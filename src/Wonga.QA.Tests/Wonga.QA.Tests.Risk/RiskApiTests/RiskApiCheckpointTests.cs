@@ -30,8 +30,6 @@ namespace Wonga.QA.Tests.Risk
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
             Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, expectedResult), Data.EnumToString(checkpoint));
-
-            //Assert.Contains(Application.GetExecutedCheckpointDefinitions(application.Id, expectedResult), Data.EnumToString(checkpoint));
         }
         
         [Test, AUT(AUT.Wb), JIRA("SME-156")]
@@ -82,13 +80,13 @@ namespace Wonga.QA.Tests.Risk
         [Test, AUT(AUT.Wb), JIRA("SME-162")]
         public void BusinessPaymentScoreNotFound()
         {
-            TestSingleBusinessCheckpoint(RiskMiddlenameMask.TESTBusinessPaymentScoreIsAcceptable, CheckpointStatus.Verified, CheckpointDefinitionEnum.BusinessPaymentScoreIsAcceptable, 90000004);
+            TestSingleBusinessCheckpoint(RiskMiddlenameMask.TESTBusinessPaymentScoreIsAcceptable, CheckpointStatus.Verified, CheckpointDefinitionEnum.BusinessPaymentScoreIsAcceptable, 99999904);
         }
 
-        [Test, AUT(AUT.Wb), JIRA("SME-162"), ExpectedException(typeof(TimeoutException))]
+        [Test, AUT(AUT.Wb), JIRA("SME-162")]
         public void BusinessPaymentScoreIsNotAcceptable()
         {
-            TestSingleBusinessCheckpoint(RiskMiddlenameMask.TESTBusinessPaymentScoreIsAcceptable, CheckpointStatus.Failed, CheckpointDefinitionEnum.BusinessPaymentScoreIsAcceptable, 90000003);
+            TestSingleBusinessCheckpoint(RiskMiddlenameMask.TESTBusinessPaymentScoreIsAcceptable, CheckpointStatus.Failed, CheckpointDefinitionEnum.BusinessPaymentScoreIsAcceptable, 99999903);
         }
 
         #endregion
