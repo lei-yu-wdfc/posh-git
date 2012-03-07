@@ -103,7 +103,12 @@ namespace Wonga.QA.Framework
 			Do.While(ftl.Refresh);
 		}
 
-        public virtual Application PutApplicationIntoArrears()
+		public virtual Application PutApplicationIntoArrears()
+		{
+			return PutApplicationIntoArrears(0);
+		}
+
+        public virtual Application PutApplicationIntoArrears(int daysInArrears)
 		{
 			ApplicationEntity application = Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id);
 
@@ -112,16 +117,9 @@ namespace Wonga.QA.Framework
 			application.FixedTermLoanApplicationEntity.NextDueDate -= span;
 			application.Submit();
 
-			if (Config.AUT == AUT.Uk)
-			{
-				Driver.Msmq.Payments.Send(new ProcessScheduledPaymentCommand { ApplicationId = application.ApplicationId });
-			}
-            else
-            {
-                FixedTermLoanSagaEntity ftl = Driver.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
-                Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
-                Do.While(ftl.Refresh);
-            }
+            FixedTermLoanSagaEntity ftl = Driver.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
+            Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
+            Do.While(ftl.Refresh);
 
 			ScheduledPaymentSagaEntity sp =
 				Do.Until(() => Driver.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationGuid == Id));
@@ -129,6 +127,27 @@ namespace Wonga.QA.Framework
 			Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = sp.Id });
 
 			Do.Until(() => Driver.Db.Payments.Arrears.Single(s => s.ApplicationId == application.ApplicationId));
+        	var db = new DbDriver();
+        	var arrears = db.Payments.Arrears.Single(a => a.ApplicationId == application.ApplicationId);
+        	arrears.CreatedOn = arrears.CreatedOn.Subtract(TimeSpan.FromDays(daysInArrears));
+        	db.Payments.SubmitChanges();
+
+        	var product = Driver.Db.Payments.Products.Single(x => x.ProductId == application.ProductId);
+        	
+        	Driver.Msmq.Payments.Send(new CreateTransactionCommand
+        	                          	{
+        	                          		Amount = 2,
+        	                          		ApplicationId = application.ExternalId,
+        	                          		ComponentTransactionId = Guid.Empty,
+        	                          		Currency = (CurrencyCodeIso4217Enum) application.Currency,
+        	                          		ExternalId = Guid.NewGuid(),
+											Mir = product.MonthlyInterestRate,
+											PostedOn = DateTime.UtcNow,
+											Reference = "Automated Accrued Interest Posted",
+											Scope = PaymentTransactionScopeEnum.Debit,
+											Type = PaymentTransactionEnum.Interest,
+											Source = PaymentTransactionSourceEnum.System
+        	                          	});
 
 			return this;
 		}
