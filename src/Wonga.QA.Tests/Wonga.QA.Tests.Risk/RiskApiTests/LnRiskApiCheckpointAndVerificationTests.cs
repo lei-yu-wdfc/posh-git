@@ -9,7 +9,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.RiskApiTests
 {
-	public class LnRiskApiCheckpointAndVerificationTestsForCa : BaseLnRiskApiCheckpointAndVerificationTests
+	public class LnRiskApiCheckpointAndVerificationTests : BaseLnRiskApiCheckpointAndVerificationTests
 	{
 		[Test, AUT(AUT.Ca)]
 		public void GivenLNApplicant_WhenIsNotMinor_ThenIsAccepted()

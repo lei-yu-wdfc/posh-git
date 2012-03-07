@@ -10,7 +10,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.RiskApiTests
 {
-	public class L0RiskApiCheckpointAndVerificationTestsForCa : BaseL0RiskApiCheckpointAndVerificationTests
+	public class L0RiskApiCheckpointAndVerificationTests : BaseL0RiskApiCheckpointAndVerificationTests
 	{
 		[Test, AUT(AUT.Ca)]
 		public void GivenL0Applicant_WhenIsNotMinor_ThenIsAccepted()
@@ -38,6 +38,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 
 		}
 
+        
 		[Test, AUT(AUT.Ca)]
 		public void GivenL0Applicant_WhenIsEmployed_ThenIsAccepted()
 		{
@@ -225,5 +226,41 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 				"CreditBureauDataIsAvailableVerification");
 
 		}
+
+        [Test, AUT(AUT.Uk)]
+        public void GivenL0Applicant_WhenCustomerIsUnEmployed_ThenIsDeclined()
+        {
+            _builderConfig = new ApplicationBuilderConfig(ApplicationDecisionStatusEnum.Declined);
+            CustomerBuilder builder = CustomerBuilder.New()
+                .WithEmployerStatus("Unemployed").WithEmployer("test:EmployedMask");
+            L0ApplicationWithSingleCheckPointAndSingleVerification(builder, CheckpointDefinitionEnum.CustomerIsEmployed, "CustomerIsEmployedVerification");
+        }
+
+
+        [Test, AUT(AUT.Uk)]
+        public void GivenL0Applicant_WhenCustomerIsEmployed_ThenIsAccepted()
+        {
+            _builderConfig = new ApplicationBuilderConfig();
+            L0ApplicationWithSingleCheckPointAndSingleVerification(CheckpointDefinitionEnum.CustomerIsEmployed, "CustomerIsEmployedVerification");
+        }
+
+        [Test, AUT(AUT.Uk)]
+        public void GivenL0Applicant_WhenIsUnderAged_ThenIsDeclined()
+        {
+            _builderConfig = new ApplicationBuilderConfig(ApplicationDecisionStatusEnum.Declined);
+            CustomerBuilder builder = CustomerBuilder.New()
+                .WithEmployer("test:ApplicantIsNotMinor")
+                .WithDateOfBirth(new Date(DateTime.Now.AddYears(-18), DateFormat.Date));
+            L0ApplicationWithSingleCheckPointAndSingleVerification(
+                builder, CheckpointDefinitionEnum.ApplicantIsNotMinor,
+                "ApplicantIsNotMinorVerification");
+        }
+
+        [Test, AUT(AUT.Uk)]
+        public void GivenL0Applicant_WhenCustomerIsNotMinor_ThenIsAccepted()
+        {
+            _builderConfig = new ApplicationBuilderConfig();
+            L0ApplicationWithSingleCheckPointAndSingleVerification(CheckpointDefinitionEnum.ApplicantIsNotMinor, "ApplicantIsNotMinorVerification");
+        }
 	}
 }
