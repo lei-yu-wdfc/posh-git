@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.InternalMessages.Email.SendPasswordChangedEmailMessage </summary>
     [XmlRoot("SendPasswordChangedEmailMessage", Namespace = "Wonga.Comms.InternalMessages.Email", DataType = "")]
     public partial class SendPasswordChangedEmailCommand : MsmqMessage<SendPasswordChangedEmailCommand>
     {

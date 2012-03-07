@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Payments
 {
+    /// <summary> Wonga.Payments.InternalMessages.Messages.ITransactionAddedInternal </summary>
     [XmlRoot("ITransactionAddedInternal", Namespace = "Wonga.Payments.InternalMessages.Messages", DataType = "Wonga.Payments.PublicMessages.ITransactionAdded,Wonga.Payments.PublicMessages.IPaymentsEvent")]
     public partial class ITransactionAddedInternalEvent : MsmqMessage<ITransactionAddedInternalEvent>
     {

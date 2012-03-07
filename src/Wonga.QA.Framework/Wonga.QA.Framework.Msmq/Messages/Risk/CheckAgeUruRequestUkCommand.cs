@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Risk
 {
+    /// <summary> Wonga.Risk.URU.CheckAgeUruRequestMessage </summary>
     [XmlRoot("CheckAgeUruRequestMessage", Namespace = "Wonga.Risk.URU", DataType = "Wonga.Risk.Uru.UruRequestMessage,Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
     public partial class CheckAgeUruRequestUkCommand : MsmqMessage<CheckAgeUruRequestUkCommand>
     {

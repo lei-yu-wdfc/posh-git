@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Risk
 {
+    /// <summary> Wonga.Risk.CancelUserActionMessage </summary>
     [XmlRoot("CancelUserActionMessage", Namespace = "Wonga.Risk", DataType = "")]
     public partial class CancelUserActionCommand : MsmqMessage<CancelUserActionCommand>
     {

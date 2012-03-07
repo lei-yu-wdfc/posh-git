@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Graydon
 {
+    /// <summary> Wonga.Graydon.Handlers.InternalMessages.GraydonReportReadyMessage </summary>
     [XmlRoot("GraydonReportReadyMessage", Namespace = "Wonga.Graydon.Handlers.InternalMessages", DataType = "NServiceBus.Saga.ISagaMessage")]
     public partial class GraydonReportReadyCommand : MsmqMessage<GraydonReportReadyCommand>
     {

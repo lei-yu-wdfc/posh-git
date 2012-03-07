@@ -4,7 +4,8 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Bi
 {
-    [XmlRoot("IApplicationStatusChanged", Namespace = "Wonga.PublicMessages.Bi.CustomerManagement.Events", DataType = "Wonga.PublicMessages.Bi.CustomerManagement.ISatausEvent")]
+    /// <summary> Wonga.PublicMessages.Bi.CustomerManagement.Events.IApplicationStatusChanged </summary>
+    [XmlRoot("IApplicationStatusChanged", Namespace = "Wonga.PublicMessages.Bi.CustomerManagement.Events", DataType = "Wonga.PublicMessages.Bi.CustomerManagement.IStatusEvent")]
     public partial class IApplicationStatusChangedEvent : MsmqMessage<IApplicationStatusChangedEvent>
     {
         public ApplicationStatusEnum Status { get; set; }

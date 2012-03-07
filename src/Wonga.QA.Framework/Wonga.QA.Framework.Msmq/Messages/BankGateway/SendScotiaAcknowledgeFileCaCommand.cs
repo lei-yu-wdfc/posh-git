@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.BankGateway
 {
+    /// <summary> Wonga.BankGateway.InternalMessages.Scotiabank.Ca.SendScotiaAcknowledgeFileMessage </summary>
     [XmlRoot("SendScotiaAcknowledgeFileMessage", Namespace = "Wonga.BankGateway.InternalMessages.Scotiabank.Ca", DataType = "Wonga.BankGateway.Core.Interfaces.IAcknowledgeFileMessage")]
     public partial class SendScotiaAcknowledgeFileCaCommand : MsmqMessage<SendScotiaAcknowledgeFileCaCommand>
     {

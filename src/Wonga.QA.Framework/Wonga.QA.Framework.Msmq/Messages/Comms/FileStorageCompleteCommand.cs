@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.InternalMessages.SagaMessages.FileStorageCompleteMessage </summary>
     [XmlRoot("FileStorageCompleteMessage", Namespace = "Wonga.Comms.InternalMessages.SagaMessages", DataType = "Wonga.Comms.InternalMessages.SagaMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
     public partial class FileStorageCompleteCommand : MsmqMessage<FileStorageCompleteCommand>
     {

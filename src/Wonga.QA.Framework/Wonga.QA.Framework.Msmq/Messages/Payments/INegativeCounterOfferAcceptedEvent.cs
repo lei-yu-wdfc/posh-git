@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Payments
 {
+    /// <summary> Wonga.Payments.PublicMessages.INegativeCounterOfferAccepted </summary>
     [XmlRoot("INegativeCounterOfferAccepted", Namespace = "Wonga.Payments.PublicMessages", DataType = "Wonga.Payments.PublicMessages.IPaymentsEvent")]
     public partial class INegativeCounterOfferAcceptedEvent : MsmqMessage<INegativeCounterOfferAcceptedEvent>
     {

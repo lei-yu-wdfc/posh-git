@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.DocumentGeneration.PublicMessages.Wb.Uk.IUnsignedPersonalGuaranteeCreatedAndStored </summary>
     [XmlRoot("IUnsignedPersonalGuaranteeCreatedAndStored", Namespace = "Wonga.Comms.DocumentGeneration.PublicMessages.Wb.Uk", DataType = "")]
     public partial class IUnsignedPersonalGuaranteeCreatedAndStoredWbUkEvent : MsmqMessage<IUnsignedPersonalGuaranteeCreatedAndStoredWbUkEvent>
     {

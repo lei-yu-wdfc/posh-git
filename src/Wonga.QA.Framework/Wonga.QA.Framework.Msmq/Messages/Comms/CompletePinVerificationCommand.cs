@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.InternalMessages.CompletePinVerificationMessage </summary>
     [XmlRoot("CompletePinVerificationMessage", Namespace = "Wonga.Comms.InternalMessages", DataType = "")]
     public partial class CompletePinVerificationCommand : MsmqMessage<CompletePinVerificationCommand>
     {

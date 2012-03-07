@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Risk
 {
+    /// <summary> Wonga.Risk.UserVerification.CounterOfferUserVerificationMessage </summary>
     [XmlRoot("CounterOfferUserVerificationMessage", Namespace = "Wonga.Risk.UserVerification", DataType = "")]
     public partial class CounterOfferUserVerificationCommand : MsmqMessage<CounterOfferUserVerificationCommand>
     {

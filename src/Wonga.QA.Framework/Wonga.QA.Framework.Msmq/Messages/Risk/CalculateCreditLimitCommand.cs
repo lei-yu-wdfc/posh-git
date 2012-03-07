@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Risk
 {
+    /// <summary> Wonga.Risk.CalculateCreditLimitMessage </summary>
     [XmlRoot("CalculateCreditLimitMessage", Namespace = "Wonga.Risk", DataType = "")]
     public partial class CalculateCreditLimitCommand : MsmqMessage<CalculateCreditLimitCommand>
     {

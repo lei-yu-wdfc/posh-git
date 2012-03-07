@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.InternalMessages.Email.SendRepaymentArrangementClosedLoanDisabledEmailMessage </summary>
     [XmlRoot("SendRepaymentArrangementClosedLoanDisabledEmailMessage", Namespace = "Wonga.Comms.InternalMessages.Email", DataType = "Wonga.Comms.InternalMessages.Email.BaseSimpleEmailMessage,Wonga.Comms.InternalMessages.SagaMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
     public partial class SendRepaymentArrangementClosedLoanDisabledEmailCommand : MsmqMessage<SendRepaymentArrangementClosedLoanDisabledEmailCommand>
     {

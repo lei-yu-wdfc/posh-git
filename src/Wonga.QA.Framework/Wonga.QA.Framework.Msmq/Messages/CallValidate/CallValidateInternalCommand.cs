@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.CallValidate
 {
+    /// <summary> Wonga.CallValidate.Handlers.CallValidateInternalMessage </summary>
     [XmlRoot("CallValidateInternalMessage", Namespace = "Wonga.CallValidate.Handlers", DataType = "NServiceBus.Saga.ISagaMessage")]
     public partial class CallValidateInternalCommand : MsmqMessage<CallValidateInternalCommand>
     {

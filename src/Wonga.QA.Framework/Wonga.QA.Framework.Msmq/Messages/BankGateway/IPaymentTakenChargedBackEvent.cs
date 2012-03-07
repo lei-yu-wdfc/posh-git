@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.BankGateway
 {
+    /// <summary> Wonga.BankGateway.PublicMessages.IPaymentTakenChargedBack </summary>
     [XmlRoot("IPaymentTakenChargedBack", Namespace = "Wonga.BankGateway.PublicMessages", DataType = "")]
     public partial class IPaymentTakenChargedBackEvent : MsmqMessage<IPaymentTakenChargedBackEvent>
     {

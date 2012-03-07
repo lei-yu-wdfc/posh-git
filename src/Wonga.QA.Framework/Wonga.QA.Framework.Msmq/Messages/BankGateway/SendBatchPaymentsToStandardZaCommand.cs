@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.BankGateway
 {
+    /// <summary> Wonga.BankGateway.InternalMessages.Standard.Za.SendBatchPaymentsToStandardMessage </summary>
     [XmlRoot("SendBatchPaymentsToStandardMessage", Namespace = "Wonga.BankGateway.InternalMessages.Standard.Za", DataType = "")]
     public partial class SendBatchPaymentsToStandardZaCommand : MsmqMessage<SendBatchPaymentsToStandardZaCommand>
     {

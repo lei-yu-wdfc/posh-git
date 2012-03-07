@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.InternalMessages.Events.Wb.Uk.IGuarantorDataCorrelatedInternal </summary>
     [XmlRoot("IGuarantorDataCorrelatedInternal", Namespace = "Wonga.Comms.InternalMessages.Events.Wb.Uk", DataType = "Wonga.Comms.PublicMessages.Wb.Uk.IGuarantorDataCorrelated,Wonga.Comms.PublicMessages.ICommsEvent")]
     public partial class IGuarantorDataCorrelatedInternalWbUkEvent : MsmqMessage<IGuarantorDataCorrelatedInternalWbUkEvent>
     {

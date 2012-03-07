@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Payments
 {
+    /// <summary> Wonga.Payments.PublicMessages.IRepaymentArrangementPartiallyRepaid </summary>
     [XmlRoot("IRepaymentArrangementPartiallyRepaid", Namespace = "Wonga.Payments.PublicMessages", DataType = "")]
     public partial class IRepaymentArrangementPartiallyRepaidEvent : MsmqMessage<IRepaymentArrangementPartiallyRepaidEvent>
     {

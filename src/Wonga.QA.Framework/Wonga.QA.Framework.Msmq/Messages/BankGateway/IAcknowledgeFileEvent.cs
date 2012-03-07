@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.BankGateway
 {
+    /// <summary> Wonga.BankGateway.Core.Interfaces.IAcknowledgeFileMessage </summary>
     [XmlRoot("IAcknowledgeFileMessage", Namespace = "Wonga.BankGateway.Core.Interfaces", DataType = "")]
     public partial class IAcknowledgeFileEvent : MsmqMessage<IAcknowledgeFileEvent>
     {

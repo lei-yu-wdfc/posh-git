@@ -3,6 +3,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Api
 {
+    /// <summary> Wonga.Comms.ContactManagement.Commands.AddSecondaryOrganisationDirector </summary>
     [XmlRoot("AddSecondaryOrganisationDirector")]
     public partial class AddSecondaryOrganisationDirectorCommand : ApiRequest<AddSecondaryOrganisationDirectorCommand>
     {

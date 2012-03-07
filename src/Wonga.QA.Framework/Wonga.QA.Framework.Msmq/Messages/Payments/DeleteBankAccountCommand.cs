@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Payments
 {
+    /// <summary> Wonga.Payments.DeleteBankAccount </summary>
     [XmlRoot("DeleteBankAccount", Namespace = "Wonga.Payments", DataType = "")]
     public partial class DeleteBankAccountCommand : MsmqMessage<DeleteBankAccountCommand>
     {

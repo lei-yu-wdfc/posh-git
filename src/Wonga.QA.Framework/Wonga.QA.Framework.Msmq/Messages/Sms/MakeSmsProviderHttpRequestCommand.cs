@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Sms
 {
+    /// <summary> Wonga.Sms.InternalMessages.SagaMessages.HttpRequests.MakeSmsProviderHttpRequestMessage </summary>
     [XmlRoot("MakeSmsProviderHttpRequestMessage", Namespace = "Wonga.Sms.InternalMessages.SagaMessages.HttpRequests", DataType = "Wonga.Sms.InternalMessages.SagaMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
     public partial class MakeSmsProviderHttpRequestCommand : MsmqMessage<MakeSmsProviderHttpRequestCommand>
     {

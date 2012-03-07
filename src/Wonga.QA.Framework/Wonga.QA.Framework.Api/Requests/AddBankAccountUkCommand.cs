@@ -3,6 +3,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Api
 {
+    /// <summary> Wonga.Payments.Commands.Uk.AddBankAccount </summary>
     [XmlRoot("AddBankAccount")]
     public partial class AddBankAccountUkCommand : ApiRequest<AddBankAccountUkCommand>
     {

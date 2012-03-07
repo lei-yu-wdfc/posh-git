@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.PublicMessages.IExtensionAgreementProduced </summary>
     [XmlRoot("IExtensionAgreementProduced", Namespace = "Wonga.Comms.PublicMessages", DataType = "")]
     public partial class IExtensionAgreementProducedEvent : MsmqMessage<IExtensionAgreementProducedEvent>
     {

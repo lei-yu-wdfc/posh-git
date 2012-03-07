@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.FileStorage
 {
+    /// <summary> Wonga.FileStorage.PublicMessages.SaveFileMessage </summary>
     [XmlRoot("SaveFileMessage", Namespace = "Wonga.FileStorage.PublicMessages", DataType = "")]
     public partial class SaveFileCommand : MsmqMessage<SaveFileCommand>
     {

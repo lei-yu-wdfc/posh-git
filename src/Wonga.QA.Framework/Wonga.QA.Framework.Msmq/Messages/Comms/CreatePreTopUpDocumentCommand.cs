@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.InternalMessages.CreatePreTopUpDocumentMessage </summary>
     [XmlRoot("CreatePreTopUpDocumentMessage", Namespace = "Wonga.Comms.InternalMessages", DataType = "")]
     public partial class CreatePreTopUpDocumentCommand : MsmqMessage<CreatePreTopUpDocumentCommand>
     {

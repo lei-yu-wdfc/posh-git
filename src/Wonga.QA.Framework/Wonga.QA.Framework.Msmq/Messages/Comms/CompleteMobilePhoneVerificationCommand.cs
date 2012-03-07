@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.Commands.CompleteMobilePhoneVerificationMessage </summary>
     [XmlRoot("CompleteMobilePhoneVerificationMessage", Namespace = "Wonga.Comms.Commands", DataType = "")]
     public partial class CompleteMobilePhoneVerificationCommand : MsmqMessage<CompleteMobilePhoneVerificationCommand>
     {

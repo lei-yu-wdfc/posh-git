@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.Handlers.SomeScheduledReminder </summary>
     [XmlRoot("SomeScheduledReminder", Namespace = "Wonga.Comms.Handlers", DataType = "")]
     public partial class SomeScheduledReminderCommand : MsmqMessage<SomeScheduledReminderCommand>
     {

@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.Commands.ConfirmSmsPinMessage </summary>
     [XmlRoot("ConfirmSmsPinMessage", Namespace = "Wonga.Comms.Commands", DataType = "")]
     public partial class ConfirmSmsPinCommand : MsmqMessage<ConfirmSmsPinCommand>
     {

@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Email
 {
+    /// <summary> Wonga.Email.PublicMessages.Za.IRepaymentArrangementCancelledEmailSent </summary>
     [XmlRoot("IRepaymentArrangementCancelledEmailSent", Namespace = "Wonga.Email.PublicMessages.Za", DataType = "Wonga.Email.PublicMessages.Za.IEmailSent")]
     public partial class IRepaymentArrangementCancelledEmailSentZaEvent : MsmqMessage<IRepaymentArrangementCancelledEmailSentZaEvent>
     {

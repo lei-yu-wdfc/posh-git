@@ -75,15 +75,16 @@ namespace Wonga.QA.Generators.Api
                     FileInfo code = Repo.File(String.Format("{0}.cs", name1), bin.Requests);
 
                     StringBuilder builder1 = new StringBuilder().AppendFormatLine(new[]{
-			            "using System;",
-			            "using System.Xml.Serialization;",
-			            "",
-			            "namespace {0}",
-			            "{{",
-			            "    [XmlRoot({1})]",
-			            "    public partial class {2} : ApiRequest<{2}>",
-			            "    {{",
-		            }, Config.Api.Project, element.Name.Quote(), name1);
+                        "using System;",
+                        "using System.Xml.Serialization;",
+                        "",
+                        "namespace {0}",
+                        "{{",
+                        "    /// <summary> {1} </summary>",
+                        "    [XmlRoot({2})]",
+                        "    public partial class {3} : ApiRequest<{3}>",
+                        "    {{",
+                    }, Config.Api.Project, String.Format("{0}.{1}", file.GetName(), element.Name), element.Name.Quote(), name1);
 
                     foreach (PropertyInfo property in types[element.Name].GetProperties().Where(p => !p.IsIgnore()))
                         builder1.AppendFormatLine("        public Object {0} {{ get; set; }}", property.GetName());
@@ -110,12 +111,12 @@ namespace Wonga.QA.Generators.Api
                         FileInfo fenum = Repo.File(String.Format("{0}.cs", name), bin.Enums);
 
                         StringBuilder builder = new StringBuilder().AppendFormatLine(new[]
-	                    {
-		                    "namespace {0}",
-		                    "{{",
-		                    "    public enum {1}",
-		                    "    {{"
-	                    }, Config.Api.Project, name);
+                        {
+                            "namespace {0}",
+                            "{{",
+                            "    public enum {1}",
+                            "    {{"
+                        }, Config.Api.Project, name);
 
                         foreach (String value in values)
                             builder.AppendFormatLine("        {0},", value);

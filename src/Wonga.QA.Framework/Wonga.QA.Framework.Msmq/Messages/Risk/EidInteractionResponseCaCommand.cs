@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Risk
 {
+    /// <summary> Wonga.Risk.InternalMessages.Equifax.EidInteractionQueryResponseMessage </summary>
     [XmlRoot("EidInteractionQueryResponseMessage", Namespace = "Wonga.Risk.InternalMessages.Equifax", DataType = "Wonga.Risk.InternalMessages.Equifax.EidBaseResponseMessage,Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
     public partial class EidInteractionResponseCaCommand : MsmqMessage<EidInteractionResponseCaCommand>
     {

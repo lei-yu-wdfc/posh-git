@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Graydon
 {
+    /// <summary> Wonga.Graydon.PublicMessages.CompanyLookupNoResultResponse </summary>
     [XmlRoot("CompanyLookupNoResultResponse", Namespace = "Wonga.Graydon.PublicMessages", DataType = "")]
     public partial class CompanyLookupNoResultResponseCommand : MsmqMessage<CompanyLookupNoResultResponseCommand>
     {

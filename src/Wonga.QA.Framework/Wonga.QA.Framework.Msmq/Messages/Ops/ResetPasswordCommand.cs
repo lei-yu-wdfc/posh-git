@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Ops
 {
+    /// <summary> Wonga.Ops.ResetPasswordMessage </summary>
     [XmlRoot("ResetPasswordMessage", Namespace = "Wonga.Ops", DataType = "")]
     public partial class ResetPasswordCommand : MsmqMessage<ResetPasswordCommand>
     {

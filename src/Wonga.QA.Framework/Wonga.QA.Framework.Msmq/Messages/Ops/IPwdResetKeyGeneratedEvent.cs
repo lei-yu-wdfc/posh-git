@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Ops
 {
+    /// <summary> Wonga.Ops.PublicMessages.IPwdResetKeyGenerated </summary>
     [XmlRoot("IPwdResetKeyGenerated", Namespace = "Wonga.Ops.PublicMessages", DataType = "")]
     public partial class IPwdResetKeyGeneratedEvent : MsmqMessage<IPwdResetKeyGeneratedEvent>
     {

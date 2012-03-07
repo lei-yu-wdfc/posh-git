@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.Commands.SendVerificationEmail </summary>
     [XmlRoot("SendVerificationEmail", Namespace = "Wonga.Comms.Commands", DataType = "")]
     public partial class SendVerificationEmailCommand : MsmqMessage<SendVerificationEmailCommand>
     {

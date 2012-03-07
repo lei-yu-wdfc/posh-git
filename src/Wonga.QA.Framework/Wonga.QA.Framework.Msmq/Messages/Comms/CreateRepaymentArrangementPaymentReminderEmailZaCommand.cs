@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.InternalMessages.DocumentGeneration.Za.RepaymentArrangements.CreateRepaymentArrangementPaymentReminderEmailMessage </summary>
     [XmlRoot("CreateRepaymentArrangementPaymentReminderEmailMessage", Namespace = "Wonga.Comms.InternalMessages.DocumentGeneration.Za.RepaymentArrangements", DataType = "")]
     public partial class CreateRepaymentArrangementPaymentReminderEmailZaCommand : MsmqMessage<CreateRepaymentArrangementPaymentReminderEmailZaCommand>
     {

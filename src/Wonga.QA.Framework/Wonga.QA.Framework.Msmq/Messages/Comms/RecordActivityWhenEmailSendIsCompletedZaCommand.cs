@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.InternalMessages.Za.RecordActivityWhenEmailSendIsCompletedMessage </summary>
     [XmlRoot("RecordActivityWhenEmailSendIsCompletedMessage", Namespace = "Wonga.Comms.InternalMessages.Za", DataType = "")]
     public partial class RecordActivityWhenEmailSendIsCompletedZaCommand : MsmqMessage<RecordActivityWhenEmailSendIsCompletedZaCommand>
     {

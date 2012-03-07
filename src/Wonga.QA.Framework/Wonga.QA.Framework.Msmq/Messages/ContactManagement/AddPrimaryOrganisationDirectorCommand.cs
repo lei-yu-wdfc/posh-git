@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.ContactManagement
 {
+    /// <summary> Wonga.Comms.ContactManagement.Commands.AddPrimaryOrganisationDirectorMessage </summary>
     [XmlRoot("AddPrimaryOrganisationDirectorMessage", Namespace = "Wonga.Comms.ContactManagement.Commands", DataType = "")]
     public partial class AddPrimaryOrganisationDirectorCommand : MsmqMessage<AddPrimaryOrganisationDirectorCommand>
     {

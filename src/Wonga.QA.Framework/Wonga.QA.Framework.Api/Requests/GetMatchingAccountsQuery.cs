@@ -3,6 +3,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Api
 {
+    /// <summary> Wonga.Comms.Queries.GetMatchingAccounts </summary>
     [XmlRoot("GetMatchingAccounts")]
     public partial class GetMatchingAccountsQuery : ApiRequest<GetMatchingAccountsQuery>
     {

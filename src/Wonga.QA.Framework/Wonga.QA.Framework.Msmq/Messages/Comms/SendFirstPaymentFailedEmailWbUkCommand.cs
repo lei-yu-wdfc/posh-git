@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.InternalMessages.Email.Wb.Uk.PaymentRequestFailures.SendFirstPaymentFailedEmailMessage </summary>
     [XmlRoot("SendFirstPaymentFailedEmailMessage", Namespace = "Wonga.Comms.InternalMessages.Email.Wb.Uk.PaymentRequestFailures", DataType = "")]
     public partial class SendFirstPaymentFailedEmailWbUkCommand : MsmqMessage<SendFirstPaymentFailedEmailWbUkCommand>
     {

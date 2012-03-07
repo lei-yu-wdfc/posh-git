@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.PublicMessages.ILoanAgreementProduced </summary>
     [XmlRoot("ILoanAgreementProduced", Namespace = "Wonga.Comms.PublicMessages", DataType = "")]
     public partial class ILoanAgreementProducedEvent : MsmqMessage<ILoanAgreementProducedEvent>
     {

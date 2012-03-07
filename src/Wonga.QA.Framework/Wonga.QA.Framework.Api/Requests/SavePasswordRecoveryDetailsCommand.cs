@@ -3,6 +3,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Api
 {
+    /// <summary> Wonga.Ops.Commands.SavePasswordRecoveryDetails </summary>
     [XmlRoot("SavePasswordRecoveryDetails")]
     public partial class SavePasswordRecoveryDetailsCommand : ApiRequest<SavePasswordRecoveryDetailsCommand>
     {

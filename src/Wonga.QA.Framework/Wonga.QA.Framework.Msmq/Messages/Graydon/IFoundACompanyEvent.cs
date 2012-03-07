@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Graydon
 {
+    /// <summary> Wonga.Graydon.PublicMessages.events.IFoundACompany </summary>
     [XmlRoot("IFoundACompany", Namespace = "Wonga.Graydon.PublicMessages.events", DataType = "")]
     public partial class IFoundACompanyEvent : MsmqMessage<IFoundACompanyEvent>
     {

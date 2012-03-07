@@ -3,6 +3,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Api
 {
+    /// <summary> Wonga.Payments.Commands.DeletePaymentCard </summary>
     [XmlRoot("DeletePaymentCard")]
     public partial class DeletePaymentCardCommand : ApiRequest<DeletePaymentCardCommand>
     {

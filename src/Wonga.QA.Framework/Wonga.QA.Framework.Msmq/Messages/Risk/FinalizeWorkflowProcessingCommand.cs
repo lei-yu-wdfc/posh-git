@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Risk
 {
+    /// <summary> Wonga.Risk.Workflow.Messages.FinalizeWorkflowProcessingMessage </summary>
     [XmlRoot("FinalizeWorkflowProcessingMessage", Namespace = "Wonga.Risk.Workflow.Messages", DataType = "")]
     public partial class FinalizeWorkflowProcessingCommand : MsmqMessage<FinalizeWorkflowProcessingCommand>
     {

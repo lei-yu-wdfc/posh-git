@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Risk
 {
+    /// <summary> Wonga.Risk.IManualVerificationRequired </summary>
     [XmlRoot("IManualVerificationRequired", Namespace = "Wonga.Risk", DataType = "Wonga.Risk.IRiskEvent")]
     public partial class IManualVerificationRequiredEvent : MsmqMessage<IManualVerificationRequiredEvent>
     {

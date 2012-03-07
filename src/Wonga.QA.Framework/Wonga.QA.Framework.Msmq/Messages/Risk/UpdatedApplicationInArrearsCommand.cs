@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Risk
 {
+    /// <summary> Wonga.Risk.UpdatedApplicationInArrears </summary>
     [XmlRoot("UpdatedApplicationInArrears", Namespace = "Wonga.Risk", DataType = "")]
     public partial class UpdatedApplicationInArrearsCommand : MsmqMessage<UpdatedApplicationInArrearsCommand>
     {

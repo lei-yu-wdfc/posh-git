@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.InternalMessages.Ca.Alberta.CreateAlbertaPreApproveDirectDebitMessage </summary>
     [XmlRoot("CreateAlbertaPreApproveDirectDebitMessage", Namespace = "Wonga.Comms.InternalMessages.Ca.Alberta", DataType = "")]
     public partial class CreateAlbertaPreApproveDirectDebitCaCommand : MsmqMessage<CreateAlbertaPreApproveDirectDebitCaCommand>
     {

@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.Commands.UpdateHomePhoneMessage </summary>
     [XmlRoot("UpdateHomePhoneMessage", Namespace = "Wonga.Comms.Commands", DataType = "")]
     public partial class UpdateHomePhoneCommand : MsmqMessage<UpdateHomePhoneCommand>
     {

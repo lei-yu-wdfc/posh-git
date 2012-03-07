@@ -3,6 +3,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Api
 {
+    /// <summary> Wonga.Comms.Commands.Za.InsertMissingCustomerDetailsZa </summary>
     [XmlRoot("InsertMissingCustomerDetailsZa")]
     public partial class InsertMissingCustomerDetailsZaCommand : ApiRequest<InsertMissingCustomerDetailsZaCommand>
     {

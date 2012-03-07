@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.InternalMessages.Email.Ca.SendCollatedLegalDocumentsAtApprovalMessage </summary>
     [XmlRoot("SendCollatedLegalDocumentsAtApprovalMessage", Namespace = "Wonga.Comms.InternalMessages.Email.Ca", DataType = "Wonga.Comms.InternalMessages.SagaMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
     public partial class SendCollatedLegalDocumentsAtApprovalCaCommand : MsmqMessage<SendCollatedLegalDocumentsAtApprovalCaCommand>
     {

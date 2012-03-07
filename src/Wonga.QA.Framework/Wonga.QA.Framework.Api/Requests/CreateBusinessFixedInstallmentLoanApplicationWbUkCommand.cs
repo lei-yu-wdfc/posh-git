@@ -3,6 +3,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Api
 {
+    /// <summary> Wonga.Payments.Commands.Wb.Uk.CreateBusinessFixedInstallmentLoanApplication </summary>
     [XmlRoot("CreateBusinessFixedInstallmentLoanApplication")]
     public partial class CreateBusinessFixedInstallmentLoanApplicationWbUkCommand : ApiRequest<CreateBusinessFixedInstallmentLoanApplicationWbUkCommand>
     {

@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.InternalMessages.ITopUpAgreementProducedInternal </summary>
     [XmlRoot("ITopUpAgreementProducedInternal", Namespace = "Wonga.Comms.InternalMessages", DataType = "Wonga.Comms.PublicMessages.ITopUpAgreementProduced")]
     public partial class ITopUpAgreementProducedInternalEvent : MsmqMessage<ITopUpAgreementProducedInternalEvent>
     {

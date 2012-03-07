@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.InternalMessages.Ca.BritishColombia.CreateBcConfirmationOfPADAuthorisationMessage </summary>
     [XmlRoot("CreateBcConfirmationOfPADAuthorisationMessage", Namespace = "Wonga.Comms.InternalMessages.Ca.BritishColombia", DataType = "")]
     public partial class CreateBcConfirmationOfPadAuthorisationCaCommand : MsmqMessage<CreateBcConfirmationOfPadAuthorisationCaCommand>
     {

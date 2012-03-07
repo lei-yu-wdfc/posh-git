@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Salesforce
 {
+    /// <summary> Wonga.Salesforce.InternalMessages.ActivitySalesforceAccountAddedMessage </summary>
     [XmlRoot("ActivitySalesforceAccountAddedMessage", Namespace = "Wonga.Salesforce.InternalMessages", DataType = "")]
     public partial class ActivitySalesforceAccountAddedCommand : MsmqMessage<ActivitySalesforceAccountAddedCommand>
     {

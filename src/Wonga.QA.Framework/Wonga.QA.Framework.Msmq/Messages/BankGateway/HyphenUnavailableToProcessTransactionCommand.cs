@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.BankGateway
 {
+    /// <summary> Wonga.BankGateway.InternalMessages.HyphenUnavailableToProcessTransaction </summary>
     [XmlRoot("HyphenUnavailableToProcessTransaction", Namespace = "Wonga.BankGateway.InternalMessages", DataType = "")]
     public partial class HyphenUnavailableToProcessTransactionCommand : MsmqMessage<HyphenUnavailableToProcessTransactionCommand>
     {

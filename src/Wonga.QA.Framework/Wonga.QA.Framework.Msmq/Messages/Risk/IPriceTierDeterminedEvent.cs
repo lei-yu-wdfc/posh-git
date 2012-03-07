@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Risk
 {
+    /// <summary> Wonga.Risk.IPriceTierDetermined </summary>
     [XmlRoot("IPriceTierDetermined", Namespace = "Wonga.Risk", DataType = "Wonga.Risk.IRiskEvent")]
     public partial class IPriceTierDeterminedEvent : MsmqMessage<IPriceTierDeterminedEvent>
     {

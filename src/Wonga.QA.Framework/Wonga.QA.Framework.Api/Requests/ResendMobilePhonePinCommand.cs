@@ -3,6 +3,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Api
 {
+    /// <summary> Wonga.Comms.Commands.ResendMobilePhonePin </summary>
     [XmlRoot("ResendMobilePhonePin")]
     public partial class ResendMobilePhonePinCommand : ApiRequest<ResendMobilePhonePinCommand>
     {

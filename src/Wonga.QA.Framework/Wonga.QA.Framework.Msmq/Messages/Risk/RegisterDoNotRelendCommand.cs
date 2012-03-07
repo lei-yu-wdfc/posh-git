@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Risk
 {
+    /// <summary> Wonga.Risk.UI.RegisterDoNotRelendMessage </summary>
     [XmlRoot("RegisterDoNotRelendMessage", Namespace = "Wonga.Risk.UI", DataType = "")]
     public partial class RegisterDoNotRelendCommand : MsmqMessage<RegisterDoNotRelendCommand>
     {

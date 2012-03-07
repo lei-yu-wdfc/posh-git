@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Risk
 {
+    /// <summary> Wonga.Risk.UI.RegisterDisputeMessage </summary>
     [XmlRoot("RegisterDisputeMessage", Namespace = "Wonga.Risk.UI", DataType = "")]
     public partial class RegisterDisputeCommand : MsmqMessage<RegisterDisputeCommand>
     {

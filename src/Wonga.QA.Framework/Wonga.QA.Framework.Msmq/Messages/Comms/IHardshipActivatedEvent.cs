@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.PublicMessages.IHardshipActivated </summary>
     [XmlRoot("IHardshipActivated", Namespace = "Wonga.Comms.PublicMessages", DataType = "")]
     public partial class IHardshipActivatedEvent : MsmqMessage<IHardshipActivatedEvent>
     {

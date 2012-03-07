@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Payments
 {
+    /// <summary> Wonga.Payments.PublicMessages.IRepaymentArrangementClosed </summary>
     [XmlRoot("IRepaymentArrangementClosed", Namespace = "Wonga.Payments.PublicMessages", DataType = "")]
     public partial class IRepaymentArrangementClosedEvent : MsmqMessage<IRepaymentArrangementClosedEvent>
     {

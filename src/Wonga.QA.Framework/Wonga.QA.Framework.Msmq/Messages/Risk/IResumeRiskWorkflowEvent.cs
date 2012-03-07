@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Risk
 {
+    /// <summary> Wonga.Risk.IResumeRiskWorkflow </summary>
     [XmlRoot("IResumeRiskWorkflow", Namespace = "Wonga.Risk", DataType = "NServiceBus.Saga.ISagaMessage")]
     public partial class IResumeRiskWorkflowEvent : MsmqMessage<IResumeRiskWorkflowEvent>
     {

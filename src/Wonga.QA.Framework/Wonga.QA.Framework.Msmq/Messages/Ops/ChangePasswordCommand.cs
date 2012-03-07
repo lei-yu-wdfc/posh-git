@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Ops
 {
+    /// <summary> Wonga.Ops.ChangePasswordMessage </summary>
     [XmlRoot("ChangePasswordMessage", Namespace = "Wonga.Ops", DataType = "")]
     public partial class ChangePasswordCommand : MsmqMessage<ChangePasswordCommand>
     {

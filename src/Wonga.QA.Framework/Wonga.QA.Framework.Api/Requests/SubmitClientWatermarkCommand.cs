@@ -3,6 +3,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Api
 {
+    /// <summary> Wonga.Risk.Commands.SubmitClientWatermark </summary>
     [XmlRoot("SubmitClientWatermark")]
     public partial class SubmitClientWatermarkCommand : ApiRequest<SubmitClientWatermarkCommand>
     {

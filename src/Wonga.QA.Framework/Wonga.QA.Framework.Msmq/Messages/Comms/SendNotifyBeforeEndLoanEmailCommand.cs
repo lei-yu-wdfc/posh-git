@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.InternalMessages.Email.SendNotifyBeforeEndLoanEmailMessage </summary>
     [XmlRoot("SendNotifyBeforeEndLoanEmailMessage", Namespace = "Wonga.Comms.InternalMessages.Email", DataType = "Wonga.Comms.InternalMessages.SagaMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
     public partial class SendNotifyBeforeEndLoanEmailCommand : MsmqMessage<SendNotifyBeforeEndLoanEmailCommand>
     {

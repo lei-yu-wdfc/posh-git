@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.BankGateway
 {
+    /// <summary> Wonga.BankGateway.PublicMessages.ICashOutInstructionSent </summary>
     [XmlRoot("ICashOutInstructionSent", Namespace = "Wonga.BankGateway.PublicMessages", DataType = "")]
     public partial class ICashOutInstructionSentEvent : MsmqMessage<ICashOutInstructionSentEvent>
     {

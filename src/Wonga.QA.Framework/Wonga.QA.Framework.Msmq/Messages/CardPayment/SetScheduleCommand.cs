@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.CardPayment
 {
+    /// <summary> Wonga.CardPayment.InternalMessages.SetScheduleMessage </summary>
     [XmlRoot("SetScheduleMessage", Namespace = "Wonga.CardPayment.InternalMessages", DataType = "")]
     public partial class SetScheduleCommand : MsmqMessage<SetScheduleCommand>
     {

@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Risk
 {
+    /// <summary> Wonga.Risk.Commands.VerifyMainBusinessApplicantMessage </summary>
     [XmlRoot("VerifyMainBusinessApplicantMessage", Namespace = "Wonga.Risk.Commands", DataType = "")]
     public partial class VerifyMainBusinessApplicantWbCommand : MsmqMessage<VerifyMainBusinessApplicantWbCommand>
     {

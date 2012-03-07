@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Risk
 {
+    /// <summary> Wonga.Risk.SubmitMPANDetailsMessage </summary>
     [XmlRoot("SubmitMPANDetailsMessage", Namespace = "Wonga.Risk", DataType = "Wonga.Risk.BaseHandleUserDataMessage,NServiceBus.Saga.ISagaMessage")]
     public partial class SubmitMpanDetailsCommand : MsmqMessage<SubmitMpanDetailsCommand>
     {

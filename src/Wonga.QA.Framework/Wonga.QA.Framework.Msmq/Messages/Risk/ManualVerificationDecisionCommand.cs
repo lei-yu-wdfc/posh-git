@@ -4,11 +4,13 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Risk
 {
-    [XmlRoot("ManualVerificationDecisionMessage", Namespace = "Wonga.Risk.UI", DataType = "")]
+    /// <summary> Wonga.Risk.UI.ManualVerificationDecisionMessage </summary>
+    [XmlRoot("ManualVerificationDecisionMessage", Namespace = "Wonga.Risk.UI", DataType = "Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
     public partial class ManualVerificationDecisionCommand : MsmqMessage<ManualVerificationDecisionCommand>
     {
         public Guid AccountId { get; set; }
-        public Guid SagaId { get; set; }
         public Int32 Probability { get; set; }
+        public Guid SagaId { get; set; }
+        public DateTime CreatedOn { get; set; }
     }
 }

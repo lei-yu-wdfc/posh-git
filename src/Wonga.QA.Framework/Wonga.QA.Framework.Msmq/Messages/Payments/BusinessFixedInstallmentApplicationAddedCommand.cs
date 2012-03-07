@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Payments
 {
+    /// <summary> Wonga.Payments.InternalMessages.Messages.BusinessFixedInstallmentApplicationAdded </summary>
     [XmlRoot("BusinessFixedInstallmentApplicationAdded", Namespace = "Wonga.Payments.InternalMessages.Messages", DataType = "Wonga.Payments.PublicMessages.IBusinessApplicationAdded,Wonga.Payments.PublicMessages.IPaymentsEvent")]
     public partial class BusinessFixedInstallmentApplicationAddedCommand : MsmqMessage<BusinessFixedInstallmentApplicationAddedCommand>
     {
@@ -18,8 +19,6 @@ namespace Wonga.QA.Framework.Msmq.Payments
         public Guid BusinessPaymentCardId { get; set; }
         public DateTime ApplicationDate { get; set; }
         public ProductEnum ProductId { get; set; }
-        public Decimal MonthlyInterestRate { get; set; }
-        public Decimal ApplicationFee { get; set; }
         public Guid MainApplicantBankAccountId { get; set; }
         public Guid MainApplicantPaymentCardId { get; set; }
     }

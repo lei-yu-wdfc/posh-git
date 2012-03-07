@@ -21,7 +21,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <NoWarn />
+    <NoWarn>1591</NoWarn>
+    <DocumentationFile>$(SolutionDir)\..\..\bin\$(SolutionName)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -155,6 +156,7 @@
     <Compile Include="Requests\GetPromoCodeParametersQuery.cs" />
     <Compile Include="Requests\GetRepayLoanCalculationQuery.cs" />
     <Compile Include="Requests\GetRepayLoanParametersQuery.cs" />
+    <Compile Include="Requests\GetRepayLoanStatusQuery.cs" />
     <Compile Include="Requests\GetRepaymentArrangementAllowedQuery.cs" />
     <Compile Include="Requests\GetRepaymentArrangementCalculationQuery.cs" />
     <Compile Include="Requests\GetRepaymentArrangementParametersQuery.cs" />

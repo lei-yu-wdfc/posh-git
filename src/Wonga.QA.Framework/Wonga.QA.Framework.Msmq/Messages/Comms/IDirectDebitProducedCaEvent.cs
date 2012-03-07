@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.PublicMessages.Ca.IDirectDebitProduced </summary>
     [XmlRoot("IDirectDebitProduced", Namespace = "Wonga.Comms.PublicMessages.Ca", DataType = "")]
     public partial class IDirectDebitProducedCaEvent : MsmqMessage<IDirectDebitProducedCaEvent>
     {

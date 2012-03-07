@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.TimeZone
 {
+    /// <summary> Wonga.Timezone.InternalMessages.UpdateTimezoneMessage </summary>
     [XmlRoot("UpdateTimezoneMessage", Namespace = "Wonga.Timezone.InternalMessages", DataType = "")]
     public partial class UpdateTimezoneCommand : MsmqMessage<UpdateTimezoneCommand>
     {

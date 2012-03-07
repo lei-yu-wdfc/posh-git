@@ -3,6 +3,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Api
 {
+    /// <summary> Wonga.Comms.Commands.Za.VerifyMobilePhoneZa </summary>
     [XmlRoot("VerifyMobilePhoneZa")]
     public partial class VerifyMobilePhoneZaCommand : ApiRequest<VerifyMobilePhoneZaCommand>
     {

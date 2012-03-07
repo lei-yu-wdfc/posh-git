@@ -3,6 +3,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Api
 {
+    /// <summary> Wonga.Payments.Queries.Uk.GetBankAccountIsValid </summary>
     [XmlRoot("GetBankAccountIsValid")]
     public partial class GetBankAccountIsValidUkQuery : ApiRequest<GetBankAccountIsValidUkQuery>
     {

@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Payments
 {
+    /// <summary> Wonga.Payments.PublicMessages.IRepaymentOverdue </summary>
     [XmlRoot("IRepaymentOverdue", Namespace = "Wonga.Payments.PublicMessages", DataType = "")]
     public partial class IRepaymentOverdueEvent : MsmqMessage<IRepaymentOverdueEvent>
     {

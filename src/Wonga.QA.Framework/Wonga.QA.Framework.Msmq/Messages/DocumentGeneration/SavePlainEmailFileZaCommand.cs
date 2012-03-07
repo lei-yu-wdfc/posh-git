@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.DocumentGeneration
 {
+    /// <summary> Wonga.Comms.DocumentGeneration.InternalMessages.Za.SavePlainEmailFileMessage </summary>
     [XmlRoot("SavePlainEmailFileMessage", Namespace = "Wonga.Comms.DocumentGeneration.InternalMessages.Za", DataType = "")]
     public partial class SavePlainEmailFileZaCommand : MsmqMessage<SavePlainEmailFileZaCommand>
     {

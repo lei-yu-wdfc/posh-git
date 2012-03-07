@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.InternalMessages.DocumentGeneration.Za.RepaymentArrangements.CreateAndStoreRepaymentArrangementThankYouDoNotRelendEmailCompleteMessage </summary>
     [XmlRoot("CreateAndStoreRepaymentArrangementThankYouDoNotRelendEmailCompleteMessage", Namespace = "Wonga.Comms.InternalMessages.DocumentGeneration.Za.RepaymentArrangements", DataType = "")]
     public partial class CreateAndStoreRepaymentArrangementThankYouDoNotRelendEmailCompleteZaCommand : MsmqMessage<CreateAndStoreRepaymentArrangementThankYouDoNotRelendEmailCompleteZaCommand>
     {

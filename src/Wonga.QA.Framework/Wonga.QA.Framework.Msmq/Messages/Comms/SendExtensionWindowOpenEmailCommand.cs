@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.InternalMessages.Email.SendExtensionWindowOpenEmailMessage </summary>
     [XmlRoot("SendExtensionWindowOpenEmailMessage", Namespace = "Wonga.Comms.InternalMessages.Email", DataType = "Wonga.Comms.InternalMessages.SagaMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
     public partial class SendExtensionWindowOpenEmailCommand : MsmqMessage<SendExtensionWindowOpenEmailCommand>
     {

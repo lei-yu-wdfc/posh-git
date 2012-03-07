@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Risk
 {
+    /// <summary> Wonga.Risk.UIdInitialRequestMessage </summary>
     [XmlRoot("UIdInitialRequestMessage", Namespace = "Wonga.Risk", DataType = "Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
     public partial class UIdInitialRequestCommand : MsmqMessage<UIdInitialRequestCommand>
     {

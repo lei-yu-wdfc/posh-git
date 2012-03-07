@@ -3,6 +3,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Api
 {
+    /// <summary> Wonga.Comms.Commands.SendExtensionWindowOpenedReminderMessage </summary>
     [XmlRoot("SendExtensionWindowOpenedReminderMessage")]
     public partial class SendExtensionWindowOpenedReminderCommand : ApiRequest<SendExtensionWindowOpenedReminderCommand>
     {

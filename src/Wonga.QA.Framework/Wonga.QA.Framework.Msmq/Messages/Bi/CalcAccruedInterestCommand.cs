@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Bi
 {
+    /// <summary> Wonga.Bi.Messages.CalcAccruedInterestMessage </summary>
     [XmlRoot("CalcAccruedInterestMessage", Namespace = "Wonga.Bi.Messages", DataType = "")]
     public partial class CalcAccruedInterestCommand : MsmqMessage<CalcAccruedInterestCommand>
     {

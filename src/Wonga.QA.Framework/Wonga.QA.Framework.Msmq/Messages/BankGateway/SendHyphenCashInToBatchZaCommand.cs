@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.BankGateway
 {
+    /// <summary> Wonga.BankGateway.InternalMessages.Hyphen.Za.SagaMessages.SendHyphenCashInToBatchMessage </summary>
     [XmlRoot("SendHyphenCashInToBatchMessage", Namespace = "Wonga.BankGateway.InternalMessages.Hyphen.Za.SagaMessages", DataType = "Wonga.BankGateway.InternalMessages.SagaMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage,Wonga.BankGateway.Core.Interfaces.ISendPaymentToBatchMessage")]
     public partial class SendHyphenCashInToBatchZaCommand : MsmqMessage<SendHyphenCashInToBatchZaCommand>
     {

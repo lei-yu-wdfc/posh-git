@@ -3,6 +3,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Api
 {
+    /// <summary> Wonga.Ops.Commands.GeneratePasswordResetKey </summary>
     [XmlRoot("GeneratePasswordResetKey")]
     public partial class GeneratePasswordResetKeyCommand : ApiRequest<GeneratePasswordResetKeyCommand>
     {

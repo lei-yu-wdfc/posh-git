@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Sms
 {
+    /// <summary> Wonga.Sms.InternalMessages.SagaMessages.HttpResponses.HttpCallbackNotificationMessage </summary>
     [XmlRoot("HttpCallbackNotificationMessage", Namespace = "Wonga.Sms.InternalMessages.SagaMessages.HttpResponses", DataType = "Wonga.Sms.InternalMessages.SagaMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
     public partial class HttpCallbackNotificationCommand : MsmqMessage<HttpCallbackNotificationCommand>
     {

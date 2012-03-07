@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.BankGateway
 {
+    /// <summary> Wonga.BankGateway.InternalMessages.HSBC.Uk.FileWatcherMessages.RecordFinalSuccessMessage </summary>
     [XmlRoot("RecordFinalSuccessMessage", Namespace = "Wonga.BankGateway.InternalMessages.HSBC.Uk.FileWatcherMessages", DataType = "")]
     public partial class RecordFinalSuccessUkCommand : MsmqMessage<RecordFinalSuccessUkCommand>
     {

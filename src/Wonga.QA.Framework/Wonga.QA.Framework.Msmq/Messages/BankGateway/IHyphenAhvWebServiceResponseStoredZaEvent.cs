@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.BankGateway
 {
+    /// <summary> Wonga.BankGateway.InternalMessages.Events.Hyphen.Za.IHyphenAHVWebServiceResponseStored </summary>
     [XmlRoot("IHyphenAHVWebServiceResponseStored", Namespace = "Wonga.BankGateway.InternalMessages.Events.Hyphen.Za", DataType = "")]
     public partial class IHyphenAhvWebServiceResponseStoredZaEvent : MsmqMessage<IHyphenAhvWebServiceResponseStoredZaEvent>
     {

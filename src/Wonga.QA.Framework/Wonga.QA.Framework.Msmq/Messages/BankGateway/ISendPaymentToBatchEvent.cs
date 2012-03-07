@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.BankGateway
 {
+    /// <summary> Wonga.BankGateway.Core.Interfaces.ISendPaymentToBatchMessage </summary>
     [XmlRoot("ISendPaymentToBatchMessage", Namespace = "Wonga.BankGateway.Core.Interfaces", DataType = "")]
     public partial class ISendPaymentToBatchEvent : MsmqMessage<ISendPaymentToBatchEvent>
     {

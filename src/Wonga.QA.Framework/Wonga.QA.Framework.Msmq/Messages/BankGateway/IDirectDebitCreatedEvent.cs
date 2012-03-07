@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.BankGateway
 {
+    /// <summary> Wonga.BankGateway.PublicMessages.IDirectDebitCreated </summary>
     [XmlRoot("IDirectDebitCreated", Namespace = "Wonga.BankGateway.PublicMessages", DataType = "")]
     public partial class IDirectDebitCreatedEvent : MsmqMessage<IDirectDebitCreatedEvent>
     {

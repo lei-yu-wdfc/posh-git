@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Payments
 {
+    /// <summary> Wonga.Payments.InternalMessages.SagaMessages.DirectDebitRegularPaymentFailedMessage </summary>
     [XmlRoot("DirectDebitRegularPaymentFailedMessage", Namespace = "Wonga.Payments.InternalMessages.SagaMessages", DataType = "Wonga.Payments.InternalMessages.SagaMessages.BaseDirectDebitMessage,Wonga.Payments.InternalMessages.SagaMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
     public partial class DirectDebitRegularPaymentFailedCommand : MsmqMessage<DirectDebitRegularPaymentFailedCommand>
     {

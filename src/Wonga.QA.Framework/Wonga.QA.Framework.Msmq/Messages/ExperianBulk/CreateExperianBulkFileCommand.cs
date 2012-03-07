@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.ExperianBulk
 {
+    /// <summary> Wonga.ExperianBulk.InternalMessages.CreateExperianBulkFileMessage </summary>
     [XmlRoot("CreateExperianBulkFileMessage", Namespace = "Wonga.ExperianBulk.InternalMessages", DataType = "")]
     public partial class CreateExperianBulkFileCommand : MsmqMessage<CreateExperianBulkFileCommand>
     {

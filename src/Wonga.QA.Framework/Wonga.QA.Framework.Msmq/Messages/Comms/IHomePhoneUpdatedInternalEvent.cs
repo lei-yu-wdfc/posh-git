@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.InternalMessages.IHomePhoneUpdatedInternal </summary>
     [XmlRoot("IHomePhoneUpdatedInternal", Namespace = "Wonga.Comms.InternalMessages", DataType = "Wonga.Comms.PublicMessages.IHomePhoneUpdated")]
     public partial class IHomePhoneUpdatedInternalEvent : MsmqMessage<IHomePhoneUpdatedInternalEvent>
     {

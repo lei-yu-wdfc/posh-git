@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Payments
 {
+    /// <summary> Wonga.Payments.PublicMessages.INotifyBeforeEndLoanAuto </summary>
     [XmlRoot("INotifyBeforeEndLoanAuto", Namespace = "Wonga.Payments.PublicMessages", DataType = "Wonga.Payments.PublicMessages.INotifyBeforeEndLoan,Wonga.Payments.PublicMessages.IPaymentsEvent")]
     public partial class INotifyBeforeEndLoanAutoEvent : MsmqMessage<INotifyBeforeEndLoanAutoEvent>
     {

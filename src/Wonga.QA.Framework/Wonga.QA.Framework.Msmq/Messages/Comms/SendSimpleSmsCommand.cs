@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.InternalMessages.Sms.SendSimpleSmsMessage </summary>
     [XmlRoot("SendSimpleSmsMessage", Namespace = "Wonga.Comms.InternalMessages.Sms", DataType = "")]
     public partial class SendSimpleSmsCommand : MsmqMessage<SendSimpleSmsCommand>
     {

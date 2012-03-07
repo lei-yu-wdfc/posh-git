@@ -3,6 +3,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Api
 {
+    /// <summary> Wonga.Payments.Commands.SubmitCounterOffer </summary>
     [XmlRoot("SubmitCounterOffer")]
     public partial class SubmitCounterOfferCommand : ApiRequest<SubmitCounterOfferCommand>
     {

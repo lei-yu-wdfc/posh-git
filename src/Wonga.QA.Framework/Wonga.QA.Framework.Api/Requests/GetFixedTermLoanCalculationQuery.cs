@@ -3,6 +3,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Api
 {
+    /// <summary> Wonga.Payments.Queries.GetFixedTermLoanCalculation </summary>
     [XmlRoot("GetFixedTermLoanCalculation")]
     public partial class GetFixedTermLoanCalculationQuery : ApiRequest<GetFixedTermLoanCalculationQuery>
     {

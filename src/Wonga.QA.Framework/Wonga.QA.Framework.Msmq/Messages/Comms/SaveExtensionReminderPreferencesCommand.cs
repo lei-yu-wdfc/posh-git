@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.Commands.SaveExtensionReminderPreferencesMessage </summary>
     [XmlRoot("SaveExtensionReminderPreferencesMessage", Namespace = "Wonga.Comms.Commands", DataType = "")]
     public partial class SaveExtensionReminderPreferencesCommand : MsmqMessage<SaveExtensionReminderPreferencesCommand>
     {

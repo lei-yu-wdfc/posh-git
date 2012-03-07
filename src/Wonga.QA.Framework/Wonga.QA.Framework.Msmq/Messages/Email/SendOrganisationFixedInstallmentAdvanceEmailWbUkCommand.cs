@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Email
 {
+    /// <summary> Wonga.Email.InternalMessages.Wb.Uk.SendOrganisationFixedInstallmentAdvanceEmailMessage </summary>
     [XmlRoot("SendOrganisationFixedInstallmentAdvanceEmailMessage", Namespace = "Wonga.Email.InternalMessages.Wb.Uk", DataType = "")]
     public partial class SendOrganisationFixedInstallmentAdvanceEmailWbUkCommand : MsmqMessage<SendOrganisationFixedInstallmentAdvanceEmailWbUkCommand>
     {

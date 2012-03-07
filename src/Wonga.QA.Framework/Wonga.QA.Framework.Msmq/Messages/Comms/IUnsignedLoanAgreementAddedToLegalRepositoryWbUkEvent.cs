@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.PublicMessages.Wb.Uk.IUnsignedLoanAgreementAddedToLegalRepository </summary>
     [XmlRoot("IUnsignedLoanAgreementAddedToLegalRepository", Namespace = "Wonga.Comms.PublicMessages.Wb.Uk", DataType = "Wonga.Comms.PublicMessages.Wb.Uk.ILoanAgreementAddedToLegalRepository")]
     public partial class IUnsignedLoanAgreementAddedToLegalRepositoryWbUkEvent : MsmqMessage<IUnsignedLoanAgreementAddedToLegalRepositoryWbUkEvent>
     {

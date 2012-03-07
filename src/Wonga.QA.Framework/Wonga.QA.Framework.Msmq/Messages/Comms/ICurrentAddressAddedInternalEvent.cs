@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.InternalMessages.ICurrentAddressAddedInternal </summary>
     [XmlRoot("ICurrentAddressAddedInternal", Namespace = "Wonga.Comms.InternalMessages", DataType = "Wonga.Comms.PublicMessages.ICurrentAddressAdded")]
     public partial class ICurrentAddressAddedInternalEvent : MsmqMessage<ICurrentAddressAddedInternalEvent>
     {

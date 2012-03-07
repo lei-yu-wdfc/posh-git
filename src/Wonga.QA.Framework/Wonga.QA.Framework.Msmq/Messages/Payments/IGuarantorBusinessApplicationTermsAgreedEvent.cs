@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Payments
 {
+    /// <summary> Wonga.Payments.PublicMessages.IGuarantorBusinessApplicationTermsAgreed </summary>
     [XmlRoot("IGuarantorBusinessApplicationTermsAgreed", Namespace = "Wonga.Payments.PublicMessages", DataType = "Wonga.Payments.PublicMessages.IPaymentsEvent")]
     public partial class IGuarantorBusinessApplicationTermsAgreedEvent : MsmqMessage<IGuarantorBusinessApplicationTermsAgreedEvent>
     {

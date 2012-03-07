@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.BankGateway
 {
+    /// <summary> Wonga.BankGateway.InternalMessages.HyphenAccountVerificationResponseMessage </summary>
     [XmlRoot("HyphenAccountVerificationResponseMessage", Namespace = "Wonga.BankGateway.InternalMessages", DataType = "")]
     public partial class HyphenAccountVerificationResponseCommand : MsmqMessage<HyphenAccountVerificationResponseCommand>
     {

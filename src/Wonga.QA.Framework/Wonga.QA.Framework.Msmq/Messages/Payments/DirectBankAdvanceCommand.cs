@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Payments
 {
+    /// <summary> Wonga.Payments.InternalMessages.Messages.DirectBankAdvanceMessage </summary>
     [XmlRoot("DirectBankAdvanceMessage", Namespace = "Wonga.Payments.InternalMessages.Messages", DataType = "")]
     public partial class DirectBankAdvanceCommand : MsmqMessage<DirectBankAdvanceCommand>
     {

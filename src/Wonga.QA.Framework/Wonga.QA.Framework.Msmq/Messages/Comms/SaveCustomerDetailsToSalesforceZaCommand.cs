@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.InternalMessages.Salesforce.Za.SaveCustomerDetailsToSalesforceMessage </summary>
     [XmlRoot("SaveCustomerDetailsToSalesforceMessage", Namespace = "Wonga.Comms.InternalMessages.Salesforce.Za", DataType = "")]
     public partial class SaveCustomerDetailsToSalesforceZaCommand : MsmqMessage<SaveCustomerDetailsToSalesforceZaCommand>
     {

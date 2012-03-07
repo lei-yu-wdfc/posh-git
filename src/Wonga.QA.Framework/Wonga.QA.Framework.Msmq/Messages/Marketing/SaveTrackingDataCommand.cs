@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Marketing
 {
+    /// <summary> Wonga.Marketing.Commands.SaveTrackingDataCommand </summary>
     [XmlRoot("SaveTrackingDataCommand", Namespace = "Wonga.Marketing.Commands", DataType = "")]
     public partial class SaveTrackingDataCommand : MsmqMessage<SaveTrackingDataCommand>
     {

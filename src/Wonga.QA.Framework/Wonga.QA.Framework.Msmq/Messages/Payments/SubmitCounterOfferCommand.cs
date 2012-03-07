@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Payments
 {
+    /// <summary> Wonga.Payments.SubmitCounterOffer </summary>
     [XmlRoot("SubmitCounterOffer", Namespace = "Wonga.Payments", DataType = "")]
     public partial class SubmitCounterOfferCommand : MsmqMessage<SubmitCounterOfferCommand>
     {

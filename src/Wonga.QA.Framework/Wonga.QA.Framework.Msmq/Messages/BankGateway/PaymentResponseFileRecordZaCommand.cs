@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.BankGateway
 {
+    /// <summary> Wonga.BankGateway.InternalMessages.Hyphen.Za.PaymentResponseFileRecordMessage </summary>
     [XmlRoot("PaymentResponseFileRecordMessage", Namespace = "Wonga.BankGateway.InternalMessages.Hyphen.Za", DataType = "")]
     public partial class PaymentResponseFileRecordZaCommand : MsmqMessage<PaymentResponseFileRecordZaCommand>
     {

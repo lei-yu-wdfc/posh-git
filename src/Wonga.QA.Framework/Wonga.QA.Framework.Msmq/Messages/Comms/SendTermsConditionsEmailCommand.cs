@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.InternalMessages.Email.SendTermsConditionsEmailMessage </summary>
     [XmlRoot("SendTermsConditionsEmailMessage", Namespace = "Wonga.Comms.InternalMessages.Email", DataType = "")]
     public partial class SendTermsConditionsEmailCommand : MsmqMessage<SendTermsConditionsEmailCommand>
     {

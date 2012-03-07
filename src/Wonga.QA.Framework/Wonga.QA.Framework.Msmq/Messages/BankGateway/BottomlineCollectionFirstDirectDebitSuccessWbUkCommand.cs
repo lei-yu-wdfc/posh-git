@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.BankGateway
 {
+    /// <summary> Wonga.BankGateway.InternalMessages.Bottomline.Wb.Uk.BottomlineCollectionFirstDirectDebitSuccessMessage </summary>
     [XmlRoot("BottomlineCollectionFirstDirectDebitSuccessMessage", Namespace = "Wonga.BankGateway.InternalMessages.Bottomline.Wb.Uk", DataType = "")]
     public partial class BottomlineCollectionFirstDirectDebitSuccessWbUkCommand : MsmqMessage<BottomlineCollectionFirstDirectDebitSuccessWbUkCommand>
     {

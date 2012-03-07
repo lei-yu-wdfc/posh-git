@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Bi
 {
+    /// <summary> Wonga.Bi.Messages.UpdateDailyAccruedInterest </summary>
     [XmlRoot("UpdateDailyAccruedInterest", Namespace = "Wonga.Bi.Messages", DataType = "")]
     public partial class UpdateDailyAccruedInterestCommand : MsmqMessage<UpdateDailyAccruedInterestCommand>
     {

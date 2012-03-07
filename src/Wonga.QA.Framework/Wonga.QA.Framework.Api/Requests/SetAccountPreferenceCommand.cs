@@ -3,6 +3,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Api
 {
+    /// <summary> Wonga.Payments.Commands.SetAccountPreference </summary>
     [XmlRoot("SetAccountPreference")]
     public partial class SetAccountPreferenceCommand : ApiRequest<SetAccountPreferenceCommand>
     {

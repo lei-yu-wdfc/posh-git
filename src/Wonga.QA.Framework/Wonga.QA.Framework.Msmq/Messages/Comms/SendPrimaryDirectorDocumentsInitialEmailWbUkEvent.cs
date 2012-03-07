@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.PublicMessages.Email.Wb.Uk.SendPrimaryDirectorDocumentsInitialEmail </summary>
     [XmlRoot("SendPrimaryDirectorDocumentsInitialEmail", Namespace = "Wonga.Comms.PublicMessages.Email.Wb.Uk", DataType = "")]
     public partial class SendPrimaryDirectorDocumentsInitialEmailWbUkEvent : MsmqMessage<SendPrimaryDirectorDocumentsInitialEmailWbUkEvent>
     {

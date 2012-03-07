@@ -50,10 +50,11 @@ namespace Wonga.QA.Generators.Msmq
                         "",
                         "namespace {0}.{1}",
                         "{{",
-                        "    [XmlRoot({2}, Namespace = {3}, DataType = {4})]",
-                        "    public partial class {5} : MsmqMessage<{5}>",
+                        "    /// <summary> {2} </summary>",
+                        "    [XmlRoot({3}, Namespace = {4}, DataType = {5})]",
+                        "    public partial class {6} : MsmqMessage<{6}>",
                         "    {{"
-                    }, Config.Msmq.Project, root, message.Name.Quote(), message.Namespace.Quote(), String.Join(",", message.GetTypes().Select(t => t.FullName)).Quote(), name);
+                    }, Config.Msmq.Project, root, message.FullName, message.Name.Quote(), message.Namespace.Quote(), String.Join(",", message.GetTypes().Select(t => t.FullName)).Quote(), name);
 
                     foreach (KeyValuePair<String, Type> member in message.GetMessageMembers())
                     {

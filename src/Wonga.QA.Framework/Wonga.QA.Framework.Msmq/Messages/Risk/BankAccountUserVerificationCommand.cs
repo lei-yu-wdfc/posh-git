@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Risk
 {
+    /// <summary> Wonga.Risk.UserVerification.BankAccountUserVerificationMessage </summary>
     [XmlRoot("BankAccountUserVerificationMessage", Namespace = "Wonga.Risk.UserVerification", DataType = "")]
     public partial class BankAccountUserVerificationCommand : MsmqMessage<BankAccountUserVerificationCommand>
     {

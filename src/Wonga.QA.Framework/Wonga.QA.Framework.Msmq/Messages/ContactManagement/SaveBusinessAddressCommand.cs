@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.ContactManagement
 {
+    /// <summary> Wonga.Comms.ContactManagement.InternalMessages.SaveBusinessAddressMessage </summary>
     [XmlRoot("SaveBusinessAddressMessage", Namespace = "Wonga.Comms.ContactManagement.InternalMessages", DataType = "")]
     public partial class SaveBusinessAddressCommand : MsmqMessage<SaveBusinessAddressCommand>
     {

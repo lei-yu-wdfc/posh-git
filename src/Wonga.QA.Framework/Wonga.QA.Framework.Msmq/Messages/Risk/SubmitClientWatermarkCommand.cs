@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Risk
 {
+    /// <summary> Wonga.Risk.SubmitClientWatermarkCommand </summary>
     [XmlRoot("SubmitClientWatermarkCommand", Namespace = "Wonga.Risk", DataType = "")]
     public partial class SubmitClientWatermarkCommand : MsmqMessage<SubmitClientWatermarkCommand>
     {

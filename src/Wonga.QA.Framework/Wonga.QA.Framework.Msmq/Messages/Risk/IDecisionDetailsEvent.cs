@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Risk
 {
+    /// <summary> Wonga.Risk.InternalMessages.Events.IDecisionDetails </summary>
     [XmlRoot("IDecisionDetails", Namespace = "Wonga.Risk.InternalMessages.Events", DataType = "")]
     public partial class IDecisionDetailsEvent : MsmqMessage<IDecisionDetailsEvent>
     {

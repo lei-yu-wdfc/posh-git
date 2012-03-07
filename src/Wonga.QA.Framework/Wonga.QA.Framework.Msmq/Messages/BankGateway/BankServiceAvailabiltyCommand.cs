@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.BankGateway
 {
+    /// <summary> Wonga.BankGateway.InternalMessages.BankServiceAvailabiltyMessage </summary>
     [XmlRoot("BankServiceAvailabiltyMessage", Namespace = "Wonga.BankGateway.InternalMessages", DataType = "")]
     public partial class BankServiceAvailabiltyCommand : MsmqMessage<BankServiceAvailabiltyCommand>
     {

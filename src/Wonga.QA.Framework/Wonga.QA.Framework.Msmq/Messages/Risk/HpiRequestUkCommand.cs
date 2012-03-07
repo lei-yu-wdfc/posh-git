@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Risk
 {
+    /// <summary> Wonga.Risk.HPI.HpiRequestMessage </summary>
     [XmlRoot("HpiRequestMessage", Namespace = "Wonga.Risk.HPI", DataType = "Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
     public partial class HpiRequestUkCommand : MsmqMessage<HpiRequestUkCommand>
     {

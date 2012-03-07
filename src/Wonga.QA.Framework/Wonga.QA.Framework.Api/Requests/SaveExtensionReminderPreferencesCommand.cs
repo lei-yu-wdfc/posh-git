@@ -3,6 +3,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Api
 {
+    /// <summary> Wonga.Comms.Commands.SaveExtensionReminderPreferences </summary>
     [XmlRoot("SaveExtensionReminderPreferences")]
     public partial class SaveExtensionReminderPreferencesCommand : ApiRequest<SaveExtensionReminderPreferencesCommand>
     {

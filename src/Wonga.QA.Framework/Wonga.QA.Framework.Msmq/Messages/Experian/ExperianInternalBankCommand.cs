@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Experian
 {
+    /// <summary> Wonga.Experian.Handlers.ExperianInternalBankMessage </summary>
     [XmlRoot("ExperianInternalBankMessage", Namespace = "Wonga.Experian.Handlers", DataType = "NServiceBus.Saga.ISagaMessage")]
     public partial class ExperianInternalBankCommand : MsmqMessage<ExperianInternalBankCommand>
     {

@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Email
 {
+    /// <summary> Wonga.Email.PublicMessages.Za.IEmailSent </summary>
     [XmlRoot("IEmailSent", Namespace = "Wonga.Email.PublicMessages.Za", DataType = "")]
     public partial class IEmailSentZaEvent : MsmqMessage<IEmailSentZaEvent>
     {

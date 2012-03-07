@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.InternalMessages.Events.Ca.ILoanAgreementCancellationNoticeProducedInternal </summary>
     [XmlRoot("ILoanAgreementCancellationNoticeProducedInternal", Namespace = "Wonga.Comms.InternalMessages.Events.Ca", DataType = "Wonga.Comms.PublicMessages.Ca.ILoanAgreementCancellationNoticeProduced")]
     public partial class ILoanAgreementCancellationNoticeProducedInternalCaEvent : MsmqMessage<ILoanAgreementCancellationNoticeProducedInternalCaEvent>
     {

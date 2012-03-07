@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Bi
 {
+    /// <summary> Wonga.Bi.Messages.CalcCollectionDateMessage </summary>
     [XmlRoot("CalcCollectionDateMessage", Namespace = "Wonga.Bi.Messages", DataType = "")]
     public partial class CalcCollectionDateCommand : MsmqMessage<CalcCollectionDateCommand>
     {

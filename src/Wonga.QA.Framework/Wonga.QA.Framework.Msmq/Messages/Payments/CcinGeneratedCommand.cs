@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Payments
 {
+    /// <summary> Wonga.Payments.InternalMessages.Messages.CcinGenerated </summary>
     [XmlRoot("CcinGenerated", Namespace = "Wonga.Payments.InternalMessages.Messages", DataType = "Wonga.Payments.PublicMessages.ICcinGenerated,Wonga.Payments.PublicMessages.IPaymentsEvent")]
     public partial class CcinGeneratedCommand : MsmqMessage<CcinGeneratedCommand>
     {

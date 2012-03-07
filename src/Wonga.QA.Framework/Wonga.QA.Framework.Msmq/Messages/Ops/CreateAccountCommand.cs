@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Ops
 {
+    /// <summary> Wonga.Ops.CreateAccountMessage </summary>
     [XmlRoot("CreateAccountMessage", Namespace = "Wonga.Ops", DataType = "")]
     public partial class CreateAccountCommand : MsmqMessage<CreateAccountCommand>
     {

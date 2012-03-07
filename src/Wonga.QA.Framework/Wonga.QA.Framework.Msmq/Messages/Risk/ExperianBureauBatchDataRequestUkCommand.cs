@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Risk
 {
+    /// <summary> Wonga.Risk.Experian.ExperianBureauBatchDataRequestMessage </summary>
     [XmlRoot("ExperianBureauBatchDataRequestMessage", Namespace = "Wonga.Risk.Experian", DataType = "Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
     public partial class ExperianBureauBatchDataRequestUkCommand : MsmqMessage<ExperianBureauBatchDataRequestUkCommand>
     {

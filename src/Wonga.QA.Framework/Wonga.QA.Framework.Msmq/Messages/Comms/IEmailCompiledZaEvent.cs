@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.PublicMessages.Za.IEmailCompiled </summary>
     [XmlRoot("IEmailCompiled", Namespace = "Wonga.Comms.PublicMessages.Za", DataType = "")]
     public partial class IEmailCompiledZaEvent : MsmqMessage<IEmailCompiledZaEvent>
     {

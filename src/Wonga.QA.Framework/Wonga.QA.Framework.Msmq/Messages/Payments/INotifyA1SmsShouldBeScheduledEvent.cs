@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Payments
 {
+    /// <summary> Wonga.Payments.PublicMessages.INotifyA1SmsShouldBeScheduled </summary>
     [XmlRoot("INotifyA1SmsShouldBeScheduled", Namespace = "Wonga.Payments.PublicMessages", DataType = "Wonga.Payments.PublicMessages.IPaymentsEvent")]
     public partial class INotifyA1SmsShouldBeScheduledEvent : MsmqMessage<INotifyA1SmsShouldBeScheduledEvent>
     {

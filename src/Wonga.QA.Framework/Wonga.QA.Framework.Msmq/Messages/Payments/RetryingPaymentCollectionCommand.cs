@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Payments
 {
+    /// <summary> Wonga.Payments.InternalMessages.SagaMessages.RetryingPaymentCollectionMessage </summary>
     [XmlRoot("RetryingPaymentCollectionMessage", Namespace = "Wonga.Payments.InternalMessages.SagaMessages", DataType = "Wonga.Payments.InternalMessages.SagaMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
     public partial class RetryingPaymentCollectionCommand : MsmqMessage<RetryingPaymentCollectionCommand>
     {

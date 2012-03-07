@@ -3,6 +3,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Api
 {
+    /// <summary> Wonga.Comms.Commands.Za.SaveCustomerDetailsZa </summary>
     [XmlRoot("SaveCustomerDetailsZa")]
     public partial class SaveCustomerDetailsZaCommand : ApiRequest<SaveCustomerDetailsZaCommand>
     {

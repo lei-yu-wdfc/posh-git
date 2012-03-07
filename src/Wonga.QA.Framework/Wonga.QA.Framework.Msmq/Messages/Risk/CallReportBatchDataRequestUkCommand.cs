@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Risk
 {
+    /// <summary> Wonga.Risk.CallReport.CallReportBatchDataRequestMessage </summary>
     [XmlRoot("CallReportBatchDataRequestMessage", Namespace = "Wonga.Risk.CallReport", DataType = "Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
     public partial class CallReportBatchDataRequestUkCommand : MsmqMessage<CallReportBatchDataRequestUkCommand>
     {

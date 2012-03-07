@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.BankGateway
 {
+    /// <summary> Wonga.BankGateway.InternalMessages.Hyphen.Za.AHVResponseXmlCallbackMessage </summary>
     [XmlRoot("AHVResponseXmlCallbackMessage", Namespace = "Wonga.BankGateway.InternalMessages.Hyphen.Za", DataType = "")]
     public partial class AhvResponseXmlCallbackZaCommand : MsmqMessage<AhvResponseXmlCallbackZaCommand>
     {

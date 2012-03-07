@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Payments
 {
+    /// <summary> Wonga.Payments.SignFixedTermLoanTopup </summary>
     [XmlRoot("SignFixedTermLoanTopup", Namespace = "Wonga.Payments", DataType = "")]
     public partial class SignFixedTermLoanTopupCommand : MsmqMessage<SignFixedTermLoanTopupCommand>
     {

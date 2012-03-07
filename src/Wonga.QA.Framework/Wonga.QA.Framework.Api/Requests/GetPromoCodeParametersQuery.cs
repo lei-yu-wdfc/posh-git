@@ -3,6 +3,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Api
 {
+    /// <summary> Wonga.Payments.Queries.GetPromoCodeParameters </summary>
     [XmlRoot("GetPromoCodeParameters")]
     public partial class GetPromoCodeParametersQuery : ApiRequest<GetPromoCodeParametersQuery>
     {

@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq.Comms
 {
+    /// <summary> Wonga.Comms.InternalMessages.DocumentGeneration.Wb.Uk.LegalAgreement.CreateAndStoreUnsignedLegalAgreementDocumentMessage </summary>
     [XmlRoot("CreateAndStoreUnsignedLegalAgreementDocumentMessage", Namespace = "Wonga.Comms.InternalMessages.DocumentGeneration.Wb.Uk.LegalAgreement", DataType = "")]
     public partial class CreateAndStoreUnsignedLegalAgreementDocumentWbUkCommand : MsmqMessage<CreateAndStoreUnsignedLegalAgreementDocumentWbUkCommand>
     {
