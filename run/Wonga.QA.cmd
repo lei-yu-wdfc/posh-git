@@ -12,19 +12,17 @@ SET MSBuild=%SystemRoot%\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe /nolog
 ECHO.
 ECHO   1. Build all solutions
 ECHO   2. Set SUT ^& AUT
-ECHO   3. Run Wonga.QA.Tests
-ECHO   4. Run Wonga.QA.Tests for all AUTs against RC
-ECHO   5. Run Wonga.QA.Generators.Api
-ECHO   6. Run Wonga.QA.Generators.Msmq
-ECHO   7. Run Wonga.QA.Generators.Db
-ECHO   8. Set ProxyMode
+ECHO   3. Rebase from Upstream
+ECHO   4. Run Wonga.QA.Tests
+ECHO   5. Run Wonga.QA.Tests for all AUTs against RC
+ECHO   6. Run Wonga.QA.Generators
+ECHO   7. Set ProxyMode
 ECHO   0. Exit
 ECHO.
 
-CHOICE /C 123456780 /M "But if you already know, how can I make a choice?" /N
+CHOICE /C 12345670 /M "But if you already know, how can I make a choice?" /N
 
-IF ERRORLEVEL 9 GOTO EOF
-IF ERRORLEVEL 8 GOTO 8
+IF ERRORLEVEL 8 GOTO EOF
 IF ERRORLEVEL 7 GOTO 7
 IF ERRORLEVEL 6 GOTO 6
 IF ERRORLEVEL 5 GOTO 5
@@ -46,10 +44,16 @@ GOTO MENU
 GOTO MENU
 
 :3
-	%MsBuild% %Run%\Wonga.QA.Tests.build || PAUSE
+	git remote add upstream git@github.com:QuickbridgeLtd/v3QA.git 2> NUL
+	git pull --rebase upstream master
+	IF ERRORLEVEL 1 EXIT /B
 GOTO MENU
 
 :4
+	%MsBuild% %Run%\Wonga.QA.Tests.build || PAUSE
+GOTO MENU
+
+:5
 	%MsBuild% %Run%\Wonga.QA.Tests.build /t:Build;Merge /v:m || PAUSE
 	CALL :TEST RC Uk
 	CALL :TEST RC Za
@@ -57,19 +61,15 @@ GOTO MENU
 	CALL :TEST RC Wb
 GOTO MENU
 
-:5
-	CALL :GENERATE Api
-GOTO MENU
-
 :6
-	CALL :GENERATE Msmq
+	SET /P Origin=Path to v3 [..\v3]: 
+	CHOICE /C AMD /M "Api, Msmq or Db?"	
+	IF ERRORLEVEL 3 CALL :GENERATE Db
+	IF ERRORLEVEL 2 CALL :GENERATE Msmq
+	IF ERRORLEVEL 1 CALL :GENERATE Api
 GOTO MENU
 
 :7
-	CALL :GENERATE Db
-GOTO MENU
-
-:8
 	SET /P ProxyMode=Are you working through a proxy?(true or false):
 	SETX ProxyMode %ProxyMode% > NUL
 GOTO MENU
@@ -79,7 +79,6 @@ GOTO MENU
 GOTO EOF
 
 :GENERATE
-	SET /P Origin=Enter path to v3 [..\v3]: 
 	%MsBuild% %Src%\Wonga.QA.Generators\Wonga.QA.Generators.sln /v:m || PAUSE
 	%Bin%\Wonga.QA.Generators\Wonga.QA.Generators.%1.exe %Origin%
 GOTO EOF
