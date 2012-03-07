@@ -12,9 +12,6 @@ namespace Wonga.QA.Generators.Db
     {
         public static void Main(String[] args)
         {
-            if (!Config.SqlMetal.Exists)
-                throw new FileNotFoundException(Config.SqlMetal.FullName);
-
             var bin = new
             {
                 Dbml = Repo.Directory("Dbml"),

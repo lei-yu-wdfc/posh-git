@@ -12,8 +12,8 @@ namespace Wonga.QA.Generators.Msmq
     {
         public static void Main(String[] args)
         {
-            if (args.FirstOrDefault() != null)
-                Config.Origin = args.First();
+            if (args.Any())
+                Config.Origin = args.Single();
 
             var bin = new
             {
