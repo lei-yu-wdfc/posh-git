@@ -22,8 +22,8 @@ namespace Wonga.QA.Tests.Ui
             CustomerBuilder.New().WithEmailAddress(email).Build();
             var page = loginPage.LoginAs(email);
 
-            var logoutTrigger = page.Client.Driver.FindElement(By.Id("logout-trigger"));
-            logoutTrigger.Click();
+            var homePage = Client.Home();
+            homePage.Login.Logout();
             var title = page.Client.Driver.FindElement(By.XPath("//div[@id='block-wonga-1']/h2[1]"));
             switch (Config.AUT)
             {

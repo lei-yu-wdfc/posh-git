@@ -59,11 +59,9 @@ namespace Wonga.QA.Tests.Ui
             int randomDuration = _termMin + (new Random()).Next(_termMax - _termMin);
             page.Sliders.HowLong = randomDuration.ToString();
 
-            //Following code isn't good but works. If you have other variants, please use it instead
             string[] dateArray = page.Sliders.GetRepaymentDate.Split(' ');
             string day = Char.IsDigit(dateArray[1].ElementAt(1)) ? dateArray[1].Remove(2, 2) : dateArray[1].Remove(1, 2);
             _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
-            //---
 
             _actualDate = DateTime.Now.AddDays(randomDuration);
             Assert.AreEqual(_repaymentDate, String.Format("{0:d MMM yyyy}", _actualDate));
@@ -110,25 +108,141 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-156")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-156", "QA-238")]
         public void L0DefaultAmountSliderValueShouldBeCorrect()
         {
             var page = Client.Home();
-            Assert.AreEqual(page.Sliders.HowMuch, "1335");
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    Assert.AreEqual(page.Sliders.HowMuch, "1335");
+                    break;
+                case AUT.Ca:
+                    Assert.AreEqual(page.Sliders.HowMuch, "265");
+                    break;
+            }
+
         }
 
-        [Test, AUT(AUT.Ca,AUT.Za), JIRA("QA-237", "QA-153")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-156", "QA-238")]
+        public void LNDefaultAmountSliderValueShouldBeCorrect()
+        {
+            var loginPage = Client.Login();
+            string email = Data.GetEmail();
+            CustomerBuilder.New().WithEmailAddress(email).Build();
+            loginPage.LoginAs(email);
+
+            var page = Client.Home();
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    Assert.AreEqual(page.Sliders.HowMuch, "1335");
+                    break;
+                case AUT.Ca:
+                    Assert.AreEqual(page.Sliders.HowMuch, "265");
+                    break;
+            }
+        }
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-241", "QA-159")]
+        public void L0DefaultDurationSliderValueShouldBeCorrect()
+        {
+            var page = Client.Home();
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    string[] dateArray = page.Sliders.GetRepaymentDate.Split(' ');
+                    string day = Char.IsDigit(dateArray[1].ElementAt(1)) ? dateArray[1].Remove(2, 2) : dateArray[1].Remove(1, 2);
+                    _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
+
+                    var today = DateTime.Today;
+                    var expectedDate = today.Day <= 25
+                                           ? new DateTime(today.Year, today.Month, 25)
+                                           : new DateTime(today.Year, today.Month, 25).AddMonths(1);
+                    Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate), _repaymentDate);
+                    break;
+                case AUT.Ca:
+                    Assert.AreEqual(page.Sliders.HowLong, "11");
+                    break;
+            }
+
+        }
+
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-241", "QA-159")]
+        public void LNDefaultDurationSliderValueShouldBeCorrect()
+        {
+            var loginPage = Client.Login();
+            string email = Data.GetEmail();
+            CustomerBuilder.New().WithEmailAddress(email).Build();
+            loginPage.LoginAs(email);
+
+            var page = Client.Home();
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    string[] dateArray = page.Sliders.GetRepaymentDate.Split(' ');
+                    string day = Char.IsDigit(dateArray[1].ElementAt(1)) ? dateArray[1].Remove(2, 2) : dateArray[1].Remove(1, 2);
+                    _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
+
+                    var today = DateTime.Today;
+                    var expectedDate = today.Day <= 25
+                                           ? new DateTime(today.Year, today.Month, 25)
+                                           : new DateTime(today.Year, today.Month, 25).AddMonths(1);
+                    Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate), _repaymentDate);
+                    break;
+                case AUT.Ca:
+                    Assert.AreEqual(page.Sliders.HowLong, "11");
+                    break;
+            }
+
+        }
+
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-237", "QA-153")]
         public void ChangingAmountBeyondMinIsNotAllowedByFrontEnd()
         {
             var product = Driver.Db.Payments.Products.FirstOrDefault();
-            int _minAmountValue = (int)product.AmountMin;
-            int _setAmountValue = _minAmountValue - 1;
+            int minAmountValue = (int)product.AmountMin;
+            int setAmountValue = minAmountValue - 1;
             var page = Client.Home();
-            page.Sliders.HowMuch = _setAmountValue.ToString();
+            page.Sliders.HowMuch = setAmountValue.ToString();
             page.Sliders.HowLong = "10"; //To lost focus
             page.Help.HelpTriggerClick();
-            Assert.AreEqual(_minAmountValue.ToString(), page.Sliders.HowMuch);
+            Assert.AreEqual(minAmountValue.ToString(), page.Sliders.HowMuch);
         }
+
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-239", "QA-158")]
+        public void L0MaxDurationSliderValueShouldBeCorrect()
+        {
+            var product = Driver.Db.Payments.Products.FirstOrDefault();
+            int maxLoanDuration = product.TermMax;
+            int setLoanDuration = maxLoanDuration + 1;
+            var page = Client.Home();
+            page.Sliders.HowLong = setLoanDuration.ToString();
+            page.Sliders.HowMuch = "10"; //To lost focus
+            page.Help.HelpTriggerClick();
+            Assert.AreEqual(maxLoanDuration.ToString(), page.Sliders.HowLong);
+        }
+
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-239", "QA-158")]
+        public void LNMaxDurationSliderValueShouldBeCorrect()
+        {
+            var loginPage = Client.Login();
+            string email = Data.GetEmail();
+            CustomerBuilder.New().WithEmailAddress(email).Build();
+            loginPage.LoginAs(email);
+
+            var page = Client.Home();
+            var product = Driver.Db.Payments.Products.FirstOrDefault();
+            int maxLoanDuration = product.TermMax;
+            int setLoanDuration = maxLoanDuration + 1;
+
+            page.Sliders.HowLong = setLoanDuration.ToString();
+            page.Sliders.HowMuch = "10"; //To lost focus
+            page.Help.HelpTriggerClick();
+            Assert.AreEqual(maxLoanDuration.ToString(), page.Sliders.HowLong);
+        }
+
+
+
 
     }
 }
