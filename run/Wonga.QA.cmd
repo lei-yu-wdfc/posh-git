@@ -16,7 +16,7 @@ ECHO   3. Rebase from Upstream
 ECHO   4. Run Wonga.QA.Tests
 ECHO   5. Run Wonga.QA.Tests for all AUTs against RC
 ECHO   6. Run Wonga.QA.Generators
-ECHO   7. Set ProxyMode
+ECHO   7. Set Proxy
 ECHO   0. Exit
 ECHO.
 
@@ -63,15 +63,16 @@ GOTO MENU
 
 :6
 	SET /P Origin=Path to v3 [..\v3]: 
-	CHOICE /C AMD /M "Api, Msmq or Db?"	
+	CHOICE /C AMD /M "Api, Msmq or Db"	
 	IF ERRORLEVEL 3 CALL :GENERATE Db
 	IF ERRORLEVEL 2 CALL :GENERATE Msmq
 	IF ERRORLEVEL 1 CALL :GENERATE Api
 GOTO MENU
 
 :7
-	SET /P ProxyMode=Are you working through a proxy?(true or false):
-	SETX ProxyMode %ProxyMode% > NUL
+	CHOICE /C YN /M "Are you working through a proxy"
+	IF ERRORLEVEL 2 SETX Proxy False > NUL
+	IF ERRORLEVEL 1 SETX Proxy True > NUL
 GOTO MENU
 
 :TEST
