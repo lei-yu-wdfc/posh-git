@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Tests.Payments.Enums;
@@ -84,15 +85,15 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
         public static int GetApplicationId(Guid applicationGuid)
         {
-            return Driver.Db.Payments.Applications.Single(a => a.ExternalId == applicationGuid).ApplicationId;
+            return Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == applicationGuid).ApplicationId);
         }
 
         public static decimal GetInterestAmountApplied(Guid applicationGuid)
         {
             var applicationid = GetApplicationId(applicationGuid);
             return
-                Driver.Db.Payments.Transactions.Single(
-                    a => a.ApplicationId == applicationid && a.Type == PaymentTransactionType.Interest.ToString()).Amount;
+                Do.Until(() => Driver.Db.Payments.Transactions.Single(
+                    a => a.ApplicationId == applicationid && a.Type == PaymentTransactionType.Interest.ToString()).Amount);
         }
 
         public static decimal GetArrearsInterestAmountApplied(Guid applicationGuid)
@@ -146,9 +147,8 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
             var applicationid = GetApplicationId(applicationGuid);
             return
-                Driver.Db.Payments.Transactions.Single(
-                    a => a.ApplicationId == applicationid && a.Type == PaymentTransactionType.DefaultCharge.ToString()).
-                    Amount;
+                Do.Until(() => Driver.Db.Payments.Transactions.Single(
+                    a => a.ApplicationId == applicationid && a.Type == PaymentTransactionType.DefaultCharge.ToString()).Amount);
         }
     }
 }

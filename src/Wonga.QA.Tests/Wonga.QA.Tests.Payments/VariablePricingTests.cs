@@ -20,6 +20,12 @@ namespace Wonga.QA.Tests.Payments
     {
         private const ProvinceEnum Province = ProvinceEnum.ON;
 
+        [SetUp]
+        public void Setup()
+        {
+
+        }
+
         [Test, AUT(AUT.Ca), JIRA("CA-1472")]
         public void VerifyFixedTermLoanOfferCaQueryRates()
         {
@@ -46,145 +52,120 @@ namespace Wonga.QA.Tests.Payments
         }
 
 
-        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
-        //[Row(12), Row(10), Row(11), Row(15), Row(19), Row(30)]
-        //public void VerifyInterestAmountCharged(int term)
-        //{
-        //    var loanTerm = term;
-        //    const decimal loanAmount = 100;
-        //    SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
-            
-        //    var customer = CustomerBuilder.New().ForProvince(Province).Build();
-        //    var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
-        //    var applicationId = application.Id;
+        [Test, AUT(AUT.Ca), JIRA("CA-1472")]
+        [Row(12), Row(10), Row(11), Row(15), Row(19), Row(30)]
+        public void VerifyInterestAmountCharged(int term)
+        {
+            var loanTerm = term;
+            const decimal loanAmount = 100;
+            SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
 
-        //    application.RepayOnDueDate();
+            var customer = CustomerBuilder.New().ForProvince(Province).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
+            var applicationId = application.Id;
 
-        //    var actualInterestAmountApplied = GetPaymentFunctions.GetInterestAmountApplied(applicationId);
-        //    var expectedInterestAmountApplied = CalculateFunctionsCa.CalculateExpectedVariableInterestAmountAppliedCa(loanAmount, loanTerm);
+            application.RepayOnDueDate();
 
-        //    Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestCharged(actualInterestAmountApplied, expectedInterestAmountApplied));
-        //}
+            var actualInterestAmountApplied = GetPaymentFunctions.GetInterestAmountApplied(applicationId);
+            var expectedInterestAmountApplied = CalculateFunctionsCa.CalculateExpectedVariableInterestAmountAppliedCa(loanAmount, loanTerm);
 
-        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
-        //[Row(9), Row(15)]
-        //public void VerifyLoanClosedAfterPaymenFulltRecieved(int term)
-        //{
-        //    var loanTerm = term;
-        //    const decimal loanAmount = 100;
+            Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestCharged(actualInterestAmountApplied, expectedInterestAmountApplied));
+        }
 
-        //    TestLog.DebugTrace.WriteLine("BEGIN: VerifyL0LoanClosedAfterPaymentRecieved @ TimeStamp: {0}\n", DateTime.UtcNow.ToString("o"));
-        //    TestLog.DebugTrace.WriteLine("loanTerm -> {0}", loanTerm);
-        //    TestLog.DebugTrace.WriteLine("loanAmount -> {0}", loanAmount);
+        [Test, AUT(AUT.Ca), JIRA("CA-1472")]
+        [Row(9), Row(15)]
+        public void VerifyLoanClosedAfterPaymentFullRecieved(int term)
+        {
+            var loanTerm = term;
+            const decimal loanAmount = 100;
 
-        //    SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
+            SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
 
-        //    var customer = CustomerBuilder.New().ForProvince(Province).Build();
-        //    var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
-        //    TestLog.DebugTrace.WriteLine("ApplicationId: {0}", application.Id);
+            var customer = CustomerBuilder.New().ForProvince(Province).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
 
-        //    application.RepayOnDueDate();
+            application.RepayOnDueDate();
 
-        //    Assert.IsTrue(application.IsClosed);
-        //    TestLog.DebugTrace.WriteLine("END: VerifyL0LoanClosedAfterPaymentRecieved @ TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
-        //}
+            Assert.IsTrue(application.IsClosed);
+        }
 
-        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
-        //public void VerifyFixedTermLoanOfferQueryRates()
-        //{
-        //    TestLog.DebugTrace.WriteLine("BEGIN: VerifyFixedTermLoanOfferQueryRates @ TimeStamp: {0}\n", DateTime.UtcNow.ToString("o"));
+        [Test, AUT(AUT.Ca), JIRA("CA-1472")]
+        public void VerifyFixedTermLoanOfferQueryRates()
+        {
+            var response = GetPaymentFunctions.GetFixedTermLoanOfferCaQuery();
+            var actualVariableRates = GetPaymentFunctions.GetVariableRatesFromApiResponse(response);
+            var expectedVariableRates = GetPaymentFunctions.GetCurrentVariableInterestRates();
 
-        //    var response = GetPaymentFunctions.GetFixedTermLoanOfferCaQuery();
-        //    var actualVariableRates = GetPaymentFunctions.GetVariableRatesFromApiResponse(response);
-        //    var expectedVariableRates = GetPaymentFunctions.GetCurrentVariableInterestRates();
+            Assert.IsTrue(VerifyPaymentFunctions.VerifyFixedTermLoanOfferQueryRates(actualVariableRates, expectedVariableRates));
+        }
 
-        //    Assert.IsTrue(VerifyPaymentFunctions.VerifyFixedTermLoanOfferQueryRates(actualVariableRates, expectedVariableRates));
-        //    TestLog.DebugTrace.WriteLine("END: VerifyFixedTermLoanOfferQueryRates @ TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
-        //}
+        [Test, AUT(AUT.Ca), JIRA("CA-1472")]
+        public void VerifyFixedTermLoanOfferQueryRatesAfterRatesUpdated()
+        {
+            const decimal numberOfPoints = (decimal)0.3;
+            SetPaymentFunctions.SetVariableInterestRates(numberOfPoints);
 
-        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
-        //public void VerifyFixedTermLoanOfferQueryRatesAfterRatesUpdated()
-        //{
-        //    TestLog.DebugTrace.WriteLine("BEGIN: VerifyFixedTermLoanOfferQueryRatesAfterRatesUpdated @ TimeStamp: {0}\n", DateTime.UtcNow.ToString("o"));
-        //    const decimal numberOfPoints = (decimal)0.3;
-        //    TestLog.DebugTrace.WriteLine("numberOfPoints -> {0}\n", numberOfPoints);
+            var response = GetPaymentFunctions.GetFixedTermLoanOfferCaQuery();
+            var actualVariableRates = GetPaymentFunctions.GetVariableRatesFromApiResponse(response);
+            var expectedVariableRates = GetPaymentFunctions.GetCurrentVariableInterestRates();
 
-        //    SetPaymentFunctions.SetVariableInterestRates(numberOfPoints);
-        //    var response = GetPaymentFunctions.GetFixedTermLoanOfferCaQuery();
-        //    var actualVariableRates = GetPaymentFunctions.GetVariableRatesFromApiResponse(response);
-        //    var expectedVariableRates = GetPaymentFunctions.GetCurrentVariableInterestRates();
-        //    Assert.IsTrue(VerifyPaymentFunctions.VerifyFixedTermLoanOfferQueryRates(actualVariableRates, expectedVariableRates));
+            Assert.IsTrue(VerifyPaymentFunctions.VerifyFixedTermLoanOfferQueryRates(actualVariableRates, expectedVariableRates));
+            SetPaymentFunctions.SetVariableInterestRates(numberOfPoints * -1);
+        }
 
-        //    SetPaymentFunctions.SetVariableInterestRates(numberOfPoints * -1);
-        //    TestLog.DebugTrace.WriteLine("END: VerifyFixedTermLoanOfferQueryRatesAfterRatesUpdated @ TimeStamp: {0}\n", DateTime.UtcNow.ToString("o"));
-        //}
+        [Test, AUT(AUT.Ca), JIRA("CA-1472")]
+        [Row(1), Row(10), Row(11), Row(15), Row(19), Row(30)]
+        public void VerifyCurrentVariableInterestAppliedAfterRatesUpdated(int loanTerm)
+        {
+            const decimal loanAmount = 100;
 
-        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
-        //[Row(1), Row(10), Row(11), Row(15), Row(19), Row(30)]
-        //public void VerifyCurrentVariableInterestAppliedAfterRatesUpdated(int loanTerm)
-        //{
-        //    const decimal loanAmount = 100;
+            SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
+            const decimal numberOfPoints = (decimal)0.3;
 
-        //    TestLog.DebugTrace.WriteLine("BEGIN: VerifyCurrentVariableInterestAppliedAfterRatesUpdated TimeStamp: {0}\n", DateTime.UtcNow.ToString("o"));
-        //    TestLog.DebugTrace.WriteLine("loanTerm -> {0}", loanTerm);
+            var customer = CustomerBuilder.New().ForProvince(Province).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
 
-        //    SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
-        //    const decimal numberOfPoints = (decimal)0.3;
-        //    TestLog.DebugTrace.WriteLine("numberOfPoints -> {0}\n", numberOfPoints);
+            var expectedInterestAmountApplied = CalculateFunctionsCa.CalculateExpectedVariableInterestAmountAppliedCa(loanAmount,
+                                                                                                       loanTerm);
+            SetPaymentFunctions.SetVariableInterestRates(numberOfPoints);
 
-        //    var customer = CustomerBuilder.New().ForProvince(Province).Build();
-        //    var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
+            application.RepayOnDueDate();
 
-        //    TestLog.DebugTrace.WriteLine("VerifyInterestAmountCharged: {0}", application.Id);
+            var actualInterestAmountApplied = GetPaymentFunctions.GetInterestAmountApplied(application.Id);
+            Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestCharged(actualInterestAmountApplied, expectedInterestAmountApplied));
 
-        //    var expectedInterestAmountApplied = CalculateFunctionsCa.CalculateExpectedVariableInterestAmountAppliedCa(loanAmount,
-        //                                                                                               loanTerm);
-        //    SetPaymentFunctions.SetVariableInterestRates(numberOfPoints);
+            SetPaymentFunctions.SetVariableInterestRates(numberOfPoints * -1);
+        }
 
-        //    application.RepayOnDueDate();
+        [Test, AUT(AUT.Ca), JIRA("CA-1472")]
+        [Row(3), Row(10), Row(11), Row(15), Row(19), Row(30)]
+        public void VerifyUpdatedVariableInterestRateAppliedToLn(int loanTerm)
+        {
+            const decimal loanAmount = 100;
+            SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
+            const decimal numberOfPoints = (decimal)0.3;
 
-        //    var actualInterestAmountApplied = GetPaymentFunctions.GetInterestAmountApplied(application.Id);
-        //    Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestCharged(actualInterestAmountApplied, expectedInterestAmountApplied));
+            var customer = CustomerBuilder.New().ForProvince(Province).Build();
+            var l0Application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
 
-        //    SetPaymentFunctions.SetVariableInterestRates(numberOfPoints * -1);
-        //    TestLog.DebugTrace.WriteLine("END: VerifyCurrentVariableInterestAppliedAfterRatesUpdated TimeStamp: {0}\n", DateTime.UtcNow.ToString("o"));
-        //}
+            l0Application.RepayOnDueDate();
 
-        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
-        //[Row(3), Row(10), Row(11), Row(15), Row(19), Row(30)]
-        //public void VerifyUpdatedVariableInterestRateAppliedToLn(int loanTerm)
-        //{
-        //    TestLog.DebugTrace.WriteLine("BEGIN: VerifyUpdatedVariableInterestRateAppliedToLn TimeStamp: {0}\n", DateTime.UtcNow.ToString("o"));
-        //    TestLog.DebugTrace.WriteLine("loanTerm -> {0}", loanTerm);
+            SetPaymentFunctions.SetVariableInterestRates(numberOfPoints);
 
-        //    const decimal loanAmount = 100;
-        //    SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
-        //    const decimal numberOfPoints = (decimal)0.3;
-        //    TestLog.DebugTrace.WriteLine("numberOfPoints -> {0}\n", numberOfPoints);
+            var lNApplication = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
 
-        //    var customer = CustomerBuilder.New().ForProvince(Province).Build();
-        //    var l0Application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
+            lNApplication.RepayOnDueDate();
 
-        //    TestLog.DebugTrace.WriteLine("l0ApplicationId: {0}", l0Application.Id);
+            var actualInterestAmountApplied = GetPaymentFunctions.GetInterestAmountApplied(lNApplication.Id);
+            var expectedInterestAmountApplied = CalculateFunctionsCa.CalculateExpectedVariableInterestAmountAppliedCa(loanAmount, loanTerm);
 
-        //    l0Application.RepayOnDueDate();
+            Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestCharged(actualInterestAmountApplied, expectedInterestAmountApplied));
 
-        //    SetPaymentFunctions.SetVariableInterestRates(numberOfPoints);
+            SetPaymentFunctions.SetVariableInterestRates(numberOfPoints * -1);
+        }
 
-        //    var lNApplication = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
 
-        //    TestLog.DebugTrace.WriteLine("lNApplicationId: {0}\n", lNApplication.Id);
 
-        //    lNApplication.RepayOnDueDate();
-
-        //    var actualInterestAmountApplied = GetPaymentFunctions.GetInterestAmountApplied(lNApplication.Id);
-        //    var expectedInterestAmountApplied = CalculateFunctionsCa.CalculateExpectedVariableInterestAmountAppliedCa(loanAmount, loanTerm);
-
-        //    Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestCharged(actualInterestAmountApplied, expectedInterestAmountApplied));
-
-        //    SetPaymentFunctions.SetVariableInterestRates(numberOfPoints * -1);
-        //    TestLog.DebugTrace.WriteLine("END: VerifyUpdatedVariableInterestRateAppliedToLn TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
-        //}
 
         //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
         //[Row(10), Row(15)]

@@ -196,9 +196,6 @@ namespace Wonga.QA.Framework
             
             Driver.Api.Commands.Post(requests);
 
-
-
-
             switch (Config.AUT)
             {
                 case AUT.Ca:

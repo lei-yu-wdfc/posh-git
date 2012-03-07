@@ -48,6 +48,7 @@
     <Compile Include="Helpers\Ca\CalculateFunctionsCa.cs" />
     <Compile Include="Helpers\GetPaymentFunctions.cs" />
     <Compile Include="Helpers\SendPaymentFunctions.cs" />
+    <Compile Include="HelperTests.cs" />
     <Compile Include="PaymentsServiceTests.cs" />
     <Compile Include="PaymentTransactionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

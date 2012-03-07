@@ -102,6 +102,54 @@ namespace Wonga.QA.Tests.Risk
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1647")]
+        public void Eid_OneCorrectAnswer_OneCorrectAnswer_OneCorrectAnswer_Declined()
+        {
+            var eidSessionInteraction = new Dictionary<int, List<bool>>
+                                            {
+                                                {SessionOne, new List<bool>(new bool[] {true, false})},
+                                                {SessionTwo, new List<bool>(new bool[] {true, false})},
+                                                {SessionThree, new List<bool>(new bool[] {true, false})}
+                                            };
+
+            ApplicationBuilder applicationBuilder =
+                ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).
+                    WithEidSessionInteraction(eidSessionInteraction);
+            applicationBuilder.Build();
+        }
+
+        [Test, AUT(AUT.Ca), JIRA("CA-1647")]
+        public void Eid_OneCorrectAnswer_OneCorrectAnswer_ZeroCorrectAnswers_Declined()
+        {
+            var eidSessionInteraction = new Dictionary<int, List<bool>>
+                                            {
+                                                {SessionOne, new List<bool>(new bool[] {true, false})},
+                                                {SessionTwo, new List<bool>(new bool[] {true, false})},
+                                                {SessionThree, new List<bool>(new bool[] {false, false})}
+                                            };
+
+            ApplicationBuilder applicationBuilder =
+                ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).
+                    WithEidSessionInteraction(eidSessionInteraction);
+            applicationBuilder.Build();
+        }
+
+        [Test, AUT(AUT.Ca), JIRA("CA-1647")]
+        public void Eid_OneCorrectAnswer_ZeroCorrectAnswers_TwoCorrectAnswer_Accepted()
+        {
+            var eidSessionInteraction = new Dictionary<int, List<bool>>
+                                            {
+                                                {SessionOne, new List<bool>(new bool[] {true, false})},
+                                                {SessionTwo, new List<bool>(new bool[] {false, false})},
+                                                {SessionThree, new List<bool>(new bool[] {true, true})}
+                                            };
+
+            ApplicationBuilder applicationBuilder =
+                ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).
+                    WithEidSessionInteraction(eidSessionInteraction);
+            applicationBuilder.Build();
+        }
+
+        [Test, AUT(AUT.Ca), JIRA("CA-1647")]
         public void Eid_OneCorrectAnswer_ZeroCorrectAnswers_OneCorrectAnswer_Declined()
         {
             var eidSessionInteraction = new Dictionary<int, List<bool>>
