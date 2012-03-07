@@ -90,6 +90,7 @@
     <Email>#edit-name</Email>
     <Password>#edit-pass</Password>
     <LoginButton>#edit-login</LoginButton>
+    <LogoutTrigger>#logout-trigger</LogoutTrigger>
   </LoginSection>
 
   <!--Mihail-->
