@@ -19,41 +19,14 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		protected ApplicationBuilderConfig _builderConfig;
 
 
-		#region assertions
+		#region assertions		
 
-		protected void AssertCheckpointAndVerifications1900126404(CheckpointStatus expectedStatus, IEnumerable<string> expectedVerificationNames, CheckpointDefinitionEnum checkpoint, Application application)
+		protected static void AssertCheckpointOnWorkflowDbEntity(CheckpointStatus expectedStatus, CheckpointDefinitionEnum checkpoint, RiskWorkflowEntity riskWorkflow)
 		{
-			//first check what was the failed checkpoint if expected status is declined			
-			AssertFailedCheckpointOnApplication(application, expectedStatus, checkpoint);
+			List<string> checkpointNames = Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflow.WorkflowId, expectedStatus);
+			Assert.AreEqual(1, checkpointNames.Count);
+			Assert.AreEqual(Data.EnumToString(checkpoint), checkpointNames.First());
 
-			RiskApplicationEntity riskApplication = new DbDriver().Risk.RiskApplications.Single(r => r.ApplicationId == application.Id);
-
-			AssertCheckpointOnApplicationDbEntity(expectedStatus, checkpoint, riskApplication);
-
-			AssertVerificationsOnApplicationDbEntity(expectedVerificationNames, riskApplication);
-		}
-
-		protected void AssertVerificationsOnApplicationDbEntity1384639980(IEnumerable<string> expectedVerificationNames, RiskApplicationEntity riskApplication)
-		{
-            //Assert.AreEqual(expectedVerificationNames.Count(), riskApplication.WorkflowVerifications.Count());
-
-            //foreach (string expectedVerificationName in expectedVerificationNames)
-            //{
-            //    Assert.IsTrue(
-            //        riskApplication.WorkflowVerifications.Any(v => v.VerificationDefinitionEntity.Name == expectedVerificationName),
-            //        String.Format("Verification name should be {0}", expectedVerificationName));
-            //}
-		}
-
-		protected static void AssertCheckpointOnApplicationDbEntity(CheckpointStatus expectedStatus, CheckpointDefinitionEnum checkpoint, RiskApplicationEntity riskApplication)
-		{
-            //var dbCheckpoint = riskApplication.WorkflowCheckpoints.Single(r => r.RiskApplicationId == riskApplication.RiskApplicationId);
-
-            //Assert.AreEqual(Convert.ToByte(expectedStatus), dbCheckpoint.CheckpointStatus);
-
-            //string checkpointName = dbCheckpoint.CheckpointDefinitionEntity.Name;
-
-            //Assert.AreEqual(Data.EnumToString(checkpoint), checkpointName);
 		}
 
 		/// <summary>
@@ -81,30 +54,30 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 			                                    	: (CheckpointDefinitionEnum?)null);
 		}
 
-
 		protected void AssertCheckpointAndVerifications(CheckpointStatus expectedStatus, IEnumerable<string> expectedVerificationNames, CheckpointDefinitionEnum checkpoint, Application application)
 		{
 			//first check what was the failed checkpoint if expected status is declined			
 			AssertFailedCheckpointOnApplication(application, expectedStatus, checkpoint);
 
-			RiskApplicationEntity riskApplication = new DbDriver().Risk.RiskApplications.Single(r => r.ApplicationId == application.Id);
+			//RiskApplicationEntity riskApplication = new DbDriver().Risk.RiskApplications.Single(r => r.ApplicationId == application.Id);
+			RiskWorkflowEntity riskWorkflow = new DbDriver().Risk.RiskWorkflows.Single(r => r.ApplicationId == application.Id);
 
-			AssertCheckpointOnApplicationDbEntity(expectedStatus, checkpoint, riskApplication);
+			AssertCheckpointOnWorkflowDbEntity(expectedStatus, checkpoint, riskWorkflow);
 
-			AssertVerificationsOnApplicationDbEntity(expectedVerificationNames, riskApplication);
+			AssertVerificationsOnWorkflowDbEntity(expectedVerificationNames, riskWorkflow);
 		}
 
-		protected void AssertVerificationsOnApplicationDbEntity(IEnumerable<string> expectedVerificationNames, RiskApplicationEntity riskApplication)
+		protected void AssertVerificationsOnWorkflowDbEntity(IEnumerable<string> expectedVerificationNames, RiskWorkflowEntity riskWorkflow)
 		{
-            //Assert.AreEqual(expectedVerificationNames.Count(), riskApplication.WorkflowVerifications.Count());
+			Assert.AreEqual(expectedVerificationNames.Count(), riskWorkflow.WorkflowVerifications.Count());
 
-            //foreach (string expectedVerificationName in expectedVerificationNames)
-            //{
-            //    Assert.IsTrue(
-            //        riskApplication.WorkflowVerifications.Any(v => v.VerificationDefinitionEntity.Name == expectedVerificationName),
-            //        String.Format("Verification name should be {0}", expectedVerificationName));
-            //}
-		}
+            foreach (string expectedVerificationName in expectedVerificationNames)
+            {
+                Assert.IsTrue(
+				   riskWorkflow.WorkflowVerifications.Any(v => v.VerificationDefinitionEntity.Name == expectedVerificationName),
+                   String.Format("Verification name should be {0}", expectedVerificationName));
+            }
+		}		
 
 		#endregion
 

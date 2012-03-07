@@ -90,7 +90,6 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		[Test, AUT(AUT.Ca)]
 		[Row(IovationMockResponse.Allow)]
 		[Row(IovationMockResponse.Deny)]
-		[Ignore("seems to fail on RC and works locally.. need to investigate")]
 		public void GivenL0Applicant_WhenApplicationDeviceBlacklistTimesout_ThenIsAccepted(IovationMockResponse iovationMockResponse)
 		{
 			int? currentMockIovationWaitSeconds = null;
