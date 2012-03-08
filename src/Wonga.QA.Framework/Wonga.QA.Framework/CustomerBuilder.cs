@@ -469,8 +469,10 @@ namespace Wonga.QA.Framework
 
             Driver.Api.Commands.Post(requests);
 
-            Do.With().Timeout(2).Until(() => Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == _id));
-            Do.With().Timeout(2).Until(() => Driver.Db.Risk.RiskAccounts.Single(a => a.AccountId == _id));
+        	const int timeout = 5;
+        	Do.With().Timeout(timeout).Until(() => Driver.Db.Ops.Accounts.Single(a => a.ExternalId == _id));
+            Do.With().Timeout(timeout).Until(() => Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == _id));
+            Do.With().Timeout(timeout).Until(() => Driver.Db.Risk.RiskAccounts.Single(a => a.AccountId == _id));
             
             switch (Config.AUT)
             {
