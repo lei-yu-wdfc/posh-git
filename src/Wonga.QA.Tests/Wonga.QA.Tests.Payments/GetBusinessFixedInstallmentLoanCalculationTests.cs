@@ -14,7 +14,7 @@ namespace Wonga.QA.Tests.Payments
 		public void GetBusinessFixedInstallmentLoanCalculation()
 		{
 			var customer = CustomerBuilder.New().Build();
-			var organisation = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
+			var organisation = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organisation).Build();
 
 			var response = Driver.Api.Queries.Post(new GetBusinessFixedInstallmentLoanCalculationWbUkQuery
@@ -48,7 +48,7 @@ namespace Wonga.QA.Tests.Payments
 			int.TryParse(offerResponse.Values["TermMin"].SingleOrDefault(), out minTerm);
 
 			var customer = CustomerBuilder.New().Build();
-			var organisation = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
+			var organisation = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organisation).Build();
 
 			var response = Driver.Api.Queries.Post(new GetBusinessFixedInstallmentLoanCalculationWbUkQuery 
@@ -75,7 +75,7 @@ namespace Wonga.QA.Tests.Payments
 			int.TryParse(offerResponse.Values["TermMax"].SingleOrDefault(), out maxTerm);
 
 			var customer = CustomerBuilder.New().Build();
-			var organisation = OrganisationBuilder.New().WithPrimaryApplicant(customer).Build();
+			var organisation = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organisation).Build();
 
 			var response = Driver.Api.Queries.Post(new GetBusinessFixedInstallmentLoanCalculationWbUkQuery { LoanAmount = 5000, Term = maxTerm + 1, ApplicationId = application.Id });
