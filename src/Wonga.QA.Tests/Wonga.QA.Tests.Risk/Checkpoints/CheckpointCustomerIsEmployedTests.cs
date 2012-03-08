@@ -18,7 +18,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test]
 		public void CustomerIsEmployedAccept()
 		{
-			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithEmployerStatus("EmployedFullTime").Build();
+			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithEmployerStatus(EmploymentStatusEnum.EmployedFullTime.ToString()).Build();
 			ApplicationBuilder.New(customer).Build();
 		}
 

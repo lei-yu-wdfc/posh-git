@@ -11,7 +11,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
     {
         private const string TestMask = "test:DeviceNotOnBlacklist";
 
-        [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk), JIRA("CA-1735")]
+        [Test, AUT(AUT.Ca, AUT.Uk), JIRA("CA-1735")]
 		public void CheckpointApplicationDeviceNotOnBlacklistDecline()
         {
             var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
@@ -22,7 +22,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             //Assert.Contains(Application.GetExecutedCheckpointDefinitions(app.Id, CheckpointStatus.Failed), Data.EnumToString(CheckpointDefinitionEnum.Applicationdatablacklistcheck));
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk), JIRA("CA-1735")]
+        [Test, AUT(AUT.Ca, AUT.Uk), JIRA("CA-1735")]
 		public void CheckpointApplicationDeviceNotOnBlacklistAccept()
         {
             Customer customer = CustomerBuilder.New().WithEmployer(TestMask).Build();

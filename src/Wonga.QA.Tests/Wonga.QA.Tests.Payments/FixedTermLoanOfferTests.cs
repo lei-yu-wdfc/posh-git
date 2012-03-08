@@ -46,49 +46,5 @@ namespace Wonga.QA.Tests.Payments
             Assert.AreEqual(defaultTerm, int.Parse(response.Values["TermDefault"].Single()));
             Assert.AreEqual(maxTerm, int.Parse(response.Values["TermMax"].Single()));
         }
-
-		[Test, AUT(AUT.Za)]
-		public void PromiseDateSetToDefaultPayday()
-		{
-			const int numDaysToTest = 1;
-
-			for (int i = 0; i < numDaysToTest; i++)
-			{
-				var now = new Date(DateTime.UtcNow.AddDays(i), DateFormat.Date);
-				Driver.Db.SetServiceConfiguration(DateOverrideKey, new Date(now, DateFormat.Date).ToString());
-
-				var iMonth = now.DateTime.Month - 1;
-				var payDayPerMonth = _payDayPerMonth[i];
-				var payDayPlusToMaxTerm = _payDayPlusToMaxTerm[i];
-				var defaultPromiseDate = new DateTime(now.DateTime.Year, now.DateTime.Month, payDayPerMonth);
-				var expectedTermDefault = defaultPromiseDate.Subtract(now).Days;
-
-				//Check if we should snap to the next month's payday
-				if (expectedTermDefault < _sliderTermAddDays)
-				{
-					iMonth = iMonth + 1 >= 12 ? 1 : iMonth + 1;
-					payDayPerMonth = _payDayPerMonth[iMonth];
-					payDayPlusToMaxTerm = _payDayPlusToMaxTerm[iMonth];
-					defaultPromiseDate = defaultPromiseDate.AddMonths(1);
-					defaultPromiseDate = new DateTime(defaultPromiseDate.Year, defaultPromiseDate.Month, payDayPerMonth);
-				}
-
-				defaultPromiseDate = Driver.Db.GetPreviousWorkingDay(new Date(defaultPromiseDate, DateFormat.Date));
-
-				var defaultMaxDate = defaultPromiseDate.AddDays(payDayPlusToMaxTerm);
-
-				expectedTermDefault = defaultPromiseDate.Subtract(now).Days;
-				var expectedTermMax = defaultMaxDate.Subtract(now).Days;
-
-				if (expectedTermMax > MaxDefaultTerm) expectedTermMax = MaxDefaultTerm;
-
-				var response = Driver.Api.Queries.Post(new GetFixedTermLoanOfferZaQuery{ AccountId = Guid.NewGuid().ToString() });
-				var actualTermMax = Int32.Parse(response.Values["TermMax"].Single());
-				var actualTermDefault = Int32.Parse(response.Values["TermDefault"].Single());
-
-				Assert.AreEqual(expectedTermMax, actualTermMax);
-				Assert.AreEqual(expectedTermDefault, actualTermDefault);
-			}
-		}
 	}
 }
