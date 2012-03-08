@@ -176,18 +176,18 @@ namespace Wonga.QA.Tests.Payments
 
 			Assert.IsNotNull(response);
 			Assert.IsNotNull(response.Values["ApplicationId"]);
-			Assert.AreEqual("true", response.Values["IsApplicationSigned"].SingleOrDefault());
-			Assert.AreEqual("true", response.Values["IsApplicationAccepted"].SingleOrDefault());
-			Assert.AreEqual("0", response.Values["Arrears"].SingleOrDefault());
-			Assert.AreEqual("10000.00", response.Values["PrincipalLoanAmount"].SingleOrDefault());
-			Assert.AreEqual("20", response.Values["LoanTerm"].SingleOrDefault());
-			Assert.AreEqual("700.00", response.Values["WeeklyRepaymentAmount"].SingleOrDefault());
-			Assert.AreEqual("0", response.Values["NumberOfPaymentsMade"].SingleOrDefault());
-			Assert.AreEqual("20", response.Values["RemainingNumberOfPayments"].SingleOrDefault());
-			Assert.AreEqual("14000.00", response.Values["TotalOutstandingAmount"].SingleOrDefault());
-			Assert.AreEqual("10000.00", response.Values["OutstandingPrincipalAmount"].SingleOrDefault());
-			Assert.AreEqual("500.00", response.Values["OutstandingFees"].SingleOrDefault());
-			Assert.AreEqual("3500.00", response.Values["OutstandingInterest"].SingleOrDefault());
+			Assert.AreEqual("true", response.Values["IsApplicationSigned"].SingleOrDefault(), "Expected IsApplicationSigned value is incorrect.");
+			Assert.AreEqual("true", response.Values["IsApplicationAccepted"].SingleOrDefault(), "Expected IsApplicationAccepted value is incorrect.");
+			Assert.AreEqual("0", response.Values["Arrears"].SingleOrDefault(), "Expected Arrears value is incorrect.");
+			Assert.AreEqual("10000.00", response.Values["PrincipalLoanAmount"].SingleOrDefault(), "Expected PrincipalLoanAmount value is incorrect.");
+			Assert.AreEqual("20", response.Values["LoanTerm"].SingleOrDefault(), "Expected LoanTerm value is incorrect.");
+			Assert.AreEqual("700.00", response.Values["WeeklyRepaymentAmount"].SingleOrDefault(), "Expected WeeklyRepaymentAmount value is incorrect.");
+			Assert.AreEqual("0", response.Values["NumberOfPaymentsMade"].SingleOrDefault(), "Expected NumberOfPaymentsMade value is incorrect.");
+			Assert.AreEqual("20", response.Values["RemainingNumberOfPayments"].SingleOrDefault(), "Expected RemainingNumberOfPayments value is incorrect.");
+			Assert.AreEqual("14000.00", response.Values["TotalOutstandingAmount"].SingleOrDefault(), "Expected TotalOutstandingAmount value is incorrect.");
+			Assert.AreEqual("10000.00", response.Values["OutstandingPrincipalAmount"].SingleOrDefault(), "Expected OutstandingPrincipalAmount value is incorrect.");
+			Assert.AreEqual("500.00", response.Values["OutstandingFees"].SingleOrDefault(), "Expected OutstandingFees value is incorrect.");
+			Assert.AreEqual("3500.00", response.Values["OutstandingInterest"].SingleOrDefault(), "Expected OutstandingInterest value is incorrect.");
 		}
 
 		private int GetTransactionCount(Func<TransactionEntity, bool> func)
