@@ -12,7 +12,7 @@ namespace Wonga.QA.Tests.Payments
 {
 	public class FixedTermLoanTopUpTests
 	{
-		[Test, AUT(AUT.Uk), JIRA("UK-789")]
+		[Test, AUT(AUT.Uk), JIRA("UK-789"), Parallelizable]
 		public void GetFixedTermLoanTopUpOfferTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
@@ -25,7 +25,7 @@ namespace Wonga.QA.Tests.Payments
 			Assert.GreaterThan(int.Parse(response.Values["DaysTillRepaymentDate"].Single()), 0);
 		}
 
-		[Test, AUT(AUT.Uk), JIRA("UK-789")]
+		[Test, AUT(AUT.Uk), JIRA("UK-789"), Parallelizable]
 		public void GetFixedTermLoanTopupCalculationTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
@@ -43,7 +43,7 @@ namespace Wonga.QA.Tests.Payments
 			Assert.AreEqual(15.91M, decimal.Parse(response.Values["InterestAndFeesAmount"].Single()));
 		}
 
-		[Test, AUT(AUT.Uk), JIRA("UK-789")]
+		[Test, AUT(AUT.Uk), JIRA("UK-789"), Parallelizable]
 		public void CreateFixedTermLoanTopUpTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
@@ -62,7 +62,7 @@ namespace Wonga.QA.Tests.Payments
 			Assert.IsNotNull(Do.Until(() => Driver.Db.Payments.Topups.Single(x => x.ApplicationId == app.ApplicationId)));
 		}
 
-		[Test, AUT(AUT.Uk), JIRA("UK-789")]
+		[Test, AUT(AUT.Uk), JIRA("UK-789"), Parallelizable]
 		public void SignFixedTermLoanTopup()
 		{
 			Customer customer = CustomerBuilder.New().Build();
