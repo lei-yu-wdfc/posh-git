@@ -44,8 +44,8 @@ GOTO MENU
 GOTO MENU
 
 :3
-	git remote add upstream git@github.com:QuickbridgeLtd/v3QA.git 2> NUL
-	git pull --rebase upstream master
+	CALL git remote add upstream git@github.com:QuickbridgeLtd/v3QA.git 2> NUL
+	CALL git pull --rebase upstream master
 	IF ERRORLEVEL 1 EXIT /B
 GOTO MENU
 
