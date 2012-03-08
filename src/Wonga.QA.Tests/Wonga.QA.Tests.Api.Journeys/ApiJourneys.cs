@@ -20,6 +20,16 @@ namespace Wonga.QA.Tests.Journeys
             ApplicationBuilder.New(cust, comp).Build();            
         }
 
+
+		[Test, AUT(AUT.Wb)]
+		public void WBApiDeclinedL0Accepted()
+		{
+			Customer cust = CustomerBuilder.New().WithMiddleName("Middle").Build();
+
+			Organisation comp = OrganisationBuilder.New(cust).Build();
+			ApplicationBuilder.New(cust, comp).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
+		}
+
         [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
         public void ApiL0JourneyAccepted()
         {
@@ -27,21 +37,12 @@ namespace Wonga.QA.Tests.Journeys
             ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
         }
 
-        [Test, AUT(AUT.Wb)]
-        public void WBApiDeclinedL0Accepted()
-        {
-            Customer cust = CustomerBuilder.New().WithMiddleName("Middle").Build();
-
-            Organisation comp = OrganisationBuilder.New(cust).Build();
-            ApplicationBuilder.New(cust, comp).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
-        }
-
-        [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
-        public void ApiDeclinedL0Accepted()
-        {
-            Customer cust = CustomerBuilder.New().WithEmployer("Wonga").Build();
-            ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
-        }
+		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
+		public void ApiL0JourneyDeclined()
+		{
+			Customer cust = CustomerBuilder.New().WithEmployer("Wonga").Build();
+			ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
+		}
 
 		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
 		public void ApiLnJourneyAccepted()
@@ -58,14 +59,9 @@ namespace Wonga.QA.Tests.Journeys
 		public void ApiLnJourneyDeclined()
 		{
 			Customer cust = CustomerBuilder.New().Build();
-			var applicationL0 = ApplicationBuilder.New(cust).Build();
+			ApplicationBuilder.New(cust).Build().RepayOnDueDate();
 
-            applicationL0.RepayOnDueDate();
-
-			var db = new DbDriver();
-			db.Risk.EmploymentDetails.Single(a => a.AccountId == cust.Id).EmployerName = "Wonga";
-			db.Risk.SubmitChanges();
-
+			Driver.Db.UpdateEmployerName(cust.Id, "Wonga");
 			ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
 
 		}
