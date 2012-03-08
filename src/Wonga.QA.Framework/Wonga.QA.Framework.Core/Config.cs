@@ -136,8 +136,8 @@ namespace Wonga.QA.Framework.Core
 
         private static T GetValue<T>(String variable = null)
         {
-            String value = (String)Registry.CurrentUser.OpenSubKey("Environment").GetValue(variable ?? typeof(T).Name);
-            return (T)(typeof(T).IsEnum ? Enum.Parse(typeof(T), value, true) : Convert.ChangeType(value, typeof(T)));
+            Object value = Registry.CurrentUser.OpenSubKey("Environment").GetValue(variable ?? typeof(T).Name) ?? default(T);
+            return (T)(typeof(T).IsEnum ? Enum.Parse(typeof(T), value.ToString(), true) : Convert.ChangeType(value, typeof(T)));
         }
 
         public class ApiConfig
