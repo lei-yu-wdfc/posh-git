@@ -7,7 +7,7 @@ namespace Wonga.QA.Framework.Core
 {
     public static class Do
     {
-        public static TimeSpan Timeout { get { return TimeSpan.FromSeconds(30); } }
+        public static TimeSpan Timeout { get { return TimeSpan.FromSeconds(60); } }
         public static TimeSpan Interval { get { return TimeSpan.FromSeconds(1); } }
 
         public static DoBuilder With()

@@ -20,7 +20,6 @@ namespace Wonga.QA.Tests.Journeys
             ApplicationBuilder.New(cust, comp).Build();            
         }
 
-
 		[Test, AUT(AUT.Wb)]
 		public void WBApiDeclinedL0Accepted()
 		{
