@@ -32,14 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Gallio\bin\Gallio.dll</HintPath>
-    </Reference>
-    <Reference Include="MbUnit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Gallio\bin\MbUnit.dll</HintPath>
-    </Reference>
+    <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
+    <Reference Include="MbUnit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
     <Reference Include="NHamcrest, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31c3ea0b6fcf8c4a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\Gallio\bin\NHamcrest.dll</HintPath>
@@ -54,82 +48,82 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mappings\Content.cs" />
-    <Compile Include="Mappings\ContentItems\LoanAgreement.cs" />
-    <Compile Include="Mappings\Elements.cs" />
-    <Compile Include="Mappings\Pages\DealDonePage.cs" />
-    <Compile Include="Mappings\Pages\DeclinedPage.cs" />
-    <Compile Include="Mappings\Pages\LoginPage.cs" />
-    <Compile Include="Mappings\Pages\PersonalDetailsPage.cs" />
-    <Compile Include="Mappings\Pages\ProcessingPage.cs" />
-    <Compile Include="Mappings\Pages\AcceptedPage.cs" />
-    <Compile Include="Mappings\Pages\Wb\AddAditionalDirectorsPage.cs" />
-    <Compile Include="Mappings\Pages\Wb\AdditionalDirectorsPage.cs" />
-    <Compile Include="Mappings\Pages\AddressDetailsPage.cs" />
-    <Compile Include="Mappings\Pages\AccountDetailsPage.cs" />
-    <Compile Include="Mappings\Pages\BankAccountPage.cs" />
-    <Compile Include="Mappings\Pages\Wb\BusinessDebitCardPage.cs" />
-    <Compile Include="Mappings\Pages\Wb\BusinessDetailsPage.cs" />
-    <Compile Include="Mappings\Pages\Wb\EligibilityQuestionsPage.cs" />
-    <Compile Include="Mappings\Pages\PersonalBankAccountPage.cs" />
-    <Compile Include="Mappings\Pages\DebitCardPage.cs" />
-    <Compile Include="Mappings\Pages\PersonalDebitCardPage.cs" />
-    <Compile Include="Mappings\Sections\AccountDetailsSection.cs" />
-    <Compile Include="Mappings\Sections\BankAccountSection.cs" />
-    <Compile Include="Mappings\Sections\DebitCardSection.cs" />
-    <Compile Include="Mappings\Sections\EmploymentDetailsSection.cs" />
-    <Compile Include="Mappings\Sections\FAQSection.cs" />
-    <Compile Include="Mappings\Sections\HelpSection.cs" />
-    <Compile Include="Mappings\Sections\InternationalSection.cs" />
-    <Compile Include="Mappings\Sections\LoginSection.cs" />
-    <Compile Include="Mappings\Sections\ProvinceSection.cs" />
-    <Compile Include="Mappings\Sections\SliderSection.cs" />
-    <Compile Include="Mappings\Sections\ContactingYouSection.cs" />
-    <Compile Include="Mappings\Sections\MobilePinVerificationSection.cs" />
-    <Compile Include="Mappings\Sections\YourDetailsSection.cs" />
-    <Compile Include="Mappings\Sections\YourNameSection.cs" />
-    <Compile Include="Mappings\XmlMapper.cs" />
-    <Compile Include="UiElements\BaseElement.cs" />
-    <Compile Include="UiElements\FAQElements.cs" />
-    <Compile Include="UiElements\HelpElements.cs" />
-    <Compile Include="UiElements\InternationalElements.cs" />
-    <Compile Include="UiElements\LoginElement.cs" />
-    <Compile Include="UiElements\Pages\Common\DealDonePage.cs" />
-    <Compile Include="UiElements\Pages\Common\DeclinedPage.cs" />
-    <Compile Include="UiElements\Pages\Common\FAQPage.cs" />
-    <Compile Include="UiElements\Pages\Common\LoginPage.cs" />
-    <Compile Include="UiElements\Pages\Common\MySummary.cs" />
-    <Compile Include="UiElements\Sections\AccountDetailsSection.cs" />
-    <Compile Include="UiElements\Sections\BankAccountSection.cs" />
-    <Compile Include="UiElements\Sections\BaseSection.cs" />
-    <Compile Include="UiElements\Sections\ContactingYouSection.cs" />
-    <Compile Include="UiElements\Sections\DebitCardSection.cs" />
-    <Compile Include="UiElements\Sections\EmploymentDetailsSection.cs" />
-    <Compile Include="UiElements\Sections\MobilePinVerificationSection.cs" />
-    <Compile Include="UiElements\Sections\ProvinceSection.cs" />
-    <Compile Include="UiElements\Sections\YourDetailsSection.cs" />
-    <Compile Include="UiElements\Sections\YourNameSection.cs" />
-    <Compile Include="UiElements\SlidersElement.cs" />
-    <Compile Include="UiElements\Pages\BasePage.cs" />
-    <Compile Include="UiElements\Pages\HomePage.cs" />
-    <Compile Include="UiElements\Pages\Interfaces\IApplyPage.cs" />
-    <Compile Include="UiElements\Pages\Interfaces\IDecisionPage.cs" />
-    <Compile Include="UiElements\Pages\Common\ProcessingPage.cs" />
-    <Compile Include="UiElements\Pages\Common\AcceptedPage.cs" />
-    <Compile Include="UiElements\Pages\Wb\AddAditionalDirectorsPage.cs" />
-    <Compile Include="UiElements\Pages\Wb\AdditionalDirectorsPage.cs" />
-    <Compile Include="UiElements\Pages\Common\AddressDetailsPage.cs" />
-    <Compile Include="UiElements\Pages\Common\PersonalBankAccountPage.cs" />
-    <Compile Include="UiElements\Pages\Common\AccountDetailsPage.cs" />
-    <Compile Include="UiElements\Pages\Wb\BusinessDetailsPage.cs" />
-    <Compile Include="UiElements\Pages\Common\PersonalDebitCardPage.cs" />
-    <Compile Include="UiElements\Pages\Wb\EligibilityQuestionsPage.cs" />
-    <Compile Include="UiElements\Pages\Wb\BusinessBankAccountPage.cs" />
-    <Compile Include="UiElements\Pages\Wb\BusinessDebitCardPage.cs" />
-    <Compile Include="UiElements\Pages\Common\PersonalDetailsPage.cs" />
+    <Compile Include="Mappings\Content\Content.cs" />
+    <Compile Include="Mappings\Content\Agreements\LoanAgreement.cs" />
+    <Compile Include="Mappings\Ui\Ui.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\DealDonePage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\DeclinedPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\LoginPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\PersonalDetailsPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\ProcessingPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\AcceptedPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Wb\AddAditionalDirectorsPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Wb\AdditionalDirectorsPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\AddressDetailsPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\AccountDetailsPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\BankAccountPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Wb\BusinessDebitCardPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Wb\BusinessDetailsPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Wb\EligibilityQuestionsPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\PersonalBankAccountPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\DebitCardPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\PersonalDebitCardPage.cs" />
+    <Compile Include="Mappings\Ui\Sections\AccountDetailsSection.cs" />
+    <Compile Include="Mappings\Ui\Sections\BankAccountSection.cs" />
+    <Compile Include="Mappings\Ui\Sections\DebitCardSection.cs" />
+    <Compile Include="Mappings\Ui\Sections\EmploymentDetailsSection.cs" />
+    <Compile Include="Mappings\Ui\Elements\FAQElement.cs" />
+    <Compile Include="Mappings\Ui\Elements\HelpElement.cs" />
+    <Compile Include="Mappings\Ui\Elements\InternationalElement.cs" />
+    <Compile Include="Mappings\Ui\Elements\LoginElement.cs" />
+    <Compile Include="Mappings\Ui\Sections\ProvinceSection.cs" />
+    <Compile Include="Mappings\Ui\Elements\SliderElement.cs" />
+    <Compile Include="Mappings\Ui\Sections\ContactingYouSection.cs" />
+    <Compile Include="Mappings\Ui\Sections\MobilePinVerificationSection.cs" />
+    <Compile Include="Mappings\Ui\Sections\YourDetailsSection.cs" />
+    <Compile Include="Mappings\Ui\Sections\YourNameSection.cs" />
+    <Compile Include="Mappings\Xml\XmlMapper.cs" />
+    <Compile Include="Test.cs" />
+    <Compile Include="Ui\Elements\BaseElement.cs" />
+    <Compile Include="Ui\Elements\FAQElement.cs" />
+    <Compile Include="Ui\Elements\HelpElement.cs" />
+    <Compile Include="Ui\Elements\InternationalElement.cs" />
+    <Compile Include="Ui\Elements\LoginElement.cs" />
+    <Compile Include="Ui\Pages\Common\DealDonePage.cs" />
+    <Compile Include="Ui\Pages\Common\DeclinedPage.cs" />
+    <Compile Include="Ui\Pages\Common\FAQPage.cs" />
+    <Compile Include="Ui\Pages\Common\LoginPage.cs" />
+    <Compile Include="Ui\Pages\Common\MySummary.cs" />
+    <Compile Include="Ui\Sections\AccountDetailsSection.cs" />
+    <Compile Include="Ui\Sections\BankAccountSection.cs" />
+    <Compile Include="Ui\Sections\BaseSection.cs" />
+    <Compile Include="Ui\Sections\ContactingYouSection.cs" />
+    <Compile Include="Ui\Sections\DebitCardSection.cs" />
+    <Compile Include="Ui\Sections\EmploymentDetailsSection.cs" />
+    <Compile Include="Ui\Sections\MobilePinVerificationSection.cs" />
+    <Compile Include="Ui\Sections\ProvinceSection.cs" />
+    <Compile Include="Ui\Sections\YourDetailsSection.cs" />
+    <Compile Include="Ui\Sections\YourNameSection.cs" />
+    <Compile Include="Ui\Elements\SlidersElement.cs" />
+    <Compile Include="Ui\Pages\Common\BasePage.cs" />
+    <Compile Include="Ui\Pages\Common\HomePage.cs" />
+    <Compile Include="Ui\Pages\Interfaces\IApplyPage.cs" />
+    <Compile Include="Ui\Pages\Interfaces\IDecisionPage.cs" />
+    <Compile Include="Ui\Pages\Common\ProcessingPage.cs" />
+    <Compile Include="Ui\Pages\Common\AcceptedPage.cs" />
+    <Compile Include="Ui\Pages\Wb\AddAditionalDirectorsPage.cs" />
+    <Compile Include="Ui\Pages\Wb\AdditionalDirectorsPage.cs" />
+    <Compile Include="Ui\Pages\Common\AddressDetailsPage.cs" />
+    <Compile Include="Ui\Pages\Common\PersonalBankAccountPage.cs" />
+    <Compile Include="Ui\Pages\Common\AccountDetailsPage.cs" />
+    <Compile Include="Ui\Pages\Wb\BusinessDetailsPage.cs" />
+    <Compile Include="Ui\Pages\Common\PersonalDebitCardPage.cs" />
+    <Compile Include="Ui\Pages\Wb\EligibilityQuestionsPage.cs" />
+    <Compile Include="Ui\Pages\Wb\BusinessBankAccountPage.cs" />
+    <Compile Include="Ui\Pages\Wb\BusinessDebitCardPage.cs" />
+    <Compile Include="Ui\Pages\Common\PersonalDetailsPage.cs" />
     <Compile Include="Selenium.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests.cs" />
     <Compile Include="UiClient.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -138,28 +132,24 @@
       <Name>Wonga.QA.Framework.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Mappings\Pages\Ca\" />
-    <Folder Include="Mappings\Pages\Uk\" />
-    <Folder Include="Mappings\Pages\Za\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mappings\Xml\Elements\Wb.xml">
+    <EmbeddedResource Include="Mappings\Xml\Ui\Wb.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mappings\Xml\Elements\Uk.xml">
+    <EmbeddedResource Include="Mappings\Xml\Ui\Uk.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mappings\Xml\Elements\Ca.xml">
+    <EmbeddedResource Include="Mappings\Xml\Ui\Ca.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mappings\Xml\Elements\Za.xml">
+    <EmbeddedResource Include="Mappings\Xml\Ui\Za.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
@@ -184,7 +174,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mappings\Xml\Elements\_base.xml">
+    <EmbeddedResource Include="Mappings\Xml\Ui\_base.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
