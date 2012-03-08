@@ -25,7 +25,7 @@
 		<MSBuild Projects="@(Projects)" />
 	</Target>
 	
-	<Target Name="Merge">
+	<Target Name="Merge" Condition="'$(Files)'==''">
 		<ItemGroup>
 			<Command Include='"$(MSBuildProgramFiles32)\Microsoft\ILMerge\ILMerge.exe"' />
 			<Command Include='/targetplatform:v4,"$(MSBuildToolsPath)"' />
@@ -37,8 +37,13 @@
 	</Target>
 	
 	<Target Name="Test">
+		<ItemGroup>
+			<Split Include="$(Files.Split(';'))" />
+			<Files Include="$(Bin)\$(Tests)\$(Tests).dll" Condition="'$(Files)'==''" />
+			<Files Include="$(Bin)\$(Tests)\$(Tests).%(Split.Identity).dll" Condition="'$(Files)'!=''" />
+		</ItemGroup>
 		<Gallio
-			Files="$(Bin)\$(Tests)\$(Tests).dll"
+			Files="@(Files)"
 			ReportTypes="xml"
 			ReportDirectory="$(Bin)\$(Tests).Report"
 		/>
