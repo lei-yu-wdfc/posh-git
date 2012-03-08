@@ -40,19 +40,20 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test, AUT(AUT.Za)]
 		public void CheckpointApplicationElementNotOnBlacklistAccept()
 		{
-			var bankAccount = Data.GetBankAccountNumber();
-			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithBankAccountNumber(bankAccount).Build();
+			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithBankAccountNumber(Data.GetBankAccountNumber()).Build();
 			ApplicationBuilder.New(customer).Build();
 		}
 
 		[Test, AUT(AUT.Za)]
 		public void CheckpointApplicationElementNotOnBlacklistMobilePhoneNumberPresent()
 		{
-			var mobileNumber = Data.GetMobilePhone();
-			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithMobileNumber(mobileNumber).Build();
-
-			var mobilePhoneNumber = Driver.Db.Comms.CustomerDetails.Single(a => a.AccountId == customer.Id).MobilePhone.Remove(0,1);
-			var formattedMobilePhoneNumber = _internationalCode + mobilePhoneNumber;
+			var mobilePhoneNumber = Data.GetMobilePhone();
+			var customer = CustomerBuilder.New()
+				.WithEmployer(TestMask)
+				.WithBankAccountNumber(Data.GetBankAccountNumber())
+				.WithMobileNumber(mobilePhoneNumber).Build();
+			
+			var formattedMobilePhoneNumber = _internationalCode + mobilePhoneNumber.Remove(0,1);
 
 			var blacklistEntity = new BlackListEntity{MobilePhone = formattedMobilePhoneNumber, ExternalId =  Guid.NewGuid()};
 			Driver.Db.Blacklist.BlackLists.InsertOnSubmit(blacklistEntity);
@@ -64,11 +65,9 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test, AUT(AUT.Za)]
 		public void CheckpointApplicationElementNotOnBlacklistBankAccountPresent()
 		{
-			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
-
-			var bankAccount = Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == customer.Id).BankAccountsBaseEntity;
-
-			var blacklistEntity = new BlackListEntity { BankAccount = bankAccount.AccountNumber, ExternalId = Guid.NewGuid() };
+			var bankAccountNumber = Data.GetBankAccountNumber();
+			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithBankAccountNumber(Data.GetBankAccountNumber()).Build();
+			var blacklistEntity = new BlackListEntity { BankAccount = bankAccountNumber.ToString(), ExternalId = Guid.NewGuid() };
 			Driver.Db.Blacklist.BlackLists.InsertOnSubmit(blacklistEntity);
 			blacklistEntity.Submit();
 

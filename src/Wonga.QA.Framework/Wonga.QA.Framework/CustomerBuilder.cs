@@ -37,8 +37,9 @@ namespace Wonga.QA.Framework
         private String _county;
         private Guid _bankAccountId;
         private String _phoneNumber;
+		private String _mobileNumber;
     	private Int64? _bankAccountNumber;
-        private String _mobileNumber;
+        
 
         private CustomerBuilder()
         {
@@ -316,7 +317,7 @@ namespace Wonga.QA.Framework
                         {
                             r.AccountId = _id;
                             r.VerificationId = _verification;
-                        	r.MobilePhone = Data.GetPhone();
+                        	r.MobilePhone = _mobileNumber;
                         }),
                     });
                     break;
