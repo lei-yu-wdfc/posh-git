@@ -5,7 +5,7 @@ using Wonga.QA.Tests.Payments.Helpers;
 
 namespace Wonga.QA.Tests.Payments
 {
-    public class HelperTests
+    public class PaymentsHelperTests
     {
         [Test, Ignore("Partial test to assist QA. Not to run on buildsite")]
         public void CloseOutExistingCustomerLoan()

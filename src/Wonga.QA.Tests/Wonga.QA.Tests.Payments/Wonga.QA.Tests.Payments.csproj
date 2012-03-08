@@ -51,8 +51,9 @@
     <Compile Include="Helpers\Ca\CalculateFunctionsCa.cs" />
     <Compile Include="Helpers\GetPaymentFunctions.cs" />
     <Compile Include="Helpers\SendPaymentFunctions.cs" />
-    <Compile Include="HelperTests.cs" />
+    <Compile Include="PaymentsHelperTests.cs" />
     <Compile Include="PaymentsServiceTests.cs" />
+    <Compile Include="PaymentsTestsViaBankGatewayScotia.cs" />
     <Compile Include="PaymentTransactionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries\GetAccountOptionsTests.cs" />
@@ -92,6 +93,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Wonga.QA.Tests.BankGateway\Wonga.QA.Tests.BankGateway.csproj">
+      <Project>{8B39146A-E679-4850-8612-41614D0F7E5B}</Project>
+      <Name>Wonga.QA.Tests.BankGateway</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Wonga.QA.Tests.Core\Wonga.QA.Tests.Core.csproj">
       <Project>{7243F3C0-71B0-4679-960A-687052AFFDAD}</Project>
       <Name>Wonga.QA.Tests.Core</Name>

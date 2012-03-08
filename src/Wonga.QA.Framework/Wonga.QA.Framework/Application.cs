@@ -269,7 +269,7 @@ namespace Wonga.QA.Framework
             return db.Risk.RiskWorkflows.Where(p => p.ApplicationId == applicationId).ToList();
         }
 
-		private void Rewind(int absoluteDays)
+		public void Rewind(int absoluteDays)
 		{
 			// Rewinds a Loans Dates
 			ApplicationEntity application = Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id);
