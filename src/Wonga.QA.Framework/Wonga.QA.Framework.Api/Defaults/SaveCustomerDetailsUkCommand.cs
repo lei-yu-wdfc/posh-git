@@ -8,7 +8,7 @@ namespace Wonga.QA.Framework.Api
 		{
 			AccountId = Data.GetId();
 			DateOfBirth = Data.GetDoB();
-			Email = Data.GetEmail();
+			Email = Data.RandomEmail();
 			Title = Data.RandomEnum<TitleEnum>();
 			Forename = Data.GetName();
 			MiddleName = Data.GetName();

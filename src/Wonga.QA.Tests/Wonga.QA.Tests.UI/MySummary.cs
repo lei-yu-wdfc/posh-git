@@ -19,7 +19,7 @@ namespace Wonga.QA.Tests.Ui
         public void IsRepaymentWarningAvailableForLn()
         {
             var loginPage = Client.Login();
-            string email = Data.GetEmail();
+            string email = Data.RandomEmail();
             CustomerBuilder.New().WithEmailAddress(email).Build();
             var summary = loginPage.LoginAs(email);
 

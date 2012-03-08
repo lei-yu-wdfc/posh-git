@@ -7,7 +7,7 @@ namespace Wonga.QA.Framework.Api
         public override void Default()
         {
             AccountId = Data.GetId();
-            Email = Data.GetEmail();
+            Email = Data.RandomEmail();
             Forename = Data.GetName();
             Surname = Data.GetName();
             OrganisationId = Data.GetId();

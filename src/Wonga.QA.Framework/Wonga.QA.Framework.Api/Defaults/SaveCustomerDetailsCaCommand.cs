@@ -10,7 +10,7 @@ namespace Wonga.QA.Framework.Api
             Title = Data.RandomEnum<TitleEnum>();
             Forename = Data.GetName();
             Surname = Data.GetName();
-            Email = Data.GetEmail();
+            Email = Data.RandomEmail();
             DateOfBirth = Data.GetDoB();
             Gender = Data.RandomEnum<GenderEnum>();
             HomePhone = "0210000000";

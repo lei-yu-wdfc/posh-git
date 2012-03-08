@@ -107,7 +107,7 @@ namespace Wonga.QA.Generators.Core
 
         public static String GetClean(this Type type)
         {
-            return String.Join(null, type.GetName().GetCamel().Select(s => s.ToTitle()).Except(Config.Products).Except(Config.Regions).Except(Config.Suffixes));
+            return String.Join(null, type.GetName().GetCamel().Select(s => s.ToTitle()).Except(Config.Products, StringComparer.InvariantCultureIgnoreCase).Except(Config.Regions, StringComparer.InvariantCultureIgnoreCase).Except(Config.Suffixes, StringComparer.InvariantCultureIgnoreCase));
         }
 
         public static String GetSuffix(this Type type)
