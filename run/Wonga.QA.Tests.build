@@ -52,14 +52,4 @@
 	<Target Name="Default">
 		<CallTarget Targets="Config;Build;Merge;Test" />
 	</Target>
-
-  <Target Name="TestUI" DependsOnTargets="Config;Build">
-    
-    <Gallio
-			Files="$(Bin)\Wonga.QA.Tests\Wonga.QA.Tests.UI.dll"
-			ReportTypes="xml"
-			ReportDirectory="$(Bin)\Wonga.QA.Tests.Report"
-		/>
-  </Target>
-
 </Project>
