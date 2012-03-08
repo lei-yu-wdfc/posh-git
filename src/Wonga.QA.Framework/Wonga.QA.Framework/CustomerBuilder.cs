@@ -468,8 +468,8 @@ namespace Wonga.QA.Framework
 
             Driver.Api.Commands.Post(requests);
 
-            Do.Until(() => Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == _id));
-            Do.Until(() => Driver.Db.Risk.RiskAccounts.Single(a => a.AccountId == _id));
+            Do.With().Timeout(2).Until(() => Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == _id));
+            Do.With().Timeout(2).Until(() => Driver.Db.Risk.RiskAccounts.Single(a => a.AccountId == _id));
             
             switch (Config.AUT)
             {
