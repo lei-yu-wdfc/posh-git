@@ -310,6 +310,7 @@ namespace Wonga.QA.Framework
                             r.AccountId = _id;
                             r.EmployerName = _employerName;
                         	r.NextPayDate = _nextPayDate;
+                        	r.Status = _employerStatus;
                         }),
                         VerifyMobilePhoneZaCommand.New(r =>
                         {
