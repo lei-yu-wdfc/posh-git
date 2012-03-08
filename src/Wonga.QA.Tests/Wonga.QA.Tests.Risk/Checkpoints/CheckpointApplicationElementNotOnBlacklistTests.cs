@@ -11,7 +11,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	//[Parallelizable(TestScope.All), AUT(AUT.Za)]
+	[Parallelizable(TestScope.All), AUT(AUT.Za)]
 	class CheckpointApplicationElementNotOnBlacklistTests
 	{
 		private const string TestMask = "test:Blacklist";
@@ -40,14 +40,16 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test, AUT(AUT.Za)]
 		public void CheckpointApplicationElementNotOnBlacklistAccept()
 		{
-			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
+			var bankAccount = Data.GetBankAccountNumber();
+			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithBankAccountNumber(bankAccount).Build();
 			ApplicationBuilder.New(customer).Build();
 		}
 
 		[Test, AUT(AUT.Za)]
 		public void CheckpointApplicationElementNotOnBlacklistMobilePhoneNumberPresent()
 		{
-			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
+			var mobileNumber = Data.GetMobilePhone();
+			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithMobileNumber(mobileNumber).Build();
 
 			var mobilePhoneNumber = Driver.Db.Comms.CustomerDetails.Single(a => a.AccountId == customer.Id).MobilePhone.Remove(0,1);
 			var formattedMobilePhoneNumber = _internationalCode + mobilePhoneNumber;

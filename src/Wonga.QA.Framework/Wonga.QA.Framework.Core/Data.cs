@@ -80,7 +80,18 @@ namespace Wonga.QA.Framework.Core
 
         public static string GetMobilePhone()
         {
-            return "07500000000";
+        	switch (Config.AUT)
+        	{
+        		case AUT.Za:
+        			{
+        				return "021" + RandomLong(1000000, 9999999);
+        			}
+						
+				default:
+        		{
+        			return "07500000000";
+        		}
+        	}
         }
 
         public static String GetNationalNumber()
@@ -122,6 +133,11 @@ namespace Wonga.QA.Framework.Core
         {
             return new Date(DateTime.UtcNow.AddDays(10), DateFormat.Date);
         }
+
+		public static Int64 GetBankAccountNumber()
+		{
+			return RandomLong(10000000000, 99999999999);
+		}
 
         public static String GetNIN(DateTime dob, Boolean female)
         {
