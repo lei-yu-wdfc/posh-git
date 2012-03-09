@@ -65,7 +65,7 @@ namespace Wonga.QA.Tests.Ui
             _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
 
             _actualDate = DateTime.Now.AddDays(randomDuration);
-            Assert.AreEqual(_repaymentDate, String.Format("{0:d MMM yyyy}", _actualDate));
+            Assert.AreEqual(_repaymentDate, String.Format(CultureInfo.InvariantCulture, "{0:d MMM yyyy}", _actualDate));
         }
 
         [Test, AUT(AUT.Za), JIRA("QA-149")]
