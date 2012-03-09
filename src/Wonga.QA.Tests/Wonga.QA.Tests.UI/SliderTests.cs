@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Globalization;
+using System.Threading;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
@@ -45,8 +46,8 @@ namespace Wonga.QA.Tests.Ui
 
 
             _response = Driver.Api.Queries.Post(request);
-            _amountMax = (int)Decimal.Parse(_response.Values["AmountMax"].Single());
-            _amountMin = (int)Decimal.Parse(_response.Values["AmountMin"].Single());
+            _amountMax = (int)Decimal.Parse(_response.Values["AmountMax"].Single(), CultureInfo.InvariantCulture);
+            _amountMin = (int)Double.Parse(_response.Values["AmountMin"].Single(), CultureInfo.InvariantCulture);
             _termMax = Int32.Parse(_response.Values["TermMax"].Single());
             _termMin = Int32.Parse(_response.Values["TermMin"].Single());
 
@@ -240,9 +241,5 @@ namespace Wonga.QA.Tests.Ui
             page.Help.HelpTriggerClick();
             Assert.AreEqual(maxLoanDuration.ToString(), page.Sliders.HowLong);
         }
-
-
-
-
     }
 }
