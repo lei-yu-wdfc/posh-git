@@ -54,9 +54,8 @@ namespace Wonga.QA.Tests.Payments
 
         [Test, AUT(AUT.Ca), JIRA("CA-1472")]
         [Row(12), Row(10), Row(11), Row(15), Row(19), Row(30)]
-        public void VerifyInterestAmountCharged(int term)
+        public void VerifyInterestAmountCharged(int loanTerm)
         {
-            var loanTerm = term;
             const decimal loanAmount = 100;
             SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
 
@@ -74,9 +73,8 @@ namespace Wonga.QA.Tests.Payments
 
         [Test, AUT(AUT.Ca), JIRA("CA-1472")]
         [Row(9), Row(15)]
-        public void VerifyLoanClosedAfterPaymentFullRecieved(int term)
+        public void VerifyLoanClosedAfterPaymentFullRecieved(int loanTerm)
         {
-            var loanTerm = term;
             const decimal loanAmount = 100;
 
             SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);

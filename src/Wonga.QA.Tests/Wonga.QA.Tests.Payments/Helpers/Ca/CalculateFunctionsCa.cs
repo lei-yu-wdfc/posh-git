@@ -29,7 +29,7 @@ namespace Wonga.QA.Tests.Payments.Helpers.Ca
                                  MidpointRounding.AwayFromZero);
         }
 
-        public static decimal CalculateExpectedEarlyRepaymentVariableInterestAmountAppliedCa(decimal loanAmount, int loanTerm, int earlyRepaymentTerm, int earlyRepaymentAmount)
+        public static decimal CalculateExpectedEarlyRepaymentVariableInterestAmountAppliedCa(decimal loanAmount, int loanTerm, int earlyRepaymentTerm, decimal earlyRepaymentAmount)
         {
             var dailyInterestRateOne = CalculateTotalDailyInterestRateCa(earlyRepaymentTerm);
             var dailyInterestRateTwo = CalculateTotalDailyInterestRateCa(loanTerm, earlyRepaymentTerm + 1);

@@ -33,6 +33,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BankGatewayServiceTests.cs" />
+    <Compile Include="Enums\BankGatewayTransactionStatus.cs" />
+    <Compile Include="Helpers\TimeoutBankGatewayFunctions.cs" />
+    <Compile Include="Helpers\WaitBankGatewayFunctions.cs" />
     <Compile Include="HsbcCashOutTests.cs" />
     <Compile Include="HsbcSortCodesTests.cs" />
     <Compile Include="AccountHolderVerificationTests.cs" />
