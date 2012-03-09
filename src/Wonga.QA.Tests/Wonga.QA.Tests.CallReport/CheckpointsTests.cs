@@ -25,7 +25,6 @@ namespace Wonga.QA.Tests.CallReport
             Assert.AreEqual(riskWorkflows.Count,1,"There should be 1 risk workflow");
             Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.ApplicantIsAlive));
             Assert.AreEqual((CreditBureauEnum) riskWorkflows[0].CreditBureauUsed, CreditBureauEnum.CallReport);
-            //omg
         }
 
         [Test, AUT(AUT.Wb)]
