@@ -15,7 +15,7 @@ namespace Wonga.QA.Tests.Payments
 {
     public class FixedTermLoanOfferTests
     {
-        private const string DateOverrideKey = "Payments.DateOverrideKey.DateTime.UtcNow";
+		private const string DateOverrideKey = "Payments.FixedTermLoanOfferHandler.DateTime.UtcNow";
 		private static readonly int[] _payDayPerMonth = Driver.Db.GetServiceConfiguration("Payments.PayDayPerMonth").Value.Split(',').Select(Int32.Parse).ToArray();
 		private static readonly int[] _payDayPlusToMaxTerm = Driver.Db.GetServiceConfiguration("Payments.PayDayPlusToMaxTerm").Value.Split(',').Select(Int32.Parse).ToArray();
 		private static readonly int _sliderTermAddDays = Int32.Parse(Driver.Db.GetServiceConfiguration("Payments.SliderTermAddDays").Value);
