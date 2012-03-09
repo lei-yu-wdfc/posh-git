@@ -134,6 +134,9 @@ namespace Wonga.QA.Tests.Payments
 			Assert.IsFalse(new DbDriver().OpsSagas.ScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id));
 		}
 
+		//[Test, AUT(AUT.Za)]
+		//public void CollectionsNaedo
+
 		#region Helpers
 
 		private void AttemptNaedoCollection(Application application, uint attempt)
