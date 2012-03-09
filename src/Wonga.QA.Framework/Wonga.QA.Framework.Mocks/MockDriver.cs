@@ -1,21 +1,21 @@
 ﻿using System;
+using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework.Mocks
 {
     public class MockDriver
     {
         /// <summary>
-        /// Lazy BankGatewayScotia object
+        /// Lazy Scotia object
         /// </summary>
-        private readonly Lazy<BankGatewayScotia> _bankGatewayScotia = new Lazy<BankGatewayScotia>();
+        private Scotia _scotia;
 
         /// <summary>
-        /// BankGatewayScotia. Instantiated lazily.
+        /// Scotia. Instantiated lazily.
         /// </summary>
-        public BankGatewayScotia BankGatewayScotia
+        public Scotia Scotia
         {
-            get { return _bankGatewayScotia.Value; }
+            get { return _scotia ?? (_scotia = new Scotia()); }
         }
-
     }
 }

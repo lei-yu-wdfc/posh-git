@@ -9,12 +9,12 @@ using Wonga.QA.Framework.Mocks.Entities;
 
 namespace Wonga.QA.Framework.Mocks
 {
-    public class BankGatewayScotia
+    public class Scotia
     {
         private readonly DbDriver _dbDriver;
         private const string _onlineBillPaymentRemittanceReport = "EBBADATA";
 
-        public BankGatewayScotia()
+        public Scotia()
         {
             _dbDriver = new DbDriver();
         }
