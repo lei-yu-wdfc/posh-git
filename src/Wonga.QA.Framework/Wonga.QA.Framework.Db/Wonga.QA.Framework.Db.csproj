@@ -33,7 +33,6 @@
     <NoWarn />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Databases\BiDatabase.cs" />
     <Compile Include="DbDatabase.cs" />
     <Compile Include="DbDriver.cs" />
     <Compile Include="DbEntity.cs" />
@@ -44,6 +43,7 @@
     <Compile Include="Temp\OpsSagasWbDatabase.cs" />
     <Compile Include="Temp\OpsSagasZaDatabase.cs" />
     <Compile Include="Databases\BankGatewayDatabase.cs" />
+    <Compile Include="Databases\BiDatabase.cs" />
     <Compile Include="Databases\BlacklistDatabase.cs" />
     <Compile Include="Databases\CallReportDatabase.cs" />
     <Compile Include="Databases\CallValidateDatabase.cs" />
