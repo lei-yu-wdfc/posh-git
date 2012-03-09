@@ -202,6 +202,7 @@
     <Compile Include="Requests\SubmitApplicationBehaviourCommand.cs" />
     <Compile Include="Requests\SubmitClientWatermarkCommand.cs" />
     <Compile Include="Requests\SubmitCounterOfferCommand.cs" />
+    <Compile Include="Requests\SubmitNumberOfGuarantorsCommand.cs" />
     <Compile Include="Requests\SubmitUidAnswersCommand.cs" />
     <Compile Include="Requests\UpdateCustomerAddressCaCommand.cs" />
     <Compile Include="Requests\UpdateCustomerAddressUkCommand.cs" />
@@ -211,6 +212,7 @@
     <Compile Include="Requests\UpdateHomePhoneCaCommand.cs" />
     <Compile Include="Requests\UpdateHomePhoneUkCommand.cs" />
     <Compile Include="Requests\UpdateHomePhoneZaCommand.cs" />
+    <Compile Include="Requests\UpdateLoanTermWbUkCommand.cs" />
     <Compile Include="Requests\UpdateMobilePhoneUkCommand.cs" />
     <Compile Include="Requests\VerifyFixedTermLoanCommand.cs" />
     <Compile Include="Requests\VerifyHomePhoneCaCommand.cs" />

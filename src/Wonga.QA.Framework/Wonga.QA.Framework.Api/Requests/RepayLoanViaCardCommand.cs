@@ -12,5 +12,6 @@ namespace Wonga.QA.Framework.Api
         public Object Amount { get; set; }
         public Object PaymentCardCv2 { get; set; }
         public Object RepaymentRequestId { get; set; }
+        public Object ActionDate { get; set; }
     }
 }
