@@ -82,6 +82,7 @@ namespace Wonga.QA.Framework.Core
 
         public T Until<T>(Func<T> predicate)
         {
+            Exception exception = null;
             Stopwatch stopwatch = Stopwatch.StartNew();
             while (stopwatch.Elapsed < _timeout)
                 try
@@ -91,11 +92,12 @@ namespace Wonga.QA.Framework.Core
                         return t;
                     Thread.Sleep(_interval);
                 }
-                catch
+                catch (Exception e)
                 {
+                    exception = e;
                     Thread.Sleep(_interval);
                 }
-            throw new TimeoutException(_message());
+            throw new TimeoutException(_message(), exception);
         }
 
         public void While<T>(Func<T> predicate)
