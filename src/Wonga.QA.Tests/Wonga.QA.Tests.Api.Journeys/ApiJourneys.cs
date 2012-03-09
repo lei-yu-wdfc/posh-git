@@ -66,29 +66,6 @@ namespace Wonga.QA.Tests.Journeys
 
 		}
 
-		[Test, AUT(AUT.Za)]
-		public void IsHardship()
-		{
-			var customer = CustomerBuilder.New().Build();
-
-			Driver.Msmq.Payments.Send(new RegisterHardshipCommand(){AccountId = customer.Id, HasHardship = true});
-			Do.Until(() => Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == customer.Id).IsHardship == true);
-
-			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
-		}
-
-		[Test, AUT(AUT.Za)]
-		public void IsDispute()
-		{
-			var customer = CustomerBuilder.New().Build();
-			ApplicationBuilder.New(customer).Build();
-
-			Driver.Msmq.Risk.Send(new RegisterDisputeCommand() { AccountId = customer.Id, HasDispute = true });
-			Do.Until(() => Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == customer.Id).IsDispute);
-
-			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
-		}
-
         public abstract class GivenAL0CustomerWithAnOpenLoan
         {
             protected Customer Customer;
