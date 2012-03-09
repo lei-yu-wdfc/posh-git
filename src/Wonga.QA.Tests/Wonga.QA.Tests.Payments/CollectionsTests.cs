@@ -134,9 +134,6 @@ namespace Wonga.QA.Tests.Payments
 			Assert.IsFalse(new DbDriver().OpsSagas.ScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id));
 		}
 
-		//[Test, AUT(AUT.Za)]
-		//public void CollectionsNaedo
-
 		#region Helpers
 
 		private void AttemptNaedoCollection(Application application, uint attempt)
@@ -169,7 +166,7 @@ namespace Wonga.QA.Tests.Payments
 			var scheduledPaymentSaga = db.OpsSagas.ScheduledPaymentSagaEntities.Single(a => a.ApplicationGuid == application.Id);
 
 			var expectedPaymentRequestDate = GetExpectedPaymentRequestDate(application, attempt, now);
-			var expectedTrackingDays = GetExpectedTrackingDays(attempt, expectedPaymentRequestDate);
+			var expectedTrackingDays = GetExpectedTrackingDays(application, expectedPaymentRequestDate, now);
 
 			Assert.AreEqual(expectedPaymentRequestDate, scheduledPaymentSaga.PaymentRequestDate);
 			Assert.AreEqual(expectedTrackingDays, scheduledPaymentSaga.TrackingDays);
@@ -236,7 +233,10 @@ namespace Wonga.QA.Tests.Payments
 				case 1:
 					{
 						//Payday of month - 1
-						return Driver.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, now.Month, GetSelfReportedPayDayForApplication(application) - 1)));
+						var selfReportedPayDay = GetSelfReportedPayDayForApplication(application);
+						var validPayDay = Driver.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, now.Month,  selfReportedPayDay))).DateTime.Day;
+
+						return Driver.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, now.Month,  validPayDay - 1)));
 					}
 				case 2:
 					{
@@ -255,19 +255,24 @@ namespace Wonga.QA.Tests.Payments
 			}
 		}
 
-		private int GetExpectedTrackingDays(uint attempt, DateTime paymentRequestDate)
+		private int GetExpectedTrackingDays(Application application, DateTime paymentRequestDate, DateTime now)
 		{
-			if (attempt == 0 || attempt == 1)
+			int trackingDays = 0;
+
+			if( paymentRequestDate.Day > TrackingDayThreshold)
+				trackingDays = (DateTime.DaysInMonth(paymentRequestDate.Year, paymentRequestDate.Month) + 1) - paymentRequestDate.Day;
+
+			else
+				trackingDays = 3;
+
+			//Facilitates an odd edge case where the self reported payday is on a sunday or holiday
+			var payDay = GetSelfReportedPayDayForApplication(application);
+			if (!Driver.Db.IsWorkingDay(new Date(new DateTime(now.Year, now.Month, payDay))) && paymentRequestDate.Day > TrackingDayThreshold)
 			{
-				return paymentRequestDate.Day > TrackingDayThreshold ? 14 : 3;
+				trackingDays -= 1;
 			}
 
-			if (attempt == 2 || attempt == 3)
-			{
-				return (DateTime.DaysInMonth(paymentRequestDate.Year, paymentRequestDate.Month) + 1) - paymentRequestDate.Day;
-			}
-
-			throw new Exception(String.Format("We don't Naedo {0} times.", attempt));
+			return trackingDays;
 		}
 
 		private FixedTermLoanApplicationEntity GetFixedTermLoanApplicationEntity(Application application)
