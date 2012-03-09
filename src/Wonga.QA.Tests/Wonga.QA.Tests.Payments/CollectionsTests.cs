@@ -17,25 +17,13 @@ namespace Wonga.QA.Tests.Payments
 		private const int MaximumRetries = 4;
 		private const string NowServiceConfigKey = "Payments.ProcessScheduledPaymentSaga.DateTime.UtcNow";
 
-		[FixtureSetUp]
+		[SetUp]
 		public void FixtureSetUp()
 		{
-			var db = new DbDriver();
-
-			var paymentsNowDb = db.Ops.ServiceConfigurations.Where(a => a.Key == NowServiceConfigKey);
-
-			if (!paymentsNowDb.Any())
-			{
-				db.Ops.ServiceConfigurations.InsertOnSubmit(new ServiceConfigurationEntity { Key = NowServiceConfigKey, Value = DateTime.UtcNow.ToString("yyyy-MM-dd") });
-				db.Ops.SubmitChanges();
-			}
-			else
-			{
 				SetPaymentsUtcNow(DateTime.UtcNow);
-			}
 		}
 
-		[FixtureTearDown]
+		[TearDown]
 		public void FixtureTearDown()
 		{
 			var db = new DbDriver();
@@ -299,10 +287,7 @@ namespace Wonga.QA.Tests.Payments
 
 		private void SetPaymentsUtcNow(DateTime dateTime)
 		{
-			var db = new DbDriver();
-			var dbEntry = db.Ops.ServiceConfigurations.Single(a => a.Key == NowServiceConfigKey);
-			dbEntry.Value = dateTime.ToString("yyyy-MM-dd hh:mm:ss");
-			db.Ops.SubmitChanges();
+			Driver.Db.SetServiceConfiguration(NowServiceConfigKey, dateTime.ToString("yyyy-MM-dd hh:mm:ss"));
 		}
 
 		public int[] GetDefaultPayDaysOfMonth()
