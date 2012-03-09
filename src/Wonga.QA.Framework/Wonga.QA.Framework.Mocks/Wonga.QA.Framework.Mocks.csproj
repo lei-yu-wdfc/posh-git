@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\bin\Wonga.QA.Framework\</OutputPath>
+    <OutputPath>$(SolutionDir)\..\..\bin\$(SolutionName)</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -25,7 +25,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>$(SolutionDir)\..\..\bin\$(SolutionName)</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -34,11 +34,6 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Scotia.cs" />
@@ -48,10 +43,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Wonga.QA.Framework.Core\Wonga.QA.Framework.Core.csproj">
-      <Project>{BACA1D90-F604-476F-ACDE-A9839E85147F}</Project>
-      <Name>Wonga.QA.Framework.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Wonga.QA.Framework.Db\Wonga.QA.Framework.Db.csproj">
       <Project>{06D44CDD-9AB7-47EC-8D7A-0E548465EF9D}</Project>
       <Name>Wonga.QA.Framework.Db</Name>
