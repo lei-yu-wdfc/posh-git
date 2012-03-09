@@ -20,7 +20,7 @@ namespace Wonga.QA.Tests.Payments
 		[SetUp]
 		public void FixtureSetUp()
 		{
-				SetPaymentsUtcNow(DateTime.UtcNow);
+			SetPaymentsUtcNow(DateTime.UtcNow);
 		}
 
 		[TearDown]

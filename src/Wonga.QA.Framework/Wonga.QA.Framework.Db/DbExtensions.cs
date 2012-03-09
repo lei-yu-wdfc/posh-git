@@ -117,7 +117,8 @@ namespace Wonga.QA.Framework.Db
 
 			if( serviceConfig == null)
 			{
-				db.Ops.ServiceConfigurations.Insert(new ServiceConfigurationEntity {Key = key, Value = value});
+				serviceConfig = new ServiceConfigurationEntity {Key = key, Value = value};
+				db.Ops.ServiceConfigurations.InsertOnSubmit(serviceConfig);
 				db.Ops.SubmitChanges();
 			}
 
