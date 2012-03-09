@@ -39,9 +39,6 @@ namespace Wonga.QA.Framework.Db.ContactManagement
     partial void InsertMSSQLDeploy(MSSQLDeploy instance);
     partial void UpdateMSSQLDeploy(MSSQLDeploy instance);
     partial void DeleteMSSQLDeploy(MSSQLDeploy instance);
-    partial void InsertOrganisationApplicationHistoryEntity(OrganisationApplicationHistoryEntity instance);
-    partial void UpdateOrganisationApplicationHistoryEntity(OrganisationApplicationHistoryEntity instance);
-    partial void DeleteOrganisationApplicationHistoryEntity(OrganisationApplicationHistoryEntity instance);
     partial void InsertOrganisationDetailEntity(OrganisationDetailEntity instance);
     partial void UpdateOrganisationDetailEntity(OrganisationDetailEntity instance);
     partial void DeleteOrganisationDetailEntity(OrganisationDetailEntity instance);
@@ -92,14 +89,6 @@ namespace Wonga.QA.Framework.Db.ContactManagement
 			get
 			{
 				return this.GetTable<MSSQLDeploy>();
-			}
-		}
-		
-		public System.Data.Linq.Table<OrganisationApplicationHistoryEntity> OrganisationApplicationHistories
-		{
-			get
-			{
-				return this.GetTable<OrganisationApplicationHistoryEntity>();
 			}
 		}
 		
@@ -826,140 +815,6 @@ namespace Wonga.QA.Framework.Db.ContactManagement
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="ContactManagement.OrganisationApplicationHistory")]
-	public partial class OrganisationApplicationHistoryEntity : DbEntity<OrganisationApplicationHistoryEntity>, INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _RecordId;
-		
-		private System.Guid _OrganisationId;
-		
-		private System.Nullable<System.DateTime> _CreatedOn;
-		
-		private System.Guid _ApplicationId;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnRecordIdChanging(int value);
-    partial void OnRecordIdChanged();
-    partial void OnOrganisationIdChanging(System.Guid value);
-    partial void OnOrganisationIdChanged();
-    partial void OnCreatedOnChanging(System.Nullable<System.DateTime> value);
-    partial void OnCreatedOnChanged();
-    partial void OnApplicationIdChanging(System.Guid value);
-    partial void OnApplicationIdChanged();
-    #endregion
-		
-		public OrganisationApplicationHistoryEntity()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RecordId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int RecordId
-		{
-			get
-			{
-				return this._RecordId;
-			}
-			set
-			{
-				if ((this._RecordId != value))
-				{
-					this.OnRecordIdChanging(value);
-					this.SendPropertyChanging();
-					this._RecordId = value;
-					this.SendPropertyChanged("RecordId");
-					this.OnRecordIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrganisationId", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid OrganisationId
-		{
-			get
-			{
-				return this._OrganisationId;
-			}
-			set
-			{
-				if ((this._OrganisationId != value))
-				{
-					this.OnOrganisationIdChanging(value);
-					this.SendPropertyChanging();
-					this._OrganisationId = value;
-					this.SendPropertyChanged("OrganisationId");
-					this.OnOrganisationIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedOn", DbType="DateTime")]
-		public System.Nullable<System.DateTime> CreatedOn
-		{
-			get
-			{
-				return this._CreatedOn;
-			}
-			set
-			{
-				if ((this._CreatedOn != value))
-				{
-					this.OnCreatedOnChanging(value);
-					this.SendPropertyChanging();
-					this._CreatedOn = value;
-					this.SendPropertyChanged("CreatedOn");
-					this.OnCreatedOnChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplicationId", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid ApplicationId
-		{
-			get
-			{
-				return this._ApplicationId;
-			}
-			set
-			{
-				if ((this._ApplicationId != value))
-				{
-					this.OnApplicationIdChanging(value);
-					this.SendPropertyChanging();
-					this._ApplicationId = value;
-					this.SendPropertyChanged("ApplicationId");
-					this.OnApplicationIdChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="ContactManagement.OrganisationDetails")]
 	public partial class OrganisationDetailEntity : DbEntity<OrganisationDetailEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -978,8 +833,6 @@ namespace Wonga.QA.Framework.Db.ContactManagement
 		
 		private string _VatNumber;
 		
-		private int _DataCorrelated;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -996,8 +849,6 @@ namespace Wonga.QA.Framework.Db.ContactManagement
     partial void OnRegisteredNumberChanged();
     partial void OnVatNumberChanging(string value);
     partial void OnVatNumberChanged();
-    partial void OnDataCorrelatedChanging(int value);
-    partial void OnDataCorrelatedChanged();
     #endregion
 		
 		public OrganisationDetailEntity()
@@ -1121,26 +972,6 @@ namespace Wonga.QA.Framework.Db.ContactManagement
 					this._VatNumber = value;
 					this.SendPropertyChanged("VatNumber");
 					this.OnVatNumberChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DataCorrelated", DbType="Int NOT NULL")]
-		public int DataCorrelated
-		{
-			get
-			{
-				return this._DataCorrelated;
-			}
-			set
-			{
-				if ((this._DataCorrelated != value))
-				{
-					this.OnDataCorrelatedChanging(value);
-					this.SendPropertyChanging();
-					this._DataCorrelated = value;
-					this.SendPropertyChanged("DataCorrelated");
-					this.OnDataCorrelatedChanged();
 				}
 			}
 		}

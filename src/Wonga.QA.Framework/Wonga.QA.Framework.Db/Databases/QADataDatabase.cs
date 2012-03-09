@@ -48,6 +48,9 @@ namespace Wonga.QA.Framework.Db.QAData
     partial void InsertGraydonCompanyReport(GraydonCompanyReport instance);
     partial void UpdateGraydonCompanyReport(GraydonCompanyReport instance);
     partial void DeleteGraydonCompanyReport(GraydonCompanyReport instance);
+    partial void InsertIncomingBankGatewayScotiaFile(IncomingBankGatewayScotiaFile instance);
+    partial void UpdateIncomingBankGatewayScotiaFile(IncomingBankGatewayScotiaFile instance);
+    partial void DeleteIncomingBankGatewayScotiaFile(IncomingBankGatewayScotiaFile instance);
     partial void InsertIovationDataOutput(IovationDataOutput instance);
     partial void UpdateIovationDataOutput(IovationDataOutput instance);
     partial void DeleteIovationDataOutput(IovationDataOutput instance);
@@ -125,6 +128,14 @@ namespace Wonga.QA.Framework.Db.QAData
 			get
 			{
 				return this.GetTable<GraydonCompanyReport>();
+			}
+		}
+		
+		public System.Data.Linq.Table<IncomingBankGatewayScotiaFile> IncomingBankGatewayScotiaFiles
+		{
+			get
+			{
+				return this.GetTable<IncomingBankGatewayScotiaFile>();
 			}
 		}
 		
@@ -1044,6 +1055,92 @@ namespace Wonga.QA.Framework.Db.QAData
 					this._CompanyProducts = value;
 					this.SendPropertyChanged("CompanyProducts");
 					this.OnCompanyProductsChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.IncomingBankGatewayScotiaFile")]
+	public partial class IncomingBankGatewayScotiaFile : DbEntity<IncomingBankGatewayScotiaFile>, INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _FileName;
+		
+		private System.Data.Linq.Binary _File;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnFileNameChanging(string value);
+    partial void OnFileNameChanged();
+    partial void OnFileChanging(System.Data.Linq.Binary value);
+    partial void OnFileChanged();
+    #endregion
+		
+		public IncomingBankGatewayScotiaFile()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FileName", DbType="NVarChar(150) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string FileName
+		{
+			get
+			{
+				return this._FileName;
+			}
+			set
+			{
+				if ((this._FileName != value))
+				{
+					this.OnFileNameChanging(value);
+					this.SendPropertyChanging();
+					this._FileName = value;
+					this.SendPropertyChanged("FileName");
+					this.OnFileNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_File", DbType="VarBinary(1) NOT NULL", CanBeNull=false)]
+		public System.Data.Linq.Binary File
+		{
+			get
+			{
+				return this._File;
+			}
+			set
+			{
+				if ((this._File != value))
+				{
+					this.OnFileChanging(value);
+					this.SendPropertyChanging();
+					this._File = value;
+					this.SendPropertyChanged("File");
+					this.OnFileChanged();
 				}
 			}
 		}

@@ -2243,9 +2243,13 @@ namespace Wonga.QA.Framework.Db.Risk
 		
 		private string _EventType;
 		
-		private System.Guid _SubjectId;
+		private System.Guid _PublisherSagaId;
 		
-		private System.Guid _SubscriberId;
+		private System.Guid _SubscriberSagaId;
+		
+		private string _SubscriberType;
+		
+		private string _PublisherType;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -2255,10 +2259,14 @@ namespace Wonga.QA.Framework.Db.Risk
     partial void OnInternalSubscriptionIdChanged();
     partial void OnEventTypeChanging(string value);
     partial void OnEventTypeChanged();
-    partial void OnSubjectIdChanging(System.Guid value);
-    partial void OnSubjectIdChanged();
-    partial void OnSubscriberIdChanging(System.Guid value);
-    partial void OnSubscriberIdChanged();
+    partial void OnPublisherSagaIdChanging(System.Guid value);
+    partial void OnPublisherSagaIdChanged();
+    partial void OnSubscriberSagaIdChanging(System.Guid value);
+    partial void OnSubscriberSagaIdChanged();
+    partial void OnSubscriberTypeChanging(string value);
+    partial void OnSubscriberTypeChanged();
+    partial void OnPublisherTypeChanging(string value);
+    partial void OnPublisherTypeChanged();
     #endregion
 		
 		public InternalSubscriptionEntity()
@@ -2306,42 +2314,82 @@ namespace Wonga.QA.Framework.Db.Risk
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SubjectId", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid SubjectId
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PublisherSagaId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid PublisherSagaId
 		{
 			get
 			{
-				return this._SubjectId;
+				return this._PublisherSagaId;
 			}
 			set
 			{
-				if ((this._SubjectId != value))
+				if ((this._PublisherSagaId != value))
 				{
-					this.OnSubjectIdChanging(value);
+					this.OnPublisherSagaIdChanging(value);
 					this.SendPropertyChanging();
-					this._SubjectId = value;
-					this.SendPropertyChanged("SubjectId");
-					this.OnSubjectIdChanged();
+					this._PublisherSagaId = value;
+					this.SendPropertyChanged("PublisherSagaId");
+					this.OnPublisherSagaIdChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SubscriberId", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid SubscriberId
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SubscriberSagaId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid SubscriberSagaId
 		{
 			get
 			{
-				return this._SubscriberId;
+				return this._SubscriberSagaId;
 			}
 			set
 			{
-				if ((this._SubscriberId != value))
+				if ((this._SubscriberSagaId != value))
 				{
-					this.OnSubscriberIdChanging(value);
+					this.OnSubscriberSagaIdChanging(value);
 					this.SendPropertyChanging();
-					this._SubscriberId = value;
-					this.SendPropertyChanged("SubscriberId");
-					this.OnSubscriberIdChanged();
+					this._SubscriberSagaId = value;
+					this.SendPropertyChanged("SubscriberSagaId");
+					this.OnSubscriberSagaIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SubscriberType", DbType="VarChar(200)")]
+		public string SubscriberType
+		{
+			get
+			{
+				return this._SubscriberType;
+			}
+			set
+			{
+				if ((this._SubscriberType != value))
+				{
+					this.OnSubscriberTypeChanging(value);
+					this.SendPropertyChanging();
+					this._SubscriberType = value;
+					this.SendPropertyChanged("SubscriberType");
+					this.OnSubscriberTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PublisherType", DbType="VarChar(200)")]
+		public string PublisherType
+		{
+			get
+			{
+				return this._PublisherType;
+			}
+			set
+			{
+				if ((this._PublisherType != value))
+				{
+					this.OnPublisherTypeChanging(value);
+					this.SendPropertyChanging();
+					this._PublisherType = value;
+					this.SendPropertyChanged("PublisherType");
+					this.OnPublisherTypeChanged();
 				}
 			}
 		}
@@ -4191,6 +4239,8 @@ namespace Wonga.QA.Framework.Db.Risk
 		
 		private System.Nullable<byte> _PriceTier;
 		
+		private System.Nullable<int> _GuarantorCount;
+		
 		private EntityRef<ApplicationBehaviourEntity> _ApplicationBehaviourEntity;
 		
 		private EntityRef<RiskBusinessApplicationEntity> _RiskBusinessApplicationEntity;
@@ -4265,6 +4315,8 @@ namespace Wonga.QA.Framework.Db.Risk
     partial void OnMainCardRepayRateChanged();
     partial void OnPriceTierChanging(System.Nullable<byte> value);
     partial void OnPriceTierChanged();
+    partial void OnGuarantorCountChanging(System.Nullable<int> value);
+    partial void OnGuarantorCountChanged();
     #endregion
 		
 		public RiskApplicationEntity()
@@ -4877,6 +4929,26 @@ namespace Wonga.QA.Framework.Db.Risk
 					this._PriceTier = value;
 					this.SendPropertyChanged("PriceTier");
 					this.OnPriceTierChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GuarantorCount", DbType="Int")]
+		public System.Nullable<int> GuarantorCount
+		{
+			get
+			{
+				return this._GuarantorCount;
+			}
+			set
+			{
+				if ((this._GuarantorCount != value))
+				{
+					this.OnGuarantorCountChanging(value);
+					this.SendPropertyChanging();
+					this._GuarantorCount = value;
+					this.SendPropertyChanged("GuarantorCount");
+					this.OnGuarantorCountChanged();
 				}
 			}
 		}
