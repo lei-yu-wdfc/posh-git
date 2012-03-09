@@ -25,6 +25,30 @@ namespace Wonga.QA.Framework.Db
 			return new DbDriver().Payments.CalendarDates.Any(a => a.IsBankHoliday && a.Date == date);
 		}
 
+		public static bool IsWorkingDay(this DbDriver db, Date date)
+		{
+			if (db.IsHoliday(date)) return false;
+
+			switch (Config.AUT)
+			{
+				case (AUT.Za):
+					{
+							if( date.DateTime.DayOfWeek == DayOfWeek.Sunday)
+								return false;
+					}
+					break;
+
+				default:
+					{
+						if (date.DateTime.DayOfWeek == DayOfWeek.Saturday || date.DateTime.DayOfWeek == DayOfWeek.Sunday)
+							return false;
+					}
+					break;
+			}
+
+			return true;
+		}
+
 		public static Date GetNextWorkingDay(this DbDriver db, Date date)
 		{
 			switch (Config.AUT)
@@ -93,8 +117,9 @@ namespace Wonga.QA.Framework.Db
 
 			if( serviceConfig == null)
 			{
-				db.Ops.ServiceConfigurations.Insert(new ServiceConfigurationEntity {Key = key, Value = value});
-				return;
+				serviceConfig = new ServiceConfigurationEntity {Key = key, Value = value};
+				db.Ops.ServiceConfigurations.InsertOnSubmit(serviceConfig);
+				db.Ops.SubmitChanges();
 			}
 
 			serviceConfig.Value = value;
