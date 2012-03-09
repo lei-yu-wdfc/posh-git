@@ -20,7 +20,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             Do.Until(customer.GetPaymentCard);
             Application application = ApplicationBuilder.New(customer).Build();
 
-            var response = Driver.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = customer.Id });
+            var response = Driver.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = customer.Id, TrustRating=400.00M });
             Assert.GreaterThan(int.Parse(response.Values["ScenarioId"].Single()), 1);
             // ToDo: Assert Options
             //Assert.GreaterThan(int.Parse(response.Values["DaysTillRepaymentDate"].Single()), 0);
