@@ -65,5 +65,10 @@ namespace Wonga.QA.Framework
             customerDetailsRow.Surname = surname;
             db.Comms.SubmitChanges();
         }
+
+        public string GetCcin()
+        {
+            return Do.Until(() => Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == Id)).Ccin;
+        }
     }
 }
