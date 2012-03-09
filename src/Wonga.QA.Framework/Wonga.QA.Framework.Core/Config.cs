@@ -15,6 +15,7 @@ namespace Wonga.QA.Framework.Core
         public static Boolean Proxy { get; set; }
 
         public static ApiConfig Api { get; set; }
+        public static CsConfig Cs { get; set; }
         public static SvcConfig Svc { get; set; }
         public static MsmqConfig Msmq { get; set; }
         public static DbConfig Db { get; set; }
@@ -30,6 +31,7 @@ namespace Wonga.QA.Framework.Core
             {
                 case SUT.Dev:
                     Api = new ApiConfig("localhost");
+                    Cs = new CsConfig("localhost");
                     Svc = new SvcConfig(".");
                     Msmq = new MsmqConfig(".");
                     Db = new DbConfig(".");
@@ -37,6 +39,7 @@ namespace Wonga.QA.Framework.Core
                     break;
                 case SUT.WIP:
                     Api = new ApiConfig(String.Format("wip.api.{0}.wonga.com", AUT));
+                    Cs = new CsConfig(String.Format("wip.csapi.{0}.wonga.com", AUT));
                     Svc =
                         AUT == AUT.Uk ? new SvcConfig("WIP2") :
                         AUT == AUT.Za ? new SvcConfig("WIP4") :
@@ -56,6 +59,7 @@ namespace Wonga.QA.Framework.Core
                     break;
                 case SUT.WIPRelease:
                     Api = new ApiConfig(String.Format("wip.release.api.{0}.wonga.com", AUT));
+                    Cs = new CsConfig(String.Format("wip.release.csapi.{0}.wonga.com", AUT));
                     Svc =
                         AUT == AUT.Ca ? new SvcConfig("ca-rel-wip-app") :
                         AUT == AUT.Za ? new SvcConfig("za-rel-wip-app") : Throw<SvcConfig>();
@@ -69,6 +73,7 @@ namespace Wonga.QA.Framework.Core
                     break;
                 case SUT.UAT:
                     Api = new ApiConfig(String.Format("uat.api.{0}.wonga.com", AUT));
+                    Cs = new CsConfig(String.Format("uat.csapi.{0}.wonga.com", AUT));
                     Svc =
                         AUT == AUT.Uk ? new SvcConfig("UAT2") :
                         AUT == AUT.Za ? new SvcConfig("UAT4") :
@@ -88,6 +93,7 @@ namespace Wonga.QA.Framework.Core
                     break;
                 case SUT.RC:
                     Api = new ApiConfig(String.Format("rc.api.{0}.wonga.com", AUT));
+                    Cs = new CsConfig(String.Format("rc.csapi.{0}.wonga.com", AUT));
                     Svc =
                         AUT == AUT.Uk ? new SvcConfig("RC2") :
                         AUT == AUT.Za ? new SvcConfig("RC4") :
@@ -107,6 +113,7 @@ namespace Wonga.QA.Framework.Core
                     break;
                 case SUT.RCRelease:
                     Api = new ApiConfig(String.Format("rc.release.api.{0}.wonga.com", AUT));
+                    Cs = new CsConfig(String.Format("rc.release.csapi.{0}.wonga.com", AUT));
                     Svc =
                         AUT == AUT.Ca ? new SvcConfig("ca-rel-rc-app") :
                         AUT == AUT.Za ? new SvcConfig("za-rel-rc-app") : Throw<SvcConfig>();
@@ -151,6 +158,11 @@ namespace Wonga.QA.Framework.Core
                 Commands = new Uri(uri, "commands");
                 Queries = new Uri(uri, "queries");
             }
+        }
+
+        public class CsConfig : ApiConfig
+        {
+            public CsConfig(String host) : base(host) { }
         }
 
         public class SvcConfig

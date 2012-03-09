@@ -18,7 +18,7 @@ namespace Wonga.QA.Tests.Ui
         public void LogOutShouldBeRedirectedToHomePage()
         {
             var loginPage = Client.Login();
-            string email = Data.GetEmail();
+            string email = Data.RandomEmail();
             CustomerBuilder.New().WithEmailAddress(email).Build();
             var page = loginPage.LoginAs(email);
 

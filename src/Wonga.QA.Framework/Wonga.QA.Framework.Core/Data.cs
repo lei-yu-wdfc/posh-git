@@ -35,6 +35,11 @@ namespace Wonga.QA.Framework.Core
 
         public static String GetEmail()
         {
+            return "qa.wonga.com@gmail.com";
+        }
+
+        public static String RandomEmail()
+        {
             return String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
         }
 
@@ -138,6 +143,11 @@ namespace Wonga.QA.Framework.Core
 		{
 			return RandomLong(10000000000, 99999999999);
 		}
+
+        public static Guid GetCsAuthorization()
+        {
+            return Guid.Parse("93370527-1BEE-461B-B825-07A6BE7AB8FE");
+        }
 
         public static String GetNIN(DateTime dob, Boolean female)
         {

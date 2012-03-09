@@ -20,7 +20,7 @@ namespace Wonga.QA.Framework
         private OrganisationDirectorBuilder()
         {
             _id = Guid.NewGuid();
-            _email = Data.GetEmail();
+            _email = Data.RandomEmail();
             _foreName = Data.GetName();
             _surname = Data.GetName();
             _primaryLevel = true;

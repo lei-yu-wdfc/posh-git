@@ -38,7 +38,7 @@ namespace Wonga.QA.Tests.Ui
             //const string specialCompanyRegistrationNumberMask = "00000086";
             var middleName = middleNameMask ?? Data.RandomString(3, 15);
             var firstName = Data.RandomString(3, 15);
-            var emailAddress = Data.GetEmail();
+            var emailAddress = Data.RandomEmail();
 
             var page = Client.Home();
             page.Sliders.HowMuch = "5550";
@@ -149,7 +149,7 @@ namespace Wonga.QA.Tests.Ui
 
         protected ProcessingPage ZaL0Path(string employerNameMask = null)
         {
-            var email = Data.GetEmail();
+            var email = Data.RandomEmail();
             string employerName = employerNameMask ?? Data.GetMiddleName();
 
             var homePage = Client.Home();
@@ -214,7 +214,7 @@ namespace Wonga.QA.Tests.Ui
 
         protected ProcessingPage CaL0Path(string employerNameMask = null)
         {
-            var email = Data.GetEmail();
+            var email = Data.RandomEmail();
             string employerName = employerNameMask ?? Data.GetMiddleName();
 
             var page = Client.Home();

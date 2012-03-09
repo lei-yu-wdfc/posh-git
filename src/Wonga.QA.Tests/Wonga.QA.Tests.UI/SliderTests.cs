@@ -128,7 +128,7 @@ namespace Wonga.QA.Tests.Ui
         public void LNDefaultAmountSliderValueShouldBeCorrect()
         {
             var loginPage = Client.Login();
-            string email = Data.GetEmail();
+            string email = Data.RandomEmail();
             CustomerBuilder.New().WithEmailAddress(email).Build();
             loginPage.LoginAs(email);
 
@@ -171,7 +171,7 @@ namespace Wonga.QA.Tests.Ui
         public void LNDefaultDurationSliderValueShouldBeCorrect()
         {
             var loginPage = Client.Login();
-            string email = Data.GetEmail();
+            string email = Data.RandomEmail();
             CustomerBuilder.New().WithEmailAddress(email).Build();
             loginPage.LoginAs(email);
 
@@ -226,7 +226,7 @@ namespace Wonga.QA.Tests.Ui
         public void LNMaxDurationSliderValueShouldBeCorrect()
         {
             var loginPage = Client.Login();
-            string email = Data.GetEmail();
+            string email = Data.RandomEmail();
             CustomerBuilder.New().WithEmailAddress(email).Build();
             loginPage.LoginAs(email);
 

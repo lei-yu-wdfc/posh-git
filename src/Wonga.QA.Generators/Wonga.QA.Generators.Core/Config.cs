@@ -47,7 +47,7 @@ namespace Wonga.QA.Generators.Core
             Roots = new[] { "src", "components" };
             Products = new[] { "Wb" };
             Regions = new[] { "Uk", "Za", "Ca" };
-            Suffixes = new[] { "Command", "Query", "Event", "Message" };
+            Suffixes = new[] { "Command", "Query", "Event", "Message", "Csapi" };
 
             Api = new Framework { Project = String.Format("{0}.Api", Framework.Solution), Base = "ApiRequest", Folder = "Requests" };
             Msmq = new Framework { Project = String.Format("{0}.Msmq", Framework.Solution), Base = "MsmqMessage", Folder = "Messages" };

@@ -79,7 +79,7 @@ namespace Wonga.QA.Framework
             _town = Data.RandomString(15);
             _county = Data.RandomString(15);			
         	_nextPayDate = Data.GetNextPayDate();
-			_email = Data.GetEmail();
+			_email = Data.RandomEmail();
             _bankAccountId = Data.GetId();
         	
             _province = ProvinceEnum.ON;
