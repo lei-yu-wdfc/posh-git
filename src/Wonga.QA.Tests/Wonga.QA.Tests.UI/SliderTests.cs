@@ -7,6 +7,7 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
 using System.Linq;
 using System;
+using Wonga.QA.Framework.Db;
 
 namespace Wonga.QA.Tests.Ui
 {
@@ -125,12 +126,15 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-156", "QA-238")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-156", "QA-238"), Pending("i cannot test it at the moment because of access problems.")]
         public void LNDefaultAmountSliderValueShouldBeCorrect()
         {
             var loginPage = Client.Login();
             string email = Data.RandomEmail();
-            CustomerBuilder.New().WithEmailAddress(email).Build();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            application.RepayEarly(100M, 1);
             loginPage.LoginAs(email);
 
             var page = Client.Home();
@@ -156,10 +160,11 @@ namespace Wonga.QA.Tests.Ui
                     _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
 
                     var today = DateTime.Today;
-                    var expectedDate = today.Day <= 25
+                    var nextPayDate = today.Day <= 25
                                            ? new DateTime(today.Year, today.Month, 25)
                                            : new DateTime(today.Year, today.Month, 25).AddMonths(1);
-                    Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate), _repaymentDate);
+                    var expectedDate = Driver.Db.GetPreviousWorkingDay(new Date(nextPayDate));
+                    Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate.DateTime), _repaymentDate);
                     break;
                 case AUT.Ca:
                     Assert.AreEqual(page.Sliders.HowLong, "11");
@@ -168,12 +173,15 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-241", "QA-159")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-241", "QA-159"), Pending("i cannot test it at the moment because of access problems.")]
         public void LNDefaultDurationSliderValueShouldBeCorrect()
         {
             var loginPage = Client.Login();
             string email = Data.RandomEmail();
-            CustomerBuilder.New().WithEmailAddress(email).Build();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            application.RepayEarly(100M, 1);
             loginPage.LoginAs(email);
 
             var page = Client.Home();
@@ -185,10 +193,11 @@ namespace Wonga.QA.Tests.Ui
                     _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
 
                     var today = DateTime.Today;
-                    var expectedDate = today.Day <= 25
+                    var nextPayDate = today.Day <= 25
                                            ? new DateTime(today.Year, today.Month, 25)
                                            : new DateTime(today.Year, today.Month, 25).AddMonths(1);
-                    Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate), _repaymentDate);
+                    var expectedDate = Driver.Db.GetPreviousWorkingDay(new Date(nextPayDate));
+                    Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate.DateTime), _repaymentDate);
                     break;
                 case AUT.Ca:
                     Assert.AreEqual(page.Sliders.HowLong, "11");
@@ -223,12 +232,15 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(maxLoanDuration.ToString(), page.Sliders.HowLong);
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-239", "QA-158")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-239", "QA-158"), Pending("i cannot test it at the moment because of access problems.")]
         public void LNMaxDurationSliderValueShouldBeCorrect()
         {
             var loginPage = Client.Login();
             string email = Data.RandomEmail();
-            CustomerBuilder.New().WithEmailAddress(email).Build();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            application.RepayEarly(100M, 1);
             loginPage.LoginAs(email);
 
             var page = Client.Home();
