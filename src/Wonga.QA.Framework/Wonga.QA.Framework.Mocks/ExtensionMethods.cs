@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Wonga.QA.Tests.Payments.Helpers.Ca
+namespace Wonga.QA.Framework.Mocks
 {
     public static class ExtensionMethods
     {
