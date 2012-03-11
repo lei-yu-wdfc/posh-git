@@ -11,7 +11,7 @@ namespace Wonga.QA.Framework.Mocks
     public class Scotia
     {
         private readonly DbDriver _dbDriver;
-        private const string _onlineBillPaymentRemittanceReport = "EBBADATA";
+        private const string OnlineBillPaymentRemittanceReport = "EBBADATA";
 
         public Scotia()
         {
@@ -28,6 +28,7 @@ namespace Wonga.QA.Framework.Mocks
             IncomingBankGatewayScotiaFile file = CreateFrom(fileId, batch);
 
             _dbDriver.QAData.IncomingBankGatewayScotiaFiles.InsertOnSubmit(file);
+            file.Submit();
         }
 
         private IncomingBankGatewayScotiaFile CreateFrom(string fileId,
@@ -36,7 +37,7 @@ namespace Wonga.QA.Framework.Mocks
             byte[] file = batch.ToFileFormat();
 
             return new IncomingBankGatewayScotiaFile
-                       {File = file, FileName = string.Format("{0}.{1}", _onlineBillPaymentRemittanceReport, fileId)};
+                       {FileData = file, FileName = string.Format("{0}.{1}", OnlineBillPaymentRemittanceReport, fileId)};
         }
 
         #region Nested type: OnlineBillPaymentRemittanceReportCustomerBatch
@@ -102,7 +103,7 @@ namespace Wonga.QA.Framework.Mocks
                 return new OnlineBillPaymentRemittanceReportCustomerBatchHeaderRecord
                 {
                     BankAccountBeingCredited = "SomeWongaAccount",
-                    BatchNumber = random.Next(999999),
+                    BatchNumber = random.Next(9999),
                     CorporateCreditorIdentificationNumber = 999,
                     InstitutionCode = 001,
                     PaymentDate = DateTime.UtcNow,
