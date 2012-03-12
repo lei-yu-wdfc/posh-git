@@ -253,13 +253,6 @@ namespace Wonga.QA.Tests.Payments
 			else
 				trackingDays = 3;
 
-			//Facilitates an odd edge case where the self reported payday is on a sunday or holiday
-			var payDay = GetSelfReportedPayDayForApplication(application);
-			if (!Driver.Db.IsWorkingDay(new Date(new DateTime(now.Year, now.Month, payDay))) && paymentRequestDate.Day > TrackingDayThreshold)
-			{
-				trackingDays -= 1;
-			}
-
 			return trackingDays;
 		}
 
@@ -287,7 +280,7 @@ namespace Wonga.QA.Tests.Payments
 
 		private void SetPaymentsUtcNow(DateTime dateTime)
 		{
-			Driver.Db.SetServiceConfiguration(NowServiceConfigKey, dateTime.ToString("yyyy-MM-dd hh:mm:ss"));
+			Driver.Db.SetServiceConfiguration(NowServiceConfigKey, dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
 		}
 
 		public int[] GetDefaultPayDaysOfMonth()
