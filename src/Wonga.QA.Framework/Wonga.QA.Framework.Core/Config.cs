@@ -322,8 +322,8 @@ namespace Wonga.QA.Framework.Core
         public class DbConfig
         {
             public String Ops { get; set; }
-            public String OpsSagas { get; set; }
             public String OpsLogs { get; set; }
+            public String OpsSagas { get; set; }            
             public String Comms { get; set; }
             public String Payments { get; set; }
             public String Risk { get; set; }
@@ -340,6 +340,7 @@ namespace Wonga.QA.Framework.Core
             public String FileStorage { get; set; }
             public String Hpi { get; set; }
             public String IpLookup { get; set; }
+            public String QaData { get; set; }
             public String Salesforce { get; set; }
             public String Scheduler { get; set; }
             public String Sms { get; set; }
@@ -347,7 +348,6 @@ namespace Wonga.QA.Framework.Core
             public String TransUnion { get; set; }
             public String Uru { get; set; }
             public String WongaPay { get; set; }
-            public String QAData { get; set; }
 
             public DbConfig(String server)
             {
@@ -372,6 +372,7 @@ namespace Wonga.QA.Framework.Core
                 FileStorage = String.Format(format, server, "FileStorage");
                 Hpi = String.Format(format, server, "Hpi");
                 IpLookup = String.Format(format, server, "IpLookup");
+                QaData = String.Format(format, server, "QaData");
                 Salesforce = String.Format(format, server, "Salesforce");
                 Scheduler = String.Format(format, server, "Scheduler");
                 Sms = String.Format(format, server, "Sms");
@@ -379,7 +380,6 @@ namespace Wonga.QA.Framework.Core
                 TransUnion = String.Format(format, server, "TransUnion");
                 Uru = String.Format(format, server, "Uru");
                 WongaPay = String.Format(format, server, "WongaPay");
-                QAData = String.Format(format, server, "QAData");
             }
         }
 

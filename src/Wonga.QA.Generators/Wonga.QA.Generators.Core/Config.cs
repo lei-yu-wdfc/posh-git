@@ -75,14 +75,14 @@ namespace Wonga.QA.Generators.Core
                 "FileStorage",
                 "Hpi",
                 "IpLookup",
+                "QaData",
                 "Salesforce",
                 "Scheduler",
                 "Sms",
                 "TimeZone",
                 "TransUnion",
                 "Uru",
-                "WongaPay",
-                "QAData"
+                "WongaPay"
             };
 
             Solutions = new Dictionary<String, String>
