@@ -209,8 +209,7 @@ namespace Wonga.QA.Framework
                                             Values
                                             ["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatusEnum.Pending);
 
-                        Do.Until(() => Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["AnswerId"].Count() != 0);
-			
+                        Do.Until(() => Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["SequenceId"].SingleOrDefault() == keyValuePair.Key.ToString());
 
                         var xmlString =
                             (Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Body);
