@@ -5,25 +5,33 @@ using System.Text;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
+using Wonga.QA.Framework.Db.Payments;
+using Wonga.QA.Framework.Msmq;
+using Wonga.QA.Tests.Core;
+using RepayLoanViaBankCommand = Wonga.QA.Framework.Api.RepayLoanViaBankCommand;
 
 namespace Wonga.QA.Tests.Payments.Za
 {
     public class RepayLoanTests
     {
         private Guid _accountId;
+        private Application _application;
+        private DateTime _promisedDate;
 
         private const string NowServiceConfigKey =
             @"Wonga.Payments.ApplicationQueries.Za.GetRepayLoanParametersHandler.DateTime.UtcNow";
+
         [FixtureSetUp]
         public void Setup()
         {
             var customer = CustomerBuilder.New().Build();
-            var application = ApplicationBuilder.New(customer).Build();
+            _application = ApplicationBuilder.New(customer).Build();
             _accountId = customer.Id;
         }
 
-        [Test]
+        [Test, AUT(AUT.Za), JIRA("ZA-2099")]
         [Row("2012/3/8 10:00:00", "2012/3/9", Order = 0)]
         [Row("2012/3/8 14:00:00", "2012/3/10", Order = 1)]
         [Row("2012/3/10 5:00:00", "2012/3/12", Order = 2)]
@@ -38,7 +46,7 @@ namespace Wonga.QA.Tests.Payments.Za
             Assert.AreEqual(expectedActionDate, DateTime.Parse(response.Values["ActionDate"].Single()));
         }
 
-        [Test]
+        [Test, AUT(AUT.Za), JIRA("ZA-2099")]
         public void GetRepayLoanStatusQueryTest()
         {
             var response = Driver.Api.Queries.Post(new GetRepayLoanStatusQuery()
@@ -47,9 +55,34 @@ namespace Wonga.QA.Tests.Payments.Za
                                                        });
         }
 
+        [Test, AUT(AUT.Za), JIRA("ZA-2099")]
         public void RepayLoanViaBankTest()
         {
-            
+            var command = new RepayLoanViaBankCommand()
+                              {
+                                  ApplicationId = _application.Id,
+                                  ActionDate = new Date
+                                                   {
+                                                       DateTime = Data.GetPromiseDate().DateTime.AddDays(-3),
+                                                       DateFormat = DateFormat.Date
+                                                   }, //Early repay before promised date
+                                  Amount = _application.LoanAmount,
+                                  RepaymentRequestId = Guid.NewGuid()
+                              };
+            Driver.Api.Commands.Post(command);
+
+            var app = Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == _application.Id));
+            var saga = Do.Until(() =>Driver.Db.OpsSagas.RepaymentSagaEntities.Single(s => s.ApplicationId == app.ApplicationId));
+
+            //Cause request is schedule to timeout, send timeout message now.
+            new MsmqDriver().Payments.Send(new TimeoutMessage()
+                                          {
+                                              SagaId = saga.Id,
+                                          });
+
+            var request = Do.Until(() => Driver.Db.Payments.RepaymentRequests.Single(r => r.ExternalId == (Guid)command.RepaymentRequestId));
+            var requestDetail = request.RepaymentRequestDetails;
+            Assert.AreEqual(0, requestDetail[0].StatusCode);
         }
 
         private void SetPaymentsUtcNow(DateTime dateTime)
