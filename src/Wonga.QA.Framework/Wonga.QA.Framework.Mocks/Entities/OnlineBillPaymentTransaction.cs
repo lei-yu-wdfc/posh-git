@@ -13,7 +13,7 @@ namespace Wonga.QA.Framework.Mocks.Entities
         private const int RemittanceTraceNumberLenght = 30;
         private const int CustomerFullNameLenght = 35;
 
-        private long _amount;
+        private long _amountInCent;
         private int _batchNumber;
         private string _ccin;
         private string _customerFullName;
@@ -32,10 +32,10 @@ namespace Wonga.QA.Framework.Mocks.Entities
             set { _batchNumber = value.AssertLenght(BatchNumberLenght); }
         }
 
-        public long Amount
+        public long AmountInCent
         {
-            get { return _amount; }
-            set { _amount = value.AssertLenght(AmountLenght); }
+            get { return _amountInCent; }
+            set { _amountInCent = value.AssertLenght(AmountLenght); }
         }
 
         public string Ccin
@@ -62,9 +62,9 @@ namespace Wonga.QA.Framework.Mocks.Entities
         {
             return
                 string.Format(
-                    "{0}{1}{2}{3}{4}{5}{6}{7}",
+                    "{0}{1}{2}{3}{4}{5}{6}{7}\n",
                     RecordType, ItemNumber.ToStringWithPadLeft(ItemNumberLenght),
-                    BatchNumber.ToStringWithPadLeft(BatchNumberLenght), Amount.ToStringWithPadLeft(AmountLenght),
+                    BatchNumber.ToStringWithPadLeft(BatchNumberLenght), AmountInCent.ToStringWithPadLeft(AmountLenght),
                     Ccin.PadLeft(CcinLenght),
                     RemittancePaymentDate.ToString("yyyyMMdd", CultureInfo.InvariantCulture),
                     RemittanceTraceNumber.PadLeft(RemittanceTraceNumberLenght),
@@ -75,8 +75,8 @@ namespace Wonga.QA.Framework.Mocks.Entities
         {
             return
                 string.Format(
-                    "ItemNumber: {0}, BatchNumber: {1}, Amount: {2}, Ccin: {3}, RemittancePaymentDate: {4}, RemittanceTraceNumber: {5}, CustomerFullName: {6}",
-                    ItemNumber, BatchNumber, Amount, Ccin, RemittancePaymentDate, RemittanceTraceNumber,
+                    "ItemNumber: {0}, BatchNumber: {1}, AmountInCent: {2}, Ccin: {3}, RemittancePaymentDate: {4}, RemittanceTraceNumber: {5}, CustomerFullName: {6}",
+                    ItemNumber, BatchNumber, AmountInCent, Ccin, RemittancePaymentDate, RemittanceTraceNumber,
                     CustomerFullName);
         }
     }

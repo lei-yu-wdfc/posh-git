@@ -77,7 +77,7 @@ namespace Wonga.QA.Framework.Mocks
 
         private class OnlineBillPaymentRemittanceReportCustomerBatchHeaderRecord
         {
-            private const int BatchNumberLenght = 4;
+            private const int BatchNumberLenght = 10;
             private const int ProcessingModeLenght = 1;
             private const int SebpLenght = 4;
             private const int CorporateCreditorIdentificationNumberLenght = 8;
@@ -118,7 +118,7 @@ namespace Wonga.QA.Framework.Mocks
             {
                 return
                     string.Format(
-                        "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}",
+                        "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}\n",
                         RecordType, BatchNumber.ToStringWithPadLeft(BatchNumberLenght),
                         ProcessingMode.ToStringWithPadLeft(ProcessingModeLenght),
                         ProcessingDate.ToString("yyyyMMdd", CultureInfo.InvariantCulture),
