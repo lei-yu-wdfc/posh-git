@@ -56,7 +56,7 @@ namespace Wonga.QA.Tests.Payments
 
             OnlineBillPaymentTransaction transaction = new OnlineBillPaymentTransaction
                                                            {
-                                                               Amount = earlyRepaymentAmount,
+                                                               AmountInCent = earlyRepaymentAmount * 100,
                                                                Ccin = customer.GetCcin(),
                                                                CustomerFullName = "CustomerFullName", // Todo: get name
                                                                ItemNumber = 1,
