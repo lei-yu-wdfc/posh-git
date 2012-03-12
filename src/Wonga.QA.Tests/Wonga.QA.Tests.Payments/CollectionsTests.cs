@@ -280,7 +280,7 @@ namespace Wonga.QA.Tests.Payments
 
 		private void SetPaymentsUtcNow(DateTime dateTime)
 		{
-			Driver.Db.SetServiceConfiguration(NowServiceConfigKey, dateTime.ToString("yyyy-MM-dd hh:mm:ss"));
+			Driver.Db.SetServiceConfiguration(NowServiceConfigKey, dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
 		}
 
 		public int[] GetDefaultPayDaysOfMonth()
