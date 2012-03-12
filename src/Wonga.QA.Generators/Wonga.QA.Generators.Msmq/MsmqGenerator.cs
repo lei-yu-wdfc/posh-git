@@ -37,9 +37,12 @@ namespace Wonga.QA.Generators.Msmq
                     continue;
                 assemblies.Add(assembly);
 
+                //TODO
+                Boolean cs = file.GetName().Split('.').Contains("Csapi", StringComparer.InvariantCultureIgnoreCase);
+
                 foreach (Type message in assembly.GetTypes().Where(t => t.IsMessage() && t.IsInstantiatable()))
                 {
-                    String name = String.Format("{0}{1}{2}{3}{4}", message.GetClean(), GetCollision(message), file.GetProduct(), file.GetRegion(), message.GetSuffix());
+                    String name = String.Format("{0}{1}{2}{3}{4}{5}", message.GetClean(), GetCollision(message), file.GetProduct(), file.GetRegion(), cs ? "Cs" : null, message.GetSuffix());
                     //String root = file.GetSolution();
                     FileInfo code = Repo.File(String.Format("{0}.cs", name), bin.Messages);
 
@@ -54,7 +57,7 @@ namespace Wonga.QA.Generators.Msmq
                         "    [XmlRoot({2}, Namespace = {3}, DataType = {4})]",
                         "    public partial class {5} : MsmqMessage<{5}>",
                         "    {{"
-                    }, Config.Msmq.Project,message.FullName, message.Name.Quote(), message.Namespace.Quote(), String.Join(",", message.GetTypes().Select(t => t.FullName)).Quote(), name);
+                    }, Config.Msmq.Project, message.FullName, message.Name.Quote(), message.Namespace.Quote(), String.Join(",", message.GetTypes().Select(t => t.FullName)).Quote(), name);
 
                     foreach (KeyValuePair<String, Type> member in message.GetMessageMembers())
                     {

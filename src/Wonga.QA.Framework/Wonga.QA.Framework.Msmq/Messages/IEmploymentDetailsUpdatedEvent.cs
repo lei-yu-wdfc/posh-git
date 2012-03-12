@@ -9,6 +9,8 @@ namespace Wonga.QA.Framework.Msmq
     public partial class IEmploymentDetailsUpdatedEvent : MsmqMessage<IEmploymentDetailsUpdatedEvent>
     {
         public Guid AccountId { get; set; }
+        public IncomeFrequencyEnum? IncomeFrequency { get; set; }
+        public DateTime? NextPayDate { get; set; }
         public DateTime CreatedOn { get; set; }
     }
 }
