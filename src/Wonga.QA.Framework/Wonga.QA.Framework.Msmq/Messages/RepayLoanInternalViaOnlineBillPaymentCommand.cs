@@ -8,10 +8,10 @@ namespace Wonga.QA.Framework.Msmq
     [XmlRoot("RepayLoanInternalViaOnlineBillPayment", Namespace = "Wonga.Payments.InternalMessages.Messages", DataType = "")]
     public partial class RepayLoanInternalViaOnlineBillPaymentCommand : MsmqMessage<RepayLoanInternalViaOnlineBillPaymentCommand>
     {
-        public Decimal PayorAmount { get; set; }
-        public String PayorName { get; set; }
-        public String PayorAccountNumber { get; set; }
-        public DateTime PaymentDate { get; set; }
-        public String RemittanceTraceNumber { get; set; }
-    }
+		public Decimal Amount { get; set; }
+		public String CustomerFullName { get; set; }
+		public String Ccin { get; set; }
+		public DateTime PaymentDate { get; set; }
+		public String RemittanceTraceNumber { get; set; }
+	}
 }

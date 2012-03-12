@@ -25,9 +25,9 @@ namespace Wonga.QA.Tests.Payments
 			var cmd = new RepayLoanInternalViaOnlineBillPaymentCommand
 			                                                   	{
 			                                                   		PaymentDate = DateTime.UtcNow,
-																	PayorAccountNumber = accountPreferences.Ccin,
-																	PayorAmount = repaymentAmount,
-																	PayorName = "PayorName",
+																	Ccin = accountPreferences.Ccin,
+																	Amount = repaymentAmount,
+																	CustomerFullName = "PayorName",
 																	RemittanceTraceNumber = "TraceNumber"
 			                                                   	};
 
