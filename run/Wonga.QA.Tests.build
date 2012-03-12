@@ -25,13 +25,16 @@
 		<MSBuild Projects="@(Projects)" />
 	</Target>
 	
-	<Target Name="Merge" Condition="'$(Files)'==''">
+	<Target Name="Merge">
+		<ItemGroup>
+			<Exclude Include="$(Bin)\$(Tests)\$(Tests).Core.dll" />
+			<Exclude Include="$(Bin)\$(Tests)\$(Tests).Meta.dll" />
+		</ItemGroup>
 		<ItemGroup>
 			<Command Include='"$(MSBuildProgramFiles32)\Microsoft\ILMerge\ILMerge.exe"' />
-			<Command Include='/targetplatform:v4,"$(MSBuildToolsPath)"' />
-			<Command Include='/wildcards' />
-			<Command Include='/out:"$(Bin)\$(Tests)\$(Tests).dll"' />
-			<Command Include='"$(Bin)\$(Tests)\$(Tests).*.dll"' />
+			<Command Include="/targetplatform:v4,$(MSBuildToolsPath)" />
+			<Command Include="/out:$(Bin)\$(Tests)\$(Tests).dll" />
+			<Command Include="$(Bin)\$(Tests)\$(Tests).*.dll" Exclude="@(Exclude)" />
 		</ItemGroup>
 		<Exec Command="@(Command, ' ')" />
 	</Target>
@@ -50,6 +53,13 @@
 	</Target>
 	
 	<Target Name="Default">
-		<CallTarget Targets="Config;Build;Merge;Test" />
+		<CallTarget Targets="Config;Build" />
+		<MsBuild
+			Condition="'$(Files)'==''"
+			Projects="$(MSBuildProjectFullPath)"
+			Targets="Test;Merge"
+			Properties="Files=Meta"
+		/>
+		<CallTarget Targets="Test" />
 	</Target>
 </Project>
