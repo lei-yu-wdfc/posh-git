@@ -496,7 +496,7 @@ namespace Wonga.QA.Framework
             			                         		Pin = mobilePhoneVerification.Pin,
             			                         		VerificationId = mobilePhoneVerification.VerificationId
             			                         	});
-            			Do.Until(() => Driver.Db.Comms.CustomerDetails.Single(a => a.AccountId == _id).MobilePhone);
+            			Do.With().Timeout(2).Until(() => Driver.Db.Comms.CustomerDetails.Single(a => a.AccountId == _id).MobilePhone);
             		}
             		break;
             }
