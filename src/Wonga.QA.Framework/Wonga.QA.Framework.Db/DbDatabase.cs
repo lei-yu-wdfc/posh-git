@@ -15,8 +15,7 @@ namespace Wonga.QA.Framework.Db
         public DbDatabase(IDbConnection connection, MappingSource mapping) : base(connection, mapping) { Init(); }
 
         public Box Boxed { get; set; }
-
-
+        
         private void Init()
         {
             Log = new LogWriter();
