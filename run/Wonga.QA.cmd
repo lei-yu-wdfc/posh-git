@@ -50,7 +50,8 @@ GOTO MENU
 GOTO MENU
 
 :4
-	%MsBuild% %Run%\Wonga.QA.Tests.build || PAUSE
+	SET /P TestsToRun=Which tests to Run?(Ui, Risk, Payments..):	
+	%MsBuild% %Run%\Wonga.QA.Tests.build /p:Files=%TestsToRun% || PAUSE
 GOTO MENU
 
 :5
