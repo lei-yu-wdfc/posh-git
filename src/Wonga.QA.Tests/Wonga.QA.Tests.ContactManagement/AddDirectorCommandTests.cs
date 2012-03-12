@@ -15,7 +15,7 @@ namespace Wonga.QA.Tests.ContactManagement
     [TestFixture]
     public class AddDirectorCommandTests
     {
-        [Test, JIRA("SME-1128"), Description("This test validates email uniquess check of command validator")]        
+        [Test, JIRA("SME-1128"), Description("This test validates email uniquess check of command validator"), AUT(AUT.Wb)]        
         public void TestPrimaryDirectorNonUniqueEmail()
         {
             String email = Data.RandomEmail();
@@ -45,7 +45,7 @@ namespace Wonga.QA.Tests.ContactManagement
             Assert.IsTrue(errorDetected, "Email not unique error was expected");
         }
 
-        [Test, JIRA("SME-1128"), Description("This test validates email uniquess check of command validator")]        
+        [Test, JIRA("SME-1128"), Description("This test validates email uniquess check of command validator"), AUT(AUT.Wb)]        
         public void TestSecondaryDirectorNonUniqueEmail()
         {
             String email = Data.RandomEmail();
