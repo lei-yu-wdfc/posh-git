@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using Microsoft.Win32;
 
@@ -322,12 +323,11 @@ namespace Wonga.QA.Framework.Core
         public class DbConfig
         {
             public String Ops { get; set; }
-            public String OpsSagas { get; set; }
-            public String OpsLogs { get; set; }
             public String Comms { get; set; }
             public String Payments { get; set; }
             public String Risk { get; set; }
             public String Bi { get; set; }
+
             public String BankGateway { get; set; }
             public String Blacklist { get; set; }
             public String CallReport { get; set; }
@@ -347,39 +347,42 @@ namespace Wonga.QA.Framework.Core
             public String TransUnion { get; set; }
             public String Uru { get; set; }
             public String WongaPay { get; set; }
-            public String QAData { get; set; }
+
+            public String OpsLogs { get; set; }
+            public String OpsSagas { get; set; }
+            public String QaData { get; set; }
 
             public DbConfig(String server)
             {
-                String format = @"Data Source={0};Initial Catalog={1};Integrated Security=True";
+                Func<String, String> builder = catalog => new SqlConnectionStringBuilder { DataSource = server, InitialCatalog = catalog, IntegratedSecurity = true }.ConnectionString;
 
-                Ops = String.Format(format, server, "Ops");
-                OpsSagas = String.Format(format, server, "OpsSagas");
-                OpsLogs = String.Format(format, server, "OpsLogs");
-                Comms = String.Format(format, server, "Comms");
-                Payments = String.Format(format, server, "Payments");
-                Risk = String.Format(format, server, "Risk");
-                Bi = String.Format(format, server, "Bi");
-                BankGateway = String.Format(format, server, "BankGateway");
-                Blacklist = String.Format(format, server, "Blacklist");
-                CallReport = String.Format(format, server, "CallReport");
-                CallValidate = String.Format(format, server, "CallValidate");
-                CardPayment = String.Format(format, server, "CardPayment");
-                ColdStorage = String.Format(format, server, "ColdStorage");
-                ContactManagement = String.Format(format, server, "ContactManagement");
-                Experian = String.Format(format, server, "Experian");
-                ExperianBulk = String.Format(format, server, "ExperianBulk");
-                FileStorage = String.Format(format, server, "FileStorage");
-                Hpi = String.Format(format, server, "Hpi");
-                IpLookup = String.Format(format, server, "IpLookup");
-                Salesforce = String.Format(format, server, "Salesforce");
-                Scheduler = String.Format(format, server, "Scheduler");
-                Sms = String.Format(format, server, "Sms");
-                TimeZone = String.Format(format, server, "TimeZone");
-                TransUnion = String.Format(format, server, "TransUnion");
-                Uru = String.Format(format, server, "Uru");
-                WongaPay = String.Format(format, server, "WongaPay");
-                QAData = String.Format(format, server, "QAData");
+                Ops = builder("Ops");
+                OpsLogs = builder("OpsLogs");
+                OpsSagas = builder("OpsSagas");
+                Comms = builder("Comms");
+                Payments = builder("Payments");
+                Risk = builder("Risk");
+                Bi = builder("Bi");
+                BankGateway = builder("BankGateway");
+                Blacklist = builder("Blacklist");
+                CallReport = builder("CallReport");
+                CallValidate = builder("CallValidate");
+                CardPayment = builder("CardPayment");
+                ColdStorage = builder("ColdStorage");
+                ContactManagement = builder("ContactManagement");
+                Experian = builder("Experian");
+                ExperianBulk = builder("ExperianBulk");
+                FileStorage = builder("FileStorage");
+                Hpi = builder("Hpi");
+                IpLookup = builder("IpLookup");
+                QaData = builder("QaData");
+                Salesforce = builder("Salesforce");
+                Scheduler = builder("Scheduler");
+                Sms = builder("Sms");
+                TimeZone = builder("TimeZone");
+                TransUnion = builder("TransUnion");
+                Uru = builder("Uru");
+                WongaPay = builder("WongaPay");
             }
         }
 

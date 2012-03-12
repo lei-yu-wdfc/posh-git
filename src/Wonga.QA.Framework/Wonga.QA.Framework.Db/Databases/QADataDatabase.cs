@@ -23,7 +23,7 @@ namespace Wonga.QA.Framework.Db.QAData
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="QAData")]
-	public partial class QADataDatabase : DbDatabase<QADataDatabase>
+	public partial class QaDataDatabase : DbDatabase<QaDataDatabase>
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -59,25 +59,25 @@ namespace Wonga.QA.Framework.Db.QAData
     partial void DeleteMSSQLDeploy(MSSQLDeploy instance);
     #endregion
 		
-		public QADataDatabase(string connection) : 
+		public QaDataDatabase(string connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public QADataDatabase(System.Data.IDbConnection connection) : 
+		public QaDataDatabase(System.Data.IDbConnection connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public QADataDatabase(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public QaDataDatabase(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public QADataDatabase(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public QaDataDatabase(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();

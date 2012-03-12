@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Xml.Schema;
 using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework.Api
@@ -34,12 +35,21 @@ namespace Wonga.QA.Framework.Api
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_endpoint);
             request.Method = "POST";
-            
+
             using (StreamWriter writer = new StreamWriter(request.GetRequestStream()))
                 writer.Write(body);
             Trace.WriteLine(Data.Indent(body), GetType().FullName);
 
             return new ApiResponse(request);
+        }
+
+        public XmlSchema GetShema()
+        {
+            XmlSchema schema = XmlSchema.Read(new StringReader(new WebClient().DownloadString(Data.GetSchema(_endpoint))), (s, a) => { throw a.Exception; });
+            XmlSchemaSet set = new XmlSchemaSet();
+            set.Add(schema);
+            set.Compile();
+            return schema;
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Wonga.QA.Framework.Mocks
 
             IncomingBankGatewayScotiaFile file = CreateFrom(fileId, batch);
 
-            _dbDriver.QAData.IncomingBankGatewayScotiaFiles.InsertOnSubmit(file);
+            _dbDriver.QaData.IncomingBankGatewayScotiaFiles.InsertOnSubmit(file);
             file.Submit();
         }
 

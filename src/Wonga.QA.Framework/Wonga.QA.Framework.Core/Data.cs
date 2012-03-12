@@ -166,6 +166,13 @@ namespace Wonga.QA.Framework.Core
             }
         }
 
+        public static Uri GetSchema(Uri uri)
+        {
+            UriBuilder builder = new UriBuilder(uri);
+            builder.Path += "/Api.xsd";
+            return builder.Uri;
+        }
+
         public static Int32 RandomInt(Int32 min, Int32 max)
         {
             return _random.Next(min, max);

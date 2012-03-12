@@ -52,6 +52,7 @@ namespace Wonga.QA.Framework.Db
         private FileStorageDatabase _fileStorage;
         private HpiDatabase _hpi;
         private IpLookupDatabase _ipLookup;
+        private QaDataDatabase _qaData;
         private SalesforceDatabase _salesforce;
         private SchedulerDatabase _scheduler;
         private SmsDatabase _sms;
@@ -59,7 +60,6 @@ namespace Wonga.QA.Framework.Db
         private TransUnionDatabase _transUnion;
         private UruDatabase _uru;
         private WongaPayDatabase _wongaPay;
-        private QADataDatabase _qaData;
 
         private OpsSagasUkDatabase _opsSagasUk;
         private OpsSagasDatabase _opsSagasZa;
@@ -178,6 +178,12 @@ namespace Wonga.QA.Framework.Db
             set { _ipLookup = value; }
         }
 
+        public QaDataDatabase QaData
+        {
+            get { return _qaData ?? (_qaData = new QaDataDatabase(Config.Db.QaData)); }
+            set { _qaData = value; }
+        }
+
         public SalesforceDatabase Salesforce
         {
             get { return _salesforce ?? (_salesforce = new SalesforceDatabase(Config.Db.Salesforce)); }
@@ -218,12 +224,6 @@ namespace Wonga.QA.Framework.Db
         {
             get { return _wongaPay ?? (_wongaPay = new WongaPayDatabase(Config.Db.WongaPay)); }
             set { _wongaPay = value; }
-        }
-
-        public QADataDatabase QAData
-        {
-            get { return _qaData ?? (_qaData = new QADataDatabase(Config.Db.QAData)); }
-            set { _qaData = value; }
         }
     }
 }

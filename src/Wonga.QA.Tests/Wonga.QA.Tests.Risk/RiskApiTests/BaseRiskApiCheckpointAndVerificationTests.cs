@@ -100,7 +100,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		protected static int SetIovationMockWaitTimeSecondsForMockResponse(IovationMockResponse response, int seconds)
 		{
 			string iovationType = response.ToString();
-			var iovationDataOutput = Driver.Db.QAData.IovationDataOutputs.Single(io => io.Type == iovationType);
+			var iovationDataOutput = Driver.Db.QaData.IovationDataOutputs.Single(io => io.Type == iovationType);
 			var currentValue = iovationDataOutput.WaitTimeInSeconds;
 			iovationDataOutput.WaitTimeInSeconds = seconds;
 			iovationDataOutput.Submit();
