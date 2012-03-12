@@ -9,8 +9,9 @@ namespace Wonga.QA.Tests.Cs
     [Parallelizable(TestScope.All)]
     public class CsApiTests
     {
-        [Test]
-        public void HelloWorld()
+        [Test, Explicit]
+        [Description("Demo test for CsApi driver")]
+        public void ThisIsSparta()
         {
             ValidatorException exception = Assert.Throws<ValidatorException>(() => Driver.Cs.Queries.Post(new GetRepaymentArrangementsQuery { ApplicationId = Guid.NewGuid() }));
             Assert.Contains(exception.Errors, "Payments_Application_NotFound");
