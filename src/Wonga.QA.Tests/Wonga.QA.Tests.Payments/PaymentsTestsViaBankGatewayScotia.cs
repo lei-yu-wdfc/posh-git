@@ -58,10 +58,10 @@ namespace Wonga.QA.Tests.Payments
                                                            {
                                                                AmountInCent = earlyRepaymentAmount * 100,
                                                                Ccin = customer.GetCcin(),
-                                                               CustomerFullName = "CustomerFullName", // Todo: get name
+                                                               CustomerFullName = customer.GetCustomerFullName(),
                                                                ItemNumber = 1,
                                                                RemittancePaymentDate = DateTime.UtcNow,
-                                                               RemittanceTraceNumber = "649463413" // Todo: Randomise
+                                                               RemittanceTraceNumber = Data.RandomInt(9, 9).ToString()
                                                            };
 
             Driver.Mocks.Scotia.AddOnlineBillPaymentFile(application.Id.ToString(), new List<OnlineBillPaymentTransaction> { transaction });
@@ -105,10 +105,27 @@ namespace Wonga.QA.Tests.Payments
         [Test, AUT(AUT.Ca), JIRA("CA-1441"), Ignore("Not fully implemented, do not run")]
         public void VerifyOnlineBillPaymentRecodredToDbForUnrecognisedCustomer()
         {
-            //create online bill payment file for customer.. date = loanCreated - 5 days + 2 extra days... i.e file not processed till 7 days into loan
-            //insert file data to database table
+            //create online bill payment file for a non existent customer.. 
             //trigger mock to intitiate bank gateway to process file
             //verify file recorded db
+
+            String ccin = Data.RandomInt(9, 9).ToString();
+
+            var transaction = new OnlineBillPaymentTransaction
+            {
+                Amount = 100,
+                Ccin = ccin,
+                CustomerFullName = Data.GetName()+" "+Data.GetName(),
+                ItemNumber = 1,
+                RemittancePaymentDate = DateTime.UtcNow,
+                RemittanceTraceNumber = Data.RandomInt(9, 9).ToString()
+            };
+
+            Driver.Mocks.Scotia.AddOnlineBillPaymentFile(Guid.NewGuid().ToString(), new List<OnlineBillPaymentTransaction> { transaction });
+
+            Assert.IsTrue(VerifyPaymentFunctions.VerifyOnlineBillPaymentRecordForCcin(ccin));
+
+            //Todo: Have some way to verify an event was created (as the customer is not recognised) and an email was generated as a result of the event. The email will be sent to finance
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1441"), Ignore("Not fully implemented, do not run")]

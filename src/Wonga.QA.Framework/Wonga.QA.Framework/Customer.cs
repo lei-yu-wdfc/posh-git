@@ -42,7 +42,7 @@ namespace Wonga.QA.Framework
 
         public Guid GetBankAccount()
         {
-            return Do.Until(() => Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == Id).BankAccountsBaseEntity.ExternalId);
+            return BankAccountId;
         }
 
         public Guid GetPaymentCard()
@@ -69,6 +69,12 @@ namespace Wonga.QA.Framework
         public string GetCcin()
         {
             return Do.Until(() => Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == Id)).Ccin;
+        }
+
+        public string GetCustomerFullName()
+        {
+            var customerDetailsRow = Driver.Db.Comms.CustomerDetails.Single(cd => cd.AccountId == Id);
+            return customerDetailsRow.Forename +" "+ customerDetailsRow.Surname;
         }
     }
 }
