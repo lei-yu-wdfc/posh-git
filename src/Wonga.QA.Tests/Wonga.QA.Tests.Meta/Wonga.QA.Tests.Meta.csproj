@@ -31,12 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BuilderTests.cs" />
     <Compile Include="ColdStartTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
     <Reference Include="MbUnit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
+    <Reference Include="System" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml" />
     <Reference Include="Wonga.QA.Framework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">

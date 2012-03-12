@@ -1,6 +1,9 @@
-﻿using MbUnit.Framework;
+﻿using System;
+using System.Net;
+using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Svc;
 
@@ -59,6 +62,12 @@ namespace Wonga.QA.Tests.Meta
         public void ServiceIsStarted(SvcService service)
         {
             Assert.IsTrue(service.IsRunning());
+        }
+
+        [Test, DependsOn("EndpointIsWarmedUpAndSchemaIsValid")]
+        public void HomePageCanBeLoaded()
+        {
+            Assert.Contains(new WebClient().DownloadString(Config.Ui.Home), "Wonga");
         }
     }
 }
