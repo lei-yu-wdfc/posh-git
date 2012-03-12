@@ -16,6 +16,7 @@ namespace Wonga.QA.Tests.Payments
     // Todo: These tests assume that the variable interest rates start on day 11 and end on day 30
     // Todo: This assumption will cause the tests to break whenever the variable interest rate config in the DB changes
     // Todo: Therefore these tests should be driven by the DB config and should not make any assumptions
+    [Ignore("Need to be updated to revert the variable pricing tables to their original state")]
     public class VariablePricingTests
     {
         private const ProvinceEnum Province = ProvinceEnum.ON;
