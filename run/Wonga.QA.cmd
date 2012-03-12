@@ -14,7 +14,7 @@ ECHO   1. Build all solutions
 ECHO   2. Set SUT ^& AUT
 ECHO   3. Rebase from Upstream
 ECHO   4. Run Wonga.QA.Tests
-ECHO   5. Run Wonga.QA.Tests for all AUTs against RC
+ECHO   5. Run Wonga.QA.Tests.Meta for all AUTs against RC
 ECHO   6. Run Wonga.QA.Generators
 ECHO   7. Set Proxy
 ECHO   0. Exit
@@ -50,16 +50,17 @@ GOTO MENU
 GOTO MENU
 
 :4
-	SET /P TestsToRun=Type a filter or leave blank(E.g. Ui, Risk, Payments..):
-	%MsBuild% %Run%\Wonga.QA.Tests.build /p:Files=%TestsToRun% || PAUSE
+	SET Files=
+	SET /P Files=Semicolon-separated projects, blank for default (e.g. Meta;Api;Ops;Ui): 
+	%MsBuild% %Run%\Wonga.QA.Tests.build /p:Files="%Files%" || PAUSE
 GOTO MENU
 
 :5
 	%MsBuild% %Run%\Wonga.QA.Tests.build /t:Build;Merge /v:m || PAUSE
-	CALL :TEST RC Uk
-	CALL :TEST RC Za
-	CALL :TEST RC Ca
-	CALL :TEST RC Wb
+	CALL :META RC Uk
+	CALL :META RC Za
+	CALL :META RC Ca
+	CALL :META RC Wb
 GOTO MENU
 
 :6
@@ -76,8 +77,8 @@ GOTO MENU
 	IF ERRORLEVEL 1 SETX Proxy True > NUL
 GOTO MENU
 
-:TEST
-	%MsBuild% %Run%\Wonga.QA.Tests.build /t:Config;Test /p:SUT=%1;AUT=%2 || PAUSE
+:META
+	%MsBuild% %Run%\Wonga.QA.Tests.build /t:Config;Test /p:Files=Meta;SUT=%1;AUT=%2 || PAUSE
 GOTO EOF
 
 :GENERATE
