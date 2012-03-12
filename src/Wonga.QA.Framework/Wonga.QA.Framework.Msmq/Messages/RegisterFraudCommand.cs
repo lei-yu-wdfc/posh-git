@@ -10,5 +10,6 @@ namespace Wonga.QA.Framework.Msmq
     {
         public Guid AccountId { get; set; }
         public Boolean HasFraud { get; set; }
+        public String CaseId { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace Wonga.QA.Framework.Msmq
         public Int32 ItemNumber { get; set; }
         public Int32 BatchNumber { get; set; }
         public Int64 Amount { get; set; }
-        public String CustomerAccountNumber { get; set; }
+        public String Ccin { get; set; }
         public DateTime RemittancePaymentDate { get; set; }
         public String RemittanceTraceNumber { get; set; }
         public String CustomerFullName { get; set; }

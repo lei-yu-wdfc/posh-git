@@ -6,7 +6,7 @@ namespace Wonga.QA.Framework.Msmq
 {
     /// <summary> Wonga.Payments.Csapi.Commands.CancelRepaymentArrangementCsapi </summary>
     [XmlRoot("CancelRepaymentArrangementCsapi", Namespace = "Wonga.Payments.Csapi.Commands", DataType = "")]
-    public partial class CancelRepaymentArrangementCsapiCommand : MsmqMessage<CancelRepaymentArrangementCsapiCommand>
+    public partial class CancelRepaymentArrangementCsCommand : MsmqMessage<CancelRepaymentArrangementCsCommand>
     {
         public Guid RepaymentArrangementId { get; set; }
         public DateTime CreatedOn { get; set; }

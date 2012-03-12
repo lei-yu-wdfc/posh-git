@@ -11,6 +11,8 @@ namespace Wonga.QA.Framework.Msmq
         public Guid AccountId { get; set; }
         public Guid OrganisationId { get; set; }
         public Guid ApplicationId { get; set; }
+        public String Forename { get; set; }
+        public String Surname { get; set; }
         public DateTime CreatedOn { get; set; }
     }
 }
