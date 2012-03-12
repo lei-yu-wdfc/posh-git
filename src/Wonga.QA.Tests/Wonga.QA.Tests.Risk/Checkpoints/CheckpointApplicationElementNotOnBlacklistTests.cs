@@ -66,7 +66,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		public void CheckpointApplicationElementNotOnBlacklistBankAccountPresent()
 		{
 			var bankAccountNumber = Data.GetBankAccountNumber();
-			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithBankAccountNumber(Data.GetBankAccountNumber()).Build();
+			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithBankAccountNumber(bankAccountNumber).Build();
 			var blacklistEntity = new BlackListEntity { BankAccount = bankAccountNumber.ToString(), ExternalId = Guid.NewGuid() };
 			Driver.Db.Blacklist.BlackLists.InsertOnSubmit(blacklistEntity);
 			blacklistEntity.Submit();
