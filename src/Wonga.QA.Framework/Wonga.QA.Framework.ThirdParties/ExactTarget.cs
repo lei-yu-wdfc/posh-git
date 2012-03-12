@@ -29,10 +29,10 @@ namespace Wonga.QA.Framework.ThirdParties
             binding.Name = "UserNameSoapBinding";
             binding.Security.Mode = BasicHttpSecurityMode.TransportWithMessageCredential;
             binding.Security.Message.ClientCredentialType = BasicHttpMessageCredentialType.UserName;
-            binding.ReceiveTimeout = new TimeSpan(0, 5, 0);
-            binding.OpenTimeout = new TimeSpan(0, 5, 0);
-            binding.CloseTimeout = new TimeSpan(0, 5, 0);
-            binding.SendTimeout = new TimeSpan(0, 5, 0);
+            binding.ReceiveTimeout = TimeSpan.FromMinutes(5);
+            binding.OpenTimeout = TimeSpan.FromMinutes(5);
+            binding.CloseTimeout = TimeSpan.FromMinutes(5);
+            binding.SendTimeout = TimeSpan.FromMinutes(5);
 
             return binding;
         }
