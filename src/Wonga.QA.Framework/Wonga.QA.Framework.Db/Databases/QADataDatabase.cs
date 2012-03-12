@@ -1088,7 +1088,7 @@ namespace Wonga.QA.Framework.Db.QAData
 		
 		private string _FileName;
 		
-		private System.Data.Linq.Binary _File;
+		private System.Data.Linq.Binary _FileData;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1125,21 +1125,21 @@ namespace Wonga.QA.Framework.Db.QAData
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_File", DbType="VarBinary(1) NOT NULL", CanBeNull=false)]
-		public System.Data.Linq.Binary File
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FileData", DbType="VarBinary(max)", CanBeNull=true)]
+		public System.Data.Linq.Binary FileData
 		{
 			get
 			{
-				return this._File;
+                return this._FileData;
 			}
 			set
 			{
-				if ((this._File != value))
+                if ((this._FileData != value))
 				{
 					this.OnFileChanging(value);
 					this.SendPropertyChanging();
-					this._File = value;
-					this.SendPropertyChanged("File");
+                    this._FileData = value;
+					this.SendPropertyChanged("FileData");
 					this.OnFileChanged();
 				}
 			}
