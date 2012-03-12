@@ -9,14 +9,18 @@ namespace Wonga.QA.Framework.Db
 {
     public class DbDatabase : DataContext
     {
-        public DbDatabase(String connection) : base(connection) { SetLog(); }
-        public DbDatabase(String connection, MappingSource mapping) : base(connection, mapping) { SetLog(); }
-        public DbDatabase(IDbConnection connection) : base(connection) { SetLog(); }
-        public DbDatabase(IDbConnection connection, MappingSource mapping) : base(connection, mapping) { SetLog(); }
+        public DbDatabase(String connection) : base(connection) { Init(); }
+        public DbDatabase(String connection, MappingSource mapping) : base(connection, mapping) { Init(); }
+        public DbDatabase(IDbConnection connection) : base(connection) { Init(); }
+        public DbDatabase(IDbConnection connection, MappingSource mapping) : base(connection, mapping) { Init(); }
 
-        private void SetLog()
+        public Box Boxed { get; set; }
+
+
+        private void Init()
         {
             Log = new LogWriter();
+            Boxed = new Box(this);
         }
 
         private class LogWriter : StringWriter
@@ -29,6 +33,23 @@ namespace Wonga.QA.Framework.Db
             public override void Write(Char[] buffer, Int32 index, Int32 count)
             {
                 Trace.Write(new String(buffer, index, count));
+            }
+        }
+
+        public class Box
+        {
+            private DbDatabase _database;
+
+            public String ConnectionString { get { return _database.Connection.ConnectionString; } }
+
+            public Box(DbDatabase database)
+            {
+                _database = database;
+            }
+
+            public Boolean Exists()
+            {
+                return _database.DatabaseExists();
             }
         }
     }
