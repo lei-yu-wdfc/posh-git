@@ -50,7 +50,7 @@ GOTO MENU
 GOTO MENU
 
 :4
-	SET /P TestsToRun=Which tests to Run?(Ui, Risk, Payments..):	
+	SET /P TestsToRun=Type a filter or leave blank(E.g. Ui, Risk, Payments..):
 	%MsBuild% %Run%\Wonga.QA.Tests.build /p:Files=%TestsToRun% || PAUSE
 GOTO MENU
 
