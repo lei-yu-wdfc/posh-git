@@ -23,28 +23,18 @@ namespace Wonga.QA.Framework.ThirdParties
 
         private Binding ConstructBinding()
         {
-            var elementCollection = new BindingElementCollection();
-            var httpsTransport = new HttpsTransportBindingElement();
-            elementCollection.Add(httpsTransport);
+            //NOTE: based on ET API documentation sample
+            //http://docs.code.exacttarget.com/020_Web_Service_Guide/Getting_Started_Developers_and_the_ExactTarget_API/Connecting_to_the_Web_Service_API_using_WCF
+            var binding = new BasicHttpBinding();
+            binding.Name = "UserNameSoapBinding";
+            binding.Security.Mode = BasicHttpSecurityMode.TransportWithMessageCredential;
+            binding.Security.Message.ClientCredentialType = BasicHttpMessageCredentialType.UserName;
+            binding.ReceiveTimeout = new TimeSpan(0, 5, 0);
+            binding.OpenTimeout = new TimeSpan(0, 5, 0);
+            binding.CloseTimeout = new TimeSpan(0, 5, 0);
+            binding.SendTimeout = new TimeSpan(0, 5, 0);
 
-            var textMessageEncoding = new TextMessageEncodingBindingElement();
-            textMessageEncoding.MessageVersion = MessageVersion.Soap12WSAddressingAugust2004;
-            elementCollection.Add(textMessageEncoding);
-
-            SecurityBindingElement security =
-                SecurityBindingElement.CreateSecureConversationBindingElement(
-                    SecurityBindingElement.CreateUserNameOverTransportBindingElement());
-
-            elementCollection.Add(security);
-
-            var result = new CustomBinding(elementCollection)
-                             {
-                                 CloseTimeout = TimeSpan.FromMinutes(1),
-                                 OpenTimeout = TimeSpan.FromMinutes(1),
-                                 ReceiveTimeout = TimeSpan.FromMinutes(10),
-                                 SendTimeout = TimeSpan.FromMinutes(4)
-                             };
-            return result;
+            return binding;
         }
 
         public bool CheckPaymentReminderEmailSent(string emailAddress)
