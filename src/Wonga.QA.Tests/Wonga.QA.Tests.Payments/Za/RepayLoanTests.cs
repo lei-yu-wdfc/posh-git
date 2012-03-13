@@ -23,6 +23,12 @@ namespace Wonga.QA.Tests.Payments.Za
         private const string NowServiceConfigKey =
             @"Wonga.Payments.ApplicationQueries.Za.GetRepayLoanParametersHandler.DateTime.UtcNow";
 
+        private const string NowServiceConfigKey_RepayLoan =
+            @"Wonga.Payments.Handlers.FixedLoanOperations.RepayLoanSagaBase.DateTime.UtcNow";
+
+        private const string NowServiceConfigKey_ActionDateCalculator =
+            "Wonga.Payments.Common.Za.ActionDateCalculator.DateTime.UtcNow";
+
         [FixtureSetUp]
         public void Setup()
         {
@@ -74,11 +80,13 @@ namespace Wonga.QA.Tests.Payments.Za
             var app = Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == _application.Id));
             var saga = Do.Until(() =>Driver.Db.OpsSagas.RepaymentSagaEntities.Single(s => s.ApplicationId == app.ApplicationId));
 
+            SetPaymentsUtcNow(Data.GetPromiseDate().DateTime.AddDays(-4));
             //Cause request is schedule to timeout, send timeout message now.
             new MsmqDriver().Payments.Send(new TimeoutMessage()
                                           {
                                               SagaId = saga.Id,
                                           });
+
 
             var request = Do.Until(() => Driver.Db.Payments.RepaymentRequests.Single(r => r.ExternalId == (Guid)command.RepaymentRequestId));
             var requestDetail = request.RepaymentRequestDetails;
@@ -88,6 +96,8 @@ namespace Wonga.QA.Tests.Payments.Za
         private void SetPaymentsUtcNow(DateTime dateTime)
         {
             Driver.Db.SetServiceConfiguration(NowServiceConfigKey, dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
+            Driver.Db.SetServiceConfiguration(NowServiceConfigKey_RepayLoan, dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
+            Driver.Db.SetServiceConfiguration(NowServiceConfigKey_ActionDateCalculator, dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
         }
     }
 }
