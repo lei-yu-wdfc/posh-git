@@ -11,19 +11,19 @@ namespace Wonga.QA.Tests.Meta
         private Customer _customer;
         private Organisation _organisation;
 
-        [Test(Order = 1)]
+        [Test]
         public void CustomerBuilderTest()
         {
             Assert.DoesNotThrow(() => _customer = CustomerBuilder.New().Build());
         }
 
-        [Test(Order = 2), AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb), DependsOn("CustomerBuilderTest")]
         public void OrganisationBuilderTest()
         {
             Assert.DoesNotThrow(() => _organisation = OrganisationBuilder.New(_customer).Build());
         }
 
-        [Test(Order = 3)]
+        [Test, DependsOn("CustomerBuilderTest"), DependsOn("OrganisationBuilderTest")]
         public void ApplicationBuilderTest()
         {
             ApplicationBuilder builder = Config.AUT == AUT.Wb ?
