@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Wonga.QA.Framework.Db.QAData
+namespace Wonga.QA.Framework.Db.QaData
 {
 	using System.Data.Linq;
 	using System.Data.Linq.Mapping;
@@ -22,7 +22,7 @@ namespace Wonga.QA.Framework.Db.QAData
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="QAData")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="QaData")]
 	public partial class QaDataDatabase : DbDatabase<QaDataDatabase>
 	{
 		
@@ -1096,8 +1096,8 @@ namespace Wonga.QA.Framework.Db.QAData
     partial void OnCreated();
     partial void OnFileNameChanging(string value);
     partial void OnFileNameChanged();
-    partial void OnFileChanging(System.Data.Linq.Binary value);
-    partial void OnFileChanged();
+    partial void OnFileDataChanging(System.Data.Linq.Binary value);
+    partial void OnFileDataChanged();
     #endregion
 		
 		public IncomingBankGatewayScotiaFile()
@@ -1125,22 +1125,22 @@ namespace Wonga.QA.Framework.Db.QAData
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FileData", DbType="VarBinary(max)", CanBeNull=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FileData", DbType="VarBinary(MAX)", CanBeNull=true, UpdateCheck=UpdateCheck.Never)]
 		public System.Data.Linq.Binary FileData
 		{
 			get
 			{
-                return this._FileData;
+				return this._FileData;
 			}
 			set
 			{
-                if ((this._FileData != value))
+				if ((this._FileData != value))
 				{
-					this.OnFileChanging(value);
+					this.OnFileDataChanging(value);
 					this.SendPropertyChanging();
-                    this._FileData = value;
+					this._FileData = value;
 					this.SendPropertyChanged("FileData");
-					this.OnFileChanged();
+					this.OnFileDataChanged();
 				}
 			}
 		}

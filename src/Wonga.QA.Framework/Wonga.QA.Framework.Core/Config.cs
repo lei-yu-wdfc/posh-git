@@ -32,7 +32,7 @@ namespace Wonga.QA.Framework.Core
             {
                 case SUT.Dev:
                     Api = new ApiConfig("localhost");
-                    Cs = new CsConfig("localhost");
+                    Cs = new CsConfig("localhost/CSAPI");
                     Svc = new SvcConfig(".");
                     Msmq = new MsmqConfig(".");
                     Db = new DbConfig(".");

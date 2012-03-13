@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using Wonga.QA.Framework.Db;
-using Wonga.QA.Framework.Db.QAData;
+using Wonga.QA.Framework.Db.QaData;
 using Wonga.QA.Framework.Mocks.Entities;
 
 namespace Wonga.QA.Framework.Mocks

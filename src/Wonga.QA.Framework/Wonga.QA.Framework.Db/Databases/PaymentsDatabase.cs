@@ -177,6 +177,9 @@ namespace Wonga.QA.Framework.Db.Payments
     partial void InsertUserEntity(UserEntity instance);
     partial void UpdateUserEntity(UserEntity instance);
     partial void DeleteUserEntity(UserEntity instance);
+    partial void InsertValidTransactionTypeEntity(ValidTransactionTypeEntity instance);
+    partial void UpdateValidTransactionTypeEntity(ValidTransactionTypeEntity instance);
+    partial void DeleteValidTransactionTypeEntity(ValidTransactionTypeEntity instance);
     partial void InsertVariableInterestRateDetailEntity(VariableInterestRateDetailEntity instance);
     partial void UpdateVariableInterestRateDetailEntity(VariableInterestRateDetailEntity instance);
     partial void DeleteVariableInterestRateDetailEntity(VariableInterestRateDetailEntity instance);
@@ -910,6 +913,14 @@ namespace Wonga.QA.Framework.Db.Payments
 			get
 			{
 				return this.GetTable<V00001_Payment_VariableInterestRates_CTEntity>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ValidTransactionTypeEntity> ValidTransactionTypes
+		{
+			get
+			{
+				return this.GetTable<ValidTransactionTypeEntity>();
 			}
 		}
 		
@@ -11505,6 +11516,8 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private decimal _Amount;
 		
+		private System.Nullable<System.DateTime> _ActionDate;
+		
 		private System.DateTime _CreatedOn;
 		
 		private EntityRef<ApplicationEntity> _ApplicationEntity;
@@ -11529,6 +11542,8 @@ namespace Wonga.QA.Framework.Db.Payments
     partial void OnStatusMessageChanged();
     partial void OnAmountChanging(decimal value);
     partial void OnAmountChanged();
+    partial void OnActionDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnActionDateChanged();
     partial void OnCreatedOnChanging(System.DateTime value);
     partial void OnCreatedOnChanged();
     #endregion
@@ -11684,6 +11699,26 @@ namespace Wonga.QA.Framework.Db.Payments
 					this._Amount = value;
 					this.SendPropertyChanged("Amount");
 					this.OnAmountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ActionDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> ActionDate
+		{
+			get
+			{
+				return this._ActionDate;
+			}
+			set
+			{
+				if ((this._ActionDate != value))
+				{
+					this.OnActionDateChanging(value);
+					this.SendPropertyChanging();
+					this._ActionDate = value;
+					this.SendPropertyChanged("ActionDate");
+					this.OnActionDateChanged();
 				}
 			}
 		}
@@ -12763,6 +12798,8 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private System.Nullable<int> _UserId;
 		
+		private string _SalesForceUsername;
+		
 		private EntityRef<ApplicationEntity> _ApplicationEntity;
 		
 		private EntityRef<UserEntity> _UserEntity;
@@ -12797,6 +12834,8 @@ namespace Wonga.QA.Framework.Db.Payments
     partial void OnCreatedOnChanged();
     partial void OnUserIdChanging(System.Nullable<int> value);
     partial void OnUserIdChanged();
+    partial void OnSalesForceUsernameChanging(string value);
+    partial void OnSalesForceUsernameChanged();
     #endregion
 		
 		public TransactionEntity()
@@ -13070,6 +13109,26 @@ namespace Wonga.QA.Framework.Db.Payments
 					this._UserId = value;
 					this.SendPropertyChanged("UserId");
 					this.OnUserIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SalesForceUsername", DbType="NVarChar(80)")]
+		public string SalesForceUsername
+		{
+			get
+			{
+				return this._SalesForceUsername;
+			}
+			set
+			{
+				if ((this._SalesForceUsername != value))
+				{
+					this.OnSalesForceUsernameChanging(value);
+					this.SendPropertyChanging();
+					this._SalesForceUsername = value;
+					this.SendPropertyChanged("SalesForceUsername");
+					this.OnSalesForceUsernameChanged();
 				}
 			}
 		}
@@ -20880,6 +20939,8 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private System.Nullable<decimal> _Amount;
 		
+		private System.Nullable<System.DateTime> _ActionDate;
+		
 		private System.Nullable<System.DateTime> _CreatedOn;
 		
 		public V00001_Payment_RepaymentRequestDetails_CTEntity()
@@ -21074,6 +21135,22 @@ namespace Wonga.QA.Framework.Db.Payments
 				if ((this._Amount != value))
 				{
 					this._Amount = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ActionDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> ActionDate
+		{
+			get
+			{
+				return this._ActionDate;
+			}
+			set
+			{
+				if ((this._ActionDate != value))
+				{
+					this._ActionDate = value;
 				}
 			}
 		}
@@ -21864,6 +21941,8 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private System.Nullable<int> _UserId;
 		
+		private string _SalesForceUsername;
+		
 		public V00001_Payment_Transactions_CTEntity()
 		{
 		}
@@ -22152,6 +22231,22 @@ namespace Wonga.QA.Framework.Db.Payments
 				if ((this._UserId != value))
 				{
 					this._UserId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SalesForceUsername", DbType="NVarChar(80)")]
+		public string SalesForceUsername
+		{
+			get
+			{
+				return this._SalesForceUsername;
+			}
+			set
+			{
+				if ((this._SalesForceUsername != value))
+				{
+					this._SalesForceUsername = value;
 				}
 			}
 		}
@@ -22612,6 +22707,116 @@ namespace Wonga.QA.Framework.Db.Payments
 				{
 					this._Description = value;
 				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="payment.ValidTransactionTypes")]
+	public partial class ValidTransactionTypeEntity : DbEntity<ValidTransactionTypeEntity>, INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ValidTransactionTypeId;
+		
+		private string _Type;
+		
+		private string _ValidScope;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnValidTransactionTypeIdChanging(int value);
+    partial void OnValidTransactionTypeIdChanged();
+    partial void OnTypeChanging(string value);
+    partial void OnTypeChanged();
+    partial void OnValidScopeChanging(string value);
+    partial void OnValidScopeChanged();
+    #endregion
+		
+		public ValidTransactionTypeEntity()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ValidTransactionTypeId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ValidTransactionTypeId
+		{
+			get
+			{
+				return this._ValidTransactionTypeId;
+			}
+			set
+			{
+				if ((this._ValidTransactionTypeId != value))
+				{
+					this.OnValidTransactionTypeIdChanging(value);
+					this.SendPropertyChanging();
+					this._ValidTransactionTypeId = value;
+					this.SendPropertyChanged("ValidTransactionTypeId");
+					this.OnValidTransactionTypeIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="NVarChar(40) NOT NULL", CanBeNull=false)]
+		public string Type
+		{
+			get
+			{
+				return this._Type;
+			}
+			set
+			{
+				if ((this._Type != value))
+				{
+					this.OnTypeChanging(value);
+					this.SendPropertyChanging();
+					this._Type = value;
+					this.SendPropertyChanged("Type");
+					this.OnTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ValidScope", DbType="NVarChar(40) NOT NULL", CanBeNull=false)]
+		public string ValidScope
+		{
+			get
+			{
+				return this._ValidScope;
+			}
+			set
+			{
+				if ((this._ValidScope != value))
+				{
+					this.OnValidScopeChanging(value);
+					this.SendPropertyChanging();
+					this._ValidScope = value;
+					this.SendPropertyChanged("ValidScope");
+					this.OnValidScopeChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}

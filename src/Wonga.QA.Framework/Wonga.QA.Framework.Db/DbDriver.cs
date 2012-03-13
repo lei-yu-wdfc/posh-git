@@ -20,7 +20,7 @@ using Wonga.QA.Framework.Db.OpsSagasCa;
 using Wonga.QA.Framework.Db.OpsSagasUk;
 using Wonga.QA.Framework.Db.OpsSagasWb;
 using Wonga.QA.Framework.Db.Payments;
-using Wonga.QA.Framework.Db.QAData;
+using Wonga.QA.Framework.Db.QaData;
 using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Framework.Db.Salesforce;
 using Wonga.QA.Framework.Db.Scheduler;
