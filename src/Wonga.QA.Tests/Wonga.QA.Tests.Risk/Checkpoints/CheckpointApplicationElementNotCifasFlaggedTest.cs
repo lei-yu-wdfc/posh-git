@@ -15,10 +15,22 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test, AUT(AUT.Uk), JIRA("UK-852")]
 		public void Accepted()
 		{
+			RunTest(CreditBureauCustomerUk.ForeName, CheckpointStatus.Verified);
+		}
+
+		[Test, AUT(AUT.Uk), JIRA("UK-852")]
+		public void Declined()
+		{
+			RunTest(string.Format("{0}CIFAS", CreditBureauCustomerUk.ForeName), CheckpointStatus.Failed);
+		}
+
+		#region Implementation
+		private void RunTest(string customerName, CheckpointStatus expectedStatus)
+		{
 			var customer =
 				CustomerBuilder.New()
 				.WithEmployer(TestMask)
-				.WithForename(CreditBureauCustomerUk.ForeName)
+				.WithForename(customerName)
 				.WithSurname(CreditBureauCustomerUk.SurName)
 				.WithDateOfBirth(CreditBureauCustomerUk.DateOfBirth)
 				.Build();
@@ -35,9 +47,10 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Do.Until(() => Driver.Db.Risk.RiskApplications.Single(x => x.ApplicationId == application.Id && x.Decision != 0));
 
 			Assert.Contains(
-				Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Verified), 
+				Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, expectedStatus),
 				Data.EnumToString(CheckpointDefinitionEnum.CIFASFraudCheck));
-
 		}
+
+		#endregion
 	}
 }
