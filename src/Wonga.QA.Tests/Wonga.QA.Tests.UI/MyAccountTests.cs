@@ -20,8 +20,6 @@ namespace Wonga.QA.Tests.Ui
             var myPaymentDetailsPage = mySummaryPage.Navigation.MyPaymentDetailsButtonClick();
 
             Assert.IsFalse(myPaymentDetailsPage.IsAddBankAccountButtonExists());
-
-
         }
 
     }
