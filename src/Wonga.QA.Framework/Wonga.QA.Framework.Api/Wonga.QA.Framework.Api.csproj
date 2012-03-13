@@ -47,6 +47,7 @@
     <Compile Include="Defaults\SaveCustomerDetailsUkCommand.cs" />
     <Compile Include="Defaults\SaveEmploymentDetailsUkCommand.cs" />
     <Compile Include="Defaults\SaveOrganisationDetailsCommand.cs" />
+    <Compile Include="Defaults\SubmitNumberOfGuarantorsCommand.cs" />
     <Compile Include="Defaults\VerifyMainBusinessApplicantWbCommand.cs" />
     <Compile Include="Defaults\VerifyMobilePhoneCaCommand.cs" />
     <Compile Include="Defaults\SaveEmploymentDetailsCaCommand.cs" />
@@ -239,6 +240,7 @@
     <Compile Include="Enums\ProvinceEnum.cs" />
     <Compile Include="Enums\SliderPositionEnum.cs" />
     <Compile Include="Enums\TitleEnum.cs" />
+    <Compile Include="Temp\VerificationDefinitionsEnum.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />

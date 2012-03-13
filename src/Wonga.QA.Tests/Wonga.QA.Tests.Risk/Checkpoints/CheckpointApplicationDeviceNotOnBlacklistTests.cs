@@ -9,28 +9,32 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	[Parallelizable(TestScope.All)]
     public class CheckpointApplicationDeviceNotOnBlacklistTests
     {
-        private const string TestMask = "test:DeviceNotOnBlacklist";
+        /* Brian can you please review me ? 
+         * Please check the data in those enums if it matches exactly what you wanna test 
+         * Delete me after
+         */
+
+        //private const string TestMask = "test:DeviceNotOnBlacklist";
+        private readonly string _testMask = RiskMiddlenameMask.TESTDeviceNotOnBlacklist.ToString();
 
         [Test, AUT(AUT.Ca, AUT.Uk), JIRA("CA-1735")]
 		public void CheckpointApplicationDeviceNotOnBlacklistDecline()
         {
-            var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
+            var customer = CustomerBuilder.New().WithEmployer(_testMask).Build();
             var application = ApplicationBuilder.New(customer).WithIovationBlackBox("Deny").WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
-            Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Failed), Data.EnumToString(CheckpointDefinitionEnum.Applicationdatablacklistcheck));
-            //Assert.Contains(Application.GetExecutedCheckpointDefinitions(app.Id, CheckpointStatus.Failed), Data.EnumToString(CheckpointDefinitionEnum.Applicationdatablacklistcheck));
+            Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Failed), Data.EnumToString(CheckpointDefinitionEnum.HardwareBlacklistCheck));
         }
 
         [Test, AUT(AUT.Ca, AUT.Uk), JIRA("CA-1735")]
 		public void CheckpointApplicationDeviceNotOnBlacklistAccept()
         {
-            Customer customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
+            Customer customer = CustomerBuilder.New().WithEmployer(_testMask).Build();
             Application application = ApplicationBuilder.New(customer).WithIovationBlackBox("Allow").WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
-            Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.Applicationdatablacklistcheck));
-            //Assert.Contains(Application.GetExecutedCheckpointDefinitions(app.Id, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.Applicationdatablacklistcheck));
+            Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.HardwareBlacklistCheck));
         }
 
     }

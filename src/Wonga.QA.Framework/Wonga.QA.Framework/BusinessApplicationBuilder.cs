@@ -33,7 +33,13 @@ namespace Wonga.QA.Framework
                             r.BusinessBankAccountId = _company.GetBankAccount();
                             r.MainApplicantBankAccountId = _customer.GetBankAccount();
                             r.MainApplicantPaymentCardId = _customer.GetPaymentCard();
-                        })
+                        }),
+                SubmitNumberOfGuarantorsCommand.New(r=>
+                                                        {
+                                                            r.AccountId = _customer.Id;
+                                                            r.ApplicationId = _id;
+                                                            r.NumberOfGuarantors = _company.GetSecondaryDirectors().ToList().Count;
+                                                        })
             };
             
             Driver.Api.Commands.Post(requests);

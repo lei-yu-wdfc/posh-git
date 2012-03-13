@@ -59,7 +59,11 @@ namespace Wonga.QA.Framework.Api
         TESTBusinessPaymentScoreIsAcceptable,
         TESTBusinessIsCurrentlyTrading,
         TESTBusinessBureauDataIsAvailable,
+        TESTMainApplicantMatchesBusinessBureauData,
         TESTBusinessPerformanceScoreIsAcceptaple,
+        TESTMainApplicantDurationAcceptable,
+        TESTNumberOfDirectorsMatchesBusinessBureauData,
+        TESTBusinessDateOfIncorporationAcceptable,
         TESTNoCheck
     }
 }

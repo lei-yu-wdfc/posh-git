@@ -17,7 +17,7 @@ namespace Wonga.QA.Tests.Risk
     {
         #region BusinessLoanNewCompanyCheckpoints
 
-        private void TestSingleBusinessCheckpoint(RiskMiddlenameMask riskMask, CheckpointStatus expectedResult, CheckpointDefinitionEnum checkpoint, int? orgNo = null)
+        private void TestSingleBusinessCheckpoint(RiskMiddlenameMask riskMask, CheckpointStatus expectedResult, CheckpointDefinitionEnum checkpoint, String orgNo = null)
         {
             ApplicationDecisionStatusEnum appOutcome = expectedResult == CheckpointStatus.Verified
                                                            ? ApplicationDecisionStatusEnum.Accepted
@@ -25,7 +25,7 @@ namespace Wonga.QA.Tests.Risk
             
             Customer customer = CustomerBuilder.New().WithMiddleName(Data.EnumToString(riskMask)).Build();
             var orgB = OrganisationBuilder.New(customer);
-            Organisation organization = orgNo == null ? orgB.Build() : orgB.WithOrganisationNumber((int)orgNo).Build();
+            Organisation organization = orgNo == null ? orgB.Build() : orgB.WithOrganisationNumber(orgNo).Build();
             Application application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(appOutcome).Build();
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
@@ -41,7 +41,7 @@ namespace Wonga.QA.Tests.Risk
         [Test, AUT(AUT.Wb), JIRA("SME-156")]
         public void BusinessDataNotFound()
         {
-            TestSingleBusinessCheckpoint(RiskMiddlenameMask.TESTBusinessBureauDataIsAvailable, CheckpointStatus.Failed, CheckpointDefinitionEnum.BusinessBureauDataIsAvailable, 99999999);
+            TestSingleBusinessCheckpoint(RiskMiddlenameMask.TESTBusinessBureauDataIsAvailable, CheckpointStatus.Failed, CheckpointDefinitionEnum.BusinessBureauDataIsAvailable, "99999999");
         }
 
 
@@ -54,7 +54,7 @@ namespace Wonga.QA.Tests.Risk
         [Test, AUT(AUT.Wb), JIRA("SME-159")]
         public void BusinessPerformanceScoreIsNotAcceptable()
         {
-            TestSingleBusinessCheckpoint(RiskMiddlenameMask.TESTBusinessPerformanceScoreIsAcceptaple, CheckpointStatus.Failed, CheckpointDefinitionEnum.BusinessPerformanceScoreIsAcceptaple, 99999902);
+            TestSingleBusinessCheckpoint(RiskMiddlenameMask.TESTBusinessPerformanceScoreIsAcceptaple, CheckpointStatus.Failed, CheckpointDefinitionEnum.BusinessPerformanceScoreIsAcceptaple,"99999902");
         }
 
 
@@ -67,7 +67,7 @@ namespace Wonga.QA.Tests.Risk
         [Test, AUT(AUT.Wb), JIRA("SME-160")]
         public void BusinessIsCurrentlyNotTrading()
         {
-            TestSingleBusinessCheckpoint(RiskMiddlenameMask.TESTBusinessIsCurrentlyTrading, CheckpointStatus.Failed, CheckpointDefinitionEnum.BusinessIsCurrentlyTrading, 90000001);
+            TestSingleBusinessCheckpoint(RiskMiddlenameMask.TESTBusinessIsCurrentlyTrading, CheckpointStatus.Failed, CheckpointDefinitionEnum.BusinessIsCurrentlyTrading, "90000001");
         }
 
 
@@ -80,13 +80,13 @@ namespace Wonga.QA.Tests.Risk
         [Test, AUT(AUT.Wb), JIRA("SME-162")]
         public void BusinessPaymentScoreNotFound()
         {
-            TestSingleBusinessCheckpoint(RiskMiddlenameMask.TESTBusinessPaymentScoreIsAcceptable, CheckpointStatus.Verified, CheckpointDefinitionEnum.BusinessPaymentScoreIsAcceptable, 99999904);
+            TestSingleBusinessCheckpoint(RiskMiddlenameMask.TESTBusinessPaymentScoreIsAcceptable, CheckpointStatus.Verified, CheckpointDefinitionEnum.BusinessPaymentScoreIsAcceptable, "99999904");
         }
 
         [Test, AUT(AUT.Wb), JIRA("SME-162")]
         public void BusinessPaymentScoreIsNotAcceptable()
         {
-            TestSingleBusinessCheckpoint(RiskMiddlenameMask.TESTBusinessPaymentScoreIsAcceptable, CheckpointStatus.Failed, CheckpointDefinitionEnum.BusinessPaymentScoreIsAcceptable, 99999903);
+            TestSingleBusinessCheckpoint(RiskMiddlenameMask.TESTBusinessPaymentScoreIsAcceptable, CheckpointStatus.Failed, CheckpointDefinitionEnum.BusinessPaymentScoreIsAcceptable, "99999903");
         }
 
         #endregion
