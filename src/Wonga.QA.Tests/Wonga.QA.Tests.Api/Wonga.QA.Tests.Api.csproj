@@ -32,11 +32,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ApiJourneys.cs" />
+    <Compile Include="ApiApplicationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
     <Reference Include="MbUnit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
+    <Reference Include="System" />
     <Reference Include="Wonga.QA.Framework">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.dll</HintPath>
     </Reference>

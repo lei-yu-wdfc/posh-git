@@ -72,7 +72,7 @@
     <Compile Include="VariablePricingTests.cs" />
     <Compile Include="Helpers\VerifyPaymentFunctions.cs" />
     <Compile Include="Helpers\WaitPaymentFunctions.cs" />
-    <Compile Include="Za\RepayLoanTests.cs" />
+    <Compile Include="RepayLoanTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />

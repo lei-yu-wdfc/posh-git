@@ -13,7 +13,7 @@ using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
 using RepayLoanViaBankCommand = Wonga.QA.Framework.Api.RepayLoanViaBankCommand;
 
-namespace Wonga.QA.Tests.Payments.Za
+namespace Wonga.QA.Tests.Payments
 {
     public class RepayLoanTests
     {
