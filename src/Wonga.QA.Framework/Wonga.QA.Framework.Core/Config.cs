@@ -21,12 +21,14 @@ namespace Wonga.QA.Framework.Core
         public static MsmqConfig Msmq { get; set; }
         public static DbConfig Db { get; set; }
         public static UiConfig Ui { get; set; }
+        public static SalesforceUiConfig SalesforceUi { get; set; }
 
         static Config()
         {
             SUT = GetValue<SUT>();
             AUT = GetValue<AUT>();
             Proxy = GetValue<Boolean>("Proxy");
+            SalesforceUi = new SalesforceUiConfig("test.salesforce.com");
 
             switch (SUT)
             {
@@ -37,6 +39,7 @@ namespace Wonga.QA.Framework.Core
                     Msmq = new MsmqConfig(".");
                     Db = new DbConfig(".");
                     Ui = new UiConfig("localhost");
+                    SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.wip", "Allw0nga");
                     break;
                 case SUT.WIP:
                     Api = new ApiConfig(String.Format("wip.api.{0}.wonga.com", AUT));
@@ -57,6 +60,7 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("WIP6", Proxy)) :
                         AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn("WIP8", Proxy)) : Throw<DbConfig>();
                     Ui = new UiConfig(String.Format("wip.{0}.wonga.com", AUT));
+                    SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.wip", "Allw0nga");                    
                     break;
                 case SUT.WIPRelease:
                     Api = new ApiConfig(String.Format("wip.release.api.{0}.wonga.com", AUT));
@@ -71,6 +75,7 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("ca-rel-wip-app", Proxy)) :
                         AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("za-rel-wip-app", Proxy)) : Throw<DbConfig>();
                     Ui = new UiConfig(String.Format("wip.release.{0}.wonga.com", AUT));
+                    SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.wip", "Allw0nga");                    
                     break;
                 case SUT.UAT:
                     Api = new ApiConfig(String.Format("uat.api.{0}.wonga.com", AUT));
@@ -111,6 +116,7 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("RC6", Proxy)) :
                         AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn("RC8", Proxy)) : Throw<DbConfig>();
                     Ui = new UiConfig(String.Format("rc.{0}.wonga.com", AUT));
+                    SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.rc", "Allw0nga");
                     break;
                 case SUT.RCRelease:
                     Api = new ApiConfig(String.Format("rc.release.api.{0}.wonga.com", AUT));
@@ -125,6 +131,7 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("ca-rel-rc-app", Proxy)) :
                         AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("za-rel-rc-app", Proxy)) : Throw<DbConfig>();
                     Ui = new UiConfig(String.Format("rc.release.{0}.wonga.com", AUT));
+                    SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.rc", "Allw0nga");
                     break;
                 default:
                     throw new NotImplementedException();
@@ -389,10 +396,28 @@ namespace Wonga.QA.Framework.Core
         public class UiConfig
         {
             public Uri Home { get; set; }
-
+            
             public UiConfig(String host)
             {
                 Home = new UriBuilder { Host = host }.Uri;
+            }
+        }
+
+        public class SalesforceUiConfig
+        {
+            public Uri Home { get; set; }
+            public String Username { get; private set; }
+            public String Password { get; private set; }
+
+            public SalesforceUiConfig(String host)
+            {
+                Home = new UriBuilder { Host = host }.Uri;
+            }
+
+            public void SetLoginDetails(string username, string password)
+            {
+                Username = username;
+                Password = password;
             }
         }
     }
