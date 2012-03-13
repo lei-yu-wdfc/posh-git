@@ -63,7 +63,7 @@ namespace Wonga.QA.Framework
 			MakeDueToday(application);
 
 			ServiceConfigurationEntity testmode = Driver.Db.Ops.ServiceConfigurations.SingleOrDefault(e => e.Key == "BankGateway.IsTestMode");
-			if (testmode == null || !Boolean.Parse(testmode.Value))
+			if (Config.AUT != AUT.Uk && (testmode == null || !Boolean.Parse(testmode.Value)))
 			{
 				var utcNow = DateTime.UtcNow;
 
@@ -72,7 +72,9 @@ namespace Wonga.QA.Framework
 				Do.While(sp.Refresh);
 			}
 
-			TransactionEntity transaction = Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).Transactions.Single(t => (PaymentTransactionScopeEnum)t.Scope == PaymentTransactionScopeEnum.Credit && t.Type == "DirectBankPayment"));
+			TransactionEntity transaction = Do.Until(() => Driver.Db.Payments.Applications.Single(
+                a => a.ExternalId == Id).Transactions.Single(t => (PaymentTransactionScopeEnum)t.Scope == PaymentTransactionScopeEnum.Credit && t.Type == Data.EnumToString(
+                    Config.AUT == AUT.Uk ? PaymentTransactionEnum.CardPayment : PaymentTransactionEnum.DirectBankPayment)));
 
 			CloseApplicationSagaEntity ca = Do.Until(() => Driver.Db.OpsSagas.CloseApplicationSagaEntities.Single(s => s.TransactionId == transaction.ExternalId));
 			Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = ca.Id });
