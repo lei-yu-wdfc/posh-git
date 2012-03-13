@@ -4,6 +4,7 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Mappings;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 
+
 namespace Wonga.QA.Framework.UI.UiElements.Sections
 {
     public class MobilePinVerificationSection : BaseSection

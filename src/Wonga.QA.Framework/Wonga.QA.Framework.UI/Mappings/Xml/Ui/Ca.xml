@@ -74,5 +74,10 @@
     <ContinueTermsButton>#edit-continue-terms</ContinueTermsButton>
     <ContinueDirectDebitButton>#edit-continue-debit</ContinueDirectDebitButton>
   </AcceptedPage>
+
+  <MyAccountNavigationSection>
+    <!-- Should be extended-->
+    <MyPaymentsDetails>//a[contains(text(),'My account details')]</MyPaymentsDetails>
+  </MyAccountNavigationSection>
   
 </Ui>

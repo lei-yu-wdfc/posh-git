@@ -1,6 +1,4 @@
-﻿
-using System;
-using Wonga.QA.Framework.Core;
+﻿using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Mappings.Elements;
 using Wonga.QA.Framework.UI.Mappings.Pages;
 using Wonga.QA.Framework.UI.Mappings.Pages.Wb;
@@ -46,6 +44,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual BankAccountSection BankAccountSection { get; set; }
         public virtual EmploymentDetailsSection EmploymentDetailsSection { get; set; }
         public virtual ProvinceSection ProvinceSection { get; set; }
+        public virtual MyAccountNavigationSection MyAccountNavigationSection { get; set; }
         #endregion
 
         #region Elements
