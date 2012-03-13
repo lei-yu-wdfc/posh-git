@@ -55,7 +55,6 @@ namespace Wonga.QA.Tests.Ui
             _amountMin = (int)Double.Parse(_response.Values["AmountMin"].Single(), CultureInfo.InvariantCulture);
             _termMax = Int32.Parse(_response.Values["TermMax"].Single(), CultureInfo.InvariantCulture);
             _termMin = Int32.Parse(_response.Values["TermMin"].Single(), CultureInfo.InvariantCulture);
-
         }
 
         [Test, AUT(AUT.Za), JIRA("QA-149")]
@@ -87,9 +86,8 @@ namespace Wonga.QA.Tests.Ui
 
             string totalRepayable = _response.Values["TotalRepayable"].Single();
             Assert.AreEqual(page.Sliders.GetTotalToRepay.Remove(0, 1), totalRepayable);
-
-
         }
+
         [Test, AUT(AUT.Za), JIRA("QA-149")]
         public void MovingSlidersBeyondMaxIsNotAllowedByFrontEnd()
         {
@@ -111,7 +109,6 @@ namespace Wonga.QA.Tests.Ui
 
             Assert.AreEqual(homePage.Sliders.GetTotalToRepay, "$121.00");
             //maximum charge is 21$ for each 100$ borrowed for 30 days.
-
         }
 
         [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-156", "QA-238")]
