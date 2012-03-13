@@ -48,6 +48,9 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
     partial void InsertApplicationSagaEntity(ApplicationSagaEntity instance);
     partial void UpdateApplicationSagaEntity(ApplicationSagaEntity instance);
     partial void DeleteApplicationSagaEntity(ApplicationSagaEntity instance);
+    partial void InsertApplicationStatusChangedEntity(ApplicationStatusChangedEntity instance);
+    partial void UpdateApplicationStatusChangedEntity(ApplicationStatusChangedEntity instance);
+    partial void DeleteApplicationStatusChangedEntity(ApplicationStatusChangedEntity instance);
     partial void InsertApplicationTimeOutSagaEntity(ApplicationTimeOutSagaEntity instance);
     partial void UpdateApplicationTimeOutSagaEntity(ApplicationTimeOutSagaEntity instance);
     partial void DeleteApplicationTimeOutSagaEntity(ApplicationTimeOutSagaEntity instance);
@@ -105,6 +108,9 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
     partial void InsertCreateAlbertaPreApproveDebitSagaEntity(CreateAlbertaPreApproveDebitSagaEntity instance);
     partial void UpdateCreateAlbertaPreApproveDebitSagaEntity(CreateAlbertaPreApproveDebitSagaEntity instance);
     partial void DeleteCreateAlbertaPreApproveDebitSagaEntity(CreateAlbertaPreApproveDebitSagaEntity instance);
+    partial void InsertCreateAndStoreFirstPaymentFailedEmailSagaEntity(CreateAndStoreFirstPaymentFailedEmailSagaEntity instance);
+    partial void UpdateCreateAndStoreFirstPaymentFailedEmailSagaEntity(CreateAndStoreFirstPaymentFailedEmailSagaEntity instance);
+    partial void DeleteCreateAndStoreFirstPaymentFailedEmailSagaEntity(CreateAndStoreFirstPaymentFailedEmailSagaEntity instance);
     partial void InsertCreateAndStoreRepaymentArrangementCancelledEmailSagaEntity(CreateAndStoreRepaymentArrangementCancelledEmailSagaEntity instance);
     partial void UpdateCreateAndStoreRepaymentArrangementCancelledEmailSagaEntity(CreateAndStoreRepaymentArrangementCancelledEmailSagaEntity instance);
     partial void DeleteCreateAndStoreRepaymentArrangementCancelledEmailSagaEntity(CreateAndStoreRepaymentArrangementCancelledEmailSagaEntity instance);
@@ -135,6 +141,9 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
     partial void InsertCreateAndStoreRepaymentArrangementThankYouEmailSagaEntity(CreateAndStoreRepaymentArrangementThankYouEmailSagaEntity instance);
     partial void UpdateCreateAndStoreRepaymentArrangementThankYouEmailSagaEntity(CreateAndStoreRepaymentArrangementThankYouEmailSagaEntity instance);
     partial void DeleteCreateAndStoreRepaymentArrangementThankYouEmailSagaEntity(CreateAndStoreRepaymentArrangementThankYouEmailSagaEntity instance);
+    partial void InsertCreateAndStoreSecondPaymentFailedEmailsagaEntity(CreateAndStoreSecondPaymentFailedEmailsagaEntity instance);
+    partial void UpdateCreateAndStoreSecondPaymentFailedEmailsagaEntity(CreateAndStoreSecondPaymentFailedEmailsagaEntity instance);
+    partial void DeleteCreateAndStoreSecondPaymentFailedEmailsagaEntity(CreateAndStoreSecondPaymentFailedEmailsagaEntity instance);
     partial void InsertCreateBcConfirmationOfPADAuthorisationSagaEntity(CreateBcConfirmationOfPADAuthorisationSagaEntity instance);
     partial void UpdateCreateBcConfirmationOfPADAuthorisationSagaEntity(CreateBcConfirmationOfPADAuthorisationSagaEntity instance);
     partial void DeleteCreateBcConfirmationOfPADAuthorisationSagaEntity(CreateBcConfirmationOfPADAuthorisationSagaEntity instance);
@@ -288,9 +297,15 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
     partial void InsertFixedTermTopUpAgreementSagaEntity(FixedTermTopUpAgreementSagaEntity instance);
     partial void UpdateFixedTermTopUpAgreementSagaEntity(FixedTermTopUpAgreementSagaEntity instance);
     partial void DeleteFixedTermTopUpAgreementSagaEntity(FixedTermTopUpAgreementSagaEntity instance);
+    partial void InsertFraudSuspectedSagaEntity(FraudSuspectedSagaEntity instance);
+    partial void UpdateFraudSuspectedSagaEntity(FraudSuspectedSagaEntity instance);
+    partial void DeleteFraudSuspectedSagaEntity(FraudSuspectedSagaEntity instance);
     partial void InsertFundsTransferredSagaEntity(FundsTransferredSagaEntity instance);
     partial void UpdateFundsTransferredSagaEntity(FundsTransferredSagaEntity instance);
     partial void DeleteFundsTransferredSagaEntity(FundsTransferredSagaEntity instance);
+    partial void InsertGuarantorSagaEntity(GuarantorSagaEntity instance);
+    partial void UpdateGuarantorSagaEntity(GuarantorSagaEntity instance);
+    partial void DeleteGuarantorSagaEntity(GuarantorSagaEntity instance);
     partial void InsertHyphenAccountVerificationSagaEntity(HyphenAccountVerificationSagaEntity instance);
     partial void UpdateHyphenAccountVerificationSagaEntity(HyphenAccountVerificationSagaEntity instance);
     partial void DeleteHyphenAccountVerificationSagaEntity(HyphenAccountVerificationSagaEntity instance);
@@ -336,6 +351,9 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
     partial void InsertPaymentsInArrearsSagaEntity(PaymentsInArrearsSagaEntity instance);
     partial void UpdatePaymentsInArrearsSagaEntity(PaymentsInArrearsSagaEntity instance);
     partial void DeletePaymentsInArrearsSagaEntity(PaymentsInArrearsSagaEntity instance);
+    partial void InsertPaymentTakenFollowUpSagaEntity(PaymentTakenFollowUpSagaEntity instance);
+    partial void UpdatePaymentTakenFollowUpSagaEntity(PaymentTakenFollowUpSagaEntity instance);
+    partial void DeletePaymentTakenFollowUpSagaEntity(PaymentTakenFollowUpSagaEntity instance);
     partial void InsertPendingScheduledPaymentSagaEntity(PendingScheduledPaymentSagaEntity instance);
     partial void UpdatePendingScheduledPaymentSagaEntity(PendingScheduledPaymentSagaEntity instance);
     partial void DeletePendingScheduledPaymentSagaEntity(PendingScheduledPaymentSagaEntity instance);
@@ -405,6 +423,9 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
     partial void InsertSaveEmploymentDetailsSagaEntity(SaveEmploymentDetailsSagaEntity instance);
     partial void UpdateSaveEmploymentDetailsSagaEntity(SaveEmploymentDetailsSagaEntity instance);
     partial void DeleteSaveEmploymentDetailsSagaEntity(SaveEmploymentDetailsSagaEntity instance);
+    partial void InsertSaveFixedTermLoanApplicationEntity(SaveFixedTermLoanApplicationEntity instance);
+    partial void UpdateSaveFixedTermLoanApplicationEntity(SaveFixedTermLoanApplicationEntity instance);
+    partial void DeleteSaveFixedTermLoanApplicationEntity(SaveFixedTermLoanApplicationEntity instance);
     partial void InsertScheduledPaymentSagaEntity(ScheduledPaymentSagaEntity instance);
     partial void UpdateScheduledPaymentSagaEntity(ScheduledPaymentSagaEntity instance);
     partial void DeleteScheduledPaymentSagaEntity(ScheduledPaymentSagaEntity instance);
@@ -577,6 +598,14 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 			}
 		}
 		
+		public System.Data.Linq.Table<ApplicationStatusChangedEntity> ApplicationStatusChangedEntities
+		{
+			get
+			{
+				return this.GetTable<ApplicationStatusChangedEntity>();
+			}
+		}
+		
 		public System.Data.Linq.Table<ApplicationTimeOutSagaEntity> ApplicationTimeOutSagaEntities
 		{
 			get
@@ -745,6 +774,14 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 			}
 		}
 		
+		public System.Data.Linq.Table<CreateAndStoreFirstPaymentFailedEmailSagaEntity> CreateAndStoreFirstPaymentFailedEmailSagaEntities
+		{
+			get
+			{
+				return this.GetTable<CreateAndStoreFirstPaymentFailedEmailSagaEntity>();
+			}
+		}
+		
 		public System.Data.Linq.Table<CreateAndStoreRepaymentArrangementCancelledEmailSagaEntity> CreateAndStoreRepaymentArrangementCancelledEmailSagaEntities
 		{
 			get
@@ -822,6 +859,14 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 			get
 			{
 				return this.GetTable<CreateAndStoreRepaymentArrangementThankYouEmailSagaEntity>();
+			}
+		}
+		
+		public System.Data.Linq.Table<CreateAndStoreSecondPaymentFailedEmailsagaEntity> CreateAndStoreSecondPaymentFailedEmailsagaEntities
+		{
+			get
+			{
+				return this.GetTable<CreateAndStoreSecondPaymentFailedEmailsagaEntity>();
 			}
 		}
 		
@@ -1233,11 +1278,27 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 			}
 		}
 		
+		public System.Data.Linq.Table<FraudSuspectedSagaEntity> FraudSuspectedSagaEntities
+		{
+			get
+			{
+				return this.GetTable<FraudSuspectedSagaEntity>();
+			}
+		}
+		
 		public System.Data.Linq.Table<FundsTransferredSagaEntity> FundsTransferredSagaEntities
 		{
 			get
 			{
 				return this.GetTable<FundsTransferredSagaEntity>();
+			}
+		}
+		
+		public System.Data.Linq.Table<GuarantorSagaEntity> GuarantorSagaEntities
+		{
+			get
+			{
+				return this.GetTable<GuarantorSagaEntity>();
 			}
 		}
 		
@@ -1374,6 +1435,14 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 			get
 			{
 				return this.GetTable<PaymentsToBeMade>();
+			}
+		}
+		
+		public System.Data.Linq.Table<PaymentTakenFollowUpSagaEntity> PaymentTakenFollowUpSagaEntities
+		{
+			get
+			{
+				return this.GetTable<PaymentTakenFollowUpSagaEntity>();
 			}
 		}
 		
@@ -1558,6 +1627,14 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 			get
 			{
 				return this.GetTable<SaveEmploymentDetailsSagaEntity>();
+			}
+		}
+		
+		public System.Data.Linq.Table<SaveFixedTermLoanApplicationEntity> SaveFixedTermLoanApplicationEntities
+		{
+			get
+			{
+				return this.GetTable<SaveFixedTermLoanApplicationEntity>();
 			}
 		}
 		
@@ -3131,6 +3208,188 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ApplicationStatusChangedEntity")]
+	public partial class ApplicationStatusChangedEntity : DbEntity<ApplicationStatusChangedEntity>, INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _Id;
+		
+		private System.Nullable<System.Guid> _ApplicationId;
+		
+		private System.Nullable<System.Guid> _AccountId;
+		
+		private string _Status;
+		
+		private string _OriginalMessageId;
+		
+		private string _Originator;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(System.Guid value);
+    partial void OnIdChanged();
+    partial void OnApplicationIdChanging(System.Nullable<System.Guid> value);
+    partial void OnApplicationIdChanged();
+    partial void OnAccountIdChanging(System.Nullable<System.Guid> value);
+    partial void OnAccountIdChanged();
+    partial void OnStatusChanging(string value);
+    partial void OnStatusChanged();
+    partial void OnOriginalMessageIdChanging(string value);
+    partial void OnOriginalMessageIdChanged();
+    partial void OnOriginatorChanging(string value);
+    partial void OnOriginatorChanged();
+    #endregion
+		
+		public ApplicationStatusChangedEntity()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplicationId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> ApplicationId
+		{
+			get
+			{
+				return this._ApplicationId;
+			}
+			set
+			{
+				if ((this._ApplicationId != value))
+				{
+					this.OnApplicationIdChanging(value);
+					this.SendPropertyChanging();
+					this._ApplicationId = value;
+					this.SendPropertyChanged("ApplicationId");
+					this.OnApplicationIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccountId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> AccountId
+		{
+			get
+			{
+				return this._AccountId;
+			}
+			set
+			{
+				if ((this._AccountId != value))
+				{
+					this.OnAccountIdChanging(value);
+					this.SendPropertyChanging();
+					this._AccountId = value;
+					this.SendPropertyChanged("AccountId");
+					this.OnAccountIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="NVarChar(255)")]
+		public string Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this.OnStatusChanging(value);
+					this.SendPropertyChanging();
+					this._Status = value;
+					this.SendPropertyChanged("Status");
+					this.OnStatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OriginalMessageId", DbType="NVarChar(255)")]
+		public string OriginalMessageId
+		{
+			get
+			{
+				return this._OriginalMessageId;
+			}
+			set
+			{
+				if ((this._OriginalMessageId != value))
+				{
+					this.OnOriginalMessageIdChanging(value);
+					this.SendPropertyChanging();
+					this._OriginalMessageId = value;
+					this.SendPropertyChanged("OriginalMessageId");
+					this.OnOriginalMessageIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Originator", DbType="NVarChar(255)")]
+		public string Originator
+		{
+			get
+			{
+				return this._Originator;
+			}
+			set
+			{
+				if ((this._Originator != value))
+				{
+					this.OnOriginatorChanging(value);
+					this.SendPropertyChanging();
+					this._Originator = value;
+					this.SendPropertyChanged("Originator");
+					this.OnOriginatorChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ApplicationTimeOutSagaEntity")]
 	public partial class ApplicationTimeOutSagaEntity : DbEntity<ApplicationTimeOutSagaEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -4294,6 +4553,8 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 		
 		private System.Guid _Id;
 		
+		private System.Nullable<int> _ApplicationId;
+		
 		private System.Nullable<decimal> _Amount;
 		
 		private System.Nullable<int> _PaymentsAttempted;
@@ -4312,6 +4573,8 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
     partial void OnCreated();
     partial void OnIdChanging(System.Guid value);
     partial void OnIdChanged();
+    partial void OnApplicationIdChanging(System.Nullable<int> value);
+    partial void OnApplicationIdChanged();
     partial void OnAmountChanging(System.Nullable<decimal> value);
     partial void OnAmountChanged();
     partial void OnPaymentsAttemptedChanging(System.Nullable<int> value);
@@ -4347,6 +4610,26 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 					this._Id = value;
 					this.SendPropertyChanged("Id");
 					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplicationId", DbType="Int")]
+		public System.Nullable<int> ApplicationId
+		{
+			get
+			{
+				return this._ApplicationId;
+			}
+			set
+			{
+				if ((this._ApplicationId != value))
+				{
+					this.OnApplicationIdChanging(value);
+					this.SendPropertyChanging();
+					this._ApplicationId = value;
+					this.SendPropertyChanged("ApplicationId");
+					this.OnApplicationIdChanged();
 				}
 			}
 		}
@@ -6392,6 +6675,164 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CreateAndStoreFirstPaymentFailedEmailSagaEntity")]
+	public partial class CreateAndStoreFirstPaymentFailedEmailSagaEntity : DbEntity<CreateAndStoreFirstPaymentFailedEmailSagaEntity>, INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _Id;
+		
+		private System.Nullable<System.Guid> _ApplicationId;
+		
+		private System.Nullable<System.Guid> _OrganisationId;
+		
+		private string _OriginalMessageId;
+		
+		private string _Originator;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(System.Guid value);
+    partial void OnIdChanged();
+    partial void OnApplicationIdChanging(System.Nullable<System.Guid> value);
+    partial void OnApplicationIdChanged();
+    partial void OnOrganisationIdChanging(System.Nullable<System.Guid> value);
+    partial void OnOrganisationIdChanged();
+    partial void OnOriginalMessageIdChanging(string value);
+    partial void OnOriginalMessageIdChanged();
+    partial void OnOriginatorChanging(string value);
+    partial void OnOriginatorChanged();
+    #endregion
+		
+		public CreateAndStoreFirstPaymentFailedEmailSagaEntity()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplicationId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> ApplicationId
+		{
+			get
+			{
+				return this._ApplicationId;
+			}
+			set
+			{
+				if ((this._ApplicationId != value))
+				{
+					this.OnApplicationIdChanging(value);
+					this.SendPropertyChanging();
+					this._ApplicationId = value;
+					this.SendPropertyChanged("ApplicationId");
+					this.OnApplicationIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrganisationId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> OrganisationId
+		{
+			get
+			{
+				return this._OrganisationId;
+			}
+			set
+			{
+				if ((this._OrganisationId != value))
+				{
+					this.OnOrganisationIdChanging(value);
+					this.SendPropertyChanging();
+					this._OrganisationId = value;
+					this.SendPropertyChanged("OrganisationId");
+					this.OnOrganisationIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OriginalMessageId", DbType="NVarChar(255)")]
+		public string OriginalMessageId
+		{
+			get
+			{
+				return this._OriginalMessageId;
+			}
+			set
+			{
+				if ((this._OriginalMessageId != value))
+				{
+					this.OnOriginalMessageIdChanging(value);
+					this.SendPropertyChanging();
+					this._OriginalMessageId = value;
+					this.SendPropertyChanged("OriginalMessageId");
+					this.OnOriginalMessageIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Originator", DbType="NVarChar(255)")]
+		public string Originator
+		{
+			get
+			{
+				return this._Originator;
+			}
+			set
+			{
+				if ((this._Originator != value))
+				{
+					this.OnOriginatorChanging(value);
+					this.SendPropertyChanging();
+					this._Originator = value;
+					this.SendPropertyChanged("Originator");
+					this.OnOriginatorChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CreateAndStoreRepaymentArrangementCancelledEmailSagaEntity")]
 	public partial class CreateAndStoreRepaymentArrangementCancelledEmailSagaEntity : DbEntity<CreateAndStoreRepaymentArrangementCancelledEmailSagaEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -8147,6 +8588,164 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 					this._PlainFileId = value;
 					this.SendPropertyChanged("PlainFileId");
 					this.OnPlainFileIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OriginalMessageId", DbType="NVarChar(255)")]
+		public string OriginalMessageId
+		{
+			get
+			{
+				return this._OriginalMessageId;
+			}
+			set
+			{
+				if ((this._OriginalMessageId != value))
+				{
+					this.OnOriginalMessageIdChanging(value);
+					this.SendPropertyChanging();
+					this._OriginalMessageId = value;
+					this.SendPropertyChanged("OriginalMessageId");
+					this.OnOriginalMessageIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Originator", DbType="NVarChar(255)")]
+		public string Originator
+		{
+			get
+			{
+				return this._Originator;
+			}
+			set
+			{
+				if ((this._Originator != value))
+				{
+					this.OnOriginatorChanging(value);
+					this.SendPropertyChanging();
+					this._Originator = value;
+					this.SendPropertyChanged("Originator");
+					this.OnOriginatorChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CreateAndStoreSecondPaymentFailedEmailsagaEntity")]
+	public partial class CreateAndStoreSecondPaymentFailedEmailsagaEntity : DbEntity<CreateAndStoreSecondPaymentFailedEmailsagaEntity>, INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _Id;
+		
+		private System.Nullable<System.Guid> _ApplicationId;
+		
+		private System.Nullable<System.Guid> _OrganisationId;
+		
+		private string _OriginalMessageId;
+		
+		private string _Originator;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(System.Guid value);
+    partial void OnIdChanged();
+    partial void OnApplicationIdChanging(System.Nullable<System.Guid> value);
+    partial void OnApplicationIdChanged();
+    partial void OnOrganisationIdChanging(System.Nullable<System.Guid> value);
+    partial void OnOrganisationIdChanged();
+    partial void OnOriginalMessageIdChanging(string value);
+    partial void OnOriginalMessageIdChanged();
+    partial void OnOriginatorChanging(string value);
+    partial void OnOriginatorChanged();
+    #endregion
+		
+		public CreateAndStoreSecondPaymentFailedEmailsagaEntity()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplicationId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> ApplicationId
+		{
+			get
+			{
+				return this._ApplicationId;
+			}
+			set
+			{
+				if ((this._ApplicationId != value))
+				{
+					this.OnApplicationIdChanging(value);
+					this.SendPropertyChanging();
+					this._ApplicationId = value;
+					this.SendPropertyChanged("ApplicationId");
+					this.OnApplicationIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrganisationId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> OrganisationId
+		{
+			get
+			{
+				return this._OrganisationId;
+			}
+			set
+			{
+				if ((this._OrganisationId != value))
+				{
+					this.OnOrganisationIdChanging(value);
+					this.SendPropertyChanging();
+					this._OrganisationId = value;
+					this.SendPropertyChanged("OrganisationId");
+					this.OnOrganisationIdChanged();
 				}
 			}
 		}
@@ -18099,6 +18698,212 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FraudSuspectedSagaEntity")]
+	public partial class FraudSuspectedSagaEntity : DbEntity<FraudSuspectedSagaEntity>, INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _Id;
+		
+		private string _FraudCaseId;
+		
+		private System.Nullable<System.Guid> _AccountId;
+		
+		private System.Nullable<bool> _FraudIsSuspected;
+		
+		private string _VerificationOutcome;
+		
+		private string _OriginalMessageId;
+		
+		private string _Originator;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(System.Guid value);
+    partial void OnIdChanged();
+    partial void OnFraudCaseIdChanging(string value);
+    partial void OnFraudCaseIdChanged();
+    partial void OnAccountIdChanging(System.Nullable<System.Guid> value);
+    partial void OnAccountIdChanged();
+    partial void OnFraudIsSuspectedChanging(System.Nullable<bool> value);
+    partial void OnFraudIsSuspectedChanged();
+    partial void OnVerificationOutcomeChanging(string value);
+    partial void OnVerificationOutcomeChanged();
+    partial void OnOriginalMessageIdChanging(string value);
+    partial void OnOriginalMessageIdChanged();
+    partial void OnOriginatorChanging(string value);
+    partial void OnOriginatorChanged();
+    #endregion
+		
+		public FraudSuspectedSagaEntity()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FraudCaseId", DbType="NVarChar(255)")]
+		public string FraudCaseId
+		{
+			get
+			{
+				return this._FraudCaseId;
+			}
+			set
+			{
+				if ((this._FraudCaseId != value))
+				{
+					this.OnFraudCaseIdChanging(value);
+					this.SendPropertyChanging();
+					this._FraudCaseId = value;
+					this.SendPropertyChanged("FraudCaseId");
+					this.OnFraudCaseIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccountId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> AccountId
+		{
+			get
+			{
+				return this._AccountId;
+			}
+			set
+			{
+				if ((this._AccountId != value))
+				{
+					this.OnAccountIdChanging(value);
+					this.SendPropertyChanging();
+					this._AccountId = value;
+					this.SendPropertyChanged("AccountId");
+					this.OnAccountIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FraudIsSuspected", DbType="Bit")]
+		public System.Nullable<bool> FraudIsSuspected
+		{
+			get
+			{
+				return this._FraudIsSuspected;
+			}
+			set
+			{
+				if ((this._FraudIsSuspected != value))
+				{
+					this.OnFraudIsSuspectedChanging(value);
+					this.SendPropertyChanging();
+					this._FraudIsSuspected = value;
+					this.SendPropertyChanged("FraudIsSuspected");
+					this.OnFraudIsSuspectedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VerificationOutcome", DbType="NVarChar(255)")]
+		public string VerificationOutcome
+		{
+			get
+			{
+				return this._VerificationOutcome;
+			}
+			set
+			{
+				if ((this._VerificationOutcome != value))
+				{
+					this.OnVerificationOutcomeChanging(value);
+					this.SendPropertyChanging();
+					this._VerificationOutcome = value;
+					this.SendPropertyChanged("VerificationOutcome");
+					this.OnVerificationOutcomeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OriginalMessageId", DbType="NVarChar(255)")]
+		public string OriginalMessageId
+		{
+			get
+			{
+				return this._OriginalMessageId;
+			}
+			set
+			{
+				if ((this._OriginalMessageId != value))
+				{
+					this.OnOriginalMessageIdChanging(value);
+					this.SendPropertyChanging();
+					this._OriginalMessageId = value;
+					this.SendPropertyChanged("OriginalMessageId");
+					this.OnOriginalMessageIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Originator", DbType="NVarChar(255)")]
+		public string Originator
+		{
+			get
+			{
+				return this._Originator;
+			}
+			set
+			{
+				if ((this._Originator != value))
+				{
+					this.OnOriginatorChanging(value);
+					this.SendPropertyChanging();
+					this._Originator = value;
+					this.SendPropertyChanged("Originator");
+					this.OnOriginatorChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FundsTransferredSagaEntity")]
 	public partial class FundsTransferredSagaEntity : DbEntity<FundsTransferredSagaEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -18232,6 +19037,188 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 					this._Originator = value;
 					this.SendPropertyChanged("Originator");
 					this.OnOriginatorChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.GuarantorSagaEntity")]
+	public partial class GuarantorSagaEntity : DbEntity<GuarantorSagaEntity>, INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _Id;
+		
+		private string _Originator;
+		
+		private string _OriginalMessageId;
+		
+		private System.Nullable<System.Guid> _ApplicationId;
+		
+		private System.Nullable<System.Guid> _AccountId;
+		
+		private System.Nullable<bool> _IsAccountPrepared;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(System.Guid value);
+    partial void OnIdChanged();
+    partial void OnOriginatorChanging(string value);
+    partial void OnOriginatorChanged();
+    partial void OnOriginalMessageIdChanging(string value);
+    partial void OnOriginalMessageIdChanged();
+    partial void OnApplicationIdChanging(System.Nullable<System.Guid> value);
+    partial void OnApplicationIdChanged();
+    partial void OnAccountIdChanging(System.Nullable<System.Guid> value);
+    partial void OnAccountIdChanged();
+    partial void OnIsAccountPreparedChanging(System.Nullable<bool> value);
+    partial void OnIsAccountPreparedChanged();
+    #endregion
+		
+		public GuarantorSagaEntity()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Originator", DbType="NVarChar(255)")]
+		public string Originator
+		{
+			get
+			{
+				return this._Originator;
+			}
+			set
+			{
+				if ((this._Originator != value))
+				{
+					this.OnOriginatorChanging(value);
+					this.SendPropertyChanging();
+					this._Originator = value;
+					this.SendPropertyChanged("Originator");
+					this.OnOriginatorChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OriginalMessageId", DbType="NVarChar(255)")]
+		public string OriginalMessageId
+		{
+			get
+			{
+				return this._OriginalMessageId;
+			}
+			set
+			{
+				if ((this._OriginalMessageId != value))
+				{
+					this.OnOriginalMessageIdChanging(value);
+					this.SendPropertyChanging();
+					this._OriginalMessageId = value;
+					this.SendPropertyChanged("OriginalMessageId");
+					this.OnOriginalMessageIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplicationId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> ApplicationId
+		{
+			get
+			{
+				return this._ApplicationId;
+			}
+			set
+			{
+				if ((this._ApplicationId != value))
+				{
+					this.OnApplicationIdChanging(value);
+					this.SendPropertyChanging();
+					this._ApplicationId = value;
+					this.SendPropertyChanged("ApplicationId");
+					this.OnApplicationIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccountId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> AccountId
+		{
+			get
+			{
+				return this._AccountId;
+			}
+			set
+			{
+				if ((this._AccountId != value))
+				{
+					this.OnAccountIdChanging(value);
+					this.SendPropertyChanging();
+					this._AccountId = value;
+					this.SendPropertyChanged("AccountId");
+					this.OnAccountIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsAccountPrepared", DbType="Bit")]
+		public System.Nullable<bool> IsAccountPrepared
+		{
+			get
+			{
+				return this._IsAccountPrepared;
+			}
+			set
+			{
+				if ((this._IsAccountPrepared != value))
+				{
+					this.OnIsAccountPreparedChanging(value);
+					this.SendPropertyChanging();
+					this._IsAccountPrepared = value;
+					this.SendPropertyChanged("IsAccountPrepared");
+					this.OnIsAccountPreparedChanged();
 				}
 			}
 		}
@@ -20297,6 +21284,8 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 		
 		private System.Nullable<int> _ApplicationId;
 		
+		private System.Nullable<System.DateTime> _ApplicationSignedOn;
+		
 		private System.Nullable<System.Guid> _ApplicationExternalId;
 		
 		private System.Nullable<System.Guid> _OrganisationId;
@@ -20319,6 +21308,8 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
     partial void OnIdChanged();
     partial void OnApplicationIdChanging(System.Nullable<int> value);
     partial void OnApplicationIdChanged();
+    partial void OnApplicationSignedOnChanging(System.Nullable<System.DateTime> value);
+    partial void OnApplicationSignedOnChanged();
     partial void OnApplicationExternalIdChanging(System.Nullable<System.Guid> value);
     partial void OnApplicationExternalIdChanged();
     partial void OnOrganisationIdChanging(System.Nullable<System.Guid> value);
@@ -20376,6 +21367,26 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 					this._ApplicationId = value;
 					this.SendPropertyChanged("ApplicationId");
 					this.OnApplicationIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplicationSignedOn", DbType="DateTime")]
+		public System.Nullable<System.DateTime> ApplicationSignedOn
+		{
+			get
+			{
+				return this._ApplicationSignedOn;
+			}
+			set
+			{
+				if ((this._ApplicationSignedOn != value))
+				{
+					this.OnApplicationSignedOnChanging(value);
+					this.SendPropertyChanging();
+					this._ApplicationSignedOn = value;
+					this.SendPropertyChanged("ApplicationSignedOn");
+					this.OnApplicationSignedOnChanged();
 				}
 			}
 		}
@@ -20837,6 +21848,164 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PaymentTakenFollowUpSagaEntity")]
+	public partial class PaymentTakenFollowUpSagaEntity : DbEntity<PaymentTakenFollowUpSagaEntity>, INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _Id;
+		
+		private System.Nullable<System.Guid> _ApplicationId;
+		
+		private System.Nullable<System.Guid> _TransactionId;
+		
+		private string _OriginalMessageId;
+		
+		private string _Originator;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(System.Guid value);
+    partial void OnIdChanged();
+    partial void OnApplicationIdChanging(System.Nullable<System.Guid> value);
+    partial void OnApplicationIdChanged();
+    partial void OnTransactionIdChanging(System.Nullable<System.Guid> value);
+    partial void OnTransactionIdChanged();
+    partial void OnOriginalMessageIdChanging(string value);
+    partial void OnOriginalMessageIdChanged();
+    partial void OnOriginatorChanging(string value);
+    partial void OnOriginatorChanged();
+    #endregion
+		
+		public PaymentTakenFollowUpSagaEntity()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplicationId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> ApplicationId
+		{
+			get
+			{
+				return this._ApplicationId;
+			}
+			set
+			{
+				if ((this._ApplicationId != value))
+				{
+					this.OnApplicationIdChanging(value);
+					this.SendPropertyChanging();
+					this._ApplicationId = value;
+					this.SendPropertyChanged("ApplicationId");
+					this.OnApplicationIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransactionId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> TransactionId
+		{
+			get
+			{
+				return this._TransactionId;
+			}
+			set
+			{
+				if ((this._TransactionId != value))
+				{
+					this.OnTransactionIdChanging(value);
+					this.SendPropertyChanging();
+					this._TransactionId = value;
+					this.SendPropertyChanged("TransactionId");
+					this.OnTransactionIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OriginalMessageId", DbType="NVarChar(255)")]
+		public string OriginalMessageId
+		{
+			get
+			{
+				return this._OriginalMessageId;
+			}
+			set
+			{
+				if ((this._OriginalMessageId != value))
+				{
+					this.OnOriginalMessageIdChanging(value);
+					this.SendPropertyChanging();
+					this._OriginalMessageId = value;
+					this.SendPropertyChanged("OriginalMessageId");
+					this.OnOriginalMessageIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Originator", DbType="NVarChar(255)")]
+		public string Originator
+		{
+			get
+			{
+				return this._Originator;
+			}
+			set
+			{
+				if ((this._Originator != value))
+				{
+					this.OnOriginatorChanging(value);
+					this.SendPropertyChanging();
+					this._Originator = value;
+					this.SendPropertyChanged("Originator");
+					this.OnOriginatorChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PendingScheduledPaymentSagaEntity")]
 	public partial class PendingScheduledPaymentSagaEntity : DbEntity<PendingScheduledPaymentSagaEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -20865,6 +22034,8 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 		
 		private System.Nullable<System.Guid> _TriggerBySagaId;
 		
+		private System.Nullable<System.DateTime> _InterestedOnDate;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -20891,6 +22062,8 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
     partial void OnIsRetryChanged();
     partial void OnTriggerBySagaIdChanging(System.Nullable<System.Guid> value);
     partial void OnTriggerBySagaIdChanged();
+    partial void OnInterestedOnDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnInterestedOnDateChanged();
     #endregion
 		
 		public PendingScheduledPaymentSagaEntity()
@@ -21114,6 +22287,26 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 					this._TriggerBySagaId = value;
 					this.SendPropertyChanged("TriggerBySagaId");
 					this.OnTriggerBySagaIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InterestedOnDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> InterestedOnDate
+		{
+			get
+			{
+				return this._InterestedOnDate;
+			}
+			set
+			{
+				if ((this._InterestedOnDate != value))
+				{
+					this.OnInterestedOnDateChanging(value);
+					this.SendPropertyChanging();
+					this._InterestedOnDate = value;
+					this.SendPropertyChanged("InterestedOnDate");
+					this.OnInterestedOnDateChanged();
 				}
 			}
 		}
@@ -21699,6 +22892,18 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 		
 		private System.Nullable<int> _PaymentCardId;
 		
+		private System.Nullable<System.DateTime> _ActionDate;
+		
+		private System.Nullable<int> _ScheduledPaymentId;
+		
+		private System.Nullable<int> _TrackingDays;
+		
+		private System.Nullable<System.Guid> _CashEntityId;
+		
+		private System.Nullable<int> _SagaStatus;
+		
+		private System.Nullable<System.DateTime> _TimeoutOn;
+		
 		private EntityRef<RepaymentSagaEntity> _RepaymentSagaEntity;
 		
     #region Extensibility Method Definitions
@@ -21713,6 +22918,18 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
     partial void OnIsFullRepayChanged();
     partial void OnPaymentCardIdChanging(System.Nullable<int> value);
     partial void OnPaymentCardIdChanged();
+    partial void OnActionDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnActionDateChanged();
+    partial void OnScheduledPaymentIdChanging(System.Nullable<int> value);
+    partial void OnScheduledPaymentIdChanged();
+    partial void OnTrackingDaysChanging(System.Nullable<int> value);
+    partial void OnTrackingDaysChanged();
+    partial void OnCashEntityIdChanging(System.Nullable<System.Guid> value);
+    partial void OnCashEntityIdChanged();
+    partial void OnSagaStatusChanging(System.Nullable<int> value);
+    partial void OnSagaStatusChanged();
+    partial void OnTimeoutOnChanging(System.Nullable<System.DateTime> value);
+    partial void OnTimeoutOnChanged();
     #endregion
 		
 		public RepayLoanSagaEntity()
@@ -21801,6 +23018,126 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 					this._PaymentCardId = value;
 					this.SendPropertyChanged("PaymentCardId");
 					this.OnPaymentCardIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ActionDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> ActionDate
+		{
+			get
+			{
+				return this._ActionDate;
+			}
+			set
+			{
+				if ((this._ActionDate != value))
+				{
+					this.OnActionDateChanging(value);
+					this.SendPropertyChanging();
+					this._ActionDate = value;
+					this.SendPropertyChanged("ActionDate");
+					this.OnActionDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ScheduledPaymentId", DbType="Int")]
+		public System.Nullable<int> ScheduledPaymentId
+		{
+			get
+			{
+				return this._ScheduledPaymentId;
+			}
+			set
+			{
+				if ((this._ScheduledPaymentId != value))
+				{
+					this.OnScheduledPaymentIdChanging(value);
+					this.SendPropertyChanging();
+					this._ScheduledPaymentId = value;
+					this.SendPropertyChanged("ScheduledPaymentId");
+					this.OnScheduledPaymentIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TrackingDays", DbType="Int")]
+		public System.Nullable<int> TrackingDays
+		{
+			get
+			{
+				return this._TrackingDays;
+			}
+			set
+			{
+				if ((this._TrackingDays != value))
+				{
+					this.OnTrackingDaysChanging(value);
+					this.SendPropertyChanging();
+					this._TrackingDays = value;
+					this.SendPropertyChanged("TrackingDays");
+					this.OnTrackingDaysChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CashEntityId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> CashEntityId
+		{
+			get
+			{
+				return this._CashEntityId;
+			}
+			set
+			{
+				if ((this._CashEntityId != value))
+				{
+					this.OnCashEntityIdChanging(value);
+					this.SendPropertyChanging();
+					this._CashEntityId = value;
+					this.SendPropertyChanged("CashEntityId");
+					this.OnCashEntityIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SagaStatus", DbType="Int")]
+		public System.Nullable<int> SagaStatus
+		{
+			get
+			{
+				return this._SagaStatus;
+			}
+			set
+			{
+				if ((this._SagaStatus != value))
+				{
+					this.OnSagaStatusChanging(value);
+					this.SendPropertyChanging();
+					this._SagaStatus = value;
+					this.SendPropertyChanged("SagaStatus");
+					this.OnSagaStatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TimeoutOn", DbType="DateTime")]
+		public System.Nullable<System.DateTime> TimeoutOn
+		{
+			get
+			{
+				return this._TimeoutOn;
+			}
+			set
+			{
+				if ((this._TimeoutOn != value))
+				{
+					this.OnTimeoutOnChanging(value);
+					this.SendPropertyChanging();
+					this._TimeoutOn = value;
+					this.SendPropertyChanged("TimeoutOn");
+					this.OnTimeoutOnChanged();
 				}
 			}
 		}
@@ -24374,6 +25711,14 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 		
 		private System.Nullable<bool> _IsApplicationAssessmentStarted;
 		
+		private System.Nullable<bool> _IsVerifyCommandRecieved;
+		
+		private System.Nullable<bool> _IsSubmitNumberOfGuarantorsReceived;
+		
+		private System.Nullable<int> _NumberOfGuarantorsSubmitted;
+		
+		private System.Nullable<int> _NumberOfGuarantorsReceived;
+		
 		private EntityRef<BusinessApplicationSagaEntity> _BusinessApplicationSagaEntity;
 		
     #region Extensibility Method Definitions
@@ -24410,6 +25755,14 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
     partial void OnIsBankAccountValidChanged();
     partial void OnIsApplicationAssessmentStartedChanging(System.Nullable<bool> value);
     partial void OnIsApplicationAssessmentStartedChanged();
+    partial void OnIsVerifyCommandRecievedChanging(System.Nullable<bool> value);
+    partial void OnIsVerifyCommandRecievedChanged();
+    partial void OnIsSubmitNumberOfGuarantorsReceivedChanging(System.Nullable<bool> value);
+    partial void OnIsSubmitNumberOfGuarantorsReceivedChanged();
+    partial void OnNumberOfGuarantorsSubmittedChanging(System.Nullable<int> value);
+    partial void OnNumberOfGuarantorsSubmittedChanged();
+    partial void OnNumberOfGuarantorsReceivedChanging(System.Nullable<int> value);
+    partial void OnNumberOfGuarantorsReceivedChanged();
     #endregion
 		
 		public RiskApplicationSagaEntity()
@@ -24714,6 +26067,86 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 					this._IsApplicationAssessmentStarted = value;
 					this.SendPropertyChanged("IsApplicationAssessmentStarted");
 					this.OnIsApplicationAssessmentStartedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsVerifyCommandRecieved", DbType="Bit")]
+		public System.Nullable<bool> IsVerifyCommandRecieved
+		{
+			get
+			{
+				return this._IsVerifyCommandRecieved;
+			}
+			set
+			{
+				if ((this._IsVerifyCommandRecieved != value))
+				{
+					this.OnIsVerifyCommandRecievedChanging(value);
+					this.SendPropertyChanging();
+					this._IsVerifyCommandRecieved = value;
+					this.SendPropertyChanged("IsVerifyCommandRecieved");
+					this.OnIsVerifyCommandRecievedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsSubmitNumberOfGuarantorsReceived", DbType="Bit")]
+		public System.Nullable<bool> IsSubmitNumberOfGuarantorsReceived
+		{
+			get
+			{
+				return this._IsSubmitNumberOfGuarantorsReceived;
+			}
+			set
+			{
+				if ((this._IsSubmitNumberOfGuarantorsReceived != value))
+				{
+					this.OnIsSubmitNumberOfGuarantorsReceivedChanging(value);
+					this.SendPropertyChanging();
+					this._IsSubmitNumberOfGuarantorsReceived = value;
+					this.SendPropertyChanged("IsSubmitNumberOfGuarantorsReceived");
+					this.OnIsSubmitNumberOfGuarantorsReceivedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NumberOfGuarantorsSubmitted", DbType="Int")]
+		public System.Nullable<int> NumberOfGuarantorsSubmitted
+		{
+			get
+			{
+				return this._NumberOfGuarantorsSubmitted;
+			}
+			set
+			{
+				if ((this._NumberOfGuarantorsSubmitted != value))
+				{
+					this.OnNumberOfGuarantorsSubmittedChanging(value);
+					this.SendPropertyChanging();
+					this._NumberOfGuarantorsSubmitted = value;
+					this.SendPropertyChanged("NumberOfGuarantorsSubmitted");
+					this.OnNumberOfGuarantorsSubmittedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NumberOfGuarantorsReceived", DbType="Int")]
+		public System.Nullable<int> NumberOfGuarantorsReceived
+		{
+			get
+			{
+				return this._NumberOfGuarantorsReceived;
+			}
+			set
+			{
+				if ((this._NumberOfGuarantorsReceived != value))
+				{
+					this.OnNumberOfGuarantorsReceivedChanging(value);
+					this.SendPropertyChanging();
+					this._NumberOfGuarantorsReceived = value;
+					this.SendPropertyChanged("NumberOfGuarantorsReceived");
+					this.OnNumberOfGuarantorsReceivedChanged();
 				}
 			}
 		}
@@ -26036,6 +27469,308 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 					this._IncomeFrequencty = value;
 					this.SendPropertyChanged("IncomeFrequencty");
 					this.OnIncomeFrequenctyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OriginalMessageId", DbType="NVarChar(255)")]
+		public string OriginalMessageId
+		{
+			get
+			{
+				return this._OriginalMessageId;
+			}
+			set
+			{
+				if ((this._OriginalMessageId != value))
+				{
+					this.OnOriginalMessageIdChanging(value);
+					this.SendPropertyChanging();
+					this._OriginalMessageId = value;
+					this.SendPropertyChanged("OriginalMessageId");
+					this.OnOriginalMessageIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Originator", DbType="NVarChar(255)")]
+		public string Originator
+		{
+			get
+			{
+				return this._Originator;
+			}
+			set
+			{
+				if ((this._Originator != value))
+				{
+					this.OnOriginatorChanging(value);
+					this.SendPropertyChanging();
+					this._Originator = value;
+					this.SendPropertyChanged("Originator");
+					this.OnOriginatorChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.SaveFixedTermLoanApplicationEntity")]
+	public partial class SaveFixedTermLoanApplicationEntity : DbEntity<SaveFixedTermLoanApplicationEntity>, INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _Id;
+		
+		private System.Nullable<System.DateTime> _ApplicationDate;
+		
+		private System.Nullable<System.Guid> _ApplicationId;
+		
+		private System.Nullable<System.Guid> _AccountId;
+		
+		private System.Nullable<decimal> _TransmissionFee;
+		
+		private System.Nullable<decimal> _LoanAmount;
+		
+		private System.Nullable<decimal> _MIR;
+		
+		private System.Nullable<System.DateTime> _PromiseDate;
+		
+		private System.Nullable<System.DateTime> _NextDueDate;
+		
+		private string _OriginalMessageId;
+		
+		private string _Originator;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(System.Guid value);
+    partial void OnIdChanged();
+    partial void OnApplicationDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnApplicationDateChanged();
+    partial void OnApplicationIdChanging(System.Nullable<System.Guid> value);
+    partial void OnApplicationIdChanged();
+    partial void OnAccountIdChanging(System.Nullable<System.Guid> value);
+    partial void OnAccountIdChanged();
+    partial void OnTransmissionFeeChanging(System.Nullable<decimal> value);
+    partial void OnTransmissionFeeChanged();
+    partial void OnLoanAmountChanging(System.Nullable<decimal> value);
+    partial void OnLoanAmountChanged();
+    partial void OnMIRChanging(System.Nullable<decimal> value);
+    partial void OnMIRChanged();
+    partial void OnPromiseDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnPromiseDateChanged();
+    partial void OnNextDueDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnNextDueDateChanged();
+    partial void OnOriginalMessageIdChanging(string value);
+    partial void OnOriginalMessageIdChanged();
+    partial void OnOriginatorChanging(string value);
+    partial void OnOriginatorChanged();
+    #endregion
+		
+		public SaveFixedTermLoanApplicationEntity()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplicationDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> ApplicationDate
+		{
+			get
+			{
+				return this._ApplicationDate;
+			}
+			set
+			{
+				if ((this._ApplicationDate != value))
+				{
+					this.OnApplicationDateChanging(value);
+					this.SendPropertyChanging();
+					this._ApplicationDate = value;
+					this.SendPropertyChanged("ApplicationDate");
+					this.OnApplicationDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplicationId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> ApplicationId
+		{
+			get
+			{
+				return this._ApplicationId;
+			}
+			set
+			{
+				if ((this._ApplicationId != value))
+				{
+					this.OnApplicationIdChanging(value);
+					this.SendPropertyChanging();
+					this._ApplicationId = value;
+					this.SendPropertyChanged("ApplicationId");
+					this.OnApplicationIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccountId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> AccountId
+		{
+			get
+			{
+				return this._AccountId;
+			}
+			set
+			{
+				if ((this._AccountId != value))
+				{
+					this.OnAccountIdChanging(value);
+					this.SendPropertyChanging();
+					this._AccountId = value;
+					this.SendPropertyChanged("AccountId");
+					this.OnAccountIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransmissionFee", DbType="Decimal(19,5)")]
+		public System.Nullable<decimal> TransmissionFee
+		{
+			get
+			{
+				return this._TransmissionFee;
+			}
+			set
+			{
+				if ((this._TransmissionFee != value))
+				{
+					this.OnTransmissionFeeChanging(value);
+					this.SendPropertyChanging();
+					this._TransmissionFee = value;
+					this.SendPropertyChanged("TransmissionFee");
+					this.OnTransmissionFeeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoanAmount", DbType="Decimal(19,5)")]
+		public System.Nullable<decimal> LoanAmount
+		{
+			get
+			{
+				return this._LoanAmount;
+			}
+			set
+			{
+				if ((this._LoanAmount != value))
+				{
+					this.OnLoanAmountChanging(value);
+					this.SendPropertyChanging();
+					this._LoanAmount = value;
+					this.SendPropertyChanged("LoanAmount");
+					this.OnLoanAmountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MIR", DbType="Decimal(19,5)")]
+		public System.Nullable<decimal> MIR
+		{
+			get
+			{
+				return this._MIR;
+			}
+			set
+			{
+				if ((this._MIR != value))
+				{
+					this.OnMIRChanging(value);
+					this.SendPropertyChanging();
+					this._MIR = value;
+					this.SendPropertyChanged("MIR");
+					this.OnMIRChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PromiseDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> PromiseDate
+		{
+			get
+			{
+				return this._PromiseDate;
+			}
+			set
+			{
+				if ((this._PromiseDate != value))
+				{
+					this.OnPromiseDateChanging(value);
+					this.SendPropertyChanging();
+					this._PromiseDate = value;
+					this.SendPropertyChanged("PromiseDate");
+					this.OnPromiseDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NextDueDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> NextDueDate
+		{
+			get
+			{
+				return this._NextDueDate;
+			}
+			set
+			{
+				if ((this._NextDueDate != value))
+				{
+					this.OnNextDueDateChanging(value);
+					this.SendPropertyChanging();
+					this._NextDueDate = value;
+					this.SendPropertyChanged("NextDueDate");
+					this.OnNextDueDateChanged();
 				}
 			}
 		}
@@ -28707,6 +30442,10 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 		
 		private string _ExternalId;
 		
+		private System.Nullable<bool> _TradingAddressExpected;
+		
+		private System.Nullable<bool> _RegisteredAddressExpected;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -28727,6 +30466,10 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
     partial void OnVatNumberReceivedChanged();
     partial void OnExternalIdChanging(string value);
     partial void OnExternalIdChanged();
+    partial void OnTradingAddressExpectedChanging(System.Nullable<bool> value);
+    partial void OnTradingAddressExpectedChanged();
+    partial void OnRegisteredAddressExpectedChanging(System.Nullable<bool> value);
+    partial void OnRegisteredAddressExpectedChanged();
     #endregion
 		
 		public StoreOrganisationExtendedDetailsSagaEntity()
@@ -28890,6 +30633,46 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 					this._ExternalId = value;
 					this.SendPropertyChanged("ExternalId");
 					this.OnExternalIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TradingAddressExpected", DbType="Bit")]
+		public System.Nullable<bool> TradingAddressExpected
+		{
+			get
+			{
+				return this._TradingAddressExpected;
+			}
+			set
+			{
+				if ((this._TradingAddressExpected != value))
+				{
+					this.OnTradingAddressExpectedChanging(value);
+					this.SendPropertyChanging();
+					this._TradingAddressExpected = value;
+					this.SendPropertyChanged("TradingAddressExpected");
+					this.OnTradingAddressExpectedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RegisteredAddressExpected", DbType="Bit")]
+		public System.Nullable<bool> RegisteredAddressExpected
+		{
+			get
+			{
+				return this._RegisteredAddressExpected;
+			}
+			set
+			{
+				if ((this._RegisteredAddressExpected != value))
+				{
+					this.OnRegisteredAddressExpectedChanging(value);
+					this.SendPropertyChanging();
+					this._RegisteredAddressExpected = value;
+					this.SendPropertyChanged("RegisteredAddressExpected");
+					this.OnRegisteredAddressExpectedChanged();
 				}
 			}
 		}
@@ -32032,6 +33815,10 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 		
 		private System.Nullable<System.Guid> _ApplicationId;
 		
+		private System.Nullable<bool> _PriceTierDetermined;
+		
+		private System.Nullable<System.Guid> _WorkflowId;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -32054,6 +33841,10 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
     partial void OnDataProviderStateChanged();
     partial void OnApplicationIdChanging(System.Nullable<System.Guid> value);
     partial void OnApplicationIdChanged();
+    partial void OnPriceTierDeterminedChanging(System.Nullable<bool> value);
+    partial void OnPriceTierDeterminedChanged();
+    partial void OnWorkflowIdChanging(System.Nullable<System.Guid> value);
+    partial void OnWorkflowIdChanged();
     #endregion
 		
 		public WorkflowState()
@@ -32237,6 +34028,46 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 					this._ApplicationId = value;
 					this.SendPropertyChanged("ApplicationId");
 					this.OnApplicationIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PriceTierDetermined", DbType="Bit")]
+		public System.Nullable<bool> PriceTierDetermined
+		{
+			get
+			{
+				return this._PriceTierDetermined;
+			}
+			set
+			{
+				if ((this._PriceTierDetermined != value))
+				{
+					this.OnPriceTierDeterminedChanging(value);
+					this.SendPropertyChanging();
+					this._PriceTierDetermined = value;
+					this.SendPropertyChanged("PriceTierDetermined");
+					this.OnPriceTierDeterminedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkflowId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> WorkflowId
+		{
+			get
+			{
+				return this._WorkflowId;
+			}
+			set
+			{
+				if ((this._WorkflowId != value))
+				{
+					this.OnWorkflowIdChanging(value);
+					this.SendPropertyChanging();
+					this._WorkflowId = value;
+					this.SendPropertyChanged("WorkflowId");
+					this.OnWorkflowIdChanged();
 				}
 			}
 		}
