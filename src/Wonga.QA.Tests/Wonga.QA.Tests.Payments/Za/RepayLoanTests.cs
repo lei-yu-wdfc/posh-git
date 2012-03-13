@@ -26,6 +26,9 @@ namespace Wonga.QA.Tests.Payments.Za
         private const string NowServiceConfigKey_RepayLoan =
             @"Wonga.Payments.Handlers.FixedLoanOperations.RepayLoanSagaBase.DateTime.UtcNow";
 
+        private const string NowServiceConfigKey_ActionDateCalculator =
+            "Wonga.Payments.Common.Za.ActionDateCalculator.DateTime.UtcNow";
+
         [FixtureSetUp]
         public void Setup()
         {
@@ -94,6 +97,7 @@ namespace Wonga.QA.Tests.Payments.Za
         {
             Driver.Db.SetServiceConfiguration(NowServiceConfigKey, dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
             Driver.Db.SetServiceConfiguration(NowServiceConfigKey_RepayLoan, dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
+            Driver.Db.SetServiceConfiguration(NowServiceConfigKey_ActionDateCalculator, dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
         }
     }
 }
