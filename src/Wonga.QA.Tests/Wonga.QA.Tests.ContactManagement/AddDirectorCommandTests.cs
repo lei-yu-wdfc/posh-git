@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Gallio.Framework;
 using MbUnit.Framework;
@@ -24,6 +25,9 @@ namespace Wonga.QA.Tests.ContactManagement
             req.Email = email;  
 
             ApiResponse resp = Driver.Api.Commands.Post(req);
+
+            DoBuilder _do = new DoBuilder(new TimeSpan(0, 2, 0), new TimeSpan(0, 0, 10));            
+            _do.Until(() => Driver.Db.ContactManagement.DirectorOrganisationMappings.Count(o=>o.Email==email)==1);
 
             bool errorDetected = false;
             try
@@ -54,6 +58,9 @@ namespace Wonga.QA.Tests.ContactManagement
             req.Email = email;
 
             ApiResponse resp = Driver.Api.Commands.Post(req);
+
+            DoBuilder _do = new DoBuilder(new TimeSpan(0, 2, 0), new TimeSpan(0, 0, 10));
+            _do.Until(() => Driver.Db.ContactManagement.DirectorOrganisationMappings.Count(o => o.Email == email) == 1);
 
             bool errorDetected = false;
             try
