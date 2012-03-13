@@ -96,6 +96,7 @@
     <Compile Include="Ui\Pages\Common\FAQPage.cs" />
     <Compile Include="Ui\Pages\Common\LoginPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\MyPaymentsPage.cs" />
+    <Compile Include="Ui\Pages\Common\MyPaymentsPage.cs" />
     <Compile Include="Ui\Pages\Common\MySummary.cs" />
     <Compile Include="Ui\Sections\AccountDetailsSection.cs" />
     <Compile Include="Ui\Sections\BankAccountSection.cs" />

@@ -5,8 +5,8 @@ using System.Text;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.UI.Elements;
 using Wonga.QA.Framework.UI.Mappings;
-using Wonga.QA.Framework.UI.Mappings.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages;
+using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 
 namespace Wonga.QA.Framework.UI.Elements
 {

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MbUnit.Framework;
+﻿using MbUnit.Framework;
 using OpenQA.Selenium;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
+using Wonga.QA.Framework.UI.Mappings;
 
 namespace Wonga.QA.Tests.Ui
 {
@@ -22,28 +19,10 @@ namespace Wonga.QA.Tests.Ui
             var mySummaryPage = loginPage.LoginAs(email);
             var myPaymentDetailsPage = mySummaryPage.Navigation.MyPaymentDetailsButtonClick();
 
-            Assert.IsFalse(IsAddBankAccountButtonExists());
+            Assert.IsFalse(myPaymentDetailsPage.IsAddBankAccountButtonExists());
 
 
         }
-        private bool IsAddBankAccountButtonExists()
-        {
-            try
-            {
-                switch (Config.AUT)
-                {
-                    case AUT.Za:
-                    case AUT.Ca:  //TODO find out what xpath for button on Ca
-                        var addBankAccountButton =
-                            Client.Driver.FindElement(By.XPath("//tr[@class='accounts-add-bank']"));
-                        break;
-                }
-            }
-            catch (NoSuchElementException)
-            {
-                return false;
-            }
-            return true;
-        }
+
     }
 }

@@ -188,4 +188,8 @@
     <Province>#edit-province</Province>
     <PopupCloseLink>a#fancybox-close</PopupCloseLink>
   </ProvinceSection>
+
+  <MyPaymentsPage>
+    <AddBankAccountButton>//tr[@class='accounts-add-bank']</AddBankAccountButton>
+  </MyPaymentsPage>
 </Ui>
