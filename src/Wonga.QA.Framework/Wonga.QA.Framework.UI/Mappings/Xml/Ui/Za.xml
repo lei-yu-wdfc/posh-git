@@ -49,4 +49,9 @@
     <Fieldset>#bank</Fieldset>
     <AccountNumber>#edit-account-number-za</AccountNumber>
   </BankAccountSection>
+
+  <MyAccountNavigationSection>
+    <!-- Should be extended-->
+    <MyPaymentsDetails>//a[contains(text(),'My payment details')]</MyPaymentsDetails>
+  </MyAccountNavigationSection>
 </Ui>

@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Mappings\Content\Content.cs" />
     <Compile Include="Mappings\Content\Agreements\LoanAgreement.cs" />
+    <Compile Include="Mappings\Ui\Elements\MyAccountNavigationElement.cs" />
     <Compile Include="Mappings\Ui\Ui.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\DealDonePage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\DeclinedPage.cs" />
@@ -89,10 +90,12 @@
     <Compile Include="Ui\Elements\HelpElement.cs" />
     <Compile Include="Ui\Elements\InternationalElement.cs" />
     <Compile Include="Ui\Elements\LoginElement.cs" />
+    <Compile Include="Ui\Elements\MyAccountNavigationElement.cs" />
     <Compile Include="Ui\Pages\Common\DealDonePage.cs" />
     <Compile Include="Ui\Pages\Common\DeclinedPage.cs" />
     <Compile Include="Ui\Pages\Common\FAQPage.cs" />
     <Compile Include="Ui\Pages\Common\LoginPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\MyPaymentsPage.cs" />
     <Compile Include="Ui\Pages\Common\MySummary.cs" />
     <Compile Include="Ui\Sections\AccountDetailsSection.cs" />
     <Compile Include="Ui\Sections\BankAccountSection.cs" />
@@ -101,6 +104,7 @@
     <Compile Include="Ui\Sections\DebitCardSection.cs" />
     <Compile Include="Ui\Sections\EmploymentDetailsSection.cs" />
     <Compile Include="Ui\Sections\MobilePinVerificationSection.cs" />
+    <Compile Include="Mappings\Ui\Sections\MyAccountNavigationSection.cs" />
     <Compile Include="Ui\Sections\ProvinceSection.cs" />
     <Compile Include="Ui\Sections\YourDetailsSection.cs" />
     <Compile Include="Ui\Sections\YourNameSection.cs" />
