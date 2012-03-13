@@ -41,6 +41,7 @@
     <Compile Include="Messages\AccountRenumberingReportDetailsCaCommand.cs" />
     <Compile Include="Messages\AcknowledgeResponseDetailRecordZaCommand.cs" />
     <Compile Include="Messages\ActivitySalesforceAccountAddedCommand.cs" />
+    <Compile Include="Messages\AddArrearsCommand.cs" />
     <Compile Include="Messages\AddBankAccountCaCommand.cs" />
     <Compile Include="Messages\AddBankAccountUkCommand.cs" />
     <Compile Include="Messages\AddBankAccountZaCommand.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="Messages\CompletePinVerificationCommand.cs" />
     <Compile Include="Messages\ConfirmFraudCsCommand.cs" />
     <Compile Include="Messages\ConfirmNotFraudCsCommand.cs" />
+    <Compile Include="Messages\ConfirmNotFraudCommand.cs" />
     <Compile Include="Messages\ConfirmSmsPinCommand.cs" />
     <Compile Include="Messages\CounterOfferUserVerificationCommand.cs" />
     <Compile Include="Messages\CreateAccountCommand.cs" />
@@ -686,7 +688,7 @@
     <Compile Include="Messages\SubmitUidAnswersCommand.cs" />
     <Compile Include="Messages\SubscribeToAccountPreparedCommand.cs" />
     <Compile Include="Messages\SuccessfullyMadeSmsProviderHttpRequestCommand.cs" />
-    <Compile Include="Messages\SuspectFraudCsCommand.cs" />
+    <Compile Include="Messages\SuspectFraudCommand.cs" />
     <Compile Include="Messages\TakeBankPaymentCommand.cs" />
     <Compile Include="Messages\TakeBankPaymentInternalCommand.cs" />
     <Compile Include="Messages\TakeExternalPaymentCommand.cs" />

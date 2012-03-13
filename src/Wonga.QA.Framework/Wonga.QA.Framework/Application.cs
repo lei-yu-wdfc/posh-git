@@ -110,6 +110,8 @@ namespace Wonga.QA.Framework
 
         public virtual Application PutApplicationIntoArrears(int daysInArrears)
 		{
+			var db = new DbDriver();
+
 			ApplicationEntity application = Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id);
 
 			TimeSpan span = application.FixedTermLoanApplicationEntity.NextDueDate.Value - DateTime.Today;
@@ -117,23 +119,21 @@ namespace Wonga.QA.Framework
 			application.FixedTermLoanApplicationEntity.NextDueDate -= span;
 			application.Submit();
 
-            FixedTermLoanSagaEntity ftl = Driver.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
-            Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
-            Do.While(ftl.Refresh);
-
-			ScheduledPaymentSagaEntity sp =
-				Do.Until(() => Driver.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationGuid == Id));
-			Driver.Msmq.Payments.Send(new TakePaymentFailedCommand { SagaId = sp.Id });
-			Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = sp.Id });
+        	Driver.Msmq.Payments.Send(new AddArrearsCommand
+        	                          	{
+        	                          		ApplicationId = application.ApplicationId,
+        	                          		PaymentTransactionType = PaymentTransactionEnum.DefaultCharge,
+        	                          		ReferenceId = Guid.NewGuid()
+        	                          	});
 
 			Do.Until(() => Driver.Db.Payments.Arrears.Single(s => s.ApplicationId == application.ApplicationId));
-        	var db = new DbDriver();
+        	
+			//Sets how far in arrears the customer is
         	var arrears = db.Payments.Arrears.Single(a => a.ApplicationId == application.ApplicationId);
         	arrears.CreatedOn = arrears.CreatedOn.Subtract(TimeSpan.FromDays(daysInArrears));
         	db.Payments.SubmitChanges();
-
+	
         	var product = Driver.Db.Payments.Products.Single(x => x.ProductId == application.ProductId);
-        	
         	Driver.Msmq.Payments.Send(new CreateTransactionCommand
         	                          	{
         	                          		Amount = 2,
@@ -148,6 +148,23 @@ namespace Wonga.QA.Framework
 											Type = PaymentTransactionEnum.Interest,
 											Source = PaymentTransactionSourceEnum.System
         	                          	});
+
+			return this;
+		}
+
+		public Application CreateRepaymentArrangement()
+		{
+			var cmd = new Api.CreateRepaymentArrangementCommand()
+			{
+				ApplicationId = Id,
+				Frequency = Api.PaymentFrequencyEnum.Every4Weeks,
+				RepaymentDates = new[] { DateTime.Today.AddDays(1), DateTime.Today.AddMonths(1) },
+				NumberOfMonths = 2
+			};
+			Driver.Api.Commands.Post(cmd);
+
+			var dbApplication = Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id);
+			Do.Until(() => Driver.Db.Payments.RepaymentArrangements.Single(x => x.ApplicationId == dbApplication.ApplicationId));
 
 			return this;
 		}
