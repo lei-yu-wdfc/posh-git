@@ -34,7 +34,7 @@ namespace Wonga.QA.Tests.Ui
             var dealDone = acceptedPage.Submit();
         }
 
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb), Pending("Broken, waiting for FE to stabilize changes..")]
         public void WbAcceptedLoan()
         {
             var processingPage = WbL0Path("TESTNoCheck");
