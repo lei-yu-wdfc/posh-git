@@ -31,6 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Checkpoints\CheckpointApplicationElementNotCifasFlaggedTest.cs" />
+    <Compile Include="CreditBureauCustomerUk.cs" />
     <Compile Include="EidTests.cs" />
     <Compile Include="Checkpoints\CheckpointApplicationElementNotOnBlacklistTests.cs" />
     <Compile Include="Checkpoints\CheckpointApplicationElementNotOnCSBlacklistTests.cs" />
