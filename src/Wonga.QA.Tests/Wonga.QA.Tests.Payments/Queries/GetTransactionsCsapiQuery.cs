@@ -8,13 +8,14 @@ using MbUnit.Framework.ContractVerifiers;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments.Queries
 {
     [TestFixture]
     public class GetTransactionsCsapiQuery
     {
-        [Test]
+        [Test, AUT(AUT.Wb), JIRA("SME-375")]
         public void PaymentsShouldReturnAllTransactionsWhenThereAreTransactionsForAGivenApplication()
         {
             var customer = CustomerBuilder.New().Build();
@@ -36,7 +37,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.Contains(response.Values["Type"], "Interest");
         }
 
-        [Test]
+        [Test, AUT(AUT.Wb), JIRA("SME-375")]
         public void PaymentsShouldReturnNoTransactionsWhenThereAreNoTransactionsForAGivenApplication()
         {
             var customer = CustomerBuilder.New().WithMiddleName("FailingName").Build();
@@ -51,7 +52,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             var response = Driver.Cs.Queries.Post(query);
 
             Assert.IsNotNull(response);
-            Assert.AreEqual(0,response.Values["Transaction"].Count());
+            Assert.AreEqual(0, response.Root.Descendants().Count(d => d.Name.LocalName == "Transaction"));
         }
     }
 }
