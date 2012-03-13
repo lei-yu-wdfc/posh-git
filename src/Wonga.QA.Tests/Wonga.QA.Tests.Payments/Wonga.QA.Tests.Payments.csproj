@@ -33,8 +33,10 @@
   <ItemGroup>
     <Compile Include="AddBankAccountTests.cs" />
     <Compile Include="CollectionsTests.cs" />
+    <Compile Include="CsapiCreateTransactionTest.cs" />
     <Compile Include="Queries\GetBusinessApplicationSummaryCsapiQuery.cs" />
     <Compile Include="Queries\GetTransactionsCsapiQuery.cs" />
+    <Compile Include="Queries\GetValidTransactionTypesQueryTest.cs" />
     <Compile Include="RepayViaOnlineBillPaymentTests.cs" />
     <Compile Include="CreateApplicationTests.cs" />
     <Compile Include="Enums\PaymentTransactionType.cs" />
@@ -77,6 +79,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="Wonga.QA.Framework">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.dll</HintPath>
     </Reference>
