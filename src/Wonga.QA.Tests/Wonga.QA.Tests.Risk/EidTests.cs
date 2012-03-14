@@ -246,6 +246,7 @@ namespace Wonga.QA.Tests.Risk
         {
             _customer.UpdateForename(Data.GetName());
             _customer.UpdateSurname(Data.GetName());
+            _customer.ScrubCcin();
         }
     }
 }
