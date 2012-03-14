@@ -31,6 +31,9 @@ namespace Wonga.QA.Tests.Payments.Za
         private const string NowServiceConfigKey_VerifyBalance =
             @"Wonga.Payments.Handlers.Za.VerifyBalanceAfterPaymentTakenHandler.DateTime.UtcNow";
 
+        private const string NowServiceConfigKey_ZaRepayLoanSaga =
+            @"Wonga.Payments.Handlers.FixedLoanOperations.Za.RepayLoanSaga.DateTime.UtcNow";
+
         [SetUp]
         public void Setup()
         {
@@ -47,6 +50,7 @@ namespace Wonga.QA.Tests.Payments.Za
             ClearServiceConfigEntry(NowServiceConfigKey_ActionDateCalculator);
             ClearServiceConfigEntry(NowServiceConfigKey_RepayLoan);
             ClearServiceConfigEntry(NowServiceConfigKey_VerifyBalance);
+            ClearServiceConfigEntry(NowServiceConfigKey_ZaRepayLoanSaga);
         }
 
         private void ClearServiceConfigEntry(string key)
@@ -167,12 +171,74 @@ namespace Wonga.QA.Tests.Payments.Za
             Assert.IsTrue(collectionForRemainingBalance.Amount < 500);
         }
 
+        [Test, AUT(AUT.Za), JIRA("ZA-2099")]
+        [Explicit]
+        public void RepayLoanViaBankTest_Timeout()
+        {
+            //Driver.Svc.BankGateway.Stop();
+
+            var app = Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == _application.Id));
+
+            var paymentsDb = new DbDriver().Payments;
+            paymentsDb.Arrears.InsertOnSubmit(new ArrearEntity()
+            {
+                ApplicationId = app.ApplicationId,
+                CreatedOn = DateTime.Today
+            });
+            paymentsDb.SubmitChanges();
+
+            var command = new RepayLoanViaBankCommand()
+            {
+                ApplicationId = _application.Id,
+                ActionDate = new Date
+                {
+                    DateTime = Data.GetPromiseDate().DateTime.AddDays(23),
+                    DateFormat = DateFormat.Date
+                }, //Early repay before promised date
+                Amount = _application.LoanAmount,
+                RepaymentRequestId = Guid.NewGuid()
+            };
+            Driver.Api.Commands.Post(command);
+            
+            var saga = Do.Until(() => Driver.Db.OpsSagas.RepaymentSagaEntities.Single(s => s.ApplicationId == app.ApplicationId));
+            //Set date to be outside collection cutoff time, which is non of action date.
+            var now = Data.GetPromiseDate().DateTime.AddDays(22);
+            SetPaymentsUtcNow(now);
+            Console.WriteLine("Set up UtcNow to {0}", now);
+            
+            //Cause request is schedule to timeout, send timeout message now.
+            new MsmqDriver().Payments.Send(new TimeoutMessage()
+            {
+                SagaId = saga.Id,
+            });
+
+            now = Data.GetPromiseDate().DateTime.AddDays(26);
+            SetPaymentsUtcNow(now);
+            Console.WriteLine("Set up UtcNow to {0}", now);
+            //Cause Failed to collection handler to be called, by timing out at collection cutoff time.
+            new MsmqDriver().Payments.Send(new TimeoutMessage()
+            {
+                SagaId = saga.Id,
+            });
+
+            var request = Do.Until(() => Driver.Db.Payments.RepaymentRequestDetails.Single(r => r.ApplicationId == app.ApplicationId &&
+                r.StatusCode == 2));
+            Assert.AreEqual("Tracking Period Expired", request.StatusMessage); //status is error
+
+            var pendingScheduledPaymentSaga = Do.Until(() =>
+                Driver.Db.OpsSagas.PendingScheduledPaymentSagaEntities.Single(p => p.ApplicationId == app.ApplicationId));
+            Assert.IsTrue(_application.LoanAmount < pendingScheduledPaymentSaga.Amount);
+
+            //Driver.Svc.BankGateway.Start();
+        }
+
         private void SetPaymentsUtcNow(DateTime dateTime)
         {
             Driver.Db.SetServiceConfiguration(NowServiceConfigKey, dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
             Driver.Db.SetServiceConfiguration(NowServiceConfigKey_RepayLoan, dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
             Driver.Db.SetServiceConfiguration(NowServiceConfigKey_ActionDateCalculator, dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
             Driver.Db.SetServiceConfiguration(NowServiceConfigKey_VerifyBalance, dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
+            Driver.Db.SetServiceConfiguration(NowServiceConfigKey_ZaRepayLoanSaga, dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
         }
     }
 }
