@@ -81,5 +81,75 @@ namespace Wonga.QA.Tests.ContactManagement
 
             Assert.IsTrue(errorDetected, "Email not unique error was expected");
         }
+
+        [Test, JIRA("SME-1167"), Description("This test validates AcountId uniquess check of command validator"), AUT(AUT.Wb)]        
+        public void TestSecondaryDirectorAccountIdNotUnique()
+        {
+            var accountId = Guid.NewGuid();
+
+            var req = AddSecondaryOrganisationDirectorCommand.New();
+
+            req.AccountId = accountId;
+
+            ApiResponse resp = Driver.Api.Commands.Post(req);
+
+            DoBuilder _do = new DoBuilder(new TimeSpan(0, 2, 0), new TimeSpan(0, 0, 10));
+            _do.Until(() => Driver.Db.ContactManagement.DirectorOrganisationMappings.Count(o => o.AccountId == accountId) == 1);
+
+            bool errorDetected = false;
+            try
+            {
+                req.Email = Data.RandomEmail();
+                resp = Driver.Api.Commands.Post(req);
+            }
+            catch (ValidatorException e)
+            {
+                foreach (String s in e.Errors)
+                {
+                    if (s == "Comms_AccountId_NotUnique")
+                    {
+                        errorDetected = true;
+                    }
+                }
+            }
+
+
+            Assert.IsTrue(errorDetected, "AccountId not unique error was expected");   
+        }
+
+        [Test, JIRA("SME-1167"), Description("This test validates AcountId uniquess check of command validator"), AUT(AUT.Wb)]
+        public void TestPrimaryDirectorAccountIdNotUnique()
+        {
+            var accountId = Guid.NewGuid();
+
+            var req = AddPrimaryOrganisationDirectorCommand.New();
+
+            req.AccountId = accountId;
+
+            ApiResponse resp = Driver.Api.Commands.Post(req);
+
+            DoBuilder _do = new DoBuilder(new TimeSpan(0, 2, 0), new TimeSpan(0, 0, 10));
+            _do.Until(() => Driver.Db.ContactManagement.DirectorOrganisationMappings.Count(o => o.AccountId == accountId) == 1);
+
+            bool errorDetected = false;
+            try
+            {
+                req.Email = Data.RandomEmail();
+                resp = Driver.Api.Commands.Post(req);
+            }
+            catch (ValidatorException e)
+            {
+                foreach (String s in e.Errors)
+                {
+                    if (s == "Comms_AccountId_NotUnique")
+                    {
+                        errorDetected = true;
+                    }
+                }
+            }
+
+
+            Assert.IsTrue(errorDetected, "AccountId not unique error was expected");
+        }
     }
 }
