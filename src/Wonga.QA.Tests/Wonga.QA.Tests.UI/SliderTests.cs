@@ -126,7 +126,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-156", "QA-238"), Pending("i cannot test it at the moment because of access problems.")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-156", "QA-238")]
         public void LNDefaultAmountSliderValueShouldBeCorrect()
         {
             var loginPage = Client.Login();
@@ -134,7 +134,7 @@ namespace Wonga.QA.Tests.Ui
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             Application application = ApplicationBuilder.New(customer)
                 .Build();
-            application.RepayEarly(100M, 1);
+            application.RepayOnDueDate();
             loginPage.LoginAs(email);
 
             var page = Client.Home();
@@ -173,7 +173,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-241", "QA-159"), Pending("i cannot test it at the moment because of access problems.")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-241", "QA-159")]
         public void LNDefaultDurationSliderValueShouldBeCorrect()
         {
             var loginPage = Client.Login();
@@ -181,7 +181,7 @@ namespace Wonga.QA.Tests.Ui
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             Application application = ApplicationBuilder.New(customer)
                 .Build();
-            application.RepayEarly(100M, 1);
+            application.RepayOnDueDate();
             loginPage.LoginAs(email);
 
             var page = Client.Home();
@@ -232,7 +232,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(maxLoanDuration.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-239", "QA-158"), Pending("i cannot test it at the moment because of access problems.")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-239", "QA-158")]
         public void LNMaxDurationSliderValueShouldBeCorrect()
         {
             var loginPage = Client.Login();
@@ -240,7 +240,7 @@ namespace Wonga.QA.Tests.Ui
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             Application application = ApplicationBuilder.New(customer)
                 .Build();
-            application.RepayEarly(100M, 1);
+            application.RepayOnDueDate();
             loginPage.LoginAs(email);
 
             var page = Client.Home();
