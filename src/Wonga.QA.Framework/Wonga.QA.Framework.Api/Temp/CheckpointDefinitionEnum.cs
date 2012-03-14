@@ -10,10 +10,10 @@ namespace Wonga.QA.Framework.Api
         [Description("Customer is solvent")] CustomerIsSolvent,
         [Description("Hardware blacklist check")] HardwareBlacklistCheck,
         [Description("CIFAS fraud check")] CIFASFraudCheck,
-        [Description("Hardware blacklist check")] Applicationdatablacklistcheck,
+        [Description("Application data blacklist check")]ApplicationDataBlacklistCheck,
         [Description("Fraud list check")] FraudListCheck,
 		[Description("Bank account matches the applicant")]BankAccountMatchesTheApplicant,
-        [Description("Bank account is valid")]BankAccountIsValid,
+        //[Description("Bank account is valid")]BankAccountIsValid,
         [Description("Credit bureau data is available")] CreditBureauDataIsAvailable,
         [Description("Date of birth is correct")] DateOfBirthIsCorrect,
         [Description("Applicant history is acceptable")] ApplicantHistoryIsAcceptable,
@@ -31,6 +31,11 @@ namespace Wonga.QA.Framework.Api
         [Description("Business Bureau Data Is Available")] BusinessBureauDataIsAvailable,
         [Description("BusinessIsCurrentlyTrading")] BusinessIsCurrentlyTrading,
         [Description("BusinessPaymentScoreIsAcceptable")] BusinessPaymentScoreIsAcceptable,
-        [Description("BusinessPerformanceScoreIsAcceptaple")] BusinessPerformanceScoreIsAcceptaple
+        [Description("BusinessPerformanceScoreIsAcceptaple")] BusinessPerformanceScoreIsAcceptaple,
+        [Description("Main Applicant Matches Business Bureau Data")] MainApplicantMatchesBusinessBureauData,
+        [Description("Main Applicant Duration Acceptable")] MainApplicantDurationAcceptable,
+        [Description("Business Date Of Incorporation Acceptable")] BusinessDateOfIncorporationAcceptable,
+        [Description("Number Of Directors Matches Business Bureau Data")] NumberOfDirectorsMatchesBusinessBureauData,
+        [Description("Guarantor Names Match Business Bureau Data")] GuarantorNamesMatchBusinessBureauData,
     }
 }

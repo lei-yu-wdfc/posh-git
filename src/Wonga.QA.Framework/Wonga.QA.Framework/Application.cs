@@ -250,7 +250,7 @@ namespace Wonga.QA.Framework
 		/// <summary>
 		/// This method returns a list of checkpoints that were executed for a given Risk Workflow id and an optional array of statuses.
 		/// </summary>
-		/// <param name="workflowId">The GUID of the application</param>
+		/// <param name="workflowId">The GUID of the workflow</param>
 		/// <param name="expectedStatus">Optional:The expected status</param>
 		/// <returns>Returns a list of CheckpointDefinitions.Name</returns>
 		public static List<String> GetExecutedCheckpointDefinitionsForRiskWorkflow(Guid workflowId, params CheckpointStatus[] expectedStatus)
@@ -276,6 +276,28 @@ namespace Wonga.QA.Framework
 			return executedCheckpoints;
 		}
 
+        /// <summary>
+        /// This method returns a list of verifications that were executed for a given Risk Workflow id and an optional array of statuses.
+        /// </summary>
+        /// <param name="workflowId">The GUID of the workflow</param>
+        /// <returns>Returns a list of CheckpointDefinitions.Name</returns>
+        public static List<String> GetExecutedVerificationDefinitionsForRiskWorkflow(Guid workflowId)
+        {
+            var db = new DbDriver();
+            var riskWorkflowEntity = db.Risk.RiskWorkflows.SingleOrDefault(r => r.WorkflowId == workflowId);
+            var executedVerifications = new List<string>();
+
+            if (riskWorkflowEntity != null)
+            {
+                var executedVerificationsIds =
+                    db.Risk.WorkflowVerifications.Where(p => p.RiskWorkflowId == riskWorkflowEntity.RiskWorkflowId).
+                        Select(p => p.VerificationDefinitionId).ToList();
+
+                executedVerifications.AddRange(db.Risk.VerificationDefinitions.Where(p=>executedVerificationsIds.Contains(p.VerificationDefinitionId)).Select(p=>p.Name));
+                return executedVerifications;
+            }
+            return executedVerifications;
+        }
 
         /// <summary>
         /// This function returns a list of Workflow entities for a given ApplicationId
@@ -287,6 +309,8 @@ namespace Wonga.QA.Framework
             var db = new DbDriver();
             return db.Risk.RiskWorkflows.Where(p => p.ApplicationId == applicationId).ToList();
         }
+
+
 
 		public void Rewind(int absoluteDays)
 		{

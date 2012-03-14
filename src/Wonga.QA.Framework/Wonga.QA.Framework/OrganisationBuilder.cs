@@ -12,13 +12,13 @@ namespace Wonga.QA.Framework
         private readonly Guid _id;
         private readonly Customer _primaryApplicant;
         private int _numberOfSecondaryDirector;
-        private int _organisationNumber;
+        private String _organisationNumber;
         
         private OrganisationBuilder(Customer primaryApplicant)
         {
             _id = Guid.NewGuid();
             _numberOfSecondaryDirector = 1;
-            _organisationNumber = Data.RandomInt(1, 99999999);
+            _organisationNumber = Data.RandomInt(1, 99999999).ToString();
             _primaryApplicant = primaryApplicant;
         }
 
@@ -33,19 +33,20 @@ namespace Wonga.QA.Framework
             return this;
         }
 
-        public OrganisationBuilder WithOrganisationNumber(int orgNo)
+        public OrganisationBuilder WithOrganisationNumber(String orgNo)
         {
             _organisationNumber = orgNo;
-            var Db = new DbDriver();
-            var existingOrg = Db.ContactManagement.OrganisationDetails.SingleOrDefault(o => o.RegisteredNumber == orgNo.ToString()) ;
+            var db = new DbDriver();
+            var existingOrg = db.ContactManagement.OrganisationDetails.SingleOrDefault(o => o.RegisteredNumber == orgNo) ;
             if (existingOrg != null)
             {
-                Db.ContactManagement.OrganisationDetails.DeleteOnSubmit(existingOrg);
+                db.ContactManagement.OrganisationDetails.DeleteOnSubmit(existingOrg);
                 existingOrg.Submit();
             }
             
             return this;
         }
+
 
         public Organisation Build()
         {
