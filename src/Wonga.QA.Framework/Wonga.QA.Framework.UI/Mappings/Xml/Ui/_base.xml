@@ -189,6 +189,10 @@
     <PopupCloseLink>a#fancybox-close</PopupCloseLink>
   </ProvinceSection>
 
+  <MySummary>
+    <Title>#my-summary</Title>
+  </MySummary>
+
   <MyPaymentsPage>
     <AddBankAccountButton>//tr[@class='accounts-add-bank']</AddBankAccountButton>
   </MyPaymentsPage>

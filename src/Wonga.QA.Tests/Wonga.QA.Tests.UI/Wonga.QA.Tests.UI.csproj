@@ -33,6 +33,7 @@
   <ItemGroup>
     <Compile Include="HelpTest.cs" />
     <Compile Include="L0AcceptedLoan.cs" />
+    <Compile Include="LnLoginTest.cs" />
     <Compile Include="LogoutTest.cs" />
     <Compile Include="MyAccountTests.cs" />
     <Compile Include="MySummary.cs" />
