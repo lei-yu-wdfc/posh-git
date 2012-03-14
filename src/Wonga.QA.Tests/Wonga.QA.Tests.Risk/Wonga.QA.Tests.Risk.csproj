@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Checkpoints\BaseCheckpointTest.cs" />
+    <Compile Include="Checkpoints\CheckpointApplicationElementNotCifasFlaggedTest.cs" />
+    <Compile Include="Checkpoints\CheckpointTooManyLoansAtAddressTest.cs" />
+    <Compile Include="CustomerJanetUk.cs" />
+    <Compile Include="CustomerData.cs" />
+    <Compile Include="CustomerKathleenUk.cs" />
     <Compile Include="EidTests.cs" />
     <Compile Include="Checkpoints\CheckpointApplicationElementNotOnBlacklistTests.cs" />
     <Compile Include="Checkpoints\CheckpointApplicationElementNotOnCSBlacklistTests.cs" />
@@ -42,6 +48,7 @@
     <Compile Include="Checkpoints\CheckpointRepaymentPredictionPositiveTests.cs" />
     <Compile Include="Checkpoints\EidCheckpointTests.cs" />
     <Compile Include="Checkpoints\CheckpointApplicationDeviceNotOnBlacklistTests.cs" />
+    <Compile Include="ICustomerData.cs" />
     <Compile Include="RiskApiTests\ApplicationBuilderConfig.cs" />
     <Compile Include="RiskApiTests\BaseL0RiskApiCheckpointAndVerificationTests.cs" />
     <Compile Include="RiskApiTests\BaseLnRiskApiCheckpointAndVerificationTests.cs" />

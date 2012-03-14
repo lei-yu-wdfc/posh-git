@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
@@ -10,8 +7,8 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[Parallelizable(TestScope.All), AUT(AUT.Za)]
-	class CheckpointCreditBureauDataIsAvailable
+	[Parallelizable(TestScope.All)]
+	class CheckpointCreditBureauDataIsAvailable : BaseCheckpointTest
 	{
 		private const string TestMask = "test:CreditBureauDataIsAvailable";
 
@@ -33,7 +30,18 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.Build();
 
 			var application = ApplicationBuilder.New(customer).Build();
+		}
 
+		[Test, AUT(AUT.Uk), JIRA("UK-851")]
+		public void DeclineIfNoData()
+		{
+			RunSingleWorkflowTest(TestMask, new CustomerJanetUk{ForeName = "NoData"}, CheckpointDefinitionEnum.CreditBureauDataIsAvailable, CheckpointStatus.Failed);
+		}
+
+		[Test, AUT(AUT.Uk), JIRA("UK-851")]
+		public void AcceptIfCallReport()
+		{
+			RunSingleWorkflowTest(TestMask, new CustomerJanetUk(), CheckpointDefinitionEnum.CreditBureauDataIsAvailable, CheckpointStatus.Failed);
 		}
 	}
 }

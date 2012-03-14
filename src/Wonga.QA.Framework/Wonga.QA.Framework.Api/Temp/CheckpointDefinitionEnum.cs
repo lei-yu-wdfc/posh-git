@@ -37,5 +37,6 @@ namespace Wonga.QA.Framework.Api
         [Description("Business Date Of Incorporation Acceptable")] BusinessDateOfIncorporationAcceptable,
         [Description("Number Of Directors Matches Business Bureau Data")] NumberOfDirectorsMatchesBusinessBureauData,
         [Description("Guarantor Names Match Business Bureau Data")] GuarantorNamesMatchBusinessBureauData,
+		[Description("There are to many active loans at same address")] TooManyLoansAtAddress
     }
 }
