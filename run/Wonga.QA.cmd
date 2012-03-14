@@ -56,7 +56,7 @@ GOTO MENU
 GOTO MENU
 
 :5
-	%MsBuild% %Run%\Wonga.QA.Tests.build /t:Build;Merge /v:m || PAUSE
+	%MsBuild% %Run%\Wonga.QA.Tests.build /t:Build /v:m || PAUSE
 	CALL :META RC Uk
 	CALL :META RC Za
 	CALL :META RC Ca

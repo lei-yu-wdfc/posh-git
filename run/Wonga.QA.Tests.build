@@ -29,8 +29,6 @@
 		<ItemGroup>
 			<Exclude Include="$(Bin)\$(Tests)\$(Tests).Core.dll" />
 			<Exclude Include="$(Bin)\$(Tests)\$(Tests).Meta.dll" />
-		</ItemGroup>
-		<ItemGroup>
 			<Command Include='"$(MSBuildProgramFiles32)\Microsoft\ILMerge\ILMerge.exe"' />
 			<Command Include="/targetplatform:v4,$(MSBuildToolsPath)" />
 			<Command Include="/out:$(Bin)\$(Tests)\$(Tests).dll" />

@@ -10,9 +10,9 @@ namespace Wonga.QA.Framework.Api
         [Description("Customer is solvent")] CustomerIsSolvent,
         [Description("Hardware blacklist check")] HardwareBlacklistCheck,
         [Description("CIFAS fraud check")] CIFASFraudCheck,
-        [Description("Application data blacklist check")]ApplicationDataBlacklistCheck,
+        [Description("Application data blacklist check")] ApplicationDataBlacklistCheck,
         [Description("Fraud list check")] FraudListCheck,
-		[Description("Bank account matches the applicant")]BankAccountMatchesTheApplicant,
+        [Description("Bank account matches the applicant")] BankAccountMatchesTheApplicant,
         //[Description("Bank account is valid")]BankAccountIsValid,
         [Description("Credit bureau data is available")] CreditBureauDataIsAvailable,
         [Description("Date of birth is correct")] DateOfBirthIsCorrect,
@@ -37,6 +37,6 @@ namespace Wonga.QA.Framework.Api
         [Description("Business Date Of Incorporation Acceptable")] BusinessDateOfIncorporationAcceptable,
         [Description("Number Of Directors Matches Business Bureau Data")] NumberOfDirectorsMatchesBusinessBureauData,
         [Description("Guarantor Names Match Business Bureau Data")] GuarantorNamesMatchBusinessBureauData,
-		[Description("There are to many active loans at same address")] TooManyLoansAtAddress
+        [Description("There are to many active loans at same address")] TooManyLoansAtAddress
     }
 }
