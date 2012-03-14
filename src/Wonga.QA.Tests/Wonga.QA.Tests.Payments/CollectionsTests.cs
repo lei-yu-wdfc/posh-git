@@ -50,7 +50,7 @@ namespace Wonga.QA.Tests.Payments
 			var application = ApplicationBuilder.New(customer)
 				.WithLoanAmount(loanAmount)
 				.WithPromiseDate(promiseDate)
-				.Build();
+				.Build().PutApplicationIntoArrears(4);
 
 			AttemptNaedoCollection(application, 0);
 			FailNaedoCollection(application, 0);
