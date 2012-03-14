@@ -25,13 +25,13 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         }
 
-        public MySummary LoginAs(string email)
+        public MySummaryPage LoginAs(string email)
         {
 
             _username.SendKeys(email);
             _password.SendKeys(Data.GetPassword());
             _buttonLogin.Click();
-            return new MySummary(Client);
+            return new MySummaryPage(Client);
         }
     }
 }

@@ -18,26 +18,9 @@ namespace Wonga.QA.Tests.Ui
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             Application application = ApplicationBuilder.New(customer)
                 .Build();
-          //  application.RepayOnDueDate();
+            application.RepayOnDueDate();
             var page = loginPage.LoginAs(email);
-
-
-            Assert.IsTrue(IsMySummaryTitleExistsOnCurrentPage());
-
-
         }
-        private bool IsMySummaryTitleExistsOnCurrentPage()
-        {
-            
-            try
-            {
-                var mySummaryTitle = Client.Driver.FindElement(By.CssSelector(Framework.UI.Mappings.Ui.Get.MySummary.Title));
-            }
-            catch(NoSuchElementException)
-            {
-                return false;
-            }
-            return true;
-        }
+      
     }
 }

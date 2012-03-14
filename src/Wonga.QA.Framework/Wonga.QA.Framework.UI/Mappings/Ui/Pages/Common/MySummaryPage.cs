@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Wonga.QA.Framework.UI.Mappings.Pages
 {
-    public sealed class MySummary
+    public sealed class MySummaryPage
     {
         public String Title { get; set; }
     }

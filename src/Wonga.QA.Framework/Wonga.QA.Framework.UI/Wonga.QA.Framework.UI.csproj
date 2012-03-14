@@ -51,7 +51,7 @@
     <Compile Include="Mappings\Content\Content.cs" />
     <Compile Include="Mappings\Content\Agreements\LoanAgreement.cs" />
     <Compile Include="Mappings\Ui\Elements\MyAccountNavigationElement.cs" />
-    <Compile Include="Mappings\Ui\Pages\Common\MySummary.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\MySummaryPage.cs" />
     <Compile Include="Mappings\Ui\Ui.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\DealDonePage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\DeclinedPage.cs" />
@@ -98,7 +98,7 @@
     <Compile Include="Ui\Pages\Common\LoginPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\MyPaymentsPage.cs" />
     <Compile Include="Ui\Pages\Common\MyPaymentsPage.cs" />
-    <Compile Include="Ui\Pages\Common\MySummary.cs" />
+    <Compile Include="Ui\Pages\Common\MySummaryPage.cs" />
     <Compile Include="Ui\Sections\AccountDetailsSection.cs" />
     <Compile Include="Ui\Sections\BankAccountSection.cs" />
     <Compile Include="Ui\Sections\BaseSection.cs" />

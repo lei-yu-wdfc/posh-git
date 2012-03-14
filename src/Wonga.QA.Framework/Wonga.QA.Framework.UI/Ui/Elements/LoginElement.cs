@@ -21,7 +21,7 @@ namespace Wonga.QA.Framework.UI.Elements
 
         }
 
-        public MySummary LoginAs(string email, string password)
+        public MySummaryPage LoginAs(string email, string password)
         {
             _loginTrigger = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.LoginElement.LoginTrigger));
             _form = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.LoginElement.FormId));
@@ -32,7 +32,7 @@ namespace Wonga.QA.Framework.UI.Elements
             _email.SendKeys(email);
             _password.SendKeys(password);
             _loginButton.Click();
-            return new MySummary(Page.Client);
+            return new MySummaryPage(Page.Client);
         }
 
         public HomePage Logout()
