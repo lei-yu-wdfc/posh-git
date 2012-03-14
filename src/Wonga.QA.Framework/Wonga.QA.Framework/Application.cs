@@ -134,7 +134,7 @@ namespace Wonga.QA.Framework
         	var arrears = db.Payments.Arrears.Single(a => a.ApplicationId == application.ApplicationId);
         	arrears.CreatedOn = arrears.CreatedOn.Subtract(TimeSpan.FromDays(daysInArrears));
         	db.Payments.SubmitChanges();
-	
+			//Post some interest to simulate a customer being in arrears.
         	var product = Driver.Db.Payments.Products.Single(x => x.ProductId == application.ProductId);
         	Driver.Msmq.Payments.Send(new CreateTransactionCommand
         	                          	{
@@ -150,6 +150,8 @@ namespace Wonga.QA.Framework
 											Type = PaymentTransactionEnum.Interest,
 											Source = PaymentTransactionSourceEnum.System
         	                          	});
+        	Do.Until(() => Driver.Db.Payments.Transactions.Single(t => t.ApplicationId == application.ApplicationId && 
+																	   t.Reference == "Automated Accrued Interest Posted"));
 
 			return this;
 		}
