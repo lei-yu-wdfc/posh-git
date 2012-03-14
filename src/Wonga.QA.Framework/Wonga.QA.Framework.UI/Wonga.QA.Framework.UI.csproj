@@ -51,6 +51,7 @@
     <Compile Include="Mappings\Content\Content.cs" />
     <Compile Include="Mappings\Content\Agreements\LoanAgreement.cs" />
     <Compile Include="Mappings\Ui\Elements\MyAccountNavigationElement.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\ForgotPasswordPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\MySummaryPage.cs" />
     <Compile Include="Mappings\Ui\Ui.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\DealDonePage.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Ui\Pages\Common\DealDonePage.cs" />
     <Compile Include="Ui\Pages\Common\DeclinedPage.cs" />
     <Compile Include="Ui\Pages\Common\FAQPage.cs" />
+    <Compile Include="Ui\Pages\Common\ForgotPasswordPage.cs" />
     <Compile Include="Ui\Pages\Common\LoginPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\MyPaymentsPage.cs" />
     <Compile Include="Ui\Pages\Common\MyPaymentsPage.cs" />

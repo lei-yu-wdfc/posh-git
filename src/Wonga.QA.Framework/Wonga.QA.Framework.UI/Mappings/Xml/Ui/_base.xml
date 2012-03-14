@@ -4,8 +4,15 @@
     <Username>#edit-name</Username>
     <Password>#edit-pass</Password>
     <LoginButton>#edit-login</LoginButton>
+    <ForgotPassword>.//*[@id='wonga-login-form']/div/div[5]/a</ForgotPassword>
   </LoginPage>
-  
+
+  <ForgotPasswordPage>
+    <Username>#edit-email</Username>
+    <Captcha>#edit-captcha-response</Captcha>
+    <Next>#edit-next</Next>
+  </ForgotPasswordPage>
+
   <MobilePinVerificationSection>
     <Fieldset>#pin-verification</Fieldset>
     <Pin>#edit-pin</Pin>
@@ -14,7 +21,7 @@
   <DeclinedPage>
     <HeaderText>Application declined</HeaderText>
   </DeclinedPage>
-  
+
   <AddressDetailsPage>
     <FormId>#wonga-apply-lzero-form</FormId>
     <District>#edit-district</District>
@@ -27,7 +34,7 @@
     <NextButton>#edit-submit</NextButton>
     <PostOfficeBox>#edit-pobox-ca</PostOfficeBox>
   </AddressDetailsPage>
-  
+
   <PersonalBankAccountDetailsPage>
     <FormId>#lzero-bank-form</FormId>
     <NextButton>#edit-submit</NextButton>
@@ -54,7 +61,7 @@
     <ContinueTermsButton>#edit-continue-terms</ContinueTermsButton>
     <ContinueDirectDebitButton>#edit-continue-debit</ContinueDirectDebitButton>
   </AcceptedPage>
-  
+
   <BankAccountSection>
     <Fieldset>#bank-1</Fieldset>
     <BankName>#edit-bank-name</BankName>
@@ -67,12 +74,12 @@
     <BankPeriod>#edit-bank-period</BankPeriod>
     <InstitutionNumber>#edit-institution-number</InstitutionNumber>
   </BankAccountSection>
-  
+
   <PersonalDebitCardPage>
     <FormId>#lzero-card-form</FormId>
     <NextButton>#edit-submit</NextButton>
   </PersonalDebitCardPage>
-  
+
   <SlidersElement>
     <FormId>#wonga-sliders-form</FormId>
     <LoanAmount>#edit-loan-amount</LoanAmount>
@@ -111,7 +118,7 @@
     <InternationalPanelZa>.//*[@id='international-panel']/div/ul/li[1]/a</InternationalPanelZa>
     <InternationalPanelUk>.//*[@id='international-panel']/div/ul/li[2]/a</InternationalPanelUk>
   </InternationalElement>
-  
+
   <PersonalDetailsPage>
     <FormId>#wonga-apply-lzero-form</FormId>
     <CheckPrivacyPolicy>#edit-privacy</CheckPrivacyPolicy>
