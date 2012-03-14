@@ -224,7 +224,7 @@ namespace Wonga.QA.Tests.Graydon
         #region Main Applicant Duration Acceptable
 
         [Test, AUT(AUT.Wb)]
-        [Description("Graydon -> This test creates a loan and checks the main director appointed date")]
+        [JIRA("SME-937"), Description("Graydon -> This test creates a loan and checks the main director appointed date")]
         public void TestGraydonDirectorAppointedDateIsOlderThanThreshold_LoanIsAccepted()
         {
             const String goodCompanyRegNumber = "00000086";
@@ -240,7 +240,7 @@ namespace Wonga.QA.Tests.Graydon
         }
 
         [Test, AUT(AUT.Wb)]
-        [Description("Graydon -> This test creates a loan and checks the main director appointed date for the negative case - Newer than threshold")]
+        [JIRA("SME-937"), Description("Graydon -> This test creates a loan and checks the main director appointed date for the negative case - Newer than threshold")]
         public void TestGraydonDirectorAppointedDateIsMoreRecentThanThreshold_LoanIsDeclined()
         {
             const string configKey = "Risk.Wb.Uk.GraydonDirectorDurationDaysAcceptableThreshold";
@@ -269,7 +269,7 @@ namespace Wonga.QA.Tests.Graydon
         }
 
         [Test, AUT(AUT.Wb)]
-        [Description("Graydon -> This test creates a loan and checks the main director appointed date for the negative case - Director does not match applicant")]
+        [JIRA("SME-937"), Description("Graydon -> This test creates a loan and checks the main director appointed date for the negative case - Director does not match applicant")]
         public void TestGraydonDirectorAppointedDate_DirectorDoesNotMatchApplicant_LoanIsDeclined()
         {
             const String goodCompanyRegNumber = "00000086";
@@ -285,7 +285,7 @@ namespace Wonga.QA.Tests.Graydon
         }
 
         [Test, AUT(AUT.Wb)]
-        [Description("Graydon -> This test creates a loan and checks the main director appointed date for the negative case - Director does not match applicant")]
+        [JIRA("SME-937"), Description("Graydon -> This test creates a loan and checks the main director appointed date for the negative case - Director does not match applicant")]
         public void TestGraydonDirectorAppointedDate_DirectorIsSecretary_LoanIsDeclined()
         {
             const String goodCompanyRegNumber = "00000086";
@@ -299,10 +299,10 @@ namespace Wonga.QA.Tests.Graydon
 
         #endregion
 
-        #region Number of Directors matches Business Bureau
+        #region Number of Directors matches Business Bureau Data
 
         [Test, AUT(AUT.Wb)]
-        [ Description("Graydon -> This test creates a loan and checks the number of guarantors")]
+        [JIRA("SME-155"), Description("Graydon -> This test creates a loan and checks the number of guarantors")]
         public void TestGraydonNumberOfGuarantorsMatchesNumberOfDirectors_LoanIsAccepted()
         {
             /*This consts need to be externalized. I know how to do it but dont have the time.
@@ -321,7 +321,7 @@ namespace Wonga.QA.Tests.Graydon
         }
 
         [Test, AUT(AUT.Wb)]
-        [Description("Graydon -> This test creates a loan and checks the number of guarantors for the negative case - Number of guarantors does not match ")]
+        [JIRA("SME-155"), Description("Graydon -> This test creates a loan and checks the number of guarantors for the negative case - Number of guarantors does not match ")]
         public void TestGraydonNumberOfGuarantorsDoesNotMatchNumberOfDirectors_LoanIsDeclined()
         {
             /*This consts need to be externalized. I know how to do it but dont have the time.
@@ -344,7 +344,7 @@ namespace Wonga.QA.Tests.Graydon
         #region Business Date Of Incorporation is Acceptable
 
         [Test, AUT(AUT.Wb)]
-        [Description("Graydon -> This test creates a loan and checks the date of the incorporation")]
+        [JIRA("SME-161"), Description("Graydon -> This test creates a loan and checks the date of the incorporation")]
         public void TestGraydonCompanyIncorporationDateIsOlderThanThreshold_LoanIsAccepted()
         {
             const String goodCompanyRegNumber = "00000086";
@@ -360,7 +360,7 @@ namespace Wonga.QA.Tests.Graydon
         }
 
         [Test, AUT(AUT.Wb)]
-        [Description("Graydon -> This test creates a loan and checks the date of the incorporation for the negative case - The date of incorporation is unacceptable")]
+        [JIRA("SME-161"), Description("Graydon -> This test creates a loan and checks the date of the incorporation for the negative case - The date of incorporation is unacceptable")]
         public void TestGraydonCompanyIncorporationDateIsUnnacceptabled_LoanIsDeclined()
         {
             const String goodCompanyRegNumber = "99999905";
@@ -376,7 +376,7 @@ namespace Wonga.QA.Tests.Graydon
         }
 
         [Test, AUT(AUT.Wb)]
-        [Description("Graydon -> This test creates a loan and checks the date of the incorporation for the negative case - The date of incorporation is more recent than threshold")]
+        [JIRA("SME-161"), Description("Graydon -> This test creates a loan and checks the date of the incorporation for the negative case - The date of incorporation is more recent than threshold")]
         public void TestGraydonCompanyIncorporationDateIsMoreRecentThanThreshold_LoanIsDeclined()
         {
             const string configKey = "Risk.Wb.Uk.GraydonCompanyIncorporationMonthsAcceptableThreshold";
