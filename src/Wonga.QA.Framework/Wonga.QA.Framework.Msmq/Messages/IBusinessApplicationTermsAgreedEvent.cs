@@ -9,6 +9,7 @@ namespace Wonga.QA.Framework.Msmq
     public partial class IBusinessApplicationTermsAgreedEvent : MsmqMessage<IBusinessApplicationTermsAgreedEvent>
     {
         public Guid ApplicationId { get; set; }
+        public Guid OrganisationId { get; set; }
         public DateTime CreatedOn { get; set; }
     }
 }

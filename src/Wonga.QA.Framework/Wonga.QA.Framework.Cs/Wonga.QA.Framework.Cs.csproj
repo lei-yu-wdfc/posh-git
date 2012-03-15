@@ -42,6 +42,7 @@
     <Compile Include="Requests\CreateTransactionCommand.cs" />
     <Compile Include="Requests\GetBusinessApplicationSummaryWbUkQuery.cs" />
     <Compile Include="Requests\GetDirectDebitFormZaQuery.cs" />
+    <Compile Include="Requests\GetLoanAgreementsQuery.cs" />
     <Compile Include="Requests\GetRepaymentArrangementsQuery.cs" />
     <Compile Include="Requests\GetTransactionsQuery.cs" />
     <Compile Include="Requests\GetValidTransactionTypesQuery.cs" />
