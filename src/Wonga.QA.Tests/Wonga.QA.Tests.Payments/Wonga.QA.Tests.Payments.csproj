@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AddBankAccountTests.cs" />
+    <Compile Include="AddBusinessBankAccountTests.cs" />
     <Compile Include="CollectionsTests.cs" />
     <Compile Include="CsapiCreateTransactionTest.cs" />
     <Compile Include="Queries\GetBusinessApplicationSummaryCsapiQuery.cs" />
