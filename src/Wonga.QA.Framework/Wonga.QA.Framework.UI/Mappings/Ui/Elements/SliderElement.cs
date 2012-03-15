@@ -14,5 +14,9 @@ namespace Wonga.QA.Framework.UI.Mappings.Elements
         public String TotalFees { get; set; }
         public String TotalToRepay { get; set; }
         public String RepaymentDate { get; set; }
+        public String AmountMinusButton { get; set; }
+        public String AmountPlusButton { get; set; }
+        public String DurationMinusButton { get; set; }
+        public String DurationPlusButton { get; set; }
     }
 }

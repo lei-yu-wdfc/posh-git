@@ -60,11 +60,15 @@ namespace Wonga.QA.Tests.Ui
             
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-177")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-177"), Pending("Not completed yet")]
         public void ChangeLoanAmountAndDurationOnPersonalDetailsViaPlusMinusOptions()
         {
             var journey = new Journey(Client.Home());
             var personalDetailsPage = journey.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
+            personalDetailsPage.ClickSliderToggler();
+            personalDetailsPage.Sliders.ClickAmountPlusButton();
+            personalDetailsPage.Sliders.ClickDurationMinusButton();
+            
             Assert.IsNotNull(personalDetailsPage);
         }
     }

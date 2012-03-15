@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.UI.Elements;
 using Wonga.QA.Framework.UI.UiElements.Pages.Wb;
 using Wonga.QA.Framework.UI.UiElements.Sections;
 using Wonga.QA.Framework.UI.Mappings;
@@ -18,6 +19,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public ContactingYouSection ContactingYou { get; set; }
         public ProvinceSection ProvinceSection { get; set; }
         public Boolean PrivacyPolicy { set { _privacy.Toggle(value); } }
+        public SlidersElement Sliders { get; set; }
         public Object CanContact
         {
             set
@@ -73,6 +75,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             var sliderToggler = Client.Driver.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.SliderToggler));
             sliderToggler.Click();
+            Sliders = new SlidersElement(this);
         }
 
         public IApplyPage Submit()
