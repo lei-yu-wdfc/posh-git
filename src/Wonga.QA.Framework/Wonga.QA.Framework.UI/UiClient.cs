@@ -10,6 +10,7 @@ using OpenQA.Selenium.Firefox;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
+using Wonga.QA.Framework.UI.UiElements.Pages.SalesForce;
 
 namespace Wonga.QA.Framework.UI
 {
@@ -58,6 +59,12 @@ namespace Wonga.QA.Framework.UI
         public void Dispose()
         {
             Do.Until(() => { Driver.Quit(); return true; });
+        }
+
+        public SalesForceLoginPage SalesForceStart()
+        {
+            Driver.Navigate().GoToUrl(Config.SalesforceUi.Home);
+            return new SalesForceLoginPage(this);
         }
     }
 }

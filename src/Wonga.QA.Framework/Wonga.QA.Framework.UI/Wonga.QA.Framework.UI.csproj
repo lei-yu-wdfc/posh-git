@@ -54,6 +54,10 @@
     <Compile Include="Mappings\Ui\Elements\MyAccountNavigationElement.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ForgotPasswordPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\MySummaryPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceCustomerDetailPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceHomePage.cs" />
+    <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceLoginPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceSearchResultPage.cs" />
     <Compile Include="Mappings\Ui\Ui.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\DealDonePage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\DeclinedPage.cs" />
@@ -102,6 +106,11 @@
     <Compile Include="Mappings\Ui\Pages\Common\MyPaymentsPage.cs" />
     <Compile Include="Ui\Pages\Common\MyPaymentsPage.cs" />
     <Compile Include="Ui\Pages\Common\MySummaryPage.cs" />
+    <Compile Include="Ui\Pages\SalesForce\BaseSfPage.cs" />
+    <Compile Include="Ui\Pages\SalesForce\SalesForceCustomerDetailPage.cs" />
+    <Compile Include="Ui\Pages\SalesForce\SalesForceHomePage.cs" />
+    <Compile Include="Ui\Pages\SalesForce\SalesForceLoginPage.cs" />
+    <Compile Include="Ui\Pages\SalesForce\SalesForceSearchResultPage.cs" />
     <Compile Include="Ui\Sections\AccountDetailsSection.cs" />
     <Compile Include="Ui\Sections\BankAccountSection.cs" />
     <Compile Include="Ui\Sections\BaseSection.cs" />

@@ -100,19 +100,16 @@
     <LogoutTrigger>#logout-trigger</LogoutTrigger>
   </LoginElement>
 
-  <!--Mihail-->
   <HelpElement>
     <HelpTrigger>help-trigger</HelpTrigger>
     <HelplistQuestions>#listQuestions</HelplistQuestions>
   </HelpElement>
 
-  <!--Mihail-->
   <FAQElement>
     <SelectQuestion>.//*[@id='faqQuestions']/option[@selected='selected']</SelectQuestion>
     <AnswerQuestion>.//*[@id='containerAnswer']/h2</AnswerQuestion>
   </FAQElement>
 
-  <!--Mihail-->
   <InternationalElement>
     <InternationalTrigger>.//*[@id='international-trigger']</InternationalTrigger>
     <InternationalPanelZa>.//*[@id='international-panel']/div/ul/li[1]/a</InternationalPanelZa>
@@ -203,4 +200,19 @@
   <MyPaymentsPage>
     <AddBankAccountButton>//tr[@class='accounts-add-bank']</AddBankAccountButton>
   </MyPaymentsPage>
+
+  <SalesForceLoginPage>
+    <Username>#username</Username>
+    <Password>#password</Password>
+    <LoginButton>#Login</LoginButton>
+  </SalesForceLoginPage>
+  
+  <SalesForceHomePage>
+    <SearchBox>#phSearchInput</SearchBox>
+    <SearchButton>#phSearchButton</SearchButton>
+  </SalesForceHomePage>
+
+  <SalesForceSearchResultPage>
+    <Customer>#Account_body table tbody tr:nth-child(2) th a</Customer>
+  </SalesForceSearchResultPage>
 </Ui>
