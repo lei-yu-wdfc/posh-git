@@ -166,16 +166,9 @@ namespace Wonga.QA.Framework
 
 		public Application RepayEarly(decimal amount, int dayOfLoanToMakeRepayment)
 		{
-			int daysUntilStartOfLoan = 0;
+            var daysToRewind = GetAbsoluteDaysToRewind(dayOfLoanToMakeRepayment);
 
-			if (Config.AUT == AUT.Ca)
-			{
-				daysUntilStartOfLoan = DateHelper.GetNumberOfDaysUntilStartOfLoanForCa();
-			}
-
-			int daysToRewind = daysUntilStartOfLoan + dayOfLoanToMakeRepayment - 1;
-
-			Rewind(daysToRewind);
+            Rewind(daysToRewind);
 
 			Guid repaymentRequestId = Guid.NewGuid();
 
@@ -298,7 +291,7 @@ namespace Wonga.QA.Framework
 
 
 
-		public void Rewind(int absoluteDays)
+		private void Rewind(int absoluteDays)
 		{
 			// Rewinds a Loans Dates
 			ApplicationEntity application = Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id);
@@ -322,7 +315,28 @@ namespace Wonga.QA.Framework
 			application.FixedTermLoanApplicationEntity.PromiseDate -= span;
 			application.FixedTermLoanApplicationEntity.NextDueDate -= span;
 			application.Transactions.ForEach(t => t.PostedOn -= span);
-			application.Submit();
+            application.Database.SubmitChanges();
 		}
+
+        public void RewindToDayOfLoanTerm(int dayOfLoanTerm)
+        {
+            var daysToRewind = GetAbsoluteDaysToRewind(dayOfLoanTerm);
+
+            Rewind(daysToRewind);
+
+        }
+
+        private static int GetAbsoluteDaysToRewind(int dayOfLoanToMakeRepayment)
+        {
+            int daysUntilStartOfLoan = 0;
+
+            if (Config.AUT == AUT.Ca)
+            {
+                daysUntilStartOfLoan = DateHelper.GetNumberOfDaysUntilStartOfLoanForCa();
+            }
+
+            int daysToRewind = daysUntilStartOfLoan + dayOfLoanToMakeRepayment - 1;
+            return daysToRewind;
+        }
 	}
 }
