@@ -1786,6 +1786,8 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private System.Nullable<System.DateTime> _DeclinedOn;
 		
+		private System.Nullable<byte> _Decision;
+		
 		private EntitySet<AccountsApplicationEntity> _AccountsApplications;
 		
 		private EntityRef<ProductEntity> _ProductEntity;
@@ -1842,6 +1844,8 @@ namespace Wonga.QA.Framework.Db.Payments
     partial void OnAcceptedOnChanged();
     partial void OnDeclinedOnChanging(System.Nullable<System.DateTime> value);
     partial void OnDeclinedOnChanged();
+    partial void OnDecisionChanging(System.Nullable<byte> value);
+    partial void OnDecisionChanged();
     #endregion
 		
 		public ApplicationEntity()
@@ -2179,6 +2183,26 @@ namespace Wonga.QA.Framework.Db.Payments
 					this._DeclinedOn = value;
 					this.SendPropertyChanged("DeclinedOn");
 					this.OnDeclinedOnChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Decision", DbType="TinyInt", UpdateCheck=UpdateCheck.Never)]
+		public System.Nullable<byte> Decision
+		{
+			get
+			{
+				return this._Decision;
+			}
+			set
+			{
+				if ((this._Decision != value))
+				{
+					this.OnDecisionChanging(value);
+					this.SendPropertyChanging();
+					this._Decision = value;
+					this.SendPropertyChanged("Decision");
+					this.OnDecisionChanged();
 				}
 			}
 		}
@@ -14063,6 +14087,8 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private System.Nullable<System.DateTime> _DeclinedOn;
 		
+		private System.Nullable<byte> _Decision;
+		
 		public V00001_Payment_Applications_CTEntity()
 		{
 		}
@@ -14399,6 +14425,22 @@ namespace Wonga.QA.Framework.Db.Payments
 				if ((this._DeclinedOn != value))
 				{
 					this._DeclinedOn = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Decision", DbType="TinyInt")]
+		public System.Nullable<byte> Decision
+		{
+			get
+			{
+				return this._Decision;
+			}
+			set
+			{
+				if ((this._Decision != value))
+				{
+					this._Decision = value;
 				}
 			}
 		}

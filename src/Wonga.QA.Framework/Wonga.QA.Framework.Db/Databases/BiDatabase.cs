@@ -174,6 +174,9 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void InsertLogMessageTypeEntity(LogMessageTypeEntity instance);
     partial void UpdateLogMessageTypeEntity(LogMessageTypeEntity instance);
     partial void DeleteLogMessageTypeEntity(LogMessageTypeEntity instance);
+    partial void InsertMergeLogEntity(MergeLogEntity instance);
+    partial void UpdateMergeLogEntity(MergeLogEntity instance);
+    partial void DeleteMergeLogEntity(MergeLogEntity instance);
     partial void InsertMessageArchiveEntity(MessageArchiveEntity instance);
     partial void UpdateMessageArchiveEntity(MessageArchiveEntity instance);
     partial void DeleteMessageArchiveEntity(MessageArchiveEntity instance);
@@ -650,6 +653,14 @@ namespace Wonga.QA.Framework.Db.Bi
 			get
 			{
 				return this.GetTable<LogMessageTypeEntity>();
+			}
+		}
+		
+		public System.Data.Linq.Table<MergeLogEntity> MergeLogs
+		{
+			get
+			{
+				return this.GetTable<MergeLogEntity>();
 			}
 		}
 		
@@ -5475,6 +5486,8 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private EntitySet<FUpdateDailyAccruedInterestEntity> _FUpdateDailyAccruedInterests;
 		
+		private EntitySet<MergeLogEntity> _MergeLogs;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -5538,6 +5551,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			this._FTransunionResponses = new EntitySet<FTransunionResponseEntity>(new Action<FTransunionResponseEntity>(this.attach_FTransunionResponses), new Action<FTransunionResponseEntity>(this.detach_FTransunionResponses));
 			this._DateSKeyBi_FTransunionResponses = new EntitySet<FTransunionResponseEntity>(new Action<FTransunionResponseEntity>(this.attach_DateSKeyBi_FTransunionResponses), new Action<FTransunionResponseEntity>(this.detach_DateSKeyBi_FTransunionResponses));
 			this._FUpdateDailyAccruedInterests = new EntitySet<FUpdateDailyAccruedInterestEntity>(new Action<FUpdateDailyAccruedInterestEntity>(this.attach_FUpdateDailyAccruedInterests), new Action<FUpdateDailyAccruedInterestEntity>(this.detach_FUpdateDailyAccruedInterests));
+			this._MergeLogs = new EntitySet<MergeLogEntity>(new Action<MergeLogEntity>(this.attach_MergeLogs), new Action<MergeLogEntity>(this.detach_MergeLogs));
 			OnCreated();
 		}
 		
@@ -6190,6 +6204,19 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_MergeLog_REF_Date", Storage="_MergeLogs", ThisKey="DateSKey", OtherKey="DateSKey", DeleteRule="NO ACTION")]
+		public EntitySet<MergeLogEntity> MergeLogs
+		{
+			get
+			{
+				return this._MergeLogs;
+			}
+			set
+			{
+				this._MergeLogs.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -6601,6 +6628,18 @@ namespace Wonga.QA.Framework.Db.Bi
 		}
 		
 		private void detach_FUpdateDailyAccruedInterests(FUpdateDailyAccruedInterestEntity entity)
+		{
+			this.SendPropertyChanging();
+			entity.DateEntity = null;
+		}
+		
+		private void attach_MergeLogs(MergeLogEntity entity)
+		{
+			this.SendPropertyChanging();
+			entity.DateEntity = this;
+		}
+		
+		private void detach_MergeLogs(MergeLogEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.DateEntity = null;
@@ -20077,6 +20116,205 @@ namespace Wonga.QA.Framework.Db.Bi
 		{
 			this.SendPropertyChanging();
 			entity.LogMessageTypeEntity = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.MergeLog")]
+	public partial class MergeLogEntity : DbEntity<MergeLogEntity>, INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _MergeLogSKey;
+		
+		private int _DateSKey;
+		
+		private string _Table;
+		
+		private string _Action;
+		
+		private int _Rows;
+		
+		private EntityRef<DateEntity> _DateEntity;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnMergeLogSKeyChanging(int value);
+    partial void OnMergeLogSKeyChanged();
+    partial void OnDateSKeyChanging(int value);
+    partial void OnDateSKeyChanged();
+    partial void OnTableChanging(string value);
+    partial void OnTableChanged();
+    partial void OnActionChanging(string value);
+    partial void OnActionChanged();
+    partial void OnRowsChanging(int value);
+    partial void OnRowsChanged();
+    #endregion
+		
+		public MergeLogEntity()
+		{
+			this._DateEntity = default(EntityRef<DateEntity>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MergeLogSKey", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int MergeLogSKey
+		{
+			get
+			{
+				return this._MergeLogSKey;
+			}
+			set
+			{
+				if ((this._MergeLogSKey != value))
+				{
+					this.OnMergeLogSKeyChanging(value);
+					this.SendPropertyChanging();
+					this._MergeLogSKey = value;
+					this.SendPropertyChanged("MergeLogSKey");
+					this.OnMergeLogSKeyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateSKey", DbType="Int NOT NULL")]
+		public int DateSKey
+		{
+			get
+			{
+				return this._DateSKey;
+			}
+			set
+			{
+				if ((this._DateSKey != value))
+				{
+					if (this._DateEntity.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnDateSKeyChanging(value);
+					this.SendPropertyChanging();
+					this._DateSKey = value;
+					this.SendPropertyChanged("DateSKey");
+					this.OnDateSKeyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Table", DbType="VarChar(500) NOT NULL", CanBeNull=false)]
+		public string Table
+		{
+			get
+			{
+				return this._Table;
+			}
+			set
+			{
+				if ((this._Table != value))
+				{
+					this.OnTableChanging(value);
+					this.SendPropertyChanging();
+					this._Table = value;
+					this.SendPropertyChanged("Table");
+					this.OnTableChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Action", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
+		public string Action
+		{
+			get
+			{
+				return this._Action;
+			}
+			set
+			{
+				if ((this._Action != value))
+				{
+					this.OnActionChanging(value);
+					this.SendPropertyChanging();
+					this._Action = value;
+					this.SendPropertyChanged("Action");
+					this.OnActionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rows", DbType="Int NOT NULL")]
+		public int Rows
+		{
+			get
+			{
+				return this._Rows;
+			}
+			set
+			{
+				if ((this._Rows != value))
+				{
+					this.OnRowsChanging(value);
+					this.SendPropertyChanging();
+					this._Rows = value;
+					this.SendPropertyChanged("Rows");
+					this.OnRowsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_MergeLog_REF_Date", Storage="_DateEntity", ThisKey="DateSKey", OtherKey="DateSKey", IsForeignKey=true)]
+		public DateEntity DateEntity
+		{
+			get
+			{
+				return this._DateEntity.Entity;
+			}
+			set
+			{
+				DateEntity previousValue = this._DateEntity.Entity;
+				if (((previousValue != value) 
+							|| (this._DateEntity.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._DateEntity.Entity = null;
+						previousValue.MergeLogs.Remove(this);
+					}
+					this._DateEntity.Entity = value;
+					if ((value != null))
+					{
+						value.MergeLogs.Add(this);
+						this._DateSKey = value.DateSKey;
+					}
+					else
+					{
+						this._DateSKey = default(int);
+					}
+					this.SendPropertyChanged("DateEntity");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	
