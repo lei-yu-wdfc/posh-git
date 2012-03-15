@@ -14,12 +14,26 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
     public class DealDonePage : BasePage, IApplyPage
     {
         private IWebElement _continueButton;
+        private IWebElement _repayDate;
+        private IWebElement _repayAmount;
 
         public DealDonePage(UiClient client) : base(client)
         {
             Assert.That(Headers, Has.Item(Ui.Get.DealDonePage.HeaderText));
             _continueButton = Content.FirstOrDefaultElement(By.CssSelector(Ui.Get.DealDonePage.ContinueButtonLink)) ??
                               Content.FirstOrDefaultElement(By.CssSelector(Ui.Get.DealDonePage.ContinueButton));
+        }
+
+        public String GetRepaymentDate()
+        {
+            _repayDate = Content.FindElement(By.CssSelector(Ui.Get.DealDonePage.RepayDate));
+           return _repayDate.Text;
+        }
+
+        public String GetRapaymentAmount()
+        {
+            _repayAmount = Content.FindElement(By.CssSelector(Ui.Get.DealDonePage.RepayAmount));
+             return _repayAmount.Text; 
         }
 
         public IApplyPage ContinueToMyAccount()

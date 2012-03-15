@@ -40,11 +40,13 @@
     <NextButton>#edit-submit</NextButton>
   </PersonalBankAccountDetailsPage>
 
-  <DealDonePage>
-    <HeaderText>Your application has been approved</HeaderText>
-    <ContinueButtonLink>.application-success-button</ContinueButtonLink>
-    <ContinueButton>#edit-submit</ContinueButton>
-  </DealDonePage>
+	<DealDonePage>
+		<HeaderText>Your application has been approved</HeaderText>
+		<ContinueButtonLink>.application-success-button</ContinueButtonLink>
+		<ContinueButton>#edit-submit</ContinueButton>
+		<RepayDate>#content-area div div div:nth-child(1) div p:nth-child(2) strong em</RepayDate>
+		<RepayAmount>#content-area div div div:nth-child(1) div p:nth-child(2) span</RepayAmount>
+	</DealDonePage>
 
   <AcceptedPage>
     <FormId>#wonga-loan-approve-form</FormId>
