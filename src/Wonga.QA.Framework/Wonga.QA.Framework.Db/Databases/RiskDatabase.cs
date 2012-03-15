@@ -96,6 +96,12 @@ namespace Wonga.QA.Framework.Db.Risk
     partial void InsertRiskDecisionDataEntity(RiskDecisionDataEntity instance);
     partial void UpdateRiskDecisionDataEntity(RiskDecisionDataEntity instance);
     partial void DeleteRiskDecisionDataEntity(RiskDecisionDataEntity instance);
+    partial void InsertRiskGuarantorPartialDetailEntity(RiskGuarantorPartialDetailEntity instance);
+    partial void UpdateRiskGuarantorPartialDetailEntity(RiskGuarantorPartialDetailEntity instance);
+    partial void DeleteRiskGuarantorPartialDetailEntity(RiskGuarantorPartialDetailEntity instance);
+    partial void InsertRiskIovationPostcodeEntity(RiskIovationPostcodeEntity instance);
+    partial void UpdateRiskIovationPostcodeEntity(RiskIovationPostcodeEntity instance);
+    partial void DeleteRiskIovationPostcodeEntity(RiskIovationPostcodeEntity instance);
     partial void InsertRiskPaymentCardEntity(RiskPaymentCardEntity instance);
     partial void UpdateRiskPaymentCardEntity(RiskPaymentCardEntity instance);
     partial void DeleteRiskPaymentCardEntity(RiskPaymentCardEntity instance);
@@ -319,6 +325,22 @@ namespace Wonga.QA.Framework.Db.Risk
 			get
 			{
 				return this.GetTable<RiskDecisionDataEntity>();
+			}
+		}
+		
+		public System.Data.Linq.Table<RiskGuarantorPartialDetailEntity> RiskGuarantorPartialDetails
+		{
+			get
+			{
+				return this.GetTable<RiskGuarantorPartialDetailEntity>();
+			}
+		}
+		
+		public System.Data.Linq.Table<RiskIovationPostcodeEntity> RiskIovationPostcodes
+		{
+			get
+			{
+				return this.GetTable<RiskIovationPostcodeEntity>();
 			}
 		}
 		
@@ -5781,6 +5803,466 @@ namespace Wonga.QA.Framework.Db.Risk
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="risk.RiskGuarantorPartialDetails")]
+	public partial class RiskGuarantorPartialDetailEntity : DbEntity<RiskGuarantorPartialDetailEntity>, INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _RiskGuarantorPartialDetailId;
+		
+		private System.Guid _AccountId;
+		
+		private System.Guid _ApplicationId;
+		
+		private string _Forename;
+		
+		private string _Surname;
+		
+		private System.DateTime _CreatedOn;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnRiskGuarantorPartialDetailIdChanging(int value);
+    partial void OnRiskGuarantorPartialDetailIdChanged();
+    partial void OnAccountIdChanging(System.Guid value);
+    partial void OnAccountIdChanged();
+    partial void OnApplicationIdChanging(System.Guid value);
+    partial void OnApplicationIdChanged();
+    partial void OnForenameChanging(string value);
+    partial void OnForenameChanged();
+    partial void OnSurnameChanging(string value);
+    partial void OnSurnameChanged();
+    partial void OnCreatedOnChanging(System.DateTime value);
+    partial void OnCreatedOnChanged();
+    #endregion
+		
+		public RiskGuarantorPartialDetailEntity()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RiskGuarantorPartialDetailId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int RiskGuarantorPartialDetailId
+		{
+			get
+			{
+				return this._RiskGuarantorPartialDetailId;
+			}
+			set
+			{
+				if ((this._RiskGuarantorPartialDetailId != value))
+				{
+					this.OnRiskGuarantorPartialDetailIdChanging(value);
+					this.SendPropertyChanging();
+					this._RiskGuarantorPartialDetailId = value;
+					this.SendPropertyChanged("RiskGuarantorPartialDetailId");
+					this.OnRiskGuarantorPartialDetailIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccountId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid AccountId
+		{
+			get
+			{
+				return this._AccountId;
+			}
+			set
+			{
+				if ((this._AccountId != value))
+				{
+					this.OnAccountIdChanging(value);
+					this.SendPropertyChanging();
+					this._AccountId = value;
+					this.SendPropertyChanged("AccountId");
+					this.OnAccountIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplicationId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid ApplicationId
+		{
+			get
+			{
+				return this._ApplicationId;
+			}
+			set
+			{
+				if ((this._ApplicationId != value))
+				{
+					this.OnApplicationIdChanging(value);
+					this.SendPropertyChanging();
+					this._ApplicationId = value;
+					this.SendPropertyChanged("ApplicationId");
+					this.OnApplicationIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Forename", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Forename
+		{
+			get
+			{
+				return this._Forename;
+			}
+			set
+			{
+				if ((this._Forename != value))
+				{
+					this.OnForenameChanging(value);
+					this.SendPropertyChanging();
+					this._Forename = value;
+					this.SendPropertyChanged("Forename");
+					this.OnForenameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Surname", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Surname
+		{
+			get
+			{
+				return this._Surname;
+			}
+			set
+			{
+				if ((this._Surname != value))
+				{
+					this.OnSurnameChanging(value);
+					this.SendPropertyChanging();
+					this._Surname = value;
+					this.SendPropertyChanged("Surname");
+					this.OnSurnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedOn", DbType="DateTime NOT NULL")]
+		public System.DateTime CreatedOn
+		{
+			get
+			{
+				return this._CreatedOn;
+			}
+			set
+			{
+				if ((this._CreatedOn != value))
+				{
+					this.OnCreatedOnChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedOn = value;
+					this.SendPropertyChanged("CreatedOn");
+					this.OnCreatedOnChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="risk.RiskIovationPostcode")]
+	public partial class RiskIovationPostcodeEntity : DbEntity<RiskIovationPostcodeEntity>, INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Nullable<int> _Id;
+		
+		private System.Nullable<System.DateTime> _ApplicationDate;
+		
+		private string _Postcode;
+		
+		private System.Guid _ApplicationId;
+		
+		private System.Nullable<System.Guid> _AccountId;
+		
+		private System.Nullable<byte> _ApplicationDecision;
+		
+		private System.Nullable<int> _AccountRank;
+		
+		private string _DeviceAlias;
+		
+		private string _IovationResult;
+		
+		private System.Nullable<bool> _InArrears;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(System.Nullable<int> value);
+    partial void OnIdChanged();
+    partial void OnApplicationDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnApplicationDateChanged();
+    partial void OnPostcodeChanging(string value);
+    partial void OnPostcodeChanged();
+    partial void OnApplicationIdChanging(System.Guid value);
+    partial void OnApplicationIdChanged();
+    partial void OnAccountIdChanging(System.Nullable<System.Guid> value);
+    partial void OnAccountIdChanged();
+    partial void OnApplicationDecisionChanging(System.Nullable<byte> value);
+    partial void OnApplicationDecisionChanged();
+    partial void OnAccountRankChanging(System.Nullable<int> value);
+    partial void OnAccountRankChanged();
+    partial void OnDeviceAliasChanging(string value);
+    partial void OnDeviceAliasChanged();
+    partial void OnIovationResultChanging(string value);
+    partial void OnIovationResultChanged();
+    partial void OnInArrearsChanging(System.Nullable<bool> value);
+    partial void OnInArrearsChanged();
+    #endregion
+		
+		public RiskIovationPostcodeEntity()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int")]
+		public System.Nullable<int> Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplicationDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> ApplicationDate
+		{
+			get
+			{
+				return this._ApplicationDate;
+			}
+			set
+			{
+				if ((this._ApplicationDate != value))
+				{
+					this.OnApplicationDateChanging(value);
+					this.SendPropertyChanging();
+					this._ApplicationDate = value;
+					this.SendPropertyChanged("ApplicationDate");
+					this.OnApplicationDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Postcode", DbType="VarChar(10)")]
+		public string Postcode
+		{
+			get
+			{
+				return this._Postcode;
+			}
+			set
+			{
+				if ((this._Postcode != value))
+				{
+					this.OnPostcodeChanging(value);
+					this.SendPropertyChanging();
+					this._Postcode = value;
+					this.SendPropertyChanged("Postcode");
+					this.OnPostcodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplicationId", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid ApplicationId
+		{
+			get
+			{
+				return this._ApplicationId;
+			}
+			set
+			{
+				if ((this._ApplicationId != value))
+				{
+					this.OnApplicationIdChanging(value);
+					this.SendPropertyChanging();
+					this._ApplicationId = value;
+					this.SendPropertyChanged("ApplicationId");
+					this.OnApplicationIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccountId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> AccountId
+		{
+			get
+			{
+				return this._AccountId;
+			}
+			set
+			{
+				if ((this._AccountId != value))
+				{
+					this.OnAccountIdChanging(value);
+					this.SendPropertyChanging();
+					this._AccountId = value;
+					this.SendPropertyChanged("AccountId");
+					this.OnAccountIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplicationDecision", DbType="TinyInt")]
+		public System.Nullable<byte> ApplicationDecision
+		{
+			get
+			{
+				return this._ApplicationDecision;
+			}
+			set
+			{
+				if ((this._ApplicationDecision != value))
+				{
+					this.OnApplicationDecisionChanging(value);
+					this.SendPropertyChanging();
+					this._ApplicationDecision = value;
+					this.SendPropertyChanged("ApplicationDecision");
+					this.OnApplicationDecisionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccountRank", DbType="Int")]
+		public System.Nullable<int> AccountRank
+		{
+			get
+			{
+				return this._AccountRank;
+			}
+			set
+			{
+				if ((this._AccountRank != value))
+				{
+					this.OnAccountRankChanging(value);
+					this.SendPropertyChanging();
+					this._AccountRank = value;
+					this.SendPropertyChanged("AccountRank");
+					this.OnAccountRankChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DeviceAlias", DbType="VarChar(50)")]
+		public string DeviceAlias
+		{
+			get
+			{
+				return this._DeviceAlias;
+			}
+			set
+			{
+				if ((this._DeviceAlias != value))
+				{
+					this.OnDeviceAliasChanging(value);
+					this.SendPropertyChanging();
+					this._DeviceAlias = value;
+					this.SendPropertyChanged("DeviceAlias");
+					this.OnDeviceAliasChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IovationResult", DbType="VarChar(50)")]
+		public string IovationResult
+		{
+			get
+			{
+				return this._IovationResult;
+			}
+			set
+			{
+				if ((this._IovationResult != value))
+				{
+					this.OnIovationResultChanging(value);
+					this.SendPropertyChanging();
+					this._IovationResult = value;
+					this.SendPropertyChanged("IovationResult");
+					this.OnIovationResultChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InArrears", DbType="Bit")]
+		public System.Nullable<bool> InArrears
+		{
+			get
+			{
+				return this._InArrears;
+			}
+			set
+			{
+				if ((this._InArrears != value))
+				{
+					this.OnInArrearsChanging(value);
+					this.SendPropertyChanging();
+					this._InArrears = value;
+					this.SendPropertyChanged("InArrears");
+					this.OnInArrearsChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="risk.RiskPaymentCards")]
 	public partial class RiskPaymentCardEntity : DbEntity<RiskPaymentCardEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -6029,6 +6511,10 @@ namespace Wonga.QA.Framework.Db.Risk
 		
 		private System.Nullable<byte> _CreditBureauUsed;
 		
+		private byte _WorkflowType;
+		
+		private System.Guid _AccountId;
+		
 		private EntitySet<WorkflowCheckpointEntity> _WorkflowCheckpoints;
 		
 		private EntitySet<WorkflowVerificationEntity> _WorkflowVerifications;
@@ -6049,6 +6535,10 @@ namespace Wonga.QA.Framework.Db.Risk
     partial void OnFICOScoreChanged();
     partial void OnCreditBureauUsedChanging(System.Nullable<byte> value);
     partial void OnCreditBureauUsedChanged();
+    partial void OnWorkflowTypeChanging(byte value);
+    partial void OnWorkflowTypeChanged();
+    partial void OnAccountIdChanging(System.Guid value);
+    partial void OnAccountIdChanged();
     #endregion
 		
 		public RiskWorkflowEntity()
@@ -6174,6 +6664,46 @@ namespace Wonga.QA.Framework.Db.Risk
 					this._CreditBureauUsed = value;
 					this.SendPropertyChanged("CreditBureauUsed");
 					this.OnCreditBureauUsedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkflowType", DbType="TinyInt NOT NULL")]
+		public byte WorkflowType
+		{
+			get
+			{
+				return this._WorkflowType;
+			}
+			set
+			{
+				if ((this._WorkflowType != value))
+				{
+					this.OnWorkflowTypeChanging(value);
+					this.SendPropertyChanging();
+					this._WorkflowType = value;
+					this.SendPropertyChanged("WorkflowType");
+					this.OnWorkflowTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccountId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid AccountId
+		{
+			get
+			{
+				return this._AccountId;
+			}
+			set
+			{
+				if ((this._AccountId != value))
+				{
+					this.OnAccountIdChanging(value);
+					this.SendPropertyChanging();
+					this._AccountId = value;
+					this.SendPropertyChanged("AccountId");
+					this.OnAccountIdChanged();
 				}
 			}
 		}
