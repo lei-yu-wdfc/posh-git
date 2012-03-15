@@ -42,7 +42,9 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.WithDateOfBirth(customerData.DateOfBirth)
 				.Build();
 
-			var application = ApplicationBuilder.New(customer).Build();
+			var application = ApplicationBuilder.New(customer)
+				.WithExpectedDecision(expectedStatus == CheckpointStatus.Verified ? ApplicationDecisionStatusEnum.Accepted : ApplicationDecisionStatusEnum.Declined)
+				.Build();
 
 			// wait until workflow will be created and started
 			Do.Until(() => Driver.Db.Risk.RiskWorkflows.Single(x => x.ApplicationId == application.Id));
