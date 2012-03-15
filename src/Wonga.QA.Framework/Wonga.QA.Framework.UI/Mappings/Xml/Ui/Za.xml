@@ -43,6 +43,7 @@
     <AddressPeriod>#edit-address-period-za</AddressPeriod>
     <Street>#edit-street-za</Street>
     <Postcode>#edit-postcode-za</Postcode>
+    <PostcodeErrorForm>div#edit-postcode-za-wrapper>div.invalid</PostcodeErrorForm>
   </AddressDetailsPage>
 
   <BankAccountSection>

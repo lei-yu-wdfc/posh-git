@@ -6,6 +6,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
     {
         public String FormId { get; set; }
         public String Postcode { get; set; }
+        public String PostcodeErrorForm { get; set; }
         public String FlatNumber { get; set; }
         public String District { get; set; }
         public String County { get; set; }

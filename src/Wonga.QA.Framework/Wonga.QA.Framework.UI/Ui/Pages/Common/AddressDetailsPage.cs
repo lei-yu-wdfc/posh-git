@@ -7,7 +7,7 @@ using Wonga.QA.Framework.UI.UiElements.Sections;
 
 namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
-    public class AddressDetailsPage : BasePage,IApplyPage
+    public class AddressDetailsPage : BasePage, IApplyPage
     {
         public AccountDetailsSection AccountDetailsSection { get; set; }
         private readonly IWebElement _postCode;
@@ -23,6 +23,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private readonly IWebElement _postOfficeBox;
 
         private IWebElement _addressOptions;
+        private IWebElement _postCodeErrorForm;
 
         public String PostCode { set { _postCode.SendValue(value); } }
         public String SelectedAddress { set { _addressOptions.SelectOption(value); } }
@@ -32,9 +33,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public String Town { set { _town.SendValue(value); } }
         public String Street { set { _street.SendValue(value); } }
         public String AddressPeriod { set { _addressPeriod.SelectOption(value); } }
-        public String PostOfficeBox {set {_postOfficeBox.SendValue(value);}}
+        public String PostOfficeBox { set { _postOfficeBox.SendValue(value); } }
 
-        public AddressDetailsPage(UiClient client) : base(client)
+        public AddressDetailsPage(UiClient client)
+            : base(client)
         {
 
             _form = Content.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.FormId));
@@ -45,22 +47,22 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
             switch (Config.AUT)
             {
-                case(AUT.Wb):
+                case (AUT.Wb):
                     _county = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.County));
                     _district = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.District));
                     _lookup = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.LookupButton));
                     break;
-                case(AUT.Za):
+                case (AUT.Za):
                     _county = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.County));
                     _district = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.District));
                     _street = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.Street));
                     _town = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.Town));
-                    break;
+                   break;
                 case (AUT.Ca):
                     _street = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.Street));
                     _town = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.Town));
                     _postOfficeBox = _form.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.PostOfficeBox));
-                    AccountDetailsSection = new AccountDetailsSection(this);
+                   AccountDetailsSection = new AccountDetailsSection(this);
                     break;
             }
         }
@@ -78,14 +80,28 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public BasePage Next()
         {
             _next.Click();
-            switch(Config.AUT)
+            switch (Config.AUT)
             {
-                case(AUT.Ca):
+                case (AUT.Ca):
                     return new PersonalBankAccountPage(Client);
                 default:
                     return new AccountDetailsPage(Client);
-                
+
             }
+        }
+        public bool IsPostcodeWarningOccurred()
+        {
+            _postCodeErrorForm =
+                       _form.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.PostcodeErrorForm));
+            string postCodeErrorFormClass = _postCodeErrorForm.GetAttribute("class");
+
+            if (postCodeErrorFormClass.Equals("invalid"))
+            {
+                return true;
+            }
+
+            return false;
+
         }
 
     }
