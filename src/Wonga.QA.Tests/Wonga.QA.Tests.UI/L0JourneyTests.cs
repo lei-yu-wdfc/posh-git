@@ -12,7 +12,7 @@ namespace Wonga.QA.Tests.Ui
 {
     class L0JourneyTests : UiTest
     {
-        [Test, AUT(AUT.Za, AUT.Ca)]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-180")]
         public void L0JourneyInvalidPostcodeShouldCauseWarningMessage()
         {
             var journey = new Journey(Client.Home());
