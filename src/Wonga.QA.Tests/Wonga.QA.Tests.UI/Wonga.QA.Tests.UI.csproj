@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ForgotPassword.cs" />
     <Compile Include="HelpTest.cs" />
     <Compile Include="L0AcceptedLoan.cs" />
     <Compile Include="LnLoginTest.cs" />
@@ -39,6 +40,7 @@
     <Compile Include="MySummary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RedirectedToSelectedSiteTest.cs" />
+    <Compile Include="SalesForceTest.cs" />
     <Compile Include="SliderTests.cs" />
     <Compile Include="UiTest.cs" />
     <Compile Include="L0DeclinedLoan.cs" />
@@ -61,6 +63,7 @@
     </Reference>
     <Reference Include="Wonga.QA.Framework.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Wonga.QA.Framework.Db, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Wonga.QA.Framework.ThirdParties, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Wonga.QA.Framework.Ui">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Ui.dll</HintPath>
     </Reference>

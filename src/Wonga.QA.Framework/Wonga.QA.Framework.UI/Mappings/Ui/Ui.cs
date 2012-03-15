@@ -3,6 +3,7 @@ using Wonga.QA.Framework.UI.Mappings.Elements;
 using Wonga.QA.Framework.UI.Mappings.Pages;
 using Wonga.QA.Framework.UI.Mappings.Pages.Wb;
 using Wonga.QA.Framework.UI.Mappings.Sections;
+using Wonga.QA.Framework.UI.Mappings.Pages.SalesForce;
 
 namespace Wonga.QA.Framework.UI.Mappings
 {
@@ -28,8 +29,8 @@ namespace Wonga.QA.Framework.UI.Mappings
 
         protected Ui()
         {
-           XmlMapper = new XmlMapper("Wonga.QA.Framework.UI.Mappings.Xml.Ui._base.xml", string.Format("Wonga.QA.Framework.UI.Mappings.Xml.Ui.{0}.xml", Config.AUT));
-           XmlMapper.GetValues(this, null);
+            XmlMapper = new XmlMapper("Wonga.QA.Framework.UI.Mappings.Xml.Ui._base.xml", string.Format("Wonga.QA.Framework.UI.Mappings.Xml.Ui.{0}.xml", Config.AUT));
+            XmlMapper.GetValues(this, null);
         }
 
         public XmlMapper XmlMapper = null;
@@ -83,6 +84,15 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual MySummaryPage MySummaryPage { get; set; }
         public virtual MyPaymentsPage MyPaymentsPage { get; set; }
 
+        #endregion
+
+        #region SalesForcePages
+
+        public virtual SalesForceLoginPage SalesForceLoginPage { get; set; }
+        public virtual SalesForceHomePage SalesForceHomePage { get; set; }
+        public virtual SalesForceSearchResultPage SalesForceSearchResultPage { get; set; }
+        public virtual SalesForceCustomerDetailPage SalesForceCustomerDetailPage { get; set; }
+        
         #endregion
     }
 }
