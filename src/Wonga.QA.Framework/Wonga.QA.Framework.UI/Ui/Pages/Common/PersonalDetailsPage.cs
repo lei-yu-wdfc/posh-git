@@ -69,6 +69,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             }
         }
 
+        public void ClickSliderToggler()
+        {
+            var sliderToggler = Client.Driver.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.SliderToggler));
+            sliderToggler.Click();
+        }
+
         public IApplyPage Submit()
         {
             _next.Click();
