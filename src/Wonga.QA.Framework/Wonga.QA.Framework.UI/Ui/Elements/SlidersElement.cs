@@ -19,6 +19,10 @@ namespace Wonga.QA.Framework.UI.Elements
         private readonly IWebElement _totalFees;
         private readonly IWebElement _totalToRepay;
         private readonly IWebElement _repaymentDate;
+        private readonly IWebElement _amountMinusButton;
+        private readonly IWebElement _amountPlusButton;
+        private readonly IWebElement _durationMinusButton;
+        private readonly IWebElement _durationPlusButton;
 
         public SlidersElement(BasePage page) : base(page)
         {
@@ -26,6 +30,10 @@ namespace Wonga.QA.Framework.UI.Elements
             _loanAmount = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.LoanAmount));
             _loanDuration = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.LoanDuration));
             _submit = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.SubmitButton));
+            _amountMinusButton = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.AmountMinusButton));
+            _amountPlusButton = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.AmountPlusButton));
+            _durationMinusButton = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.DurationMinusButton));
+            _durationPlusButton = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.DurationPlusButton));
             switch(Config.AUT)
             {
                 case(AUT.Ca):
@@ -63,6 +71,22 @@ namespace Wonga.QA.Framework.UI.Elements
         public String GetRepaymentDate
         {
             get { return _repaymentDate.Text; }
+        }
+        public void ClickAmountMinusButton()
+        {
+            _amountMinusButton.Click();
+        }
+        public void ClickAmountPlusButton()
+        {
+            _amountPlusButton.Click();
+        }
+        public void ClickDurationMinusButton()
+        {
+            _durationMinusButton.Click();
+        }
+        public void ClickDurationPlusButton()
+        {
+            _durationPlusButton.Click();
         }
 
 
