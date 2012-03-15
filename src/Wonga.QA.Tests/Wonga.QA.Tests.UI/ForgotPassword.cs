@@ -18,7 +18,7 @@ namespace Wonga.QA.Tests.Ui
 {
     class ForgotPassword : UiTest
     {
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-162")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-162"), Pending("Cactcha is steel on page")]
         public void ClicksOnForgotYourPasswordLinkAndEntersValidEmailAndCaptcha()
         {
 
