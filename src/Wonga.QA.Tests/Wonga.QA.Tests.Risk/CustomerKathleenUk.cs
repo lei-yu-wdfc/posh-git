@@ -11,14 +11,14 @@ namespace Wonga.QA.Tests.Risk
 			MiddleName = "A";
 			SurName = "Martin";
 			DateOfBirth = new Date(new DateTime(1987, 09, 18));
-			Flat = "10";
-			HouseNumber = "14";
-			HouseName = "";
+			Flat = "1";
+			HouseNumber = "6";
+			HouseName = "1";
 			Street = "Mather Avenue";
-			District = "Weston Point";
-			Town = "Runcorn";
-			County = "Cheshire";
-			Postcode = "WA7 4JJ";
+			District = "";
+			Town = "Shanklin";
+			County = "";
+			Postcode = "BB12 0NL";
 			CountryCode = "UK";
 		}
 	}

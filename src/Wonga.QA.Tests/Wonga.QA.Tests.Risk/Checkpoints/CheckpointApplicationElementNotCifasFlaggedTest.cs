@@ -11,13 +11,13 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		private const string TestMask = "test:ApplicationElementNotCIFASFlagged";
 
 		[Test, AUT(AUT.Uk), JIRA("UK-852")]
-		public void Accepted()
+		public void AcceptNoCifas()
 		{
 			RunSingleWorkflowTest(TestMask, new CustomerJanetUk(), CheckpointDefinitionEnum.CIFASFraudCheck, CheckpointStatus.Verified);
 		}
 
 		[Test, AUT(AUT.Uk), JIRA("UK-852")]
-		public void Declined()
+		public void DeclineCifasDetected()
 		{
 			var customerData = new CustomerJanetUk();
 			customerData.ForeName = string.Format("{0}CIFAS", customerData.ForeName);
