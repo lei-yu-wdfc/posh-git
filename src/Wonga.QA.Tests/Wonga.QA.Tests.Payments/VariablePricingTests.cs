@@ -7,6 +7,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
 using Wonga.QA.Tests.Payments.Helpers.Ca;
@@ -15,16 +16,23 @@ namespace Wonga.QA.Tests.Payments
 {
     // Todo: These tests assume that the variable interest rates start on day 11 and end on day 30
     // Todo: This assumption will cause the tests to break whenever the variable interest rate config in the DB changes
-    // Todo: Therefore these tests should be driven by the DB config and should not make any assumptions
-    [Ignore("Need to be updated to revert the variable pricing tables to their original state")]
+    // Todo: Therefore these tests should be driven by the DB config and should not make any assumptions    
     public class VariablePricingTests
     {
         private const ProvinceEnum Province = ProvinceEnum.ON;
 
+        private List<VariableInterestRateDetailEntity> _originalRates;
+
         [SetUp]
         public void Setup()
         {
+            _originalRates = GetPaymentFunctions.GetCurrentVariableInterestRates();
+        }
 
+        [TearDown]
+        public void TearDown()
+        {
+            GetPaymentFunctions.SetCurrentVariableInterestRates(_originalRates);
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1472")]
@@ -41,7 +49,7 @@ namespace Wonga.QA.Tests.Payments
         [Row(11), Row(10), Row(11), Row(15), Row(19), Row(30)]
         public void VerifyVariableInterestPostedOnLoanCreation(int loanTerm)
         {
-            SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
+            ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
 
             var customer = CustomerBuilder.New().ForProvince(Province).Build();
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
@@ -58,7 +66,7 @@ namespace Wonga.QA.Tests.Payments
         public void VerifyInterestAmountCharged(int loanTerm)
         {
             const decimal loanAmount = 100;
-            SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
+            ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
 
             var customer = CustomerBuilder.New().ForProvince(Province).Build();
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
@@ -78,7 +86,7 @@ namespace Wonga.QA.Tests.Payments
         {
             const decimal loanAmount = 100;
 
-            SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
+            ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
 
             var customer = CustomerBuilder.New().ForProvince(Province).Build();
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
@@ -101,15 +109,15 @@ namespace Wonga.QA.Tests.Payments
         [Test, AUT(AUT.Ca), JIRA("CA-1472")]
         public void VerifyFixedTermLoanOfferQueryRatesAfterRatesUpdated()
         {
-            const decimal numberOfPoints = (decimal)0.3;
-            SetPaymentFunctions.SetVariableInterestRates(numberOfPoints);
+            const decimal increment = (decimal)0.3;
+            SetPaymentFunctions.IncrementVariableInterestRatesMonthlyInterestRate(increment);
 
             var response = GetPaymentFunctions.GetFixedTermLoanOfferCaQuery();
             var actualVariableRates = GetPaymentFunctions.GetVariableRatesFromApiResponse(response);
             var expectedVariableRates = GetPaymentFunctions.GetCurrentVariableInterestRates();
 
             Assert.IsTrue(VerifyPaymentFunctions.VerifyFixedTermLoanOfferQueryRates(actualVariableRates, expectedVariableRates));
-            SetPaymentFunctions.SetVariableInterestRates(numberOfPoints * -1);
+            SetPaymentFunctions.IncrementVariableInterestRatesMonthlyInterestRate(increment * -1);
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1472")]
@@ -118,22 +126,22 @@ namespace Wonga.QA.Tests.Payments
         {
             const decimal loanAmount = 100;
 
-            SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
-            const decimal numberOfPoints = (decimal)0.3;
+            ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
+            const decimal increment = (decimal)0.3;
 
             var customer = CustomerBuilder.New().ForProvince(Province).Build();
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
 
             var expectedInterestAmountApplied = CalculateFunctionsCa.CalculateExpectedVariableInterestAmountAppliedCa(loanAmount,
                                                                                                        loanTerm);
-            SetPaymentFunctions.SetVariableInterestRates(numberOfPoints);
+            SetPaymentFunctions.IncrementVariableInterestRatesMonthlyInterestRate(increment);
 
             application.RepayOnDueDate();
 
             var actualInterestAmountApplied = GetPaymentFunctions.GetInterestAmountApplied(application.Id);
             Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestCharged(actualInterestAmountApplied, expectedInterestAmountApplied));
 
-            SetPaymentFunctions.SetVariableInterestRates(numberOfPoints * -1);
+            SetPaymentFunctions.IncrementVariableInterestRatesMonthlyInterestRate(increment * -1);
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1472")]
@@ -141,15 +149,15 @@ namespace Wonga.QA.Tests.Payments
         public void VerifyUpdatedVariableInterestRateAppliedToLn(int loanTerm)
         {
             const decimal loanAmount = 100;
-            SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
-            const decimal numberOfPoints = (decimal)0.3;
+            ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
+            const decimal increment = (decimal)0.3;
 
             var customer = CustomerBuilder.New().ForProvince(Province).Build();
             var l0Application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
 
             l0Application.RepayOnDueDate();
 
-            SetPaymentFunctions.SetVariableInterestRates(numberOfPoints);
+            SetPaymentFunctions.IncrementVariableInterestRatesMonthlyInterestRate(increment);
 
             var lNApplication = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
 
@@ -160,7 +168,7 @@ namespace Wonga.QA.Tests.Payments
 
             Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestCharged(actualInterestAmountApplied, expectedInterestAmountApplied));
 
-            SetPaymentFunctions.SetVariableInterestRates(numberOfPoints * -1);
+            SetPaymentFunctions.IncrementVariableInterestRatesMonthlyInterestRate(increment * -1);
         }
 
 

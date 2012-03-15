@@ -70,6 +70,25 @@ namespace Wonga.QA.Tests.Payments.Helpers
             return Driver.Db.Payments.VariableInterestRateDetails.Where(v => v.VariableInterestRateId == 1).ToList();
         }
 
+        public static void SetCurrentVariableInterestRates(List<VariableInterestRateDetailEntity> rates)
+        {
+            var db = Driver.Db.Payments;
+
+            var currentRates = db.VariableInterestRateDetails.Where(v => v.VariableInterestRateId == 1);
+
+            foreach (var currentRate in currentRates)
+            {
+                var rate = rates.Single(r => r.Day == currentRate.Day);
+
+                if (rate != null)
+                {
+                    currentRate.MonthlyInterestRate = rate.MonthlyInterestRate;
+                }
+            }
+
+            db.SubmitChanges();
+        }
+
         public static decimal GetCurrentArrearsInterestRate()
         {
             return Driver.Db.Payments.ProductInterestRates.Single(v => v.ProductInterestRateId == 2).MonthlyInterestRate;
@@ -113,7 +132,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
         private static bool GetIsBankGatewayTestMode()
         {
-            return Convert.ToBoolean(Driver.Db.Ops.ServiceConfigurations.Single(bg => bg.Key == SetPaymentFunctions.BankGateWayIsTestMode).Value);
+            return Convert.ToBoolean(Driver.Db.Ops.ServiceConfigurations.Single(bg => bg.Key == ConfigurationFunctions.BankGateWayIsTestMode).Value);
         }
 
         public static List<TransactionEntity> GetCurrentVariableInterestRates(int loanTerm)

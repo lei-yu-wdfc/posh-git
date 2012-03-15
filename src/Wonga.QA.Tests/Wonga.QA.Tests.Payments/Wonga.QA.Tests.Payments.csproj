@@ -35,6 +35,8 @@
     <Compile Include="AddBusinessBankAccountTests.cs" />
     <Compile Include="CollectionsTests.cs" />
     <Compile Include="CsapiCreateTransactionTest.cs" />
+    <Compile Include="EarlyRepaymentTests.cs" />
+    <Compile Include="Helpers\VerifyPaymentFunctions.cs" />
     <Compile Include="Queries\GetBusinessApplicationSummaryCsapiQuery.cs" />
     <Compile Include="Queries\GetTransactionsCsapiQuery.cs" />
     <Compile Include="Queries\GetValidTransactionTypesQueryTest.cs" />
@@ -70,7 +72,6 @@
     <Compile Include="ServiceFeesTests.cs" />
     <Compile Include="UpdateLoanTermTests.cs" />
     <Compile Include="VariablePricingTests.cs" />
-    <Compile Include="Helpers\VerifyPaymentFunctions.cs" />
     <Compile Include="Helpers\WaitPaymentFunctions.cs" />
     <Compile Include="RepayLoanTests.cs" />
   </ItemGroup>
