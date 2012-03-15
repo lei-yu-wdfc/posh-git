@@ -50,7 +50,15 @@ namespace Wonga.QA.Tests.Payments
 			var application = ApplicationBuilder.New(customer)
 				.WithLoanAmount(loanAmount)
 				.WithPromiseDate(promiseDate)
-				.Build().PutApplicationIntoArrears(4);
+				.Build();
+
+			var paymentsDb = new DbDriver().Payments;
+			paymentsDb.Arrears.InsertOnSubmit(new ArrearEntity()
+			{
+				ApplicationId = paymentsDb.Applications.Single(a => a.ExternalId == application.Id).ApplicationId,
+				CreatedOn = DateTime.Today
+			});
+			paymentsDb.SubmitChanges();
 
 			AttemptNaedoCollection(application, 0);
 			FailNaedoCollection(application, 0);
