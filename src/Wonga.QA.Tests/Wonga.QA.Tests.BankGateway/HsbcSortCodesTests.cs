@@ -45,21 +45,21 @@ namespace Wonga.QA.Tests.BankGateway
             _code.Delete().Submit();
 
             Driver.Svc.Hsbc.Restart();
-            Do.With().Interval(3).Until(() => Driver.Db.BankGateway.SortCodes.Max(c => c.CreationDate) > Data.GetDateTimeMin());
+            Do.With().Timeout(3).Interval(10).Until(() => Driver.Db.BankGateway.SortCodes.Max(c => c.CreationDate) > Data.GetDateTimeMin());
 
             Table<SortCodeEntity> codes = Driver.Db.BankGateway.SortCodes;
             Assert.GreaterThanOrEqualTo(codes.Count(), _rows);
             Assert.Contains(codes.Select(c => c.SortCode), _code.SortCode);
         }
 
-        [Test, JIRA("UK-494"), TestsOn(typeof(UpdateSortCodeTableCommand))]
+        [Test, JIRA("UK-494"), TestsOn(typeof(UpdateSortCodeTableUkCommand))]
         public void SortCodesTableIsUpdatedOnMessage()
         {
             _code.PaymentTypeId = _type.PaymentTypeId;
             _code.Submit();
 
-            Driver.Msmq.Hsbc.Send(new UpdateSortCodeTableCommand());
-            Do.With().Timeout(3).Until(() => Driver.Db.BankGateway.SortCodes.Max(c => c.CreationDate) > Data.GetDateTimeMin());
+            Driver.Msmq.Hsbc.Send(new UpdateSortCodeTableUkCommand());
+            Do.With().Timeout(3).Interval(10).Until(() => Driver.Db.BankGateway.SortCodes.Max(c => c.CreationDate) > Data.GetDateTimeMin());
 
             Assert.GreaterThan(_code.Refresh().CreationDate, Data.GetDateTimeMin());
             Assert.AreNotEqual(_code.PaymentTypeId, _type.PaymentTypeId);
