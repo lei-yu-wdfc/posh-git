@@ -16,26 +16,32 @@ using SignApplicationCommand = Wonga.QA.Framework.Msmq.SignApplicationCommand;
 
 namespace Wonga.QA.Tests.Payments.Queries
 {
-    [TestFixture, Parallelizable(TestScope.All)]
+    /// <summary>
+    /// Not paralellizable because it is altering 
+    /// </summary>
+    [TestFixture, Parallelizable (TestScope.All)]
     public class GetAccountOptionsTests
     {
         private string _resetExtendLoanDays = null;
-        [SetUp]
+        private string _resetExtendLoanDaysBeforeDueDate = null;
+        [FixtureSetUp]
         public void Setup()
         {
-            // Record value
-            var cfg = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays");
-            _resetExtendLoanDays = cfg.Value;
+            // Record value(s)
+            _resetExtendLoanDays = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays").Value;
+            _resetExtendLoanDaysBeforeDueDate = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanDaysBeforeDueDate").Value;
         }
 
-        [TearDown]
+        [FixtureTearDown]
         public void TearDown()
         {
-            // Reset value
-            var cfg = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays");
-            //  if (cfg.Value != _resetExtendLoanDays)
-            cfg.Value = _resetExtendLoanDays;
-            cfg.Submit();
+            // Reset value(s)
+            var cfg1 = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays");
+            cfg1.Value = _resetExtendLoanDays;
+            cfg1.Submit();
+            var cfg2 = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanDaysBeforeDueDate");
+            cfg2.Value = _resetExtendLoanDaysBeforeDueDate;
+            cfg2.Submit();
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-823")]
@@ -46,17 +52,6 @@ namespace Wonga.QA.Tests.Payments.Queries
             var paymentCardId = Guid.NewGuid();
             var appId = Guid.NewGuid();
 
-
-       /*     Driver.Msmq.Payments.Send(new AddBankAccountUkCommand() { BankCode = "161017",
-                                                                      AccountId = accountId,
-                                                                      AccountNumber = "10062650",
-                                                                      AccountOpenDate = DateTime.Now.AddYears(-3),
-                                                                      BankAccountId = bankAccountId,
-                                                                      BankName = "RBS",
-                                                                      ClientId = Guid.NewGuid(),
-                                                                      CountryCode = "GBP"
-                                                                     });
-            */
             // Create Application 
             Driver.Msmq.Payments.Send(new CreateFixedTermLoanApplicationCommand()
             {
@@ -84,26 +79,10 @@ namespace Wonga.QA.Tests.Payments.Queries
             app.ClosedOn = DateTime.UtcNow;
             app.Submit(true);
             
-            /*
-           
-            Driver.Msmq.Payments.Send(new CreateTransactionCommand()
-                                                                    {
-                                                                        ApplicationId = appId,
-                                                                        ExternalId = Guid.NewGuid(),
-                                                                        Amount = -115.50M,
-                                                                        Type = PaymentTransactionEnum.CardPayment,
-                                                                        Currency = CurrencyCodeIso4217Enum.GBP,
-                                                                        Mir = 30.0M,
-                                                                        PostedOn = DateTime.Now,
-                                                                        Scope = PaymentTransactionScopeEnum.Credit,
-                                                                        Reference = "Test Card Payment Fee"
-                                                                    });
-
-            */
             var response = Driver.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = 400.00M });
             Assert.GreaterThan(int.Parse(response.Values["ScenarioId"].Single()), 1);
             // ToDo: Assert Options
-            //Assert.GreaterThan(int.Parse(response.Values["DaysTillRepaymentDate"].Single()), 0);
+
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-823"),]
@@ -113,16 +92,21 @@ namespace Wonga.QA.Tests.Payments.Queries
             var bankAccountId = Guid.NewGuid();
             var paymentCardId = Guid.NewGuid();
             var appId = Guid.NewGuid();
-            const string extendMinLoanDays = "11";
-            
+            const string extendMinLoanDays = "-1";
+            const string extendLoanDaysBeforeDueDate = "30";
 
             // Create Account so that time zone can be looked up
             Driver.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
 
             // Override setting in ServiceConfig Db for ExtendDaysMins
-            var app = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays");
-            app.Value = extendMinLoanDays;
-            app.Submit();
+            var cfg1 = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays");
+            cfg1.Value = extendMinLoanDays;
+            cfg1.Submit();
+
+            // Override setting in ServiceConfig Db for ExtendLoanDaysBeforeDueDate
+            var cfg2 = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanDaysBeforeDueDate");
+            cfg2.Value = extendLoanDaysBeforeDueDate;
+            cfg2.Submit();
 
             // Create Application 
             Driver.Msmq.Payments.Send(new CreateFixedTermLoanApplicationCommand()
