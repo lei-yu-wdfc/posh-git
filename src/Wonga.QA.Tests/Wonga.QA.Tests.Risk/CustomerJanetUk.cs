@@ -10,8 +10,8 @@ namespace Wonga.QA.Tests.Risk
 		public CustomerJanetUk()
 		{
 			ForeName = "Janet";
-			MiddleName = "Bernadette";
-			SurName = "";
+			MiddleName = "";
+			SurName = "Bernadette";
 			DateOfBirth = new Date(new DateTime(1963, 07, 26));
 			Flat = "1";
 			HouseNumber = "14";
