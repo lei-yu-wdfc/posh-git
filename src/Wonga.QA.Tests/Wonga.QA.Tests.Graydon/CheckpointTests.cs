@@ -85,7 +85,7 @@ namespace Wonga.QA.Tests.Graydon
 
         #region Business Bureau Data Is Available
 
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb), JIRA("SME-156")]
         [Description("Graydon -> This test creates a loan and checks if the company has graydon data available")]
         public void TestGraydonBusinessBureauDataIsAvailable_LoanIsApproved()
         {
@@ -98,7 +98,7 @@ namespace Wonga.QA.Tests.Graydon
             Assert.Contains(Application.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId), Data.EnumToString(VerificationDefinitionsEnum.BusinessDataAvailableInGraydonVerification));
         }
 
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb), JIRA("SME-156")]
         [Description("Graydon -> This test creates a loan and checks if the company has graydon data for the negative case - Organisation is unknown to Graydon")]
         public void TestGraydonBusinessBureauDataIsUnavailable_LoanIsDeclined()
         {
@@ -110,12 +110,12 @@ namespace Wonga.QA.Tests.Graydon
             Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Failed), Data.EnumToString(CheckpointDefinitionEnum.BusinessBureauDataIsAvailable));
             Assert.Contains(Application.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId), Data.EnumToString(VerificationDefinitionsEnum.BusinessDataAvailableInGraydonVerification));
         }
-
+        
         #endregion
 
         #region Business is Trading 
 
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb), JIRA("SME-160")]
         [Description("Graydon -> This test creates a loan and checks if the company is trading")]
         public void TestGraydonBusinessIsTrading_LoanIsApproved()
         {
@@ -128,7 +128,7 @@ namespace Wonga.QA.Tests.Graydon
             Assert.Contains(Application.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId), Data.EnumToString(VerificationDefinitionsEnum.GraydonBusinessIsTradingVerification));
         }
 
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb), JIRA("SME-160")]
         [Description("Graydon -> This test creates a loan and checks if the company is trading for the negative case")]
         public void TestGraydonBusinessIsNotTrading_LoanIsDeclined()
         {
@@ -145,7 +145,7 @@ namespace Wonga.QA.Tests.Graydon
 
         #region Business Payment Score is Acceptable
 
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb), JIRA("SME-162")]
         [Description("Graydon -> This test creates a loan and checks if the companys payment score is acceptable")]
         public void TestGraydonBusinessPaymentScoreIsAcceptable_LoanIsApproved()
         {
@@ -159,7 +159,7 @@ namespace Wonga.QA.Tests.Graydon
             Assert.Contains(Application.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId), Data.EnumToString(VerificationDefinitionsEnum.GraydonPaymentScoreVerification));
         }
 
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb), JIRA("SME-162")]
         [Description("Graydon -> This test creates a loan and checks if the companys payment score is acceptable for the negative case - Payment score is low")]
         public void TestGraydonBusinessPaymentScoreIsLow_LoanIsDeclined()
         {
@@ -173,7 +173,7 @@ namespace Wonga.QA.Tests.Graydon
             Assert.Contains(Application.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId), Data.EnumToString(VerificationDefinitionsEnum.GraydonPaymentScoreVerification));
         }
 
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb), JIRA("SME-162")]
         [Description("Graydon -> This test creates a loan and checks if the companys with no payment score")]
         public void TestGraydonBusinessNoPaymentScore_LoanIsApproved()
         {
@@ -191,7 +191,7 @@ namespace Wonga.QA.Tests.Graydon
 
         #region Business Performance Score Is Acceptable
 
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb), JIRA("SME-159")]
         [Description("Graydon -> This test creates a loan and checks if the companys performance score is acceptable")]
         public void TestGraydonBusinessPerformanceScoreIsAcceptable_LoanIsApproved()
         {
@@ -205,7 +205,7 @@ namespace Wonga.QA.Tests.Graydon
             Assert.Contains(Application.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId), Data.EnumToString(VerificationDefinitionsEnum.GraydonAugurScoreVerification));
         }
 
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb), JIRA("SME-159")]
         [Description("Graydon -> This test creates a loan and checks if the companys performance score is acceptable for the negatice case - Performance score is too low")]
         public void TestGraydonBusinessPerformanceScoreIsTooLow_LoanIsDeclined()
         {
@@ -405,7 +405,7 @@ namespace Wonga.QA.Tests.Graydon
         }
 
         #endregion
-
+       
         private static Application CreateApplicationWithAsserts(RiskMiddlenameMask middlenameMask, String forename, String surname, Date dateOfBirth, String companyRegisteredNumber, ApplicationDecisionStatusEnum applicationDecision, int numberOfSecondaryDirectors = 0)
         {
             var customer = CustomerBuilder.New().WithMiddleName(middlenameMask.ToString()).WithForename(forename).WithSurname(surname).WithDateOfBirth(dateOfBirth).Build();
