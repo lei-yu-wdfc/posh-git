@@ -35,7 +35,6 @@
     <Compile Include="AddBusinessBankAccountTests.cs" />
     <Compile Include="CollectionsTests.cs" />
     <Compile Include="CsapiCreateTransactionTest.cs" />
-    <Compile Include="FeeTests.cs" />
     <Compile Include="Queries\GetBusinessApplicationSummaryCsapiQuery.cs" />
     <Compile Include="Queries\GetTransactionsCsapiQuery.cs" />
     <Compile Include="Queries\GetValidTransactionTypesQueryTest.cs" />

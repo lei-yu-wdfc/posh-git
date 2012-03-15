@@ -16,9 +16,9 @@ namespace Wonga.QA.Tests.Payments
     public class FixedTermLoanOfferTests
     {
 		private const string DateOverrideKey = "Payments.FixedTermLoanOfferHandler.DateTime.UtcNow";
-		private static readonly int[] _payDayPerMonth = Driver.Db.GetServiceConfiguration("Payments.PayDayPerMonth").Value.Split(',').Select(Int32.Parse).ToArray();
-		private static readonly int[] _payDayPlusToMaxTerm = Driver.Db.GetServiceConfiguration("Payments.PayDayPlusToMaxTerm").Value.Split(',').Select(Int32.Parse).ToArray();
-		private static readonly int _sliderTermAddDays = Int32.Parse(Driver.Db.GetServiceConfiguration("Payments.SliderTermAddDays").Value);
+		private static readonly int[] PayDayPerMonth = Driver.Db.GetServiceConfiguration("Payments.PayDayPerMonth").Value.Split(',').Select(Int32.Parse).ToArray();
+		private static readonly int[] PayDayPlusToMaxTerm = Driver.Db.GetServiceConfiguration("Payments.PayDayPlusToMaxTerm").Value.Split(',').Select(Int32.Parse).ToArray();
+		private static readonly int SliderTermAddDays = Int32.Parse(Driver.Db.GetServiceConfiguration("Payments.SliderTermAddDays").Value);
     	private const int MaxDefaultTerm = 30;
 
 		[FixtureTearDown]
@@ -46,5 +46,26 @@ namespace Wonga.QA.Tests.Payments
             Assert.AreEqual(defaultTerm, int.Parse(response.Values["TermDefault"].Single()));
             Assert.AreEqual(maxTerm, int.Parse(response.Values["TermMax"].Single()));
         }
+
+		[Test, AUT(AUT.Za), Explicit("Release")]
+		public void MaxLoanTermIsLastDayOfMonth()
+		{
+			for(int i = 0; i < 12; i++)
+			{
+				var payDayOfMonth = PayDayPerMonth[i];
+				var payDayPlusToMaxTerm = PayDayPlusToMaxTerm[i];
+
+				var now = new DateTime(DateTime.UtcNow.Year, i + 1, 1);
+				Driver.Db.SetServiceConfiguration(DateOverrideKey, now.ToString("yyyy-MM-dd HH:mm:ss"));
+
+				var response = Driver.Api.Queries.Post(new GetFixedTermLoanOfferZaQuery());
+
+				var expectedMax = payDayOfMonth + payDayPlusToMaxTerm;
+				Assert.AreEqual(expectedMax, DateTime.DaysInMonth(now.Year, now.Month));
+
+				var actualMax = int.Parse(response.Values["TermMax"].Single());
+				Assert.AreEqual(expectedMax, actualMax);
+			}
+		}
 	}
 }
