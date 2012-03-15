@@ -45,7 +45,7 @@ namespace Wonga.QA.Tests.Payments.Queries
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-823")]
-        public void Scenario1ExistingCustomerWithoutLiveLoan()
+        public void Scenario01ExistingCustomerWithoutLiveLoan()
         {
             var accountId = Guid.NewGuid();
             var bankAccountId = Guid.NewGuid();
