@@ -33,11 +33,13 @@
   <ItemGroup>
     <Compile Include="Checkpoints\BaseCheckpointTest.cs" />
     <Compile Include="Checkpoints\CheckpointApplicantIsNotDeceasedTest.cs" />
+    <Compile Include="Checkpoints\CheckpointApplicantIsSolventTest.cs" />
     <Compile Include="Checkpoints\CheckpointApplicationElementNotCifasFlaggedTest.cs" />
     <Compile Include="Checkpoints\CheckpointTooManyLoansAtAddressTest.cs" />
     <Compile Include="CustomerJanetUk.cs" />
     <Compile Include="CustomerData.cs" />
     <Compile Include="CustomerKathleenUk.cs" />
+    <Compile Include="CustomerLauraUk.cs" />
     <Compile Include="EidTests.cs" />
     <Compile Include="Checkpoints\CheckpointApplicationElementNotOnBlacklistTests.cs" />
     <Compile Include="Checkpoints\CheckpointApplicationElementNotOnCSBlacklistTests.cs" />
