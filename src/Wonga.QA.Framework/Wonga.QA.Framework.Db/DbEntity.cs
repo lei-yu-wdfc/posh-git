@@ -39,9 +39,22 @@ namespace Wonga.QA.Framework.Db
             return (T)this;
         }
 
-        public T Submit()
+        public T Submit(Boolean force = false)
         {
-            Database.SubmitChanges();
+            try
+            {
+                Database.SubmitChanges();
+            }
+            catch (ChangeConflictException)
+            {
+                if (force)
+                {
+                    Database.ChangeConflicts.ResolveAll(RefreshMode.KeepCurrentValues);
+                    Database.SubmitChanges();
+                }
+                else
+                    throw;
+            }
             return (T)this;
         }
 
