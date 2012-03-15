@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Checkpoints\BaseCheckpointTest.cs" />
+    <Compile Include="Checkpoints\CheckpointApplicantIsNotDeceasedTest.cs" />
     <Compile Include="Checkpoints\CheckpointApplicationElementNotCifasFlaggedTest.cs" />
     <Compile Include="Checkpoints\CheckpointTooManyLoansAtAddressTest.cs" />
     <Compile Include="CustomerJanetUk.cs" />
