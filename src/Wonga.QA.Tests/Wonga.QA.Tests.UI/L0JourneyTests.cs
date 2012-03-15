@@ -59,5 +59,13 @@ namespace Wonga.QA.Tests.Ui
             Assert.Throws<AssertionFailureException>(() => { var processingPage = bankDetailsPage.Next(); });
             
         }
+
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-177")]
+        public void ChangeLoanAmountAndDurationOnPersonalDetailsViaPlusMinusOptions()
+        {
+            var journey = new Journey(Client.Home());
+            var personalDetailsPage = journey.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
+            Assert.IsNotNull(personalDetailsPage);
+        }
     }
 }
