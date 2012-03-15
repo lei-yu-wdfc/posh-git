@@ -67,6 +67,13 @@ namespace Wonga.QA.Framework
             db.Comms.SubmitChanges();
         }
 
+        public void UpdateEmployer(String employer)
+        {
+            var row = Driver.Db.Risk.EmploymentDetails.Single(cd => cd.AccountId == Id);
+            row.EmployerName = employer;
+            row.Submit();
+        }
+
         public string GetCcin()
         {
             return Do.Until(() => Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == Id)).Ccin;
