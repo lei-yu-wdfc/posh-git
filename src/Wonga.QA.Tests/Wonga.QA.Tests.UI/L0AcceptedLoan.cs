@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using MbUnit.Framework;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Framework.UI.UiElements.Pages.Wb;
 using Wonga.QA.Tests.Core;
@@ -16,7 +17,13 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Za)]
         public void ZaAcceptedLoan()
         {
-            var processingPage = ZaL0Path("test:EmployedMask");
+            var journey = new Journey(Client.Home());
+            var processingPage = journey.ApplyForLoan(200, 10)
+                                 .FillPersonalDetails("test:EmployedMask")
+                                 .FillAddressDetails()
+                                 .FillAccountDetails()
+                                 .FillBankDetails()
+                                 .CurrentPage as ProcessingPage;
 
             var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
             acceptedPage.SignAgreementConfirm();
@@ -28,7 +35,14 @@ namespace Wonga.QA.Tests.Ui
        [Test, AUT(AUT.Ca), Pending("CA WIP,RC FE seems broken - postponing the push of the selenium tests")]
         public void CaAcceptedLoan()
         {
-            var processingPage = CaL0Path("test:EmployedMask");
+            var journey = new Journey(Client.Home());
+            var processingPage = journey.ApplyForLoan(200, 10)
+                                 .FillPersonalDetails("test:EmployedMask")
+                                 .FillAddressDetails()
+                                 .FillAccountDetails()
+                                 .FillBankDetails()
+                                 .CurrentPage as ProcessingPage;
+
             var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
             acceptedPage.SignConfirmCA(DateTime.Now.ToString("d MMM yyyy"), _firstName, _lastName);
             var dealDone = acceptedPage.Submit();

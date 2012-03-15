@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using MbUnit.Framework;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Framework.UI.UiElements.Pages.Wb;
@@ -25,14 +26,27 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Za)]
         public void ZaDeclinedLoan()
         {
-            var processingPage = ZaL0Path();
+            var journey = new Journey(Client.Home());
+            var processingPage = journey.ApplyForLoan(200, 10)
+                                 .FillPersonalDetails()
+                                 .FillAddressDetails()
+                                 .FillAccountDetails()
+                                 .FillBankDetails()
+                                 .CurrentPage as ProcessingPage;
+
             var declinedPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
         }
 
         [Test, AUT(AUT.Ca), Pending("CA WIP,RC FE seems broken - postponing the push of the selenium tests")]
         public void CaDeclinedLoan()
         {
-            var processingPage = CaL0Path();
+            var journey = new Journey(Client.Home());
+            var processingPage = journey.ApplyForLoan(200, 10)
+                                 .FillPersonalDetails()
+                                 .FillAddressDetails()
+                                 .FillAccountDetails()
+                                 .FillBankDetails()
+                                 .CurrentPage as ProcessingPage;
             var declinedPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
         }
     }
