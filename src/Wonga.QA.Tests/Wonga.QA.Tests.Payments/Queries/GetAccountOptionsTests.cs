@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq;
 using System.Threading;
 using MbUnit.Framework;
@@ -54,17 +53,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             var appId = Guid.NewGuid();
 
             // Create Application 
-            Driver.Msmq.Payments.Send(new CreateFixedTermLoanApplicationCommand()
-            {
-                ApplicationId = appId,
-                AccountId = accountId,
-                PromiseDate = DateTime.UtcNow.AddDays(10),
-                BankAccountId = bankAccountId,
-                PaymentCardId = paymentCardId,
-                LoanAmount = 100.0M,
-                Currency = CurrencyCodeIso4217Enum.GBP,
-                CreatedOn = DateTime.UtcNow
-            });
+            CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
 
             // Check App Exists in DB
             Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId));
@@ -111,17 +100,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             cfg2.Submit();
 
             // Create Application 
-            Driver.Msmq.Payments.Send(new CreateFixedTermLoanApplicationCommand()
-            {
-                ApplicationId = appId,
-                AccountId = accountId,
-                PromiseDate = DateTime.UtcNow.AddDays(10),
-                BankAccountId = bankAccountId,
-                PaymentCardId = paymentCardId,
-                LoanAmount = 100.0M,
-                Currency = CurrencyCodeIso4217Enum.GBP,
-                CreatedOn = DateTime.UtcNow
-            });
+            CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
 
             Driver.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Driver.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
@@ -163,17 +142,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             cfg2.Submit();
 
             // Create Application 
-            Driver.Msmq.Payments.Send(new CreateFixedTermLoanApplicationCommand()
-            {
-                ApplicationId = appId,
-                AccountId = accountId,
-                PromiseDate = DateTime.UtcNow.AddDays(10),
-                BankAccountId = bankAccountId,
-                PaymentCardId = paymentCardId,
-                LoanAmount = 100.0M,
-                Currency = CurrencyCodeIso4217Enum.GBP,
-                CreatedOn = DateTime.UtcNow
-            });
+            CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
 
             Driver.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Driver.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
@@ -216,17 +185,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             cfg2.Submit();
 
             // Create Application 
-            Driver.Msmq.Payments.Send(new CreateFixedTermLoanApplicationCommand()
-            {
-                ApplicationId = appId,
-                AccountId = accountId,
-                PromiseDate = DateTime.UtcNow.AddDays(10),
-                BankAccountId = bankAccountId,
-                PaymentCardId = paymentCardId,
-                LoanAmount = 100.0M,
-                Currency = CurrencyCodeIso4217Enum.GBP,
-                CreatedOn = DateTime.UtcNow
-            });
+            CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
 
             Driver.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Driver.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
@@ -248,7 +207,22 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual(4, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
         #region "Helpers"
-        
+
+            private void CreateFixedTermLoanApplication(Guid appId, Guid accountId, Guid bankAccountId, Guid paymentCardId)
+            {
+                Driver.Msmq.Payments.Send(new CreateFixedTermLoanApplicationCommand()
+                {
+                    ApplicationId = appId,
+                    AccountId = accountId,
+                    PromiseDate = DateTime.UtcNow.AddDays(10),
+                    BankAccountId = bankAccountId,
+                    PaymentCardId = paymentCardId,
+                    LoanAmount = 100.0M,
+                    Currency = CurrencyCodeIso4217Enum.GBP,
+                    CreatedOn = DateTime.UtcNow
+                });
+            }
+
             private Guid CreateLoanAdvanceTransaction(Guid appId)
             {
                 var trnGuid1 = Guid.NewGuid();
