@@ -44,6 +44,12 @@ namespace Wonga.QA.Framework.UI
             return new LoginPage(this);
         }
 
+        public MyPaymentsPage Payments()
+        {
+            Driver.Navigate().GoToUrl(Config.Ui.Home + "/my-account/details");
+            return new MyPaymentsPage(this);
+        }
+
         public Image Screen()
         {
             var screenshot = ((ITakesScreenshot)Driver).GetScreenshot();

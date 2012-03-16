@@ -11,6 +11,13 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
     public class MyPaymentsPage : BasePage
     {
+        private IWebElement _addBankAccountButton;
+        private IWebElement _popupBankName;
+        private IWebElement _popupBankAccountType;
+        private IWebElement _popupAccountNumber;
+        private IWebElement _popupLengthOfTime;
+        private IWebElement _popupAddBankAccountButton;
+
         public MyPaymentsPage(UiClient client)
             : base(client)
         {
@@ -23,7 +30,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                 {
                     case AUT.Za:
                     case AUT.Ca:  //TODO find out what xpath for button on Ca
-                        var addBankAccountButton =
+                        _addBankAccountButton =
                             Client.Driver.FindElement(By.XPath(Ui.Get.MyPaymentsPage.AddBankAccountButton));
                         break;
                 }
@@ -33,6 +40,26 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                 return false;
             }
             return true;
+        }
+
+        public void AddBankAccountButtonClick()
+        {
+            _addBankAccountButton.Click();
+        }
+
+        public void AddBankAccount(string bankName, string bankType, string accountNumber, string lenghtOfTime)
+        {
+            _popupBankName = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPaymentsPage.PopupBankName));
+            _popupBankAccountType = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPaymentsPage.PopupBankAccountType));
+            _popupAccountNumber = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPaymentsPage.PopupAccountNumber));
+            _popupLengthOfTime = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPaymentsPage.PopupLengthOfTime));
+            _popupAddBankAccountButton = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPaymentsPage.AddBankAccountButton));
+
+            _popupBankName.SelectOption(bankName);
+            _popupBankAccountType.SelectOption(bankType);
+            _popupAccountNumber.SendKeys(accountNumber);
+            _popupLengthOfTime.SelectOption(lenghtOfTime);
+            _addBankAccountButton.Click();
         }
     }
 }

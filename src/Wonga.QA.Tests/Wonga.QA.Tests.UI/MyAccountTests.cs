@@ -1,4 +1,5 @@
 ﻿using Gallio.Framework.Assertions;
+using System.Threading;
 using MbUnit.Framework;
 using OpenQA.Selenium;
 using Wonga.QA.Framework;
