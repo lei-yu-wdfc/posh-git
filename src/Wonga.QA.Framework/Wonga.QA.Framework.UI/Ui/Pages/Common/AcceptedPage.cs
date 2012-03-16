@@ -10,6 +10,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
     public class AcceptedPage : BasePage, IDecisionPage
     {
         private readonly IWebElement _form;
+        private readonly IWebElement _totalToRepay;
+        private readonly IWebElement _repaymentDate;
         private readonly IWebElement _acceptBusinessLoanLink;
         private readonly IWebElement _acceptGuarantorLoanLink;
         private readonly IWebElement _agreementConfirm;
@@ -38,10 +40,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     _acceptGuarantorLoanLink = _form.FindElement(By.CssSelector(Ui.Get.AcceptedPage.AcceptGuarantorLoan));
                     break;
                 case(AUT.Za):
+                     _totalToRepay = Content.FindElement(By.CssSelector(Ui.Get.AcceptedPage.TotalToRepay));
+                    _repaymentDate = Content.FindElement(By.CssSelector(Ui.Get.AcceptedPage.RepaymentDate));
                     _agreementConfirm = _form.FindElement(By.CssSelector(Ui.Get.AcceptedPage.AgreementConfirm));
                     _directDebitConfirm = _form.FindElement(By.CssSelector(Ui.Get.AcceptedPage.DirectDebitConfirm));
                     break;
                 case (AUT.Ca):
+                    _totalToRepay = Content.FindElement(By.CssSelector(Ui.Get.AcceptedPage.TotalToRepay));
+                    _repaymentDate = Content.FindElement(By.CssSelector(Ui.Get.AcceptedPage.RepaymentDate));
                     _agreementConfirm = _form.FindElement(By.CssSelector(Ui.Get.AcceptedPage.AgreementConfirm));
                     _directDebitConfirm = _form.FindElement(By.CssSelector(Ui.Get.AcceptedPage.DirectDebitConfirm));
                     _initials = _form.FindElement(By.CssSelector(Ui.Get.AcceptedPage.Initials1));
@@ -55,7 +61,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             }
         }
 
-
+        public String GetTotalToRepay
+        {
+            get { return _totalToRepay.Text; }
+        }
+        public String GetRepaymentDate
+        {
+            get { return _repaymentDate.Text; }
+        }
         public void SignAgreementConfirm()
         {
             _agreementConfirm.Click();
@@ -91,6 +104,13 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _continueDirectDebitButton.Click();
             _directDebitConfirm.Click();
         }
+
+        public void SignConfirmZA()
+        {
+            _agreementConfirm.Click();
+            _directDebitConfirm.Click();
+        }
+
 
         public IApplyPage Submit()
         {

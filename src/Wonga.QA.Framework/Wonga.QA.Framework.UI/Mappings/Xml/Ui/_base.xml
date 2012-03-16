@@ -50,6 +50,8 @@
 
   <AcceptedPage>
     <FormId>#wonga-loan-approve-form</FormId>
+    <TotalToRepay>div#content-area span.blue-text</TotalToRepay>
+    <RepaymentDate>div#content-area em</RepaymentDate>
     <AcceptBusinessLoan>#terms-accept .button</AcceptBusinessLoan>
     <AcceptGuarantorLoan>#guarantor-accept .button</AcceptGuarantorLoan>
     <AgreementConfirm>#edit-agreement-confirm</AgreementConfirm>
@@ -124,10 +126,17 @@
 
   <PersonalDetailsPage>
     <FormId>#wonga-apply-lzero-form</FormId>
+    <SlidersFormId>#wonga-alterable-loan-details-fieldset</SlidersFormId>
     <CheckPrivacyPolicy>#edit-privacy</CheckPrivacyPolicy>
     <CheckCanContact>input[type="radio"][name="update_option"]</CheckCanContact>
     <NextButton>#edit-submit</NextButton>
     <SliderToggler>#slider-toggler</SliderToggler>
+    <TotalToRepay>span.loan-total</TotalToRepay>
+    <RepaymentDate>span.repayment-date</RepaymentDate>
+    <AmountMinusButton>#wonga-amount-slider-wrapper button.slider-minus</AmountMinusButton>
+    <AmountPlusButton>#wonga-amount-slider-wrapper button.slider-plus</AmountPlusButton>
+    <DurationMinusButton>#wonga-duration-slider-wrapper button.slider-minus</DurationMinusButton>
+    <DurationPlusButton>#wonga-duration-slider-wrapper button.slider-plus</DurationPlusButton>
   </PersonalDetailsPage>
 
   <YourNameSection>
