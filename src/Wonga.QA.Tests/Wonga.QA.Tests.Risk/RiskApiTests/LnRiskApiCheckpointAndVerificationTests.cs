@@ -163,7 +163,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 
             L0app.RepayOnDueDate();
 
-            L0app.Rewind(suspiciousDaysSinceLastLoan);
+            L0app.RewindToDayOfLoanTerm(suspiciousDaysSinceLastLoan);
 
             cust.UpdateEmployer(Data.EnumToString(RiskMask.TESTNoSuspiciousApplicationActivity));
 
@@ -193,7 +193,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 
             L0app.RepayOnDueDate();
 
-            L0app.Rewind(suspiciousDaysSinceLastLoan);
+            L0app.RewindToDayOfLoanTerm(suspiciousDaysSinceLastLoan);
 
             cust.UpdateEmployer(Data.EnumToString(RiskMask.TESTNoSuspiciousApplicationActivity));
 
@@ -221,7 +221,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 
             L0app.RepayOnDueDate();
 
-            L0app.Rewind(suspiciousDaysSinceLastLoan);
+            L0app.RewindToDayOfLoanTerm(suspiciousDaysSinceLastLoan);
 
             cust.UpdateEmployer(Data.EnumToString(RiskMask.TESTNoSuspiciousApplicationActivity));
 
@@ -248,7 +248,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 
             L0app.RepayOnDueDate();
 
-            L0app.Rewind(suspiciousDaysSinceLastLoan);
+            L0app.RewindToDayOfLoanTerm(suspiciousDaysSinceLastLoan);
 
             cust.UpdateEmployer(Data.EnumToString(RiskMask.TESTNoSuspiciousApplicationActivity));
 

@@ -120,10 +120,11 @@ namespace Wonga.QA.Framework
             ApplicationEntity application = Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id);
             DateTime dueDate = application.FixedTermLoanApplicationEntity.NextDueDate ??
                               application.FixedTermLoanApplicationEntity.PromiseDate;
+            RiskApplicationEntity riskApplication = Driver.Db.Risk.RiskApplications.Single(r => r.ApplicationId == Id);
 
             TimeSpan span = dueDate - DateTime.Today;
 
-            RewindApplicationDates(application, span);
+            RewindApplicationDates(application, riskApplication, span);
 
             ScheduledPostAccruedInterestSagaEntity entity = Driver.Db.OpsSagas.ScheduledPostAccruedInterestSagaEntities.Single(a => a.ApplicationGuid == Id);
             Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = entity.Id });
