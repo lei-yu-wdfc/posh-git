@@ -53,7 +53,7 @@ namespace Wonga.QA.Framework.Core
 
         public static String GetEmployerName()
         {
-            return EnumToString(RiskMask.EmployedMask);
+            return "TESTEmployedMask";
         }
 
         public static String GetEmploymentStatus()

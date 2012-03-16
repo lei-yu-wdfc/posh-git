@@ -113,7 +113,6 @@
     <Compile Include="Requests\GetAddressDescriptorsByPostCodeUkQuery.cs" />
     <Compile Include="Requests\GetApplicationDecisionQuery.cs" />
     <Compile Include="Requests\GetApplicationTransactionsQuery.cs" />
-    <Compile Include="Requests\GetBankAccountIsValidUkQuery.cs" />
     <Compile Include="Requests\GetBankAccountsQuery.cs" />
     <Compile Include="Requests\GetBankAccountTypesZaQuery.cs" />
     <Compile Include="Requests\GetBankHolidaysQuery.cs" />
@@ -242,7 +241,6 @@
     <Compile Include="Enums\SliderPositionEnum.cs" />
     <Compile Include="Enums\TitleEnum.cs" />
     <Compile Include="Temp\ServiceConfigurationKeys.cs" />
-    <Compile Include="Temp\VerificationDefinitionsEnum.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
