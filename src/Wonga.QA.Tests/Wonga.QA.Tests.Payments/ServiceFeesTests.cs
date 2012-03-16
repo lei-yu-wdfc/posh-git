@@ -14,7 +14,7 @@ namespace Wonga.QA.Tests.Payments
 {
 	public class ServiceFeesTests
 	{
-		[Test, AUT(AUT.Za), JIRA("ZA-1969")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1969"), Pending("Feature switch might be off")]
 		public void VerifyServiceFeesArePostedUpfront()
 		{
 			Customer customer = CustomerBuilder.New().Build();
