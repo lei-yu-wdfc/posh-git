@@ -40,7 +40,10 @@ namespace Wonga.QA.Framework.Core
 
         public static String RandomEmail()
         {
-            return String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
+        	return String.Format(
+        		"qa.wonga.com+{0}-{1}@gmail.com",
+        		Environment.MachineName,
+        		Guid.NewGuid());
         }
 
         public static String GetEmailWithoutPlusChar()
