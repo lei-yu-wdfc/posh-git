@@ -253,5 +253,39 @@ namespace Wonga.QA.Tests.Ui
             page.Help.HelpTriggerClick();
             Assert.AreEqual(maxLoanDuration.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
         }
+
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-157")]
+        public void L0MinDurationSliderValueShouldBeCorrect()
+        {
+            var product = Driver.Db.Payments.Products.FirstOrDefault();
+            int minDurationValue = (int)product.TermMin;
+            int setDurationValue = minDurationValue - 1;
+            var page = Client.Home();
+            page.Sliders.HowLong = setDurationValue.ToString(CultureInfo.InvariantCulture);
+            page.Sliders.HowMuch = "400"; // to lost focus
+            Thread.Sleep(2000); // wait some time to changes apply, with out this row it's fail
+            Assert.AreEqual(minDurationValue.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
+        }
+
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-157")]
+        public void LNMinDurationSliderValueShouldBeCorrect()
+        {
+            var loginPage = Client.Login();
+            string email = Data.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            application.RepayOnDueDate();
+            loginPage.LoginAs(email);
+
+            var product = Driver.Db.Payments.Products.FirstOrDefault();
+            int minDurationValue = (int)product.TermMin;
+            int setDurationValue = minDurationValue - 1;
+            var page = Client.Home();
+            page.Sliders.HowLong = setDurationValue.ToString(CultureInfo.InvariantCulture);
+            page.Sliders.HowMuch = "400"; // to lost focus
+            Thread.Sleep(2000); // wait some time to changes apply, with out this row it's fail
+            Assert.AreEqual(minDurationValue.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
+        }
     }
 }
