@@ -97,8 +97,9 @@ namespace Wonga.QA.Framework
 		public void MakeDueToday(ApplicationEntity application)
 		{
 			TimeSpan span = application.FixedTermLoanApplicationEntity.NextDueDate.Value - DateTime.Today;
+            RiskApplicationEntity riskApplication = Driver.Db.Risk.RiskApplications.Single(r => r.ApplicationId == Id);
 
-			RewindApplicationDates(application, span);
+			RewindApplicationDates(application, riskApplication, span);
 
 			FixedTermLoanSagaEntity ftl = Driver.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
 			Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
@@ -119,10 +120,11 @@ namespace Wonga.QA.Framework
             ApplicationEntity application = Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id);
             DateTime dueDate = application.FixedTermLoanApplicationEntity.NextDueDate ??
                               application.FixedTermLoanApplicationEntity.PromiseDate;
+            RiskApplicationEntity riskApplication = Driver.Db.Risk.RiskApplications.Single(r => r.ApplicationId == Id);
 
             TimeSpan span = dueDate - DateTime.Today;
 
-            RewindApplicationDates(application, span);
+            RewindApplicationDates(application, riskApplication, span);
 
             ScheduledPostAccruedInterestSagaEntity entity = Driver.Db.OpsSagas.ScheduledPostAccruedInterestSagaEntities.Single(a => a.ApplicationGuid == Id);
             Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = entity.Id });
@@ -295,6 +297,7 @@ namespace Wonga.QA.Framework
 		{
 			// Rewinds a Loans Dates
 			ApplicationEntity application = Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id);
+		    RiskApplicationEntity riskApplication = Driver.Db.Risk.RiskApplications.Single(r => r.ApplicationId == Id);
 
 			if (application.FixedTermLoanApplicationEntity.NextDueDate == null)
 			{
@@ -303,10 +306,10 @@ namespace Wonga.QA.Framework
 
 			var duration = new TimeSpan(absoluteDays, 0, 0, 0);
 
-			RewindApplicationDates(application, duration);
+			RewindApplicationDates(application, riskApplication, duration);
         }
 
-		private static void RewindApplicationDates(ApplicationEntity application, TimeSpan span)
+		private static void RewindApplicationDates(ApplicationEntity application, RiskApplicationEntity riskApp, TimeSpan span)
 		{
 			application.ApplicationDate -= span;
 			application.SignedOn -= span;
@@ -315,8 +318,17 @@ namespace Wonga.QA.Framework
 			application.FixedTermLoanApplicationEntity.PromiseDate -= span;
 			application.FixedTermLoanApplicationEntity.NextDueDate -= span;
 			application.Transactions.ForEach(t => t.PostedOn -= span);
-            application.Database.SubmitChanges();
-		}
+            if (application.ClosedOn != null)
+                application.ClosedOn -= span;
+
+
+		    riskApp.ApplicationDate -= span;
+            riskApp.PromiseDate -= span;
+            if (riskApp.ClosedOn != null)
+                riskApp.ClosedOn -= span;
+		    riskApp.Submit();
+		    
+        }
 
         public void RewindToDayOfLoanTerm(int dayOfLoanTerm)
         {

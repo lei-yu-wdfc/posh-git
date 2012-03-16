@@ -8,7 +8,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	[Parallelizable(TestScope.All)]
 	public class CheckpointApplicationElementNotCifasFlaggedTest : BaseCheckpointTest
 	{
-		private const string TestMask = "test:ApplicationElementNotCIFASFlagged";
+		private const RiskMask TestMask = RiskMask.TESTApplicationElementNotCIFASFlagged;
 
 		[Test, AUT(AUT.Uk), JIRA("UK-852")]
 		public void AcceptNoCifas()

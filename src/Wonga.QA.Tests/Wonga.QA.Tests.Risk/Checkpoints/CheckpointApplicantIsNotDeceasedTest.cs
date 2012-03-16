@@ -8,7 +8,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	[Parallelizable(TestScope.All)]
 	public class CheckpointApplicantIsNotDeceasedTest : BaseCheckpointTest
 	{
-		private const string TestMask = "test:IsAlive";
+	    private const RiskMask TestMask = RiskMask.TESTIsAlive;
 
 		[Test, AUT(AUT.Uk), JIRA("UK-853")]
 		public void AcceptForNormalCustomer()

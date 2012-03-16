@@ -8,7 +8,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	[Parallelizable(TestScope.All)]
 	public class CheckpointApplicantIsSolventTest : BaseCheckpointTest
 	{
-		private const string TestMask = "test:IsSolvent";
+		private const RiskMask TestMask = RiskMask.TESTIsSolvent;
 
 		[Test, AUT(AUT.Uk), JIRA("UK-854")]
 		public void AcceptForNormalCustomer()

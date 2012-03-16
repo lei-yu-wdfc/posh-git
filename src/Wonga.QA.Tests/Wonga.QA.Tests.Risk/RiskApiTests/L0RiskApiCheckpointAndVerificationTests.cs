@@ -28,7 +28,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 			//NOTE: for BC min age to be adult is 19 Y.
 			// to test other provinces with < 18 Y we get a comms error
 			CustomerBuilder builder = CustomerBuilder.New()
-				.WithEmployer("test:ApplicantIsNotMinor")
+				.WithEmployer(RiskMask.TESTApplicantIsNotMinor)
 				.WithProvinceInAddress(ProvinceEnum.BC)
 				.WithDateOfBirth(new Date(DateTime.Now.AddYears(-18), DateFormat.Date));
 
@@ -55,7 +55,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		public void GivenL0Applicant_WhenElementNotOnCsBlacklistFailed()
 		{
 			//need to send a RegisterFraudMessage with AccountId and HasFraud = true			
-			L0ApplicationWithSingleCheckPointAndSingleVerification(CheckpointDefinitionEnum.FraudListCheck, "FraudBlacklistVerification", "test:ApplicationElementNotOnCSBlacklist", CheckpointStatus.Failed);
+			L0ApplicationWithSingleCheckPointAndSingleVerification(CheckpointDefinitionEnum.FraudListCheck, "FraudBlacklistVerification", RiskMask.ApplicationElementNotOnCSBlacklist", CheckpointStatus.Failed);
 		}
 		*/
 
@@ -142,7 +142,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 
 
 			CustomerBuilder builder = CustomerBuilder.New()
-				.WithEmployer("test:MonthlyIncomeEnoughForRepayment")
+				.WithEmployer(RiskMask.TESTMonthlyIncomeEnoughForRepayment)
 				.WithNetMonthlyIncome(10);
 
 			L0ApplicationWithSingleCheckPointAndVerifications(builder, CheckpointDefinitionEnum.MonthlyIncomeLimitCheck, expectedVerificationNames);
@@ -232,7 +232,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
         {
             _builderConfig = new ApplicationBuilderConfig(ApplicationDecisionStatusEnum.Declined);
             CustomerBuilder builder = CustomerBuilder.New()
-                .WithEmployerStatus("Unemployed").WithEmployer("test:EmployedMask");
+                .WithEmployerStatus("Unemployed").WithEmployer(RiskMask.TESTEmployedMask);
             L0ApplicationWithSingleCheckPointAndSingleVerification(builder, CheckpointDefinitionEnum.CustomerIsEmployed, "CustomerIsEmployedVerification");
         }
 
@@ -249,7 +249,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
         {
             _builderConfig = new ApplicationBuilderConfig(ApplicationDecisionStatusEnum.Declined);
             CustomerBuilder builder = CustomerBuilder.New()
-                .WithEmployer("test:ApplicantIsNotMinor")
+                .WithEmployer(RiskMask.TESTApplicantIsNotMinor)
                 .WithDateOfBirth(new Date(DateTime.Now.AddYears(-18), DateFormat.Date));
             L0ApplicationWithSingleCheckPointAndSingleVerification(
                 builder, CheckpointDefinitionEnum.ApplicantIsNotMinor,

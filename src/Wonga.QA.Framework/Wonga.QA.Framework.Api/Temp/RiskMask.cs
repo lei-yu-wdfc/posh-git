@@ -1,7 +1,7 @@
 ﻿
 namespace Wonga.QA.Framework.Api
 {
-    public enum RiskMiddlenameMask
+    public enum RiskMask
     {
         TESTTransUnionandBank,
         TESTTransUnion,
@@ -64,6 +64,7 @@ namespace Wonga.QA.Framework.Api
         TESTMainApplicantDurationAcceptable,
         TESTNumberOfDirectorsMatchesBusinessBureauData,
         TESTBusinessDateOfIncorporationAcceptable,
-        TESTNoCheck
+        TESTNoCheck,
+        TESTTooManyLoansAtAddress
     }
 }

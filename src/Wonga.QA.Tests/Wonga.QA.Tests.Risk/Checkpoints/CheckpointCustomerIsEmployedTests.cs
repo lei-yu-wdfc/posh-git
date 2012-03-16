@@ -13,7 +13,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	[Parallelizable(TestScope.All), AUT(AUT.Za)]
 	public class CheckpointCustomerIsEmployedTests
 	{
-		private const string TestMask = "test:CustomerIsEmployed";
+        private const RiskMask TestMask = RiskMask.TESTCustomerIsEmployed;
 
 		[Test]
 		public void CustomerIsEmployedAccept()

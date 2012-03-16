@@ -12,7 +12,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	[Parallelizable(TestScope.All), AUT(AUT.Za)]
 	public class CheckpointRepaymentPredictionPositiveTests
 	{
-		private const string TestMask = "test:RepaymentPredictionPositive";
+		private const RiskMask TestMask = RiskMask.TESTRepaymentPredictionPositive;
 
 		private string _forename;
 		private string _surname;
@@ -117,7 +117,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			var customer = CustomerBuilder.New().Build();
 			ApplicationBuilder.New(customer).Build().RepayOnDueDate();
 
-			Driver.Db.UpdateEmployerName(customer.Id, TestMask);
+			Driver.Db.UpdateEmployerName(customer.Id, Data.EnumToString(TestMask));
 
 			var application = ApplicationBuilder.New(customer).WithLoanTerm(5).WithLoanAmount(100).Build();
 

@@ -53,7 +53,7 @@ namespace Wonga.QA.Framework.Core
 
         public static String GetEmployerName()
         {
-            return "Test:EmployedMask";
+            return "TESTEmployedMask";
         }
 
         public static String GetEmploymentStatus()

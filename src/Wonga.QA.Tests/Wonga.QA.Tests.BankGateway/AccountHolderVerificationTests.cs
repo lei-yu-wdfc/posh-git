@@ -15,7 +15,7 @@ namespace Wonga.QA.Tests.BankGateway
 	[Parallelizable(TestScope.All)]
 	class AccountHolderVerificationTests
 	{
-		private const string TestMask = "test:BankAccountIsValid";
+		private const RiskMask TestMask = RiskMask.TESTBankAccountIsValid;
 
 		private readonly Dictionary<string, string> _testModesToSetup = new Dictionary<string, string>
 		                                                              	{

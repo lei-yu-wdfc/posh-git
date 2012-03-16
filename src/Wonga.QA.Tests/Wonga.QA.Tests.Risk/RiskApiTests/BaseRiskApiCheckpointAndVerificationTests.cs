@@ -112,7 +112,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		{
 			var className = GetCheckpointClassName(checkpointDefinition);
 
-			return string.Format("test:{0}", className);
+			return string.Format("TEST{0}", className);
 		}
 
 		//TODO: check why this does not work for middle name???

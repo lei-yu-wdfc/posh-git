@@ -14,7 +14,7 @@ namespace Wonga.QA.Framework
     {
         private Guid _id;
         private Guid _verification;
-        private String _employerName;
+        private object _employerName;
         private String _employerStatus;
 		private Decimal _netMonthlyIncome;
     	private GenderEnum _gender;
@@ -22,7 +22,7 @@ namespace Wonga.QA.Framework
         private String _foreName;
 	    private Date _nextPayDate;
     	private Date _dateOfBirth;
-        private String _middleName;
+        private object _middleName;
         private String _surname;
     	private String _maidenName;
         private String _houseNumber;
@@ -39,6 +39,7 @@ namespace Wonga.QA.Framework
         private String _phoneNumber;
 		private String _mobileNumber;
     	private Int64? _bankAccountNumber;
+        private Int64 _paymentCardNumber;
         
 
         private CustomerBuilder()
@@ -84,6 +85,7 @@ namespace Wonga.QA.Framework
         	
             _province = ProvinceEnum.ON;
         	_bankAccountNumber = null;
+            _paymentCardNumber = 4444333322221111;
             _mobileNumber = Data.GetMobilePhone();
         }
 
@@ -106,6 +108,12 @@ namespace Wonga.QA.Framework
         public CustomerBuilder WithEmployer(string employerName)
         {
             _employerName = employerName;
+            return this;
+        }
+
+        public CustomerBuilder WithEmployer(RiskMask mask)
+        {
+            _employerName = mask;
             return this;
         }
 
@@ -160,6 +168,12 @@ namespace Wonga.QA.Framework
         public CustomerBuilder WithMiddleName(String middleName)
         {
             _middleName = middleName;
+            return this;
+        }
+
+        public CustomerBuilder WithMiddleName(RiskMask mask)
+        {
+            _middleName = mask;
             return this;
         }
 
@@ -246,6 +260,12 @@ namespace Wonga.QA.Framework
 			_bankAccountNumber = bankAccountNumber;
 			return this;
 		}
+
+        public CustomerBuilder WithPaymentCardNumber(Int64 cardNumber)
+        {
+            _paymentCardNumber = cardNumber;
+            return this;
+        }
 
         public CustomerBuilder WithMobileNumber(String mobileNumber)
         {
@@ -405,7 +425,11 @@ namespace Wonga.QA.Framework
                                                     			r.AccountNumber = _bankAccountNumber;
                                                     		}
                                                     	}),
-                        AddPaymentCardCommand.New(r=>r.AccountId = _id),
+                        AddPaymentCardCommand.New(r =>
+						                              {
+						                                  r.AccountId = _id;
+						                                  r.Number = _paymentCardNumber;
+						                              }),
                         VerifyMobilePhoneUkCommand.New(r=>
                                                            {
                                                                r.AccountId = _id;
@@ -424,6 +448,7 @@ namespace Wonga.QA.Framework
 						                                     {
 						                                         r.AccountId = _id;
 						                                         r.Forename = _foreName;
+						                                         r.MiddleName = _middleName;
 						                                         r.Surname = _surname;
 						                                         r.Email = _email;
 						                                         r.DateOfBirth = _dateOfBirth;
@@ -448,7 +473,11 @@ namespace Wonga.QA.Framework
 						                            			r.AccountNumber = _bankAccountNumber;
 						                            		}
 						                            	}),
-						AddPaymentCardCommand.New(r => { r.AccountId = _id; }),
+						AddPaymentCardCommand.New(r =>
+						                              {
+						                                  r.AccountId = _id;
+						                                  r.Number = _paymentCardNumber;
+						                              }),
 						SaveEmploymentDetailsUkCommand.New(r =>
 						{
 							r.AccountId = _id;
