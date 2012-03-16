@@ -10,7 +10,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	public abstract class BaseCheckpointTest
 	{
 
-		protected RiskApplicationEntity CreateRiskApplicationUsingApi(string testMask, ICustomerData customerData)
+        protected RiskApplicationEntity CreateRiskApplicationUsingApi(RiskMask testMask, ICustomerData customerData)
 		{
 			var customer =
 				CustomerBuilder.New()
@@ -32,7 +32,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			return Driver.Db.Risk.RiskApplications.Single(x => x.ApplicationId == application.Id);
 		}
 
-		protected Application RunSingleWorkflowTest(string testMask, ICustomerData customerData, CheckpointDefinitionEnum checkpoint, CheckpointStatus expectedStatus)
+		protected Application RunSingleWorkflowTest(RiskMask testMask, ICustomerData customerData, CheckpointDefinitionEnum checkpoint, CheckpointStatus expectedStatus)
 		{
 			var customer =
 				CustomerBuilder.New()

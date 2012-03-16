@@ -165,7 +165,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 
             L0app.Rewind(suspiciousDaysSinceLastLoan);
 
-            cust.UpdateEmployer(Data.EnumToString(RiskMiddlenameMask.TESTNoSuspiciousApplicationActivity));
+            cust.UpdateEmployer(Data.EnumToString(RiskMask.TESTNoSuspiciousApplicationActivity));
 
             Application LnApp = ApplicationBuilder.New(cust)
                 .WithExpectedDecision(ApplicationDecisionStatusEnum.Declined)
@@ -195,7 +195,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 
             L0app.Rewind(suspiciousDaysSinceLastLoan);
 
-            cust.UpdateEmployer(Data.EnumToString(RiskMiddlenameMask.TESTNoSuspiciousApplicationActivity));
+            cust.UpdateEmployer(Data.EnumToString(RiskMask.TESTNoSuspiciousApplicationActivity));
 
             Application LnApp = ApplicationBuilder.New(cust)
                 .WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted)
@@ -223,7 +223,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 
             L0app.Rewind(suspiciousDaysSinceLastLoan);
 
-            cust.UpdateEmployer(Data.EnumToString(RiskMiddlenameMask.TESTNoSuspiciousApplicationActivity));
+            cust.UpdateEmployer(Data.EnumToString(RiskMask.TESTNoSuspiciousApplicationActivity));
 
             Application LnApp = ApplicationBuilder.New(cust)
                 .WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted)
@@ -250,7 +250,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 
             L0app.Rewind(suspiciousDaysSinceLastLoan);
 
-            cust.UpdateEmployer(Data.EnumToString(RiskMiddlenameMask.TESTNoSuspiciousApplicationActivity));
+            cust.UpdateEmployer(Data.EnumToString(RiskMask.TESTNoSuspiciousApplicationActivity));
 
             Application LnApp = ApplicationBuilder.New(cust)
                 .WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted)

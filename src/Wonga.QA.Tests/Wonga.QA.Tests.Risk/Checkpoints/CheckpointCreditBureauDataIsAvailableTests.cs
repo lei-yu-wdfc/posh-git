@@ -10,7 +10,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	[Parallelizable(TestScope.All)]
 	class CheckpointCreditBureauDataIsAvailable : BaseCheckpointTest
 	{
-		private const string TestMask = "test:CreditBureauDataIsAvailable";
+        private const RiskMask TestMask = RiskMask.TESTCreditBureauDataIsAvailable;
 
 		private string _forename = "ANITHA";
 		private string _surname = "ESSACK";

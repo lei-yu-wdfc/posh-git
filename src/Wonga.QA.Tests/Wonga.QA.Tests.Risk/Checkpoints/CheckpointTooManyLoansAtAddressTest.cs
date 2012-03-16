@@ -10,7 +10,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	[Parallelizable(TestScope.All)]
 	public class CheckpointTooManyLoansAtAddressTest : BaseCheckpointTest
 	{
-		private const string TestMask = "test:TooManyLoansAtAddress";
+		private const RiskMask TestMask = RiskMask.TESTTooManyLoansAtAddress;
 
 		[Test, AUT(AUT.Uk), JIRA("UK-913")]
 		public void AcceptForOneAllication()

@@ -9,6 +9,7 @@ using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Framework.UI.UiElements.Pages.Wb;
 using Wonga.QA.Tests.Core;
+using Wonga.QA.Framework.Api;
 
 namespace Wonga.QA.Tests.Ui
 {
@@ -19,7 +20,7 @@ namespace Wonga.QA.Tests.Ui
         {
             var journey = new Journey(Client.Home());
             var processingPage = journey.ApplyForLoan(200, 10)
-                                 .FillPersonalDetails("test:EmployedMask")
+                                 .FillPersonalDetails(Data.EnumToString(RiskMask.TESTEmployedMask))
                                  .FillAddressDetails()
                                  .FillAccountDetails()
                                  .FillBankDetails()
@@ -37,7 +38,7 @@ namespace Wonga.QA.Tests.Ui
         {
             var journey = new Journey(Client.Home());
             var processingPage = journey.ApplyForLoan(200, 10)
-                                 .FillPersonalDetails("test:EmployedMask")
+                                 .FillPersonalDetails(Data.EnumToString(Data.EnumToString(RiskMask.TESTEmployedMask)))
                                  .FillAddressDetails()
                                  .FillAccountDetails()
                                  .FillBankDetails()

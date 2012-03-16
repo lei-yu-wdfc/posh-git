@@ -14,7 +14,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	//[Parallelizable(TestScope.All), AUT(AUT.Za)]
 	class CheckpointApplicationElementNotOnBlacklistTests
 	{
-		private const string TestMask = "test:Blacklist";
+        private const RiskMask TestMask = RiskMask.TESTBlacklist;
 
 		private string _internationalCode;
 		private const string InternationalCodeZa = "+27";

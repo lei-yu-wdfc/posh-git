@@ -80,7 +80,7 @@
     <Compile Include="Temp\CheckpointStatusEnum.cs" />
     <Compile Include="Temp\CreditBureauEnum.cs" />
     <Compile Include="Temp\IovationMockResponse.cs" />
-    <Compile Include="Temp\RiskMiddlenameMask.cs" />
+    <Compile Include="Temp\RiskMask.cs" />
     <Compile Include="Temp\VerificationDefinitionsEnum.cs" />
     <Compile Include="Requests\AddBankAccountCaCommand.cs" />
     <Compile Include="Requests\AddBankAccountUkCommand.cs" />

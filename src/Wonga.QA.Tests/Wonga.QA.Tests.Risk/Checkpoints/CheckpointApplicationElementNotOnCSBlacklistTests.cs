@@ -11,7 +11,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	[Parallelizable(TestScope.All), AUT(AUT.Za)]
 	class CheckpointApplicationElementNotOnCSBlacklistTests
 	{
-		private const string TestMask = "test:ApplicationElementNotOnCSBlacklist";
+        private const RiskMask TestMask = RiskMask.TESTApplicationElementNotOnCSBlacklist;
 
 		[Test, AUT(AUT.Za)]
 		public void CheckpointApplicationElementNotOnCSBlacklistAccept()

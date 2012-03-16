@@ -26,7 +26,7 @@ namespace Wonga.QA.Tests.Graydon
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
 
-            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTMainApplicantMatchesBusinessBureauData, forename, surname, dateOfBirth, goodCompanyRegNumber, ApplicationDecisionStatusEnum.Accepted);
+            var application = CreateApplicationWithAsserts(RiskMask.TESTMainApplicantMatchesBusinessBureauData, forename, surname, dateOfBirth, goodCompanyRegNumber, ApplicationDecisionStatusEnum.Accepted);
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
             Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.MainApplicantMatchesBusinessBureauData));
@@ -42,7 +42,7 @@ namespace Wonga.QA.Tests.Graydon
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1977, 12, 21), DateFormat.Date); //wrong DOB
 
-            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTMainApplicantMatchesBusinessBureauData, forename, surname, dateOfBirth, goodCompanyRegNumber, ApplicationDecisionStatusEnum.Declined);
+            var application = CreateApplicationWithAsserts(RiskMask.TESTMainApplicantMatchesBusinessBureauData, forename, surname, dateOfBirth, goodCompanyRegNumber, ApplicationDecisionStatusEnum.Declined);
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
             Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Failed), Data.EnumToString(CheckpointDefinitionEnum.MainApplicantMatchesBusinessBureauData));
@@ -58,7 +58,7 @@ namespace Wonga.QA.Tests.Graydon
             const String surname = "Bridson";
             var dateOfBirth = Data.GetDoB();
 
-            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTMainApplicantMatchesBusinessBureauData, forename, surname, dateOfBirth, goodCompanyRegNumber, ApplicationDecisionStatusEnum.Declined);
+            var application = CreateApplicationWithAsserts(RiskMask.TESTMainApplicantMatchesBusinessBureauData, forename, surname, dateOfBirth, goodCompanyRegNumber, ApplicationDecisionStatusEnum.Declined);
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
             Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Failed), Data.EnumToString(CheckpointDefinitionEnum.MainApplicantMatchesBusinessBureauData));
@@ -74,7 +74,7 @@ namespace Wonga.QA.Tests.Graydon
             const String surname = "COOMBE";
             var dateOfBirth = new Date(new DateTime(1960, 01, 09), DateFormat.Date);
 
-            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTMainApplicantMatchesBusinessBureauData, forename, surname, dateOfBirth, goodCompanyRegNumber, ApplicationDecisionStatusEnum.Declined);
+            var application = CreateApplicationWithAsserts(RiskMask.TESTMainApplicantMatchesBusinessBureauData, forename, surname, dateOfBirth, goodCompanyRegNumber, ApplicationDecisionStatusEnum.Declined);
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
             Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Failed), Data.EnumToString(CheckpointDefinitionEnum.MainApplicantMatchesBusinessBureauData));
@@ -91,7 +91,7 @@ namespace Wonga.QA.Tests.Graydon
         {
             const String goodCompanyRegNumber = "00000086";
 
-            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTBusinessBureauDataIsAvailable, Data.RandomString(7), Data.RandomString(7), Data.GetDoB(), goodCompanyRegNumber, ApplicationDecisionStatusEnum.Accepted);
+            var application = CreateApplicationWithAsserts(RiskMask.TESTBusinessBureauDataIsAvailable, Data.RandomString(7), Data.RandomString(7), Data.GetDoB(), goodCompanyRegNumber, ApplicationDecisionStatusEnum.Accepted);
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
             Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.BusinessBureauDataIsAvailable));
@@ -104,7 +104,7 @@ namespace Wonga.QA.Tests.Graydon
         {
             const String goodCompanyRegNumber = "99999999";
 
-            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTBusinessBureauDataIsAvailable, Data.RandomString(7), Data.RandomString(7), Data.GetDoB(), goodCompanyRegNumber, ApplicationDecisionStatusEnum.Declined);
+            var application = CreateApplicationWithAsserts(RiskMask.TESTBusinessBureauDataIsAvailable, Data.RandomString(7), Data.RandomString(7), Data.GetDoB(), goodCompanyRegNumber, ApplicationDecisionStatusEnum.Declined);
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
             Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Failed), Data.EnumToString(CheckpointDefinitionEnum.BusinessBureauDataIsAvailable));
@@ -121,7 +121,7 @@ namespace Wonga.QA.Tests.Graydon
         {
             const String goodCompanyRegNumber = "00000086";
 
-            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTBusinessIsCurrentlyTrading, Data.RandomString(7), Data.RandomString(7), Data.GetDoB(), goodCompanyRegNumber, ApplicationDecisionStatusEnum.Accepted);
+            var application = CreateApplicationWithAsserts(RiskMask.TESTBusinessIsCurrentlyTrading, Data.RandomString(7), Data.RandomString(7), Data.GetDoB(), goodCompanyRegNumber, ApplicationDecisionStatusEnum.Accepted);
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
             Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.BusinessIsCurrentlyTrading));
@@ -134,7 +134,7 @@ namespace Wonga.QA.Tests.Graydon
         {
             const String goodCompanyRegNumber = "90000001";
 
-            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTBusinessIsCurrentlyTrading, Data.RandomString(7), Data.RandomString(7), Data.GetDoB(), goodCompanyRegNumber, ApplicationDecisionStatusEnum.Declined);
+            var application = CreateApplicationWithAsserts(RiskMask.TESTBusinessIsCurrentlyTrading, Data.RandomString(7), Data.RandomString(7), Data.GetDoB(), goodCompanyRegNumber, ApplicationDecisionStatusEnum.Declined);
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
             Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Failed), Data.EnumToString(CheckpointDefinitionEnum.BusinessIsCurrentlyTrading));
@@ -152,7 +152,7 @@ namespace Wonga.QA.Tests.Graydon
             //good score = 60
             const String goodCompanyRegNumber = "00000086";
 
-            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTBusinessPaymentScoreIsAcceptable, Data.RandomString(7), Data.RandomString(7), Data.GetDoB(), goodCompanyRegNumber, ApplicationDecisionStatusEnum.Accepted);
+            var application = CreateApplicationWithAsserts(RiskMask.TESTBusinessPaymentScoreIsAcceptable, Data.RandomString(7), Data.RandomString(7), Data.GetDoB(), goodCompanyRegNumber, ApplicationDecisionStatusEnum.Accepted);
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
             Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.BusinessPaymentScoreIsAcceptable));
@@ -166,7 +166,7 @@ namespace Wonga.QA.Tests.Graydon
             //bad score = 59
             const String goodCompanyRegNumber = "99999903";
 
-            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTBusinessPaymentScoreIsAcceptable, Data.RandomString(7), Data.RandomString(7), Data.GetDoB(), goodCompanyRegNumber, ApplicationDecisionStatusEnum.Declined);
+            var application = CreateApplicationWithAsserts(RiskMask.TESTBusinessPaymentScoreIsAcceptable, Data.RandomString(7), Data.RandomString(7), Data.GetDoB(), goodCompanyRegNumber, ApplicationDecisionStatusEnum.Declined);
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
             Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Failed), Data.EnumToString(CheckpointDefinitionEnum.BusinessPaymentScoreIsAcceptable));
@@ -180,7 +180,7 @@ namespace Wonga.QA.Tests.Graydon
             //bad score = 59
             const String goodCompanyRegNumber = "99999904";
 
-            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTBusinessPaymentScoreIsAcceptable, Data.RandomString(7), Data.RandomString(7), Data.GetDoB(), goodCompanyRegNumber, ApplicationDecisionStatusEnum.Accepted);
+            var application = CreateApplicationWithAsserts(RiskMask.TESTBusinessPaymentScoreIsAcceptable, Data.RandomString(7), Data.RandomString(7), Data.GetDoB(), goodCompanyRegNumber, ApplicationDecisionStatusEnum.Accepted);
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
             Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.BusinessPaymentScoreIsAcceptable));
@@ -198,7 +198,7 @@ namespace Wonga.QA.Tests.Graydon
             //good augur score = 446
             const String goodCompanyRegNumber = "00000086";
 
-            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTBusinessPerformanceScoreIsAcceptaple, Data.RandomString(7), Data.RandomString(7), Data.GetDoB(), goodCompanyRegNumber, ApplicationDecisionStatusEnum.Accepted);
+            var application = CreateApplicationWithAsserts(RiskMask.TESTBusinessPerformanceScoreIsAcceptaple, Data.RandomString(7), Data.RandomString(7), Data.GetDoB(), goodCompanyRegNumber, ApplicationDecisionStatusEnum.Accepted);
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
             Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.BusinessPerformanceScoreIsAcceptaple));
@@ -212,7 +212,7 @@ namespace Wonga.QA.Tests.Graydon
             //good augur score = 300
             const String goodCompanyRegNumber = "99999902";
 
-            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTBusinessPerformanceScoreIsAcceptaple, Data.RandomString(7), Data.RandomString(7), Data.GetDoB(), goodCompanyRegNumber, ApplicationDecisionStatusEnum.Declined);
+            var application = CreateApplicationWithAsserts(RiskMask.TESTBusinessPerformanceScoreIsAcceptaple, Data.RandomString(7), Data.RandomString(7), Data.GetDoB(), goodCompanyRegNumber, ApplicationDecisionStatusEnum.Declined);
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
             Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Failed), Data.EnumToString(CheckpointDefinitionEnum.BusinessPerformanceScoreIsAcceptaple));
@@ -232,7 +232,7 @@ namespace Wonga.QA.Tests.Graydon
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
 
-            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTMainApplicantDurationAcceptable, forename, surname, dateOfBirth, goodCompanyRegNumber, ApplicationDecisionStatusEnum.Accepted);
+            var application = CreateApplicationWithAsserts(RiskMask.TESTMainApplicantDurationAcceptable, forename, surname, dateOfBirth, goodCompanyRegNumber, ApplicationDecisionStatusEnum.Accepted);
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
             Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.MainApplicantDurationAcceptable));
@@ -255,7 +255,7 @@ namespace Wonga.QA.Tests.Graydon
 
             try
             {
-                var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTMainApplicantDurationAcceptable, forename, surname, dateOfBirth, goodCompanyRegNumber, ApplicationDecisionStatusEnum.Declined);
+                var application = CreateApplicationWithAsserts(RiskMask.TESTMainApplicantDurationAcceptable, forename, surname, dateOfBirth, goodCompanyRegNumber, ApplicationDecisionStatusEnum.Declined);
                 var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
                 Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
                 Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId,CheckpointStatus.Failed),Data.EnumToString(CheckpointDefinitionEnum.MainApplicantDurationAcceptable));
@@ -277,7 +277,7 @@ namespace Wonga.QA.Tests.Graydon
             const String surname = "COOMBE";
             var dateOfBirth = new Date(new DateTime(1960, 01, 09), DateFormat.Date);
 
-            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTMainApplicantDurationAcceptable, forename, surname, dateOfBirth, goodCompanyRegNumber, ApplicationDecisionStatusEnum.Declined);
+            var application = CreateApplicationWithAsserts(RiskMask.TESTMainApplicantDurationAcceptable, forename, surname, dateOfBirth, goodCompanyRegNumber, ApplicationDecisionStatusEnum.Declined);
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
             Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Failed), Data.EnumToString(CheckpointDefinitionEnum.MainApplicantDurationAcceptable));
@@ -290,7 +290,7 @@ namespace Wonga.QA.Tests.Graydon
         {
             const String goodCompanyRegNumber = "00000086";
 
-            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTMainApplicantDurationAcceptable, Data.RandomString(7), Data.RandomString(7), Data.GetDoB(), goodCompanyRegNumber, ApplicationDecisionStatusEnum.Declined);
+            var application = CreateApplicationWithAsserts(RiskMask.TESTMainApplicantDurationAcceptable, Data.RandomString(7), Data.RandomString(7), Data.GetDoB(), goodCompanyRegNumber, ApplicationDecisionStatusEnum.Declined);
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
             Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Failed), Data.EnumToString(CheckpointDefinitionEnum.MainApplicantDurationAcceptable));
@@ -313,7 +313,7 @@ namespace Wonga.QA.Tests.Graydon
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
 
-            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTNumberOfDirectorsMatchesBusinessBureauData, forename, surname, dateOfBirth, goodCompanyRegNumber, ApplicationDecisionStatusEnum.Accepted,numberOfGuarantors);
+            var application = CreateApplicationWithAsserts(RiskMask.TESTNumberOfDirectorsMatchesBusinessBureauData, forename, surname, dateOfBirth, goodCompanyRegNumber, ApplicationDecisionStatusEnum.Accepted,numberOfGuarantors);
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
             Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.NumberOfDirectorsMatchesBusinessBureauData));
@@ -332,7 +332,7 @@ namespace Wonga.QA.Tests.Graydon
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
 
-            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTNumberOfDirectorsMatchesBusinessBureauData, forename, surname, dateOfBirth, goodCompanyRegNumber, ApplicationDecisionStatusEnum.Declined, numberOfGuarantors);
+            var application = CreateApplicationWithAsserts(RiskMask.TESTNumberOfDirectorsMatchesBusinessBureauData, forename, surname, dateOfBirth, goodCompanyRegNumber, ApplicationDecisionStatusEnum.Declined, numberOfGuarantors);
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
             Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Failed), Data.EnumToString(CheckpointDefinitionEnum.NumberOfDirectorsMatchesBusinessBureauData));
@@ -352,7 +352,7 @@ namespace Wonga.QA.Tests.Graydon
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
 
-            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTBusinessDateOfIncorporationAcceptable, forename, surname, dateOfBirth, goodCompanyRegNumber, ApplicationDecisionStatusEnum.Accepted);
+            var application = CreateApplicationWithAsserts(RiskMask.TESTBusinessDateOfIncorporationAcceptable, forename, surname, dateOfBirth, goodCompanyRegNumber, ApplicationDecisionStatusEnum.Accepted);
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
             Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.BusinessDateOfIncorporationAcceptable));
@@ -368,7 +368,7 @@ namespace Wonga.QA.Tests.Graydon
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
 
-            var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTBusinessDateOfIncorporationAcceptable, forename, surname, dateOfBirth, goodCompanyRegNumber, ApplicationDecisionStatusEnum.Declined);
+            var application = CreateApplicationWithAsserts(RiskMask.TESTBusinessDateOfIncorporationAcceptable, forename, surname, dateOfBirth, goodCompanyRegNumber, ApplicationDecisionStatusEnum.Declined);
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
             Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Failed), Data.EnumToString(CheckpointDefinitionEnum.BusinessDateOfIncorporationAcceptable));
@@ -391,7 +391,7 @@ namespace Wonga.QA.Tests.Graydon
 
             try
             {
-                var application = CreateApplicationWithAsserts(RiskMiddlenameMask.TESTBusinessDateOfIncorporationAcceptable, forename, surname, dateOfBirth, goodCompanyRegNumber, ApplicationDecisionStatusEnum.Declined);
+                var application = CreateApplicationWithAsserts(RiskMask.TESTBusinessDateOfIncorporationAcceptable, forename, surname, dateOfBirth, goodCompanyRegNumber, ApplicationDecisionStatusEnum.Declined);
                 var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
                 Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
                 Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Failed), Data.EnumToString(CheckpointDefinitionEnum.BusinessDateOfIncorporationAcceptable));
@@ -406,7 +406,7 @@ namespace Wonga.QA.Tests.Graydon
 
         #endregion
        
-        private static Application CreateApplicationWithAsserts(RiskMiddlenameMask middlenameMask, String forename, String surname, Date dateOfBirth, String companyRegisteredNumber, ApplicationDecisionStatusEnum applicationDecision, int numberOfSecondaryDirectors = 0)
+        private static Application CreateApplicationWithAsserts(RiskMask middlenameMask, String forename, String surname, Date dateOfBirth, String companyRegisteredNumber, ApplicationDecisionStatusEnum applicationDecision, int numberOfSecondaryDirectors = 0)
         {
             var customer = CustomerBuilder.New().WithMiddleName(middlenameMask.ToString()).WithForename(forename).WithSurname(surname).WithDateOfBirth(dateOfBirth).Build();
             var organisationBuilder = OrganisationBuilder.New(customer).WithOrganisationNumber(companyRegisteredNumber).WithSoManySecondaryDirectors(numberOfSecondaryDirectors);

@@ -14,7 +14,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	[Parallelizable(TestScope.All), AUT(AUT.Za)]
 	class CheckpointMonthlyIncomeEnoughForRepaymentTests
 	{
-		private const string TestMask = "test:MonthlyIncomeEnoughForRepayment";
+        private const RiskMask TestMask = RiskMask.TESTMonthlyIncomeEnoughForRepayment;
 
 		[Test, AUT(AUT.Za)]
 		public void CheckpointMonthlyIncomeEnoughForRepaymentAccept()
