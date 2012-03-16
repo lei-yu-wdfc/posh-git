@@ -3547,7 +3547,7 @@ namespace Wonga.QA.Framework.Db.OpsSagasUk
 		
 		private System.Guid _Id;
 		
-		private System.Nullable<int> _TransactionId;
+		private string _TransactionReference;
 		
 		private string _OriginalMessageId;
 		
@@ -3563,8 +3563,8 @@ namespace Wonga.QA.Framework.Db.OpsSagasUk
     partial void OnCreated();
     partial void OnIdChanging(System.Guid value);
     partial void OnIdChanged();
-    partial void OnTransactionIdChanging(System.Nullable<int> value);
-    partial void OnTransactionIdChanged();
+    partial void OnTransactionReferenceChanging(string value);
+    partial void OnTransactionReferenceChanged();
     partial void OnOriginalMessageIdChanging(string value);
     partial void OnOriginalMessageIdChanged();
     partial void OnOriginatorChanging(string value);
@@ -3597,23 +3597,23 @@ namespace Wonga.QA.Framework.Db.OpsSagasUk
 				}
 			}
 		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransactionId", DbType="Int")]
-		public System.Nullable<int> TransactionId
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_TransactionReference", DbType = "NVarChar(255)")]
+        public string TransactionReference
 		{
 			get
 			{
-				return this._TransactionId;
+                return this._TransactionReference;
 			}
 			set
 			{
-				if ((this._TransactionId != value))
+				if ((this._TransactionReference != value))
 				{
-					this.OnTransactionIdChanging(value);
+					this.OnTransactionReferenceChanging(value);
 					this.SendPropertyChanging();
-					this._TransactionId = value;
-					this.SendPropertyChanged("TransactionId");
-					this.OnTransactionIdChanged();
+					this._TransactionReference = value;
+                    this.SendPropertyChanged("TransactionReference");
+					this.OnTransactionReferenceChanged();
 				}
 			}
 		}
@@ -5877,7 +5877,7 @@ namespace Wonga.QA.Framework.Db.OpsSagasUk
 		
 		private System.Nullable<System.Guid> _ApplicationId;
 		
-		private System.Nullable<System.Guid> _TransactionId;
+		private string _TransactionReference;
 		
 		private string _OriginalMessageId;
 		
@@ -5891,8 +5891,8 @@ namespace Wonga.QA.Framework.Db.OpsSagasUk
     partial void OnIdChanged();
     partial void OnApplicationIdChanging(System.Nullable<System.Guid> value);
     partial void OnApplicationIdChanged();
-    partial void OnTransactionIdChanging(System.Nullable<System.Guid> value);
-    partial void OnTransactionIdChanged();
+    partial void OnTransactionReferenceChanging(string value);
+    partial void OnTransactionReferenceChanged();
     partial void OnOriginalMessageIdChanging(string value);
     partial void OnOriginalMessageIdChanged();
     partial void OnOriginatorChanging(string value);
@@ -5944,22 +5944,22 @@ namespace Wonga.QA.Framework.Db.OpsSagasUk
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransactionId", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> TransactionId
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransactionReference", DbType="UniqueIdentifier")]
+		public string TransactionReference
 		{
 			get
 			{
-				return this._TransactionId;
+				return this._TransactionReference;
 			}
 			set
 			{
-				if ((this._TransactionId != value))
+				if ((this._TransactionReference != value))
 				{
-					this.OnTransactionIdChanging(value);
+					this.OnTransactionReferenceChanging(value);
 					this.SendPropertyChanging();
-					this._TransactionId = value;
-					this.SendPropertyChanged("TransactionId");
-					this.OnTransactionIdChanged();
+					this._TransactionReference = value;
+					this.SendPropertyChanged("TransactionReference");
+					this.OnTransactionReferenceChanged();
 				}
 			}
 		}
@@ -12160,7 +12160,7 @@ namespace Wonga.QA.Framework.Db.OpsSagasUk
 		
 		private string _Originator;
 		
-		private System.Nullable<System.Guid> _PaymentTransactionId;
+		private System.Nullable<System.Guid> _PaymentTransactionReference;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -12176,8 +12176,8 @@ namespace Wonga.QA.Framework.Db.OpsSagasUk
     partial void OnOriginalMessageIdChanged();
     partial void OnOriginatorChanging(string value);
     partial void OnOriginatorChanged();
-    partial void OnPaymentTransactionIdChanging(System.Nullable<System.Guid> value);
-    partial void OnPaymentTransactionIdChanged();
+    partial void OnPaymentTransactionReferenceChanging(System.Nullable<System.Guid> value);
+    partial void OnPaymentTransactionReferenceChanged();
     #endregion
 		
 		public EmailNotificationBeforeEndLoanSagaEntity()
@@ -12285,22 +12285,22 @@ namespace Wonga.QA.Framework.Db.OpsSagasUk
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentTransactionId", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> PaymentTransactionId
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentTransactionReference", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> PaymentTransactionReference
 		{
 			get
 			{
-				return this._PaymentTransactionId;
+				return this._PaymentTransactionReference;
 			}
 			set
 			{
-				if ((this._PaymentTransactionId != value))
+				if ((this._PaymentTransactionReference != value))
 				{
-					this.OnPaymentTransactionIdChanging(value);
+					this.OnPaymentTransactionReferenceChanging(value);
 					this.SendPropertyChanging();
-					this._PaymentTransactionId = value;
-					this.SendPropertyChanged("PaymentTransactionId");
-					this.OnPaymentTransactionIdChanged();
+					this._PaymentTransactionReference = value;
+					this.SendPropertyChanged("PaymentTransactionReference");
+					this.OnPaymentTransactionReferenceChanged();
 				}
 			}
 		}
@@ -16741,7 +16741,7 @@ namespace Wonga.QA.Framework.Db.OpsSagasUk
 		
 		private System.Nullable<System.Guid> _PaymentsSagaId;
 		
-		private System.Nullable<int> _TransactionId;
+		private System.Nullable<int> _TransactionReference;
 		
 		private string _OriginalMessageId;
 		
@@ -16755,8 +16755,8 @@ namespace Wonga.QA.Framework.Db.OpsSagasUk
     partial void OnIdChanged();
     partial void OnPaymentsSagaIdChanging(System.Nullable<System.Guid> value);
     partial void OnPaymentsSagaIdChanged();
-    partial void OnTransactionIdChanging(System.Nullable<int> value);
-    partial void OnTransactionIdChanged();
+    partial void OnTransactionReferenceChanging(System.Nullable<int> value);
+    partial void OnTransactionReferenceChanged();
     partial void OnOriginalMessageIdChanging(string value);
     partial void OnOriginalMessageIdChanged();
     partial void OnOriginatorChanging(string value);
@@ -16808,22 +16808,22 @@ namespace Wonga.QA.Framework.Db.OpsSagasUk
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransactionId", DbType="Int")]
-		public System.Nullable<int> TransactionId
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransactionReference", DbType="Int")]
+		public System.Nullable<int> TransactionReference
 		{
 			get
 			{
-				return this._TransactionId;
+				return this._TransactionReference;
 			}
 			set
 			{
-				if ((this._TransactionId != value))
+				if ((this._TransactionReference != value))
 				{
-					this.OnTransactionIdChanging(value);
+					this.OnTransactionReferenceChanging(value);
 					this.SendPropertyChanging();
-					this._TransactionId = value;
-					this.SendPropertyChanged("TransactionId");
-					this.OnTransactionIdChanged();
+					this._TransactionReference = value;
+					this.SendPropertyChanged("TransactionReference");
+					this.OnTransactionReferenceChanged();
 				}
 			}
 		}
@@ -18544,7 +18544,7 @@ namespace Wonga.QA.Framework.Db.OpsSagasUk
 		
 		private System.Nullable<System.Guid> _ApplicationId;
 		
-		private System.Nullable<System.Guid> _TransactionId;
+		private System.Nullable<System.Guid> _TransactionReference;
 		
 		private string _OriginalMessageId;
 		
@@ -18558,8 +18558,8 @@ namespace Wonga.QA.Framework.Db.OpsSagasUk
     partial void OnIdChanged();
     partial void OnApplicationIdChanging(System.Nullable<System.Guid> value);
     partial void OnApplicationIdChanged();
-    partial void OnTransactionIdChanging(System.Nullable<System.Guid> value);
-    partial void OnTransactionIdChanged();
+    partial void OnTransactionReferenceChanging(System.Nullable<System.Guid> value);
+    partial void OnTransactionReferenceChanged();
     partial void OnOriginalMessageIdChanging(string value);
     partial void OnOriginalMessageIdChanged();
     partial void OnOriginatorChanging(string value);
@@ -18611,22 +18611,22 @@ namespace Wonga.QA.Framework.Db.OpsSagasUk
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransactionId", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> TransactionId
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransactionReference", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> TransactionReference
 		{
 			get
 			{
-				return this._TransactionId;
+				return this._TransactionReference;
 			}
 			set
 			{
-				if ((this._TransactionId != value))
+				if ((this._TransactionReference != value))
 				{
-					this.OnTransactionIdChanging(value);
+					this.OnTransactionReferenceChanging(value);
 					this.SendPropertyChanging();
-					this._TransactionId = value;
-					this.SendPropertyChanged("TransactionId");
-					this.OnTransactionIdChanged();
+					this._TransactionReference = value;
+					this.SendPropertyChanged("TransactionReference");
+					this.OnTransactionReferenceChanged();
 				}
 			}
 		}
@@ -25097,7 +25097,7 @@ namespace Wonga.QA.Framework.Db.OpsSagasUk
 		
 		private System.Nullable<int> _TrackingDays;
 		
-		private System.Nullable<System.Guid> _RepresentTransactionId;
+		private System.Nullable<System.Guid> _RepresentTransactionReference;
 		
 		private System.Nullable<bool> _IsPaymentTakenChargedBack;
 		
@@ -25137,8 +25137,8 @@ namespace Wonga.QA.Framework.Db.OpsSagasUk
     partial void OnSettleAmountChanged();
     partial void OnTrackingDaysChanging(System.Nullable<int> value);
     partial void OnTrackingDaysChanged();
-    partial void OnRepresentTransactionIdChanging(System.Nullable<System.Guid> value);
-    partial void OnRepresentTransactionIdChanged();
+    partial void OnRepresentTransactionReferenceChanging(System.Nullable<System.Guid> value);
+    partial void OnRepresentTransactionReferenceChanged();
     partial void OnIsPaymentTakenChargedBackChanging(System.Nullable<bool> value);
     partial void OnIsPaymentTakenChargedBackChanged();
     partial void OnScheduledPaymentIdChanging(System.Nullable<int> value);
@@ -25377,22 +25377,22 @@ namespace Wonga.QA.Framework.Db.OpsSagasUk
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RepresentTransactionId", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> RepresentTransactionId
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RepresentTransactionReference", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> RepresentTransactionReference
 		{
 			get
 			{
-				return this._RepresentTransactionId;
+				return this._RepresentTransactionReference;
 			}
 			set
 			{
-				if ((this._RepresentTransactionId != value))
+				if ((this._RepresentTransactionReference != value))
 				{
-					this.OnRepresentTransactionIdChanging(value);
+					this.OnRepresentTransactionReferenceChanging(value);
 					this.SendPropertyChanging();
-					this._RepresentTransactionId = value;
-					this.SendPropertyChanged("RepresentTransactionId");
-					this.OnRepresentTransactionIdChanged();
+					this._RepresentTransactionReference = value;
+					this.SendPropertyChanged("RepresentTransactionReference");
+					this.OnRepresentTransactionReferenceChanged();
 				}
 			}
 		}
@@ -26818,7 +26818,7 @@ namespace Wonga.QA.Framework.Db.OpsSagasUk
 		
 		private System.Guid _Id;
 		
-		private System.Nullable<int> _TransactionId;
+		private System.Nullable<int> _TransactionReference;
 		
 		private System.Nullable<System.Guid> _OriginatorSagaId;
 		
@@ -26838,8 +26838,8 @@ namespace Wonga.QA.Framework.Db.OpsSagasUk
     partial void OnCreated();
     partial void OnIdChanging(System.Guid value);
     partial void OnIdChanged();
-    partial void OnTransactionIdChanging(System.Nullable<int> value);
-    partial void OnTransactionIdChanged();
+    partial void OnTransactionReferenceChanging(System.Nullable<int> value);
+    partial void OnTransactionReferenceChanged();
     partial void OnOriginatorSagaIdChanging(System.Nullable<System.Guid> value);
     partial void OnOriginatorSagaIdChanged();
     partial void OnIsInProcessingChanging(System.Nullable<bool> value);
@@ -26878,22 +26878,22 @@ namespace Wonga.QA.Framework.Db.OpsSagasUk
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransactionId", DbType="Int")]
-		public System.Nullable<int> TransactionId
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransactionReference", DbType="Int")]
+		public System.Nullable<int> TransactionReference
 		{
 			get
 			{
-				return this._TransactionId;
+				return this._TransactionReference;
 			}
 			set
 			{
-				if ((this._TransactionId != value))
+				if ((this._TransactionReference != value))
 				{
-					this.OnTransactionIdChanging(value);
+					this.OnTransactionReferenceChanging(value);
 					this.SendPropertyChanging();
-					this._TransactionId = value;
-					this.SendPropertyChanged("TransactionId");
-					this.OnTransactionIdChanged();
+					this._TransactionReference = value;
+					this.SendPropertyChanged("TransactionReference");
+					this.OnTransactionReferenceChanged();
 				}
 			}
 		}
@@ -28953,7 +28953,7 @@ namespace Wonga.QA.Framework.Db.OpsSagasUk
 		
 		private System.Guid _Id;
 		
-		private System.Nullable<int> _TransactionId;
+		private System.Nullable<int> _TransactionReference;
 		
 		private System.Nullable<System.Guid> _OriginatorSagaId;
 		
@@ -28971,8 +28971,8 @@ namespace Wonga.QA.Framework.Db.OpsSagasUk
     partial void OnCreated();
     partial void OnIdChanging(System.Guid value);
     partial void OnIdChanged();
-    partial void OnTransactionIdChanging(System.Nullable<int> value);
-    partial void OnTransactionIdChanged();
+    partial void OnTransactionReferenceChanging(System.Nullable<int> value);
+    partial void OnTransactionReferenceChanged();
     partial void OnOriginatorSagaIdChanging(System.Nullable<System.Guid> value);
     partial void OnOriginatorSagaIdChanged();
     partial void OnIsInProcessingChanging(System.Nullable<bool> value);
@@ -29009,22 +29009,22 @@ namespace Wonga.QA.Framework.Db.OpsSagasUk
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransactionId", DbType="Int")]
-		public System.Nullable<int> TransactionId
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransactionReference", DbType="Int")]
+		public System.Nullable<int> TransactionReference
 		{
 			get
 			{
-				return this._TransactionId;
+				return this._TransactionReference;
 			}
 			set
 			{
-				if ((this._TransactionId != value))
+				if ((this._TransactionReference != value))
 				{
-					this.OnTransactionIdChanging(value);
+					this.OnTransactionReferenceChanging(value);
 					this.SendPropertyChanging();
-					this._TransactionId = value;
-					this.SendPropertyChanged("TransactionId");
-					this.OnTransactionIdChanged();
+					this._TransactionReference = value;
+					this.SendPropertyChanged("TransactionReference");
+					this.OnTransactionReferenceChanged();
 				}
 			}
 		}
