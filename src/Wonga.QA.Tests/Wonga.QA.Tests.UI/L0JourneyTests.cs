@@ -63,7 +63,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-177"), Pending("Not completed yet")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-177")]
         public void ChangeLoanAmountAndDurationOnPersonalDetailsViaPlusMinusOptions()
         {
             var journey = new Journey(Client.Home());
@@ -80,21 +80,128 @@ namespace Wonga.QA.Tests.Ui
                                      .FillBankDetails()
                                      .WaitForAcceptedPage().CurrentPage as AcceptedPage;
 
-            string totalToRepayAtAccepted = acceptedPage.GetTotalToRepay;
-            string repaymentDateAtAccepted = acceptedPage.GetRepaymentDate;
+            string actualTotalToRepay = acceptedPage.GetTotalToRepay;
+            string actualRepaymentDate = acceptedPage.GetRepaymentDate;
 
-            Assert.AreEqual(totalToRepayAtPersonalDetails,totalToRepayAtAccepted);
-            Assert.AreEqual(repaymentDateAtPersonalDetails,repaymentDateAtAccepted);
-            var mySummaryPage = journey.FillAcceptedPage()
-                                    .GoToMySummaryPage().CurrentPage as MySummaryPage;
-            Assert.IsNotNull(mySummaryPage);
+            Assert.AreEqual(totalToRepayAtPersonalDetails, actualTotalToRepay);
+            Assert.AreEqual(repaymentDateAtPersonalDetails, actualRepaymentDate);
+            var dealDonePage = journey.FillAcceptedPage().CurrentPage as DealDonePage;
 
+            actualTotalToRepay = dealDonePage.GetRapaymentAmount();
+
+            var date = DateTime.ParseExact(dealDonePage.GetRepaymentDate(), "dd MMMM yyyy", null);
+
+            switch (date.Day % 10)
+            {
+                case 1:
+                    actualRepaymentDate = (date.Day > 10 && date.Day < 20)
+                                                ? String.Format("{0:dddd d\\t\\h MMM yyyy}", date)
+                                                : String.Format("{0:dddd d\\s\\t MMM yyyy}", date);
+                    break;
+                case 2:
+                    actualRepaymentDate = (date.Day > 10 && date.Day < 20)
+                                                ? String.Format("{0:dddd d\\t\\h MMM yyyy}", date)
+                                                : String.Format("{0:dddd d\\n\\d MMM yyyy}", date);
+                    break;
+                case 3:
+                    actualRepaymentDate = (date.Day > 10 && date.Day < 20)
+                                                ? String.Format("{0:dddd d\\t\\h MMM yyyy}", date)
+                                                : String.Format("{0:dddd d\\r\\d MMM yyyy}", date);
+                    break;
+                default:
+                    actualRepaymentDate = String.Format("{0:dddd d\\t\\h MMM yyyy}", date);
+                    break;
+
+            }
+
+            Assert.AreEqual(totalToRepayAtPersonalDetails, actualTotalToRepay);
+            Assert.AreEqual(repaymentDateAtPersonalDetails, actualRepaymentDate);
+
+            switch (Config.AUT)
+            {
+                case AUT.Ca:
+                    var mySummaryPage = journey.GoToMySummaryPage().CurrentPage as MySummaryPage;
+
+                    actualTotalToRepay = mySummaryPage.GetTotalToRepay;
+
+                    Assert.AreEqual(totalToRepayAtPersonalDetails, actualTotalToRepay);
+                    //TODO add the dates comparison
+                    break;
+                //TODO case AUT.Za:
+            }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-183"), Pending("Not completed yet")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-176")]
+        public void ChangeLoanAmountAndDurationOnPersonalDetailsViaTypingToTheFields()
+        {
+            var journey = new Journey(Client.Home());
+            var personalDetailsPage = journey.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
+            personalDetailsPage.ClickSliderToggler();
+            personalDetailsPage.ChangeAmount = "195";
+            personalDetailsPage.ChangeDuration = "5";
+            string totalToRepayAtPersonalDetails = personalDetailsPage.GetTotalToRepay;
+            string repaymentDateAtPersonalDetails = personalDetailsPage.GetRepaymentDate;
+
+            var acceptedPage = journey.FillPersonalDetails("test:EmployedMask")
+                                     .FillAddressDetails()
+                                     .FillAccountDetails()
+                                     .FillBankDetails()
+                                     .WaitForAcceptedPage().CurrentPage as AcceptedPage;
+
+            string actualTotalToRepay = acceptedPage.GetTotalToRepay;
+            string actualRepaymentDate = acceptedPage.GetRepaymentDate;
+
+            Assert.AreEqual(totalToRepayAtPersonalDetails, actualTotalToRepay);
+            Assert.AreEqual(repaymentDateAtPersonalDetails, actualRepaymentDate);
+            var dealDonePage = journey.FillAcceptedPage().CurrentPage as DealDonePage;
+
+            actualTotalToRepay = dealDonePage.GetRapaymentAmount();
+
+            var date = DateTime.ParseExact(dealDonePage.GetRepaymentDate(), "dd MMMM yyyy", null);
+
+            switch (date.Day % 10)
+            {
+                case 1:
+                    actualRepaymentDate = (date.Day > 10 && date.Day < 20)
+                                                ? String.Format("{0:dddd d\\t\\h MMM yyyy}", date)
+                                                : String.Format("{0:dddd d\\s\\t MMM yyyy}", date);
+                    break;
+                case 2:
+                    actualRepaymentDate = (date.Day > 10 && date.Day < 20)
+                                                ? String.Format("{0:dddd d\\t\\h MMM yyyy}", date)
+                                                : String.Format("{0:dddd d\\n\\d MMM yyyy}", date);
+                    break;
+                case 3:
+                    actualRepaymentDate = (date.Day > 10 && date.Day < 20)
+                                                ? String.Format("{0:dddd d\\t\\h MMM yyyy}", date)
+                                                : String.Format("{0:dddd d\\r\\d MMM yyyy}", date);
+                    break;
+                default:
+                    actualRepaymentDate = String.Format("{0:dddd d\\t\\h MMM yyyy}", date);
+                    break;
+
+            }
+
+            Assert.AreEqual(totalToRepayAtPersonalDetails, actualTotalToRepay);
+            Assert.AreEqual(repaymentDateAtPersonalDetails, actualRepaymentDate);
+
+            switch (Config.AUT)
+            {
+                case AUT.Ca:
+                    var mySummaryPage = journey.GoToMySummaryPage().CurrentPage as MySummaryPage;
+
+                    actualTotalToRepay = mySummaryPage.GetTotalToRepay;
+
+                    Assert.AreEqual(totalToRepayAtPersonalDetails, actualTotalToRepay);
+                    //TODO add the dates comparison
+                    break;
+                //TODO case AUT.Za:
+            }
+        }
+
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-183")]
         public void EnterDifferentPasswordsAtAccountDetailsPageShouldCauseWarningMessage()
         {
-            //TODO don't forget about Za part!
             var journey = new Journey(Client.Home());
             switch (Config.AUT)
             {
@@ -104,6 +211,7 @@ namespace Wonga.QA.Tests.Ui
                                        .FillAddressDetails().CurrentPage as AccountDetailsPage;
                     accountDetailsPage.AccountDetailsSection.Password = "Passw0rd";
                     accountDetailsPage.AccountDetailsSection.PasswordConfirm = "qweqweqwe";
+                    accountDetailsPage.AccountDetailsSection.SecretQuestion = "123124";//to lost focus
                     Assert.IsTrue(accountDetailsPage.AccountDetailsSection.IsPasswordMismatchWarningOccured());
                     break;
                 case AUT.Ca:
@@ -112,11 +220,12 @@ namespace Wonga.QA.Tests.Ui
                                       .FillAddressDetails().CurrentPage as AddressDetailsPage;
                     addressDetailsPage.AccountDetailsSection.Password = "Passw0rd";
                     addressDetailsPage.AccountDetailsSection.PasswordConfirm = "qweqweqwe";
+                    addressDetailsPage.AccountDetailsSection.SecretQuestion = "12312"; //to lost focus
                     Assert.IsTrue(addressDetailsPage.AccountDetailsSection.IsPasswordMismatchWarningOccured());
                     break;
 
             }
-            
+
         }
 
     }

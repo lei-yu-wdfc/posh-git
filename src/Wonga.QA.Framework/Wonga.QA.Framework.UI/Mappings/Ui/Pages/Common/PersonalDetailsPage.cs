@@ -16,6 +16,8 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String SliderToggler { get; set; }
         public String TotalToRepay { get; set; }
         public String RepaymentDate { get; set; }
+        public String LoanAmount { get; set; }
+        public String LoanDuration { get; set; }
         public String AmountMinusButton { get; set; }
         public String AmountPlusButton { get; set; }
         public String DurationMinusButton { get; set; }

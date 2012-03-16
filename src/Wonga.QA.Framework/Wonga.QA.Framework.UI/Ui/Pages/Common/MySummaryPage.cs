@@ -1,3 +1,4 @@
+using System;
 using MbUnit.Framework;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.UI.Elements;
@@ -29,5 +30,16 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             }
             return true;
         }
+        public String GetTotalToRepay
+        {
+            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.TotalToRepay)).Text;  }
+        }
+        public String GetRepaymentDate
+        {
+            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.RepaymentDate)).Text; }
+        }
+        
+            
+        
     }
 }
