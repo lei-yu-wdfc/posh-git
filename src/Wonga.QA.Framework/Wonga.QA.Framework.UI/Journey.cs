@@ -179,5 +179,42 @@ namespace Wonga.QA.Framework.UI
             }
             return this;
         }
+        public Journey WaitForAcceptedPage()
+        {
+            var processingPage = CurrentPage as ProcessingPage;
+            CurrentPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
+            return this;
+        }
+        public Journey WaitForDeclinedPage()
+        {
+            var processingPage = CurrentPage as ProcessingPage;
+            CurrentPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
+            return this;
+        }
+        public Journey FillAcceptedPage()
+        {
+            var acceptedPage = CurrentPage as AcceptedPage;
+            string date = String.Format("{0:d MMM yyyy}", DateTime.Today);
+            switch (Config.AUT)
+            {
+                case AUT.Ca:
+                    acceptedPage.SignConfirmCA(date, _firstName, _lastName);
+                    CurrentPage = acceptedPage.Submit() as DealDonePage;
+                    break;
+                case AUT.Za:
+                    acceptedPage.SignConfirmZA();
+                    CurrentPage = acceptedPage.Submit() as DealDonePage;
+                    break;
+            }
+            return this;
+        }
+        public Journey GoToMySummaryPage()
+        {
+            var dealDonePage = CurrentPage as DealDonePage;
+            CurrentPage = dealDonePage.ContinueToMyAccount() as MySummaryPage;
+            return this;
+        }
+
+
     }
 }

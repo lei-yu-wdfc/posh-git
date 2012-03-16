@@ -2,10 +2,11 @@ using MbUnit.Framework;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.UI.Elements;
 using Wonga.QA.Framework.UI.Mappings;
+using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
 
 namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
-    public class MySummaryPage : BasePage
+    public class MySummaryPage : BasePage, IApplyPage 
     {
         public MyAccountNavigationElement Navigation { get; set; }
         

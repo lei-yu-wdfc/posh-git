@@ -26,7 +26,7 @@ namespace Wonga.QA.Framework.UI.Elements
 
         public SlidersElement(BasePage page) : base(page)
         {
-            _form = Page.Content.FindElement(By.CssSelector(Ui.Get.SlidersElement.FormId));
+            _form = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.SlidersElement.FormId));
             _loanAmount = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.LoanAmount));
             _loanDuration = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.LoanDuration));
             _submit = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.SubmitButton));

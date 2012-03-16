@@ -38,18 +38,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public IApplyPage ContinueToMyAccount()
         {
-            throw new NotImplementedException();
-
-            //switch (Config.AUT)
-            //{
-            //    case AUT.Za:
-            //        throw new NotImplementedException();
-            //    case AUT.Ca:
-            //        throw new NotImplementedException();
-            //    case AUT.Wb:
-            //        throw new NotImplementedException();
-            //}
-            
+            _continueButton.Click();
+            return new MySummaryPage(Client);
         }
     }
 }

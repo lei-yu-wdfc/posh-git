@@ -27,5 +27,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             _secretQuestion = Section.FindElement(By.CssSelector(Ui.Get.AccountDetailsSection.SecretQuestion));
             _secretAnswer = Section.FindElement(By.CssSelector(Ui.Get.AccountDetailsSection.SecretAnswer));
         }
+        public bool IsPasswordMismatchWarningOccured()
+        {
+            var passwordWarning = Section.FindElement(By.CssSelector(Ui.Get.AccountDetailsSection.PasswordErrorForm));
+            return passwordWarning.Text.Equals("Passwords must match");
+        }
     }
 }
