@@ -18,10 +18,10 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="C:\Wonga\v3QA\src\Wonga.QA.Framework\Wonga.QA.Framework.ThirdParties\enterprise.wsdl" Protocol="file" SourceId="1" />
+    <MetadataSource Address="C:\Work\Rep3\v3\src\components\Salesforce\enterprise.wsdl" Protocol="file" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="enterprise.wsdl" MetadataType="Wsdl" ID="32806fb1-e06e-4bba-a8f4-299db5760c10" SourceId="1" SourceUrl="file:///C:/Wonga/v3QA/src/Wonga.QA.Framework/Wonga.QA.Framework.ThirdParties/enterprise.wsdl" />
+    <MetadataFile FileName="enterprise1.wsdl" MetadataType="Wsdl" ID="025aeec7-25e2-419c-983a-397c94a27458" SourceId="1" SourceUrl="file:///C:/Work/Rep3/v3/src/components/Salesforce/enterprise.wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

@@ -61,6 +61,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Service References\ExactTargetService\etframework.wsdl" />
     <None Include="Service References\ExactTargetService\ETFrameworkFault.xsd">
       <SubType>Designer</SubType>
@@ -101,7 +102,7 @@
     <None Include="Service References\ExactTargetService\Wonga.QA.Framework.ThirdParties.ExactTargetService.VersionInfoResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\SalesforceApi\enterprise.wsdl" />
+    <None Include="Service References\SalesforceApi\enterprise1.wsdl" />
     <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.DebuggingInfo.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
