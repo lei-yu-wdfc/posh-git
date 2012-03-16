@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using System.Linq;
 using System.Text;
 using MbUnit.Framework;
@@ -63,6 +64,34 @@ namespace Wonga.QA.Tests.Payments.Za
                 driver.Ops.SubmitChanges();
             }
         }
+
+        [Test]
+        public void GetRepayLoanParameterQueryTest_HasPendingRequest()
+        {
+            var command = new RepayLoanViaBankCommand()
+            {
+                ApplicationId = _application.Id,
+                ActionDate = new Date
+                {
+                    DateTime = Data.GetPromiseDate().DateTime.AddDays(-3),
+                    DateFormat = DateFormat.Date
+                }, //Early repay before promised date
+                Amount = _application.LoanAmount,
+                RepaymentRequestId = Guid.NewGuid()
+            };
+            Driver.Api.Commands.Post(command);
+
+            var app = Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == _application.Id));
+            var saga = Do.Until(() => Driver.Db.OpsSagas.RepaymentSagaEntities.Single(s => s.ApplicationId == app.ApplicationId));
+
+            var response = Driver.Api.Queries.Post(new GetRepayLoanParametersQuery
+            {
+                AccountId = _accountId
+            });
+
+            Assert.IsFalse(bool.Parse(response.Values["IsRepayEnabled"].Single()));
+        }
+
 
         [Test, AUT(AUT.Za), JIRA("ZA-2099")]
         [Row("2012/3/8 10:00:00", "2012/3/9", Order = 0)]
