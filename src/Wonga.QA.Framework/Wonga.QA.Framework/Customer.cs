@@ -4,6 +4,7 @@ using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Db.Comms;
+using Wonga.QA.Framework.Db.Payments;
 
 namespace Wonga.QA.Framework
 {
@@ -42,7 +43,7 @@ namespace Wonga.QA.Framework
 
         public Guid GetBankAccount()
         {
-            return Do.Until(() => Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == Id).BankAccountsBaseEntity.ExternalId);
+            return BankAccountId;
         }
 
         public Guid GetPaymentCard()
@@ -69,6 +70,20 @@ namespace Wonga.QA.Framework
         public string GetCcin()
         {
             return Do.Until(() => Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == Id)).Ccin;
+        }
+
+        public string GetCustomerFullName()
+        {
+            var customerDetailsRow = Driver.Db.Comms.CustomerDetails.Single(cd => cd.AccountId == Id);
+            return customerDetailsRow.Forename +" "+ customerDetailsRow.Surname;
+        }
+
+        public void ScrubCcin()
+        {
+            var db = new DbDriver();
+            AccountPreferenceEntity accountPreferenceEntity = db.Payments.AccountPreferences.Single(ap => ap.AccountId == Id);
+            accountPreferenceEntity.Ccin = "ScrubbedCcin_"+Data.RandomInt(10000, 99999);
+            db.Payments.SubmitChanges();
         }
     }
 }

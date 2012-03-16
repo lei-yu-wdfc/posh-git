@@ -129,5 +129,10 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
             return Driver.Db.Payments.Transactions.SingleOrDefault((s => s.ApplicationId == appId & s.Type == PaymentTransactionType.DefaultCharge.ToString())) == null;
         }
+
+        public static bool VerifyOnlineBillPaymentRecordForCcin(String ccin)
+        {
+            return Do.With().Timeout(2).Interval(10).Until(() => Driver.Db.Payments.OnlineBillPayments.Single(c => c.Ccin == ccin)) != null;
+        }
     }
 }
