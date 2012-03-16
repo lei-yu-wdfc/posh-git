@@ -44,8 +44,8 @@
 		<HeaderText>Your application has been approved</HeaderText>
 		<ContinueButtonLink>.application-success-button</ContinueButtonLink>
 		<ContinueButton>#edit-submit</ContinueButton>
-		<RepayDate>#content-area div div div:nth-child(1) div p:nth-child(2) strong em</RepayDate>
-		<RepayAmount>#content-area div div div:nth-child(1) div p:nth-child(2) span</RepayAmount>
+		<RepayDate>#content-area em</RepayDate>
+		<RepayAmount>#content-area span.blue-text</RepayAmount>
 	</DealDonePage>
 
   <AcceptedPage>
@@ -133,6 +133,8 @@
     <SliderToggler>#slider-toggler</SliderToggler>
     <TotalToRepay>span.loan-total</TotalToRepay>
     <RepaymentDate>span.repayment-date</RepaymentDate>
+    <LoanAmount>#edit-loan-amount</LoanAmount>
+    <LoanDuration>#edit-loan-duration</LoanDuration>
     <AmountMinusButton>#wonga-amount-slider-wrapper button.slider-minus</AmountMinusButton>
     <AmountPlusButton>#wonga-amount-slider-wrapper button.slider-plus</AmountPlusButton>
     <DurationMinusButton>#wonga-duration-slider-wrapper button.slider-minus</DurationMinusButton>
@@ -192,6 +194,7 @@
     <Fieldset>#account-setup-1</Fieldset>
     <Password>#edit-password</Password>
     <PasswordConfirm>#edit-password-confirm</PasswordConfirm>
+    <PasswordErrorForm>div#edit-password-confirm-wrapper div.invalid</PasswordErrorForm>
     <SecretQuestion>#edit-secret-question</SecretQuestion>
     <SecretAnswer>#edit-secret-answer</SecretAnswer>
   </AccountDetailsSection>
@@ -211,6 +214,8 @@
 
   <MySummaryPage>
     <Title>#my-summary</Title>
+    <TotalToRepay>div.summary-box-content span.blue-text</TotalToRepay>
+    <RepaymentDate>div.summary-box-content i</RepaymentDate>
   </MySummaryPage>
 
   <MyPaymentsPage>

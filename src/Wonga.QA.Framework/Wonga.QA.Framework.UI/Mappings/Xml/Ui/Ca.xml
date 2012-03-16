@@ -34,7 +34,7 @@
   
   <AddressDetailsPage>
     <Postcode>#edit-postcode-ca</Postcode>
-    <PostcodeErrorForm>div[class~="invalid"][htmlfor="edit-postcode-ca"]</PostcodeErrorForm>
+    <PostcodeErrorForm>div#edit-postcode-ca-wrapper div.invalid</PostcodeErrorForm>
     <FlatNumber>#edit-street-number-ca</FlatNumber>
     <Street>#edit-street-ca</Street>
     <PostOfficeBox>#edit-pobox-ca</PostOfficeBox>
@@ -44,7 +44,6 @@
 
   <AccountDetailsSection>
     <Fieldset>fieldset#account-setup</Fieldset>
-    <PasswordErrorForm>div[class~="invalid"][htmlfor="edit-password-confirm"]</PasswordErrorForm>
   </AccountDetailsSection>
 
   <PersonalBankAccountDetailsPage>
