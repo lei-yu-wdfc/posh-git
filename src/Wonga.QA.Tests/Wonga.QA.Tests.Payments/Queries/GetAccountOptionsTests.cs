@@ -357,6 +357,69 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual(7, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
+        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        public void Scenario08CustomerRepaidLoanTodayViaScheduledPayment()
+        {
+            var accountId = Guid.NewGuid();
+            var bankAccountId = Guid.NewGuid();
+            var paymentCardId = Guid.NewGuid();
+            var appId = Guid.NewGuid();
+
+            const string extendMinLoanDays = "-1";
+            const string extendLoanDaysBeforeDueDate = "30";
+            const decimal trustRating = 100.00M;
+            const string extendLoanEnabled = "false";
+
+            // Create Account so that time zone can be looked up
+            Driver.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+
+            // Override setting in ServiceConfig Db for ExtendDaysMins
+            var cfg1 = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays");
+            cfg1.Value = extendMinLoanDays;
+            cfg1.Submit();
+
+            // Override setting in ServiceConfig Db for ExtendLoanDaysBeforeDueDate
+            var cfg2 = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanDaysBeforeDueDate");
+            cfg2.Value = extendLoanDaysBeforeDueDate;
+            cfg2.Submit();
+
+            // Override setting in ServiceConfig Db for ExtendDaysMins
+            var cfg3 = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanEnabled");
+            cfg3.Value = extendLoanEnabled;
+            cfg3.Submit();
+
+
+            // Create Application 
+            CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
+
+            Driver.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Driver.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+
+            // Check App Exists in DB
+            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+
+            var trnGuid1 = CreateLoanAdvanceTransaction(appId);
+            var trnGuid2 = CreateTransmissionFeeTransaction(appId);
+
+            // Check transactions have been created
+            Do.Until(() => Driver.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2) == 2);
+
+            // Go to DB and set Application to closed
+            ApplicationEntity app = Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId);
+            app.ClosedOn = DateTime.UtcNow.AddDays(0);
+            var fixAppId = app.ApplicationId;
+            app.Submit(true);
+
+            // Go to DB and set NextDueDate to today
+            FixedTermLoanApplicationEntity fixApp = Driver.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationId == fixAppId);
+            fixApp.NextDueDate = DateTime.UtcNow.AddDays(0);
+            fixApp.Submit(true);
+
+
+            var response = Driver.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(8, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
+        }
+
         #region "Helpers"
 
             private void CreateFixedTermLoanApplication(Guid appId, Guid accountId, Guid bankAccountId, Guid paymentCardId, int dueInDays = 10)
