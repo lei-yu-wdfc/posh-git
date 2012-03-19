@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Threading;
+using Gallio.Framework.Assertions;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
@@ -286,6 +287,18 @@ namespace Wonga.QA.Tests.Ui
             page.Sliders.HowMuch = "400"; // to lost focus
             Thread.Sleep(2000); // wait some time to changes apply, with out this row it's fail
             Assert.AreEqual(minDurationValue.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
+        }
+
+         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-194")]
+        public void WhanCustomerWithLiveLoanTriesTakeLoanSlidersShouldBeBlocked()
+        {
+            var loginPage = Client.Login();
+            string email = Data.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            loginPage.LoginAs(email);
+            Assert.Throws<NullReferenceException>(() => { var page = Client.Home(); });
         }
     }
 }
