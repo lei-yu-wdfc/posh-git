@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Threading;
 using Gallio.Framework.Assertions;
 using MbUnit.Framework;
 using Wonga.QA.Framework.Core;
@@ -212,6 +213,7 @@ namespace Wonga.QA.Tests.Ui
                     accountDetailsPage.AccountDetailsSection.Password = "Passw0rd";
                     accountDetailsPage.AccountDetailsSection.PasswordConfirm = "qweqweqwe";
                     accountDetailsPage.AccountDetailsSection.SecretQuestion = "123124";//to lost focus
+                    Thread.Sleep(500);
                     Assert.IsTrue(accountDetailsPage.AccountDetailsSection.IsPasswordMismatchWarningOccured());
                     break;
                 case AUT.Ca:
@@ -221,10 +223,77 @@ namespace Wonga.QA.Tests.Ui
                     addressDetailsPage.AccountDetailsSection.Password = "Passw0rd";
                     addressDetailsPage.AccountDetailsSection.PasswordConfirm = "qweqweqwe";
                     addressDetailsPage.AccountDetailsSection.SecretQuestion = "12312"; //to lost focus
+                    Thread.Sleep(500);
                     Assert.IsTrue(addressDetailsPage.AccountDetailsSection.IsPasswordMismatchWarningOccured());
                     break;
 
             }
+
+        }
+
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-190")]
+        public void L0JourneyDataOnAcceptedPageShouldBeCorrect()
+        {
+            Journey journey = new Journey(Client.Home());
+            var personalDetailsPage = journey.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
+            string totalAmountOnPersonalDetails = personalDetailsPage.GetTotalAmount + ".00";
+            string totalFeesOnPersonalDetails = personalDetailsPage.GetTotalFees;
+            string totalToRepayOnPersonalDetails = personalDetailsPage.GetTotalToRepay;
+            string repaymentDateOnPersonalDetails = personalDetailsPage.GetRepaymentDate;
+
+            var acceptedPage = journey.FillPersonalDetails("test:EmployedMask")
+                .FillAddressDetails()
+                .FillAccountDetails()
+                .FillBankDetails()
+                .WaitForAcceptedPage()
+                .CurrentPage as AcceptedPage;
+
+            Assert.AreEqual(totalToRepayOnPersonalDetails,acceptedPage.GetTotalToRepay);
+            Assert.AreEqual(repaymentDateOnPersonalDetails, acceptedPage.GetRepaymentDate);
+
+            switch (Config.AUT)
+            {
+                case AUT.Ca:
+                    string[] date = acceptedPage.GetPaymentDueDate.Replace(",", "").Split(' ');
+                    string paymentDate = date[0] + " " + date[2] + " " + date[1].Remove(3) + " " + date[3];
+                    Assert.AreEqual(totalAmountOnPersonalDetails, acceptedPage.GetPrincipalAmountBorrowed);
+                    Assert.AreEqual(totalAmountOnPersonalDetails, acceptedPage.GetPrincipalAmountToBeTransfered);
+                    Assert.AreEqual(totalFeesOnPersonalDetails, acceptedPage.GetTotalCostOfCredit);
+                    Assert.AreEqual(totalToRepayOnPersonalDetails, acceptedPage.GetTotalAmountDueUnderTheAgreement);
+                    Assert.AreEqual(repaymentDateOnPersonalDetails, paymentDate);
+                    break;
+                case AUT.Za:
+                    var dateTime = DateTime.ParseExact(acceptedPage.GetPaymentDueDate, "dddd, d MMMM yyyy", null);
+                    string actualRepaymentDate;
+                    switch (dateTime.Day % 10)
+                    {
+                        case 1:
+                            actualRepaymentDate = (dateTime.Day > 10 && dateTime.Day < 20)
+                                                        ? String.Format("{0:dddd d\\t\\h MMM yyyy}", dateTime)
+                                                        : String.Format("{0:dddd d\\s\\t MMM yyyy}", dateTime);
+                            break;
+                        case 2:
+                            actualRepaymentDate = (dateTime.Day > 10 && dateTime.Day < 20)
+                                                        ? String.Format("{0:dddd d\\t\\h MMM yyyy}", dateTime)
+                                                        : String.Format("{0:dddd d\\n\\d MMM yyyy}", dateTime);
+                            break;
+                        case 3:
+                            actualRepaymentDate = (dateTime.Day > 10 && dateTime.Day < 20)
+                                                        ? String.Format("{0:dddd d\\t\\h MMM yyyy}", dateTime)
+                                                        : String.Format("{0:dddd d\\r\\d MMM yyyy}", dateTime);
+                            break;
+                        default:
+                            actualRepaymentDate = String.Format("{0:dddd d\\t\\h MMM yyyy}", dateTime);
+                            break;
+
+                    }
+
+                    Assert.AreEqual(totalAmountOnPersonalDetails, acceptedPage.GetLoanAmount);
+                    Assert.AreEqual(totalToRepayOnPersonalDetails, acceptedPage.GetTotalToPayOnPaymentDate);
+                    Assert.AreEqual(repaymentDateOnPersonalDetails, actualRepaymentDate);
+                    break;
+            }
+
 
         }
 
