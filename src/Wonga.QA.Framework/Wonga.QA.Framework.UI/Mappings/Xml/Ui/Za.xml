@@ -6,6 +6,7 @@
 		<PopupAccountNumber>#edit-account-number-za</PopupAccountNumber>
 		<PopupLengthOfTime>#edit-bank-period</PopupLengthOfTime>
 		<PopupAddBankAccountButton>#edit-submit</PopupAddBankAccountButton>
+		<PopupExeption>#wonga-my-account-edit-bank-form div:nth-child(1) ul li</PopupExeption>
 	</MyPaymentsPage>
 	
   <ContactingYouSection>

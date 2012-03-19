@@ -221,7 +221,7 @@
   </MySummaryPage>
 
   <MyPaymentsPage>
-    <AddBankAccountButton>//tr[@class='accounts-add-bank']</AddBankAccountButton>
+    <AddBankAccountButton>#accounts tbody tr td table tbody tr:nth-child(3) td a</AddBankAccountButton>
   </MyPaymentsPage>
 
   <SalesForceLoginPage>

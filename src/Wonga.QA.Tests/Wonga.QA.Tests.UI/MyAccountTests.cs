@@ -78,7 +78,8 @@ namespace Wonga.QA.Tests.Ui
 
                 Thread.Sleep(20000); // Wait some time to load popup
 
-                Assert.Throws<AssertionFailureException>(() => { var paymentPage = payment1.AddBankAccount("Capitec", "Current", "7434567", "2 to 3 years"); });
+               var paymentPage = payment1.AddBankAccount("Capitec", "Current", "7434567", "2 to 3 years");
+               Assert.IsTrue(paymentPage.IfHasAnExeption());
             }
             else
             {
@@ -92,8 +93,9 @@ namespace Wonga.QA.Tests.Ui
                 payment2.AddBankAccountButtonClick(); // Click on this button don't work, so i click on it manualy
 
                 Thread.Sleep(20000);// Wait some time to load popup
-                
-                Assert.Throws<AssertionFailureException>(() => { var paymentPage = payment1.AddBankAccount("Capitec", "Current", "7534567", "2 to 3 years"); });
+
+                var paymentPage = payment1.AddBankAccount("Capitec", "Current", "7534567", "2 to 3 years");
+                Assert.IsTrue(paymentPage.IfHasAnExeption());
             }
             else
             {
