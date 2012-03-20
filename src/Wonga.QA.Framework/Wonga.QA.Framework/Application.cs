@@ -68,13 +68,13 @@ namespace Wonga.QA.Framework
 				var utcNow = DateTime.UtcNow;
 
 				ScheduledPaymentSagaEntity sp = Do.Until(() => Driver.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationGuid == Id));
-                Driver.Msmq.Payments.Send(new PaymentTakenCommand { SagaId = sp.Id, ValueDate = utcNow, CreatedOn = utcNow,  ApplicationId = Id, TransactionAmount = GetBalance()});
+				Driver.Msmq.Payments.Send(new PaymentTakenCommand { SagaId = sp.Id, ValueDate = utcNow, CreatedOn = utcNow, ApplicationId = Id, TransactionAmount = GetBalance() });
 				Do.While(sp.Refresh);
 			}
 
 			TransactionEntity transaction = Do.Until(() => Driver.Db.Payments.Applications.Single(
-                a => a.ExternalId == Id).Transactions.Single(t => (PaymentTransactionScopeEnum)t.Scope == PaymentTransactionScopeEnum.Credit && t.Type == Data.EnumToString(
-                    Config.AUT == AUT.Uk ? PaymentTransactionEnum.CardPayment : PaymentTransactionEnum.DirectBankPayment)));
+				a => a.ExternalId == Id).Transactions.Single(t => (PaymentTransactionScopeEnum)t.Scope == PaymentTransactionScopeEnum.Credit && t.Type == Data.EnumToString(
+					Config.AUT == AUT.Uk ? PaymentTransactionEnum.CardPayment : PaymentTransactionEnum.DirectBankPayment)));
 
 			CloseApplicationSagaEntity ca = Do.Until(() => Driver.Db.OpsSagas.CloseApplicationSagaEntities.Single(s => s.TransactionId == transaction.ExternalId));
 			Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = ca.Id });
@@ -97,7 +97,7 @@ namespace Wonga.QA.Framework
 		public void MakeDueToday(ApplicationEntity application)
 		{
 			TimeSpan span = application.FixedTermLoanApplicationEntity.NextDueDate.Value - DateTime.Today;
-            RiskApplicationEntity riskApplication = Driver.Db.Risk.RiskApplications.Single(r => r.ApplicationId == Id);
+			RiskApplicationEntity riskApplication = Driver.Db.Risk.RiskApplications.Single(r => r.ApplicationId == Id);
 
 			RewindApplicationDates(application, riskApplication, span);
 
@@ -106,40 +106,40 @@ namespace Wonga.QA.Framework
 			Do.While(ftl.Refresh);
 		}
 
-        public virtual Application PutApplicationIntoArrears(int daysInArrears)
+		public virtual Application PutApplicationIntoArrears(int daysInArrears)
 		{
-            PutApplicationIntoArrears();
+			PutApplicationIntoArrears();
 
-            Rewind(daysInArrears);
+			Rewind(daysInArrears);
 
-            return this;
+			return this;
 		}
 
-        public virtual Application PutApplicationIntoArrears()
+		public virtual Application PutApplicationIntoArrears()
 		{
-            ApplicationEntity application = Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id);
-            DateTime dueDate = application.FixedTermLoanApplicationEntity.NextDueDate ??
-                              application.FixedTermLoanApplicationEntity.PromiseDate;
-            RiskApplicationEntity riskApplication = Driver.Db.Risk.RiskApplications.Single(r => r.ApplicationId == Id);
+			ApplicationEntity application = Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id);
+			DateTime dueDate = application.FixedTermLoanApplicationEntity.NextDueDate ??
+							  application.FixedTermLoanApplicationEntity.PromiseDate;
+			RiskApplicationEntity riskApplication = Driver.Db.Risk.RiskApplications.Single(r => r.ApplicationId == Id);
 
-            TimeSpan span = dueDate - DateTime.Today;
+			TimeSpan span = dueDate - DateTime.Today;
 
-            RewindApplicationDates(application, riskApplication, span);
+			RewindApplicationDates(application, riskApplication, span);
 
-            ScheduledPostAccruedInterestSagaEntity entity = Driver.Db.OpsSagas.ScheduledPostAccruedInterestSagaEntities.Single(a => a.ApplicationGuid == Id);
-            Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = entity.Id });
+			ScheduledPostAccruedInterestSagaEntity entity = Driver.Db.OpsSagas.ScheduledPostAccruedInterestSagaEntities.Single(a => a.ApplicationGuid == Id);
+			Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = entity.Id });
 
-            FixedTermLoanSagaEntity ftl = Driver.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
-            Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
-            Do.While(ftl.Refresh);
+			FixedTermLoanSagaEntity ftl = Driver.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
+			Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
+			Do.While(ftl.Refresh);
 
-            ScheduledPaymentSagaEntity sp = Do.Until(() => Driver.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationGuid == Id));
-            Driver.Msmq.Payments.Send(new TakePaymentFailedCommand { SagaId = sp.Id, CreatedOn = DateTime.UtcNow, ValueDate = DateTime.UtcNow });
-            Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = sp.Id });
+			ScheduledPaymentSagaEntity sp = Do.Until(() => Driver.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationGuid == Id));
+			Driver.Msmq.Payments.Send(new TakePaymentFailedCommand { SagaId = sp.Id, CreatedOn = DateTime.UtcNow, ValueDate = DateTime.UtcNow });
+			Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = sp.Id });
 
-            Do.Until(() => Driver.Db.Payments.Arrears.Single(s => s.ApplicationId == application.ApplicationId));
+			Do.Until(() => Driver.Db.Payments.Arrears.Single(s => s.ApplicationId == application.ApplicationId));
 
-            return this;
+			return this;
 		}
 
 		public Application CreateRepaymentArrangement()
@@ -168,9 +168,9 @@ namespace Wonga.QA.Framework
 
 		public Application RepayEarly(decimal amount, int dayOfLoanToMakeRepayment)
 		{
-            var daysToRewind = GetAbsoluteDaysToRewind(dayOfLoanToMakeRepayment);
+			var daysToRewind = GetAbsoluteDaysToRewind(dayOfLoanToMakeRepayment);
 
-            Rewind(daysToRewind);
+			Rewind(daysToRewind);
 
 			Guid repaymentRequestId = Guid.NewGuid();
 
@@ -199,34 +199,34 @@ namespace Wonga.QA.Framework
 			return this;
 		}
 
-        /// <summary>
-        /// This metod ASSUMES that there is only one workflow for an application and returns a list of executed checkpoints for it
-        /// </summary>
-        /// <param name="applicationId">The GUID of the application</param>
-        /// <param name="expectedStatus">Optional:The expected status</param>
-        /// <returns>Returns a list of CheckpointDefinitions.Name</returns>
-        public static List<String> GetExecutedCheckpointsDefinitionsForApplicationId(Guid applicationId, params CheckpointStatus[] expectedStatus)
-        {
-            var db = new DbDriver();
-            var riskWorkflowEntity = db.Risk.RiskWorkflows.SingleOrDefault(r => r.ApplicationId == applicationId);
-            var executedCheckpoints = new List<string>();
+		/// <summary>
+		/// This metod ASSUMES that there is only one workflow for an application and returns a list of executed checkpoints for it
+		/// </summary>
+		/// <param name="applicationId">The GUID of the application</param>
+		/// <param name="expectedStatus">Optional:The expected status</param>
+		/// <returns>Returns a list of CheckpointDefinitions.Name</returns>
+		public static List<String> GetExecutedCheckpointsDefinitionsForApplicationId(Guid applicationId, params CheckpointStatus[] expectedStatus)
+		{
+			var db = new DbDriver();
+			var riskWorkflowEntity = db.Risk.RiskWorkflows.SingleOrDefault(r => r.ApplicationId == applicationId);
+			var executedCheckpoints = new List<string>();
 
-            if (riskWorkflowEntity != null)
-            {
-                var executedCheckpointIds = expectedStatus.Any()
-                                                 ? db.Risk.WorkflowCheckpoints.Where(
-                                                     p =>
-                                                     p.RiskWorkflowId == riskWorkflowEntity.RiskWorkflowId &&
-                                                     expectedStatus.Contains((CheckpointStatus)p.CheckpointStatus)).Select(
-                                                         p => p.CheckpointDefinitionId).ToList()
-                                                 : db.Risk.WorkflowCheckpoints.Where(
-                                                     p => p.RiskWorkflowId == riskWorkflowEntity.RiskWorkflowId).
-                                                       Select(p => p.CheckpointDefinitionId).ToList();
-                executedCheckpoints.AddRange(db.Risk.CheckpointDefinitions.Where(p => executedCheckpointIds.Contains(p.CheckpointDefinitionId)).Select(p => p.Name));
-                return executedCheckpoints;
-            }
-            return executedCheckpoints;
-        }
+			if (riskWorkflowEntity != null)
+			{
+				var executedCheckpointIds = expectedStatus.Any()
+												 ? db.Risk.WorkflowCheckpoints.Where(
+													 p =>
+													 p.RiskWorkflowId == riskWorkflowEntity.RiskWorkflowId &&
+													 expectedStatus.Contains((CheckpointStatus)p.CheckpointStatus)).Select(
+														 p => p.CheckpointDefinitionId).ToList()
+												 : db.Risk.WorkflowCheckpoints.Where(
+													 p => p.RiskWorkflowId == riskWorkflowEntity.RiskWorkflowId).
+													   Select(p => p.CheckpointDefinitionId).ToList();
+				executedCheckpoints.AddRange(db.Risk.CheckpointDefinitions.Where(p => executedCheckpointIds.Contains(p.CheckpointDefinitionId)).Select(p => p.Name));
+				return executedCheckpoints;
+			}
+			return executedCheckpoints;
+		}
 
 		/// <summary>
 		/// This method returns a list of checkpoints that were executed for a given Risk Workflow id and an optional array of statuses.
@@ -237,59 +237,59 @@ namespace Wonga.QA.Framework
 		public static List<String> GetExecutedCheckpointDefinitionsForRiskWorkflow(Guid workflowId, params CheckpointStatus[] expectedStatus)
 		{
 			var db = new DbDriver();
-		    var riskWorkflowEntity = db.Risk.RiskWorkflows.SingleOrDefault(r => r.WorkflowId == workflowId);
+			var riskWorkflowEntity = db.Risk.RiskWorkflows.SingleOrDefault(r => r.WorkflowId == workflowId);
 			var executedCheckpoints = new List<string>();
 
-            if (riskWorkflowEntity != null)
-            {
-                var executedCheckpointIds = expectedStatus.Any()
-                                                 ? db.Risk.WorkflowCheckpoints.Where(
-                                                     p =>
-                                                     p.RiskWorkflowId == riskWorkflowEntity.RiskWorkflowId &&
-                                                     expectedStatus.Contains((CheckpointStatus)p.CheckpointStatus)).Select(
-                                                         p => p.CheckpointDefinitionId).ToList()
-                                                 : db.Risk.WorkflowCheckpoints.Where(
-                                                     p => p.RiskWorkflowId == riskWorkflowEntity.RiskWorkflowId).
-                                                       Select(p => p.CheckpointDefinitionId).ToList();
-                executedCheckpoints.AddRange(db.Risk.CheckpointDefinitions.Where(p => executedCheckpointIds.Contains(p.CheckpointDefinitionId)).Select(p => p.Name));
-                return executedCheckpoints;
-            }
+			if (riskWorkflowEntity != null)
+			{
+				var executedCheckpointIds = expectedStatus.Any()
+												 ? db.Risk.WorkflowCheckpoints.Where(
+													 p =>
+													 p.RiskWorkflowId == riskWorkflowEntity.RiskWorkflowId &&
+													 expectedStatus.Contains((CheckpointStatus)p.CheckpointStatus)).Select(
+														 p => p.CheckpointDefinitionId).ToList()
+												 : db.Risk.WorkflowCheckpoints.Where(
+													 p => p.RiskWorkflowId == riskWorkflowEntity.RiskWorkflowId).
+													   Select(p => p.CheckpointDefinitionId).ToList();
+				executedCheckpoints.AddRange(db.Risk.CheckpointDefinitions.Where(p => executedCheckpointIds.Contains(p.CheckpointDefinitionId)).Select(p => p.Name));
+				return executedCheckpoints;
+			}
 			return executedCheckpoints;
 		}
 
-        /// <summary>
-        /// This method returns a list of verifications that were executed for a given Risk Workflow id and an optional array of statuses.
-        /// </summary>
-        /// <param name="workflowId">The GUID of the workflow</param>
-        /// <returns>Returns a list of CheckpointDefinitions.Name</returns>
-        public static List<String> GetExecutedVerificationDefinitionsForRiskWorkflow(Guid workflowId)
-        {
-            var db = new DbDriver();
-            var riskWorkflowEntity = db.Risk.RiskWorkflows.SingleOrDefault(r => r.WorkflowId == workflowId);
-            var executedVerifications = new List<string>();
+		/// <summary>
+		/// This method returns a list of verifications that were executed for a given Risk Workflow id and an optional array of statuses.
+		/// </summary>
+		/// <param name="workflowId">The GUID of the workflow</param>
+		/// <returns>Returns a list of CheckpointDefinitions.Name</returns>
+		public static List<String> GetExecutedVerificationDefinitionsForRiskWorkflow(Guid workflowId)
+		{
+			var db = new DbDriver();
+			var riskWorkflowEntity = db.Risk.RiskWorkflows.SingleOrDefault(r => r.WorkflowId == workflowId);
+			var executedVerifications = new List<string>();
 
-            if (riskWorkflowEntity != null)
-            {
-                var executedVerificationsIds =
-                    db.Risk.WorkflowVerifications.Where(p => p.RiskWorkflowId == riskWorkflowEntity.RiskWorkflowId).
-                        Select(p => p.VerificationDefinitionId).ToList();
+			if (riskWorkflowEntity != null)
+			{
+				var executedVerificationsIds =
+					db.Risk.WorkflowVerifications.Where(p => p.RiskWorkflowId == riskWorkflowEntity.RiskWorkflowId).
+						Select(p => p.VerificationDefinitionId).ToList();
 
-                executedVerifications.AddRange(db.Risk.VerificationDefinitions.Where(p=>executedVerificationsIds.Contains(p.VerificationDefinitionId)).Select(p=>p.Name));
-                return executedVerifications;
-            }
-            return executedVerifications;
-        }
+				executedVerifications.AddRange(db.Risk.VerificationDefinitions.Where(p => executedVerificationsIds.Contains(p.VerificationDefinitionId)).Select(p => p.Name));
+				return executedVerifications;
+			}
+			return executedVerifications;
+		}
 
-        /// <summary>
-        /// This function returns a list of Workflow entities for a given ApplicationId
-        /// </summary>
-        /// <param name="applicationId">The GUID of the application</param>
-        /// <returns></returns>
-        public static  List<RiskWorkflowEntity> GetWorkflowsForApplication(Guid applicationId)
-        {
-            var db = new DbDriver();
-            return db.Risk.RiskWorkflows.Where(p => p.ApplicationId == applicationId).ToList();
-        }
+		/// <summary>
+		/// This function returns a list of Workflow entities for a given ApplicationId
+		/// </summary>
+		/// <param name="applicationId">The GUID of the application</param>
+		/// <returns></returns>
+		public static List<RiskWorkflowEntity> GetWorkflowsForApplication(Guid applicationId)
+		{
+			var db = new DbDriver();
+			return db.Risk.RiskWorkflows.Where(p => p.ApplicationId == applicationId).ToList();
+		}
 
 
 
@@ -297,7 +297,7 @@ namespace Wonga.QA.Framework
 		{
 			// Rewinds a Loans Dates
 			ApplicationEntity application = Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id);
-		    RiskApplicationEntity riskApplication = Driver.Db.Risk.RiskApplications.Single(r => r.ApplicationId == Id);
+			RiskApplicationEntity riskApplication = Driver.Db.Risk.RiskApplications.Single(r => r.ApplicationId == Id);
 
 			if (application.FixedTermLoanApplicationEntity.NextDueDate == null)
 			{
@@ -307,7 +307,7 @@ namespace Wonga.QA.Framework
 			var duration = new TimeSpan(absoluteDays, 0, 0, 0);
 
 			RewindApplicationDates(application, riskApplication, duration);
-        }
+		}
 
 		private static void RewindApplicationDates(ApplicationEntity application, RiskApplicationEntity riskApp, TimeSpan span)
 		{
@@ -318,37 +318,37 @@ namespace Wonga.QA.Framework
 			application.FixedTermLoanApplicationEntity.PromiseDate -= span;
 			application.FixedTermLoanApplicationEntity.NextDueDate -= span;
 			application.Transactions.ForEach(t => t.PostedOn -= span);
-            if (application.ClosedOn != null)
-                application.ClosedOn -= span;
+			if (application.ClosedOn != null)
+				application.ClosedOn -= span;
 
 
-		    riskApp.ApplicationDate -= span;
-            riskApp.PromiseDate -= span;
-            if (riskApp.ClosedOn != null)
-                riskApp.ClosedOn -= span;
-		    riskApp.Submit();
-		    
-        }
+			riskApp.ApplicationDate -= span;
+			riskApp.PromiseDate -= span;
+			if (riskApp.ClosedOn != null)
+				riskApp.ClosedOn -= span;
+			riskApp.Submit();
 
-        public void RewindToDayOfLoanTerm(int dayOfLoanTerm)
-        {
-            var daysToRewind = GetAbsoluteDaysToRewind(dayOfLoanTerm);
+		}
 
-            Rewind(daysToRewind);
+		public void RewindToDayOfLoanTerm(int dayOfLoanTerm)
+		{
+			var daysToRewind = GetAbsoluteDaysToRewind(dayOfLoanTerm);
 
-        }
+			Rewind(daysToRewind);
 
-        private static int GetAbsoluteDaysToRewind(int dayOfLoanToMakeRepayment)
-        {
-            int daysUntilStartOfLoan = 0;
+		}
 
-            if (Config.AUT == AUT.Ca)
-            {
-                daysUntilStartOfLoan = DateHelper.GetNumberOfDaysUntilStartOfLoanForCa();
-            }
+		private static int GetAbsoluteDaysToRewind(int dayOfLoanToMakeRepayment)
+		{
+			int daysUntilStartOfLoan = 0;
 
-            int daysToRewind = daysUntilStartOfLoan + dayOfLoanToMakeRepayment - 1;
-            return daysToRewind;
-        }
+			if (Config.AUT == AUT.Ca)
+			{
+				daysUntilStartOfLoan = DateHelper.GetNumberOfDaysUntilStartOfLoanForCa();
+			}
+
+			int daysToRewind = daysUntilStartOfLoan + dayOfLoanToMakeRepayment - 1;
+			return daysToRewind;
+		}
 	}
 }

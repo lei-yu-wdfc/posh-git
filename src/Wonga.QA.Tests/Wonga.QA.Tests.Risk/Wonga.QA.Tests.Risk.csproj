@@ -40,6 +40,7 @@
     <Compile Include="CustomerData.cs" />
     <Compile Include="CustomerKathleenUk.cs" />
     <Compile Include="CustomerLauraUk.cs" />
+    <Compile Include="Checkpoints\CheckpointReputationPredictionPositiveTests.cs" />
     <Compile Include="EidTests.cs" />
     <Compile Include="Checkpoints\CheckpointApplicationElementNotOnBlacklistTests.cs" />
     <Compile Include="Checkpoints\CheckpointApplicationElementNotOnCSBlacklistTests.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="RiskApiTests\LnRiskApiCheckpointAndVerificationTests.cs" />
     <Compile Include="RiskServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Workflows\WorkflowTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />

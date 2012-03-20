@@ -60,7 +60,6 @@ namespace Wonga.QA.Tests.Api
 
             Driver.Db.UpdateEmployerName(cust.Id, "Wonga");
             ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
-
         }
 
         public abstract class GivenAL0CustomerWithAnOpenLoan
