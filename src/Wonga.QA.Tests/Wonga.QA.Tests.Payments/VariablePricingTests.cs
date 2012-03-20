@@ -32,7 +32,7 @@ namespace Wonga.QA.Tests.Payments
         [TearDown]
         public void TearDown()
         {
-            GetPaymentFunctions.SetCurrentVariableInterestRates(_originalRates);
+            SetPaymentFunctions.SetCurrentVariableInterestRates(_originalRates);
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1472")]
@@ -117,7 +117,6 @@ namespace Wonga.QA.Tests.Payments
             var expectedVariableRates = GetPaymentFunctions.GetCurrentVariableInterestRates();
 
             Assert.IsTrue(VerifyPaymentFunctions.VerifyFixedTermLoanOfferQueryRates(actualVariableRates, expectedVariableRates));
-            SetPaymentFunctions.IncrementVariableInterestRatesMonthlyInterestRate(increment * -1);
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1472")]
@@ -140,8 +139,6 @@ namespace Wonga.QA.Tests.Payments
 
             var actualInterestAmountApplied = GetPaymentFunctions.GetInterestAmountApplied(application.Id);
             Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestCharged(actualInterestAmountApplied, expectedInterestAmountApplied));
-
-            SetPaymentFunctions.IncrementVariableInterestRatesMonthlyInterestRate(increment * -1);
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1472")]
@@ -167,8 +164,6 @@ namespace Wonga.QA.Tests.Payments
             var expectedInterestAmountApplied = CalculateFunctionsCa.CalculateExpectedVariableInterestAmountAppliedCa(loanAmount, loanTerm);
 
             Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestCharged(actualInterestAmountApplied, expectedInterestAmountApplied));
-
-            SetPaymentFunctions.IncrementVariableInterestRatesMonthlyInterestRate(increment * -1);
         }
 
 
