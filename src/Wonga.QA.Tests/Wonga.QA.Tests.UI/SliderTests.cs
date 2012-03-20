@@ -42,6 +42,9 @@ namespace Wonga.QA.Tests.Ui
                 case AUT.Ca:
                     request = new GetFixedTermLoanOfferCaQuery();
                     break;
+                case AUT.Wb:
+                    request = new GetBusinessFixedInstallmentLoanOfferWbUkQuery();
+                    break;
                 default:
                     throw new NotImplementedException();
             }
@@ -111,7 +114,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-156", "QA-238")]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-156", "QA-238")]
         public void L0DefaultAmountSliderValueShouldBeCorrect()
         {
             var page = Client.Home();
@@ -122,6 +125,9 @@ namespace Wonga.QA.Tests.Ui
                     break;
                 case AUT.Ca:
                     Assert.AreEqual(page.Sliders.HowMuch, "265");
+                    break;
+                case AUT.Wb:
+                    Assert.AreEqual(page.Sliders.HowMuch, "9,000");
                     break;
             }
 
