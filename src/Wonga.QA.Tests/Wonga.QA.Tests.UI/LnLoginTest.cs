@@ -11,16 +11,14 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-160")]
         public void LnLogInShouldBeRedirectedToMySummaryPage()
         {
-            //i had done logon through the login page instead of home page.
-            //this will be fixed after the frontend team will solve problems with home page
-            var loginPage = Client.Login();
+            var homePage = Client.Home();
             string email = Data.RandomEmail();
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             Application application = ApplicationBuilder.New(customer)
                 .Build();
             application.RepayOnDueDate();
-            var page = loginPage.LoginAs(email);
+            var page = homePage.Login.LoginAs(email, "Passw0rd");
+
         }
-      
     }
 }

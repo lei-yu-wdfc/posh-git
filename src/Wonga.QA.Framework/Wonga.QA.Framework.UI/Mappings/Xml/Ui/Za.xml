@@ -46,6 +46,13 @@
     <PostcodeErrorForm>div#edit-postcode-za-wrapper div.invalid</PostcodeErrorForm>
   </AddressDetailsPage>
 
+  <AcceptedPage>
+    <DetailsTable>div#agreementscroll div:nth-child(3) table tbody</DetailsTable>
+    <LoanAmount>tr:nth-child(1)>td:nth-child(2)</LoanAmount>
+    <PaymentDueDate>tr:nth-child(6)>td:nth-child(2)</PaymentDueDate>
+    <TotalToPayOnPaymentDate>tr:nth-child(11)>td:nth-child(2)</TotalToPayOnPaymentDate>
+  </AcceptedPage>
+  
   <BankAccountSection>
     <Fieldset>#bank</Fieldset>
     <AccountNumber>#edit-account-number-za</AccountNumber>

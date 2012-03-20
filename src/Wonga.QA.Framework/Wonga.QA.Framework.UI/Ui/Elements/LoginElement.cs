@@ -28,7 +28,7 @@ namespace Wonga.QA.Framework.UI.Elements
             _email = _form.FindElement(By.CssSelector(Ui.Get.LoginElement.Email));
             _password = _form.FindElement(By.CssSelector(Ui.Get.LoginElement.Password));
             _loginButton = _form.FindElement(By.CssSelector(Ui.Get.LoginElement.LoginButton));
-            //Mouse to _loginTrigger to make email and pass fields visible
+            _loginTrigger.Click();
             _email.SendKeys(email);
             _password.SendKeys(password);
             _loginButton.Click();

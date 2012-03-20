@@ -7,16 +7,16 @@ namespace Wonga.QA.Framework.UI
 {
     public class Journey
     {
-        protected String _firstName;
-        protected String _lastName;
+        public String FirstName { get; set; }
+        public String LastName { get; set; }
 
         public BasePage CurrentPage { get; set; }
 
         public Journey(BasePage homePage)
         {
             CurrentPage = homePage as HomePage;
-            _firstName = Data.GetName();
-            _lastName = Data.RandomString(10);
+            FirstName = Data.GetName();
+            LastName = Data.RandomString(10);
         }
         public Journey ApplyForLoan(int amount, int duration)
         {
@@ -41,8 +41,8 @@ namespace Wonga.QA.Framework.UI
             switch (Config.AUT)
             {
                 case AUT.Za:
-                    personalDetailsPage.YourName.FirstName = _firstName;
-                    personalDetailsPage.YourName.LastName = _lastName;
+                    personalDetailsPage.YourName.FirstName = FirstName;
+                    personalDetailsPage.YourName.LastName = LastName;
                     personalDetailsPage.YourName.Title = "Mr";
                     personalDetailsPage.YourDetails.Number = "5710300020087";
                     personalDetailsPage.YourDetails.DateOfBirth = "30/Oct/1957";
@@ -75,9 +75,9 @@ namespace Wonga.QA.Framework.UI
                     personalDetailsPage.ProvinceSection.Province = "British Columbia";
                     Do.Until(() => personalDetailsPage.ProvinceSection.ClosePopup());
 
-                    personalDetailsPage.YourName.FirstName = _firstName;
+                    personalDetailsPage.YourName.FirstName = FirstName;
                     personalDetailsPage.YourName.MiddleName = Data.GetMiddleName();
-                    personalDetailsPage.YourName.LastName = _lastName;
+                    personalDetailsPage.YourName.LastName = LastName;
                     personalDetailsPage.YourName.Title = "Mr";
                     personalDetailsPage.YourDetails.Number = "123213126";
                     personalDetailsPage.YourDetails.DateOfBirth = "1/Jan/1980";
@@ -198,7 +198,7 @@ namespace Wonga.QA.Framework.UI
             switch (Config.AUT)
             {
                 case AUT.Ca:
-                    acceptedPage.SignConfirmCA(date, _firstName, _lastName);
+                    acceptedPage.SignConfirmCA(date, FirstName, LastName);
                     CurrentPage = acceptedPage.Submit() as DealDonePage;
                     break;
                 case AUT.Za:

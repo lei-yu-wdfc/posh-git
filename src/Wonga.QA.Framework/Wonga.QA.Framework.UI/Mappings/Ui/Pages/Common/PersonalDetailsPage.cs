@@ -15,6 +15,8 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String MarriedInCommunityProperty { get; set; }
         public String SliderToggler { get; set; }
         public String TotalToRepay { get; set; }
+        public String TotalAmount { get; set; }
+        public String TotalFees { get; set; }
         public String RepaymentDate { get; set; }
         public String LoanAmount { get; set; }
         public String LoanDuration { get; set; }

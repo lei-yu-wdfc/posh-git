@@ -133,6 +133,8 @@
     <SliderToggler>#slider-toggler</SliderToggler>
     <TotalToRepay>span.loan-total</TotalToRepay>
     <RepaymentDate>span.repayment-date</RepaymentDate>
+    <TotalAmount>span.loan-amount</TotalAmount>
+    <TotalFees>span.loan-fees</TotalFees>
     <LoanAmount>#edit-loan-amount</LoanAmount>
     <LoanDuration>#edit-loan-duration</LoanDuration>
     <AmountMinusButton>#wonga-amount-slider-wrapper button.slider-minus</AmountMinusButton>

@@ -23,5 +23,14 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String DateOfAgreement { get; set; }
         public String ContinueTermsButton { get; set; }
         public String ContinueDirectDebitButton { get; set; }
+
+        public String DetailsTable { get; set; }
+        public String PrincipalAmountBorrowed { get; set; }
+        public String PrincipalAmountToBeTransfered { get; set; }
+        public String TotalCostOfCredit { get; set; }
+        public String TotalAmountDueUnderTheAgreement { get; set; }
+        public String PaymentDueDate { get; set; }
+        public String LoanAmount { get; set; }
+        public String TotalToPayOnPaymentDate { get; set; }
     }
 }

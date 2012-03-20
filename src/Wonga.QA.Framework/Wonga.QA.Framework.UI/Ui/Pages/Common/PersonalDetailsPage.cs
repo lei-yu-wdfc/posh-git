@@ -44,6 +44,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private readonly IWebElement _next;
         private readonly IWebElement _totalToRepay;
         private readonly IWebElement _repaymentDate;
+        private readonly IWebElement _totalAmount;
+        private readonly IWebElement _totalFees;
         private IWebElement _loanAmount;
         private IWebElement _loanDuration;
         private IWebElement _amountMinusButton;
@@ -58,6 +60,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _slidersForm = Content.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.SlidersFormId));
             _totalToRepay = _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.TotalToRepay));
             _repaymentDate = _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.RepaymentDate));
+            _totalAmount = _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.TotalAmount));
+            _totalFees = _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.TotalFees));
             _privacy = _form.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.CheckPrivacyPolicy));
             _contact = _form.FindElements(By.CssSelector(Ui.Get.PersonalDetailsPage.CheckCanContact));
             _next = _form.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.NextButton));
@@ -95,6 +99,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                 _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.DurationMinusButton));
             _durationPlusButton = _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.DurationPlusButton));
 
+        }
+        public String GetTotalAmount
+        {
+            get { return _totalAmount.Text; }
+        }
+        public String GetTotalFees
+        {
+            get { return _totalFees.Text; }
         }
         public String GetTotalToRepay
         {

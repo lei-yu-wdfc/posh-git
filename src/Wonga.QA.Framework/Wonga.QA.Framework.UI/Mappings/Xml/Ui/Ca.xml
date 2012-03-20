@@ -74,6 +74,13 @@
     <DateOfAgreement>#edit-date-of-agreement-ca-datepicker-popup-0</DateOfAgreement>
     <ContinueTermsButton>#edit-continue-terms</ContinueTermsButton>
     <ContinueDirectDebitButton>#edit-continue-debit</ContinueDirectDebitButton>
+
+    <DetailsTable>div.loan-agreement-details-table tbody</DetailsTable>
+    <PrincipalAmountBorrowed>tr:nth-child(2)>td:nth-child(2)</PrincipalAmountBorrowed>
+    <PrincipalAmountToBeTransfered>tr:nth-child(3)>td:nth-child(2)</PrincipalAmountToBeTransfered>
+    <TotalCostOfCredit>tr:nth-child(5)>td:nth-child(2)</TotalCostOfCredit>
+    <TotalAmountDueUnderTheAgreement>tr:nth-child(8)>td:nth-child(2)</TotalAmountDueUnderTheAgreement>
+    <PaymentDueDate>tr:nth-child(9)>td:nth-child(2)</PaymentDueDate>
   </AcceptedPage>
 
   <MyAccountNavigationSection>
