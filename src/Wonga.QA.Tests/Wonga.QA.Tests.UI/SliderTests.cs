@@ -304,5 +304,26 @@ namespace Wonga.QA.Tests.Ui
             loginPage.LoginAs(email);
             Assert.Throws<Exception>(() => { var page = Client.Home(); });
         }
+
+         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-155")]
+         public void MaxAmountSliderValueShouldBeCorrectLn()
+         {
+             var loginPage = Client.Login();
+             string email = Data.RandomEmail();
+             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+             Application application = ApplicationBuilder.New(customer)
+                 .Build();
+             application.RepayOnDueDate();
+             loginPage.LoginAs(email);
+             var homePage = Client.Home();
+             var response = Driver.Db.Risk.RiskAccounts.FirstOrDefault();
+             int creditLimit = (int)response.CreditLimit;
+             int moreThanCreditLimit = (int)response.CreditLimit + 100;
+             homePage.Sliders.HowMuch = moreThanCreditLimit.ToString(CultureInfo.InvariantCulture);
+             homePage.Sliders.HowLong = "10"; //to lost focus
+             Thread.Sleep(1000);
+             Assert.AreEqual(creditLimit.ToString(), homePage.Sliders.HowMuch);
+
+         }
     }
 }
