@@ -118,5 +118,22 @@ namespace Wonga.QA.Framework.ThirdParties
             QueryResult result = client.query(sessionHeader, null, null, null, query);
             return result.records.FirstOrDefault() as Loan_Application__c;
         }
+
+        public Bank_Account__c GetBankAccountById( Guid bankAccountId)
+        {
+            string sessionId;
+            SoapClient client = Login(out sessionId);
+            var sessionHeader = new SessionHeader { sessionId = sessionId };
+
+            var query =
+                String.Format(@"Select b.Account_Number__c, b.Account_Open_Date__c, b.Bank_Name__c, b.Country_Code__c, b.Holder_Name__c, 
+                              b.Sort_Code__c, b.V3_Bank_Account_ID__c
+                              From Bank_Account__c b 
+                              Where b.V3_Bank_Account_ID__c = '{0}'",
+                              bankAccountId);
+
+            QueryResult result = client.query(sessionHeader, null, null, null, query);
+            return result.records.FirstOrDefault() as Bank_Account__c;
+        }
     }
 }

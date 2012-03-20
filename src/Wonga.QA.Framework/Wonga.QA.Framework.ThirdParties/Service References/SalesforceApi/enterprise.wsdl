@@ -43,6 +43,7 @@
               <xsd:element minOccurs="0" name="Available_Credit__c" nillable="true" type="xsd:double" />
               <xsd:element minOccurs="0" name="Average_Loan_Duration__c" nillable="true" type="xsd:double" />
               <xsd:element minOccurs="0" name="Average_Loan_Value__c" nillable="true" type="xsd:double" />
+              <xsd:element minOccurs="0" name="Bank_Account__r" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="BillingCity" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="BillingCountry" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="BillingPostalCode" nillable="true" type="xsd:string" />
@@ -835,6 +836,82 @@
           </xsd:extension>
         </xsd:complexContent>
       </xsd:complexType>
+      <xsd:complexType name="Bank_Account__History">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="ens:sObject">
+            <xsd:sequence>
+              <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:Name" />
+              <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="Field" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="IsDeleted" nillable="true" type="xsd:boolean" />
+              <xsd:element minOccurs="0" name="NewValue" nillable="true" type="xsd:anyType" />
+              <xsd:element minOccurs="0" name="OldValue" nillable="true" type="xsd:anyType" />
+              <xsd:element minOccurs="0" name="Parent" nillable="true" type="ens:Bank_Account__c" />
+              <xsd:element minOccurs="0" name="ParentId" nillable="true" type="tns:ID" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Bank_Account__Tag">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="ens:sObject">
+            <xsd:sequence>
+              <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="IsDeleted" nillable="true" type="xsd:boolean" />
+              <xsd:element minOccurs="0" name="Item" nillable="true" type="ens:Bank_Account__c" />
+              <xsd:element minOccurs="0" name="ItemId" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="Name" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="SystemModstamp" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="TagDefinition" nillable="true" type="ens:TagDefinition" />
+              <xsd:element minOccurs="0" name="TagDefinitionId" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="Type" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Bank_Account__c">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="ens:sObject">
+            <xsd:sequence>
+              <xsd:element minOccurs="0" name="Account_Number__c" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="Account_Open_Date__c" nillable="true" type="xsd:date" />
+              <xsd:element minOccurs="0" name="ActivityHistories" nillable="true" type="tns:QueryResult" />
+              <xsd:element minOccurs="0" name="Attachments" nillable="true" type="tns:QueryResult" />
+              <xsd:element minOccurs="0" name="Bank_Name__c" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="Country_Code__c" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="CreatedBy" nillable="true" type="ens:User" />
+              <xsd:element minOccurs="0" name="CreatedById" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="CurrencyIsoCode" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="Customer_Account__c" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="Customer_Account__r" nillable="true" type="ens:Account" />
+              <xsd:element minOccurs="0" name="Events" nillable="true" type="tns:QueryResult" />
+              <xsd:element minOccurs="0" name="FeedSubscriptionsForEntity" nillable="true" type="tns:QueryResult" />
+              <xsd:element minOccurs="0" name="Histories" nillable="true" type="tns:QueryResult" />
+              <xsd:element minOccurs="0" name="Holder_Name__c" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="IsDeleted" nillable="true" type="xsd:boolean" />
+              <xsd:element minOccurs="0" name="LastActivityDate" nillable="true" type="xsd:date" />
+              <xsd:element minOccurs="0" name="LastModifiedBy" nillable="true" type="ens:User" />
+              <xsd:element minOccurs="0" name="LastModifiedById" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="LastModifiedDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="Name" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="Notes" nillable="true" type="tns:QueryResult" />
+              <xsd:element minOccurs="0" name="NotesAndAttachments" nillable="true" type="tns:QueryResult" />
+              <xsd:element minOccurs="0" name="OpenActivities" nillable="true" type="tns:QueryResult" />
+              <xsd:element minOccurs="0" name="Owner" nillable="true" type="ens:Name" />
+              <xsd:element minOccurs="0" name="OwnerId" nillable="true" type="tns:ID" />
+              <xsd:element minOccurs="0" name="ProcessInstances" nillable="true" type="tns:QueryResult" />
+              <xsd:element minOccurs="0" name="ProcessSteps" nillable="true" type="tns:QueryResult" />
+              <xsd:element minOccurs="0" name="Sort_Code__c" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="SystemModstamp" nillable="true" type="xsd:dateTime" />
+              <xsd:element minOccurs="0" name="Tags" nillable="true" type="tns:QueryResult" />
+              <xsd:element minOccurs="0" name="Tasks" nillable="true" type="tns:QueryResult" />
+              <xsd:element minOccurs="0" name="V3_Bank_Account_ID__c" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
       <xsd:complexType name="BrandTemplate">
         <xsd:complexContent mixed="false">
           <xsd:extension base="ens:sObject">
@@ -1184,6 +1261,7 @@
               <xsd:element minOccurs="0" name="Shares" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="Solutions" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="Status" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="Sub_Reason__c" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="Subject" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="SuppliedCompany" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="SuppliedEmail" nillable="true" type="xsd:string" />

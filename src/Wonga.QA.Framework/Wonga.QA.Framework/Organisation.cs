@@ -27,6 +27,13 @@ namespace Wonga.QA.Framework
             return Drive.Db.Payments.BankAccountsBases.Single(a=>a.BankAccountId == bankAccountId).ExternalId;
         }
 
+        public Guid GetValidBankAccount()
+        {
+            var bankAccountId = Do.Until(() => Driver.Db.Payments.BusinessBankAccounts.Single(b => b.OrganisationId == Id).BankAccountId);
+            return Driver.Db.Payments.BankAccountsBases.Single(a => a.BankAccountId == bankAccountId && a.ValidatedOn != null).ExternalId;
+        }
+
+
         public IEnumerable<DirectorOrganisationMappingEntity> GetSecondaryDirectors()
         {
             return Drive.Db.ContactManagement.DirectorOrganisationMappings.Where(r => r.OrganisationId == Id && r.DirectorLevel == 1);
