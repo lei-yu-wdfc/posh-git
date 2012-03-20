@@ -62,8 +62,8 @@ namespace Wonga.QA.Tests.Api
             ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
         }
 
-		[Test]
-		public void ApiRepayingOnDueDateClosedApplication()
+		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
+		public void ApiRepayingOnDueDateClosesApplication()
 		{
 			var customer = CustomerBuilder.New().Build();
 			var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
