@@ -39,9 +39,6 @@ namespace Wonga.QA.Tests.BankGateway
             }
         }
 
-        /// <summary>
-        /// Cashes the out file is sent.
-        /// </summary>
         [Test, JIRA("UK-495")]
         public void CashOutFileIsSent()
         {
@@ -74,7 +71,7 @@ namespace Wonga.QA.Tests.BankGateway
             Do.Until(() => Driver.Db.BankGateway.Acknowledges.Single(e =>
                 e.TransactionID == transaction.TransactionId
                 && e.AcknowledgeTypeID == 3
-                && !e.HasError)); //3rd faster ack
+                && !e.HasError)); //2nd faster ack
         }
 
         /// <summary>
@@ -111,7 +108,7 @@ namespace Wonga.QA.Tests.BankGateway
         /// Cashes the out file is sent.
         /// </summary>
         [Test, JIRA("UK-495")]
-        public void CashOutFileIsSentFaster3ndAckFailure()
+        public void CashOutFileIsSentFaster3rdAckFailure()
         {
             var accountId = CreateCustomerDetails().AccountId;
             var applicationId = Guid.NewGuid();
@@ -125,7 +122,7 @@ namespace Wonga.QA.Tests.BankGateway
                 BankCode = "161027",
                 Currency = CurrencyCodeIso4217Enum.GBP,
                 BankAccountType = "test",
-                SenderReference = Guid.NewGuid()
+                SenderReference = Guid.NewGuid(),
             });
 
             Do.Until(() => Driver.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId).TransactionStatus == 3);
@@ -142,14 +139,13 @@ namespace Wonga.QA.Tests.BankGateway
                                           FileName = "fielname.txt",
                                           RawContents = "File raw contents",
                                       }
-
                 );
 
             Do.Until(() => Driver.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId).TransactionStatus == 5); //Failure
             Do.Until(() => Driver.Db.BankGateway.Acknowledges.Single(e =>
                 e.TransactionID == transaction.TransactionId
                 && e.AcknowledgeTypeID == 5
-                && e.HasError)); //3rd faster ack
+                && e.HasError)); //3rd ack error for faster payment
         }
 
 
