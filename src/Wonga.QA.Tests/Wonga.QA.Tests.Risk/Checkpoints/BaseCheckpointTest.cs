@@ -9,7 +9,6 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 {
 	public abstract class BaseCheckpointTest
 	{
-
         protected RiskApplicationEntity CreateRiskApplicationUsingApi(RiskMask testMask, ICustomerData customerData)
 		{
 			var customer =
@@ -61,6 +60,5 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 			return application;
 		}
-
 	}
 }

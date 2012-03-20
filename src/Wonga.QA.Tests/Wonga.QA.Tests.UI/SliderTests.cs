@@ -112,7 +112,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
         [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-156", "QA-238")]
-        public void L0DefaultAmountSliderValueShouldBeCorrect()
+        public void DefaultAmountSliderValueShouldBeCorrectL0()
         {
             var page = Client.Home();
             switch (Config.AUT)
@@ -131,7 +131,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-156", "QA-238")]
-        public void LNDefaultAmountSliderValueShouldBeCorrect()
+        public void DefaultAmountSliderValueShouldBeCorrectLn()
         {
             var loginPage = Client.Login();
             string email = Data.RandomEmail();
@@ -152,8 +152,9 @@ namespace Wonga.QA.Tests.Ui
                     break;
             }
         }
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-241", "QA-159")]
-        public void L0DefaultDurationSliderValueShouldBeCorrect()
+
+        [Test, AUT(AUT.Ca), JIRA("QA-241", "QA-159")]
+        public void DefaultDurationSliderValueShouldBeCorrectL0()
         {
             var page = Client.Home();
             switch (Config.AUT)
@@ -177,8 +178,8 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-241", "QA-159")]
-        public void LNDefaultDurationSliderValueShouldBeCorrect()
+        [Test, AUT(AUT.Ca), JIRA("QA-241", "QA-159")]
+        public void DefaultDurationSliderValueShouldBeCorrectLn()
         {
             var loginPage = Client.Login();
             string email = Data.RandomEmail();
@@ -223,8 +224,8 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(minAmountValue.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-239", "QA-158")]
-        public void L0MaxDurationSliderValueShouldBeCorrect()
+        [Test, AUT(AUT.Ca), JIRA("QA-239", "QA-158")]
+        public void MaxDurationSliderValueShouldBeCorrectL0()
         {
             var product = Driver.Db.Payments.Products.FirstOrDefault();
             int maxLoanDuration = product.TermMax;
@@ -236,8 +237,8 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(maxLoanDuration.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-239", "QA-158")]
-        public void LNMaxDurationSliderValueShouldBeCorrect()
+        [Test, AUT(AUT.Ca), JIRA("QA-239", "QA-158")]
+        public void MaxDurationSliderValueShouldBeCorrectLn()
         {
             var loginPage = Client.Login();
             string email = Data.RandomEmail();
@@ -259,7 +260,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-157")]
-        public void L0MinDurationSliderValueShouldBeCorrect()
+        public void MinDurationSliderValueShouldBeCorrectL0()
         {
             var product = Driver.Db.Payments.Products.FirstOrDefault();
             int minDurationValue = (int)product.TermMin;
@@ -272,7 +273,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-157")]
-        public void LNMinDurationSliderValueShouldBeCorrect()
+        public void MinDurationSliderValueShouldBeCorrectLn()
         {
             var loginPage = Client.Login();
             string email = Data.RandomEmail();

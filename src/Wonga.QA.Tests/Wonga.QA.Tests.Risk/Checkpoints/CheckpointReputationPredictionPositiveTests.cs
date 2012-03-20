@@ -8,7 +8,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[Parallelizable(TestScope.All), AUT(AUT.Za)]
+	[Parallelizable(TestScope.All)]
 	class CheckpointReputationPredictionPositiveTests
 	{
 	}
