@@ -62,35 +62,15 @@ namespace Wonga.QA.Tests.Api
             ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
         }
 
-        public abstract class GivenAL0CustomerWithAnOpenLoan
-        {
-            protected Customer Customer;
-            protected Application Application;
+		[Test]
+		public void ApiRepayingOnDueDateClosedApplication()
+		{
+			var customer = CustomerBuilder.New().Build();
+			var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
 
-            [SetUp]
-            public virtual void SetUp()
-            {
-                Customer = CustomerBuilder.New().Build();
-                Application =
-                    ApplicationBuilder.New(Customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
-            }
+			application.RepayOnDueDate();
 
-            public class WhenTheyRepayTheLoanInFull : GivenAL0CustomerWithAnOpenLoan
-            {
-                [SetUp]
-                public override void SetUp()
-                {
-                    base.SetUp();
-
-                    Application.RepayOnDueDate();
-                }
-
-                [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
-                public void ThenTheLoanShouldClose()
-                {
-                    Assert.IsTrue(Application.IsClosed);
-                }
-            }
-        }
+			Assert.IsTrue(application.IsClosed);
+		}
     }
 }
