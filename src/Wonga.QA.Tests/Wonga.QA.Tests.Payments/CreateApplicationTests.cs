@@ -13,7 +13,6 @@ namespace Wonga.QA.Tests.Payments
     public class CreateApplicationTests
     {
         [Test, AUT(AUT.Za), JIRA("ZA-2024")]
-
         public void CreateApplicationDueDayOnSaturdayTest()
         {
             Guid appId = Guid.NewGuid();
@@ -40,6 +39,17 @@ namespace Wonga.QA.Tests.Payments
             while (promiseDate.DayOfWeek != expectedDayOfWeek) promiseDate = promiseDate.AddDays(1);
             Console.WriteLine("Use PromiseDate = {0}", promiseDate);
             return promiseDate;
+        }
+
+        [Test, AUT(AUT.Wb), JIRA("SME-849")]
+        public void PaymentsShouldAddLoanReferenceNumberWhenApplicaitonIsCreated()
+        {
+            var customer = CustomerBuilder.New().Build();
+            var organization = OrganisationBuilder.New(customer).Build();
+            var app = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).
+                Build();
+
+            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == app.Id).LoanReference);
         }
     }
 }
