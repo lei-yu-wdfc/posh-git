@@ -78,7 +78,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(dealDone.GetRapaymentAmount().Remove(0, 1), totalRepayable);
         }
 
-        [Test, AUT(AUT.Ca), JIRA("QA-192"), Pending("CA WIP,RC FE seems broken - postponing the push of the selenium tests")]
+        [Test, AUT(AUT.Ca), JIRA("QA-192"), Pending("GetFixedTermLoanCalculationQuery don't work Wonga.QA.Framework.Api.Exceptions.ValidatorException: Could not process query")]
         public void CorrectDataShouldBeDisplayedOnApplicationSuccessPageForCa()
         {
             int randomAmount = _amountMin + (new Random()).Next(_amountMax - _amountMin);
@@ -93,12 +93,16 @@ namespace Wonga.QA.Tests.Ui
                                  .CurrentPage as ProcessingPage;
 
             var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
-            acceptedPage.SignConfirmCA(DateTime.Now.ToString("d MMM yyyy"), _firstName, _lastName);
+            acceptedPage.SignConfirmCA(DateTime.Now.ToString("d MMM yyyy"), journey.FirstName, journey.LastName);
             var dealDone = acceptedPage.Submit() as DealDonePage;
             // Check data
-
+            DateTime _date = DateTime.Parse(dealDone.GetRepaymentDate());
+            _actualDate = DateTime.Now.AddDays(randomDuration+1);
+            Assert.AreEqual( String.Format(CultureInfo.InvariantCulture, "{0:d MMM yyyy}", _actualDate), String.Format(CultureInfo.InvariantCulture, "{0:d MMM yyyy}", _date));
             // Check amount
-
+            _response = Driver.Api.Queries.Post(new GetFixedTermLoanCalculationQuery { LoanAmount = randomAmount, Term = randomDuration });
+            string totalRepayable = _response.Values["TotalRepayable"].Single();
+            Assert.AreEqual(dealDone.GetRapaymentAmount().Remove(0, 1), totalRepayable);
         }
     }
 }
