@@ -339,13 +339,13 @@ namespace Wonga.QA.Framework
 			application.Transactions.ForEach(t => t.PostedOn -= span);
 			if (application.ClosedOn != null)
 				application.ClosedOn -= span;
-
+            application.Submit(true);
 
 			riskApp.ApplicationDate -= span;
 			riskApp.PromiseDate -= span;
 			if (riskApp.ClosedOn != null)
 				riskApp.ClosedOn -= span;
-			riskApp.Submit();
+			riskApp.Submit(true);
 
 		}
 
