@@ -94,7 +94,7 @@ namespace Wonga.QA.Tests.Ui
             {
                 payment2.AddBankAccountButtonClick();
 
-                Thread.Sleep(5000); // Wait some time to load popup
+                Thread.Sleep(2000); // Wait some time to load popup
 
                 var paymentPage = payment1.AddBankAccount("Capitec", "Current", "7534567", "2 to 3 years");
                 Thread.Sleep(2000); // Wait some time before assert
