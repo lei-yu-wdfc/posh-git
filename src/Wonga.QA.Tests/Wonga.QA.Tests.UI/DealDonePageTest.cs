@@ -50,12 +50,12 @@ namespace Wonga.QA.Tests.Ui
             _termMin = Int32.Parse(_response.Values["TermMin"].Single(), CultureInfo.InvariantCulture);
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-192"), Pending("za.rc.commands.api.xsd is not properly configured")]
+        [Test, AUT(AUT.Za), JIRA("QA-192")]
         public void CorrectDataShouldBeDisplayedOnApplicationSuccessPageForZa()
         {
             int randomAmount = _amountMin + (new Random()).Next(_amountMax - _amountMin);
             int randomDuration = _termMin + (new Random()).Next(_termMax - _termMin);
-            
+
             var journey = new Journey(Client.Home());
             var processingPage = journey.ApplyForLoan(randomAmount, randomDuration)
                                  .FillPersonalDetails("test:EmployedMask")
@@ -68,17 +68,15 @@ namespace Wonga.QA.Tests.Ui
             acceptedPage.SignAgreementConfirm();
             acceptedPage.SignDirectDebitConfirm();
             var dealDone = acceptedPage.Submit() as DealDonePage;
-            // Check data
-            string[] dateArray = dealDone.GetRepaymentDate().Split(' ');
-            string day = Char.IsDigit(dateArray[1].ElementAt(1)) ? dateArray[1].Remove(2, 2) : dateArray[1].Remove(1, 2);
-            _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
+            // Check date
+            DateTime _date = DateTime.Parse(dealDone.GetRepaymentDate());
             _actualDate = DateTime.Now.AddDays(randomDuration);
-            Assert.AreEqual(_repaymentDate, String.Format(CultureInfo.InvariantCulture, "{0:d MMM yyyy}", _actualDate));
+            Assert.AreEqual(String.Format(CultureInfo.InvariantCulture, "{0:d MMM yyyy}", _date), String.Format(CultureInfo.InvariantCulture, "{0:d MMM yyyy}", _actualDate));
             // Check amount
             _response = Driver.Api.Queries.Post(new GetFixedTermLoanCalculationZaQuery { LoanAmount = randomAmount, Term = randomDuration });
             string totalRepayable = _response.Values["TotalRepayable"].Single();
             Assert.AreEqual(dealDone.GetRapaymentAmount().Remove(0, 1), totalRepayable);
-            }
+        }
 
         [Test, AUT(AUT.Ca), JIRA("QA-192"), Pending("CA WIP,RC FE seems broken - postponing the push of the selenium tests")]
         public void CorrectDataShouldBeDisplayedOnApplicationSuccessPageForCa()
@@ -88,7 +86,7 @@ namespace Wonga.QA.Tests.Ui
 
             var journey = new Journey(Client.Home());
             var processingPage = journey.ApplyForLoan(randomAmount, randomDuration)
-                                 .FillPersonalDetails("test:EmployedMask")
+                                 .FillPersonalDetails(Data.EnumToString(RiskMask.TESTEmployedMask))
                                  .FillAddressDetails()
                                  .FillAccountDetails()
                                  .FillBankDetails()
@@ -98,9 +96,9 @@ namespace Wonga.QA.Tests.Ui
             acceptedPage.SignConfirmCA(DateTime.Now.ToString("d MMM yyyy"), _firstName, _lastName);
             var dealDone = acceptedPage.Submit() as DealDonePage;
             // Check data
-           
+
             // Check amount
-            
+
         }
     }
 }
