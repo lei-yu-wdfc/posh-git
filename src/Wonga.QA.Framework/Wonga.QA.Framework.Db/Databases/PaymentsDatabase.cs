@@ -1805,8 +1805,6 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private System.Nullable<System.DateTime> _DeclinedOn;
 		
-		private System.Nullable<byte> _Decision;
-		
 		private string _LoanReference;
 		
 		private EntitySet<AccountsApplicationEntity> _AccountsApplications;
@@ -2206,26 +2204,6 @@ namespace Wonga.QA.Framework.Db.Payments
 					this._DeclinedOn = value;
 					this.SendPropertyChanged("DeclinedOn");
 					this.OnDeclinedOnChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Decision", DbType="TinyInt", UpdateCheck=UpdateCheck.Never)]
-		public System.Nullable<byte> Decision
-		{
-			get
-			{
-				return this._Decision;
-			}
-			set
-			{
-				if ((this._Decision != value))
-				{
-					this.OnDecisionChanging(value);
-					this.SendPropertyChanging();
-					this._Decision = value;
-					this.SendPropertyChanged("Decision");
-					this.OnDecisionChanged();
 				}
 			}
 		}
