@@ -9,11 +9,6 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	[Parallelizable(TestScope.All)]
     public class CheckpointApplicationDeviceNotOnBlacklistTests
     {
-        /* Brian can you please review me ? 
-         * Please check the data in those enums if it matches exactly what you wanna test 
-         * Delete me after
-         */
-        
         private readonly string _testMask = RiskMask.TESTDeviceNotOnBlacklist.ToString();
 
         [Test, AUT(AUT.Ca, AUT.Uk), JIRA("CA-1735")]

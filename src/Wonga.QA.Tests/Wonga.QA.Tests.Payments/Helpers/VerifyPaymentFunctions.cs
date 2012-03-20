@@ -7,6 +7,7 @@ using Gallio.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Payments;
+using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Payments.Enums;
 
 namespace Wonga.QA.Tests.Payments.Helpers
@@ -54,20 +55,29 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
         public static bool VerifyApplicationClosed(Guid applicationGuid)
         {
-            var row = Driver.Db.Payments.Applications.Single(a => a.ExternalId == applicationGuid);
+            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == applicationGuid).ClosedOn != null);
 
-            for (var seconds = 0; seconds < 60; seconds++)
-            {
-                Driver.Db.Payments.Refresh(RefreshMode.KeepChanges, row);
-                if (row.ClosedOn != null)
-                {
-                    TestLog.DebugTrace.WriteLine("VerifyApplicationClosed -> {0} -> true @ {1}\n", applicationGuid, row.ClosedOn);
-                    return true;
-                }
-                Thread.Sleep(1000);
-            }
-            TestLog.DebugTrace.WriteLine("VerifyApplicationClosed -> {0} -> false\n", applicationGuid);
-            return false;
+            return true;
+        }
+
+        public static bool VerifyApplicationNotClosed(Guid applicationGuid)
+        {
+            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == applicationGuid).ClosedOn == null);
+
+            return true;
+        }
+
+        public static bool VerifyApplicationNotClosedAfterCashIn(Guid applicationGuid)
+        {
+            Do.Until(() => Driver.Db.Payments.Applications.Single(
+                a => a.ExternalId == applicationGuid).Transactions.Single(
+                    t =>
+                    (PaymentTransactionScopeEnum)t.Scope == PaymentTransactionScopeEnum.Credit && t.Type == Data.EnumToString(
+                        Config.AUT == AUT.Uk ? PaymentTransactionEnum.CardPayment : PaymentTransactionEnum.DirectBankPayment)));
+
+            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == applicationGuid).ClosedOn == null);
+
+            return true;
         }
 
         public static bool VerifyApplicationInArrears(Guid applicationGuid)

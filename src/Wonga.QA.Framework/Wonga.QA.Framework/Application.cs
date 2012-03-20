@@ -72,20 +72,34 @@ namespace Wonga.QA.Framework
 				Do.While(sp.Refresh);
 			}
 
-			TransactionEntity transaction = Do.Until(() => Driver.Db.Payments.Applications.Single(
-				a => a.ExternalId == Id).Transactions.Single(t => (PaymentTransactionScopeEnum)t.Scope == PaymentTransactionScopeEnum.Credit && t.Type == Data.EnumToString(
-					Config.AUT == AUT.Uk ? PaymentTransactionEnum.CardPayment : PaymentTransactionEnum.DirectBankPayment)));
+			var transaction = WaitForDirectBankPaymentCreditTransaction();
 
-			CloseApplicationSagaEntity ca = Do.Until(() => Driver.Db.OpsSagas.CloseApplicationSagaEntities.Single(s => s.TransactionId == transaction.ExternalId));
-			Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = ca.Id });
-			Do.While(ca.Refresh);
+			TimeoutCloseApplicationSaga(transaction);
 
-			Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).ClosedOn);
+		    Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).ClosedOn);
 
 			return this;
 		}
 
-		public Application MakeDueToday()
+	    private static void TimeoutCloseApplicationSaga(TransactionEntity transaction)
+	    {
+	        CloseApplicationSagaEntity ca =
+	            Do.Until(
+	                () => Driver.Db.OpsSagas.CloseApplicationSagaEntities.Single(s => s.TransactionId == transaction.ExternalId));
+	        Driver.Msmq.Payments.Send(new TimeoutMessage {SagaId = ca.Id});
+	        Do.While(ca.Refresh);
+	    }
+
+	    private TransactionEntity WaitForDirectBankPaymentCreditTransaction()
+	    {
+	        return Do.Until(() => Driver.Db.Payments.Applications.Single(
+	            a => a.ExternalId == Id).Transactions.Single(
+	                t =>
+	                (PaymentTransactionScopeEnum) t.Scope == PaymentTransactionScopeEnum.Credit && t.Type == Data.EnumToString(
+	                    Config.AUT == AUT.Uk ? PaymentTransactionEnum.CardPayment : PaymentTransactionEnum.DirectBankPayment)));
+	    }
+
+	    public Application MakeDueToday()
 		{
 			ApplicationEntity application = Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id);
 
@@ -192,9 +206,14 @@ namespace Wonga.QA.Framework
 					Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).ApplicationId;
 
 				RepaymentSagaEntity sp = Do.Until(() => Driver.Db.OpsSagas.RepaymentSagaEntities.Single(s => s.ApplicationId == applicationid));
-				Driver.Msmq.Payments.Send(new PaymentTakenCommand { SagaId = sp.Id, ValueDate = utcNow, CreatedOn = utcNow });
+                Driver.Msmq.Payments.Send(new PaymentTakenCommand { SagaId = sp.Id, ValueDate = utcNow, CreatedOn = utcNow, ApplicationId = Id });
 				Do.While(sp.Refresh);
 			}
+
+            var transaction = WaitForDirectBankPaymentCreditTransaction();
+
+            // Not sure this should be a part of this method 
+            TimeoutCloseApplicationSaga(transaction);
 
 			return this;
 		}

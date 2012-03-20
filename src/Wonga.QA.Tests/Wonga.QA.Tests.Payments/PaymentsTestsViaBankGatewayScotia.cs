@@ -43,7 +43,7 @@ namespace Wonga.QA.Tests.Payments
             const decimal loanAmount = 100;
             const int dayOfLoanTermToRepay = 5;
             const int earlyRepaymentAmount = 104;
-            SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
+            ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
 
             var customer = CustomerBuilder.New().ForProvince(ProvinceEnum.ON).Build();
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
@@ -82,7 +82,7 @@ namespace Wonga.QA.Tests.Payments
             const decimal loanAmount = 100;
             const int dayOfLoanTermToRepay = 5;
             const int earlyRepaymentAmount = 102;
-            SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
+            ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
 
             var customer = CustomerBuilder.New().ForProvince(ProvinceEnum.ON).Build();
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
@@ -149,7 +149,7 @@ namespace Wonga.QA.Tests.Payments
             const int dayOfLoanTermToRepay = 5;
             const int earlyRepaymentAmount = 104;
             const int overpayAmount = 10;
-            SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
+            ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
 
             var customer = CustomerBuilder.New().ForProvince(ProvinceEnum.ON).Build();
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
@@ -192,7 +192,7 @@ namespace Wonga.QA.Tests.Payments
             const decimal loanAmount = 100;
             const int dayOfLoanTermToRepay = 5;
             const int earlyRepaymentAmount = 50;
-            SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
+            ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
 
             var customer = CustomerBuilder.New().ForProvince(ProvinceEnum.ON).Build();
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
@@ -228,7 +228,7 @@ namespace Wonga.QA.Tests.Payments
             const decimal loanAmount = 100;
             const int dayOfLoanTermToRepay = 5;
             const int earlyRepaymentAmount = 104;
-            SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
+            ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
 
             var customer = CustomerBuilder.New().ForProvince(ProvinceEnum.ON).Build();
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
@@ -262,7 +262,7 @@ namespace Wonga.QA.Tests.Payments
             const decimal loanAmount = 100;
             const int daysInArrears = 5;
             const decimal repaymentAmount = 130.45m;
-            SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
+            ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
 
             var customer = CustomerBuilder.New().ForProvince(ProvinceEnum.ON).Build();
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();

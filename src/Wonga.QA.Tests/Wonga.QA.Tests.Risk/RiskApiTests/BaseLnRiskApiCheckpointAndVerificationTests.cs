@@ -62,7 +62,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 
 			Application application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
 
-			application.RepayEarly(application.LoanAmount, 1);
+            application.RepayOnDueDate();
 
 			return application;
 		}
