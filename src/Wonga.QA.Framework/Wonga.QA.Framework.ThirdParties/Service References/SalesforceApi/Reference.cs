@@ -15319,6 +15319,8 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         
         private QueryResult attachmentsField;
         
+        private string cCIN__cField;
+        
         private QueryResult cases__rField;
         
         private User createdByField;
@@ -15525,6 +15527,18 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=5)]
+        public string CCIN__c {
+            get {
+                return this.cCIN__cField;
+            }
+            set {
+                this.cCIN__cField = value;
+                this.RaisePropertyChanged("CCIN__c");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=6)]
         public QueryResult Cases__r {
             get {
                 return this.cases__rField;
@@ -15536,7 +15550,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=6)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=7)]
         public User CreatedBy {
             get {
                 return this.createdByField;
@@ -15548,7 +15562,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=7)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=8)]
         public string CreatedById {
             get {
                 return this.createdByIdField;
@@ -15560,7 +15574,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=8)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=9)]
         public System.Nullable<System.DateTime> CreatedDate {
             get {
                 return this.createdDateField;
@@ -15584,7 +15598,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=9)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=10)]
         public string CurrencyIsoCode {
             get {
                 return this.currencyIsoCodeField;
@@ -15596,7 +15610,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=10)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=11)]
         public string Customer_Account__c {
             get {
                 return this.customer_Account__cField;
@@ -15608,7 +15622,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=11)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=12)]
         public Account Customer_Account__r {
             get {
                 return this.customer_Account__rField;
@@ -15620,7 +15634,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=12)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=13)]
         public QueryResult Events {
             get {
                 return this.eventsField;
@@ -15632,7 +15646,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=13)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=14)]
         public QueryResult FeedSubscriptionsForEntity {
             get {
                 return this.feedSubscriptionsForEntityField;
@@ -15644,7 +15658,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=14)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=15)]
         public QueryResult Guarantors__r {
             get {
                 return this.guarantors__rField;
@@ -15656,7 +15670,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=15)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=16)]
         public QueryResult Histories {
             get {
                 return this.historiesField;
@@ -15668,7 +15682,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=16)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=17)]
         public System.Nullable<double> Initiation_Fee__c {
             get {
                 return this.initiation_Fee__cField;
@@ -15692,7 +15706,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=17)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=18)]
         public System.Nullable<bool> IsDeleted {
             get {
                 return this.isDeletedField;
@@ -15716,7 +15730,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType="date", IsNullable=true, Order=18)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType="date", IsNullable=true, Order=19)]
         public System.Nullable<System.DateTime> LastActivityDate {
             get {
                 return this.lastActivityDateField;
@@ -15740,7 +15754,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=19)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=20)]
         public User LastModifiedBy {
             get {
                 return this.lastModifiedByField;
@@ -15752,7 +15766,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=20)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=21)]
         public string LastModifiedById {
             get {
                 return this.lastModifiedByIdField;
@@ -15764,7 +15778,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=21)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=22)]
         public System.Nullable<System.DateTime> LastModifiedDate {
             get {
                 return this.lastModifiedDateField;
@@ -15788,7 +15802,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=22)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=23)]
         public System.Nullable<double> Loan_Amount__c {
             get {
                 return this.loan_Amount__cField;
@@ -15812,7 +15826,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=23)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=24)]
         public QueryResult Manual_Verifications__r {
             get {
                 return this.manual_Verifications__rField;
@@ -15824,7 +15838,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=24)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=25)]
         public System.Nullable<double> Monthly_Interest_Rate__c {
             get {
                 return this.monthly_Interest_Rate__cField;
@@ -15848,7 +15862,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=25)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=26)]
         public string Name {
             get {
                 return this.nameField;
@@ -15860,7 +15874,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType="date", IsNullable=true, Order=26)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType="date", IsNullable=true, Order=27)]
         public System.Nullable<System.DateTime> Next_Due_Date__c {
             get {
                 return this.next_Due_Date__cField;
@@ -15884,7 +15898,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=27)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=28)]
         public QueryResult Notes {
             get {
                 return this.notesField;
@@ -15896,7 +15910,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=28)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=29)]
         public QueryResult NotesAndAttachments {
             get {
                 return this.notesAndAttachmentsField;
@@ -15908,7 +15922,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=29)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=30)]
         public System.Nullable<double> Number_Of_Weeks__c {
             get {
                 return this.number_Of_Weeks__cField;
@@ -15932,7 +15946,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=30)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=31)]
         public QueryResult OpenActivities {
             get {
                 return this.openActivitiesField;
@@ -15944,7 +15958,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=31)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=32)]
         public QueryResult ProcessInstances {
             get {
                 return this.processInstancesField;
@@ -15956,7 +15970,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=32)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=33)]
         public QueryResult ProcessSteps {
             get {
                 return this.processStepsField;
@@ -15968,7 +15982,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType="date", IsNullable=true, Order=33)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType="date", IsNullable=true, Order=34)]
         public System.Nullable<System.DateTime> Promise_Date__c {
             get {
                 return this.promise_Date__cField;
@@ -15992,7 +16006,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=34)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=35)]
         public System.Nullable<double> Service_Fee__c {
             get {
                 return this.service_Fee__cField;
@@ -16016,7 +16030,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=35)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=36)]
         public System.Nullable<System.DateTime> SignedOn__c {
             get {
                 return this.signedOn__cField;
@@ -16040,7 +16054,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=36)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=37)]
         public System.Nullable<double> Status_ID__c {
             get {
                 return this.status_ID__cField;
@@ -16064,7 +16078,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=37)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=38)]
         public string Status__c {
             get {
                 return this.status__cField;
@@ -16076,7 +16090,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=38)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=39)]
         public System.Nullable<System.DateTime> SystemModstamp {
             get {
                 return this.systemModstampField;
@@ -16100,7 +16114,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=39)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=40)]
         public QueryResult Tags {
             get {
                 return this.tagsField;
@@ -16112,7 +16126,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=40)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=41)]
         public QueryResult Tasks {
             get {
                 return this.tasksField;
@@ -16124,7 +16138,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=41)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=42)]
         public QueryResult Transactions__r {
             get {
                 return this.transactions__rField;
@@ -16136,7 +16150,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=42)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=43)]
         public System.Nullable<double> Transmission_Fee__c {
             get {
                 return this.transmission_Fee__cField;
@@ -16160,7 +16174,7 @@ namespace Wonga.QA.Framework.ThirdParties.SalesforceApi {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=43)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=44)]
         public string V3_Application_Id__c {
             get {
                 return this.v3_Application_Id__cField;
