@@ -20,7 +20,7 @@ namespace Wonga.QA.Tests.Payments
 
 			var accountPreferences = Do.Until(() => Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == customer.Id));
 
-			decimal repaymentAmount = application.GetBalance();
+		    decimal repaymentAmount = application.LoanAmount;
 
 			var cmd = new RepayLoanInternalViaOnlineBillPaymentCommand
 			                                                   	{
