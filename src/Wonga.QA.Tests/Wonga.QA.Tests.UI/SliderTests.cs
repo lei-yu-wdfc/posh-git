@@ -302,7 +302,7 @@ namespace Wonga.QA.Tests.Ui
             Application application = ApplicationBuilder.New(customer)
                 .Build();
             loginPage.LoginAs(email);
-            Assert.Throws<NullReferenceException>(() => { var page = Client.Home(); });
+            Assert.Throws<Exception>(() => { var page = Client.Home(); });
         }
     }
 }
