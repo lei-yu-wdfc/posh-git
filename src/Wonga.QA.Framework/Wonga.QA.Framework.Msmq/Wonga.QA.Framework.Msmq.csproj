@@ -208,6 +208,7 @@
     <Compile Include="Messages\CreateRepaymentArrangementThankYouDoNotRelendEmailZaCommand.cs" />
     <Compile Include="Messages\CreateRepaymentArrangementThankYouEmailCompleteZaCommand.cs" />
     <Compile Include="Messages\CreateRepaymentArrangementThankYouEmailZaCommand.cs" />
+    <Compile Include="Messages\CreateScheduledPaymentRequestCommand.cs" />
     <Compile Include="Messages\CreateTopUpDocumentCommand.cs" />
     <Compile Include="Messages\CreateTransactionCommand.cs" />
     <Compile Include="Messages\CreateTransactionCsCommand.cs" />
@@ -304,7 +305,6 @@
     <Compile Include="Messages\IBankAccountDeactivatedEvent.cs" />
     <Compile Include="Messages\IBankAccountDeletedEvent.cs" />
     <Compile Include="Messages\IBankAccountSetPrimaryEvent.cs" />
-    <Compile Include="Messages\IBankAccountValidatedEvent.cs" />
     <Compile Include="Messages\IBusinessApplicationAcceptedEvent.cs" />
     <Compile Include="Messages\IBusinessApplicationAddedEvent.cs" />
     <Compile Include="Messages\IBusinessApplicationDeclinedEvent.cs" />
@@ -520,7 +520,6 @@
     <Compile Include="Messages\IUnsignedPersonalGuaranteeAddedToLegalRepositoryInternalWbUkEvent.cs" />
     <Compile Include="Messages\IUnsignedPersonalGuaranteeAddedToLegalRepositoryWbUkEvent.cs" />
     <Compile Include="Messages\IUnsignedPersonalGuaranteeCreatedAndStoredWbUkEvent.cs" />
-    <Compile Include="Messages\IWantToValidateBankAccountEvent.cs" />
     <Compile Include="Messages\IWorkflowAcceptedEvent.cs" />
     <Compile Include="Messages\IWorkflowDecisionInternalEvent.cs" />
     <Compile Include="Messages\IWorkflowDecisionPublicEvent.cs" />
@@ -740,6 +739,7 @@
     <Compile Include="Messages\UpdateOrganisationVatNumberCommand.cs" />
     <Compile Include="Messages\UpdateSagaTimeoutCommand.cs" />
     <Compile Include="Messages\UpdateScheduleCallReportCommand.cs" />
+    <Compile Include="Messages\UpdateScheduledPaymentRequestStatusCommand.cs" />
     <Compile Include="Messages\UpdateScheduleExperianBulkCommand.cs" />
     <Compile Include="Messages\UpdateSortCodeTableUkCommand.cs" />
     <Compile Include="Messages\UpdateTimezoneCommand.cs" />
@@ -779,6 +779,7 @@
     <Compile Include="Enums\ProductEnum.cs" />
     <Compile Include="Enums\ProvinceEnum.cs" />
     <Compile Include="Enums\PwdResetKeyComplexityEnum.cs" />
+    <Compile Include="Enums\RepaymentRequestStatusEnum.cs" />
     <Compile Include="Enums\RiskPriceTierEnum.cs" />
     <Compile Include="Enums\RiskProductEnum.cs" />
     <Compile Include="Enums\SchedulePeriodEnum.cs" />

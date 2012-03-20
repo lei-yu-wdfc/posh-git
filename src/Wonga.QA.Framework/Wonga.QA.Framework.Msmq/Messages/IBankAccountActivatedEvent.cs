@@ -8,6 +8,7 @@ namespace Wonga.QA.Framework.Msmq
     [XmlRoot("IBankAccountActivated", Namespace = "Wonga.Payments.PublicMessages", DataType = "Wonga.Payments.PublicMessages.IPaymentsEvent")]
     public partial class IBankAccountActivatedEvent : MsmqMessage<IBankAccountActivatedEvent>
     {
+        public Guid AccountId { get; set; }
         public Guid BankAccountId { get; set; }
         public DateTime CreatedOn { get; set; }
     }
