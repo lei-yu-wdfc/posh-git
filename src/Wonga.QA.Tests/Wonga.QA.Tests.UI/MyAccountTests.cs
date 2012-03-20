@@ -4,6 +4,7 @@ using System.Threading;
 using MbUnit.Framework;
 using OpenQA.Selenium;
 using Wonga.QA.Framework;
+using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
@@ -32,7 +33,7 @@ namespace Wonga.QA.Tests.Ui
         {
             var journey1 = new Journey(Client.Home());
             var bankDetailsPage1 = journey1.ApplyForLoan(200, 10)
-                                      .FillPersonalDetails("test:EmployedMask")
+                                      .FillPersonalDetails(Data.EnumToString(RiskMask.TESTEmployedMask))
                                       .FillAddressDetails()
                                       .FillAccountDetails()
                                       .CurrentPage as PersonalBankAccountPage;
@@ -46,7 +47,7 @@ namespace Wonga.QA.Tests.Ui
 
             var journey2 = new Journey(Client.Home());
             var bankDetailsPage2 = journey2.ApplyForLoan(200, 10)
-                                      .FillPersonalDetails("test:EmployedMask")
+                                      .FillPersonalDetails(Data.EnumToString(RiskMask.TESTEmployedMask))
                                       .FillAddressDetails()
                                       .FillAccountDetails()
                                       .CurrentPage as PersonalBankAccountPage;
