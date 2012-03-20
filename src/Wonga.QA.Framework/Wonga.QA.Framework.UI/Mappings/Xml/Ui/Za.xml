@@ -1,5 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Ui>
+	<MyPaymentsPage>
+		<PopupBankName>#edit-bank-name</PopupBankName>
+		<PopupBankAccountType>#edit-bank-account-type</PopupBankAccountType>
+		<PopupAccountNumber>#edit-account-number-za</PopupAccountNumber>
+		<PopupLengthOfTime>#edit-bank-period</PopupLengthOfTime>
+		<PopupAddBankAccountButton>#edit-submit</PopupAddBankAccountButton>
+		<PopupExeption>#wonga-my-account-edit-bank-form div:nth-child(1) ul li</PopupExeption>
+	</MyPaymentsPage>
+	
   <ContactingYouSection>
     <HomePhone>#edit-home-phone-za</HomePhone>
     <MobilePhone>#edit-mobile-phone-za</MobilePhone>
