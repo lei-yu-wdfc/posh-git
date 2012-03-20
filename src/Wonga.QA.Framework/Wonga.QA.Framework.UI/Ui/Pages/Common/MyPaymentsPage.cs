@@ -32,7 +32,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     case AUT.Za:
                     case AUT.Ca:  //TODO find out what xpath for button on Ca
                         _addBankAccountButton =
-                            Client.Driver.FindElement(By.XPath(Ui.Get.MyPaymentsPage.AddBankAccountButton));
+                            Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPaymentsPage.AddBankAccountButton));
                         break;
                 }
             }
