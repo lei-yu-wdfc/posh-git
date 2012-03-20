@@ -60,7 +60,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.Throws<AssertionFailureException>(() => { var processingPage = bankDetailsPage2.Next(); });
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-202"), Pending("Click on add bank account button don't work")]
+        [Test, AUT(AUT.Za), JIRA("QA-202")]
         public void LNJourneyInvalidAccountNumberShouldCauseWarningMessageOnNextPage()
         {
             var loginPage = Client.Login();
@@ -75,12 +75,13 @@ namespace Wonga.QA.Tests.Ui
 
             if (payment1.IsAddBankAccountButtonExists())
             {
-                payment1.AddBankAccountButtonClick(); // Click on this button don't work, so i click on it manualy
+                payment1.AddBankAccountButtonClick();
 
-                Thread.Sleep(20000); // Wait some time to load popup
+                Thread.Sleep(2000); // Wait some time to load popup
 
-               var paymentPage = payment1.AddBankAccount("Capitec", "Current", "7434567", "2 to 3 years");
-               Assert.IsTrue(paymentPage.IfHasAnExeption());
+                var paymentPage = payment1.AddBankAccount("Capitec", "Current", "7434567", "2 to 3 years");
+                Thread.Sleep(2000); // Wait some time before assert
+                Assert.IsTrue(paymentPage.IfHasAnExeption());
             }
             else
             {
@@ -91,11 +92,12 @@ namespace Wonga.QA.Tests.Ui
 
             if (payment2.IsAddBankAccountButtonExists())
             {
-                payment2.AddBankAccountButtonClick(); // Click on this button don't work, so i click on it manualy
+                payment2.AddBankAccountButtonClick();
 
-                Thread.Sleep(20000);// Wait some time to load popup
+                Thread.Sleep(5000); // Wait some time to load popup
 
                 var paymentPage = payment1.AddBankAccount("Capitec", "Current", "7534567", "2 to 3 years");
+                Thread.Sleep(2000); // Wait some time before assert
                 Assert.IsTrue(paymentPage.IfHasAnExeption());
             }
             else
