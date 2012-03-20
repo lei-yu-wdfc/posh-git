@@ -235,8 +235,10 @@ namespace Wonga.QA.Tests.Payments
 					{
 						//Payday of month - 1
 						var selfReportedPayDay = GetSelfReportedPayDayForApplication(application);
-						var validPayDay = Driver.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, now.Month,  selfReportedPayDay))).DateTime.Day;
-						paymentRequestDate = Driver.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, now.Month, validPayDay - 1)));
+						var month = selfReportedPayDay > now.Day ? now.Month : now.Month + 1;
+						var validPayDay = Driver.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, month,  selfReportedPayDay))).DateTime.Day;
+
+						paymentRequestDate = Driver.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, month, validPayDay - 1)));
 					}
 					break;
 				default:
