@@ -133,7 +133,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-156", "QA-238")]
         public void DefaultAmountSliderValueShouldBeCorrectLn()
         {
-            var loginPage = Client.Login();            var loginPage = Client.Login();
+            var loginPage = Client.Login();
             string email = Data.RandomEmail();
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             Application application = ApplicationBuilder.New(customer)
@@ -369,27 +369,4 @@ namespace Wonga.QA.Tests.Ui
 
 		#endregion
 	}
-        }
-
-         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-155")]
-         public void MaxAmountSliderValueShouldBeCorrectLn()
-         {
-             var loginPage = Client.Login();
-             string email = Data.RandomEmail();
-             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-             Application application = ApplicationBuilder.New(customer)
-                 .Build();
-             application.RepayOnDueDate();
-             loginPage.LoginAs(email);
-             var homePage = Client.Home();
-             var response = Driver.Db.Risk.RiskAccounts.FirstOrDefault();
-             int creditLimit = (int)response.CreditLimit;
-             int moreThanCreditLimit = (int)response.CreditLimit + 100;
-             homePage.Sliders.HowMuch = moreThanCreditLimit.ToString(CultureInfo.InvariantCulture);
-             homePage.Sliders.HowLong = "10"; //to lost focus
-             Thread.Sleep(1000);
-             Assert.AreEqual(creditLimit.ToString(), homePage.Sliders.HowMuch);
-
-         }
-    }
 }
