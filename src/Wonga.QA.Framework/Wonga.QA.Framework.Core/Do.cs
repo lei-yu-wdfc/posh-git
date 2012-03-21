@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 
 namespace Wonga.QA.Framework.Core
@@ -8,7 +9,7 @@ namespace Wonga.QA.Framework.Core
     public static class Do
     {
         public static TimeSpan Timeout { get { return TimeSpan.FromSeconds(60); } }
-        public static TimeSpan Interval { get { return TimeSpan.FromSeconds(1); } }
+        public static TimeSpan Interval { get { return TimeSpan.FromSeconds(5); } }
 
         public static DoBuilder With()
         {
@@ -82,22 +83,24 @@ namespace Wonga.QA.Framework.Core
 
         public T Until<T>(Func<T> predicate)
         {
-            Exception exception = null;
-            Stopwatch stopwatch = Stopwatch.StartNew();
+            var exceptions = new List<Exception>();
+            var stopwatch = Stopwatch.StartNew();
             while (stopwatch.Elapsed < _timeout)
                 try
                 {
-                    T t = predicate();
+                    var t = predicate();
                     if (!EqualityComparer<T>.Default.Equals(t, default(T)))
                         return t;
+                    exceptions.Add(new ArgumentException(t == null ? "null" : t.ToString()));
                     Thread.Sleep(_interval);
                 }
-                catch (Exception e)
+                catch (Exception exception)
                 {
-                    exception = e;
+                    exceptions.Add(exception);
                     Thread.Sleep(_interval);
                 }
-            throw new TimeoutException(_message(), exception);
+            exceptions.Add(new TimeoutException(stopwatch.Elapsed.ToString()));
+            throw new AggregateException(_message(), exceptions);
         }
 
         public void While<T>(Func<T> predicate)
