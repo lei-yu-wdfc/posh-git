@@ -29,8 +29,8 @@ namespace Wonga.QA.Framework
 
         public Guid GetValidBankAccount()
         {
-            var bankAccountId = Do.Until(() => Driver.Db.Payments.BusinessBankAccounts.Single(b => b.OrganisationId == Id).BankAccountId);
-            return Driver.Db.Payments.BankAccountsBases.Single(a => a.BankAccountId == bankAccountId && a.ValidatedOn != null).ExternalId;
+            var bankAccountId = Do.Until(() => Drive.Db.Payments.BusinessBankAccounts.Single(b => b.OrganisationId == Id).BankAccountId);
+            return Drive.Db.Payments.BankAccountsBases.Single(a => a.BankAccountId == bankAccountId && a.ValidatedOn != null).ExternalId;
         }
 
 
