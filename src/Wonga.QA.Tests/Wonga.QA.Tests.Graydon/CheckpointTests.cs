@@ -332,8 +332,8 @@ namespace Wonga.QA.Tests.Graydon
                 Assert.IsNotNull(workflowVerificationsWithDefinitions, "There should be verifications in the workflow");
                 Assert.IsNotNull(workflowCheckpointsWithDefinitions, "There should be checkpoints in the workflow");
 
-                Assert.Contains(workflowVerificationsWithDefinitions.Values.ToList(), Data.EnumToString(VerificationDefinitionsEnum.NumberOfDirectorsMatchesBusinessBureauDataVerification));
-                Assert.Contains(workflowCheckpointsWithDefinitions.Values.ToList(), Data.EnumToString(CheckpointDefinitionEnum.NumberOfDirectorsMatchesBusinessBureauData));
+                Assert.Contains(workflowVerificationsWithDefinitions.Values.ToList(), Get.EnumToString(VerificationDefinitionsEnum.NumberOfDirectorsMatchesBusinessBureauDataVerification));
+                Assert.Contains(workflowCheckpointsWithDefinitions.Values.ToList(), Get.EnumToString(CheckpointDefinitionEnum.NumberOfDirectorsMatchesBusinessBureauData));
 
                 foreach (var checkpointWithDefinition in workflowCheckpointsWithDefinitions)
                 {
@@ -373,8 +373,8 @@ namespace Wonga.QA.Tests.Graydon
                 Assert.IsNotNull(workflowVerificationsWithDefinitions, "There should be verifications in the workflow");
                 Assert.IsNotNull(workflowCheckpointsWithDefinitions, "There should be checkpoints in the workflow");
 
-                Assert.Contains(workflowVerificationsWithDefinitions.Values.ToList(), Data.EnumToString(VerificationDefinitionsEnum.NumberOfDirectorsMatchesBusinessBureauDataVerification));
-                Assert.Contains(workflowCheckpointsWithDefinitions.Values.ToList(), Data.EnumToString(CheckpointDefinitionEnum.NumberOfDirectorsMatchesBusinessBureauData));
+                Assert.Contains(workflowVerificationsWithDefinitions.Values.ToList(), Get.EnumToString(VerificationDefinitionsEnum.NumberOfDirectorsMatchesBusinessBureauDataVerification));
+                Assert.Contains(workflowCheckpointsWithDefinitions.Values.ToList(), Get.EnumToString(CheckpointDefinitionEnum.NumberOfDirectorsMatchesBusinessBureauData));
 
                 foreach (var checkpointWithDefinition in workflowCheckpointsWithDefinitions)
                 {
