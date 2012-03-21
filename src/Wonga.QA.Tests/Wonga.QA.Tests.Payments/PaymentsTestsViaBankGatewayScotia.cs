@@ -36,7 +36,7 @@ namespace Wonga.QA.Tests.Payments
             entity.Submit();
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1441"), Ignore("Not fully implemented, do not run")]
+        [Test, AUT(AUT.Ca), JIRA("CA-1441")]
         public void VerifyOnlineBillPaymentCreditedToCustomerAccount()
         {
             const int loanTerm = 15;
@@ -51,19 +51,16 @@ namespace Wonga.QA.Tests.Payments
 
             application.RewindToDayOfLoanTerm(dayOfLoanTermToRepay);
 
-            //create online bill payment file for customer.. date = loanCreated - 5 days...
-            //insert file data to database table
-            //trigger mock to intitiate bank gateway to process file
-
-            OnlineBillPaymentTransaction transaction = new OnlineBillPaymentTransaction
-                                                           {
-                                                               AmountInCent = earlyRepaymentAmount * 100,
-                                                               Ccin = customer.GetCcin(),
-                                                               CustomerFullName = customer.GetCustomerFullName(),
-                                                               ItemNumber = 1,
-                                                               RemittancePaymentDate = DateTime.UtcNow,
-                                                               RemittanceTraceNumber = Get.RandomInt(100000000, 999999999).ToString()
-                                                           };
+            var transaction = new OnlineBillPaymentTransaction
+                                  {
+                                      AmountInCent = earlyRepaymentAmount*100,
+                                      Ccin = customer.GetCcin(),
+                                      CustomerFullName = customer.GetCustomerFullName(),
+                                      ItemNumber = 1,
+                                      RemittancePaymentDate = DateTime.UtcNow,
+                                      RemittanceTraceNumber =
+                                          Get.RandomInt(100000000, 999999999).ToString()
+                                  };
 
             Drive.Mocks.Scotia.AddOnlineBillPaymentFile(application.Id.ToString(), new List<OnlineBillPaymentTransaction> { transaction });
 
@@ -73,6 +70,68 @@ namespace Wonga.QA.Tests.Payments
 
             var actualInterestAmountApplied = GetPaymentFunctions.GetInterestAmountApplied(applicationId);
             Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestCharged(actualInterestAmountApplied, expectedInterestAmountApplied));
+        }
+
+        [Test, AUT(AUT.Ca), JIRA("CA-1441")]
+        public void VerifyLoanClosesAfterFullOnlineBillPaymentRecieved()
+        {
+            const int loanTerm = 15;
+            const decimal loanAmount = 100;
+            const int dayOfLoanTermToRepay = 5;
+            const int earlyRepaymentAmount = 104;
+            ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
+
+            var customer = CustomerBuilder.New().ForProvince(ProvinceEnum.ON).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
+
+            application.RewindToDayOfLoanTerm(dayOfLoanTermToRepay);
+
+            var transaction = new OnlineBillPaymentTransaction
+                                  {
+                                      AmountInCent = earlyRepaymentAmount*100,
+                                      Ccin = customer.GetCcin(),
+                                      CustomerFullName = customer.GetCustomerFullName(),
+                                      ItemNumber = 1,
+                                      RemittancePaymentDate = DateTime.UtcNow,
+                                      RemittanceTraceNumber =
+                                          Get.RandomInt(100000000, 999999999).ToString()
+                                  };
+
+            Drive.Mocks.Scotia.AddOnlineBillPaymentFile(application.Id.ToString(), new List<OnlineBillPaymentTransaction> { transaction });
+
+            Do.With().Timeout(1).Until(() => application.IsClosed);
+        }
+
+        [Test, AUT(AUT.Ca), JIRA("CA-1441"), Ignore("Not fully implemented, do not run")]
+        public void VerifyPartialOnlineBillPaymentDoesNotCloseLoan()
+        {
+            const int loanTerm = 15;
+            const decimal loanAmount = 100;
+            const int dayOfLoanTermToRepay = 5;
+            const int earlyRepaymentAmount = 50;
+            ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
+
+            var customer = CustomerBuilder.New().ForProvince(ProvinceEnum.ON).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
+            var applicationId = application.Id;
+
+            application.RewindToDayOfLoanTerm(dayOfLoanTermToRepay);
+
+            var transaction = new OnlineBillPaymentTransaction
+                                  {
+                                      AmountInCent = earlyRepaymentAmount*100,
+                                      Ccin = customer.GetCcin(),
+                                      CustomerFullName = customer.GetCustomerFullName(),
+                                      ItemNumber = 1,
+                                      RemittancePaymentDate = DateTime.UtcNow,
+                                      RemittanceTraceNumber =
+                                          Get.RandomInt(100000000, 999999999).ToString()
+                                  };
+
+            Drive.Mocks.Scotia.AddOnlineBillPaymentFile(application.Id.ToString(), new List<OnlineBillPaymentTransaction> { transaction });
+            WaitPaymentFunctions.WaitForTransactionTypeOfDirectBankPayment(applicationId, (earlyRepaymentAmount * -1));
+
+            //Todo: Verify that loan does not close a minute after payment recieved...
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1441"), Ignore("Not fully implemented, do not run")]
@@ -183,42 +242,6 @@ namespace Wonga.QA.Tests.Payments
             //Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestCharged(actualInterestAmountApplied, expectedInterestAmountApplied));
 
             //verify recorded in db that customer has overpaid... 
-        }
-
-        [Test, AUT(AUT.Ca), JIRA("CA-1441"), Ignore("Not fully implemented, do not run")]
-        public void VerifyPartialOnlineBillPaymentDoesNotCloseLoan()
-        {
-            const int loanTerm = 15;
-            const decimal loanAmount = 100;
-            const int dayOfLoanTermToRepay = 5;
-            const int earlyRepaymentAmount = 50;
-            ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
-
-            var customer = CustomerBuilder.New().ForProvince(ProvinceEnum.ON).Build();
-            var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
-            var applicationId = application.Id;
-
-            application.RewindToDayOfLoanTerm(dayOfLoanTermToRepay);
-
-            //create online bill payment file for customer.. date = loanCreate.d - 5 days...
-            //insert file data to database table
-            //trigger mock to intitiate bank gateway to process file
-
-            OnlineBillPaymentTransaction transaction = new OnlineBillPaymentTransaction
-            {
-                AmountInCent = earlyRepaymentAmount * 100,
-                Ccin = customer.GetCcin(),
-                CustomerFullName = customer.GetCustomerFullName(),
-                ItemNumber = 1,
-                RemittancePaymentDate = DateTime.UtcNow,
-                RemittanceTraceNumber = Get.RandomInt(100000000, 999999999).ToString()
-            };
-
-            Drive.Mocks.Scotia.AddOnlineBillPaymentFile(application.Id.ToString(), new List<OnlineBillPaymentTransaction> { transaction });
-
-            WaitPaymentFunctions.WaitForTransactionTypeOfDirectBankPayment(applicationId, (earlyRepaymentAmount * -1));
-
-            //Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestCharged(actualInterestAmountApplied, expectedInterestAmountApplied));
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1441"), Ignore("Not fully implemented, do not run")]
