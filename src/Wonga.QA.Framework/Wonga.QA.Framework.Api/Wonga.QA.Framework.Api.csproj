@@ -241,6 +241,7 @@
     <Compile Include="Enums\SliderPositionEnum.cs" />
     <Compile Include="Enums\TitleEnum.cs" />
     <Compile Include="Temp\ServiceConfigurationKeys.cs" />
+    <Compile Include="Temp\WorkflowStatusEnum.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />

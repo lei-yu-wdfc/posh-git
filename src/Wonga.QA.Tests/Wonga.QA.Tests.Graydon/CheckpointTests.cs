@@ -315,9 +315,31 @@ namespace Wonga.QA.Tests.Graydon
 
             var application = CreateApplicationWithAsserts(RiskMask.TESTNumberOfDirectorsMatchesBusinessBureauData, forename, surname, dateOfBirth, goodCompanyRegNumber, ApplicationDecisionStatusEnum.Accepted,numberOfGuarantors);
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
-            Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
-            Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Verified), Get.EnumToString(CheckpointDefinitionEnum.NumberOfDirectorsMatchesBusinessBureauData));
-            Assert.Contains(Application.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(VerificationDefinitionsEnum.NumberOfDirectorsMatchesBusinessBureauDataVerification));
+            Assert.AreEqual(numberOfGuarantors + 1, riskWorkflows.Count, "There should be 4 risk workflows");
+
+           /* Verify the workflow
+            * Get the verifications for the workflow 
+            * Verify the verifications for the workflow
+            * Get the checkpoints for the workflow
+            * Verify the checkpoints + status + name */
+            foreach (var riskWorkflowEntity in riskWorkflows)
+            {
+                Assert.AreEqual(WorkflowStatus.Verified, (WorkflowStatus)riskWorkflowEntity.Decision);
+
+                var workflowCheckpointsWithDefinitions = riskWorkflowEntity.WorkflowCheckpoints.ToDictionary(checkpoint => checkpoint,p =>p.CheckpointDefinitionEntity.Name);
+                var workflowVerificationsWithDefinitions = riskWorkflowEntity.WorkflowVerifications.ToDictionary(verification => verification, p => p.VerificationDefinitionEntity.Name);
+
+                Assert.IsNotNull(workflowVerificationsWithDefinitions, "There should be verifications in the workflow");
+                Assert.IsNotNull(workflowCheckpointsWithDefinitions, "There should be checkpoints in the workflow");
+
+                Assert.Contains(workflowVerificationsWithDefinitions.Values.ToList(), Data.EnumToString(VerificationDefinitionsEnum.NumberOfDirectorsMatchesBusinessBureauDataVerification));
+                Assert.Contains(workflowCheckpointsWithDefinitions.Values.ToList(), Data.EnumToString(CheckpointDefinitionEnum.NumberOfDirectorsMatchesBusinessBureauData));
+
+                foreach (var checkpointWithDefinition in workflowCheckpointsWithDefinitions)
+                {
+                    Assert.AreEqual(CheckpointStatus.Verified, (CheckpointStatus) checkpointWithDefinition.Key.CheckpointStatus);
+                }
+            }
         }
 
         [Test, AUT(AUT.Wb)]
@@ -334,9 +356,32 @@ namespace Wonga.QA.Tests.Graydon
 
             var application = CreateApplicationWithAsserts(RiskMask.TESTNumberOfDirectorsMatchesBusinessBureauData, forename, surname, dateOfBirth, goodCompanyRegNumber, ApplicationDecisionStatusEnum.Declined, numberOfGuarantors);
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
-            Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
-            Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Failed), Get.EnumToString(CheckpointDefinitionEnum.NumberOfDirectorsMatchesBusinessBureauData));
-            Assert.Contains(Application.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(VerificationDefinitionsEnum.NumberOfDirectorsMatchesBusinessBureauDataVerification));
+            Assert.AreEqual(numberOfGuarantors + 1, riskWorkflows.Count, "There should be 2 risk workflows");
+
+            /* Verify the workflow
+            * Get the verifications for the workflow 
+            * Verify the verifications for the workflow
+            * Get the checkpoints for the workflow
+            * Verify the checkpoints + status + name */
+            foreach (var riskWorkflowEntity in riskWorkflows)
+            {
+                Assert.AreEqual(WorkflowStatus.Failed, (WorkflowStatus)riskWorkflowEntity.Decision);
+
+                var workflowCheckpointsWithDefinitions = riskWorkflowEntity.WorkflowCheckpoints.ToDictionary(checkpoint => checkpoint, p => p.CheckpointDefinitionEntity.Name);
+                var workflowVerificationsWithDefinitions = riskWorkflowEntity.WorkflowVerifications.ToDictionary(verification => verification, p => p.VerificationDefinitionEntity.Name);
+
+                Assert.IsNotNull(workflowVerificationsWithDefinitions, "There should be verifications in the workflow");
+                Assert.IsNotNull(workflowCheckpointsWithDefinitions, "There should be checkpoints in the workflow");
+
+                Assert.Contains(workflowVerificationsWithDefinitions.Values.ToList(), Data.EnumToString(VerificationDefinitionsEnum.NumberOfDirectorsMatchesBusinessBureauDataVerification));
+                Assert.Contains(workflowCheckpointsWithDefinitions.Values.ToList(), Data.EnumToString(CheckpointDefinitionEnum.NumberOfDirectorsMatchesBusinessBureauData));
+
+                foreach (var checkpointWithDefinition in workflowCheckpointsWithDefinitions)
+                {
+                    Assert.AreEqual(CheckpointStatus.Failed, (CheckpointStatus)checkpointWithDefinition.Key.CheckpointStatus);
+                }
+            }
+
         }
 
         #endregion
