@@ -22,7 +22,7 @@ namespace Wonga.QA.Tests.Comms
             var businessApplicationBuilder = ApplicationBuilder.New(cust, company) as BusinessApplicationBuilder;
             var application = businessApplicationBuilder.Build();
             organisationBuilder.BuildSecondaryDirectors();
-            businessApplicationBuilder.BuildForSecondaryDirectors();
+            businessApplicationBuilder.SignApplicationForSecondaryDirectors();
 
             DoBuilder _do = new DoBuilder(new TimeSpan(0,2,0), new TimeSpan(0,0,20));
             var emailCorrelationRecords = _do.Until(() => Driver.Db.Comms.EmailReturnLinkCorrelationWbUks.Count(p => p.OrganisationId == company.Id) == 2);
@@ -46,7 +46,7 @@ namespace Wonga.QA.Tests.Comms
             var businessApplicationBuilder = ApplicationBuilder.New(cust, company) as BusinessApplicationBuilder;
             var application = businessApplicationBuilder.Build();
             organisationBuilder.BuildSecondaryDirectors();
-            businessApplicationBuilder.BuildForSecondaryDirectors();
+            businessApplicationBuilder.SignApplicationForSecondaryDirectors();
 
             DoBuilder _do = new DoBuilder(new TimeSpan(0, 2, 0), new TimeSpan(0, 0, 20));            
             //_do.Until(() => Driver.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.DocumentType == 11) ==1);

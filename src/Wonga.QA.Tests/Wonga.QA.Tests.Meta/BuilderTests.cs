@@ -30,6 +30,7 @@ namespace Wonga.QA.Tests.Meta
                 ApplicationBuilder.New(_customer, _organisation) :
                 ApplicationBuilder.New(_customer);
             Assert.DoesNotThrow(() => builder.Build());
+            //builder.Build();//debug only
         }
     }
 }

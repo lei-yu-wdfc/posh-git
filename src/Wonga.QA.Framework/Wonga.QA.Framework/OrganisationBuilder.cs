@@ -101,5 +101,24 @@ namespace Wonga.QA.Framework
                     director => director.OrganisationId == _id && director.DirectorLevel > 0) == _numberOfSecondaryDirector);
 
         }
+
+        public void BuildSecondaryDirectors(List<Guid> secondaryDirectorsIds)
+        {
+            List<ApiRequest> requests = new List<ApiRequest>();
+
+            for (var i = 0; i < secondaryDirectorsIds.Count; i++)
+            {
+                var guarantorId = i;
+                requests.Add(AddSecondaryOrganisationDirectorCommand.New(r =>
+                {
+                    r.OrganisationId = _id;
+                    r.AccountId = secondaryDirectorsIds[guarantorId];
+                }));
+            }
+
+            Driver.Api.Commands.Post(requests);
+
+            Do.Until(() =>Driver.Db.ContactManagement.DirectorOrganisationMappings.Count(director => director.OrganisationId == _id && director.DirectorLevel > 0) == _numberOfSecondaryDirector);
+        }
     }
 }
