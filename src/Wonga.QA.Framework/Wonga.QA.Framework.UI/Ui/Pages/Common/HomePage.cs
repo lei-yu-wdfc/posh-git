@@ -1,5 +1,4 @@
-﻿using OpenQA.Selenium;
-using Wonga.QA.Framework.Core;
+﻿using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Elements;
 
 namespace Wonga.QA.Framework.UI.UiElements.Pages
@@ -11,6 +10,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
         public HelpElement Help { get; set; }
         public InternationalElement InternationalElements { get; set; }
         public LoginElement Login { get; set; }
+        public SurveyElement Survey { get; set; }
+
         //public TabsElement Tabs { get; set; }
 
         public HomePage(UiClient client)
@@ -20,6 +21,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             switch (Config.AUT)
             {
                 case (AUT.Ca):
+                    Survey = new SurveyElement(this);
+                    break;
                 case (AUT.Za):
                     Help = new HelpElement(this);
                     InternationalElements = new InternationalElement(this);
