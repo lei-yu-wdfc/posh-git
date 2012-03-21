@@ -98,6 +98,7 @@
     <Compile Include="Ui\Elements\InternationalElement.cs" />
     <Compile Include="Ui\Elements\LoginElement.cs" />
     <Compile Include="Ui\Elements\MyAccountNavigationElement.cs" />
+    <Compile Include="Ui\Elements\SurveyElement.cs" />
     <Compile Include="Ui\Pages\Common\DealDonePage.cs" />
     <Compile Include="Ui\Pages\Common\DeclinedPage.cs" />
     <Compile Include="Ui\Pages\Common\FAQPage.cs" />
