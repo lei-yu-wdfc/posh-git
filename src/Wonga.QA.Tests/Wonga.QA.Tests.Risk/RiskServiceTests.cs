@@ -10,7 +10,7 @@ namespace Wonga.QA.Tests.Risk
         [Test]
         public void RiskServiceIsRunning()
         {
-            Assert.IsTrue(Driver.Svc.Risk.IsRunning());
+            Assert.IsTrue(Drive.Svc.Risk.IsRunning());
         }
     }
 }

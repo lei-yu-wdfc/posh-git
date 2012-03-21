@@ -11,7 +11,7 @@ namespace Wonga.QA.Tests.Graydon
         [Test, AUT(AUT.Wb)]
         public void GraydonServiceIsRunning()
         {
-            Assert.IsTrue(Driver.Svc.Graydon.IsRunning());
+            Assert.IsTrue(Drive.Svc.Graydon.IsRunning());
         }
     }
 }

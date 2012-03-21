@@ -14,7 +14,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Core
 {
-    public static class Data
+    public static class Get
     {
         private static String _alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         private static Random _random = new Random(Guid.NewGuid().GetHashCode());

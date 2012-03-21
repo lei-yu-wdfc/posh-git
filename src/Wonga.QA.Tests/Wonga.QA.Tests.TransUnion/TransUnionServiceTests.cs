@@ -11,7 +11,7 @@ namespace Wonga.QA.Tests.TransUnion
         [Test, AUT(AUT.Za)]
         public void TransUnionServiceIsRunning()
         {
-            Assert.IsTrue(Driver.Svc.TransUnion.IsRunning());
+            Assert.IsTrue(Drive.Svc.TransUnion.IsRunning());
         }
     }
 }

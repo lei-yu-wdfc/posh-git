@@ -31,7 +31,7 @@ namespace Wonga.QA.Tests.Payments
 			var paymentCardId = Guid.NewGuid();
 			var bankAccountId = Guid.NewGuid();
 
-			Driver.Api.Commands.Post(new ApiRequest[]
+			Drive.Api.Commands.Post(new ApiRequest[]
 			                         	{
 											AddBankAccountUkCommand.New(a => { a.AccountId = accountId;
 											                                 	a.BankAccountId = bankAccountId;
@@ -49,9 +49,9 @@ namespace Wonga.QA.Tests.Payments
 											})
 			                         	});
 
-			Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == applicationId));
+			Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == applicationId));
 
-			var response = Driver.Api.Queries.Post(new GetBusinessAccountSummaryWbUkQuery
+			var response = Drive.Api.Queries.Post(new GetBusinessAccountSummaryWbUkQuery
 													{
 														AccountId = accountId
 													});
@@ -86,7 +86,7 @@ namespace Wonga.QA.Tests.Payments
 			var paymentCardId = Guid.NewGuid();
 			var bankAccountId = Guid.NewGuid();
 
-			Driver.Api.Commands.Post(new ApiRequest[]
+			Drive.Api.Commands.Post(new ApiRequest[]
 			                            {
 			                                AddBankAccountUkCommand.New(a => { a.AccountId = accountId;
 			                                                                a.BankAccountId = bankAccountId;
@@ -104,9 +104,9 @@ namespace Wonga.QA.Tests.Payments
 			                                })
 			                            });
 
-			Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == applicationId));
+			Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == applicationId));
 
-			Driver.Api.Commands.Post(new ApiRequest[]
+			Drive.Api.Commands.Post(new ApiRequest[]
 			                            {
 			                                    new SignBusinessApplicationWbUkCommand
 			                                    {
@@ -115,9 +115,9 @@ namespace Wonga.QA.Tests.Payments
 			                                    } 
 			                            });
 
-			Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == applicationId && a.SignedOn != null));
+			Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == applicationId && a.SignedOn != null));
 
-			var response = Driver.Api.Queries.Post(new GetBusinessAccountSummaryWbUkQuery
+			var response = Drive.Api.Queries.Post(new GetBusinessAccountSummaryWbUkQuery
 			{
 				AccountId = accountId
 			});
@@ -167,9 +167,9 @@ namespace Wonga.QA.Tests.Payments
 					t => application.Id == t.ApplicationEntity.ExternalId && t.Scope == (int)PaymentTransactionScopeEnum.Debit
 						 && t.Type == PaymentTransactionEnum.CashAdvance.ToString()));
 
-			Do.Until(() => Driver.Db.Payments.PaymentPlans.Single(pp => pp.ApplicationEntity.ExternalId == application.Id));
+			Do.Until(() => Drive.Db.Payments.PaymentPlans.Single(pp => pp.ApplicationEntity.ExternalId == application.Id));
 
-			var response = Driver.Api.Queries.Post(new GetBusinessAccountSummaryWbUkQuery
+			var response = Drive.Api.Queries.Post(new GetBusinessAccountSummaryWbUkQuery
 			{
 				AccountId = customer.Id
 			});
@@ -192,7 +192,7 @@ namespace Wonga.QA.Tests.Payments
 
 		private int GetTransactionCount(Func<TransactionEntity, bool> func)
 		{
-			return Driver.Db.Payments.Transactions.Count(func);
+			return Drive.Db.Payments.Transactions.Count(func);
 		}
 	}
 }

@@ -18,7 +18,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
 
-			var riskAccount = Do.Until(() => Driver.Db.Risk.RiskAccounts.Single(a => a.AccountId == customer.Id));
+			var riskAccount = Do.Until(() => Drive.Db.Risk.RiskAccounts.Single(a => a.AccountId == customer.Id));
 			Assert.IsFalse(riskAccount.DoNotRelend);
 
 			ApplicationBuilder.New(customer).Build();
@@ -29,8 +29,8 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
 
-			Driver.Msmq.Risk.Send(new RegisterDoNotRelendCommand{AccountId =  customer.Id, DoNotRelend =  true});
-			Do.Until(() => Driver.Db.Risk.RiskAccounts.Single(a => a.AccountId == customer.Id).DoNotRelend);
+			Drive.Msmq.Risk.Send(new RegisterDoNotRelendCommand{AccountId =  customer.Id, DoNotRelend =  true});
+			Do.Until(() => Drive.Db.Risk.RiskAccounts.Single(a => a.AccountId == customer.Id).DoNotRelend);
 
 			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
 		}

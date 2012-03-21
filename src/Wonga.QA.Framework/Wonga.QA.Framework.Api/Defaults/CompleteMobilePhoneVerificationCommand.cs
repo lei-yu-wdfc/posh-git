@@ -6,7 +6,7 @@ namespace Wonga.QA.Framework.Api
     {
         public override void Default()
         {
-            VerificationId = Data.GetId();
+            VerificationId = Get.GetId();
             Pin = "0000";
         }
     }

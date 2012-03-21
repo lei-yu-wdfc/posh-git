@@ -6,8 +6,8 @@ namespace Wonga.QA.Framework.Api
     {
         public override void Default()
         {
-            AccountId = Data.GetId();
-            VerificationId = Data.GetId();
+            AccountId = Get.GetId();
+            VerificationId = Get.GetId();
             MobilePhone = "07800000000";
             Forename = "Forename";
         }

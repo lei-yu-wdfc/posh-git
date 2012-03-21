@@ -9,7 +9,7 @@ namespace Wonga.QA.Tests.TimeZone
         [Test]
         public void TimeZoneServiceIsRunning()
         {
-            Assert.IsTrue(Driver.Svc.TimeZone.IsRunning());
+            Assert.IsTrue(Drive.Svc.TimeZone.IsRunning());
         }
     }
 }

@@ -36,12 +36,12 @@ namespace Wonga.QA.Framework.Cs
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_endpoint);
             request.Method = "POST";
 
-            request.Headers.Add("Authorization", Data.GetCsAuthorization().ToString());
-            request.Headers.Add("SalesForceUserName", Data.GetEmail());
+            request.Headers.Add("Authorization", Get.GetCsAuthorization().ToString());
+            request.Headers.Add("SalesForceUserName", Get.GetEmail());
 
             using (StreamWriter writer = new StreamWriter(request.GetRequestStream()))
                 writer.Write(body);
-            Trace.WriteLine(Data.Indent(body), GetType().FullName);
+            Trace.WriteLine(Get.Indent(body), GetType().FullName);
 
             return new CsResponse(request);
         }

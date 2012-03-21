@@ -10,7 +10,7 @@ namespace Wonga.QA.Tests.Email
         [Test]
         public void EmailServiceIsRunning()
         {
-            Assert.IsTrue(Driver.Svc.Email.IsRunning());
+            Assert.IsTrue(Drive.Svc.Email.IsRunning());
         }
     }
 }

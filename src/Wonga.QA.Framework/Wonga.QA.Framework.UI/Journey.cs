@@ -15,8 +15,8 @@ namespace Wonga.QA.Framework.UI
         public Journey(BasePage homePage)
         {
             CurrentPage = homePage as HomePage;
-            FirstName = Data.GetName();
-            LastName = Data.RandomString(10);
+            FirstName = Get.GetName();
+            LastName = Get.RandomString(10);
         }
         public Journey ApplyForLoan(int amount, int duration)
         {
@@ -35,8 +35,8 @@ namespace Wonga.QA.Framework.UI
 
         public Journey FillPersonalDetails(string employerNameMask = null)
         {
-            var email = Data.RandomEmail();
-            string employerName = employerNameMask ?? Data.GetMiddleName();
+            var email = Get.RandomEmail();
+            string employerName = employerNameMask ?? Get.GetMiddleName();
             var personalDetailsPage = CurrentPage as PersonalDetailsPage;
             switch (Config.AUT)
             {
@@ -76,7 +76,7 @@ namespace Wonga.QA.Framework.UI
                     Do.Until(() => personalDetailsPage.ProvinceSection.ClosePopup());
 
                     personalDetailsPage.YourName.FirstName = FirstName;
-                    personalDetailsPage.YourName.MiddleName = Data.GetMiddleName();
+                    personalDetailsPage.YourName.MiddleName = Get.GetMiddleName();
                     personalDetailsPage.YourName.LastName = LastName;
                     personalDetailsPage.YourName.Title = "Mr";
                     personalDetailsPage.YourDetails.Number = "123213126";
@@ -137,16 +137,16 @@ namespace Wonga.QA.Framework.UI
             {
                 case AUT.Za:
                     var accountDetailsPage = CurrentPage as AccountDetailsPage;
-                    accountDetailsPage.AccountDetailsSection.Password = Data.GetPassword();
-                    accountDetailsPage.AccountDetailsSection.PasswordConfirm = Data.GetPassword();
+                    accountDetailsPage.AccountDetailsSection.Password = Get.GetPassword();
+                    accountDetailsPage.AccountDetailsSection.PasswordConfirm = Get.GetPassword();
                     accountDetailsPage.AccountDetailsSection.SecretQuestion = "Secret question'-.";
                     accountDetailsPage.AccountDetailsSection.SecretAnswer = "Secret answer";
                     CurrentPage = accountDetailsPage.Next();//returns PersonalBankAccountPage
                     break;
                 case AUT.Ca:
                     var addressPage = CurrentPage as AddressDetailsPage;
-                    addressPage.AccountDetailsSection.Password = Data.GetPassword();
-                    addressPage.AccountDetailsSection.PasswordConfirm = Data.GetPassword();
+                    addressPage.AccountDetailsSection.Password = Get.GetPassword();
+                    addressPage.AccountDetailsSection.PasswordConfirm = Get.GetPassword();
                     addressPage.AccountDetailsSection.SecretQuestion = "Secret question'-.";
                     addressPage.AccountDetailsSection.SecretAnswer = "Secret answer";
                     CurrentPage = addressPage.Next() as PersonalBankAccountPage;

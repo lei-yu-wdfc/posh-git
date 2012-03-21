@@ -21,7 +21,7 @@ namespace Wonga.QA.Tests.Payments
                 .WithLoanTerm(loanTerm)
                 .WithLoanAmount(loanAmount).Build();
 
-            Do.Until(() => Driver.Db.OpsSagas.FixedTermLoanSagaEntities
+            Do.Until(() => Drive.Db.OpsSagas.FixedTermLoanSagaEntities
                                .Single(saga=>saga.AccountGuid == customer.Id 
                                              && saga.ApplicationGuid == application.Id 
                                              && saga.TermsAgreed == true
@@ -40,7 +40,7 @@ namespace Wonga.QA.Tests.Payments
                 .WithLoanTerm(loanTerm)
                 .WithLoanAmount(loanAmount).Build();
 
-            Do.Until(() => Driver.Db.OpsSagas.FixedTermLoanSagaEntities
+            Do.Until(() => Drive.Db.OpsSagas.FixedTermLoanSagaEntities
                                .Single(saga => saga.AccountGuid == customer.Id
                                                && saga.ApplicationGuid == application.Id
                                                && saga.TermsAgreed == true
@@ -48,12 +48,12 @@ namespace Wonga.QA.Tests.Payments
 
             application.MakeDueToday();
 
-            Do.While(() => Driver.Db.OpsSagas.FixedTermLoanSagaEntities
+            Do.While(() => Drive.Db.OpsSagas.FixedTermLoanSagaEntities
                                .Any(saga => saga.AccountGuid == customer.Id
                                             && saga.ApplicationGuid == application.Id
                                             && saga.TermsAgreed == true
                                             && saga.ApplicationAccepted == true));
-            Do.Until(() => Driver.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(
+            Do.Until(() => Drive.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(
                 saga => saga.ApplicationGuid == application.Id 
                         && saga.AccountGuid == customer.Id));
         }

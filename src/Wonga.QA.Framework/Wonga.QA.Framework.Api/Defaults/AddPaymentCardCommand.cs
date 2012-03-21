@@ -8,8 +8,8 @@ namespace Wonga.QA.Framework.Api
     {
 		public override void Default()
 		{
-			AccountId = Data.GetId();
-			PaymentCardId = Data.GetId();
+			AccountId = Get.GetId();
+			PaymentCardId = Get.GetId();
 			CardType = "VISA";
 			Number = "4444333322221111";
 			HolderName = "Test Holder";

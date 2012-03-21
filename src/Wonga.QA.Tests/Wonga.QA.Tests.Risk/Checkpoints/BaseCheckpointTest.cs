@@ -26,9 +26,9 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			var application = ApplicationBuilder.New(customer).Build();
 
 			// wait until risk application will be created
-			Do.Until(() => Driver.Db.Risk.RiskApplications.Single(x => x.ApplicationId == application.Id));
+			Do.Until(() => Drive.Db.Risk.RiskApplications.Single(x => x.ApplicationId == application.Id));
 
-			return Driver.Db.Risk.RiskApplications.Single(x => x.ApplicationId == application.Id);
+			return Drive.Db.Risk.RiskApplications.Single(x => x.ApplicationId == application.Id);
 		}
 
 		protected Application RunSingleWorkflowTest(RiskMask testMask, ICustomerData customerData, CheckpointDefinitionEnum checkpoint, CheckpointStatus expectedStatus)
@@ -46,17 +46,17 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.Build();
 
 			// wait until workflow will be created and started
-			Do.Until(() => Driver.Db.Risk.RiskWorkflows.Single(x => x.ApplicationId == application.Id));
+			Do.Until(() => Drive.Db.Risk.RiskWorkflows.Single(x => x.ApplicationId == application.Id));
 
 			var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
 			Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
 
 			// wait until decision made
-			Do.Until(() => Driver.Db.Risk.RiskApplications.Single(x => x.ApplicationId == application.Id && x.Decision != 0));
+			Do.Until(() => Drive.Db.Risk.RiskApplications.Single(x => x.ApplicationId == application.Id && x.Decision != 0));
 
 			Assert.Contains(
 				Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, expectedStatus),
-				Data.EnumToString(checkpoint));
+				Get.EnumToString(checkpoint));
 
 			return application;
 		}

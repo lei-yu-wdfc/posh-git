@@ -6,8 +6,8 @@ namespace Wonga.QA.Framework.Api
     {
         public override void Default()
         {
-            AccountId = Data.GetId();
-            AcceptMarketingContact = Data.RandomBoolean();
+            AccountId = Get.GetId();
+            AcceptMarketingContact = Get.RandomBoolean();
         }
     }
 }

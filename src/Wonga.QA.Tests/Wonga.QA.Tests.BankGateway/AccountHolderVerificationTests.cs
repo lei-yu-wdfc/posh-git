@@ -33,7 +33,7 @@ namespace Wonga.QA.Tests.BankGateway
 		[Test, AUT(AUT.Za), JIRA("ZA-2061")]
 		public void AccountHolderVerificationFeatureSwitchTurnedOn()
 		{
-		    var featureSwitchOn = Boolean.Parse(Driver.Db.GetServiceConfiguration("FeatureSwitch.ZA.UseHyphenAHVWebService").Value);
+		    var featureSwitchOn = Boolean.Parse(Drive.Db.GetServiceConfiguration("FeatureSwitch.ZA.UseHyphenAHVWebService").Value);
 		    Assert.IsTrue(featureSwitchOn);
 		}
 
@@ -57,16 +57,16 @@ namespace Wonga.QA.Tests.BankGateway
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
 			ApplicationBuilder.New(customer).Build().RepayOnDueDate();
 
-			var primaryAccountId = Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == customer.Id).PrimaryBankAccountId;
+			var primaryAccountId = Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == customer.Id).PrimaryBankAccountId;
 
-			Driver.Api.Commands.Post(AddBankAccountZaCommand.New(r =>
+			Drive.Api.Commands.Post(AddBankAccountZaCommand.New(r =>
 			                                                     	{
 			                                                     		r.AccountId = customer.Id;
 			                                                     		r.AccountNumber = 12345678902;
 			                                                     	}));
 
 			//Account has changed
-			Do.Until(() => Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == customer.Id).PrimaryBankAccountId != primaryAccountId);
+			Do.Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == customer.Id).PrimaryBankAccountId != primaryAccountId);
 
 			var application = ApplicationBuilder.New(customer).Build();
 
@@ -81,11 +81,11 @@ namespace Wonga.QA.Tests.BankGateway
 		private BankAccountVerificationResponseEntity WaitForAccountHolderVerificationResponse(Application application)
 		{
 			BankAccountVerificationEntity verification =
-				Do.Until(() => Driver.Db.BankGateway.BankAccountVerifications
+				Do.Until(() => Drive.Db.BankGateway.BankAccountVerifications
 								.First(e => e.SenderReference == application.Id.ToString().ToLower()));
 
 			BankAccountVerificationResponseEntity response =
-				Do.Until(() => Driver.Db.BankGateway.BankAccountVerificationResponses
+				Do.Until(() => Drive.Db.BankGateway.BankAccountVerificationResponses
 								.First(r => r.BankAccountVerificationId == verification.BankAccountVerificationId));
 
 			return response;

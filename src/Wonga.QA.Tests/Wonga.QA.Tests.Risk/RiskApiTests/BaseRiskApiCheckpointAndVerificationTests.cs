@@ -25,7 +25,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		{
 			List<string> checkpointNames = Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflow.WorkflowId, expectedStatus);
 			Assert.AreEqual(1, checkpointNames.Count);
-			Assert.AreEqual(Data.EnumToString(checkpoint), checkpointNames.First());
+			Assert.AreEqual(Get.EnumToString(checkpoint), checkpointNames.First());
 
 		}
 
@@ -38,7 +38,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		{
 			if (expectedFailedCheckpoint.HasValue)
 			{
-				Assert.AreEqual(Data.EnumToString(expectedFailedCheckpoint), application.FailedCheckpoint);
+				Assert.AreEqual(Get.EnumToString(expectedFailedCheckpoint), application.FailedCheckpoint);
 			}
 			else
 			{
@@ -90,7 +90,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		/// <returns>current timeout value in secs</returns>
 		protected static int SetRiskIovationResponseTimeoutSeconds(int seconds)
 		{
-			var serviceConfigurationEntity = Driver.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == RiskIovationResponseTimeoutSecondsKeyName);
+			var serviceConfigurationEntity = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == RiskIovationResponseTimeoutSecondsKeyName);
 			var currentValue = serviceConfigurationEntity.Value;
 			serviceConfigurationEntity.Value = seconds.ToString();
 			serviceConfigurationEntity.Submit();
@@ -100,7 +100,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		protected static int SetIovationMockWaitTimeSecondsForMockResponse(IovationMockResponse response, int seconds)
 		{
 			string iovationType = response.ToString();
-			var iovationDataOutput = Driver.Db.QaData.IovationDataOutputs.Single(io => io.Type == iovationType);
+			var iovationDataOutput = Drive.Db.QaData.IovationDataOutputs.Single(io => io.Type == iovationType);
 			var currentValue = iovationDataOutput.WaitTimeInSeconds;
 			iovationDataOutput.WaitTimeInSeconds = seconds;
 			iovationDataOutput.Submit();
@@ -127,7 +127,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		{
 			//type name has this format:
 			//"Wonga.Risk.Checkpoints.ApplicationElementNotOnCSBlacklist, Wonga.Risk.Checkpoints, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
-			var checkpoint = new DbDriver().Risk.CheckpointDefinitions.SingleOrDefault(cd => cd.Name == Data.EnumToString(checkpointDefinition));
+			var checkpoint = new DbDriver().Risk.CheckpointDefinitions.SingleOrDefault(cd => cd.Name == Get.EnumToString(checkpointDefinition));
 			if (checkpoint == null)
 			{
 				throw new ArgumentOutOfRangeException("checkpointDefinition", checkpointDefinition, "Not found in DB");

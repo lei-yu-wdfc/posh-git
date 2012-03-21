@@ -18,7 +18,7 @@ namespace Wonga.QA.Tests.Payments
 			var customer = CustomerBuilder.New().Build();
 			var application = ApplicationBuilder.New(customer).Build();
 
-			var accountPreferences = Do.Until(() => Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == customer.Id));
+			var accountPreferences = Do.Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == customer.Id));
 
 		    decimal repaymentAmount = application.LoanAmount;
 
@@ -31,7 +31,7 @@ namespace Wonga.QA.Tests.Payments
 																	RemittanceTraceNumber = "TraceNumber"
 			                                                   	};
 
-			Driver.Msmq.Payments.Send(cmd);
+			Drive.Msmq.Payments.Send(cmd);
 
 			Do.With().Timeout(60).Until(() => application.IsClosed);
 			VerifyPaymentFunctions.VerifyDirectBankPaymentOfAmount(application.Id, -repaymentAmount);

@@ -29,7 +29,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
 
             _username.SendKeys(email);
-            _password.SendKeys(Data.GetPassword());
+            _password.SendKeys(Get.GetPassword());
             _buttonLogin.Click();
             return new MySummaryPage(Client);
         }

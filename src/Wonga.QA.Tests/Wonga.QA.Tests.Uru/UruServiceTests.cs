@@ -11,7 +11,7 @@ namespace Wonga.QA.Tests.Uru
         [Test, AUT(AUT.Uk, AUT.Wb)]
         public void UruServiceIsRunning()
         {
-            Assert.IsTrue(Driver.Svc.Uru.IsRunning());
+            Assert.IsTrue(Drive.Svc.Uru.IsRunning());
         }
     }
 }

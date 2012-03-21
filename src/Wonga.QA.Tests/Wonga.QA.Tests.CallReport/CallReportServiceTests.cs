@@ -11,7 +11,7 @@ namespace Wonga.QA.Tests.CallReport
         [Test, AUT(AUT.Uk, AUT.Wb)]
         public void CallReportServiceIsRunning()
         {
-            Assert.IsTrue(Driver.Svc.CallReport.IsRunning());
+            Assert.IsTrue(Drive.Svc.CallReport.IsRunning());
         }
     }
 }

@@ -17,19 +17,19 @@ namespace Wonga.QA.Framework
 
         public Guid GetPaymentCard()
         {
-            var paymentCardId = Do.Until(()=>Driver.Db.Payments.BusinessPaymentCards.Single(b => b.OrganisationId == Id).PaymentCardId);
-            return Driver.Db.Payments.PaymentCardsBases.Single(a=>a.PaymentCardId == paymentCardId).ExternalId;
+            var paymentCardId = Do.Until(()=>Drive.Db.Payments.BusinessPaymentCards.Single(b => b.OrganisationId == Id).PaymentCardId);
+            return Drive.Db.Payments.PaymentCardsBases.Single(a=>a.PaymentCardId == paymentCardId).ExternalId;
         }
 
         public Guid GetBankAccount()
         {
-            var bankAccountId =Do.Until(()=>Driver.Db.Payments.BusinessBankAccounts.Single(b => b.OrganisationId == Id).BankAccountId);
-            return Driver.Db.Payments.BankAccountsBases.Single(a=>a.BankAccountId == bankAccountId).ExternalId;
+            var bankAccountId =Do.Until(()=>Drive.Db.Payments.BusinessBankAccounts.Single(b => b.OrganisationId == Id).BankAccountId);
+            return Drive.Db.Payments.BankAccountsBases.Single(a=>a.BankAccountId == bankAccountId).ExternalId;
         }
 
         public IEnumerable<DirectorOrganisationMappingEntity> GetSecondaryDirectors()
         {
-            return Driver.Db.ContactManagement.DirectorOrganisationMappings.Where(r => r.OrganisationId == Id && r.DirectorLevel == 1);
+            return Drive.Db.ContactManagement.DirectorOrganisationMappings.Where(r => r.OrganisationId == Id && r.DirectorLevel == 1);
         }
     }
 }

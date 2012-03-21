@@ -35,7 +35,7 @@ namespace Wonga.QA.Framework.Helpers
         private static List<CalendarDateEntity> GetBankHolidays(DateTime startOfRange, DateTime endOfRange)
         {
             return
-                Driver.Db.Payments.CalendarDates.Where(
+                Drive.Db.Payments.CalendarDates.Where(
                     itm => itm.IsBankHoliday && itm.Date >= startOfRange && itm.Date < endOfRange.AddDays(1)).
                     OrderBy(itm => itm.Date).ToList();
         }

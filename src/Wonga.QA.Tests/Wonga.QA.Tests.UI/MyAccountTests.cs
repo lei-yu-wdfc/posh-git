@@ -19,7 +19,7 @@ namespace Wonga.QA.Tests.Ui
         public void CustomerWithLiveLoanShouldNotBeAbleToAddBankAccount()
         {
             var loginPage = Client.Login();
-            string email = Data.RandomEmail();
+            string email = Get.RandomEmail();
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).Build();
             var mySummaryPage = loginPage.LoginAs(email);
@@ -33,7 +33,7 @@ namespace Wonga.QA.Tests.Ui
         {
             var journey1 = new Journey(Client.Home());
             var bankDetailsPage1 = journey1.ApplyForLoan(200, 10)
-                                      .FillPersonalDetails(Data.EnumToString(RiskMask.TESTEmployedMask))
+                                      .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                                       .FillAddressDetails()
                                       .FillAccountDetails()
                                       .CurrentPage as PersonalBankAccountPage;
@@ -47,7 +47,7 @@ namespace Wonga.QA.Tests.Ui
 
             var journey2 = new Journey(Client.Home());
             var bankDetailsPage2 = journey2.ApplyForLoan(200, 10)
-                                      .FillPersonalDetails(Data.EnumToString(RiskMask.TESTEmployedMask))
+                                      .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                                       .FillAddressDetails()
                                       .FillAccountDetails()
                                       .CurrentPage as PersonalBankAccountPage;
@@ -64,7 +64,7 @@ namespace Wonga.QA.Tests.Ui
         public void LNJourneyInvalidAccountNumberShouldCauseWarningMessageOnNextPage()
         {
             var loginPage = Client.Login();
-            string email = Data.RandomEmail();
+            string email = Get.RandomEmail();
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             Application application = ApplicationBuilder.New(customer)
                 .Build();
@@ -99,6 +99,34 @@ namespace Wonga.QA.Tests.Ui
                 var paymentPage = payment1.AddBankAccount("Capitec", "Current", "7534567", "2 to 3 years");
                 Thread.Sleep(2000); // Wait some time before assert
                 Assert.IsTrue(paymentPage.IfHasAnExeption());
+            }
+            else
+            {
+                throw new NullReferenceException("Add bank account button not found");
+            }
+        }
+
+        [Test, AUT(AUT.Za), JIRA("QA-201")]
+        public void WhenLoggedCustomerWithoutLiveLoanAddsNewBankAccountItShouldBecomePrimary()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            application.RepayOnDueDate();
+
+            var page = loginPage.LoginAs(email);
+            var payment = Client.Payments();
+
+            if (payment.IsAddBankAccountButtonExists())
+            {
+                payment.AddBankAccountButtonClick();
+
+                Thread.Sleep(2000); // Wait some time to load popup
+
+                var paymentPage = payment.AddBankAccount("Capitec", "Current", "1234567", "2 to 3 years");
+
             }
             else
             {

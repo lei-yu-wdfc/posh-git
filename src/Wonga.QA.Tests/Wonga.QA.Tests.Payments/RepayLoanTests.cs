@@ -73,18 +73,18 @@ namespace Wonga.QA.Tests.Payments
                 ApplicationId = _application.Id,
                 ActionDate = new Date
                 {
-                    DateTime = Data.GetPromiseDate().DateTime.AddDays(-3),
+                    DateTime = Get.GetPromiseDate().DateTime.AddDays(-3),
                     DateFormat = DateFormat.Date
                 }, //Early repay before promised date
                 Amount = _application.LoanAmount,
                 RepaymentRequestId = Guid.NewGuid()
             };
-            Driver.Api.Commands.Post(command);
+            Drive.Api.Commands.Post(command);
 
-            var app = Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == _application.Id));
-            var saga = Do.Until(() => Driver.Db.OpsSagas.RepaymentSagaEntities.Single(s => s.ApplicationId == app.ApplicationId));
+            var app = Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == _application.Id));
+            var saga = Do.Until(() => Drive.Db.OpsSagas.RepaymentSagaEntities.Single(s => s.ApplicationId == app.ApplicationId));
 
-            var response = Driver.Api.Queries.Post(new GetRepayLoanParametersQuery
+            var response = Drive.Api.Queries.Post(new GetRepayLoanParametersQuery
             {
                 AccountId = _accountId
             });
@@ -101,7 +101,7 @@ namespace Wonga.QA.Tests.Payments
         public void GetRepayLoanParameterQueryTest(DateTime now, DateTime expectedActionDate)
         {
             SetPaymentsUtcNow(now);
-            var response = Driver.Api.Queries.Post(new GetRepayLoanParametersQuery()
+            var response = Drive.Api.Queries.Post(new GetRepayLoanParametersQuery()
                                         {
                                             AccountId = _accountId
                                         });
@@ -111,7 +111,7 @@ namespace Wonga.QA.Tests.Payments
         [Test, AUT(AUT.Za), JIRA("ZA-2099")]
         public void GetRepayLoanStatusQueryTest()
         {
-            var response = Driver.Api.Queries.Post(new GetRepayLoanStatusQuery()
+            var response = Drive.Api.Queries.Post(new GetRepayLoanStatusQuery()
                                                        {
                                                            AccountId = _accountId
                                                        });
@@ -125,18 +125,18 @@ namespace Wonga.QA.Tests.Payments
                                   ApplicationId = _application.Id,
                                   ActionDate = new Date
                                                    {
-                                                       DateTime = Data.GetPromiseDate().DateTime.AddDays(-3),
+                                                       DateTime = Get.GetPromiseDate().DateTime.AddDays(-3),
                                                        DateFormat = DateFormat.Date
                                                    }, //Early repay before promised date
                                   Amount = _application.LoanAmount,
                                   RepaymentRequestId = Guid.NewGuid()
                               };
-            Driver.Api.Commands.Post(command);
+            Drive.Api.Commands.Post(command);
 
-            var app = Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == _application.Id));
-            var saga = Do.Until(() =>Driver.Db.OpsSagas.RepaymentSagaEntities.Single(s => s.ApplicationId == app.ApplicationId));
+            var app = Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == _application.Id));
+            var saga = Do.Until(() =>Drive.Db.OpsSagas.RepaymentSagaEntities.Single(s => s.ApplicationId == app.ApplicationId));
 
-            var now = Data.GetPromiseDate().DateTime.AddDays(-4);
+            var now = Get.GetPromiseDate().DateTime.AddDays(-4);
             SetPaymentsUtcNow(now);
             Console.WriteLine("Set up UtcNow to {0}", now);
             //Cause request is schedule to timeout, send timeout message now.
@@ -146,7 +146,7 @@ namespace Wonga.QA.Tests.Payments
                                           });
 
 
-            var request = Do.Until(() => Driver.Db.Payments.RepaymentRequests.Single(r => r.ExternalId == (Guid)command.RepaymentRequestId));
+            var request = Do.Until(() => Drive.Db.Payments.RepaymentRequests.Single(r => r.ExternalId == (Guid)command.RepaymentRequestId));
             var requestDetail = request.RepaymentRequestDetails;
             Assert.AreEqual(0, requestDetail[0].StatusCode);
         }
@@ -154,7 +154,7 @@ namespace Wonga.QA.Tests.Payments
         [Test, AUT(AUT.Za), JIRA("ZA-2099")]
         public void RepayLoanViaBankTest_ArrearsRepay()
         {            
-            var app = Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == _application.Id));
+            var app = Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == _application.Id));
 
             var paymentsDb = new DbDriver().Payments;
            paymentsDb.Arrears.InsertOnSubmit(new ArrearEntity()
@@ -169,18 +169,18 @@ namespace Wonga.QA.Tests.Payments
                 ApplicationId = _application.Id,
                 ActionDate = new Date
                 {
-                    DateTime = Data.GetPromiseDate().DateTime.AddDays(23),
+                    DateTime = Get.GetPromiseDate().DateTime.AddDays(23),
                     DateFormat = DateFormat.Date
                 }, //Early repay before promised date
                 Amount = _application.LoanAmount,
                 RepaymentRequestId = Guid.NewGuid()
             };
-            Driver.Api.Commands.Post(command);
+            Drive.Api.Commands.Post(command);
 
 
-            var saga = Do.Until(() => Driver.Db.OpsSagas.RepaymentSagaEntities.Single(s => s.ApplicationId == app.ApplicationId));
+            var saga = Do.Until(() => Drive.Db.OpsSagas.RepaymentSagaEntities.Single(s => s.ApplicationId == app.ApplicationId));
 
-            var now = Data.GetPromiseDate().DateTime.AddDays(22);
+            var now = Get.GetPromiseDate().DateTime.AddDays(22);
             SetPaymentsUtcNow(now);
             Console.WriteLine("Set up UtcNow to {0}", now);
             //Cause request is schedule to timeout, send timeout message now.
@@ -190,12 +190,12 @@ namespace Wonga.QA.Tests.Payments
             });
 
 
-            var request = Do.Until(() => Driver.Db.Payments.RepaymentRequests.Single(r => r.ExternalId == (Guid)command.RepaymentRequestId));
+            var request = Do.Until(() => Drive.Db.Payments.RepaymentRequests.Single(r => r.ExternalId == (Guid)command.RepaymentRequestId));
             var requestDetail = request.RepaymentRequestDetails;
             Assert.AreEqual(0, requestDetail[0].StatusCode);
 
             var collectionForRemainingBalance =
-                Driver.Db.Payments.ScheduledPayments.OrderByDescending(sp => sp.CreatedOn).First(
+                Drive.Db.Payments.ScheduledPayments.OrderByDescending(sp => sp.CreatedOn).First(
                     sp => sp.ApplicationId == app.ApplicationId);
             Assert.IsTrue(collectionForRemainingBalance.Amount < 500);
         }
@@ -206,7 +206,7 @@ namespace Wonga.QA.Tests.Payments
         {
             //Driver.Svc.BankGateway.Stop();
 
-            var app = Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == _application.Id));
+            var app = Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == _application.Id));
 
             var paymentsDb = new DbDriver().Payments;
             paymentsDb.Arrears.InsertOnSubmit(new ArrearEntity()
@@ -221,17 +221,17 @@ namespace Wonga.QA.Tests.Payments
                 ApplicationId = _application.Id,
                 ActionDate = new Date
                 {
-                    DateTime = Data.GetPromiseDate().DateTime.AddDays(23),
+                    DateTime = Get.GetPromiseDate().DateTime.AddDays(23),
                     DateFormat = DateFormat.Date
                 }, //Early repay before promised date
                 Amount = _application.LoanAmount,
                 RepaymentRequestId = Guid.NewGuid()
             };
-            Driver.Api.Commands.Post(command);
+            Drive.Api.Commands.Post(command);
             
-            var saga = Do.Until(() => Driver.Db.OpsSagas.RepaymentSagaEntities.Single(s => s.ApplicationId == app.ApplicationId));
+            var saga = Do.Until(() => Drive.Db.OpsSagas.RepaymentSagaEntities.Single(s => s.ApplicationId == app.ApplicationId));
             //Set date to be outside collection cutoff time, which is non of action date.
-            var now = Data.GetPromiseDate().DateTime.AddDays(22);
+            var now = Get.GetPromiseDate().DateTime.AddDays(22);
             SetPaymentsUtcNow(now);
             Console.WriteLine("Set up UtcNow to {0}", now);
             
@@ -241,7 +241,7 @@ namespace Wonga.QA.Tests.Payments
                 SagaId = saga.Id,
             });
 
-            now = Data.GetPromiseDate().DateTime.AddDays(26);
+            now = Get.GetPromiseDate().DateTime.AddDays(26);
             SetPaymentsUtcNow(now);
             Console.WriteLine("Set up UtcNow to {0}", now);
             //Cause Failed to collection handler to be called, by timing out at collection cutoff time.
@@ -250,12 +250,12 @@ namespace Wonga.QA.Tests.Payments
                 SagaId = saga.Id,
             });
 
-            var request = Do.Until(() => Driver.Db.Payments.RepaymentRequestDetails.Single(r => r.ApplicationId == app.ApplicationId &&
+            var request = Do.Until(() => Drive.Db.Payments.RepaymentRequestDetails.Single(r => r.ApplicationId == app.ApplicationId &&
                 r.StatusCode == 2));
             Assert.AreEqual("Tracking Period Expired", request.StatusMessage); //status is error
 
             var pendingScheduledPaymentSaga = Do.Until(() =>
-                Driver.Db.OpsSagas.PendingScheduledPaymentSagaEntities.Single(p => p.ApplicationId == app.ApplicationId));
+                Drive.Db.OpsSagas.PendingScheduledPaymentSagaEntities.Single(p => p.ApplicationId == app.ApplicationId));
             Assert.IsTrue(_application.LoanAmount < pendingScheduledPaymentSaga.Amount);
 
             //Driver.Svc.BankGateway.Start();
@@ -263,11 +263,11 @@ namespace Wonga.QA.Tests.Payments
 
         private void SetPaymentsUtcNow(DateTime dateTime)
         {
-            Driver.Db.SetServiceConfiguration(NowServiceConfigKey, dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
-            Driver.Db.SetServiceConfiguration(NowServiceConfigKey_RepayLoan, dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
-            Driver.Db.SetServiceConfiguration(NowServiceConfigKey_ActionDateCalculator, dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
-            Driver.Db.SetServiceConfiguration(NowServiceConfigKey_VerifyBalance, dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
-            Driver.Db.SetServiceConfiguration(NowServiceConfigKey_ZaRepayLoanSaga, dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
+            Drive.Db.SetServiceConfiguration(NowServiceConfigKey, dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
+            Drive.Db.SetServiceConfiguration(NowServiceConfigKey_RepayLoan, dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
+            Drive.Db.SetServiceConfiguration(NowServiceConfigKey_ActionDateCalculator, dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
+            Drive.Db.SetServiceConfiguration(NowServiceConfigKey_VerifyBalance, dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
+            Drive.Db.SetServiceConfiguration(NowServiceConfigKey_ZaRepayLoanSaga, dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
         }
     }
 }

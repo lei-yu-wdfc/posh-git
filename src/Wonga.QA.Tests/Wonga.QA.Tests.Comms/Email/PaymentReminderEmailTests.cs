@@ -37,7 +37,7 @@ namespace Wonga.QA.Tests.Comms.Email
         private void AdjustLocalTimeOfDayToSendPaymentReminderEmail()
         {
             ServiceConfigurationEntity configurationEntity =
-                Driver.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == ConfigKey);
+                Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == ConfigKey);
             _oldConfigValue = configurationEntity.Value;
 
             TimeZoneInfo localTimeZone = TimeZoneInfo.FindSystemTimeZoneById(_mzTimeZone);
@@ -69,7 +69,7 @@ namespace Wonga.QA.Tests.Comms.Email
         private void ResetLocalTimeOfDayToSendPaymentReminderEmail()
         {
             ServiceConfigurationEntity configurationEntity =
-                Driver.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == ConfigKey);
+                Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == ConfigKey);
             configurationEntity.Value = _oldConfigValue;
 
             configurationEntity.Submit();
@@ -77,7 +77,7 @@ namespace Wonga.QA.Tests.Comms.Email
 
         private bool CheckPaymentReminderEmailSent()
         {
-            return Driver.ThirdParties.ExactTarget.CheckPaymentReminderEmailSent(_customer.Email);
+            return Drive.ThirdParties.ExactTarget.CheckPaymentReminderEmailSent(_customer.Email);
         }
 
         public abstract class GivenACustomerFromOntarioWithAnActiveLoan : PaymentReminderEmailTests

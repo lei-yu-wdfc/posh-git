@@ -43,7 +43,7 @@ namespace Wonga.QA.Framework.Api
 
             using (StreamReader reader = new StreamReader(Response.GetResponseStream()))
                 Body = reader.ReadToEnd();
-            Trace.WriteLine(Data.Indent(Body), GetType().FullName);
+            Trace.WriteLine(Get.Indent(Body), GetType().FullName);
 
             try
             {

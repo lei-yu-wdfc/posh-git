@@ -31,7 +31,7 @@ namespace Wonga.QA.Framework.Api
                     builder.AppendFormat("<{0} xsi:nil=\"true\" />", property.Name);
                 else
                 {
-                    String convert = Data.ToString(value);
+                    String convert = Get.ToString(value);
                     if (String.IsNullOrEmpty(convert))
                         builder.AppendFormat("<{0} />", property.Name);
                     else

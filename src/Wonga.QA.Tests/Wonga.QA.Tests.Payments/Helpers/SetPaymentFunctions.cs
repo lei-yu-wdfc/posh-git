@@ -24,7 +24,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
         public static void SetCurrentVariableInterestRates(List<VariableInterestRateDetailEntity> rates)
         {
-            var db = Driver.Db.Payments;
+            var db = Drive.Db.Payments;
 
             var currentRates = db.VariableInterestRateDetails.Where(v => v.VariableInterestRateId == 1);
 

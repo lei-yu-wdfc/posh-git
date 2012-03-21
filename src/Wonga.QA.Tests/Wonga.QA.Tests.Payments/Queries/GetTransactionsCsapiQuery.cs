@@ -22,14 +22,14 @@ namespace Wonga.QA.Tests.Payments.Queries
             var organisation = OrganisationBuilder.New(customer).Build();
             var app = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
 
-            Do.Until(() => Driver.Db.Payments.Transactions.Count(t => t.ApplicationEntity.ExternalId == app.Id));
+            Do.Until(() => Drive.Db.Payments.Transactions.Count(t => t.ApplicationEntity.ExternalId == app.Id));
 
             var query = new Framework.Cs.GetTransactionsQuery
                             {
                                 ApplicationGuid = app.Id
                             };
 
-            var response = Driver.Cs.Queries.Post(query);
+            var response = Drive.Cs.Queries.Post(query);
 
             Assert.IsNotNull(response);
             Assert.Contains(response.Values["Type"], "Fee");
@@ -49,7 +49,7 @@ namespace Wonga.QA.Tests.Payments.Queries
                 ApplicationGuid = app.Id
             };
 
-            var response = Driver.Cs.Queries.Post(query);
+            var response = Drive.Cs.Queries.Post(query);
 
             Assert.IsNotNull(response);
             Assert.AreEqual(0, response.Root.Descendants().Count(d => d.Name.LocalName == "Transaction"));

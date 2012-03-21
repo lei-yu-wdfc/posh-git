@@ -42,13 +42,13 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		private decimal GetLoanThresholdForCustomer(Customer customer)
 		{
 			var allowedIncomeLimit = GetAllowedIncomeLimitPercent();
-			var netMonthlyIncome = Driver.Db.Risk.EmploymentDetails.Single(a => a.AccountId == customer.Id).NetMonthlyIncome;
+			var netMonthlyIncome = Drive.Db.Risk.EmploymentDetails.Single(a => a.AccountId == customer.Id).NetMonthlyIncome;
 			return ((allowedIncomeLimit / 100.0m) * netMonthlyIncome);
 		}
 
 		private decimal GetAllowedIncomeLimitPercent()
 		{
-			return Decimal.Parse(Driver.Db.GetServiceConfiguration("Risk.AllowedIncomeLimitPercent").Value);
+			return Decimal.Parse(Drive.Db.GetServiceConfiguration("Risk.AllowedIncomeLimitPercent").Value);
 		}
 
 		#endregion

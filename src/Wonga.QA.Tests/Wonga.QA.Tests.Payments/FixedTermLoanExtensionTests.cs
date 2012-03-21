@@ -35,12 +35,12 @@ namespace Wonga.QA.Tests.Payments
 				.WithLoanTerm(loanTerm)
 				.Build();
 
-			var ftApp = Driver.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationEntity.ExternalId == app.Id);
+			var ftApp = Drive.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationEntity.ExternalId == app.Id);
 			Assert.IsNotNull(ftApp);
 
 			ConfigurationFunctions.SetupQaUtcNowOverride((ftApp.NextDueDate ?? ftApp.PromiseDate).AddDays(-daysToDueDate));
 			//Check Extension available.
-			ApiResponse parm = Driver.Api.Queries.Post(new GetFixedTermLoanExtensionParametersQuery
+			ApiResponse parm = Drive.Api.Queries.Post(new GetFixedTermLoanExtensionParametersQuery
 			{
 				AccountId = cust.Id,
 			});
@@ -51,7 +51,7 @@ namespace Wonga.QA.Tests.Payments
 			Assert.GreaterThan(DateTime.Parse(parm.Values["MinExtendDate"].Single()), dueDate);
 
 			//Check calculations for extend
-			ApiResponse calc = Driver.Api.Queries.Post(new GetFixedTermLoanExtensionCalculationQuery
+			ApiResponse calc = Drive.Api.Queries.Post(new GetFixedTermLoanExtensionCalculationQuery
 			{
 				ApplicationId = app.Id,
 				ExtendDate = new Date(DateTime.Today.AddDays(extendTerm + loanTerm), DateFormat.Date)
@@ -94,7 +94,7 @@ namespace Wonga.QA.Tests.Payments
 					.WithLoanAmount(100)
 					.Build();
 
-				ftApp = Driver.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationEntity.ExternalId == app.Id);
+				ftApp = Drive.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationEntity.ExternalId == app.Id);
 
 				if (inArrears)
 					app.PutApplicationIntoArrears();
@@ -104,7 +104,7 @@ namespace Wonga.QA.Tests.Payments
 			var cardId = (appExists ? cust.GetPaymentCard() : Guid.NewGuid());
 			var extendDate = new Date(appExists
 			                 	? (ftApp.NextDueDate ?? ftApp.PromiseDate).AddDays(3)
-			                 	: Data.RandomDate(DateTime.Now.AddYears(-1), DateTime.Now.AddYears(1)), DateFormat.Date);
+			                 	: Get.RandomDate(DateTime.Now.AddYears(-1), DateTime.Now.AddYears(1)), DateFormat.Date);
 
 			ConfigurationFunctions.SetupQaUtcNowOverride((ftApp.NextDueDate ?? ftApp.PromiseDate).AddDays(-3));
 
@@ -117,7 +117,7 @@ namespace Wonga.QA.Tests.Payments
 			          		PaymentCardId = cardId
 			          	};
 
-			var cmdAct = new Gallio.Common.Action(() => Driver.Api.Commands.Post(cmd));
+			var cmdAct = new Gallio.Common.Action(() => Drive.Api.Commands.Post(cmd));
 			if (shouldPass)
 				Assert.DoesNotThrow(cmdAct);
 			else

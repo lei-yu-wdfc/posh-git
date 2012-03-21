@@ -36,5 +36,22 @@ namespace Wonga.QA.Tests.Ui
 
             }
         }
+
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-165")]
+        public void SelectingATroubleshootingQuestionTakesMeToPageWithCorrectQuestionSelected()
+        {
+            var page = Client.Home();
+            page.Help.HelpTriggerClick();
+            List<String> troubleshootingQuestions = page.Help.GetTroubleshootingQuestions();
+            foreach (string question in troubleshootingQuestions)
+            {
+                page.Help.HelpTriggerClick();
+                FAQPage faqPage = page.Help.SelectTroubleshootingQuestion(question);
+                Assert.AreEqual(question, faqPage.Faq.GetSelectedQuestionText());
+                Assert.AreEqual(question, faqPage.Faq.GetAnswerQuestionText());
+                page = Client.Home();
+
+            }
+        }
     }
 }

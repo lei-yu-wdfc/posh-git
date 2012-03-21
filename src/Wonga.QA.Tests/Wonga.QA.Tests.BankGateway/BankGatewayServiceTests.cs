@@ -11,18 +11,18 @@ namespace Wonga.QA.Tests.BankGateway
         [Test]
         public void BankGatewayServiceIsRunning()
         {
-            Assert.IsTrue(Driver.Svc.BankGateway.IsRunning());
+            Assert.IsTrue(Drive.Svc.BankGateway.IsRunning());
 
             switch (Config.AUT)
             {
                 case AUT.Uk:
-                    Assert.IsTrue(Driver.Svc.Hsbc.IsRunning());
+                    Assert.IsTrue(Drive.Svc.Hsbc.IsRunning());
                     break;
                 case AUT.Za:
-                    Assert.IsTrue(Driver.Svc.Hyphen.IsRunning());
+                    Assert.IsTrue(Drive.Svc.Hyphen.IsRunning());
                     break;
                 case AUT.Ca:
-                    Assert.IsTrue(Driver.Svc.Scotia.IsRunning());
+                    Assert.IsTrue(Drive.Svc.Scotia.IsRunning());
                     break;
                 case AUT.Wb:
                     break;

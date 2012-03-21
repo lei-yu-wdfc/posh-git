@@ -10,7 +10,7 @@ namespace Wonga.QA.Tests.Salesforce
         [Test]
         public void SalesforceServiceIsRunning()
         {
-            Assert.IsTrue(Driver.Svc.Salesforce.IsRunning());
+            Assert.IsTrue(Drive.Svc.Salesforce.IsRunning());
         }
     }
 }

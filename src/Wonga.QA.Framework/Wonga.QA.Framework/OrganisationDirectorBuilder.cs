@@ -20,9 +20,9 @@ namespace Wonga.QA.Framework
         private OrganisationDirectorBuilder()
         {
             _id = Guid.NewGuid();
-            _email = Data.RandomEmail();
-            _foreName = Data.GetName();
-            _surname = Data.GetName();
+            _email = Get.RandomEmail();
+            _foreName = Get.GetName();
+            _surname = Get.GetName();
             _primaryLevel = true;
         }
 
@@ -65,7 +65,7 @@ namespace Wonga.QA.Framework
         {
             if (_primaryLevel)
             {
-                Driver.Api.Commands.Post(AddPrimaryOrganisationDirectorCommand.New(r =>
+                Drive.Api.Commands.Post(AddPrimaryOrganisationDirectorCommand.New(r =>
                                                                                        {                                                                                           
                                                                                            r.OrganisationId =
                                                                                                _company.Id;
@@ -77,7 +77,7 @@ namespace Wonga.QA.Framework
             }
             else
             {
-                Driver.Api.Commands.Post(AddSecondaryOrganisationDirectorCommand.New(r =>
+                Drive.Api.Commands.Post(AddSecondaryOrganisationDirectorCommand.New(r =>
                 {
                     r.OrganisationId =
                         _company.Id;

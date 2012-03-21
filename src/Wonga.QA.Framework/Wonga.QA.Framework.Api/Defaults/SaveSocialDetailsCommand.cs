@@ -6,10 +6,10 @@ namespace Wonga.QA.Framework.Api
     {
         public override void Default()
         {
-            AccountId = Data.GetId();
-            Dependants = Data.RandomInt(0, 10);
-            MaritalStatus = Data.RandomEnum<MaritalStatusEnum>();
-            OccupancyStatus = Data.RandomEnum<OccupancyStatusEnum>();
+            AccountId = Get.GetId();
+            Dependants = Get.RandomInt(0, 10);
+            MaritalStatus = Get.RandomEnum<MaritalStatusEnum>();
+            OccupancyStatus = Get.RandomEnum<OccupancyStatusEnum>();
         }
     }
 }

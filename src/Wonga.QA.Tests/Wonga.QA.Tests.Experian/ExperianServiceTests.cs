@@ -11,7 +11,7 @@ namespace Wonga.QA.Tests.Experian
         [Test, AUT(AUT.Uk, AUT.Wb)]
         public void ExperianServiceIsRunning()
         {
-            Assert.IsTrue(Driver.Svc.Experian.IsRunning());
+            Assert.IsTrue(Drive.Svc.Experian.IsRunning());
         }
     }
 }

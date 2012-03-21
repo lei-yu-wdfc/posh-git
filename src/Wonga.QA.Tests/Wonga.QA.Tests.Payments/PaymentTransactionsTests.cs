@@ -50,7 +50,7 @@ Then create cashadvance, fee and interest transactions on the application.
 
         private int GetTransactionCount(Func<TransactionEntity, bool> func)
         {
-            return Driver.Db.Payments.Transactions.Count(func);
+            return Drive.Db.Payments.Transactions.Count(func);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Wonga.QA.Tests.Ui
         {
             var journey = new Journey(Client.Home());
             var addressPage = journey.ApplyForLoan(200, 10)
-                                      .FillPersonalDetails(Data.EnumToString(RiskMask.TESTEmployedMask))
+                                      .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                                       .CurrentPage as AddressDetailsPage;
             switch (Config.AUT)
             {
@@ -40,7 +40,7 @@ namespace Wonga.QA.Tests.Ui
         {
             var journey = new Journey(Client.Home());
             var bankDetailsPage = journey.ApplyForLoan(200, 10)
-                                      .FillPersonalDetails(Data.EnumToString(RiskMask.TESTEmployedMask))
+                                      .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                                       .FillAddressDetails()
                                       .FillAccountDetails()
                                       .CurrentPage as PersonalBankAccountPage;
@@ -79,7 +79,7 @@ namespace Wonga.QA.Tests.Ui
 
             Assert.AreNotEqual(firstTotalToRepayValue, totalToRepayAtPersonalDetails);
 
-            var acceptedPage = journey.FillPersonalDetails(Data.EnumToString(RiskMask.TESTEmployedMask))
+            var acceptedPage = journey.FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                                      .FillAddressDetails()
                                      .FillAccountDetails()
                                      .FillBankDetails()
@@ -150,7 +150,7 @@ namespace Wonga.QA.Tests.Ui
 
             Assert.AreNotEqual(firstTotalToRepayValue, totalToRepayAtPersonalDetails);
 
-            var acceptedPage = journey.FillPersonalDetails(Data.EnumToString(RiskMask.TESTEmployedMask))
+            var acceptedPage = journey.FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                                      .FillAddressDetails()
                                      .FillAccountDetails()
                                      .FillBankDetails()
@@ -215,7 +215,7 @@ namespace Wonga.QA.Tests.Ui
             {
                 case AUT.Za:
                     var accountDetailsPage = journey.ApplyForLoan(200, 10)
-                                       .FillPersonalDetails(Data.EnumToString(RiskMask.TESTEmployedMask))
+                                       .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                                        .FillAddressDetails().CurrentPage as AccountDetailsPage;
                     accountDetailsPage.AccountDetailsSection.Password = "Passw0rd";
                     accountDetailsPage.AccountDetailsSection.PasswordConfirm = "qweqweqwe";
@@ -225,7 +225,7 @@ namespace Wonga.QA.Tests.Ui
                     break;
                 case AUT.Ca:
                     var addressDetailsPage = journey.ApplyForLoan(200, 10)
-                                      .FillPersonalDetails(Data.EnumToString(RiskMask.TESTEmployedMask))
+                                      .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                                       .FillAddressDetails().CurrentPage as AddressDetailsPage;
                     addressDetailsPage.AccountDetailsSection.Password = "Passw0rd";
                     addressDetailsPage.AccountDetailsSection.PasswordConfirm = "qweqweqwe";
@@ -248,7 +248,7 @@ namespace Wonga.QA.Tests.Ui
             string totalToRepayOnPersonalDetails = personalDetailsPage.GetTotalToRepay;
             string repaymentDateOnPersonalDetails = personalDetailsPage.GetRepaymentDate;
 
-            var acceptedPage = journey.FillPersonalDetails(Data.EnumToString(RiskMask.TESTEmployedMask))
+            var acceptedPage = journey.FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                 .FillAddressDetails()
                 .FillAccountDetails()
                 .FillBankDetails()

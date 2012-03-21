@@ -32,9 +32,9 @@ namespace Wonga.QA.Tests.Comms.PaymentFailureEmailTests
             _applicationInfo.FirstCollectionAttempt(null, false, false);
             _applicationInfo.SecondCollectionAttempt(false);
 
-            Do.Until(() => Driver.Db.OpsSagasWb.FirstPaymentRequestFailedSagaEntities.Single(t => t.ApplicationId == _applicationInfo.Id
+            Do.Until(() => Drive.Db.OpsSagasWb.FirstPaymentRequestFailedSagaEntities.Single(t => t.ApplicationId == _applicationInfo.Id
                                                                                                    && t.EmailSent == true));
-            Do.Until(() => Driver.Db.OpsSagasWb.SecondPaymentRequestFailedSagaEntities.Single(t => t.ApplicationId == _applicationInfo.Id
+            Do.Until(() => Drive.Db.OpsSagasWb.SecondPaymentRequestFailedSagaEntities.Single(t => t.ApplicationId == _applicationInfo.Id
                                                                                                    && t.EmailSent == true));
         }
     }

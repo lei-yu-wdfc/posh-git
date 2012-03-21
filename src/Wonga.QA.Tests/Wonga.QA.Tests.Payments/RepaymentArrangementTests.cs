@@ -27,7 +27,7 @@ namespace Wonga.QA.Tests.Payments
 			
 			application.PutApplicationIntoArrears();
 
-			Driver.Msmq.Payments.Send(new CreateExtendedRepaymentArrangementCommand
+			Drive.Msmq.Payments.Send(new CreateExtendedRepaymentArrangementCommand
 			                          	{
 			                          		AccountId = customer.Id,
 											ApplicationId = application.Id,
@@ -40,9 +40,9 @@ namespace Wonga.QA.Tests.Payments
 											                   	}
 			                          	});
 
-			var dbApplication = Driver.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
+			var dbApplication = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
 			Thread.Sleep(10000);
-			var repaymentArrangement = Driver.Db.Payments.RepaymentArrangements.Single(x => x.ApplicationId == dbApplication.ApplicationId);
+			var repaymentArrangement = Drive.Db.Payments.RepaymentArrangements.Single(x => x.ApplicationId == dbApplication.ApplicationId);
 			Assert.AreEqual(2, repaymentArrangement.RepaymentArrangementDetails.Count);
 		}
 
@@ -63,13 +63,13 @@ namespace Wonga.QA.Tests.Payments
 			           		RepaymentDates = new[] {DateTime.Today.AddDays(1), DateTime.Today.AddMonths(1)},
 			           		NumberOfMonths = 2
 			           	};
-			Driver.Api.Commands.Post(cmd);
+			Drive.Api.Commands.Post(cmd);
 			
-			var dbApplication = Driver.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
-			Do.Until(() => Driver.Db.Payments.RepaymentArrangements.Single(x => x.ApplicationId == dbApplication.ApplicationId));
-			var repaymentArrangement = Driver.Db.Payments.RepaymentArrangements.Single(x => x.ApplicationId == dbApplication.ApplicationId);
+			var dbApplication = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
+			Do.Until(() => Drive.Db.Payments.RepaymentArrangements.Single(x => x.ApplicationId == dbApplication.ApplicationId));
+			var repaymentArrangement = Drive.Db.Payments.RepaymentArrangements.Single(x => x.ApplicationId == dbApplication.ApplicationId);
 			Assert.AreEqual(2, repaymentArrangement.RepaymentArrangementDetails.Count);
-			Assert.IsNotNull(Driver.Db.Payments.Transactions.Where(x => x.ApplicationId == dbApplication.ApplicationId && x.Type == "SuspendInterestAccrual"));
+			Assert.IsNotNull(Drive.Db.Payments.Transactions.Where(x => x.ApplicationId == dbApplication.ApplicationId && x.Type == "SuspendInterestAccrual"));
 		}
 
 		[Test, AUT(AUT.Uk), JIRA("UK-726"), Parallelizable]
@@ -85,18 +85,18 @@ namespace Wonga.QA.Tests.Payments
 
 			application.CreateRepaymentArrangement();
 
-			var app = Driver.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
+			var app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
 			
 			//Remove card details, replace with bad card details to cause payment failure
 			var db = new DbDriver();
 			var accountPreferences = db.Payments.AccountPreferences.Single(x => x.AccountId == app.AccountId);
 			accountPreferences.PrimaryPaymentCardId = null;
 			db.Payments.SubmitChanges();
-			var paymentCard = Driver.Db.Payments.PaymentCardsBases.Single(x => x.ExternalId == app.PaymentCardGuid);
-			Driver.Db.Payments.PersonalPaymentCards.Single(x => x.PaymentCardId == paymentCard.PaymentCardId).Delete().Submit();
-			Driver.Db.Payments.PaymentCardsBases.Single(x => x.ExternalId == app.PaymentCardGuid).Delete().Submit();
-			Driver.Db.ColdStorage.PaymentCards.Single(x => x.ExternalId == app.PaymentCardGuid).Delete().Submit();
-			Driver.Api.Commands.Post(new AddPaymentCardCommand
+			var paymentCard = Drive.Db.Payments.PaymentCardsBases.Single(x => x.ExternalId == app.PaymentCardGuid);
+			Drive.Db.Payments.PersonalPaymentCards.Single(x => x.PaymentCardId == paymentCard.PaymentCardId).Delete().Submit();
+			Drive.Db.Payments.PaymentCardsBases.Single(x => x.ExternalId == app.PaymentCardGuid).Delete().Submit();
+			Drive.Db.ColdStorage.PaymentCards.Single(x => x.ExternalId == app.PaymentCardGuid).Delete().Submit();
+			Drive.Api.Commands.Post(new AddPaymentCardCommand
 			                         	{
 			                         		AccountId = app.AccountId,
 			                         		PaymentCardId = app.PaymentCardGuid,
@@ -110,7 +110,7 @@ namespace Wonga.QA.Tests.Payments
 			                         		IsCreditCard = false,
 			                         		IsPrimary = true,
 			                         	});
-			Do.Until(() => Driver.Db.Payments.PaymentCardsBases.Single(x => x.ExternalId == app.PaymentCardGuid));
+			Do.Until(() => Drive.Db.Payments.PaymentCardsBases.Single(x => x.ExternalId == app.PaymentCardGuid));
 			
 			var newPaymentCard = db.Payments.PaymentCardsBases.Single(x => x.ExternalId == app.PaymentCardGuid);
 			//Set date to past for card payment mock
@@ -120,18 +120,18 @@ namespace Wonga.QA.Tests.Payments
 
 			//Process Repayment Arrangement Installment, expecting failure
 			var repaymentArrangement =
-				Driver.Db.Payments.RepaymentArrangements.Single(x => x.ApplicationId == app.ApplicationId);
+				Drive.Db.Payments.RepaymentArrangements.Single(x => x.ApplicationId == app.ApplicationId);
 			var firstRepaymentArrangementDetail =
 				db.Payments.RepaymentArrangementDetails.First(
 					x => x.RepaymentArrangementId == repaymentArrangement.RepaymentArrangementId);
 
-			Driver.Msmq.Payments.Send(new ProcessScheduledRepaymentCommand
+			Drive.Msmq.Payments.Send(new ProcessScheduledRepaymentCommand
 			                          	{
 			                          		RepaymentArrangementId = repaymentArrangement.RepaymentArrangementId,
 			                          		RepaymentDetailId = firstRepaymentArrangementDetail.RepaymentArrangementDetailId
 			                          	});
 			
-			var scheduledPayment = Do.Until(() => Driver.Db.Payments.ScheduledPayments.Single(x => x.ApplicationId == app.ApplicationId));
+			var scheduledPayment = Do.Until(() => Drive.Db.Payments.ScheduledPayments.Single(x => x.ApplicationId == app.ApplicationId));
 			Assert.IsFalse(scheduledPayment.Success.Value);
 		}
 

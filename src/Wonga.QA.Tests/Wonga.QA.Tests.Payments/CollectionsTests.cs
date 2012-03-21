@@ -41,7 +41,7 @@ namespace Wonga.QA.Tests.Payments
 			const int loanAmount = 500;
 
 			var nextPayDate = new Date(DateTime.UtcNow.AddDays(term / 2));
-			nextPayDate.DateTime = Driver.Db.GetNextWorkingDay(nextPayDate);
+			nextPayDate.DateTime = Drive.Db.GetNextWorkingDay(nextPayDate);
 
 			var customer = CustomerBuilder.New()
 				.WithNextPayDate(nextPayDate)
@@ -81,7 +81,7 @@ namespace Wonga.QA.Tests.Payments
 			const int loanAmount = 500;
 
 			var nextPayDate = new Date(DateTime.UtcNow.AddDays(term / 2));
-			nextPayDate.DateTime = Driver.Db.GetNextWorkingDay(nextPayDate);
+			nextPayDate.DateTime = Drive.Db.GetNextWorkingDay(nextPayDate);
 
 			var customer = CustomerBuilder.New()
 				.WithNextPayDate(nextPayDate)
@@ -97,8 +97,8 @@ namespace Wonga.QA.Tests.Payments
 
 			SendPaymentTaken(application, application.GetBalance());
 
-			Do.With().Timeout(1).Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == application.Id).ClosedOn != null);
-			Do.Until(() => Driver.Db.OpsSagas.ScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id) == false);
+			Do.With().Timeout(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id).ClosedOn != null);
+			Do.Until(() => Drive.Db.OpsSagas.ScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id) == false);
 			Do.Until(() => new DbDriver().OpsSagas.PendingScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id) == false);
 		}
 
@@ -110,7 +110,7 @@ namespace Wonga.QA.Tests.Payments
 			const int loanAmount = 500;
 
 			var nextPayDate = new Date(DateTime.UtcNow.AddDays(term / 2));
-			nextPayDate.DateTime = Driver.Db.GetNextWorkingDay(nextPayDate);
+			nextPayDate.DateTime = Drive.Db.GetNextWorkingDay(nextPayDate);
 
 			var customer = CustomerBuilder.New()
 				.WithNextPayDate(nextPayDate)
@@ -126,7 +126,7 @@ namespace Wonga.QA.Tests.Payments
 
 			SendPaymentTaken(application, application.GetBalance() / 2);
 
-			Assert.IsNull(Driver.Db.Payments.Applications.Single(a => a.ExternalId == application.Id).ClosedOn);
+			Assert.IsNull(Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id).ClosedOn);
 			Assert.IsTrue(new DbDriver().OpsSagas.PendingScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id));
 			Assert.IsFalse(new DbDriver().OpsSagas.ScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id));
 		}
@@ -236,14 +236,14 @@ namespace Wonga.QA.Tests.Payments
 						//Payday of month - 1
 						var selfReportedPayDay = GetSelfReportedPayDayForApplication(application);
 						var month = selfReportedPayDay > now.Day ? now.Month : now.Month + 1;
-						var validPayDay = Driver.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, month,  selfReportedPayDay))).DateTime.Day;
+						var validPayDay = Drive.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, month,  selfReportedPayDay))).DateTime.Day;
 
-						paymentRequestDate = Driver.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, month, validPayDay - 1)));
+						paymentRequestDate = Drive.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, month, validPayDay - 1)));
 					}
 					break;
 				default:
 					{
-						paymentRequestDate = Driver.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, now.Month, GetDefaultPayDaysOfMonth()[now.Month - 1] - 1)));
+						paymentRequestDate = Drive.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, now.Month, GetDefaultPayDaysOfMonth()[now.Month - 1] - 1)));
 					}
 					break;
 			}
@@ -266,7 +266,7 @@ namespace Wonga.QA.Tests.Payments
 
 		private bool IsTrackingForMoreThanMaxDays(Application application, DateTime now)
 		{
-			var promiseDate = Driver.Db.Payments.Applications.Single(a => a.ExternalId == application.Id).FixedTermLoanApplicationEntity.PromiseDate;
+			var promiseDate = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id).FixedTermLoanApplicationEntity.PromiseDate;
 			var daysTracking = (now - promiseDate).Days;
 
 			return daysTracking > InArrearsMaxDays;
@@ -296,7 +296,7 @@ namespace Wonga.QA.Tests.Payments
 
 		private void SetPaymentsUtcNow(DateTime dateTime)
 		{
-			Driver.Db.SetServiceConfiguration(NowServiceConfigKey, dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
+			Drive.Db.SetServiceConfiguration(NowServiceConfigKey, dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
 		}
 
 		public int[] GetDefaultPayDaysOfMonth()

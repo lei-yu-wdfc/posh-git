@@ -10,7 +10,7 @@ namespace Wonga.QA.Tests.ColdStorage
         [Test]
         public void ColdStorageServiceIsRunning()
         {
-            Assert.IsTrue(Driver.Svc.ColdStorage.IsRunning());
+            Assert.IsTrue(Drive.Svc.ColdStorage.IsRunning());
         }
     }
 }

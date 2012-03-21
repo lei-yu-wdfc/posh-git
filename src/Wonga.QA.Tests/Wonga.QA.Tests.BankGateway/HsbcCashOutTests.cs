@@ -18,7 +18,7 @@ namespace Wonga.QA.Tests.BankGateway
         [FixtureSetUp]
         public void TurnOffTestMode()
         {
-            ServiceConfigurationEntity mode = Driver.Db.Ops.ServiceConfigurations.SingleOrDefault(e => e.Key == "BankGateway.IsTestMode");
+            ServiceConfigurationEntity mode = Drive.Db.Ops.ServiceConfigurations.SingleOrDefault(e => e.Key == "BankGateway.IsTestMode");
             if (mode != null && Boolean.Parse(mode.Value))
             {
                 mode.Value = false.ToString();
@@ -32,7 +32,7 @@ namespace Wonga.QA.Tests.BankGateway
         {
             if (_wasTestModeEnabled)
             {
-                ServiceConfigurationEntity mode = Driver.Db.Ops.ServiceConfigurations.Single(e => e.Key == "BankGateway.IsTestMode");
+                ServiceConfigurationEntity mode = Drive.Db.Ops.ServiceConfigurations.Single(e => e.Key == "BankGateway.IsTestMode");
                 mode.Value = true.ToString();
                 mode.Submit();
                 _wasTestModeEnabled = false;
@@ -45,7 +45,7 @@ namespace Wonga.QA.Tests.BankGateway
             var accountId = CreateCustomerDetails().AccountId;
             var applicationId = Guid.NewGuid();
 
-            Driver.Msmq.BankGateway.Send(new SendPaymentCommand
+            Drive.Msmq.BankGateway.Send(new SendPaymentCommand
                                              {
                                                  AccountId = accountId,
                                                  Amount = 100.00M,
@@ -57,18 +57,18 @@ namespace Wonga.QA.Tests.BankGateway
                                                  SenderReference = Guid.NewGuid()
                                              });
 
-            var transaction = Do.Until(() => Driver.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId && e.TransactionStatus == 3));
+            var transaction = Do.Until(() => Drive.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId && e.TransactionStatus == 3));
 
             var transactionReference = transaction.TransactionId.ToString();
 
-            Driver.Msmq.Hsbc.Send(new FasterSecondResponseSuccessSagaUkCommand { FileName = "file name 1", RawContents = "Some raw contenst", TransactionReference = transactionReference });
-            var baseResponseRecordEntity = Do.Until(() => Driver.Db.OpsSagasUk.BaseResponseRecordEntities.Single(x => x.TransactionReference == transactionReference));
+            Drive.Msmq.Hsbc.Send(new FasterSecondResponseSuccessSagaUkCommand { FileName = "file name 1", RawContents = "Some raw contenst", TransactionReference = transactionReference });
+            var baseResponseRecordEntity = Do.Until(() => Drive.Db.OpsSagasUk.BaseResponseRecordEntities.Single(x => x.TransactionReference == transactionReference));
 
-            Driver.Msmq.Hsbc.Send(new TimeoutMessage { ClearTimeout = true, Expires = DateTime.UtcNow, SagaId = baseResponseRecordEntity.Id, State = null });
+            Drive.Msmq.Hsbc.Send(new TimeoutMessage { ClearTimeout = true, Expires = DateTime.UtcNow, SagaId = baseResponseRecordEntity.Id, State = null });
 
-            Do.Until(() => Driver.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId).TransactionStatus == 4); //success
+            Do.Until(() => Drive.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId).TransactionStatus == 4); //success
 
-            Do.Until(() => Driver.Db.BankGateway.Acknowledges.Single(e =>
+            Do.Until(() => Drive.Db.BankGateway.Acknowledges.Single(e =>
                 e.TransactionID == transaction.TransactionId
                 && e.AcknowledgeTypeID == 3
                 && !e.HasError)); //2nd faster ack
@@ -83,7 +83,7 @@ namespace Wonga.QA.Tests.BankGateway
             var accountId = CreateCustomerDetails().AccountId;
             var applicationId = Guid.NewGuid();
 
-            Driver.Msmq.BankGateway.Send(new SendPaymentCommand
+            Drive.Msmq.BankGateway.Send(new SendPaymentCommand
             {
                 AccountId = accountId,
                 Amount = 100.00M,
@@ -95,13 +95,13 @@ namespace Wonga.QA.Tests.BankGateway
                 SenderReference = Guid.NewGuid()
             });
 
-            var transaction = Do.Until(() => Driver.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId && e.TransactionStatus == 3));
+            var transaction = Do.Until(() => Drive.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId && e.TransactionStatus == 3));
 
             var transactionReference = transaction.TransactionId.ToString();
 
-            Driver.Msmq.Hsbc.Send(new RecordFinalFailureUkCommand { ErrorCode = "90", TransactionReference = transactionReference }); //Invalid Bank Sort Code
+            Drive.Msmq.Hsbc.Send(new RecordFinalFailureUkCommand { ErrorCode = "90", TransactionReference = transactionReference }); //Invalid Bank Sort Code
 
-            Do.Until(() => Driver.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId).TransactionStatus == 5); //Failure
+            Do.Until(() => Drive.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId).TransactionStatus == 5); //Failure
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Wonga.QA.Tests.BankGateway
             var accountId = CreateCustomerDetails().AccountId;
             var applicationId = Guid.NewGuid();
 
-            Driver.Msmq.BankGateway.Send(new SendPaymentCommand
+            Drive.Msmq.BankGateway.Send(new SendPaymentCommand
             {
                 AccountId = accountId,
                 Amount = 100.00M,
@@ -125,14 +125,14 @@ namespace Wonga.QA.Tests.BankGateway
                 SenderReference = Guid.NewGuid(),
             });
 
-            Do.Until(() => Driver.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId).TransactionStatus == 3);
-            var transaction = Driver.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId);
+            Do.Until(() => Drive.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId).TransactionStatus == 3);
+            var transaction = Drive.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId);
 
             var transactionReference = transaction.TransactionId.ToString();
-            Driver.Msmq.Hsbc.Send(new FasterSecondResponseSuccessSagaUkCommand { FileName = "file name 1", RawContents = "Some raw contenst", TransactionReference = transactionReference });
-            Do.Until(() => Driver.Db.OpsSagasUk.BaseResponseRecordEntities.Single(x => x.TransactionReference == transactionReference));
+            Drive.Msmq.Hsbc.Send(new FasterSecondResponseSuccessSagaUkCommand { FileName = "file name 1", RawContents = "Some raw contenst", TransactionReference = transactionReference });
+            Do.Until(() => Drive.Db.OpsSagasUk.BaseResponseRecordEntities.Single(x => x.TransactionReference == transactionReference));
 
-            Driver.Msmq.Hsbc.Send(new FasterThirdResponseFailureUkCommand
+            Drive.Msmq.Hsbc.Send(new FasterThirdResponseFailureUkCommand
                                       {
                                           ErrorCode = "BE", //insufficient funds
                                           TransactionReference = transactionReference,
@@ -141,8 +141,8 @@ namespace Wonga.QA.Tests.BankGateway
                                       }
                 );
 
-            Do.Until(() => Driver.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId).TransactionStatus == 5); //Failure
-            Do.Until(() => Driver.Db.BankGateway.Acknowledges.Single(e =>
+            Do.Until(() => Drive.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId).TransactionStatus == 5); //Failure
+            Do.Until(() => Drive.Db.BankGateway.Acknowledges.Single(e =>
                 e.TransactionID == transaction.TransactionId
                 && e.AcknowledgeTypeID == 5
                 && e.HasError)); //3rd ack error for faster payment
@@ -164,8 +164,8 @@ namespace Wonga.QA.Tests.BankGateway
                                                                             MobilePhone = "070123123",
                                                                             Title = TitleEnum.Mr,
                                                                         };
-            Driver.Msmq.Comms.Send(saveCustomerDetailsCommand);
-            Do.Until(() => Driver.Db.Comms.CustomerDetails.Single(e => e.AccountId == saveCustomerDetailsCommand.AccountId));
+            Drive.Msmq.Comms.Send(saveCustomerDetailsCommand);
+            Do.Until(() => Drive.Db.Comms.CustomerDetails.Single(e => e.AccountId == saveCustomerDetailsCommand.AccountId));
 
 
             CreateCustomerAddress(saveCustomerDetailsCommand.AccountId);
@@ -185,8 +185,8 @@ namespace Wonga.QA.Tests.BankGateway
                                                                             Postcode = "W8 1HD",
                                                                             AtAddressFrom = new DateTime(1970, 1, 1),
                                                                         };
-            Driver.Msmq.Comms.Send(saveCustomerAddressCommand);
-            Do.Until(() => Driver.Db.Comms.Addresses.Single(e => e.ExternalId == saveCustomerAddressCommand.AddressId));
+            Drive.Msmq.Comms.Send(saveCustomerAddressCommand);
+            Do.Until(() => Drive.Db.Comms.Addresses.Single(e => e.ExternalId == saveCustomerAddressCommand.AddressId));
         }
 
     }

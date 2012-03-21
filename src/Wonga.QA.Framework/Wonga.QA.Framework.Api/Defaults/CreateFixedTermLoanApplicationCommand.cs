@@ -7,10 +7,10 @@ namespace Wonga.QA.Framework.Api
     {
         public override void Default()
         {
-            AccountId = Data.GetId();
-            ApplicationId = Data.GetId();
-            PaymentCardId = Data.GetId();
-            BankAccountId = Data.GetId();
+            AccountId = Get.GetId();
+            ApplicationId = Get.GetId();
+            PaymentCardId = Get.GetId();
+            BankAccountId = Get.GetId();
             Currency =
                 Config.AUT == AUT.Uk ? CurrencyCodeEnum.GBP :
                 Config.AUT == AUT.Za ? CurrencyCodeEnum.ZAR :

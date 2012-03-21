@@ -19,7 +19,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             if (loanInArrears)
             {
                 return
-                    Driver.Db.Payments.ProductInterestRates.Single(v => v.ProductInterestRateId == 2).
+                    Drive.Db.Payments.ProductInterestRates.Single(v => v.ProductInterestRateId == 2).
                         MonthlyInterestRate;
             }
 
@@ -31,21 +31,21 @@ namespace Wonga.QA.Tests.Payments.Helpers
             if (!GetVariableInterestRateEnabledValue())
             {
                 return
-                    Driver.Db.Payments.ProductInterestRates.Single(v => v.ProductInterestRateId == 1).
+                    Drive.Db.Payments.ProductInterestRates.Single(v => v.ProductInterestRateId == 1).
                         MonthlyInterestRate;
             }
 
             return day < 11
-                       ? Driver.Db.Payments.ProductInterestRates.Single(v => v.ProductInterestRateId == 1).
+                       ? Drive.Db.Payments.ProductInterestRates.Single(v => v.ProductInterestRateId == 1).
                              MonthlyInterestRate
-                       : Driver.Db.Payments.VariableInterestRateDetails.Single(v => v.Day == day).MonthlyInterestRate;
+                       : Drive.Db.Payments.VariableInterestRateDetails.Single(v => v.Day == day).MonthlyInterestRate;
         }
 
         public static bool GetVariableInterestRateEnabledValue()
         {
             return
                 Convert.ToBoolean(
-                    Driver.Db.Ops.ServiceConfigurations.Single(v => v.Key == VariableInterestRateEnabled).Value);
+                    Drive.Db.Ops.ServiceConfigurations.Single(v => v.Key == VariableInterestRateEnabled).Value);
         }
 
         public static List<VariableInterestRateDetailEntity> GetVariableRatesFromApiResponse(ApiResponse response)
@@ -67,32 +67,32 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
         public static List<VariableInterestRateDetailEntity> GetCurrentVariableInterestRates()
         {
-            return Driver.Db.Payments.VariableInterestRateDetails.Where(v => v.VariableInterestRateId == 1).ToList();
+            return Drive.Db.Payments.VariableInterestRateDetails.Where(v => v.VariableInterestRateId == 1).ToList();
         }
 
         public static decimal GetCurrentArrearsInterestRate()
         {
-            return Driver.Db.Payments.ProductInterestRates.Single(v => v.ProductInterestRateId == 2).MonthlyInterestRate;
+            return Drive.Db.Payments.ProductInterestRates.Single(v => v.ProductInterestRateId == 2).MonthlyInterestRate;
         }
 
         public static List<TransactionEntity> GetInterestRatesForApplication(Guid applicationGuid)
         {
             var applicationId = GetApplicationId(applicationGuid);
             return
-                Driver.Db.Payments.Transactions.Where(
+                Drive.Db.Payments.Transactions.Where(
                     a => a.ApplicationId == applicationId && a.Type == PaymentTransactionType.InterestRate.ToString()).ToList();
         }
 
         public static int GetApplicationId(Guid applicationGuid)
         {
-            return Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == applicationGuid).ApplicationId);
+            return Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == applicationGuid).ApplicationId);
         }
 
         public static decimal GetInterestAmountApplied(Guid applicationGuid)
         {
             var applicationid = GetApplicationId(applicationGuid);
             return
-                Do.Until(() => Driver.Db.Payments.Transactions.Single(
+                Do.Until(() => Drive.Db.Payments.Transactions.Single(
                     a => a.ApplicationId == applicationid && a.Type == PaymentTransactionType.Interest.ToString()).Amount);
         }
 
@@ -100,7 +100,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
             var applicationid = GetApplicationId(applicationGuid);
 
-            var allInterestAmountsPosted = Driver.Db.Payments.Transactions.Where(
+            var allInterestAmountsPosted = Drive.Db.Payments.Transactions.Where(
                 a => a.ApplicationId == applicationid && a.Type == PaymentTransactionType.Interest.ToString()).ToList();
 
             return allInterestAmountsPosted.Last().Amount;
@@ -108,12 +108,12 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
         public static ApiResponse GetFixedTermLoanOfferCaQuery()
         {
-            return Driver.Api.Queries.Post(new GetFixedTermLoanOfferCaQuery());
+            return Drive.Api.Queries.Post(new GetFixedTermLoanOfferCaQuery());
         } 
 
         private static bool GetIsBankGatewayTestMode()
         {
-            return Convert.ToBoolean(Driver.Db.Ops.ServiceConfigurations.Single(bg => bg.Key == ConfigurationFunctions.BankGateWayIsTestMode).Value);
+            return Convert.ToBoolean(Drive.Db.Ops.ServiceConfigurations.Single(bg => bg.Key == ConfigurationFunctions.BankGateWayIsTestMode).Value);
         }
 
         public static List<TransactionEntity> GetCurrentVariableInterestRates(int loanTerm)
@@ -147,7 +147,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
             var applicationid = GetApplicationId(applicationGuid);
             return
-                Do.Until(() => Driver.Db.Payments.Transactions.Single(
+                Do.Until(() => Drive.Db.Payments.Transactions.Single(
                     a => a.ApplicationId == applicationid && a.Type == PaymentTransactionType.DefaultCharge.ToString()).Amount);
         }
     }

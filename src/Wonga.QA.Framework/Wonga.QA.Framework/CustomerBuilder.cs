@@ -44,23 +44,23 @@ namespace Wonga.QA.Framework
 
         private CustomerBuilder()
         {
-            _id = Data.GetId();
-            _verification = Data.GetId();
-            _employerName = Data.GetEmployerName();
-            _employerStatus = Data.GetEmploymentStatus();
-        	_netMonthlyIncome = Data.RandomInt(1000, 2000);
-			_dateOfBirth = Data.GetDoB();
+            _id = Get.GetId();
+            _verification = Get.GetId();
+            _employerName = Get.GetEmployerName();
+            _employerStatus = Get.GetEmploymentStatus();
+        	_netMonthlyIncome = Get.RandomInt(1000, 2000);
+			_dateOfBirth = Get.GetDoB();
 			_gender = GenderEnum.Female;
 			if(Config.AUT == AUT.Za) //TODO implement nationalNumber generators for other regions
-        		_nationalNumber = Data.GetNIN(_dateOfBirth.DateTime, _gender == GenderEnum.Female);
-            _surname = Data.GetName();
-            _middleName = Data.GetMiddleName();
-        	_maidenName = Data.GetName();
-            _foreName = Data.GetName();
+        		_nationalNumber = Get.GetNIN(_dateOfBirth.DateTime, _gender == GenderEnum.Female);
+            _surname = Get.GetName();
+            _middleName = Get.GetMiddleName();
+        	_maidenName = Get.GetName();
+            _foreName = Get.GetName();
             _province = ProvinceEnum.ON;
-            _houseNumber = Data.RandomInt(1, 100).ToString(CultureInfo.InvariantCulture);
-            _houseName = Data.RandomString(8);
-            _phoneNumber = Data.GetPhone();
+            _houseNumber = Get.RandomInt(1, 100).ToString(CultureInfo.InvariantCulture);
+            _houseName = Get.RandomString(8);
+            _phoneNumber = Get.GetPhone();
             if (Config.AUT == AUT.Wb || Config.AUT == AUT.Uk)
             {
                 _postcode = "SW6 6PN";
@@ -74,19 +74,19 @@ namespace Wonga.QA.Framework
                 _postcode = "K0A0A0";
             	_province = ProvinceEnum.ON;
             }
-            _street = Data.RandomString(15);
-            _flat = Data.RandomString(4);
-            _district = Data.RandomString(15);
-            _town = Data.RandomString(15);
-            _county = Data.RandomString(15);			
-        	_nextPayDate = Data.GetNextPayDate();
-			_email = Data.RandomEmail();
-            _bankAccountId = Data.GetId();
+            _street = Get.RandomString(15);
+            _flat = Get.RandomString(4);
+            _district = Get.RandomString(15);
+            _town = Get.RandomString(15);
+            _county = Get.RandomString(15);			
+        	_nextPayDate = Get.GetNextPayDate();
+			_email = Get.RandomEmail();
+            _bankAccountId = Get.GetId();
         	
             _province = ProvinceEnum.ON;
         	_bankAccountNumber = null;
             _paymentCardNumber = 4444333322221111;
-            _mobileNumber = Data.GetMobilePhone();
+            _mobileNumber = Get.GetMobilePhone();
         }
 
         public static CustomerBuilder New()
@@ -497,36 +497,36 @@ namespace Wonga.QA.Framework
                     throw new NotImplementedException();
             }
 
-            Driver.Api.Commands.Post(requests);
+            Drive.Api.Commands.Post(requests);
 
-        	Do.With().Timeout(2).Until(() => Driver.Db.Ops.Accounts.Single(a => a.ExternalId == _id));
-            Do.With().Timeout(2).Until(() => Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == _id));
-            Do.With().Timeout(2).Until(() => Driver.Db.Risk.RiskAccounts.Single(a => a.AccountId == _id));
+        	Do.With().Timeout(2).Until(() => Drive.Db.Ops.Accounts.Single(a => a.ExternalId == _id));
+            Do.With().Timeout(2).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == _id));
+            Do.With().Timeout(2).Until(() => Drive.Db.Risk.RiskAccounts.Single(a => a.AccountId == _id));
             
             switch (Config.AUT)
             {
                 case AUT.Wb:
                     Do.Until(
                         () =>
-                        Driver.Db.Payments.AccountPreferences.Single(ap => ap.AccountId == _id).PaymentCardsBaseEntity);
+                        Drive.Db.Payments.AccountPreferences.Single(ap => ap.AccountId == _id).PaymentCardsBaseEntity);
                     break;
 
 				case AUT.Ca:
 					Do.Until(
 						() =>
-						Driver.Db.Payments.BankAccountsBases.Single(bab => bab.ExternalId == _bankAccountId));
+						Drive.Db.Payments.BankAccountsBases.Single(bab => bab.ExternalId == _bankAccountId));
 					break;
 
 				case AUT.Za:
             		{
-						var mobilePhoneVerification = Do.Until(() => Driver.Db.Comms.MobilePhoneVerifications.Single(a => a.AccountId == _id));
+						var mobilePhoneVerification = Do.Until(() => Drive.Db.Comms.MobilePhoneVerifications.Single(a => a.AccountId == _id));
 
-            			Driver.Api.Commands.Post(new CompleteMobilePhoneVerificationCommand
+            			Drive.Api.Commands.Post(new CompleteMobilePhoneVerificationCommand
             			                         	{
             			                         		Pin = mobilePhoneVerification.Pin,
             			                         		VerificationId = mobilePhoneVerification.VerificationId
             			                         	});
-            			Do.With().Timeout(2).Until(() => Driver.Db.Comms.CustomerDetails.Single(a => a.AccountId == _id).MobilePhone);
+            			Do.With().Timeout(2).Until(() => Drive.Db.Comms.CustomerDetails.Single(a => a.AccountId == _id).MobilePhone);
             		}
             		break;
             }
@@ -540,7 +540,7 @@ namespace Wonga.QA.Framework
             var customerDetailEntities = db.Comms.CustomerDetails.Where(cd => cd.Forename == forename).ToList();
             foreach (CustomerDetailEntity customerDetailEntity in customerDetailEntities)
             {
-                customerDetailEntity.Forename = Data.GetName();
+                customerDetailEntity.Forename = Get.GetName();
             }
             db.Comms.SubmitChanges();
         }
@@ -551,7 +551,7 @@ namespace Wonga.QA.Framework
             var customerDetailEntities = db.Comms.CustomerDetails.Where(cd => cd.Surname == surname).ToList();
             foreach (CustomerDetailEntity customerDetailEntity in customerDetailEntities)
             {
-                customerDetailEntity.Surname = Data.GetName();
+                customerDetailEntity.Surname = Get.GetName();
             }
             db.Comms.SubmitChanges();
         }

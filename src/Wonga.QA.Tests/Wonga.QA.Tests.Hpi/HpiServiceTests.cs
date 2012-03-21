@@ -11,7 +11,7 @@ namespace Wonga.QA.Tests.Hpi
         [Test, AUT(AUT.Uk, AUT.Wb)]
         public void HpiServiceIsRunning()
         {
-            Assert.IsTrue(Driver.Svc.Hpi.IsRunning());
+            Assert.IsTrue(Drive.Svc.Hpi.IsRunning());
         }
     }
 }

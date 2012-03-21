@@ -11,7 +11,7 @@ namespace Wonga.QA.Tests.DocumentGeneration
         [Test, AUT(AUT.Wb)]
         public void DocumentGenerationServiceIsRunning()
         {
-            Assert.IsTrue(Driver.Svc.DocumentGeneration.IsRunning());
+            Assert.IsTrue(Drive.Svc.DocumentGeneration.IsRunning());
         }
     }
 }

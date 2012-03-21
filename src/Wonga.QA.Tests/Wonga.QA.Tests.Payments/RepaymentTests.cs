@@ -48,7 +48,7 @@ namespace Wonga.QA.Tests.Payments
             _applicationInfo.SecondCollectionAttempt(true);
 
             // Check that only one transaction has occured
-            Do.Until(() => Driver.Db.Payments.Transactions.Single(t => t.ApplicationEntity.ExternalId == _applicationInfo.Id
+            Do.Until(() => Drive.Db.Payments.Transactions.Single(t => t.ApplicationEntity.ExternalId == _applicationInfo.Id
                                                                     && t.Scope == (int)PaymentTransactionScopeEnum.Credit
                                                                     && t.Type == PaymentTransactionEnum.CardPayment.ToString()));
         }
@@ -62,10 +62,10 @@ namespace Wonga.QA.Tests.Payments
             _applicationInfo.SecondCollectionAttempt(false);
 
             // Check we have a default charge and that no transactions have been written to DB
-            Do.Until(() => Driver.Db.Payments.Transactions.SingleOrDefault(
+            Do.Until(() => Drive.Db.Payments.Transactions.SingleOrDefault(
                     t => t.ApplicationEntity.ExternalId == _applicationInfo.Id
                          && t.Type == PaymentTransactionEnum.DefaultCharge.ToString()));
-            Assert.IsNull(Driver.Db.Payments.Transactions.SingleOrDefault(t => t.ApplicationEntity.ExternalId == _applicationInfo.Id
+            Assert.IsNull(Drive.Db.Payments.Transactions.SingleOrDefault(t => t.ApplicationEntity.ExternalId == _applicationInfo.Id
                                                                     && t.Scope == (int)PaymentTransactionScopeEnum.Credit
                                                                     && t.Type == PaymentTransactionEnum.CardPayment.ToString()));
         }
@@ -91,7 +91,7 @@ namespace Wonga.QA.Tests.Payments
         {
             var paymentPlan = _applicationInfo.GetPaymentPlan();
 
-            var accountId = Do.Until(() => Driver.Db.Payments.AccountsApplications.Single(a => a.ApplicationEntity.ExternalId == _applicationInfo.Id).AccountId);
+            var accountId = Do.Until(() => Drive.Db.Payments.AccountsApplications.Single(a => a.ApplicationEntity.ExternalId == _applicationInfo.Id).AccountId);
 
             var initialBalance = GetTotalOutstandingAmount(accountId);
 
@@ -119,14 +119,14 @@ namespace Wonga.QA.Tests.Payments
         {
             var paymentPlan = _applicationInfo.GetPaymentPlan();
 
-            var accountId = Do.Until(() => Driver.Db.Payments.AccountsApplications.Single(a => a.ApplicationEntity.ExternalId == _applicationInfo.Id).AccountId);
+            var accountId = Do.Until(() => Drive.Db.Payments.AccountsApplications.Single(a => a.ApplicationEntity.ExternalId == _applicationInfo.Id).AccountId);
 
             var initialBalance = GetTotalOutstandingAmount(accountId);
 
             _applicationInfo.FirstCollectionAttempt(paymentPlan, false, false);
             _applicationInfo.SecondCollectionAttempt(true);
             // Wait for he second payment to succeed
-            Do.Until(() => Driver.Db.Payments.Transactions.Single(t => t.ApplicationEntity.ExternalId == _applicationInfo.Id
+            Do.Until(() => Drive.Db.Payments.Transactions.Single(t => t.ApplicationEntity.ExternalId == _applicationInfo.Id
                                                                     && t.Amount == paymentPlan.RegularAmount
                                                                     && t.Scope == (int)PaymentTransactionScopeEnum.Credit
                                                                     && t.Type == PaymentTransactionEnum.CardPayment.ToString()));
@@ -159,7 +159,7 @@ namespace Wonga.QA.Tests.Payments
             _applicationInfo.FirstCollectionAttempt(paymentPlan, false, false);
             _applicationInfo.SecondCollectionAttempt(false);
             // Wait for he second payment to succeed
-            Do.Until(() => Driver.Db.Payments.Transactions.Single(t => t.ApplicationEntity.ExternalId == _applicationInfo.Id
+            Do.Until(() => Drive.Db.Payments.Transactions.Single(t => t.ApplicationEntity.ExternalId == _applicationInfo.Id
                                                                     && t.Scope == (int)PaymentTransactionScopeEnum.Debit
                                                                     && t.Type == PaymentTransactionEnum.DefaultCharge.ToString()));
 
@@ -167,13 +167,13 @@ namespace Wonga.QA.Tests.Payments
 
             _applicationInfo.FirstCollectionAttempt(paymentPlan, false, true);
 
-            Do.Until(() => Driver.Db.Payments.Transactions.Count(t => t.ApplicationEntity.ExternalId == _applicationInfo.Id
+            Do.Until(() => Drive.Db.Payments.Transactions.Count(t => t.ApplicationEntity.ExternalId == _applicationInfo.Id
                                                                  &&
                                                                  t.Type == PaymentTransactionEnum.CardPayment.ToString()
                                                                  && t.Amount == paymentPlan.RegularAmount
                                                                  && t.Scope == (int)PaymentTransactionScopeEnum.Credit) == 2);
 
-            Do.Until(() => Driver.Db.Payments.Transactions.SingleOrDefault(t => t.ApplicationEntity.ExternalId == _applicationInfo.Id
+            Do.Until(() => Drive.Db.Payments.Transactions.SingleOrDefault(t => t.ApplicationEntity.ExternalId == _applicationInfo.Id
                                                      &&
                                                      t.Type == PaymentTransactionEnum.CardPayment.ToString()
                                                      && t.Amount == 10
@@ -184,7 +184,7 @@ namespace Wonga.QA.Tests.Payments
         public void BalanceShouldBeZeroAfterAllCollectionAttemptsAreSuccessfullWithOneFailedIntermediateCollection()
         {
             var paymentPlan = _applicationInfo.GetPaymentPlan();
-            var accountId = Do.Until(() => Driver.Db.Payments.AccountsApplications.Single(a => a.ApplicationEntity.ExternalId == _applicationInfo.Id).AccountId);
+            var accountId = Do.Until(() => Drive.Db.Payments.AccountsApplications.Single(a => a.ApplicationEntity.ExternalId == _applicationInfo.Id).AccountId);
             MoveBackInTime(7, false);
             for (int i = 0; i < paymentPlan.NumberOfPayments; i++)
             {
@@ -210,7 +210,7 @@ namespace Wonga.QA.Tests.Payments
         public void BalanceShouldBeZeroAfterAllCollectionAttemptsAreSuccessfull()
         {
             var paymentPlan = _applicationInfo.GetPaymentPlan();
-            var accountId = Do.Until(() => Driver.Db.Payments.AccountsApplications.Single(a => a.ApplicationEntity.ExternalId == _applicationInfo.Id).AccountId);
+            var accountId = Do.Until(() => Drive.Db.Payments.AccountsApplications.Single(a => a.ApplicationEntity.ExternalId == _applicationInfo.Id).AccountId);
             MoveBackInTime(7, false);
             for (int i = 0; i < paymentPlan.NumberOfPayments; i++)
             {
@@ -236,7 +236,7 @@ namespace Wonga.QA.Tests.Payments
         {
             var paymentPlan = _applicationInfo.GetPaymentPlan();
             _applicationInfo.FirstCollectionAttempt(paymentPlan, false, false);
-            Driver.Msmq.Payments.Send(new CreateTransactionCommand
+            Drive.Msmq.Payments.Send(new CreateTransactionCommand
             {
                 Amount = paymentPlan.RegularAmount,
                 ApplicationId = _applicationInfo.Id,
@@ -255,7 +255,7 @@ namespace Wonga.QA.Tests.Payments
             // Wait for collection atempt to fail
             Thread.Sleep(15000);
 
-            Assert.IsNull(Driver.Db.Payments.Transactions.SingleOrDefault(t => t.ApplicationEntity.ExternalId == _applicationInfo.Id
+            Assert.IsNull(Drive.Db.Payments.Transactions.SingleOrDefault(t => t.ApplicationEntity.ExternalId == _applicationInfo.Id
                 && t.Type == PaymentTransactionEnum.DefaultCharge.ToString()));
         }
 
@@ -267,7 +267,7 @@ namespace Wonga.QA.Tests.Payments
                 Do.Until(() =>
                              {
                                  var paymentPlans =
-                                     Driver.Db.Payments.PaymentPlans.Where(
+                                     Drive.Db.Payments.PaymentPlans.Where(
                                          pp => pp.ApplicationEntity.ExternalId == _applicationInfo.Id);
                                  foreach (var paymentPlan in paymentPlans)
                                  {
@@ -284,7 +284,7 @@ namespace Wonga.QA.Tests.Payments
                              });
             }
 
-            var transactionEntities = Driver.Db.Payments.Transactions.Where(t => t.ApplicationEntity.ExternalId == _applicationInfo.Id);
+            var transactionEntities = Drive.Db.Payments.Transactions.Where(t => t.ApplicationEntity.ExternalId == _applicationInfo.Id);
             foreach (var transaction in transactionEntities)
             {
                 transaction.CreatedOn = transaction.CreatedOn.AddDays(days);
@@ -295,7 +295,7 @@ namespace Wonga.QA.Tests.Payments
 
         private static double GetTotalOutstandingAmount(Guid accountId)
         {
-            var response = Driver.Api.Queries.Post(new GetBusinessAccountSummaryWbUkQuery
+            var response = Drive.Api.Queries.Post(new GetBusinessAccountSummaryWbUkQuery
                                                         {
                                                             AccountId = accountId
                                                         });
