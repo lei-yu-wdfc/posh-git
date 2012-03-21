@@ -8,13 +8,14 @@ using MbUnit.Framework.ContractVerifiers;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Salesforce
 {
     [TestFixture]
     public class SalesforcePushBusinessBankAccountDetails
     {
-        [Test]
+        [Test, AUT(AUT.Wb), JIRA("SME-192")]
         public void SalesforceTC_ShouldPushBusinessBankAccountToSF_WhenBankAccountIsvalidated()
         {
             var customer = CustomerBuilder.New().Build();
