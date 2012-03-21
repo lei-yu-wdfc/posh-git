@@ -14,7 +14,7 @@ namespace Wonga.QA.Framework.UI.Elements
         private readonly IWebElement _form;
         private readonly IWebElement _loanAmount;
         private readonly IWebElement _loanDuration;
-        private readonly IWebElement _submit;
+        private IWebElement _submit;
         private readonly IWebElement _totalAmount;
         private readonly IWebElement _totalFees;
         private readonly IWebElement _totalToRepay;
@@ -29,7 +29,6 @@ namespace Wonga.QA.Framework.UI.Elements
             _form = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.SlidersElement.FormId));
             _loanAmount = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.LoanAmount));
             _loanDuration = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.LoanDuration));
-            _submit = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.SubmitButton));
             _amountMinusButton = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.AmountMinusButton));
             _amountPlusButton = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.AmountPlusButton));
             _durationMinusButton = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.DurationMinusButton));
@@ -92,6 +91,7 @@ namespace Wonga.QA.Framework.UI.Elements
 
         public IApplyPage Apply()
         {
+            _submit = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.SubmitButton));
             _submit.Click();
             if (Config.AUT == AUT.Wb)
                 return new EligibilityQuestionsPage(Page.Client);
@@ -99,5 +99,18 @@ namespace Wonga.QA.Framework.UI.Elements
                 return new PersonalDetailsPage(Page.Client);
             return null;
         }
+        public bool IsSubmitButtonPresent()
+        {
+            try
+            {
+                _submit = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.SubmitButton));
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+        }
+
     }
 }

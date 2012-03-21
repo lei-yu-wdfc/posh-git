@@ -279,17 +279,17 @@ namespace Wonga.QA.Tests.Ui
         }
 
          [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-194")]
-        public void WhanCustomerWithLiveLoanTriesTakeLoanSlidersShouldBeBlocked()
-        {
-            var loginPage = Client.Login();
-            string email = Data.RandomEmail();
-            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            Application application = ApplicationBuilder.New(customer)
-                .Build();
-            loginPage.LoginAs(email);
-            Assert.Throws<Exception>(() => { var page = Client.Home(); });
-		}
-
+         public void WhanCustomerWithLiveLoanTriesTakeLoanSlidersShouldBeBlocked()
+         {
+             var loginPage = Client.Login();
+             string email = Data.RandomEmail();
+             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+             Application application = ApplicationBuilder.New(customer)
+                 .Build();
+             loginPage.LoginAs(email);
+             var page = Client.Home();
+             Assert.IsFalse(page.Sliders.IsSubmitButtonPresent());
+         }
 
 		#region Helpers
 
