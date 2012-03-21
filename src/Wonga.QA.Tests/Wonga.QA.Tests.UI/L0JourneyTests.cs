@@ -71,10 +71,13 @@ namespace Wonga.QA.Tests.Ui
             var journey = new Journey(Client.Home());
             var personalDetailsPage = journey.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
             personalDetailsPage.ClickSliderToggler();
+            var firstTotalToRepayValue = personalDetailsPage.GetTotalToRepay;
             personalDetailsPage.ClickAmountPlusButton();
             personalDetailsPage.ClickDurationMinusButton();
             string totalToRepayAtPersonalDetails = personalDetailsPage.GetTotalToRepay;
             string repaymentDateAtPersonalDetails = personalDetailsPage.GetRepaymentDate;
+
+            Assert.AreNotEqual(firstTotalToRepayValue, totalToRepayAtPersonalDetails);
 
             var acceptedPage = journey.FillPersonalDetails(Data.EnumToString(RiskMask.TESTEmployedMask))
                                      .FillAddressDetails()
@@ -139,10 +142,13 @@ namespace Wonga.QA.Tests.Ui
             var journey = new Journey(Client.Home());
             var personalDetailsPage = journey.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
             personalDetailsPage.ClickSliderToggler();
-            personalDetailsPage.ChangeAmount = "195";
-            personalDetailsPage.ChangeDuration = "5";
+            var firstTotalToRepayValue = personalDetailsPage.GetTotalToRepay;
+            personalDetailsPage.HowMuch = "195";
+            personalDetailsPage.HowLong = "5";
             string totalToRepayAtPersonalDetails = personalDetailsPage.GetTotalToRepay;
             string repaymentDateAtPersonalDetails = personalDetailsPage.GetRepaymentDate;
+
+            Assert.AreNotEqual(firstTotalToRepayValue, totalToRepayAtPersonalDetails);
 
             var acceptedPage = journey.FillPersonalDetails(Data.EnumToString(RiskMask.TESTEmployedMask))
                                      .FillAddressDetails()

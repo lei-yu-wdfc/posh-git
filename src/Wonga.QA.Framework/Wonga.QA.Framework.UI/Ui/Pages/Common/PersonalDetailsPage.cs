@@ -116,12 +116,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             get { return _repaymentDate.Text; }
         }
-        public String ChangeAmount
+        public String HowMuch
         {
+            get { return _loanAmount.GetValue(); }
             set { _loanAmount.SendValue(value); }
         }
-        public String ChangeDuration
+        public String HowLong
         {
+            get { return _loanDuration.GetValue(); }
             set { _loanDuration.SendValue(value); }
         }
         public void ClickAmountMinusButton()
