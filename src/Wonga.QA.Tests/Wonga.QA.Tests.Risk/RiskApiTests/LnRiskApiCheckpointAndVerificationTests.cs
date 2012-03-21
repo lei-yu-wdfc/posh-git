@@ -76,9 +76,9 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		}
 
 		[Test, AUT(AUT.Ca)]
-		public void GivenLNApplicant_WhenDirectFraudCheck_ThenIsDeclined()
-		{
-			_builderConfig = new ApplicationBuilderConfig(ApplicationDecisionStatusEnum.Declined);
+        public void GivenLNApplicant_WhenDirectFraudCheck_ThenIsAccepted()
+		{   
+			_builderConfig = new ApplicationBuilderConfig(ApplicationDecisionStatusEnum.Accepted);
 
 			LNApplicationWithSingleCheckPointAndSingleVerification(
 				CheckpointDefinitionEnum.UserAssistedFraudCheck,
