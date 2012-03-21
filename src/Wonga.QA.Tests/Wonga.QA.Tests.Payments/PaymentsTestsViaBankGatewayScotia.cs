@@ -59,7 +59,7 @@ namespace Wonga.QA.Tests.Payments
                                       ItemNumber = 1,
                                       RemittancePaymentDate = DateTime.UtcNow,
                                       RemittanceTraceNumber =
-                                          Data.RandomInt(100000000, 999999999).ToString()
+                                          Get.RandomInt(100000000, 999999999).ToString()
                                   };
 
             Drive.Mocks.Scotia.AddOnlineBillPaymentFile(application.Id.ToString(), new List<OnlineBillPaymentTransaction> { transaction });
@@ -94,10 +94,10 @@ namespace Wonga.QA.Tests.Payments
                                       ItemNumber = 1,
                                       RemittancePaymentDate = DateTime.UtcNow,
                                       RemittanceTraceNumber =
-                                          Data.RandomInt(100000000, 999999999).ToString()
+                                          Get.RandomInt(100000000, 999999999).ToString()
                                   };
 
-            Driver.Mocks.Scotia.AddOnlineBillPaymentFile(application.Id.ToString(), new List<OnlineBillPaymentTransaction> { transaction });
+            Drive.Mocks.Scotia.AddOnlineBillPaymentFile(application.Id.ToString(), new List<OnlineBillPaymentTransaction> { transaction });
 
             Do.With().Timeout(1).Until(() => application.IsClosed);
         }
@@ -125,13 +125,11 @@ namespace Wonga.QA.Tests.Payments
                                       ItemNumber = 1,
                                       RemittancePaymentDate = DateTime.UtcNow,
                                       RemittanceTraceNumber =
-                                          Data.RandomInt(100000000, 999999999).ToString()
+                                          Get.RandomInt(100000000, 999999999).ToString()
                                   };
 
-            Driver.Mocks.Scotia.AddOnlineBillPaymentFile(application.Id.ToString(), new List<OnlineBillPaymentTransaction> { transaction });
+            Drive.Mocks.Scotia.AddOnlineBillPaymentFile(application.Id.ToString(), new List<OnlineBillPaymentTransaction> { transaction });
             WaitPaymentFunctions.WaitForTransactionTypeOfDirectBankPayment(applicationId, (earlyRepaymentAmount * -1));
-
-            //Do.With().Timeout(1).Interval(45).Until(() => !application.IsClosed);
 
             //Todo: Verify that loan does not close a minute after payment recieved...
         }
@@ -247,8 +245,6 @@ namespace Wonga.QA.Tests.Payments
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1441"), Ignore("Not fully implemented, do not run")]
-                RemittanceTraceNumber = Get.RandomInt(100000000, 999999999).ToString()
-            Drive.Mocks.Scotia.AddOnlineBillPaymentFile(application.Id.ToString(), new List<OnlineBillPaymentTransaction> { transaction });
         public void VerifyOnlineBillPaymentForCustomerInArrears()
         {
             const int loanTerm = 15;
