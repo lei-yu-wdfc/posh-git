@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
@@ -17,6 +18,12 @@ namespace Wonga.QA.Framework.Core
     {
         private static String _alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         private static Random _random = new Random(Guid.NewGuid().GetHashCode());
+    	private static readonly string EmailSafeMachineName;
+
+		static Data()
+		{
+			EmailSafeMachineName = Regex.Replace(Environment.MachineName, @"[^a-zA-Z0-9-._]", @"-");
+		}
 
         public static Guid GetId()
         {
@@ -38,17 +45,17 @@ namespace Wonga.QA.Framework.Core
             return "qa.wonga.com@gmail.com";
         }
 
-        public static String RandomEmail()
-        {
-        	return String.Format(
-        		"qa.wonga.com+{0}-{1}@gmail.com",
-        		Environment.MachineName,
-        		Guid.NewGuid());
-        }
+		public static String RandomEmail()
+		{
+			return String.Format(
+				"qa.wonga.com+{0}-{1}@gmail.com",
+				EmailSafeMachineName,
+				Guid.NewGuid());
+		}
 
-        public static String GetEmailWithoutPlusChar()
+    	public static String GetEmailWithoutPlusChar()
         {
-            return String.Format("qa.wonga.com{0}@gmail.com", Guid.NewGuid());
+            return String.Format("qa.wonga.com{0}{1}@gmail.com", EmailSafeMachineName, Guid.NewGuid());
         }
 
         public static String GetEmployerName()
@@ -83,7 +90,7 @@ namespace Wonga.QA.Framework.Core
 
         public static String GetPhone()
         {
-            return "021" + new Random().Next(1000000, 9999999).ToString(CultureInfo.InvariantCulture);
+            return "021" + _random.Next(1000000, 9999999).ToString(CultureInfo.InvariantCulture);
         }
 
         public static string GetMobilePhone()
