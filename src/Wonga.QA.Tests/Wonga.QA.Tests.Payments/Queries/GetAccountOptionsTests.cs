@@ -466,6 +466,193 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual(9, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
+        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        public void Scenario10CustomerWithLiveLoanWithMissedPaymentFeeOneDayInArrears()
+        {
+            var accountId = Guid.NewGuid();
+            var bankAccountId = Guid.NewGuid();
+            var paymentCardId = Guid.NewGuid();
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            var appId = Guid.NewGuid();
+            const decimal trustRating = 400.00M;
+
+            // Create Account so that time zone can be looked up
+            Driver.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Do.Until(() => Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
+
+            // Create Application & Check it Exists in DB
+            CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
+            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+
+            // Set SignedOn + AcceptedOn & check statuses have been updated
+            Driver.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Driver.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
+
+            // Create transactions & Check transactions have been created
+            var trnGuid1 = CreateLoanAdvanceTransaction(appId);
+            var trnGuid2 = CreateTransmissionFeeTransaction(appId);
+            var trnGuid3 = CreateMissedPaymentChargeTransaction(appId);
+            Do.Until(() => Driver.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2 || itm.ExternalId == trnGuid3) == 3);
+
+            // Send command to create scheduled payment request
+            Driver.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
+            Driver.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
+
+            Do.Until(() => Driver.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
+            Do.Until(() => Driver.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
+
+            // Go to DB and set Application NextDueDate to yesterday.
+            ApplicationEntity app = Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId);
+            FixedTermLoanApplicationEntity fixedApp = Driver.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationId == app.ApplicationId);
+            fixedApp.NextDueDate = DateTime.UtcNow.Date.AddDays(-1);
+            fixedApp.Submit(true);
+
+            var response = Driver.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(10, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        public void Scenario11CustomerWithLiveLoanThreeDaysInArrears()
+        {
+            var accountId = Guid.NewGuid();
+            var bankAccountId = Guid.NewGuid();
+            var paymentCardId = Guid.NewGuid();
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            var appId = Guid.NewGuid();
+            const decimal trustRating = 400.00M;
+
+            // Create Account so that time zone can be looked up
+            Driver.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Do.Until(() => Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
+
+            // Create Application & Check it Exists in DB
+            CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
+            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+
+            // Set SignedOn + AcceptedOn & check statuses have been updated
+            Driver.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Driver.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
+
+            // Create transactions & Check transactions have been created
+            var trnGuid1 = CreateLoanAdvanceTransaction(appId);
+            var trnGuid2 = CreateTransmissionFeeTransaction(appId);
+            var trnGuid3 = CreateMissedPaymentChargeTransaction(appId);
+            Do.Until(() => Driver.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2 || itm.ExternalId == trnGuid3) == 3);
+
+            // Send command to create scheduled payment request
+            Driver.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
+            Driver.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
+
+            Do.Until(() => Driver.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
+            Do.Until(() => Driver.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
+
+            // Go to DB and set Application NextDueDate to yesterday.
+            ApplicationEntity app = Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId);
+            FixedTermLoanApplicationEntity fixedApp = Driver.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationId == app.ApplicationId);
+            fixedApp.NextDueDate = DateTime.UtcNow.Date.AddDays(-3);
+            fixedApp.Submit(true);
+
+            var response = Driver.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(11, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        public void Scenario12CustomerWithLiveLoanThirtyOneDaysInArrears()
+        {
+            var accountId = Guid.NewGuid();
+            var bankAccountId = Guid.NewGuid();
+            var paymentCardId = Guid.NewGuid();
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            var appId = Guid.NewGuid();
+            const decimal trustRating = 400.00M;
+
+            // Create Account so that time zone can be looked up
+            Driver.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Do.Until(() => Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
+
+            // Create Application & Check it Exists in DB
+            CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
+            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+
+            // Set SignedOn + AcceptedOn & check statuses have been updated
+            Driver.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Driver.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
+
+            // Create transactions & Check transactions have been created
+            var trnGuid1 = CreateLoanAdvanceTransaction(appId);
+            var trnGuid2 = CreateTransmissionFeeTransaction(appId);
+            var trnGuid3 = CreateMissedPaymentChargeTransaction(appId);
+            Do.Until(() => Driver.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2 || itm.ExternalId == trnGuid3) == 3);
+
+            // Send command to create scheduled payment request
+            Driver.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
+            Driver.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
+
+            Do.Until(() => Driver.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
+            Do.Until(() => Driver.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
+
+            // Go to DB and set Application NextDueDate to yesterday.
+            ApplicationEntity app = Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId);
+            FixedTermLoanApplicationEntity fixedApp = Driver.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationId == app.ApplicationId);
+            fixedApp.NextDueDate = DateTime.UtcNow.Date.AddDays(-31);
+            fixedApp.Submit(true);
+
+            var response = Driver.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(12, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        public void Scenario13CustomerWithLiveLoanSixtyOneDaysInArrears()
+        {
+            var accountId = Guid.NewGuid();
+            var bankAccountId = Guid.NewGuid();
+            var paymentCardId = Guid.NewGuid();
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            var appId = Guid.NewGuid();
+            const decimal trustRating = 400.00M;
+
+            // Create Account so that time zone can be looked up
+            Driver.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Do.Until(() => Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
+
+            // Create Application & Check it Exists in DB
+            CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
+            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+
+            // Set SignedOn + AcceptedOn & check statuses have been updated
+            Driver.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Driver.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
+
+            // Create transactions & Check transactions have been created
+            var trnGuid1 = CreateLoanAdvanceTransaction(appId);
+            var trnGuid2 = CreateTransmissionFeeTransaction(appId);
+            var trnGuid3 = CreateMissedPaymentChargeTransaction(appId);
+            Do.Until(() => Driver.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2 || itm.ExternalId == trnGuid3) == 3);
+
+            // Send command to create scheduled payment request
+            Driver.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
+            Driver.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
+
+            Do.Until(() => Driver.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
+            Do.Until(() => Driver.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
+
+            // Go to DB and set Application NextDueDate to yesterday.
+            ApplicationEntity app = Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId);
+            FixedTermLoanApplicationEntity fixedApp = Driver.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationId == app.ApplicationId);
+            fixedApp.NextDueDate = DateTime.UtcNow.Date.AddDays(-61);
+            fixedApp.Submit(true);
+
+            var response = Driver.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(13, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
+        }
 
         #region "Helpers"
 
@@ -537,6 +724,25 @@ namespace Wonga.QA.Tests.Payments.Queries
                     PostedOn = DateTime.Now,
                     Scope = PaymentTransactionScopeEnum.Debit,
                     Reference = "Test Extension fee"
+                });
+                return trnGuid1;
+            }
+
+            private Guid CreateMissedPaymentChargeTransaction(Guid appId)
+            {
+                var trnGuid1 = Guid.NewGuid();
+
+                Driver.Msmq.Payments.Send(new CreateTransactionCommand()
+                {
+                    ApplicationId = appId,
+                    ExternalId = trnGuid1,
+                    Amount = 20.00M,
+                    Type = PaymentTransactionEnum.DefaultCharge,
+                    Currency = CurrencyCodeIso4217Enum.GBP,
+                    Mir = 30.0M,
+                    PostedOn = DateTime.Now,
+                    Scope = PaymentTransactionScopeEnum.Debit,
+                    Reference = "Test Missed Payment Charge"
                 });
                 return trnGuid1;
             }
