@@ -147,8 +147,8 @@ namespace Wonga.QA.Tests.Payments
 
 
             var request = Do.Until(() => Drive.Db.Payments.RepaymentRequests.Single(r => r.ExternalId == (Guid)command.RepaymentRequestId));
-            var requestDetail = request.RepaymentRequestDetails;
-            Assert.AreEqual(0, requestDetail[0].StatusCode);
+            var requestDetail = request.RepaymentRequestDetails.ToList().OrderBy(pd => pd.CreatedOn);
+            Assert.AreEqual(3, requestDetail.First().StatusCode);
         }
 
         [Test, AUT(AUT.Za), JIRA("ZA-2099")]
@@ -188,16 +188,10 @@ namespace Wonga.QA.Tests.Payments
             {
                 SagaId = saga.Id,
             });
-
-
-            var request = Do.Until(() => Drive.Db.Payments.RepaymentRequests.Single(r => r.ExternalId == (Guid)command.RepaymentRequestId));
-            var requestDetail = request.RepaymentRequestDetails;
-            Assert.AreEqual(0, requestDetail[0].StatusCode);
-
-            var collectionForRemainingBalance =
-                Drive.Db.Payments.ScheduledPayments.OrderByDescending(sp => sp.CreatedOn).First(
-                    sp => sp.ApplicationId == app.ApplicationId);
-            Assert.IsTrue(collectionForRemainingBalance.Amount < 500);
+            
+            var collectionForRepay = Do.Until(() =>
+                Drive.Db.Payments.ScheduledPayments.Where(sp => sp.ApplicationId == app.ApplicationId).OrderBy(sp => sp.CreatedOn).First());
+            Assert.IsTrue(collectionForRepay.Amount == _application.LoanAmount);
         }
 
         [Test, AUT(AUT.Za), JIRA("ZA-2099")]
