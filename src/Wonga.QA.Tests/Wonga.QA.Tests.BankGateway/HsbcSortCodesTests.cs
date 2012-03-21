@@ -35,7 +35,7 @@ namespace Wonga.QA.Tests.BankGateway
         public void ResetCreationDatesAndGetLastSortCode()
         {
             BankGatewayDatabase database = Driver.Db.BankGateway;
-            _rows = database.ExecuteCommand(String.Format("UPDATE {0} SET CreationDate = {{0}}", database.SortCodes.GetName()), Data.GetDateTimeMin());
+            _rows = database.ExecuteCommand(String.Format("UPDATE {0} SET CreationDate = {{0}}", database.SortCodes.GetName()), Get.GetDateTimeMin());
             _code = database.SortCodes.OrderByDescending(c => c.CreationDate).ThenByDescending(c => c.SortCodeId).First();
         }
 
@@ -46,7 +46,7 @@ namespace Wonga.QA.Tests.BankGateway
             _code.Delete().Submit();
 
             Driver.Svc.Hsbc.Restart();
-            Do.With().Timeout(3).Interval(10).Until(() => Driver.Db.BankGateway.SortCodes.Max(c => c.CreationDate) > Data.GetDateTimeMin());
+            Do.With().Timeout(3).Interval(10).Until(() => Driver.Db.BankGateway.SortCodes.Max(c => c.CreationDate) > Get.GetDateTimeMin());
 
             Table<SortCodeEntity> codes = Driver.Db.BankGateway.SortCodes;
             Assert.GreaterThanOrEqualTo(codes.Count(), _rows);
@@ -61,9 +61,9 @@ namespace Wonga.QA.Tests.BankGateway
             _code.Submit();
 
             Driver.Msmq.Hsbc.Send(new UpdateSortCodeTableUkCommand());
-            Do.With().Timeout(3).Interval(10).Until(() => Driver.Db.BankGateway.SortCodes.Max(c => c.CreationDate) > Data.GetDateTimeMin());
+            Do.With().Timeout(3).Interval(10).Until(() => Driver.Db.BankGateway.SortCodes.Max(c => c.CreationDate) > Get.GetDateTimeMin());
 
-            Assert.GreaterThan(_code.Refresh().CreationDate, Data.GetDateTimeMin());
+            Assert.GreaterThan(_code.Refresh().CreationDate, Get.GetDateTimeMin());
             Assert.AreNotEqual(_code.PaymentTypeId, _type.PaymentTypeId);
         }
     }

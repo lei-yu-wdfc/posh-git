@@ -7,8 +7,8 @@ namespace Wonga.QA.Framework.Api
     {
         public override void Default()
         {
-            AccountId = Data.GetId();
-            BankAccountId = Data.GetId();
+            AccountId = Get.GetId();
+            BankAccountId = Get.GetId();
             BankName = "ABBEY";
             BankCode = 938600;
             HolderName = "FirstName LastName";

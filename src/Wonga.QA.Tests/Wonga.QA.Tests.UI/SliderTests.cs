@@ -134,7 +134,7 @@ namespace Wonga.QA.Tests.Ui
         public void DefaultAmountSliderValueShouldBeCorrectLn()
         {
             var loginPage = Client.Login();
-            string email = Data.RandomEmail();
+            string email = Get.RandomEmail();
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             Application application = ApplicationBuilder.New(customer)
                 .Build();
@@ -170,7 +170,7 @@ namespace Wonga.QA.Tests.Ui
         public void DefaultDurationSliderValueShouldBeCorrectLn()
         {
             var loginPage = Client.Login();
-            string email = Data.RandomEmail();
+            string email = Get.RandomEmail();
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
         	Application application = ApplicationBuilder.New(customer).Build().RepayOnDueDate();
 
@@ -227,7 +227,7 @@ namespace Wonga.QA.Tests.Ui
         public void MaxDurationSliderValueShouldBeCorrectLn()
         {
             var loginPage = Client.Login();
-            string email = Data.RandomEmail();
+            string email = Get.RandomEmail();
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             Application application = ApplicationBuilder.New(customer)
                 .Build();
@@ -261,7 +261,7 @@ namespace Wonga.QA.Tests.Ui
         public void MinDurationSliderValueShouldBeCorrectLn()
         {
             var loginPage = Client.Login();
-            string email = Data.RandomEmail();
+            string email = Get.RandomEmail();
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             Application application = ApplicationBuilder.New(customer)
                 .Build();
@@ -282,7 +282,7 @@ namespace Wonga.QA.Tests.Ui
          public void WhanCustomerWithLiveLoanTriesTakeLoanSlidersShouldBeBlocked()
          {
              var loginPage = Client.Login();
-             string email = Data.RandomEmail();
+             string email = Get.RandomEmail();
              Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
              Application application = ApplicationBuilder.New(customer)
                  .Build();

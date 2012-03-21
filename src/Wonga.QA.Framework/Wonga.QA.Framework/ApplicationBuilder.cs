@@ -29,12 +29,12 @@ namespace Wonga.QA.Framework
         protected ApplicationBuilder()
         {
             _id = Guid.NewGuid();
-            _loanAmount = Data.GetLoanAmount();
+            _loanAmount = Get.GetLoanAmount();
             _iovationBlackBox = "foobar";
 
             _setPromiseDateAndLoanTerm = () =>
                                   {
-                                      _promiseDate = Data.GetPromiseDate();
+                                      _promiseDate = Get.GetPromiseDate();
                                       _loanTerm = GetLoanTermFromPromiseDate();
                                   };
 

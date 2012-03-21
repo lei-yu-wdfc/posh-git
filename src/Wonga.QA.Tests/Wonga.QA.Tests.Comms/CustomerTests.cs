@@ -164,10 +164,10 @@ namespace Wonga.QA.Tests.Comms
                                   AccountId = accountId,
                                   Gender = "Female",
                                   DateOfBirth = new DateTime(1957, 10, 30).ToDate(DateFormat.Date),
-                                  Email = Data.RandomEmail(),
-                                  Forename = Data.RandomString(8),
-                                  Surname = Data.RandomString(8),
-                                  MiddleName = Data.RandomString(8),
+                                  Email = Get.RandomEmail(),
+                                  Forename = Get.RandomString(8),
+                                  Surname = Get.RandomString(8),
+                                  MiddleName = Get.RandomString(8),
                                   HomePhone = "0217050520",
                                   WorkPhone = "0217450510"
                               };
@@ -187,7 +187,7 @@ namespace Wonga.QA.Tests.Comms
         public void TestSaveCustomerDetailsCommand_DuplicateCustomer()
         {
             var accountId = Guid.NewGuid();
-            var emailAddress = Data.RandomEmail();
+            var emailAddress = Get.RandomEmail();
             Driver.Api.Commands.Post(new CreateAccountCommand { AccountId = accountId, Password = "Passw0rd", Login = emailAddress });
             var message = (new SaveCustomerDetailsUkCommand
                                {
@@ -195,16 +195,16 @@ namespace Wonga.QA.Tests.Comms
                                    Gender = "Female",
                                    DateOfBirth = new DateTime(1957, 10, 30).ToDate(DateFormat.Date),
                                    Email = emailAddress,
-                                   Forename = Data.RandomString(8),
-                                   Surname = Data.RandomString(8),
-                                   MiddleName = Data.RandomString(8),
+                                   Forename = Get.RandomString(8),
+                                   Surname = Get.RandomString(8),
+                                   MiddleName = Get.RandomString(8),
                                    HomePhone = "0217050520",
                                    WorkPhone = "0217450510"
                                });
 
             Driver.Api.Commands.Post(message);
             var customerEntity = Do.Until(() => Driver.Db.Comms.CustomerDetails.Single(p => p.AccountId == accountId));
-            message.Email = Data.RandomEmail();
+            message.Email = Get.RandomEmail();
 
             var response = Driver.Api.Commands.Post(message);
             var x = response.GetErrors();
@@ -220,10 +220,10 @@ namespace Wonga.QA.Tests.Comms
                 AccountId = accountId,
                 Gender = "Female",
                 DateOfBirth = DateTime.Now.ToDate(DateFormat.Date),
-                Email = Data.RandomEmail(),
-                Forename = Data.RandomString(8),
-                Surname = Data.RandomString(8),
-                MiddleName = Data.RandomString(8),
+                Email = Get.RandomEmail(),
+                Forename = Get.RandomString(8),
+                Surname = Get.RandomString(8),
+                MiddleName = Get.RandomString(8),
                 HomePhone = "0217050520",
                 WorkPhone = "0217450510"
             };
@@ -242,11 +242,11 @@ namespace Wonga.QA.Tests.Comms
                                  {
                                      AccountId = accountId,
                                      Gender = 2,
-                                     DateOfBirth = Data.GetDoB(),
-                                     Email = Data.RandomEmail(),
-                                     Forename = Data.RandomString(8),
-                                     Surname = Data.RandomString(8),
-                                     MiddleName = Data.RandomString(8),
+                                     DateOfBirth = Get.GetDoB(),
+                                     Email = Get.RandomEmail(),
+                                     Forename = Get.RandomString(8),
+                                     Surname = Get.RandomString(8),
+                                     MiddleName = Get.RandomString(8),
                                      HomePhone = "0217050520",
                                      WorkPhone = "0217450510"
                                  };
@@ -306,17 +306,17 @@ namespace Wonga.QA.Tests.Comms
         public void TestSendPasswordResetEmailCommand()
         {
             var accountId = Guid.NewGuid();
-            var emailAddress = Data.RandomEmail();
+            var emailAddress = Get.RandomEmail();
             var commsDb = Driver.Db.Comms;
             var newEntity = new CustomerDetailEntity
             {
                 AccountId = accountId,
                 Gender = 2,
-                DateOfBirth = Data.GetDoB(),
+                DateOfBirth = Get.GetDoB(),
                 Email = emailAddress,
-                Forename = Data.RandomString(8),
-                Surname = Data.RandomString(8),
-                MiddleName = Data.RandomString(8),
+                Forename = Get.RandomString(8),
+                Surname = Get.RandomString(8),
+                MiddleName = Get.RandomString(8),
                 HomePhone = "0217050520",
                 WorkPhone = "0217450510"
             };
@@ -342,11 +342,11 @@ namespace Wonga.QA.Tests.Comms
             {
                 AccountId = accountId,
                 Gender = 2,
-                DateOfBirth = Data.GetDoB(),
-                Email = Data.RandomEmail(),
-                Forename = Data.RandomString(8),
-                Surname = Data.RandomString(8),
-                MiddleName = Data.RandomString(8),
+                DateOfBirth = Get.GetDoB(),
+                Email = Get.RandomEmail(),
+                Forename = Get.RandomString(8),
+                Surname = Get.RandomString(8),
+                MiddleName = Get.RandomString(8),
                 HomePhone = "0217050520",
                 WorkPhone = "0217450510"
             };
@@ -375,11 +375,11 @@ namespace Wonga.QA.Tests.Comms
             {
                 AccountId = accountId,
                 Gender = 2,
-                DateOfBirth = Data.GetDoB(),
-                Email = Data.RandomEmail(),
-                Forename = Data.RandomString(8),
-                Surname = Data.RandomString(8),
-                MiddleName = Data.RandomString(8),
+                DateOfBirth = Get.GetDoB(),
+                Email = Get.RandomEmail(),
+                Forename = Get.RandomString(8),
+                Surname = Get.RandomString(8),
+                MiddleName = Get.RandomString(8),
                 HomePhone = "0217050520",
                 WorkPhone = "0217450510"
             };
@@ -392,7 +392,7 @@ namespace Wonga.QA.Tests.Comms
             Assert.DoesNotThrow(() => Driver.Api.Commands.Post(new SendVerificationEmailCommand()
                                                         {
                                                             AccountId = accountId,
-                                                            Email = Data.RandomEmail(),
+                                                            Email = Get.RandomEmail(),
                                                             UriFragment = "api_test"
                                                         }));
         }
@@ -407,11 +407,11 @@ namespace Wonga.QA.Tests.Comms
             {
                 AccountId = accountId,
                 Gender = 2,
-                DateOfBirth = Data.GetDoB(),
-                Email = Data.RandomEmail(),
-                Forename = Data.RandomString(8),
-                Surname = Data.RandomString(8),
-                MiddleName = Data.RandomString(8),
+                DateOfBirth = Get.GetDoB(),
+                Email = Get.RandomEmail(),
+                Forename = Get.RandomString(8),
+                Surname = Get.RandomString(8),
+                MiddleName = Get.RandomString(8),
                 HomePhone = "0217050520",
                 WorkPhone = "0217450510"
             };
@@ -423,7 +423,7 @@ namespace Wonga.QA.Tests.Comms
             Assert.DoesNotThrow(() => Driver.Api.Commands.Post(new SendVerificationEmailCommand()
             {
                 AccountId = accountId,
-                Email = Data.RandomEmail(),
+                Email = Get.RandomEmail(),
                 UriFragment = "api_test"
             }));
 
@@ -439,9 +439,9 @@ namespace Wonga.QA.Tests.Comms
         [Test, AUT(AUT.Uk), JIRA("UK-850")]
         public void CreateCustomerTwice()
         {
-            String forename = Data.RandomString(4, 8);
-            String surname = Data.RandomString(5, 10);
-            Date dob = Data.GetDoB();
+            String forename = Get.RandomString(4, 8);
+            String surname = Get.RandomString(5, 10);
+            Date dob = Get.GetDoB();
 
             CustomerBuilder.New()
                 .WithForename(forename)
@@ -462,9 +462,9 @@ namespace Wonga.QA.Tests.Comms
         [Test, AUT(AUT.Uk), JIRA("UK-850")]
         public void CreateSameCustomerTwiceInverseCaseOnSurnameAndForename()
         {
-            String forename = Data.RandomString(4, 8);
-            String surname = Data.RandomString(5, 10);
-            Date dob = Data.GetDoB();
+            String forename = Get.RandomString(4, 8);
+            String surname = Get.RandomString(5, 10);
+            Date dob = Get.GetDoB();
 
             CustomerBuilder.New()
                 .WithForename(forename)
@@ -474,8 +474,8 @@ namespace Wonga.QA.Tests.Comms
 
             var error = Assert.Throws<ValidatorException>(() =>
             CustomerBuilder.New()
-                .WithForename(Data.InvertCase(forename))
-                .WithSurname(Data.InvertCase(surname))
+                .WithForename(Get.InvertCase(forename))
+                .WithSurname(Get.InvertCase(surname))
                 .WithDateOfBirth(dob)
                 .Build());
 
@@ -485,9 +485,9 @@ namespace Wonga.QA.Tests.Comms
         [Test, AUT(AUT.Uk), JIRA("UK-850")]
         public void CreateSimilarCustomerDiffForename()
         {
-            String forename = Data.RandomString(4, 8);
-            String surname = Data.RandomString(5, 10);
-            Date dob = Data.GetDoB();
+            String forename = Get.RandomString(4, 8);
+            String surname = Get.RandomString(5, 10);
+            Date dob = Get.GetDoB();
 
             CustomerBuilder.New()
                 .WithForename(forename)
@@ -505,11 +505,11 @@ namespace Wonga.QA.Tests.Comms
         [Test, AUT(AUT.Uk), JIRA("UK-850")]
         public void CreateSimilarCustomerSoundexOnSurname()
         {
-            String forename = Data.RandomString(4, 8);
-            String random = Data.RandomString(5, 10);
+            String forename = Get.RandomString(4, 8);
+            String random = Get.RandomString(5, 10);
             String surname = "Zi" + random;
             String soundexSurname = "Zy" + random;
-            Date dob = Data.GetDoB();
+            Date dob = Get.GetDoB();
 
             CustomerBuilder.New()
                 .WithForename(forename)
@@ -530,7 +530,7 @@ namespace Wonga.QA.Tests.Comms
         [Test, AUT(AUT.Uk), JIRA("UK-850")]
         public void CreateTwoCustomersSameEmail()
         {
-            String email = Data.RandomEmail();
+            String email = Get.RandomEmail();
             
             CustomerBuilder.New()
                 .WithEmailAddress(email)
@@ -547,7 +547,7 @@ namespace Wonga.QA.Tests.Comms
         [Test, AUT(AUT.Uk), JIRA("UK-850")]
         public void CreateTwoCustomersSameEmailInvertedCase()
         {
-            String email = Data.RandomEmail();
+            String email = Get.RandomEmail();
 
             CustomerBuilder.New()
                 .WithEmailAddress(email)
@@ -555,7 +555,7 @@ namespace Wonga.QA.Tests.Comms
 
             var error = Assert.Throws<ValidatorException>(() =>
             CustomerBuilder.New()
-                .WithEmailAddress(Data.InvertCase(email))
+                .WithEmailAddress(Get.InvertCase(email))
                 .Build());
 
             Assert.Contains(error.Message, "Ops_Login_AlreadyExists");

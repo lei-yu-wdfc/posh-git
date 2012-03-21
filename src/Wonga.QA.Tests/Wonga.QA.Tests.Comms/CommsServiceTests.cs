@@ -36,7 +36,7 @@ namespace Wonga.QA.Tests.Comms
                                             ApplicationId = app.Id, 
                                             PartPaymentRequired = 10m,
                                             ExtendDate = ftApp.NextDueDate ?? ftApp.PromiseDate,
-                                            ExtensionId = Data.GetId(),
+                                            ExtensionId = Get.GetId(),
                                             NewFinalBalance = ftApp.LoanAmount
                                         });
 

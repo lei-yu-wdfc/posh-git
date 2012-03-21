@@ -9,12 +9,12 @@ namespace Wonga.QA.Framework.Api
         {
             AccountNumber = "00000190";
             AccountOpenDate = DateTime.Now.AddYears(-4);
-            BankAccountId = Data.GetId();
+            BankAccountId = Get.GetId();
             BankCode = "180002";
             BankName = "FSB Business Banking";
             CountryCode = CountryCodeEnum.UK;
-            HolderName = Data.GetName();
-            OrganisationId = Data.GetId();
+            HolderName = Get.GetName();
+            OrganisationId = Get.GetId();
         }
     }
 }

@@ -58,7 +58,7 @@ namespace Wonga.QA.Tests.Ui
 
             var journey = new Journey(Client.Home());
             var processingPage = journey.ApplyForLoan(randomAmount, randomDuration)
-                                 .FillPersonalDetails(Data.EnumToString(RiskMask.TESTEmployedMask))
+                                 .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                                  .FillAddressDetails()
                                  .FillAccountDetails()
                                  .FillBankDetails()
@@ -86,7 +86,7 @@ namespace Wonga.QA.Tests.Ui
 
             var journey = new Journey(Client.Home());
             var processingPage = journey.ApplyForLoan(randomAmount, randomDuration)
-                                 .FillPersonalDetails(Data.EnumToString(RiskMask.TESTEmployedMask))
+                                 .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                                  .FillAddressDetails()
                                  .FillAccountDetails()
                                  .FillBankDetails()

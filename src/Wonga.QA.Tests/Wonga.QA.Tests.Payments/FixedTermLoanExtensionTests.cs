@@ -104,7 +104,7 @@ namespace Wonga.QA.Tests.Payments
 			var cardId = (appExists ? cust.GetPaymentCard() : Guid.NewGuid());
 			var extendDate = new Date(appExists
 			                 	? (ftApp.NextDueDate ?? ftApp.PromiseDate).AddDays(3)
-			                 	: Data.RandomDate(DateTime.Now.AddYears(-1), DateTime.Now.AddYears(1)), DateFormat.Date);
+			                 	: Get.RandomDate(DateTime.Now.AddYears(-1), DateTime.Now.AddYears(1)), DateFormat.Date);
 
 			ConfigurationFunctions.SetupQaUtcNowOverride((ftApp.NextDueDate ?? ftApp.PromiseDate).AddDays(-3));
 

@@ -10,8 +10,8 @@ namespace Wonga.QA.Framework.Api
     {
         public override void Default()
         {
-            AccountId = Data.GetId();
-            ApplicationId = Data.GetId();
+            AccountId = Get.GetId();
+            ApplicationId = Get.GetId();
             NumberOfGuarantors = 0;
         }
     }

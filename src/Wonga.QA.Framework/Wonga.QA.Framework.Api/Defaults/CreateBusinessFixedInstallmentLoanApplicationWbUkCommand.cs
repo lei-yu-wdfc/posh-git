@@ -6,16 +6,16 @@ namespace Wonga.QA.Framework.Api
     {
         public override void Default()
         {
-            AccountId = Data.GetId();
-            ApplicationId = Data.GetId();
+            AccountId = Get.GetId();
+            ApplicationId = Get.GetId();
             Currency = CurrencyCodeEnum.GBP;
             LoanAmount = 10000;
-            BusinessBankAccountId = Data.GetId();
-            BusinessPaymentCardId = Data.GetId();
-            MainApplicantPaymentCardId = Data.GetId();
-            MainApplicantBankAccountId = Data.GetId();
+            BusinessBankAccountId = Get.GetId();
+            BusinessPaymentCardId = Get.GetId();
+            MainApplicantPaymentCardId = Get.GetId();
+            MainApplicantBankAccountId = Get.GetId();
             Term = 20;
-            OrganisationId = Data.GetId();
+            OrganisationId = Get.GetId();
         }
     }
 }

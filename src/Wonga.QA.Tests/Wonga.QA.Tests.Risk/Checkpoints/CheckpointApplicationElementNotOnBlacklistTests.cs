@@ -40,17 +40,17 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test, AUT(AUT.Za)]
 		public void CheckpointApplicationElementNotOnBlacklistAccept()
 		{
-			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithBankAccountNumber(Data.GetBankAccountNumber()).Build();
+			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithBankAccountNumber(Get.GetBankAccountNumber()).Build();
 			ApplicationBuilder.New(customer).Build();
 		}
 
 		[Test, AUT(AUT.Za)]
 		public void CheckpointApplicationElementNotOnBlacklistMobilePhoneNumberPresent()
 		{
-			var mobilePhoneNumber = Data.GetMobilePhone();
+			var mobilePhoneNumber = Get.GetMobilePhone();
 			var customer = CustomerBuilder.New()
 				.WithEmployer(TestMask)
-				.WithBankAccountNumber(Data.GetBankAccountNumber())
+				.WithBankAccountNumber(Get.GetBankAccountNumber())
 				.WithMobileNumber(mobilePhoneNumber).Build();
 			
 			var formattedMobilePhoneNumber = _internationalCode + mobilePhoneNumber.Remove(0,1);
@@ -65,7 +65,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test, AUT(AUT.Za)]
 		public void CheckpointApplicationElementNotOnBlacklistBankAccountPresent()
 		{
-			var bankAccountNumber = Data.GetBankAccountNumber();
+			var bankAccountNumber = Get.GetBankAccountNumber();
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithBankAccountNumber(bankAccountNumber).Build();
 			var blacklistEntity = new BlackListEntity { BankAccount = bankAccountNumber.ToString(), ExternalId = Guid.NewGuid() };
 			Driver.Db.Blacklist.BlackLists.InsertOnSubmit(blacklistEntity);

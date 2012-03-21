@@ -56,7 +56,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 			Assert.Contains(
 				Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, expectedStatus),
-				Data.EnumToString(checkpoint));
+				Get.EnumToString(checkpoint));
 
 			return application;
 		}

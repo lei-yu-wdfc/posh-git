@@ -19,7 +19,7 @@ namespace Wonga.QA.Tests.ContactManagement
         [Test, JIRA("SME-1128"), Description("This test validates email uniquess check of command validator"), AUT(AUT.Wb)]        
         public void TestPrimaryDirectorNonUniqueEmail()
         {
-            String email = Data.RandomEmail();
+            String email = Get.RandomEmail();
             var req= AddPrimaryOrganisationDirectorCommand.New();
 
             req.Email = email;  
@@ -52,7 +52,7 @@ namespace Wonga.QA.Tests.ContactManagement
         [Test, JIRA("SME-1128"), Description("This test validates email uniquess check of command validator"), AUT(AUT.Wb)]        
         public void TestSecondaryDirectorNonUniqueEmail()
         {
-            String email = Data.RandomEmail();
+            String email = Get.RandomEmail();
             var req = AddSecondaryOrganisationDirectorCommand.New();
 
             req.Email = email;
@@ -99,7 +99,7 @@ namespace Wonga.QA.Tests.ContactManagement
             bool errorDetected = false;
             try
             {
-                req.Email = Data.RandomEmail();
+                req.Email = Get.RandomEmail();
                 resp = Driver.Api.Commands.Post(req);
             }
             catch (ValidatorException e)
@@ -134,7 +134,7 @@ namespace Wonga.QA.Tests.ContactManagement
             bool errorDetected = false;
             try
             {
-                req.Email = Data.RandomEmail();
+                req.Email = Get.RandomEmail();
                 resp = Driver.Api.Commands.Post(req);
             }
             catch (ValidatorException e)

@@ -19,7 +19,7 @@ namespace Wonga.QA.Tests.Ui
         public void CustomerWithLiveLoanShouldNotBeAbleToAddBankAccount()
         {
             var loginPage = Client.Login();
-            string email = Data.RandomEmail();
+            string email = Get.RandomEmail();
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).Build();
             var mySummaryPage = loginPage.LoginAs(email);
@@ -33,7 +33,7 @@ namespace Wonga.QA.Tests.Ui
         {
             var journey1 = new Journey(Client.Home());
             var bankDetailsPage1 = journey1.ApplyForLoan(200, 10)
-                                      .FillPersonalDetails(Data.EnumToString(RiskMask.TESTEmployedMask))
+                                      .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                                       .FillAddressDetails()
                                       .FillAccountDetails()
                                       .CurrentPage as PersonalBankAccountPage;
@@ -47,7 +47,7 @@ namespace Wonga.QA.Tests.Ui
 
             var journey2 = new Journey(Client.Home());
             var bankDetailsPage2 = journey2.ApplyForLoan(200, 10)
-                                      .FillPersonalDetails(Data.EnumToString(RiskMask.TESTEmployedMask))
+                                      .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                                       .FillAddressDetails()
                                       .FillAccountDetails()
                                       .CurrentPage as PersonalBankAccountPage;
@@ -64,7 +64,7 @@ namespace Wonga.QA.Tests.Ui
         public void LNJourneyInvalidAccountNumberShouldCauseWarningMessageOnNextPage()
         {
             var loginPage = Client.Login();
-            string email = Data.RandomEmail();
+            string email = Get.RandomEmail();
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             Application application = ApplicationBuilder.New(customer)
                 .Build();

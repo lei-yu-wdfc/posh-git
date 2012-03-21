@@ -72,7 +72,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Do.Until(() => Driver.Db.Payments.Applications.Single(
                 a => a.ExternalId == applicationGuid).Transactions.Single(
                     t =>
-                    (PaymentTransactionScopeEnum)t.Scope == PaymentTransactionScopeEnum.Credit && t.Type == Data.EnumToString(
+                    (PaymentTransactionScopeEnum)t.Scope == PaymentTransactionScopeEnum.Credit && t.Type == Get.EnumToString(
                         Config.AUT == AUT.Uk ? PaymentTransactionEnum.CardPayment : PaymentTransactionEnum.DirectBankPayment)));
 
             Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == applicationGuid).ClosedOn == null);

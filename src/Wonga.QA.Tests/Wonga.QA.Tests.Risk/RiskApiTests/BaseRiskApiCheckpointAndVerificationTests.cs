@@ -25,7 +25,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		{
 			List<string> checkpointNames = Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflow.WorkflowId, expectedStatus);
 			Assert.AreEqual(1, checkpointNames.Count);
-			Assert.AreEqual(Data.EnumToString(checkpoint), checkpointNames.First());
+			Assert.AreEqual(Get.EnumToString(checkpoint), checkpointNames.First());
 
 		}
 
@@ -38,7 +38,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		{
 			if (expectedFailedCheckpoint.HasValue)
 			{
-				Assert.AreEqual(Data.EnumToString(expectedFailedCheckpoint), application.FailedCheckpoint);
+				Assert.AreEqual(Get.EnumToString(expectedFailedCheckpoint), application.FailedCheckpoint);
 			}
 			else
 			{
@@ -127,7 +127,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		{
 			//type name has this format:
 			//"Wonga.Risk.Checkpoints.ApplicationElementNotOnCSBlacklist, Wonga.Risk.Checkpoints, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
-			var checkpoint = new DbDriver().Risk.CheckpointDefinitions.SingleOrDefault(cd => cd.Name == Data.EnumToString(checkpointDefinition));
+			var checkpoint = new DbDriver().Risk.CheckpointDefinitions.SingleOrDefault(cd => cd.Name == Get.EnumToString(checkpointDefinition));
 			if (checkpoint == null)
 			{
 				throw new ArgumentOutOfRangeException("checkpointDefinition", checkpointDefinition, "Not found in DB");

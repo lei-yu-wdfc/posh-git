@@ -47,7 +47,7 @@ namespace Wonga.QA.Framework.Msmq
         public void Send(MsmqMessage message)
         {
             String body = message.ToString();
-            Trace.WriteLine(Data.Indent(body), GetType().FullName);
+            Trace.WriteLine(Get.Indent(body), GetType().FullName);
 
             Byte[] bytes = Encoding.Default.GetBytes(body);
             Message send = new Message

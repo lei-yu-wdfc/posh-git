@@ -117,7 +117,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			var customer = CustomerBuilder.New().Build();
 			ApplicationBuilder.New(customer).Build().RepayOnDueDate();
 
-			Driver.Db.UpdateEmployerName(customer.Id, Data.EnumToString(TestMask));
+			Driver.Db.UpdateEmployerName(customer.Id, Get.EnumToString(TestMask));
 
 			var application = ApplicationBuilder.New(customer).WithLoanTerm(5).WithLoanAmount(100).Build();
 

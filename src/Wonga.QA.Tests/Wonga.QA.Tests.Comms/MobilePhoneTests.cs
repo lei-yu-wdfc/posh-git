@@ -27,7 +27,7 @@ namespace Wonga.QA.Tests.Comms
             Assert.DoesNotThrow(() => Driver.Api.Commands.Post(new VerifyMobilePhoneUkCommand()
                               {
                                   AccountId = accountId,
-                                  Forename = Data.RandomString(8),
+                                  Forename = Get.RandomString(8),
                                   MobilePhone = mobilePhone,
                                   VerificationId = verificationId
                               }));
@@ -46,7 +46,7 @@ namespace Wonga.QA.Tests.Comms
                                                                                          {
                                                                                              AccountId = Guid.NewGuid(),
                                                                                              Forename =
-                                                                                                 Data.RandomString(8),
+                                                                                                 Get.RandomString(8),
                                                                                              MobilePhone =
                                                                                                  invalidMobilePhone,
                                                                                              VerificationId =
@@ -68,11 +68,11 @@ namespace Wonga.QA.Tests.Comms
             {
                 AccountId = accountId,
                 Gender = 2,
-                DateOfBirth = Data.GetDoB(),
-                Email = Data.RandomEmail(),
-                Forename = Data.RandomString(8),
-                Surname = Data.RandomString(8),
-                MiddleName = Data.RandomString(8),
+                DateOfBirth = Get.GetDoB(),
+                Email = Get.RandomEmail(),
+                Forename = Get.RandomString(8),
+                Surname = Get.RandomString(8),
+                MiddleName = Get.RandomString(8),
                 HomePhone = "0217050520",
                 WorkPhone = "0217450510",
                 MobilePhone = mobilePhoneNumber
@@ -84,7 +84,7 @@ namespace Wonga.QA.Tests.Comms
             Assert.DoesNotThrow(() => Driver.Api.Commands.Post(new VerifyMobilePhoneUkCommand()
                                           {
                                               AccountId = accountId,
-                                              Forename = Data.RandomString(8),
+                                              Forename = Get.RandomString(8),
                                               MobilePhone = mobilePhoneNumber,
                                               VerificationId = verificationId
                                           }));
@@ -125,11 +125,11 @@ namespace Wonga.QA.Tests.Comms
             {
                 AccountId = accountId,
                 Gender = 2,
-                DateOfBirth = Data.GetDoB(),
-                Email = Data.RandomEmail(),
-                Forename = Data.RandomString(8),
-                Surname = Data.RandomString(8),
-                MiddleName = Data.RandomString(8),
+                DateOfBirth = Get.GetDoB(),
+                Email = Get.RandomEmail(),
+                Forename = Get.RandomString(8),
+                Surname = Get.RandomString(8),
+                MiddleName = Get.RandomString(8),
                 HomePhone = "0217050520",
                 WorkPhone = "0217450510",
                 MobilePhone = mobilePhoneNumber
@@ -141,7 +141,7 @@ namespace Wonga.QA.Tests.Comms
             Assert.DoesNotThrow(() => Driver.Api.Commands.Post(new VerifyMobilePhoneUkCommand()
             {
                 AccountId = accountId,
-                Forename = Data.RandomString(8),
+                Forename = Get.RandomString(8),
                 MobilePhone = mobilePhoneNumber,
                 VerificationId = verificationId
             }));
@@ -150,7 +150,7 @@ namespace Wonga.QA.Tests.Comms
 
             Assert.DoesNotThrow(()=>Driver.Api.Commands.Post(new ResendMobilePhonePinCommand()
                                                                  {
-                                                                     Forename = Data.RandomString(8),
+                                                                     Forename = Get.RandomString(8),
                                                                      VerificationId = mobileVerificationEntity.VerificationId
                                                                  }));
         }

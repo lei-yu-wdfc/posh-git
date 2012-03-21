@@ -7,9 +7,9 @@ namespace Wonga.QA.Framework.Api
     {
         public override void Default()
         {
-            AccountId = Data.GetId();
-            SecretAnswer = Data.RandomString(30);
-            SecretQuestion = Data.RandomString(30);
+            AccountId = Get.GetId();
+            SecretAnswer = Get.RandomString(30);
+            SecretQuestion = Get.RandomString(30);
         }
     }
 }

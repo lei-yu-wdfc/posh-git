@@ -95,7 +95,7 @@ namespace Wonga.QA.Framework
 	        return Do.Until(() => Driver.Db.Payments.Applications.Single(
 	            a => a.ExternalId == Id).Transactions.Single(
 	                t =>
-	                (PaymentTransactionScopeEnum) t.Scope == PaymentTransactionScopeEnum.Credit && t.Type == Data.EnumToString(
+	                (PaymentTransactionScopeEnum) t.Scope == PaymentTransactionScopeEnum.Credit && t.Type == Get.EnumToString(
 	                    Config.AUT == AUT.Uk ? PaymentTransactionEnum.CardPayment : PaymentTransactionEnum.DirectBankPayment)));
 	    }
 

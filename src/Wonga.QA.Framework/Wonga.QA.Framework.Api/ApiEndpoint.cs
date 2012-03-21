@@ -38,14 +38,14 @@ namespace Wonga.QA.Framework.Api
 
             using (StreamWriter writer = new StreamWriter(request.GetRequestStream()))
                 writer.Write(body);
-            Trace.WriteLine(Data.Indent(body), GetType().FullName);
+            Trace.WriteLine(Get.Indent(body), GetType().FullName);
 
             return new ApiResponse(request);
         }
 
         public XmlSchema GetShema()
         {
-            XmlSchema schema = XmlSchema.Read(new StringReader(new WebClient().DownloadString(Data.GetSchema(_endpoint))), (s, a) => { throw a.Exception; });
+            XmlSchema schema = XmlSchema.Read(new StringReader(new WebClient().DownloadString(Get.GetSchema(_endpoint))), (s, a) => { throw a.Exception; });
             XmlSchemaSet set = new XmlSchemaSet();
             set.Add(schema);
             set.Compile();

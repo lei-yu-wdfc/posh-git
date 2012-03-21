@@ -64,7 +64,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.WithEmployer(TestMask)
 				.WithForename(_forename)
 				.WithMiddleName(_middleName)
-				.WithSurname(Data.GetName())
+				.WithSurname(Get.GetName())
 				.WithDateOfBirth(_dateOfBirth)
 				.WithNationalNumber(_nationalNumber)
 				.Build();
@@ -75,11 +75,11 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test, AUT(AUT.Za)]
 		public void CheckpointCustomerNameIsCorrectIncorrectForenameDeclines()
 		{
-			string incorrectForename = Data.GetName();
+			string incorrectForename = Get.GetName();
 
 			//Must ensure that the first letter of incorrect surname doens't match the actual forename
 			while(incorrectForename.First() == _forename.First())
-				incorrectForename = Data.GetName();
+				incorrectForename = Get.GetName();
 		
 			var customer = CustomerBuilder.New()
 				.WithEmployer(TestMask)
@@ -102,7 +102,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.WithMiddleName(_middleName)
 				.WithSurname(_surname)
 				.WithDateOfBirth(_dateOfBirth)
-				.WithNationalNumber(Data.GetNIN(_dateOfBirth, true))
+				.WithNationalNumber(Get.GetNIN(_dateOfBirth, true))
 				.Build();
 
 			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
@@ -111,7 +111,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test, AUT(AUT.Za)]
 		public void CheckpointCustomerNameIsCorrectFirstLetterOfForenameMatchesAccepts()
 		{
-			string incorrectForename = Data.GetName();
+			string incorrectForename = Get.GetName();
 			incorrectForename = _forename.First() + incorrectForename;
 
 			var customer = CustomerBuilder.New()
@@ -148,7 +148,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.WithEmployer(TestMask)
 				.WithForename(_forename)
 				.WithMiddleName(_middleName)
-				.WithSurname(Data.GetName())
+				.WithSurname(Get.GetName())
 				.WithMaidenName(_surname)
 				.WithDateOfBirth(_dateOfBirth)
 				.WithNationalNumber(_nationalNumber)
@@ -164,8 +164,8 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.WithEmployer(TestMask)
 				.WithForename(_forename)
 				.WithMiddleName(_middleName)
-				.WithSurname(Data.GetName())
-				.WithMaidenName(Data.GetName())
+				.WithSurname(Get.GetName())
+				.WithMaidenName(Get.GetName())
 				.WithDateOfBirth(_dateOfBirth)
 				.WithNationalNumber(_nationalNumber)
 				.Build();
@@ -180,7 +180,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.WithEmployer(TestMask)
 				.WithForename(_middleName)
 				.WithMiddleName(_forename)
-				.WithSurname(Data.GetName())
+				.WithSurname(Get.GetName())
 				.WithMaidenName(_surname)
 				.WithDateOfBirth(_dateOfBirth)
 				.WithNationalNumber(_nationalNumber)

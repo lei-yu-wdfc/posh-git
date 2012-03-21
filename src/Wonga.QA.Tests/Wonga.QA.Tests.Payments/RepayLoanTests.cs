@@ -73,7 +73,7 @@ namespace Wonga.QA.Tests.Payments
                 ApplicationId = _application.Id,
                 ActionDate = new Date
                 {
-                    DateTime = Data.GetPromiseDate().DateTime.AddDays(-3),
+                    DateTime = Get.GetPromiseDate().DateTime.AddDays(-3),
                     DateFormat = DateFormat.Date
                 }, //Early repay before promised date
                 Amount = _application.LoanAmount,
@@ -125,7 +125,7 @@ namespace Wonga.QA.Tests.Payments
                                   ApplicationId = _application.Id,
                                   ActionDate = new Date
                                                    {
-                                                       DateTime = Data.GetPromiseDate().DateTime.AddDays(-3),
+                                                       DateTime = Get.GetPromiseDate().DateTime.AddDays(-3),
                                                        DateFormat = DateFormat.Date
                                                    }, //Early repay before promised date
                                   Amount = _application.LoanAmount,
@@ -136,7 +136,7 @@ namespace Wonga.QA.Tests.Payments
             var app = Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == _application.Id));
             var saga = Do.Until(() =>Driver.Db.OpsSagas.RepaymentSagaEntities.Single(s => s.ApplicationId == app.ApplicationId));
 
-            var now = Data.GetPromiseDate().DateTime.AddDays(-4);
+            var now = Get.GetPromiseDate().DateTime.AddDays(-4);
             SetPaymentsUtcNow(now);
             Console.WriteLine("Set up UtcNow to {0}", now);
             //Cause request is schedule to timeout, send timeout message now.
@@ -169,7 +169,7 @@ namespace Wonga.QA.Tests.Payments
                 ApplicationId = _application.Id,
                 ActionDate = new Date
                 {
-                    DateTime = Data.GetPromiseDate().DateTime.AddDays(23),
+                    DateTime = Get.GetPromiseDate().DateTime.AddDays(23),
                     DateFormat = DateFormat.Date
                 }, //Early repay before promised date
                 Amount = _application.LoanAmount,
@@ -180,7 +180,7 @@ namespace Wonga.QA.Tests.Payments
 
             var saga = Do.Until(() => Driver.Db.OpsSagas.RepaymentSagaEntities.Single(s => s.ApplicationId == app.ApplicationId));
 
-            var now = Data.GetPromiseDate().DateTime.AddDays(22);
+            var now = Get.GetPromiseDate().DateTime.AddDays(22);
             SetPaymentsUtcNow(now);
             Console.WriteLine("Set up UtcNow to {0}", now);
             //Cause request is schedule to timeout, send timeout message now.
@@ -221,7 +221,7 @@ namespace Wonga.QA.Tests.Payments
                 ApplicationId = _application.Id,
                 ActionDate = new Date
                 {
-                    DateTime = Data.GetPromiseDate().DateTime.AddDays(23),
+                    DateTime = Get.GetPromiseDate().DateTime.AddDays(23),
                     DateFormat = DateFormat.Date
                 }, //Early repay before promised date
                 Amount = _application.LoanAmount,
@@ -231,7 +231,7 @@ namespace Wonga.QA.Tests.Payments
             
             var saga = Do.Until(() => Driver.Db.OpsSagas.RepaymentSagaEntities.Single(s => s.ApplicationId == app.ApplicationId));
             //Set date to be outside collection cutoff time, which is non of action date.
-            var now = Data.GetPromiseDate().DateTime.AddDays(22);
+            var now = Get.GetPromiseDate().DateTime.AddDays(22);
             SetPaymentsUtcNow(now);
             Console.WriteLine("Set up UtcNow to {0}", now);
             
@@ -241,7 +241,7 @@ namespace Wonga.QA.Tests.Payments
                 SagaId = saga.Id,
             });
 
-            now = Data.GetPromiseDate().DateTime.AddDays(26);
+            now = Get.GetPromiseDate().DateTime.AddDays(26);
             SetPaymentsUtcNow(now);
             Console.WriteLine("Set up UtcNow to {0}", now);
             //Cause Failed to collection handler to be called, by timing out at collection cutoff time.

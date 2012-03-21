@@ -62,7 +62,7 @@ namespace Wonga.QA.Tests.Payments
                                                                CustomerFullName = customer.GetCustomerFullName(),
                                                                ItemNumber = 1,
                                                                RemittancePaymentDate = DateTime.UtcNow,
-                                                               RemittanceTraceNumber = Data.RandomInt(100000000, 999999999).ToString()
+                                                               RemittanceTraceNumber = Get.RandomInt(100000000, 999999999).ToString()
                                                            };
 
             Driver.Mocks.Scotia.AddOnlineBillPaymentFile(application.Id.ToString(), new List<OnlineBillPaymentTransaction> { transaction });
@@ -101,7 +101,7 @@ namespace Wonga.QA.Tests.Payments
                 CustomerFullName = customer.GetCustomerFullName(),
                 ItemNumber = 1,
                 RemittancePaymentDate = DateTime.UtcNow.Subtract(new TimeSpan(2, 0, 0, 0)),
-                RemittanceTraceNumber = Data.RandomInt(100000000, 999999999).ToString()
+                RemittanceTraceNumber = Get.RandomInt(100000000, 999999999).ToString()
             };
 
             Driver.Mocks.Scotia.AddOnlineBillPaymentFile(application.Id.ToString(), new List<OnlineBillPaymentTransaction> { transaction });
@@ -121,17 +121,17 @@ namespace Wonga.QA.Tests.Payments
             //trigger mock to intitiate bank gateway to process file
             //verify file recorded db
 
-            String ccin = Data.RandomInt(100000000, 999999999).ToString();
+            String ccin = Get.RandomInt(100000000, 999999999).ToString();
             TestLog.DebugTrace.WriteLine("ccin -> {0}\n", ccin);
 
             var transaction = new OnlineBillPaymentTransaction
             {
                 AmountInCent = 10000,
                 Ccin = ccin,
-                CustomerFullName = Data.GetName()+" "+Data.GetName(),
+                CustomerFullName = Get.GetName()+" "+Get.GetName(),
                 ItemNumber = 1,
                 RemittancePaymentDate = DateTime.UtcNow,
-                RemittanceTraceNumber = Data.RandomInt(100000000, 999999999).ToString()
+                RemittanceTraceNumber = Get.RandomInt(100000000, 999999999).ToString()
             };
 
             Driver.Mocks.Scotia.AddOnlineBillPaymentFile(Guid.NewGuid().ToString(), new List<OnlineBillPaymentTransaction> { transaction });
@@ -168,7 +168,7 @@ namespace Wonga.QA.Tests.Payments
                 CustomerFullName = customer.GetCustomerFullName(),
                 ItemNumber = 1,
                 RemittancePaymentDate = DateTime.UtcNow,
-                RemittanceTraceNumber = Data.RandomInt(100000000, 999999999).ToString()
+                RemittanceTraceNumber = Get.RandomInt(100000000, 999999999).ToString()
             };
 
             TestLog.DebugTrace.WriteLine("ccin -> {0}\n", customer.GetCcin());
@@ -211,7 +211,7 @@ namespace Wonga.QA.Tests.Payments
                 CustomerFullName = customer.GetCustomerFullName(),
                 ItemNumber = 1,
                 RemittancePaymentDate = DateTime.UtcNow,
-                RemittanceTraceNumber = Data.RandomInt(100000000, 999999999).ToString()
+                RemittanceTraceNumber = Get.RandomInt(100000000, 999999999).ToString()
             };
 
             Driver.Mocks.Scotia.AddOnlineBillPaymentFile(application.Id.ToString(), new List<OnlineBillPaymentTransaction> { transaction });
@@ -247,7 +247,7 @@ namespace Wonga.QA.Tests.Payments
                 CustomerFullName = customer.GetCustomerFullName(),
                 ItemNumber = 1,
                 RemittancePaymentDate = DateTime.UtcNow,
-                RemittanceTraceNumber = Data.RandomInt(100000000, 999999999).ToString()
+                RemittanceTraceNumber = Get.RandomInt(100000000, 999999999).ToString()
             };
 
             Driver.Mocks.Scotia.AddOnlineBillPaymentFile(application.Id.ToString(), new List<OnlineBillPaymentTransaction> { transaction });
@@ -281,7 +281,7 @@ namespace Wonga.QA.Tests.Payments
                 CustomerFullName = customer.GetCustomerFullName(),
                 ItemNumber = 1,
                 RemittancePaymentDate = DateTime.UtcNow,
-                RemittanceTraceNumber = Data.RandomInt(100000000, 999999999).ToString()
+                RemittanceTraceNumber = Get.RandomInt(100000000, 999999999).ToString()
             };
 
             Driver.Mocks.Scotia.AddOnlineBillPaymentFile(application.Id.ToString(), new List<OnlineBillPaymentTransaction> { transaction });

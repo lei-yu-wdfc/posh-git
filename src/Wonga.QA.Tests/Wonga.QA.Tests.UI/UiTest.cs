@@ -19,8 +19,8 @@ namespace Wonga.QA.Tests.Ui
         public void SetUp()
         {
             Client = new UiClient();
-            _firstName = Data.GetName();
-            _lastName = Data.RandomString(10);
+            _firstName = Get.GetName();
+            _lastName = Get.RandomString(10);
         }
 
         [TearDown]
@@ -35,9 +35,9 @@ namespace Wonga.QA.Tests.Ui
         protected ProcessingPage WbL0Path(String middleNameMask = null)
         {
             //const string specialCompanyRegistrationNumberMask = "00000086";
-            var middleName = middleNameMask ?? Data.RandomString(3, 15);
-            var firstName = Data.RandomString(3, 15);
-            var emailAddress = Data.RandomEmail();
+            var middleName = middleNameMask ?? Get.RandomString(3, 15);
+            var firstName = Get.RandomString(3, 15);
+            var emailAddress = Get.RandomEmail();
 
             var page = Client.Home();
             page.Sliders.HowMuch = "5550";
@@ -111,8 +111,8 @@ namespace Wonga.QA.Tests.Ui
 
             var businessDetailsPage = personalDebitCardPage.Next() as BusinessDetailsPage;
             Thread.Sleep(1000);
-            businessDetailsPage.BusinessName = Data.RandomString(3, 15);
-            businessDetailsPage.BusinessNumber = Data.RandomInt(9999999).ToString();
+            businessDetailsPage.BusinessName = Get.RandomString(3, 15);
+            businessDetailsPage.BusinessNumber = Get.RandomInt(9999999).ToString();
             //businessDetailsPage.BusinessNumber = graydonCompanyRegistrationNumberMask;
 
             var additionalDirectorsPage = businessDetailsPage.Next();
@@ -122,8 +122,8 @@ namespace Wonga.QA.Tests.Ui
             Thread.Sleep(1000);
             var additionalDirectorEmail = String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
             addAdditionalDirectorPage.Title = "Mr";
-            addAdditionalDirectorPage.FirstName = Data.RandomString(3, 15);
-            addAdditionalDirectorPage.LastName = Data.RandomString(3, 15);
+            addAdditionalDirectorPage.FirstName = Get.RandomString(3, 15);
+            addAdditionalDirectorPage.LastName = Get.RandomString(3, 15);
             addAdditionalDirectorPage.EmailAddress = additionalDirectorEmail;
             addAdditionalDirectorPage.ConfirmEmailAddress = additionalDirectorEmail;
 

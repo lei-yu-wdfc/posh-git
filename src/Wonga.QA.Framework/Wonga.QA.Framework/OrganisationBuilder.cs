@@ -18,7 +18,7 @@ namespace Wonga.QA.Framework
         {
             _id = Guid.NewGuid();
             _numberOfSecondaryDirector = 1;
-            _organisationNumber = Data.RandomInt(1, 99999999).ToString();
+            _organisationNumber = Get.RandomInt(1, 99999999).ToString();
             _primaryApplicant = primaryApplicant;
         }
 

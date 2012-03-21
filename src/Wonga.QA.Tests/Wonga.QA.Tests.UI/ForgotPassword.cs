@@ -23,7 +23,7 @@ namespace Wonga.QA.Tests.Ui
         {
 
             var loginPage = Client.Login();
-            string email = Data.RandomEmail();
+            string email = Get.RandomEmail();
             string captcha = "captcha"; // Get captcha text
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             Application application = ApplicationBuilder.New(customer).Build();
