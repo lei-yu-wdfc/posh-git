@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 
 namespace Wonga.QA.Framework.Core
@@ -90,6 +91,7 @@ namespace Wonga.QA.Framework.Core
                     var t = predicate();
                     if (!EqualityComparer<T>.Default.Equals(t, default(T)))
                         return t;
+                    exceptions.Add(new ArgumentException(t == null ? "null" : t.ToString()));
                     Thread.Sleep(_interval);
                 }
                 catch (Exception exception)
@@ -97,6 +99,7 @@ namespace Wonga.QA.Framework.Core
                     exceptions.Add(exception);
                     Thread.Sleep(_interval);
                 }
+            exceptions.Add(new TimeoutException(stopwatch.Elapsed.ToString()));
             throw new AggregateException(_message(), exceptions);
         }
 
