@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ServiceModel;
-using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Security;
@@ -99,7 +98,7 @@ namespace Wonga.QA.Framework.ThirdParties
 
         public bool ApplicationExists(Guid applicationId)
         {
-            return GetApplicationById(applicationId) != null;
+			return GetApplicationById(applicationId) != null;
         }
 
         public Loan_Application__c GetApplicationById(Guid applicationId)
@@ -112,12 +111,32 @@ namespace Wonga.QA.Framework.ThirdParties
                 String.Format("Select l.V3_Application_Id__c, l.Transmission_Fee__c, l.Status__c, l.CCIN__c, l.Service_Fee__c, " +
                               "l.Promise_Date__c, l.Number_Of_Weeks__c, l.Next_Due_Date__c, l.Monthly_Interest_Rate__c, " +
                               "l.Loan_Amount__c, l.Initiation_Fee__c, l.Customer_Account__c, l.CurrencyIsoCode, l.Application_Fee__c, " +
+							  "l.SignedOn__c, l.Customer_Account__r.V3_Organization_Id__c, " +
                               "l.Application_Date__c From Loan_Application__c l Where l.V3_Application_Id__c = '{0}'",
                               applicationId);
 
-            QueryResult result = client.query(sessionHeader, null, null, null, query);
+            var result = client.query(sessionHeader, null, null, null, query);
+
+			if (result == null) throw new Exception(string.Format("Unable to retrieve loan application by id={0}", applicationId));
+
             return result.records.FirstOrDefault() as Loan_Application__c;
         }
+
+		public Contact GetContactById(Guid contactId)
+		{
+			string sessionId;
+			var client = Login(out sessionId);
+			var sessionHeader = new SessionHeader { sessionId = sessionId };
+
+			var query =
+				String.Format("Select l.V3_Account_Id__c, l.Guarantor_Status_ID__c From Contact l Where l.V3_Account_Id__c = '{0}'", contactId);
+
+			var result = client.query(sessionHeader, null, null, null, query);
+
+			if (result == null) throw new Exception(string.Format("Unable to retrieve contact by id={0}", contactId));
+
+			return result.records.FirstOrDefault() as Contact;
+		}
 
         public Bank_Account__c GetBankAccountById( Guid bankAccountId)
         {
