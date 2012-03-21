@@ -65,7 +65,7 @@ namespace Wonga.QA.Tests.Payments
             }
         }
 
-        [Test]
+        [Test, AUT(AUT.Za), JIRA("ZA-2099")]
         public void GetRepayLoanParameterQueryTest_HasPendingRequest()
         {
             var command = new RepayLoanViaBankCommand()
