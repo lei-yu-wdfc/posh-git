@@ -128,7 +128,7 @@ namespace Wonga.QA.Tests.Payments
 
 			Assert.IsNull(Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id).ClosedOn);
 			Assert.IsTrue(new DbDriver().OpsSagas.PendingScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id));
-			Assert.IsFalse(new DbDriver().OpsSagas.ScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id));
+			Assert.IsTrue(new DbDriver().OpsSagas.ScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id));
 		}
 
 		#region Helpers
