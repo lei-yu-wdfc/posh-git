@@ -14,7 +14,7 @@ namespace Wonga.QA.Tests.Payments
 		[Test, AUT(AUT.Wb), JIRA("SME-889")]
 		public void GetBusinessFixedInstallmentLoanOffer()
 		{
-			var response = Driver.Api.Queries.Post(new GetBusinessFixedInstallmentLoanOfferWbUkQuery());
+			var response = Drive.Api.Queries.Post(new GetBusinessFixedInstallmentLoanOfferWbUkQuery());
 
 			Assert.IsNotNull(response);
 			Assert.AreEqual("3000.00", response.Values["AmountMin"].SingleOrDefault(),"Expected AmountMin is incorrect.");
@@ -28,7 +28,7 @@ namespace Wonga.QA.Tests.Payments
 		[Test, AUT(AUT.Wb), JIRA("SME-889")]
 		public void GetBusinessFixedInstallmentLoanOfferAccountIsNull()
 		{
-			var response = Driver.Api.Queries.Post(new GetBusinessFixedInstallmentLoanOfferWbUkQuery{ AccountId = Guid.NewGuid()});
+			var response = Drive.Api.Queries.Post(new GetBusinessFixedInstallmentLoanOfferWbUkQuery{ AccountId = Guid.NewGuid()});
 
 			Assert.IsNotNull(response);
 			Assert.AreEqual("3000.00", response.Values["AmountMin"].SingleOrDefault(), "Expected AmountMin is incorrect.");

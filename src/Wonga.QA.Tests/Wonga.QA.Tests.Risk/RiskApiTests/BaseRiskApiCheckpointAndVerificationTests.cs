@@ -90,7 +90,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		/// <returns>current timeout value in secs</returns>
 		protected static int SetRiskIovationResponseTimeoutSeconds(int seconds)
 		{
-			var serviceConfigurationEntity = Driver.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == RiskIovationResponseTimeoutSecondsKeyName);
+			var serviceConfigurationEntity = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == RiskIovationResponseTimeoutSecondsKeyName);
 			var currentValue = serviceConfigurationEntity.Value;
 			serviceConfigurationEntity.Value = seconds.ToString();
 			serviceConfigurationEntity.Submit();
@@ -100,7 +100,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		protected static int SetIovationMockWaitTimeSecondsForMockResponse(IovationMockResponse response, int seconds)
 		{
 			string iovationType = response.ToString();
-			var iovationDataOutput = Driver.Db.QaData.IovationDataOutputs.Single(io => io.Type == iovationType);
+			var iovationDataOutput = Drive.Db.QaData.IovationDataOutputs.Single(io => io.Type == iovationType);
 			var currentValue = iovationDataOutput.WaitTimeInSeconds;
 			iovationDataOutput.WaitTimeInSeconds = seconds;
 			iovationDataOutput.Submit();

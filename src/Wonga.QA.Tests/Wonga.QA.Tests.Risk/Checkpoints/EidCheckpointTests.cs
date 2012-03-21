@@ -18,7 +18,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
             l0app.RepayOnDueDate();
 
-            EmploymentDetailEntity employmentDetails = Driver.Db.Risk.EmploymentDetails.Single(cd => cd.AccountId == customer.Id);
+            EmploymentDetailEntity employmentDetails = Drive.Db.Risk.EmploymentDetails.Single(cd => cd.AccountId == customer.Id);
             employmentDetails.EmployerName = Get.EnumToString(RiskMask.TESTDirectFraud);
             employmentDetails.Submit();
 

@@ -156,7 +156,7 @@ namespace Wonga.QA.Tests.CallReport
             var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(applicationDecision).Build();
             Assert.IsNotNull(application);
 
-            var riskDb = Driver.Db.Risk;
+            var riskDb = Drive.Db.Risk;
             var riskApplicationEntity = Do.Until(() => riskDb.RiskApplications.SingleOrDefault(p => p.ApplicationId == application.Id));
             Assert.IsNotNull(riskApplicationEntity, "Risk application should exist");
 

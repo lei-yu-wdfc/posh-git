@@ -11,7 +11,7 @@ namespace Wonga.QA.Tests.CardPayment
         [Test, AUT(AUT.Uk, AUT.Wb)]
         public void CardPaymentServiceIsRunning()
         {
-            Assert.IsTrue(Driver.Svc.CardPayment.IsRunning());
+            Assert.IsTrue(Drive.Svc.CardPayment.IsRunning());
         }
     }
 }

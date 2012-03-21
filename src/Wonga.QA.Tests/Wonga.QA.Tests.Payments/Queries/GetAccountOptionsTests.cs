@@ -29,22 +29,22 @@ namespace Wonga.QA.Tests.Payments.Queries
         public void Setup()
         {
             // Record value(s)
-            _resetExtendLoanDays = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays").Value;
-            _resetExtendLoanDaysBeforeDueDate = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanDaysBeforeDueDate").Value;
-            _resetextendLoanEnabled = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanEnabled").Value;
+            _resetExtendLoanDays = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays").Value;
+            _resetExtendLoanDaysBeforeDueDate = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanDaysBeforeDueDate").Value;
+            _resetextendLoanEnabled = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanEnabled").Value;
         }
 
         [FixtureTearDown]
         public void TearDown()
         {
             // Reset value(s)
-            var cfg1 = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays");
+            var cfg1 = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays");
             cfg1.Value = _resetExtendLoanDays;
             cfg1.Submit();
-            var cfg2 = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanDaysBeforeDueDate");
+            var cfg2 = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanDaysBeforeDueDate");
             cfg2.Value = _resetExtendLoanDaysBeforeDueDate;
             cfg2.Submit();
-            var cfg3 = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanEnabled");
+            var cfg3 = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanEnabled");
             cfg3.Value = _resetextendLoanEnabled;
             cfg3.Submit();
         }
@@ -62,20 +62,20 @@ namespace Wonga.QA.Tests.Payments.Queries
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
 
             // Check App Exists in DB
-            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
 
-            Driver.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId,CreatedOn = DateTime.Now.AddHours(-1)});
-            Driver.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId,CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId,CreatedOn = DateTime.Now.AddHours(-1)});
+            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId,CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
-            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
+            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
       
             // Go to DB and set Application to closed
-            ApplicationEntity app = Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId);
+            ApplicationEntity app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId);
             app.ClosedOn = DateTime.UtcNow.AddDays(-1);
             app.Submit(true);
 
-            var response = Driver.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
             Assert.AreEqual(1, int.Parse(response.Values["ScenarioId"].Single()));
             // ToDo: Assert Options
 
@@ -94,33 +94,33 @@ namespace Wonga.QA.Tests.Payments.Queries
             const decimal trustRating = 400.00M;
 
             // Create Account so that time zone can be looked up
-            Driver.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
 
             // Override setting in ServiceConfig Db for ExtendDaysMins
-            var cfg1 = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays");
+            var cfg1 = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays");
             cfg1.Value = extendMinLoanDays;
             cfg1.Submit();
 
             // Override setting in ServiceConfig Db for ExtendLoanDaysBeforeDueDate
-            var cfg2 = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanDaysBeforeDueDate");
+            var cfg2 = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanDaysBeforeDueDate");
             cfg2.Value = extendLoanDaysBeforeDueDate;
             cfg2.Submit();
 
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
 
-            Driver.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-            Driver.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
-            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
+            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
 
             var trnGuid1 = CreateLoanAdvanceTransaction(appId);
             var trnGuid2 = CreateTransmissionFeeTransaction(appId);
 
-            Do.Until(() => Driver.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2) == 2);
+            Do.Until(() => Drive.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2) == 2);
 
-            var response = Driver.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
             Assert.AreEqual(2,int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
@@ -137,33 +137,33 @@ namespace Wonga.QA.Tests.Payments.Queries
             const decimal trustRating = 400.00M;
 
             // Create Account so that time zone can be looked up
-            Driver.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
 
             // Override setting in ServiceConfig Db for ExtendDaysMins
-            var cfg1 = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays");
+            var cfg1 = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays");
             cfg1.Value = extendMinLoanDays;
             cfg1.Submit();
 
            // Override setting in ServiceConfig Db for ExtendLoanDaysBeforeDueDate
-            var cfg2 = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanDaysBeforeDueDate");
+            var cfg2 = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanDaysBeforeDueDate");
             cfg2.Value = extendLoanDaysBeforeDueDate;
             cfg2.Submit();
 
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
 
-            Driver.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-            Driver.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
-            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
 
             var trnGuid1 = CreateLoanAdvanceTransaction(appId);
             var trnGuid2 = CreateTransmissionFeeTransaction(appId);
 
-            Do.Until(() => Driver.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2) == 2);
+            Do.Until(() => Drive.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2) == 2);
 
-            var response = Driver.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
             Assert.AreEqual(3, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
@@ -180,26 +180,26 @@ namespace Wonga.QA.Tests.Payments.Queries
             const decimal trustRating = 400.00M;
 
             // Create Account so that time zone can be looked up
-            Driver.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
 
             // Override setting in ServiceConfig Db for ExtendDaysMins
-            var cfg1 = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays");
+            var cfg1 = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays");
             cfg1.Value = extendMinLoanDays;
             cfg1.Submit();
 
             // Override setting in ServiceConfig Db for ExtendLoanDaysBeforeDueDate
-            var cfg2 = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanDaysBeforeDueDate");
+            var cfg2 = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanDaysBeforeDueDate");
             cfg2.Value = extendLoanDaysBeforeDueDate;
             cfg2.Submit();
 
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
 
-            Driver.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-            Driver.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
-            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
 
             var trnGuid1 = CreateLoanAdvanceTransaction(appId);
             var trnGuid2 = CreateTransmissionFeeTransaction(appId);
@@ -208,9 +208,9 @@ namespace Wonga.QA.Tests.Payments.Queries
             var trnGuid5 = CreateExtensionFeeTransaction(appId);
 
             // Check transactions have been created
-            Do.Until(() => Driver.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2 || itm.ExternalId == trnGuid3 || itm.ExternalId == trnGuid4 || itm.ExternalId == trnGuid5) == 5);
+            Do.Until(() => Drive.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2 || itm.ExternalId == trnGuid3 || itm.ExternalId == trnGuid4 || itm.ExternalId == trnGuid5) == 5);
 
-            var response = Driver.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
             Assert.AreEqual(4, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
@@ -227,26 +227,26 @@ namespace Wonga.QA.Tests.Payments.Queries
             const decimal trustRating = 100.00M;
             
             // Create Account so that time zone can be looked up
-            Driver.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
 
             // Override setting in ServiceConfig Db for ExtendDaysMins
-            var cfg1 = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays");
+            var cfg1 = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays");
             cfg1.Value = extendMinLoanDays;
             cfg1.Submit();
 
             // Override setting in ServiceConfig Db for ExtendLoanDaysBeforeDueDate
-            var cfg2 = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanDaysBeforeDueDate");
+            var cfg2 = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanDaysBeforeDueDate");
             cfg2.Value = extendLoanDaysBeforeDueDate;
             cfg2.Submit();
 
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
 
-            Driver.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-            Driver.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
-            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
 
             var trnGuid1 = CreateLoanAdvanceTransaction(appId);
             var trnGuid2 = CreateTransmissionFeeTransaction(appId);
@@ -255,10 +255,10 @@ namespace Wonga.QA.Tests.Payments.Queries
             var trnGuid5 = CreateExtensionFeeTransaction(appId);
 
             // Check transactions have been created
-            Do.Until(() => Driver.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2 || itm.ExternalId == trnGuid3 || itm.ExternalId == trnGuid4 || itm.ExternalId == trnGuid5) == 5);
+            Do.Until(() => Drive.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2 || itm.ExternalId == trnGuid3 || itm.ExternalId == trnGuid4 || itm.ExternalId == trnGuid5) == 5);
 
             
-            var response = Driver.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
             Assert.AreEqual(5, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
@@ -275,34 +275,34 @@ namespace Wonga.QA.Tests.Payments.Queries
             const decimal trustRating = 100.00M;
 
             // Create Account so that time zone can be looked up
-            Driver.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
 
             // Override setting in ServiceConfig Db for ExtendDaysMins
-            var cfg1 = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays");
+            var cfg1 = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays");
             cfg1.Value = extendMinLoanDays;
             cfg1.Submit();
 
             // Override setting in ServiceConfig Db for ExtendLoanDaysBeforeDueDate
-            var cfg2 = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanDaysBeforeDueDate");
+            var cfg2 = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanDaysBeforeDueDate");
             cfg2.Value = extendLoanDaysBeforeDueDate;
             cfg2.Submit();
 
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
 
-            Driver.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-            Driver.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
-            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
 
             var trnGuid1 = CreateLoanAdvanceTransaction(appId);
             var trnGuid2 = CreateTransmissionFeeTransaction(appId);
 
             // Check transactions have been created
-            Do.Until(() => Driver.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2) == 2);
+            Do.Until(() => Drive.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2) == 2);
 
-            var response = Driver.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
             Assert.AreEqual(6, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
@@ -320,20 +320,20 @@ namespace Wonga.QA.Tests.Payments.Queries
             const string extendLoanEnabled = "false";
 
             // Create Account so that time zone can be looked up
-            Driver.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
 
             // Override setting in ServiceConfig Db for ExtendDaysMins
-            var cfg1 = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays");
+            var cfg1 = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays");
             cfg1.Value = extendMinLoanDays;
             cfg1.Submit();
 
             // Override setting in ServiceConfig Db for ExtendLoanDaysBeforeDueDate
-            var cfg2 = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanDaysBeforeDueDate");
+            var cfg2 = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanDaysBeforeDueDate");
             cfg2.Value = extendLoanDaysBeforeDueDate;
             cfg2.Submit();
 
             // Override setting in ServiceConfig Db for ExtendDaysMins
-            var cfg3 = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanEnabled");
+            var cfg3 = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanEnabled");
             cfg3.Value = extendLoanEnabled;
             cfg3.Submit();
 
@@ -341,19 +341,19 @@ namespace Wonga.QA.Tests.Payments.Queries
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
 
-            Driver.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-            Driver.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
-            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
 
             var trnGuid1 = CreateLoanAdvanceTransaction(appId);
             var trnGuid2 = CreateTransmissionFeeTransaction(appId);
 
             // Check transactions have been created
-            Do.Until(() => Driver.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2) == 2);
+            Do.Until(() => Drive.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2) == 2);
 
-            var response = Driver.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
             Assert.AreEqual(7, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
@@ -371,20 +371,20 @@ namespace Wonga.QA.Tests.Payments.Queries
             const string extendLoanEnabled = "false";
 
             // Create Account so that time zone can be looked up
-            Driver.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
 
             // Override setting in ServiceConfig Db for ExtendDaysMins
-            var cfg1 = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays");
+            var cfg1 = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays");
             cfg1.Value = extendMinLoanDays;
             cfg1.Submit();
 
             // Override setting in ServiceConfig Db for ExtendLoanDaysBeforeDueDate
-            var cfg2 = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanDaysBeforeDueDate");
+            var cfg2 = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanDaysBeforeDueDate");
             cfg2.Value = extendLoanDaysBeforeDueDate;
             cfg2.Submit();
 
             // Override setting in ServiceConfig Db for ExtendDaysMins
-            var cfg3 = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanEnabled");
+            var cfg3 = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanEnabled");
             cfg3.Value = extendLoanEnabled;
             cfg3.Submit();
 
@@ -392,31 +392,31 @@ namespace Wonga.QA.Tests.Payments.Queries
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
 
-            Driver.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-            Driver.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
-            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
 
             var trnGuid1 = CreateLoanAdvanceTransaction(appId);
             var trnGuid2 = CreateTransmissionFeeTransaction(appId);
 
             // Check transactions have been created
-            Do.Until(() => Driver.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2) == 2);
+            Do.Until(() => Drive.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2) == 2);
 
             // Go to DB and set Application to closed
-            ApplicationEntity app = Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId);
+            ApplicationEntity app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId);
             app.ClosedOn = DateTime.UtcNow.AddDays(0);
             var fixAppId = app.ApplicationId;
             app.Submit(true);
 
             // Go to DB and set NextDueDate to today
-            FixedTermLoanApplicationEntity fixApp = Driver.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationId == fixAppId);
+            FixedTermLoanApplicationEntity fixApp = Drive.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationId == fixAppId);
             fixApp.NextDueDate = DateTime.UtcNow.AddDays(0);
             fixApp.Submit(true);
 
 
-            var response = Driver.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
             Assert.AreEqual(8, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
@@ -432,37 +432,37 @@ namespace Wonga.QA.Tests.Payments.Queries
             const decimal trustRating = 400.00M;
 
             // Create Account so that time zone can be looked up
-            Driver.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
-            Do.Until(() => Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
+            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Do.Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
 
             // Create Application & Check it Exists in DB
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
-            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
 
             // Set SignedOn + AcceptedOn & check statuses have been updated
-            Driver.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-            Driver.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
+            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
 
             // Create transactions & Check transactions have been created
             var trnGuid1 = CreateLoanAdvanceTransaction(appId);
             var trnGuid2 = CreateTransmissionFeeTransaction(appId);
-            Do.Until(() => Driver.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2) == 2);
+            Do.Until(() => Drive.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2) == 2);
 
             // Send command to create scheduled payment request
-            Driver.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand(){ApplicationId = appId,RepaymentRequestId = requestId1,});
-            Driver.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
+            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand(){ApplicationId = appId,RepaymentRequestId = requestId1,});
+            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
 
-            Do.Until(() => Driver.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
-            Do.Until(() => Driver.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
+            Do.Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
+            Do.Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
 
             // Go to DB and set Application NextDueDate to today.
-            ApplicationEntity app = Driver.Db.Payments.Applications.Single(a => a.ExternalId == appId);
-            FixedTermLoanApplicationEntity fixedApp = Driver.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationId == app.ApplicationId);
+            ApplicationEntity app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId);
+            FixedTermLoanApplicationEntity fixedApp = Drive.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationId == app.ApplicationId);
             fixedApp.NextDueDate = DateTime.UtcNow.Date;
             fixedApp.Submit(true);
 
-            var response = Driver.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
             Assert.AreEqual(9, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
@@ -471,7 +471,7 @@ namespace Wonga.QA.Tests.Payments.Queries
 
             private void CreateFixedTermLoanApplication(Guid appId, Guid accountId, Guid bankAccountId, Guid paymentCardId, int dueInDays = 10)
             {
-                Driver.Msmq.Payments.Send(new CreateFixedTermLoanApplicationCommand()
+                Drive.Msmq.Payments.Send(new CreateFixedTermLoanApplicationCommand()
                 {
                     ApplicationId = appId,
                     AccountId = accountId,
@@ -488,7 +488,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             {
                 var trnGuid1 = Guid.NewGuid();
 
-                Driver.Msmq.Payments.Send(new CreateTransactionCommand()
+                Drive.Msmq.Payments.Send(new CreateTransactionCommand()
                 {
                     ApplicationId = appId,
                     ExternalId = trnGuid1,
@@ -507,7 +507,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             {
                 var trnGuid1 = Guid.NewGuid();
 
-                Driver.Msmq.Payments.Send(new CreateTransactionCommand()
+                Drive.Msmq.Payments.Send(new CreateTransactionCommand()
                 {
                     ApplicationId = appId,
                     ExternalId = trnGuid1,
@@ -526,7 +526,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             {
                 var trnGuid1 = Guid.NewGuid();
 
-                Driver.Msmq.Payments.Send(new CreateTransactionCommand()
+                Drive.Msmq.Payments.Send(new CreateTransactionCommand()
                 {
                     ApplicationId = appId,
                     ExternalId = trnGuid1,

@@ -147,11 +147,11 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
         public void LnSuspiciousActivityDeclined()
         {
             int suspiciousDuration = Get.RandomInt(1,
-                Convert.ToInt16(Driver.Db.Ops.ServiceConfigurations.Single(a =>
+                Convert.ToInt16(Drive.Db.Ops.ServiceConfigurations.Single(a =>
                     a.Key == Get.EnumToString(ServiceConfigurationKeys.RiskSuspiciousPrevApplicationDuration)).Value));
 
             int suspiciousDaysSinceLastLoan = Get.RandomInt(1,
-                Convert.ToInt16(Driver.Db.Ops.ServiceConfigurations.Single(a =>
+                Convert.ToInt16(Drive.Db.Ops.ServiceConfigurations.Single(a =>
                     a.Key == Get.EnumToString(ServiceConfigurationKeys.RiskSuspiciousDaysSinceLastApplication)).Value));
 
             Customer cust = CustomerBuilder.New()
@@ -177,11 +177,11 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
         [Test, AUT(AUT.Uk), JIRA("UK-845")]
         public void LnSuspiciousActivityAcceptedDueToUnsuspiciousDuration()
         {
-            int unsuspiciousDuration = Convert.ToInt16(Driver.Db.Ops.ServiceConfigurations.Single(a =>
+            int unsuspiciousDuration = Convert.ToInt16(Drive.Db.Ops.ServiceConfigurations.Single(a =>
                 a.Key == Get.EnumToString(ServiceConfigurationKeys.RiskSuspiciousPrevApplicationDuration)).Value) + 1;
 
             int suspiciousDaysSinceLastLoan = Get.RandomInt(1,
-                Convert.ToInt16(Driver.Db.Ops.ServiceConfigurations.Single(a =>
+                Convert.ToInt16(Drive.Db.Ops.ServiceConfigurations.Single(a =>
                     a.Key == Get.EnumToString(ServiceConfigurationKeys.RiskSuspiciousDaysSinceLastApplication)).Value));
 
             Customer cust = CustomerBuilder.New()
@@ -206,10 +206,10 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
         public void LnSuspiciousActivityAcceptedDueToUnsuspiciousDaysSinceLastLoan()
         {
             int unsuspiciousDuration = Get.RandomInt(1,
-                Convert.ToInt16(Driver.Db.Ops.ServiceConfigurations.Single(a =>
+                Convert.ToInt16(Drive.Db.Ops.ServiceConfigurations.Single(a =>
                     a.Key == Get.EnumToString(ServiceConfigurationKeys.RiskSuspiciousPrevApplicationDuration)).Value));
 
-            int suspiciousDaysSinceLastLoan = Convert.ToInt16(Driver.Db.Ops.ServiceConfigurations.Single(
+            int suspiciousDaysSinceLastLoan = Convert.ToInt16(Drive.Db.Ops.ServiceConfigurations.Single(
                 a => a.Key == Get.EnumToString(ServiceConfigurationKeys.RiskSuspiciousDaysSinceLastApplication)).Value) + 1;
 
             Customer cust = CustomerBuilder.New()
@@ -233,10 +233,10 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
         [Test, AUT(AUT.Uk), JIRA("UK-845")]
         public void LnSuspiciousActivityAccepted()
         {
-            int unsuspiciousDuration = Convert.ToInt16(Driver.Db.Ops.ServiceConfigurations.Single(a =>
+            int unsuspiciousDuration = Convert.ToInt16(Drive.Db.Ops.ServiceConfigurations.Single(a =>
                 a.Key == Get.EnumToString(ServiceConfigurationKeys.RiskSuspiciousPrevApplicationDuration)).Value) + 1;
 
-            int suspiciousDaysSinceLastLoan = Convert.ToInt16(Driver.Db.Ops.ServiceConfigurations.Single(a =>
+            int suspiciousDaysSinceLastLoan = Convert.ToInt16(Drive.Db.Ops.ServiceConfigurations.Single(a =>
                 a.Key == Get.EnumToString(ServiceConfigurationKeys.RiskSuspiciousDaysSinceLastApplication)).Value) + 1;
 
             Customer cust = CustomerBuilder.New()

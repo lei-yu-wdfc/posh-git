@@ -194,7 +194,7 @@ namespace Wonga.QA.Framework
                     break;
             }
             
-            Driver.Api.Commands.Post(requests);
+            Drive.Api.Commands.Post(requests);
 
             switch (Config.AUT)
             {
@@ -205,35 +205,35 @@ namespace Wonga.QA.Framework
                             () =>
                             (ApplicationDecisionStatusEnum)
                             Enum.Parse(typeof(ApplicationDecisionStatusEnum),
-                                        Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).
+                                        Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).
                                             Values
                                             ["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatusEnum.Pending);
 
-                        Do.Until(() => Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["SequenceId"].SingleOrDefault() == keyValuePair.Key.ToString());
+                        Do.Until(() => Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["SequenceId"].SingleOrDefault() == keyValuePair.Key.ToString());
 
                         var xmlString =
-                            (Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Body);
+                            (Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Body);
                         xmlString = xmlString.Replace("xmlns=\"http://www.wonga.com/api/3.0\"", "");
 
                         var userActionId = UserActionId(xmlString);
 
                         var eidAnswers = AnswerEidQuestionsAccordingToEidSessionInteraction(xmlString, keyValuePair.Key, _eidSessionInteraction);
 
-                        Driver.Api.Commands.Post(new SubmitUidAnswersCommand { Answers = eidAnswers, UserActionId = userActionId });
+                        Drive.Api.Commands.Post(new SubmitUidAnswersCommand { Answers = eidAnswers, UserActionId = userActionId });
                     }
                     break;
             }
 
             ApiResponse response = null;
             Do.With().Timeout(3).Until(() => (ApplicationDecisionStatusEnum)
-                Enum.Parse(typeof(ApplicationDecisionStatusEnum), (response = Driver.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id })).Values["ApplicationDecisionStatus"].Single()) == _decision);
+                Enum.Parse(typeof(ApplicationDecisionStatusEnum), (response = Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id })).Values["ApplicationDecisionStatus"].Single()) == _decision);
 
             if (_decision == ApplicationDecisionStatusEnum.Declined)
             {
                 return new Application(_id, GetFailedCheckpointFromApplicationDecisionResponse(response));
             }
 
-            Driver.Api.Commands.Post(new SignApplicationCommand { AccountId = _customer.Id, ApplicationId = _id });
+            Drive.Api.Commands.Post(new SignApplicationCommand { AccountId = _customer.Id, ApplicationId = _id });
 
 
 
@@ -242,9 +242,9 @@ namespace Wonga.QA.Framework
                                      :  (ApiRequest)new GetAccountSummaryQuery { AccountId = _customer.Id };
 
 
-            Do.Until(() => Driver.Api.Queries.Post(summary).Values["HasCurrentLoan"].Single() == "true");
+            Do.Until(() => Drive.Api.Queries.Post(summary).Values["HasCurrentLoan"].Single() == "true");
 
-            Do.With().Timeout(TimeSpan.FromSeconds(10)).Watch(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == _id).Transactions.Count);
+            Do.With().Timeout(TimeSpan.FromSeconds(10)).Watch(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == _id).Transactions.Count);
 
             return new Application {Id = _id, BankAccountId = _customer.BankAccountId, LoanAmount = _loanAmount, LoanTerm = _loanTerm};
         }

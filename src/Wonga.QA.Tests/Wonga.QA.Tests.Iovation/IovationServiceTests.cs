@@ -10,7 +10,7 @@ namespace Wonga.QA.Tests.Iovation
         [Test]
         public void IovationServiceIsRunning()
         {
-            Assert.IsTrue(Driver.Svc.Iovation.IsRunning());
+            Assert.IsTrue(Drive.Svc.Iovation.IsRunning());
         }
     }
 }

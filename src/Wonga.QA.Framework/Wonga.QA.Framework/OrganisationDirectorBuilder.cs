@@ -65,7 +65,7 @@ namespace Wonga.QA.Framework
         {
             if (_primaryLevel)
             {
-                Driver.Api.Commands.Post(AddPrimaryOrganisationDirectorCommand.New(r =>
+                Drive.Api.Commands.Post(AddPrimaryOrganisationDirectorCommand.New(r =>
                                                                                        {                                                                                           
                                                                                            r.OrganisationId =
                                                                                                _company.Id;
@@ -77,7 +77,7 @@ namespace Wonga.QA.Framework
             }
             else
             {
-                Driver.Api.Commands.Post(AddSecondaryOrganisationDirectorCommand.New(r =>
+                Drive.Api.Commands.Post(AddSecondaryOrganisationDirectorCommand.New(r =>
                 {
                     r.OrganisationId =
                         _company.Id;

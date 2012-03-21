@@ -38,12 +38,12 @@ namespace Wonga.QA.Framework
 
 		public bool IsClosed
 		{
-			get { return Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).ClosedOn.HasValue; }
+			get { return Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).ClosedOn.HasValue; }
 		}
 
 		public Guid AccountId
 		{
-			get { return Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).AccountId; }
+			get { return Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).AccountId; }
 		}
 
 		public Customer GetCustomer()
@@ -51,24 +51,24 @@ namespace Wonga.QA.Framework
 			//avoid going to the DB twice
 			Guid currentAccountId = AccountId;
 			return new Customer(
-				Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).AccountId,
-				Driver.Db.Comms.CustomerDetails.Single(cd => cd.AccountId == currentAccountId).Email,
-				Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == currentAccountId).BankAccountsBaseEntity.ExternalId);
+				Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).AccountId,
+				Drive.Db.Comms.CustomerDetails.Single(cd => cd.AccountId == currentAccountId).Email,
+				Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == currentAccountId).BankAccountsBaseEntity.ExternalId);
 		}
 
 		public Application RepayOnDueDate()
 		{
-			ApplicationEntity application = Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id);
+			ApplicationEntity application = Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id);
 
 			MakeDueToday(application);
 
-			ServiceConfigurationEntity testmode = Driver.Db.Ops.ServiceConfigurations.SingleOrDefault(e => e.Key == "BankGateway.IsTestMode");
+			ServiceConfigurationEntity testmode = Drive.Db.Ops.ServiceConfigurations.SingleOrDefault(e => e.Key == "BankGateway.IsTestMode");
 			if (Config.AUT != AUT.Uk && (testmode == null || !Boolean.Parse(testmode.Value)))
 			{
 				var utcNow = DateTime.UtcNow;
 
-				ScheduledPaymentSagaEntity sp = Do.Until(() => Driver.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationGuid == Id));
-				Driver.Msmq.Payments.Send(new PaymentTakenCommand { SagaId = sp.Id, ValueDate = utcNow, CreatedOn = utcNow, ApplicationId = Id, TransactionAmount = GetBalance() });
+				ScheduledPaymentSagaEntity sp = Do.Until(() => Drive.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationGuid == Id));
+				Drive.Msmq.Payments.Send(new PaymentTakenCommand { SagaId = sp.Id, ValueDate = utcNow, CreatedOn = utcNow, ApplicationId = Id, TransactionAmount = GetBalance() });
 				Do.While(sp.Refresh);
 			}
 
@@ -76,7 +76,7 @@ namespace Wonga.QA.Framework
 
 			TimeoutCloseApplicationSaga(transaction);
 
-		    Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).ClosedOn);
+		    Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).ClosedOn);
 
 			return this;
 		}
@@ -85,14 +85,14 @@ namespace Wonga.QA.Framework
 	    {
 	        CloseApplicationSagaEntity ca =
 	            Do.Until(
-	                () => Driver.Db.OpsSagas.CloseApplicationSagaEntities.Single(s => s.TransactionId == transaction.ExternalId));
-	        Driver.Msmq.Payments.Send(new TimeoutMessage {SagaId = ca.Id});
+	                () => Drive.Db.OpsSagas.CloseApplicationSagaEntities.Single(s => s.TransactionId == transaction.ExternalId));
+	        Drive.Msmq.Payments.Send(new TimeoutMessage {SagaId = ca.Id});
 	        Do.While(ca.Refresh);
 	    }
 
 	    private TransactionEntity WaitForDirectBankPaymentCreditTransaction()
 	    {
-	        return Do.Until(() => Driver.Db.Payments.Applications.Single(
+	        return Do.Until(() => Drive.Db.Payments.Applications.Single(
 	            a => a.ExternalId == Id).Transactions.Single(
 	                t =>
 	                (PaymentTransactionScopeEnum) t.Scope == PaymentTransactionScopeEnum.Credit && t.Type == Get.EnumToString(
@@ -101,7 +101,7 @@ namespace Wonga.QA.Framework
 
 	    public Application MakeDueToday()
 		{
-			ApplicationEntity application = Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id);
+			ApplicationEntity application = Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id);
 
 			MakeDueToday(application);
 
@@ -111,12 +111,12 @@ namespace Wonga.QA.Framework
 		public void MakeDueToday(ApplicationEntity application)
 		{
 			TimeSpan span = application.FixedTermLoanApplicationEntity.NextDueDate.Value - DateTime.Today;
-			RiskApplicationEntity riskApplication = Driver.Db.Risk.RiskApplications.Single(r => r.ApplicationId == Id);
+			RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == Id);
 
 			RewindApplicationDates(application, riskApplication, span);
 
-			FixedTermLoanSagaEntity ftl = Driver.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
-			Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
+			FixedTermLoanSagaEntity ftl = Drive.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
+			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
 			Do.While(ftl.Refresh);
 		}
 
@@ -131,27 +131,27 @@ namespace Wonga.QA.Framework
 
 		public virtual Application PutApplicationIntoArrears()
 		{
-			ApplicationEntity application = Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id);
+			ApplicationEntity application = Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id);
 			DateTime dueDate = application.FixedTermLoanApplicationEntity.NextDueDate ??
 							  application.FixedTermLoanApplicationEntity.PromiseDate;
-			RiskApplicationEntity riskApplication = Driver.Db.Risk.RiskApplications.Single(r => r.ApplicationId == Id);
+			RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == Id);
 
 			TimeSpan span = dueDate - DateTime.Today;
 
 			RewindApplicationDates(application, riskApplication, span);
 
-			ScheduledPostAccruedInterestSagaEntity entity = Driver.Db.OpsSagas.ScheduledPostAccruedInterestSagaEntities.Single(a => a.ApplicationGuid == Id);
-			Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = entity.Id });
+			ScheduledPostAccruedInterestSagaEntity entity = Drive.Db.OpsSagas.ScheduledPostAccruedInterestSagaEntities.Single(a => a.ApplicationGuid == Id);
+			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = entity.Id });
 
-			FixedTermLoanSagaEntity ftl = Driver.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
-			Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
+			FixedTermLoanSagaEntity ftl = Drive.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
+			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
 			Do.While(ftl.Refresh);
 
-			ScheduledPaymentSagaEntity sp = Do.Until(() => Driver.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationGuid == Id));
-			Driver.Msmq.Payments.Send(new TakePaymentFailedCommand { SagaId = sp.Id, CreatedOn = DateTime.UtcNow, ValueDate = DateTime.UtcNow });
-			Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = sp.Id });
+			ScheduledPaymentSagaEntity sp = Do.Until(() => Drive.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationGuid == Id));
+			Drive.Msmq.Payments.Send(new TakePaymentFailedCommand { SagaId = sp.Id, CreatedOn = DateTime.UtcNow, ValueDate = DateTime.UtcNow });
+			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = sp.Id });
 
-			Do.Until(() => Driver.Db.Payments.Arrears.Single(s => s.ApplicationId == application.ApplicationId));
+			Do.Until(() => Drive.Db.Payments.Arrears.Single(s => s.ApplicationId == application.ApplicationId));
 
 			return this;
 		}
@@ -165,10 +165,10 @@ namespace Wonga.QA.Framework
 				RepaymentDates = new[] { DateTime.Today.AddDays(1), DateTime.Today.AddMonths(1) },
 				NumberOfMonths = 2
 			};
-			Driver.Api.Commands.Post(cmd);
+			Drive.Api.Commands.Post(cmd);
 
-			var dbApplication = Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id);
-			Do.Until(() => Driver.Db.Payments.RepaymentArrangements.Single(x => x.ApplicationId == dbApplication.ApplicationId));
+			var dbApplication = Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id);
+			Do.Until(() => Drive.Db.Payments.RepaymentArrangements.Single(x => x.ApplicationId == dbApplication.ApplicationId));
 
 			return this;
 		}
@@ -188,7 +188,7 @@ namespace Wonga.QA.Framework
 
 			Guid repaymentRequestId = Guid.NewGuid();
 
-			Driver.Msmq.Payments.Send(new RepayLoanInternalViaBankCommand
+			Drive.Msmq.Payments.Send(new RepayLoanInternalViaBankCommand
 			{
 				Amount = amount,
 				ApplicationId = Id,
@@ -196,17 +196,17 @@ namespace Wonga.QA.Framework
 				RepaymentRequestId = repaymentRequestId
 			});
 
-			ServiceConfigurationEntity testmode = Driver.Db.Ops.ServiceConfigurations.SingleOrDefault(e => e.Key == "BankGateway.IsTestMode");
+			ServiceConfigurationEntity testmode = Drive.Db.Ops.ServiceConfigurations.SingleOrDefault(e => e.Key == "BankGateway.IsTestMode");
 
 			if (testmode == null || !Boolean.Parse(testmode.Value))
 			{
 				var utcNow = DateTime.UtcNow;
 
 				Int32 applicationid =
-					Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).ApplicationId;
+					Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).ApplicationId;
 
-				RepaymentSagaEntity sp = Do.Until(() => Driver.Db.OpsSagas.RepaymentSagaEntities.Single(s => s.ApplicationId == applicationid));
-                Driver.Msmq.Payments.Send(new PaymentTakenCommand { SagaId = sp.Id, ValueDate = utcNow, CreatedOn = utcNow, ApplicationId = Id });
+				RepaymentSagaEntity sp = Do.Until(() => Drive.Db.OpsSagas.RepaymentSagaEntities.Single(s => s.ApplicationId == applicationid));
+                Drive.Msmq.Payments.Send(new PaymentTakenCommand { SagaId = sp.Id, ValueDate = utcNow, CreatedOn = utcNow, ApplicationId = Id });
 				Do.While(sp.Refresh);
 			}
 
@@ -315,8 +315,8 @@ namespace Wonga.QA.Framework
 		private void Rewind(int absoluteDays)
 		{
 			// Rewinds a Loans Dates
-			ApplicationEntity application = Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id);
-			RiskApplicationEntity riskApplication = Driver.Db.Risk.RiskApplications.Single(r => r.ApplicationId == Id);
+			ApplicationEntity application = Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id);
+			RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == Id);
 
 			if (application.FixedTermLoanApplicationEntity.NextDueDate == null)
 			{

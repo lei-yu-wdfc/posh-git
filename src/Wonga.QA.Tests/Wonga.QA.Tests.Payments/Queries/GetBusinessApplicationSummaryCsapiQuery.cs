@@ -18,7 +18,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             var organisation = OrganisationBuilder.New(customer).Build();
             var app = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
 
-            var response = Driver.Cs.Queries.Post(new Framework.Cs.GetBusinessApplicationSummaryWbUkQuery
+            var response = Drive.Cs.Queries.Post(new Framework.Cs.GetBusinessApplicationSummaryWbUkQuery
                                                         {
                                                             ApplicationGuid = app.Id
                                                         });
@@ -31,7 +31,7 @@ namespace Wonga.QA.Tests.Payments.Queries
         [Test, JIRA("SME-375"), AUT(AUT.Wb)]
         public void PaymentsShouldReturnNullWhenApplicationDoesNotExists()
         {
-            var response = Driver.Cs.Queries.Post(new Framework.Cs.GetBusinessApplicationSummaryWbUkQuery
+            var response = Drive.Cs.Queries.Post(new Framework.Cs.GetBusinessApplicationSummaryWbUkQuery
             {
                 ApplicationGuid = Guid.NewGuid()
             });

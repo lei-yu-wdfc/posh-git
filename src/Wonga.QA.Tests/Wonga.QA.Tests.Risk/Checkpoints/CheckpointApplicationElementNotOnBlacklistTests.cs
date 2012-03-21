@@ -56,7 +56,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			var formattedMobilePhoneNumber = _internationalCode + mobilePhoneNumber.Remove(0,1);
 
 			var blacklistEntity = new BlackListEntity{MobilePhone = formattedMobilePhoneNumber, ExternalId =  Guid.NewGuid()};
-			Driver.Db.Blacklist.BlackLists.InsertOnSubmit(blacklistEntity);
+			Drive.Db.Blacklist.BlackLists.InsertOnSubmit(blacklistEntity);
 			blacklistEntity.Submit();
 
 			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
@@ -68,7 +68,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			var bankAccountNumber = Get.GetBankAccountNumber();
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithBankAccountNumber(bankAccountNumber).Build();
 			var blacklistEntity = new BlackListEntity { BankAccount = bankAccountNumber.ToString(), ExternalId = Guid.NewGuid() };
-			Driver.Db.Blacklist.BlackLists.InsertOnSubmit(blacklistEntity);
+			Drive.Db.Blacklist.BlackLists.InsertOnSubmit(blacklistEntity);
 			blacklistEntity.Submit();
 
 			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();

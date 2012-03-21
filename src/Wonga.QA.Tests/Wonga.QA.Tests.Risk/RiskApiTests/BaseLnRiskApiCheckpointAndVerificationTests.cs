@@ -41,7 +41,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 			Application firstApplication = MakeFirstLNApplicationAndRepay();
 
 			//tweak the test mask
-			EmploymentDetailEntity employmentDetails = Driver.Db.Risk.EmploymentDetails.Single(cd => cd.AccountId == firstApplication.GetCustomer().Id);
+			EmploymentDetailEntity employmentDetails = Drive.Db.Risk.EmploymentDetails.Single(cd => cd.AccountId == firstApplication.GetCustomer().Id);
 			employmentDetails.EmployerName = employerNameTestMask;
 			employmentDetails.Submit();
 

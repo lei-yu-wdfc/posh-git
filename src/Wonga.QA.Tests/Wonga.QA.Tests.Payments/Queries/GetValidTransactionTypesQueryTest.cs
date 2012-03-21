@@ -17,7 +17,7 @@ namespace Wonga.QA.Tests.Payments.Queries
         [Test, AUT(AUT.Wb), JIRA("SME-375")]
         public void ShouldReturnOnlyExpectedTransactionTypes()
         {
-            var response= Driver.Cs.Queries.Post(new Wonga.QA.Framework.Cs.GetValidTransactionTypesQuery());
+            var response= Drive.Cs.Queries.Post(new Wonga.QA.Framework.Cs.GetValidTransactionTypesQuery());
 
             Assert.AreEqual(9, response.Values["Type"].Count());
             Assert.Contains(response.Values["Type"], "CardPayment");

@@ -16,9 +16,9 @@ namespace Wonga.QA.Tests.Payments
     public class FixedTermLoanOfferTests
     {
 		private const string DateOverrideKey = "Payments.FixedTermLoanOfferHandler.DateTime.UtcNow";
-		private static readonly int[] PayDayPerMonth = Driver.Db.GetServiceConfiguration("Payments.PayDayPerMonth").Value.Split(',').Select(Int32.Parse).ToArray();
-		private static readonly int[] PayDayPlusToMaxTerm = Driver.Db.GetServiceConfiguration("Payments.PayDayPlusToMaxTerm").Value.Split(',').Select(Int32.Parse).ToArray();
-		private static readonly int SliderTermAddDays = Int32.Parse(Driver.Db.GetServiceConfiguration("Payments.SliderTermAddDays").Value);
+		private static readonly int[] PayDayPerMonth = Drive.Db.GetServiceConfiguration("Payments.PayDayPerMonth").Value.Split(',').Select(Int32.Parse).ToArray();
+		private static readonly int[] PayDayPlusToMaxTerm = Drive.Db.GetServiceConfiguration("Payments.PayDayPlusToMaxTerm").Value.Split(',').Select(Int32.Parse).ToArray();
+		private static readonly int SliderTermAddDays = Int32.Parse(Drive.Db.GetServiceConfiguration("Payments.SliderTermAddDays").Value);
     	private const int MaxDefaultTerm = 30;
 
 		[FixtureTearDown]
@@ -39,9 +39,9 @@ namespace Wonga.QA.Tests.Payments
         [Row("2012-8-1", 24, 30, Order = 2)]
         public void GetFixedTermLoanOfferTest(DateTime today, int defaultTerm, int maxTerm)
         {
-			Driver.Db.SetServiceConfiguration(DateOverrideKey, new Date(today, DateFormat.Date).ToString());
+			Drive.Db.SetServiceConfiguration(DateOverrideKey, new Date(today, DateFormat.Date).ToString());
 
-            var response = Driver.Api.Queries.Post(new GetFixedTermLoanOfferZaQuery());
+            var response = Drive.Api.Queries.Post(new GetFixedTermLoanOfferZaQuery());
             
             Assert.AreEqual(defaultTerm, int.Parse(response.Values["TermDefault"].Single()));
             Assert.AreEqual(maxTerm, int.Parse(response.Values["TermMax"].Single()));
@@ -56,9 +56,9 @@ namespace Wonga.QA.Tests.Payments
 				var payDayPlusToMaxTerm = PayDayPlusToMaxTerm[i];
 
 				var now = new DateTime(DateTime.UtcNow.Year, i + 1, 1);
-				Driver.Db.SetServiceConfiguration(DateOverrideKey, now.ToString("yyyy-MM-dd HH:mm:ss"));
+				Drive.Db.SetServiceConfiguration(DateOverrideKey, now.ToString("yyyy-MM-dd HH:mm:ss"));
 
-				var response = Driver.Api.Queries.Post(new GetFixedTermLoanOfferZaQuery());
+				var response = Drive.Api.Queries.Post(new GetFixedTermLoanOfferZaQuery());
 
 				var expectedMax = payDayOfMonth + payDayPlusToMaxTerm;
 				Assert.AreEqual(expectedMax, DateTime.DaysInMonth(now.Year, now.Month));

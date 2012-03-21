@@ -10,7 +10,7 @@ namespace Wonga.QA.Tests.Sms
         [Test]
         public void SmsServiceIsRunning()
         {
-            Assert.IsTrue(Driver.Svc.Sms.IsRunning());
+            Assert.IsTrue(Drive.Svc.Sms.IsRunning());
         }
     }
 }

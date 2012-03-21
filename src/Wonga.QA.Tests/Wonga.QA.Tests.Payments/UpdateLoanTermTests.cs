@@ -21,21 +21,21 @@ namespace Wonga.QA.Tests.Payments
 			var organisation = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organisation).Build();
 			
-			ApplicationEntity applicationEntity = Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == application.Id));
+			ApplicationEntity applicationEntity = Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id));
 			var currentTerm = applicationEntity.BusinessFixedInstallmentLoanApplicationEntity.Term;
 
 			if (currentTerm == newLoanTerm) newLoanTerm += 1;
 
-			Driver.Api.Commands.Post(new UpdateLoanTermWbUkCommand { ApplicationId = application.Id, Term = newLoanTerm });
+			Drive.Api.Commands.Post(new UpdateLoanTermWbUkCommand { ApplicationId = application.Id, Term = newLoanTerm });
 
-			Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == application.Id
+			Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id
 				&& a.BusinessFixedInstallmentLoanApplicationEntity.Term == newLoanTerm));
 		}
 
 		[Test, AUT(AUT.Wb), JIRA("SME-889")]
 		public void ShouldAdjustLoanTermBeforeUpdatingApplication_WhenLoanTermIsLessThanMinTermAllowed()
 		{
-			var offerResponse = Driver.Api.Queries.Post(new GetBusinessFixedInstallmentLoanOfferWbUkQuery());
+			var offerResponse = Drive.Api.Queries.Post(new GetBusinessFixedInstallmentLoanOfferWbUkQuery());
 			int minTerm;
 			int.TryParse(offerResponse.Values["TermMin"].SingleOrDefault(), out minTerm);
 
@@ -44,7 +44,7 @@ namespace Wonga.QA.Tests.Payments
 			var application = ApplicationBuilder.New(customer, organisation).Build();
 
 			var exception = Assert.Throws<ValidatorException>(
-				() => Driver.Api.Commands.Post(new UpdateLoanTermWbUkCommand {ApplicationId = application.Id, Term = minTerm - 1}));
+				() => Drive.Api.Commands.Post(new UpdateLoanTermWbUkCommand {ApplicationId = application.Id, Term = minTerm - 1}));
 
 			Assert.Contains(exception.Message, "Payments_LoanTerm_Invalid");
 		}
@@ -53,7 +53,7 @@ namespace Wonga.QA.Tests.Payments
 		[Test, AUT(AUT.Wb), JIRA("SME-889")]
 		public void ShouldAdjustLoanTermBeforeUpdatingApplication_WhenLoanTermIsMoreThanMaxTermAllowed()
 		{
-			var offerResponse = Driver.Api.Queries.Post(new GetBusinessFixedInstallmentLoanOfferWbUkQuery());
+			var offerResponse = Drive.Api.Queries.Post(new GetBusinessFixedInstallmentLoanOfferWbUkQuery());
 			int maxTerm;
 			int.TryParse(offerResponse.Values["TermMax"].SingleOrDefault(), out maxTerm);
 
@@ -62,7 +62,7 @@ namespace Wonga.QA.Tests.Payments
 			var application = ApplicationBuilder.New(customer, organisation).Build();
 
 			var exception = Assert.Throws<ValidatorException>(
-				() => Driver.Api.Commands.Post(new UpdateLoanTermWbUkCommand { ApplicationId = application.Id, Term = maxTerm + 1 }));
+				() => Drive.Api.Commands.Post(new UpdateLoanTermWbUkCommand { ApplicationId = application.Id, Term = maxTerm + 1 }));
 
 			Assert.Contains(exception.Message, "Payments_Term_GreaterTermMax");
 		}

@@ -16,11 +16,11 @@ namespace Wonga.QA.Tests.Payments
 			var organisation = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organisation).Build();
 
-			var riskApplicationEntity = Do.Until(() => Driver.Db.Risk.RiskApplications.Single(a => a.RiskBusinessApplicationEntity.RiskApplicationEntity.ApplicationId == application.Id));
+			var riskApplicationEntity = Do.Until(() => Drive.Db.Risk.RiskApplications.Single(a => a.RiskBusinessApplicationEntity.RiskApplicationEntity.ApplicationId == application.Id));
 
-			var tierRateMappingEntity = Do.Until(() => Driver.Db.Payments.TierRateMappings.Single(a => a.Tier == riskApplicationEntity.PriceTier));
+			var tierRateMappingEntity = Do.Until(() => Drive.Db.Payments.TierRateMappings.Single(a => a.Tier == riskApplicationEntity.PriceTier));
 
-			Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == application.Id 
+			Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id 
 				&& a.BusinessFixedInstallmentLoanApplicationEntity.ApplicationFee == tierRateMappingEntity.ApplicationFeeRate
 				&& a.BusinessFixedInstallmentLoanApplicationEntity.InterestRate == tierRateMappingEntity.WeeklyInterestRate));
 		}

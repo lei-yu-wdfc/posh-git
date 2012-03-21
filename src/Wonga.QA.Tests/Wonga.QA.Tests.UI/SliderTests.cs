@@ -50,7 +50,7 @@ namespace Wonga.QA.Tests.Ui
             }
 
 
-            _response = Driver.Api.Queries.Post(request);
+            _response = Drive.Api.Queries.Post(request);
             _amountMax = (int)Decimal.Parse(_response.Values["AmountMax"].Single(), CultureInfo.InvariantCulture);
             _amountMin = (int)Double.Parse(_response.Values["AmountMin"].Single(), CultureInfo.InvariantCulture);
             _termMax = Int32.Parse(_response.Values["TermMax"].Single(), CultureInfo.InvariantCulture);
@@ -82,7 +82,7 @@ namespace Wonga.QA.Tests.Ui
             page.Sliders.HowMuch = randomAmount.ToString(CultureInfo.InvariantCulture);
             page.Sliders.HowLong = randomDuration.ToString(CultureInfo.InvariantCulture);
 
-            _response = Driver.Api.Queries.Post(new GetFixedTermLoanCalculationZaQuery { LoanAmount = randomAmount, Term = randomDuration });
+            _response = Drive.Api.Queries.Post(new GetFixedTermLoanCalculationZaQuery { LoanAmount = randomAmount, Term = randomDuration });
 
             string totalRepayable = _response.Values["TotalRepayable"].Single();
             Assert.AreEqual(page.Sliders.GetTotalToRepay.Remove(0, 1), totalRepayable);
@@ -188,7 +188,7 @@ namespace Wonga.QA.Tests.Ui
                     var nextPayDate = today.Day <= 25
                                            ? new DateTime(today.Year, today.Month, 25)
                                            : new DateTime(today.Year, today.Month, 25).AddMonths(1);
-                    var expectedDate = Driver.Db.GetPreviousWorkingDay(new Date(nextPayDate));
+                    var expectedDate = Drive.Db.GetPreviousWorkingDay(new Date(nextPayDate));
                     Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate.DateTime), _repaymentDate);
                     break;
                 case AUT.Ca:
@@ -201,7 +201,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Ca), JIRA("QA-237", "QA-153")]
         public void ChangingAmountBeyondMinIsNotAllowedByFrontEnd()
         {
-            var product = Driver.Db.Payments.Products.FirstOrDefault();
+            var product = Drive.Db.Payments.Products.FirstOrDefault();
             int minAmountValue = (int)product.AmountMin;
             int setAmountValue = minAmountValue - 1;
             var page = Client.Home();
@@ -235,7 +235,7 @@ namespace Wonga.QA.Tests.Ui
             loginPage.LoginAs(email);
 
             var page = Client.Home();
-            var product = Driver.Db.Payments.Products.FirstOrDefault();
+            var product = Drive.Db.Payments.Products.FirstOrDefault();
             int maxLoanDuration = product.TermMax;
             int setLoanDuration = maxLoanDuration + 1;
 
@@ -268,7 +268,7 @@ namespace Wonga.QA.Tests.Ui
             application.RepayOnDueDate();
             loginPage.LoginAs(email);
 
-            var product = Driver.Db.Payments.Products.FirstOrDefault();
+            var product = Drive.Db.Payments.Products.FirstOrDefault();
             int minDurationValue = (int)product.TermMin;
             int setDurationValue = minDurationValue - 1;
             var page = Client.Home();
@@ -304,8 +304,8 @@ namespace Wonga.QA.Tests.Ui
 					{
 						var iMonth = DateTime.UtcNow.Month - 1;
 
-						var payDayPerMonths = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.PayDayPerMonth").Value.Split(',');
-						var sliderTermAddDays = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.SliderTermAddDays").Value;
+						var payDayPerMonths = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.PayDayPerMonth").Value.Split(',');
+						var sliderTermAddDays = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.SliderTermAddDays").Value;
 
 						var payDayPerMonth = Int32.Parse(payDayPerMonths[iMonth]);
 						var minimumTerm = Int32.Parse(sliderTermAddDays);
@@ -322,7 +322,7 @@ namespace Wonga.QA.Tests.Ui
 							defaultPromiseDate = new DateTime(defaultPromiseDate.Year, defaultPromiseDate.Month, payDayPerMonth);
 						}
 
-						defaultPromiseDate = Driver.Db.GetPreviousWorkingDay(new Date(defaultPromiseDate));
+						defaultPromiseDate = Drive.Db.GetPreviousWorkingDay(new Date(defaultPromiseDate));
 					}
 					break;
 
@@ -337,7 +337,7 @@ namespace Wonga.QA.Tests.Ui
 
 		private int GetExpectedMinTerm()
 		{
-			return Driver.Db.Payments.Products.FirstOrDefault().TermMin;
+			return Drive.Db.Payments.Products.FirstOrDefault().TermMin;
 		}
 
 		private int GetExpectedMaxTermL0()
@@ -351,7 +351,7 @@ namespace Wonga.QA.Tests.Ui
 						var promiseDate = GetExpectedDefaultPromiseDateL0();
 						var iMonth = promiseDate.Month - 1;
 
-						var payDayPlusToMaxTerm = Int32.Parse(Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.PayDayPlusToMaxTerm").Value.Split(',')[iMonth]);
+						var payDayPlusToMaxTerm = Int32.Parse(Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.PayDayPlusToMaxTerm").Value.Split(',')[iMonth]);
 
 						maxTerm = (promiseDate.AddDays(payDayPlusToMaxTerm) - DateTime.Today).Days;
 					}
@@ -359,7 +359,7 @@ namespace Wonga.QA.Tests.Ui
 
 				default:
 					{
-						return (int) Driver.Db.Payments.Products.FirstOrDefault().TermMax;
+						return (int) Drive.Db.Payments.Products.FirstOrDefault().TermMax;
 					}
 					break;
 			}

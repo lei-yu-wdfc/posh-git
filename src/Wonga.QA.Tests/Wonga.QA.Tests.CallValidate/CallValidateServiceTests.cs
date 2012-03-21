@@ -11,7 +11,7 @@ namespace Wonga.QA.Tests.CallValidate
         [Test, AUT(AUT.Uk, AUT.Wb)]
         public void CallValidateServiceIsRunning()
         {
-            Assert.IsTrue(Driver.Svc.CallValidate.IsRunning());
+            Assert.IsTrue(Drive.Svc.CallValidate.IsRunning());
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Wonga.QA.Tests.Bi
         [Test]
         public void BiServiceIsRunning()
         {
-            Assert.IsTrue(Driver.Svc.Bi.IsRunning());
+            Assert.IsTrue(Drive.Svc.Bi.IsRunning());
         }
     }
 }

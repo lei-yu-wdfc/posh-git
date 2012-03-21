@@ -71,7 +71,7 @@ namespace Wonga.QA.Framework
 
            
             
-            Driver.Api.Commands.Post(requests);            
+            Drive.Api.Commands.Post(requests);            
 
             return new Organisation(_id);
         }    
@@ -93,11 +93,11 @@ namespace Wonga.QA.Framework
                 
             }
 
-            Driver.Api.Commands.Post(requests);
+            Drive.Api.Commands.Post(requests);
 
             Do.Until(
                 () =>
-                Driver.Db.ContactManagement.DirectorOrganisationMappings.Count(
+                Drive.Db.ContactManagement.DirectorOrganisationMappings.Count(
                     director => director.OrganisationId == _id && director.DirectorLevel > 0) == _numberOfSecondaryDirector);
 
         }
@@ -116,9 +116,9 @@ namespace Wonga.QA.Framework
                 }));
             }
 
-            Driver.Api.Commands.Post(requests);
+            Drive.Api.Commands.Post(requests);
 
-            Do.Until(() =>Driver.Db.ContactManagement.DirectorOrganisationMappings.Count(director => director.OrganisationId == _id && director.DirectorLevel > 0) == _numberOfSecondaryDirector);
+            Do.Until(() =>Drive.Db.ContactManagement.DirectorOrganisationMappings.Count(director => director.OrganisationId == _id && director.DirectorLevel > 0) == _numberOfSecondaryDirector);
         }
     }
 }

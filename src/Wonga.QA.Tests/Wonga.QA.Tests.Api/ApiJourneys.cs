@@ -58,7 +58,7 @@ namespace Wonga.QA.Tests.Api
             Customer cust = CustomerBuilder.New().Build();
             ApplicationBuilder.New(cust).Build().RepayOnDueDate();
 
-            Driver.Db.UpdateEmployerName(cust.Id, "Wonga");
+            Drive.Db.UpdateEmployerName(cust.Id, "Wonga");
             ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
         }
 

@@ -29,7 +29,7 @@ namespace Wonga.QA.Tests.Ui
             Application application = ApplicationBuilder.New(customer).Build();
             var forgotPasswordPage = loginPage.ForgotPasswordClick();
             var homePage = forgotPasswordPage.EnterEmailAndCaptcha(email, captcha);
-            Assert.IsTrue(Driver.ThirdParties.ExactTarget.CheckPaymentReminderEmailSent(email));
+            Assert.IsTrue(Drive.ThirdParties.ExactTarget.CheckPaymentReminderEmailSent(email));
         }
     }
 }

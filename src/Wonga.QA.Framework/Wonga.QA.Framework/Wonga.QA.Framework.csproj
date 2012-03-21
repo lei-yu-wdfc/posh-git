@@ -43,7 +43,7 @@
     <Compile Include="OrganisationBuilder.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="CustomerBuilder.cs" />
-    <Compile Include="Driver.cs" />
+    <Compile Include="Drive.cs" />
     <Compile Include="OrganisationDirector.cs" />
     <Compile Include="OrganisationDirectorBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

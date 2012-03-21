@@ -25,15 +25,15 @@ namespace Wonga.QA.Tests.Comms
             businessApplicationBuilder.SignApplicationForSecondaryDirectors();
 
             DoBuilder _do = new DoBuilder(new TimeSpan(0,2,0), new TimeSpan(0,0,20));
-            var emailCorrelationRecords = _do.Until(() => Driver.Db.Comms.EmailReturnLinkCorrelationWbUks.Count(p => p.OrganisationId == company.Id) == 2);
+            var emailCorrelationRecords = _do.Until(() => Drive.Db.Comms.EmailReturnLinkCorrelationWbUks.Count(p => p.OrganisationId == company.Id) == 2);
 
             var directors = company.GetSecondaryDirectors();
             foreach (var director in directors)
             {
-                _do.Until(() => Driver.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId==director.AccountId && p.DocumentType == 9) == 2);
+                _do.Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId==director.AccountId && p.DocumentType == 9) == 2);
             }
             
-            _do.Until(() => Driver.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.DocumentType == 12) == 2);
+            _do.Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.DocumentType == 12) == 2);
         }
 
         [Test, AUT(AUT.Wb), JIRA("SME-951"), Description("This test verifies documents being generated as part of L0 process, which is a key prerequisite for emails to be sent (this last step involves 3rd party)"), Explicit("Required risk event not being published yet")]
@@ -49,10 +49,10 @@ namespace Wonga.QA.Tests.Comms
             businessApplicationBuilder.SignApplicationForSecondaryDirectors();
 
             DoBuilder _do = new DoBuilder(new TimeSpan(0, 2, 0), new TimeSpan(0, 0, 20));            
-            //_do.Until(() => Driver.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.DocumentType == 11) ==1);
-            _do.Until(() => Driver.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId== cust.Id && p.DocumentType == 9) == 2);
-            _do.Until(() => Driver.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId == cust.Id && p.DocumentType == 10) == 2);
-            //Assert.IsTrue(Driver.ThirdParties.ExactTarget.CheckSMEInitialPrimaryDirectorEmailSent(cust.GetEmail()), "Email should have been sent");
+            //_do.Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.DocumentType == 11) ==1);
+            _do.Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId== cust.Id && p.DocumentType == 9) == 2);
+            _do.Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId == cust.Id && p.DocumentType == 10) == 2);
+            //Assert.IsTrue(Drive.ThirdParties.ExactTarget.CheckSMEInitialPrimaryDirectorEmailSent(cust.GetEmail()), "Email should have been sent");
         }
     }
 }

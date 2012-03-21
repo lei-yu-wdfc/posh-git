@@ -14,14 +14,14 @@ namespace Wonga.QA.Tests.BankGateway.Helpers
 
         public static void TimeoutScotiaCashOut()
         {
-            var scotiaCashOutQueue = new Guid(Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == ScotiaCashOut).Value);
-            Driver.Msmq.BankGateway.Send(new TimeoutMessage { SagaId = scotiaCashOutQueue });
+            var scotiaCashOutQueue = new Guid(Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == ScotiaCashOut).Value);
+            Drive.Msmq.BankGateway.Send(new TimeoutMessage { SagaId = scotiaCashOutQueue });
         }
 
         public static void TimeoutScotiaCashIn()
         {
-            var scotiaCashInQueue = new Guid(Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == ScotiaCashIn).Value);
-            Driver.Msmq.BankGateway.Send(new TimeoutMessage { SagaId = scotiaCashInQueue });
+            var scotiaCashInQueue = new Guid(Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == ScotiaCashIn).Value);
+            Drive.Msmq.BankGateway.Send(new TimeoutMessage { SagaId = scotiaCashInQueue });
         }
     }
 }

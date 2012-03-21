@@ -18,7 +18,7 @@ namespace Wonga.QA.Tests.Payments
             Guid appId = Guid.NewGuid();
             var customer = CustomerBuilder.New().Build();
             var promisedDate = FindPromiseDateOfExpectedDayOfWeek(DayOfWeek.Saturday);
-            Driver.Api.Commands.Post(new CreateFixedTermLoanApplicationCommand()
+            Drive.Api.Commands.Post(new CreateFixedTermLoanApplicationCommand()
                                          {
                                              ApplicationId = appId,
                                              AccountId = customer.Id,
@@ -27,7 +27,7 @@ namespace Wonga.QA.Tests.Payments
                                              LoanAmount = 100.0M,
                                              Currency = "ZAR"
                                          });
-           var app = Do.Until(() => Driver.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationEntity.ExternalId == appId));
+           var app = Do.Until(() => Drive.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationEntity.ExternalId == appId));
 
             Assert.AreEqual(promisedDate.Date, app.NextDueDate);
         }
@@ -49,7 +49,7 @@ namespace Wonga.QA.Tests.Payments
             var app = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).
                 Build();
 
-            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == app.Id).LoanReference);
+            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == app.Id).LoanReference);
         }
     }
 }

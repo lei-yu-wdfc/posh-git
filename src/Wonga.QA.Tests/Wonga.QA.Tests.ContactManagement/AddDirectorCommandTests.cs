@@ -24,15 +24,15 @@ namespace Wonga.QA.Tests.ContactManagement
 
             req.Email = email;  
 
-            ApiResponse resp = Driver.Api.Commands.Post(req);
+            ApiResponse resp = Drive.Api.Commands.Post(req);
 
             DoBuilder _do = new DoBuilder(new TimeSpan(0, 2, 0), new TimeSpan(0, 0, 10));            
-            _do.Until(() => Driver.Db.ContactManagement.DirectorOrganisationMappings.Count(o=>o.Email==email)==1);
+            _do.Until(() => Drive.Db.ContactManagement.DirectorOrganisationMappings.Count(o=>o.Email==email)==1);
 
             bool errorDetected = false;
             try
             {
-                resp = Driver.Api.Commands.Post(req);
+                resp = Drive.Api.Commands.Post(req);
             }
             catch (ValidatorException e)
             {                        
@@ -57,15 +57,15 @@ namespace Wonga.QA.Tests.ContactManagement
 
             req.Email = email;
 
-            ApiResponse resp = Driver.Api.Commands.Post(req);
+            ApiResponse resp = Drive.Api.Commands.Post(req);
 
             DoBuilder _do = new DoBuilder(new TimeSpan(0, 2, 0), new TimeSpan(0, 0, 10));
-            _do.Until(() => Driver.Db.ContactManagement.DirectorOrganisationMappings.Count(o => o.Email == email) == 1);
+            _do.Until(() => Drive.Db.ContactManagement.DirectorOrganisationMappings.Count(o => o.Email == email) == 1);
 
             bool errorDetected = false;
             try
             {
-                resp = Driver.Api.Commands.Post(req);
+                resp = Drive.Api.Commands.Post(req);
             }
             catch (ValidatorException e)
             {
@@ -91,16 +91,16 @@ namespace Wonga.QA.Tests.ContactManagement
 
             req.AccountId = accountId;
 
-            ApiResponse resp = Driver.Api.Commands.Post(req);
+            ApiResponse resp = Drive.Api.Commands.Post(req);
 
             DoBuilder _do = new DoBuilder(new TimeSpan(0, 2, 0), new TimeSpan(0, 0, 10));
-            _do.Until(() => Driver.Db.ContactManagement.DirectorOrganisationMappings.Count(o => o.AccountId == accountId) == 1);
+            _do.Until(() => Drive.Db.ContactManagement.DirectorOrganisationMappings.Count(o => o.AccountId == accountId) == 1);
 
             bool errorDetected = false;
             try
             {
                 req.Email = Get.RandomEmail();
-                resp = Driver.Api.Commands.Post(req);
+                resp = Drive.Api.Commands.Post(req);
             }
             catch (ValidatorException e)
             {
@@ -126,16 +126,16 @@ namespace Wonga.QA.Tests.ContactManagement
 
             req.AccountId = accountId;
 
-            ApiResponse resp = Driver.Api.Commands.Post(req);
+            ApiResponse resp = Drive.Api.Commands.Post(req);
 
             DoBuilder _do = new DoBuilder(new TimeSpan(0, 2, 0), new TimeSpan(0, 0, 10));
-            _do.Until(() => Driver.Db.ContactManagement.DirectorOrganisationMappings.Count(o => o.AccountId == accountId) == 1);
+            _do.Until(() => Drive.Db.ContactManagement.DirectorOrganisationMappings.Count(o => o.AccountId == accountId) == 1);
 
             bool errorDetected = false;
             try
             {
                 req.Email = Get.RandomEmail();
-                resp = Driver.Api.Commands.Post(req);
+                resp = Drive.Api.Commands.Post(req);
             }
             catch (ValidatorException e)
             {

@@ -29,7 +29,7 @@ namespace Wonga.QA.Tests.Payments
 
         private void CreateExtraPayment(decimal extraPaymentAmount)
         {
-            Driver.Msmq.Payments.Send(new CreateTransactionCommand
+            Drive.Msmq.Payments.Send(new CreateTransactionCommand
                                           {
                                               Amount = extraPaymentAmount,
                                               ApplicationId = _application.Id,
@@ -58,7 +58,7 @@ namespace Wonga.QA.Tests.Payments
             CreateExtraPayment(extraPaymentAmount);
             var newPaymentPlan = _application.GetPaymentPlan();
             Assert.LessThan(newPaymentPlan.RegularAmount, _paymentPlan.RegularAmount);
-            Do.Until(() => Driver.Db.Payments.Transactions.Single(t => t.ApplicationEntity.ExternalId == _application.Id
+            Do.Until(() => Drive.Db.Payments.Transactions.Single(t => t.ApplicationEntity.ExternalId == _application.Id
                                                         && t.Type == PaymentTransactionEnum.InterestAdjustment.ToString()));
         }
 
@@ -77,7 +77,7 @@ namespace Wonga.QA.Tests.Payments
             var newPaymentPlan = _application.GetPaymentPlan();
 
             Assert.LessThan(newPaymentPlan.RegularAmount, _paymentPlan.RegularAmount);
-            Do.Until(() => Driver.Db.Payments.Transactions.Single(t => t.ApplicationEntity.ExternalId == _application.Id
+            Do.Until(() => Drive.Db.Payments.Transactions.Single(t => t.ApplicationEntity.ExternalId == _application.Id
                                             && t.Type == PaymentTransactionEnum.InterestAdjustment.ToString()));
             // Check that app is in not arrears
             Assert.IsFalse(_application.IsInArrears());

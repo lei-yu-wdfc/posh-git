@@ -26,7 +26,7 @@ namespace Wonga.QA.Tests.Payments
 				.WithLoanTerm(30)
 				.Build();
 
-			var ftApp = Driver.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationEntity.ExternalId == app.Id);
+			var ftApp = Drive.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationEntity.ExternalId == app.Id);
 			Assert.IsNotNull(ftApp);
 		
 			Assert.IsNull(GetTransactions(ftApp, repayAmount));
@@ -44,7 +44,7 @@ namespace Wonga.QA.Tests.Payments
 				RepaymentRequestId = Guid.NewGuid()
 			};
 
-			var cmdAct = new Gallio.Common.Action(() => Driver.Api.Commands.Post(cmd));
+			var cmdAct = new Gallio.Common.Action(() => Drive.Api.Commands.Post(cmd));
 			Assert.DoesNotThrow(cmdAct);
 
 			Do.With().Timeout(TimeSpan.FromSeconds(5)).Until(() => GetTransactions(ftApp.ApplicationEntity.ExternalId, repayAmount));
@@ -58,7 +58,7 @@ namespace Wonga.QA.Tests.Payments
 				Do.With()
 					.Timeout(TimeSpan.FromSeconds(60))
 					.Until(
-						() => Driver.Db.Payments.FixedTermLoanApplications.Single(
+						() => Drive.Db.Payments.FixedTermLoanApplications.Single(
 							a =>
 							a.ApplicationEntity.ExternalId == appId &&
 							a.ApplicationEntity.ClosedOn != null));
@@ -67,7 +67,7 @@ namespace Wonga.QA.Tests.Payments
 
 		private TransactionEntity GetTransactions(Guid appId, decimal repayAmount)
 		{
-			var app = Driver.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationEntity.ExternalId == appId);
+			var app = Drive.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationEntity.ExternalId == appId);
 			Assert.IsNotNull(app);
 			return GetTransactions(app, repayAmount);
 		}
@@ -80,7 +80,7 @@ namespace Wonga.QA.Tests.Payments
 
 		private decimal GetAmount(Guid custId)
 		{
-			ApiResponse calc = Driver.Api.Queries.Post(
+			ApiResponse calc = Drive.Api.Queries.Post(
 				new GetAccountSummaryQuery
 					{
 						AccountId = custId

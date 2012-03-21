@@ -46,7 +46,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			// Sign Applications
 			app1.SignedOn = DateTime.UtcNow;
 			app2.SignedOn = DateTime.UtcNow;
-			Driver.Db.Risk.SubmitChanges();
+			Drive.Db.Risk.SubmitChanges();
 
 		}
 

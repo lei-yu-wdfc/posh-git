@@ -420,7 +420,7 @@ namespace Wonga.QA.Tests.Graydon
             var application = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(applicationDecision).Build();
             Assert.IsNotNull(application);
 
-            var riskDb = Driver.Db.Risk;
+            var riskDb = Drive.Db.Risk;
             var riskApplicationEntity = Do.Until(() => riskDb.RiskApplications.SingleOrDefault(p => p.ApplicationId == application.Id));
             Assert.IsNotNull(riskApplicationEntity, "Risk application should exist");
 
@@ -435,7 +435,7 @@ namespace Wonga.QA.Tests.Graydon
         private static String UpdateServiceConfigurationKey(String configKey,String newConfigValue)
         {
             String currentValue;
-            var opsDb = Driver.Db.Ops;
+            var opsDb = Drive.Db.Ops;
             var config = opsDb.ServiceConfigurations.FirstOrDefault(p => p.Key == configKey);
             if(config !=null)
             {

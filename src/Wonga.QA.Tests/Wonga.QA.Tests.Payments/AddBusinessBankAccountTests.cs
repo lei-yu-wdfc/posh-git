@@ -56,9 +56,9 @@ namespace Wonga.QA.Tests.Payments
 		{
 			var orgId = Guid.NewGuid();
 			var message = AddBusinessBankAccountWbInternal(orgId);
-			Driver.Api.Commands.Post(message);
+			Drive.Api.Commands.Post(message);
 
-			var db = Driver.Db.Payments;
+			var db = Drive.Db.Payments;
 			var baseBankAccountEntity = Do.Until(() => db.BankAccountsBases.SingleOrDefault(p => p.ExternalId == (Guid)message.BankAccountId && p.ValidatedOn != null));
 			var businessBankAccountEntity = Do.Until(() => db.BusinessBankAccounts.SingleOrDefault(p => p.BankAccountId == baseBankAccountEntity.BankAccountId));
 
@@ -83,7 +83,7 @@ namespace Wonga.QA.Tests.Payments
 			var orgId = Guid.NewGuid();
 			var message = AddBusinessBankAccountWbInternal(orgId, sortCode: "1");
 
-			Assert.Throws<ValidatorException>(() => Driver.Api.Commands.Post(message), "Payments_BankCode_InvalidLength");
+			Assert.Throws<ValidatorException>(() => Drive.Api.Commands.Post(message), "Payments_BankCode_InvalidLength");
 		}
 
 		/// <summary>
@@ -100,7 +100,7 @@ namespace Wonga.QA.Tests.Payments
 			var orgId = Guid.NewGuid();
 			var message = AddBusinessBankAccountWbInternal(orgId, accountNumber: "1");
 
-			Assert.Throws<ValidatorException>(() => Driver.Api.Commands.Post(message), "Payments_AccountNumber_InvalidLength");
+			Assert.Throws<ValidatorException>(() => Drive.Api.Commands.Post(message), "Payments_AccountNumber_InvalidLength");
 		}
 
 		/// <summary>
@@ -118,9 +118,9 @@ namespace Wonga.QA.Tests.Payments
 			var orgId = Guid.NewGuid();
 			var firstAccount = AddBusinessBankAccountWbInternal(orgId);
 			var secondAccount = AddBusinessBankAccountWbInternal(orgId);
-			Driver.Api.Commands.Post(firstAccount);
+			Drive.Api.Commands.Post(firstAccount);
 
-			var db = Driver.Db.Payments;
+			var db = Drive.Db.Payments;
 			var baseBankAccountEntity = Do.Until(() => db.BankAccountsBases.SingleOrDefault(p => p.ExternalId == (Guid)firstAccount.BankAccountId && p.ValidatedOn != null));
 			var businessBankAccountEntity = Do.Until(() => db.BusinessBankAccounts.SingleOrDefault(p => p.BankAccountId == baseBankAccountEntity.BankAccountId));
 
@@ -130,7 +130,7 @@ namespace Wonga.QA.Tests.Payments
 			Assert.AreEqual(baseBankAccountEntity.ExternalId, firstAccount.BankAccountId);
 			Assert.AreEqual(firstAccount.BankName, baseBankAccountEntity.BankName);
 
-			Assert.Throws<ValidatorException>(() => Driver.Api.Commands.Post(secondAccount), "Payments_BankAccount_MaxNumberReached");
+			Assert.Throws<ValidatorException>(() => Drive.Api.Commands.Post(secondAccount), "Payments_BankAccount_MaxNumberReached");
 		}
 
 		/// <summary>
@@ -149,9 +149,9 @@ namespace Wonga.QA.Tests.Payments
 		{
 			var orgId = Guid.NewGuid();
 			var message = AddBusinessBankAccountWbInternal(orgId, "66666666", "666666");
-			Driver.Api.Commands.Post(message);
+			Drive.Api.Commands.Post(message);
 
-			var db = Driver.Db.Payments;
+			var db = Drive.Db.Payments;
 			var baseBankAccountEntity = Do.Until(() => db.BankAccountsBases.SingleOrDefault(p => p.ExternalId == (Guid)message.BankAccountId && p.ValidateFailedOn != null));
 			var businessBankAccountEntity = Do.Until(() => db.BusinessBankAccounts.SingleOrDefault(p => p.BankAccountId == baseBankAccountEntity.BankAccountId));
 
@@ -178,9 +178,9 @@ namespace Wonga.QA.Tests.Payments
 		{
 			var orgId = Guid.NewGuid();
 			var message = AddBusinessBankAccountWbInternal(orgId);
-			Driver.Api.Commands.Post(message);
+			Drive.Api.Commands.Post(message);
 
-			var db = Driver.Db.Payments;
+			var db = Drive.Db.Payments;
 			var baseBankAccountEntity = Do.Until(() => db.BankAccountsBases.SingleOrDefault(p => p.ExternalId == (Guid)message.BankAccountId && p.ValidatedOn != null));
 			var businessBankAccountEntity = Do.Until(() => db.BusinessBankAccounts.SingleOrDefault(p => p.BankAccountId == baseBankAccountEntity.BankAccountId));
 

@@ -43,7 +43,7 @@ namespace Wonga.QA.Tests.Ui
                 default:
                     throw new NotImplementedException();
             }
-            _response = Driver.Api.Queries.Post(request);
+            _response = Drive.Api.Queries.Post(request);
             _amountMax = (int)Decimal.Parse(_response.Values["AmountMax"].Single(), CultureInfo.InvariantCulture);
             _amountMin = (int)Double.Parse(_response.Values["AmountMin"].Single(), CultureInfo.InvariantCulture);
             _termMax = Int32.Parse(_response.Values["TermMax"].Single(), CultureInfo.InvariantCulture);
@@ -73,7 +73,7 @@ namespace Wonga.QA.Tests.Ui
             _actualDate = DateTime.Now.AddDays(randomDuration);
             Assert.AreEqual(String.Format(CultureInfo.InvariantCulture, "{0:d MMM yyyy}", _date), String.Format(CultureInfo.InvariantCulture, "{0:d MMM yyyy}", _actualDate));
             // Check amount
-            _response = Driver.Api.Queries.Post(new GetFixedTermLoanCalculationZaQuery { LoanAmount = randomAmount, Term = randomDuration });
+            _response = Drive.Api.Queries.Post(new GetFixedTermLoanCalculationZaQuery { LoanAmount = randomAmount, Term = randomDuration });
             string totalRepayable = _response.Values["TotalRepayable"].Single();
             Assert.AreEqual(dealDone.GetRapaymentAmount().Remove(0, 1), totalRepayable);
         }
@@ -100,7 +100,7 @@ namespace Wonga.QA.Tests.Ui
             _actualDate = DateTime.Now.AddDays(randomDuration+1);
             Assert.AreEqual( String.Format(CultureInfo.InvariantCulture, "{0:d MMM yyyy}", _actualDate), String.Format(CultureInfo.InvariantCulture, "{0:d MMM yyyy}", _date));
             // Check amount
-            _response = Driver.Api.Queries.Post(new GetFixedTermLoanCalculationQuery { LoanAmount = randomAmount, Term = randomDuration });
+            _response = Drive.Api.Queries.Post(new GetFixedTermLoanCalculationQuery { LoanAmount = randomAmount, Term = randomDuration });
             string totalRepayable = _response.Values["TotalRepayable"].Single();
             Assert.AreEqual(dealDone.GetRapaymentAmount().Remove(0, 1), totalRepayable);
         }

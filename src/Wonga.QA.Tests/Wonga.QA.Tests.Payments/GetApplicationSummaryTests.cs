@@ -19,7 +19,7 @@ namespace Wonga.QA.Tests.Payments
 			Do.Until(customer.GetPaymentCard);
 			ApplicationBuilder.New(customer).Build();
 
-			var response = Driver.Api.Queries.Post(new GetAccountSummaryQuery {AccountId = customer.Id});
+			var response = Drive.Api.Queries.Post(new GetAccountSummaryQuery {AccountId = customer.Id});
 			//£100 loan for 10 days.
 			Assert.AreEqual(115.91M, decimal.Parse(response.Values["CurrentLoanRepaymentAmountOnDueDate"].Single()));
 			Assert.AreEqual(DateTime.Today.AddDays(10), DateTime.Parse(response.Values["CurrentLoanDueDate"].Single()));

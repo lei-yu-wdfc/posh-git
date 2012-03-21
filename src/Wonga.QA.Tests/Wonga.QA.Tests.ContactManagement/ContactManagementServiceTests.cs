@@ -11,7 +11,7 @@ namespace Wonga.QA.Tests.ContactManagement
         [Test, AUT(AUT.Wb)]
         public void ContactManagementServiceIsRunning()
         {
-            Assert.IsTrue(Driver.Svc.ContactManagement.IsRunning());
+            Assert.IsTrue(Drive.Svc.ContactManagement.IsRunning());
         }
     }
 }

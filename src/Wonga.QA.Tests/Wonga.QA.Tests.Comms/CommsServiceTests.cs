@@ -14,7 +14,7 @@ namespace Wonga.QA.Tests.Comms
         [Test]
         public void CommsServiceIsRunning()
         {
-            Assert.IsTrue(Driver.Svc.Comms.IsRunning());
+            Assert.IsTrue(Drive.Svc.Comms.IsRunning());
         }
 
         [Test, AUT(AUT.Uk)]
@@ -27,10 +27,10 @@ namespace Wonga.QA.Tests.Comms
                 .WithPromiseDate(new Date(DateTime.Now.AddDays(6), DateFormat.Date))
                 .WithLoanAmount(100)
                 .Build();
-            var ftApp = Driver.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationEntity.ExternalId == app.Id);
-            Assert.IsTrue(Driver.Svc.DocumentGeneration.IsRunning());
-            Assert.IsTrue(Driver.Svc.Payments.IsRunning());
-            Driver.Msmq.Payments.Send(new ExtendLoanStartedInternalCommand
+            var ftApp = Drive.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationEntity.ExternalId == app.Id);
+            Assert.IsTrue(Drive.Svc.DocumentGeneration.IsRunning());
+            Assert.IsTrue(Drive.Svc.Payments.IsRunning());
+            Drive.Msmq.Payments.Send(new ExtendLoanStartedInternalCommand
                                         {
                                             AccountId = cust.Id, 
                                             ApplicationId = app.Id, 
@@ -41,10 +41,10 @@ namespace Wonga.QA.Tests.Comms
                                         });
 
             new DoBuilder(TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(1))
-                                .Until(() => Driver.Db.Comms.LegalDocuments.Single(ld => ld.ApplicationId == app.Id && ld.DocumentType == 2));//ExtensionSeccii
+                                .Until(() => Drive.Db.Comms.LegalDocuments.Single(ld => ld.ApplicationId == app.Id && ld.DocumentType == 2));//ExtensionSeccii
 
             new DoBuilder(TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(1))
-                                .Until(() => Driver.Db.Comms.LegalDocuments.Single(ld => ld.ApplicationId == app.Id && ld.DocumentType == 3));//Pre Agreement
+                                .Until(() => Drive.Db.Comms.LegalDocuments.Single(ld => ld.ApplicationId == app.Id && ld.DocumentType == 3));//Pre Agreement
 
 
         }
