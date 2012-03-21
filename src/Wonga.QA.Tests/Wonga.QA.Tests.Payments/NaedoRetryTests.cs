@@ -22,7 +22,7 @@ namespace Wonga.QA.Tests.Payments
 		public void FixtureTearDown()
 		{
 			ServiceConfigurationEntity entity =
-				Driver.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == BankGatewayIsTestModeKey);
+				Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == BankGatewayIsTestModeKey);
 			entity.Value = _bankGatewayIsTestMode;
 			entity.Submit();
 		}
@@ -34,8 +34,8 @@ namespace Wonga.QA.Tests.Payments
 
 			Customer customer = CustomerBuilder.New().Build();
 			Application application = ApplicationBuilder.New(customer).WithLoanAmount(amount).Build();
-			PaymentsDatabase paymentsDatabase = Driver.Db.Payments;
-			MsmqQueue paymentsQueue = Driver.Msmq.Payments;
+			PaymentsDatabase paymentsDatabase = Drive.Db.Payments;
+			MsmqQueue paymentsQueue = Drive.Msmq.Payments;
 			var applicationEntity = paymentsDatabase.Applications.Single(a => a.ExternalId == application.Id);
 
 			TimeSpan span = applicationEntity.FixedTermLoanApplicationEntity.NextDueDate.Value - DateTime.Today;
@@ -44,13 +44,13 @@ namespace Wonga.QA.Tests.Payments
 			applicationEntity.Submit();
 
 			var scheduledsaga =
-				Driver.Db.OpsSagas.FixedTermLoanSagaEntities
+				Drive.Db.OpsSagas.FixedTermLoanSagaEntities
 					.Single(e => e.ApplicationGuid == applicationEntity.ExternalId);
 
 			paymentsQueue.Send(new TimeoutMessage {Expires = DateTime.UtcNow, SagaId = scheduledsaga.Id});
 
 			var processSaga =
-				Do.Until(() => Driver.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationId == applicationEntity.ApplicationId));
+				Do.Until(() => Drive.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationId == applicationEntity.ApplicationId));
 
 			paymentsQueue.Send(new TimeoutMessage {Expires = DateTime.UtcNow, SagaId = processSaga.Id});
 
@@ -84,7 +84,7 @@ namespace Wonga.QA.Tests.Payments
 		private void SetBankGatewayTestMode()
 		{
 			ServiceConfigurationEntity entity =
-				Driver.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == BankGatewayIsTestModeKey);
+				Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == BankGatewayIsTestModeKey);
 			_bankGatewayIsTestMode = entity.Value;
 			entity.Value = "true";
 			entity.Submit();

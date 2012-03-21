@@ -20,7 +20,7 @@ namespace Wonga.QA.Framework.Core
         private static Random _random = new Random(Guid.NewGuid().GetHashCode());
     	private static readonly string EmailSafeMachineName;
 
-		static Data()
+		static Get()
 		{
 			EmailSafeMachineName = Regex.Replace(Environment.MachineName, @"[^a-zA-Z0-9-._]", @"-");
 		}

@@ -70,7 +70,7 @@ namespace Wonga.QA.Tests.Payments
 
 			var query =
 				new GetFixedTermLoanApplicationZaQuery {ApplicationId = application.Id};
-			var response = Driver.Api.Queries.Post(query);
+			var response = Drive.Api.Queries.Post(query);
 
 			Assert.AreEqual("174.10", response.Values["BalanceToday"].Single());
 			Assert.AreEqual("74.10", response.Values["Fees"].Single());
@@ -88,7 +88,7 @@ namespace Wonga.QA.Tests.Payments
 
 			var query =
 				new GetFixedTermLoanApplicationZaQuery {ApplicationId = application.Id};
-			var response = Driver.Api.Queries.Post(query);
+			var response = Drive.Api.Queries.Post(query);
 
 			Assert.AreEqual("200.00", response.Values["BalanceNextDueDate"].Single());
 			Assert.AreEqual("100.00", response.Values["Fees"].Single());
@@ -96,7 +96,7 @@ namespace Wonga.QA.Tests.Payments
 
 		private void SetUtcNow(string nowServiceConfigKey, DateTime dateTime)
 		{
-			Driver.Db.SetServiceConfiguration(nowServiceConfigKey, dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
+			Drive.Db.SetServiceConfiguration(nowServiceConfigKey, dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
 		}
 	}
 }
