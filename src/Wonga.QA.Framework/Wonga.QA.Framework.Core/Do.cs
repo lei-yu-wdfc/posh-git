@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
+using System.Text;
 using System.Threading;
 
 namespace Wonga.QA.Framework.Core
@@ -83,7 +83,7 @@ namespace Wonga.QA.Framework.Core
 
         public T Until<T>(Func<T> predicate)
         {
-            var exceptions = new List<Exception>();
+            var exception = new DoUntilException(_message);
             var stopwatch = Stopwatch.StartNew();
             while (stopwatch.Elapsed < _timeout)
                 try
@@ -91,16 +91,16 @@ namespace Wonga.QA.Framework.Core
                     var t = predicate();
                     if (!EqualityComparer<T>.Default.Equals(t, default(T)))
                         return t;
-                    exceptions.Add(new ArgumentException(t == null ? "null" : t.ToString()));
+                    exception.Add(new ArgumentException(t == null ? "null" : t.ToString()), stopwatch.Elapsed);
                     Thread.Sleep(_interval);
                 }
-                catch (Exception exception)
+                catch (Exception e)
                 {
-                    exceptions.Add(exception);
+                    exception.Add(exception, stopwatch.Elapsed);
                     Thread.Sleep(_interval);
                 }
-            exceptions.Add(new TimeoutException(stopwatch.Elapsed.ToString()));
-            throw new AggregateException(_message(), exceptions);
+            exception.Add(new TimeoutException(stopwatch.Elapsed.ToString()), stopwatch.Elapsed);
+            throw exception;
         }
 
         public void While<T>(Func<T> predicate)
@@ -133,6 +133,48 @@ namespace Wonga.QA.Framework.Core
                 t = p;
             }
             return t;
+        }
+    }
+
+    public class DoUntilException : Exception
+    {
+        private Func<String> _message;
+        private List<Tuple<DateTime, TimeSpan, Exception>> _exceptions;
+
+        public override string Message { get { return _message(); } }
+        public InnerExceptions Exceptions { get { return new InnerExceptions(_exceptions); } }
+
+        public DoUntilException(Func<String> message)
+        {
+            _message = message;
+            _exceptions = new List<Tuple<DateTime, TimeSpan, Exception>>();
+        }
+
+        public DoUntilException Add(Exception exception, TimeSpan span)
+        {
+            _exceptions.Add(Tuple.Create(DateTime.UtcNow, span, exception));
+            return this;
+        }
+
+        public class InnerExceptions
+        {
+            private List<Tuple<DateTime, TimeSpan, Exception>> _exceptions;
+
+            public InnerExceptions(List<Tuple<DateTime, TimeSpan, Exception>> exceptions)
+            {
+                _exceptions = exceptions;
+            }
+
+            public override string ToString()
+            {
+                var builder = new StringBuilder();
+                for (var i = 0; i < _exceptions.Count; i++)
+                {
+                    var tuple = _exceptions[i];
+                    builder.AppendLine(String.Format("> #{0} @ {1} ({2}) {3}", i, tuple.Item1.ToString("dd/MM HH:mm:ss.fff"), tuple.Item2.TotalSeconds, tuple.Item3));
+                }
+                return builder.ToString();
+            }
         }
     }
 }
