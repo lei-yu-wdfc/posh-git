@@ -70,6 +70,17 @@ namespace Wonga.QA.Framework
 				ScheduledPaymentSagaEntity sp = Do.Until(() => Driver.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationGuid == Id));
 				Driver.Msmq.Payments.Send(new PaymentTakenCommand { SagaId = sp.Id, ValueDate = utcNow, CreatedOn = utcNow, ApplicationId = Id, TransactionAmount = GetBalance() });
 				Do.While(sp.Refresh);
+
+				//TODO Terrible hack,figure out how to have interest posted before
+				if (Config.AUT == AUT.Za)
+				{
+					var autoInterest = Do.Until(() => Driver.Db.Payments.Transactions.Single(a => a.Type == Data.EnumToString(PaymentTransactionEnum.Interest) && a.CreatedOn > utcNow)).Amount;
+					Driver.Msmq.Payments.Send(new PaymentTakenCommand { SagaId = sp.Id, ValueDate = utcNow, CreatedOn = utcNow, ApplicationId = Id, TransactionAmount = autoInterest });
+					Do.While(sp.Refresh);
+
+					Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).ClosedOn);
+					return this;
+				}
 			}
 
 			var transaction = WaitForDirectBankPaymentCreditTransaction();
