@@ -94,7 +94,7 @@ namespace Wonga.QA.Tests.Ui
 
             actualTotalToRepay = dealDonePage.GetRapaymentAmount();
 
-            var date = DateTime.ParseExact(dealDonePage.GetRepaymentDate(), "dd MMMM yyyy", null);
+            var date = DateTime.ParseExact(dealDonePage.GetRepaymentDate(), "d MMMM yyyy", null);
 
             switch (date.Day % 10)
             {
@@ -165,7 +165,7 @@ namespace Wonga.QA.Tests.Ui
 
             actualTotalToRepay = dealDonePage.GetRapaymentAmount();
 
-            var date = DateTime.ParseExact(dealDonePage.GetRepaymentDate(), "dd MMMM yyyy", null);
+            var date = DateTime.ParseExact(dealDonePage.GetRepaymentDate(), "d MMMM yyyy", null);
 
             switch (date.Day % 10)
             {
@@ -262,7 +262,9 @@ namespace Wonga.QA.Tests.Ui
             {
                 case AUT.Ca:
                     string[] date = acceptedPage.GetPaymentDueDate.Replace(",", "").Split(' ');
-                    string paymentDate = date[0] + " " + date[2] + " " + date[1].Remove(3) + " " + date[3];
+                    string day = date[2][0] == '0' ? date[2].Remove(0, 1) : date[2];
+                    string paymentDate = date[0] + " " + day + " " + date[1].Remove(3) + " " + date[3];
+
                     Assert.AreEqual(totalAmountOnPersonalDetails, acceptedPage.GetPrincipalAmountBorrowed);
                     Assert.AreEqual(totalAmountOnPersonalDetails, acceptedPage.GetPrincipalAmountToBeTransfered);
                     Assert.AreEqual(totalFeesOnPersonalDetails, acceptedPage.GetTotalCostOfCredit);

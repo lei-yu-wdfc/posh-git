@@ -69,6 +69,16 @@
 
   <MyAccountNavigationSection>
     <!-- Should be extended-->
-    <MyPaymentsDetails>//a[contains(text(),'My payment details')]</MyPaymentsDetails>
+    <MySummary>div#block-wonga-6 ul.menu>li:nth-child(1)>a</MySummary>
+    <MyPersonalDetails>div#block-wonga-6 ul.menu>li:nth-child(2)>a</MyPersonalDetails>
+    <MyPaymentsDetails>div#block-wonga-6 ul.menu>li:nth-child(3)>a</MyPaymentsDetails>
   </MyAccountNavigationSection>
+
+  <MyPersonalDetailsPage>
+    <Address>table#profile tr#address</Address>
+    <Password>table#profile tr#password</Password>
+    <Phone>table#profile tr#phone</Phone>
+    <Communication>table#profile tr#communication</Communication>
+    <CommunicationPrefs>input[type="radio"][name="comms_preference"]</CommunicationPrefs>
+  </MyPersonalDetailsPage>
 </Ui>

@@ -11,6 +11,8 @@ namespace Wonga.QA.Framework.UI.Mappings.Elements
 {
     public class MyAccountNavigationElement
     {
+        public String MySummary { get; set; }
+        public String MyPersonalDetails { get; set; }
         public String MyPaymentsDetails { get; set; }
     }
 }
