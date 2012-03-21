@@ -74,11 +74,11 @@ namespace Wonga.QA.Framework
 				//TODO Terrible hack,figure out how to have interest posted before
 				if (Config.AUT == AUT.Za)
 				{
-					var autoInterest = Do.Until(() => Driver.Db.Payments.Transactions.Single(a => a.Type == Data.EnumToString(PaymentTransactionEnum.Interest) && a.CreatedOn > utcNow)).Amount;
-					Driver.Msmq.Payments.Send(new PaymentTakenCommand { SagaId = sp.Id, ValueDate = utcNow, CreatedOn = utcNow, ApplicationId = Id, TransactionAmount = autoInterest });
+					var autoInterest = Do.Until(() => Drive.Db.Payments.Transactions.Single(a => a.Type == Get.EnumToString(PaymentTransactionEnum.Interest) && a.CreatedOn > utcNow)).Amount;
+					Drive.Msmq.Payments.Send(new PaymentTakenCommand { SagaId = sp.Id, ValueDate = utcNow, CreatedOn = utcNow, ApplicationId = Id, TransactionAmount = autoInterest });
 					Do.While(sp.Refresh);
 
-					Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == Id).ClosedOn);
+					Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).ClosedOn);
 					return this;
 				}
 			}
