@@ -22,11 +22,11 @@ namespace Wonga.QA.Tests.Salesforce
 			var app = ApplicationBuilder.New(customer).Build();
 
 			// query saleforce to see if application exists.
-			var salesforce = Driver.ThirdParties.Salesforce;
+			var salesforce = Drive.ThirdParties.Salesforce;
 
-			var sfUsername = Driver.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == "Salesforce.UserName");
-			var sfPassword = Driver.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == "Salesforce.Password");
-			var sfUrl = Driver.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == "Salesforce.Url");
+			var sfUsername = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == "Salesforce.UserName");
+			var sfPassword = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == "Salesforce.Password");
+			var sfUrl = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == "Salesforce.Url");
 
 			salesforce.SalesforceUsername = sfUsername.Value;
 			salesforce.SalesforcePassword = sfPassword.Value;

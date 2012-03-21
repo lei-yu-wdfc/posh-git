@@ -14,7 +14,7 @@ namespace Wonga.QA.Tests.Meta
     {
         private ApiEndpoint[] Endpoints()
         {
-            ApiDriver api = Driver.Api;
+            ApiDriver api = Drive.Api;
             return new[]
             {
                 api.Commands,
@@ -24,7 +24,7 @@ namespace Wonga.QA.Tests.Meta
 
         private DbDatabase.Box[] Databases()
         {
-            DbDriver db = Driver.Db;
+            DbDriver db = Drive.Db;
             return new[]
             {
                 db.Ops.Boxed,
@@ -36,7 +36,7 @@ namespace Wonga.QA.Tests.Meta
 
         private SvcService[] Services()
         {
-            SvcDriver svc = Driver.Svc;
+            SvcDriver svc = Drive.Svc;
             return new[]
             {
                 svc.Ops,

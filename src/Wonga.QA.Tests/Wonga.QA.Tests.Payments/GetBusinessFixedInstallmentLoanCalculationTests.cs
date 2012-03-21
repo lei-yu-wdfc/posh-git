@@ -17,7 +17,7 @@ namespace Wonga.QA.Tests.Payments
 			var organisation = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organisation).Build();
 
-			var response = Driver.Api.Queries.Post(new GetBusinessFixedInstallmentLoanCalculationWbUkQuery
+			var response = Drive.Api.Queries.Post(new GetBusinessFixedInstallmentLoanCalculationWbUkQuery
 				{ LoanAmount = 5000, Term = 16, ApplicationId = application.Id});
 
 			Assert.IsNotNull(response);
@@ -42,7 +42,7 @@ namespace Wonga.QA.Tests.Payments
 		[Test, AUT(AUT.Wb), JIRA("SME-889")]
 		public void GetBusinessFixedInstallmentLoanCalculation_SetTheTermToMinimalAllowed()
 		{
-			var offerResponse = Driver.Api.Queries.Post(new GetBusinessFixedInstallmentLoanOfferWbUkQuery());
+			var offerResponse = Drive.Api.Queries.Post(new GetBusinessFixedInstallmentLoanOfferWbUkQuery());
 			int minTerm;
 
 			int.TryParse(offerResponse.Values["TermMin"].SingleOrDefault(), out minTerm);
@@ -51,7 +51,7 @@ namespace Wonga.QA.Tests.Payments
 			var organisation = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organisation).Build();
 
-			var response = Driver.Api.Queries.Post(new GetBusinessFixedInstallmentLoanCalculationWbUkQuery 
+			var response = Drive.Api.Queries.Post(new GetBusinessFixedInstallmentLoanCalculationWbUkQuery 
 				{ LoanAmount = 5000, Term = minTerm - 1, ApplicationId = application.Id });
 
 			Assert.IsNotNull(response);
@@ -69,7 +69,7 @@ namespace Wonga.QA.Tests.Payments
 		[Test, AUT(AUT.Wb), JIRA("SME-889")]
 		public void GetBusinessFixedInstallmentLoanCalculation_SetTheTermToMaximumAllowed()
 		{
-			var offerResponse = Driver.Api.Queries.Post(new GetBusinessFixedInstallmentLoanOfferWbUkQuery());
+			var offerResponse = Drive.Api.Queries.Post(new GetBusinessFixedInstallmentLoanOfferWbUkQuery());
 			int maxTerm;
 
 			int.TryParse(offerResponse.Values["TermMax"].SingleOrDefault(), out maxTerm);
@@ -78,7 +78,7 @@ namespace Wonga.QA.Tests.Payments
 			var organisation = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organisation).Build();
 
-			var response = Driver.Api.Queries.Post(new GetBusinessFixedInstallmentLoanCalculationWbUkQuery { LoanAmount = 5000, Term = maxTerm + 1, ApplicationId = application.Id });
+			var response = Drive.Api.Queries.Post(new GetBusinessFixedInstallmentLoanCalculationWbUkQuery { LoanAmount = 5000, Term = maxTerm + 1, ApplicationId = application.Id });
 
 			Assert.IsNotNull(response);
 			Assert.AreEqual(offerResponse.Values["TermMax"].SingleOrDefault(), response.Values["Term"].SingleOrDefault());

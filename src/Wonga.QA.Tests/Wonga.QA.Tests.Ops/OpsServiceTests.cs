@@ -10,7 +10,7 @@ namespace Wonga.QA.Tests.Ops
         [Test]
         public void OpsServiceIsRunning()
         {
-            Assert.IsTrue(Driver.Svc.Ops.IsRunning());
+            Assert.IsTrue(Drive.Svc.Ops.IsRunning());
         }
     }
 }

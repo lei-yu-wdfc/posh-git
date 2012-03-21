@@ -10,7 +10,7 @@ namespace Wonga.QA.Tests.Blacklist
         [Test]
         public void BlacklistServiceIsRunning()
         {
-            Assert.IsTrue(Driver.Svc.Blacklist.IsRunning());
+            Assert.IsTrue(Drive.Svc.Blacklist.IsRunning());
         }
     }
 }

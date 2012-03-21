@@ -22,7 +22,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-220")]
         public void CustomerInformationDisplayInSF()
         {
-            string email = Data.RandomEmail();
+            string email = Get.RandomEmail();
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             Application application = ApplicationBuilder.New(customer).Build();
             Thread.Sleep(30000);
@@ -38,7 +38,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-220"), Pending("right now can't do this")]
         public void CustomerGetsAcceptedDecisionHasRecordWithLiveLoanStatusInSF()
         {
-            string email = Data.RandomEmail();
+            string email = Get.RandomEmail();
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             Application application = ApplicationBuilder.New(customer).Build();
             Thread.Sleep(30000);
@@ -56,7 +56,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-220"), Pending("right now can't do this")]
         public void CustomerGetsAcceptedDecisionLoanAmountIndicatesLoanAmountCustomerAppliedForDueDays()
         {
-            string email = Data.RandomEmail();
+            string email = Get.RandomEmail();
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             Application application = ApplicationBuilder.New(customer).Build();
             Thread.Sleep(30000);
@@ -74,7 +74,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-220"), Pending("right now can't do this")]
         public void CustomerTakesLoanCheckBalanceAtTodayAndBalanceAtTodayShouldBePrincipalPlusFee()
         {
-            string email = Data.RandomEmail();
+            string email = Get.RandomEmail();
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             Application application = ApplicationBuilder.New(customer).Build();
             Thread.Sleep(30000);

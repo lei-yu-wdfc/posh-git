@@ -19,8 +19,8 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		private Date _dateOfBirth;
 		private string _nationalNumber;
 
-		private readonly int ScoreCutoffNewUsers = Int32.Parse(Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Risk.RepaymentScoreNewUsersCutOff").Value);
-		private readonly int ScoreCutoffExistingUsers = Int32.Parse(Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Risk.RepaymentScoreExistingUsersCutOff").Value);
+		private readonly int ScoreCutoffNewUsers = Int32.Parse(Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Risk.RepaymentScoreNewUsersCutOff").Value);
+		private readonly int ScoreCutoffExistingUsers = Int32.Parse(Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Risk.RepaymentScoreExistingUsersCutOff").Value);
 		
 		private string _expectedScorecardNameL0;
 		private string _expectedScorecardNameLn;
@@ -61,14 +61,14 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test, AUT(AUT.Za)]
 		public void CheckpointRepaymentPredictionPositiveCorrectScorecardUsedL0()
 		{
-			var scorecardName = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Risk.RepaymentModelForNewUsers").Value;
+			var scorecardName = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Risk.RepaymentModelForNewUsers").Value;
 			Assert.AreEqual(_expectedScorecardNameL0, scorecardName);
 		}
 
 		[Test, AUT(AUT.Za)]
 		public void CheckpointRepaymentPredictionPositiveCorrectScorecardUsedLn()
 		{
-			var scorecardName = Driver.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Risk.RepaymentModelForExistingUsers").Value;
+			var scorecardName = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Risk.RepaymentModelForExistingUsers").Value;
 			Assert.AreEqual(_expectedScorecardNameLn, scorecardName);
 		}
 
@@ -117,7 +117,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			var customer = CustomerBuilder.New().Build();
 			ApplicationBuilder.New(customer).Build().RepayOnDueDate();
 
-			Driver.Db.UpdateEmployerName(customer.Id, Data.EnumToString(TestMask));
+			Drive.Db.UpdateEmployerName(customer.Id, Get.EnumToString(TestMask));
 
 			var application = ApplicationBuilder.New(customer).WithLoanTerm(5).WithLoanAmount(100).Build();
 

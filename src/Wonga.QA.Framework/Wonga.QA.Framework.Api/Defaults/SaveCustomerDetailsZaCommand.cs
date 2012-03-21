@@ -6,18 +6,18 @@ namespace Wonga.QA.Framework.Api
     {
         public override void Default()
         {
-            AccountId = Data.GetId();
-            Title = Data.RandomEnum<TitleEnum>();
-            Forename = Data.GetName();
-            Surname = Data.GetName();
-            Email = Data.RandomEmail();
-            DateOfBirth = Data.GetDoB();
-            Gender = Data.RandomEnum<GenderEnum>();
-            HomeLanguage = Data.RandomEnum<LanguageZaEnum>();
+            AccountId = Get.GetId();
+            Title = Get.RandomEnum<TitleEnum>();
+            Forename = Get.GetName();
+            Surname = Get.GetName();
+            Email = Get.RandomEmail();
+            DateOfBirth = Get.GetDoB();
+            Gender = Get.RandomEnum<GenderEnum>();
+            HomeLanguage = Get.RandomEnum<LanguageZaEnum>();
             HomePhone = "0210000000";
             WorkPhone = "0210000000";
             MarriedInCommunityProperty = 0;
-            NationalNumber = Data.GetNIN((Date)DateOfBirth, (GenderEnum)Gender == GenderEnum.Female);
+            NationalNumber = Get.GetNIN((Date)DateOfBirth, (GenderEnum)Gender == GenderEnum.Female);
 
             if ((GenderEnum)Gender != GenderEnum.Female)
                 MaidenName = null;

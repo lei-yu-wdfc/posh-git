@@ -20,7 +20,7 @@ namespace Wonga.QA.Tests.Payments
 			Do.Until(customer.GetPaymentCard);
 			Application application = ApplicationBuilder.New(customer).Build();
 
-			var response = Driver.Api.Queries.Post(new GetFixedTermLoanTopupOfferQuery {AccountId = customer.Id});
+			var response = Drive.Api.Queries.Post(new GetFixedTermLoanTopupOfferQuery {AccountId = customer.Id});
 			Assert.GreaterThan(decimal.Parse(response.Values["AmountMax"].Single()), 0);
 			Assert.GreaterThan(int.Parse(response.Values["DaysTillRepaymentDate"].Single()), 0);
 		}
@@ -33,7 +33,7 @@ namespace Wonga.QA.Tests.Payments
 			Do.Until(customer.GetPaymentCard);
 			Application application = ApplicationBuilder.New(customer).Build();
 
-			var response = Driver.Api.Queries.Post(new GetFixedTermLoanTopupCalculationQuery
+			var response = Drive.Api.Queries.Post(new GetFixedTermLoanTopupCalculationQuery
 			                                       	{
 			                                       		ApplicationId = application.Id,
 			                                       		TopupAmount = 100
@@ -51,15 +51,15 @@ namespace Wonga.QA.Tests.Payments
 			Do.Until(customer.GetPaymentCard);
 			Application application = ApplicationBuilder.New(customer).Build();
 
-			Driver.Api.Commands.Post(new CreateFixedTermLoanTopupCommand
+			Drive.Api.Commands.Post(new CreateFixedTermLoanTopupCommand
 			                         	{
 			                         		AccountId = customer.Id,
 			                         		ApplicationId = application.Id,
 											FixedTermLoanTopupId = Guid.NewGuid(),
 			                         		TopupAmount = 150
 			                         	});
-			var app = Driver.Db.Payments.Applications.Single(x => x.ExternalId == application.Id);
-			Assert.IsNotNull(Do.Until(() => Driver.Db.Payments.Topups.Single(x => x.ApplicationId == app.ApplicationId)));
+			var app = Drive.Db.Payments.Applications.Single(x => x.ExternalId == application.Id);
+			Assert.IsNotNull(Do.Until(() => Drive.Db.Payments.Topups.Single(x => x.ApplicationId == app.ApplicationId)));
 		}
 
 		[Test, AUT(AUT.Uk), JIRA("UK-789"), Parallelizable]
@@ -70,7 +70,7 @@ namespace Wonga.QA.Tests.Payments
 			Do.Until(customer.GetPaymentCard);
 			Application application = ApplicationBuilder.New(customer).Build();
 
-			Driver.Api.Commands.Post(new CreateFixedTermLoanTopupCommand
+			Drive.Api.Commands.Post(new CreateFixedTermLoanTopupCommand
 			                         	{
 			                         		AccountId = customer.Id,
 			                         		ApplicationId = application.Id,
@@ -78,11 +78,11 @@ namespace Wonga.QA.Tests.Payments
 			                         		TopupAmount = 150
 			                         	});
 
-			var app = Driver.Db.Payments.Applications.Single(x => x.ExternalId == application.Id);
-			var topUp = Driver.Db.Payments.Topups.Single(x => x.ApplicationId == app.ApplicationId);
+			var app = Drive.Db.Payments.Applications.Single(x => x.ExternalId == application.Id);
+			var topUp = Drive.Db.Payments.Topups.Single(x => x.ApplicationId == app.ApplicationId);
 			Assert.IsNotNull(topUp);
 
-			Driver.Api.Commands.Post(new SignFixedTermLoanTopupCommand
+			Drive.Api.Commands.Post(new SignFixedTermLoanTopupCommand
 			                         	{
 			                         		AccountId = customer.Id,
 			                         		FixedTermLoanTopupId = topUp.ExternalId
@@ -92,7 +92,7 @@ namespace Wonga.QA.Tests.Payments
 
 			Assert.IsNotNull(topUp.SignedOn);
 			
-			Assert.AreEqual(2, Do.Until(() => Driver.Db.Payments.Transactions.Where(
+			Assert.AreEqual(2, Do.Until(() => Drive.Db.Payments.Transactions.Where(
 					x => x.ApplicationId == app.ApplicationId && x.ComponentTransactionId == topUp.ExternalId)).Count());
 		}
 	}

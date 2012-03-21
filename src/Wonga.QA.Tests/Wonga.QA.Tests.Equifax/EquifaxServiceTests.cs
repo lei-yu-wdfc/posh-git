@@ -11,7 +11,7 @@ namespace Wonga.QA.Tests.Equifax
         [Test, AUT(AUT.Ca)]
         public void EquifaxServiceIsRunning()
         {
-            Assert.IsTrue(Driver.Svc.Equifax.IsRunning());
+            Assert.IsTrue(Drive.Svc.Equifax.IsRunning());
         }
     }
 }

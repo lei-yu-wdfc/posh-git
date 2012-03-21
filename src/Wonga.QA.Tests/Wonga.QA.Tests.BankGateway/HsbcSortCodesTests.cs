@@ -21,7 +21,7 @@ namespace Wonga.QA.Tests.BankGateway
         [FixtureSetUp]
         public void InsertTestPaymentType()
         {
-            Table<PaymentTypeEntity> types = Driver.Db.BankGateway.PaymentTypes;
+            Table<PaymentTypeEntity> types = Drive.Db.BankGateway.PaymentTypes;
             _type = types.SingleOrDefault(t => t.Name == "QAF") ?? types.Insert(new PaymentTypeEntity { PaymentTypeId = types.Max(t => t.PaymentTypeId) + 1, Name = "QAF" }).Submit();
         }
 
@@ -34,8 +34,8 @@ namespace Wonga.QA.Tests.BankGateway
         [SetUp]
         public void ResetCreationDatesAndGetLastSortCode()
         {
-            BankGatewayDatabase database = Driver.Db.BankGateway;
-            _rows = database.ExecuteCommand(String.Format("UPDATE {0} SET CreationDate = {{0}}", database.SortCodes.GetName()), Data.GetDateTimeMin());
+            BankGatewayDatabase database = Drive.Db.BankGateway;
+            _rows = database.ExecuteCommand(String.Format("UPDATE {0} SET CreationDate = {{0}}", database.SortCodes.GetName()), Get.GetDateTimeMin());
             _code = database.SortCodes.OrderByDescending(c => c.CreationDate).ThenByDescending(c => c.SortCodeId).First();
         }
 
@@ -45,10 +45,10 @@ namespace Wonga.QA.Tests.BankGateway
         {
             _code.Delete().Submit();
 
-            Driver.Svc.Hsbc.Restart();
-            Do.With().Timeout(3).Interval(10).Until(() => Driver.Db.BankGateway.SortCodes.Max(c => c.CreationDate) > Data.GetDateTimeMin());
+            Drive.Svc.Hsbc.Restart();
+            Do.With().Timeout(3).Interval(10).Until(() => Drive.Db.BankGateway.SortCodes.Max(c => c.CreationDate) > Get.GetDateTimeMin());
 
-            Table<SortCodeEntity> codes = Driver.Db.BankGateway.SortCodes;
+            Table<SortCodeEntity> codes = Drive.Db.BankGateway.SortCodes;
             Assert.GreaterThanOrEqualTo(codes.Count(), _rows);
             Assert.Contains(codes.Select(c => c.SortCode), _code.SortCode);
         }
@@ -60,10 +60,10 @@ namespace Wonga.QA.Tests.BankGateway
             _code.PaymentTypeId = _type.PaymentTypeId;
             _code.Submit();
 
-            Driver.Msmq.Hsbc.Send(new UpdateSortCodeTableUkCommand());
-            Do.With().Timeout(3).Interval(10).Until(() => Driver.Db.BankGateway.SortCodes.Max(c => c.CreationDate) > Data.GetDateTimeMin());
+            Drive.Msmq.Hsbc.Send(new UpdateSortCodeTableUkCommand());
+            Do.With().Timeout(3).Interval(10).Until(() => Drive.Db.BankGateway.SortCodes.Max(c => c.CreationDate) > Get.GetDateTimeMin());
 
-            Assert.GreaterThan(_code.Refresh().CreationDate, Data.GetDateTimeMin());
+            Assert.GreaterThan(_code.Refresh().CreationDate, Get.GetDateTimeMin());
             Assert.AreNotEqual(_code.PaymentTypeId, _type.PaymentTypeId);
         }
     }

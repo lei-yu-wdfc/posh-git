@@ -8,7 +8,7 @@ using Wonga.QA.Framework.ThirdParties;
 
 namespace Wonga.QA.Framework
 {
-    public static class Driver
+    public static class Drive
     {
         public static ApiDriver Api { get { return new ApiDriver(); } }
         public static CsDriver Cs { get { return new CsDriver(); } }

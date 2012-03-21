@@ -30,7 +30,7 @@ namespace Wonga.QA.Tests.Payments
 			// Add another account at the branch of the default account created using the customer builder.
 			AddBankAccountCaInternal(customer.Id, defaultBankAccount.InstitutionNumber.ToString(), defaultBankAccount.BranchNumber.ToString());
 
-			Do.Until(() => Driver.Db.Payments.BankAccountsBases.Count(a => a.PersonalBankAccountEntity.AccountId == customer.Id) == 2);
+			Do.Until(() => Drive.Db.Payments.BankAccountsBases.Count(a => a.PersonalBankAccountEntity.AccountId == customer.Id) == 2);
 		}
 
 		[Test, AUT(AUT.Ca), JIRA("CA-312")]
@@ -40,7 +40,7 @@ namespace Wonga.QA.Tests.Payments
 
 			AddBankAccountCaInternal(customer.Id);
 
-			Do.Until(() => Driver.Db.Payments.BankAccountsBases.Count(a => a.PersonalBankAccountEntity.AccountId == customer.Id) == 2);
+			Do.Until(() => Drive.Db.Payments.BankAccountsBases.Count(a => a.PersonalBankAccountEntity.AccountId == customer.Id) == 2);
 		}
 
 		[Test, AUT(AUT.Ca), JIRA("CA-312")]
@@ -52,7 +52,7 @@ namespace Wonga.QA.Tests.Payments
 			AddBankAccountCaInternal(customer.Id);
 
 			// Wait for view model to catch up, otherwise the validator in the API won't fire.
-			Do.Until(() => Driver.Db.Payments.AccountPreferences.Single(p => p.AccountId == customer.Id && !p.CanAddBankAccount));
+			Do.Until(() => Drive.Db.Payments.AccountPreferences.Single(p => p.AccountId == customer.Id && !p.CanAddBankAccount));
 
 			AddBankAccountCaInternal(customer.Id);
 		}
@@ -69,7 +69,7 @@ namespace Wonga.QA.Tests.Payments
 				AccountId = customer.Id
 			};
 
-			var response = Driver.Api.Queries.Post(request);
+			var response = Drive.Api.Queries.Post(request);
 
 			Assert.AreEqual(1, response.Values["BankCode"].Count());
 			Assert.AreEqual(customer.GetBankAccount().ToString(), response.Values["BankAccountId"].Single());
@@ -89,18 +89,18 @@ namespace Wonga.QA.Tests.Payments
 				AccountId = customer.Id
 			};
 
-			var response = Driver.Api.Queries.Post(request);
+			var response = Drive.Api.Queries.Post(request);
 			Assert.IsTrue(response.Values.Contains("CanAddBankAccount"));
 			Assert.AreEqual("true", response.Values["CanAddBankAccount"].Single());
 
 			AddBankAccountCaInternal(customer.Id);
 
 			Do.Until(
-				() => Driver.Db.Payments.BankAccountsBases.Count(a => a.PersonalBankAccountEntity.AccountId == customer.Id) == 2);
+				() => Drive.Db.Payments.BankAccountsBases.Count(a => a.PersonalBankAccountEntity.AccountId == customer.Id) == 2);
 
 			Do.Until(() =>
 			{
-				response = Driver.Api.Queries.Post(request);
+				response = Drive.Api.Queries.Post(request);
 				return response.Values.Contains("CanAddBankAccount") && "false" == response.Values["CanAddBankAccount"].Single();
 			});
 		}
@@ -118,7 +118,7 @@ namespace Wonga.QA.Tests.Payments
     		               		                            	})
     		               	};
 
-			Driver.Api.Commands.Post(requests);
+			Drive.Api.Commands.Post(requests);
 		}
 
 		private static void AddBankAccountCaInternal(Guid accountId, string institutionNumber = "001", string branchNumber = "01161")
@@ -176,9 +176,9 @@ namespace Wonga.QA.Tests.Payments
 		{
 			var accountId = Guid.NewGuid();
 			var message = AddBankAccountWbInternal(accountId, true);
-			Driver.Api.Commands.Post(message);
+			Drive.Api.Commands.Post(message);
 
-			var db = Driver.Db.Payments;
+			var db = Drive.Db.Payments;
 			var baseBankAccountEntity = Do.Until(() => db.BankAccountsBases.SingleOrDefault(p => p.ExternalId == (Guid)message.BankAccountId && p.ValidatedOn != null));
 			var accountPreferencesEntity = Do.Until(() => db.AccountPreferences.SingleOrDefault(p => p.AccountId == accountId));
 
@@ -213,10 +213,10 @@ namespace Wonga.QA.Tests.Payments
 			var addPrimaryBankAccountMessage = AddBankAccountWbInternal(accountId, true);
 			var addSecondaryBankAccountMessage = AddBankAccountWbInternal(accountId, false, "63849203", "134020");
 
-			Driver.Api.Commands.Post(addPrimaryBankAccountMessage);
-			Driver.Api.Commands.Post(addSecondaryBankAccountMessage);
+			Drive.Api.Commands.Post(addPrimaryBankAccountMessage);
+			Drive.Api.Commands.Post(addSecondaryBankAccountMessage);
 
-			var db = Driver.Db.Payments;
+			var db = Drive.Db.Payments;
 			var baseBankAccountPrimaryEntity = Do.Until(() => db.BankAccountsBases.SingleOrDefault(p => p.ExternalId == (Guid)addPrimaryBankAccountMessage.BankAccountId && p.ValidatedOn != null));
 			var baseBankAccountSecondaryEntity = Do.Until(() => db.BankAccountsBases.SingleOrDefault(p => p.ExternalId == (Guid)addSecondaryBankAccountMessage.BankAccountId && p.ValidatedOn != null));
 			var accountPreferencesEntity = Do.Until(() => db.AccountPreferences.SingleOrDefault(p => p.AccountId == accountId));
@@ -250,11 +250,11 @@ namespace Wonga.QA.Tests.Payments
 			var addPrimaryBankAccountMessage = AddBankAccountWbInternal(accountId, true);
 			var addAnotherPrimaryBankAccountMessage = AddBankAccountWbInternal(accountId, true, "63849203", "134020");
 
-			Driver.Api.Commands.Post(addPrimaryBankAccountMessage);
-			var db = Driver.Db.Payments;
+			Drive.Api.Commands.Post(addPrimaryBankAccountMessage);
+			var db = Drive.Db.Payments;
 			var baseFirstBankAccountPrimaryEntity = Do.Until(() => db.BankAccountsBases.SingleOrDefault(p => p.ExternalId == (Guid)addPrimaryBankAccountMessage.BankAccountId && p.ValidatedOn != null));
 
-			Driver.Api.Commands.Post(addAnotherPrimaryBankAccountMessage);
+			Drive.Api.Commands.Post(addAnotherPrimaryBankAccountMessage);
 			var baseSecondBankAccountPrimaryEntity = Do.Until(() => db.BankAccountsBases.SingleOrDefault(p => p.ExternalId == (Guid)addAnotherPrimaryBankAccountMessage.BankAccountId && p.ValidatedOn != null));
 
 			var accountPreferencesEntity = Do.Until(() => db.AccountPreferences.SingleOrDefault(p => p.AccountId == accountId));
@@ -280,7 +280,7 @@ namespace Wonga.QA.Tests.Payments
 			var accountId = Guid.NewGuid();
 			var addPrimaryBankAccountMessage = AddBankAccountWbInternal(accountId, true, "63849203", "1");
 
-			Assert.Throws<ValidatorException>(() => Driver.Api.Commands.Post(addPrimaryBankAccountMessage), "Payments_BankCode_InvalidLength");
+			Assert.Throws<ValidatorException>(() => Drive.Api.Commands.Post(addPrimaryBankAccountMessage), "Payments_BankCode_InvalidLength");
 		}
 
 		/// <summary>
@@ -297,7 +297,7 @@ namespace Wonga.QA.Tests.Payments
 			var accountId = Guid.NewGuid();
 			var addPrimaryBankAccountMessage = AddBankAccountWbInternal(accountId, true, "1");
 
-			Assert.Throws<ValidatorException>(() => Driver.Api.Commands.Post(addPrimaryBankAccountMessage), "Payments_AccountNumber_InvalidLength");
+			Assert.Throws<ValidatorException>(() => Drive.Api.Commands.Post(addPrimaryBankAccountMessage), "Payments_AccountNumber_InvalidLength");
 		}
 
 		/// <summary>
@@ -315,13 +315,13 @@ namespace Wonga.QA.Tests.Payments
 			var addPrimaryBankAccountMessage = AddBankAccountWbInternal(accountId, true);
 			var addAnotherPrimaryBankAccountMessage = AddBankAccountWbInternal(accountId, true);
 
-			Driver.Api.Commands.Post(addPrimaryBankAccountMessage);
+			Drive.Api.Commands.Post(addPrimaryBankAccountMessage);
 
-			var db = Driver.Db.Payments;
+			var db = Drive.Db.Payments;
 			var baseFirstBankAccountPrimaryEntity = Do.Until(() => db.BankAccountsBases.SingleOrDefault(p => p.ExternalId == (Guid)addPrimaryBankAccountMessage.BankAccountId && p.ValidatedOn != null));
 			Assert.IsNotNull(baseFirstBankAccountPrimaryEntity);
 
-			Assert.Throws<ValidatorException>(() => Driver.Api.Commands.Post(addAnotherPrimaryBankAccountMessage), "Payments_BankAccount_DuplicateBankAccount");
+			Assert.Throws<ValidatorException>(() => Drive.Api.Commands.Post(addAnotherPrimaryBankAccountMessage), "Payments_BankAccount_DuplicateBankAccount");
 		}
 
 		/// <summary>
@@ -346,13 +346,13 @@ namespace Wonga.QA.Tests.Payments
 
 			var addSixthBankAccountMessage = AddBankAccountWbInternal(accountId, false, "00000190", "180002");
 
-			Driver.Api.Commands.Post(addFirstBankAccountMessage);
-			Driver.Api.Commands.Post(addSecondBankAccountMessage);
-			Driver.Api.Commands.Post(addThirdBankAccountMessage);
-			Driver.Api.Commands.Post(addFourthBankAccountMessage);
-			Driver.Api.Commands.Post(addFifthBankAccountMessage);
+			Drive.Api.Commands.Post(addFirstBankAccountMessage);
+			Drive.Api.Commands.Post(addSecondBankAccountMessage);
+			Drive.Api.Commands.Post(addThirdBankAccountMessage);
+			Drive.Api.Commands.Post(addFourthBankAccountMessage);
+			Drive.Api.Commands.Post(addFifthBankAccountMessage);
 
-			var db = Driver.Db.Payments;
+			var db = Drive.Db.Payments;
 			var baseFirstBankAccountPrimaryEntity = Do.Until(() => db.BankAccountsBases.SingleOrDefault(p => p.ExternalId == (Guid)addFirstBankAccountMessage.BankAccountId && p.ValidatedOn != null));
 			var baseSecondBankAccountPrimaryEntity = Do.Until(() => db.BankAccountsBases.SingleOrDefault(p => p.ExternalId == (Guid)addSecondBankAccountMessage.BankAccountId && p.ValidatedOn != null));
 			var baseThirdBankAccountPrimaryEntity = Do.Until(() => db.BankAccountsBases.SingleOrDefault(p => p.ExternalId == (Guid)addFirstBankAccountMessage.BankAccountId && p.ValidatedOn != null));
@@ -371,7 +371,7 @@ namespace Wonga.QA.Tests.Payments
 			Assert.AreEqual(accountPreferencesEntity.PrimaryBankAccountId, baseFirstBankAccountPrimaryEntity.BankAccountId);
 
 			// now add one too much
-			Assert.Throws<ValidatorException>(() => Driver.Api.Commands.Post(addSixthBankAccountMessage), "Payments_BankAccount_MaxNumberReached");
+			Assert.Throws<ValidatorException>(() => Drive.Api.Commands.Post(addSixthBankAccountMessage), "Payments_BankAccount_MaxNumberReached");
 		}
 
 		/// <summary>
@@ -391,9 +391,9 @@ namespace Wonga.QA.Tests.Payments
 		{
 			var accountId = Guid.NewGuid();
 			var message = AddBankAccountWbInternal(accountId, true, "66666666", "666666");
-			Driver.Api.Commands.Post(message);
+			Drive.Api.Commands.Post(message);
 
-			var db = Driver.Db.Payments;
+			var db = Drive.Db.Payments;
 			var baseBankAccountEntity = Do.Until(() => db.BankAccountsBases.SingleOrDefault(p => p.ExternalId == (Guid)message.BankAccountId && p.ValidateFailedOn != null));
 
 			Assert.IsNotNull(baseBankAccountEntity, "Bank account base should not be null");
@@ -418,9 +418,9 @@ namespace Wonga.QA.Tests.Payments
 		{
 			var accountId = Guid.NewGuid();
 			var message = AddBankAccountWbInternal(accountId, true);
-			Driver.Api.Commands.Post(message);
+			Drive.Api.Commands.Post(message);
 
-			var db = Driver.Db.Payments;
+			var db = Drive.Db.Payments;
 			var baseBankAccountEntity = Do.Until(() => db.BankAccountsBases.SingleOrDefault(p => p.ExternalId == (Guid)message.BankAccountId && p.ValidatedOn != null));
 
 			Assert.IsNotNull(baseBankAccountEntity, "Bank account base should not be null");

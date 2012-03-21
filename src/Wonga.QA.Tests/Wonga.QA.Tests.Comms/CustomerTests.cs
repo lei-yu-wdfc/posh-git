@@ -30,7 +30,7 @@ namespace Wonga.QA.Tests.Comms
                  .WithStreetInAddress("MyStreet")
                  .WithTownInAddress("MyTown").Build();
 
-            var addressEntity = Driver.Db.Comms.Addresses.Single(a => a.AccountId == customer.Id);
+            var addressEntity = Drive.Db.Comms.Addresses.Single(a => a.AccountId == customer.Id);
             Assert.AreEqual(addressEntity.Street, "MyStreet","These values should be equal");
             Assert.AreEqual(addressEntity.County, "MyCounty", "These values should be equal");
             Assert.AreEqual(addressEntity.District, "MyDistrict", "These values should be equal");
@@ -54,7 +54,7 @@ namespace Wonga.QA.Tests.Comms
                  .WithStreetInAddress("MyStreet")
                  .WithTownInAddress("MyTown").Build();
 
-            var addressEntity = Do.Until(() => Driver.Db.Comms.Addresses.Single(a => a.AccountId == customer.Id));
+            var addressEntity = Do.Until(() => Drive.Db.Comms.Addresses.Single(a => a.AccountId == customer.Id));
             var externalId = addressEntity.ExternalId;
             var message = new UpdateCustomerAddressUkCommand()
                               {
@@ -73,9 +73,9 @@ namespace Wonga.QA.Tests.Comms
                                   Postcode = "SW7 7PN"
                               };
 
-            Driver.Api.Commands.Post(message);
+            Drive.Api.Commands.Post(message);
 
-            addressEntity = Do.Until(() => Driver.Db.Comms.Addresses.Single(a => a.Flat == message.Flat.ToString() && a.ExternalId == externalId));
+            addressEntity = Do.Until(() => Drive.Db.Comms.Addresses.Single(a => a.Flat == message.Flat.ToString() && a.ExternalId == externalId));
             Assert.AreEqual(addressEntity.AccountId, message.AccountId, "These values should be equal");
             Assert.AreEqual(addressEntity.ExternalId, message.AddressId, "These values should be equal");
             Assert.AreEqual(addressEntity.Flat, message.Flat, "These values should be equal");
@@ -102,9 +102,9 @@ namespace Wonga.QA.Tests.Comms
                  .WithStreetInAddress("MyStreet")
                  .WithTownInAddress("MyTown").Build();
 
-            var addressEntity = Driver.Db.Comms.Addresses.Single(a => a.AccountId == customer.Id);
+            var addressEntity = Drive.Db.Comms.Addresses.Single(a => a.AccountId == customer.Id);
             var query = new GetCurrentAddressQuery { AccountId = addressEntity.AccountId };
-            var response = Driver.Api.Queries.Post(query);
+            var response = Drive.Api.Queries.Post(query);
             var specificFlatName = response.Values["Flat"].Single();
             Assert.AreEqual(addressEntity.Flat, specificFlatName, "These values should be equal");
         }
@@ -119,7 +119,7 @@ namespace Wonga.QA.Tests.Comms
             foreach (var code in postCodes)
             {
                 var message = new GetAddressDescriptorsByPostCodeUkQuery { CountryCode = "UK", Postcode = code };
-                var response = Driver.Api.Queries.Post(message);
+                var response = Drive.Api.Queries.Post(message);
                 var responseDescriptionIdList = response.Values["Id"].ToList();
                 var responseDescriptorDescriptionList = response.Values["Description"].ToList();
 
@@ -128,7 +128,7 @@ namespace Wonga.QA.Tests.Comms
 
                 foreach (var descriptionId in responseDescriptionIdList)
                 {
-                    response = Driver.Api.Queries.Post(new GetAddressByDescriptorIdUkQuery { DescriptorId = descriptionId });
+                    response = Drive.Api.Queries.Post(new GetAddressByDescriptorIdUkQuery { DescriptorId = descriptionId });
                     Assert.IsNotEmpty(response.Values, "This collection should not be empty");
                 }
             }
@@ -149,7 +149,7 @@ namespace Wonga.QA.Tests.Comms
                     Postcode = postCode
                 };
 
-                var response = Driver.Api.Queries.Post(message);
+                var response = Drive.Api.Queries.Post(message);
                 Assert.IsNotEmpty(response.Values, "This collection should not be empty");
             }
         }
@@ -164,15 +164,15 @@ namespace Wonga.QA.Tests.Comms
                                   AccountId = accountId,
                                   Gender = "Female",
                                   DateOfBirth = new DateTime(1957, 10, 30).ToDate(DateFormat.Date),
-                                  Email = Data.RandomEmail(),
-                                  Forename = Data.RandomString(8),
-                                  Surname = Data.RandomString(8),
-                                  MiddleName = Data.RandomString(8),
+                                  Email = Get.RandomEmail(),
+                                  Forename = Get.RandomString(8),
+                                  Surname = Get.RandomString(8),
+                                  MiddleName = Get.RandomString(8),
                                   HomePhone = "0217050520",
                                   WorkPhone = "0217450510"
                               };
-            Driver.Api.Commands.Post(message);
-            var detailsEntity = Do.Until(() => Driver.Db.Comms.CustomerDetails.Single(p => p.AccountId == accountId));
+            Drive.Api.Commands.Post(message);
+            var detailsEntity = Do.Until(() => Drive.Db.Comms.CustomerDetails.Single(p => p.AccountId == accountId));
 
             Assert.IsNotNull(detailsEntity);
             Assert.AreEqual(message.Forename, detailsEntity.Forename, "These values should be equal");
@@ -187,26 +187,26 @@ namespace Wonga.QA.Tests.Comms
         public void TestSaveCustomerDetailsCommand_DuplicateCustomer()
         {
             var accountId = Guid.NewGuid();
-            var emailAddress = Data.RandomEmail();
-            Driver.Api.Commands.Post(new CreateAccountCommand { AccountId = accountId, Password = "Passw0rd", Login = emailAddress });
+            var emailAddress = Get.RandomEmail();
+            Drive.Api.Commands.Post(new CreateAccountCommand { AccountId = accountId, Password = "Passw0rd", Login = emailAddress });
             var message = (new SaveCustomerDetailsUkCommand
                                {
                                    AccountId = accountId,
                                    Gender = "Female",
                                    DateOfBirth = new DateTime(1957, 10, 30).ToDate(DateFormat.Date),
                                    Email = emailAddress,
-                                   Forename = Data.RandomString(8),
-                                   Surname = Data.RandomString(8),
-                                   MiddleName = Data.RandomString(8),
+                                   Forename = Get.RandomString(8),
+                                   Surname = Get.RandomString(8),
+                                   MiddleName = Get.RandomString(8),
                                    HomePhone = "0217050520",
                                    WorkPhone = "0217450510"
                                });
 
-            Driver.Api.Commands.Post(message);
-            var customerEntity = Do.Until(() => Driver.Db.Comms.CustomerDetails.Single(p => p.AccountId == accountId));
-            message.Email = Data.RandomEmail();
+            Drive.Api.Commands.Post(message);
+            var customerEntity = Do.Until(() => Drive.Db.Comms.CustomerDetails.Single(p => p.AccountId == accountId));
+            message.Email = Get.RandomEmail();
 
-            var response = Driver.Api.Commands.Post(message);
+            var response = Drive.Api.Commands.Post(message);
             var x = response.GetErrors();
         }
 
@@ -220,15 +220,15 @@ namespace Wonga.QA.Tests.Comms
                 AccountId = accountId,
                 Gender = "Female",
                 DateOfBirth = DateTime.Now.ToDate(DateFormat.Date),
-                Email = Data.RandomEmail(),
-                Forename = Data.RandomString(8),
-                Surname = Data.RandomString(8),
-                MiddleName = Data.RandomString(8),
+                Email = Get.RandomEmail(),
+                Forename = Get.RandomString(8),
+                Surname = Get.RandomString(8),
+                MiddleName = Get.RandomString(8),
                 HomePhone = "0217050520",
                 WorkPhone = "0217450510"
             };
 
-            var error = Assert.Throws<ValidatorException>(() => Driver.Api.Commands.Post(message));
+            var error = Assert.Throws<ValidatorException>(() => Drive.Api.Commands.Post(message));
             Assert.AreEqual(error.Errors.ToList()[0], "Comms_Age_BelowMinuimumAge", "These values should be equal");
         }
 
@@ -237,16 +237,16 @@ namespace Wonga.QA.Tests.Comms
         public void TestGetCustomerDetailsQuery()
         {
             var accountId = Guid.NewGuid();
-            var commsDb = Driver.Db.Comms;
+            var commsDb = Drive.Db.Comms;
             var newEntity = new CustomerDetailEntity
                                  {
                                      AccountId = accountId,
                                      Gender = 2,
-                                     DateOfBirth = Data.GetDoB(),
-                                     Email = Data.RandomEmail(),
-                                     Forename = Data.RandomString(8),
-                                     Surname = Data.RandomString(8),
-                                     MiddleName = Data.RandomString(8),
+                                     DateOfBirth = Get.GetDoB(),
+                                     Email = Get.RandomEmail(),
+                                     Forename = Get.RandomString(8),
+                                     Surname = Get.RandomString(8),
+                                     MiddleName = Get.RandomString(8),
                                      HomePhone = "0217050520",
                                      WorkPhone = "0217450510"
                                  };
@@ -254,7 +254,7 @@ namespace Wonga.QA.Tests.Comms
             commsDb.CustomerDetails.InsertOnSubmit(newEntity);
             commsDb.SubmitChanges();
 
-            var response = Driver.Api.Queries.Post(new GetCustomerDetailsQuery()
+            var response = Drive.Api.Queries.Post(new GetCustomerDetailsQuery()
                                                         {
                                                             AccountId = accountId
                                                         });
@@ -272,8 +272,8 @@ namespace Wonga.QA.Tests.Comms
                                   AccountId = accountId,
                                   AcceptMarketingContact = true
                               };
-            Driver.Api.Commands.Post(message);
-            var contactPreferenceEntity = Do.Until(() => Driver.Db.Comms.ContactPreferences.SingleOrDefault(p => p.AccountId == accountId));
+            Drive.Api.Commands.Post(message);
+            var contactPreferenceEntity = Do.Until(() => Drive.Db.Comms.ContactPreferences.SingleOrDefault(p => p.AccountId == accountId));
             Assert.IsNotNull(contactPreferenceEntity);
             Assert.AreEqual(contactPreferenceEntity.AccountId, message.AccountId, "These values should be equal");
             Assert.AreEqual(contactPreferenceEntity.AcceptMarketingContact, message.AcceptMarketingContact, "These values should be equal");
@@ -289,11 +289,11 @@ namespace Wonga.QA.Tests.Comms
                                       AccountId = accountId,
                                       AcceptMarketingContact = true
                                   };
-            Driver.Api.Commands.Post(message);
-            var saveContactPreferencesEntity = Do.Until(() => Driver.Db.Comms.ContactPreferences.SingleOrDefault(p => p.AccountId == accountId));
+            Drive.Api.Commands.Post(message);
+            var saveContactPreferencesEntity = Do.Until(() => Drive.Db.Comms.ContactPreferences.SingleOrDefault(p => p.AccountId == accountId));
             Assert.IsNotNull(saveContactPreferencesEntity);
 
-            var response = Driver.Api.Queries.Post(new GetContactPreferencesQuery()
+            var response = Drive.Api.Queries.Post(new GetContactPreferencesQuery()
                                                        {
                                                            AccountId = accountId
                                                        });
@@ -306,17 +306,17 @@ namespace Wonga.QA.Tests.Comms
         public void TestSendPasswordResetEmailCommand()
         {
             var accountId = Guid.NewGuid();
-            var emailAddress = Data.RandomEmail();
-            var commsDb = Driver.Db.Comms;
+            var emailAddress = Get.RandomEmail();
+            var commsDb = Drive.Db.Comms;
             var newEntity = new CustomerDetailEntity
             {
                 AccountId = accountId,
                 Gender = 2,
-                DateOfBirth = Data.GetDoB(),
+                DateOfBirth = Get.GetDoB(),
                 Email = emailAddress,
-                Forename = Data.RandomString(8),
-                Surname = Data.RandomString(8),
-                MiddleName = Data.RandomString(8),
+                Forename = Get.RandomString(8),
+                Surname = Get.RandomString(8),
+                MiddleName = Get.RandomString(8),
                 HomePhone = "0217050520",
                 WorkPhone = "0217450510"
             };
@@ -324,7 +324,7 @@ namespace Wonga.QA.Tests.Comms
             commsDb.CustomerDetails.InsertOnSubmit(newEntity);
             commsDb.SubmitChanges();
 
-            Assert.DoesNotThrow(() => Driver.Api.Commands.Post(new SendPasswordResetEmailCommand()
+            Assert.DoesNotThrow(() => Drive.Api.Commands.Post(new SendPasswordResetEmailCommand()
                                                                    {
                                                                        Email = emailAddress,
                                                                        NotificationId = Guid.NewGuid(),
@@ -337,16 +337,16 @@ namespace Wonga.QA.Tests.Comms
         public void TestUpdateHomePhoneCommand()
         {
             var accountId = Guid.NewGuid();
-            var commsDb = Driver.Db.Comms;
+            var commsDb = Drive.Db.Comms;
             var newEntity = new CustomerDetailEntity
             {
                 AccountId = accountId,
                 Gender = 2,
-                DateOfBirth = Data.GetDoB(),
-                Email = Data.RandomEmail(),
-                Forename = Data.RandomString(8),
-                Surname = Data.RandomString(8),
-                MiddleName = Data.RandomString(8),
+                DateOfBirth = Get.GetDoB(),
+                Email = Get.RandomEmail(),
+                Forename = Get.RandomString(8),
+                Surname = Get.RandomString(8),
+                MiddleName = Get.RandomString(8),
                 HomePhone = "0217050520",
                 WorkPhone = "0217450510"
             };
@@ -359,8 +359,8 @@ namespace Wonga.QA.Tests.Comms
                                                  AccountId = accountId,
                                                  HomePhone = "02071111111"
                                              };
-            Driver.Api.Commands.Post(updateHomePhoneMessage);
-            var detailsEntity = Do.Until(() => Driver.Db.Comms.CustomerDetails.SingleOrDefault(p => p.AccountId == accountId && p.HomePhone == updateHomePhoneMessage.HomePhone.ToString()));
+            Drive.Api.Commands.Post(updateHomePhoneMessage);
+            var detailsEntity = Do.Until(() => Drive.Db.Comms.CustomerDetails.SingleOrDefault(p => p.AccountId == accountId && p.HomePhone == updateHomePhoneMessage.HomePhone.ToString()));
             Assert.IsNotNull(detailsEntity);
             Assert.AreEqual(updateHomePhoneMessage.HomePhone, detailsEntity.HomePhone, "These values should be equal");
         }
@@ -370,29 +370,29 @@ namespace Wonga.QA.Tests.Comms
         public void TestSendVerificationEmailCommand()
         {
             var accountId = Guid.NewGuid();
-            var commsDb = Driver.Db.Comms;
+            var commsDb = Drive.Db.Comms;
             var newEntity = new CustomerDetailEntity
             {
                 AccountId = accountId,
                 Gender = 2,
-                DateOfBirth = Data.GetDoB(),
-                Email = Data.RandomEmail(),
-                Forename = Data.RandomString(8),
-                Surname = Data.RandomString(8),
-                MiddleName = Data.RandomString(8),
+                DateOfBirth = Get.GetDoB(),
+                Email = Get.RandomEmail(),
+                Forename = Get.RandomString(8),
+                Surname = Get.RandomString(8),
+                MiddleName = Get.RandomString(8),
                 HomePhone = "0217050520",
                 WorkPhone = "0217450510"
             };
 
             commsDb.CustomerDetails.InsertOnSubmit(newEntity);
             commsDb.SubmitChanges();
-            var detailsEntity = Do.Until(() => Driver.Db.Comms.CustomerDetails.SingleOrDefault(p => p.AccountId == accountId));
+            var detailsEntity = Do.Until(() => Drive.Db.Comms.CustomerDetails.SingleOrDefault(p => p.AccountId == accountId));
             Assert.IsNotNull(detailsEntity);
 
-            Assert.DoesNotThrow(() => Driver.Api.Commands.Post(new SendVerificationEmailCommand()
+            Assert.DoesNotThrow(() => Drive.Api.Commands.Post(new SendVerificationEmailCommand()
                                                         {
                                                             AccountId = accountId,
-                                                            Email = Data.RandomEmail(),
+                                                            Email = Get.RandomEmail(),
                                                             UriFragment = "api_test"
                                                         }));
         }
@@ -402,34 +402,34 @@ namespace Wonga.QA.Tests.Comms
         public void TestCompleteEmailVerificationCommand()
         {
             var accountId = Guid.NewGuid();
-            var commsDb = Driver.Db.Comms;
+            var commsDb = Drive.Db.Comms;
             var newEntity = new CustomerDetailEntity
             {
                 AccountId = accountId,
                 Gender = 2,
-                DateOfBirth = Data.GetDoB(),
-                Email = Data.RandomEmail(),
-                Forename = Data.RandomString(8),
-                Surname = Data.RandomString(8),
-                MiddleName = Data.RandomString(8),
+                DateOfBirth = Get.GetDoB(),
+                Email = Get.RandomEmail(),
+                Forename = Get.RandomString(8),
+                Surname = Get.RandomString(8),
+                MiddleName = Get.RandomString(8),
                 HomePhone = "0217050520",
                 WorkPhone = "0217450510"
             };
 
             commsDb.CustomerDetails.InsertOnSubmit(newEntity);
             commsDb.SubmitChanges();
-            var detailsEntity = Do.Until(() => Driver.Db.Comms.CustomerDetails.SingleOrDefault(p => p.AccountId == accountId));
+            var detailsEntity = Do.Until(() => Drive.Db.Comms.CustomerDetails.SingleOrDefault(p => p.AccountId == accountId));
             Assert.IsNotNull(detailsEntity);
-            Assert.DoesNotThrow(() => Driver.Api.Commands.Post(new SendVerificationEmailCommand()
+            Assert.DoesNotThrow(() => Drive.Api.Commands.Post(new SendVerificationEmailCommand()
             {
                 AccountId = accountId,
-                Email = Data.RandomEmail(),
+                Email = Get.RandomEmail(),
                 UriFragment = "api_test"
             }));
 
-            var emailVerificationEntity = Do.Until(() => Driver.Db.Comms.EmailVerifications.SingleOrDefault(p => p.AccountId == accountId));
+            var emailVerificationEntity = Do.Until(() => Drive.Db.Comms.EmailVerifications.SingleOrDefault(p => p.AccountId == accountId));
 
-            Assert.DoesNotThrow(()=> Driver.Api.Commands.Post(new CompleteEmailVerificationCommand()
+            Assert.DoesNotThrow(()=> Drive.Api.Commands.Post(new CompleteEmailVerificationCommand()
                                                                   {
                                                                       AccountId = accountId,
                                                                       ChangeId = emailVerificationEntity.ChangeId
@@ -439,9 +439,9 @@ namespace Wonga.QA.Tests.Comms
         [Test, AUT(AUT.Uk), JIRA("UK-850")]
         public void CreateCustomerTwice()
         {
-            String forename = Data.RandomString(4, 8);
-            String surname = Data.RandomString(5, 10);
-            Date dob = Data.GetDoB();
+            String forename = Get.RandomString(4, 8);
+            String surname = Get.RandomString(5, 10);
+            Date dob = Get.GetDoB();
 
             CustomerBuilder.New()
                 .WithForename(forename)
@@ -462,9 +462,9 @@ namespace Wonga.QA.Tests.Comms
         [Test, AUT(AUT.Uk), JIRA("UK-850")]
         public void CreateSameCustomerTwiceInverseCaseOnSurnameAndForename()
         {
-            String forename = Data.RandomString(4, 8);
-            String surname = Data.RandomString(5, 10);
-            Date dob = Data.GetDoB();
+            String forename = Get.RandomString(4, 8);
+            String surname = Get.RandomString(5, 10);
+            Date dob = Get.GetDoB();
 
             CustomerBuilder.New()
                 .WithForename(forename)
@@ -474,8 +474,8 @@ namespace Wonga.QA.Tests.Comms
 
             var error = Assert.Throws<ValidatorException>(() =>
             CustomerBuilder.New()
-                .WithForename(Data.InvertCase(forename))
-                .WithSurname(Data.InvertCase(surname))
+                .WithForename(Get.InvertCase(forename))
+                .WithSurname(Get.InvertCase(surname))
                 .WithDateOfBirth(dob)
                 .Build());
 
@@ -485,9 +485,9 @@ namespace Wonga.QA.Tests.Comms
         [Test, AUT(AUT.Uk), JIRA("UK-850")]
         public void CreateSimilarCustomerDiffForename()
         {
-            String forename = Data.RandomString(4, 8);
-            String surname = Data.RandomString(5, 10);
-            Date dob = Data.GetDoB();
+            String forename = Get.RandomString(4, 8);
+            String surname = Get.RandomString(5, 10);
+            Date dob = Get.GetDoB();
 
             CustomerBuilder.New()
                 .WithForename(forename)
@@ -505,11 +505,11 @@ namespace Wonga.QA.Tests.Comms
         [Test, AUT(AUT.Uk), JIRA("UK-850")]
         public void CreateSimilarCustomerSoundexOnSurname()
         {
-            String forename = Data.RandomString(4, 8);
-            String random = Data.RandomString(5, 10);
+            String forename = Get.RandomString(4, 8);
+            String random = Get.RandomString(5, 10);
             String surname = "Zi" + random;
             String soundexSurname = "Zy" + random;
-            Date dob = Data.GetDoB();
+            Date dob = Get.GetDoB();
 
             CustomerBuilder.New()
                 .WithForename(forename)
@@ -530,7 +530,7 @@ namespace Wonga.QA.Tests.Comms
         [Test, AUT(AUT.Uk), JIRA("UK-850")]
         public void CreateTwoCustomersSameEmail()
         {
-            String email = Data.RandomEmail();
+            String email = Get.RandomEmail();
             
             CustomerBuilder.New()
                 .WithEmailAddress(email)
@@ -547,7 +547,7 @@ namespace Wonga.QA.Tests.Comms
         [Test, AUT(AUT.Uk), JIRA("UK-850")]
         public void CreateTwoCustomersSameEmailInvertedCase()
         {
-            String email = Data.RandomEmail();
+            String email = Get.RandomEmail();
 
             CustomerBuilder.New()
                 .WithEmailAddress(email)
@@ -555,7 +555,7 @@ namespace Wonga.QA.Tests.Comms
 
             var error = Assert.Throws<ValidatorException>(() =>
             CustomerBuilder.New()
-                .WithEmailAddress(Data.InvertCase(email))
+                .WithEmailAddress(Get.InvertCase(email))
                 .Build());
 
             Assert.Contains(error.Message, "Ops_Login_AlreadyExists");

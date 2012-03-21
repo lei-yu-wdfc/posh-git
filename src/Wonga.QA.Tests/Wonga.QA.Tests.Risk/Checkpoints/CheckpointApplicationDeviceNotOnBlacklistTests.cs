@@ -18,7 +18,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             var application = ApplicationBuilder.New(customer).WithIovationBlackBox("Deny").WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
-            Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Failed), Data.EnumToString(CheckpointDefinitionEnum.HardwareBlacklistCheck));
+            Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Failed), Get.EnumToString(CheckpointDefinitionEnum.HardwareBlacklistCheck));
         }
 
         [Test, AUT(AUT.Ca, AUT.Uk), JIRA("CA-1735")]
@@ -28,7 +28,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             Application application = ApplicationBuilder.New(customer).WithIovationBlackBox("Allow").WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
-            Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.HardwareBlacklistCheck));
+            Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Verified), Get.EnumToString(CheckpointDefinitionEnum.HardwareBlacklistCheck));
         }
 
     }

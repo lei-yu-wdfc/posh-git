@@ -55,27 +55,27 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
         public static bool VerifyApplicationClosed(Guid applicationGuid)
         {
-            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == applicationGuid).ClosedOn != null);
+            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == applicationGuid).ClosedOn != null);
 
             return true;
         }
 
         public static bool VerifyApplicationNotClosed(Guid applicationGuid)
         {
-            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == applicationGuid).ClosedOn == null);
+            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == applicationGuid).ClosedOn == null);
 
             return true;
         }
 
         public static bool VerifyApplicationNotClosedAfterCashIn(Guid applicationGuid)
         {
-            Do.Until(() => Driver.Db.Payments.Applications.Single(
+            Do.Until(() => Drive.Db.Payments.Applications.Single(
                 a => a.ExternalId == applicationGuid).Transactions.Single(
                     t =>
-                    (PaymentTransactionScopeEnum)t.Scope == PaymentTransactionScopeEnum.Credit && t.Type == Data.EnumToString(
+                    (PaymentTransactionScopeEnum)t.Scope == PaymentTransactionScopeEnum.Credit && t.Type == Get.EnumToString(
                         Config.AUT == AUT.Uk ? PaymentTransactionEnum.CardPayment : PaymentTransactionEnum.DirectBankPayment)));
 
-            Do.Until(() => Driver.Db.Payments.Applications.Single(a => a.ExternalId == applicationGuid).ClosedOn == null);
+            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == applicationGuid).ClosedOn == null);
 
             return true;
         }
@@ -84,7 +84,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
             return
                 Do.With().Timeout(2).Interval(10).Until(
-                    () => Driver.Db.OpsSagas.PaymentsInArrearsSagaEntities.Single(s => s.ApplicationId == applicationGuid)) != null;
+                    () => Drive.Db.OpsSagas.PaymentsInArrearsSagaEntities.Single(s => s.ApplicationId == applicationGuid)) != null;
         }
 
         public static bool VerifyVariableInterestRatesApplied(List<TransactionEntity> actual, List<TransactionEntity> expected)
@@ -119,12 +119,12 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
         public static bool VerifyDirectBankPaymentOfAmount(Guid applicationGuid, decimal amount)
         {
-            int appId = Driver.Db.Payments.Applications.Single(a => a.ExternalId == applicationGuid).ApplicationId;
+            int appId = Drive.Db.Payments.Applications.Single(a => a.ExternalId == applicationGuid).ApplicationId;
 
-            Do.With().Timeout(3).Interval(10).Until(() => Driver.Db.Payments.Transactions.Single(a => a.ApplicationId == appId & a.Type == PaymentTransactionType.DirectBankPayment.ToString() & a.Amount == amount));
+            Do.With().Timeout(3).Interval(10).Until(() => Drive.Db.Payments.Transactions.Single(a => a.ApplicationId == appId & a.Type == PaymentTransactionType.DirectBankPayment.ToString() & a.Amount == amount));
 
             TestLog.DebugTrace.WriteLine("ActualDirectBankPaymentAmount => ExpectedDirectBankPayment {0} => {1}\n",
-                                         Driver.Db.Payments.Transactions.Single(
+                                         Drive.Db.Payments.Transactions.Single(
                                              a =>
                                              a.ApplicationId == appId &
                                              a.Type == PaymentTransactionType.DirectBankPayment.ToString() &
@@ -135,14 +135,14 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
         public static bool VerifyNoDefaultChargeApplied(Guid applicationGuid)
         {
-            var appId = Driver.Db.Payments.Applications.Single(a => a.ExternalId == applicationGuid).ApplicationId;
+            var appId = Drive.Db.Payments.Applications.Single(a => a.ExternalId == applicationGuid).ApplicationId;
 
-            return Driver.Db.Payments.Transactions.SingleOrDefault((s => s.ApplicationId == appId & s.Type == PaymentTransactionType.DefaultCharge.ToString())) == null;
+            return Drive.Db.Payments.Transactions.SingleOrDefault((s => s.ApplicationId == appId & s.Type == PaymentTransactionType.DefaultCharge.ToString())) == null;
         }
 
         public static bool VerifyOnlineBillPaymentRecordForCcin(String ccin)
         {
-            return Do.With().Timeout(2).Interval(10).Until(() => Driver.Db.Payments.OnlineBillPayments.Single(c => c.Ccin == ccin)) != null;
+            return Do.With().Timeout(2).Interval(10).Until(() => Drive.Db.Payments.OnlineBillPayments.Single(c => c.Ccin == ccin)) != null;
         }
     }
 }

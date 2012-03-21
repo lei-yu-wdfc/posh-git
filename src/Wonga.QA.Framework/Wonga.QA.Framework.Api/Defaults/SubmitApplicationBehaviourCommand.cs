@@ -6,9 +6,9 @@ namespace Wonga.QA.Framework.Api
     {
         public override void Default()
         {
-            ApplicationId = Data.GetId();
-            TermSliderPosition = Data.RandomEnum<SliderPositionEnum>();
-            AmountSliderPosition = Data.RandomEnum<SliderPositionEnum>();
+            ApplicationId = Get.GetId();
+            TermSliderPosition = Get.RandomEnum<SliderPositionEnum>();
+            AmountSliderPosition = Get.RandomEnum<SliderPositionEnum>();
         }
     }
 }

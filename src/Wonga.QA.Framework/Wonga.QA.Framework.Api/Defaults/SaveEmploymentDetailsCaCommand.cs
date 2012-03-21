@@ -7,16 +7,16 @@ namespace Wonga.QA.Framework.Api
     {
         public override void Default()
         {
-            AccountId = Data.GetId();
+            AccountId = Get.GetId();
             EmployerName = "test:EmployedMask";
-            EmploymentIndustry = Data.RandomEnum<EmploymentIndustryEnum>();
-            EmploymentPosition = Data.RandomEnum<EmploymentPositionCaEnum>();
-            IncomeFrequency = Data.RandomEnum<IncomeFrequencyEnum>();
+            EmploymentIndustry = Get.RandomEnum<EmploymentIndustryEnum>();
+            EmploymentPosition = Get.RandomEnum<EmploymentPositionCaEnum>();
+            IncomeFrequency = Get.RandomEnum<IncomeFrequencyEnum>();
             NetMonthlyIncome = 1000;
             NextPayDate = DateTime.Today.AddDays(10).ToDate(DateFormat.Date);
             PaidDirectDeposit = true;
             StartDate = DateTime.Today.AddYears(-1).ToDate(DateFormat.Date);
-            Status = Data.RandomEnum<EmploymentStatusEnum>();
+            Status = Get.RandomEnum<EmploymentStatusEnum>();
             Status = EmploymentStatusEnum.EmployedFullTime;
         }
     }

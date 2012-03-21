@@ -18,15 +18,15 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
             l0app.RepayOnDueDate();
 
-            EmploymentDetailEntity employmentDetails = Driver.Db.Risk.EmploymentDetails.Single(cd => cd.AccountId == customer.Id);
-            employmentDetails.EmployerName = Data.EnumToString(RiskMask.TESTDirectFraud);
+            EmploymentDetailEntity employmentDetails = Drive.Db.Risk.EmploymentDetails.Single(cd => cd.AccountId == customer.Id);
+            employmentDetails.EmployerName = Get.EnumToString(RiskMask.TESTDirectFraud);
             employmentDetails.Submit();
 
             Application lNApp = ApplicationBuilder.New(customer).Build();
             var riskWorkflows = Application.GetWorkflowsForApplication(lNApp.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
-            Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.UserAssistedFraudCheck));
-            //Assert.Contains(Application.GetExecutedCheckpointDefinitions(lNApp.Id, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.UserAssistedFraudCheck));
+            Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Verified), Get.EnumToString(CheckpointDefinitionEnum.UserAssistedFraudCheck));
+            //Assert.Contains(Application.GetExecutedCheckpointDefinitions(lNApp.Id, CheckpointStatus.Verified), Get.EnumToString(CheckpointDefinitionEnum.UserAssistedFraudCheck));
         }
     }
 }

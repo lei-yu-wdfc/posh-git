@@ -7,8 +7,8 @@ namespace Wonga.QA.Framework.Api
     {
         public override void Default()
         {
-            AccountId = Data.GetId();
-            BankAccountId = Data.GetId();
+            AccountId = Get.GetId();
+            BankAccountId = Get.GetId();
             AccountNumber = 12345678901;
             AccountOpenDate = DateTime.Now.AddYears(-4);
             AccountType = "Savings";

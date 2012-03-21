@@ -24,14 +24,14 @@ namespace Wonga.QA.Tests.Comms
             var accountId = Guid.NewGuid();
             const string mobilePhone = "07200000000";
 
-            Assert.DoesNotThrow(() => Driver.Api.Commands.Post(new VerifyMobilePhoneUkCommand()
+            Assert.DoesNotThrow(() => Drive.Api.Commands.Post(new VerifyMobilePhoneUkCommand()
                               {
                                   AccountId = accountId,
-                                  Forename = Data.RandomString(8),
+                                  Forename = Get.RandomString(8),
                                   MobilePhone = mobilePhone,
                                   VerificationId = verificationId
                               }));
-            var mobileVerificationEntity = Do.Until(() => Driver.Db.Comms.MobilePhoneVerifications.SingleOrDefault(p => p.VerificationId == verificationId));
+            var mobileVerificationEntity = Do.Until(() => Drive.Db.Comms.MobilePhoneVerifications.SingleOrDefault(p => p.VerificationId == verificationId));
             Assert.IsNotNull(mobileVerificationEntity);
             Assert.AreEqual(mobileVerificationEntity.AccountId, accountId, "These values should be equal");
             Assert.AreEqual(mobileVerificationEntity.MobilePhone, mobilePhone, "These values should be equal");
@@ -42,11 +42,11 @@ namespace Wonga.QA.Tests.Comms
         public void TestVerifyMobilePhoneCommand_WithInvalidNumber()
         {
             const string invalidMobilePhone = "072000000000";
-            var exceptionObject = Assert.Throws<ValidatorException>(() => Driver.Api.Commands.Post(new VerifyMobilePhoneUkCommand()
+            var exceptionObject = Assert.Throws<ValidatorException>(() => Drive.Api.Commands.Post(new VerifyMobilePhoneUkCommand()
                                                                                          {
                                                                                              AccountId = Guid.NewGuid(),
                                                                                              Forename =
-                                                                                                 Data.RandomString(8),
+                                                                                                 Get.RandomString(8),
                                                                                              MobilePhone =
                                                                                                  invalidMobilePhone,
                                                                                              VerificationId =
@@ -63,16 +63,16 @@ namespace Wonga.QA.Tests.Comms
             var accountId = Guid.NewGuid();
             var verificationId = Guid.NewGuid();
             const string mobilePhoneNumber = "07712345678";
-            var commsDb = Driver.Db.Comms;
+            var commsDb = Drive.Db.Comms;
             var newEntity = new CustomerDetailEntity
             {
                 AccountId = accountId,
                 Gender = 2,
-                DateOfBirth = Data.GetDoB(),
-                Email = Data.RandomEmail(),
-                Forename = Data.RandomString(8),
-                Surname = Data.RandomString(8),
-                MiddleName = Data.RandomString(8),
+                DateOfBirth = Get.GetDoB(),
+                Email = Get.RandomEmail(),
+                Forename = Get.RandomString(8),
+                Surname = Get.RandomString(8),
+                MiddleName = Get.RandomString(8),
                 HomePhone = "0217050520",
                 WorkPhone = "0217450510",
                 MobilePhone = mobilePhoneNumber
@@ -81,19 +81,19 @@ namespace Wonga.QA.Tests.Comms
             commsDb.CustomerDetails.InsertOnSubmit(newEntity);
             commsDb.SubmitChanges();
 
-            Assert.DoesNotThrow(() => Driver.Api.Commands.Post(new VerifyMobilePhoneUkCommand()
+            Assert.DoesNotThrow(() => Drive.Api.Commands.Post(new VerifyMobilePhoneUkCommand()
                                           {
                                               AccountId = accountId,
-                                              Forename = Data.RandomString(8),
+                                              Forename = Get.RandomString(8),
                                               MobilePhone = mobilePhoneNumber,
                                               VerificationId = verificationId
                                           }));
             var mobileVerificationEntity =
-                Do.Until(() => Driver.Db.Comms.MobilePhoneVerifications.SingleOrDefault(p => p.VerificationId == verificationId));
+                Do.Until(() => Drive.Db.Comms.MobilePhoneVerifications.SingleOrDefault(p => p.VerificationId == verificationId));
             Assert.IsNotNull(mobileVerificationEntity);
             Assert.IsNotNull(mobileVerificationEntity.Pin);
 
-            Assert.DoesNotThrow(() => Driver.Api.Commands.Post(new CompleteMobilePhoneVerificationCommand()
+            Assert.DoesNotThrow(() => Drive.Api.Commands.Post(new CompleteMobilePhoneVerificationCommand()
                                                                  {
                                                                      Pin = mobileVerificationEntity.Pin,
                                                                      VerificationId = verificationId
@@ -104,7 +104,7 @@ namespace Wonga.QA.Tests.Comms
         [JIRA("SME-563"),Description("This negative test covers the process of creating a new customer details record, initiates mobile phone verification and completes it with incorrect PIN, while checking for failure")]
         public void TestCompleteEmailVerificationCommand_WithInvalidPin()
         {
-            var exceptionObject = Assert.Throws<ValidatorException>(() => Driver.Api.Commands.Post(new CompleteMobilePhoneVerificationCommand()
+            var exceptionObject = Assert.Throws<ValidatorException>(() => Drive.Api.Commands.Post(new CompleteMobilePhoneVerificationCommand()
                                                              {
                                                                  Pin = "",
                                                                  VerificationId = Guid.NewGuid()
@@ -120,16 +120,16 @@ namespace Wonga.QA.Tests.Comms
             var accountId = Guid.NewGuid();
             var verificationId = Guid.NewGuid();
             const string mobilePhoneNumber = "07712345678";
-            var commsDb = Driver.Db.Comms;
+            var commsDb = Drive.Db.Comms;
             var newEntity = new CustomerDetailEntity
             {
                 AccountId = accountId,
                 Gender = 2,
-                DateOfBirth = Data.GetDoB(),
-                Email = Data.RandomEmail(),
-                Forename = Data.RandomString(8),
-                Surname = Data.RandomString(8),
-                MiddleName = Data.RandomString(8),
+                DateOfBirth = Get.GetDoB(),
+                Email = Get.RandomEmail(),
+                Forename = Get.RandomString(8),
+                Surname = Get.RandomString(8),
+                MiddleName = Get.RandomString(8),
                 HomePhone = "0217050520",
                 WorkPhone = "0217450510",
                 MobilePhone = mobilePhoneNumber
@@ -138,19 +138,19 @@ namespace Wonga.QA.Tests.Comms
             commsDb.CustomerDetails.InsertOnSubmit(newEntity);
             commsDb.SubmitChanges();
 
-            Assert.DoesNotThrow(() => Driver.Api.Commands.Post(new VerifyMobilePhoneUkCommand()
+            Assert.DoesNotThrow(() => Drive.Api.Commands.Post(new VerifyMobilePhoneUkCommand()
             {
                 AccountId = accountId,
-                Forename = Data.RandomString(8),
+                Forename = Get.RandomString(8),
                 MobilePhone = mobilePhoneNumber,
                 VerificationId = verificationId
             }));
-            var mobileVerificationEntity = Do.Until(() => Driver.Db.Comms.MobilePhoneVerifications.SingleOrDefault(p => p.VerificationId == verificationId));
+            var mobileVerificationEntity = Do.Until(() => Drive.Db.Comms.MobilePhoneVerifications.SingleOrDefault(p => p.VerificationId == verificationId));
             Assert.IsNotNull(mobileVerificationEntity);
 
-            Assert.DoesNotThrow(()=>Driver.Api.Commands.Post(new ResendMobilePhonePinCommand()
+            Assert.DoesNotThrow(()=>Drive.Api.Commands.Post(new ResendMobilePhonePinCommand()
                                                                  {
-                                                                     Forename = Data.RandomString(8),
+                                                                     Forename = Get.RandomString(8),
                                                                      VerificationId = mobileVerificationEntity.VerificationId
                                                                  }));
         }

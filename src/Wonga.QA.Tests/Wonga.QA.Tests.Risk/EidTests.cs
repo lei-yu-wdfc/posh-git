@@ -29,7 +29,7 @@ namespace Wonga.QA.Tests.Risk
 
             const string middleName = "TESTDirectFraud";
             const string employerName = "Wonga";
-            var email = Data.GetEmailWithoutPlusChar();
+            var email = Get.GetEmailWithoutPlusChar();
 
             var dateOfBirth = new Date(new DateTime(1981, 11, 11), DateFormat.Date);
             const string nationalNumber = "811224575";
@@ -244,8 +244,8 @@ namespace Wonga.QA.Tests.Risk
         [TearDown]
         public void TearDown()
         {
-            _customer.UpdateForename(Data.GetName());
-            _customer.UpdateSurname(Data.GetName());
+            _customer.UpdateForename(Get.GetName());
+            _customer.UpdateSurname(Get.GetName());
             _customer.ScrubCcin();
         }
     }

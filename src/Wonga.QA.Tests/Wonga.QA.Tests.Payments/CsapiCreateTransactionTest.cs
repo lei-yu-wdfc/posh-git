@@ -32,9 +32,9 @@ namespace Wonga.QA.Tests.Payments
                                                    Scope = PaymentTransactionScopeEnum.Credit,
                                                    Type = PaymentTransactionEnum.Cheque
                                                };
-            Driver.Cs.Commands.Post(createTransactionCommand);
+            Drive.Cs.Commands.Post(createTransactionCommand);
 
-            Do.Until(() => Driver.Db.Payments.Transactions.Single(t => t.Amount == 500.50m
+            Do.Until(() => Drive.Db.Payments.Transactions.Single(t => t.Amount == 500.50m
                                                                        && t.ApplicationEntity.ExternalId == app.Id
                                                                        && t.Reference == ""
                                                                        && t.SalesForceUsername == "test.user@wonga.com"
@@ -58,8 +58,8 @@ namespace Wonga.QA.Tests.Payments
                 Scope = PaymentTransactionScopeEnum.Credit,
                 Type = PaymentTransactionEnum.Cheque
             };
-            Assert.Throws<SchemaException>(() => Driver.Cs.Commands.Post(createTransactionCommand));
-            Assert.AreEqual(0,Driver.Db.Payments.Transactions.Count(t => t.Amount == 500.50m
+            Assert.Throws<SchemaException>(() => Drive.Cs.Commands.Post(createTransactionCommand));
+            Assert.AreEqual(0,Drive.Db.Payments.Transactions.Count(t => t.Amount == 500.50m
                                                                        && t.ApplicationEntity.ExternalId == app.Id
                                                                        && t.Reference == ""
                                                                        && t.Scope == (int)PaymentTransactionScopeEnum.Credit
@@ -83,9 +83,9 @@ namespace Wonga.QA.Tests.Payments
                 Scope = PaymentTransactionScopeEnum.Credit,
                 Type = PaymentTransactionEnum.Cheque
             };
-            var exception = Assert.Throws <ValidatorException>(() => Driver.Cs.Commands.Post(createTransactionCommand));
+            var exception = Assert.Throws <ValidatorException>(() => Drive.Cs.Commands.Post(createTransactionCommand));
             Assert.Contains(exception.Errors, "Payments_SFUserId_NotSupplied");
-           Assert.AreEqual(0,Driver.Db.Payments.Transactions.Count(t => t.Amount == 500.50m
+           Assert.AreEqual(0,Drive.Db.Payments.Transactions.Count(t => t.Amount == 500.50m
                                                                        && t.ApplicationEntity.ExternalId == app.Id
                                                                        && t.Reference == ""
                                                                        && t.Scope == (int)PaymentTransactionScopeEnum.Credit
@@ -111,9 +111,9 @@ namespace Wonga.QA.Tests.Payments
                 Scope = scope,
                 Type = type
             };
-            var exc = Assert.Throws<ValidatorException>(() => Driver.Cs.Commands.Post(createTransactionCommand));
+            var exc = Assert.Throws<ValidatorException>(() => Drive.Cs.Commands.Post(createTransactionCommand));
             Assert.Contains(exc.Errors, "Payments_TransactionType_Invalid");
-            Assert.AreEqual(0, Driver.Db.Payments.Transactions.Count(t => t.Amount == 500.50m
+            Assert.AreEqual(0, Drive.Db.Payments.Transactions.Count(t => t.Amount == 500.50m
                                                                         && t.ApplicationEntity.ExternalId == app.Id
                                                                         && t.Reference == ""
                                                                         && t.Scope == (int)PaymentTransactionScopeEnum.Credit

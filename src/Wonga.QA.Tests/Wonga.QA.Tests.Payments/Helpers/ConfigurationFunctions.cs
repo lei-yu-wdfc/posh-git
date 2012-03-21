@@ -75,7 +75,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         // Move to configurations functions
         public static int GetDelayBeforeApplicationClosed()
         {
-            return int.Parse(Driver.Db.Ops.ServiceConfigurations.Single(v => v.Key == DelayBeforeApplicationClosedInMinutes).Value);
+            return int.Parse(Drive.Db.Ops.ServiceConfigurations.Single(v => v.Key == DelayBeforeApplicationClosedInMinutes).Value);
         }
 
 

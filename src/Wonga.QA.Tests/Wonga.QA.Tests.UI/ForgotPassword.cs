@@ -23,13 +23,13 @@ namespace Wonga.QA.Tests.Ui
         {
 
             var loginPage = Client.Login();
-            string email = Data.RandomEmail();
+            string email = Get.RandomEmail();
             string captcha = "captcha"; // Get captcha text
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             Application application = ApplicationBuilder.New(customer).Build();
             var forgotPasswordPage = loginPage.ForgotPasswordClick();
             var homePage = forgotPasswordPage.EnterEmailAndCaptcha(email, captcha);
-            Assert.IsTrue(Driver.ThirdParties.ExactTarget.CheckPaymentReminderEmailSent(email));
+            Assert.IsTrue(Drive.ThirdParties.ExactTarget.CheckPaymentReminderEmailSent(email));
         }
     }
 }

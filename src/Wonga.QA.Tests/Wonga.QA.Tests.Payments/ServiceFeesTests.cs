@@ -19,7 +19,7 @@ namespace Wonga.QA.Tests.Payments
 		{
 			Customer customer = CustomerBuilder.New().Build();
 			Application application = ApplicationBuilder.New(customer).Build();
-			PaymentsDatabase paymentsDatabase = Driver.Db.Payments;
+			PaymentsDatabase paymentsDatabase = Drive.Db.Payments;
 
 			var applicationEntity = paymentsDatabase.Applications.Single(a => a.ExternalId == application.Id);
 			var serviceFees = paymentsDatabase.Transactions.Where(t =>

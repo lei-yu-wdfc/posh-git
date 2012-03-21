@@ -14,8 +14,8 @@ namespace Wonga.QA.Tests.Payments.Helpers
             var scheduledpaymentsaga =
                 Do.With().Timeout(5).Interval(10).Until(
                     () =>
-                    Driver.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationId == applicationid).Id);
-            Driver.Msmq.Payments.Send(new PaymentTakenCommand
+                    Drive.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationId == applicationid).Id);
+            Drive.Msmq.Payments.Send(new PaymentTakenCommand
                                           {
                                               SagaId = scheduledpaymentsaga,
                                               ValueDate = DateTime.UtcNow,
@@ -30,31 +30,31 @@ namespace Wonga.QA.Tests.Payments.Helpers
             var repayLoan =
                 Do.Until(
                     () =>
-                    Driver.Db.OpsSagas.PaymentsInArrearsSagaEntities.Single(s => s.ApplicationId == applicationGuid).Id);
-            Driver.Msmq.Payments.Send(new PaymentTakenCommand {SagaId = repayLoan, ValueDate = DateTime.UtcNow});
+                    Drive.Db.OpsSagas.PaymentsInArrearsSagaEntities.Single(s => s.ApplicationId == applicationGuid).Id);
+            Drive.Msmq.Payments.Send(new PaymentTakenCommand {SagaId = repayLoan, ValueDate = DateTime.UtcNow});
         }
 
         public static void SendPaymentTakenForRepayLoan(Guid applicationGuid)
         {
             var applicationid = GetPaymentFunctions.GetApplicationId(applicationGuid);
             var repayLoan =
-                Do.Until(() => Driver.Db.OpsSagas.RepaymentSagaEntities.Single(s => s.ApplicationId == applicationid).Id);
+                Do.Until(() => Drive.Db.OpsSagas.RepaymentSagaEntities.Single(s => s.ApplicationId == applicationid).Id);
 
-            Driver.Msmq.Payments.Send(new PaymentTakenCommand {SagaId = repayLoan, ValueDate = DateTime.UtcNow});
+            Drive.Msmq.Payments.Send(new PaymentTakenCommand {SagaId = repayLoan, ValueDate = DateTime.UtcNow});
         }
 
         public static void SendTakePaymentFailed(Guid applicationGuid)
         {
-            var application = Driver.Db.Payments.Applications.Single(a => a.ExternalId == applicationGuid);
+            var application = Drive.Db.Payments.Applications.Single(a => a.ExternalId == applicationGuid);
             var applicationId = application.ApplicationId;
             var accountId = application.ExternalId;
 
             var scheduledpaymentsaga =
                 Do.Until(
                     () =>
-                    Driver.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationId == applicationId).Id);
+                    Drive.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationId == applicationId).Id);
 
-            Driver.Msmq.Payments.Send(new TakePaymentFailedCommand
+            Drive.Msmq.Payments.Send(new TakePaymentFailedCommand
                                           {
                                               AccountId = accountId,
                                               SagaId = scheduledpaymentsaga,
@@ -65,7 +65,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         public static void SendRepayLoanInternalViaBank(Guid applicationGuid, decimal amount, Guid bankAccountGuid)
         {
             var repaymentRequestId = Guid.NewGuid();
-            Driver.Msmq.Payments.Send(new RepayLoanInternalViaBankCommand
+            Drive.Msmq.Payments.Send(new RepayLoanInternalViaBankCommand
                                           {
                                               Amount = amount,
                                               ApplicationId = applicationGuid,

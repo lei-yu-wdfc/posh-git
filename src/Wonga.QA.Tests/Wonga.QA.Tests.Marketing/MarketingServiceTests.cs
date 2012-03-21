@@ -10,7 +10,7 @@ namespace Wonga.QA.Tests.Marketing
         [Test]
         public void MarketingServiceIsRunning()
         {
-            Assert.IsTrue(Driver.Svc.Marketing.IsRunning());
+            Assert.IsTrue(Drive.Svc.Marketing.IsRunning());
         }
     }
 }

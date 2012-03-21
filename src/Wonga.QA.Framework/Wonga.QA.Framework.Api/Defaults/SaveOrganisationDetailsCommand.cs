@@ -6,9 +6,9 @@ namespace Wonga.QA.Framework.Api
     {
         public override void Default()
         {
-            OrganisationId = Data.GetId();
+            OrganisationId = Get.GetId();
             OrganisationName = "Test Organisation";
-            RegisteredNumber = Data.RandomInt(1, 99999999).ToString().PadLeft(8,'0');
+            RegisteredNumber = Get.RandomInt(1, 99999999).ToString().PadLeft(8,'0');
         }
     }
 }

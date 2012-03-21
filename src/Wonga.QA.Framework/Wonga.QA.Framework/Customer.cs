@@ -21,7 +21,7 @@ namespace Wonga.QA.Framework
 
         public String GetEmail()
         {
-            return Driver.Db.Ops.Accounts.Single(c => c.ExternalId == Id).Login;
+            return Drive.Db.Ops.Accounts.Single(c => c.ExternalId == Id).Login;
         }
 
         public Customer(Guid id, string email, Guid bankAccountId)
@@ -33,12 +33,12 @@ namespace Wonga.QA.Framework
 
         public Application GetApplication()
         {
-            return new Application(Guid.Parse(Driver.Api.Queries.Post(Config.AUT == AUT.Za ? (ApiRequest)new GetAccountSummaryZaQuery { AccountId = Id } : new GetAccountSummaryQuery { AccountId = Id }).Values["ApplicationId"].Single()));
+            return new Application(Guid.Parse(Drive.Api.Queries.Post(Config.AUT == AUT.Za ? (ApiRequest)new GetAccountSummaryZaQuery { AccountId = Id } : new GetAccountSummaryQuery { AccountId = Id }).Values["ApplicationId"].Single()));
         }
 
         public Application[] GetApplications()
         {
-            return Driver.Db.Payments.Applications.Where(a => a.AccountId == Id).Select(a => new Application(a.ExternalId)).ToArray();
+            return Drive.Db.Payments.Applications.Where(a => a.AccountId == Id).Select(a => new Application(a.ExternalId)).ToArray();
         }
 
         public Guid GetBankAccount()
@@ -48,7 +48,7 @@ namespace Wonga.QA.Framework
 
         public Guid GetPaymentCard()
         {
-            return Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == Id).PaymentCardsBaseEntity.ExternalId;
+            return Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == Id).PaymentCardsBaseEntity.ExternalId;
         }
 
         public void UpdateForename(String forename)
@@ -69,19 +69,19 @@ namespace Wonga.QA.Framework
 
         public void UpdateEmployer(String employer)
         {
-            var row = Driver.Db.Risk.EmploymentDetails.Single(cd => cd.AccountId == Id);
+            var row = Drive.Db.Risk.EmploymentDetails.Single(cd => cd.AccountId == Id);
             row.EmployerName = employer;
             row.Submit();
         }
 
         public string GetCcin()
         {
-            return Do.Until(() => Driver.Db.Payments.AccountPreferences.Single(a => a.AccountId == Id)).Ccin;
+            return Do.Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == Id)).Ccin;
         }
 
         public string GetCustomerFullName()
         {
-            var customerDetailsRow = Driver.Db.Comms.CustomerDetails.Single(cd => cd.AccountId == Id);
+            var customerDetailsRow = Drive.Db.Comms.CustomerDetails.Single(cd => cd.AccountId == Id);
             return customerDetailsRow.Forename +" "+ customerDetailsRow.Surname;
         }
 
@@ -89,7 +89,7 @@ namespace Wonga.QA.Framework
         {
             var db = new DbDriver();
             AccountPreferenceEntity accountPreferenceEntity = db.Payments.AccountPreferences.Single(ap => ap.AccountId == Id);
-            accountPreferenceEntity.Ccin = "ScrubbedCcin_"+Data.RandomInt(10000, 99999);
+            accountPreferenceEntity.Ccin = "ScrubbedCcin_"+Get.RandomInt(10000, 99999);
             db.Payments.SubmitChanges();
         }
     }

@@ -47,7 +47,7 @@ namespace Wonga.QA.Framework
 
             if (shouldSucceed)
             {
-                Do.Until(() => Driver.Db.Payments.Transactions.Count(t => t.ApplicationEntity.ExternalId == Id
+                Do.Until(() => Drive.Db.Payments.Transactions.Count(t => t.ApplicationEntity.ExternalId == Id
                                                                            && t.Amount == (isFinalPayment
                                                                                 ? paymentPlan.FinalAmount
                                                                                 : paymentPlan.RegularAmount)
@@ -73,10 +73,10 @@ namespace Wonga.QA.Framework
             }
 
             var paymentSchedulingSaga =
-                Driver.Db.OpsSagas.PaymentSchedulingSagaEntities.Single(
+                Drive.Db.OpsSagas.PaymentSchedulingSagaEntities.Single(
                     s => s.ApplicationExternalId == Id);
 
-            Driver.Msmq.Payments.Send(new TimeoutMessage {SagaId = paymentSchedulingSaga.Id});
+            Drive.Msmq.Payments.Send(new TimeoutMessage {SagaId = paymentSchedulingSaga.Id});
         }
 
         /// <summary>
@@ -94,11 +94,11 @@ namespace Wonga.QA.Framework
                 SetCardExpirationDate(true);
             }
             var businessLoansScheduledPaymentsSaga =
-                Do.Until(() => Driver.Db.OpsSagas.BusinessLoanScheduledPaymentSagaEntities.Single(
+                Do.Until(() => Drive.Db.OpsSagas.BusinessLoanScheduledPaymentSagaEntities.Single(
                     s => s.ApplicationGuid == Id));
 
             // Trigger repeated collection
-            Driver.Msmq.Payments.Send(new TimeoutMessage { SagaId = businessLoansScheduledPaymentsSaga.Id });
+            Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = businessLoansScheduledPaymentsSaga.Id });
         }
 
         public void RestorePaymentCardExpiryDate()
@@ -113,11 +113,11 @@ namespace Wonga.QA.Framework
             {
                 var cardGuid =
                     Do.Until(
-                        () => Driver.Db.Payments.BusinessFixedInstallmentLoanApplications.Single(
+                        () => Drive.Db.Payments.BusinessFixedInstallmentLoanApplications.Single(
                             app => app.ApplicationEntity.ExternalId == Id).BusinessPaymentCardGuid);
                 var cardEntity =
                     Do.Until(
-                        () => Driver.Db.Payments.BusinessPaymentCards.Single(
+                        () => Drive.Db.Payments.BusinessPaymentCards.Single(
                             c => c.PaymentCardsBaseEntity.ExternalId == cardGuid));
 
                 if (!cardIsValid && _originalExpiryDate == null)
@@ -138,8 +138,8 @@ namespace Wonga.QA.Framework
 
         public bool IsInArrears()
         {
-            var accountId = Do.Until(() => Driver.Db.Payments.AccountsApplications.Single(a => a.ApplicationEntity.ExternalId == Id).AccountId);
-            var response = Driver.Api.Queries.Post(new GetBusinessAccountSummaryWbUkQuery
+            var accountId = Do.Until(() => Drive.Db.Payments.AccountsApplications.Single(a => a.ApplicationEntity.ExternalId == Id).AccountId);
+            var response = Drive.Api.Queries.Post(new GetBusinessAccountSummaryWbUkQuery
             {
                 AccountId = accountId
             });
@@ -160,8 +160,8 @@ namespace Wonga.QA.Framework
         ///// <returns></returns>
         //public bool HasOutstandingCharges()
         //{
-        //    var accountId = Do.Until(() => Driver.Db.Payments.AccountsApplications.Single(a => a.ApplicationEntity.ExternalId == Id).AccountId);
-        //    var response = Driver.Api.Queries.Post(new GetBusinessAccountSummaryWbUkQuery
+        //    var accountId = Do.Until(() => Drive.Db.Payments.AccountsApplications.Single(a => a.ApplicationEntity.ExternalId == Id).AccountId);
+        //    var response = Drive.Api.Queries.Post(new GetBusinessAccountSummaryWbUkQuery
         //    {
         //        AccountId = accountId
         //    });
@@ -178,7 +178,7 @@ namespace Wonga.QA.Framework
 
         public PaymentPlanEntity GetPaymentPlan()
         {
-            return Do.Until(() => Driver.Db.Payments.PaymentPlans.Single(pp => pp.ApplicationEntity.ExternalId == Id && pp.CanceledOn == null));
+            return Do.Until(() => Drive.Db.Payments.PaymentPlans.Single(pp => pp.ApplicationEntity.ExternalId == Id && pp.CanceledOn == null));
         }
     }
 }

@@ -43,19 +43,19 @@ namespace Wonga.QA.Framework.Msmq
                     builder.AppendFormat("<{0}>\n", property.Name);
 
                     if (value is Byte[])
-                        builder.Append(Data.ToString(value));
+                        builder.Append(Get.ToString(value));
                     else
                         foreach (Object element in value as IList)
                             if (element != null)
                                 if (element.GetType().IsPrimitive || element.GetType().IsEnum || element is String || element is Decimal || element is Guid || element is DateTime || element is TimeSpan || element is DateTimeOffset)
-                                    builder.AppendFormat("<{0}>{1}</{0}>\n", element.GetType().Name, Data.ToString(element));
+                                    builder.AppendFormat("<{0}>{1}</{0}>\n", element.GetType().Name, Get.ToString(element));
                                 else
                                     builder.AppendFormat(ToString(element.GetType().Name, element));
 
                     builder.AppendFormat("</{0}>\n", property.Name);
                 }
                 else
-                    builder.AppendFormat("<{0}>{1}</{0}>\n", property.Name, Data.ToString(value));
+                    builder.AppendFormat("<{0}>{1}</{0}>\n", property.Name, Get.ToString(value));
             }
 
             return builder.AppendFormat("</{0}>", name).ToString();

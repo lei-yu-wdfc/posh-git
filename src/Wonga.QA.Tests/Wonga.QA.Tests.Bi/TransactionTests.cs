@@ -82,15 +82,15 @@ namespace Wonga.QA.Tests.Bi
 		{
 			Do.Until(
 				() =>
-				Driver.Db.Payments.Applications.Single(a => a.ExternalId == application.Id).Transactions.Any(
+				Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id).Transactions.Any(
 					t => t.Type == type));
 
-			return Driver.Db.Payments.Applications.Single(a => a.ExternalId == application.Id).Transactions.Last(t => t.Type == type);
+			return Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id).Transactions.Last(t => t.Type == type);
 		}
 
 		private void WaitForTransactionExistsInBi(TransactionEntity transaction)
 		{
-			Do.Until(() => Driver.Db.Bi.Transactions.Single(t => t.TransactionNKey == transaction.ExternalId));
+			Do.Until(() => Drive.Db.Bi.Transactions.Single(t => t.TransactionNKey == transaction.ExternalId));
 		}
 
 		#endregion
