@@ -17,6 +17,7 @@ namespace Wonga.QA.Framework.UI.Elements
     {
         private readonly IWebElement _helpTrigger;
         private readonly IWebElement _listQuestions;
+        private readonly IWebElement _troubleshooting;
 
 
         public HelpElement(BasePage page)
@@ -24,6 +25,8 @@ namespace Wonga.QA.Framework.UI.Elements
         {
             _helpTrigger = Page.Client.Driver.FindElement(By.Id(Ui.Get.HelpElement.HelpTrigger));
             _listQuestions = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.HelpElement.HelplistQuestions));
+            _troubleshooting =
+                Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.HelpElement.TroubleshootingQuestions));
         }
 
         public void HelpTriggerClick()
@@ -40,6 +43,18 @@ namespace Wonga.QA.Framework.UI.Elements
         public FAQPage SelectQuestion(string question)
         {
             _listQuestions.SelectOption(question);
+            return new FAQPage(Page.Client);
+        }
+
+        public List<string> GetTroubleshootingQuestions()
+        {
+            List<string> questions = _troubleshooting.FindElements(By.TagName("option")).Select(option => option.Text.Trim(' ')).ToList();
+            questions.Remove("Please select a question...");
+            return questions;
+        }
+        public FAQPage SelectTroubleshootingQuestion(string question)
+        {
+            _troubleshooting.SelectOption(question);
             return new FAQPage(Page.Client);
         }
     }

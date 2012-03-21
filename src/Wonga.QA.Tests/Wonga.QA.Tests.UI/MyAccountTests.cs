@@ -105,5 +105,33 @@ namespace Wonga.QA.Tests.Ui
                 throw new NullReferenceException("Add bank account button not found");
             }
         }
+
+        [Test, AUT(AUT.Za), JIRA("QA-201")]
+        public void WhenLoggedCustomerWithoutLiveLoanAddsNewBankAccountItShouldBecomePrimary()
+        {
+            var loginPage = Client.Login();
+            string email = Data.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            application.RepayOnDueDate();
+
+            var page = loginPage.LoginAs(email);
+            var payment = Client.Payments();
+
+            if (payment.IsAddBankAccountButtonExists())
+            {
+                payment.AddBankAccountButtonClick();
+
+                Thread.Sleep(2000); // Wait some time to load popup
+
+                var paymentPage = payment.AddBankAccount("Capitec", "Current", "1234567", "2 to 3 years");
+
+            }
+            else
+            {
+                throw new NullReferenceException("Add bank account button not found");
+            }
+        }
     }
 }
