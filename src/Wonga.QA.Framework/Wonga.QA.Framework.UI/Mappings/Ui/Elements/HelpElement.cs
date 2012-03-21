@@ -9,5 +9,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Elements
         public String HelpTrigger { get; set; }
         public String HelplistQuestions { get; set; }
         public String TroubleshootingQuestions { get; set; }
+        public String JargonBuster { get; set; }
     }
 }

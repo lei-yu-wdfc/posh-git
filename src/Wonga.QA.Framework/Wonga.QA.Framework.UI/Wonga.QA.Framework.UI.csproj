@@ -55,6 +55,7 @@
     <Compile Include="Mappings\Ui\Elements\SurveyElement.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ForgotPasswordPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\MyPersonalDetailsPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\JargonBusterPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\MySummaryPage.cs" />
     <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceCustomerDetailPage.cs" />
     <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceHomePage.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Ui\Pages\Common\DeclinedPage.cs" />
     <Compile Include="Ui\Pages\Common\FAQPage.cs" />
     <Compile Include="Ui\Pages\Common\ForgotPasswordPage.cs" />
+    <Compile Include="Ui\Pages\Common\JargonBusterPage.cs" />
     <Compile Include="Ui\Pages\Common\LoginPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\MyPaymentsPage.cs" />
     <Compile Include="Ui\Pages\Common\MyPaymentsPage.cs" />

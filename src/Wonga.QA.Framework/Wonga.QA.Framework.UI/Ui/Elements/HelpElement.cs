@@ -18,7 +18,7 @@ namespace Wonga.QA.Framework.UI.Elements
         private readonly IWebElement _helpTrigger;
         private readonly IWebElement _listQuestions;
         private readonly IWebElement _troubleshooting;
-
+        private readonly IWebElement _jargonBuster;
 
         public HelpElement(BasePage page)
             : base(page)
@@ -27,6 +27,7 @@ namespace Wonga.QA.Framework.UI.Elements
             _listQuestions = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.HelpElement.HelplistQuestions));
             _troubleshooting =
                 Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.HelpElement.TroubleshootingQuestions));
+            _jargonBuster = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.HelpElement.JargonBuster));
         }
 
         public void HelpTriggerClick()
@@ -56,6 +57,12 @@ namespace Wonga.QA.Framework.UI.Elements
         {
             _troubleshooting.SelectOption(question);
             return new FAQPage(Page.Client);
+        }
+
+        public JargonBusterPage JargonBusterClick()
+        {
+            _jargonBuster.Click();
+            return new JargonBusterPage(Page.Client);
         }
     }
 }

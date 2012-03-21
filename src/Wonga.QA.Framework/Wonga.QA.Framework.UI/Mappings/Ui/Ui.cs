@@ -85,6 +85,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual MySummaryPage MySummaryPage { get; set; }
         public virtual MyPaymentsPage MyPaymentsPage { get; set; }
         public virtual MyPersonalDetailsPage MyPersonalDetailsPage { get; set; }
+        public virtual JargonBusterPage JargonBusterPage { get; set; }
 
         #endregion
 
