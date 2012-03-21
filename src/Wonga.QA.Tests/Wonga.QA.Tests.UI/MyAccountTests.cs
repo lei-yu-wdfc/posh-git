@@ -133,5 +133,23 @@ namespace Wonga.QA.Tests.Ui
                 throw new NullReferenceException("Add bank account button not found");
             }
         }
+
+        [Test, AUT(AUT.Za), JIRA("QA-214"), Pending("Not completed")]
+        public void CustomerOnMyPersonalDetailsShouldBeAbleToChangeCommunicationPrefs()
+        {
+            var loginPage = Client.Login();
+            string email = Data.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            var myPersonalDetailsPage = mySummaryPage.Navigation.MyPersonalDetailsButtonClick();
+            myPersonalDetailsPage.CommunicationClick();
+            myPersonalDetailsPage.SetCommunicationPrefs =
+                "I am not happy to receive updates and other communications from Wonga via email and SMS.";
+
+
+        }
     }
 }

@@ -13,17 +13,33 @@ namespace Wonga.QA.Framework.UI.Elements
     public class MyAccountNavigationElement : BaseElement
     {
         private readonly IWebElement _myPaymentDetailsButton;
+        private readonly IWebElement _mySummaryButton;
+        private readonly IWebElement _myPersonalDetailsButton;
 
         public MyAccountNavigationElement(BasePage page)
             : base(page)
         {
             _myPaymentDetailsButton =
-                Page.Client.Driver.FindElement(By.XPath(Ui.Get.MyAccountNavigationSection.MyPaymentsDetails));
+                Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.MyAccountNavigationSection.MyPaymentsDetails));
+            _mySummaryButton = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.MyAccountNavigationSection.MySummary));
+            _myPersonalDetailsButton =
+                Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.MyAccountNavigationSection.MyPersonalDetails));
         }
         public MyPaymentsPage MyPaymentDetailsButtonClick()
         {
             _myPaymentDetailsButton.Click();
             return new MyPaymentsPage(Page.Client);
         }
+        public MyPersonalDetailsPage MyPersonalDetailsButtonClick()
+        {
+            _myPersonalDetailsButton.Click();
+            return new MyPersonalDetailsPage(Page.Client);
+        }
+        public MySummaryPage MySummaryButtonClick()
+        {
+            _mySummaryButton.Click();
+            return new MySummaryPage(Page.Client);
+        }
+        
     }
 }

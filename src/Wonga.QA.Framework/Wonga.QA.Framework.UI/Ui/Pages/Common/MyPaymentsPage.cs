@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.UI.Elements;
 using Wonga.QA.Framework.UI.Mappings;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 
@@ -11,6 +12,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
     public class MyPaymentsPage : BasePage
     {
+        public MyAccountNavigationElement Navigation { get; set; }
+
         private IWebElement _addBankAccountButton;
         private IWebElement _popupBankName;
         private IWebElement _popupBankAccountType;
@@ -22,6 +25,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public MyPaymentsPage(UiClient client)
             : base(client)
         {
+            Navigation = new MyAccountNavigationElement(this);
         }
         public bool IsAddBankAccountButtonExists()
         {

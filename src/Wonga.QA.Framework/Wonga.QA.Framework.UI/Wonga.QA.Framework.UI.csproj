@@ -53,6 +53,7 @@
     <Compile Include="Mappings\Content\Agreements\LoanAgreement.cs" />
     <Compile Include="Mappings\Ui\Elements\MyAccountNavigationElement.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ForgotPasswordPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\MyPersonalDetailsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\MySummaryPage.cs" />
     <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceCustomerDetailPage.cs" />
     <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceHomePage.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Ui\Pages\Common\LoginPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\MyPaymentsPage.cs" />
     <Compile Include="Ui\Pages\Common\MyPaymentsPage.cs" />
+    <Compile Include="Ui\Pages\Common\MyPersonalDetailsPage.cs" />
     <Compile Include="Ui\Pages\Common\MySummaryPage.cs" />
     <Compile Include="Ui\Pages\SalesForce\BaseSfPage.cs" />
     <Compile Include="Ui\Pages\SalesForce\SalesForceCustomerDetailPage.cs" />

@@ -7,6 +7,8 @@ namespace Wonga.QA.Framework.UI.Mappings.Sections
 {
     public class MyAccountNavigationSection
     {
+        public String MySummary { get; set; }
+        public String MyPersonalDetails { get; set; }
         public String MyPaymentsDetails { get; set; }
     }
 }
