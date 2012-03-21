@@ -87,5 +87,9 @@
     <!-- Should be extended-->
     <MyPaymentsDetails>//a[contains(text(),'My account details')]</MyPaymentsDetails>
   </MyAccountNavigationSection>
+
+  <SurveyElement>
+    <SurveyBox>div#wonga_survey_box</SurveyBox>
+  </SurveyElement>
   
 </Ui>
