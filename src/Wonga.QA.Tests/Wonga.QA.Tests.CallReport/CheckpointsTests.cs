@@ -112,7 +112,7 @@ namespace Wonga.QA.Tests.CallReport
             const String forename = "kathleen";
             const String surname = "bridson";
             var dateOfBirth = new Date(new DateTime(1992, 1, 24), DateFormat.Date);
-            var application = CreateApplicationWithAsserts(RiskMask.TESTCustomerDateOfBirthIsCorrect, forename,surname,dateOfBirth,ApplicationDecisionStatusEnum.Accepted);
+            var application = CreateApplicationWithAsserts(RiskMask.TESTCustomerDateOfBirthIsCorrectSME, forename, surname, dateOfBirth, ApplicationDecisionStatusEnum.Accepted);
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
             Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Verified), Data.EnumToString(CheckpointDefinitionEnum.DateOfBirthIsCorrect));
@@ -127,7 +127,7 @@ namespace Wonga.QA.Tests.CallReport
             const String surname = "bridson";
             var dateOfBirth = new Date(new DateTime(1990, 3, 21), DateFormat.Date);
 
-            var application = CreateApplicationWithAsserts(RiskMask.TESTCustomerDateOfBirthIsCorrect, forename,surname, dateOfBirth,ApplicationDecisionStatusEnum.Declined);
+            var application = CreateApplicationWithAsserts(RiskMask.TESTCustomerDateOfBirthIsCorrectSME, forename, surname, dateOfBirth, ApplicationDecisionStatusEnum.Declined);
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
             Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Failed), Data.EnumToString(CheckpointDefinitionEnum.DateOfBirthIsCorrect));
@@ -142,7 +142,7 @@ namespace Wonga.QA.Tests.CallReport
             const String forename = "kathleen";
             const String surname = "bridson";
             var dateOfBirth = new Date(new DateTime(1973, 5, 11), DateFormat.Date);
-            var application = CreateApplicationWithAsserts(RiskMask.TESTCustomerDateOfBirthIsCorrect, forename,surname, dateOfBirth,ApplicationDecisionStatusEnum.Declined);
+            var application = CreateApplicationWithAsserts(RiskMask.TESTCustomerDateOfBirthIsCorrectSME, forename, surname, dateOfBirth, ApplicationDecisionStatusEnum.Declined);
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
             Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Failed), Data.EnumToString(CheckpointDefinitionEnum.DateOfBirthIsCorrect));

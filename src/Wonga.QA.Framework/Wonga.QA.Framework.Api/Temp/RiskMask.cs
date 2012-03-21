@@ -25,6 +25,7 @@ namespace Wonga.QA.Framework.Api
         TESTCustomerIsEmployed,
         TESTApplicantIsSolvent,
         TESTCustomerDateOfBirthIsCorrect,
+        TESTCustomerDateOfBirthIsCorrectSME,
         TESTFraudScorePositive,
         TESTDirectFraudCheck,
         TESTCreditBureauScoreIsAcceptable,
