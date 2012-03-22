@@ -6,7 +6,6 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
-using Wonga.QA.Tests.Payments.Enums;
 
 namespace Wonga.QA.Tests.Payments
 {
@@ -18,7 +17,7 @@ namespace Wonga.QA.Tests.Payments
 			Customer customer = CustomerBuilder.New().Build();
 			Do.Until(customer.GetBankAccount);
 			Do.Until(customer.GetPaymentCard);
-			Application application = ApplicationBuilder.New(customer).Build();
+			ApplicationBuilder.New(customer).Build();
 
 			var response = Drive.Api.Queries.Post(new GetFixedTermLoanTopupOfferQuery {AccountId = customer.Id});
 			Assert.GreaterThan(decimal.Parse(response.Values["AmountMax"].Single()), 0);
@@ -78,9 +77,8 @@ namespace Wonga.QA.Tests.Payments
 			                         		TopupAmount = 150
 			                         	});
 
-			var app = Drive.Db.Payments.Applications.Single(x => x.ExternalId == application.Id);
-			var topUp = Drive.Db.Payments.Topups.Single(x => x.ApplicationId == app.ApplicationId);
-			Assert.IsNotNull(topUp);
+            var app = Do.Until(() => Drive.Db.Payments.Applications.Single(x => x.ExternalId == application.Id));
+            var topUp = Do.Until(() => Drive.Db.Payments.Topups.Single(x => x.ApplicationId == app.ApplicationId));
 
 			Drive.Api.Commands.Post(new SignFixedTermLoanTopupCommand
 			                         	{
