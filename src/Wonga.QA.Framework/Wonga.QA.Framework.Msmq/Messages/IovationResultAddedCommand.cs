@@ -10,6 +10,7 @@ namespace Wonga.QA.Framework.Msmq
     {
         public Guid AccountId { get; set; }
         public Guid ApplicationId { get; set; }
+        public String DeviceAlias { get; set; }
         public IovationAdviceEnum Result { get; set; }
         public String Reason { get; set; }
         public Object Details { get; set; }
