@@ -144,11 +144,13 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test, AUT(AUT.Za)]
 		public void CheckpointCustomerNameIsCorrectMaidenNameMatchedAccepts()
 		{
+			var incorrectSurname = "Incorrectsurname";
+
 			var customer = CustomerBuilder.New()
 				.WithEmployer(TestMask)
 				.WithForename(_forename)
 				.WithMiddleName(_middleName)
-				.WithSurname(Get.GetName())
+				.WithSurname(incorrectSurname)
 				.WithMaidenName(_surname)
 				.WithDateOfBirth(_dateOfBirth)
 				.WithNationalNumber(_nationalNumber)
