@@ -10,6 +10,7 @@ namespace Wonga.QA.Framework.Svc
     {
         private ServiceController _controller;
 
+        public String Name { get { return _controller.DisplayName; } }
         public ServiceControllerStatus Status { get { _controller.Refresh(); return _controller.Status; } }
 
         public SvcService(String service, String server)

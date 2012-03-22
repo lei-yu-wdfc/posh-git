@@ -10,6 +10,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Graydon
 {
+    [Parallelizable(TestScope.All)]
     public class CheckpointTests
     {
         #region Main Applicant Matches Business Bureau Data

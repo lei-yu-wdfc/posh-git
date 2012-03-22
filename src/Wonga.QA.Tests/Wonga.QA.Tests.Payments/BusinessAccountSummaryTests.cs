@@ -14,7 +14,7 @@ using SignBusinessApplicationWbUkCommand = Wonga.QA.Framework.Api.SignBusinessAp
 
 namespace Wonga.QA.Tests.Payments
 {
-	[TestFixture]
+	[Parallelizable(TestScope.All)]
 	public class BusinessAccountSummaryTests
 	{
 		/// <summary>

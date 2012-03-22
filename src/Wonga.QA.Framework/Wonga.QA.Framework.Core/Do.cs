@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
+using System.Linq;
 using System.Threading;
 
 namespace Wonga.QA.Framework.Core
@@ -38,7 +38,7 @@ namespace Wonga.QA.Framework.Core
         private TimeSpan _interval;
         private Func<String> _message;
 
-        public DoBuilder(TimeSpan timeout, TimeSpan interval)
+        internal DoBuilder(TimeSpan timeout, TimeSpan interval)
         {
             _timeout = timeout;
             _interval = interval;
@@ -83,7 +83,7 @@ namespace Wonga.QA.Framework.Core
 
         public T Until<T>(Func<T> predicate)
         {
-            var exception = new DoUntilException(_message);
+            var exception = new DoException(_message);
             var stopwatch = Stopwatch.StartNew();
             while (stopwatch.Elapsed < _timeout)
                 try
@@ -96,7 +96,7 @@ namespace Wonga.QA.Framework.Core
                 }
                 catch (Exception e)
                 {
-                    exception.Add(exception, stopwatch.Elapsed);
+                    exception.Add(e, stopwatch.Elapsed);
                     Thread.Sleep(_interval);
                 }
             exception.Add(new TimeoutException(stopwatch.Elapsed.ToString()), stopwatch.Elapsed);
@@ -105,7 +105,7 @@ namespace Wonga.QA.Framework.Core
 
         public void While<T>(Func<T> predicate)
         {
-            Stopwatch stopwatch = Stopwatch.StartNew();
+            var stopwatch = Stopwatch.StartNew();
             while (stopwatch.Elapsed < _timeout)
                 try
                 {
@@ -122,12 +122,12 @@ namespace Wonga.QA.Framework.Core
 
         public T Watch<T>(Func<T> predicate) where T : struct
         {
-            T t = predicate();
-            Stopwatch stopwatch = Stopwatch.StartNew();
+            var t = predicate();
+            var stopwatch = Stopwatch.StartNew();
             while (stopwatch.Elapsed < _timeout)
             {
                 Thread.Sleep(_interval);
-                T p = predicate();
+                var p = predicate();
                 if (!EqualityComparer<T>.Default.Equals(p, t))
                     stopwatch.Restart();
                 t = p;
@@ -136,44 +136,34 @@ namespace Wonga.QA.Framework.Core
         }
     }
 
-    public class DoUntilException : Exception
+    public class DoException : Exception
     {
         private Func<String> _message;
-        private List<Tuple<DateTime, TimeSpan, Exception>> _exceptions;
 
-        public override string Message { get { return _message(); } }
-        public InnerExceptions Exceptions { get { return new InnerExceptions(_exceptions); } }
+        public Tuples Exceptions { get; set; }
+        public override String Message { get { return _message(); } }
 
-        public DoUntilException(Func<String> message)
+        public DoException(Func<String> message)
         {
             _message = message;
-            _exceptions = new List<Tuple<DateTime, TimeSpan, Exception>>();
+            Exceptions = new Tuples();
         }
 
-        public DoUntilException Add(Exception exception, TimeSpan span)
+        public void Add(Exception exception, TimeSpan span)
         {
-            _exceptions.Add(Tuple.Create(DateTime.UtcNow, span, exception));
-            return this;
+            Exceptions.Add(Tuple.Create(DateTime.Now, span, exception));
         }
 
-        public class InnerExceptions
+        public override String ToString()
         {
-            private List<Tuple<DateTime, TimeSpan, Exception>> _exceptions;
+            return base.ToString() + Environment.NewLine + Exceptions;
+        }
 
-            public InnerExceptions(List<Tuple<DateTime, TimeSpan, Exception>> exceptions)
+        public class Tuples : List<Tuple<DateTime, TimeSpan, Exception>>
+        {
+            public override String ToString()
             {
-                _exceptions = exceptions;
-            }
-
-            public override string ToString()
-            {
-                var builder = new StringBuilder();
-                for (var i = 0; i < _exceptions.Count; i++)
-                {
-                    var tuple = _exceptions[i];
-                    builder.AppendLine(String.Format("> #{0} @ {1} ({2}) {3}", i, tuple.Item1.ToString("dd/MM HH:mm:ss.fff"), tuple.Item2.TotalSeconds, tuple.Item3));
-                }
-                return builder.ToString();
+                return String.Join(Environment.NewLine, this.Select((t, i) => String.Format("#{0} {1:HH:mm:ss.fff} ({2:0.00000}) : {3}", i, t.Item1, t.Item2.TotalSeconds, t.Item3))) + Environment.NewLine;
             }
         }
     }
