@@ -19,7 +19,7 @@ namespace Wonga.QA.Tests.Ui
 {
     class SalesForceTest : UiTest
     {
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-220")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-220"), Pending("Problem with presents customers in SF")]
         public void CustomerInformationDisplayInSF()
         {
             string email = Get.RandomEmail();

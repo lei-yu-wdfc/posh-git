@@ -111,8 +111,13 @@
   <HelpElement>
     <HelpTrigger>help-trigger</HelpTrigger>
     <HelplistQuestions>#listQuestions</HelplistQuestions>
-	<TroubleshootingQuestions>div#help-panel div.control-bar-panel div.panel:nth-child(2)>#listQuestions</TroubleshootingQuestions>
+	  <TroubleshootingQuestions>div#help-panel div.control-bar-panel div.panel:nth-child(2)>#listQuestions</TroubleshootingQuestions>
+    <JargonBuster>#help-panel div div:nth-child(3) p:nth-child(1) a</JargonBuster>
   </HelpElement>
+
+  <JargonBusterPage>
+    <Alphabet>#node-442 div div div p:nth-child(3)</Alphabet>
+  </JargonBusterPage>
 
   <FAQElement>
     <SelectQuestion>.//*[@id='faqQuestions']/option[@selected='selected']</SelectQuestion>

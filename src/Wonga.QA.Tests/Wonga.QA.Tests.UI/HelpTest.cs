@@ -53,5 +53,18 @@ namespace Wonga.QA.Tests.Ui
 
             }
         }
+
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-166")]
+        public void JargonBusterLinkShouldNavigateThroughPageByClickingDifferentLettersFromAlphabet()
+        {
+            var page = Client.Home();
+            page.Help.HelpTriggerClick();
+            var jargonBasterPage =  page.Help.JargonBusterClick();
+            var alphabetLinks =  jargonBasterPage.GetAlphabetLinks();
+            foreach (var element in alphabetLinks)
+            {
+                    element.Click();
+            }
+        }
     }
 }
