@@ -310,8 +310,6 @@ namespace Wonga.QA.Framework
 			return db.Risk.RiskWorkflows.Where(p => p.ApplicationId == applicationId).ToList();
 		}
 
-
-
 		private void Rewind(int absoluteDays)
 		{
 			// Rewinds a Loans Dates

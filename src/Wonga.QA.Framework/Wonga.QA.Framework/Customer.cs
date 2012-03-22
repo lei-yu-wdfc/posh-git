@@ -13,6 +13,8 @@ namespace Wonga.QA.Framework
         public Guid Id { get; set; }
         public string Email { get; set; }
         public Guid BankAccountId { get; set; }
+        public string Forename { get; private set; }
+        public string Surname { get; private set; }
 
         public Customer(Guid id)
         {
@@ -29,6 +31,14 @@ namespace Wonga.QA.Framework
             Id = id;
             Email = email;
             BankAccountId = bankAccountId;
+        }
+
+        public Customer(Guid id,String email,String forename, String surname)
+        {
+            Id = id;
+            Email = email;
+            Forename = forename;
+            Surname = surname;
         }
 
         public Application GetApplication()

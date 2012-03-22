@@ -15,28 +15,34 @@ namespace Wonga.QA.Framework
         public BusinessApplicationBuilder(Customer customer, Organisation company)
         {
             Company = company;
-            _customer = customer;
+            Customer = customer;
+            NumberOfGuarantors = new List<Customer>();
         }
 
         public override Application Build()
         {
+
+            if (NumberOfGuarantors.Count > 0)
+            {
+                Decision = ApplicationDecisionStatusEnum.PreAccepted;
+            }
 
             /* STEP 1
              * I create the initial common requests
              * If something is missing please let Alex P know */
             var requests = new List<ApiRequest>
             {
-                SubmitApplicationBehaviourCommand.New(r => r.ApplicationId = _id),
-                SubmitClientWatermarkCommand.New(r => { r.ApplicationId=_id; r.AccountId = _customer.Id; }),
+                SubmitApplicationBehaviourCommand.New(r => r.ApplicationId = Id),
+                SubmitClientWatermarkCommand.New(r => { r.ApplicationId=Id; r.AccountId = Customer.Id; }),
                 CreateBusinessFixedInstallmentLoanApplicationWbUkCommand.New(r =>
                         {   
-                            r.AccountId = _customer.Id; 
+                            r.AccountId = Customer.Id; 
                             r.OrganisationId = Company.Id;
-                            r.ApplicationId = _id;
+                            r.ApplicationId = Id;
                             r.BusinessPaymentCardId = Company.GetPaymentCard();
                             r.BusinessBankAccountId = Company.GetBankAccount();
-                            r.MainApplicantBankAccountId = _customer.GetBankAccount();
-                            r.MainApplicantPaymentCardId = _customer.GetPaymentCard();
+                            r.MainApplicantBankAccountId = Customer.GetBankAccount();
+                            r.MainApplicantPaymentCardId = Customer.GetPaymentCard();
                         }),
             };
 
@@ -47,34 +53,53 @@ namespace Wonga.QA.Framework
              * And I submit my number of guarantors - 0 by default => 1 Risk Workflow will exist
              * IF more then 1 => more Workflows => Please remeber that they need to SIGN*/
             Drive.Api.Commands.Post(SubmitNumberOfGuarantorsCommand.New(r =>
-                                                                             {
-                                                                                 r.AccountId = _customer.Id;
-                                                                                 r.ApplicationId = _id;
-                                                                                 r.NumberOfGuarantors =Company.GetSecondaryDirectors().ToList().Count;
-                                                                             }));
+                                                                            {
+                                                                                r.AccountId = Customer.Id;
+                                                                                r.ApplicationId = Id;
+                                                                                //r.NumberOfGuarantors =Company.GetSecondaryDirectors().ToList().Count;
+                                                                                r.NumberOfGuarantors =
+                                                                                    NumberOfGuarantors.Count;
+                                                                            }));
+                
 
             /* STEP 3
              * I wait for Payments to do their job */
-            Do.Until(() => Drive.Db.Payments.BusinessFixedInstallmentLoanApplications.Any(app => app.ApplicationEntity.ExternalId == _id));
+            Do.Until(() => Drive.Db.Payments.BusinessFixedInstallmentLoanApplications.Any(app => app.ApplicationEntity.ExternalId == Id));
+
+            /* STEP 3.1 
+             * Send guarantors partial details
+             * Added new stuff to work with new risk workflows */
+            foreach (var guarantor in NumberOfGuarantors)
+            {
+                var g = guarantor;
+                Drive.Api.Commands.Post(AddSecondaryOrganisationDirectorCommand.New(r =>
+                {
+                    r.OrganisationId =Company.Id;
+                    r.AccountId = g.Id;
+                    r.Email = g.Email;
+                    r.Forename = g.Forename;
+                    r.Surname = g.Surname;
+                }));
+            }
 
             /* STEP 4
              * I verify the main applicant */
             Drive.Api.Commands.Post(VerifyMainBusinessApplicantWbCommand.New(r =>
                                                                                   {
-                                                                                      r.AccountId = _customer.Id;
-                                                                                      r.ApplicationId = _id;
+                                                                                      r.AccountId = Customer.Id;
+                                                                                      r.ApplicationId = Id;
                                                                                   }));
             /* Well - if its declined then the code below this IF statement wont work -> so as a temporary fix return the application 
              * Still need to investigate the wait for data / pending / PreAccepted */
-            if (_decision == ApplicationDecisionStatusEnum.Declined)
+            if (Decision == ApplicationDecisionStatusEnum.Declined)
             {
-                Do.Until(() => (ApplicationDecisionStatusEnum)Enum.Parse(typeof(ApplicationDecisionStatusEnum), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["ApplicationDecisionStatus"].Single()) == _decision);
-                return new BusinessApplication(_id);
+                Do.Until(() => (ApplicationDecisionStatusEnum)Enum.Parse(typeof(ApplicationDecisionStatusEnum), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = Id }).Values["ApplicationDecisionStatus"].Single()) == Decision);
+                return new BusinessApplication(Id);
             }
 
             /* STEP 5
              * And the main applicant signs the application */
-            Drive.Api.Commands.Post(new SignBusinessApplicationWbUkCommand { AccountId = _customer.Id, ApplicationId = _id });
+            Drive.Api.Commands.Post(new SignBusinessApplicationWbUkCommand { AccountId = Customer.Id, ApplicationId = Id });
 
             /* STEP 6 
              * And I wait for Payments to create the application */
@@ -82,7 +107,7 @@ namespace Wonga.QA.Framework
             var stopwatch = Stopwatch.StartNew();
             Do.While(() =>
             {
-                Int32 current = Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == _id).Transactions.Count);
+                Int32 current = Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).Transactions.Count);
                 if (previous != current)
                     stopwatch.Restart();
                 previous = current;
@@ -91,9 +116,9 @@ namespace Wonga.QA.Framework
 
             /* STEP 7 
              * And I wait for the decision i want - PLEASE REMEBER THAT THE DEFAULT ONE IS ACCEPTED */
-            Do.Until(() => (ApplicationDecisionStatusEnum)Enum.Parse(typeof(ApplicationDecisionStatusEnum), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["ApplicationDecisionStatus"].Single()) == _decision);
+            Do.Until(() => (ApplicationDecisionStatusEnum)Enum.Parse(typeof(ApplicationDecisionStatusEnum), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = Id }).Values["ApplicationDecisionStatus"].Single()) == Decision);
 
-            return new BusinessApplication(_id);
+            return new BusinessApplication(Id);
         }
 
         public void SignApplicationForSecondaryDirectors()
@@ -106,7 +131,7 @@ namespace Wonga.QA.Framework
 
             foreach (var guarantor in guarantors)
             {
-                requests.Add(new SignBusinessApplicationWbUkCommand { AccountId = guarantor.AccountId, ApplicationId = _id });
+                requests.Add(new SignBusinessApplicationWbUkCommand { AccountId = guarantor.AccountId, ApplicationId = Id });
             }
 
             Drive.Api.Commands.Post(requests);
@@ -118,56 +143,56 @@ namespace Wonga.QA.Framework
         {
             var requests = new List<ApiRequest>
                                {
-                                   SubmitApplicationBehaviourCommand.New(r => r.ApplicationId = _id),
+                                   SubmitApplicationBehaviourCommand.New(r => r.ApplicationId = Id),
                                    SubmitClientWatermarkCommand.New(r =>
                                                                         {
-                                                                            r.ApplicationId = _id;
-                                                                            r.AccountId = _customer.Id;
+                                                                            r.ApplicationId = Id;
+                                                                            r.AccountId = Customer.Id;
                                                                         }),
                                    CreateBusinessFixedInstallmentLoanApplicationWbUkCommand.New(r =>
                                                                                                     {
-                                                                                                        r.AccountId =_customer.Id;
+                                                                                                        r.AccountId =Customer.Id;
                                                                                                         r.OrganisationId=Company.Id;
-                                                                                                        r.ApplicationId=_id;
+                                                                                                        r.ApplicationId=Id;
                                                                                                         r.BusinessPaymentCardId=Company.GetPaymentCard();
                                                                                                         r.BusinessBankAccountId=Company.GetBankAccount();
-                                                                                                        r.MainApplicantBankAccountId=_customer.GetBankAccount();
-                                                                                                        r.MainApplicantPaymentCardId=_customer.GetPaymentCard();
+                                                                                                        r.MainApplicantBankAccountId=Customer.GetBankAccount();
+                                                                                                        r.MainApplicantPaymentCardId=Customer.GetPaymentCard();
                                                                                                     }),
                                    SubmitNumberOfGuarantorsCommand.New(r =>
                                                                            {
-                                                                               r.AccountId = _customer.Id;
-                                                                               r.ApplicationId = _id;
+                                                                               r.AccountId = Customer.Id;
+                                                                               r.ApplicationId = Id;
                                                                                r.NumberOfGuarantors =Company.GetSecondaryDirectors().ToList().Count;
                                                                            })
                                };
 
             Drive.Api.Commands.Post(requests);
 
-            Do.Until(() =>Drive.Db.Payments.BusinessFixedInstallmentLoanApplications.Any(app => app.ApplicationEntity.ExternalId == _id));
+            Do.Until(() =>Drive.Db.Payments.BusinessFixedInstallmentLoanApplications.Any(app => app.ApplicationEntity.ExternalId == Id));
             Drive.Api.Commands.Post(VerifyMainBusinessApplicantWbCommand.New(r =>
                                                                                   {
-                                                                                      r.AccountId = _customer.Id;
-                                                                                      r.ApplicationId = _id;
+                                                                                      r.AccountId = Customer.Id;
+                                                                                      r.ApplicationId = Id;
                                                                                   }));
-            Do.Until(() => (ApplicationDecisionStatusEnum)Enum.Parse(typeof(ApplicationDecisionStatusEnum), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = _id }).Values["ApplicationDecisionStatus"].Single()) == _decision);
+            Do.Until(() => (ApplicationDecisionStatusEnum)Enum.Parse(typeof(ApplicationDecisionStatusEnum), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = Id }).Values["ApplicationDecisionStatus"].Single()) == Decision);
 
-            if (_decision == ApplicationDecisionStatusEnum.Declined)
-                return new BusinessApplication(_id);
+            if (Decision == ApplicationDecisionStatusEnum.Declined)
+                return new BusinessApplication(Id);
 
-            Drive.Api.Commands.Post(new SignBusinessApplicationWbUkCommand{AccountId = _customer.Id, ApplicationId = _id});
+            Drive.Api.Commands.Post(new SignBusinessApplicationWbUkCommand{AccountId = Customer.Id, ApplicationId = Id});
 
             Int32 previous = 0;
             Stopwatch stopwatch = Stopwatch.StartNew();
             Do.While(() =>
                          {
-                             Int32 current =Do.Until(() =>Drive.Db.Payments.Applications.Single(a => a.ExternalId == _id).Transactions.Count);
+                             Int32 current =Do.Until(() =>Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).Transactions.Count);
                              if (previous != current) stopwatch.Restart();
                              previous = current;
                              return stopwatch.Elapsed < TimeSpan.FromSeconds(5);
                          });
 
-            return new BusinessApplication(_id);
+            return new BusinessApplication(Id);
         }
 
         #endregion

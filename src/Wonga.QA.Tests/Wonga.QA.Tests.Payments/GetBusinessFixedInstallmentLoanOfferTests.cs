@@ -14,6 +14,7 @@ namespace Wonga.QA.Tests.Payments
 		[Test, AUT(AUT.Wb), JIRA("SME-889")]
 		public void GetBusinessFixedInstallmentLoanOffer()
 		{
+            //This returns stuff from payments.Products
 			var response = Drive.Api.Queries.Post(new GetBusinessFixedInstallmentLoanOfferWbUkQuery());
 
 			Assert.IsNotNull(response);
