@@ -34,6 +34,7 @@
     <Compile Include="AddBankAccountTests.cs" />
     <Compile Include="AddBusinessBankAccountTests.cs" />
     <Compile Include="CollectionsTests.cs" />
+    <Compile Include="CsapiRevokeApplicationFromDcaTest.cs" />
     <Compile Include="CsapiCreateTransactionTest.cs" />
     <Compile Include="EarlyRepaymentTests.cs" />
     <Compile Include="Helpers\VerifyPaymentFunctions.cs" />
