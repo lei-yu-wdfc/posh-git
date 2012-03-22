@@ -1,5 +1,7 @@
-﻿using Wonga.QA.Framework.Api;
+﻿using System;
+using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Cs;
+using Wonga.QA.Framework.Data;
 using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Mocks;
 using Wonga.QA.Framework.Msmq;
@@ -14,8 +16,12 @@ namespace Wonga.QA.Framework
         public static CsDriver Cs { get { return new CsDriver(); } }
         public static SvcDriver Svc { get { return new SvcDriver(); } }
         public static MsmqDriver Msmq { get { return new MsmqDriver(); } }
-        public static DbDriver Db { get { return new DbDriver(); } }
         public static ThirdPartyDriver ThirdParties { get { return new ThirdPartyDriver(); } }
         public static MockDriver Mocks { get { return new MockDriver(); } }
+
+        [Obsolete("Use Driver.Data instead")]
+        public static DbDriver Db { get { return new DbDriver(); } }
+
+        public static DataDriver Data { get { return new DataDriver(); } }
     }
 }

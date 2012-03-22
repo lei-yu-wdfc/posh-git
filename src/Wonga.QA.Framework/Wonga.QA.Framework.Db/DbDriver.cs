@@ -1,4 +1,5 @@
-﻿using Wonga.QA.Framework.Core;
+﻿using System;
+using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.BankGateway;
 using Wonga.QA.Framework.Db.Bi;
 using Wonga.QA.Framework.Db.Blacklist;
@@ -32,6 +33,7 @@ using Wonga.QA.Framework.Db.WongaPay;
 
 namespace Wonga.QA.Framework.Db
 {
+    [Obsolete("Use DataDriver instead")]
     public class DbDriver
     {
         private OpsDatabase _ops;
