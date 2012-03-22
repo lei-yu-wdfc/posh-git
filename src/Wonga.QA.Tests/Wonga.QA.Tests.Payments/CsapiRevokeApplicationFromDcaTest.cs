@@ -50,6 +50,26 @@ namespace Wonga.QA.Tests.Payments
 			}
 			catch (ValidatorException exception)
 			{
+				Assert.AreEqual("Payments_RevokeFromDca_MissingApplicationId", exception.Errors.Single());
+			}
+		}
+
+		[Test, AUT(AUT.Ca), JIRA("CA-1862")]
+		public void ShouldRejectCommandBecauseApplicationDoesNotExist()
+		{
+			var command = new Wonga.QA.Framework.Cs.RevokeApplicationFromDcaCommand
+			{
+				ApplicationId = Guid.NewGuid()
+			};
+
+			try
+			{
+				Drive.Cs.Commands.Post(command);
+
+				Assert.Fail("Exception expected.");
+			}
+			catch (ValidatorException exception)
+			{
 				Assert.AreEqual("Payments_RevokeFromDca_ApplicationDoesNotExist", exception.Errors.Single());
 			}
 		}
