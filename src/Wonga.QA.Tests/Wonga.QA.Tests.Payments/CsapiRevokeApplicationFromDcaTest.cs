@@ -8,39 +8,39 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments
 {
-    [Parallelizable(TestScope.All)]
-    public class CsapiRevokeApplicationFromDcaTest
-    {
-        [Test, AUT(AUT.Ca), JIRA("CA-1862")]
-        public void ShouldRejectCommandBecauseApplicationHasNotBeenMovedToDca()
-        {
-            var customer = CustomerBuilder.New().Build();
-            var application = ApplicationBuilder.New(customer).Build();
+	[Parallelizable(TestScope.All)]
+	public class CsapiRevokeApplicationFromDcaTest
+	{
+		[Test, AUT(AUT.Ca), JIRA("CA-1862")]
+		public void ShouldRejectCommandBecauseApplicationHasNotBeenMovedToDca()
+		{
+			var customer = CustomerBuilder.New().Build();
+			var application = ApplicationBuilder.New(customer).Build();
 
-            var command = new Wonga.QA.Framework.Cs.RevokeApplicationFromDcaCommand
-                                               {
-												   ApplicationId = application.Id
-                                               };
+			var command = new Wonga.QA.Framework.Cs.RevokeApplicationFromDcaCommand
+			              	{
+			              		ApplicationId = application.Id
+			              	};
 
-        	try
-        	{
+			try
+			{
 				Drive.Cs.Commands.Post(command);
 
 				Assert.Fail("Exception expected.");
 			}
-        	catch (ValidatorException exception)
-        	{
+			catch (ValidatorException exception)
+			{
 				Assert.AreEqual("Payments_RevokeFromDca_ApplicationHasNotBeenMovedToDca", exception.Errors.Single());
-        	}
-        }
+			}
+		}
 
 		[Test, AUT(AUT.Ca), JIRA("CA-1862")]
 		public void ShouldRejectCommandBecauseApplicationWasNotSpecified()
 		{
 			var command = new Wonga.QA.Framework.Cs.RevokeApplicationFromDcaCommand
-			{
-				ApplicationId = Guid.Empty
-			};
+			              	{
+			              		ApplicationId = Guid.Empty
+			              	};
 
 			try
 			{
@@ -58,9 +58,9 @@ namespace Wonga.QA.Tests.Payments
 		public void ShouldRejectCommandBecauseApplicationDoesNotExist()
 		{
 			var command = new Wonga.QA.Framework.Cs.RevokeApplicationFromDcaCommand
-			{
-				ApplicationId = Guid.NewGuid()
-			};
+			              	{
+			              		ApplicationId = Guid.NewGuid()
+			              	};
 
 			try
 			{
