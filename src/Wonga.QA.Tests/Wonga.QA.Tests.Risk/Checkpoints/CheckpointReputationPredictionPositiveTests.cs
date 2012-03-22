@@ -11,5 +11,6 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	[Parallelizable(TestScope.All)]
 	class CheckpointReputationPredictionPositiveTests
 	{
+
 	}
 }
