@@ -72,7 +72,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(_repaymentDate, String.Format(CultureInfo.InvariantCulture, "{0:d MMM yyyy}", _actualDate));
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-149")]
+        [Test, AUT(AUT.Za), JIRA("QA-149"), Pending("Rounding error")]
         public void MovingSlidersLoanSummaryShouldBeCorrect()
         {
             var page = Client.Home();
