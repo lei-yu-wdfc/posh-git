@@ -199,7 +199,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-209")]
+        [Test, AUT(AUT.Za), JIRA("QA-209"), Pending("Changes not save in DB")]
         public void CustomerShouldBeAbleToChangePhoneNumber()
         {
             var loginPage = Client.Login();
@@ -218,6 +218,7 @@ namespace Wonga.QA.Tests.Ui
             Thread.Sleep(5000);
             myPersonalDetailsPage.Submit();
 
+            Thread.Sleep(60000);
             var homePhone = Drive.Db.Comms.CustomerDetails.FirstOrDefault().HomePhone;
             
             Assert.AreEqual("0123000000", myPersonalDetailsPage.GetHomePhone);
