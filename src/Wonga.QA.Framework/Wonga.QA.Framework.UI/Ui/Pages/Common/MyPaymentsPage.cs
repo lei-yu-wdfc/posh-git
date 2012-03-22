@@ -21,6 +21,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private IWebElement _popupLengthOfTime;
         private IWebElement _popupAddBankAccountButton;
         private IWebElement _popupExeption;
+        private IWebElement _accountNumber;
 
         public MyPaymentsPage(UiClient client)
             : base(client)
@@ -79,6 +80,25 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             catch (Exception)
             {
 
+                return false;
+            }
+        }
+
+        public void CloseButtonClick()
+        {
+            _popupAddBankAccountButton = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPaymentsPage.PopupAddBankAccountButton));
+            _popupAddBankAccountButton.Click();
+        }
+
+        public bool IsAccountNumberRight(string number)
+        {
+            _accountNumber = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPaymentsPage.AccountNumber));
+            if (_accountNumber.Text.Remove(0, 3) == number.Remove(0, 3))
+            {
+                return true;
+            }
+            else
+            {
                 return false;
             }
         }
