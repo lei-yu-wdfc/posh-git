@@ -25,6 +25,8 @@ namespace Wonga.QA.Tests.Payments
         	try
         	{
 				Drive.Cs.Commands.Post(command);
+
+				Assert.Fail("Exception expected.");
 			}
         	catch (ValidatorException exception)
         	{
@@ -43,6 +45,8 @@ namespace Wonga.QA.Tests.Payments
 			try
 			{
 				Drive.Cs.Commands.Post(command);
+
+				Assert.Fail("Exception expected.");
 			}
 			catch (ValidatorException exception)
 			{
