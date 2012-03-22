@@ -19,6 +19,7 @@ namespace Wonga.QA.Framework.UI.Elements
         private readonly IWebElement _listQuestions;
         private readonly IWebElement _troubleshooting;
         private readonly IWebElement _jargonBuster;
+        private IWebElement _contactUs;
 
         public HelpElement(BasePage page)
             : base(page)
@@ -63,6 +64,12 @@ namespace Wonga.QA.Framework.UI.Elements
         {
             _jargonBuster.Click();
             return new JargonBusterPage(Page.Client);
+        }
+
+        public void ContactUsClick()
+        {
+            _contactUs = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.HelpElement.ContactUs));
+            _contactUs.Click();
         }
     }
 }

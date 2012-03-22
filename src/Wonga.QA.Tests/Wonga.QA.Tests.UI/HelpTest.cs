@@ -66,5 +66,16 @@ namespace Wonga.QA.Tests.Ui
                     element.Click();
             }
         }
+
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-167")]
+        public void ClickOnContactUsCauseContactInformationDisplayedOnPage()
+        {
+            var page = Client.Home();
+            page.Help.HelpTriggerClick();
+            page.Help.ContactUsClick();
+            Thread.Sleep(5000); //wait for ajax load the popup
+            Assert.IsTrue(page.Contact.IsContactPopupPresent()); 
+            
+        }
     }
 }

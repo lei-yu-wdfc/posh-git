@@ -108,11 +108,16 @@
     <LogoutTrigger>#logout-trigger</LogoutTrigger>
   </LoginElement>
 
+  <ContactElement>
+    <ContactTitle>#contact</ContactTitle>
+  </ContactElement>
+
   <HelpElement>
     <HelpTrigger>help-trigger</HelpTrigger>
     <HelplistQuestions>#listQuestions</HelplistQuestions>
 	  <TroubleshootingQuestions>div#help-panel div.control-bar-panel div.panel:nth-child(2)>#listQuestions</TroubleshootingQuestions>
     <JargonBuster>#help-panel div div:nth-child(3) p:nth-child(1) a</JargonBuster>
+    <ContactUs>#help-panel div div:nth-child(3) p:nth-child(2) a</ContactUs>
   </HelpElement>
 
   <JargonBusterPage>

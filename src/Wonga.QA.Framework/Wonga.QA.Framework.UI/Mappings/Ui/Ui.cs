@@ -55,6 +55,8 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual InternationalElement InternationalElement { get; set; }
         public virtual FAQElement FAQElement { get; set; }
         public virtual SurveyElement SurveyElement { get; set; }
+        public virtual ContactElement ContactElement { get; set; }
+
         #endregion
 
         #region WbPages
