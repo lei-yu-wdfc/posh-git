@@ -7,6 +7,6 @@ namespace Wonga.QA.Framework.Cs
     [XmlRoot("RevokeApplicationFromDca")]
     public partial class RevokeApplicationFromDcaCommand : CsRequest<RevokeApplicationFromDcaCommand>
     {
-        public Object ApplicationId { get; set; }
+        public Guid ApplicationId { get; set; }
     }
 }
