@@ -35,6 +35,7 @@ namespace Wonga.QA.Framework.Api
         TESTMonthlyIncomeEnoughForRepayment,
         TESTPaymentCardIsValid,
         TESTRepaymentPredictionPositive,
+		TESTReputationtPredictionPositive,
         TESTNoSuspiciousApplicationActivity,
         TESTCallValidateBankAccountMatchedToApplicant,
         TESTCallValidatePaymentCardIsValid,
