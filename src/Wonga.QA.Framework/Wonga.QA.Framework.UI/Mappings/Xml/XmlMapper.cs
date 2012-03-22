@@ -49,7 +49,8 @@ namespace Wonga.QA.Framework.UI.Mappings
             
             if (String.IsNullOrEmpty(myValueResult))
             {
-                Trace.TraceWarning("No mapping for xml element {0} in file {1}", path, _xmlFile);
+                //Disabling these warnings for now.
+                //Trace.TraceWarning("No mapping for xml element {0} in file {1}", path, _xmlFile);
             }
             return myValueResult;
         }
