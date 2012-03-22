@@ -85,7 +85,7 @@
 
   <MyAccountNavigationSection>
     <!-- Should be extended-->
-    <MyPaymentsDetails>//a[contains(text(),'My account details')]</MyPaymentsDetails>
+    <MyPaymentsDetails>a.text:contains("My account details")</MyPaymentsDetails>
   </MyAccountNavigationSection>
 
   <SurveyElement>
