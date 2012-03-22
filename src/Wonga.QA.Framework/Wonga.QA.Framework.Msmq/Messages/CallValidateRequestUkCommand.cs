@@ -11,6 +11,7 @@ namespace Wonga.QA.Framework.Msmq
         public Guid AccountId { get; set; }
         public Guid ApplicationId { get; set; }
         public Decimal LoanAmount { get; set; }
+        public AccountEnum? AccountType { get; set; }
         public Guid SagaId { get; set; }
         public DateTime CreatedOn { get; set; }
     }

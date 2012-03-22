@@ -82,6 +82,8 @@
     <Compile Include="Temp\IovationMockResponse.cs" />
     <Compile Include="Temp\RiskMask.cs" />
     <Compile Include="Temp\VerificationDefinitionsEnum.cs" />
+    <Compile Include="Temp\ServiceConfigurationKeys.cs" />
+    <Compile Include="Temp\WorkflowStatusEnum.cs" />
     <Compile Include="Requests\AddBankAccountCaCommand.cs" />
     <Compile Include="Requests\AddBankAccountUkCommand.cs" />
     <Compile Include="Requests\AddBankAccountZaCommand.cs" />
@@ -101,6 +103,7 @@
     <Compile Include="Requests\CreateFixedTermLoanExtensionCommand.cs" />
     <Compile Include="Requests\CreateFixedTermLoanTopupCommand.cs" />
     <Compile Include="Requests\CreateRepaymentArrangementCommand.cs" />
+    <Compile Include="Requests\CreateScheduledPaymentRequestCommand.cs" />
     <Compile Include="Requests\DeleteBankAccountCommand.cs" />
     <Compile Include="Requests\DeletePaymentCardCommand.cs" />
     <Compile Include="Requests\GeneratePasswordResetKeyCommand.cs" />
@@ -188,6 +191,7 @@
     <Compile Include="Requests\SaveExtensionReminderPreferencesCommand.cs" />
     <Compile Include="Requests\SaveOrganisationDetailsCommand.cs" />
     <Compile Include="Requests\SavePasswordRecoveryDetailsCommand.cs" />
+    <Compile Include="Requests\SavePaymentCardBillingAddressCommand.cs" />
     <Compile Include="Requests\SaveSocialDetailsCommand.cs" />
     <Compile Include="Requests\SaveTrackingDataCommand.cs" />
     <Compile Include="Requests\SendExtensionWindowOpenedReminderCommand.cs" />
@@ -240,8 +244,6 @@
     <Compile Include="Enums\ProvinceEnum.cs" />
     <Compile Include="Enums\SliderPositionEnum.cs" />
     <Compile Include="Enums\TitleEnum.cs" />
-    <Compile Include="Temp\ServiceConfigurationKeys.cs" />
-    <Compile Include="Temp\WorkflowStatusEnum.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />

@@ -11,6 +11,7 @@ using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
 using AddBankAccountUkCommand = Wonga.QA.Framework.Msmq.AddBankAccountUkCommand;
 using CreateFixedTermLoanApplicationCommand = Wonga.QA.Framework.Msmq.CreateFixedTermLoanApplicationCommand;
+using CreateScheduledPaymentRequestCommand = Wonga.QA.Framework.Msmq.CreateScheduledPaymentRequestCommand;
 using SignApplicationCommand = Wonga.QA.Framework.Msmq.SignApplicationCommand;
 
 
