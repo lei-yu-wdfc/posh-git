@@ -21,6 +21,15 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                 _communicationPrefs.SelectLabel(value);
             }
         }
+        public string GetHomePhone
+        {
+            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.HomePhone)).Text; }
+        }
+        public string GetMobilePhone
+        {
+            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.MobilePhone)).Text; }
+        }
+
         private readonly IWebElement _address;
         private readonly IWebElement _password;
         private readonly IWebElement _phone;
@@ -28,6 +37,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private ReadOnlyCollection<IWebElement> _communicationPrefs;
         private IWebElement _editPhoneHome;
         private IWebElement _editPhoneMobile;
+        private IWebElement _editPhonePin;
         private IWebElement _editPasswordCurrent;
         private IWebElement _editPasswordNew;
         private IWebElement _editPasswordConfirm;
@@ -66,18 +76,26 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _editPasswordConfirm.SendKeys(confirmPass);
         }
 
-        public void ChangePhone(string homePhone, string mobilePhone)
+        public void ChangePhone(string homePhone, string mobilePhone, string pin)
         {
             _editPhoneHome = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.EditPhoneHome));
             _editPhoneMobile = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.EditPhoneMobile));
             _submitButton = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.SubmitButton));
-
+            
+            _editPhoneHome.Clear();
             _editPhoneHome.SendKeys(homePhone);
+            _editPhoneMobile.Clear();
             _editPhoneMobile.SendKeys(mobilePhone);
+
+            _submitButton.Click();
+            Thread.Sleep(5000);
+            _editPhonePin = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.EditPhonePin));
+            _editPhonePin.SendKeys(pin);
         }
         
         public void Submit()
         {
+            _submitButton = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.SubmitButton));
             _submitButton.Click();
         }
 

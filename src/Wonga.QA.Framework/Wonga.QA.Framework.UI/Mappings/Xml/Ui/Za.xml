@@ -81,8 +81,11 @@
     <Phone>table#profile tr#phone</Phone>
     <Communication>table#profile tr#communication</Communication>
     <CommunicationPrefs>input[type="radio"][name="comms_preference"]</CommunicationPrefs>
+    <HomePhone>table#profile tr#phone tbody tr:nth-child(1)>td</HomePhone>
+    <MobilePhone>table#profile tr#phone tbody tr:nth-child(2)>td</MobilePhone>
     <EditPhoneHome>input#edit-home-phone-za</EditPhoneHome>
     <EditPhoneMobile>input#edit-mobile-phone-za</EditPhoneMobile>
+    <EditPhonePin>input#edit-mobile-pin</EditPhonePin>
     <EditPasswordCurrent>input#edit-current-password</EditPasswordCurrent>
     <EditPasswordNew>input#edit-password</EditPasswordNew>
     <EditPasswordConfirm>input#edit-password-confirm</EditPasswordConfirm>

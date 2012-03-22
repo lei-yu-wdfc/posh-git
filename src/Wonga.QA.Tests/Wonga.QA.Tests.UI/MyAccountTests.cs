@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Gallio.Framework.Assertions;
 using System.Threading;
 using MbUnit.Framework;
@@ -196,6 +197,33 @@ namespace Wonga.QA.Tests.Ui
             var mySummary = homePage.Login.LoginAs(email, "QWEasd12");
 
 
+        }
+
+        [Test, AUT(AUT.Za), JIRA("QA-209"), Pending("Changes not save in DB")]
+        public void CustomerShouldBeAbleToChangePhoneNumber()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            var mySummaryPage = loginPage.LoginAs(email);
+            var myPersonalDetailsPage = mySummaryPage.Navigation.MyPersonalDetailsButtonClick();
+
+            myPersonalDetailsPage.PhoneClick();
+            Thread.Sleep(5000);
+            myPersonalDetailsPage.ChangePhone("0123000000", "0212571908", "0000");
+            
+            myPersonalDetailsPage.Submit();
+            Thread.Sleep(5000);
+            myPersonalDetailsPage.Submit();
+
+            Thread.Sleep(60000);
+            var homePhone = Drive.Db.Comms.CustomerDetails.FirstOrDefault().HomePhone;
+            
+            Assert.AreEqual("0123000000", myPersonalDetailsPage.GetHomePhone);
+            Assert.AreEqual("0123000000", homePhone);
+            //TODO check SF
         }
     }
 }
