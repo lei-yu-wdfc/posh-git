@@ -148,6 +148,48 @@ namespace Wonga.QA.Tests.Ui
             myPersonalDetailsPage.CommunicationClick();
             myPersonalDetailsPage.SetCommunicationPrefs =
                 "I am not happy to receive updates and other communications from Wonga via email and SMS.";
+            //Journey journey = new Journey(Client.Home());
+            //var page = journey.ApplyForLoan(200, 10)
+            //               .CurrentPage as PersonalDetailsPage;
+
+
+        }
+
+        [Test, AUT(AUT.Za), JIRA("QA-216")]
+        public void CustomerShouldBeAbleToChangePassword()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            var mySummaryPage = loginPage.LoginAs(email);
+            var myPersonalDetailsPage = mySummaryPage.Navigation.MyPersonalDetailsButtonClick();
+
+            myPersonalDetailsPage.PasswordClick();
+            Thread.Sleep(5000); //here and below - waiting for a pop-up
+            myPersonalDetailsPage.ChangePassword("Passw0rd", "Passw0rd", "Passw0rd");
+            myPersonalDetailsPage.Submit();
+
+            Thread.Sleep(5000);
+            Assert.IsTrue(myPersonalDetailsPage.IsPasswordPopupHasErrorMessage());
+            myPersonalDetailsPage.PasswordClick();
+            myPersonalDetailsPage.PasswordClick();
+            Thread.Sleep(5000);
+            myPersonalDetailsPage.ChangePassword("Passw0rd", "Pass", "Pass");
+
+            Thread.Sleep(5000); 
+            Assert.IsTrue(myPersonalDetailsPage.IsPasswordWarningMessageOccurs());
+
+            myPersonalDetailsPage.PasswordClick();
+            myPersonalDetailsPage.PasswordClick();
+            Thread.Sleep(5000);
+            myPersonalDetailsPage.ChangePassword("Passw0rd", "QWEasd12", "QWEasd12");
+            myPersonalDetailsPage.Submit();
+            Thread.Sleep(5000);
+
+            var homePage = myPersonalDetailsPage.Login.Logout();
+            var mySummary = homePage.Login.LoginAs(email, "QWEasd12");
 
 
         }

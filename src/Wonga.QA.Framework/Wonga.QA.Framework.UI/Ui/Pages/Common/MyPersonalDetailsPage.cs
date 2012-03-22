@@ -13,16 +13,33 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
     public class MyPersonalDetailsPage : BasePage
     {
         public MyAccountNavigationElement Navigation { get; set; }
-
+        public LoginElement Login { get; set; }
+        public string SetCommunicationPrefs
+        {
+            set
+            {
+                _communicationPrefs.SelectLabel(value);
+            }
+        }
         private readonly IWebElement _address;
         private readonly IWebElement _password;
         private readonly IWebElement _phone;
         private readonly IWebElement _communication;
         private ReadOnlyCollection<IWebElement> _communicationPrefs;
+        private IWebElement _editPhoneHome;
+        private IWebElement _editPhoneMobile;
+        private IWebElement _editPasswordCurrent;
+        private IWebElement _editPasswordNew;
+        private IWebElement _editPasswordConfirm;
+        private IWebElement _editPasswordErrorMessage;
+        private IWebElement _editPasswordPopupErrorMessage;
+        private IWebElement _submitButton;
 
         public MyPersonalDetailsPage(UiClient client) : base(client)
         {
             Navigation = new MyAccountNavigationElement(this);
+            Login = new LoginElement(this);
+
             _address = Content.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.Address));
             _password = Content.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.Password));
             _phone = Content.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.Phone));
@@ -35,32 +52,81 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             Thread.Sleep(1000); //Wait for a pop-up
         }
 
-        public void PasswordClick()
+        public void ChangePassword(string currentPass, string newPass, string confirmPass)
         {
-            _password.Click();
-            Thread.Sleep(1000);
+            _editPasswordCurrent =
+               Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.EditPasswordCurrent));
+            _editPasswordNew = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.EditPasswordNew));
+            _editPasswordConfirm =
+                Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.EditPasswordConfirm));
+            _submitButton = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.SubmitButton));
+
+            _editPasswordCurrent.SendKeys(currentPass);
+            _editPasswordNew.SendKeys(newPass);
+            _editPasswordConfirm.SendKeys(confirmPass);
         }
 
-        public void PhoneClick()
+        public void ChangePhone(string homePhone, string mobilePhone)
         {
-            _phone.Click();
-            Thread.Sleep(1000);
+            _editPhoneHome = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.EditPhoneHome));
+            _editPhoneMobile = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.EditPhoneMobile));
+            _submitButton = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.SubmitButton));
+
+            _editPhoneHome.SendKeys(homePhone);
+            _editPhoneMobile.SendKeys(mobilePhone);
+        }
+        
+        public void Submit()
+        {
+            _submitButton.Click();
         }
 
         public void CommunicationClick()
         {
             _communication.Click();
             Thread.Sleep(1000);
+            _communicationPrefs = Client.Driver.FindElements(By.CssSelector(Ui.Get.MyPersonalDetailsPage.CommunicationPrefs));
         }
 
-        public string SetCommunicationPrefs
+        public void PasswordClick()
         {
-            set
+            _password.Click();
+        }
+
+        public void PhoneClick()
+        {
+            _phone.Click();
+        }
+
+        public bool IsPasswordWarningMessageOccurs()
+        {
+            try
             {
-                _communicationPrefs = Content.FindElements(By.CssSelector(Ui.Get.MyPersonalDetailsPage.CommunicationPrefs));
-                _communicationPrefs.SelectLabel(value);
+                _editPasswordErrorMessage =
+                    Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.EditPasswordErrorMessage));
+                return true;
+            }
+            catch(NoSuchElementException)
+            {
+                return false;
             }
         }
+        public bool IsPasswordPopupHasErrorMessage()
+        {
+            try
+            {
+                _editPasswordPopupErrorMessage =
+                    Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.EditPasswordPopupErrorMessage));
+                return true;
+            }
+            catch(NoSuchElementException)
+            {
+                return false;
+            }
+            
+        }
+
+       
 
     }
 }
