@@ -47,6 +47,7 @@
     <Compile Include="Requests\GetRepaymentArrangementsQuery.cs" />
     <Compile Include="Requests\GetTransactionsQuery.cs" />
     <Compile Include="Requests\GetValidTransactionTypesQuery.cs" />
+    <Compile Include="Requests\RevokeApplicationFromDcaCommand.cs" />
     <Compile Include="Requests\SuspectFraudCommand.cs" />
   </ItemGroup>
   <ItemGroup>
