@@ -41,7 +41,20 @@ namespace Wonga.QA.Framework.ThirdParties
         {
             const string emailTemplateId = "32377";
 
-            TriggeredSendDefinition triggeredSendDefinition = GetTriggeredSendDefinition(emailTemplateId);
+            return CheckEmailSent(emailAddress, emailTemplateId);
+        }
+
+        public bool CheckPaymentConfirmationUkEmailSent(string emailAddress)
+        {
+            const string emailTemplateId = "34009";
+
+            return CheckEmailSent(emailAddress, emailTemplateId);
+        }
+
+        //SH: Leaving this as public so it can be used directly.
+        public bool CheckEmailSent(string emailAddress, string templateId)
+        {
+            TriggeredSendDefinition triggeredSendDefinition = GetTriggeredSendDefinition(templateId);
 
             if (triggeredSendDefinition == null)
             {
@@ -50,12 +63,7 @@ namespace Wonga.QA.Framework.ThirdParties
 
             SentEvent sentEvent = GetSentEvent(emailAddress, triggeredSendDefinition);
 
-            if (sentEvent == null)
-            {
-                return false;
-            }
-
-            return true;
+            return sentEvent != null;
         }
 
         private TriggeredSendDefinition GetTriggeredSendDefinition(string customerKey)
