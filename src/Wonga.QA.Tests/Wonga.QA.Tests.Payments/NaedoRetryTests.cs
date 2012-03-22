@@ -12,7 +12,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments
 {
-	[AUT(AUT.Za)]
+	[AUT(AUT.Za), Pending("Work in progress")]
 	public class NaedoRetryTests
 	{
 		private const string BankGatewayIsTestModeKey = "BankGateway.IsTestMode";
@@ -27,7 +27,7 @@ namespace Wonga.QA.Tests.Payments
 			entity.Submit();
 		}
 
-		[Test, JIRA("ZA-1969"), Parallelizable, Pending("Work in progress")]
+		[Test, JIRA("ZA-1969"), Parallelizable]
 		public void SecondNaedoIsPostedWhenFirstSucceededButAmountIsOutstandingInArrears()
 		{
 			const decimal amount = 1000m;
