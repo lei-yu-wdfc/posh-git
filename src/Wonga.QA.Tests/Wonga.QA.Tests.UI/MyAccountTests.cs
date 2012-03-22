@@ -109,6 +109,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Za), JIRA("QA-201")]
         public void WhenLoggedCustomerWithoutLiveLoanAddsNewBankAccountItShouldBecomePrimary()
         {
+            string accountNumber = "1234567";
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
@@ -125,8 +126,11 @@ namespace Wonga.QA.Tests.Ui
 
                 Thread.Sleep(2000); // Wait some time to load popup
 
-                var paymentPage = payment.AddBankAccount("Capitec", "Current", "1234567", "2 to 3 years");
-
+                var paymentPage = payment.AddBankAccount("Capitec", "Current", accountNumber, "2 to 3 years");
+                Thread.Sleep(3000);
+                paymentPage.CloseButtonClick();
+                payment = Client.Payments();
+                Assert.IsTrue(payment.IsAccountNumberRight(accountNumber)); 
             }
             else
             {
