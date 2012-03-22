@@ -80,5 +80,13 @@
     <Phone>table#profile tr#phone</Phone>
     <Communication>table#profile tr#communication</Communication>
     <CommunicationPrefs>input[type="radio"][name="comms_preference"]</CommunicationPrefs>
+    <EditPhoneHome>input#edit-home-phone-za</EditPhoneHome>
+    <EditPhoneMobile>input#edit-mobile-phone-za</EditPhoneMobile>
+    <EditPasswordCurrent>input#edit-current-password</EditPasswordCurrent>
+    <EditPasswordNew>input#edit-password</EditPasswordNew>
+    <EditPasswordConfirm>input#edit-password-confirm</EditPasswordConfirm>
+    <EditPasswordErrorMessage>div#edit-password-wrapper div.form-error div[class='invalid']</EditPasswordErrorMessage>
+    <EditPasswordPopupErrorMessage>form#wonga-my-account-profile-edit-password-form div.messages.error</EditPasswordPopupErrorMessage>
+    <SubmitButton>input#edit-submit</SubmitButton>
   </MyPersonalDetailsPage>
 </Ui>
