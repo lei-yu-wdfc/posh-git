@@ -3,6 +3,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments
@@ -17,17 +18,19 @@ namespace Wonga.QA.Tests.Payments
 			var organisation = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organisation).Build();
 
+			var applicationEntity = Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id));
+
 			var response = Drive.Api.Queries.Post(new GetBusinessFixedInstallmentLoanCalculationWbUkQuery
 				{ LoanAmount = 5000, Term = 16, ApplicationId = application.Id});
 
 			Assert.IsNotNull(response);
-			Assert.AreEqual("10000.00", response.Values["LoanAmount"].SingleOrDefault(), "Expected LoanAmount value is incorrect.");
+			Assert.AreEqual(applicationEntity.BusinessFixedInstallmentLoanApplicationEntity.LoanAmount.ToString(), response.Values["LoanAmount"].SingleOrDefault(), "Expected LoanAmount value is incorrect.");
 			Assert.AreEqual("16", response.Values["Term"].SingleOrDefault(), "Expected Term value is incorrect.");
-			Assert.AreEqual("5.00", response.Values["ApplicationFeeRate"].SingleOrDefault(), "Expected ApplicationFeeRate value is incorrect.");
-			Assert.AreEqual("4800.00", response.Values["InterestAmount"].SingleOrDefault(), "Expected InterestAmount value is incorrect.");
-			Assert.AreEqual("3.000000", response.Values["WeeklyInterestRate"].SingleOrDefault(), "Expected WeeklyInterestRate value is incorrect.");
-			Assert.AreEqual("15300.00", response.Values["TotalRepayable"].SingleOrDefault(), "Expected TotalRepayable value is incorrect.");
-			Assert.AreEqual("956.25", response.Values["WeeklyRepayable"].SingleOrDefault(), "Expected WeeklyRepayable value is incorrect.");
+			Assert.AreEqual(applicationEntity.BusinessFixedInstallmentLoanApplicationEntity.ApplicationFee.ToString(), response.Values["ApplicationFeeRate"].SingleOrDefault(), "Expected ApplicationFeeRate value is incorrect.");
+			Assert.AreEqual(applicationEntity.BusinessFixedInstallmentLoanApplicationEntity.InterestRate.ToString(), response.Values["WeeklyInterestRate"].SingleOrDefault(), "Expected WeeklyInterestRate value is incorrect.");
+			Assert.AreEqual("2800.00", response.Values["InterestAmount"].SingleOrDefault(), "Expected InterestAmount value is incorrect.");
+			Assert.AreEqual("13300.00", response.Values["TotalRepayable"].SingleOrDefault(), "Expected TotalRepayable value is incorrect.");
+			Assert.AreEqual("831.25", response.Values["WeeklyRepayable"].SingleOrDefault(), "Expected WeeklyRepayable value is incorrect.");
 		}
 
 
