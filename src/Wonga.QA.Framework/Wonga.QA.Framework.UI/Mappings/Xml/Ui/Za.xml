@@ -93,4 +93,9 @@
     <EditPasswordPopupErrorMessage>form#wonga-my-account-profile-edit-password-form div.messages.error</EditPasswordPopupErrorMessage>
     <SubmitButton>input#edit-submit</SubmitButton>
   </MyPersonalDetailsPage>
+  
+  <AboutUsPage>
+    <OurCustomers>#block-wonga-6 div div ul li:nth-child(2) a</OurCustomers>
+    <ResponsibleLending>#block-wonga-6 div div ul li:nth-child(3) a</ResponsibleLending>
+  </AboutUsPage>
 </Ui>

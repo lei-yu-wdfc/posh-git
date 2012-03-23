@@ -88,6 +88,11 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual MyPaymentsPage MyPaymentsPage { get; set; }
         public virtual MyPersonalDetailsPage MyPersonalDetailsPage { get; set; }
         public virtual JargonBusterPage JargonBusterPage { get; set; }
+        public virtual AboutUsPage AboutUsPage { get; set; }
+        public virtual BlogPage BlogPage { get; set; }
+        public virtual OurCustomersPage OurCustomersPage { get; set; }
+        public virtual ResponsibleLendingPage ResponsibleLendingPage { get; set; }
+        public virtual WhyUseUsPage WhyUseUsPage { get; set; }
 
         #endregion
 

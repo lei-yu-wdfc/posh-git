@@ -49,6 +49,12 @@ namespace Wonga.QA.Framework.UI
             Driver.Navigate().GoToUrl(Config.Ui.Home + "/my-account/details");
             return new MyPaymentsPage(this);
         }
+        
+        public AboutUsPage About()
+        {
+            Driver.Navigate().GoToUrl(Config.Ui.Home + "/about");
+            return new AboutUsPage(this);
+        }
 
         public Image Screen()
         {
@@ -72,5 +78,6 @@ namespace Wonga.QA.Framework.UI
             Driver.Navigate().GoToUrl(Config.SalesforceUi.Home);
             return new SalesForceLoginPage(this);
         }
+
     }
 }
