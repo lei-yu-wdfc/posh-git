@@ -1,4 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Ui>
 
+  <PersonalDetailsPage>
+    <FormId>div.wonga-box-1</FormId>
+  </PersonalDetailsPage>
+
+  <AddressDetailsPage>
+    <FormId>div.wonga-box-1</FormId>
+    <AddressOptions>#edit-address-options</AddressOptions>
+    <LookupButton>#edit-submit-lookup</LookupButton>
+  </AddressDetailsPage>
+  
+  <EmploymentDetailsSection>
+    <NextPaydayDay>div#edit-next-payday-wrapper div.date-day</NextPaydayDay>
+    <NextPaydayMonth>div#edit-next-payday-wrapper div.date-month</NextPaydayMonth>
+    <NextPaydayYear>div#edit-next-payday-wrapper div.date-year</NextPaydayYear>
+  </EmploymentDetailsSection>
 </Ui>
