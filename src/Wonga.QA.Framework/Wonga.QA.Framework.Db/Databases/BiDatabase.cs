@@ -57,6 +57,9 @@ namespace Wonga.QA.Framework.Db.Bi
     partial void InsertApplicationDeclinedReasonEntity(ApplicationDeclinedReasonEntity instance);
     partial void UpdateApplicationDeclinedReasonEntity(ApplicationDeclinedReasonEntity instance);
     partial void DeleteApplicationDeclinedReasonEntity(ApplicationDeclinedReasonEntity instance);
+    partial void InsertArrearsExportEntity(ArrearsExportEntity instance);
+    partial void UpdateArrearsExportEntity(ArrearsExportEntity instance);
+    partial void DeleteArrearsExportEntity(ArrearsExportEntity instance);
     partial void InsertBankAccountEntity(BankAccountEntity instance);
     partial void UpdateBankAccountEntity(BankAccountEntity instance);
     partial void DeleteBankAccountEntity(BankAccountEntity instance);
@@ -344,6 +347,14 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
+		public System.Data.Linq.Table<ArrearsExportEntity> ArrearsExports
+		{
+			get
+			{
+				return this.GetTable<ArrearsExportEntity>();
+			}
+		}
+		
 		public System.Data.Linq.Table<BankAccountEntity> BankAccounts
 		{
 			get
@@ -365,6 +376,14 @@ namespace Wonga.QA.Framework.Db.Bi
 			get
 			{
 				return this.GetTable<CollectionMethodEntity>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ConfigurationSSISEncryptedEntity> ConfigurationSSISEncrypteds
+		{
+			get
+			{
+				return this.GetTable<ConfigurationSSISEncryptedEntity>();
 			}
 		}
 		
@@ -1021,6 +1040,8 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private EntitySet<FTransunionResponseEntity> _FTransunionResponses;
 		
+		private EntitySet<ArrearsExportEntity> _ArrearsExports;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1109,6 +1130,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			this._FSignFixedTermLoanTopups = new EntitySet<FSignFixedTermLoanTopupEntity>(new Action<FSignFixedTermLoanTopupEntity>(this.attach_FSignFixedTermLoanTopups), new Action<FSignFixedTermLoanTopupEntity>(this.detach_FSignFixedTermLoanTopups));
 			this._FSubmitCounterOffers = new EntitySet<FSubmitCounterOfferEntity>(new Action<FSubmitCounterOfferEntity>(this.attach_FSubmitCounterOffers), new Action<FSubmitCounterOfferEntity>(this.detach_FSubmitCounterOffers));
 			this._FTransunionResponses = new EntitySet<FTransunionResponseEntity>(new Action<FTransunionResponseEntity>(this.attach_FTransunionResponses), new Action<FTransunionResponseEntity>(this.detach_FTransunionResponses));
+			this._ArrearsExports = new EntitySet<ArrearsExportEntity>(new Action<ArrearsExportEntity>(this.attach_ArrearsExports), new Action<ArrearsExportEntity>(this.detach_ArrearsExports));
 			OnCreated();
 		}
 		
@@ -1960,6 +1982,19 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_ArrearsExport_REF_Account", Storage="_ArrearsExports", ThisKey="AccountSKey", OtherKey="AccountSKey", DeleteRule="NO ACTION")]
+		public EntitySet<ArrearsExportEntity> ArrearsExports
+		{
+			get
+			{
+				return this._ArrearsExports;
+			}
+			set
+			{
+				this._ArrearsExports.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2167,6 +2202,18 @@ namespace Wonga.QA.Framework.Db.Bi
 		}
 		
 		private void detach_FTransunionResponses(FTransunionResponseEntity entity)
+		{
+			this.SendPropertyChanging();
+			entity.AccountEntity = null;
+		}
+		
+		private void attach_ArrearsExports(ArrearsExportEntity entity)
+		{
+			this.SendPropertyChanging();
+			entity.AccountEntity = this;
+		}
+		
+		private void detach_ArrearsExports(ArrearsExportEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.AccountEntity = null;
@@ -3374,6 +3421,8 @@ namespace Wonga.QA.Framework.Db.Bi
 		
 		private EntitySet<FUpdateDailyAccruedInterestEntity> _FUpdateDailyAccruedInterests;
 		
+		private EntitySet<ArrearsExportEntity> _ArrearsExports;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -3415,6 +3464,7 @@ namespace Wonga.QA.Framework.Db.Bi
 			this._FTransactionLedgers = new EntitySet<FTransactionLedgerEntity>(new Action<FTransactionLedgerEntity>(this.attach_FTransactionLedgers), new Action<FTransactionLedgerEntity>(this.detach_FTransactionLedgers));
 			this._FTransactionRequests = new EntitySet<FTransactionRequestEntity>(new Action<FTransactionRequestEntity>(this.attach_FTransactionRequests), new Action<FTransactionRequestEntity>(this.detach_FTransactionRequests));
 			this._FUpdateDailyAccruedInterests = new EntitySet<FUpdateDailyAccruedInterestEntity>(new Action<FUpdateDailyAccruedInterestEntity>(this.attach_FUpdateDailyAccruedInterests), new Action<FUpdateDailyAccruedInterestEntity>(this.detach_FUpdateDailyAccruedInterests));
+			this._ArrearsExports = new EntitySet<ArrearsExportEntity>(new Action<ArrearsExportEntity>(this.attach_ArrearsExports), new Action<ArrearsExportEntity>(this.detach_ArrearsExports));
 			OnCreated();
 		}
 		
@@ -3907,6 +3957,19 @@ namespace Wonga.QA.Framework.Db.Bi
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_ArrearsExport_REF_Application", Storage="_ArrearsExports", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", DeleteRule="NO ACTION")]
+		public EntitySet<ArrearsExportEntity> ArrearsExports
+		{
+			get
+			{
+				return this._ArrearsExports;
+			}
+			set
+			{
+				this._ArrearsExports.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -4106,6 +4169,18 @@ namespace Wonga.QA.Framework.Db.Bi
 			this.SendPropertyChanging();
 			entity.ApplicationEntity = null;
 		}
+		
+		private void attach_ArrearsExports(ArrearsExportEntity entity)
+		{
+			this.SendPropertyChanging();
+			entity.ApplicationEntity = this;
+		}
+		
+		private void detach_ArrearsExports(ArrearsExportEntity entity)
+		{
+			this.SendPropertyChanging();
+			entity.ApplicationEntity = null;
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="bi.ApplicationDeclinedReason")]
@@ -4267,6 +4342,270 @@ namespace Wonga.QA.Framework.Db.Bi
 		{
 			this.SendPropertyChanging();
 			entity.ApplicationDeclinedReasonEntity = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="Export.ArrearsExport")]
+	public partial class ArrearsExportEntity : DbEntity<ArrearsExportEntity>, INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ArrearsReportId;
+		
+		private int _NoOfDays;
+		
+		private System.DateTime _Date;
+		
+		private int _AccountSKey;
+		
+		private int _ApplicationSKey;
+		
+		private string _DocumentType;
+		
+		private EntityRef<AccountEntity> _AccountEntity;
+		
+		private EntityRef<ApplicationEntity> _ApplicationEntity;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnArrearsReportIdChanging(int value);
+    partial void OnArrearsReportIdChanged();
+    partial void OnNoOfDaysChanging(int value);
+    partial void OnNoOfDaysChanged();
+    partial void OnDateChanging(System.DateTime value);
+    partial void OnDateChanged();
+    partial void OnAccountSKeyChanging(int value);
+    partial void OnAccountSKeyChanged();
+    partial void OnApplicationSKeyChanging(int value);
+    partial void OnApplicationSKeyChanged();
+    partial void OnDocumentTypeChanging(string value);
+    partial void OnDocumentTypeChanged();
+    #endregion
+		
+		public ArrearsExportEntity()
+		{
+			this._AccountEntity = default(EntityRef<AccountEntity>);
+			this._ApplicationEntity = default(EntityRef<ApplicationEntity>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ArrearsReportId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ArrearsReportId
+		{
+			get
+			{
+				return this._ArrearsReportId;
+			}
+			set
+			{
+				if ((this._ArrearsReportId != value))
+				{
+					this.OnArrearsReportIdChanging(value);
+					this.SendPropertyChanging();
+					this._ArrearsReportId = value;
+					this.SendPropertyChanged("ArrearsReportId");
+					this.OnArrearsReportIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NoOfDays", DbType="Int NOT NULL")]
+		public int NoOfDays
+		{
+			get
+			{
+				return this._NoOfDays;
+			}
+			set
+			{
+				if ((this._NoOfDays != value))
+				{
+					this.OnNoOfDaysChanging(value);
+					this.SendPropertyChanging();
+					this._NoOfDays = value;
+					this.SendPropertyChanged("NoOfDays");
+					this.OnNoOfDaysChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="DateTime NOT NULL")]
+		public System.DateTime Date
+		{
+			get
+			{
+				return this._Date;
+			}
+			set
+			{
+				if ((this._Date != value))
+				{
+					this.OnDateChanging(value);
+					this.SendPropertyChanging();
+					this._Date = value;
+					this.SendPropertyChanged("Date");
+					this.OnDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccountSKey", DbType="Int NOT NULL")]
+		public int AccountSKey
+		{
+			get
+			{
+				return this._AccountSKey;
+			}
+			set
+			{
+				if ((this._AccountSKey != value))
+				{
+					if (this._AccountEntity.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnAccountSKeyChanging(value);
+					this.SendPropertyChanging();
+					this._AccountSKey = value;
+					this.SendPropertyChanged("AccountSKey");
+					this.OnAccountSKeyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplicationSKey", DbType="Int NOT NULL")]
+		public int ApplicationSKey
+		{
+			get
+			{
+				return this._ApplicationSKey;
+			}
+			set
+			{
+				if ((this._ApplicationSKey != value))
+				{
+					if (this._ApplicationEntity.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnApplicationSKeyChanging(value);
+					this.SendPropertyChanging();
+					this._ApplicationSKey = value;
+					this.SendPropertyChanged("ApplicationSKey");
+					this.OnApplicationSKeyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocumentType", DbType="VarChar(20) NOT NULL", CanBeNull=false)]
+		public string DocumentType
+		{
+			get
+			{
+				return this._DocumentType;
+			}
+			set
+			{
+				if ((this._DocumentType != value))
+				{
+					this.OnDocumentTypeChanging(value);
+					this.SendPropertyChanging();
+					this._DocumentType = value;
+					this.SendPropertyChanged("DocumentType");
+					this.OnDocumentTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_ArrearsExport_REF_Account", Storage="_AccountEntity", ThisKey="AccountSKey", OtherKey="AccountSKey", IsForeignKey=true)]
+		public AccountEntity AccountEntity
+		{
+			get
+			{
+				return this._AccountEntity.Entity;
+			}
+			set
+			{
+				AccountEntity previousValue = this._AccountEntity.Entity;
+				if (((previousValue != value) 
+							|| (this._AccountEntity.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._AccountEntity.Entity = null;
+						previousValue.ArrearsExports.Remove(this);
+					}
+					this._AccountEntity.Entity = value;
+					if ((value != null))
+					{
+						value.ArrearsExports.Add(this);
+						this._AccountSKey = value.AccountSKey;
+					}
+					else
+					{
+						this._AccountSKey = default(int);
+					}
+					this.SendPropertyChanged("AccountEntity");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_ArrearsExport_REF_Application", Storage="_ApplicationEntity", ThisKey="ApplicationSKey", OtherKey="ApplicationSKey", IsForeignKey=true)]
+		public ApplicationEntity ApplicationEntity
+		{
+			get
+			{
+				return this._ApplicationEntity.Entity;
+			}
+			set
+			{
+				ApplicationEntity previousValue = this._ApplicationEntity.Entity;
+				if (((previousValue != value) 
+							|| (this._ApplicationEntity.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._ApplicationEntity.Entity = null;
+						previousValue.ArrearsExports.Remove(this);
+					}
+					this._ApplicationEntity.Entity = value;
+					if ((value != null))
+					{
+						value.ArrearsExports.Add(this);
+						this._ApplicationSKey = value.ApplicationSKey;
+					}
+					else
+					{
+						this._ApplicationSKey = default(int);
+					}
+					this.SendPropertyChanged("ApplicationEntity");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	
@@ -5190,6 +5529,123 @@ namespace Wonga.QA.Framework.Db.Bi
 			if ((this.PropertyChanged != null))
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="ssis.ConfigurationSSISEncrypted")]
+	public partial class ConfigurationSSISEncryptedEntity : DbEntity<ConfigurationSSISEncryptedEntity>
+	{
+		
+		private int _ConfigurationSSISId;
+		
+		private string _ConfigurationFilter;
+		
+		private System.Data.Linq.Binary _ConfiguredValue;
+		
+		private string _PackagePath;
+		
+		private string _ConfiguredValueType;
+		
+		private string _Comment;
+		
+		public ConfigurationSSISEncryptedEntity()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ConfigurationSSISId", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
+		public int ConfigurationSSISId
+		{
+			get
+			{
+				return this._ConfigurationSSISId;
+			}
+			set
+			{
+				if ((this._ConfigurationSSISId != value))
+				{
+					this._ConfigurationSSISId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ConfigurationFilter", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string ConfigurationFilter
+		{
+			get
+			{
+				return this._ConfigurationFilter;
+			}
+			set
+			{
+				if ((this._ConfigurationFilter != value))
+				{
+					this._ConfigurationFilter = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ConfiguredValue", DbType="VarBinary(512)", CanBeNull=true)]
+		public System.Data.Linq.Binary ConfiguredValue
+		{
+			get
+			{
+				return this._ConfiguredValue;
+			}
+			set
+			{
+				if ((this._ConfiguredValue != value))
+				{
+					this._ConfiguredValue = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PackagePath", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string PackagePath
+		{
+			get
+			{
+				return this._PackagePath;
+			}
+			set
+			{
+				if ((this._PackagePath != value))
+				{
+					this._PackagePath = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ConfiguredValueType", DbType="NVarChar(20) NOT NULL", CanBeNull=false)]
+		public string ConfiguredValueType
+		{
+			get
+			{
+				return this._ConfiguredValueType;
+			}
+			set
+			{
+				if ((this._ConfiguredValueType != value))
+				{
+					this._ConfiguredValueType = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Comment", DbType="VarChar(255)")]
+		public string Comment
+		{
+			get
+			{
+				return this._Comment;
+			}
+			set
+			{
+				if ((this._Comment != value))
+				{
+					this._Comment = value;
+				}
 			}
 		}
 	}
