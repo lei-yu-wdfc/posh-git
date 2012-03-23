@@ -5985,13 +5985,11 @@ namespace Wonga.QA.Framework.Db.Risk
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="risk.RiskIovationPostcode")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="risk.RiskIovationPostcodes")]
 	public partial class RiskIovationPostcodeEntity : DbEntity<RiskIovationPostcodeEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Nullable<int> _Id;
 		
 		private System.Nullable<System.DateTime> _ApplicationDate;
 		
@@ -6011,12 +6009,12 @@ namespace Wonga.QA.Framework.Db.Risk
 		
 		private System.Nullable<bool> _InArrears;
 		
+		private int _RiskIovationPostcodeId;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnIdChanging(System.Nullable<int> value);
-    partial void OnIdChanged();
     partial void OnApplicationDateChanging(System.Nullable<System.DateTime> value);
     partial void OnApplicationDateChanged();
     partial void OnPostcodeChanging(string value);
@@ -6035,31 +6033,13 @@ namespace Wonga.QA.Framework.Db.Risk
     partial void OnIovationResultChanged();
     partial void OnInArrearsChanging(System.Nullable<bool> value);
     partial void OnInArrearsChanged();
+    partial void OnRiskIovationPostcodeIdChanging(int value);
+    partial void OnRiskIovationPostcodeIdChanged();
     #endregion
 		
 		public RiskIovationPostcodeEntity()
 		{
 			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int")]
-		public System.Nullable<int> Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplicationDate", DbType="DateTime")]
@@ -6102,7 +6082,7 @@ namespace Wonga.QA.Framework.Db.Risk
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplicationId", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplicationId", DbType="UniqueIdentifier NOT NULL")]
 		public System.Guid ApplicationId
 		{
 			get
@@ -6238,6 +6218,26 @@ namespace Wonga.QA.Framework.Db.Risk
 					this._InArrears = value;
 					this.SendPropertyChanged("InArrears");
 					this.OnInArrearsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RiskIovationPostcodeId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int RiskIovationPostcodeId
+		{
+			get
+			{
+				return this._RiskIovationPostcodeId;
+			}
+			set
+			{
+				if ((this._RiskIovationPostcodeId != value))
+				{
+					this.OnRiskIovationPostcodeIdChanging(value);
+					this.SendPropertyChanging();
+					this._RiskIovationPostcodeId = value;
+					this.SendPropertyChanged("RiskIovationPostcodeId");
+					this.OnRiskIovationPostcodeIdChanged();
 				}
 			}
 		}

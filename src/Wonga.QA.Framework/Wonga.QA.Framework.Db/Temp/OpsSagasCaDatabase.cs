@@ -34092,5 +34092,187 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 			}
 		}
 	}
+
+    [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.ExternalDebtCollectionSagaEntity")]
+    public partial class ExternalDebtCollectionSagaEntity : INotifyPropertyChanging, INotifyPropertyChanged
+    {
+
+        private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+
+        private System.Guid _Id;
+
+        private System.Nullable<System.Guid> _AccountId;
+
+        private System.Nullable<System.Guid> _ApplicationId;
+
+        private System.Nullable<bool> _ChargeBackOccured;
+
+        private string _OriginalMessageId;
+
+        private string _Originator;
+
+        #region Extensibility Method Definitions
+        partial void OnLoaded();
+        partial void OnValidate(System.Data.Linq.ChangeAction action);
+        partial void OnCreated();
+        partial void OnIdChanging(System.Guid value);
+        partial void OnIdChanged();
+        partial void OnAccountIdChanging(System.Nullable<System.Guid> value);
+        partial void OnAccountIdChanged();
+        partial void OnApplicationIdChanging(System.Nullable<System.Guid> value);
+        partial void OnApplicationIdChanged();
+        partial void OnChargeBackOccuredChanging(System.Nullable<bool> value);
+        partial void OnChargeBackOccuredChanged();
+        partial void OnOriginalMessageIdChanging(string value);
+        partial void OnOriginalMessageIdChanged();
+        partial void OnOriginatorChanging(string value);
+        partial void OnOriginatorChanged();
+        #endregion
+
+        public ExternalDebtCollectionSagaEntity()
+        {
+            OnCreated();
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_Id", DbType = "UniqueIdentifier NOT NULL", IsPrimaryKey = true)]
+        public System.Guid Id
+        {
+            get
+            {
+                return this._Id;
+            }
+            set
+            {
+                if ((this._Id != value))
+                {
+                    this.OnIdChanging(value);
+                    this.SendPropertyChanging();
+                    this._Id = value;
+                    this.SendPropertyChanged("Id");
+                    this.OnIdChanged();
+                }
+            }
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_AccountId", DbType = "UniqueIdentifier")]
+        public System.Nullable<System.Guid> AccountId
+        {
+            get
+            {
+                return this._AccountId;
+            }
+            set
+            {
+                if ((this._AccountId != value))
+                {
+                    this.OnAccountIdChanging(value);
+                    this.SendPropertyChanging();
+                    this._AccountId = value;
+                    this.SendPropertyChanged("AccountId");
+                    this.OnAccountIdChanged();
+                }
+            }
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_ApplicationId", DbType = "UniqueIdentifier")]
+        public System.Nullable<System.Guid> ApplicationId
+        {
+            get
+            {
+                return this._ApplicationId;
+            }
+            set
+            {
+                if ((this._ApplicationId != value))
+                {
+                    this.OnApplicationIdChanging(value);
+                    this.SendPropertyChanging();
+                    this._ApplicationId = value;
+                    this.SendPropertyChanged("ApplicationId");
+                    this.OnApplicationIdChanged();
+                }
+            }
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_ChargeBackOccured", DbType = "Bit")]
+        public System.Nullable<bool> ChargeBackOccured
+        {
+            get
+            {
+                return this._ChargeBackOccured;
+            }
+            set
+            {
+                if ((this._ChargeBackOccured != value))
+                {
+                    this.OnChargeBackOccuredChanging(value);
+                    this.SendPropertyChanging();
+                    this._ChargeBackOccured = value;
+                    this.SendPropertyChanged("ChargeBackOccured");
+                    this.OnChargeBackOccuredChanged();
+                }
+            }
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_OriginalMessageId", DbType = "NVarChar(255)")]
+        public string OriginalMessageId
+        {
+            get
+            {
+                return this._OriginalMessageId;
+            }
+            set
+            {
+                if ((this._OriginalMessageId != value))
+                {
+                    this.OnOriginalMessageIdChanging(value);
+                    this.SendPropertyChanging();
+                    this._OriginalMessageId = value;
+                    this.SendPropertyChanged("OriginalMessageId");
+                    this.OnOriginalMessageIdChanged();
+                }
+            }
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_Originator", DbType = "NVarChar(255)")]
+        public string Originator
+        {
+            get
+            {
+                return this._Originator;
+            }
+            set
+            {
+                if ((this._Originator != value))
+                {
+                    this.OnOriginatorChanging(value);
+                    this.SendPropertyChanging();
+                    this._Originator = value;
+                    this.SendPropertyChanged("Originator");
+                    this.OnOriginatorChanged();
+                }
+            }
+        }
+
+        public event PropertyChangingEventHandler PropertyChanging;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void SendPropertyChanging()
+        {
+            if ((this.PropertyChanging != null))
+            {
+                this.PropertyChanging(this, emptyChangingEventArgs);
+            }
+        }
+
+        protected virtual void SendPropertyChanged(String propertyName)
+        {
+            if ((this.PropertyChanged != null))
+            {
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
 }
 #pragma warning restore 1591

@@ -36,6 +36,12 @@ namespace Wonga.QA.Framework.Db.QaData
     partial void InsertCallValidateOutput(CallValidateOutput instance);
     partial void UpdateCallValidateOutput(CallValidateOutput instance);
     partial void DeleteCallValidateOutput(CallValidateOutput instance);
+    partial void InsertEmail(Email instance);
+    partial void UpdateEmail(Email instance);
+    partial void DeleteEmail(Email instance);
+    partial void InsertEmailToken(EmailToken instance);
+    partial void UpdateEmailToken(EmailToken instance);
+    partial void DeleteEmailToken(EmailToken instance);
     partial void InsertExperianBWCardResponse(ExperianBWCardResponse instance);
     partial void UpdateExperianBWCardResponse(ExperianBWCardResponse instance);
     partial void DeleteExperianBWCardResponse(ExperianBWCardResponse instance);
@@ -96,6 +102,22 @@ namespace Wonga.QA.Framework.Db.QaData
 			get
 			{
 				return this.GetTable<CallValidateOutput>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Email> Emails
+		{
+			get
+			{
+				return this.GetTable<Email>();
+			}
+		}
+		
+		public System.Data.Linq.Table<EmailToken> EmailTokens
+		{
+			get
+			{
+				return this.GetTable<EmailToken>();
 			}
 		}
 		
@@ -423,6 +445,319 @@ namespace Wonga.QA.Framework.Db.QaData
 					this._Response = value;
 					this.SendPropertyChanged("Response");
 					this.OnResponseChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Email")]
+	public partial class Email : DbEntity<Email>, INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _EmailId;
+		
+		private string _EmailAddress;
+		
+		private string _TemplateName;
+		
+		private EntitySet<EmailToken> _EmailTokens;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnEmailIdChanging(int value);
+    partial void OnEmailIdChanged();
+    partial void OnEmailAddressChanging(string value);
+    partial void OnEmailAddressChanged();
+    partial void OnTemplateNameChanging(string value);
+    partial void OnTemplateNameChanged();
+    #endregion
+		
+		public Email()
+		{
+			this._EmailTokens = new EntitySet<EmailToken>(new Action<EmailToken>(this.attach_EmailTokens), new Action<EmailToken>(this.detach_EmailTokens));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int EmailId
+		{
+			get
+			{
+				return this._EmailId;
+			}
+			set
+			{
+				if ((this._EmailId != value))
+				{
+					this.OnEmailIdChanging(value);
+					this.SendPropertyChanging();
+					this._EmailId = value;
+					this.SendPropertyChanged("EmailId");
+					this.OnEmailIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailAddress", DbType="NVarChar(MAX)", UpdateCheck=UpdateCheck.Never)]
+		public string EmailAddress
+		{
+			get
+			{
+				return this._EmailAddress;
+			}
+			set
+			{
+				if ((this._EmailAddress != value))
+				{
+					this.OnEmailAddressChanging(value);
+					this.SendPropertyChanging();
+					this._EmailAddress = value;
+					this.SendPropertyChanged("EmailAddress");
+					this.OnEmailAddressChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TemplateName", DbType="NVarChar(MAX)", UpdateCheck=UpdateCheck.Never)]
+		public string TemplateName
+		{
+			get
+			{
+				return this._TemplateName;
+			}
+			set
+			{
+				if ((this._TemplateName != value))
+				{
+					this.OnTemplateNameChanging(value);
+					this.SendPropertyChanging();
+					this._TemplateName = value;
+					this.SendPropertyChanged("TemplateName");
+					this.OnTemplateNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_EmailToken_Email", Storage="_EmailTokens", ThisKey="EmailId", OtherKey="EmailId", DeleteRule="NO ACTION")]
+		public EntitySet<EmailToken> EmailTokens
+		{
+			get
+			{
+				return this._EmailTokens;
+			}
+			set
+			{
+				this._EmailTokens.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_EmailTokens(EmailToken entity)
+		{
+			this.SendPropertyChanging();
+			entity.Email = this;
+		}
+		
+		private void detach_EmailTokens(EmailToken entity)
+		{
+			this.SendPropertyChanging();
+			entity.Email = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EmailToken")]
+	public partial class EmailToken : DbEntity<EmailToken>, INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _EmailTokenId;
+		
+		private System.Nullable<int> _EmailId;
+		
+		private string _Key;
+		
+		private string _Value;
+		
+		private EntityRef<Email> _Email;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnEmailTokenIdChanging(int value);
+    partial void OnEmailTokenIdChanged();
+    partial void OnEmailIdChanging(System.Nullable<int> value);
+    partial void OnEmailIdChanged();
+    partial void OnKeyChanging(string value);
+    partial void OnKeyChanged();
+    partial void OnValueChanging(string value);
+    partial void OnValueChanged();
+    #endregion
+		
+		public EmailToken()
+		{
+			this._Email = default(EntityRef<Email>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailTokenId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int EmailTokenId
+		{
+			get
+			{
+				return this._EmailTokenId;
+			}
+			set
+			{
+				if ((this._EmailTokenId != value))
+				{
+					this.OnEmailTokenIdChanging(value);
+					this.SendPropertyChanging();
+					this._EmailTokenId = value;
+					this.SendPropertyChanged("EmailTokenId");
+					this.OnEmailTokenIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailId", DbType="Int")]
+		public System.Nullable<int> EmailId
+		{
+			get
+			{
+				return this._EmailId;
+			}
+			set
+			{
+				if ((this._EmailId != value))
+				{
+					if (this._Email.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnEmailIdChanging(value);
+					this.SendPropertyChanging();
+					this._EmailId = value;
+					this.SendPropertyChanged("EmailId");
+					this.OnEmailIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Key", DbType="NVarChar(MAX)", UpdateCheck=UpdateCheck.Never)]
+		public string Key
+		{
+			get
+			{
+				return this._Key;
+			}
+			set
+			{
+				if ((this._Key != value))
+				{
+					this.OnKeyChanging(value);
+					this.SendPropertyChanging();
+					this._Key = value;
+					this.SendPropertyChanged("Key");
+					this.OnKeyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Value", DbType="NVarChar(MAX)", UpdateCheck=UpdateCheck.Never)]
+		public string Value
+		{
+			get
+			{
+				return this._Value;
+			}
+			set
+			{
+				if ((this._Value != value))
+				{
+					this.OnValueChanging(value);
+					this.SendPropertyChanging();
+					this._Value = value;
+					this.SendPropertyChanged("Value");
+					this.OnValueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_EmailToken_Email", Storage="_Email", ThisKey="EmailId", OtherKey="EmailId", IsForeignKey=true)]
+		public Email Email
+		{
+			get
+			{
+				return this._Email.Entity;
+			}
+			set
+			{
+				Email previousValue = this._Email.Entity;
+				if (((previousValue != value) 
+							|| (this._Email.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Email.Entity = null;
+						previousValue.EmailTokens.Remove(this);
+					}
+					this._Email.Entity = value;
+					if ((value != null))
+					{
+						value.EmailTokens.Add(this);
+						this._EmailId = value.EmailId;
+					}
+					else
+					{
+						this._EmailId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Email");
 				}
 			}
 		}
