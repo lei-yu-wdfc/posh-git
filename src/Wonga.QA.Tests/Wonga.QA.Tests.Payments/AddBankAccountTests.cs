@@ -12,7 +12,7 @@ using AddBankAccountCaCommand = Wonga.QA.Framework.Api.AddBankAccountCaCommand;
 
 namespace Wonga.QA.Tests.Payments
 {
-	[Parallelizable(TestScope.All)]
+	[Parallelizable(TestScope.All), Ignore("Not finished yet")]
 	public class AddBankAccountTests
 	{
 		#region Canada Tests

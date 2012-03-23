@@ -4,7 +4,9 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api.Exceptions;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Cs;
 using Wonga.QA.Tests.Core;
+using Wonga.QA.Tests.Payments.Helpers;
 
 namespace Wonga.QA.Tests.Payments
 {
@@ -12,12 +14,43 @@ namespace Wonga.QA.Tests.Payments
     public class ExternalDebtCollectionTests
     {
         [Test, AUT(AUT.Ca), JIRA("CA-1862")]
+        public void WhenApplicationMovedToDcaInterestAcrualShouldBeSuppressed()
+        {
+            var customer = CustomerBuilder.New().Build();
+            var application = ApplicationBuilder.New(customer).Build();
+
+            application.PutApplicationIntoArrears();
+
+            application.MoveToDebtCollectionAgency();
+
+            Assert.IsTrue(VerifyPaymentFunctions.VerifyInterestSuspended(application, DateTime.UtcNow.Date));
+        }
+
+        [Test, AUT(AUT.Ca), JIRA("CA-1862")]
+        public void WhenApplicationRevokedFromDcaInterestAcrualShouldBeRessumed()
+        {
+            var customer = CustomerBuilder.New().Build();
+            var application = ApplicationBuilder.New(customer).Build();
+
+            application.PutApplicationIntoArrears();
+
+            application.MoveToDebtCollectionAgency();
+
+            Drive.Api.Commands.Post(new RevokeApplicationFromDcaCommand
+                                        {
+                                            ApplicationId = Guid.NewGuid()
+                                        });
+
+            Assert.IsTrue(VerifyPaymentFunctions.VerifyInterestResumed(application, DateTime.UtcNow.Date));
+        }
+
+        [Test, AUT(AUT.Ca), JIRA("CA-1862")]
         public void ShouldRejectCommandBecauseApplicationHasNotBeenMovedToDca()
         {
             var customer = CustomerBuilder.New().Build();
             var application = ApplicationBuilder.New(customer).Build();
 
-            var command = new Wonga.QA.Framework.Cs.RevokeApplicationFromDcaCommand
+            var command = new RevokeApplicationFromDcaCommand
             {
                 ApplicationId = application.Id
             };
@@ -37,7 +70,7 @@ namespace Wonga.QA.Tests.Payments
         [Test, AUT(AUT.Ca), JIRA("CA-1862")]
         public void ShouldRejectCommandBecauseApplicationWasNotSpecified()
         {
-            var command = new Wonga.QA.Framework.Cs.RevokeApplicationFromDcaCommand
+            var command = new RevokeApplicationFromDcaCommand
             {
                 ApplicationId = Guid.Empty
             };
@@ -57,7 +90,7 @@ namespace Wonga.QA.Tests.Payments
         [Test, AUT(AUT.Ca), JIRA("CA-1862")]
         public void ShouldRejectCommandBecauseApplicationDoesNotExist()
         {
-            var command = new Wonga.QA.Framework.Cs.RevokeApplicationFromDcaCommand
+            var command = new RevokeApplicationFromDcaCommand
             {
                 ApplicationId = Guid.NewGuid()
             };
