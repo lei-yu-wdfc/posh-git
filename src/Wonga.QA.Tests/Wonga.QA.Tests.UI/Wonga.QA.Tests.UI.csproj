@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AboutUsTest.cs" />
     <Compile Include="DealDonePageTest.cs" />
     <Compile Include="ForgotPassword.cs" />
     <Compile Include="HelpTest.cs" />
