@@ -83,7 +83,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public void LookupByPostCode()
         {
-            Thread.Sleep(5000);
+            Thread.Sleep(10000);
             _lookup.Click();
         }
 

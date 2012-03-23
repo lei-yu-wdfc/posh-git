@@ -306,14 +306,21 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Uk), Pending("Temporary test")]
+        [Test, AUT(AUT.Uk), Pending("Example of full Uk L0 journey")]
         public void UKL0JourneyTest()
         {
             Journey journey = new Journey(Client.Home());
-            journey.ApplyForLoan(200, 10)
-                .FillPersonalDetails()
+            var mySummary = journey.ApplyForLoan(200, 10)
+                .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                 .FillAddressDetails()
-                .FillAccountDetails();
+                .FillAccountDetails()
+                .FillBankDetails()
+                .FillDebitCardPage()
+                .WaitForAcceptedPage()
+                .FillAcceptedPage()
+                .GoToMySummaryPage()
+                .CurrentPage as MySummaryPage;
+            
         }
 
     }

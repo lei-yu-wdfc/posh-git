@@ -58,6 +58,11 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
                     _institutionNumber = Section.FindElement(By.CssSelector(Ui.Get.BankAccountSection.InstitutionNumber));
                     _branchNumber = Section.FindElement(By.CssSelector(Ui.Get.BankAccountSection.BranchNumber));
                     break;
+                case (AUT.Uk):
+                     _sortCodePart1 = Section.FindElement(By.CssSelector(Ui.Get.BankAccountSection.SortCodePart1));
+                    _sortCodePart2 = Section.FindElement(By.CssSelector(Ui.Get.BankAccountSection.SortCodePart2));
+                    _sortCodePart3 = Section.FindElement(By.CssSelector(Ui.Get.BankAccountSection.SortCodePart3));
+                    break;
 
             }
             

@@ -159,11 +159,11 @@ namespace Wonga.QA.Framework.UI
                     addressPage.PostCode = "se3 0sw";
                     addressPage.LookupByPostCode();
 
-                    Thread.Sleep(60000);
+                    Thread.Sleep(10000);
                     addressPage.GetAddressesDropDown();
                     addressPage.SelectedAddress = "52 Ryculff Square, LONDON SE3 0SW";
-   
-                    Thread.Sleep(5000);
+
+                    Thread.Sleep(10000);
                     addressPage.GetAddressFieldsUK();
                     addressPage.AddressPeriod = "3 to 4 years";
                     CurrentPage = addressPage.Next() as AccountDetailsPage;
@@ -225,6 +225,32 @@ namespace Wonga.QA.Framework.UI
                     bankDetailsPage.PinVerificationSection.Pin = "0000";
                     CurrentPage = bankDetailsPage.Next() as ProcessingPage;
                     break;
+                case AUT.Uk:
+                    bankDetailsPage.BankAccountSection.BankName = "Barclays";
+                    bankDetailsPage.BankAccountSection.SortCode = "13-40-20";
+                    bankDetailsPage.BankAccountSection.AccountNumber = "63849203";
+                    bankDetailsPage.BankAccountSection.BankPeriod = "3 to 4 years";
+                    CurrentPage = bankDetailsPage.Next() as PersonalDebitCardPage;
+                    break;
+            }
+            return this;
+        }
+
+        public Journey FillDebitCardPage()
+        {
+            switch(Config.AUT)
+            {
+                case AUT.Uk:
+                    var cardDetailsPage = CurrentPage as PersonalDebitCardPage;
+                    cardDetailsPage.DebitCardSection.CardType = "Visa Electron";
+                    cardDetailsPage.DebitCardSection.CardNumber = "4444333322221111";
+                    cardDetailsPage.DebitCardSection.CardName = "mr " + LastName;
+                    cardDetailsPage.DebitCardSection.StartDate = "Jan/2010";
+                    cardDetailsPage.DebitCardSection.ExpiryDate = "Jan/2014";
+                    cardDetailsPage.DebitCardSection.CardSecurity = "000";
+                    cardDetailsPage.MobilePinVerification.Pin = "0000";
+                    CurrentPage = cardDetailsPage.Next() as ProcessingPage;
+                    break;
             }
             return this;
         }
@@ -252,6 +278,9 @@ namespace Wonga.QA.Framework.UI
                     break;
                 case AUT.Za:
                     acceptedPage.SignConfirmZA();
+                    CurrentPage = acceptedPage.Submit() as DealDonePage;
+                    break;
+                case AUT.Uk:
                     CurrentPage = acceptedPage.Submit() as DealDonePage;
                     break;
             }
