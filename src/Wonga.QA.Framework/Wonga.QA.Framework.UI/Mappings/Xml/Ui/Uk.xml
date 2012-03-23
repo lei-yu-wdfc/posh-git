@@ -8,7 +8,8 @@
   <AddressDetailsPage>
     <FormId>div.wonga-box-1</FormId>
     <AddressOptions>#edit-address-options</AddressOptions>
-    <LookupButton>#edit-submit-lookup</LookupButton>
+    <LookupButton>div#button-edit-submit-lookup input#edit-submit-lookup</LookupButton>
+    <Postcode>input#edit-postcode-lookup-uk</Postcode>
   </AddressDetailsPage>
   
   <EmploymentDetailsSection>

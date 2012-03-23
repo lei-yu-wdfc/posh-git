@@ -255,7 +255,7 @@ namespace Wonga.QA.Tests.Ui
                 .WaitForAcceptedPage()
                 .CurrentPage as AcceptedPage;
 
-            Assert.AreEqual(totalToRepayOnPersonalDetails,acceptedPage.GetTotalToRepay);
+            Assert.AreEqual(totalToRepayOnPersonalDetails, acceptedPage.GetTotalToRepay);
             Assert.AreEqual(repaymentDateOnPersonalDetails, acceptedPage.GetRepaymentDate);
 
             switch (Config.AUT)
@@ -310,10 +310,10 @@ namespace Wonga.QA.Tests.Ui
         public void UKL0JourneyTest()
         {
             Journey journey = new Journey(Client.Home());
-            var addressDetailsPage = journey.ApplyForLoan(200, 10)
-                                         .FillPersonalDetails()
-                                         .FillAddressDetails()
-                                         .CurrentPage as AccountDetailsPage;
+            journey.ApplyForLoan(200, 10)
+                .FillPersonalDetails()
+                .FillAddressDetails()
+                .FillAccountDetails();
         }
 
     }

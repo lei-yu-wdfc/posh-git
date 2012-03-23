@@ -158,11 +158,12 @@ namespace Wonga.QA.Framework.UI
                 case AUT.Uk:
                     addressPage.PostCode = "se3 0sw";
                     addressPage.LookupByPostCode();
+
                     Thread.Sleep(60000);
                     addressPage.GetAddressesDropDown();
                     addressPage.SelectedAddress = "52 Ryculff Square, LONDON SE3 0SW";
-                    addressPage.ClickNextButton();
-                    Thread.Sleep(60000);
+   
+                    Thread.Sleep(5000);
                     addressPage.GetAddressFieldsUK();
                     addressPage.AddressPeriod = "3 to 4 years";
                     CurrentPage = addressPage.Next() as AccountDetailsPage;
