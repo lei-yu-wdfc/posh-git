@@ -53,6 +53,11 @@
     <Compile Include="Checkpoints\EidCheckpointTests.cs" />
     <Compile Include="Checkpoints\CheckpointApplicationDeviceNotOnBlacklistTests.cs" />
     <Compile Include="ICustomerData.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="RiskApiTests\ApplicationBuilderConfig.cs" />
     <Compile Include="RiskApiTests\BaseL0RiskApiCheckpointAndVerificationTests.cs" />
     <Compile Include="RiskApiTests\BaseLnRiskApiCheckpointAndVerificationTests.cs" />
@@ -62,6 +67,7 @@
     <Compile Include="RiskServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Workflows\WorkflowTests.cs" />
+    <Compile Include="ZScoreTest\ZscoreTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
@@ -94,7 +100,15 @@
       <Name>Wonga.QA.Tests.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CustomerDataforCallCredit.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
