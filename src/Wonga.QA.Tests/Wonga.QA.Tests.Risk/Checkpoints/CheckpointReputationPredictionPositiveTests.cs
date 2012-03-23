@@ -12,14 +12,13 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
     [Parallelizable(TestScope.All), AUT(AUT.Za)]
+	
 	class CheckpointReputationPredictionPositiveTests
 	{
 		private const RiskMask TestMask = RiskMask.TESTReputationtPredictionPositive;
 
 		private const double ReputationScoreCutoff = 200; //TODO Hardcoded in Risk for now
-		private static readonly string[] ExpectedFactorNames = new [] { "PostcodeInArrears", "LoanNumber", "DeviceCountPostcode", "DeviceDeclineRate" };
-
-		private static readonly int PostcodeWithHighArrearsRate = Get.RandomInt(1000, 9999);
+		private static readonly string[] FactorNames = new [] { "PostcodeInArrears", "LoanNumber", "DeviceCountPostcode", "DeviceDeclineRate" };
 
 		[FixtureSetUp]
 		public void FixtureSetUp()
@@ -38,7 +37,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			}
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1938"), Pending("Work in progress")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1938")]
 		public void CheckpointReputationPredictionPositiveAccept()
 		{
 			var customer = CustomerBuilder.New()
@@ -51,7 +50,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Assert.GreaterThan(actualScore, ReputationScoreCutoff);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1938"), Pending("Work in progress")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1938")]
 		public void CheckpointReputationPredictionPositiveDecline()
 		{
 			int newCutoff = 800;
@@ -75,7 +74,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			}
 		}
 
-		[Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za), JIRA("ZA-1938")]
 		public void CheckpointReputationPredictionPositiveCorrectFactorsUsed()
 		{
 			var customer = CustomerBuilder.New()
@@ -85,8 +84,47 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
 			var actualFactorNames = GetFactorNamesUsed(application);
-			Assert.AreElementsEqualIgnoringOrder(ExpectedFactorNames, actualFactorNames);
+			Assert.AreElementsEqualIgnoringOrder(FactorNames, actualFactorNames);
 		}
+
+		[Test, AUT(AUT.Za), JIRA("ZA-1938")]
+		public void CheckpointReputationPredictionPositiveIdentialCustomersHaveEqualScores()
+		{
+			int postcodeWithHighArrearsRate = Get.RandomInt(1000, 9999);
+
+			var customer1 = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(postcodeWithHighArrearsRate.ToString()).Build();
+			var application1 = ApplicationBuilder.New(customer1).Build();
+
+			var score1 = GetReputationPredictionScore(application1);
+
+			var customer2 = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(postcodeWithHighArrearsRate.ToString()).Build();
+			var application2 = ApplicationBuilder.New(customer2).Build();
+
+			var score2 = GetReputationPredictionScore(application2);
+
+			Assert.AreEqual(score2, score1);
+		}
+
+		[Test, AUT(AUT.Za), JIRA("ZA-1938")]
+		public void CheckpointReputationPredictionPositivePostCodeWithHighArrearsRateLowersScore()
+		{
+			int postcodeWithHighArrearsRate = Get.RandomInt(1000, 9999);
+
+			var customer1 = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(postcodeWithHighArrearsRate.ToString()).Build();
+			var application1 = ApplicationBuilder.New(customer1).Build();
+
+			var score1 = GetReputationPredictionScore(application1);
+
+			application1.PutApplicationIntoArrears();
+
+			var customer2 = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(postcodeWithHighArrearsRate.ToString()).Build();
+			var application2 = ApplicationBuilder.New(customer2).Build();
+
+			var score2 = GetReputationPredictionScore(application2);
+
+			Assert.LessThan(score2, score1);
+		}
+		
 
 		#region Helpers
 
@@ -107,6 +145,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			        select f.Name).ToArray();
 
 		}
+
 		#endregion
 	}
 }
