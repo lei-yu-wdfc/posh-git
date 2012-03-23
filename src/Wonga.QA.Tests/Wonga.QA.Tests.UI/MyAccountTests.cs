@@ -172,26 +172,26 @@ namespace Wonga.QA.Tests.Ui
             var myPersonalDetailsPage = mySummaryPage.Navigation.MyPersonalDetailsButtonClick();
 
             myPersonalDetailsPage.PasswordClick();
-            Thread.Sleep(5000); //here and below - waiting for a pop-up
+            Thread.Sleep(10000); //here and below - waiting for a pop-up
             myPersonalDetailsPage.ChangePassword("Passw0rd", "Passw0rd", "Passw0rd");
             myPersonalDetailsPage.Submit();
 
-            Thread.Sleep(5000);
+            Thread.Sleep(10000);
             Assert.IsTrue(myPersonalDetailsPage.IsPasswordPopupHasErrorMessage());
             myPersonalDetailsPage.PasswordClick();
             myPersonalDetailsPage.PasswordClick();
-            Thread.Sleep(5000);
+            Thread.Sleep(10000);
             myPersonalDetailsPage.ChangePassword("Passw0rd", "Pass", "Pass");
 
-            Thread.Sleep(5000); 
+            Thread.Sleep(10000); 
             Assert.IsTrue(myPersonalDetailsPage.IsPasswordWarningMessageOccurs());
 
             myPersonalDetailsPage.PasswordClick();
             myPersonalDetailsPage.PasswordClick();
-            Thread.Sleep(5000);
+            Thread.Sleep(10000);
             myPersonalDetailsPage.ChangePassword("Passw0rd", "QWEasd12", "QWEasd12");
             myPersonalDetailsPage.Submit();
-            Thread.Sleep(5000);
+            Thread.Sleep(10000);
 
             var homePage = myPersonalDetailsPage.Login.Logout();
             var mySummary = homePage.Login.LoginAs(email, "QWEasd12");

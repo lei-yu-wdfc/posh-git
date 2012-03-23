@@ -306,7 +306,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Uk)]
+        [Test, AUT(AUT.Uk), Pending("Temporary test")]
         public void UKL0JourneyTest()
         {
             Journey journey = new Journey(Client.Home());
