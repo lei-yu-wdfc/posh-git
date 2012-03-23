@@ -36,6 +36,7 @@
     <Compile Include="Checkpoints\CheckpointApplicantIsSolventTest.cs" />
     <Compile Include="Checkpoints\CheckpointApplicationElementNotCifasFlaggedTest.cs" />
     <Compile Include="Checkpoints\CheckpointTooManyLoansAtAddressTest.cs" />
+    <Compile Include="Checkpoints\CheckpointRepaymentPredictionPositiveTestsCa.cs" />
     <Compile Include="CustomerJanetUk.cs" />
     <Compile Include="CustomerData.cs" />
     <Compile Include="CustomerKathleenUk.cs" />
