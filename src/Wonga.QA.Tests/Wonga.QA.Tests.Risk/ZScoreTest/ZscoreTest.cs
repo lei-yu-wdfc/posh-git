@@ -11,11 +11,24 @@ namespace Wonga.QA.Tests.Risk.ZScoreTest
 {
     class ZScoreTest
     {
+        public const string CallReportMockMode = "Mocks.CallReportEnabled";
+        private string _savedCallReportMockMode; 
+        [SetUp]
+        public void Setup()
+        {
+            _savedCallReportMockMode = Drive.Db.GetServiceConfiguration(CallReportMockMode).Value;
+            SetCallReportTrialMode(false);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            Drive.Db.SetServiceConfiguration(CallReportMockMode, _savedCallReportMockMode);
+        }
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-956"), Description("score card test with CallCredit")]
         public void ScoreCardTest1000WithCallCredit()
         {
-            Drive.Db.SetServiceConfiguration("Mocks.CallReportEnabled", "false");
             var data = Resources.CustomerDataforCallCredit;
             var delimiters = new[] { ',', ';' };
             string[] customerdetails = data.Split(delimiters[1]);
@@ -32,7 +45,6 @@ namespace Wonga.QA.Tests.Risk.ZScoreTest
                 var application = CreateApplicationWithAsserts(forename, surname, dateofBirth, PostCode, HouseNumber);
                 var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
             }
-            Drive.Db.SetServiceConfiguration("Mocks.CallReportEnabled", "true");
         }
         private static Application CreateApplicationWithAsserts(String forename, String surname, Date dateOfBirth, String postCode, String houseNumber)
         {
@@ -54,6 +66,18 @@ namespace Wonga.QA.Tests.Risk.ZScoreTest
             Assert.IsNotNull(socialDetailsEntity, "Risk Social details should exist");
 
             return application;
+        }
+        public static void SetCallReportTrialMode(Boolean value)
+        {
+            var db = new DbDriver();
+            var bgw = db.Ops.ServiceConfigurations.Single(bg => bg.Key == CallReportMockMode);
+            var dbValue = bgw.Value;
+            var wantedValue = value.ToString().ToLower();
+            if (dbValue != wantedValue)
+            {
+                bgw.Value = wantedValue;
+                db.Ops.SubmitChanges();
+            }
         }
     }
 }
