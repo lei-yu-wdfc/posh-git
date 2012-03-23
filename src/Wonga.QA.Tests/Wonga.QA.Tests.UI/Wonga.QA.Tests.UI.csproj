@@ -36,7 +36,7 @@
     <Compile Include="HelpTest.cs" />
     <Compile Include="L0AcceptedLoan.cs" />
     <Compile Include="L0JourneyTests.cs" />
-    <Compile Include="LnLoginTest.cs" />
+    <Compile Include="LoginTest.cs" />
     <Compile Include="LogoutTest.cs" />
     <Compile Include="MyAccountTests.cs" />
     <Compile Include="MySummary.cs" />

@@ -6,10 +6,10 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Ui
 {
-    class LnLoginTest : UiTest
+    class LoginTest : UiTest
     {
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-160")]
-        public void LnLogInShouldBeRedirectedToMySummaryPage()
+        [Test, AUT(AUT.Ca), JIRA("QA-160")]
+        public void LogInShouldBeRedirectedToMySummaryPage()
         {
             var homePage = Client.Home();
             string email = Get.RandomEmail();
