@@ -13,7 +13,7 @@ namespace Wonga.QA.Framework
         private readonly Customer _primaryApplicant;
         private int _numberOfSecondaryDirector;
         private String _organisationNumber;
-        
+
         private OrganisationBuilder(Customer primaryApplicant)
         {
             _id = Guid.NewGuid();
@@ -38,13 +38,13 @@ namespace Wonga.QA.Framework
         {
             _organisationNumber = orgNo;
             var db = new DbDriver();
-            var existingOrg = db.ContactManagement.OrganisationDetails.SingleOrDefault(o => o.RegisteredNumber == orgNo) ;
+            var existingOrg = db.ContactManagement.OrganisationDetails.SingleOrDefault(o => o.RegisteredNumber == orgNo);
             if (existingOrg != null)
             {
                 db.ContactManagement.OrganisationDetails.DeleteOnSubmit(existingOrg);
                 existingOrg.Submit();
             }
-            
+
             return this;
         }
 
@@ -53,6 +53,7 @@ namespace Wonga.QA.Framework
         {
             var requests = new List<ApiRequest>();
 
+            var addBusinessPaymentCardWbUkCommand = AddBusinessPaymentCardWbUkCommand.New(r => r.OrganisationId = _id);
             requests.AddRange(new ApiRequest[]
                                   {
                                       SaveOrganisationDetailsCommand.New(r =>
@@ -61,22 +62,28 @@ namespace Wonga.QA.Framework
                                                                                  r.RegisteredNumber =_organisationNumber;
                                                                              }),
                                       AddBusinessBankAccountWbUkCommand.New(r => r.OrganisationId = _id),
-                                      AddBusinessPaymentCardWbUkCommand.New(r => r.OrganisationId = _id),
+                                      addBusinessPaymentCardWbUkCommand,
                                       AddPrimaryOrganisationDirectorCommand.New(r =>
                                                                                     {
                                                                                         r.OrganisationId = _id;
                                                                                         r.AccountId =_primaryApplicant.Id;
                                                                                         r.Email =_primaryApplicant.Email;
-                                                                                    })
+                                                                                    }),
+                                        SavePaymentCardBillingAddressCommand.New(s =>
+                                                                                     {
+                                                                                         s.PaymentCardId =
+                                                                                             addBusinessPaymentCardWbUkCommand
+                                                                                                 .PaymentCardId;
+                                                                                     })
                                   });
 
-           
-            
-            Drive.Api.Commands.Post(requests);            
+
+
+            Drive.Api.Commands.Post(requests);
 
             return new Organisation(_id);
-        }    
-  
+        }
+
         [Obsolete]
         public void BuildSecondaryDirectors()
         {
