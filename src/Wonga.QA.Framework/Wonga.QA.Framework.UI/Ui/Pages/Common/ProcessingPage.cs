@@ -24,10 +24,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             //Do.Until(() => !(Source.Contains(Ui.Get.ProcessingPage.ProcessingText)), TimeSpan.FromMinutes(5));
             
             if (typeof(T) == typeof(AcceptedPage))
-                return Do.With().Timeout(2).Until(() => new AcceptedPage(Client));
+                return Do.With.Timeout(2).Until(() => new AcceptedPage(Client));
 
             if (typeof(T) == typeof(DeclinedPage))
-                return Do.With().Timeout(2).Until(() => new DeclinedPage(Client));
+                return Do.With.Timeout(2).Until(() => new DeclinedPage(Client));
             throw new NotImplementedException();
         }
     }

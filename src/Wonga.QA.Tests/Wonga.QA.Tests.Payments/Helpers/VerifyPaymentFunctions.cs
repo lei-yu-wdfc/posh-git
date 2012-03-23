@@ -76,7 +76,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         public static bool VerifyApplicationInArrears(Guid applicationGuid)
         {
             return
-                Do.With().Timeout(2).Interval(10).Until(
+                Do.With.Timeout(2).Interval(10).Until(
                     () => Drive.Db.OpsSagas.PaymentsInArrearsSagaEntities.Single(s => s.ApplicationId == applicationGuid)) != null;
         }
 
@@ -114,7 +114,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
             int appId = Drive.Db.Payments.Applications.Single(a => a.ExternalId == applicationGuid).ApplicationId;
 
-            Do.With().Timeout(3).Interval(10).Until(() => Drive.Db.Payments.Transactions.Single(a => a.ApplicationId == appId & a.Type == PaymentTransactionType.DirectBankPayment.ToString() & a.Amount == amount));
+            Do.With.Timeout(3).Interval(10).Until(() => Drive.Db.Payments.Transactions.Single(a => a.ApplicationId == appId & a.Type == PaymentTransactionType.DirectBankPayment.ToString() & a.Amount == amount));
 
             TestLog.DebugTrace.WriteLine("ActualDirectBankPaymentAmount => ExpectedDirectBankPayment {0} => {1}\n",
                                          Drive.Db.Payments.Transactions.Single(
@@ -135,7 +135,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
         public static bool VerifyOnlineBillPaymentRecordForCcin(String ccin)
         {
-            return Do.With().Timeout(2).Interval(10).Until(() => Drive.Db.Payments.OnlineBillPayments.Single(c => c.Ccin == ccin)) != null;
+            return Do.With.Timeout(2).Interval(10).Until(() => Drive.Db.Payments.OnlineBillPayments.Single(c => c.Ccin == ccin)) != null;
         }
 
         internal static bool VerifyInterestSuspended(Application application, DateTime suspensionDate)

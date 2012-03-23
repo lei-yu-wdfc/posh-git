@@ -181,13 +181,13 @@ namespace Wonga.QA.Tests.Payments
             var l0Application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
 
             l0Application.RepayOnDueDate();
-            Do.With().Timeout(1).Until(() => l0Application.IsClosed);
+            Do.With.Timeout(1).Until(() => l0Application.IsClosed);
 
             var lNApplication = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
 
             lNApplication.RepayOnDueDate();
 
-            Assert.IsTrue(Do.With().Timeout(1).Until(() => lNApplication.IsClosed));
+            Assert.IsTrue(Do.With.Timeout(1).Until(() => lNApplication.IsClosed));
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1472")]
@@ -241,7 +241,7 @@ namespace Wonga.QA.Tests.Payments
             ConfigurationFunctions.SetVariableInterestRateEnabled(true);
 
             l0Application.RepayOnDueDate();
-            Do.With().Timeout(1).Until(() => l0Application.IsClosed);
+            Do.With.Timeout(1).Until(() => l0Application.IsClosed);
 
             var actualInterestAmountApplied = GetPaymentFunctions.GetInterestAmountApplied(l0Application.Id);
 

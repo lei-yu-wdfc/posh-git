@@ -499,9 +499,9 @@ namespace Wonga.QA.Framework
 
             Drive.Api.Commands.Post(requests);
 
-        	Do.With().Timeout(2).Until(() => Drive.Db.Ops.Accounts.Single(a => a.ExternalId == _id));
-            Do.With().Timeout(2).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == _id));
-            Do.With().Timeout(2).Until(() => Drive.Db.Risk.RiskAccounts.Single(a => a.AccountId == _id));
+        	Do.With.Timeout(2).Until(() => Drive.Db.Ops.Accounts.Single(a => a.ExternalId == _id));
+            Do.With.Timeout(2).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == _id));
+            Do.With.Timeout(2).Until(() => Drive.Db.Risk.RiskAccounts.Single(a => a.AccountId == _id));
             
             switch (Config.AUT)
             {
@@ -526,7 +526,7 @@ namespace Wonga.QA.Framework
             			                         		Pin = mobilePhoneVerification.Pin,
             			                         		VerificationId = mobilePhoneVerification.VerificationId
             			                         	});
-            			Do.With().Timeout(2).Until(() => Drive.Db.Comms.CustomerDetails.Single(a => a.AccountId == _id).MobilePhone);
+            			Do.With.Timeout(2).Until(() => Drive.Db.Comms.CustomerDetails.Single(a => a.AccountId == _id).MobilePhone);
             		}
             		break;
             }

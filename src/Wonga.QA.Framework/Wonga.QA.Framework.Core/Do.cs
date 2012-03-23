@@ -8,27 +8,23 @@ namespace Wonga.QA.Framework.Core
 {
     public static class Do
     {
-        public static TimeSpan Timeout { get { return TimeSpan.FromSeconds(60); } }
+        public static TimeSpan Timeout { get { return TimeSpan.FromMinutes(1); } }
         public static TimeSpan Interval { get { return TimeSpan.FromSeconds(5); } }
-
-        public static DoBuilder With()
-        {
-            return new DoBuilder(Timeout, Interval);
-        }
+        public static DoBuilder With { get { return new DoBuilder(Timeout, Interval); } }
 
         public static T Until<T>(Func<T> predicate)
         {
-            return With().Until(predicate);
+            return With.Until(predicate);
         }
 
         public static void While<T>(Func<T> predicate)
         {
-            With().While(predicate);
+            With.While(predicate);
         }
 
         public static T Watch<T>(Func<T> predicate) where T : struct
         {
-            return With().Watch(predicate);
+            return With.Watch(predicate);
         }
     }
 
@@ -42,7 +38,6 @@ namespace Wonga.QA.Framework.Core
         {
             _timeout = timeout;
             _interval = interval;
-            _message = () => null;
         }
 
         public DoBuilder Timeout(Int32 minutes)
@@ -91,7 +86,7 @@ namespace Wonga.QA.Framework.Core
                     var t = predicate();
                     if (!EqualityComparer<T>.Default.Equals(t, default(T)))
                         return t;
-                    exception.Add(new ArgumentException(t == null ? "null" : t.ToString()), stopwatch.Elapsed);
+                    exception.Add(new Exception(_message == null ? t == null ? "null" : t.ToString() : _message()), stopwatch.Elapsed);
                     Thread.Sleep(_interval);
                 }
                 catch (Exception e)
@@ -117,7 +112,7 @@ namespace Wonga.QA.Framework.Core
                 {
                     return;
                 }
-            throw new TimeoutException(_message());
+            throw new TimeoutException(_message == null ? stopwatch.Elapsed.ToString() : _message());
         }
 
         public T Watch<T>(Func<T> predicate) where T : struct
@@ -141,7 +136,7 @@ namespace Wonga.QA.Framework.Core
         private Func<String> _message;
 
         public Tuples Exceptions { get; set; }
-        public override String Message { get { return _message(); } }
+        public override String Message { get { return _message == null ? base.Message : _message(); } }
 
         public DoException(Func<String> message)
         {

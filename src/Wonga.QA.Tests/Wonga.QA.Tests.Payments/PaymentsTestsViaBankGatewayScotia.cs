@@ -99,7 +99,7 @@ namespace Wonga.QA.Tests.Payments
 
             Drive.Mocks.Scotia.AddOnlineBillPaymentFile(application.Id.ToString(), new List<OnlineBillPaymentTransaction> { transaction });
 
-            Do.With().Timeout(1).Until(() => application.IsClosed);
+            Do.With.Timeout(1).Until(() => application.IsClosed);
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1441"), Ignore("Not fully implemented, do not run")]

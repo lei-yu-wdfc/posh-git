@@ -75,7 +75,7 @@ namespace Wonga.QA.Tests.Salesforce
             var app = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatus.Accepted).
                 Build();
 
-            Do.With().Message("Salesforce should contain loan application with non-empty loan reference").Until(() => SalesforceContainsAppWithLoanReference(app));
+            Do.With.Message("Salesforce should contain loan application with non-empty loan reference").Until(() => SalesforceContainsAppWithLoanReference(app));
         }
 
         private bool SalesforceContainsAppWithLoanReference(Application app)

@@ -26,7 +26,7 @@ namespace Wonga.QA.Tests.ContactManagement
 
             ApiResponse resp = Drive.Api.Commands.Post(req);
 
-            Do.With().Timeout(2).Interval(10).Until(() => Drive.Db.ContactManagement.DirectorOrganisationMappings.Count(o=>o.Email==email)==1);
+            Do.With.Timeout(2).Interval(10).Until(() => Drive.Db.ContactManagement.DirectorOrganisationMappings.Count(o=>o.Email==email)==1);
 
             bool errorDetected = false;
             try
@@ -58,7 +58,7 @@ namespace Wonga.QA.Tests.ContactManagement
 
             ApiResponse resp = Drive.Api.Commands.Post(req);
 
-            Do.With().Timeout(2).Interval(10).Until(() => Drive.Db.ContactManagement.DirectorOrganisationMappings.Count(o => o.Email == email) == 1);
+            Do.With.Timeout(2).Interval(10).Until(() => Drive.Db.ContactManagement.DirectorOrganisationMappings.Count(o => o.Email == email) == 1);
 
             bool errorDetected = false;
             try
@@ -91,7 +91,7 @@ namespace Wonga.QA.Tests.ContactManagement
 
             ApiResponse resp = Drive.Api.Commands.Post(req);
 
-            Do.With().Timeout(2).Interval(10).Until(() => Drive.Db.ContactManagement.DirectorOrganisationMappings.Count(o => o.AccountId == accountId) == 1);
+            Do.With.Timeout(2).Interval(10).Until(() => Drive.Db.ContactManagement.DirectorOrganisationMappings.Count(o => o.AccountId == accountId) == 1);
 
             bool errorDetected = false;
             try
@@ -125,7 +125,7 @@ namespace Wonga.QA.Tests.ContactManagement
 
             ApiResponse resp = Drive.Api.Commands.Post(req);
 
-            Do.With().Timeout(2).Interval(10).Until(() => Drive.Db.ContactManagement.DirectorOrganisationMappings.Count(o => o.AccountId == accountId) == 1);
+            Do.With.Timeout(2).Interval(10).Until(() => Drive.Db.ContactManagement.DirectorOrganisationMappings.Count(o => o.AccountId == accountId) == 1);
 
             bool errorDetected = false;
             try

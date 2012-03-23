@@ -94,7 +94,7 @@ namespace Wonga.QA.Tests.Payments
                 [Test, AUT(AUT.Ca)]
                 public void ThenTheApplicationShouldClose()
                 {
-                    Assert.IsTrue(Do.With().Timeout(1).Until(() => _application.IsClosed));
+                    Assert.IsTrue(Do.With.Timeout(1).Until(() => _application.IsClosed));
                 }
             } 
         }

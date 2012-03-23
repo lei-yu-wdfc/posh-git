@@ -37,12 +37,12 @@ Then create cashadvance, fee and interest transactions on the application.
                 GetTransactionCount(t => app.Id == t.ApplicationEntity.ExternalId && t.Scope == (int)PaymentTransactionScopeEnum.Debit
                 && t.Type == PaymentTransactionEnum.Fee.ToString())));
 
-            Assert.AreEqual(1, Do.With().Timeout(TimeSpan.FromSeconds(5)).Until(
+            Assert.AreEqual(1, Do.With.Timeout(TimeSpan.FromSeconds(5)).Until(
                 () =>
                 GetTransactionCount(t => app.Id == t.ApplicationEntity.ExternalId && t.Scope == (int)PaymentTransactionScopeEnum.Debit
                 && t.Type == PaymentTransactionEnum.Interest.ToString())));
 
-            Assert.AreEqual(1, Do.With().Timeout(TimeSpan.FromSeconds(5)).Until(
+            Assert.AreEqual(1, Do.With.Timeout(TimeSpan.FromSeconds(5)).Until(
                 () =>
                 GetTransactionCount(t => app.Id == t.ApplicationEntity.ExternalId && t.Scope == (int)PaymentTransactionScopeEnum.Debit
                 && t.Type == PaymentTransactionEnum.CashAdvance.ToString())));

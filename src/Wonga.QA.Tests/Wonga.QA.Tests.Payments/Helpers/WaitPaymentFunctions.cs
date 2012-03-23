@@ -10,7 +10,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
     {
         public static void WaitForApplicationToEnterIntoArrears(Guid applicationGuid)
         {
-            Do.With().Timeout(3).Interval(10).Until(
+            Do.With.Timeout(3).Interval(10).Until(
                 () => Drive.Db.OpsSagas.PaymentsInArrearsSagaEntities.Single(a => (a.ApplicationId == applicationGuid)));
         }
 
@@ -18,7 +18,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
             var applicationid = GetPaymentFunctions.GetApplicationId(applicationGuid);
 
-            Do.With().Timeout(3).Interval(10).Until(
+            Do.With.Timeout(3).Interval(10).Until(
                 () =>
                 Drive.Db.Payments.Transactions.Single(
                     a =>

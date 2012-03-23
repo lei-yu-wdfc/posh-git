@@ -35,7 +35,7 @@ namespace Wonga.QA.Tests.Salesforce
             salesforce.SalesforcePassword = sfPassword.Value;
             salesforce.SalesforceUrl = sfUrl.Value;
 
-            Do.With().Message("Bank account for a given organization should exist in SF").Until(
+            Do.With.Message("Bank account for a given organization should exist in SF").Until(
                 () => salesforce.GetBankAccountById(bankAccountId));
         }
     }

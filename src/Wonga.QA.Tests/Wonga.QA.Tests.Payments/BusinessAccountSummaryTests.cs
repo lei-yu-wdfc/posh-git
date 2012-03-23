@@ -157,12 +157,12 @@ namespace Wonga.QA.Tests.Payments
 				t => application.Id == t.ApplicationEntity.ExternalId && t.Scope == (int)PaymentTransactionScopeEnum.Debit
 						&& t.Type == PaymentTransactionEnum.Fee.ToString()));
 
-			Do.With().Timeout(TimeSpan.FromSeconds(5)).Until(() =>
+			Do.With.Timeout(TimeSpan.FromSeconds(5)).Until(() =>
 				GetTransactionCount(
 					t => application.Id == t.ApplicationEntity.ExternalId && t.Scope == (int)PaymentTransactionScopeEnum.Debit
 						 && t.Type == PaymentTransactionEnum.Interest.ToString()));
 
-			Do.With().Timeout(TimeSpan.FromSeconds(5)).Until(() =>
+			Do.With.Timeout(TimeSpan.FromSeconds(5)).Until(() =>
 				GetTransactionCount(
 					t => application.Id == t.ApplicationEntity.ExternalId && t.Scope == (int)PaymentTransactionScopeEnum.Debit
 						 && t.Type == PaymentTransactionEnum.CashAdvance.ToString()));
