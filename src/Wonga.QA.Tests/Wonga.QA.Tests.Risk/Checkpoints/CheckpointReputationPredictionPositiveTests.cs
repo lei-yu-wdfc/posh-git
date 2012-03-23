@@ -17,6 +17,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		private const RiskMask TestMask = RiskMask.TESTReputationtPredictionPositive;
 
 		private const int ReputationScoreCutoff = 200; //TODO Hardcoded in Risk for now
+		private static readonly string[] ExpectedFactorNames = new string[] { "PostcodeInArrears", "LoanNumber", "DeviceCountPostcode", "DeviceDeclineRate" };
 
 		private string _forename;
 		private string _surname;
@@ -63,6 +64,29 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		public void CheckpointReputationPredictionPositiveDecline()
 		{
 
+		}
+
+		[Test, AUT(AUT.Za)]
+		public void CheckpointReputationPredictionPositiveCorrectFactorsUsed()
+		{
+			var customer = CustomerBuilder.New()
+				.WithEmployer(TestMask)
+				.WithForename(_forename)
+				.WithSurname(_surname)
+				.WithDateOfBirth(_dateOfBirth)
+				.WithNationalNumber(_nationalNumber)
+				.Build();
+
+			var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+
+			var db = new DbDriver();
+			var actualFactorNames = (from ra in db.Risk.RiskApplications
+										where ra.ApplicationId == application.Id
+										join pf in db.Risk.PmmlFactors on ra.RiskApplicationId equals pf.RiskApplicationId
+										join f in db.Risk.Factors on pf.FactorId equals f.FactorId
+									select f.Name).ToArray();
+
+			Assert.AreElementsEqualIgnoringOrder(ExpectedFactorNames, actualFactorNames);
 		}
 	}
 }
