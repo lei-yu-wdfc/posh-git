@@ -16,7 +16,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	{
 		private const RiskMask TestMask = RiskMask.TESTReputationtPredictionPositive;
 
-		private const int ReputationScoreCutoff = 200;
+		private const int ReputationScoreCutoff = 200; //TODO Hardcoded in Risk for now
 
 		private string _forename;
 		private string _surname;
