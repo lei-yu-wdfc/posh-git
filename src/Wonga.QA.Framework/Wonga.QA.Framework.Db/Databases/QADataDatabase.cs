@@ -89,6 +89,12 @@ namespace Wonga.QA.Framework.Db.QaData
 			OnCreated();
 		}
 		
+        //SH: Added this
+        public System.Data.Linq.Table<Email> Email 
+        { 
+            get { return this.GetTable<Email>(); } 
+        }
+
 		public System.Data.Linq.Table<CallReportResponse> CallReportResponses
 		{
 			get
@@ -335,7 +341,118 @@ namespace Wonga.QA.Framework.Db.QaData
 			}
 		}
 	}
-	
+
+    [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.Email")]
+    public partial class Email : DbEntity<Email>, INotifyPropertyChanging, INotifyPropertyChanged
+    {
+        
+            private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+
+            private int _emailId;
+
+            private string _emailAddress;
+
+            private string _templateName;
+
+            #region Extensibility Method Definitions
+            partial void OnLoaded();
+            partial void OnValidate(System.Data.Linq.ChangeAction action);
+            partial void OnCreated();
+            partial void OnEmailIdChanging(int value);
+            partial void OnEmailIdChanged();
+            partial void OnEmailAddressChanging(string value);
+            partial void OnEmailAddressChanged();
+            partial void OnTemplateNameChanging(string value);
+            partial void OnTemplateNameChanged();
+            #endregion
+
+            public Email()
+            {
+                OnCreated();
+            }
+
+            [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_emailId", AutoSync = AutoSync.OnInsert, DbType = "Int NOT NULL IDENTITY", IsPrimaryKey = true, IsDbGenerated = true)]
+            public int EmailId
+            {
+                get
+                {
+                    return this._emailId;
+                }
+                set
+                {
+                    if ((this._emailId != value))
+                    {
+                        this.OnEmailIdChanging(value);
+                        this.SendPropertyChanging();
+                        this._emailId = value;
+                        this.SendPropertyChanged("EmailId");
+                        this.OnEmailIdChanged();
+                    }
+                }
+            }
+
+            [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_templateName", DbType = "NVarChar(MAX) NULL", CanBeNull = true, UpdateCheck = UpdateCheck.Never)]
+            public string TemplateName
+            {
+                get
+                {
+                    return this._templateName;
+                }
+                set
+                {
+                    if ((this._templateName != value))
+                    {
+                        this.OnTemplateNameChanging(value);
+                        this.SendPropertyChanging();
+                        this._templateName = value;
+                        this.SendPropertyChanged("TemplateName");
+                        this.OnTemplateNameChanged();
+                    }
+                }
+            }
+
+            [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_emailAddress", DbType = "NVarChar(MAX) NULL", CanBeNull = true, UpdateCheck = UpdateCheck.Never)]
+            public string EmailAddress
+            {
+                get
+                {
+                    return this._emailAddress;
+                }
+                set
+                {
+                    if ((this._emailAddress != value))
+                    {
+                        this.OnEmailAddressChanging(value);
+                        this.SendPropertyChanging();
+                        this._emailAddress = value;
+                        this.SendPropertyChanged("EmailAddress");
+                        this.OnEmailAddressChanged();
+                    }
+                }
+            }
+
+            public event PropertyChangingEventHandler PropertyChanging;
+
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            protected virtual void SendPropertyChanging()
+            {
+                if ((this.PropertyChanging != null))
+                {
+                    this.PropertyChanging(this, emptyChangingEventArgs);
+                }
+            }
+
+            protected virtual void SendPropertyChanged(String propertyName)
+            {
+                if ((this.PropertyChanged != null))
+                {
+                    this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                }
+            }
+        
+    }
+
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CallValidateOutput")]
 	public partial class CallValidateOutput : DbEntity<CallValidateOutput>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
