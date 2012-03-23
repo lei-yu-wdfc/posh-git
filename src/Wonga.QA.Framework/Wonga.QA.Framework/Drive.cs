@@ -18,10 +18,7 @@ namespace Wonga.QA.Framework
         public static MsmqDriver Msmq { get { return new MsmqDriver(); } }
         public static ThirdPartyDriver ThirdParties { get { return new ThirdPartyDriver(); } }
         public static MockDriver Mocks { get { return new MockDriver(); } }
-
-        [Obsolete("Use Driver.Data instead")]
         public static DbDriver Db { get { return new DbDriver(); } }
-
-        public static DataDriver Data { get { return new DataDriver(); } }
+        //public static DataDriver Data { get { return new DataDriver(); } }
     }
 }
