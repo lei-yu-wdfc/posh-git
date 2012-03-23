@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using MbUnit.Framework;
+using OpenQA.Selenium;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Api;
@@ -54,7 +55,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-166")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-166"), Pending("Bug on JargonBuster page. It has the same href for U and V.")]
         public void JargonBusterLinkShouldNavigateThroughPageByClickingDifferentLettersFromAlphabet()
         {
             var page = Client.Home();
@@ -64,6 +65,7 @@ namespace Wonga.QA.Tests.Ui
             foreach (var element in alphabetLinks)
             {
                     element.Click();
+                    Assert.IsTrue(jargonBasterPage.Url.Contains("#"+element.Text.ToLower()));
             }
         }
 
