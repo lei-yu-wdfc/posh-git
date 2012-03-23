@@ -32,20 +32,20 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
         #region L0 tests
 
-        [Test, AUT(AUT.Ca)]
+        [Test, AUT(AUT.Ca), Ignore("Not fully implemented, do not run")]
 		public void CheckpointRepaymentPredictionPositiveCorrectScorecardUsedL0()
 		{
 			var scorecardName = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Risk.RepaymentModelForNewUsers").Value;
 			Assert.AreEqual(_expectedScorecardNameL0, scorecardName);
 		}
 
-        [Test, AUT(AUT.Ca)]
+        [Test, AUT(AUT.Ca), Ignore("Not fully implemented, do not run")]
         public void CheckpointRepaymentPredictionPositiveCorrectCutoffL0()
         {
             Assert.AreEqual(_expectedScoreCutoffNewUsers, _scoreCutoffNewUsers);
         }
 
-        [Test, AUT(AUT.Ca)]
+        [Test, AUT(AUT.Ca), Ignore("Not fully implemented, do not run")]
         public void CheckpointRepaymentPredictionPositiveL0Accept()
         {
 
@@ -81,7 +81,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             //Assert.GreaterThan(repaymentPredictionScore, ScoreCutoffNewUsersCa);
         }
 
-        [Test, AUT(AUT.Ca)]
+        [Test, AUT(AUT.Ca), Ignore("Not fully implemented, do not run")]
         public void CheckpointRepaymentPredictionPositiveL0Decline()
         {
             const string forename = "DAWN";

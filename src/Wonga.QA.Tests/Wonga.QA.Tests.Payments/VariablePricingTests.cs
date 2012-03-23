@@ -22,17 +22,22 @@ namespace Wonga.QA.Tests.Payments
         private const ProvinceEnum Province = ProvinceEnum.ON;
 
         private List<VariableInterestRateDetailEntity> _originalRates;
+        private int _closeDelay;
 
         [SetUp]
         public void Setup()
         {
             _originalRates = GetPaymentFunctions.GetCurrentVariableInterestRates();
+            _closeDelay = ConfigurationFunctions.GetDelayBeforeApplicationClosed();
+            ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
         }
 
         [TearDown]
         public void TearDown()
         {
             SetPaymentFunctions.SetCurrentVariableInterestRates(_originalRates);
+            ConfigurationFunctions.SetVariableInterestRateEnabled(true);
+            ConfigurationFunctions.SetDelayBeforeApplicationClosed(_closeDelay);
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1472")]
@@ -166,113 +171,82 @@ namespace Wonga.QA.Tests.Payments
             Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestCharged(actualInterestAmountApplied, expectedInterestAmountApplied));
         }
 
+        [Test, AUT(AUT.Ca), JIRA("CA-1472")]
+        [Row(10), Row(15)]
+        public void VerifyLNLoanClosedAfterPaymentRecieved(int loanTerm)
+        {
+            ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
 
+            var customer = CustomerBuilder.New().ForProvince(Province).Build();
+            var l0Application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
 
+            l0Application.RepayOnDueDate();
+            Do.With().Timeout(1).Until(() => l0Application.IsClosed);
 
-        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
-        //[Row(10), Row(15)]
-        //public void VerifyLNLoanClosedAfterPaymentRecieved(int loanTerm)
-        //{
-        //    TestLog.DebugTrace.WriteLine("BEGIN: VerifyLNLoanClosedAfterPaymentRecieved TimeStamp: {0}\n", DateTime.UtcNow.ToString("o"));
-        //    TestLog.DebugTrace.WriteLine("loanTerm -> {0}", loanTerm);
+            var lNApplication = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
 
-        //    SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
+            lNApplication.RepayOnDueDate();
 
-        //    var customer = CustomerBuilder.New().ForProvince(Province).Build();
-        //    var l0Application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
+            Assert.IsTrue(Do.With().Timeout(1).Until(() => lNApplication.IsClosed));
+        }
 
-        //    TestLog.DebugTrace.WriteLine("l0ApplicationId: {0}", l0Application.Id);
+        [Test, AUT(AUT.Ca), JIRA("CA-1472")]
+        public void VerifyMaxPercentageRateChargedOn30Days()
+        {
+            const int loanTerm = 30;
+            const decimal maxRateOver30Days = (decimal)0.2100;
+            const decimal loanAmount = 100;
 
-        //    l0Application.RepayOnDueDate();
+            ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
 
-        //    var lNApplication = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
+            var customer = CustomerBuilder.New().ForProvince(Province).Build();
+            var l0Application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
 
-        //    TestLog.DebugTrace.WriteLine("lNApplicationId: {0}\n", lNApplication.Id);
+            var actualRatesApplied = GetPaymentFunctions.GetInterestRatesForApplication(l0Application.Id);
+            var actualDailyRateApplied = CalculateFunctionsCa.CalculateActualDailyInterestRateCa(actualRatesApplied);
 
-        //    lNApplication.RepayOnDueDate();
+            Assert.IsTrue(actualDailyRateApplied == maxRateOver30Days);
+        }
 
-        //    Assert.IsTrue(VerifyPaymentFunctions.VerifyApplicationClosed(lNApplication.Id));
-        //    TestLog.DebugTrace.WriteLine("END: VerifyLNLoanClosedAfterPaymentRecieved TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
-        //}
+        [Test, AUT(AUT.Ca), JIRA("CA-1472")]
+        [Row(17)]
+        public void VerifyNoVariableInterestPostedWhenFeatureSwitchIsOff(int loanTerm)
+        {
+            const decimal loanAmount = 100;
+            ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
+            ConfigurationFunctions.SetVariableInterestRateEnabled(false);
 
-        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
-        //public void VerifyMaxPercentageRateChargedOn30Days()
-        //{
-        //    TestLog.DebugTrace.WriteLine("BEGIN: VerifyMaxPercentageRateChargedOn30Days TimeStamp: {0}\n", DateTime.UtcNow.ToString("o"));
-        //    const int loanTerm = 30;
-        //    const decimal loanAmount = 100;
-        //    const decimal maxRateOver30Days = (decimal)0.2100;
-            
-        //    SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
+            var customer = CustomerBuilder.New().ForProvince(Province).Build();
+            var l0Application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
 
-        //    var customer = CustomerBuilder.New().ForProvince(Province).Build();
-        //    var l0Application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
+            var actualRates = GetPaymentFunctions.GetInterestRatesForApplication(l0Application.Id);
+            var expectedRates = GetPaymentFunctions.GetCurrentVariableInterestRates(loanTerm);
+            Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestRatesApplied(actualRates, expectedRates));
 
-        //    TestLog.DebugTrace.WriteLine("l0ApplicationId: {0}", l0Application.Id);
+            ConfigurationFunctions.SetVariableInterestRateEnabled(true);
+        }
 
-        //    var actualRatesApplied = GetPaymentFunctions.GetInterestRatesForApplication(l0Application.Id);
-        //    var actualDailyRateApplied = CalculateFunctionsCa.CalculateActualDailyInterestRateCa(actualRatesApplied);
-        //    TestLog.DebugTrace.WriteLine("actualDailyRateApplied: {0}\n", actualDailyRateApplied);
-        //    Assert.IsTrue(actualDailyRateApplied == maxRateOver30Days);
-        //    TestLog.DebugTrace.WriteLine("END: VerifyMaxPercentageRateChargedOn30Days TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
-        //}
+        [Test, AUT(AUT.Ca), JIRA("CA-1472")]
+        [Row(22)]
+        public void VerifyExistingLoansInterestRatesAreNotAffectedIfFeatureSwitchIsTurnedOn(int loanTerm)
+        {
+            const decimal loanAmount = 100;
+            ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
+            ConfigurationFunctions.SetVariableInterestRateEnabled(false);
 
-        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
-        //[Row(17)]
-        //public void VerifyNoVariableInterestPostedWhenFeatureSwitchIsOff(int loanTerm)
-        //{
-        //    TestLog.DebugTrace.WriteLine("BEGIN: VerifyNoVariableInterestPostedWhenFeatureSwitchIsOff @ TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
-        //    TestLog.DebugTrace.WriteLine("loanTerm -> {0}\n", loanTerm);
+            var customer = CustomerBuilder.New().ForProvince(Province).Build();
+            var l0Application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
 
-        //    var promiseDate = (GetPaymentFunctions.GetNextWorkingDate(DateTime.Today)).AddDays(loanTerm).ToDateString();
-        //    SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
+            var expectedInterestAmountApplied = CalculateFunctionsCa.CalculateExpectedVariableInterestAmountAppliedCa(loanAmount, loanTerm);
+            ConfigurationFunctions.SetVariableInterestRateEnabled(true);
 
-        //    SetPaymentFunctions.SetVariableInterestRateEnabled(false);
+            l0Application.RepayOnDueDate();
+            Do.With().Timeout(1).Until(() => l0Application.IsClosed);
 
-        //    var application =
-        //        commonFunct.CreateL0Application(new Dictionary<string, string> { { "PromiseDate", promiseDate } });
-        //    var applicationId = application["ApplicationId"];
-        //    TestLog.DebugTrace.WriteLine("ApplicationId: {0}\n", applicationId);
-        //    var actualRates = GetPaymentFunctions.GetInterestRatesForApplication(applicationId);
-        //    var expectedRates = GetPaymentFunctions.GetCurrentVariableInterestRates(loanTerm);
-        //    Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestRatesApplied(actualRates, expectedRates));
+            var actualInterestAmountApplied = GetPaymentFunctions.GetInterestAmountApplied(l0Application.Id);
 
-        //    TestLog.DebugTrace.WriteLine("END: VerifyNoVariableInterestPostedWhenFeatureSwitchIsOff @ TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
-
-        //    SetPaymentFunctions.SetVariableInterestRateEnabled(true);
-        //}
-
-        //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
-        //[Row(22)]
-        //public void VerifyExistingLoansInterestRatesAreNotAffectedIfFeatureSwitchIsTurnedOn(int loanTerm)
-        //{
-        //    const decimal loanAmount = 100;
-
-        //    TestLog.DebugTrace.WriteLine("BEGIN: VerifyExistingLoansInterestRatesAreNotAffectedIfFeatureSwitchIsTurnedOn @ TimeStamp: {0}\n", DateTime.UtcNow.ToString("o"));
-        //    TestLog.DebugTrace.WriteLine("loanTerm -> {0}", loanTerm);
-        //    TestLog.DebugTrace.WriteLine("loanAmount -> {0}", loanAmount);
-
-        //    var promiseDate = (GetPaymentFunctions.GetNextWorkingDate(DateTime.Today)).AddDays(loanTerm).ToDateString();
-        //    SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
-        //    SetPaymentFunctions.SetVariableInterestRateEnabled(false);
-
-        //    var application =
-        //        commonFunct.CreateL0Application(new Dictionary<string, string> { { "PromiseDate", promiseDate }, { "Amount", loanAmount.ToString() } });
-        //    var applicationId = application["ApplicationId"];
-        //    TestLog.DebugTrace.WriteLine("ApplicationId: {0}", applicationId);
-        //    var expectedInterestAmountApplied = CalculateFunctionsCa.CalculateExpectedVariableInterestAmountAppliedCa(loanAmount, loanTerm);
-        //    SetPaymentFunctions.SetVariableInterestRateEnabled(true);
-
-        //    commonFunct.RewindQuery(applicationId);
-
-        //    TimeoutPaymentFunctions.TimeoutFixedTermLoanAndSchedInterest(applicationId);
-        //    SendPaymentFunctions.SendPaymentTaken(applicationId);
-
-        //    var actualInterestAmountApplied = GetPaymentFunctions.GetInterestAmountApplied(applicationId);
-
-        //    Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestCharged(actualInterestAmountApplied, expectedInterestAmountApplied));
-        //    TestLog.DebugTrace.WriteLine("END: VerifyExistingLoansInterestRatesAreNotAffectedIfFeatureSwitchIsTurnedOn @ TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
-        //}
+            Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestCharged(actualInterestAmountApplied, expectedInterestAmountApplied));
+        }
 
         //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
         //[Row(12, 4), Row(15, 11)]
@@ -280,27 +254,14 @@ namespace Wonga.QA.Tests.Payments
         //{
         //    const decimal loanAmount = 100;
         //    const int earlyRepaymentAmount = 50;
+        //    ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
 
-        //    TestLog.DebugTrace.WriteLine("BEGIN: VerifyVariableInterestAmountAppliedToPartialEarlyRepayment @ TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
-        //    TestLog.DebugTrace.WriteLine("loanTerm -> {0}", loanTerm);
-        //    TestLog.DebugTrace.WriteLine("earlyRepaymentTerm -> {0}", earlyRepaymentTerm);
-        //    TestLog.DebugTrace.WriteLine("loanAmount -> {0}", loanAmount);
-        //    TestLog.DebugTrace.WriteLine("earlyRepaymentAmount -> {0}", earlyRepaymentAmount);
+        //    var customer = CustomerBuilder.New().ForProvince(Province).Build();
+        //    var l0Application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
+        //    var applicationId = l0Application.Id;
+        //    var accountId = l0Application.AccountId;
 
-        //    var promiseDate = (GetPaymentFunctions.GetNextWorkingDate(DateTime.Today)).AddDays(loanTerm).ToDateString();
-        //    var earlyRepaymentDate = (GetPaymentFunctions.GetNextWorkingDate(DateTime.Today)).AddDays(earlyRepaymentTerm);
-        //    var adjustedEarlyRepaymentTerm = Convert.ToInt32(earlyRepaymentDate.Subtract(DateTime.Today).TotalDays.ToString());
-        //    SetPaymentFunctions.SetDelayBeforeApplicationClosed(0);
-
-        //    var application =
-        //        commonFunct.CreateL0Application(new Dictionary<string, string> { { "PromiseDate", promiseDate }, { "Amount", loanAmount.ToString() } });
-        //    var applicationId = application["ApplicationId"];
-        //    var accountId = application["AccountId"];
-        //    TestLog.DebugTrace.WriteLine("applicationId: {0}", applicationId);
-
-        //    commonFunct.RewindQuery(applicationId, (adjustedEarlyRepaymentTerm * -1));
-        //    SendPaymentFunctions.SendRepayLoanInternalViaBank(applicationId, earlyRepaymentAmount.ToString(), accountId);
-        //    SendPaymentFunctions.SendPaymentTakenForRepayLoan(applicationId);
+        //    l0Application.RepayEarly(earlyRepaymentAmount, earlyRepaymentTerm);
 
         //    commonFunct.RewindQuery(applicationId);
         //    TimeoutPaymentFunctions.TimeoutFixedTermLoanAndSchedInterest(applicationId);
@@ -309,10 +270,7 @@ namespace Wonga.QA.Tests.Payments
         //    var expectedInterestAmountApplied =
         //        CalculateFunctionsCa.CalculateExpectedEarlyRepaymentVariableInterestAmountAppliedCa(loanAmount, loanTerm, earlyRepaymentTerm, earlyRepaymentAmount);
         //    var actualInterestAmoutApplied = GetPaymentFunctions.GetInterestAmountApplied(applicationId);
-        //    TestLog.DebugTrace.WriteLine(
-        //            "VerifyVariableInterestAmountCharged: actualAmount -> expectedAmount   {0} -> {1}", actualInterestAmoutApplied, expectedInterestAmountApplied);
         //    Assert.IsTrue(actualInterestAmoutApplied == expectedInterestAmountApplied);
-        //    TestLog.DebugTrace.WriteLine("END: VerifyVariableInterestAmountAppliedToPartialEarlyRepayment @ TimeStamp: {0}", DateTime.UtcNow.ToString("o"));
         //}
 
         //[Test, AUT(AUT.Ca), JIRA("CA-1472")]
