@@ -26,7 +26,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		public void CustomerIsEmployedDecline()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithEmployerStatus(EmploymentStatusEnum.Unemployed.ToString()).Build();
-			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
+            ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
 	}
 }

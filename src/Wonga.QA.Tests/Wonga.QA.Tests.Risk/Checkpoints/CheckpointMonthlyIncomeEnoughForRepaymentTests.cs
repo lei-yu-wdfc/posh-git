@@ -33,7 +33,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 			ApplicationBuilder.New(customer)
 				.WithLoanAmount(GetLoanThresholdForCustomer(customer) + 1)
-				.WithExpectedDecision(ApplicationDecisionStatusEnum.Declined)
+                .WithExpectedDecision(ApplicationDecisionStatus.Declined)
 				.Build();
 		}
 

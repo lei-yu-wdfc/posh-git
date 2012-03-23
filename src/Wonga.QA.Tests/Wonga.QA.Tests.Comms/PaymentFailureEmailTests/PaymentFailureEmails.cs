@@ -22,7 +22,7 @@ namespace Wonga.QA.Tests.Comms.PaymentFailureEmailTests
         {
             var customer = CustomerBuilder.New().Build();
             var organization = OrganisationBuilder.New(customer).Build();
-            _applicationInfo = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build() as BusinessApplication;
+            _applicationInfo = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build() as BusinessApplication;
         }
 
         [Test, JIRA("SME-810")]

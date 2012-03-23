@@ -150,7 +150,7 @@ namespace Wonga.QA.Tests.Payments
 		{
 			var customer = CustomerBuilder.New().Build();
             var organisation = OrganisationBuilder.New(customer).Build();
-			var application = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+            var application = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
 			Do.Until(() =>
 				GetTransactionCount(

@@ -69,7 +69,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.WithNationalNumber(_nationalNumber)
 				.Build();
 
-			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
+            ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
 
 		[Test, AUT(AUT.Za)]
@@ -90,7 +90,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.WithNationalNumber(_nationalNumber)
 				.Build();
 
-			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
+            ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
 
 		[Test, AUT(AUT.Za)]
@@ -105,7 +105,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.WithNationalNumber(Get.GetNIN(_dateOfBirth, true))
 				.Build();
 
-			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
+            ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
 
 		[Test, AUT(AUT.Za)]
@@ -172,7 +172,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.WithNationalNumber(_nationalNumber)
 				.Build();
 
-			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
+            ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
 
 		[Test, AUT(AUT.Za)]
@@ -188,7 +188,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.WithNationalNumber(_nationalNumber)
 				.Build();
 
-			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
+            ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
 		
 	}

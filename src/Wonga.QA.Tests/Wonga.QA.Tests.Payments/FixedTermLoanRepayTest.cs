@@ -21,7 +21,7 @@ namespace Wonga.QA.Tests.Payments
 			Do.Until(cust.GetBankAccount);
 			Do.Until(cust.GetPaymentCard);
 			Application app = ApplicationBuilder.New(cust)
-				.WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted)
+                .WithExpectedDecision(ApplicationDecisionStatus.Accepted)
 				.WithLoanAmount(100)
 				.WithLoanTerm(30)
 				.Build();

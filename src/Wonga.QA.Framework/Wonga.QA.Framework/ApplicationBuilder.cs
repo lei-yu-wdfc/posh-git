@@ -18,7 +18,7 @@ namespace Wonga.QA.Framework
         protected Customer Customer;
         protected decimal LoanAmount;
         protected Date PromiseDate;
-        protected ApplicationDecisionStatusEnum Decision = ApplicationDecisionStatusEnum.Accepted;
+        protected ApplicationDecisionStatus Decision = ApplicationDecisionStatus.Accepted;
         protected int LoanTerm;
         protected string IovationBlackBox;
         protected Dictionary<int, List<bool>> EidSessionInteraction = new Dictionary<int, List<bool>>();
@@ -230,11 +230,11 @@ namespace Wonga.QA.Framework
                     {
                         Do.Until(
                             () =>
-                            (ApplicationDecisionStatusEnum)
-                            Enum.Parse(typeof(ApplicationDecisionStatusEnum),
+                            (ApplicationDecisionStatus)
+                            Enum.Parse(typeof(ApplicationDecisionStatus),
                                         Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = Id }).
                                             Values
-                                            ["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatusEnum.Pending);
+                                            ["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Pending);
 
                         Do.Until(() => Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = Id }).Values["SequenceId"].SingleOrDefault() == keyValuePair.Key.ToString());
 
@@ -252,10 +252,10 @@ namespace Wonga.QA.Framework
             }
 
             ApiResponse response = null;
-            Do.With().Timeout(3).Until(() => (ApplicationDecisionStatusEnum)
-                Enum.Parse(typeof(ApplicationDecisionStatusEnum), (response = Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = Id })).Values["ApplicationDecisionStatus"].Single()) == Decision);
+            Do.With().Timeout(3).Until(() => (ApplicationDecisionStatus)
+                Enum.Parse(typeof(ApplicationDecisionStatus), (response = Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = Id })).Values["ApplicationDecisionStatus"].Single()) == Decision);
 
-            if (Decision == ApplicationDecisionStatusEnum.Declined)
+            if (Decision == ApplicationDecisionStatus.Declined)
             {
                 return new Application(Id, GetFailedCheckpointFromApplicationDecisionResponse(response));
             }
@@ -312,7 +312,7 @@ namespace Wonga.QA.Framework
             return this;
         }
 
-        public ApplicationBuilder WithExpectedDecision(ApplicationDecisionStatusEnum decision)
+        public ApplicationBuilder WithExpectedDecision(ApplicationDecisionStatus decision)
         {
             Decision = decision;
             return this;

@@ -31,7 +31,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			return Drive.Db.Risk.RiskApplications.Single(x => x.ApplicationId == application.Id);
 		}
 
-		protected Application RunSingleWorkflowTest(RiskMask testMask, ICustomerData customerData, CheckpointDefinitionEnum checkpoint, CheckpointStatus expectedStatus)
+        protected Application RunSingleWorkflowTest(RiskMask testMask, ICustomerData customerData, RiskCheckpointDefinitionEnum checkpoint, RiskCheckpointStatus expectedStatus)
 		{
 			var customer =
 				CustomerBuilder.New()
@@ -42,7 +42,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.Build();
 
 			var application = ApplicationBuilder.New(customer)
-				.WithExpectedDecision(expectedStatus == CheckpointStatus.Verified ? ApplicationDecisionStatusEnum.Accepted : ApplicationDecisionStatusEnum.Declined)
+                .WithExpectedDecision(expectedStatus == RiskCheckpointStatus.Verified ? ApplicationDecisionStatus.Accepted : ApplicationDecisionStatus.Declined)
 				.Build();
 
 			// wait until workflow will be created and started

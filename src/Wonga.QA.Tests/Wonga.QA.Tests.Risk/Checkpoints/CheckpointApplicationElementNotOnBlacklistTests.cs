@@ -59,7 +59,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Drive.Db.Blacklist.BlackLists.InsertOnSubmit(blacklistEntity);
 			blacklistEntity.Submit();
 
-			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
+            ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
 
 		[Test, AUT(AUT.Za)]
@@ -71,7 +71,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Drive.Db.Blacklist.BlackLists.InsertOnSubmit(blacklistEntity);
 			blacklistEntity.Submit();
 
-			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
+            ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
 	}
 }

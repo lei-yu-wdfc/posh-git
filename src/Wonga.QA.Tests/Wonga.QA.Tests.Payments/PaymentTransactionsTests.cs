@@ -30,7 +30,7 @@ Then create cashadvance, fee and interest transactions on the application.
             var organization = OrganisationBuilder.New(customer).Build();
             var app =
                 ApplicationBuilder.New(customer, organization).WithExpectedDecision(
-                    ApplicationDecisionStatusEnum.Accepted).Build();
+                    ApplicationDecisionStatus.Accepted).Build();
 
             Assert.AreEqual(1, Do.Until(
                 () =>

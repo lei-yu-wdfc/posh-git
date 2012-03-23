@@ -64,7 +64,7 @@ namespace Wonga.QA.Tests.Risk
                                             {{SessionOne, new List<bool>(new bool[] {true, true})}};
 
             ApplicationBuilder applicationBuilder =
-                ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).
+                ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).
                     WithEidSessionInteraction(eidSessionInteraction);
             applicationBuilder.Build();
 
@@ -80,7 +80,7 @@ namespace Wonga.QA.Tests.Risk
                                             };
 
             ApplicationBuilder applicationBuilder =
-                ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).
+                ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).
                     WithEidSessionInteraction(eidSessionInteraction);
             applicationBuilder.Build();
         }
@@ -96,7 +96,7 @@ namespace Wonga.QA.Tests.Risk
                                             };
 
             ApplicationBuilder applicationBuilder =
-                ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).
+                ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).
                     WithEidSessionInteraction(eidSessionInteraction);
             applicationBuilder.Build();
         }
@@ -112,7 +112,7 @@ namespace Wonga.QA.Tests.Risk
                                             };
 
             ApplicationBuilder applicationBuilder =
-                ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).
+                ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).
                     WithEidSessionInteraction(eidSessionInteraction);
             applicationBuilder.Build();
         }
@@ -128,7 +128,7 @@ namespace Wonga.QA.Tests.Risk
                                             };
 
             ApplicationBuilder applicationBuilder =
-                ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).
+                ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).
                     WithEidSessionInteraction(eidSessionInteraction);
             applicationBuilder.Build();
         }
@@ -144,7 +144,7 @@ namespace Wonga.QA.Tests.Risk
                                             };
 
             ApplicationBuilder applicationBuilder =
-                ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).
+                ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).
                     WithEidSessionInteraction(eidSessionInteraction);
             applicationBuilder.Build();
         }
@@ -160,7 +160,7 @@ namespace Wonga.QA.Tests.Risk
                                             };
 
             ApplicationBuilder applicationBuilder =
-                ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).
+                ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).
                     WithEidSessionInteraction(eidSessionInteraction);
             applicationBuilder.Build();
         }
@@ -176,7 +176,7 @@ namespace Wonga.QA.Tests.Risk
                                             };
 
             ApplicationBuilder applicationBuilder =
-                ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).
+                ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).
                     WithEidSessionInteraction(eidSessionInteraction);
             applicationBuilder.Build();
         }
@@ -191,7 +191,7 @@ namespace Wonga.QA.Tests.Risk
                                             };
 
             ApplicationBuilder applicationBuilder =
-                ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).
+                ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).
                     WithEidSessionInteraction(eidSessionInteraction);
             applicationBuilder.Build();
         }
@@ -206,7 +206,7 @@ namespace Wonga.QA.Tests.Risk
                                             };
 
             ApplicationBuilder applicationBuilder =
-                ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).
+                ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).
                     WithEidSessionInteraction(eidSessionInteraction);
             applicationBuilder.Build();
         }
@@ -221,7 +221,7 @@ namespace Wonga.QA.Tests.Risk
                                             };
 
             ApplicationBuilder applicationBuilder =
-                ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).
+                ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).
                     WithEidSessionInteraction(eidSessionInteraction);
             applicationBuilder.Build();
         }
@@ -236,7 +236,7 @@ namespace Wonga.QA.Tests.Risk
                                             };
 
             ApplicationBuilder applicationBuilder =
-                ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).
+                ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).
                     WithEidSessionInteraction(eidSessionInteraction);
             applicationBuilder.Build();
         }

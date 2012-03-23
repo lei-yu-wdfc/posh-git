@@ -20,7 +20,7 @@ namespace Wonga.QA.Tests.Salesforce
         {
             var customer = CustomerBuilder.New().Build();
             var organization = OrganisationBuilder.New(customer).Build();
-            var app = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).
+            var app = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatus.Accepted).
                 Build() as BusinessApplication;
 
             var bankAccountId = Do.Until(organization.GetValidBankAccount);

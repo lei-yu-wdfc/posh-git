@@ -20,7 +20,7 @@ namespace Wonga.QA.Tests.Payments.Queries
         {
             var customer = CustomerBuilder.New().Build();
             var organisation = OrganisationBuilder.New(customer).Build();
-            var app = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+            var app = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
             Do.Until(() => Drive.Db.Payments.Transactions.Count(t => t.ApplicationEntity.ExternalId == app.Id));
 
@@ -42,7 +42,7 @@ namespace Wonga.QA.Tests.Payments.Queries
         {
             var customer = CustomerBuilder.New().WithMiddleName("FailingName").Build();
             var organisation = OrganisationBuilder.New(customer).Build();
-            var app = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
+            var app = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 
             var query = new Framework.Cs.GetTransactionsQuery
             {

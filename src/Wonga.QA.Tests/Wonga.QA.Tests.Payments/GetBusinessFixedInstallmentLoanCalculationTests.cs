@@ -41,7 +41,7 @@ namespace Wonga.QA.Tests.Payments
 		/// Given the customer on the page with the sliders displaying the interest rate based on the risk tier
 		/// When the customer sets the term to below minimal allowed
 		/// Then return minimal term
-		/// </scenario>
+		/// </scenario>                         
 		[Test, AUT(AUT.Wb), JIRA("SME-889")]
 		public void GetBusinessFixedInstallmentLoanCalculation_SetTheTermToMinimalAllowed()
 		{
@@ -51,7 +51,7 @@ namespace Wonga.QA.Tests.Payments
 			int.TryParse(offerResponse.Values["TermMin"].SingleOrDefault(), out minTerm);
 
 			var customer = CustomerBuilder.New().Build();
-			var organisation = OrganisationBuilder.New(customer).Build();
+            var organisation = OrganisationBuilder.New(customer).WithOrganisationNumber("00000086").Build();
 			var application = ApplicationBuilder.New(customer, organisation).Build();
 
 			var response = Drive.Api.Queries.Post(new GetBusinessFixedInstallmentLoanCalculationWbUkQuery 

@@ -224,7 +224,7 @@ namespace Wonga.QA.Framework
 		/// <param name="applicationId">The GUID of the application</param>
 		/// <param name="expectedStatus">Optional:The expected status</param>
 		/// <returns>Returns a list of CheckpointDefinitions.Name</returns>
-		public static List<String> GetExecutedCheckpointsDefinitionsForApplicationId(Guid applicationId, params CheckpointStatus[] expectedStatus)
+		public static List<String> GetExecutedCheckpointsDefinitionsForApplicationId(Guid applicationId, params RiskCheckpointStatus[] expectedStatus)
 		{
 			var db = new DbDriver();
 			var riskWorkflowEntity = db.Risk.RiskWorkflows.SingleOrDefault(r => r.ApplicationId == applicationId);
@@ -236,7 +236,7 @@ namespace Wonga.QA.Framework
 												 ? db.Risk.WorkflowCheckpoints.Where(
 													 p =>
 													 p.RiskWorkflowId == riskWorkflowEntity.RiskWorkflowId &&
-													 expectedStatus.Contains((CheckpointStatus)p.CheckpointStatus)).Select(
+													 expectedStatus.Contains((RiskCheckpointStatus)p.CheckpointStatus)).Select(
 														 p => p.CheckpointDefinitionId).ToList()
 												 : db.Risk.WorkflowCheckpoints.Where(
 													 p => p.RiskWorkflowId == riskWorkflowEntity.RiskWorkflowId).
@@ -253,7 +253,7 @@ namespace Wonga.QA.Framework
 		/// <param name="workflowId">The GUID of the workflow</param>
 		/// <param name="expectedStatus">Optional:The expected status</param>
 		/// <returns>Returns a list of CheckpointDefinitions.Name</returns>
-		public static List<String> GetExecutedCheckpointDefinitionsForRiskWorkflow(Guid workflowId, params CheckpointStatus[] expectedStatus)
+		public static List<String> GetExecutedCheckpointDefinitionsForRiskWorkflow(Guid workflowId, params RiskCheckpointStatus[] expectedStatus)
 		{
 			var db = new DbDriver();
 			var riskWorkflowEntity = db.Risk.RiskWorkflows.SingleOrDefault(r => r.WorkflowId == workflowId);
@@ -265,7 +265,7 @@ namespace Wonga.QA.Framework
 												 ? db.Risk.WorkflowCheckpoints.Where(
 													 p =>
 													 p.RiskWorkflowId == riskWorkflowEntity.RiskWorkflowId &&
-													 expectedStatus.Contains((CheckpointStatus)p.CheckpointStatus)).Select(
+													 expectedStatus.Contains((RiskCheckpointStatus)p.CheckpointStatus)).Select(
 														 p => p.CheckpointDefinitionId).ToList()
 												 : db.Risk.WorkflowCheckpoints.Where(
 													 p => p.RiskWorkflowId == riskWorkflowEntity.RiskWorkflowId).

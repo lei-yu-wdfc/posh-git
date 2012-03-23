@@ -13,15 +13,15 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 	{
 		public IovationMockResponse IovationBlackBox { get; private set; }
 
-		public ApplicationDecisionStatusEnum ExpectedDecisionStatus { get; private set; }
+        public ApplicationDecisionStatus ExpectedDecisionStatus { get; private set; }
 
-		public ApplicationBuilderConfig(IovationMockResponse iovationBlackBox = IovationMockResponse.Allow, ApplicationDecisionStatusEnum expectedDecisionStatus = ApplicationDecisionStatusEnum.Accepted)
+        public ApplicationBuilderConfig(IovationMockResponse iovationBlackBox = IovationMockResponse.Allow, ApplicationDecisionStatus expectedDecisionStatus = ApplicationDecisionStatus.Accepted)
 		{
 			IovationBlackBox = iovationBlackBox;
 			ExpectedDecisionStatus = expectedDecisionStatus;
 		}
 
-		public ApplicationBuilderConfig(ApplicationDecisionStatusEnum expectedDecisionStatus)
+		public ApplicationBuilderConfig(ApplicationDecisionStatus expectedDecisionStatus)
 			: this(IovationMockResponse.Allow, expectedDecisionStatus)
 		{
 

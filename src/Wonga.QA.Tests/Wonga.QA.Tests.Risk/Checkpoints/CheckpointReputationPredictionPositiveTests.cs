@@ -56,7 +56,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.WithNationalNumber(_nationalNumber)
 				.Build();
 
-			var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+            var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-1938"), Pending("Work in progress")]

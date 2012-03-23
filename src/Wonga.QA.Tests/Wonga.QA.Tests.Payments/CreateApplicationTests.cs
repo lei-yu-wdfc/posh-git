@@ -46,7 +46,7 @@ namespace Wonga.QA.Tests.Payments
         {
             var customer = CustomerBuilder.New().Build();
             var organization = OrganisationBuilder.New(customer).Build();
-            var app = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).
+            var app = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatus.Accepted).
                 Build();
 
             Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == app.Id).LoanReference);
