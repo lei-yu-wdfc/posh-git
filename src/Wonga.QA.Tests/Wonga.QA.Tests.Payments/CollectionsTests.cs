@@ -97,7 +97,7 @@ namespace Wonga.QA.Tests.Payments
 
 			SendPaymentTaken(application, application.GetBalance());
 
-			Do.With().Timeout(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id).ClosedOn != null);
+			Do.With.Timeout(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id).ClosedOn != null);
 			Do.Until(() => Drive.Db.OpsSagas.ScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id) == false);
 			Do.Until(() => Drive.Db.OpsSagas.PendingScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id) == false);
 		}

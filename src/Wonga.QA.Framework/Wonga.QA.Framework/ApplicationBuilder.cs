@@ -252,7 +252,7 @@ namespace Wonga.QA.Framework
             }
 
             ApiResponse response = null;
-            Do.With().Timeout(3).Until(() => (ApplicationDecisionStatus)
+            Do.With.Timeout(3).Until(() => (ApplicationDecisionStatus)
                 Enum.Parse(typeof(ApplicationDecisionStatus), (response = Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = Id })).Values["ApplicationDecisionStatus"].Single()) == Decision);
 
             if (Decision == ApplicationDecisionStatus.Declined)
@@ -271,7 +271,7 @@ namespace Wonga.QA.Framework
 
             Do.Until(() => Drive.Api.Queries.Post(summary).Values["HasCurrentLoan"].Single() == "true");
 
-            Do.With().Timeout(TimeSpan.FromSeconds(10)).Watch(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).Transactions.Count);
+            Do.With.Timeout(TimeSpan.FromSeconds(10)).Watch(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).Transactions.Count);
 
             return new Application { Id = Id, BankAccountId = Customer.BankAccountId, LoanAmount = LoanAmount, LoanTerm = LoanTerm };
         }

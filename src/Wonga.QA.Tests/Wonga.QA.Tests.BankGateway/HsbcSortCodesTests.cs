@@ -46,7 +46,7 @@ namespace Wonga.QA.Tests.BankGateway
             _code.Delete().Submit();
 
             Drive.Svc.Hsbc.Restart();
-            Do.With().Timeout(3).Interval(10).Until(() => Drive.Db.BankGateway.SortCodes.Max(c => c.CreationDate) > Get.GetDateTimeMin());
+            Do.With.Timeout(3).Interval(10).Until(() => Drive.Db.BankGateway.SortCodes.Max(c => c.CreationDate) > Get.GetDateTimeMin());
 
             Table<SortCodeEntity> codes = Drive.Db.BankGateway.SortCodes;
             Assert.GreaterThanOrEqualTo(codes.Count(), _rows);
@@ -61,7 +61,7 @@ namespace Wonga.QA.Tests.BankGateway
             _code.Submit();
 
             Drive.Msmq.Hsbc.Send(new UpdateSortCodeTableUkCommand());
-            Do.With().Timeout(3).Interval(10).Until(() => Drive.Db.BankGateway.SortCodes.Max(c => c.CreationDate) > Get.GetDateTimeMin());
+            Do.With.Timeout(3).Interval(10).Until(() => Drive.Db.BankGateway.SortCodes.Max(c => c.CreationDate) > Get.GetDateTimeMin());
 
             Assert.GreaterThan(_code.Refresh().CreationDate, Get.GetDateTimeMin());
             Assert.AreNotEqual(_code.PaymentTypeId, _type.PaymentTypeId);

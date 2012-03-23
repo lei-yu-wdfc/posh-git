@@ -12,7 +12,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
             var applicationid = GetPaymentFunctions.GetApplicationId(applicationGuid);
             var scheduledpaymentsaga =
-                Do.With().Timeout(5).Interval(10).Until(
+                Do.With.Timeout(5).Interval(10).Until(
                     () =>
                     Drive.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationId == applicationid).Id);
             Drive.Msmq.Payments.Send(new PaymentTakenCommand

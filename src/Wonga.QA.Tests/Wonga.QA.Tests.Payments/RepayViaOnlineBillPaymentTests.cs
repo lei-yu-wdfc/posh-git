@@ -33,7 +33,7 @@ namespace Wonga.QA.Tests.Payments
 
 			Drive.Msmq.Payments.Send(cmd);
 
-			Do.With().Timeout(60).Until(() => application.IsClosed);
+			Do.With.Timeout(60).Until(() => application.IsClosed);
 			VerifyPaymentFunctions.VerifyDirectBankPaymentOfAmount(application.Id, -repaymentAmount);
 		}
 	}

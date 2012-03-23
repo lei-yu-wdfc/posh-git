@@ -47,7 +47,7 @@ namespace Wonga.QA.Tests.Payments
 			var cmdAct = new Gallio.Common.Action(() => Drive.Api.Commands.Post(cmd));
 			Assert.DoesNotThrow(cmdAct);
 
-			Do.With().Timeout(TimeSpan.FromSeconds(5)).Until(() => GetTransactions(ftApp.ApplicationEntity.ExternalId, repayAmount));
+			Do.With.Timeout(TimeSpan.FromSeconds(5)).Until(() => GetTransactions(ftApp.ApplicationEntity.ExternalId, repayAmount));
 
 			decimal newAmount = GetAmount(cust.Id);
 			Assert.GreaterThan(amount, newAmount);
@@ -55,7 +55,7 @@ namespace Wonga.QA.Tests.Payments
 			if (fullRepay)
 			{
 				Guid appId = ftApp.ApplicationEntity.ExternalId;
-				Do.With()
+				Do.With
 					.Timeout(TimeSpan.FromSeconds(60))
 					.Until(
 						() => Drive.Db.Payments.FixedTermLoanApplications.Single(
