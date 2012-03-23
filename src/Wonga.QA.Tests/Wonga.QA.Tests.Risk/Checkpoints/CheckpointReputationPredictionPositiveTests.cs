@@ -16,13 +16,10 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	{
 		private const RiskMask TestMask = RiskMask.TESTReputationtPredictionPositive;
 
-		private const int ReputationScoreCutoff = 200; //TODO Hardcoded in Risk for now
-		private static readonly string[] ExpectedFactorNames = new string[] { "PostcodeInArrears", "LoanNumber", "DeviceCountPostcode", "DeviceDeclineRate" };
+		private const double ReputationScoreCutoff = 200; //TODO Hardcoded in Risk for now
+		private static readonly string[] ExpectedFactorNames = new [] { "PostcodeInArrears", "LoanNumber", "DeviceCountPostcode", "DeviceDeclineRate" };
 
-		private string _forename;
-		private string _surname;
-		private Date _dateOfBirth;
-		private string _nationalNumber;
+		private static readonly int PostcodeWithHighArrearsRate = Get.RandomInt(1000, 9999);
 
 		[FixtureSetUp]
 		public void FixtureSetUp()
@@ -31,11 +28,6 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			{
 				case AUT.Za:
 					{
-						_forename = "ANITHA";
-						_surname = "ESSACK";
-						_dateOfBirth = new Date(new DateTime(1957, 12, 19));
-						_nationalNumber = "5712190106083";
-
 						Drive.Db.SetServiceConfiguration("FeatureSwitch.ZA.ReputationPredictionCheckpoint", "true");
 					}
 					break;
@@ -51,19 +43,36 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		{
 			var customer = CustomerBuilder.New()
 				.WithEmployer(TestMask)
-				.WithForename(_forename)
-				.WithSurname(_surname)
-				.WithDateOfBirth(_dateOfBirth)
-				.WithNationalNumber(_nationalNumber)
 				.Build();
 
-            var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+            var application = ApplicationBuilder.New(customer).WithIovationBlackBox("Accept").WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+
+			var actualScore = GetReputationPredictionScore(application);
+			Assert.GreaterThan(actualScore, ReputationScoreCutoff);
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-1938"), Pending("Work in progress")]
 		public void CheckpointReputationPredictionPositiveDecline()
 		{
+			int newCutoff = 800;
+			Drive.Db.SetServiceConfiguration("Risk.ReputationScoreCutOff", newCutoff.ToString());
 
+			try
+			{
+				var customer = CustomerBuilder.New()
+				.WithEmployer(TestMask)
+				.Build();
+
+				var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+
+				var actualScore = GetReputationPredictionScore(application);
+				Assert.LessThan(actualScore,newCutoff);
+			}
+
+			finally
+			{
+				Drive.Db.SetServiceConfiguration("Risk.ReputationScoreCutOff", ReputationScoreCutoff.ToString());
+			}
 		}
 
 		[Test, AUT(AUT.Za)]
@@ -71,22 +80,33 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		{
 			var customer = CustomerBuilder.New()
 				.WithEmployer(TestMask)
-				.WithForename(_forename)
-				.WithSurname(_surname)
-				.WithDateOfBirth(_dateOfBirth)
-				.WithNationalNumber(_nationalNumber)
 				.Build();
 
-			var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+			var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
-			var db = new DbDriver();
-			var actualFactorNames = (from ra in db.Risk.RiskApplications
-										where ra.ApplicationId == application.Id
-										join pf in db.Risk.PmmlFactors on ra.RiskApplicationId equals pf.RiskApplicationId
-										join f in db.Risk.Factors on pf.FactorId equals f.FactorId
-									select f.Name).ToArray();
-
+			var actualFactorNames = GetFactorNamesUsed(application);
 			Assert.AreElementsEqualIgnoringOrder(ExpectedFactorNames, actualFactorNames);
 		}
+
+		#region Helpers
+
+		private double GetReputationPredictionScore(Application application)
+		{
+			var db = new DbDriver();
+			return (double) (db.Risk.RiskApplications.Where(ra => ra.ApplicationId == application.Id).Join(
+				db.Risk.RiskDecisionDatas, ra => ra.RiskApplicationId, dd => dd.RiskApplicationId, (ra, dd) => dd.ValueDouble)).First();
+		}
+
+		private IEnumerable<string> GetFactorNamesUsed(Application application)
+		{
+			var db = new DbDriver();
+			return (from ra in db.Risk.RiskApplications
+			        where ra.ApplicationId == application.Id
+			        join pf in db.Risk.PmmlFactors on ra.RiskApplicationId equals pf.RiskApplicationId
+			        join f in db.Risk.Factors on pf.FactorId equals f.FactorId
+			        select f.Name).ToArray();
+
+		}
+		#endregion
 	}
 }
