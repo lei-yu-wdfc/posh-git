@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
-using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Db;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Risk.Properties;
 
@@ -18,26 +14,20 @@ namespace Wonga.QA.Tests.Risk.ZScoreTest
         [JIRA("SME-956"), Description("score card test with CallCredit")]
         public void ScoreCardTest1000WithCallCredit()
         {
-            var forename = "";
-            var surname = "";
-            var PostCode = "";
-            var dateofBirth = new Date(new DateTime(1973, 5, 11), DateFormat.Date);
-            var HouseNumber = "";
-            string data = Resources.CustomerDataforCallCredit;
-            var delimiters = new char[] { ',', ';' };
+            var data = Resources.CustomerDataforCallCredit;
+            var delimiters = new[] { ',', ';' };
             string[] customerdetails = data.Split(delimiters[1]);
-            foreach (var customerdetail in customerdetails)
+            foreach (var riskWorkflows in from customerdetail in customerdetails
+                                          select customerdetail.Split(delimiters[0])
+                                          into custdata let theCultureInfo = new System.Globalization.CultureInfo("en-GB", true) 
+                                          let theDateTime = DateTime.ParseExact(custdata[2], "yyyy-mm-dd", theCultureInfo) 
+                                          let forename = custdata[0] 
+                                          let surname = custdata[1] 
+                                          let dateofBirth = new Date(theDateTime, DateFormat.Date) 
+                                          let HouseNumber = custdata[3] 
+                                          let PostCode = custdata[4] select CreateApplicationWithAsserts(forename, surname, dateofBirth, PostCode, HouseNumber)
+                                          into application select Application.GetWorkflowsForApplication(application.Id))
             {
-                string[] custdata = customerdetail.Split(delimiters[0]);
-                IFormatProvider theCultureInfo = new System.Globalization.CultureInfo("en-GB", true);
-                DateTime theDateTime = DateTime.ParseExact(custdata[2], "yyyy-mm-dd", theCultureInfo);
-                forename = custdata[0];
-                surname = custdata[1];
-                dateofBirth = new Date(theDateTime, DateFormat.Date);
-                HouseNumber = custdata[3];
-                PostCode = custdata[4];
-                var application = CreateApplicationWithAsserts(forename, surname, dateofBirth, PostCode, HouseNumber);
-                var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
                 Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
             }
         }
