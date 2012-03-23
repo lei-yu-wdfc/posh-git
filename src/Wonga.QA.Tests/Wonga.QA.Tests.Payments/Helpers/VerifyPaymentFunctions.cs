@@ -53,13 +53,6 @@ namespace Wonga.QA.Tests.Payments.Helpers
             return actualInterestAmountApplied == expectedInterestAmountApplied;
         }
 
-        public static bool VerifyApplicationClosed(Guid applicationGuid)
-        {
-            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == applicationGuid).ClosedOn != null);
-
-            return true;
-        }
-
         public static bool VerifyApplicationNotClosed(Guid applicationGuid)
         {
             Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == applicationGuid).ClosedOn == null);
