@@ -9,7 +9,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 {
 	public class BaseL0RiskApiCheckpointAndVerificationTests : BaseRiskApiCheckpointAndVerificationTests
 	{
-		protected Application L0ApplicationWithSingleCheckPointAndVerifications(CustomerBuilder customerBuilder, CheckpointDefinitionEnum checkpointDefinition, IEnumerable<string> expectedVerificationNames)
+        protected Application L0ApplicationWithSingleCheckPointAndVerifications(CustomerBuilder customerBuilder, RiskCheckpointDefinitionEnum checkpointDefinition, IEnumerable<string> expectedVerificationNames)
 		{
 			if (_builderConfig == null)
 			{
@@ -17,7 +17,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 				_builderConfig = new ApplicationBuilderConfig();
 			}
 
-			CheckpointStatus expectedStatus = GetExpectedCheckpointStatus(_builderConfig.ExpectedDecisionStatus);
+            RiskCheckpointStatus expectedStatus = GetExpectedCheckpointStatus(_builderConfig.ExpectedDecisionStatus);
 
 			Customer cust = customerBuilder.Build();
 
@@ -30,24 +30,24 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 			return app;
 		}
 
-		protected Application L0ApplicationWithSingleCheckPointAndSingleVerification(CustomerBuilder customerBuilder, CheckpointDefinitionEnum checkpointDefinition, string expectedVerificationName)
+        protected Application L0ApplicationWithSingleCheckPointAndSingleVerification(CustomerBuilder customerBuilder, RiskCheckpointDefinitionEnum checkpointDefinition, string expectedVerificationName)
 		{
 			return L0ApplicationWithSingleCheckPointAndVerifications(customerBuilder, checkpointDefinition, new[] { expectedVerificationName });
 		}
 
-		protected Application L0ApplicationWithSingleCheckPointAndSingleVerification(CheckpointDefinitionEnum checkpointDefinition, string expectedVerificationName)
+        protected Application L0ApplicationWithSingleCheckPointAndSingleVerification(RiskCheckpointDefinitionEnum checkpointDefinition, string expectedVerificationName)
 		{
 			return L0ApplicationWithSingleCheckPointAndVerifications(checkpointDefinition, new List<string> { expectedVerificationName });
 		}
 
-		protected Application L0ApplicationWithSingleCheckPointAndVerifications(CheckpointDefinitionEnum checkpointDefinition, IEnumerable<string> expectedVerificationNames, string employerNameTestMask)
+        protected Application L0ApplicationWithSingleCheckPointAndVerifications(RiskCheckpointDefinitionEnum checkpointDefinition, IEnumerable<string> expectedVerificationNames, string employerNameTestMask)
 		{
 			return L0ApplicationWithSingleCheckPointAndVerifications(
 				CustomerBuilder.New().WithEmployer(employerNameTestMask),
 				checkpointDefinition, expectedVerificationNames);
 		}
 
-		protected Application L0ApplicationWithSingleCheckPointAndVerifications(CheckpointDefinitionEnum checkpointDefinition, IEnumerable<string> expectedVerificationNames)
+        protected Application L0ApplicationWithSingleCheckPointAndVerifications(RiskCheckpointDefinitionEnum checkpointDefinition, IEnumerable<string> expectedVerificationNames)
 		{
 			return L0ApplicationWithSingleCheckPointAndVerifications(
 						checkpointDefinition,

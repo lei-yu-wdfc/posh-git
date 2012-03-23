@@ -105,7 +105,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		public void CheckpointRepaymentPredictionPositiveL0Decline()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
-			var application = ApplicationBuilder.New(customer).WithLoanTerm(30).WithLoanAmount(2000).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanTerm(30).WithLoanAmount(2000).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 
 			var repaymentPredictionScore = GetRepaymentPredictionScore(application);
 			Assert.LessThan(repaymentPredictionScore, ScoreCutoffNewUsers);

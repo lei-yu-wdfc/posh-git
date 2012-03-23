@@ -33,7 +33,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		public void CheckpointBankAccountIsValidShouldReturnReadyToSignStatus()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
-			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.ReadyToSign).Build();
+            ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.ReadyToSign).Build();
 		}
 	}
 }

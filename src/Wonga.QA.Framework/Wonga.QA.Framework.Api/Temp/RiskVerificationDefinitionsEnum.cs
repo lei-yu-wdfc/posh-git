@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Wonga.QA.Framework.Api
 {
-    public enum VerificationDefinitionsEnum
+    public enum RiskVerificationDefinitions
     {
         [Description("CreditBureauEcbsScoreIsAcceptableVerification")] CreditBureauEcbsScoreIsAcceptableVerification,
         [Description("CreditBureauDataIsAvailableVerification")] CreditBureauDataIsAvailableVerification,

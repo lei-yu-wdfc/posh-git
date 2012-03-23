@@ -13,7 +13,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test, AUT(AUT.Uk), JIRA("UK-852")]
 		public void AcceptNoCifas()
 		{
-			RunSingleWorkflowTest(TestMask, new CustomerJanetUk(), CheckpointDefinitionEnum.CIFASFraudCheck, CheckpointStatus.Verified);
+            RunSingleWorkflowTest(TestMask, new CustomerJanetUk(), RiskCheckpointDefinitionEnum.CIFASFraudCheck, RiskCheckpointStatus.Verified);
 		}
 
 		[Test, AUT(AUT.Uk), JIRA("UK-852")]
@@ -21,7 +21,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		{
 			var customerData = new CustomerJanetUk();
 			customerData.ForeName = string.Format("{0}CIFAS", customerData.ForeName);
-			RunSingleWorkflowTest(TestMask, customerData, CheckpointDefinitionEnum.CIFASFraudCheck, CheckpointStatus.Failed);
+            RunSingleWorkflowTest(TestMask, customerData, RiskCheckpointDefinitionEnum.CIFASFraudCheck, RiskCheckpointStatus.Failed);
 		}
 	}
 }

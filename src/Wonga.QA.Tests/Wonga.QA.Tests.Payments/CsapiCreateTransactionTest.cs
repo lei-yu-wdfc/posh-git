@@ -20,7 +20,7 @@ namespace Wonga.QA.Tests.Payments
         {
             var customer = CustomerBuilder.New().Build();
             var organisation = OrganisationBuilder.New(customer).Build();
-            var app = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+            var app = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
             var createTransactionCommand = new Wonga.QA.Framework.Cs.CreateTransactionCommand
                                                {
@@ -47,7 +47,7 @@ namespace Wonga.QA.Tests.Payments
         {
             var customer = CustomerBuilder.New().Build();
             var organisation = OrganisationBuilder.New(customer).Build();
-            var app = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+            var app = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
             var createTransactionCommand = new Wonga.QA.Framework.Cs.CreateTransactionCommand
             {
@@ -71,7 +71,7 @@ namespace Wonga.QA.Tests.Payments
         {
             var customer = CustomerBuilder.New().Build();
             var organisation = OrganisationBuilder.New(customer).Build();
-            var app = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+            var app = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
             var createTransactionCommand = new Wonga.QA.Framework.Cs.CreateTransactionCommand
             {
@@ -99,7 +99,7 @@ namespace Wonga.QA.Tests.Payments
         {
             var customer = CustomerBuilder.New().Build();
             var organisation = OrganisationBuilder.New(customer).Build();
-            var app = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+            var app = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
             var createTransactionCommand = new Wonga.QA.Framework.Cs.CreateTransactionCommand
             {

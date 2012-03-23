@@ -1,7 +1,7 @@
 ﻿
 namespace Wonga.QA.Framework.Api
 {
-    public enum ApplicationDecisionStatusEnum
+    public enum ApplicationDecisionStatus
     {
         WaitForData,
         Pending,

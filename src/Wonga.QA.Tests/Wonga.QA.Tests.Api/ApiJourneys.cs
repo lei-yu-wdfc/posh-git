@@ -24,21 +24,21 @@ namespace Wonga.QA.Tests.Api
             Customer cust = CustomerBuilder.New().WithMiddleName("Middle").Build();
 
             Organisation comp = OrganisationBuilder.New(cust).Build();
-            ApplicationBuilder.New(cust, comp).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
+            ApplicationBuilder.New(cust, comp).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
         }
 
         [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
         public void ApiL0JourneyAccepted()
         {
             Customer cust = CustomerBuilder.New().Build();
-            ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+            ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
         }
 
         [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
         public void ApiL0JourneyDeclined()
         {
             Customer cust = CustomerBuilder.New().WithEmployer("Wonga").Build();
-            ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
+            ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
         }
 
         [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
@@ -59,14 +59,14 @@ namespace Wonga.QA.Tests.Api
             ApplicationBuilder.New(cust).Build().RepayOnDueDate();
 
             Drive.Db.UpdateEmployerName(cust.Id, "Wonga");
-            ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
+            ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
         }
 
 		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
 		public void ApiRepayingOnDueDateClosesApplication()
 		{
 			var customer = CustomerBuilder.New().Build();
-			var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+			var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
 			application.RepayOnDueDate();
 

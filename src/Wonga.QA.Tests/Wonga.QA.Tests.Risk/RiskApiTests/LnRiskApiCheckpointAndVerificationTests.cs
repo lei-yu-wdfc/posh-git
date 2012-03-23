@@ -16,7 +16,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		{
 			_builderConfig = new ApplicationBuilderConfig();
 
-			LNApplicationWithSingleCheckPointAndSingleVerification(CheckpointDefinitionEnum.ApplicantIsNotMinor, "ApplicantIsNotMinorVerification");
+            LNApplicationWithSingleCheckPointAndSingleVerification(RiskCheckpointDefinitionEnum.ApplicantIsNotMinor, "ApplicantIsNotMinorVerification");
 		}
 
 		[Test, AUT(AUT.Ca)]
@@ -24,7 +24,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		{
 			_builderConfig = new ApplicationBuilderConfig();
 
-			LNApplicationWithSingleCheckPointAndSingleVerification(CheckpointDefinitionEnum.CustomerIsEmployed, "CustomerIsEmployedVerification");
+            LNApplicationWithSingleCheckPointAndSingleVerification(RiskCheckpointDefinitionEnum.CustomerIsEmployed, "CustomerIsEmployedVerification");
 		}
 
 		[Test, AUT(AUT.Ca)]
@@ -32,7 +32,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		{
 			_builderConfig = new ApplicationBuilderConfig();
 
-			LNApplicationWithSingleCheckPointAndSingleVerification(CheckpointDefinitionEnum.FraudListCheck, "FraudBlacklistVerification");
+            LNApplicationWithSingleCheckPointAndSingleVerification(RiskCheckpointDefinitionEnum.FraudListCheck, "FraudBlacklistVerification");
 		}
 
 		[Test, AUT(AUT.Ca)]
@@ -42,17 +42,17 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 
 			var expectedVerifications = new List<string> { "IovationVerification", "IovationAutoReviewVerification" };
 
-			LNApplicationWithSingleCheckPointAndVerifications(CheckpointDefinitionEnum.HardwareBlacklistCheck, expectedVerifications);
+            LNApplicationWithSingleCheckPointAndVerifications(RiskCheckpointDefinitionEnum.HardwareBlacklistCheck, expectedVerifications);
 		}
 
 		[Test, AUT(AUT.Ca)]
 		public void GivenLNApplicant_WhenApplicationDeviceIsOnBlacklist_ThenDeclined()
 		{
-			_builderConfig = new ApplicationBuilderConfig(IovationMockResponse.Deny, ApplicationDecisionStatusEnum.Declined);
+            _builderConfig = new ApplicationBuilderConfig(IovationMockResponse.Deny, ApplicationDecisionStatus.Declined);
 
 			var expectedVerifications = new List<string> { "IovationVerification", "IovationAutoReviewVerification" };
 
-			LNApplicationWithSingleCheckPointAndVerifications(CheckpointDefinitionEnum.HardwareBlacklistCheck, expectedVerifications);
+            LNApplicationWithSingleCheckPointAndVerifications(RiskCheckpointDefinitionEnum.HardwareBlacklistCheck, expectedVerifications);
 		}
 
 		[Test, AUT(AUT.Ca)]
@@ -62,7 +62,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 
 			var expectedVerificationNames = new List<string> { "MonthlyIncomeVerification", "MonthlyIncomeBCVerification" };
 
-			LNApplicationWithSingleCheckPointAndVerifications(CheckpointDefinitionEnum.MonthlyIncomeLimitCheck, expectedVerificationNames);
+            LNApplicationWithSingleCheckPointAndVerifications(RiskCheckpointDefinitionEnum.MonthlyIncomeLimitCheck, expectedVerificationNames);
 
 		}
 
@@ -72,29 +72,29 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 			_builderConfig = new ApplicationBuilderConfig();
 
 			LNApplicationWithSingleCheckPointAndSingleVerification(
-				CheckpointDefinitionEnum.SuspiciousActivityCheck, "SuspiciousActivityVerification");
+                RiskCheckpointDefinitionEnum.SuspiciousActivityCheck, "SuspiciousActivityVerification");
 		}
 
 		[Test, AUT(AUT.Ca)]
         public void GivenLNApplicant_WhenDirectFraudCheck_ThenIsAccepted()
-		{   
-			_builderConfig = new ApplicationBuilderConfig(ApplicationDecisionStatusEnum.Accepted);
+		{
+            _builderConfig = new ApplicationBuilderConfig(ApplicationDecisionStatus.Accepted);
 
 			LNApplicationWithSingleCheckPointAndSingleVerification(
-				CheckpointDefinitionEnum.UserAssistedFraudCheck,
+                RiskCheckpointDefinitionEnum.UserAssistedFraudCheck,
 				"DirectFraudCheckVerification");
 		}
 
 		[Test, AUT(AUT.Ca)]
 		public void GivenLNApplicant_WhenBankAccountDoesNotMatchApplicant_ThenIsDeclined()
 		{
-			_builderConfig = new ApplicationBuilderConfig(ApplicationDecisionStatusEnum.Declined);
+            _builderConfig = new ApplicationBuilderConfig(ApplicationDecisionStatus.Declined);
 
 			//no verifications???
 			var expectedVerificationNames = new List<string>();
 
 			LNApplicationWithSingleCheckPointAndVerifications(
-				CheckpointDefinitionEnum.BankAccountMatchesTheApplicant,
+                RiskCheckpointDefinitionEnum.BankAccountMatchesTheApplicant,
 				expectedVerificationNames);
 		}
 
@@ -105,7 +105,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 			_builderConfig = new ApplicationBuilderConfig();
 
 			LNApplicationWithSingleCheckPointAndSingleVerification(
-				CheckpointDefinitionEnum.ApplicantIsAlive,
+                RiskCheckpointDefinitionEnum.ApplicantIsAlive,
 				"CreditBureauCustomerIsAliveVerification");
 
 		}
@@ -116,7 +116,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 			_builderConfig = new ApplicationBuilderConfig();
 
 			LNApplicationWithSingleCheckPointAndSingleVerification(
-				CheckpointDefinitionEnum.CustomerIsSolvent,
+                RiskCheckpointDefinitionEnum.CustomerIsSolvent,
 				"CreditBureauCustomerIsSolventVerification");
 
 		}
@@ -127,7 +127,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 			_builderConfig = new ApplicationBuilderConfig();
 
 			LNApplicationWithSingleCheckPointAndSingleVerification(
-				CheckpointDefinitionEnum.DateOfBirthIsCorrect,
+                RiskCheckpointDefinitionEnum.DateOfBirthIsCorrect,
 				"DateOfBirthIsCorrectVerification");
 
 		}
@@ -135,10 +135,10 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		[Test, AUT(AUT.Ca)]
 		public void GivenLNApplicant_WhenCreditBureauDataIsNotAvailable_ThenIsDeclined()
 		{
-			_builderConfig = new ApplicationBuilderConfig(ApplicationDecisionStatusEnum.Declined);
+            _builderConfig = new ApplicationBuilderConfig(ApplicationDecisionStatus.Declined);
 
 			LNApplicationWithSingleCheckPointAndSingleVerification(
-				CheckpointDefinitionEnum.CreditBureauDataIsAvailable,
+                RiskCheckpointDefinitionEnum.CreditBureauDataIsAvailable,
 				"CreditBureauDataIsAvailableVerification");
 
 		}
@@ -168,10 +168,10 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
             cust.UpdateEmployer(Get.EnumToString(RiskMask.TESTNoSuspiciousApplicationActivity));
 
             Application LnApp = ApplicationBuilder.New(cust)
-                .WithExpectedDecision(ApplicationDecisionStatusEnum.Declined)
+                .WithExpectedDecision(ApplicationDecisionStatus.Declined)
                 .Build();
 
-            Assert.AreEqual(LnApp.FailedCheckpoint, Get.EnumToString(CheckpointDefinitionEnum.SuspiciousActivityCheck));
+            Assert.AreEqual(LnApp.FailedCheckpoint, Get.EnumToString(RiskCheckpointDefinitionEnum.SuspiciousActivityCheck));
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-845")]
@@ -198,7 +198,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
             cust.UpdateEmployer(Get.EnumToString(RiskMask.TESTNoSuspiciousApplicationActivity));
 
             Application LnApp = ApplicationBuilder.New(cust)
-                .WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted)
+                .WithExpectedDecision(ApplicationDecisionStatus.Accepted)
                 .Build();
         }
 
@@ -226,7 +226,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
             cust.UpdateEmployer(Get.EnumToString(RiskMask.TESTNoSuspiciousApplicationActivity));
 
             Application LnApp = ApplicationBuilder.New(cust)
-                .WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted)
+                .WithExpectedDecision(ApplicationDecisionStatus.Accepted)
                 .Build();
         }
 
@@ -253,7 +253,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
             cust.UpdateEmployer(Get.EnumToString(RiskMask.TESTNoSuspiciousApplicationActivity));
 
             Application LnApp = ApplicationBuilder.New(cust)
-                .WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted)
+                .WithExpectedDecision(ApplicationDecisionStatus.Accepted)
                 .Build();
         }
 

@@ -21,7 +21,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 
 		#region assertions		
 
-		protected static void AssertCheckpointOnWorkflowDbEntity(CheckpointStatus expectedStatus, CheckpointDefinitionEnum checkpoint, RiskWorkflowEntity riskWorkflow)
+        protected static void AssertCheckpointOnWorkflowDbEntity(RiskCheckpointStatus expectedStatus, RiskCheckpointDefinitionEnum checkpoint, RiskWorkflowEntity riskWorkflow)
 		{
 			List<string> checkpointNames = Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflow.WorkflowId, expectedStatus);
 			Assert.AreEqual(1, checkpointNames.Count);
@@ -34,7 +34,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		/// </summary>
 		/// <param name="application">the application object</param>
 		/// <param name="expectedFailedCheckpoint">the expected checkpoint to fail</param>
-		protected static void AssertFailedCheckpointOnApplication(Application application, CheckpointDefinitionEnum? expectedFailedCheckpoint)
+        protected static void AssertFailedCheckpointOnApplication(Application application, RiskCheckpointDefinitionEnum? expectedFailedCheckpoint)
 		{
 			if (expectedFailedCheckpoint.HasValue)
 			{
@@ -46,15 +46,15 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 			}
 		}
 
-		protected static void AssertFailedCheckpointOnApplication(Application application, CheckpointStatus expectedStatus, CheckpointDefinitionEnum checkpoint)
+        protected static void AssertFailedCheckpointOnApplication(Application application, RiskCheckpointStatus expectedStatus, RiskCheckpointDefinitionEnum checkpoint)
 		{
 			AssertFailedCheckpointOnApplication(application,
-			                                    expectedStatus == CheckpointStatus.Failed
+                                                expectedStatus == RiskCheckpointStatus.Failed
 			                                    	? checkpoint
-			                                    	: (CheckpointDefinitionEnum?)null);
+                                                    : (RiskCheckpointDefinitionEnum?)null);
 		}
 
-		protected void AssertCheckpointAndVerifications(CheckpointStatus expectedStatus, IEnumerable<string> expectedVerificationNames, CheckpointDefinitionEnum checkpoint, Application application)
+        protected void AssertCheckpointAndVerifications(RiskCheckpointStatus expectedStatus, IEnumerable<string> expectedVerificationNames, RiskCheckpointDefinitionEnum checkpoint, Application application)
 		{
 			//first check what was the failed checkpoint if expected status is declined			
 			AssertFailedCheckpointOnApplication(application, expectedStatus, checkpoint);
@@ -108,7 +108,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 			return currentValue;
 		}
 
-		protected string GetEmployerNameMaskFromCheckpointDefinition(CheckpointDefinitionEnum checkpointDefinition)
+        protected string GetEmployerNameMaskFromCheckpointDefinition(RiskCheckpointDefinitionEnum checkpointDefinition)
 		{
 			var className = GetCheckpointClassName(checkpointDefinition);
 
@@ -116,14 +116,14 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		}
 
 		//TODO: check why this does not work for middle name???
-		protected string GetMiddleNameMaskFromCheckpointDefinition(CheckpointDefinitionEnum checkpointDefinition)
+        protected string GetMiddleNameMaskFromCheckpointDefinition(RiskCheckpointDefinitionEnum checkpointDefinition)
 		{
 			var className = GetCheckpointClassName(checkpointDefinition);
 
 			return string.Format("TEST{0}", className);
 		}
 
-		protected static string GetCheckpointClassName(CheckpointDefinitionEnum checkpointDefinition)
+        protected static string GetCheckpointClassName(RiskCheckpointDefinitionEnum checkpointDefinition)
 		{
 			//type name has this format:
 			//"Wonga.Risk.Checkpoints.ApplicationElementNotOnCSBlacklist, Wonga.Risk.Checkpoints, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
@@ -152,21 +152,21 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 			return className;
 		}
 
-		protected static CheckpointStatus GetExpectedCheckpointStatus(ApplicationDecisionStatusEnum decision)
+        protected static RiskCheckpointStatus GetExpectedCheckpointStatus(ApplicationDecisionStatus decision)
 		{
 			switch (decision)
 			{
-				case ApplicationDecisionStatusEnum.Declined:
-					return CheckpointStatus.Failed;
+                case ApplicationDecisionStatus.Declined:
+                    return RiskCheckpointStatus.Failed;
 
-				case ApplicationDecisionStatusEnum.Pending:
-				case ApplicationDecisionStatusEnum.WaitForData:
+                case ApplicationDecisionStatus.Pending:
+                case ApplicationDecisionStatus.WaitForData:
 
-					return CheckpointStatus.Pending;
+                    return RiskCheckpointStatus.Pending;
 
-				case ApplicationDecisionStatusEnum.Accepted:
-				case ApplicationDecisionStatusEnum.ReadyToSign:
-					return CheckpointStatus.Verified;
+                case ApplicationDecisionStatus.Accepted:
+                case ApplicationDecisionStatus.ReadyToSign:
+                    return RiskCheckpointStatus.Verified;
 
 				default:
 					throw new InvalidEnumArgumentException("decision", (int)decision, decision.GetType());

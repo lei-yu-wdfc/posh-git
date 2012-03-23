@@ -14,7 +14,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
         public void LnShouldPassEidCheck()
         {
             var customer = CustomerBuilder.New().Build();
-            var l0app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+            var l0app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
             l0app.RepayOnDueDate();
 
@@ -25,8 +25,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             Application lNApp = ApplicationBuilder.New(customer).Build();
             var riskWorkflows = Application.GetWorkflowsForApplication(lNApp.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
-            Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, CheckpointStatus.Verified), Get.EnumToString(CheckpointDefinitionEnum.UserAssistedFraudCheck));
-            //Assert.Contains(Application.GetExecutedCheckpointDefinitions(lNApp.Id, CheckpointStatus.Verified), Get.EnumToString(CheckpointDefinitionEnum.UserAssistedFraudCheck));
+            Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.UserAssistedFraudCheck));
         }
     }
 }

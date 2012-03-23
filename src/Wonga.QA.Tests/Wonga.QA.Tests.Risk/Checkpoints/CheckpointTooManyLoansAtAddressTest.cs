@@ -15,7 +15,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test, AUT(AUT.Uk), JIRA("UK-913")]
 		public void AcceptForOneAllication()
 		{
-			RunSingleWorkflowTest(TestMask, new CustomerJanetUk(), CheckpointDefinitionEnum.TooManyLoansAtAddress, CheckpointStatus.Verified);
+            RunSingleWorkflowTest(TestMask, new CustomerJanetUk(), RiskCheckpointDefinitionEnum.TooManyLoansAtAddress, RiskCheckpointStatus.Verified);
 		}
 
 		[Test, AUT(AUT.Uk), JIRA("UK-913")]
@@ -32,8 +32,8 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 						Flat = custData1.Flat,
 						HouseName = custData1.HouseName,
 						HouseNumber = custData1.HouseNumber
-					}, 
-				CheckpointDefinitionEnum.TooManyLoansAtAddress, CheckpointStatus.Failed);
+					},
+                RiskCheckpointDefinitionEnum.TooManyLoansAtAddress, RiskCheckpointStatus.Failed);
 		}
 
 		#region Implementation

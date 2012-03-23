@@ -32,7 +32,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Drive.Msmq.Risk.Send(new RegisterDoNotRelendCommand{AccountId =  customer.Id, DoNotRelend =  true});
 			Do.Until(() => Drive.Db.Risk.RiskAccounts.Single(a => a.AccountId == customer.Id).DoNotRelend);
 
-			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
+            ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
 	}
 }

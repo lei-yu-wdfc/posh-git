@@ -13,13 +13,13 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test, AUT(AUT.Uk), JIRA("UK-854")]
 		public void AcceptForNormalCustomer()
 		{
-			RunSingleWorkflowTest(TestMask, new CustomerKathleenUk(), CheckpointDefinitionEnum.CustomerIsSolvent, CheckpointStatus.Verified);
+            RunSingleWorkflowTest(TestMask, new CustomerKathleenUk(), RiskCheckpointDefinitionEnum.CustomerIsSolvent, RiskCheckpointStatus.Verified);
 		}
 
 		[Test, AUT(AUT.Uk), JIRA("UK-854")]
 		public void DeclineForSolvent()
 		{
-			RunSingleWorkflowTest(TestMask, new CustomerLauraUk(), CheckpointDefinitionEnum.CustomerIsSolvent, CheckpointStatus.Failed);
+            RunSingleWorkflowTest(TestMask, new CustomerLauraUk(), RiskCheckpointDefinitionEnum.CustomerIsSolvent, RiskCheckpointStatus.Failed);
 		}
 	}
 }

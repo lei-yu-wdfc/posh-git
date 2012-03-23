@@ -29,7 +29,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 			var customer = CustomerBuilder.New().WithEmployer("Wonga").Build();
 			var application =
 				ApplicationBuilder.New(customer)
-				.WithExpectedDecision(ApplicationDecisionStatusEnum.Declined)
+                .WithExpectedDecision(ApplicationDecisionStatus.Declined)
 				.Build();
 
 			var actualCheckpointNames = GetApplicationCheckpointNames(application).ToList();

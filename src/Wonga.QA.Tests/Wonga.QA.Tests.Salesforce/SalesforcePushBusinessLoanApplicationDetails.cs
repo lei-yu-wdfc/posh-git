@@ -32,7 +32,7 @@ namespace Wonga.QA.Tests.Salesforce
 		{
 			var customer = CustomerBuilder.New().Build();
 			var organisation = OrganisationBuilder.New(customer).WithSoManySecondaryDirectors(3).Build();
-			var application = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+            var application = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
 			var applicationEntity = Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id));
 
@@ -72,7 +72,7 @@ namespace Wonga.QA.Tests.Salesforce
         {
             var customer = CustomerBuilder.New().Build();
             var organization = OrganisationBuilder.New(customer).Build();
-            var app = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).
+            var app = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatus.Accepted).
                 Build();
 
             Do.With().Message("Salesforce should contain loan application with non-empty loan reference").Until(() => SalesforceContainsAppWithLoanReference(app));

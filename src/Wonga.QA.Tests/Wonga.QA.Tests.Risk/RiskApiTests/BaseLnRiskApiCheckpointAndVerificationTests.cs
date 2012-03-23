@@ -10,26 +10,26 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 {
 	public class BaseLnRiskApiCheckpointAndVerificationTests : BaseRiskApiCheckpointAndVerificationTests
 	{
-		protected Application LNApplicationWithSingleCheckPointAndSingleVerification(CheckpointDefinitionEnum checkpointDefinition, string expectedVerificationName)
+        protected Application LNApplicationWithSingleCheckPointAndSingleVerification(RiskCheckpointDefinitionEnum checkpointDefinition, string expectedVerificationName)
 		{
 			return LNApplicationWithSingleCheckPointAndSingleVerification(
 						checkpointDefinition, expectedVerificationName,
 						GetEmployerNameMaskFromCheckpointDefinition(checkpointDefinition));
 		}
 
-		protected Application LNApplicationWithSingleCheckPointAndSingleVerification(CheckpointDefinitionEnum checkpointDefinition, string expectedVerificationName, string employerNameTestMask)
+        protected Application LNApplicationWithSingleCheckPointAndSingleVerification(RiskCheckpointDefinitionEnum checkpointDefinition, string expectedVerificationName, string employerNameTestMask)
 		{
 			return LNApplicationWithSingleCheckPointAndVerifications(checkpointDefinition, new[] { expectedVerificationName }, employerNameTestMask);
 		}
 
-		protected Application LNApplicationWithSingleCheckPointAndVerifications(CheckpointDefinitionEnum checkpointDefinition, IEnumerable<string> expectedVerificationNames)
+        protected Application LNApplicationWithSingleCheckPointAndVerifications(RiskCheckpointDefinitionEnum checkpointDefinition, IEnumerable<string> expectedVerificationNames)
 		{
 			return LNApplicationWithSingleCheckPointAndVerifications(
 						checkpointDefinition, expectedVerificationNames,
 						GetEmployerNameMaskFromCheckpointDefinition(checkpointDefinition));
 		}
 
-		protected Application LNApplicationWithSingleCheckPointAndVerifications(CheckpointDefinitionEnum checkpointDefinition, IEnumerable<string> expectedVerificationNames, string employerNameTestMask)
+        protected Application LNApplicationWithSingleCheckPointAndVerifications(RiskCheckpointDefinitionEnum checkpointDefinition, IEnumerable<string> expectedVerificationNames, string employerNameTestMask)
 		{
 			if (_builderConfig == null)
 			{
@@ -45,7 +45,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 			employmentDetails.EmployerName = employerNameTestMask;
 			employmentDetails.Submit();
 
-			CheckpointStatus expectedStatus = GetExpectedCheckpointStatus(_builderConfig.ExpectedDecisionStatus);
+            RiskCheckpointStatus expectedStatus = GetExpectedCheckpointStatus(_builderConfig.ExpectedDecisionStatus);
 
 			Application secondApplication = ApplicationBuilder.New(firstApplication.GetCustomer())
 				.WithIovationBlackBox(_builderConfig.IovationBlackBox.ToString())
@@ -60,7 +60,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		{
 			Customer customer = CustomerBuilder.New().Build();
 
-			Application application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+            Application application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
             application.RepayOnDueDate();
 

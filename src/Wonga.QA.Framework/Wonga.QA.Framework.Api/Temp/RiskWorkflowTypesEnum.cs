@@ -5,10 +5,10 @@ using System.Text;
 
 namespace Wonga.QA.Framework.Api
 {
-    public enum WorkflowStatus
+    public enum RiskWorkflowTypes
     {
-        Pending = 0,
-        Verified = 1,
-        Failed = 2,
+        MainApplicant = 0,
+        Guarantor = 1,
+        ManualVerification = 2,
     }
 }

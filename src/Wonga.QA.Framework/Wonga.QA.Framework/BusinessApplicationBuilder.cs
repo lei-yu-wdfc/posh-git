@@ -24,7 +24,7 @@ namespace Wonga.QA.Framework
 
             if (NumberOfGuarantors.Count > 0)
             {
-                Decision = ApplicationDecisionStatusEnum.PreAccepted;
+                Decision = ApplicationDecisionStatus.PreAccepted;
             }
 
             /* STEP 1
@@ -91,9 +91,9 @@ namespace Wonga.QA.Framework
                                                                                   }));
             /* Well - if its declined then the code below this IF statement wont work -> so as a temporary fix return the application 
              * Still need to investigate the wait for data / pending / PreAccepted */
-            if (Decision == ApplicationDecisionStatusEnum.Declined)
+            if (Decision == ApplicationDecisionStatus.Declined)
             {
-                Do.Until(() => (ApplicationDecisionStatusEnum)Enum.Parse(typeof(ApplicationDecisionStatusEnum), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = Id }).Values["ApplicationDecisionStatus"].Single()) == Decision);
+                Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = Id }).Values["ApplicationDecisionStatus"].Single()) == Decision);
                 return new BusinessApplication(Id);
             }
 
@@ -116,7 +116,7 @@ namespace Wonga.QA.Framework
 
             /* STEP 7 
              * And I wait for the decision i want - PLEASE REMEBER THAT THE DEFAULT ONE IS ACCEPTED */
-            Do.Until(() => (ApplicationDecisionStatusEnum)Enum.Parse(typeof(ApplicationDecisionStatusEnum), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = Id }).Values["ApplicationDecisionStatus"].Single()) == Decision);
+            Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = Id }).Values["ApplicationDecisionStatus"].Single()) == Decision);
 
             return new BusinessApplication(Id);
         }
@@ -175,9 +175,9 @@ namespace Wonga.QA.Framework
                                                                                       r.AccountId = Customer.Id;
                                                                                       r.ApplicationId = Id;
                                                                                   }));
-            Do.Until(() => (ApplicationDecisionStatusEnum)Enum.Parse(typeof(ApplicationDecisionStatusEnum), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = Id }).Values["ApplicationDecisionStatus"].Single()) == Decision);
+            Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = Id }).Values["ApplicationDecisionStatus"].Single()) == Decision);
 
-            if (Decision == ApplicationDecisionStatusEnum.Declined)
+            if (Decision == ApplicationDecisionStatus.Declined)
                 return new BusinessApplication(Id);
 
             Drive.Api.Commands.Post(new SignBusinessApplicationWbUkCommand{AccountId = Customer.Id, ApplicationId = Id});
