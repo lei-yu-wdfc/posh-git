@@ -1901,6 +1901,14 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 				return this.GetTable<WorkflowState>();
 			}
 		}
+
+        public System.Data.Linq.Table<ExternalDebtCollectionSagaEntity> ExternalDebtCollectionSagaEntities
+        {
+            get
+            {
+                return this.GetTable<ExternalDebtCollectionSagaEntity>();
+            }
+        }
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AccountVerificationsToBeMade")]
@@ -34094,7 +34102,7 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
 	}
 
     [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.ExternalDebtCollectionSagaEntity")]
-    public partial class ExternalDebtCollectionSagaEntity : INotifyPropertyChanging, INotifyPropertyChanged
+    public partial class ExternalDebtCollectionSagaEntity : DbEntity<ExternalDebtCollectionSagaEntity>, INotifyPropertyChanging, INotifyPropertyChanged
     {
 
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);

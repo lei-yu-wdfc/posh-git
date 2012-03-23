@@ -144,5 +144,29 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
             return Do.With().Timeout(2).Interval(10).Until(() => Drive.Db.Payments.OnlineBillPayments.Single(c => c.Ccin == ccin)) != null;
         }
+
+        internal static bool VerifyInterestSuspended(Application application, DateTime suspensionDate)
+        {
+            return
+                Do.Until(
+                    () =>
+                    Drive.Db.Payments.Transactions.Any(
+                        t =>
+                        t.ApplicationEntity.ExternalId == application.Id &&
+                        t.CreatedOn == suspensionDate &&
+                        t.Type == PaymentTransactionType.SuspendInterestAccrual.ToString()));
+        }
+
+        internal static bool VerifyInterestResumed(Application application, DateTime resumptionDate)
+        {
+            return
+                Do.Until(
+                    () =>
+                    Drive.Db.Payments.Transactions.Any(
+                        t =>
+                        t.ApplicationEntity.ExternalId == application.Id &&
+                        t.CreatedOn == resumptionDate &&
+                        t.Type == PaymentTransactionType.SuspendInterestAccrual.ToString()));
+        }
     }
 }
