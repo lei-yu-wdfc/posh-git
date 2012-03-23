@@ -304,7 +304,8 @@ namespace Wonga.QA.Framework
 			return executedVerifications;
 		}
 
-		/// <summary>
+        
+        /// <summary>
 		/// This function returns a list of Workflow entities for a given ApplicationId
 		/// </summary>
 		/// <param name="applicationId">The GUID of the application</param>
@@ -314,6 +315,18 @@ namespace Wonga.QA.Framework
 			var db = new DbDriver();
 			return db.Risk.RiskWorkflows.Where(p => p.ApplicationId == applicationId).ToList();
 		}
+
+	    /// <summary>
+	    /// This function returns a list of Workflow entities for a given ApplicationId
+	    /// </summary>
+	    /// <param name="applicationId">The GUID of the application</param>
+        /// <param name="workflowType">The type of the workflow(enum RiskWorkflowTypes)</param>
+	    /// <returns></returns>
+	    public static List<RiskWorkflowEntity> GetWorkflowsForApplication(Guid applicationId,RiskWorkflowTypes workflowType)
+        {
+            var db = new DbDriver();
+            return db.Risk.RiskWorkflows.Where(p => p.ApplicationId == applicationId && (RiskWorkflowTypes)p.WorkflowType == workflowType).ToList();
+        }
 
 		private void Rewind(int absoluteDays)
 		{
