@@ -124,7 +124,12 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 			Assert.LessThan(score2, score1);
 		}
-		
+
+		[Test, AUT(AUT.Za), JIRA("ZA-1938")]
+		public void CheckpointReputationPredictionPositiveSameDeviceDifferentPostCodeLowersScore()
+		{
+
+		}
 
 		#region Helpers
 
