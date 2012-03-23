@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
@@ -24,6 +25,7 @@ namespace Wonga.QA.Framework.UI
             {
                 case AUT.Za:
                 case AUT.Ca:
+                case AUT.Uk:
                     var homePage = CurrentPage as HomePage;
                     homePage.Sliders.HowMuch = amount.ToString();
                     homePage.Sliders.HowLong = duration.ToString();
@@ -101,6 +103,32 @@ namespace Wonga.QA.Framework.UI
                     personalDetailsPage.CanContact = true;
                     CurrentPage = personalDetailsPage.Submit() as AddressDetailsPage;
                     break;
+                case AUT.Uk:
+                    personalDetailsPage.YourName.Title = "Mr";
+                    personalDetailsPage.YourName.FirstName = FirstName;
+                    personalDetailsPage.YourName.MiddleName = Get.GetMiddleName();
+                    personalDetailsPage.YourName.LastName = LastName;
+                    personalDetailsPage.YourDetails.Gender = "Male";
+                    personalDetailsPage.YourDetails.DateOfBirth = "1/Jan/1980";
+                    personalDetailsPage.YourDetails.HomeStatus = "Owner occupier";
+                    personalDetailsPage.YourDetails.MaritalStatus = "Single";
+                    personalDetailsPage.YourDetails.NumberOfDependants = "0";
+                    personalDetailsPage.EmploymentDetails.EmploymentStatus = "Employed - full time";
+                    personalDetailsPage.EmploymentDetails.EmployerName = employerName;
+                    personalDetailsPage.EmploymentDetails.EmployerIndustry = "Finance";
+                    personalDetailsPage.EmploymentDetails.EmploymentPosition = "Administration";
+                    personalDetailsPage.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d MMM yyyy");
+                    personalDetailsPage.EmploymentDetails.TimeWithEmployerYears = "5";
+                    personalDetailsPage.EmploymentDetails.TimeWithEmployerMonths = "5";
+                    personalDetailsPage.EmploymentDetails.MonthlyIncome = "5000";
+                    personalDetailsPage.EmploymentDetails.SalaryPaidToBank = true;
+                    personalDetailsPage.EmploymentDetails.WorkPhone = "01605741258";
+                    personalDetailsPage.ContactingYou.CellPhoneNumber = "07200000000";
+                    personalDetailsPage.ContactingYou.EmailAddress = email;
+                    personalDetailsPage.ContactingYou.ConfirmEmailAddress = email;
+                    personalDetailsPage.PrivacyPolicy = true;
+                    CurrentPage = personalDetailsPage.Submit() as AddressDetailsPage;
+                    break;
             }
             return this;
         }
@@ -127,6 +155,18 @@ namespace Wonga.QA.Framework.UI
                     addressPage.AddressPeriod = "2 to 3 years";
                     addressPage.PostOfficeBox = "C12345";
                     break;
+                case AUT.Uk:
+                    addressPage.PostCode = "se3 0sw";
+                    addressPage.LookupByPostCode();
+                    Thread.Sleep(60000);
+                    addressPage.GetAddressesDropDown();
+                    addressPage.SelectedAddress = "52 Ryculff Square, LONDON SE3 0SW";
+                    addressPage.ClickNextButton();
+                    Thread.Sleep(60000);
+                    addressPage.GetAddressFieldsUK();
+                    addressPage.AddressPeriod = "3 to 4 years";
+                    CurrentPage = addressPage.Next() as AccountDetailsPage;
+                    break;
             }
             return this;
         }
@@ -150,6 +190,14 @@ namespace Wonga.QA.Framework.UI
                     addressPage.AccountDetailsSection.SecretQuestion = "Secret question'-.";
                     addressPage.AccountDetailsSection.SecretAnswer = "Secret answer";
                     CurrentPage = addressPage.Next() as PersonalBankAccountPage;
+                    break;
+                case AUT.Uk:
+                    var accountDetailsPageUK = CurrentPage as AccountDetailsPage;
+                    accountDetailsPageUK.AccountDetailsSection.Password = Get.GetPassword();
+                    accountDetailsPageUK.AccountDetailsSection.PasswordConfirm = Get.GetPassword();
+                    accountDetailsPageUK.AccountDetailsSection.SecretQuestion = "Secret question'-.";
+                    accountDetailsPageUK.AccountDetailsSection.SecretAnswer = "Secret answer";
+                    CurrentPage = accountDetailsPageUK.Next();//returns PersonalBankAccountPage
                     break;
             }
             return this;

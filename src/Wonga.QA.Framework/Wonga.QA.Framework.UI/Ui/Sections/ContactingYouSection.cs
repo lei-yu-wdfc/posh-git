@@ -54,6 +54,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
                     case (AUT.Wb):
                         _mobilePhone.SendValue(value);
                         break;
+                    case (AUT.Uk):
+                        _mobilePhone.SendValue(value);
+                        break;
                 }
 
             }

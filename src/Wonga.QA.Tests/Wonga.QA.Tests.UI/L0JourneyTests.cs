@@ -306,5 +306,15 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
+        [Test, AUT(AUT.Uk)]
+        public void UKL0JourneyTest()
+        {
+            Journey journey = new Journey(Client.Home());
+            var addressDetailsPage = journey.ApplyForLoan(200, 10)
+                                         .FillPersonalDetails()
+                                         .FillAddressDetails()
+                                         .CurrentPage as AccountDetailsPage;
+        }
+
     }
 }
