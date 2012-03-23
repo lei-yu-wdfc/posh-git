@@ -22,7 +22,7 @@ namespace Wonga.QA.Framework
         public override Application Build()
         {
 
-            if (NumberOfGuarantors.Count > 0)
+            if (NumberOfGuarantors.Count > 0 && Decision != ApplicationDecisionStatus.Declined)
             {
                 Decision = ApplicationDecisionStatus.PreAccepted;
             }
