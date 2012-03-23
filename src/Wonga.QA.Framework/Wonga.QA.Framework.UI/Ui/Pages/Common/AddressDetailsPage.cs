@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
@@ -82,6 +83,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public void LookupByPostCode()
         {
+            Thread.Sleep(10000);
             _lookup.Click();
         }
 
@@ -90,12 +92,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _addressOptions = _form.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.AddressOptions));
         }
 
-        public void ClickNextButton()
-        {
-            _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.NextButton)).Click();
-        }
         public void GetAddressFieldsUK()
         {
+            _next = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.NextButton));
             _flatNumber = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.FlatNumber));
             _addressPeriod = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.AddressPeriod));
             _county = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.County));

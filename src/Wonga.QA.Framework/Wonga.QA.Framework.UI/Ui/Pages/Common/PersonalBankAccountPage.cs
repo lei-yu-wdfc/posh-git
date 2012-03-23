@@ -38,6 +38,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                 case(AUT.Za):
                 case (AUT.Ca):
                     return new ProcessingPage(Client);
+                case AUT.Uk:
+                    return new PersonalDebitCardPage(Client);
                 default:
                     throw new NotImplementedException();
             }

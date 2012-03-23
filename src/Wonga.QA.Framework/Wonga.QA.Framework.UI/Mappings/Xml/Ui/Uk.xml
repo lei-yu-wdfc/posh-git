@@ -8,7 +8,8 @@
   <AddressDetailsPage>
     <FormId>div.wonga-box-1</FormId>
     <AddressOptions>#edit-address-options</AddressOptions>
-    <LookupButton>#edit-submit-lookup</LookupButton>
+    <LookupButton>div#button-edit-submit-lookup input#edit-submit-lookup</LookupButton>
+    <Postcode>input#edit-postcode-lookup-uk</Postcode>
   </AddressDetailsPage>
   
   <EmploymentDetailsSection>
@@ -16,4 +17,20 @@
     <NextPaydayMonth>div#edit-next-payday-wrapper div.date-month</NextPaydayMonth>
     <NextPaydayYear>div#edit-next-payday-wrapper div.date-year</NextPaydayYear>
   </EmploymentDetailsSection>
+
+  <DealDonePage>
+    <HeaderText>Your application has been accepted</HeaderText>
+  </DealDonePage>
+  
+  <DebitCardSection>
+    <Fieldset>fieldset#card-details</Fieldset>
+    <CardType>#edit-card-type</CardType>
+    <CardNumber>#edit-card-number</CardNumber>
+    <CardName>#edit-card-name</CardName>
+    <CardExpiryDateMonth>#edit-card-expiry-date-month</CardExpiryDateMonth>
+    <CardExpiryDateYear>#edit-card-expiry-date-year</CardExpiryDateYear>
+    <CardSecurityNumber>#edit-card-security</CardSecurityNumber>
+    <CardStartDateMonth>#edit-card-start-date-month</CardStartDateMonth>
+    <CardStartDateYear>#edit-card-start-date-year</CardStartDateYear>
+  </DebitCardSection>
 </Ui>

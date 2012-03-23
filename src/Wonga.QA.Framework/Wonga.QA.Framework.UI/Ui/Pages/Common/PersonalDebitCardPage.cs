@@ -13,7 +13,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public Sections.DebitCardSection DebitCardSection { get; set; }
         public Sections.MobilePinVerificationSection MobilePinVerification { get; set; }
 
-        public PersonalDebitCardPage(UiClient client) : base(client)
+        public PersonalDebitCardPage(UiClient client)
+            : base(client)
         {
             _form = Content.FindElement(By.CssSelector(Ui.Get.PersonalDebitCardDetailsPage.FormId));
             _next = _form.FindElement(By.CssSelector(Ui.Get.PersonalDebitCardDetailsPage.NextButton));
@@ -24,10 +25,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public BasePage Next()
         {
             _next.Click();
-            switch(Config.AUT)
+            switch (Config.AUT)
             {
-                case(AUT.Wb):
+                case (AUT.Wb):
                     return new Wb.BusinessDetailsPage(Client);
+                case (AUT.Uk):
+                    return new ProcessingPage(Client);
                 default:
                     throw new NotImplementedException();
             }
