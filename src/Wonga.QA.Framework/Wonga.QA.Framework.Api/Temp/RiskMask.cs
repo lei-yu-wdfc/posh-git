@@ -67,6 +67,7 @@ namespace Wonga.QA.Framework.Api
         TESTNumberOfDirectorsMatchesBusinessBureauData,
         TESTBusinessDateOfIncorporationAcceptable,
         TESTNoCheck,
-        TESTTooManyLoansAtAddress
+        TESTTooManyLoansAtAddress,
+        TESTGuarantorNamesMatchBusinessBureauData
     }
 }
