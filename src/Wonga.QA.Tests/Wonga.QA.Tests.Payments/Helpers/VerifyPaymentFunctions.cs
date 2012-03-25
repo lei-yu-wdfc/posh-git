@@ -146,7 +146,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
                     Drive.Db.Payments.Transactions.Any(
                         t =>
                         t.ApplicationEntity.ExternalId == application.Id &&
-                        t.CreatedOn == suspensionDate &&
+                        t.CreatedOn.Date == suspensionDate.Date &&
                         t.Type == PaymentTransactionType.SuspendInterestAccrual.ToString()));
         }
 
@@ -158,7 +158,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
                     Drive.Db.Payments.Transactions.Any(
                         t =>
                         t.ApplicationEntity.ExternalId == application.Id &&
-                        t.CreatedOn == resumptionDate &&
+                        t.CreatedOn.Date == resumptionDate.Date &&
                         t.Type == PaymentTransactionType.SuspendInterestAccrual.ToString()));
         }
     }

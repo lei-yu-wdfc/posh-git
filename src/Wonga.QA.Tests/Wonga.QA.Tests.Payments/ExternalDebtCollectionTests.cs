@@ -36,9 +36,9 @@ namespace Wonga.QA.Tests.Payments
 
             application.MoveToDebtCollectionAgency();
 
-            Drive.Api.Commands.Post(new RevokeApplicationFromDcaCommand
+            Drive.Cs.Commands.Post(new RevokeApplicationFromDcaCommand
                                         {
-                                            ApplicationId = Guid.NewGuid()
+                                            ApplicationId = application.Id
                                         });
 
             Assert.IsTrue(VerifyPaymentFunctions.VerifyInterestResumed(application, DateTime.UtcNow.Date));
