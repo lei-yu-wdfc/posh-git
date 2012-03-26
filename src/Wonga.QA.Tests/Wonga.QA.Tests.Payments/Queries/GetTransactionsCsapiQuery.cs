@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Gallio.Framework;
+﻿using System.Linq;
 using MbUnit.Framework;
-using MbUnit.Framework.ContractVerifiers;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments.Queries
