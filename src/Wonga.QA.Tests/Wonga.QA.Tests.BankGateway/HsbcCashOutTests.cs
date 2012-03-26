@@ -94,9 +94,9 @@ namespace Wonga.QA.Tests.BankGateway
                 SenderReference = Guid.NewGuid()
             });
 
-            var transaction = Do.With().Timeout(2).Interval(10).Until(() => Drive.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId && e.TransactionStatus == 3));
+            var transaction = Do.With.Timeout(2).Interval(10).Until(() => Drive.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId && e.TransactionStatus == 3));
 
-            Do.With().Timeout(15).Interval(10).Until(() => Drive.Db.BankGateway.Acknowledges.Single(e =>
+            Do.With.Timeout(15).Interval(10).Until(() => Drive.Db.BankGateway.Acknowledges.Single(e =>
                 e.TransactionID == transaction.TransactionId
                 && e.AcknowledgeTypeID == 3
                 && !e.HasError)); //2nd faster ack
@@ -104,7 +104,7 @@ namespace Wonga.QA.Tests.BankGateway
             //Timeout saga:
             var baseResponseRecordEntity = Do.Until(() => Drive.Db.OpsSagasUk.BaseResponseRecordEntities.Single(x => x.TransactionReference == transaction.TransactionId.ToString()));
             Drive.Msmq.Hsbc.Send(new TimeoutMessage { ClearTimeout = true, Expires = DateTime.UtcNow, SagaId = baseResponseRecordEntity.Id, State = null });
-            Do.With().Timeout(1).Interval(10).Until(() => Drive.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId).TransactionStatus == 4);
+            Do.With.Timeout(1).Interval(10).Until(() => Drive.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId).TransactionStatus == 4);
         }
 
 
@@ -184,7 +184,7 @@ namespace Wonga.QA.Tests.BankGateway
                                                 });
 
                 var transaction =
-                    Do.With().Timeout(5).Interval(10).Until(
+                    Do.With.Timeout(5).Interval(10).Until(
                         () =>
                         Drive.Db.BankGateway.Transactions.Single(
                             e => e.ApplicationId == applicationId && e.TransactionStatus == 3));
@@ -194,7 +194,7 @@ namespace Wonga.QA.Tests.BankGateway
                         Drive.Db.BankGateway.Transactions.Single(
                             e => e.ApplicationId == applicationId2 && e.TransactionStatus == 3));
 
-                Do.With().Timeout(15).Interval(10).Until(() => Drive.Db.BankGateway.Acknowledges.Single(e =>
+                Do.With.Timeout(15).Interval(10).Until(() => Drive.Db.BankGateway.Acknowledges.Single(e =>
                                                                                                         e.TransactionID ==
                                                                                                         transaction.
                                                                                                             TransactionId
@@ -204,7 +204,7 @@ namespace Wonga.QA.Tests.BankGateway
                                                                                                         3
                                                                                                         && !e.HasError));
 
-                Do.With().Timeout(1).Interval(2).Until(() => Drive.Db.BankGateway.Acknowledges.Single(e =>
+                Do.With.Timeout(1).Interval(2).Until(() => Drive.Db.BankGateway.Acknowledges.Single(e =>
                                                                                                       e.TransactionID ==
                                                                                                       transaction2fail.
                                                                                                           TransactionId
@@ -232,7 +232,7 @@ namespace Wonga.QA.Tests.BankGateway
                                              SagaId = baseResponseRecordEntity.Id,
                                              State = null
                                          });
-                Do.With().Timeout(1).Interval(10).Until(
+                Do.With.Timeout(1).Interval(10).Until(
                     () =>
                     Drive.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId).TransactionStatus ==
                     4); ////Saga times out 
