@@ -151,12 +151,17 @@ namespace Wonga.QA.Tests.Ui
 
             var myPersonalDetailsPage = mySummaryPage.Navigation.MyPersonalDetailsButtonClick();
             myPersonalDetailsPage.CommunicationClick();
+            Thread.Sleep(10000);
             myPersonalDetailsPage.SetCommunicationPrefs =
-                "I am not happy to receive updates and other communications from Wonga via email and SMS.";
-            //Journey journey = new Journey(Client.Home());
-            //var page = journey.ApplyForLoan(200, 10)
-            //               .CurrentPage as PersonalDetailsPage;
+                "I am happy to receive updates and other communications from Wonga via email and SMS.";
 
+            myPersonalDetailsPage.Submit();
+            Thread.Sleep(10000);
+            myPersonalDetailsPage.Submit();
+            Thread.Sleep(10000);
+
+            Assert.AreEqual("You are happy to receive updates and other communications from Wonga via email and SMS.", myPersonalDetailsPage.GetCommunicationText);
+            
 
         }
 

@@ -29,6 +29,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.MobilePhone)).Text; }
         }
+        public string GetCommunicationText
+        {
+            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.CommunicationText)).Text; }
+        }
 
         private readonly IWebElement _address;
         private readonly IWebElement _password;
@@ -93,17 +97,19 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _editPhonePin.SendKeys(pin);
         }
         
-        public void Submit()
+        public bool Submit()
         {
             _submitButton = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.SubmitButton));
             _submitButton.Click();
+            return true;
         }
 
-        public void CommunicationClick()
+        public bool CommunicationClick()
         {
             _communication.Click();
             Thread.Sleep(1000);
             _communicationPrefs = Client.Driver.FindElements(By.CssSelector(Ui.Get.MyPersonalDetailsPage.CommunicationPrefs));
+            return true;
         }
 
         public void PasswordClick()

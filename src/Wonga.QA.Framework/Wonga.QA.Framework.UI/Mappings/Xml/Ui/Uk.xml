@@ -30,6 +30,10 @@
     <NextButton>#edit-submit</NextButton>
   </BankAccountPage>
 
+  <DealDonePage>
+    <HeaderText>Your application has been accepted</HeaderText>
+  </DealDonePage>
+
   <DebitCardSection>
     <Fieldset>#card-details</Fieldset>
     <CardType>#edit-card-type</CardType>

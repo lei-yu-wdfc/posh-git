@@ -109,13 +109,20 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         }
         public bool IsPostcodeWarningOccurred()
         {
-            _postCodeErrorForm =
-                       _form.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.PostcodeErrorForm));
-            string postCodeErrorFormClass = _postCodeErrorForm.GetAttribute("class");
-
-            if (postCodeErrorFormClass.Equals("invalid"))
+            try
             {
-                return true;
+                _postCodeErrorForm =
+                           _form.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.PostcodeErrorForm));
+                string postCodeErrorFormClass = _postCodeErrorForm.GetAttribute("class");
+
+                if (postCodeErrorFormClass.Equals("invalid"))
+                {
+                    return true;
+                }
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
             }
 
             return false;

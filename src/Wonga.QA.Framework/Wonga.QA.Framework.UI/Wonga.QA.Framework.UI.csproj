@@ -39,6 +39,7 @@
       <HintPath>C:\Program Files\Gallio\bin\NHamcrest.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
@@ -49,6 +50,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Journey.cs" />
+    <Compile Include="Journey\CaJourney.cs" />
+    <Compile Include="Journey\IConsumerJourney.cs" />
+    <Compile Include="Journey\JourneyFactory.cs" />
+    <Compile Include="Journey\UkJourney.cs" />
+    <Compile Include="Journey\ZaJourney.cs" />
     <Compile Include="Mappings\Content\Content.cs" />
     <Compile Include="Mappings\Content\Agreements\LoanAgreement.cs" />
     <Compile Include="Mappings\Ui\Elements\ContactElement.cs" />

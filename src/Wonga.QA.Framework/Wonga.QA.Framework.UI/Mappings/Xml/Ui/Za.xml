@@ -80,6 +80,7 @@
     <Password>table#profile tr#password</Password>
     <Phone>table#profile tr#phone</Phone>
     <Communication>table#profile tr#communication</Communication>
+    <CommunicationText>table#profile tr#communication tbody tr:nth-child(1) td:nth-child(1)</CommunicationText>
     <CommunicationPrefs>input[type="radio"][name="comms_preference"]</CommunicationPrefs>
     <HomePhone>table#profile tr#phone tbody tr:nth-child(1)>td</HomePhone>
     <MobilePhone>table#profile tr#phone tbody tr:nth-child(2)>td</MobilePhone>
