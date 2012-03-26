@@ -59,7 +59,10 @@ namespace Wonga.QA.Tests.Payments
             //staff message for application is closed.
             Drive.Msmq.Payments.Send(new IApplicationClosedEvent()
                                          {
-                                             ApplicationId = _application.Id
+                                             ApplicationId = _application.Id,
+                                             AccountId = _accountId,
+                                             ClosedOn = DateTime.UtcNow,
+                                             CreatedOn = DateTime.UtcNow
                                          });
             Do.Until(() => ! Drive.Db.OpsSagas.InArrearsNoticeSagaEntities.Any(e => e.AccountId == _accountId));
         }
