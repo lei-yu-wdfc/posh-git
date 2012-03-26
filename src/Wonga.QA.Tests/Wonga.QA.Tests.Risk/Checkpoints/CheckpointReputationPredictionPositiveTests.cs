@@ -11,8 +11,8 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-    [Parallelizable(TestScope.All), AUT(AUT.Za)]
 	
+    [Parallelizable(TestScope.All), AUT(AUT.Za)]
 	class CheckpointReputationPredictionPositiveTests
 	{
 		private const RiskMask TestMask = RiskMask.TESTReputationtPredictionPositive;
@@ -54,7 +54,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		public void CheckpointReputationPredictionPositiveDecline()
 		{
 			int newCutoff = 800;
-			Drive.Db.SetServiceConfiguration("Risk.ReputationScoreCutOff", newCutoff.ToString());
+			SetReputationScoreCutoff(newCutoff);
 
 			try
 			{
@@ -70,7 +70,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 			finally
 			{
-				Drive.Db.SetServiceConfiguration("Risk.ReputationScoreCutOff", ReputationScoreCutoff.ToString());
+				ResetReputationScoreCutoff();
 			}
 		}
 
@@ -108,16 +108,16 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test, AUT(AUT.Za), JIRA("ZA-1938")]
 		public void CheckpointReputationPredictionPositivePostCodeWithHighArrearsRateLowersScore()
 		{
-			int postcodeWithHighArrearsRate = Get.RandomInt(1000, 9999);
+			int postcode = Get.RandomInt(1000, 9999);
 
-			var customer1 = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(postcodeWithHighArrearsRate.ToString()).Build();
+			var customer1 = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(postcode.ToString()).Build();
 			var application1 = ApplicationBuilder.New(customer1).Build();
 
 			var score1 = GetReputationPredictionScore(application1);
 
 			application1.PutApplicationIntoArrears();
 
-			var customer2 = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(postcodeWithHighArrearsRate.ToString()).Build();
+			var customer2 = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(postcode.ToString()).Build();
 			var application2 = ApplicationBuilder.New(customer2).Build();
 
 			var score2 = GetReputationPredictionScore(application2);
@@ -126,9 +126,44 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-1938")]
-		public void CheckpointReputationPredictionPositiveSameDeviceDifferentPostCodeLowersScore()
+		public void CheckpointReputationPredictionPositiveSameDeviceDifferentPostCodeLowersScoreWhenDeclined()
 		{
+			try
+			{
+				SetReputationScoreCutoff(800);
 
+				int postcode1 = Get.RandomInt(1000, 9999);
+
+				var customer1 = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(postcode1.ToString()).Build();
+				var application1 = ApplicationBuilder.New(customer1).WithIovationBlackBox("Deny").WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+
+				var score1 = GetReputationPredictionScore(application1);
+
+				int postcode2 = Get.RandomInt(1000, 9999);
+				var customer2 = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(postcode2.ToString()).Build();
+				var application2 = ApplicationBuilder.New(customer2).WithIovationBlackBox("Deny").WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+
+				var score2 = GetReputationPredictionScore(application2);
+
+				var iovationPostCode1 = Drive.Db.Risk.RiskIovationPostcodes.Single(a => a.ApplicationId == application1.Id);
+				var iovationPostCode2 = Drive.Db.Risk.RiskIovationPostcodes.Single(a => a.ApplicationId == application2.Id);
+
+				Assert.AreEqual(iovationPostCode1.DeviceAlias, iovationPostCode2.DeviceAlias);
+				Assert.AreNotEqual(iovationPostCode1.Postcode, iovationPostCode2.Postcode);
+
+				Assert.LessThan(score2, score1);
+			}
+
+			finally
+			{
+				ResetReputationScoreCutoff();
+			}
+		}
+
+		[Test, AUT(AUT.Za), JIRA("ZA-1938")]
+		public void CheckpointReputationPredictionPositiveTablesUpdateWhenIn()
+		{
+			
 		}
 
 		#region Helpers
@@ -149,6 +184,16 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			        join f in db.Risk.Factors on pf.FactorId equals f.FactorId
 			        select f.Name).ToArray();
 
+		}
+
+		private void SetReputationScoreCutoff(double cutoff)
+		{
+			Drive.Db.SetServiceConfiguration("Risk.ReputationScoreCutOff",cutoff.ToString());
+		}
+
+		private void ResetReputationScoreCutoff()
+		{
+			SetReputationScoreCutoff(ReputationScoreCutoff);
 		}
 
 		#endregion

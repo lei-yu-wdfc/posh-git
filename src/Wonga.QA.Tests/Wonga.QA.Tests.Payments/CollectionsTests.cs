@@ -256,7 +256,7 @@ namespace Wonga.QA.Tests.Payments
 			int trackingDays = 0;
 
 			if( paymentRequestDate.Day > TrackingDayThreshold)
-				trackingDays = (DateTime.DaysInMonth(paymentRequestDate.Year, paymentRequestDate.Month) + 1) - paymentRequestDate.Day;
+				trackingDays = (DateTime.DaysInMonth(paymentRequestDate.Year, paymentRequestDate.Month)) - paymentRequestDate.Day;
 
 			else
 				trackingDays = 3;
