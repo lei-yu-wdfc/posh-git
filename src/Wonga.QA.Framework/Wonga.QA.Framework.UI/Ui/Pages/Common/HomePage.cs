@@ -26,6 +26,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
                     Contact = new ContactElement(this);
                     Help = new HelpElement(this);
                     Survey = new SurveyElement(this);
+                    Login = new LoginElement(this);
                     break;
                 case (AUT.Za):
                     Contact = new ContactElement(this);
