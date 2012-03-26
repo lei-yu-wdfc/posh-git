@@ -54,6 +54,7 @@
     <Compile Include="Checkpoints\EidCheckpointTests.cs" />
     <Compile Include="Checkpoints\CheckpointApplicationDeviceNotOnBlacklistTests.cs" />
     <Compile Include="ICustomerData.cs" />
+    <Compile Include="MobilePhone\MobilePhoneIsUnique.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
