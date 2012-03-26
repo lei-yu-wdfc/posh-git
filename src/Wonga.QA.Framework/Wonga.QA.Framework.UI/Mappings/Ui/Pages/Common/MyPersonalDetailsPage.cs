@@ -12,6 +12,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String Password { get; set; }
         public String Phone { get; set; }
         public String Communication { get; set; }
+        public String CommunicationText { get; set; }
         public String CommunicationPrefs { get; set; }
         public String HomePhone { get; set; }
         public String MobilePhone { get; set; }
