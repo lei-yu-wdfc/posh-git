@@ -22,8 +22,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     Navigation = new MyAccountNavigationElement(this);
                     break;
 
-                case (AUT.Ca) : 
-                    Sliders = new SlidersElement(this);
+                case (AUT.Ca) :
+                    LookForSliders();
                     break;
 
             }
@@ -32,6 +32,18 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             
             Assert.IsTrue(IsMySummaryTitleExists());
             
+        }
+        public bool LookForSliders()
+        {
+            try
+            {
+                Sliders = new SlidersElement(this);
+                return true;
+            }
+            catch(NoSuchElementException)
+            {
+                return false;
+            }
         }
         private bool IsMySummaryTitleExists()
         {
