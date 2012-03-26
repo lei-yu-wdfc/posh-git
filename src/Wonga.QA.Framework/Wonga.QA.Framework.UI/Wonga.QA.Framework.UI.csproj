@@ -52,6 +52,7 @@
     <Compile Include="Journey.cs" />
     <Compile Include="Journey\CaJourney.cs" />
     <Compile Include="Journey\ICustomerJourney.cs" />
+    <Compile Include="Journey\JourneyFactory.cs" />
     <Compile Include="Journey\UkJourney.cs" />
     <Compile Include="Journey\ZaJourney.cs" />
     <Compile Include="Mappings\Content\Content.cs" />

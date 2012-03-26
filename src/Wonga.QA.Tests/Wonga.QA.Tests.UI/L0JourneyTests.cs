@@ -17,7 +17,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-180")]
         public void L0JourneyInvalidPostcodeShouldCauseWarningMessage()
         {
-            var journey = new Journey(Client.Home());
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
             var addressPage = journey.ApplyForLoan(200, 10)
                                       .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                                       .CurrentPage as AddressDetailsPage;
@@ -304,6 +304,23 @@ namespace Wonga.QA.Tests.Ui
             }
 
 
+        }
+
+        [Test, AUT(AUT.Uk), Pending("Example of full Uk L0 journey")]
+        public void UKL0JourneyTest()
+        {
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var mySummary = journey.ApplyForLoan(200, 10)
+                .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                .FillAddressDetails()
+                .FillAccountDetails()
+                .FillBankDetails()
+                .FillDebitCardPage()
+                .WaitForAcceptedPage()
+                .FillAcceptedPage()
+                .GoToMySummaryPage()
+                .CurrentPage as MySummaryPage;
+            
         }
 
     }

@@ -9,7 +9,7 @@ using Wonga.QA.Framework.UI.UiElements.Pages;
 namespace Wonga.QA.Framework.UI
 {
        
-    interface ICustomerJourney
+    public interface ICustomerJourney
     {
         String FirstName { get; set; }
         String LastName { get; set; }
