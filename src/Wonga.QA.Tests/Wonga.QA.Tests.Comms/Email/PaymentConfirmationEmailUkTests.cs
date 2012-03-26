@@ -28,7 +28,7 @@ namespace Wonga.QA.Tests.Comms.Email
                                        .WithEmailAddress(_emailAddress)
                                        .Build();
 
-            Console.WriteLine("Created Customer. Id: {0}", _customer.Id);
+            Console.WriteLine("Created Customer. Id: {0} with e-mail address {1}", _customer.Id, _emailAddress);
 
             _application = ApplicationBuilder.New(_customer)
                                              .WithLoanAmount(_loanAmount)
@@ -40,7 +40,8 @@ namespace Wonga.QA.Tests.Comms.Email
         
         private bool CheckPaymentConfirmationEmailSent()
         {
-            return Drive.Db.QaData.Email.First((m) => m.EmailAddress == _emailAddress) != null;
+            return Drive.Db.QaData.Email.First(e => e.EmailAddress == _emailAddress && 
+                                                    e.TemplateName == "34009") != null;
         }
 
         public abstract class GivenACustomerWithAnApprovedLoan : PaymentConfirmationEmailUkTests
@@ -67,7 +68,7 @@ namespace Wonga.QA.Tests.Comms.Email
                 [Test, AUT(AUT.Uk), JIRA("UK-1032")]
                 public void ThenAPaymentConfirmationEmailIsSent()
                 {
-                    Do.With().Timeout(1).Interval(20).Until(CheckPaymentConfirmationEmailSent);
+                    Do.With.Timeout(5).Interval(20).Until(CheckPaymentConfirmationEmailSent);
                 }
             }
         }
