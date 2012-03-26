@@ -27,9 +27,7 @@ namespace Wonga.QA.Tests.Ui
             Application application = ApplicationBuilder.New(customer).Build();
             Thread.Sleep(30000);
             var salesForceStartPage = Client.SalesForceStart();
-            string employeeName = "padraig.gilboy@wonga.com.rc";
-            string employeePassword = "Passw0rd";
-            var salesForceHome = salesForceStartPage.LoginAs(employeeName, employeePassword);
+            var salesForceHome = salesForceStartPage.LoginAs(Config.SalesforceUi.Username, Config.SalesforceUi.Password);
             var salesForceSearchResultPage = salesForceHome.FindCustomerByMail(email);
             Thread.Sleep(2000);
             Assert.IsTrue(salesForceSearchResultPage.IsCustomerFind());
@@ -43,9 +41,7 @@ namespace Wonga.QA.Tests.Ui
             Application application = ApplicationBuilder.New(customer).Build();
             Thread.Sleep(30000);
             var salesForceStartPage = Client.SalesForceStart();
-            string employeeName = "padraig.gilboy@wonga.com.rc";
-            string employeePassword = "Passw0rd";
-            var salesForceHome = salesForceStartPage.LoginAs(employeeName, employeePassword);
+            var salesForceHome = salesForceStartPage.LoginAs(Config.SalesforceUi.Username, Config.SalesforceUi.Password);
             var salesForceSearchResultPage = salesForceHome.FindCustomerByMail(email);
             Thread.Sleep(2000);
             Assert.IsTrue(salesForceSearchResultPage.IsCustomerFind());
@@ -61,9 +57,7 @@ namespace Wonga.QA.Tests.Ui
             Application application = ApplicationBuilder.New(customer).Build();
             Thread.Sleep(30000);
             var salesForceStartPage = Client.SalesForceStart();
-            string employeeName = "padraig.gilboy@wonga.com.rc";
-            string employeePassword = "Passw0rd";
-            var salesForceHome = salesForceStartPage.LoginAs(employeeName, employeePassword);
+            var salesForceHome = salesForceStartPage.LoginAs(Config.SalesforceUi.Username, Config.SalesforceUi.Password);
             var salesForceSearchResultPage = salesForceHome.FindCustomerByMail(email);
             Thread.Sleep(2000);
             Assert.IsTrue(salesForceSearchResultPage.IsCustomerFind());
@@ -79,9 +73,7 @@ namespace Wonga.QA.Tests.Ui
             Application application = ApplicationBuilder.New(customer).Build();
             Thread.Sleep(30000);
             var salesForceStartPage = Client.SalesForceStart();
-            string employeeName = "padraig.gilboy@wonga.com.rc";
-            string employeePassword = "Passw0rd";
-            var salesForceHome = salesForceStartPage.LoginAs(employeeName, employeePassword);
+            var salesForceHome = salesForceStartPage.LoginAs(Config.SalesforceUi.Username, Config.SalesforceUi.Password);
             var salesForceSearchResultPage = salesForceHome.FindCustomerByMail(email);
             Thread.Sleep(2000);
             Assert.IsTrue(salesForceSearchResultPage.IsCustomerFind());
