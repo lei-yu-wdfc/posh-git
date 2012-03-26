@@ -3,6 +3,7 @@ using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db.BankGateway;
 using Wonga.QA.Framework.Db.Ops;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
@@ -72,13 +73,43 @@ namespace Wonga.QA.Tests.BankGateway
                 e.TransactionID == transaction.TransactionId
                 && e.AcknowledgeTypeID == 3
                 && !e.HasError)); //2nd faster ack
+
         }
 
-        /// <summary>
-        /// Cashes the out file is sent.
-        /// </summary>
+        [Test, JIRA("UK-495"), Explicit]
+        public void CashOutFileIsSentLiveTest()
+        {
+            var accountId = CreateCustomerDetails().AccountId;
+            var applicationId = Guid.NewGuid();
+
+            Drive.Msmq.BankGateway.Send(new SendPaymentCommand
+            {
+                AccountId = accountId,
+                Amount = 100.00M,
+                ApplicationId = applicationId,
+                BankAccount = "10032650",
+                BankCode = "161027",
+                Currency = CurrencyCodeIso4217Enum.GBP,
+                BankAccountType = "test",
+                SenderReference = Guid.NewGuid()
+            });
+
+            var transaction = Do.With.Timeout(2).Interval(10).Until(() => Drive.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId && e.TransactionStatus == 3));
+
+            Do.With.Timeout(15).Interval(10).Until(() => Drive.Db.BankGateway.Acknowledges.Single(e =>
+                e.TransactionID == transaction.TransactionId
+                && e.AcknowledgeTypeID == 3
+                && !e.HasError)); //2nd faster ack
+
+            //Timeout saga:
+            var baseResponseRecordEntity = Do.Until(() => Drive.Db.OpsSagasUk.BaseResponseRecordEntities.Single(x => x.TransactionReference == transaction.TransactionId.ToString()));
+            Drive.Msmq.Hsbc.Send(new TimeoutMessage { ClearTimeout = true, Expires = DateTime.UtcNow, SagaId = baseResponseRecordEntity.Id, State = null });
+            Do.With.Timeout(1).Interval(10).Until(() => Drive.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId).TransactionStatus == 4);
+        }
+
+
         [Test, JIRA("UK-495")]
-        public void CashOutFileIsSent2ndAckFailure()
+        public void CashOutFileIsSent2ndAckFailureTest()
         {
             var accountId = CreateCustomerDetails().AccountId;
             var applicationId = Guid.NewGuid();
@@ -104,11 +135,123 @@ namespace Wonga.QA.Tests.BankGateway
             Do.Until(() => Drive.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId).TransactionStatus == 5); //Failure
         }
 
-        /// <summary>
-        /// Cashes the out file is sent.
-        /// </summary>
+
+        [Test, JIRA("UK-495"), Explicit]
+        public void CashOutFileIsSent2ndAckFailureLiveTest()
+        {
+
+            const int badSortCode = 666666;
+            SortCodeEntity attachedSortCodeEntity = null;
+            try
+            {
+
+                if (!Drive.Db.BankGateway.SortCodes.Any(x => (x.SortCode == badSortCode)))
+                {
+                    attachedSortCodeEntity = new SortCodeEntity { SortCode = badSortCode, CreationDate = DateTime.UtcNow, PaymentTypeId = 1 };
+                    Drive.Db.BankGateway.SortCodes.InsertOnSubmit(attachedSortCodeEntity);
+                    attachedSortCodeEntity.Submit();
+                }
+
+
+                var accountId = CreateCustomerDetails().AccountId;
+                var applicationId = Guid.NewGuid();
+
+                var accountId2 = CreateCustomerDetails().AccountId;
+                var applicationId2 = Guid.NewGuid();
+
+                Drive.Msmq.BankGateway.Send(new SendPaymentCommand
+                                                {
+                                                    AccountId = accountId,
+                                                    Amount = 100.00M,
+                                                    ApplicationId = applicationId,
+                                                    BankAccount = "10032650",
+                                                    BankCode = "161027",
+                                                    Currency = CurrencyCodeIso4217Enum.GBP,
+                                                    BankAccountType = "test",
+                                                    SenderReference = Guid.NewGuid()
+                                                });
+
+                Drive.Msmq.BankGateway.Send(new SendPaymentCommand
+                                                {
+                                                    AccountId = accountId2,
+                                                    Amount = 100.00M,
+                                                    ApplicationId = applicationId2,
+                                                    BankAccount = "10032650",
+                                                    BankCode = badSortCode.ToString(),
+                                                    Currency = CurrencyCodeIso4217Enum.GBP,
+                                                    BankAccountType = "test",
+                                                    SenderReference = Guid.NewGuid()
+                                                });
+
+                var transaction =
+                    Do.With.Timeout(5).Interval(10).Until(
+                        () =>
+                        Drive.Db.BankGateway.Transactions.Single(
+                            e => e.ApplicationId == applicationId && e.TransactionStatus == 3));
+                var transaction2fail =
+                    Do.Until(
+                        () =>
+                        Drive.Db.BankGateway.Transactions.Single(
+                            e => e.ApplicationId == applicationId2 && e.TransactionStatus == 3));
+
+                Do.With.Timeout(15).Interval(10).Until(() => Drive.Db.BankGateway.Acknowledges.Single(e =>
+                                                                                                        e.TransactionID ==
+                                                                                                        transaction.
+                                                                                                            TransactionId
+                                                                                                        &&
+                                                                                                        e.
+                                                                                                            AcknowledgeTypeID ==
+                                                                                                        3
+                                                                                                        && !e.HasError));
+
+                Do.With.Timeout(1).Interval(2).Until(() => Drive.Db.BankGateway.Acknowledges.Single(e =>
+                                                                                                      e.TransactionID ==
+                                                                                                      transaction2fail.
+                                                                                                          TransactionId
+                                                                                                      &&
+                                                                                                      e.
+                                                                                                          AcknowledgeTypeID ==
+                                                                                                      3
+                                                                                                      && e.HasError));
+
+                var baseResponseRecordEntity =
+                    Do.Until(
+                        () =>
+                        Drive.Db.OpsSagasUk.BaseResponseRecordEntities.Single(
+                            x => x.TransactionReference == transaction.TransactionId.ToString()));
+
+                Do.Until(
+                    () =>
+                    Drive.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId2).TransactionStatus ==
+                    5); //Failure
+
+                Drive.Msmq.Hsbc.Send(new TimeoutMessage
+                                         {
+                                             ClearTimeout = true,
+                                             Expires = DateTime.UtcNow,
+                                             SagaId = baseResponseRecordEntity.Id,
+                                             State = null
+                                         });
+                Do.With.Timeout(1).Interval(10).Until(
+                    () =>
+                    Drive.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId).TransactionStatus ==
+                    4); ////Saga times out 
+            }
+            finally
+            {
+                if (attachedSortCodeEntity != null)
+                {
+                    attachedSortCodeEntity.Refresh();
+                    attachedSortCodeEntity.Delete();
+                    attachedSortCodeEntity.Submit();
+                }
+
+            }
+        }
+
+
         [Test, JIRA("UK-495")]
-        public void CashOutFileIsSentFaster3rdAckFailure()
+        public void CashOutFileIsSentFaster3rdAckFailureTest()
         {
             var accountId = CreateCustomerDetails().AccountId;
             var applicationId = Guid.NewGuid();
