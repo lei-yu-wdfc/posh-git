@@ -37,31 +37,34 @@ namespace Wonga.QA.Tests.Risk.ZScoreTest
                 try
                 {
                     string[] custdata = customerdetail.Split(delimiters[0]);
-                    IFormatProvider theCultureInfo = new System.Globalization.CultureInfo("en-GB", true);
-                    DateTime theDateTime = DateTime.ParseExact(custdata[2], "yyyy-mm-dd", theCultureInfo);
+                    DateTime theDateTime = DateTime.Parse(custdata[3]);
                     var forename = custdata[0];
-                    var surname = custdata[1];
-                    Date dateofBirth = new Date(theDateTime, DateFormat.Date);
-                    var HouseNumber = custdata[3];
-                    var PostCode = custdata[4];
-                    var application = CreateApplicationWithAsserts(forename, surname, dateofBirth, PostCode, HouseNumber);
-                    var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
+                    var MiddleName = custdata[1];
+                    var surname = custdata[2];
+                    var dateOfBirth = new Date(theDateTime, DateFormat.Date);
+                    var HouseNumber = custdata[4];
+                    var PostCode = custdata[5];
+                    var Street = custdata[6];
+                    var City = custdata[7];
+                    CreateApplication(forename, surname, dateOfBirth, PostCode, HouseNumber, MiddleName, City, Street);
                 }
                 catch
                 {
                 }
             }
         }
-        private static Application CreateApplicationWithAsserts(String forename, String surname, Date dateOfBirth, String postCode, String houseNumber)
+        private static void CreateApplication(string forename, string surname, Date dateOfBirth, string postCode, string houseNumber, string middleName, string city, string street)
         {
+            var customerBuilder = CustomerBuilder.New();
+            customerBuilder.ScrubForename(forename);
+            customerBuilder.ScrubSurname(surname);
             var customer =
-    CustomerBuilder.New().WithDateOfBirth(dateOfBirth).WithForename(forename).WithSurname(surname).
-        WithPostcodeInAddress(postCode).WithHouseNumberInAddress(houseNumber).Build();
+                customerBuilder.WithDateOfBirth(dateOfBirth).WithForename(forename).WithSurname(surname).
+                    WithPostcodeInAddress(postCode).WithHouseNumberInAddress(houseNumber).WithMiddleName(middleName).
+                    WithStreetInAddress(street).WithTownInAddress(city).Build();
             var organization = OrganisationBuilder.New(customer).Build();
-            var application = ApplicationBuilder.New(customer, organization).Build();
-            var riskDb = Drive.Db.Risk;
-            var riskApplicationEntity = Do.Until(() => riskDb.RiskApplications.SingleOrDefault(p => p.ApplicationId == application.Id));
-            return application;
+            ApplicationBuilder.New(customer, organization).Build();
+            return;
         }
         public static void SetCallReportTrialMode(Boolean value)
         {
