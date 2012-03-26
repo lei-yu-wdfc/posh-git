@@ -28,5 +28,6 @@ namespace Wonga.QA.Framework.Api
         [Description("BusinessDateOfIncorporationAcceptableVerification")] BusinessDateOfIncorporationAcceptableVerification,
         [Description("NumberOfDirectorsMatchesBusinessBureauDataVerification")] NumberOfDirectorsMatchesBusinessBureauDataVerification,
         [Description("GuarantorNamesMatchBusinessBureauDataVerification")] GuarantorNamesMatchBusinessBureauDataVerification,
+        [Description("MobilePhoneIsUniqueVerification")] MobilePhoneIsUniqueVerification,
     }
 }

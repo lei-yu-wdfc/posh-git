@@ -7,6 +7,7 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
+using Wonga.QA.Framework.Db;
 
 namespace Wonga.QA.Tests.Graydon
 {
@@ -25,7 +26,7 @@ namespace Wonga.QA.Tests.Graydon
             const String forename = "JOHN";
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth);
+            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth,Get.GetMobilePhone());
 
             var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
                                                            RiskMask.TESTMainApplicantMatchesBusinessBureauData,
@@ -44,7 +45,7 @@ namespace Wonga.QA.Tests.Graydon
             const String forename = "JOHN";
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1977, 12, 21), DateFormat.Date); //wrong DOB
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth);
+            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
 
             var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
                                                            RiskMask.TESTMainApplicantMatchesBusinessBureauData,
@@ -62,7 +63,7 @@ namespace Wonga.QA.Tests.Graydon
             const String goodCompanyRegNumber = "00000086";
             const String forename = "Kathleen";
             const String surname = "Bridson";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB());
+            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(), Get.GetMobilePhone());
 
             var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
                                                            RiskMask.TESTMainApplicantMatchesBusinessBureauData,
@@ -81,7 +82,7 @@ namespace Wonga.QA.Tests.Graydon
             const String forename = "ROBERT";
             const String surname = "COOMBE";
             var dateOfBirth = new Date(new DateTime(1960, 01, 09), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth);
+            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
 
             var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
                                                            RiskMask.TESTMainApplicantMatchesBusinessBureauData,
@@ -102,7 +103,7 @@ namespace Wonga.QA.Tests.Graydon
         {
             const String goodCompanyRegNumber = "00000086";
             var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB());
+                                             Get.GetDoB(), Get.GetMobilePhone());
 
             var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
                                                            RiskMask.TESTBusinessBureauDataIsAvailable,
@@ -119,7 +120,7 @@ namespace Wonga.QA.Tests.Graydon
         {
             const String goodCompanyRegNumber = "99999999";
             var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB());
+                                             Get.GetDoB(), Get.GetMobilePhone());
 
             var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
                                                            RiskMask.TESTBusinessBureauDataIsAvailable,
@@ -140,7 +141,7 @@ namespace Wonga.QA.Tests.Graydon
         {
             const String goodCompanyRegNumber = "00000086";
             var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB());
+                                             Get.GetDoB(), Get.GetMobilePhone());
 
             var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
                                                            RiskMask.TESTBusinessIsCurrentlyTrading,
@@ -157,7 +158,7 @@ namespace Wonga.QA.Tests.Graydon
         {
             const String goodCompanyRegNumber = "90000001";
             var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB());
+                                             Get.GetDoB(), Get.GetMobilePhone());
 
             var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
                                                            RiskMask.TESTBusinessIsCurrentlyTrading,
@@ -179,7 +180,7 @@ namespace Wonga.QA.Tests.Graydon
             //good score = 60
             const String goodCompanyRegNumber = "00000086";
             var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB());
+                                             Get.GetDoB(), Get.GetMobilePhone());
 
             var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
                                                            RiskMask.TESTBusinessPaymentScoreIsAcceptable,
@@ -197,7 +198,7 @@ namespace Wonga.QA.Tests.Graydon
             //bad score = 59
             const String goodCompanyRegNumber = "99999903";
             var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB());
+                                             Get.GetDoB(), Get.GetMobilePhone());
 
             var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
                                                            RiskMask.TESTBusinessPaymentScoreIsAcceptable,
@@ -215,7 +216,7 @@ namespace Wonga.QA.Tests.Graydon
             //bad score = 59
             const String goodCompanyRegNumber = "99999904";
             var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB());
+                                             Get.GetDoB(), Get.GetMobilePhone());
 
             var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
                                                            RiskMask.TESTBusinessPaymentScoreIsAcceptable,
@@ -237,7 +238,7 @@ namespace Wonga.QA.Tests.Graydon
             //good augur score = 446
             const String goodCompanyRegNumber = "00000086";
             var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB());
+                                             Get.GetDoB(), Get.GetMobilePhone());
 
             var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
                                                            RiskMask.TESTBusinessPerformanceScoreIsAcceptaple,
@@ -255,7 +256,7 @@ namespace Wonga.QA.Tests.Graydon
             //good augur score = 300
             const String goodCompanyRegNumber = "99999902";
             var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB());
+                                             Get.GetDoB(), Get.GetMobilePhone());
 
             var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
                                                            RiskMask.TESTBusinessPerformanceScoreIsAcceptaple,
@@ -278,7 +279,7 @@ namespace Wonga.QA.Tests.Graydon
             const String forename = "JOHN";
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth);
+            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
 
             var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
                                                            RiskMask.TESTMainApplicantDurationAcceptable,
@@ -295,13 +296,15 @@ namespace Wonga.QA.Tests.Graydon
         {
             const string configKey = "Risk.Wb.Uk.GraydonDirectorDurationDaysAcceptableThreshold";
             const int newThreshold = 100 * 365;
+            var oldThreshold = Drive.Db.GetServiceConfiguration(configKey).Value;
 
             const String goodCompanyRegNumber = "00000086";
             const String forename = "JOHN";
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth);
-            var oldThreshhold = UpdateServiceConfigurationKey(configKey, newThreshold.ToString());
+            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
+
+            Drive.Db.SetServiceConfiguration(configKey,newThreshold.ToString());
 
             try
             {
@@ -315,8 +318,8 @@ namespace Wonga.QA.Tests.Graydon
             }
             finally
             {
-                if(!string.IsNullOrEmpty(oldThreshhold))
-                    UpdateServiceConfigurationKey(configKey, oldThreshhold);
+                if (!string.IsNullOrEmpty(oldThreshold))
+                    Drive.Db.SetServiceConfiguration(configKey,oldThreshold);
             }
         }
 
@@ -328,7 +331,7 @@ namespace Wonga.QA.Tests.Graydon
             const String forename = "ROBERT";
             const String surname = "COOMBE";
             var dateOfBirth = new Date(new DateTime(1960, 01, 09), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth);
+            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
 
             var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
                                                            RiskMask.TESTMainApplicantDurationAcceptable,
@@ -345,7 +348,7 @@ namespace Wonga.QA.Tests.Graydon
         {
             const String goodCompanyRegNumber = "00000086";
             var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB());
+                                             Get.GetDoB(), Get.GetMobilePhone());
 
             var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
                                                            RiskMask.TESTMainApplicantDurationAcceptable,
@@ -371,12 +374,12 @@ namespace Wonga.QA.Tests.Graydon
             const String forename = "JOHN";
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth);
+            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
             var listOfGuarantors = new List<Customer>();
 
             for (int i = 0; i < numberOfGuarantors; i++)
             {
-                listOfGuarantors.Add(new Customer(Guid.NewGuid(),Get.RandomEmail(),Get.RandomString(8),Get.RandomString(8),Get.GetDoB()));
+                listOfGuarantors.Add(new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8), Get.GetDoB(), Get.GetMobilePhone()));
             }
 
             var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber, RiskMask.TESTNoCheck,
@@ -420,12 +423,12 @@ namespace Wonga.QA.Tests.Graydon
             const String forename = "JOHN";
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth);
+            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
             var listOfGuarantors = new List<Customer>();
 
             for (int i = 0; i < numberOfGuarantors; i++)
             {
-                listOfGuarantors.Add(new Customer(Guid.NewGuid(),Get.RandomEmail(),Get.RandomString(8),Get.RandomString(8),Get.GetDoB()));
+                listOfGuarantors.Add(new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8), Get.GetDoB(), Get.GetMobilePhone()));
             }
 
             var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
@@ -472,7 +475,7 @@ namespace Wonga.QA.Tests.Graydon
             const String forename = "JOHN";
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth);
+            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
 
             var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
                                                            RiskMask.TESTBusinessDateOfIncorporationAcceptable,
@@ -491,7 +494,7 @@ namespace Wonga.QA.Tests.Graydon
             const String forename = "JOHN";
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth);
+            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
 
             var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
                                                            RiskMask.TESTBusinessDateOfIncorporationAcceptable,
@@ -508,15 +511,15 @@ namespace Wonga.QA.Tests.Graydon
         {
             const string configKey = "Risk.Wb.Uk.GraydonCompanyIncorporationMonthsAcceptableThreshold";
             const int newThreshold = 500 * 12;
+            var oldThreshold = Drive.Db.GetServiceConfiguration(configKey).Value;
 
             const String goodCompanyRegNumber = "99999905";
             const String forename = "JOHN";
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
+            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
 
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth);
-
-            var oldThreshhold = UpdateServiceConfigurationKey(configKey, newThreshold.ToString());
+            Drive.Db.SetServiceConfiguration(configKey, newThreshold.ToString());
 
             try
             {
@@ -530,8 +533,8 @@ namespace Wonga.QA.Tests.Graydon
             }
             finally
             {
-                if (!string.IsNullOrEmpty(oldThreshhold))
-                    UpdateServiceConfigurationKey(configKey, oldThreshhold);
+                if (!string.IsNullOrEmpty(oldThreshold))
+                    Drive.Db.SetServiceConfiguration(configKey, oldThreshold);
             }
         }
 
@@ -547,15 +550,15 @@ namespace Wonga.QA.Tests.Graydon
             const String forename = "JOHN";
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth);
+            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
             var listOfGuarantors = new List<Customer>
                                        {
                                            new Customer(Guid.NewGuid(), Get.RandomEmail(), "Roger John", "Clarke",
-                                                        Get.GetDoB()),
+                                                        Get.GetDoB(),Get.GetMobilePhone()),
                                            new Customer(Guid.NewGuid(), Get.RandomEmail(), "Anthony Charles Bramham",
-                                                        "Lister", Get.GetDoB()),
+                                                        "Lister", Get.GetDoB(),Get.GetMobilePhone()),
                                            new Customer(Guid.NewGuid(), Get.RandomEmail(), "Timothy Charles", "Monckton",
-                                                        Get.GetDoB())
+                                                        Get.GetDoB(),Get.GetMobilePhone())
                                        };
             var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
                                                            RiskMask.TESTGuarantorNamesMatchBusinessBureauData,
@@ -589,15 +592,15 @@ namespace Wonga.QA.Tests.Graydon
             const String forename = "JOHN";
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth);
+            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
             var listOfGuarantors = new List<Customer>
                                        {
                                            new Customer(Guid.NewGuid(), Get.RandomEmail(), "RXXXXXXXXX", "Clarke",
-                                                        Get.GetDoB()),
+                                                        Get.GetDoB(),Get.GetMobilePhone()),
                                            new Customer(Guid.NewGuid(), Get.RandomEmail(), "AXXXXXXXXX",
-                                                        "Lister", Get.GetDoB()),
+                                                        "Lister", Get.GetDoB(),Get.GetMobilePhone()),
                                            new Customer(Guid.NewGuid(), Get.RandomEmail(), "TXXXXXXXXX", "Monckton",
-                                                        Get.GetDoB())
+                                                        Get.GetDoB(),Get.GetMobilePhone())
                                        };
             var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
                                                            RiskMask.TESTGuarantorNamesMatchBusinessBureauData,
@@ -631,18 +634,18 @@ namespace Wonga.QA.Tests.Graydon
             const String forename = "JOHN";
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth);
+            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
             var listOfGuarantors = new List<Customer>
                                        {
                                            new Customer(Guid.NewGuid(), Get.RandomEmail(), "Roger John", "Clarke",
-                                                        Get.GetDoB()),
+                                                        Get.GetDoB(),Get.GetMobilePhone()),
                                            new Customer(Guid.NewGuid(), Get.RandomEmail(), "Anthony Charles Bramham",
-                                                        "Lister", Get.GetDoB()),
+                                                        "Lister", Get.GetDoB(),Get.GetMobilePhone()),
                                            new Customer(Guid.NewGuid(), Get.RandomEmail(), "Timothy Charles", "Monckton",
-                                                        Get.GetDoB()),
+                                                        Get.GetDoB(),Get.GetMobilePhone()),
                                                         //Secretary
                                            new Customer(Guid.NewGuid(), Get.RandomEmail(), "Robert Nigel James", "Coombe",
-                                                        Get.GetDoB())
+                                                        Get.GetDoB(),Get.GetMobilePhone())
                                        };
             var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
                                                            RiskMask.TESTGuarantorNamesMatchBusinessBureauData,
@@ -676,16 +679,16 @@ namespace Wonga.QA.Tests.Graydon
             const String forename = "JOHN";
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth);
+            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
             var listOfGuarantors = new List<Customer>
                                        {
                                            //The wrong one
                                            new Customer(Guid.NewGuid(), Get.RandomEmail(), "Roger John", "Wrong",
-                                                        Get.GetDoB()),
+                                                        Get.GetDoB(),Get.GetMobilePhone()),
                                            new Customer(Guid.NewGuid(), Get.RandomEmail(), "Anthony Charles Bramham",
-                                                        "Lister", Get.GetDoB()),
+                                                        "Lister", Get.GetDoB(),Get.GetMobilePhone()),
                                            new Customer(Guid.NewGuid(), Get.RandomEmail(), "Timothy Charles", "Monckton",
-                                                        Get.GetDoB()),
+                                                        Get.GetDoB(),Get.GetMobilePhone()),
                                        };
             var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
                                                            RiskMask.TESTGuarantorNamesMatchBusinessBureauData,
@@ -719,7 +722,7 @@ namespace Wonga.QA.Tests.Graydon
             customerBuilder.ScrubForename(mainApplicant.Forename);
             customerBuilder.ScrubSurname(mainApplicant.Surname);
             //STEP 1 - Create the main director
-            var mainDirector = customerBuilder.WithMiddleName(middlenameMask.ToString()).WithForename(mainApplicant.Forename).WithSurname(mainApplicant.Surname).WithDateOfBirth(mainApplicant.DateOfBirth).Build();
+            var mainDirector = customerBuilder.WithMiddleName(middlenameMask.ToString()).WithForename(mainApplicant.Forename).WithSurname(mainApplicant.Surname).WithDateOfBirth(mainApplicant.DateOfBirth).WithMobileNumber(mainApplicant.MobilePhoneNumber).Build();
 
             //STEP2 - Create the company
             var organisationBuilder = OrganisationBuilder.New(mainDirector).WithOrganisationNumber(companyRegisteredNumber);
@@ -750,7 +753,7 @@ namespace Wonga.QA.Tests.Graydon
                         guarantorCustomerBuilder.ScrubSurname(guarantor.Surname);
 
                         guarantorCustomerBuilder.WithEmailAddress(guarantor.Email).WithForename(guarantor.Forename)
-                            .WithSurname(guarantor.Surname).WithDateOfBirth(guarantor.DateOfBirth).Build();
+                            .WithSurname(guarantor.Surname).WithDateOfBirth(guarantor.DateOfBirth).WithMobileNumber(guarantor.MobilePhoneNumber).Build();
                     }
                     applicationBuilder.SignApplicationForSecondaryDirectors();
                 }
@@ -772,23 +775,5 @@ namespace Wonga.QA.Tests.Graydon
 
         }
 
-
-        private static String UpdateServiceConfigurationKey(String configKey,String newConfigValue)
-        {
-            String currentValue;
-            var opsDb = Drive.Db.Ops;
-            var config = opsDb.ServiceConfigurations.FirstOrDefault(p => p.Key == configKey);
-            if(config !=null)
-            {
-                currentValue = config.Value;
-                config.Value = newConfigValue;
-                opsDb.SubmitChanges();
-            }
-            else
-			{
-				throw new ArgumentOutOfRangeException("configKey", string.Format("Missing service configuration key: {0}", configKey));
-			}
-            return currentValue;
-        }
     }
 }
