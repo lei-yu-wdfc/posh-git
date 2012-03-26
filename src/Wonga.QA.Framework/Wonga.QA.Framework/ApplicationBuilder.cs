@@ -22,7 +22,9 @@ namespace Wonga.QA.Framework
         protected int LoanTerm;
         protected string IovationBlackBox;
         protected Dictionary<int, List<bool>> EidSessionInteraction = new Dictionary<int, List<bool>>();
-        protected List<Customer> NumberOfGuarantors;
+
+        //WB specific members
+        protected List<Customer> Guarantors;
 
         private Action _setPromiseDateAndLoanTerm;
         private Func<int> _getDaysUntilStartOfLoan;
@@ -118,7 +120,7 @@ namespace Wonga.QA.Framework
         {
             Id = Guid.NewGuid();
             LoanAmount = Get.GetLoanAmount();
-            IovationBlackBox = "foobar";
+            IovationBlackBox = "Unknown";
 
             _setPromiseDateAndLoanTerm = () =>
                                   {
@@ -129,13 +131,13 @@ namespace Wonga.QA.Framework
             _getDaysUntilStartOfLoan = GetDaysUntilStartOfLoan;
         }
 
-        public static ApplicationBuilder New(Customer customer)
+        public static ApplicationBuilder New(Customer mainApplicant)
         {
-            return new ApplicationBuilder { Customer = customer };
+            return new ApplicationBuilder { Customer = mainApplicant };
         }
-        public static ApplicationBuilder New(Customer customer, Organisation company)
+        public static ApplicationBuilder New(Customer mainApplicant, Organisation company)
         {
-            return new BusinessApplicationBuilder(customer, company);
+            return new BusinessApplicationBuilder(mainApplicant, company);
         }
         public virtual Application Build()
         {
@@ -324,11 +326,7 @@ namespace Wonga.QA.Framework
             return this;
         }
 
-        public ApplicationBuilder WithGuarantors(List<Customer> numberOfGuarantors)
-        {
-            NumberOfGuarantors = numberOfGuarantors;
-            return this;
-        }
+        
 
         #endregion
     }

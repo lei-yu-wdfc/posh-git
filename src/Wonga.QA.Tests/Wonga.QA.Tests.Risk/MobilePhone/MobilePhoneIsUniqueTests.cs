@@ -11,7 +11,7 @@ using Wonga.QA.Framework.Db.Risk;
 
 namespace Wonga.QA.Tests.Risk.MobilePhone
 {
-    public class MobilePhoneIsUnique
+    public class MobilePhoneIsUniqueTests
     {
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-1107"), Description("This will test if the main directors phone is not in our system")]
@@ -147,15 +147,7 @@ namespace Wonga.QA.Tests.Risk.MobilePhone
                 //STE6 - Build the extra guarantors + sign
                 if (guarantors != null)
                 {
-                    foreach (var guarantor in guarantors)
-                    {
-                        var guarantorCustomerBuilder = CustomerBuilder.New(guarantor.Id);
-                        guarantorCustomerBuilder.ScrubForename(guarantor.Forename);
-                        guarantorCustomerBuilder.ScrubSurname(guarantor.Surname);
-
-                        guarantorCustomerBuilder.WithEmailAddress(guarantor.Email).WithForename(guarantor.Forename)
-                            .WithSurname(guarantor.Surname).WithDateOfBirth(guarantor.DateOfBirth).WithMobileNumber(guarantor.MobilePhoneNumber).Build();
-                    }
+                    applicationBuilder.BuildGuarantors();
                     applicationBuilder.SignApplicationForSecondaryDirectors();
                 }
             }

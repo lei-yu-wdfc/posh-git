@@ -17,6 +17,7 @@ namespace Wonga.QA.Tests.Comms.PaymentFailureEmailTests
     class PaymentFailureEmails
     {
         private BusinessApplication _applicationInfo;
+
         [SetUp]
         public void Setup()
         {

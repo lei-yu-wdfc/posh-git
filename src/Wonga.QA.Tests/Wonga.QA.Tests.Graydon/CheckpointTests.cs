@@ -746,15 +746,7 @@ namespace Wonga.QA.Tests.Graydon
                 //STE6 - Build the extra guarantors + sign
                 if (guarantors!=null)
                 {
-                    foreach (var guarantor in guarantors)
-                    {
-                        var guarantorCustomerBuilder = CustomerBuilder.New(guarantor.Id);
-                        guarantorCustomerBuilder.ScrubForename(guarantor.Forename);
-                        guarantorCustomerBuilder.ScrubSurname(guarantor.Surname);
-
-                        guarantorCustomerBuilder.WithEmailAddress(guarantor.Email).WithForename(guarantor.Forename)
-                            .WithSurname(guarantor.Surname).WithDateOfBirth(guarantor.DateOfBirth).WithMobileNumber(guarantor.MobilePhoneNumber).Build();
-                    }
+                    applicationBuilder.BuildGuarantors();
                     applicationBuilder.SignApplicationForSecondaryDirectors();
                 }
             }

@@ -48,7 +48,6 @@ namespace Wonga.QA.Framework
             return this;
         }
 
-
         public Organisation Build()
         {
             var requests = new List<ApiRequest>();

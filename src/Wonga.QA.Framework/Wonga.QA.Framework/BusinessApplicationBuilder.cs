@@ -16,13 +16,13 @@ namespace Wonga.QA.Framework
         {
             Company = company;
             Customer = customer;
-            NumberOfGuarantors = new List<Customer>();
+            Guarantors = new List<Customer>();
         }
 
         public override Application Build()
         {
 
-            if (NumberOfGuarantors.Count > 0 && Decision != ApplicationDecisionStatus.Declined)
+            if (Guarantors.Count > 0 && Decision != ApplicationDecisionStatus.Declined)
             {
                 Decision = ApplicationDecisionStatus.PreAccepted;
             }
@@ -33,7 +33,9 @@ namespace Wonga.QA.Framework
             var requests = new List<ApiRequest>
             {
                 SubmitApplicationBehaviourCommand.New(r => r.ApplicationId = Id),
-                SubmitClientWatermarkCommand.New(r => { r.ApplicationId=Id; r.AccountId = Customer.Id; }),
+                SubmitClientWatermarkCommand.New(r => { r.ApplicationId=Id; r.AccountId = Customer.Id;
+                                                          r.BlackboxData = IovationBlackBox;
+                }),
                 CreateBusinessFixedInstallmentLoanApplicationWbUkCommand.New(r =>
                         {   
                             r.AccountId = Customer.Id; 
@@ -58,7 +60,7 @@ namespace Wonga.QA.Framework
                                                                                 r.ApplicationId = Id;
                                                                                 //r.NumberOfGuarantors =Company.GetSecondaryDirectors().ToList().Count;
                                                                                 r.NumberOfGuarantors =
-                                                                                    NumberOfGuarantors.Count;
+                                                                                    Guarantors.Count;
                                                                             }));
                 
 
@@ -69,7 +71,7 @@ namespace Wonga.QA.Framework
             /* STEP 3.1 
              * Send guarantors partial details
              * Added new stuff to work with new risk workflows */
-            foreach (var guarantor in NumberOfGuarantors)
+            foreach (var guarantor in Guarantors)
             {
                 var g = guarantor;
                 Drive.Api.Commands.Post(AddSecondaryOrganisationDirectorCommand.New(r =>
@@ -121,6 +123,8 @@ namespace Wonga.QA.Framework
             return new BusinessApplication(Id);
         }
 
+        #region Public Methods
+
         public void SignApplicationForSecondaryDirectors()
         {
             var guarantors = Drive.Db.ContactManagement.DirectorOrganisationMappings.Where(
@@ -136,6 +140,30 @@ namespace Wonga.QA.Framework
 
             Drive.Api.Commands.Post(requests);
         }
+        public void BuildGuarantors()
+        {
+            foreach (var guarantor in Guarantors)
+            {
+                var guarantorCustomerBuilder = CustomerBuilder.New(guarantor.Id);
+                guarantorCustomerBuilder.ScrubForename(guarantor.Forename);
+                guarantorCustomerBuilder.ScrubSurname(guarantor.Surname);
+
+                guarantorCustomerBuilder.WithEmailAddress(guarantor.Email).WithForename(guarantor.Forename)
+                    .WithSurname(guarantor.Surname).WithDateOfBirth(guarantor.DateOfBirth).WithMobileNumber(guarantor.MobilePhoneNumber).Build();
+            }
+        }
+
+        #endregion
+
+        #region "With" Helper Methods
+
+        public ApplicationBuilder WithGuarantors(List<Customer> guarantors)
+        {
+            Guarantors = guarantors;
+            return this;
+        }
+
+        #endregion
 
         #region OLD BUILD METHOD
 
