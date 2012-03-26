@@ -1,30 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Db.Ops;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
+using Wonga.QA.Tests.Payments.Helpers;
 
 namespace Wonga.QA.Tests.Payments
 {
 	[AUT(AUT.Za), Pending("Work in progress")]
 	public class NaedoRetryTests
 	{
-		private const string BankGatewayIsTestModeKey = "BankGateway.IsTestMode";
-		private string _bankGatewayIsTestMode;
+		private bool _bankGatewayTestModeOriginal;
+
+		[FixtureSetUp]
+		public void FixtureSetup()
+		{
+			_bankGatewayTestModeOriginal = ConfigurationFunctions.GetBankGatewayTestMode();
+		}
 
 		[FixtureTearDown]
 		public void FixtureTearDown()
 		{
-			ServiceConfigurationEntity entity =
-				Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == BankGatewayIsTestModeKey);
-			entity.Value = _bankGatewayIsTestMode;
-			entity.Submit();
+			ConfigurationFunctions.SetBankGatewayTestMode(_bankGatewayTestModeOriginal);
 		}
 
 		[Test, JIRA("ZA-1969"), Parallelizable]
@@ -38,24 +39,10 @@ namespace Wonga.QA.Tests.Payments
 			MsmqQueue paymentsQueue = Drive.Msmq.Payments;
 			var applicationEntity = paymentsDatabase.Applications.Single(a => a.ExternalId == application.Id);
 
-			TimeSpan span = applicationEntity.FixedTermLoanApplicationEntity.NextDueDate.Value - DateTime.Today;
-			applicationEntity.FixedTermLoanApplicationEntity.PromiseDate -= span;
-			applicationEntity.FixedTermLoanApplicationEntity.NextDueDate -= span;
-			applicationEntity.Submit();
-
-			var scheduledsaga =
-				Drive.Db.OpsSagas.FixedTermLoanSagaEntities
-					.Single(e => e.ApplicationGuid == applicationEntity.ExternalId);
-
-			paymentsQueue.Send(new TimeoutMessage {Expires = DateTime.UtcNow, SagaId = scheduledsaga.Id});
-
-			var processSaga =
-				Do.Until(() => Drive.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationId == applicationEntity.ApplicationId));
-
-			paymentsQueue.Send(new TimeoutMessage {Expires = DateTime.UtcNow, SagaId = processSaga.Id});
+			application.PutApplicationIntoArrears(20);
 
 			Do.Until(() => paymentsDatabase.Arrears.Single(s => s.ApplicationId == applicationEntity.ApplicationId));
-			SetBankGatewayTestMode();
+			ConfigurationFunctions.SetBankGatewayTestMode(true);
 
 			paymentsQueue.Send(new ProcessScheduledPaymentCommand
 			                   	{
@@ -79,15 +66,6 @@ namespace Wonga.QA.Tests.Payments
 
 			Assert.AreEqual(-amount/2, ddTransactions[0].Amount);
 			Assert.GreaterThan(-amount/2, ddTransactions[1].Amount);
-		}
-
-		private void SetBankGatewayTestMode()
-		{
-			ServiceConfigurationEntity entity =
-				Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == BankGatewayIsTestModeKey);
-			_bankGatewayIsTestMode = entity.Value;
-			entity.Value = "true";
-			entity.Submit();
 		}
 	}
 }
