@@ -17,6 +17,22 @@ namespace Wonga.QA.Tests.Payments
     [Parallelizable(TestScope.All)]
     public class ExternalDebtCollectionTests
     {
+        private static bool _bankGatewayIsinTestMode;
+
+        [FixtureSetUp]
+        public static void FixtureSetUp()
+        {
+            _bankGatewayIsinTestMode = ConfigurationFunctions.GetBankGatewayTestMode();
+
+            ConfigurationFunctions.SetBankGatewayTestMode(false);
+        }
+
+        [FixtureTearDown]
+        public static void FixtureTearDown()
+        {
+            ConfigurationFunctions.SetBankGatewayTestMode(_bankGatewayIsinTestMode);
+        }
+
     	[Test, AUT(AUT.Ca), JIRA("CA-913")]
 		public void When31DaysPassedAndArrearsCollectionSucceededThenShouldNotMoveApplicationToDca()
 		{

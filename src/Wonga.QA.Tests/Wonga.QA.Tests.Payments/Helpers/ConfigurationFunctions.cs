@@ -59,6 +59,14 @@ namespace Wonga.QA.Tests.Payments.Helpers
             }
         }
 
+        public static Boolean GetBankGatewayTestMode()
+        {
+            var db = new DbDriver();
+            var bgw = db.Ops.ServiceConfigurations.Single(bg => bg.Key == BankGateWayIsTestMode);
+
+            return bool.Parse(bgw.Value);
+        }
+
         // Move to configurations functions
         public static void SetVariableInterestRateEnabled(bool value)
         {
