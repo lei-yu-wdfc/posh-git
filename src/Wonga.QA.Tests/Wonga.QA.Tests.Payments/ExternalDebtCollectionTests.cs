@@ -5,6 +5,8 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api.Exceptions;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Cs;
+using Wonga.QA.Framework.Db.OpsSagasCa;
+using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
 
@@ -13,7 +15,44 @@ namespace Wonga.QA.Tests.Payments
     [Parallelizable(TestScope.All)]
     public class ExternalDebtCollectionTests
     {
-        [Test, AUT(AUT.Ca), JIRA("CA-1862")]
+    	[Test, AUT(AUT.Ca), JIRA("CA-913")]
+		public void When31DaysPassedAndArrearsCollectionSucceededThenShouldNotMoveApplicationToDca()
+		{
+			ConfigurationFunctions.SetDelayBeforeApplicationClosed(100000);
+
+			var customer = CustomerBuilder.New().Build();
+			var application = ApplicationBuilder.New(customer).Build();
+
+			application.PutApplicationIntoArrears();
+
+			RepayLoanInArrears(application);
+
+    		application.WaitForClose();
+
+    		// Validate that external debt collection finished
+			Do.Until(() => Drive.Db.OpsSagasCa.ExternalDebtCollectionSagaEntities.SingleOrDefault(e => e.ApplicationId == application.Id) == null);
+
+			// And no debt collection record was created
+			Assert.AreEqual(0, Drive.Db.Payments.DebtCollections.Count(d => d.ApplicationEntity.ExternalId == application.Id));
+		}
+
+		[Test, AUT(AUT.Ca), JIRA("CA-913")]
+		public void When31DaysPassedThenShouldMoveApplicationToDca()
+		{
+			var customer = CustomerBuilder.New().Build();
+			var application = ApplicationBuilder.New(customer).Build();
+
+			application.PutApplicationIntoArrears();
+
+			// Trigger 31 days timeout of debt collection agency
+			var debtCollectionSaga = Do.Until( () => Drive.Db.OpsSagasCa.ExternalDebtCollectionSagaEntities.SingleOrDefault(e => e.ApplicationId == application.Id));
+			Drive.Msmq.Payments.Send(new TimeoutMessage{ SagaId = debtCollectionSaga.Id});
+
+			// Wait for debt collection to be created
+			Do.Until( () => Drive.Db.Payments.DebtCollections.Single(d => d.ApplicationEntity.ExternalId == application.Id && d.MovedToAgency ));
+		}
+
+    	[Test, AUT(AUT.Ca), JIRA("CA-1862")]
         public void WhenApplicationMovedToDcaInterestAcrualShouldBeSuppressed()
         {
             var customer = CustomerBuilder.New().Build();
@@ -107,22 +146,59 @@ namespace Wonga.QA.Tests.Payments
             }
         }
 
-        //[Test, AUT(AUT.Ca), JIRA("CA-1862")]
-        //public void ShouldAddARevokeRecordToDebtCollections()
-        //{
-        //    var customer = CustomerBuilder.New().Build();
-        //    var application = ApplicationBuilder.New(customer).Build();
+		//[Test, AUT(AUT.Ca), JIRA("CA-1862")]
+		//public void ShouldAddARevokeRecordToDebtCollections()
+		//{
+		//    var customer = CustomerBuilder.New().Build();
+		//    var application = ApplicationBuilder.New(customer).Build();
 
-        //    var command = new Wonga.QA.Framework.Cs.RevokeApplicationFromDcaCommand
-        //    {
-        //        ApplicationId = application.Id
-        //    };
+		//    var command = new Wonga.QA.Framework.Cs.RevokeApplicationFromDcaCommand
+		//    {
+		//        ApplicationId = application.Id
+		//    };
 
-        //    // TODO: Need to write a Debt Collection record to the DB
+		//    // TODO: Add debt collection record
 
-        //    Drive.Cs.Commands.Post(command);
+		//    Drive.Cs.Commands.Post(command);
 
-        //    // TODO: Need to query for a further debt collection record that indicates the revoke
-        //}
-    }
+		//    // TODO: Need to query for a further debt collection record that indicates the revoke
+		//}
+
+		private static void RepayLoanInArrears(Application application)
+		{
+			Do.Until(() => Drive.Db.OpsSagasCa.PaymentsInArrearsSagaEntities.Single(
+				e => e.ApplicationId == application.Id && e.InArrearsState == "FirstAttempt"));
+
+			PaymentsInArrearsSagaEntity entity =
+				Do.Until(() => Drive.Db.OpsSagasCa.PaymentsInArrearsSagaEntities.Single(e => e.ApplicationId == application.Id));
+			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = entity.Id });
+
+			var firstPaymentTaken = new PaymentTakenCommand
+			{
+				ApplicationId = application.Id,
+				SagaId = entity.Id,
+				TransactionAmount = entity.Amount.GetValueOrDefault(),
+				ValueDate = DateTime.UtcNow,
+			};
+
+			Drive.Msmq.Payments.Send(firstPaymentTaken);
+
+			Do.Until(() => Drive.Db.OpsSagasCa.PaymentsInArrearsSagaEntities.Single(
+				e => e.ApplicationId == application.Id && e.InArrearsState == "SecondAttempt"));
+
+			entity =
+				Do.Until(() => Drive.Db.OpsSagasCa.PaymentsInArrearsSagaEntities.Single(e => e.ApplicationId == application.Id));
+			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = entity.Id });
+
+			var arrears = new PaymentTakenCommand
+			{
+				ApplicationId = application.Id,
+				SagaId = entity.Id,
+				TransactionAmount = entity.Amount.GetValueOrDefault(),
+				ValueDate = DateTime.UtcNow,
+			};
+
+			Drive.Msmq.Payments.Send(arrears);
+		}
+	}
 }
