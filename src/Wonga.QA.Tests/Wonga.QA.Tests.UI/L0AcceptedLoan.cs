@@ -58,5 +58,19 @@ namespace Wonga.QA.Tests.Ui
             acceptedPage.SignTermsGuarantor();
             var dealDonePage = acceptedPage.Submit() as DealDonePage;
         }
+
+        [Test, AUT(AUT.Uk)]
+        public void UkAcceptedLoan()
+        {
+            var journey = new Journey(Client.Home());
+
+            var acceptedPage = journey.ApplyForLoan(200, 10)
+                                     .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                     .FillAddressDetails()
+                                     .FillAccountDetails()
+                                     .FillBankDetails()
+                                     .FillCardDetails()
+                                     .WaitForAcceptedPage().CurrentPage as AcceptedPage;
+        }
     }
 }

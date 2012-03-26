@@ -24,6 +24,7 @@
     <AddressDetailsPage>
       <FormId>#lzero-address-form</FormId>
       <LookupButton>#edit-submit-lookup</LookupButton>
+      <AddressOptionsWrapper>#edit-address-options-wrapper</AddressOptionsWrapper>
       <Postcode>#edit-postcode-lookup-uk</Postcode>
       <District>#edit-district</District>
       <FlatNumber>#edit-flat</FlatNumber>

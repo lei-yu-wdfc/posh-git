@@ -31,7 +31,6 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Ca)]
         public void ThisIsTestSoBuggerOff()
         {
-
             
         }
 

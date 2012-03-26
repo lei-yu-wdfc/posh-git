@@ -12,20 +12,24 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
     {
         public AccountDetailsSection AccountDetailsSection { get; set; }
         private readonly IWebElement _postCode;
-        private IWebElement _form;
+        private readonly IWebElement _postCodeLookup;
+        private readonly IWebElement _form;
         private readonly IWebElement _lookup;
-        private IWebElement _next;
-        private IWebElement _flatNumber;
-        private IWebElement _district;
-        private IWebElement _county;
-        private IWebElement _town;
-        private IWebElement _street;
-        private IWebElement _addressPeriod;
-        private IWebElement _postOfficeBox;
+        private readonly IWebElement _next;
+        private readonly IWebElement _flatNumber;
+        private readonly IWebElement _district;
+        private readonly IWebElement _county;
+        private readonly IWebElement _town;
+        private readonly IWebElement _street;
+        private readonly IWebElement _addressPeriod;
+        private readonly IWebElement _postOfficeBox;
 
         private IWebElement _addressOptions;
         private IWebElement _postCodeErrorForm;
+        private IWebElement _addressOptionsWrapper;
+        private IWebElement _postcodeValid;
 
+        public String PostCodeLookup { set { _postCodeLookup.SendValue(value); } }
         public String PostCode { set { _postCode.SendValue(value); } }
         public String SelectedAddress { set { _addressOptions.SelectOption(value); } }
         public String FlatNumber { set { _flatNumber.SendValue(value); } }
@@ -39,65 +43,56 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public AddressDetailsPage(UiClient client)
             : base(client)
         {
+
+            _form = Content.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.FormId));
+            _postCode = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.Postcode));
+            _flatNumber = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.FlatNumber));
+            _addressPeriod = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.AddressPeriod));
+            _next = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.NextButton));
+            _addressOptionsWrapper = _form.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.AddressOptionsWrapper));
+            _postcodeValid = _form.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.PostcodeValid));
+
             switch (Config.AUT)
             {
-                case (AUT.Uk):
-                    _form = Content.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.FormId));
-                    _postCode = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.Postcode));
-                    _lookup = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.LookupButton));
-                    break;
                 case (AUT.Wb):
-                    _form = Content.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.FormId));
-                    _postCode = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.Postcode));
-                    _flatNumber = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.FlatNumber));
-                    _addressPeriod = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.AddressPeriod));
-                    _next = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.NextButton));
                     _county = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.County));
                     _district = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.District));
                     _lookup = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.LookupButton));
                     break;
                 case (AUT.Za):
-                    _form = Content.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.FormId));
-                    _postCode = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.Postcode));
-                    _flatNumber = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.FlatNumber));
-                    _addressPeriod = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.AddressPeriod));
-                    _next = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.NextButton));
                     _county = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.County));
                     _district = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.District));
                     _street = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.Street));
                     _town = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.Town));
                     break;
                 case (AUT.Ca):
-                    _form = Content.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.FormId));
-                    _postCode = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.Postcode));
-                    _flatNumber = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.FlatNumber));
-                    _addressPeriod = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.AddressPeriod));
-                    _next = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.NextButton));
                     _street = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.Street));
                     _town = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.Town));
                     _postOfficeBox = _form.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.PostOfficeBox));
                     AccountDetailsSection = new AccountDetailsSection(this);
+                    break;
+                case (AUT.Uk):
+                    _postCodeLookup = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.PostcodeLookup));
+                    _lookup = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.LookupButton));
                     break;
             }
         }
 
         public void LookupByPostCode()
         {
-            Thread.Sleep(10000);
+            Do.With.Interval(1).Until(ClickLookupAddress);
+            Do.Until(() => _addressOptionsWrapper.Displayed);
+        }
+
+        private IWebElement ClickLookupAddress()
+        {
             _lookup.Click();
+            return _postcodeValid.FindElement(By.CssSelector(".success"));
         }
 
         public void GetAddressesDropDown()
         {
             _addressOptions = _form.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.AddressOptions));
-        }
-
-        public void GetAddressFieldsUK()
-        {
-            _next = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.NextButton));
-            _flatNumber = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.FlatNumber));
-            _addressPeriod = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.AddressPeriod));
-            _county = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.County));
         }
 
         public BasePage Next()
