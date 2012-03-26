@@ -12,7 +12,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
 	
-    [Parallelizable(TestScope.All), AUT(AUT.Za)]
+    [Pending, AUT(AUT.Za)]
 	class CheckpointReputationPredictionPositiveTests
 	{
 		private const RiskMask TestMask = RiskMask.TESTReputationtPredictionPositive;
@@ -126,9 +126,39 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-1938")]
-		public void CheckpointReputationPredictionPositiveTablesUpdateWhenIn()
+		public void CheckpointReputationPredictionPositiveTablesUpdateWhenInArrears()
 		{
-			
+			int postcode = Get.RandomInt(1000, 9999);
+
+			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(postcode.ToString()).Build();
+			var application = ApplicationBuilder.New(customer).Build();
+
+			var prevInArrears = Drive.Db.Risk.RiskIovationPostcodes.Single(a => a.ApplicationId == application.Id).InArrears;
+			Assert.IsNotNull(prevInArrears);
+			Assert.IsFalse((bool) prevInArrears);
+
+			application.PutApplicationIntoArrears();
+
+			var currentInArrears = Drive.Db.Risk.RiskIovationPostcodes.Single(a => a.ApplicationId == application.Id).InArrears;
+			Assert.IsNotNull(currentInArrears);
+			Assert.IsTrue((bool) currentInArrears);
+		}
+
+		[Test, AUT(AUT.Za), JIRA("ZA-1938")]
+		public void CheckpointReputationPredictionPositiveTablesUpdateWhenAccountRankIncreases()
+		{
+			int postcode = Get.RandomInt(1000, 9999);
+
+			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(postcode.ToString()).Build();
+			var application = ApplicationBuilder.New(customer).Build();
+
+			var prevAccountRank = Drive.Db.Risk.RiskIovationPostcodes.Single(a => a.ApplicationId == application.Id).AccountRank;
+			Assert.AreEqual(0, prevAccountRank);
+
+			application.RepayOnDueDate();
+
+			var currentAccountRank = Drive.Db.Risk.RiskIovationPostcodes.Single(a => a.ApplicationId == application.Id).AccountRank;
+			Assert.AreEqual(1, currentAccountRank);
 		}
 
 		#region Helpers
