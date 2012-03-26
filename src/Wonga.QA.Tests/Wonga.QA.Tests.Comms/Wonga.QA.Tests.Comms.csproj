@@ -31,11 +31,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CollectionsChaseSmsTests.cs" />
     <Compile Include="CommsServiceTests.cs" />
     <Compile Include="DocumentsEmailsTests.cs" />
     <Compile Include="Email\LoanTopUpEmailTests.cs" />
     <Compile Include="Email\PaymentConfirmationEmailUkTests.cs" />
     <Compile Include="Email\PaymentReminderEmailTests.cs" />
+    <Compile Include="Helpers\ConfigurationFunctions.cs" />
     <Compile Include="MobilePhoneTests.cs" />
     <Compile Include="OrganisationTests.cs" />
     <Compile Include="PaymentFailureEmailTests\PaymentFailureEmails.cs" />

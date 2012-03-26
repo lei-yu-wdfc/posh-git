@@ -46,16 +46,21 @@ namespace Wonga.QA.Tests.Payments
 					       t.Type == "ServiceFee")
 					.OrderBy(t => t.PostedOn)
 					.ToList();
+			var cashAdvance =
+				paymentsDatabase.Transactions
+					.Single(t =>
+					       t.ApplicationId == applicationEntity.ApplicationId &&
+					       t.Type == "CashAdvance");
 
 			Assert.AreEqual(4, serviceFees.Count);
 			Assert.AreApproximatelyEqual(
-				applicationEntity.CreatedOn, serviceFees[0].PostedOn, TimeSpan.FromMinutes(10));
+				cashAdvance.PostedOn, serviceFees[0].PostedOn, TimeSpan.FromMinutes(10));
 			Assert.AreApproximatelyEqual(
-				applicationEntity.CreatedOn.AddDays(30), serviceFees[1].PostedOn, TimeSpan.FromMinutes(10));
+			    cashAdvance.PostedOn.AddDays(30), serviceFees[1].PostedOn, TimeSpan.FromMinutes(10));
 			Assert.AreApproximatelyEqual(
-				applicationEntity.CreatedOn.AddDays(60), serviceFees[2].PostedOn, TimeSpan.FromMinutes(10));
+			    cashAdvance.PostedOn.AddDays(60), serviceFees[2].PostedOn, TimeSpan.FromMinutes(10));
 			Assert.AreApproximatelyEqual(
-				applicationEntity.CreatedOn.AddDays(90), serviceFees[3].PostedOn, TimeSpan.FromMinutes(10));
+			    cashAdvance.PostedOn.AddDays(90), serviceFees[3].PostedOn, TimeSpan.FromMinutes(10));
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-1969", "ZA-2193"), Parallelizable]
