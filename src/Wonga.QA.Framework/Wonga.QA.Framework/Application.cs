@@ -5,16 +5,11 @@ using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Db.Ops;
-using Wonga.QA.Framework.Db.OpsSagasCa;
+using Wonga.QA.Framework.Db.OpsSagas;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Framework.Db.Risk;
-using CloseApplicationSagaEntity = Wonga.QA.Framework.Db.OpsSagas.CloseApplicationSagaEntity;
-using FixedTermLoanSagaEntity = Wonga.QA.Framework.Db.OpsSagas.FixedTermLoanSagaEntity;
-using RepaymentSagaEntity = Wonga.QA.Framework.Db.OpsSagas.RepaymentSagaEntity;
-using ScheduledPaymentSagaEntity = Wonga.QA.Framework.Db.OpsSagas.ScheduledPaymentSagaEntity;
-using ScheduledPostAccruedInterestSagaEntity = Wonga.QA.Framework.Db.OpsSagas.ScheduledPostAccruedInterestSagaEntity;
 
 namespace Wonga.QA.Framework
 {
@@ -163,7 +158,7 @@ namespace Wonga.QA.Framework
 
 		public Application CreateRepaymentArrangement()
 		{
-			var cmd = new Api.CreateRepaymentArrangementCommand()
+			var cmd = new Api.CreateRepaymentArrangementCommand
 			{
 				ApplicationId = Id,
 				Frequency = Api.PaymentFrequencyEnum.Every4Weeks,
@@ -394,8 +389,7 @@ namespace Wonga.QA.Framework
 
             Rewind(daysToRewind);
 
-            ExternalDebtCollectionSagaEntity entity =
-                Do.Until(() => Drive.Db.OpsSagasCa.ExternalDebtCollectionSagaEntities.Single(e => e.ApplicationId == Id));
+            var entity = Do.Until(() => Drive.Db.OpsSagasCa.ExternalDebtCollectionSagaEntities.Single(e => e.ApplicationId == Id));
             Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = entity.Id });
 
             return this;
