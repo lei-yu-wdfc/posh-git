@@ -229,6 +229,8 @@
     <Title>#my-summary</Title>
     <TotalToRepay>div.summary-box-content span.blue-text</TotalToRepay>
     <RepaymentDate>div.summary-box-content i</RepaymentDate>
+	<PromisedRepayAmount>#content-area p span</PromisedRepayAmount>
+	<PromisedRepayDate>#content-area p strong em</PromisedRepayDate>  
   </MySummaryPage>
 
   <MyPaymentsPage>

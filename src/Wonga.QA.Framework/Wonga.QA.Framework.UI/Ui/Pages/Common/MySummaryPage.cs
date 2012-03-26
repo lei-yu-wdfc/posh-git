@@ -12,6 +12,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
     {
         public MyAccountNavigationElement Navigation { get; set; }
         public SlidersElement Sliders { get; set; }
+        public IWebElement _repayButton { get; set; }
         
         public MySummaryPage(UiClient client) : base(client)
         {
@@ -23,6 +24,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     break;
 
                 case (AUT.Ca) :
+                    _repayButton = Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.RepayButton));
                     LookForSliders();
                     break;
 
@@ -66,8 +68,28 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.RepaymentDate)).Text; }
         }
-        
-            
-        
+
+        public String GetPromisedRepayAmount
+        {
+            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.PromisedRepayAmount)).Text; }
+        }
+        public String GetPromisedRepayDate
+        {
+            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.PromisedRepayDate)).Text; }
+        }
+
+        public void RepayButtonClick()
+        {
+            _repayButton.Click();
+        }
+
+        public String GetTotalToRepayAmountPopup
+        {
+            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.TotalToRepayAmountPopup)).Text; }
+        }
+        public String GetPromisedRepayDatePopup
+        {
+            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.PromisedRepayDatePopup)).Text; }
+        }
     }
 }
