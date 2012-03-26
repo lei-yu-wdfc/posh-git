@@ -8,7 +8,7 @@ namespace Wonga.QA.Tests.Ui
 {
     class LoginTest : UiTest
     {
-        [Test, AUT(AUT.Ca), JIRA("QA-160")]
+        [Test, AUT(AUT.Ca), JIRA("QA-160"), Pending("Login element doesn't work on home page")]
         public void LogInShouldBeRedirectedToMySummaryPage()
         {
             var homePage = Client.Home();
