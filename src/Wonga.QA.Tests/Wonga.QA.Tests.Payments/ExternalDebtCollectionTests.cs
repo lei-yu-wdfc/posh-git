@@ -165,23 +165,33 @@ namespace Wonga.QA.Tests.Payments
             }
         }
 
-		//[Test, AUT(AUT.Ca), JIRA("CA-1862")]
-		//public void RevokeApplicationFromDcaShouldAddARevokeRecordToDebtCollections()
-		//{
-		//    var customer = CustomerBuilder.New().Build();
-		//    var application = ApplicationBuilder.New(customer).Build();
+		[Test, AUT(AUT.Ca), JIRA("CA-1862")]
+		public void RevokeApplicationFromDcaShouldAddARevokeRecordToDebtCollections()
+		{
+			var customer = CustomerBuilder.New().Build();
+			var application = ApplicationBuilder.New(customer).Build();
 
-		//    var command = new Wonga.QA.Framework.Cs.RevokeApplicationFromDcaCommand
-		//    {
-		//        ApplicationId = application.Id
-		//    };
+			var command = new RevokeApplicationFromDcaCommand
+			{
+				ApplicationId = application.Id
+			};
 
-		//    // TODO: Add debt collection record
+			var db = new DbDriver();
+			
+			var applicationEntity = db.Payments.Applications.Single(a => a.ExternalId == application.Id);
+			var debtCollection = new DebtCollectionEntity
+				                     	{
+				                     		ApplicationEntity = applicationEntity,
+				                     		CreatedOn = DateTime.UtcNow,
+				                     		MovedToAgency = true,
+				                     	};
+			db.Payments.DebtCollections.Insert(debtCollection);
+			db.Payments.SubmitChanges();
+			
+			Drive.Cs.Commands.Post(command);
 
-		//    Drive.Cs.Commands.Post(command);
-
-		//    // TODO: Need to query for a further debt collection record that indicates the revoke
-		//}
+			Do.Until( () => Drive.Db.Payments.DebtCollections.Single(a => a.ApplicationEntity.ExternalId == application.Id && !a.MovedToAgency));
+		}
 
 		private static void RepayLoanInArrears(Application application)
 		{
