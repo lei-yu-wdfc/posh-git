@@ -8,7 +8,7 @@ using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 
 namespace Wonga.QA.Framework.UI
 {
-    class ZaJourney : ICustomerJourney
+    class ZaJourney : IConsumerJourney
     {
         public string FirstName { get; set; }
 
@@ -22,7 +22,7 @@ namespace Wonga.QA.Framework.UI
             FirstName = Get.GetName();
             LastName = Get.RandomString(10);
         }
-        public ICustomerJourney ApplyForLoan(int amount, int duration)
+        public IConsumerJourney ApplyForLoan(int amount, int duration)
         {
             var homePage = CurrentPage as HomePage;
             homePage.Sliders.HowMuch = amount.ToString();
@@ -31,7 +31,7 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public ICustomerJourney FillPersonalDetails(string employerNameMask = null)
+        public IConsumerJourney FillPersonalDetails(string employerNameMask = null)
         {
             var email = Get.RandomEmail();
             string employerName = employerNameMask ?? Get.GetMiddleName();
@@ -68,7 +68,7 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public ICustomerJourney FillAddressDetails()
+        public IConsumerJourney FillAddressDetails()
         {
             var addressPage = CurrentPage as AddressDetailsPage;
             addressPage.FlatNumber = "25";
@@ -81,7 +81,7 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public ICustomerJourney FillAccountDetails()
+        public IConsumerJourney FillAccountDetails()
         {
             var accountDetailsPage = CurrentPage as AccountDetailsPage;
             accountDetailsPage.AccountDetailsSection.Password = Get.GetPassword();
@@ -92,7 +92,7 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public ICustomerJourney FillBankDetails()
+        public IConsumerJourney FillBankDetails()
         {
             var bankDetailsPage = CurrentPage as PersonalBankAccountPage;
             bankDetailsPage.BankAccountSection.BankName = "Capitec";
@@ -104,26 +104,26 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public ICustomerJourney FillCardDetails()
+        public IConsumerJourney FillCardDetails()
         {
             throw new NotImplementedException();
         }
 
-        public ICustomerJourney WaitForAcceptedPage()
+        public IConsumerJourney WaitForAcceptedPage()
         {
             var processingPage = CurrentPage as ProcessingPage;
             CurrentPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
             return this;
         }
 
-        public ICustomerJourney WaitForDeclinedPage()
+        public IConsumerJourney WaitForDeclinedPage()
         {
             var processingPage = CurrentPage as ProcessingPage;
             CurrentPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
             return this;
         }
 
-        public ICustomerJourney FillAcceptedPage()
+        public IConsumerJourney FillAcceptedPage()
         {
             var acceptedPage = CurrentPage as AcceptedPage;
             acceptedPage.SignConfirmZA();
@@ -131,7 +131,7 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public ICustomerJourney GoToMySummaryPage()
+        public IConsumerJourney GoToMySummaryPage()
         {
             var dealDonePage = CurrentPage as DealDonePage;
             CurrentPage = dealDonePage.ContinueToMyAccount() as MySummaryPage;
