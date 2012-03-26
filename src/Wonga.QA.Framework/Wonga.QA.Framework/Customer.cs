@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Db.Comms;
 using Wonga.QA.Framework.Db.Payments;
+using Wonga.QA.Framework.Helpers;
 
 namespace Wonga.QA.Framework
 {
@@ -58,6 +60,28 @@ namespace Wonga.QA.Framework
         public Guid GetBankAccount()
         {
             return BankAccountId;
+        }
+
+        public PersonalPaymentCardEntity[] GetPersonalPaymentCards()
+        {
+            return Drive.Db.Payments.PersonalPaymentCards.Where(c=>c.AccountId == this.Id).ToArray();
+        }
+
+        public void AddPaymentCard(string cardType, string cardNumber, string securityCode, DateTime expiryDate, bool isPrimary)
+        {
+            AddPaymentCardCommand cmd = AddPaymentCardCommand.New(r =>
+            {
+                r.AccountId = this.Id;
+                r.Number = cardNumber;
+                r.IsPrimary = isPrimary;
+                r.SecurityCode = securityCode;
+                r.ExpiryDate = expiryDate.ToString("yyyy-MM");
+                r.CardType = cardType;
+            });
+            Drive.Api.Commands.Post(cmd);
+            Do.Until(() => Drive.Db.Payments.PersonalPaymentCards
+                         .Single(c => c.AccountId == this.Id
+                                      && c.PaymentCardsBaseEntity.MaskedNumber == cardNumber.MaskedCardNumber()));
         }
 
         public Guid GetPaymentCard()

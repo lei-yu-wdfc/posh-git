@@ -42,6 +42,7 @@
     <Compile Include="InArrearsNoticeTests.cs" />
     <Compile Include="NaedoRetryTests.cs" />
     <Compile Include="Queries\GetBusinessApplicationSummaryCsapiQuery.cs" />
+    <Compile Include="Queries\GetPersonalPaymentCardsCsapiQueryTests.cs" />
     <Compile Include="Queries\GetTransactionsCsapiQuery.cs" />
     <Compile Include="Queries\GetValidTransactionTypesQueryTest.cs" />
     <Compile Include="RepayViaOnlineBillPaymentTests.cs" />
