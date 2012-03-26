@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
-using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Salesforce
 {
 	[TestFixture, AUT(AUT.Uk), Parallelizable(TestScope.All)]
-	public class SalesforcePushFixedTermLoanApplicationDataTest
+	public class SalesforcePushFixedTermLoanApplicationDataTest : SalesforceTestBase
 	{
 		[Test]
         [AUT(AUT.Uk), JIRA("UK-808")]
@@ -21,18 +19,7 @@ namespace Wonga.QA.Tests.Salesforce
 			Do.Until(customer.GetPaymentCard);
 			var app = ApplicationBuilder.New(customer).Build();
 
-			// query saleforce to see if application exists.
-			var salesforce = Drive.ThirdParties.Salesforce;
-
-			var sfUsername = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == "Salesforce.UserName");
-			var sfPassword = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == "Salesforce.Password");
-			var sfUrl = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == "Salesforce.Url");
-
-			salesforce.SalesforceUsername = sfUsername.Value;
-			salesforce.SalesforcePassword = sfPassword.Value;
-			salesforce.SalesforceUrl = sfUrl.Value;
-
-			Do.Until(() => salesforce.ApplicationExists(app.Id));
+			Do.With().Timeout(TimeSpan.FromSeconds(5)).Until(() => Salesforce.ApplicationExists(app.Id));
 		}
 	}
 }
