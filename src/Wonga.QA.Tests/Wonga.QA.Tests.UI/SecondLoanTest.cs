@@ -37,8 +37,8 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual("R649.89", mySummaryPage.GetTotalToRepay);
             // Check data in SF
             var salesForceStartPage = Client.SalesForceStart();
-            string employeeName = "padraig.gilboy@wonga.com.rc";
-            string employeePassword = "Passw0rd";
+            string employeeName = Config.SalesforceUi.Username;
+            string employeePassword = Config.SalesforceUi.Password;
             var salesForceHome = salesForceStartPage.LoginAs(employeeName, employeePassword);
             var salesForceSearchResultPage = salesForceHome.FindCustomerByMail(email);
             Thread.Sleep(2000);
