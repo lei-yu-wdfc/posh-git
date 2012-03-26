@@ -16,7 +16,7 @@ namespace Wonga.QA.Tests.Salesforce
 
 			var customer = CustomerBuilder.New().Build();
 			var organisation = OrganisationBuilder.New(customer).WithSoManySecondaryDirectors(3).Build();
-			ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+			ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
 			Do.Until(() => Salesforce.GetContactByStatus(customer.Id, expectedStatus));
 		}

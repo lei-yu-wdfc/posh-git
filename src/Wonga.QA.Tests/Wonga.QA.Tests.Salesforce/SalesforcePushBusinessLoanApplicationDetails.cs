@@ -41,7 +41,7 @@ namespace Wonga.QA.Tests.Salesforce
 		{
 			var customer = CustomerBuilder.New().Build();
 			var organisation = OrganisationBuilder.New(customer).WithSoManySecondaryDirectors(3).Build();
-			var application = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+			var application = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
 			var salesforceApplication = Do.Until(() => Salesforce.GetApplicationWithOrganisationById(application.Id, organisation.Id));
 
@@ -90,7 +90,7 @@ namespace Wonga.QA.Tests.Salesforce
 			const int acceptedStatus = 111;
 			var customer = CustomerBuilder.New().Build();
 			var organisation = OrganisationBuilder.New(customer).Build();
-			var application = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build();
+			var application = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
 			var query = String.Format(getApplicationWithUpdatedStatus, application.Id, acceptedStatus);
 
@@ -104,7 +104,7 @@ namespace Wonga.QA.Tests.Salesforce
 	
 			var customer = CustomerBuilder.New().WithMiddleName("Middle").Build();
 			var organisation = OrganisationBuilder.New(customer).Build();
-			var application = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatusEnum.Declined).Build();
+			var application = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 
 			var query = String.Format(getApplicationWithUpdatedStatus, application.Id, declinedStatus);
 
@@ -118,7 +118,7 @@ namespace Wonga.QA.Tests.Salesforce
 
 			var customer = CustomerBuilder.New().Build();
 			var organization = OrganisationBuilder.New(customer).Build();
-			var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatusEnum.Accepted).Build() as BusinessApplication;
+			var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build() as BusinessApplication;
 
 			application.GetPaymentPlan();
 			application.FirstCollectionAttempt(null, false, false);

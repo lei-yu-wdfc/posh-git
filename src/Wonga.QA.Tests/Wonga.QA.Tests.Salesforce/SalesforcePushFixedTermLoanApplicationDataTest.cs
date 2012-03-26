@@ -19,7 +19,7 @@ namespace Wonga.QA.Tests.Salesforce
 			Do.Until(customer.GetPaymentCard);
 			var app = ApplicationBuilder.New(customer).Build();
 
-			Do.With().Timeout(TimeSpan.FromSeconds(5)).Until(() => Salesforce.ApplicationExists(app.Id));
+			Do.With.Timeout(TimeSpan.FromSeconds(5)).Until(() => Salesforce.ApplicationExists(app.Id));
 		}
 	}
 }
