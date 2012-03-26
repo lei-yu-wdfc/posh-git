@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
+using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Cs;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Tests.Core;
@@ -11,7 +12,7 @@ namespace Wonga.QA.Tests.Payments.Queries
     [TestFixture]
     public class GetPersonalPaymentCardsCsapiQueryTests
     {
-        [Test, JIRA("UK-1194")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1194")]
         public void Query_ShouldReturnAllPersonalPaymentCards_WhenPersonalCardsPresentForAccount()
         {
             DateTime today = DateTime.Today;
