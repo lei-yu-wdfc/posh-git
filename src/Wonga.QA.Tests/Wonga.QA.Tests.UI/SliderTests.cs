@@ -291,9 +291,64 @@ namespace Wonga.QA.Tests.Ui
              Assert.IsFalse(page.Sliders.IsSubmitButtonPresent());
          }
 
-		#region Helpers
 
-		private DateTime GetExpectedDefaultPromiseDateL0()
+         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-152")]
+         public void CustomerTriesEnterSomeRubbishDataToFieldsThenAmountsShouldntBeChanged()
+         {
+            var page = Client.Home();
+
+             #region enter an empty string
+             page.Sliders.HowMuch = "";
+             page.Sliders.HowLong = "";
+             Assert.AreEqual(_amountMin.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
+             Thread.Sleep(1000);
+             page.Sliders.HowMuch = ""; // to lost focus
+             Thread.Sleep(1000);
+             Assert.AreEqual(_termMin.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
+             #endregion
+
+             #region enter negative values
+             page.Sliders.HowMuch = "-200";
+             page.Sliders.HowLong = "-10";
+             Assert.AreEqual("200", page.Sliders.HowMuch);
+             Thread.Sleep(1000);
+             page.Sliders.HowMuch = ""; // to lost focus
+             Thread.Sleep(1000);
+             Assert.AreEqual("10", page.Sliders.HowLong);
+             #endregion
+             
+             #region enter letters
+             page.Sliders.HowMuch = "sdfgsghfg";
+             page.Sliders.HowLong = "sdfgsghfg";
+             Assert.AreEqual(_amountMin.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
+             Thread.Sleep(1000);
+             page.Sliders.HowMuch = ""; // to lost focus
+             Thread.Sleep(1000);
+             Assert.AreEqual(_termMin.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
+             #endregion
+
+             #region enter bigger than max possible values
+             page.Sliders.HowMuch = "5000";
+             page.Sliders.HowLong = "100";
+             Assert.AreEqual(_amountMax.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
+             Thread.Sleep(1000);
+             Assert.AreEqual(_termMax.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
+             #endregion
+
+             #region enter mixed data
+             page.Sliders.HowMuch = "kjh2-dsf0sdf0";
+             page.Sliders.HowLong = "dfg1dfg-0df";
+             Assert.AreEqual("200", page.Sliders.HowMuch);
+             Thread.Sleep(1000);
+             page.Sliders.HowMuch = ""; // to lost focus
+             Thread.Sleep(1000);
+             Assert.AreEqual("10", page.Sliders.HowLong);
+             #endregion
+         }
+
+         #region Helpers
+
+         private DateTime GetExpectedDefaultPromiseDateL0()
 		{
 			DateTime defaultPromiseDate;
 			var now = DateTime.Today;
