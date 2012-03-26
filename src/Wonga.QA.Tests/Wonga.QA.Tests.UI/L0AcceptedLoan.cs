@@ -18,7 +18,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Za)]
         public void ZaAcceptedLoan()
         {
-            var journey = new Journey(Client.Home());
+            var journey = JourneyFactory.GetL0Journey(Client.Home()); 
             var processingPage = journey.ApplyForLoan(200, 10)
                                  .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                                  .FillAddressDetails()
@@ -36,7 +36,7 @@ namespace Wonga.QA.Tests.Ui
        [Test, AUT(AUT.Ca), Pending("CA WIP,RC FE seems broken - postponing the push of the selenium tests")]
         public void CaAcceptedLoan()
         {
-            var journey = new Journey(Client.Home());
+            var journey = JourneyFactory.GetL0Journey(Client.Home()); 
             var processingPage = journey.ApplyForLoan(200, 10)
                                  .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                                  .FillAddressDetails()
