@@ -17,6 +17,7 @@ namespace Wonga.QA.Framework.Msmq
         public DateTime? StartDate { get; set; }
         public DateTime ExpiryDate { get; set; }
         public String IssueNo { get; set; }
+        public Object BillingAddress { get; set; }
         public Decimal Amount { get; set; }
         public CurrencyCodeIso4217Enum Currency { get; set; }
         public Guid SagaId { get; set; }
