@@ -80,7 +80,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public void LookupByPostCode()
         {
-            Do.With().Interval(1).Until(ClickLookupAddress);
+            Do.With.Interval(1).Until(ClickLookupAddress);
             Do.Until(() => _addressOptionsWrapper.Displayed);
         }
 

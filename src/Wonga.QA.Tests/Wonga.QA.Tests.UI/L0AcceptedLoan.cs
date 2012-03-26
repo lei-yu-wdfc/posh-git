@@ -65,7 +65,7 @@ namespace Wonga.QA.Tests.Ui
             var journey = new Journey(Client.Home());
 
             var acceptedPage = journey.ApplyForLoan(200, 10)
-                                     .FillPersonalDetails("test:CustomerIsEmployed")
+                                     .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                                      .FillAddressDetails()
                                      .FillAccountDetails()
                                      .FillBankDetails()

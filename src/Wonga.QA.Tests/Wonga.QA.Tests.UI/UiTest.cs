@@ -29,7 +29,7 @@ namespace Wonga.QA.Tests.Ui
             var name = TestContext.CurrentContext.Test.Name;
             TestLog.EmbedImage(name + ".Screen", Client.Screen());
             TestLog.AttachHtml(name + ".Source", Client.Source());
-            //Client.Dispose();
+            Client.Dispose();
         }
 
         protected ProcessingPage WbL0Path(String middleNameMask = null)
