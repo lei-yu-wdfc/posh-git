@@ -392,6 +392,8 @@ namespace Wonga.QA.Framework
             var entity = Do.Until(() => Drive.Db.OpsSagasCa.ExternalDebtCollectionSagaEntities.Single(e => e.ApplicationId == Id));
             Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = entity.Id });
 
+            Do.Until(() => Drive.Db.Payments.DebtCollections.Single(d => d.ApplicationEntity.ExternalId == Id && d.MovedToAgency));
+
             return this;
         }
 	}
