@@ -8,7 +8,7 @@ using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Tests.Bi
 {
-	[TestFixture]
+	[Parallelizable(TestScope.All)]
 	class AccountTests
 	{
 		[Test]
