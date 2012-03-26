@@ -11,6 +11,8 @@ using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
 using CloseApplicationSagaEntity = Wonga.QA.Framework.Db.OpsSagas.CloseApplicationSagaEntity;
+using System.Threading;
+using Wonga.QA.Framework.Db;
 
 namespace Wonga.QA.Tests.Payments
 {
@@ -164,7 +166,7 @@ namespace Wonga.QA.Tests.Payments
         }
 
 		//[Test, AUT(AUT.Ca), JIRA("CA-1862")]
-		//public void ShouldAddARevokeRecordToDebtCollections()
+		//public void RevokeApplicationFromDcaShouldAddARevokeRecordToDebtCollections()
 		//{
 		//    var customer = CustomerBuilder.New().Build();
 		//    var application = ApplicationBuilder.New(customer).Build();
@@ -231,5 +233,101 @@ namespace Wonga.QA.Tests.Payments
 				Do.Until(() => Drive.Db.OpsSagas.CloseApplicationSagaEntities.Single(s => s.TransactionId == transaction.ExternalId));
 			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ca.Id });
 		}
+
+        [Test, AUT(AUT.Ca), JIRA("CA-1862")]
+        public void ShouldCreateADebtCollectionRecord()
+        {
+            var customer = CustomerBuilder.New().Build();
+            var application = ApplicationBuilder.New(customer).Build();
+
+            var command = new MoveApplicationToDcaCommand
+            {
+                ApplicationId = application.Id,
+                AccountId = customer.Id,
+                ChargeBackOccured = false
+            };
+
+            Drive.Msmq.Payments.Send(command);
+
+            var applicationRow = Do.Until(() => Drive.Db.Payments.Applications.SingleOrDefault(e => e.ExternalId == command.ApplicationId));
+            var debtCollectionRow = Do.Until(() => Drive.Db.Payments.DebtCollections.SingleOrDefault(e => e.ApplicationId == applicationRow.ApplicationId));
+            Assert.IsNotNull(debtCollectionRow);
+        }
+
+        [Test, AUT(AUT.Ca), JIRA("CA-1862")]
+        public void ShouldNotCreateADebtCollectionRecordIfInDispute()
+        {
+            var customer = CustomerBuilder.New().Build();
+            var application = ApplicationBuilder.New(customer).Build();
+
+            var db = new DbDriver();
+            var customerDetailsRow = db.Payments.AccountPreferences.Single(cd => cd.AccountId == customer.Id);
+            customerDetailsRow.IsDispute = true;
+            db.Payments.SubmitChanges();
+
+            var command = new MoveApplicationToDcaCommand
+            {
+                ApplicationId = application.Id,
+                AccountId = customer.Id,
+                ChargeBackOccured = false
+            };
+
+            Drive.Msmq.Payments.Send(command);
+
+            Thread.Sleep(10000);
+
+            var applicationRow = Drive.Db.Payments.Applications.SingleOrDefault(e => e.ExternalId == command.ApplicationId);
+            var debtCollectionRow = Drive.Db.Payments.DebtCollections.SingleOrDefault(e => e.ApplicationId == applicationRow.ApplicationId);
+            Assert.IsNull(debtCollectionRow);
+        }
+
+        [Test, AUT(AUT.Ca), JIRA("CA-1862")]
+        public void ShouldNotCreateADebtCollectionRecordIfInHardship()
+        {
+            var customer = CustomerBuilder.New().Build();
+            var application = ApplicationBuilder.New(customer).Build();
+
+            var db = new DbDriver();
+            var customerDetailsRow = db.Payments.AccountPreferences.Single(cd => cd.AccountId == customer.Id);
+            customerDetailsRow.IsHardship = true;
+            db.Payments.SubmitChanges();
+
+            var command = new MoveApplicationToDcaCommand
+            {
+                ApplicationId = application.Id,
+                AccountId = customer.Id,
+                ChargeBackOccured = false
+            };
+
+            Drive.Msmq.Payments.Send(command);
+
+            Thread.Sleep(10000);
+
+            var applicationRow = Drive.Db.Payments.Applications.SingleOrDefault(e => e.ExternalId == command.ApplicationId);
+            var debtCollectionRow = Drive.Db.Payments.DebtCollections.SingleOrDefault(e => e.ApplicationId == applicationRow.ApplicationId);
+            Assert.IsNull(debtCollectionRow);
+        }
+
+        [Test, AUT(AUT.Ca), JIRA("CA-1862")]
+        public void ShouldNotCreateADebtCollectionRecordIfAChargeBackOccurred()
+        {
+            var customer = CustomerBuilder.New().Build();
+            var application = ApplicationBuilder.New(customer).Build();
+
+            var command = new MoveApplicationToDcaCommand
+            {
+                ApplicationId = application.Id,
+                AccountId = customer.Id,
+                ChargeBackOccured = true
+            };
+
+            Drive.Msmq.Payments.Send(command);
+
+            Thread.Sleep(10000);
+
+            var applicationRow = Drive.Db.Payments.Applications.SingleOrDefault(e => e.ExternalId == command.ApplicationId);
+            var debtCollectionRow = Drive.Db.Payments.DebtCollections.SingleOrDefault(e => e.ApplicationId == applicationRow.ApplicationId);
+            Assert.IsNull(debtCollectionRow);
+        }
 	}
 }

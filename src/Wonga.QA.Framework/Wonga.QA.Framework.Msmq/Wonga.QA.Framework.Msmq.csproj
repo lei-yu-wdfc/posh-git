@@ -293,6 +293,7 @@
     <Compile Include="Messages\IApplicationDecisionEvent.cs" />
     <Compile Include="Messages\IApplicationDeclinedEvent.cs" />
     <Compile Include="Messages\IApplicationGuarantorAddedEvent.cs" />
+    <Compile Include="Messages\IApplicationMovedToDcaEvent.cs" />
     <Compile Include="Messages\IApplicationOrganisationCorrelatedWbUkEvent.cs" />
     <Compile Include="Messages\IApplicationOrganisationPrimaryDirectorCorrelatedWbUkEvent.cs" />
     <Compile Include="Messages\IApplicationOrganisationSecondaryDirectorCorrelatedWbUkEvent.cs" />
@@ -545,6 +546,7 @@
     <Compile Include="Messages\MakeSmsProviderHttpRequestCommand.cs" />
     <Compile Include="Messages\ManualVerificationDecisionCommand.cs" />
     <Compile Include="Messages\MobilePhoneSalesforceAccountAdddedCommand.cs" />
+    <Compile Include="Messages\MoveApplicationToDcaCommand.cs" />
     <Compile Include="Messages\NaedoResponseFileRecordZaCommand.cs" />
     <Compile Include="Messages\NeedIovationResultCommand.cs" />
     <Compile Include="Messages\NumberOfBankAccountsAddedCommand.cs" />
