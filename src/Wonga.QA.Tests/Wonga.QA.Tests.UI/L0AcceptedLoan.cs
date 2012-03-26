@@ -63,16 +63,14 @@ namespace Wonga.QA.Tests.Ui
         public void UkAcceptedLoan()
         {
             var journey = new Journey(Client.Home());
-            
-            var processingPage = journey.ApplyForLoan(200, 10)
-                .FillPersonalDetails("test:CustomerIsEmployed")
-                .FillAddressDetails()
-                .FillAccountDetails()
-                .FillBankDetails()
-                .FillCardDetails()
-                .CurrentPage as ProcessingPage;
-                var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
 
+            var acceptedPage = journey.ApplyForLoan(200, 10)
+                                     .FillPersonalDetails("test:CustomerIsEmployed")
+                                     .FillAddressDetails()
+                                     .FillAccountDetails()
+                                     .FillBankDetails()
+                                     .FillCardDetails()
+                                     .WaitForAcceptedPage().CurrentPage as AcceptedPage;
         }
     }
 }
