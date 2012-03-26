@@ -6,6 +6,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
     {
         public String FormId { get; set; }
         public String Postcode { get; set; }
+        public String PostcodeLookup { get; set; }
         public String PostcodeErrorForm { get; set; }
         public String FlatNumber { get; set; }
         public String District { get; set; }
@@ -18,5 +19,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
 
         public String LookupButton { get; set; }
         public String NextButton { get; set; }
+        public String AddressOptionsWrapper { get; set; }
+        public String PostcodeValid { get; set; }
     }
 }

@@ -3,6 +3,7 @@ obj/
 TestResults/
 Reports/
 _ReSharper.*/
+lib/WebDriver
 
 *.dotCover
 *.DotSettings

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Gallio.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Remote;
@@ -15,12 +16,12 @@ namespace Wonga.QA.Framework.UI
     {
         public static IWebDriver Driver(this IWebElement element)
         {
-            return ((RemoteWebElement)element).WrappedDriver; 
+            return ((RemoteWebElement)element).WrappedDriver;
         }
 
         public static void SelectLabel(this ReadOnlyCollection<IWebElement> elements, String value)
         {
-            
+
             elements.SelectLabel(label => label.Trim() == value);
         }
 
