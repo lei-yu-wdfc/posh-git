@@ -40,7 +40,7 @@ namespace Wonga.QA.Tests.Comms.Email
         
         private bool CheckPaymentConfirmationEmailSent()
         {
-            return Drive.Db.QaData.Email.First(e => e.EmailAddress == _emailAddress && 
+            return Drive.Db.QaData.Emails.First(e => e.EmailAddress == _emailAddress && 
                                                     e.TemplateName == "34009") != null;
         }
 
