@@ -17,8 +17,8 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		public void CheckpointApplicationElementNotOnCSBlacklistAccept()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
-
-			var riskAccount = Do.With().Timeout(1).Until(() => Drive.Db.Risk.RiskAccounts.Single(a => a.AccountId == customer.Id));
+		
+			var riskAccount =Do.With.Timeout(1).Until(() => Drive.Db.Risk.RiskAccounts.Single(a => a.AccountId == customer.Id));
 			Assert.IsFalse(riskAccount.DoNotRelend);
 
 			ApplicationBuilder.New(customer).Build();
