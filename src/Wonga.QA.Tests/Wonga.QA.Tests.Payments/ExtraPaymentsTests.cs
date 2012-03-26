@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading;
+using Gallio.Framework;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
@@ -14,25 +15,23 @@ namespace Wonga.QA.Tests.Payments
     [Parallelizable(TestScope.All)]
     public class ExtraPaymentsTests
     {
-        private BusinessApplication _application;
-        private PaymentPlanEntity _paymentPlan;
-
-        [SetUp]
-        public void Setup()
+        private static void InitApplication(out PaymentPlanEntity paymentPlan, out BusinessApplication application)
         {
             var customer = CustomerBuilder.New().Build();
             var organization = OrganisationBuilder.New(customer).Build();
 
-            _application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build() as BusinessApplication;
-            _paymentPlan = _application.GetPaymentPlan();
+            application =
+                ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build()
+                as BusinessApplication;
+            paymentPlan = application.GetPaymentPlan();
         }
 
-        private void CreateExtraPayment(decimal extraPaymentAmount)
+        private void CreateExtraPayment(decimal extraPaymentAmount, Guid applicationId)
         {
             Drive.Msmq.Payments.Send(new CreateTransactionCommand
                                           {
                                               Amount = extraPaymentAmount,
-                                              ApplicationId = _application.Id,
+                                              ApplicationId = applicationId,
                                               Currency = CurrencyCodeIso4217Enum.GBP,
                                               ExternalId = Guid.NewGuid(),
                                               ComponentTransactionId = Guid.Empty,
@@ -54,11 +53,15 @@ namespace Wonga.QA.Tests.Payments
         [Test, AUT(AUT.Wb), JIRA("SME-800")]
         public void GivenExtraPaymentHasBeenMadePaymentsShouldAmmendWeeklyRepayment()
         {
-            decimal extraPaymentAmount = _paymentPlan.RegularAmount / 2M;
-            CreateExtraPayment(extraPaymentAmount);
-            var newPaymentPlan = _application.GetPaymentPlan();
-            Assert.LessThan(newPaymentPlan.RegularAmount, _paymentPlan.RegularAmount);
-            Do.Until(() => Drive.Db.Payments.Transactions.Single(t => t.ApplicationEntity.ExternalId == _application.Id
+            PaymentPlanEntity paymentPlan;
+            BusinessApplication application;
+            InitApplication(out paymentPlan, out application);
+
+            decimal extraPaymentAmount = paymentPlan.RegularAmount / 2M;
+            CreateExtraPayment(extraPaymentAmount, application.Id);
+            var newPaymentPlan = application.GetPaymentPlan();
+            Assert.LessThan(newPaymentPlan.RegularAmount, paymentPlan.RegularAmount);
+            Do.Until(() => Drive.Db.Payments.Transactions.Single(t => t.ApplicationEntity.ExternalId == application.Id
                                                         && t.Type == PaymentTransactionEnum.InterestAdjustment.ToString()));
         }
 
@@ -70,17 +73,21 @@ namespace Wonga.QA.Tests.Payments
         [Test, AUT(AUT.Wb), JIRA("SME-800")]
         public void GivenExtraPaymentHasBeenMadeWhenItIsMoreThanArrearsPaymentsShouldAmmendWeeklyRepayment()
         {
-            decimal extraPaymentAmount = _paymentPlan.RegularAmount * 2M;
-            _application.PutApplicationIntoArrears();
+            PaymentPlanEntity paymentPlan;
+            BusinessApplication application;
+            InitApplication(out paymentPlan, out application);
 
-            CreateExtraPayment(extraPaymentAmount);
-            var newPaymentPlan = _application.GetPaymentPlan();
+            decimal extraPaymentAmount = paymentPlan.RegularAmount * 2M;
+            application.PutApplicationIntoArrears();
 
-            Assert.LessThan(newPaymentPlan.RegularAmount, _paymentPlan.RegularAmount);
-            Do.Until(() => Drive.Db.Payments.Transactions.Single(t => t.ApplicationEntity.ExternalId == _application.Id
+            CreateExtraPayment(extraPaymentAmount, application.Id);
+            var newPaymentPlan = application.GetPaymentPlan();
+
+            Assert.LessThan(newPaymentPlan.RegularAmount, paymentPlan.RegularAmount);
+            Do.Until(() => Drive.Db.Payments.Transactions.Single(t => t.ApplicationEntity.ExternalId == application.Id
                                             && t.Type == PaymentTransactionEnum.InterestAdjustment.ToString()));
             // Check that app is in not arrears
-            Assert.IsFalse(_application.IsInArrears());
+            Assert.IsFalse(application.IsInArrears());
         }
 
         /// <summary>
@@ -91,15 +98,19 @@ namespace Wonga.QA.Tests.Payments
         [Test, AUT(AUT.Wb), JIRA("SME-800")]
         public void GivenExtraPaymentHasBeenMadeWhenItIsLessThanArrearsPaymentsShouldNotAmmendWeeklyRepayment()
         {
-            decimal extraPaymentAmount = _paymentPlan.RegularAmount / 2M;
-            _application.PutApplicationIntoArrears();
+            PaymentPlanEntity paymentPlan;
+            BusinessApplication application;
+            InitApplication(out paymentPlan, out application);
 
-            CreateExtraPayment(extraPaymentAmount);
-            var newPaymentPlan = _application.GetPaymentPlan();
+            decimal extraPaymentAmount = paymentPlan.RegularAmount / 2M;
+            application.PutApplicationIntoArrears();
 
-            Assert.AreEqual(newPaymentPlan.RegularAmount, _paymentPlan.RegularAmount);
+            CreateExtraPayment(extraPaymentAmount, application.Id);
+            var newPaymentPlan = application.GetPaymentPlan();
+
+            Assert.AreEqual(newPaymentPlan.RegularAmount, paymentPlan.RegularAmount);
             // Check that app is in arrears
-            Assert.IsTrue(_application.IsInArrears());
+            Assert.IsTrue(application.IsInArrears());
         }
 
         /// <summary>
@@ -110,15 +121,19 @@ namespace Wonga.QA.Tests.Payments
         [Test, AUT(AUT.Wb), JIRA("SME-800")]
         public void GivenExtraPaymentHasBeenMadeWhenItIsEqualArrearsPaymentsShouldNotAmmendWeeklyRepayment()
         {
-            decimal extraPaymentAmount = _paymentPlan.RegularAmount;
-            _application.PutApplicationIntoArrears();
+            PaymentPlanEntity paymentPlan;
+            BusinessApplication application;
+            InitApplication(out paymentPlan, out application);
 
-            CreateExtraPayment(extraPaymentAmount);
-            var newPaymentPlan = _application.GetPaymentPlan();
+            decimal extraPaymentAmount = paymentPlan.RegularAmount;
+            application.PutApplicationIntoArrears();
 
-            Assert.AreEqual(newPaymentPlan.RegularAmount, _paymentPlan.RegularAmount);
+            CreateExtraPayment(extraPaymentAmount, application.Id);
+            var newPaymentPlan = application.GetPaymentPlan();
+
+            Assert.AreEqual(newPaymentPlan.RegularAmount, paymentPlan.RegularAmount);
             // Check that app is in not arrears
-            Assert.IsFalse(_application.IsInArrears());
+            Assert.IsFalse(application.IsInArrears());
         }
 
         /// <summary>
@@ -129,16 +144,20 @@ namespace Wonga.QA.Tests.Payments
         [Test, AUT(AUT.Wb), JIRA("SME-800")]
         public void GivenExtraPaymentHasBeenMadeWhenItIsEqualArrearsAndFeesPaymentsShouldNotAmmendWeeklyRepayment()
         {
+            PaymentPlanEntity paymentPlan;
+            BusinessApplication application;
+            InitApplication(out paymentPlan, out application);
+
             // arrears + default charges
-            decimal extraPaymentAmount = _paymentPlan.RegularAmount + 10;
-            _application.PutApplicationIntoArrears();
+            decimal extraPaymentAmount = paymentPlan.RegularAmount + 10;
+            application.PutApplicationIntoArrears();
 
-            CreateExtraPayment(extraPaymentAmount);
-            var newPaymentPlan = _application.GetPaymentPlan();
+            CreateExtraPayment(extraPaymentAmount, application.Id);
+            var newPaymentPlan = application.GetPaymentPlan();
 
-            Assert.AreEqual(newPaymentPlan.RegularAmount, _paymentPlan.RegularAmount);
+            Assert.AreEqual(newPaymentPlan.RegularAmount, paymentPlan.RegularAmount);
             // Check that app is in not arrears
-            Assert.IsFalse(_application.IsInArrears());
+            Assert.IsFalse(application.IsInArrears());
             //Assert.IsFalse(application.HasOutstandingCharges());
         }
     }
