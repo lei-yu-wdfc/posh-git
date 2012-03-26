@@ -32,7 +32,9 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test, AUT(AUT.Za), JIRA("ZA-1910")]
 		public void CheckpointBankAccountIsValidShouldReturnReadyToSignStatus()
 		{
-			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
+			var bankAccountNumber = Get.GetBankAccountNumber();
+
+			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithBankAccountNumber(bankAccountNumber).Build();
             ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.ReadyToSign).Build();
 		}
 	}
