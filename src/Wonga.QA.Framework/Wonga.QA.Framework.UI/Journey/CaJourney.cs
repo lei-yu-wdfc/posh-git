@@ -100,7 +100,7 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public ICustomerJourney FillDebitCardPage()
+        public ICustomerJourney FillCardDetails()
         {
             throw new NotImplementedException();
         }

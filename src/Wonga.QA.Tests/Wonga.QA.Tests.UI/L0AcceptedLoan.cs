@@ -62,7 +62,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk)]
         public void UkAcceptedLoan()
         {
-            var journey = new Journey(Client.Home());
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
 
             var acceptedPage = journey.ApplyForLoan(200, 10)
                                      .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))

@@ -38,7 +38,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-189")]
         public void L0JourneyInvalidPINShouldCauseWarningMessageOnNextPage()
         {
-            var journey = new Journey(Client.Home());
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
             var bankDetailsPage = journey.ApplyForLoan(200, 10)
                                       .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                                       .FillAddressDetails()
@@ -68,7 +68,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-177")]
         public void ChangeLoanAmountAndDurationOnPersonalDetailsViaPlusMinusOptions()
         {
-            var journey = new Journey(Client.Home());
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
             var personalDetailsPage = journey.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
             personalDetailsPage.ClickSliderToggler();
             var firstTotalToRepayValue = personalDetailsPage.GetTotalToRepay;
@@ -139,7 +139,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-176")]
         public void ChangeLoanAmountAndDurationOnPersonalDetailsViaTypingToTheFields()
         {
-            var journey = new Journey(Client.Home());
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
             var personalDetailsPage = journey.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
             personalDetailsPage.ClickSliderToggler();
             var firstTotalToRepayValue = personalDetailsPage.GetTotalToRepay;
@@ -210,7 +210,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-183")]
         public void EnterDifferentPasswordsAtAccountDetailsPageShouldCauseWarningMessage()
         {
-            var journey = new Journey(Client.Home());
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
             switch (Config.AUT)
             {
                 case AUT.Za:
@@ -241,7 +241,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-190")]
         public void L0JourneyDataOnAcceptedPageShouldBeCorrect()
         {
-            Journey journey = new Journey(Client.Home());
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
             var personalDetailsPage = journey.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
             string totalAmountOnPersonalDetails = personalDetailsPage.GetTotalAmount + ".00";
             string totalFeesOnPersonalDetails = personalDetailsPage.GetTotalFees;
@@ -315,7 +315,7 @@ namespace Wonga.QA.Tests.Ui
                 .FillAddressDetails()
                 .FillAccountDetails()
                 .FillBankDetails()
-                .FillDebitCardPage()
+                .FillCardDetails()
                 .WaitForAcceptedPage()
                 .FillAcceptedPage()
                 .GoToMySummaryPage()

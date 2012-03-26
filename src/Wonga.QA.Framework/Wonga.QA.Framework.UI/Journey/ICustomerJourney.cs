@@ -21,7 +21,7 @@ namespace Wonga.QA.Framework.UI
         ICustomerJourney FillAddressDetails();
         ICustomerJourney FillAccountDetails();
         ICustomerJourney FillBankDetails();
-        ICustomerJourney FillDebitCardPage();
+        ICustomerJourney FillCardDetails();
         ICustomerJourney WaitForAcceptedPage();
         ICustomerJourney WaitForDeclinedPage();
         ICustomerJourney FillAcceptedPage();

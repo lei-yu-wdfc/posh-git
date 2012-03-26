@@ -35,29 +35,31 @@ namespace Wonga.QA.Framework.UI
             var email = Get.RandomEmail();
             string employerName = employerNameMask ?? Get.GetMiddleName();
             var personalDetailsPage = CurrentPage as PersonalDetailsPage;
-            personalDetailsPage.YourName.Title = "Mr";
             personalDetailsPage.YourName.FirstName = FirstName;
-            personalDetailsPage.YourName.MiddleName = Get.GetMiddleName();
+            personalDetailsPage.YourName.MiddleName = "";
             personalDetailsPage.YourName.LastName = LastName;
-            personalDetailsPage.YourDetails.Gender = "Male";
+            personalDetailsPage.YourName.Title = "Mr";
             personalDetailsPage.YourDetails.DateOfBirth = "1/Jan/1980";
-            personalDetailsPage.YourDetails.HomeStatus = "Owner occupier";
+            personalDetailsPage.YourDetails.Gender = "Male";
+            personalDetailsPage.YourDetails.HomeStatus = "Tenant furnished";
             personalDetailsPage.YourDetails.MaritalStatus = "Single";
             personalDetailsPage.YourDetails.NumberOfDependants = "0";
             personalDetailsPage.EmploymentDetails.EmploymentStatus = "Employed - full time";
+            personalDetailsPage.EmploymentDetails.MonthlyIncome = "1000";
             personalDetailsPage.EmploymentDetails.EmployerName = employerName;
             personalDetailsPage.EmploymentDetails.EmployerIndustry = "Finance";
-            personalDetailsPage.EmploymentDetails.EmploymentPosition = "Administration";
-            personalDetailsPage.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d MMM yyyy");
-            personalDetailsPage.EmploymentDetails.TimeWithEmployerYears = "5";
-            personalDetailsPage.EmploymentDetails.TimeWithEmployerMonths = "5";
-            personalDetailsPage.EmploymentDetails.MonthlyIncome = "5000";
+            personalDetailsPage.EmploymentDetails.EmploymentPosition = "Engineering";
+            personalDetailsPage.EmploymentDetails.TimeWithEmployerYears = "1";
+            personalDetailsPage.EmploymentDetails.TimeWithEmployerMonths = "0";
             personalDetailsPage.EmploymentDetails.SalaryPaidToBank = true;
-            personalDetailsPage.EmploymentDetails.WorkPhone = "01605741258";
-            personalDetailsPage.ContactingYou.CellPhoneNumber = "07200000000";
+            personalDetailsPage.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("dd/MMM/yyyy");
+            personalDetailsPage.EmploymentDetails.IncomeFrequency = "Monthly";
+            personalDetailsPage.EmploymentDetails.WorkPhone = "02087111222";
+            personalDetailsPage.ContactingYou.CellPhoneNumber = "07707111222";
             personalDetailsPage.ContactingYou.EmailAddress = email;
             personalDetailsPage.ContactingYou.ConfirmEmailAddress = email;
             personalDetailsPage.PrivacyPolicy = true;
+            personalDetailsPage.CanContact = "Yes";
             CurrentPage = personalDetailsPage.Submit() as AddressDetailsPage;
             return this;
 
@@ -66,53 +68,51 @@ namespace Wonga.QA.Framework.UI
         public ICustomerJourney FillAddressDetails()
         {
             var addressPage = CurrentPage as AddressDetailsPage;
-            addressPage.PostCode = "se3 0sw";
+            addressPage.PostCodeLookup = "SW6 6PN";
             addressPage.LookupByPostCode();
-
-            Thread.Sleep(10000);
             addressPage.GetAddressesDropDown();
-            addressPage.SelectedAddress = "52 Ryculff Square, LONDON SE3 0SW";
-
-            Thread.Sleep(10000);
-            addressPage.GetAddressFieldsUK();
+            Do.Until(() => addressPage.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN");
+            Do.Until(() => addressPage.FlatNumber = "666");
             addressPage.AddressPeriod = "3 to 4 years";
-            CurrentPage = addressPage.Next() as AccountDetailsPage;
+            CurrentPage = addressPage.Next();
             return this;
         }
 
         public ICustomerJourney FillAccountDetails()
         {
-            var addressPage = CurrentPage as AddressDetailsPage;
-            addressPage.AccountDetailsSection.Password = Get.GetPassword();
-            addressPage.AccountDetailsSection.PasswordConfirm = Get.GetPassword();
-            addressPage.AccountDetailsSection.SecretQuestion = "Secret question'-.";
-            addressPage.AccountDetailsSection.SecretAnswer = "Secret answer";
-            CurrentPage = addressPage.Next() as PersonalBankAccountPage;
+            var accountDetailsPage = CurrentPage as AccountDetailsPage;
+            accountDetailsPage.AccountDetailsSection.Password = Get.GetPassword();
+            accountDetailsPage.AccountDetailsSection.PasswordConfirm = Get.GetPassword();
+            accountDetailsPage.AccountDetailsSection.SecretQuestion = "Secret question'-.";
+            accountDetailsPage.AccountDetailsSection.SecretAnswer = "Secret answer";
+            CurrentPage = accountDetailsPage.Next() as PersonalBankAccountPage;
             return this;
         }
 
         public ICustomerJourney FillBankDetails()
         {
             var bankDetailsPage = CurrentPage as PersonalBankAccountPage;
-            bankDetailsPage.BankAccountSection.BankName = "Barclays";
+            bankDetailsPage.BankAccountSection.BankName = "AIB";
             bankDetailsPage.BankAccountSection.SortCode = "13-40-20";
             bankDetailsPage.BankAccountSection.AccountNumber = "63849203";
             bankDetailsPage.BankAccountSection.BankPeriod = "3 to 4 years";
-            CurrentPage = bankDetailsPage.Next() as PersonalDebitCardPage;
+            CurrentPage = bankDetailsPage.Next();
             return this;
         }
 
-        public ICustomerJourney FillDebitCardPage()
+        public ICustomerJourney FillCardDetails()
         {
-            var cardDetailsPage = CurrentPage as PersonalDebitCardPage;
-            cardDetailsPage.DebitCardSection.CardType = "Visa Electron";
-            cardDetailsPage.DebitCardSection.CardNumber = "4444333322221111";
-            cardDetailsPage.DebitCardSection.CardName = "mr " + LastName;
-            cardDetailsPage.DebitCardSection.StartDate = "Jan/2010";
-            cardDetailsPage.DebitCardSection.ExpiryDate = "Jan/2014";
-            cardDetailsPage.DebitCardSection.CardSecurity = "000";
-            cardDetailsPage.MobilePinVerification.Pin = "0000";
-            CurrentPage = cardDetailsPage.Next() as ProcessingPage;
+            var personalDebitCardPage = CurrentPage as PersonalDebitCardPage;
+
+            personalDebitCardPage.DebitCardSection.CardName = FirstName;
+            personalDebitCardPage.DebitCardSection.CardNumber = "4444333322221111";
+            personalDebitCardPage.DebitCardSection.CardSecurity = "666";
+            personalDebitCardPage.DebitCardSection.CardType = "Visa Debit";
+            personalDebitCardPage.DebitCardSection.ExpiryDate = "Jan/2015";
+            personalDebitCardPage.DebitCardSection.StartDate = "Jan/2007";
+            personalDebitCardPage.MobilePinVerification.Pin = "0000";
+            CurrentPage = personalDebitCardPage.Next() as ProcessingPage;
+
             return this;
         }
 
