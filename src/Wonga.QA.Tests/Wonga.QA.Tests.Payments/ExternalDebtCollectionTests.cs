@@ -6,9 +6,11 @@ using Wonga.QA.Framework.Api.Exceptions;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Cs;
 using Wonga.QA.Framework.Db.OpsSagasCa;
+using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
+using CloseApplicationSagaEntity = Wonga.QA.Framework.Db.OpsSagas.CloseApplicationSagaEntity;
 
 namespace Wonga.QA.Tests.Payments
 {
@@ -18,8 +20,6 @@ namespace Wonga.QA.Tests.Payments
     	[Test, AUT(AUT.Ca), JIRA("CA-913")]
 		public void When31DaysPassedAndArrearsCollectionSucceededThenShouldNotMoveApplicationToDca()
 		{
-			ConfigurationFunctions.SetDelayBeforeApplicationClosed(100000);
-
 			var customer = CustomerBuilder.New().Build();
 			var application = ApplicationBuilder.New(customer).Build();
 
@@ -27,7 +27,8 @@ namespace Wonga.QA.Tests.Payments
 
 			RepayLoanInArrears(application);
 
-    		application.WaitForClose();
+    		var transaction = WaitForCreditTransaction(application);
+    		TimeoutCloseApplicationSaga(transaction);
 
     		// Validate that external debt collection finished
 			Do.Until(() => Drive.Db.OpsSagasCa.ExternalDebtCollectionSagaEntities.SingleOrDefault(e => e.ApplicationId == application.Id) == null);
@@ -199,6 +200,20 @@ namespace Wonga.QA.Tests.Payments
 			};
 
 			Drive.Msmq.Payments.Send(arrears);
+		}
+
+		private TransactionEntity WaitForCreditTransaction(Application application)
+		{
+			return Do.Until(() => Drive.Db.Payments.Applications.Single(
+				a => a.ExternalId == application.Id).Transactions.OrderByDescending(o => o.CreatedOn).
+				Single(t =>(PaymentTransactionScopeEnum)t.Scope == PaymentTransactionScopeEnum.Credit));
+		}
+
+		private void TimeoutCloseApplicationSaga(TransactionEntity transaction)
+		{
+			CloseApplicationSagaEntity ca =
+				Do.Until(() => Drive.Db.OpsSagas.CloseApplicationSagaEntities.Single(s => s.TransactionId == transaction.ExternalId));
+			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ca.Id });
 		}
 	}
 }

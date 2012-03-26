@@ -77,36 +77,22 @@ namespace Wonga.QA.Framework
 				Do.While(sp.Refresh);
 			}
 
-			WaitForDirectBankPaymentCreditTransaction();
+			var transaction = WaitForDirectBankPaymentCreditTransaction();
 
-			WaitForClose();
+			TimeoutCloseApplicationSaga(transaction);
+
+		    Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).ClosedOn);
 
 			return this;
 		}
 
-		public void WaitForClose()
-		{
-			Do.Until(() =>
-			{
-				try
-				{
-					TimeoutCloseApplicationSaga();
-				}
-				// ReSharper disable EmptyGeneralCatchClause
-				catch
-				{
-					// The saga timeout might fail if "Setting the ClosedOn", "Sending the timeout" and "Asserting if it was closed" race against each other
-				}
-				// ReSharper restore EmptyGeneralCatchClause
-
-				return Drive.Db.Payments.Applications.Single(e => e.ExternalId == Id).ClosedOn != null;
-			});
-		}
-
-		private void TimeoutCloseApplicationSaga()
+	    private static void TimeoutCloseApplicationSaga(TransactionEntity transaction)
 	    {
-	        CloseApplicationSagaEntity ca = Drive.Db.OpsSagas.CloseApplicationSagaEntities.Single(s => s.ApplicationId == Id);
+	        CloseApplicationSagaEntity ca =
+	            Do.Until(
+	                () => Drive.Db.OpsSagas.CloseApplicationSagaEntities.Single(s => s.TransactionId == transaction.ExternalId));
 	        Drive.Msmq.Payments.Send(new TimeoutMessage {SagaId = ca.Id});
+	        Do.While(ca.Refresh);
 	    }
 
 	    private TransactionEntity WaitForDirectBankPaymentCreditTransaction()
@@ -177,7 +163,7 @@ namespace Wonga.QA.Framework
 
 		public Application CreateRepaymentArrangement()
 		{
-			var cmd = new Api.CreateRepaymentArrangementCommand
+			var cmd = new Api.CreateRepaymentArrangementCommand()
 			{
 				ApplicationId = Id,
 				Frequency = Api.PaymentFrequencyEnum.Every4Weeks,
@@ -229,10 +215,10 @@ namespace Wonga.QA.Framework
 				Do.While(sp.Refresh);
 			}
 
-            WaitForDirectBankPaymentCreditTransaction();
+            var transaction = WaitForDirectBankPaymentCreditTransaction();
 
             // Not sure this should be a part of this method 
-            TimeoutCloseApplicationSaga();
+            TimeoutCloseApplicationSaga(transaction);
 
 			return this;
 		}
