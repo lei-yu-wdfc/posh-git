@@ -84,6 +84,19 @@ namespace Wonga.QA.Tests.Salesforce
 			Do.Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, query));
 		}
 
+		[Test, AUT(AUT.Wb), JIRA("SME-375"), Explicit]
+		public void PaymentsShouldPushNewBusinessLoanApplicationStatusToSF_WhenMainApplicantIsAccepted()
+		{
+			const int acceptedInPrincipleStatus = 101;
+			var customer = CustomerBuilder.New().Build();
+			var organisation = OrganisationBuilder.New(customer).WithSoManySecondaryDirectors(2).Build();
+			var application = ApplicationBuilder.New(customer, organisation).Build();
+
+			var query = String.Format(getApplicationWithUpdatedStatus, application.Id, acceptedInPrincipleStatus);
+
+			Do.Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, query));
+		}
+
 		[Test, AUT(AUT.Wb), JIRA("SME-375")]
 		public void PaymentsShouldPushNewBusinessLoanApplicationStatusToSF_WhenApplicationIsAccepted()
 		{
@@ -111,7 +124,7 @@ namespace Wonga.QA.Tests.Salesforce
 			Do.Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, query));
 		}
 
-		[Test, AUT(AUT.Wb), JIRA("SME-892"), Ignore]
+		[Test, AUT(AUT.Wb), JIRA("SME-811"), Ignore]
 		public void PaymentsShouldPushNewBusinessLoanApplicationStatusToSF_WhenApplicationIsAddedToInArrears()
 		{
 			const int inArrearsStatus = 113;
@@ -127,10 +140,31 @@ namespace Wonga.QA.Tests.Salesforce
 
 			var query = String.Format(getApplicationWithUpdatedStatus, application.Id, inArrearsStatus);
 
-			Do.Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, query));													
+			Do.With.Timeout(2).Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, query));													
 		}
 
-		//Test for InArrearsRemoved
+		[Test, AUT(AUT.Wb), JIRA("SME-892"), Ignore]
+		public void PaymentsShouldPushNewBusinessLoanApplicationStatusToSF_WhenApplicationIsRemovedFromArrears()
+		{
+			const int inArrearsStatus = 113;
+			const int loanLiveStatus = 112;
+
+			var customer = CustomerBuilder.New().Build();
+			var organization = OrganisationBuilder.New(customer).Build();
+			var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build() as BusinessApplication;
+
+			application.GetPaymentPlan();
+			application.FirstCollectionAttempt(null, false, false);
+			application.SecondCollectionAttempt(false);
+			//arrears event is fired at this point
+
+			var inArrearsQuery = String.Format(getApplicationWithUpdatedStatus, application.Id, inArrearsStatus);
+			Do.Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, inArrearsQuery));
+
+			//fire transaction for pay off arrears
+			var removedFromArrearsQuery = String.Format(getApplicationWithUpdatedStatus, application.Id, loanLiveStatus);
+			Do.Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, removedFromArrearsQuery));
+		}
 
         [Test, AUT(AUT.Wb), JIRA("SME-849")]
         public void PaymentsShouldPushLoanReferenceNumberToSFWhenApplicationIsCreated()
