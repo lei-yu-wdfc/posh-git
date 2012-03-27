@@ -8,13 +8,13 @@ using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 
 namespace Wonga.QA.Framework.UI
 {
-    class CaJourney : IConsumerJourney
+    class CaL0Journey : IConsumerJourney
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public BasePage CurrentPage { get; set; }
 
-         public CaJourney(BasePage homePage)
+         public CaL0Journey(BasePage homePage)
         {
             CurrentPage = homePage as HomePage;
             FirstName = Get.GetName();

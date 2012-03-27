@@ -14,11 +14,11 @@ namespace Wonga.QA.Framework.UI
             switch (Config.AUT)
             {
                 case AUT.Za:
-                    return new ZaJourney(homePage);
+                    return new ZaL0Journey(homePage);
                 case AUT.Ca:
-                    return new CaJourney(homePage);
+                    return new CaL0Journey(homePage);
                 case AUT.Uk:
-                    return new UkJourney(homePage);
+                    return new UkL0Journey(homePage);
                 default:
                     throw new NotImplementedException();
             }
