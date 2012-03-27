@@ -45,5 +45,9 @@
     <CardStartDateMonth>#edit-card-start-date-month</CardStartDateMonth>
     <CardStartDateYear>#edit-card-start-date-year</CardStartDateYear>
   </DebitCardSection>
+
+  <AcceptedPage>
+    <NodeWrap>.node-type-wonga-decision-page</NodeWrap>
+  </AcceptedPage>
   
 </Ui>

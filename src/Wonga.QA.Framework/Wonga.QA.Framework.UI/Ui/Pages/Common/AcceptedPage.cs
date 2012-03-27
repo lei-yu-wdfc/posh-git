@@ -10,6 +10,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
     public class AcceptedPage : BasePage, IDecisionPage
     {
         private readonly IWebElement _form;
+        private readonly IWebElement _nodeWrapper;
         private readonly IWebElement _totalToRepay;
         private readonly IWebElement _repaymentDate;
         private readonly IWebElement _acceptBusinessLoanLink;
@@ -79,6 +80,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     _totalAmountDueUnderTheAgreement =
                         _detailsTable.FindElement(By.CssSelector(Ui.Get.AcceptedPage.TotalAmountDueUnderTheAgreement));
                     _paymentDueDate = _detailsTable.FindElement(By.CssSelector(Ui.Get.AcceptedPage.PaymentDueDate));
+                    break;
+                case (AUT.Uk):
+                    _nodeWrapper = Content.FindElement(By.CssSelector(Ui.Get.AcceptedPage.NodeWrap));
                     break;
             }
         }
