@@ -1,16 +1,16 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
-using Gallio.Framework.Assertions;
 using System.Threading;
+using Gallio.Framework.Assertions;
 using MbUnit.Framework;
-using OpenQA.Selenium;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.UI;
+using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
-using Wonga.QA.Framework.UI.Mappings;
+using Wonga.QA.Framework.UI;
 
 namespace Wonga.QA.Tests.Ui
 {
@@ -131,7 +131,7 @@ namespace Wonga.QA.Tests.Ui
                 Thread.Sleep(3000);
                 paymentPage.CloseButtonClick();
                 payment = Client.Payments();
-                Assert.IsTrue(payment.IsAccountNumberRight(accountNumber)); 
+                Assert.IsTrue(payment.IsAccountNumberRight(accountNumber));
             }
             else
             {
@@ -161,11 +161,11 @@ namespace Wonga.QA.Tests.Ui
             Thread.Sleep(10000);
 
             Assert.AreEqual("You are happy to receive updates and other communications from Wonga via email and SMS.", myPersonalDetailsPage.GetCommunicationText);
-            
+
 
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-216")]
+        [Test, AUT(AUT.Za), JIRA("QA-216"), Pending("need refinement")]
         public void CustomerShouldBeAbleToChangePassword()
         {
             var loginPage = Client.Login();
@@ -188,7 +188,7 @@ namespace Wonga.QA.Tests.Ui
             Thread.Sleep(10000);
             myPersonalDetailsPage.ChangePassword("Passw0rd", "Pass", "Pass");
 
-            Thread.Sleep(10000); 
+            Thread.Sleep(10000);
             Assert.IsTrue(myPersonalDetailsPage.IsPasswordWarningMessageOccurs());
 
             myPersonalDetailsPage.PasswordClick();
@@ -218,17 +218,120 @@ namespace Wonga.QA.Tests.Ui
             myPersonalDetailsPage.PhoneClick();
             Thread.Sleep(10000);
             myPersonalDetailsPage.ChangePhone("0123000000", "0212571908", "0000");
-            
+
             myPersonalDetailsPage.Submit();
             Thread.Sleep(10000);
             myPersonalDetailsPage.Submit();
 
             Thread.Sleep(10000);
             var homePhone = Drive.Db.Comms.CustomerDetails.FirstOrDefault(c => c.Email == email).HomePhone;
-            
+
             Assert.AreEqual("0123000000", myPersonalDetailsPage.GetHomePhone);
             Assert.AreEqual("0123000000", homePhone);
             //TODO check SF
+        }
+
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-193"), Pending("need refinement")]
+        public void ArrearsCustomerCheckData()
+        {
+            int arrearsdays = 10;
+            string actualPromisedRepayDate;
+            DateTime date = DateTime.Now.AddDays(-arrearsdays);
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            application.PutApplicationIntoArrears(arrearsdays);
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+            switch (Config.AUT)
+            {
+                case (AUT.Za):
+                    #region DateFormat
+                    switch (date.Day % 10)
+                    {
+                        case 1:
+                            actualPromisedRepayDate = (date.Day > 10 && date.Day < 20)
+                                                        ? String.Format("{0:dddd d\\t\\h MMM yyyy}", date)
+                                                        : String.Format("{0:dddd d\\s\\t MMM yyyy}", date);
+                            break;
+                        case 2:
+                            actualPromisedRepayDate = (date.Day > 10 && date.Day < 20)
+                                                        ? String.Format("{0:dddd d\\t\\h MMM yyyy}", date)
+                                                        : String.Format("{0:dddd d\\n\\d MMM yyyy}", date);
+                            break;
+                        case 3:
+                            actualPromisedRepayDate = (date.Day > 10 && date.Day < 20)
+                                                        ? String.Format("{0:dddd d\\t\\h MMM yyyy}", date)
+                                                        : String.Format("{0:dddd d\\r\\d MMM yyyy}", date);
+                            break;
+                        default:
+                            actualPromisedRepayDate = String.Format("{0:dddd d\\t\\h MMM yyyy}", date);
+                            break;
+                    }
+                    #endregion
+                    Assert.AreEqual("R655.23", mySummaryPage.GetTotalToRepay);
+                    Assert.AreEqual("R649.89", mySummaryPage.GetPromisedRepayAmount);
+                    Assert.AreEqual(actualPromisedRepayDate, mySummaryPage.GetPromisedRepayDate);
+                    break;
+                case (AUT.Ca):
+                    #region DateFormat
+                    switch (date.Day % 10)
+                    {
+                        case 1:
+                            actualPromisedRepayDate = (date.Day > 10 && date.Day < 20)
+                                                        ? String.Format("{0:ddd d\\t\\h MMM yyyy}", date)
+                                                        : String.Format("{0:ddd d\\s\\t MMM yyyy}", date);
+                            break;
+                        case 2:
+                            actualPromisedRepayDate = (date.Day > 10 && date.Day < 20)
+                                                        ? String.Format("{0:ddd d\\t\\h MMM yyyy}", date)
+                                                        : String.Format("{0:ddd d\\n\\d MMM yyyy}", date);
+                            break;
+                        case 3:
+                            actualPromisedRepayDate = (date.Day > 10 && date.Day < 20)
+                                                        ? String.Format("{0:ddd d\\t\\h MMM yyyy}", date)
+                                                        : String.Format("{0:ddd d\\r\\d MMM yyyy}", date);
+                            break;
+                        default:
+                            actualPromisedRepayDate = String.Format("{0:ddd d\\t\\h MMM yyyy}", date);
+                            break;
+                    }
+                    #endregion
+                    Assert.AreEqual("$129.45", mySummaryPage.GetTotalToRepay);
+                    Assert.AreEqual("$129.00", mySummaryPage.GetPromisedRepayAmount);
+                    Thread.Sleep(10000);
+                    Assert.AreEqual(actualPromisedRepayDate, mySummaryPage.GetPromisedRepayDate);
+                    mySummaryPage.RepayButtonClick();
+                    Thread.Sleep(10000);
+                    Assert.AreEqual("$129.18", mySummaryPage.GetTotalToRepayAmountPopup);
+                    #region DateFormat
+                    switch (date.Day % 10)
+                    {
+                        case 1:
+                            actualPromisedRepayDate = (date.Day > 10 && date.Day < 20)
+                                                        ? String.Format("{0:d\\t\\h MMMM yyyy}", date)
+                                                        : String.Format("{0:d\\s\\t MMMM yyyy}", date);
+                            break;
+                        case 2:
+                            actualPromisedRepayDate = (date.Day > 10 && date.Day < 20)
+                                                        ? String.Format("{0:d\\t\\h MMMM yyyy}", date)
+                                                        : String.Format("{0:d\\n\\d MMMM yyyy}", date);
+                            break;
+                        case 3:
+                            actualPromisedRepayDate = (date.Day > 10 && date.Day < 20)
+                                                        ? String.Format("{0:d\\t\\h MMMM yyyy}", date)
+                                                        : String.Format("{0:d\\r\\d MMMM yyyy}", date);
+                            break;
+                        default:
+                            actualPromisedRepayDate = String.Format("{0:d\\t\\h MMMM yyyy}", date);
+                            break;
+                    }
+                    #endregion
+                    Assert.AreEqual(actualPromisedRepayDate, mySummaryPage.GetPromisedRepayDatePopup);
+                    break;
+            }
+
         }
     }
 }
