@@ -127,6 +127,7 @@ namespace Wonga.QA.Framework
 			Drive.Db.RewindApplicationDates(application, riskApplication, span);
 
 			FixedTermLoanSagaEntity ftl = Drive.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
+			LoanDueDateNotificationSagaEntity dueNotificationSaga = Drive.Db.OpsSagas.LoanDueDateNotificationSagaEntities.Single(s => s.ApplicationId == Id);
 			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
 			Drive.Msmq.Payments.Send(new TimeoutMessage() { SagaId = dueNotificationSaga.Id });
 			Do.With.While(ftl.Refresh);
