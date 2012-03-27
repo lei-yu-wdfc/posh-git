@@ -8,7 +8,7 @@ using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Tests.Bi
 {
-	[Parallelizable(TestScope.All), Ignore("This test keeps failing due to a known issue with BI")]
+	[Parallelizable(TestScope.All), Ignore("This test keeps failing due to a known issue  with BI")]
 	class AccountTests
 	{
 		[Test]
