@@ -12,7 +12,6 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
     {
         public MyAccountNavigationElement Navigation { get; set; }
         public SlidersElement Sliders { get; set; }
-        public IWebElement _repayButton { get; set; }
         
         public MySummaryPage(UiClient client) : base(client)
         {
@@ -23,8 +22,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     Navigation = new MyAccountNavigationElement(this);
                     break;
 
-                case (AUT.Ca) :
-                    _repayButton = Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.RepayButton));
+                case (AUT.Ca) :     
                     LookForSliders();
                     break;
 
@@ -80,7 +78,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public void RepayButtonClick()
         {
-            _repayButton.Click();
+            Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.RepayButton)).Click();
         }
 
         public String GetTotalToRepayAmountPopup
