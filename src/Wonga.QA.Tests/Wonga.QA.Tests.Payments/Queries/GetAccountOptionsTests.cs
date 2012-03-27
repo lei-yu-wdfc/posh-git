@@ -315,6 +315,81 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual(15, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
+        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        public void Scenario16CustomerInArrearsWithBrokenRepaymentArrangement()
+        {
+            var accountId = Guid.NewGuid();
+            var bankAccountId = Guid.NewGuid();
+            var paymentCardId = Guid.NewGuid();
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            var appId = Guid.NewGuid();
+            const int applicationId = 0;
+            const decimal trustRating = 400.00M;
+
+            var setupData = new AccountSummarySetupFunctions();
+            setupData.Scenario16Setup(requestId1, requestId2, applicationId, accountId, appId, paymentCardId, bankAccountId);
+
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(16, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        public void Scenario17NewCustomerWithApplicationInProgress()
+        {
+            var accountId = Guid.NewGuid();
+            var bankAccountId = Guid.NewGuid();
+            var paymentCardId = Guid.NewGuid();
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            var appId = Guid.NewGuid();
+            const int applicationId = 0;
+            const decimal trustRating = 400.00M;
+
+            var setupData = new AccountSummarySetupFunctions();
+            setupData.Scenario17Setup(requestId1, requestId2, applicationId, accountId, appId, paymentCardId, bankAccountId);
+
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(17, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        public void Scenario20NewCustomerLastApplicationDeclined()
+        {
+            var accountId = Guid.NewGuid();
+            var bankAccountId = Guid.NewGuid();
+            var paymentCardId = Guid.NewGuid();
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            var appId = Guid.NewGuid();
+            const int applicationId = 0;
+            const decimal trustRating = 400.00M;
+
+            var setupData = new AccountSummarySetupFunctions();
+            setupData.Scenario20Setup(requestId1, requestId2, applicationId, accountId, appId, paymentCardId, bankAccountId);
+
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(20, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        public void Scenario21CustomerApplicationAwaitingSignature()
+        {
+            var accountId = Guid.NewGuid();
+            var bankAccountId = Guid.NewGuid();
+            var paymentCardId = Guid.NewGuid();
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            var appId = Guid.NewGuid();
+            const int applicationId = 0;
+            const decimal trustRating = 400.00M;
+
+            var setupData = new AccountSummarySetupFunctions();
+            setupData.Scenario21Setup(requestId1, requestId2, applicationId, accountId, appId, paymentCardId, bankAccountId);
+
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(21, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
+        }
         #region "Helpers"
 
             private void CreateFixedTermLoanApplication(Guid appId, Guid accountId, Guid bankAccountId, Guid paymentCardId, int dueInDays = 10)
