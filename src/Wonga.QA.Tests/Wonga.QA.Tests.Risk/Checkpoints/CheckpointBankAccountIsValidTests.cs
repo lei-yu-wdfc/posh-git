@@ -7,11 +7,12 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
+using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[Parallelizable(TestScope.All), AUT(AUT.Za)]
+	[Parallelizable(TestScope.All), AUT(AUT.Za), Pending]
 	class CheckpointBankAccountIsValidTests
 	{
         private const RiskMask TestMask = RiskMask.TESTBankAccountIsValid;

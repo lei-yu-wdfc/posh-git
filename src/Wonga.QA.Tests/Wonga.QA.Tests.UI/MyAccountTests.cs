@@ -8,6 +8,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
@@ -330,9 +331,9 @@ namespace Wonga.QA.Tests.Ui
                     #region DateFormat
 
                     DateTime now = DateTime.Now;
-                    int daysTillStartOfLoan = DateHelper.GetNumberOfDaysUntilStartOfLoanForCa(now);
+                    int daysTillStartOfLoan = Drive.Db.GetNumberOfDaysUntilStartOfLoan(now);
                     DateTime promiseDate = now.Date.AddDays(daysTillStartOfLoan + loanTerm);
-                    DateTime dueDate = DateHelper.GetNextWorkingDay(promiseDate);
+                    DateTime dueDate = Drive.Db.GetNextWorkingDay(new Date(promiseDate));
                     double dueDateOffsetInDays = dueDate.Subtract(promiseDate).TotalDays;
                     date = now.AddDays(-(arrearsdays + dueDateOffsetInDays));
 

@@ -38,7 +38,11 @@
     <Compile Include="DbDatabase.cs" />
     <Compile Include="DbDriver.cs" />
     <Compile Include="DbEntity.cs" />
-    <Compile Include="DbExtensions.cs" />
+    <Compile Include="Extensions\DbExtensions.cs" />
+    <Compile Include="Extensions\DbExtensions.Application.cs" />
+    <Compile Include="Extensions\DbExtensions.Ops.cs" />
+    <Compile Include="Extensions\DbExtensions.Payments.cs" />
+    <Compile Include="Extensions\DbExtensions.Risk.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Temp\OpsSagasCaDatabase.cs" />
     <Compile Include="Temp\OpsSagasDatabase.cs" />
