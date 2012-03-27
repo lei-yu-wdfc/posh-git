@@ -40,6 +40,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\CancelRepaymentArrangementCommand.cs" />
     <Compile Include="Requests\ConfirmFraudCommand.cs" />
+    <Compile Include="Requests\ConfirmManualVerificationAcceptedCommand.cs" />
+    <Compile Include="Requests\ConfirmManualVerificationDeclinedCommand.cs" />
     <Compile Include="Requests\ConfirmNotFraudCommand.cs" />
     <Compile Include="Requests\CreateTransactionCommand.cs" />
     <Compile Include="Requests\GetBusinessApplicationSummaryWbUkQuery.cs" />

@@ -240,7 +240,7 @@ namespace Wonga.QA.Framework.Core
                 CallReport = new KeyValuePair<String, String>("Wonga.CallReport.Handlers", component);
                 CallValidate = new KeyValuePair<String, String>("Wonga.CallValidate.Handlers", component);
                 CardPayment = new KeyValuePair<String, String>("Wonga.CardPayment.Handlers", component);
-                ColdStorage = new KeyValuePair<String, String>("Wonga.ColdStorage.Handlers", component);
+                ColdStorage = new KeyValuePair<String, String>("Wonga.Payments.ColdStorage.Handlers", component);
                 ContactManagement = new KeyValuePair<String, String>("Wonga.Comms.ContactManagement.Handlers", component);
                 DocumentGeneration = new KeyValuePair<String, String>("Wonga.Comms.DocumentGeneration.Handlers", component);
                 Email = new KeyValuePair<String, String>("Wonga.Email.Handlers", component);
