@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -142,8 +143,8 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Za), JIRA("QA-214")]
         public void CustomerOnMyPersonalDetailsShouldBeAbleToChangeCommunicationPrefs()
         {
-            var happy = "You are happy to receive updates and other communications from Wonga via email and SMS.";
-            var notHappy = "You are not happy to receive updates and other communications from Wonga via email and SMS.";
+
+
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
@@ -168,10 +169,8 @@ namespace Wonga.QA.Tests.Ui
                         myPersonalDetailsPage.Submit();
                         Thread.Sleep(10000);
 
-                        //var status = Drive.Data.Comms.ContactPreferences.FindBy(AccountId:customer.Id);
-                        Assert.IsTrue(
-                            Drive.Db.Comms.ContactPreferences.FirstOrDefault(c => c.AccountId == customer.Id).
-                                AcceptMarketingContact);
+                        var happy = Drive.Data.Comms.ContactPreferences.FindAllBy(AccountId: customer.Id).FirstOrDefault().AcceptMarketingContact;
+                        Assert.IsTrue(happy);
                         Assert.AreEqual(
                             "You are happy to receive updates and other communications from Wonga via email and SMS.",
                             myPersonalDetailsPage.GetCommunicationText);
@@ -187,16 +186,14 @@ namespace Wonga.QA.Tests.Ui
                         myPersonalDetailsPage.Submit();
                         Thread.Sleep(10000);
 
-                        //var status = Drive.Data.Comms.ContactPreferences.FindBy(AccountId:customer.Id);
-                        Assert.IsFalse(
-                            Drive.Db.Comms.ContactPreferences.FirstOrDefault(c => c.AccountId == customer.Id).
-                                AcceptMarketingContact);
+                        var happy = Drive.Data.Comms.ContactPreferences.FindAllBy(AccountId: customer.Id).FirstOrDefault().AcceptMarketingContact;
+                        Assert.IsFalse(happy);
                         Assert.AreEqual(
                             "You are not happy to receive updates and other communications from Wonga via email and SMS.",
                             myPersonalDetailsPage.GetCommunicationText);
                         break;
                     }
-                default: 
+                default:
                     throw new NotImplementedException();
             }
 
