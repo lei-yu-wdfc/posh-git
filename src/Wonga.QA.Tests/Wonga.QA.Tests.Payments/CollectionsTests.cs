@@ -16,16 +16,31 @@ namespace Wonga.QA.Tests.Payments
 		private const int TrackingDayThreshold = 19;
 		private const int MaximumRetries = 4;
 		private const string NowServiceConfigKey = "Payments.ProcessScheduledPaymentSaga.DateTime.UtcNow";
-		private const int InArrearsMaxDays = 90; //Hardcoded in payments code also
+		private const int InArrearsMaxDays = 90; //Hardcoded in payments
+		private readonly int[] NaedoTrackingDays = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 14, 21, 32 }; //Hardcoded in payments
+
+		private readonly string PrevBankGatewayTestMode = Drive.Db.GetServiceConfiguration("BankGateway.IsTestMode").Value;
+
+		[FixtureSetUp]
+		public void FixtureSetUp()
+		{
+			Drive.Db.SetServiceConfiguration("BankGateway.IsTestMode", "false");
+		}
+
+		[FixtureTearDown]
+		public void FixtureTearDown()
+		{
+			Drive.Db.SetServiceConfiguration("BankGateway.IsTestMode", PrevBankGatewayTestMode);
+		}
 
 		[SetUp]
-		public void FixtureSetUp()
+		public void SetUp()
 		{
 			SetPaymentsUtcNow(DateTime.UtcNow);
 		}
 
 		[TearDown]
-		public void FixtureTearDown()
+		public void TearDown()
 		{
 			var db = new DbDriver();
 			var paymentsNowDb = db.Ops.ServiceConfigurations.Single(a => a.Key == NowServiceConfigKey);
@@ -165,7 +180,7 @@ namespace Wonga.QA.Tests.Payments
 				return;
 
 			var expectedPaymentRequestDate = GetExpectedPaymentRequestDate(application, attempt, now);
-			var expectedTrackingDays = GetExpectedTrackingDays(application, expectedPaymentRequestDate, now);
+			var expectedTrackingDays = GetExpectedTrackingDays(expectedPaymentRequestDate);
 
 			Assert.AreEqual(expectedPaymentRequestDate, scheduledPaymentSaga.PaymentRequestDate);
 			Assert.AreEqual(expectedTrackingDays, scheduledPaymentSaga.TrackingDays);
@@ -238,12 +253,12 @@ namespace Wonga.QA.Tests.Payments
 						var month = selfReportedPayDay > now.Day ? now.Month : now.Month + 1;
 						var validPayDay = Drive.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, month,  selfReportedPayDay))).DateTime.Day;
 
-						paymentRequestDate = Drive.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, month, validPayDay - 1)));
+						paymentRequestDate = Drive.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, month, validPayDay)));
 					}
 					break;
 				default:
 					{
-						paymentRequestDate = Drive.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, now.Month, GetDefaultPayDaysOfMonth()[now.Month - 1] - 1)));
+						paymentRequestDate = Drive.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, now.Month, GetDefaultPayDaysOfMonth()[now.Month - 1])));
 					}
 					break;
 			}
@@ -251,15 +266,17 @@ namespace Wonga.QA.Tests.Payments
 			return paymentRequestDate;
 		}
 
-		private int GetExpectedTrackingDays(Application application, DateTime paymentRequestDate, DateTime now)
+		private int GetExpectedTrackingDays(DateTime paymentRequestDate)
 		{
 			int trackingDays = 0;
 
 			if( paymentRequestDate.Day > TrackingDayThreshold)
-				trackingDays = (DateTime.DaysInMonth(paymentRequestDate.Year, paymentRequestDate.Month)) - paymentRequestDate.Day;
+				trackingDays = (DateTime.DaysInMonth(paymentRequestDate.Year, paymentRequestDate.Month)) - paymentRequestDate.Day + 1;
 
 			else
 				trackingDays = 3;
+
+			trackingDays = NaedoTrackingDays.Where(a => trackingDays >= a).Max();
 
 			return trackingDays;
 		}
