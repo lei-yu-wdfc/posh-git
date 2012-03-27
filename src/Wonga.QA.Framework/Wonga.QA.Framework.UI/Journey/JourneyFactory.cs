@@ -9,7 +9,7 @@ namespace Wonga.QA.Framework.UI
 {
     public static class JourneyFactory
     {
-        public static IConsumerJourney GetL0Journey(BasePage homePage)
+        public static IL0ConsumerJourney GetL0Journey(BasePage homePage)
         {
             switch (Config.AUT)
             {

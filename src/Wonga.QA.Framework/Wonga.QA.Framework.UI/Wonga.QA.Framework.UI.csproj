@@ -53,7 +53,8 @@
   <ItemGroup>
     <Compile Include="Journey.cs" />
     <Compile Include="Journey\CaL0Journey.cs" />
-    <Compile Include="Journey\IConsumerJourney.cs" />
+    <Compile Include="Journey\IL0ConsumerJourney.cs" />
+    <Compile Include="Journey\ILnConsumerJourney.cs" />
     <Compile Include="Journey\JourneyFactory.cs" />
     <Compile Include="Journey\UkL0Journey.cs" />
     <Compile Include="Journey\ZaL0Journey.cs" />

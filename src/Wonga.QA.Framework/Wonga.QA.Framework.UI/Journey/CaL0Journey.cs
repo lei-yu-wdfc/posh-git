@@ -8,7 +8,7 @@ using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 
 namespace Wonga.QA.Framework.UI
 {
-    class CaL0Journey : IConsumerJourney
+    class CaL0Journey : IL0ConsumerJourney
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -20,7 +20,7 @@ namespace Wonga.QA.Framework.UI
             FirstName = Get.GetName();
             LastName = Get.RandomString(10);
         }
-        public IConsumerJourney ApplyForLoan(int amount, int duration)
+        public IL0ConsumerJourney ApplyForLoan(int amount, int duration)
         {
             var homePage = CurrentPage as HomePage;
             homePage.Sliders.HowMuch = amount.ToString();
@@ -29,7 +29,7 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public IConsumerJourney FillPersonalDetails(string employerNameMask = null)
+        public IL0ConsumerJourney FillPersonalDetails(string employerNameMask = null)
         {
             var email = Get.RandomEmail();
             string employerName = employerNameMask ?? Get.GetMiddleName();
@@ -65,7 +65,7 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public IConsumerJourney FillAddressDetails()
+        public IL0ConsumerJourney FillAddressDetails()
         {
             var addressPage = CurrentPage as AddressDetailsPage;
             addressPage.FlatNumber = "1403";
@@ -77,7 +77,7 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public IConsumerJourney FillAccountDetails()
+        public IL0ConsumerJourney FillAccountDetails()
         {
             var addressPage = CurrentPage as AddressDetailsPage;
             addressPage.AccountDetailsSection.Password = Get.GetPassword();
@@ -88,7 +88,7 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public IConsumerJourney FillBankDetails()
+        public IL0ConsumerJourney FillBankDetails()
         {
             var bankDetailsPage = CurrentPage as PersonalBankAccountPage;
             bankDetailsPage.BankAccountSection.BankName = "Bank of Montreal";
@@ -100,26 +100,26 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public IConsumerJourney FillCardDetails()
+        public IL0ConsumerJourney FillCardDetails()
         {
             throw new NotImplementedException();
         }
 
-        public IConsumerJourney WaitForAcceptedPage()
+        public IL0ConsumerJourney WaitForAcceptedPage()
         {
             var processingPage = CurrentPage as ProcessingPage;
             CurrentPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
             return this;
         }
 
-        public IConsumerJourney WaitForDeclinedPage()
+        public IL0ConsumerJourney WaitForDeclinedPage()
         {
             var processingPage = CurrentPage as ProcessingPage;
             CurrentPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
             return this;
         }
 
-        public IConsumerJourney FillAcceptedPage()
+        public IL0ConsumerJourney FillAcceptedPage()
         {
             var acceptedPage = CurrentPage as AcceptedPage;
             string date = String.Format("{0:d MMM yyyy}", DateTime.Today);
@@ -128,7 +128,7 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public IConsumerJourney GoToMySummaryPage()
+        public IL0ConsumerJourney GoToMySummaryPage()
         {
             var dealDonePage = CurrentPage as DealDonePage;
             CurrentPage = dealDonePage.ContinueToMyAccount() as MySummaryPage;
