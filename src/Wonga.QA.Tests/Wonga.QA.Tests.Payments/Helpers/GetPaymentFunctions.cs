@@ -4,6 +4,7 @@ using System.Linq;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Tests.Payments.Enums;
@@ -121,7 +122,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             var expectedRates = new List<TransactionEntity>();
             var counter = 1;
             var loanCreatedDate = DateTime.Today;
-            int numberOfDaysUntilStartOfLoan = DateHelper.GetNumberOfDaysUntilStartOfLoanForCa();
+            int numberOfDaysUntilStartOfLoan = Drive.Db.GetNumberOfDaysUntilStartOfLoan();
             var loanStartDate = DateTime.Today.AddDays(numberOfDaysUntilStartOfLoan);
 
             expectedRates.Add(CreatePaymentFunctions.CreateRowOfTypeTransaction());

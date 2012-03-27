@@ -6,6 +6,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Db.Ops;
 using Wonga.QA.Framework.Mocks.Entities;
 using Wonga.QA.Tests.Core;
@@ -49,7 +50,7 @@ namespace Wonga.QA.Tests.Payments
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
             var applicationId = application.Id;
 
-            application.RewindToDayOfLoanTerm(dayOfLoanTermToRepay);
+            Drive.Db.RewindToDayOfLoanTerm(application.Id, dayOfLoanTermToRepay);
 
             var transaction = new OnlineBillPaymentTransaction
                                   {
@@ -84,7 +85,7 @@ namespace Wonga.QA.Tests.Payments
             var customer = CustomerBuilder.New().ForProvince(ProvinceEnum.ON).Build();
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
 
-            application.RewindToDayOfLoanTerm(dayOfLoanTermToRepay);
+            Drive.Db.RewindToDayOfLoanTerm(application.Id, dayOfLoanTermToRepay);
 
             var transaction = new OnlineBillPaymentTransaction
                                   {
@@ -115,7 +116,7 @@ namespace Wonga.QA.Tests.Payments
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
             var applicationId = application.Id;
 
-            application.RewindToDayOfLoanTerm(dayOfLoanTermToRepay);
+			Drive.Db.RewindToDayOfLoanTerm(application.Id, dayOfLoanTermToRepay);
 
             var transaction = new OnlineBillPaymentTransaction
                                   {
@@ -149,7 +150,7 @@ namespace Wonga.QA.Tests.Payments
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
             var applicationId = application.Id;
 
-            application.RewindToDayOfLoanTerm(dayOfLoanTermToRepay);
+			Drive.Db.RewindToDayOfLoanTerm(application.Id, dayOfLoanTermToRepay);
 
             //create online bill payment file for customer.. date = loanCreated - 5 days + 2 extra days... i.e file not processed till 7 days into loan
             //insert file data to database table
@@ -216,7 +217,7 @@ namespace Wonga.QA.Tests.Payments
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
             var applicationId = application.Id;
 
-            application.RewindToDayOfLoanTerm(dayOfLoanTermToRepay);
+			Drive.Db.RewindToDayOfLoanTerm(application.Id, dayOfLoanTermToRepay);
 
             //create online bill payment file for customer.. amount should be greater than balance....
             //insert file data to database table
