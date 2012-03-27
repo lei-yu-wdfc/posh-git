@@ -449,8 +449,8 @@ namespace Wonga.QA.Tests.Graydon
                 var workflowCheckpointsWithDefinitions = riskWorkflowEntity.WorkflowCheckpoints.ToDictionary(checkpoint => checkpoint, p => p.CheckpointDefinitionEntity.Name);
                 var workflowVerificationsWithDefinitions = riskWorkflowEntity.WorkflowVerifications.ToDictionary(verification => verification, p => p.VerificationDefinitionEntity.Name);
 
-                Assert.IsNotNull(workflowVerificationsWithDefinitions, "There should be verifications in the workflow");
-                Assert.IsNotNull(workflowCheckpointsWithDefinitions, "There should be checkpoints in the workflow");
+                Assert.IsNotNull(workflowVerificationsWithDefinitions.Count, "There should be verifications in the workflow");
+                Assert.IsNotNull(workflowCheckpointsWithDefinitions.Count, "There should be checkpoints in the workflow");
 
                 Assert.Contains(workflowVerificationsWithDefinitions.Values.ToList(), Get.EnumToString(RiskVerificationDefinitions.NumberOfDirectorsMatchesBusinessBureauDataVerification));
                 Assert.Contains(workflowCheckpointsWithDefinitions.Values.ToList(), Get.EnumToString(RiskCheckpointDefinitionEnum.NumberOfDirectorsMatchesBusinessBureauData));

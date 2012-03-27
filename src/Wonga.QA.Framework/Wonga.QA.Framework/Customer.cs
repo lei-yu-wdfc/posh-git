@@ -13,10 +13,11 @@ namespace Wonga.QA.Framework
     public class Customer
     {
         public Guid Id { get; set; }
-        public string Email { get; set; }
+        public String Email { get; set; }
         public Guid BankAccountId { get; set; }
-        public string Forename { get; private set; }
-        public string Surname { get; private set; }
+        public String Forename { get; private set; }
+        public String Surname { get; private set; }
+        public String MiddleName { get; set; }
         public Date DateOfBirth { get; private set; }
         public String MobilePhoneNumber { get; private set; }
 

@@ -148,8 +148,9 @@ namespace Wonga.QA.Framework
                 guarantorCustomerBuilder.ScrubForename(guarantor.Forename);
                 guarantorCustomerBuilder.ScrubSurname(guarantor.Surname);
 
+                //THIS IS A HACK! WE NEED TO EXTEND THE QAF TO PROPERLY BUILD AND CREATE SECONDARY DIRECTORS AND ALL THIS STUFF.
                 guarantorCustomerBuilder.WithEmailAddress(guarantor.Email).WithForename(guarantor.Forename)
-                    .WithSurname(guarantor.Surname).WithDateOfBirth(guarantor.DateOfBirth).WithMobileNumber(guarantor.MobilePhoneNumber).Build();
+                    .WithSurname(guarantor.Surname).WithDateOfBirth(guarantor.DateOfBirth).WithMobileNumber(guarantor.MobilePhoneNumber).WithMiddleName(!String.IsNullOrEmpty(guarantor.MiddleName) ? guarantor.MiddleName : RiskMask.TESTNoCheck.ToString()).Build();
             }
         }
 
