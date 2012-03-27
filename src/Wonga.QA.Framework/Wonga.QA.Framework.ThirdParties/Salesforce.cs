@@ -4,6 +4,7 @@ using System.Linq;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Security;
 using System.Text;
+using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.ThirdParties.SalesforceApi;
 
 
@@ -18,9 +19,9 @@ namespace Wonga.QA.Framework.ThirdParties
         public Salesforce()
         {
             // default
-            SalesforceUsername = "datareplicator@wonga.com.wip";
-            SalesforcePassword = "d33psp@c3n1n30hnAAc77NHb48XiYfzQvl3kxf";
-            SalesforceUrl = "https://test.salesforce.com/services/Soap/c/22.0/0DFL00000004CC7";
+            SalesforceUsername = Config.SalesforceApi.Username;
+            SalesforcePassword = Config.SalesforceApi.Password;
+            SalesforceUrl = Config.SalesforceApi.Home.ToString();
         }
 
         /// <summary>
