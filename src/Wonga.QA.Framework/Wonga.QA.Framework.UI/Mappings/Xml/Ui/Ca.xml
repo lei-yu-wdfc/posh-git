@@ -101,7 +101,7 @@
 		<PromisedRepayAmount>#content-area p span</PromisedRepayAmount>
 		<PromisedRepayDate>#content-area p b em</PromisedRepayDate>
 		<RepayButton>#cloud ul li a</RepayButton>
-		<TotalToRepayAmountPopup>#fancybox-content div div p:nth-child(1) b:nth-child(1)</TotalToRepayAmountPopup>
-		<PromisedRepayDatePopup>#fancybox-content div div p:nth-child(1) b:nth-child(3)</PromisedRepayDatePopup>
+		<TotalToRepayAmountPopup>#fancybox-content div div b:first-of-type</TotalToRepayAmountPopup>
+		<PromisedRepayDatePopup>#fancybox-content div div b:last-of-type</PromisedRepayDatePopup>
 	</MySummaryPage>
 </Ui>

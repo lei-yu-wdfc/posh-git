@@ -9,7 +9,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
     {
         public String Title { get; set; }
         public String TotalToRepay { get; set; }
-        public String RepaymentDate { get; set; }
+        public String RepaymentDate { get; set;} 
         public String PromisedRepayAmount { get; set; }
         public String PromisedRepayDate { get; set; }
         public String RepayButton { get; set; }
