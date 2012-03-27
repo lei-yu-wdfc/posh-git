@@ -524,7 +524,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         public void Scenario14Setup(Guid requestId1, Guid requestId2, int applicationId, Guid accountId, Guid appId,
                                     Guid paymentCardId, Guid bankAccountId)
         {
-            const string minDays = "0";
+            const string minDays = "-1";
 
             var inArrearsMinDays = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.InArrearsMinDays");
             inArrearsMinDays.Value = minDays;
@@ -592,6 +592,86 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 CreatedOn = DateTime.UtcNow
             });
             Do.Until(() => Drive.Db.Payments.RepaymentArrangements.Single(a => a.ApplicationId == applicationId));
+        }
+
+        public void Scenario15Setup(Guid requestId1, Guid requestId2, int applicationId, Guid accountId, Guid appId,
+                                   Guid paymentCardId, Guid bankAccountId)
+        {
+            const string minDays = "-1";
+
+            var inArrearsMinDays = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.InArrearsMinDays");
+            inArrearsMinDays.Value = minDays;
+            inArrearsMinDays.Submit();
+
+            // Create Account so that time zone can be looked up
+            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Do.Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
+
+            // Create Application & Check it Exists in DB
+            CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
+            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+
+            // Set SignedOn + AcceptedOn & check statuses have been updated
+            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Do.Until(
+                () =>
+                Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
+
+            // Create transactions & Check transactions have been created
+            var trnGuid1 = CreateLoanAdvanceTransaction(appId);
+            var trnGuid2 = CreateTransmissionFeeTransaction(appId);
+            var trnGuid3 = CreateMissedPaymentChargeTransaction(appId);
+            Do.Until(
+                () =>
+                Drive.Db.Payments.Transactions.Count(
+                    itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2 || itm.ExternalId == trnGuid3) == 3);
+
+            // Send command to create scheduled payment request
+            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
+            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
+
+            Do.Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
+            Do.Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
+
+            // Go to DB and set Application NextDueDate to yesterday.
+            ApplicationEntity app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId);
+            applicationId = app.ApplicationId;
+            FixedTermLoanApplicationEntity fixedApp =
+                Drive.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationId == app.ApplicationId);
+            fixedApp.NextDueDate = DateTime.UtcNow.Date.AddDays(-61);
+            fixedApp.Submit(true);
+
+            // Put application into arrears
+            Drive.Msmq.Payments.Send(new AddArrearsCommand()
+            {
+                ApplicationId = applicationId,
+                PaymentTransactionType = PaymentTransactionEnum.CardPayment,
+                ReferenceId = Guid.NewGuid()
+            });
+            Do.Until(() => Drive.Db.Payments.Arrears.Single(a => a.ApplicationId == applicationId));
+
+            // Create Repayment Arrangement
+            DateTime dueDate = DateTime.UtcNow.AddDays(10).Date;
+            var dateTimes = new DateTime[]
+                                {
+                                    dueDate,
+                                };
+            Drive.Msmq.Payments.Send(new CreateRepaymentArrangementCommand()
+            {
+                ApplicationId = appId,
+                Frequency = PaymentFrequencyEnum.Monthly,
+                NumberOfMonths = 1,
+                RepaymentDates = dateTimes,
+                CreatedOn = DateTime.UtcNow
+            });
+
+            RepaymentArrangementEntity ra = Do.Until(() => Drive.Db.Payments.RepaymentArrangements.Single(a => a.ApplicationId == applicationId));
+
+            // Put Repayment Arrangement into a state of missed payment
+            RepaymentArrangementDetailEntity ras = Drive.Db.Payments.RepaymentArrangementDetails.Single(itm => itm.RepaymentArrangementId == ra.RepaymentArrangementId && itm.DueDate == dueDate);
+            ras.DueDate = DateTime.UtcNow.AddDays(-1).Date;
+            ras.Submit();
         }
 
         private void CreateFixedTermLoanApplication(Guid appId, Guid accountId, Guid bankAccountId, Guid paymentCardId, int dueInDays = 10)
