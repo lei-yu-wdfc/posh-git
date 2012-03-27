@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using System.Linq;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
@@ -108,17 +109,41 @@ namespace Wonga.QA.Framework
 			return this;
 		}
 
+        private void RewindAppDates(ApplicationEntity application)
+        {
+            TimeSpan span = application.FixedTermLoanApplicationEntity.NextDueDate.Value - DateTime.Today;
+            RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == Id);
+
+            RewindApplicationDates(application, riskApplication, span);
+        }
+
 		public void MakeDueToday(ApplicationEntity application)
 		{
-			TimeSpan span = application.FixedTermLoanApplicationEntity.NextDueDate.Value - DateTime.Today;
-			RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == Id);
+			RewindAppDates(application);
 
-			RewindApplicationDates(application, riskApplication, span);
-
-			FixedTermLoanSagaEntity ftl = Drive.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
+		    FixedTermLoanSagaEntity ftl = Drive.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
+		    LoanDueDateNotificationSagaEntity dueNotificationSaga = Drive.Db.OpsSagas.LoanDueDateNotificationSagaEntities.Single(s => s.ApplicationId == Id);
 			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
-			Do.While(ftl.Refresh);
+            Drive.Msmq.Payments.Send(new TimeoutMessage() { SagaId = dueNotificationSaga.Id });
+            Do.With.While(ftl.Refresh);
+		    Do.With.While(dueNotificationSaga.Refresh);
 		}
+
+        public Application MakeDueStatusToday()
+        {
+            ApplicationEntity application = Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id);
+            MakeDueStatusToday(application);
+            return this;
+        }
+
+	    public void MakeDueStatusToday(ApplicationEntity application)
+        {
+            RewindAppDates(application);
+
+            LoanDueDateNotificationSagaEntity dueNotificationSaga = Drive.Db.OpsSagas.LoanDueDateNotificationSagaEntities.Single(s => s.ApplicationId == Id);
+            Drive.Msmq.Payments.Send(new TimeoutMessage() { SagaId = dueNotificationSaga.Id });
+            Do.With.While(dueNotificationSaga.Refresh);
+        }
 
 		public virtual Application PutApplicationIntoArrears(int daysInArrears)
 		{

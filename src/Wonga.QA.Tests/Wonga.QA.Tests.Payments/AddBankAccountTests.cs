@@ -7,8 +7,10 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Exceptions;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
 using AddBankAccountCaCommand = Wonga.QA.Framework.Api.AddBankAccountCaCommand;
+using AddBankAccountUkCommand = Wonga.QA.Framework.Api.AddBankAccountUkCommand;
 
 namespace Wonga.QA.Tests.Payments
 {

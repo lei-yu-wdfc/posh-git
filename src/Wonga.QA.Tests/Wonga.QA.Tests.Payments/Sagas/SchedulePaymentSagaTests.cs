@@ -21,7 +21,7 @@ namespace Wonga.QA.Tests.Payments
                 .WithLoanTerm(loanTerm)
                 .WithLoanAmount(loanAmount).Build();
 
-            Do.Until(() => Drive.Db.OpsSagas.FixedTermLoanSagaEntities
+            Do. Until(() => Drive.Db.OpsSagas.FixedTermLoanSagaEntities
                                .Single(saga=>saga.AccountGuid == customer.Id 
                                              && saga.ApplicationGuid == application.Id 
                                              && saga.TermsAgreed == true

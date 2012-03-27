@@ -76,7 +76,8 @@
     <Compile Include="Helpers\TimeoutPaymentFunctions.cs" />
     <Compile Include="RepaymentTests.cs" />
     <Compile Include="RiskBasedPricingTests.cs" />
-    <Compile Include="SchedulePaymentSagaTests.cs" />
+    <Compile Include="Sagas\LoanDueNotificationSagaTests.cs" />
+    <Compile Include="Sagas\SchedulePaymentSagaTests.cs" />
     <Compile Include="ServiceFeesTests.cs" />
     <Compile Include="UpdateLoanTermTests.cs" />
     <Compile Include="VariablePricingTests.cs" />
@@ -100,8 +101,12 @@
     <Reference Include="Wonga.QA.Framework.Core">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Wonga.QA.Framework.Cs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="Wonga.QA.Framework.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Wonga.QA.Framework.Cs">
+	  <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Cs.dll</HintPath>
+	</Reference>
+    <Reference Include="Wonga.QA.Framework.Data">
+	  <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Data.dll</HintPath>
+	</Reference>
     <Reference Include="Wonga.QA.Framework.Db">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Db.dll</HintPath>
     </Reference>
@@ -114,6 +119,7 @@
     <Reference Include="Wonga.QA.Framework.Svc">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Svc.dll</HintPath>
     </Reference>
+    <Reference Include="Wonga.QA.Framework.ThirdParties, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Wonga.QA.Tests.BankGateway\Wonga.QA.Tests.BankGateway.csproj">
@@ -123,6 +129,10 @@
     <ProjectReference Include="..\Wonga.QA.Tests.Core\Wonga.QA.Tests.Core.csproj">
       <Project>{7243F3C0-71B0-4679-960A-687052AFFDAD}</Project>
       <Name>Wonga.QA.Tests.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wonga.QA.Tests.Salesforce\Wonga.QA.Tests.Salesforce.csproj">
+      <Project>{E149DC99-4254-4659-AD72-574B2A5DD67D}</Project>
+      <Name>Wonga.QA.Tests.Salesforce</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
