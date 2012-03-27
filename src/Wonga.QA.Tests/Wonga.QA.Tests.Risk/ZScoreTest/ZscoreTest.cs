@@ -2,6 +2,7 @@
 using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
+using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
 using Wonga.QA.Tests.Core;
@@ -60,7 +61,7 @@ namespace Wonga.QA.Tests.Risk.ZScoreTest
             customerBuilder.ScrubSurname(surname);
             var customer =
                 customerBuilder.WithDateOfBirth(dateOfBirth).WithForename(forename).WithSurname(surname).
-                    WithPostcodeInAddress(postCode).WithHouseNumberInAddress(houseNumber).WithMiddleName(middleName).
+                    WithPostcodeInAddress(postCode).WithHouseNumberInAddress(houseNumber).
                     WithStreetInAddress(street).WithTownInAddress(city).Build();
             var organization = OrganisationBuilder.New(customer).Build();
             ApplicationBuilder.New(customer, organization).Build();
