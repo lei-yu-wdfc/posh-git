@@ -149,10 +149,14 @@ namespace Wonga.QA.Tests.CallReport
 
         private static Application CreateApplicationWithAsserts(RiskMask middlenameMask, String forename, String surname, Date dateOfBirth, ApplicationDecisionStatus applicationDecision)
         {
+            var r = new Random();
+            var mobilePhone = "07624" + r.Next(100000, 999999);
             var customerBuilder = CustomerBuilder.New();
             customerBuilder.ScrubForename(forename);
             customerBuilder.ScrubSurname(surname);
-            var customer = customerBuilder.WithMiddleName(middlenameMask.ToString()).WithForename(forename).WithSurname(surname).WithDateOfBirth(dateOfBirth).Build();
+            var customer =
+                customerBuilder.WithMiddleName(middlenameMask.ToString()).WithForename(forename).WithSurname(surname).
+                    WithDateOfBirth(dateOfBirth).WithMobileNumber(mobilePhone).Build();
             var organization = OrganisationBuilder.New(customer).Build();
             var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(applicationDecision).Build();
             Assert.IsNotNull(application);
