@@ -8,6 +8,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
@@ -268,16 +269,19 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-193"), Pending("need refinement")]
         public void ArrearsCustomerCheckData()
         {
-            int arrearsdays = 10;
+            int loanTerm = 10;
+            int arrearsdays = 5;
             string actualPromisedRepayDate;
+            
             DateTime date = DateTime.Now.AddDays(-arrearsdays);
             string email = Get.RandomEmail();
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            Application application = ApplicationBuilder.New(customer)
+            Application application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm)
                 .Build();
             application.PutApplicationIntoArrears(arrearsdays);
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
+            
             switch (Config.AUT)
             {
                 case (AUT.Za):
@@ -310,6 +314,14 @@ namespace Wonga.QA.Tests.Ui
                     break;
                 case (AUT.Ca):
                     #region DateFormat
+
+                    DateTime now = DateTime.Now;
+                    int daysTillStartOfLoan = DateHelper.GetNumberOfDaysUntilStartOfLoanForCa(now);
+                    DateTime promiseDate = now.Date.AddDays(daysTillStartOfLoan + loanTerm);
+                    DateTime dueDate = DateHelper.GetNextWorkingDay(promiseDate);
+                    double dueDateOffsetInDays = dueDate.Subtract(promiseDate).TotalDays;
+                    date = now.AddDays(-(arrearsdays + dueDateOffsetInDays));
+
                     switch (date.Day % 10)
                     {
                         case 1:
@@ -331,6 +343,7 @@ namespace Wonga.QA.Tests.Ui
                             actualPromisedRepayDate = String.Format("{0:ddd d\\t\\h MMM yyyy}", date);
                             break;
                     }
+
                     #endregion
                     Assert.AreEqual("$129.45", mySummaryPage.GetTotalToRepay);
                     Assert.AreEqual("$129.00", mySummaryPage.GetPromisedRepayAmount);
