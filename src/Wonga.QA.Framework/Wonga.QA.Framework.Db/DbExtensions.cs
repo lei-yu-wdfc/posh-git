@@ -181,11 +181,11 @@ namespace Wonga.QA.Framework.Db
             riskDb.SubmitChanges();
         }
 
-        public static void AddEmailToBlacklist(this DbDriver db, String emailAddress)
+        public static void AddSurnameToBlacklist(this DbDriver db, String surname)
         {
             var blacklistEntity = new Blacklist.BlackListEntity()
                                       {
-                                          Email = emailAddress,
+                                          LastName = surname,
                                           ExternalId = Guid.NewGuid(),
                                       };
             db.Blacklist.BlackLists.Insert(blacklistEntity);

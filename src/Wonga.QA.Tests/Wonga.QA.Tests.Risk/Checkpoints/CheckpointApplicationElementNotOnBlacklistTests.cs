@@ -79,11 +79,11 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
         public void CheckpointApplicationElementOnBlacklistDeclined()
         {
             //cannot use randomemail since max lenght is 5
-            const string blacklistEmail = "i_am_blacklisted@gmail.com";
+            var blacklistSurname = Get.RandomString(10);
             var db = Drive.Db;
-            db.AddEmailToBlacklist(blacklistEmail);
+            db.AddSurnameToBlacklist(blacklistSurname);
 
-            var mainApplicant = CustomerBuilder.New().WithMiddleName(_testMask).WithEmailAddress(blacklistEmail).Build();
+            var mainApplicant = CustomerBuilder.New().WithMiddleName(_testMask).WithSurname(blacklistSurname).Build();
             var organisation = OrganisationBuilder.New(mainApplicant).Build();
             var application = ApplicationBuilder.New(mainApplicant, organisation).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
             Assert.IsNotNull(application);
