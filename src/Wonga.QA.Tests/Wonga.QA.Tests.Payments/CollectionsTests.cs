@@ -11,6 +11,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments
 {
+	[TestFixture, Pending, AUT(AUT.Za)]
 	class CollectionsTests
 	{
 		private const int TrackingDayThreshold = 19;
@@ -66,6 +67,7 @@ namespace Wonga.QA.Tests.Payments
 				.WithLoanAmount(loanAmount)
 				.WithPromiseDate(promiseDate)
 				.Build();
+				//.PutApplicationIntoArrears(91);
 
 			var paymentsDb = new DbDriver().Payments;
 			paymentsDb.Arrears.InsertOnSubmit(new ArrearEntity()
@@ -170,19 +172,23 @@ namespace Wonga.QA.Tests.Payments
 
 				now = pendingScheduledPayment.PaymentRequestDate.Value;
 				SetPaymentsUtcNow(now);
+
 				new MsmqDriver().Payments.Send(new TimeoutMessage { SagaId = pendingScheduledPayment.Id });
 				Do.Until(() => db.OpsSagas.ScheduledPaymentSagaEntities.Single(a => a.ApplicationGuid == application.Id).PaymentRequestDate != scheduledPaymentDate);
+
+				now = (DateTime) db.Payments.Applications.Single(a => a.ExternalId == application.Id).ScheduledPayments.OrderBy(a => a.CreatedOn).ToArray()[attempt -1].ToBeRetriedOnDate;
 			}
 			
 			var scheduledPaymentSaga = db.OpsSagas.ScheduledPaymentSagaEntities.Single(a => a.ApplicationGuid == application.Id);
-
+			var scheduledPayment = db.Payments.Applications.Single(a => a.ExternalId == application.Id).ScheduledPayments.OrderBy(a => a.CreatedOn).ToArray()[attempt];
+			
 			if (IsTrackingForMoreThanMaxDays(application, now))
 				return;
 
 			var expectedPaymentRequestDate = GetExpectedPaymentRequestDate(application, attempt, now);
 			var expectedTrackingDays = GetExpectedTrackingDays(expectedPaymentRequestDate);
 
-			Assert.AreEqual(expectedPaymentRequestDate, scheduledPaymentSaga.PaymentRequestDate);
+			Assert.AreEqual(expectedPaymentRequestDate, scheduledPayment.PaymentDate);
 			Assert.AreEqual(expectedTrackingDays, scheduledPaymentSaga.TrackingDays);
 		}
 
@@ -270,8 +276,10 @@ namespace Wonga.QA.Tests.Payments
 		{
 			int trackingDays = 0;
 
-			if( paymentRequestDate.Day > TrackingDayThreshold)
-				trackingDays = (DateTime.DaysInMonth(paymentRequestDate.Year, paymentRequestDate.Month)) - paymentRequestDate.Day + 1;
+			var retryDate = Drive.Db.GetPreviousWorkingDay(new Date(paymentRequestDate.AddDays(-1)));
+
+			if( retryDate.DateTime.Day > TrackingDayThreshold)
+				trackingDays = (DateTime.DaysInMonth(retryDate.DateTime.Year, retryDate.DateTime.Month)) - retryDate.DateTime.Day + 1;
 
 			else
 				trackingDays = 3;
@@ -283,10 +291,13 @@ namespace Wonga.QA.Tests.Payments
 
 		private bool IsTrackingForMoreThanMaxDays(Application application, DateTime now)
 		{
-			var promiseDate = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id).FixedTermLoanApplicationEntity.PromiseDate;
-			var daysTracking = (now - promiseDate).Days;
+			return GetDaysTracking(application, now) > InArrearsMaxDays;
+		}
 
-			return daysTracking > InArrearsMaxDays;
+		private int GetDaysTracking(Application application, DateTime now)
+		{
+			var promiseDate = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id).FixedTermLoanApplicationEntity.PromiseDate;
+			return (now - promiseDate).Days;
 		}
 
 		private FixedTermLoanApplicationEntity GetFixedTermLoanApplicationEntity(Application application)
