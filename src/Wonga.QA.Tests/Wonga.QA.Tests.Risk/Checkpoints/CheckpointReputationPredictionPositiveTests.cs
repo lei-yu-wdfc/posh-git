@@ -12,7 +12,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
 	
-    [Pending, AUT(AUT.Za)]
+    [AUT(AUT.Za)]
 	class CheckpointReputationPredictionPositiveTests
 	{
 		private const RiskMask TestMask = RiskMask.TESTReputationtPredictionPositive;
