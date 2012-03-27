@@ -102,11 +102,11 @@
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Core.dll</HintPath>
     </Reference>
     <Reference Include="Wonga.QA.Framework.Cs">
-	  <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Cs.dll</HintPath>
-	</Reference>
+      <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Cs.dll</HintPath>
+    </Reference>
     <Reference Include="Wonga.QA.Framework.Data">
-	  <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Data.dll</HintPath>
-	</Reference>
+      <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Data.dll</HintPath>
+    </Reference>
     <Reference Include="Wonga.QA.Framework.Db">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Db.dll</HintPath>
     </Reference>

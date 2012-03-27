@@ -12,6 +12,39 @@ namespace Wonga.QA.Framework.ThirdParties
 {
     public class Salesforce
     {
+        public enum ApplicationStatus
+        {
+            New = 0,
+            Referral = 1,
+            UserPending = 2,
+            Deferral = 3,
+            Accepted = 4,
+            UserAccepted = 5,
+            TermsAgreed = 6,
+            UserDecline = 7,
+            Cancelled = 8,
+            Live = 9,
+            DueToday = 10,
+            InArrears = 11,
+            Fraud = 12,
+            DCA = 13,
+            DMPRepaymentArrangement = 14,
+            DMPRepaymentArrangementBroken = 15,
+            Hardship = 16,
+            Bankrupt = 17,
+            RepaymentArrangement = 18,
+            RepaymentArrangementBroken = 19,
+            Complaint = 20,
+            ManagementReview = 21,
+            Refund = 22,
+            ClearMyBalance = 23,
+            DebtSurveillance = 24,
+            DebtSold = 25,
+            PaidInFull = 26,
+            SettledInFull = 27,
+            WrittenOff = 28,
+        }
+
         public string SalesforceUsername { get; set; }
         public string SalesforcePassword { get; set; }
         public string SalesforceUrl { get; set; }
