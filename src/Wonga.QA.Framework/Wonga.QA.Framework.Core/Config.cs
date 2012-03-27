@@ -40,7 +40,7 @@ namespace Wonga.QA.Framework.Core
                     Msmq = new MsmqConfig(".");
                     Db = new DbConfig(".");
                     Ui = new UiConfig("localhost");
-                    SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.int", "Allw0nga");
+                    SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.wip", "Allw0nga");
             		SalesforceApi =
 						AUT == AUT.Ca ? new SalesforceApiConfig("v3integration@wonga.com.int") :
 						new SalesforceApiConfig("v3integration@wonga.com.wip");
