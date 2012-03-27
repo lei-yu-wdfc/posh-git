@@ -71,6 +71,7 @@ namespace Wonga.QA.Tests.Ui
                                      .FillBankDetails()
                                      .FillCardDetails()
                                      .WaitForAcceptedPage().CurrentPage as AcceptedPage;
+
         }
     }
 }
