@@ -7,31 +7,25 @@ using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Framework;
-using Wonga.QA.Framework.Db.Risk;
+using Wonga.QA.Framework.Db;
 
 namespace Wonga.QA.Tests.Risk.MobilePhone
 {
     public class MobilePhoneIsUniqueTests
     {
+        private const String GoodCompanyRegNumber = "00000086";
+        private const String MobilePhoneNumber = "07771269999";
+
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-1107"), Description("This will test if the main directors phone is not in our system")]
-        public void IfMobilePhoneIsUnique_LoanIsAccepted()
+        public void IfMobilePhoneIsUniqueForMainApplicant_LoanIsAccepted()
         {
-            const String goodCompanyRegNumber = "00000086";
-            const String mobilePhoneNumber = "07771269574";
-
-            //Clean the mobile number from DB 
-            var riskDb = Drive.Db.Risk;
-            var entities = riskDb.RiskAccountMobilePhones.Where(p => p.MobilePhone == mobilePhoneNumber).ToList();
-            if (entities.Count > 0)
-            {
-                riskDb.RiskAccountMobilePhones.DeleteAllOnSubmit(entities);
-                riskDb.SubmitChanges();
-            }
+            var db = Drive.Db;
+            db.RemovePhoneNumberFromRiskDb(MobilePhoneNumber);
 
             var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB(),mobilePhoneNumber);
-            var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
+                                             Get.GetDoB(),MobilePhoneNumber);
+            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber,
                                                            RiskMask.TESTMobilePhoneIsUnique,
                                                            ApplicationDecisionStatus.Accepted);
             var mainApplicantRiskWorkflows = Application.GetWorkflowsForApplication(application.Id,
@@ -41,8 +35,8 @@ namespace Wonga.QA.Tests.Risk.MobilePhone
             var workflowCheckpointsWithDefinitions = mainApplicantRiskWorkflows[0].WorkflowCheckpoints.ToDictionary(checkpoint => checkpoint, p => p.CheckpointDefinitionEntity.Name);
             var workflowVerificationsWithDefinitions = mainApplicantRiskWorkflows[0].WorkflowVerifications.ToDictionary(verification => verification, p => p.VerificationDefinitionEntity.Name);
 
-            Assert.IsNotNull(workflowVerificationsWithDefinitions, "There should be verifications in the workflow");
-            Assert.IsNotNull(workflowCheckpointsWithDefinitions, "There should be checkpoints in the workflow");
+            Assert.IsNotNull(workflowVerificationsWithDefinitions.Count, "There should be verifications in the workflow");
+            Assert.IsNotNull(workflowCheckpointsWithDefinitions.Count, "There should be checkpoints in the workflow");
 
             Assert.Contains(workflowVerificationsWithDefinitions.Values.ToList(), Get.EnumToString(RiskVerificationDefinitions.MobilePhoneIsUniqueVerification));
             Assert.Contains(workflowCheckpointsWithDefinitions.Values.ToList(), Get.EnumToString(RiskCheckpointDefinitionEnum.MobilePhoneIsUnique));
@@ -55,47 +49,14 @@ namespace Wonga.QA.Tests.Risk.MobilePhone
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-1107"), Description("This will test if the main directors phone is not in our system")]
-        public void IfMobilePhoneNotUnique_LoanIsDeclined()
+        public void IfMobilePhoneNotUniqueForMainApplicant_LoanIsDeclined()
         {
-            const String goodCompanyRegNumber = "00000086";
-            const String mobilePhoneNumber = "07771269574";
-            var tempId = Guid.NewGuid();
-            var riskDb = Drive.Db.Risk;
-
-
-            //Add the mobile number to Risk DB 
-            var riskAccountEntity = new RiskAccountEntity()
-                                        {
-                                            AccountId = tempId,
-                                            AccountRank = 1,
-                                            HasAccount = true,
-                                            CreditLimit = 400,
-                                            ConfirmedFraud = false,
-                                            DateOfBirth = Get.GetDoB(),
-                                            DoNotRelend = false,
-                                            Forename = Get.RandomString(8),
-                                            IsDebtSale = false,
-                                            IsDispute = false,
-                                            IsHardship = false,
-                                            Postcode = "KT2 5DL",
-                                            MaidenName = Get.RandomString(8),
-                                            Middlename = Get.RandomString(8),
-                                            Surname = Get.RandomString(8)
-                                        };
-            var riskAccoutnMobilePhoneEntity = new RiskAccountMobilePhoneEntity()
-            {
-                AccountId = tempId,
-                DateUpdated = new DateTime(2010,10,06).ToDate(),
-                MobilePhone = mobilePhoneNumber,
-            };
-
-            riskDb.RiskAccounts.InsertOnSubmit(riskAccountEntity);
-            riskDb.RiskAccountMobilePhones.InsertOnSubmit(riskAccoutnMobilePhoneEntity);
-            riskDb.SubmitChanges();
+            var db = Drive.Db;
+            db.AddPhoneNumberToRiskDb(MobilePhoneNumber);
 
             var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB(), mobilePhoneNumber);
-            var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
+                                             Get.GetDoB(), MobilePhoneNumber);
+            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber,
                                                            RiskMask.TESTMobilePhoneIsUnique,
                                                            ApplicationDecisionStatus.Declined);
             var mainApplicantRiskWorkflows = Application.GetWorkflowsForApplication(application.Id,
@@ -105,8 +66,84 @@ namespace Wonga.QA.Tests.Risk.MobilePhone
             var workflowCheckpointsWithDefinitions = mainApplicantRiskWorkflows[0].WorkflowCheckpoints.ToDictionary(checkpoint => checkpoint, p => p.CheckpointDefinitionEntity.Name);
             var workflowVerificationsWithDefinitions = mainApplicantRiskWorkflows[0].WorkflowVerifications.ToDictionary(verification => verification, p => p.VerificationDefinitionEntity.Name);
 
-            Assert.IsNotNull(workflowVerificationsWithDefinitions, "There should be verifications in the workflow");
-            Assert.IsNotNull(workflowCheckpointsWithDefinitions, "There should be checkpoints in the workflow");
+            Assert.IsNotNull(workflowVerificationsWithDefinitions.Count, "There should be verifications in the workflow");
+            Assert.IsNotNull(workflowCheckpointsWithDefinitions.Count, "There should be checkpoints in the workflow");
+
+            Assert.Contains(workflowVerificationsWithDefinitions.Values.ToList(), Get.EnumToString(RiskVerificationDefinitions.MobilePhoneIsUniqueVerification));
+            Assert.Contains(workflowCheckpointsWithDefinitions.Values.ToList(), Get.EnumToString(RiskCheckpointDefinitionEnum.MobilePhoneIsUnique));
+
+            foreach (var checkpointWithDefinition in workflowCheckpointsWithDefinitions)
+            {
+                Assert.AreEqual(RiskCheckpointStatus.Failed, (RiskCheckpointStatus)checkpointWithDefinition.Key.CheckpointStatus);
+            }
+        }
+
+        [Test, AUT(AUT.Wb)]
+        [JIRA("SME-1168"), Description("This will test if the guarantor phone is not in our system")]
+        public void IfMobilePhoneIsUniqueForGuarantor_LoanIsAccepted()
+        {
+            var listOfGuarantors = new List<Customer>();
+            var db = Drive.Db;
+            db.RemovePhoneNumberFromRiskDb(MobilePhoneNumber);
+           
+            var guarantor = new Customer(Guid.NewGuid(), Get.RandomEmail(), "Roger John", "Clarke",
+                                         Get.GetDoB(), MobilePhoneNumber)
+                                {MiddleName = RiskMask.TESTMobilePhoneIsUnique.ToString()};
+            listOfGuarantors.Add(guarantor);
+
+            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
+                                             Get.GetDoB(), Get.GetMobilePhone());
+            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber,
+                                                           RiskMask.TESTNoCheck,
+                                                           ApplicationDecisionStatus.Accepted,listOfGuarantors);
+
+
+            var guarantorsWorkflow = Application.GetWorkflowsForApplication(application.Id,
+                                                                                    RiskWorkflowTypes.Guarantor);
+            Assert.AreEqual(guarantorsWorkflow.Count, listOfGuarantors.Count, "There should be "+listOfGuarantors.Count+" risk workflow");
+
+            var workflowCheckpointsWithDefinitions = guarantorsWorkflow[0].WorkflowCheckpoints.ToDictionary(checkpoint => checkpoint, p => p.CheckpointDefinitionEntity.Name);
+            var workflowVerificationsWithDefinitions = guarantorsWorkflow[0].WorkflowVerifications.ToDictionary(verification => verification, p => p.VerificationDefinitionEntity.Name);
+
+            Assert.IsNotNull(workflowVerificationsWithDefinitions.Count, "There should be verifications in the workflow");
+            Assert.IsNotNull(workflowCheckpointsWithDefinitions.Count, "There should be checkpoints in the workflow");
+
+            Assert.Contains(workflowVerificationsWithDefinitions.Values.ToList(), Get.EnumToString(RiskVerificationDefinitions.MobilePhoneIsUniqueVerification));
+            Assert.Contains(workflowCheckpointsWithDefinitions.Values.ToList(), Get.EnumToString(RiskCheckpointDefinitionEnum.MobilePhoneIsUnique));
+
+            foreach (var checkpointWithDefinition in workflowCheckpointsWithDefinitions)
+            {
+                Assert.AreEqual(RiskCheckpointStatus.Verified, (RiskCheckpointStatus)checkpointWithDefinition.Key.CheckpointStatus);
+            }
+        }
+
+        [Test, AUT(AUT.Wb)]
+        [JIRA("SME-1168"), Description("This will test if the guarantor phone is not in our system")]
+        public void IfMobilePhoneIsNotUniqueForGuarantor_LoanIsDeclined()
+        {
+            var listOfGuarantors = new List<Customer>();
+            var db = Drive.Db;
+            db.AddPhoneNumberToRiskDb(MobilePhoneNumber);
+            
+            var guarantor = new Customer(Guid.NewGuid(), Get.RandomEmail(), "Roger John", "Clarke",
+                                         Get.GetDoB(), MobilePhoneNumber) { MiddleName = RiskMask.TESTMobilePhoneIsUnique.ToString() };
+            listOfGuarantors.Add(guarantor);
+
+            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
+                                             Get.GetDoB(), Get.GetMobilePhone());
+            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber,
+                                                           RiskMask.TESTNoCheck,
+                                                           ApplicationDecisionStatus.PreAccepted, listOfGuarantors);
+            Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
+            var guarantorsWorkflow = Application.GetWorkflowsForApplication(application.Id,
+                                                                                    RiskWorkflowTypes.Guarantor);
+            Assert.AreEqual(guarantorsWorkflow.Count, listOfGuarantors.Count, "There should be " + listOfGuarantors.Count + " risk workflow");
+
+            var workflowCheckpointsWithDefinitions = guarantorsWorkflow[0].WorkflowCheckpoints.ToDictionary(checkpoint => checkpoint, p => p.CheckpointDefinitionEntity.Name);
+            var workflowVerificationsWithDefinitions = guarantorsWorkflow[0].WorkflowVerifications.ToDictionary(verification => verification, p => p.VerificationDefinitionEntity.Name);
+
+            Assert.IsNotNull(workflowVerificationsWithDefinitions.Count, "There should be verifications in the workflow");
+            Assert.IsNotNull(workflowCheckpointsWithDefinitions.Count, "There should be checkpoints in the workflow");
 
             Assert.Contains(workflowVerificationsWithDefinitions.Values.ToList(), Get.EnumToString(RiskVerificationDefinitions.MobilePhoneIsUniqueVerification));
             Assert.Contains(workflowCheckpointsWithDefinitions.Values.ToList(), Get.EnumToString(RiskCheckpointDefinitionEnum.MobilePhoneIsUnique));
@@ -123,7 +160,7 @@ namespace Wonga.QA.Tests.Risk.MobilePhone
             customerBuilder.ScrubForename(mainApplicant.Forename);
             customerBuilder.ScrubSurname(mainApplicant.Surname);
             //STEP 1 - Create the main director
-            var mainDirector = customerBuilder.WithMiddleName(middlenameMask.ToString()).WithForename(mainApplicant.Forename).WithSurname(mainApplicant.Surname).WithDateOfBirth(mainApplicant.DateOfBirth).WithMobileNumber(mainApplicant.MobilePhoneNumber).Build();
+            var mainDirector = customerBuilder.WithMiddleName(middlenameMask).WithForename(mainApplicant.Forename).WithSurname(mainApplicant.Surname).WithDateOfBirth(mainApplicant.DateOfBirth).WithMobileNumber(mainApplicant.MobilePhoneNumber).Build();
 
             //STEP2 - Create the company
             var organisationBuilder = OrganisationBuilder.New(mainDirector).WithOrganisationNumber(companyRegisteredNumber);
@@ -167,5 +204,6 @@ namespace Wonga.QA.Tests.Risk.MobilePhone
             return application;
 
         }
+       
     }
 }
