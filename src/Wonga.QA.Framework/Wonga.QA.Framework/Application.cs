@@ -115,22 +115,19 @@ namespace Wonga.QA.Framework
             TimeSpan span = application.FixedTermLoanApplicationEntity.NextDueDate.Value - DateTime.Today;
             RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == Id);
 
-            RewindApplicationDates(application, riskApplication, span);
+            Drive.Db.RewindApplicationDates(application, riskApplication, span);
         }
 
 		public void MakeDueToday(ApplicationEntity application)
 		{
 			RewindAppDates(application);
 
-		    FixedTermLoanSagaEntity ftl = Drive.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
-		    LoanDueDateNotificationSagaEntity dueNotificationSaga = Drive.Db.OpsSagas.LoanDueDateNotificationSagaEntities.Single(s => s.ApplicationId == Id);
-			Drive.Db.RewindApplicationDates(application, riskApplication, span);
-
 			FixedTermLoanSagaEntity ftl = Drive.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
+			LoanDueDateNotificationSagaEntity dueNotificationSaga = Drive.Db.OpsSagas.LoanDueDateNotificationSagaEntities.Single(s => s.ApplicationId == Id);
 			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
-            Drive.Msmq.Payments.Send(new TimeoutMessage() { SagaId = dueNotificationSaga.Id });
-            Do.With.While(ftl.Refresh);
-		    Do.With.While(dueNotificationSaga.Refresh);
+			Drive.Msmq.Payments.Send(new TimeoutMessage() { SagaId = dueNotificationSaga.Id });
+			Do.With.While(ftl.Refresh);
+			Do.With.While(dueNotificationSaga.Refresh);
 		}
 
         public Application MakeDueStatusToday()
