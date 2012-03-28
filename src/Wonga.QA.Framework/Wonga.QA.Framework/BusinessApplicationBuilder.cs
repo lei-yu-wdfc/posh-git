@@ -105,16 +105,18 @@ namespace Wonga.QA.Framework
 
             /* STEP 6 
              * And I wait for Payments to create the application */
-            var previous = 0;
-            var stopwatch = Stopwatch.StartNew();
-            Do.While(() =>
-            {
-                Int32 current = Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).Transactions.Count);
-                if (previous != current)
-                    stopwatch.Restart();
-                previous = current;
-                return stopwatch.Elapsed < TimeSpan.FromSeconds(5);
-            });
+            //var previous = 0;
+            //var stopwatch = Stopwatch.StartNew();
+            //Do.While(() =>
+            //{
+            //    Int32 current = Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).Transactions.Count);
+            //    if (previous != current)
+            //        stopwatch.Restart();
+            //    previous = current;
+            //    return stopwatch.Elapsed < TimeSpan.FromSeconds(5);
+            //});
+
+            Do.While(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).Transactions.Count == 3);
 
             /* STEP 7 
              * And I wait for the decision i want - PLEASE REMEBER THAT THE DEFAULT ONE IS ACCEPTED */
