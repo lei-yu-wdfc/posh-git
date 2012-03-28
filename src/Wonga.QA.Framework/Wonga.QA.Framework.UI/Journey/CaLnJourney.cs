@@ -20,8 +20,8 @@ namespace Wonga.QA.Framework.UI
         }
         public ILnConsumerJourney ApplyForLoan(int amount, int duration)
         {
-            
 
+            return this;
         }
 
         public ILnConsumerJourney FillApplicationDetails()
