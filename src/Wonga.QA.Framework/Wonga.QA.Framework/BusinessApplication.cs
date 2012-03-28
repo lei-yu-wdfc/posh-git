@@ -153,6 +153,16 @@ namespace Wonga.QA.Framework
             return arrears > 0M;
         }
 
+		public decimal GetArrearsAmount()
+		{
+			var response = Drive.Api.Queries.Post(new GetBusinessAccountSummaryWbUkQuery
+			{
+				AccountId = AccountId
+			});
+			return decimal.Parse(response.Values["Arrears"].Single());
+		} 
+
+
         // Currently not working as business account summary does not include default charges
         ///// <summary>
         ///// Not working at the moment

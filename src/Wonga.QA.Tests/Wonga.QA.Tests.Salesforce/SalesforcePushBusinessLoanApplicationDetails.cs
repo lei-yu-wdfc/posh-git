@@ -27,7 +27,7 @@ namespace Wonga.QA.Tests.Salesforce
 		{
 			var customer = CustomerBuilder.New().Build();
 			var organisation = OrganisationBuilder.New(customer).WithSoManySecondaryDirectors(3).Build();
-            var application = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+			var application = ApplicationBuilder.New(customer, organisation).Build();
 
 			var applicationEntity = Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id));
 
@@ -148,9 +148,9 @@ namespace Wonga.QA.Tests.Salesforce
 			var customer = CustomerBuilder.New().Build();
 			var organization = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organization)
-				.WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutApplicationIntoArrears();
+				.WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutApplicationIntoArrears() as BusinessApplication;
 
-			var arrearsAmount = GetArrearsAmount(application.AccountId);
+			var arrearsAmount = application.GetArrearsAmount();
 
 			//fire transaction for pay off arrears
 			Drive.Msmq.Payments.Send(new CreateTransactionCommand
@@ -168,15 +168,6 @@ namespace Wonga.QA.Tests.Salesforce
 
 			var removedFromArrearsQuery = string.Format(getApplicationWithUpdatedStatus, application.Id, loanLiveStatus);
 			Do.With.Timeout(2).Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, removedFromArrearsQuery));													
-		}
-
-		private static decimal GetArrearsAmount(Guid accountId)
-		{
-			var response = Drive.Api.Queries.Post(new GetBusinessAccountSummaryWbUkQuery
-			{
-				AccountId = accountId
-			});
-			return decimal.Parse(response.Values["Arrears"].Single());
 		}
 
         [Test, AUT(AUT.Wb), JIRA("SME-849")]

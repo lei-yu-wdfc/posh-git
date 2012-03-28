@@ -1,25 +1,27 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Msmq;
+using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments
 {
 	[TestFixture]
 	public class BusinessRemoveFromArrearsTests
 	{
-		[Test]
+		[Test, AUT(AUT.Wb), JIRA("SME-892")]
 		public void BusinessApplicationShouldBeRemovedFromArrears_WhenTransactionReceivedPaysOffOutstandingArrearsAmount()
 		{
 			var customer = CustomerBuilder.New().Build();
 			var organization = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organization)
-				.WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutApplicationIntoArrears();
+				.WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutApplicationIntoArrears() as BusinessApplication;
 
-			var arrearsAmount = GetArrearsAmount(application.AccountId);
+			var arrearsAmount = application.GetArrearsAmount();
 
 			//fire transaction for pay off arrears
 			Drive.Msmq.Payments.Send(new CreateTransactionCommand
@@ -41,15 +43,15 @@ namespace Wonga.QA.Tests.Payments
 			Do.Until(() => Drive.Db.Payments.Arrears.SingleOrDefault(a => a.ApplicationId == applicationEntity.ApplicationId) == null);
 		}
 
-		[Test]
+		[Test, AUT(AUT.Wb), JIRA("SME-892")]
 		public void BusinessApplicationShouldNotBeRemovedFromArrears_WhenTransactionReceivedDoesNotPayOffEntireOutstandingArrearsAmount()
 		{
 			var customer = CustomerBuilder.New().Build();
 			var organization = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organization)
-				.WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutApplicationIntoArrears();
+				.WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutApplicationIntoArrears() as BusinessApplication;
 
-			var arrearsAmount = GetArrearsAmount(application.AccountId);
+			var arrearsAmount = application.GetArrearsAmount();
 
 			//fire transaction for pay off arrears
 			Drive.Msmq.Payments.Send(new CreateTransactionCommand
@@ -65,24 +67,23 @@ namespace Wonga.QA.Tests.Payments
 				Type = PaymentTransactionEnum.Cheque
 			});
 
-			Do.Until(() => Drive.Db.Payments.Transactions.SingleOrDefault(t => t.ApplicationEntity.ExternalId == application.Id
-				&& t.Type == PaymentTransactionEnum.Cheque.ToString() && t.Amount == arrearsAmount -1));
-	
+			Thread.Sleep(15000);
+
 			var applicationEntity = Do.Until(() => Drive.Db.Payments.BusinessFixedInstallmentLoanApplications.SingleOrDefault(
 					a => a.ApplicationEntity.ExternalId == application.Id));
 
 			Assert.IsNotNull(Drive.Db.Payments.Arrears.SingleOrDefault(a => a.ApplicationId == applicationEntity.ApplicationId));
 		}
 
-		[Test]
+		[Test, AUT(AUT.Wb), JIRA("SME-892")]
 		public void BusinessApplicationShouldNotBeRemovedFromArrears_WhenTransactionReceivedIsNotExpectedType()
 		{
 			var customer = CustomerBuilder.New().Build();
 			var organization = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organization)
-				.WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutApplicationIntoArrears();
+				.WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutApplicationIntoArrears() as BusinessApplication;
 
-			var arrearsAmount = GetArrearsAmount(application.AccountId);
+			var arrearsAmount = application.GetArrearsAmount();
 
 			//fire transaction for pay off arrears
 			Drive.Msmq.Payments.Send(new CreateTransactionCommand
@@ -98,8 +99,7 @@ namespace Wonga.QA.Tests.Payments
 				Type = PaymentTransactionEnum.Fee
 			});
 
-			Do.Until(() => Drive.Db.Payments.Transactions.SingleOrDefault(t => t.ApplicationEntity.ExternalId == application.Id
-				&& t.Type == PaymentTransactionEnum.Fee.ToString() && t.Amount == arrearsAmount));
+			Thread.Sleep(15000);
 
 			var applicationEntity = Do.Until(() => Drive.Db.Payments.BusinessFixedInstallmentLoanApplications.SingleOrDefault(
 					a => a.ApplicationEntity.ExternalId == application.Id));
@@ -107,15 +107,15 @@ namespace Wonga.QA.Tests.Payments
 			Assert.IsNotNull(Drive.Db.Payments.Arrears.SingleOrDefault(a => a.ApplicationId == applicationEntity.ApplicationId));	
 		}
 
-		[Test]
+		[Test, AUT(AUT.Wb), JIRA("SME-892")]
 		public void BusinessApplicationShouldNotBeRemovedFromArrears_WhenTransactionReceivedIsNotExpectedScope()
 		{
 			var customer = CustomerBuilder.New().Build();
 			var organization = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organization)
-				.WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutApplicationIntoArrears();
+				.WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutApplicationIntoArrears() as BusinessApplication;
 
-			var arrearsAmount = GetArrearsAmount(application.AccountId);
+			var arrearsAmount = application.GetArrearsAmount();
 
 			//fire transaction for pay off arrears
 			Drive.Msmq.Payments.Send(new CreateTransactionCommand
@@ -131,22 +131,12 @@ namespace Wonga.QA.Tests.Payments
 				Type = PaymentTransactionEnum.Cheque
 			});
 
-			Do.Until(() => Drive.Db.Payments.Transactions.SingleOrDefault(t => t.ApplicationEntity.ExternalId == application.Id
-				&& t.Scope == (int)PaymentTransactionScopeEnum.Debit && t.Amount == arrearsAmount));
+			Thread.Sleep(15000);
 
 			var applicationEntity = Do.Until(() => Drive.Db.Payments.BusinessFixedInstallmentLoanApplications.SingleOrDefault(
 					a => a.ApplicationEntity.ExternalId == application.Id));
 
 			Assert.IsNotNull(Drive.Db.Payments.Arrears.SingleOrDefault(a => a.ApplicationId == applicationEntity.ApplicationId));
-		}
-
-		private static decimal GetArrearsAmount(Guid accountId)
-		{
-			var response = Drive.Api.Queries.Post(new GetBusinessAccountSummaryWbUkQuery
-			{
-				AccountId = accountId
-			});
-			return decimal.Parse(response.Values["Arrears"].Single());
 		}
 	}
 }
