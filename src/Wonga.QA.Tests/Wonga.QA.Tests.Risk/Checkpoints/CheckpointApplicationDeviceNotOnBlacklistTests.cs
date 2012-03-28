@@ -9,7 +9,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	[Parallelizable(TestScope.All)]
     public class CheckpointApplicationDeviceNotOnBlacklistTests
     {
-        [Test, AUT(AUT.Ca, AUT.Uk, AUT.Wb), JIRA("CA-1735", "SME-130")]
+				[Test, AUT(AUT.Ca, AUT.Uk, AUT.Wb), JIRA("CA-1735", "SME-130", "UK-1046")]
 		public void CheckpointApplicationFailsIovation_LoanIsDeclined()
         {
             var customerBuilder = CustomerBuilder.New();
@@ -33,7 +33,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.HardwareBlacklistCheck));
         }
 
-        [Test, AUT(AUT.Ca, AUT.Uk, AUT.Wb), JIRA("CA-1735", "SME-130")]
+				[Test, AUT(AUT.Ca, AUT.Uk, AUT.Wb), JIRA("CA-1735", "SME-130", "UK-1046")]
 		public void CheckpointApplicationPassesIovation_LoanIsAccepted()
         {
             var customerBuilder = CustomerBuilder.New();
