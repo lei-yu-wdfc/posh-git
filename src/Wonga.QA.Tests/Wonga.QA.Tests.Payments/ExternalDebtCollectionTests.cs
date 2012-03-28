@@ -340,7 +340,6 @@ namespace Wonga.QA.Tests.Payments
             Assert.IsNull(debtCollectionEntity);
         }
 
-        [Ignore]
         [Test, AUT(AUT.Ca), JIRA("CA-1862")]
         public void WhenApplicationMovedToDcaSalesForceStatusShouldBeUpdated()
         {
