@@ -129,9 +129,11 @@ namespace Wonga.QA.Tests.Payments
                                   };
 
             Drive.Mocks.Scotia.AddOnlineBillPaymentFile(application.Id.ToString(), new List<OnlineBillPaymentTransaction> { transaction });
-            WaitPaymentFunctions.WaitForTransactionTypeOfDirectBankPayment(applicationId, (earlyRepaymentAmount * -1));
+            var directBankPaytransaction = WaitPaymentFunctions.WaitForTransactionTypeOfDirectBankPayment(applicationId, (earlyRepaymentAmount * -1));
 
-            //Todo: Verify that loan does not close a minute after payment recieved...
+            TimeoutPaymentFunctions.TimeoutCloseApplicationSaga(directBankPaytransaction);
+
+            //TODO: Verify application does not close... 
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1441"), Ignore("Not fully implemented, do not run")]

@@ -99,4 +99,9 @@
     <OurCustomers>#block-wonga-6 div div ul li:nth-child(2) a</OurCustomers>
     <ResponsibleLending>#block-wonga-6 div div ul li:nth-child(3) a</ResponsibleLending>
   </AboutUsPage>
+
+  <MySummaryPage>
+	 <PromisedRepayAmount>#content-area p span</PromisedRepayAmount>
+	 <PromisedRepayDate>#content-area p strong em</PromisedRepayDate>
+  </MySummaryPage>
 </Ui>

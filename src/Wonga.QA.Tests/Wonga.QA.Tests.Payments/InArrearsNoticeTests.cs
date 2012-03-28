@@ -10,6 +10,7 @@ using Wonga.QA.Tests.Payments.Helpers;
 
 namespace Wonga.QA.Tests.Payments
 {
+	[AUT(AUT.Za, AUT.Uk, AUT.Ca)]
 	public class InArrearsNoticeTests
 	{
 		private bool _bankGatewayTestModeOriginal;

@@ -96,4 +96,12 @@
     <OurCustomers>#block-wonga-6 div div ul li:nth-child(3) a</OurCustomers>
     <ResponsibleLending>#block-wonga-6 div div ul li:nth-child(2) a</ResponsibleLending>
   </AboutUsPage>
+
+	<MySummaryPage>
+		<PromisedRepayAmount>#content-area p span</PromisedRepayAmount>
+		<PromisedRepayDate>#content-area p b em</PromisedRepayDate>
+		<RepayButton>#cloud ul li a</RepayButton>
+		<TotalToRepayAmountPopup>#fancybox-content div div b:first-of-type</TotalToRepayAmountPopup>
+		<PromisedRepayDatePopup>#fancybox-content div div b:last-of-type</PromisedRepayDatePopup>
+	</MySummaryPage>
 </Ui>

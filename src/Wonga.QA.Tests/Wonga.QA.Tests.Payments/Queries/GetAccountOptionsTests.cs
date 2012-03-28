@@ -73,7 +73,6 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual(1, int.Parse(response.Values["ScenarioId"].Single()));
         }
 
-
         [Test, AUT(AUT.Uk), JIRA("UK-823")]
         public void Scenario02CustomerWithLiveLoanWithAvailableCreditTooEarlyToExtend()
         {
@@ -91,8 +90,6 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual(2,int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
-        
-
         [Test, AUT(AUT.Uk), JIRA("UK-823")]
         public void Scenario03CustomerWithLiveLoanWithAvailableCreditCanExtendLoan()
         {
@@ -108,7 +105,6 @@ namespace Wonga.QA.Tests.Payments.Queries
             var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
             Assert.AreEqual(3, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
-
         
         [Test, AUT(AUT.Uk), JIRA("UK-823")]
         public void Scenario04CustomerWithLiveLoanWithAvailableCreditCantExtendLoanDueTooMaxExtensions()
@@ -124,9 +120,7 @@ namespace Wonga.QA.Tests.Payments.Queries
 
             var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
             Assert.AreEqual(4, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
-        }
-
-        
+        }     
 
         [Test, AUT(AUT.Uk), JIRA("UK-823")]
         public void Scenario05CustomerWithLiveLoanWithoutAvailableCreditCantExtendTooEarly()
@@ -143,9 +137,7 @@ namespace Wonga.QA.Tests.Payments.Queries
 
             var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
             Assert.AreEqual(5, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
-        }
-
-        
+        }    
 
         [Test, AUT(AUT.Uk), JIRA("UK-823")]
         public void Scenario06CustomerWithLiveLoanWithoutAvailableCreditCanExtend()
@@ -213,8 +205,6 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual(9, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
-     
-
         [Test, AUT(AUT.Uk), JIRA("UK-823")]
         public void Scenario10CustomerWithLiveLoanWithMissedPaymentFeeOneDayInArrears()
         {
@@ -269,7 +259,6 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual(12, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
-        
         [Test, AUT(AUT.Uk), JIRA("UK-823")]
         public void Scenario13CustomerWithLiveLoanSixtyOneDaysInArrears()
         {
@@ -287,8 +276,6 @@ namespace Wonga.QA.Tests.Payments.Queries
             var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
             Assert.AreEqual(13, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
-
-       
 
         [Test, AUT(AUT.Uk), JIRA("UK-823")]
         public void Scenario14CustomerInArrearsWithRepaymentArrangementInGoodOrder()
@@ -309,8 +296,100 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual(14, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
-        
+        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        public void Scenario15CustomerInArrearsWithRepaymentArrangementWithMissedPayment()
+        {
+            var accountId = Guid.NewGuid();
+            var bankAccountId = Guid.NewGuid();
+            var paymentCardId = Guid.NewGuid();
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            var appId = Guid.NewGuid();
+            const int applicationId = 0;
+            const decimal trustRating = 400.00M;
 
+            var setupData = new AccountSummarySetupFunctions();
+            setupData.Scenario15Setup(requestId1, requestId2, applicationId, accountId, appId, paymentCardId, bankAccountId);
+
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(15, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        public void Scenario16CustomerInArrearsWithBrokenRepaymentArrangement()
+        {
+            var accountId = Guid.NewGuid();
+            var bankAccountId = Guid.NewGuid();
+            var paymentCardId = Guid.NewGuid();
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            var appId = Guid.NewGuid();
+            const int applicationId = 0;
+            const decimal trustRating = 400.00M;
+
+            var setupData = new AccountSummarySetupFunctions();
+            setupData.Scenario16Setup(requestId1, requestId2, applicationId, accountId, appId, paymentCardId, bankAccountId);
+
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(16, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        public void Scenario17NewCustomerWithApplicationInProgress()
+        {
+            var accountId = Guid.NewGuid();
+            var bankAccountId = Guid.NewGuid();
+            var paymentCardId = Guid.NewGuid();
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            var appId = Guid.NewGuid();
+            const int applicationId = 0;
+            const decimal trustRating = 400.00M;
+
+            var setupData = new AccountSummarySetupFunctions();
+            setupData.Scenario17Setup(requestId1, requestId2, applicationId, accountId, appId, paymentCardId, bankAccountId);
+
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(17, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        public void Scenario20NewCustomerLastApplicationDeclined()
+        {
+            var accountId = Guid.NewGuid();
+            var bankAccountId = Guid.NewGuid();
+            var paymentCardId = Guid.NewGuid();
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            var appId = Guid.NewGuid();
+            const int applicationId = 0;
+            const decimal trustRating = 400.00M;
+
+            var setupData = new AccountSummarySetupFunctions();
+            setupData.Scenario20Setup(requestId1, requestId2, applicationId, accountId, appId, paymentCardId, bankAccountId);
+
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(20, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        public void Scenario21CustomerApplicationAwaitingSignature()
+        {
+            var accountId = Guid.NewGuid();
+            var bankAccountId = Guid.NewGuid();
+            var paymentCardId = Guid.NewGuid();
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            var appId = Guid.NewGuid();
+            const int applicationId = 0;
+            const decimal trustRating = 400.00M;
+
+            var setupData = new AccountSummarySetupFunctions();
+            setupData.Scenario21Setup(requestId1, requestId2, applicationId, accountId, appId, paymentCardId, bankAccountId);
+
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(21, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
+        }
         #region "Helpers"
 
             private void CreateFixedTermLoanApplication(Guid appId, Guid accountId, Guid bankAccountId, Guid paymentCardId, int dueInDays = 10)

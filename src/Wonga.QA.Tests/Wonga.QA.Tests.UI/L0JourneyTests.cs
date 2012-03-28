@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Threading;
 using Gallio.Framework.Assertions;
 using MbUnit.Framework;
+using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.UiElements.Pages;
@@ -320,6 +321,20 @@ namespace Wonga.QA.Tests.Ui
                 .FillAcceptedPage()
                 .GoToMySummaryPage()
                 .CurrentPage as MySummaryPage;
+            
+        }
+
+        [Test, AUT(AUT.Ca), Pending("Example of Ca Ln journey")]
+        public void CaLnJourneyTest()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            application.RepayOnDueDate();
+            var mySummaryPage = loginPage.LoginAs(email);
+            
             
         }
 
