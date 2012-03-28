@@ -38,7 +38,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.WithEmployer(testMask)
 				.WithForename(customerData.ForeName)
 				.WithSurname(customerData.SurName)
-//				.WithDateOfBirth(customerData.DateOfBirth) // This allow to avoid validatetion error in COMMS, because customer equal by Forename and DOB
+//				.WithDateOfBirth(customerData.DateOfBirth) // This allow to avoid validation error in COMMS, because customer equal by Forename and DOB
 				.Build();
 
 			var application = ApplicationBuilder.New(customer)
