@@ -24,7 +24,6 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     break;
 
                 case (AUT.Ca) :
-                    _repayButton = Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.RepayButton));
                     LookForSliders();
                     break;
 
@@ -80,7 +79,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public void RepayButtonClick()
         {
-            _repayButton.Click();
+            Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.RepayButton)).Click();
         }
 
         public String GetTotalToRepayAmountPopup
