@@ -146,7 +146,7 @@ namespace Wonga.QA.Framework.ThirdParties
                               "l.Promise_Date__c, l.Number_Of_Weeks__c, l.Next_Due_Date__c, l.Monthly_Interest_Rate__c, " +
                               "l.Loan_Amount__c, l.Initiation_Fee__c, l.Customer_Account__c, l.CurrencyIsoCode, l.Application_Fee__c, " +
 							  "l.SignedOn__c, l.Customer_Account__r.V3_Organization_Id__c, " +
-                              "l.Application_Date__c From Loan_Application__c l Where l.V3_Application_Id__c = '{0}'",
+                              "l.Application_Date__c, l.Status_ID__c From Loan_Application__c l Where l.V3_Application_Id__c = '{0}'",
                               applicationId);
 
             var result = client.query(sessionHeader, null, null, null, query);
@@ -168,7 +168,7 @@ namespace Wonga.QA.Framework.ThirdParties
 							  "l.Promise_Date__c, l.Number_Of_Weeks__c, l.Next_Due_Date__c, l.Monthly_Interest_Rate__c, " +
 							  "l.Loan_Amount__c, l.Initiation_Fee__c, l.Customer_Account__c, l.CurrencyIsoCode, l.Application_Fee__c, " +
 							  "l.SignedOn__c, l.Customer_Account__r.V3_Organization_Id__c, " +
-							  "l.Application_Date__c From Loan_Application__c l Where l.V3_Application_Id__c = '{0}' and l.Customer_Account__r.V3_Organization_Id__c = '{1}'",
+                              "l.Application_Date__, l.Status_ID__c From Loan_Application__c l Where l.V3_Application_Id__c = '{0}' and l.Customer_Account__r.V3_Organization_Id__c = '{1}'",
 							  applicationId, organisationId);
 
 			var result = client.query(sessionHeader, null, null, null, query);
