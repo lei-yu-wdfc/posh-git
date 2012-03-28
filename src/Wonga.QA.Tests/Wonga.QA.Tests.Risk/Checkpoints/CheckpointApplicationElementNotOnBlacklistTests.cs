@@ -128,6 +128,15 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             var socialDetailsEntity = Do.Until(() => riskDb.SocialDetails.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
             Assert.IsNotNull(socialDetailsEntity, "Risk Social details should exist");
 
+            //Wait for the Risk data - this will be externalized somewhere 
+
+            Do.Until(
+                () =>
+                Drive.Db.Risk.RiskWorkflows.Any(
+                    p =>
+                    p.ApplicationId == application.Id &&
+                    (RiskWorkflowTypes) p.WorkflowType == RiskWorkflowTypes.Guarantor));
+
             var guarantorRiskWorkflow = Application.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.Guarantor);
             Assert.AreEqual(guarantorRiskWorkflow.Count, 1, "There should be 1 risk workflow");
             Do.Until(() => Drive.Db.Risk.WorkflowCheckpoints.Any(p => p.RiskWorkflowId == guarantorRiskWorkflow[0].RiskWorkflowId && p.CheckpointStatus != 0));
@@ -176,6 +185,12 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             var socialDetailsEntity = Do.Until(() => riskDb.SocialDetails.SingleOrDefault(p => p.AccountId == riskApplicationEntity.AccountId));
             Assert.IsNotNull(socialDetailsEntity, "Risk Social details should exist");
 
+            Do.Until(
+                () =>
+                Drive.Db.Risk.RiskWorkflows.Any(
+                    p =>
+                    p.ApplicationId == application.Id &&
+                    (RiskWorkflowTypes) p.WorkflowType == RiskWorkflowTypes.MainApplicant));
             var guarantorRiskWorkflow = Application.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.Guarantor);
             Assert.AreEqual(guarantorRiskWorkflow.Count, 1, "There should be 1 risk workflow");
             Do.Until(() => Drive.Db.Risk.WorkflowCheckpoints.Any(p => p.RiskWorkflowId == guarantorRiskWorkflow[0].RiskWorkflowId && p.CheckpointStatus != 0));
