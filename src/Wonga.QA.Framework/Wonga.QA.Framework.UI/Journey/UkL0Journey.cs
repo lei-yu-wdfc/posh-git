@@ -52,7 +52,7 @@ namespace Wonga.QA.Framework.UI
             personalDetailsPage.EmploymentDetails.TimeWithEmployerYears = "1";
             personalDetailsPage.EmploymentDetails.TimeWithEmployerMonths = "0";
             personalDetailsPage.EmploymentDetails.SalaryPaidToBank = true;
-            personalDetailsPage.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("dd/MMM/yyyy");
+            personalDetailsPage.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d/MMM/yyyy");
             personalDetailsPage.EmploymentDetails.IncomeFrequency = "Monthly";
             personalDetailsPage.EmploymentDetails.WorkPhone = "02087111222";
             personalDetailsPage.ContactingYou.CellPhoneNumber = "07707111222";

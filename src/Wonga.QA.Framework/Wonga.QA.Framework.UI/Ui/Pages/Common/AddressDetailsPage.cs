@@ -49,8 +49,6 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _flatNumber = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.FlatNumber));
             _addressPeriod = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.AddressPeriod));
             _next = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.NextButton));
-            _addressOptionsWrapper = _form.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.AddressOptionsWrapper));
-            _postcodeValid = _form.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.PostcodeValid));
 
             switch (Config.AUT)
             {
@@ -80,6 +78,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public void LookupByPostCode()
         {
+            _addressOptionsWrapper = _form.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.AddressOptionsWrapper));
             Do.With.Interval(1).Until(ClickLookupAddress);
             Do.Until(() => _addressOptionsWrapper.Displayed);
         }
@@ -87,6 +86,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private IWebElement ClickLookupAddress()
         {
             _lookup.Click();
+            _postcodeValid = _form.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.PostcodeValid));
             return _postcodeValid.FindElement(By.CssSelector(".success"));
         }
 
