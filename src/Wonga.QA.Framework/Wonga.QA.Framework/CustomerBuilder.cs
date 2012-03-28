@@ -420,6 +420,7 @@ namespace Wonga.QA.Framework
                         AddBankAccountUkCommand.New(r=>
                                                     	{
                                                     		r.AccountId = _id;
+                                                    	    r.BankAccountId = _bankAccountId;
                                                     		if (_bankAccountNumber.HasValue)
                                                     		{
                                                     			r.AccountNumber = _bankAccountNumber;
