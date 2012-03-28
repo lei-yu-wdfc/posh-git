@@ -35,6 +35,7 @@
   <ItemGroup>
     <Compile Include="AddBankAccountTests.cs" />
     <Compile Include="AddBusinessBankAccountTests.cs" />
+    <Compile Include="BusinessRemoveFromArrearsTests.cs" />
     <Compile Include="CollectionsTests.cs" />
     <Compile Include="Command\SavePaymentCardBillingAddress.cs" />
     <Compile Include="CsapiCreateTransactionTest.cs" />
