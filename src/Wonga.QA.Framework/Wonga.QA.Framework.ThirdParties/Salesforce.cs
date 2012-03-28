@@ -102,10 +102,17 @@ namespace Wonga.QA.Framework.ThirdParties
 
             return result;
         }
-
         private SoapClient Login(out string sessionId)
         {
-            sessionId = null;
+            SessionHeader sessionHeader;
+            var result = Login(out sessionHeader);
+            sessionId = sessionHeader.sessionId;
+            return result;
+        }
+
+        private SoapClient Login(out SessionHeader sessionHeader)
+        {
+            sessionHeader = null;
             Binding binding = ConstructBinding();
             var client = new SoapClient(binding, new EndpointAddress(SalesforceUrl));
             LoginResult loginResult;
@@ -126,7 +133,7 @@ namespace Wonga.QA.Framework.ThirdParties
             }
 
             client = new SoapClient(client.Endpoint.Binding, new EndpointAddress(loginResult.serverUrl));
-            sessionId = loginResult.sessionId;
+            sessionHeader = new SessionHeader {sessionId = loginResult.sessionId};
             return client;
         }
 
@@ -226,6 +233,29 @@ namespace Wonga.QA.Framework.ThirdParties
 			if (result == null || result.records == null) throw new Exception(string.Format("Unable to retrieve bank account by id={0}", bankAccountId));
 
             return result.records.FirstOrDefault() as Bank_Account__c;
+        }
+
+        public Billing_Card__c GetPaymentCardById(Guid paymentCardId, string customCondition)
+        {
+            SessionHeader sessionHeader;
+            SoapClient client = Login(out sessionHeader);
+
+            var query =
+                String.Format(@"Select p.V3_Payment_Card_ID__c, p.V3_Billing_Address_Id__c, p.Type__c, p.Town__c, p.Start_Date__c, 
+                              p.Post_Code__c, p.Masked_Number__c, p.Issue_No__c, p.Holder_Name__c, p.Expiry_Date__c, p.County__c,
+                              p.Country__c, p.Address_Line_2__c, p.Address_Line_1__c, p.Customer_Account__r.V3_Organization_Id__c
+                              From Billing_Card__c p 
+                              Where p.V3_Payment_Card_ID__c = '{0}' ",
+                              paymentCardId);
+            if(!string.IsNullOrEmpty(customCondition))
+            {
+                query += customCondition;
+            }
+            QueryResult result = client.query(sessionHeader, null, null, null, query);
+
+            if (result == null || result.records == null) throw new Exception(string.Format("Unable to retrieve payment card by id={0}", paymentCardId));
+
+            return result.records.FirstOrDefault() as Billing_Card__c;
         }
     }
 }
