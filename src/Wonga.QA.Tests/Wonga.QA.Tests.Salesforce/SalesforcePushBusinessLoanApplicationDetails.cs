@@ -9,6 +9,8 @@ using UpdateLoanTermWbUkCommand = Wonga.QA.Framework.Api.UpdateLoanTermWbUkComma
 
 namespace Wonga.QA.Tests.Salesforce
 {
+    // Can't run in parallel for the moment, as this overloads SF TC and all of them timeout :)
+    //[Parallelizable(TestScope.All)]
     [TestFixture]
     public class SalesforcePushBusinessLoanApplicationDetails : SalesforceTestBase
     {
