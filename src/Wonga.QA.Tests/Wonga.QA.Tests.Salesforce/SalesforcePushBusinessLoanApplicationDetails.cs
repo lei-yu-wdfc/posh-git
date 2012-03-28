@@ -4,6 +4,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
 using UpdateLoanTermWbUkCommand = Wonga.QA.Framework.Api.UpdateLoanTermWbUkCommand;
 
@@ -124,46 +125,58 @@ namespace Wonga.QA.Tests.Salesforce
 			Do.Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, query));
 		}
 
-		[Test, AUT(AUT.Wb), JIRA("SME-811"), Ignore]
+		[Test, AUT(AUT.Wb), JIRA("SME-811")]
 		public void PaymentsShouldPushNewBusinessLoanApplicationStatusToSF_WhenApplicationIsAddedToInArrears()
 		{
 			const int inArrearsStatus = 113;
 
 			var customer = CustomerBuilder.New().Build();
 			var organization = OrganisationBuilder.New(customer).Build();
-			var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build() as BusinessApplication;
+			var application = ApplicationBuilder.New(customer, organization)
+				.WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutApplicationIntoArrears();
 
-			application.GetPaymentPlan();
-			application.FirstCollectionAttempt(null, false, false);
-			application.SecondCollectionAttempt(false);
-			//arrears event is fired at this point
-
-			var query = String.Format(getApplicationWithUpdatedStatus, application.Id, inArrearsStatus);
+			var query = string.Format(getApplicationWithUpdatedStatus, application.Id, inArrearsStatus);
 
 			Do.With.Timeout(2).Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, query));													
 		}
 
-		[Test, AUT(AUT.Wb), JIRA("SME-892"), Ignore]
+		[Test, AUT(AUT.Wb), JIRA("SME-892")]
 		public void PaymentsShouldPushNewBusinessLoanApplicationStatusToSF_WhenApplicationIsRemovedFromArrears()
 		{
-			const int inArrearsStatus = 113;
 			const int loanLiveStatus = 112;
 
 			var customer = CustomerBuilder.New().Build();
 			var organization = OrganisationBuilder.New(customer).Build();
-			var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build() as BusinessApplication;
+			var application = ApplicationBuilder.New(customer, organization)
+				.WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutApplicationIntoArrears();
 
-			application.GetPaymentPlan();
-			application.FirstCollectionAttempt(null, false, false);
-			application.SecondCollectionAttempt(false);
-			//arrears event is fired at this point
-
-			var inArrearsQuery = String.Format(getApplicationWithUpdatedStatus, application.Id, inArrearsStatus);
-			Do.Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, inArrearsQuery));
+			var arrearsAmount = GetArrearsAmount(application.AccountId);
 
 			//fire transaction for pay off arrears
-			var removedFromArrearsQuery = String.Format(getApplicationWithUpdatedStatus, application.Id, loanLiveStatus);
-			Do.Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, removedFromArrearsQuery));
+			Drive.Msmq.Payments.Send(new CreateTransactionCommand
+			{
+				Amount = arrearsAmount,
+				ApplicationId = application.Id,
+				Currency = CurrencyCodeIso4217Enum.GBP,
+				ExternalId = Guid.NewGuid(),
+				ComponentTransactionId = Guid.Empty,
+				PostedOn = DateTime.Now,
+				Scope = PaymentTransactionScopeEnum.Credit,
+				Source = PaymentTransactionSourceEnum.System,
+				Type = PaymentTransactionEnum.Cheque
+			});
+
+			var removedFromArrearsQuery = string.Format(getApplicationWithUpdatedStatus, application.Id, loanLiveStatus);
+			Do.With.Timeout(2).Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, removedFromArrearsQuery));													
+		}
+
+		private static decimal GetArrearsAmount(Guid accountId)
+		{
+			var response = Drive.Api.Queries.Post(new GetBusinessAccountSummaryWbUkQuery
+			{
+				AccountId = accountId
+			});
+			return decimal.Parse(response.Values["Arrears"].Single());
 		}
 
         [Test, AUT(AUT.Wb), JIRA("SME-849")]
