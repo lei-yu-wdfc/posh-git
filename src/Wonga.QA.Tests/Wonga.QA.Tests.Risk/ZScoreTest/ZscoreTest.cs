@@ -24,7 +24,7 @@ namespace Wonga.QA.Tests.Risk.ZScoreTest
         [TearDown]
         public void TearDown()
         {
-            Drive.Db.SetServiceConfiguration(CallReportMockMode, _savedCallReportMockMode);
+            Drive.Db.SetServiceConfiguration(CallReportMockMode, "true");
         }
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-956"), Description("score card test with CallCredit")]
@@ -52,7 +52,12 @@ namespace Wonga.QA.Tests.Risk.ZScoreTest
                 catch
                 {
                 }
+                finally
+                {
+                    Drive.Db.SetServiceConfiguration(CallReportMockMode, "true");
+                }
             }
+            Drive.Db.SetServiceConfiguration(CallReportMockMode, "true");
         }
         private static void CreateApplication(string forename, string surname, Date dateOfBirth, string postCode, string houseNumber, string middleName, string city, string street)
         {
