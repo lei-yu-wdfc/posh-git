@@ -420,9 +420,9 @@ namespace Wonga.QA.Tests.Graydon
             var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber, RiskMask.TESTNoCheck,
                                                            ApplicationDecisionStatus.Accepted,listOfGuarantors);
 
-            WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
+            Do.Until(() => Drive.Db.Risk.RiskWorkflows.Where(p => p.ApplicationId == application.Id).Count() == numberOfGuarantors + 2);
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id);
-            Assert.AreEqual(numberOfGuarantors + 2, riskWorkflows.Count, "There should be 4 risk workflows");
+            Assert.AreEqual(numberOfGuarantors + 2, riskWorkflows.Count, "There should be 5 risk workflows");
 
            /* Verify the workflow
             * Get the verifications for the workflow 

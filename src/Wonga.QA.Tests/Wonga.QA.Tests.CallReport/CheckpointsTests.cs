@@ -211,13 +211,13 @@ namespace Wonga.QA.Tests.CallReport
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-644"), Description("CallReport -> This test creates a loan for a customer with the not provided date of birth, then checks the risk checkpoint")]
-        public void TestCallReportMainApplicantDateOfBirthNotProvided_LoanIsApproved()
+        public void TestCallReportMainApplicantDateOfBirthNotProvided_LoanIsDeclined()
         {
             const String forename = "kathleen";
             const String surname = "bridson";
             var dateOfBirth = new Date(new DateTime(1973, 5, 11), DateFormat.Date);
             var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
-            var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTCustomerDateOfBirthIsCorrectSME, ApplicationDecisionStatus.Accepted);
+            var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTCustomerDateOfBirthIsCorrectSME, ApplicationDecisionStatus.Declined);
 
             WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
             var riskWorkflows = Application.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
