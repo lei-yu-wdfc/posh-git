@@ -23,8 +23,8 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 
         protected static void AssertCheckpointOnWorkflowDbEntity(RiskCheckpointStatus expectedStatus, RiskCheckpointDefinitionEnum checkpoint, RiskWorkflowEntity riskWorkflow)
 		{
-			List<string> checkpointNames = Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflow.WorkflowId, expectedStatus);
-			Assert.AreEqual(1, checkpointNames.Count);
+			var checkpointNames = Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflow.WorkflowId, expectedStatus);
+			Assert.AreEqual(1, checkpointNames.Count());
 			Assert.AreEqual(Get.EnumToString(checkpoint), checkpointNames.First());
 
 		}

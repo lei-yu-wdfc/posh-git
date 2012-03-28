@@ -20,8 +20,7 @@ namespace Wonga.QA.Tests.Salesforce
 
             var bankAccountId = Do.Until(organization.GetValidBankAccount);
 
-            Do.With.Message("Bank account for a given organization should exist in SF").Until(
-                () => Salesforce.GetBankAccountById(bankAccountId));
+            Do.With.Message("Bank account for a given organization should exist in SF").Until(() => Salesforce.GetBankAccountById(bankAccountId));
         }
     }
 }

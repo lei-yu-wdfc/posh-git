@@ -99,7 +99,7 @@ namespace Wonga.QA.Tests.Graydon
 
         [Test, AUT(AUT.Wb), JIRA("SME-156")]
         [Description("Graydon -> This test creates a loan and checks if the company has graydon data available")]
-        public void TestGraydonBusinessBureauDataIsAvailable_LoanIsApproved()
+        public void TestGraydonBusinessBureauMainApplicantDataIsAvailable_LoanIsApproved()
         {
             const String goodCompanyRegNumber = "00000086";
             var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
@@ -116,7 +116,7 @@ namespace Wonga.QA.Tests.Graydon
 
         [Test, AUT(AUT.Wb), JIRA("SME-156")]
         [Description("Graydon -> This test creates a loan and checks if the company has graydon data for the negative case - Organisation is unknown to Graydon")]
-        public void TestGraydonBusinessBureauDataIsUnavailable_LoanIsDeclined()
+        public void TestGraydonBusinessBureauMainApplicantDataIsUnavailable_LoanIsDeclined()
         {
             const String goodCompanyRegNumber = "99999999";
             var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
@@ -130,6 +130,8 @@ namespace Wonga.QA.Tests.Graydon
             Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.BusinessBureauDataIsAvailable));
             Assert.Contains(Application.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.BusinessDataAvailableInGraydonVerification));
         }
+
+       
         
         #endregion
 
