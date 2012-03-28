@@ -91,10 +91,12 @@
     <Compile Include="Messages\BottomlinePaymentPlanFailedToCreateWbUkCommand.cs" />
     <Compile Include="Messages\BusinessApplicantBlackListRequestWbUkCommand.cs" />
     <Compile Include="Messages\BusinessApplicantBlackListResponseWbUkCommand.cs" />
+    <Compile Include="Messages\BusinessBankAccountUpsertedCommand.cs" />
     <Compile Include="Messages\BusinessFixedInstallmentApplicationAddedCommand.cs" />
     <Compile Include="Messages\BusinessLoanApplicationUpsertedCommand.cs" />
     <Compile Include="Messages\BusinessOrganisationExtendedIdRequestWbUkCommand.cs" />
     <Compile Include="Messages\BusinessOrganisationExtendedIdResponseWbUkCommand.cs" />
+    <Compile Include="Messages\BusinessPaymentCardUpsertedCommand.cs" />
     <Compile Include="Messages\BusinessProcessScheduledPaymentCommand.cs" />
     <Compile Include="Messages\CalcAccruedInterestCommand.cs" />
     <Compile Include="Messages\CalcCollectionDateCommand.cs" />
@@ -125,6 +127,7 @@
     <Compile Include="Messages\CompanyLookupNoResultResponseCommand.cs" />
     <Compile Include="Messages\CompanyLookupRequestCommand.cs" />
     <Compile Include="Messages\CompanyLookupResponseCommand.cs" />
+    <Compile Include="Messages\CompileDeclineEmailWbUkCommand.cs" />
     <Compile Include="Messages\CompileGuarantorDocumentsInitialEmailWbUkEvent.cs" />
     <Compile Include="Messages\CompileGuarantorFundsAdvancedEmailWbUkEvent.cs" />
     <Compile Include="Messages\CompilePrimaryDirectorDocumentsInitialEmailWbUkEvent.cs" />
@@ -283,6 +286,9 @@
     <Compile Include="Messages\HomePhoneSalesforceAccountAddedCommand.cs" />
     <Compile Include="Messages\HpiRequestUkCommand.cs" />
     <Compile Include="Messages\HpiResponseUkCommand.cs" />
+    <Compile Include="Messages\HsbcCashOutBaseUkCommand.cs" />
+    <Compile Include="Messages\HsbcCashOutStartUkCommand.cs" />
+    <Compile Include="Messages\HsbcCashOutStopUkCommand.cs" />
     <Compile Include="Messages\HttpCallbackNotificationCommand.cs" />
     <Compile Include="Messages\HyphenAccountVerificationResponseCommand.cs" />
     <Compile Include="Messages\HyphenAccountVerificationZaCommand.cs" />
@@ -320,6 +326,7 @@
     <Compile Include="Messages\IApplicationShouldBeReopenedEvent.cs" />
     <Compile Include="Messages\IApplicationStatusChangedEvent.cs" />
     <Compile Include="Messages\IApplicationTermUpdatedEvent.cs" />
+    <Compile Include="Messages\IApplicationTermUpdatedTranslatedWbUkEvent.cs" />
     <Compile Include="Messages\IApplicationWrittenOffEvent.cs" />
     <Compile Include="Messages\IBankAccountActivatedEvent.cs" />
     <Compile Include="Messages\IBankAccountAddedEvent.cs" />
@@ -328,10 +335,11 @@
     <Compile Include="Messages\IBankAccountSetPrimaryEvent.cs" />
     <Compile Include="Messages\IBankAccountValidatedEvent.cs" />
     <Compile Include="Messages\IBasePaymentCardAddedEvent.cs" />
-    <Compile Include="Messages\IBusinessApplicantionAcceptedTranslatedWbUkEvent.cs" />
     <Compile Include="Messages\IBusinessApplicationAcceptedEvent.cs" />
+    <Compile Include="Messages\IBusinessApplicationAcceptedTranslatedWbUkEvent.cs" />
     <Compile Include="Messages\IBusinessApplicationAddedEvent.cs" />
     <Compile Include="Messages\IBusinessApplicationDeclinedEvent.cs" />
+    <Compile Include="Messages\IBusinessApplicationDeclinedTranslatedWbUkEvent.cs" />
     <Compile Include="Messages\IBusinessApplicationTermsAgreedEvent.cs" />
     <Compile Include="Messages\IBusinessBankAccountAddedEvent.cs" />
     <Compile Include="Messages\IBusinessBankAccountAddedToApplicationEvent.cs" />
@@ -358,6 +366,7 @@
     <Compile Include="Messages\IDecisionDetailsEvent.cs" />
     <Compile Include="Messages\IDecisionEvent.cs" />
     <Compile Include="Messages\IDeclinedDecisionEvent.cs" />
+    <Compile Include="Messages\IDeclineEmailCompiledWbUkEvent.cs" />
     <Compile Include="Messages\IDirectDebitCreatedEvent.cs" />
     <Compile Include="Messages\IDirectDebitProducedCaEvent.cs" />
     <Compile Include="Messages\IDirectDebitProducedInternalCaEvent.cs" />
