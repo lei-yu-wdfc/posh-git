@@ -24,6 +24,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     break;
 
                 case (AUT.Ca) :
+                    Navigation = new MyAccountNavigationElement(this);
                     LookForSliders();
                     break;
 
