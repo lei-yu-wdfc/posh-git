@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
+using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Ops;
 using Wonga.QA.Framework.Db.Risk;
@@ -191,5 +192,6 @@ namespace Wonga.QA.Framework.Db
             db.Blacklist.BlackLists.Insert(blacklistEntity);
             db.Blacklist.SubmitChanges();
         }
+
     }
 }
