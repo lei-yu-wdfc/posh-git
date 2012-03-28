@@ -58,6 +58,7 @@
     <Compile Include="Journey\JourneyFactory.cs" />
     <Compile Include="Journey\UkL0Journey.cs" />
     <Compile Include="Journey\ZaL0Journey.cs" />
+    <Compile Include="Journey\CaLnJourney.cs" />
     <Compile Include="Mappings\Content\Content.cs" />
     <Compile Include="Mappings\Content\Agreements\LoanAgreement.cs" />
     <Compile Include="Mappings\Ui\Elements\ContactElement.cs" />
