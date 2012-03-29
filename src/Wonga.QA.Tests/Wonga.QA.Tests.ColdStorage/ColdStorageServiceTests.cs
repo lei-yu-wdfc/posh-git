@@ -8,7 +8,7 @@ namespace Wonga.QA.Tests.ColdStorage
     [Parallelizable(TestScope.All)]
     public class ColdStorageServiceTests
     {
-        [Test, AUT(AUT.Wb, AUT.Uk)]
+        [Test, AUT(AUT.Wb, AUT.Uk, AUT.Ca)]
         public void ColdStorageServiceIsRunning()
         {
             Assert.IsTrue(Drive.Svc.ColdStorage.IsRunning());
