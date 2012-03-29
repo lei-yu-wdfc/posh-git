@@ -32,7 +32,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
                 .WithExpectedDecision(ApplicationDecisionStatus.Declined)
 				.Build();
 
-			var actualCheckpointNames = GetApplicationCheckpointNames(application).ToList();
+			var actualCheckpointNames = Drive.Db.GetApplicationCheckpointNames(application).ToList();
 
 			Assert.AreElementsEqualIgnoringOrder(ExpectedCheckpointNames, actualCheckpointNames);
 		}
