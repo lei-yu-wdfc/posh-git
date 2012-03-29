@@ -1,23 +1,22 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Cs;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Helpers;
-using Wonga.QA.Tests.Core;
-using Wonga.QA.Framework.Cs;
 
 namespace Wonga.QA.Tests.Payments.Command
 {
     [TestFixture]
-    public class AddPersonalPaymentCardCsApiCommandTests
+    public class DeletePersonalPaymentCardCsApiCommandTests
     {
-        [Test] 
-        [Description("Adds a collection of payments cards using AddPersonalPaymentCard Cs API command and verifies all of these cards have been added to users account")]
-        [AUT(AUT.Uk)]
-        public void Command_AddsPersonalPaymentCards_ToCustomersPaymentsCards()
+        [Test]
+        [Description("Populates customer account with payment cards, deletes one of them using DeletePersonalPaymentCard Cs API" +
+                     " command and then verifies that this card has been marked as deleted")]
+
+        public void Command_DeletesPaymentCard_FromCustomersPaymentCards()
         {
             DateTime today = DateTime.Today;
             DateTime lastDayOfThisMonth = new DateTime(today.Year, today.Month, 1).AddMonths(1).AddDays(-1);
@@ -47,16 +46,17 @@ namespace Wonga.QA.Tests.Payments.Command
                                          }
                                  };
             var requests = cardsToAdd.Select(card => new AddPersonalPaymentCardCommand()
-                                        {
-                                            AccountId = customer.Id, 
-                                            CardType = card.Type,
-                                            ExpiryDate = card.ExpiryDate.ToString("yyyy-MM"),
-                                            IsPrimary = card.IsPrimary,
-                                            Number = card.Number,
-                                            SecurityCode = card.SecurityCode,
-                                            IsCreditCard = card.IsCreditCard,
-                                            HolderName = card.HolderName
-                                        });
+                                                         {
+                                                             AccountId = customer.Id,
+                                                             CardType = card.Type,
+                                                             ExpiryDate = card.ExpiryDate.ToString("yyyy-MM"),
+                                                             IsPrimary = card.IsPrimary,
+                                                             Number = card.Number,
+                                                             SecurityCode = card.SecurityCode,
+                                                             IsCreditCard = card.IsCreditCard,
+                                                             HolderName = card.HolderName
+                                                         });
+            //populate user account with cards
             Drive.Cs.Commands.Post(requests);
             Do.Until(() =>
                          {
@@ -70,10 +70,28 @@ namespace Wonga.QA.Tests.Payments.Command
                                                            &&
                                                            p.PaymentCardsBaseEntity.MaskedNumber ==
                                                            cardToAdd.Number.MaskedCardNumber()
-                                                           && p.PaymentCardsBaseEntity.Type == cardToAdd.Type);
+                                                           && p.PaymentCardsBaseEntity.Type == cardToAdd.Type
+                                                           && p.PaymentCardsBaseEntity.DeletedOn == null);
                                  if (c == null) return false;
                              }
                              return true;
+                         });
+            PersonalPaymentCardEntity[] pCards = customer.GetPersonalPaymentCards();
+
+            PersonalPaymentCardEntity firstCard = pCards.Where(p => p.PaymentCardsBaseEntity.MaskedNumber == cardsToAdd[0].Number.MaskedCardNumber()).Single();
+
+            var deleteRequest = new DeletePersonalPaymentCardCommand()
+                                    {
+                                        PaymentCardId = firstCard.PaymentCardsBaseEntity.ExternalId,
+                                    };
+            //delete the card
+            Drive.Cs.Commands.Post(deleteRequest);
+            //check if the card has been marked as deleted
+            Do.Until(() =>
+                         {
+                             var deletedCard = customer.GetPersonalPaymentCards()
+                                 .Single(c=>c.PaymentCardsBaseEntity.ExternalId == (Guid)deleteRequest.PaymentCardId);
+                             return deletedCard.PaymentCardsBaseEntity.DeletedOn != null;
                          });
         }
     }
