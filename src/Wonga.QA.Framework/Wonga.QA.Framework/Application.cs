@@ -328,7 +328,6 @@ namespace Wonga.QA.Framework
 			}
 			return executedVerifications;
 		}
-
         
         /// <summary>
 		/// This function returns a list of Workflow entities for a given ApplicationId
