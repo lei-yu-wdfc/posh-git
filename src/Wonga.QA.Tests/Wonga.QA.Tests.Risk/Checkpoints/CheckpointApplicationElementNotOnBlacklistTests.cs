@@ -7,6 +7,7 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Blacklist;
+using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Framework.Db;
 
@@ -66,9 +67,9 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
                         var application = ApplicationBuilder.New(mainApplicant, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
                         Assert.IsNotNull(application);
 
-                        var riskWorkflows = Application.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
+                        var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
                         Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
-                        Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicationDataBlacklistCheck));
+                        Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicationDataBlacklistCheck));
                     }
                     break;
             }
@@ -88,9 +89,9 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             var application = ApplicationBuilder.New(mainApplicant, organisation).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
             Assert.IsNotNull(application);
 
-            var riskWorkflows = Application.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
+            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
-            Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicationDataBlacklistCheck));
+            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicationDataBlacklistCheck));
         }
 
         [Test, AUT(AUT.Wb)]
@@ -137,11 +138,11 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
                     p.ApplicationId == application.Id &&
                     (RiskWorkflowTypes) p.WorkflowType == RiskWorkflowTypes.Guarantor));
 
-            var guarantorRiskWorkflow = Application.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.Guarantor);
+            var guarantorRiskWorkflow = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.Guarantor);
             Assert.AreEqual(guarantorRiskWorkflow.Count, 1, "There should be 1 risk workflow");
             Do.Until(() => Drive.Db.Risk.WorkflowCheckpoints.Any(p => p.RiskWorkflowId == guarantorRiskWorkflow[0].RiskWorkflowId && p.CheckpointStatus != 0));
 
-            Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(guarantorRiskWorkflow[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicationDataBlacklistCheck));
+            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionsForRiskWorkflow(guarantorRiskWorkflow[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicationDataBlacklistCheck));
         }
 
         [Test, AUT(AUT.Wb)]
@@ -191,11 +192,11 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
                     p =>
                     p.ApplicationId == application.Id &&
                     (RiskWorkflowTypes) p.WorkflowType == RiskWorkflowTypes.Guarantor));
-            var guarantorRiskWorkflow = Application.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.Guarantor);
+            var guarantorRiskWorkflow = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.Guarantor);
             Assert.AreEqual(guarantorRiskWorkflow.Count, 1, "There should be 1 risk workflow");
             Do.Until(() => Drive.Db.Risk.WorkflowCheckpoints.Any(p => p.RiskWorkflowId == guarantorRiskWorkflow[0].RiskWorkflowId && p.CheckpointStatus != 0));
 
-            Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(guarantorRiskWorkflow[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicationDataBlacklistCheck));
+            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionsForRiskWorkflow(guarantorRiskWorkflow[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicationDataBlacklistCheck));
         }
 
         [Test, AUT(AUT.Za)]

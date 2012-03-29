@@ -3,6 +3,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Tests.Core;
 
@@ -23,9 +24,9 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             employmentDetails.Submit();
 
             Application lNApp = ApplicationBuilder.New(customer).Build();
-            var riskWorkflows = Application.GetWorkflowsForApplication(lNApp.Id);
+            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(lNApp.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
-            Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.UserAssistedFraudCheck));
+            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.UserAssistedFraudCheck));
         }
     }
 }

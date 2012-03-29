@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework.Db.Extensions
@@ -87,6 +88,5 @@ namespace Wonga.QA.Framework.Db.Extensions
 			var value = db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.PayDayPerMonth").Value;
 			return value.Split(',').Select(Int32.Parse).ToArray();
 		}
-
 	}
 }
