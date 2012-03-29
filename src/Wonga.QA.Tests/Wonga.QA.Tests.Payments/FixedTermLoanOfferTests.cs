@@ -62,23 +62,6 @@ namespace Wonga.QA.Tests.Payments
 			}
 		}
 
-		[Test, AUT(AUT.Za), Pending]
-		public void MaxLoanTermIsLastDayOfMonth()
-		{
-			for (int i = 0; i < NumOfDaysToTest; i++)
-			{
-				var now = DateTime.Today.AddDays(i);
-				Drive.Db.SetServiceConfiguration(DateOverrideKey, now.ToString("yyyy-MM-dd HH:mm:ss"));
-
-				var response = Drive.Api.Queries.Post(new GetFixedTermLoanOfferZaQuery());
-
-				var expectedMaxTerm = GetExpectedMaxTerm(now);
-				var actualMaxTerm = int.Parse(response.Values["TermMax"].Single());
-
-				Assert.AreEqual(expectedMaxTerm, actualMaxTerm);
-			}
-		}
-
     	#region Helpers
 
 		private DateTime GetExpectedDefaultPromiseDate(DateTime dateTime )
@@ -107,15 +90,6 @@ namespace Wonga.QA.Tests.Payments
 		private int GetExpectedDefaultTerm(DateTime dateTime)
 		{
 			return (GetExpectedDefaultPromiseDate(dateTime) - dateTime).Days;
-		}
-
-		private int GetExpectedMaxTerm(DateTime dateTime)
-		{
-			var promiseDate = GetExpectedDefaultPromiseDate(dateTime);
-
-			var payDayPlusToMaxTerm = PayDayPlusToMaxTerm[promiseDate.Month - 1];
-
-			return (promiseDate - dateTime).Days + payDayPlusToMaxTerm;
 		}
 
 		#endregion
