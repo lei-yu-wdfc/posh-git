@@ -15,12 +15,12 @@ namespace Wonga.QA.Framework.UI.Elements
 
         public SurveyElement(BasePage page) : base(page)
         {
-            _surveyBox = page.Client.Driver.FindElement(By.CssSelector(Ui.Get.SurveyElement.SurveyBox));
+           
         }
 
         public bool IsVisible
         {
-            get { return _surveyBox.Displayed; }
+            get { return  Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.SurveyElement.SurveyBox)).Displayed; }
         }
     }
 

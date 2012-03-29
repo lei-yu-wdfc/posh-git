@@ -207,7 +207,6 @@ namespace Wonga.QA.Tests.Ui
             var page = Client.Home();
             page.Sliders.HowMuch = setAmountValue.ToString(CultureInfo.InvariantCulture);
             page.Sliders.HowLong = "10"; //To lost focus
-            page.Help.HelpTriggerClick();
             Assert.AreEqual(minAmountValue.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
         }
 
@@ -219,7 +218,6 @@ namespace Wonga.QA.Tests.Ui
             var page = Client.Home();
             page.Sliders.HowLong = setLoanDuration.ToString(CultureInfo.InvariantCulture);
             page.Sliders.HowMuch = "10"; //To lost focus
-            page.Help.HelpTriggerClick();
             Assert.AreEqual(maxLoanDuration.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
         }
 
@@ -241,7 +239,6 @@ namespace Wonga.QA.Tests.Ui
 
             page.Sliders.HowLong = setLoanDuration.ToString(CultureInfo.InvariantCulture);
             page.Sliders.HowMuch = "10"; //To lost focus
-            page.Help.HelpTriggerClick();
             Assert.AreEqual(maxLoanDuration.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
         }
 
