@@ -17,15 +17,15 @@ namespace Wonga.QA.Tests.Sms
 
         private const string TEST_PHONE_NUMBER = "4407786777486";
         private const string MBLOX_MESSAGE_TEXT_TEST = "Sending test message from acceptance tests with using Mblox provider";
-        private const string ZONG_MESSAGE_TEXT_TEST = "Sending test message from acceptance tests with using another  provider";
-        private const string RESERVE_PROVIDER_KEY = "SMS.PROVIDER_NAME";
-        private const string USE_ANOTHER_PROVIDER = "ZONG";
-        private const string USE_MBLOX_PROVIDER = "MBLOX";
+        private const string ZONG_MESSAGE_TEXT_TEST = "Sending test message from acceptance tests with using Zong provider";
+        private const string PROVIDER_CHOOSE_KEY = "SMS.PROVIDER_NAME";
+        private const string ZONG_PROVIDER_NAME = "ZONG";
+        private const string MBLOX_PROVIDER_NAME = "MBLOX";
 
         [SetUp]
         public void init()
         {
-            _configurationEntity = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key.Equals(MbloxIntegrationTests.RESERVE_PROVIDER_KEY));
+            _configurationEntity = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key.Equals(MbloxIntegrationTests.PROVIDER_CHOOSE_KEY));
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-510")]
@@ -43,7 +43,7 @@ namespace Wonga.QA.Tests.Sms
 
             Assert.IsTrue(lastMessage.MobilePhoneNumber.Equals(request.ToNumber));
             Assert.IsTrue(lastMessage.MessageText.Equals(request.MessageText));
-            Assert.IsTrue(_configurationEntity.Value.Equals(MbloxIntegrationTests.USE_MBLOX_PROVIDER));
+            Assert.IsTrue(_configurationEntity.Value.Equals(MbloxIntegrationTests.MBLOX_PROVIDER_NAME));
             Assert.IsNull(lastMessage.ErrorMessage);
             Assert.IsNull(lastMessage);
         }
@@ -52,9 +52,9 @@ namespace Wonga.QA.Tests.Sms
         public void SwitchToAnotherProviderAndSendSmsRequest()
         {
 
-            if (!_configurationEntity.Value.Equals(MbloxIntegrationTests.USE_ANOTHER_PROVIDER))
+            if (!_configurationEntity.Value.Equals(MbloxIntegrationTests.ZONG_PROVIDER_NAME))
             {
-                _configurationEntity.Value = MbloxIntegrationTests.USE_ANOTHER_PROVIDER;
+                _configurationEntity.Value = MbloxIntegrationTests.ZONG_PROVIDER_NAME;
                 _configurationEntity.Submit();
             }
 
@@ -67,7 +67,7 @@ namespace Wonga.QA.Tests.Sms
             var messages = Do.Until(() => Drive.Db.Sms.SmsMessages.Where(x => x.MessageText.Equals(request.MessageText)).OrderByDescending(x => x.SmsMessageId));
             var lastMessage = messages.First();
 
-            Assert.IsTrue(_configurationEntity.Value.Equals(MbloxIntegrationTests.USE_ANOTHER_PROVIDER));
+            Assert.IsTrue(_configurationEntity.Value.Equals(MbloxIntegrationTests.ZONG_PROVIDER_NAME));
             Assert.IsTrue(lastMessage.MobilePhoneNumber.Equals(request.ToNumber));
             Assert.IsTrue(lastMessage.MessageText.Equals(request.MessageText));
             Assert.IsNull(lastMessage.ErrorMessage);
