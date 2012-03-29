@@ -72,6 +72,30 @@ namespace Wonga.QA.Framework.Db.Extensions
 			return db.Risk.RiskWorkflows.Where(p => p.ApplicationId == applicationId && (RiskWorkflowTypes)p.WorkflowType == workflowType).ToList();
 		}
 
+		public static IEnumerable<CheckpointDefinitionEntity> GetCheckpointDefinitionsForApplication(this DbDriver db, Guid applicationId)
+		{
+			var workflows = GetWorkflowsForApplication(db, applicationId);
+
+			var checkpoints = new List<CheckpointDefinitionEntity>();
+
+			foreach (var workflow in workflows)
+			{
+				checkpoints.AddRange(GetCheckpointDefinitionsForWorkflow(db, workflow.RiskWorkflowId));
+			}
+
+			return checkpoints;
+		}
+
+		public static IEnumerable<CheckpointDefinitionEntity> GetCheckpointDefinitionsForWorkflow(this DbDriver db, int workflowId)
+		{
+			var result = (from r in db.Risk.RiskWorkflows
+			              where r.RiskWorkflowId == workflowId
+			              select r) as IEnumerable<CheckpointDefinitionEntity>;
+			
+			return result;
+		}
+
+
 		public static List<String> GetExecutedCheckpointsDefinitionNamesForApplicationId(this DbDriver db, Guid applicationId, params RiskCheckpointStatus[] expectedStatus)
 		{
 			var riskWorkflowEntity = db.Risk.RiskWorkflows.SingleOrDefault(r => r.ApplicationId == applicationId);
