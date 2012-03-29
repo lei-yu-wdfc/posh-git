@@ -8,7 +8,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-    public class EidCheckpointTests
+    public class CheckpointDirectFraudTests
     {
         [Test, AUT(AUT.Ca), JIRA("CA-1743")]
         public void LnShouldPassEidCheck()
