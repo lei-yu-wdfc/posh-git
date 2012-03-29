@@ -100,10 +100,17 @@ namespace Wonga.QA.Framework
             }
 
             /* STEP 5
+             * now let send a payment comnand representing payment term sliders adjustment*/
+            Drive.Api.Commands.Post(UpdateLoanTermWbUkCommand.New(r=>
+                                                                      {
+                                                                          r.ApplicationId = Id;                                                                          
+                                                                      })); //use default for term - same as for create applicatiomn
+
+            /* STEP 6
              * And the main applicant signs the application */
             Drive.Api.Commands.Post(new SignBusinessApplicationWbUkCommand { AccountId = Customer.Id, ApplicationId = Id });
 
-            /* STEP 6 
+            /* STEP 7 
              * And I wait for Payments to create the application */
             //var previous = 0;
             //var stopwatch = Stopwatch.StartNew();
@@ -118,7 +125,7 @@ namespace Wonga.QA.Framework
 
             Do.While(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).Transactions.Count == 3);
 
-            /* STEP 7 
+            /* STEP 8
              * And I wait for the decision i want - PLEASE REMEBER THAT THE DEFAULT ONE IS ACCEPTED */
             Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = Id }).Values["ApplicationDecisionStatus"].Single()) == Decision);
 
@@ -210,6 +217,7 @@ namespace Wonga.QA.Framework
                                                                                       r.AccountId = Customer.Id;
                                                                                       r.ApplicationId = Id;
                                                                                   }));
+
             Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = Id }).Values["ApplicationDecisionStatus"].Single()) == Decision);
 
             if (Decision == ApplicationDecisionStatus.Declined)

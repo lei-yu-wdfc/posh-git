@@ -50,6 +50,7 @@
     <Compile Include="Defaults\SaveEmploymentDetailsUkCommand.cs" />
     <Compile Include="Defaults\SaveOrganisationDetailsCommand.cs" />
     <Compile Include="Defaults\SubmitNumberOfGuarantorsCommand.cs" />
+    <Compile Include="Defaults\UpdateLoanTermWbUkCommand.cs" />
     <Compile Include="Defaults\VerifyMainBusinessApplicantWbCommand.cs" />
     <Compile Include="Defaults\VerifyMobilePhoneCaCommand.cs" />
     <Compile Include="Defaults\SaveEmploymentDetailsCaCommand.cs" />

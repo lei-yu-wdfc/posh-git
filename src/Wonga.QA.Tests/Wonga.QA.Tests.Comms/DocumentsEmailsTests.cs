@@ -90,6 +90,24 @@ namespace Wonga.QA.Tests.Comms
                 Do.With.Timeout(2).Interval(20).Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId == director.AccountId && p.DocumentType == 15) == 1);
             }
         }
-      
+
+        [Test, AUT(AUT.Wb), JIRA("SME-232"), Description("This test verifies documents being generated as part of L0 process, which is a key prerequisite for emails to be sent (this last step involves 3rd party)")]
+        public void RunPartialDeclineL0AndCheckForDeclineEmail()
+        {
+            Customer cust = CustomerBuilder.New().WithMiddleName("hahaha").Build();
+            var organisationBuilder = OrganisationBuilder.New(cust);
+            var company = organisationBuilder.WithSoManySecondaryDirectors(NumberOfSecondaryDirectors).Build();
+            organisationBuilder.BuildSecondaryDirectors();
+            var businessApplicationBuilder = ApplicationBuilder.New(cust, company) as BusinessApplicationBuilder;
+            var application = businessApplicationBuilder.WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+            
+            
+            var directors = company.GetSecondaryDirectors();
+            Do.With.Timeout(2).Interval(20).Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId == cust.Id && p.DocumentType == 17) == 1);
+            foreach (var director in directors)
+            {
+                Do.With.Timeout(2).Interval(20).Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId == director.AccountId && p.DocumentType == 17) == 1);                
+            }
+        }
     }
 }
