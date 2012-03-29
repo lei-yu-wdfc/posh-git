@@ -24,14 +24,12 @@ namespace Wonga.QA.Tests.Ui
 
             var homePage = Client.Home();
             homePage.Login.Logout();
-            var title = page.Client.Driver.FindElement(By.XPath("//div[@id='block-wonga-1']/h2[1]"));
+            var title = page.Client.Driver.FindElement(By.CssSelector(Framework.UI.Mappings.Ui.Get.HomePage.Title));
             switch (Config.AUT)
             {
                 case AUT.Za:
-                    Assert.AreEqual("Flexible, short-term loans that give you lots of control", title.Text);
-                    break;
                 case AUT.Ca:
-                    Assert.AreEqual("Flexible, short term loans that give you lots of control", title.Text);
+                    Assert.AreEqual(Framework.UI.Mappings.Ui.Get.HomePage.TitleText, title.Text);
                     break;
             }
 
