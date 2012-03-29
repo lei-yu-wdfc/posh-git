@@ -4,6 +4,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
+using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Db.Ops;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Msmq;
@@ -11,7 +12,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments
 {
-	[TestFixture, Pending, AUT(AUT.Za)]
+	[TestFixture, AUT(AUT.Za)]
 	class CollectionsTests
 	{
 		private const int TrackingDayThreshold = 19;
@@ -49,7 +50,7 @@ namespace Wonga.QA.Tests.Payments
 			db.Ops.SubmitChanges();
 		}
 
-		[Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za), Explicit]
 		public void CollectionsNaedoEntireWorkflowTest()
 		{
 			const int term = 25;
@@ -90,7 +91,7 @@ namespace Wonga.QA.Tests.Payments
 			FailNaedoCollection(application, 3);
 		}
 
-		[Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za), Explicit]
 		public void CollectionsNaedoFullPaymentAfterTrackingEndsClosesLoanTest()
 		{
 			const int term = 25;
@@ -119,7 +120,7 @@ namespace Wonga.QA.Tests.Payments
 			Do.Until(() => Drive.Db.OpsSagas.PendingScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id) == false);
 		}
 
-		[Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za), Explicit]
 		public void CollectionsNaedoPartialPaymentAfterTrackingEndsContinuesTrackingTest()
 		{
 			const int term = 25;
@@ -147,6 +148,7 @@ namespace Wonga.QA.Tests.Payments
 			Assert.IsTrue(new DbDriver().OpsSagas.PendingScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id));
 			Assert.IsTrue(new DbDriver().OpsSagas.ScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id));
 		}
+
 
 		#region Helpers
 

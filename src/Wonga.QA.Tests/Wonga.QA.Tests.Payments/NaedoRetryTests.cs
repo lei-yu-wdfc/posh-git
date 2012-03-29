@@ -28,7 +28,7 @@ namespace Wonga.QA.Tests.Payments
 			ConfigurationFunctions.SetBankGatewayTestMode(_bankGatewayTestModeOriginal);
 		}
 
-		[Test, JIRA("ZA-1969"), Parallelizable]
+		[Test, JIRA("ZA-1969"), Parallelizable, Explicit]
 		public void SecondNaedoIsPostedWhenFirstSucceededButAmountIsOutstandingInArrears()
 		{
 			const decimal amount = 1000m;

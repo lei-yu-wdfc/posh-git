@@ -8,6 +8,7 @@ using System.Xml;
 using System.Xml.Linq;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Helpers;
 
 namespace Wonga.QA.Framework
@@ -52,11 +53,6 @@ namespace Wonga.QA.Framework
         private int GetDaysUntilStartOfLoan()
         {
             return 0;
-        }
-
-        private int GetDaysUntilStartOfLoanForCa()
-        {
-            return DateHelper.GetNumberOfDaysUntilStartOfLoanForCa();
         }
 
         private static String UserActionId(String xmlString)
@@ -184,7 +180,7 @@ namespace Wonga.QA.Framework
 
                 case AUT.Ca:
                     // Start of Loan is different for CA
-                    _getDaysUntilStartOfLoan = GetDaysUntilStartOfLoanForCa;
+                    //_getDaysUntilStartOfLoan = Drive.Db.GetNumberOfDaysUntilStartOfLoan();
                     _setPromiseDateAndLoanTerm();
 
                     requests.AddRange(new ApiRequest[]{

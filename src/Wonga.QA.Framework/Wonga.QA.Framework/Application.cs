@@ -5,6 +5,7 @@ using System.Linq;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
+using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Db.Ops;
 using Wonga.QA.Framework.Db.OpsSagas;
 using Wonga.QA.Framework.Db.Payments;
@@ -114,19 +115,16 @@ namespace Wonga.QA.Framework
             TimeSpan span = application.FixedTermLoanApplicationEntity.NextDueDate.Value - DateTime.Today;
             RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == Id);
 
-            RewindApplicationDates(application, riskApplication, span);
+            Drive.Db.RewindApplicationDates(application, riskApplication, span);
         }
 
 		public void MakeDueToday(ApplicationEntity application)
 		{
 			RewindAppDates(application);
 
-		    FixedTermLoanSagaEntity ftl = Drive.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
-		    LoanDueDateNotificationSagaEntity dueNotificationSaga = Drive.Db.OpsSagas.LoanDueDateNotificationSagaEntities.Single(s => s.ApplicationId == Id);
+			FixedTermLoanSagaEntity ftl = Drive.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
 			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
-            Drive.Msmq.Payments.Send(new TimeoutMessage() { SagaId = dueNotificationSaga.Id });
-            Do.With.While(ftl.Refresh);
-		    Do.With.While(dueNotificationSaga.Refresh);
+			Do.With.While(ftl.Refresh);
 		}
 
         public Application MakeDueStatusToday()
@@ -149,7 +147,7 @@ namespace Wonga.QA.Framework
 		{
 			PutApplicationIntoArrears();
 
-			Rewind(daysInArrears);
+			Drive.Db.Rewind(Id, daysInArrears);
 
 			return this;
 		}
@@ -163,7 +161,7 @@ namespace Wonga.QA.Framework
 
 			TimeSpan span = dueDate - DateTime.Today;
 
-			RewindApplicationDates(application, riskApplication, span);
+			Drive.Db.RewindApplicationDates(application, riskApplication, span);
 
 			ScheduledPostAccruedInterestSagaEntity entity = Drive.Db.OpsSagas.ScheduledPostAccruedInterestSagaEntities.Single(a => a.ApplicationGuid == Id);
 			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = entity.Id });
@@ -207,9 +205,9 @@ namespace Wonga.QA.Framework
 
 		public Application RepayEarly(decimal amount, int dayOfLoanToMakeRepayment)
 		{
-			var daysToRewind = GetAbsoluteDaysToRewind(dayOfLoanToMakeRepayment);
+			var daysToRewind = Drive.Db.GetAbsoluteDaysToRewind(dayOfLoanToMakeRepayment);
 
-			Rewind(daysToRewind);
+			Drive.Db.Rewind(Id, daysToRewind);
 
 			Guid repaymentRequestId = Guid.NewGuid();
 
@@ -323,7 +321,6 @@ namespace Wonga.QA.Framework
 			}
 			return executedVerifications;
 		}
-
         
         /// <summary>
 		/// This function returns a list of Workflow entities for a given ApplicationId
@@ -348,71 +345,13 @@ namespace Wonga.QA.Framework
             return db.Risk.RiskWorkflows.Where(p => p.ApplicationId == applicationId && (RiskWorkflowTypes)p.WorkflowType == workflowType).ToList();
         }
 
-		private void Rewind(int absoluteDays)
-		{
-			// Rewinds a Loans Dates
-			ApplicationEntity application = Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id);
-			RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == Id);
-
-			if (application.FixedTermLoanApplicationEntity.NextDueDate == null)
-			{
-				throw new Exception("Rewind: FixedTermLoanApplication.NextDueDate is null");
-			}
-
-			var duration = new TimeSpan(absoluteDays, 0, 0, 0);
-
-			RewindApplicationDates(application, riskApplication, duration);
-		}
-
-		private static void RewindApplicationDates(ApplicationEntity application, RiskApplicationEntity riskApp, TimeSpan span)
-		{
-			application.ApplicationDate -= span;
-			application.SignedOn -= span;
-			application.CreatedOn -= span;
-			application.AcceptedOn -= span;
-			application.FixedTermLoanApplicationEntity.PromiseDate -= span;
-			application.FixedTermLoanApplicationEntity.NextDueDate -= span;
-			application.Transactions.ForEach(t => t.PostedOn -= span);
-			if (application.ClosedOn != null)
-				application.ClosedOn -= span;
-            application.Submit(true);
-
-			riskApp.ApplicationDate -= span;
-			riskApp.PromiseDate -= span;
-			if (riskApp.ClosedOn != null)
-				riskApp.ClosedOn -= span;
-			riskApp.Submit(true);
-
-		}
-
-		public void RewindToDayOfLoanTerm(int dayOfLoanTerm)
-		{
-			var daysToRewind = GetAbsoluteDaysToRewind(dayOfLoanTerm);
-
-			Rewind(daysToRewind);
-
-		}
-
-		private static int GetAbsoluteDaysToRewind(int dayOfLoanToMakeRepayment)
-		{
-			int daysUntilStartOfLoan = 0;
-
-			if (Config.AUT == AUT.Ca)
-			{
-				daysUntilStartOfLoan = DateHelper.GetNumberOfDaysUntilStartOfLoanForCa();
-			}
-
-			int daysToRewind = daysUntilStartOfLoan + dayOfLoanToMakeRepayment - 1;
-			return daysToRewind;
-		}
-
         public Application MoveToDebtCollectionAgency()
         {
             ServiceConfigurationEntity serviceConfiguration =  Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == "Payments.MoveToDcaDelayInMinutes");
 
             int daysToRewind = int.Parse(serviceConfiguration.Value)/60/24;
 
-            Rewind(daysToRewind);
+            Drive.Db.Rewind(Id, daysToRewind);
 
             var entity = Do.Until(() => Drive.Db.OpsSagasCa.ExternalDebtCollectionSagaEntities.Single(e => e.ApplicationId == Id));
             Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = entity.Id });
