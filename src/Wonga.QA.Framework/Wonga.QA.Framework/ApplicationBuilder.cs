@@ -325,9 +325,7 @@ namespace Wonga.QA.Framework
             IovationBlackBox = iovationBlackBox;
             return this;
         }
-
         
-
         #endregion
     }
 }

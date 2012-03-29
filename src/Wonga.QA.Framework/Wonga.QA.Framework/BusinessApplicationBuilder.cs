@@ -142,13 +142,16 @@ namespace Wonga.QA.Framework
 
             Drive.Api.Commands.Post(requests);
         }
-        public void BuildGuarantors()
+        public void BuildGuarantors(Boolean scrubNames = true)
         {
             foreach (var guarantor in Guarantors)
             {
                 var guarantorCustomerBuilder = CustomerBuilder.New(guarantor.Id);
-                guarantorCustomerBuilder.ScrubForename(guarantor.Forename);
-                guarantorCustomerBuilder.ScrubSurname(guarantor.Surname);
+                if (scrubNames)
+                {
+                    guarantorCustomerBuilder.ScrubForename(guarantor.Forename);
+                    guarantorCustomerBuilder.ScrubSurname(guarantor.Surname);
+                }
 
                 //THIS IS A HACK! WE NEED TO EXTEND THE QAF TO PROPERLY BUILD AND CREATE SECONDARY DIRECTORS AND ALL THIS STUFF.
                 guarantorCustomerBuilder.WithEmailAddress(guarantor.Email).WithForename(guarantor.Forename)
@@ -160,7 +163,8 @@ namespace Wonga.QA.Framework
 
         #region "With" Helper Methods
 
-        public ApplicationBuilder WithGuarantors(List<Customer> guarantors)
+        //TODO: Return BusinessApplicationBuilder not ApplicationBuilder
+        public BusinessApplicationBuilder WithGuarantors(List<Customer> guarantors)
         {
             Guarantors = guarantors;
             return this;
