@@ -73,8 +73,8 @@ namespace Wonga.QA.Framework
             }
 
             var paymentSchedulingSaga =
-                Drive.Db.OpsSagas.PaymentSchedulingSagaEntities.Single(
-                    s => s.ApplicationExternalId == Id);
+                Do.Until(() => Drive.Db.OpsSagas.PaymentSchedulingSagaEntities.Single(
+                    s => s.ApplicationExternalId == Id));
 
             Drive.Msmq.Payments.Send(new TimeoutMessage {SagaId = paymentSchedulingSaga.Id});
         }
