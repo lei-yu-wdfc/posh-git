@@ -9,7 +9,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Salesforce
 {
-    [TestFixture]
+    [TestFixture, AUT(AUT.Wb)]
     public class SalesforcePushBusinessPaymentCardDataTests:SalesforceTestBase
     {
         private Customer customer;
