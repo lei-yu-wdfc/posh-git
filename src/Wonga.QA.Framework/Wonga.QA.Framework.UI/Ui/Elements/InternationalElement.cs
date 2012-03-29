@@ -23,9 +23,9 @@ namespace Wonga.QA.Framework.UI.Elements
         public InternationalElement(BasePage page)
             : base(page)
         {
-            _internationalTrigger = Page.Client.Driver.FindElement(By.XPath(Ui.Get.InternationalElement.InternationalTrigger));
-            _internationalPanelZa = Page.Client.Driver.FindElement(By.XPath(Ui.Get.InternationalElement.InternationalPanelZa));
-            _internationalPanelUk = Page.Client.Driver.FindElement(By.XPath(Ui.Get.InternationalElement.InternationalPanelUk));
+            _internationalTrigger = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.InternationalElement.InternationalTrigger));
+            _internationalPanelZa = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.InternationalElement.InternationalPanelZa));
+            _internationalPanelUk = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.InternationalElement.InternationalPanelUk));
         }
 
         public void InternationalTriggerClick()
