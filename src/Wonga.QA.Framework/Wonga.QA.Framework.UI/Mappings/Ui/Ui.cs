@@ -84,6 +84,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual DebitCardPage DebitCardPage { get; set; }
         public virtual LoginPage LoginPage { get; set; }
         public virtual ForgotPasswordPage ForgotPasswordPage { get; set; }
+        public virtual HomePage HomePage { get; set; }
         public virtual MySummaryPage MySummaryPage { get; set; }
         public virtual MyPaymentsPage MyPaymentsPage { get; set; }
         public virtual MyPersonalDetailsPage MyPersonalDetailsPage { get; set; }

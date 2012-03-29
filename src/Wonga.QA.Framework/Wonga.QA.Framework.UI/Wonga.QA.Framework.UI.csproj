@@ -71,6 +71,7 @@
     <Compile Include="Mappings\Ui\Pages\Common\AboutUsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\BlogPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ForgotPasswordPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\HomePage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\MyPersonalDetailsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\JargonBusterPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\MySummaryPage.cs" />

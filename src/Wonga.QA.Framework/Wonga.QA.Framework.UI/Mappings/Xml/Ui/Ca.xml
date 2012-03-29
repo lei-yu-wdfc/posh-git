@@ -106,4 +106,9 @@
 		<TotalToRepayAmountPopup>#fancybox-content div div b:first-of-type</TotalToRepayAmountPopup>
 		<PromisedRepayDatePopup>#fancybox-content div div b:last-of-type</PromisedRepayDatePopup>
 	</MySummaryPage>
+
+  <HomePage>
+    <Title>div#block-wonga-1 h2:nth-child(1)</Title>
+    <TitleText>Flexible, short term loans that give you lots of control</TitleText>
+  </HomePage>
 </Ui>
