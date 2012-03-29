@@ -38,11 +38,14 @@ namespace Wonga.QA.Framework
         {
             _organisationNumber = orgNo;
             var db = new DbDriver();
-            var existingOrg = db.ContactManagement.OrganisationDetails.SingleOrDefault(o => o.RegisteredNumber == orgNo);
-            if (existingOrg != null)
+            var existingOrgs = db.ContactManagement.OrganisationDetails.Where(o => o.RegisteredNumber == orgNo);
+            if (existingOrgs.Any())
             {
-                db.ContactManagement.OrganisationDetails.DeleteOnSubmit(existingOrg);
-                existingOrg.Submit();
+                db.ContactManagement.OrganisationDetails.DeleteAllOnSubmit(existingOrgs);
+                foreach (var org in existingOrgs)
+                {
+                    org.Submit();   
+                }
             }
 
             return this;
