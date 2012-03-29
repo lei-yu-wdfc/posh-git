@@ -56,7 +56,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Do.Until(() => Drive.Db.Risk.RiskApplications.Single(x => x.ApplicationId == application.Id && x.Decision != 0));
 
 			Assert.Contains(
-				Drive.Db.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, expectedStatus),
+				Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, expectedStatus),
 				Get.EnumToString(checkpoint));
 
 			return application;

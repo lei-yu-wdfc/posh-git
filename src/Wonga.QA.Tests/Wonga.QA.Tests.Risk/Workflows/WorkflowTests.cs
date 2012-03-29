@@ -7,6 +7,7 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
+using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Workflows
@@ -22,6 +23,19 @@ namespace Wonga.QA.Tests.Risk.Workflows
 
 		private static List<string> _expectedVerificationNamesZa = new List<string>();
 
+		[Test, AUT(AUT.Za), Explicit]
+		public void WorkflowL0SingleWorkflowUsed()
+		{
+			var customer = CustomerBuilder.New().WithEmployer("Wonga").Build();
+			var application =
+				ApplicationBuilder.New(customer)
+				.WithExpectedDecision(ApplicationDecisionStatus.Declined)
+				.Build();
+
+			var workflows = Drive.Db.GetWorkflowsForApplication(application.Id);
+
+			Assert.AreEqual(1, workflows.Count);
+		}
 
 		[Test, AUT(AUT.Za), Explicit]
 		public void WorkflowL0CorrectCheckpointsUsed()
@@ -32,7 +46,9 @@ namespace Wonga.QA.Tests.Risk.Workflows
                 .WithExpectedDecision(ApplicationDecisionStatus.Declined)
 				.Build();
 
-			//var actualCheckpointNames = Drive.Db.GetApplicationCheckpointNames(application).ToList();
+			var workflow = Drive.Db.GetWorkflowsForApplication(application.Id).FirstOrDefault();
+
+			//var c = Drive.Db.GetExecutedCheckpointsDefinitionsForApplicationId(application.Id);
 
 			//Assert.AreElementsEqualIgnoringOrder(ExpectedCheckpointNames, actualCheckpointNames);
 		}

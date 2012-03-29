@@ -35,8 +35,8 @@ namespace Wonga.QA.Tests.Graydon
             WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
             var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id,RiskWorkflowTypes.MainApplicant);
             Assert.AreEqual(1,riskWorkflows.Count, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.MainApplicantMatchesBusinessBureauData));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.MainApplicantMatchesBusinessBureauDataVerification));
+            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.MainApplicantMatchesBusinessBureauData));
+            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.MainApplicantMatchesBusinessBureauDataVerification));
         }
 
         [Test, AUT(AUT.Wb)]
@@ -56,8 +56,8 @@ namespace Wonga.QA.Tests.Graydon
             WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
             var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
             Assert.AreEqual(1,riskWorkflows.Count, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.MainApplicantMatchesBusinessBureauData));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.MainApplicantMatchesBusinessBureauDataVerification));
+			Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.MainApplicantMatchesBusinessBureauData));
+            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.MainApplicantMatchesBusinessBureauDataVerification));
         }
 
         [Test, AUT(AUT.Wb)]
@@ -76,8 +76,8 @@ namespace Wonga.QA.Tests.Graydon
             WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
             var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
             Assert.AreEqual(1,riskWorkflows.Count,"There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.MainApplicantMatchesBusinessBureauData));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.MainApplicantMatchesBusinessBureauDataVerification));
+			Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.MainApplicantMatchesBusinessBureauData));
+            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.MainApplicantMatchesBusinessBureauDataVerification));
         }
 
         [Test, AUT(AUT.Wb)]
@@ -97,8 +97,8 @@ namespace Wonga.QA.Tests.Graydon
             WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
             var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
             Assert.AreEqual(1,riskWorkflows.Count, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.MainApplicantMatchesBusinessBureauData));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.MainApplicantMatchesBusinessBureauDataVerification));
+			Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.MainApplicantMatchesBusinessBureauData));
+            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.MainApplicantMatchesBusinessBureauDataVerification));
         }
 
         #endregion
@@ -120,8 +120,8 @@ namespace Wonga.QA.Tests.Graydon
             WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
             var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
             Assert.AreEqual(1,riskWorkflows.Count, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.BusinessBureauDataIsAvailable));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.BusinessDataAvailableInGraydonVerification));
+			Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.BusinessBureauDataIsAvailable));
+            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.BusinessDataAvailableInGraydonVerification));
         }
 
         [Test, AUT(AUT.Wb), JIRA("SME-156")]
@@ -139,8 +139,8 @@ namespace Wonga.QA.Tests.Graydon
             WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
             var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
             Assert.AreEqual(1,riskWorkflows.Count, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.BusinessBureauDataIsAvailable));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.BusinessDataAvailableInGraydonVerification));
+			Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.BusinessBureauDataIsAvailable));
+            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.BusinessDataAvailableInGraydonVerification));
         }
 
        
@@ -164,8 +164,8 @@ namespace Wonga.QA.Tests.Graydon
             WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
             var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
             Assert.AreEqual(1,riskWorkflows.Count, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.BusinessIsCurrentlyTrading));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.GraydonBusinessIsTradingVerification));
+			Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.BusinessIsCurrentlyTrading));
+            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.GraydonBusinessIsTradingVerification));
         }
 
         [Test, AUT(AUT.Wb), JIRA("SME-160")]
@@ -183,8 +183,8 @@ namespace Wonga.QA.Tests.Graydon
             WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
             var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
             Assert.AreEqual(1,riskWorkflows.Count, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.BusinessIsCurrentlyTrading));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.GraydonBusinessIsTradingVerification));
+			Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.BusinessIsCurrentlyTrading));
+            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.GraydonBusinessIsTradingVerification));
         }
 
         #endregion
@@ -207,8 +207,8 @@ namespace Wonga.QA.Tests.Graydon
             WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
             var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
             Assert.AreEqual(1,riskWorkflows.Count, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.BusinessPaymentScoreIsAcceptable));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.GraydonPaymentScoreVerification));
+			Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.BusinessPaymentScoreIsAcceptable));
+            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.GraydonPaymentScoreVerification));
         }
 
         [Test, AUT(AUT.Wb), JIRA("SME-162")]
@@ -227,8 +227,8 @@ namespace Wonga.QA.Tests.Graydon
             WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
             var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
             Assert.AreEqual(1,riskWorkflows.Count, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.BusinessPaymentScoreIsAcceptable));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.GraydonPaymentScoreVerification));
+			Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.BusinessPaymentScoreIsAcceptable));
+            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.GraydonPaymentScoreVerification));
         }
 
         [Test, AUT(AUT.Wb), JIRA("SME-162")]
@@ -247,8 +247,8 @@ namespace Wonga.QA.Tests.Graydon
             WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
             var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
             Assert.AreEqual(1,riskWorkflows.Count, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.BusinessPaymentScoreIsAcceptable));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.GraydonPaymentScoreVerification));
+			Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.BusinessPaymentScoreIsAcceptable));
+            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.GraydonPaymentScoreVerification));
         }
 
         #endregion
@@ -271,8 +271,8 @@ namespace Wonga.QA.Tests.Graydon
             WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
             var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
             Assert.AreEqual(1,riskWorkflows.Count, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.BusinessPerformanceScoreIsAcceptaple));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.GraydonAugurScoreVerification));
+			Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.BusinessPerformanceScoreIsAcceptaple));
+            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.GraydonAugurScoreVerification));
         }
 
         [Test, AUT(AUT.Wb), JIRA("SME-159")]
@@ -291,8 +291,8 @@ namespace Wonga.QA.Tests.Graydon
             WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
             var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
             Assert.AreEqual(1,riskWorkflows.Count, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.BusinessPerformanceScoreIsAcceptaple));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.GraydonAugurScoreVerification));
+			Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.BusinessPerformanceScoreIsAcceptaple));
+            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.GraydonAugurScoreVerification));
         }
 
         #endregion
@@ -316,8 +316,8 @@ namespace Wonga.QA.Tests.Graydon
             WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
             var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
             Assert.AreEqual(1,riskWorkflows.Count,  "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.MainApplicantDurationAcceptable));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.MainApplicantDurationAcceptableVerification));
+			Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.MainApplicantDurationAcceptable));
+            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.MainApplicantDurationAcceptableVerification));
         }
 
         [Test, AUT(AUT.Wb)]
@@ -345,8 +345,8 @@ namespace Wonga.QA.Tests.Graydon
                 WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
                 var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
                 Assert.AreEqual(1,riskWorkflows.Count, "There should be 1 risk workflow");
-                Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.MainApplicantDurationAcceptable));
-                Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId),Get.EnumToString(RiskVerificationDefinitions.MainApplicantDurationAcceptableVerification));
+                Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.MainApplicantDurationAcceptable));
+                Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId),Get.EnumToString(RiskVerificationDefinitions.MainApplicantDurationAcceptableVerification));
             }
             finally
             {
@@ -372,8 +372,8 @@ namespace Wonga.QA.Tests.Graydon
             WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
             var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
             Assert.AreEqual(1,riskWorkflows.Count, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.MainApplicantDurationAcceptable));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.MainApplicantDurationAcceptableVerification));
+            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.MainApplicantDurationAcceptable));
+            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.MainApplicantDurationAcceptableVerification));
         }
 
         [Test, AUT(AUT.Wb)]
@@ -391,8 +391,8 @@ namespace Wonga.QA.Tests.Graydon
             WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
             var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
             Assert.AreEqual(1,riskWorkflows.Count, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.MainApplicantDurationAcceptable));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.MainApplicantDurationAcceptableVerification));
+            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.MainApplicantDurationAcceptable));
+            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.MainApplicantDurationAcceptableVerification));
         }
 
         #endregion
@@ -522,8 +522,8 @@ namespace Wonga.QA.Tests.Graydon
             WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
             var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
             Assert.AreEqual(1,riskWorkflows.Count, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.BusinessDateOfIncorporationAcceptable));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.BusinessDateOfIncorporationAcceptableVerification));
+            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.BusinessDateOfIncorporationAcceptable));
+            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.BusinessDateOfIncorporationAcceptableVerification));
         }
 
         [Test, AUT(AUT.Wb)]
@@ -543,8 +543,8 @@ namespace Wonga.QA.Tests.Graydon
             WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
             var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
             Assert.AreEqual(1,riskWorkflows.Count, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.BusinessDateOfIncorporationAcceptable));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.BusinessDateOfIncorporationAcceptableVerification));
+            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.BusinessDateOfIncorporationAcceptable));
+            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.BusinessDateOfIncorporationAcceptableVerification));
         }
 
         [Test, AUT(AUT.Wb)]
@@ -572,8 +572,8 @@ namespace Wonga.QA.Tests.Graydon
                 WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
                 var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
                 Assert.AreEqual(1,riskWorkflows.Count, "There should be 1 risk workflow");
-                Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.BusinessDateOfIncorporationAcceptable));
-                Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.BusinessDateOfIncorporationAcceptableVerification));
+                Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.BusinessDateOfIncorporationAcceptable));
+                Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.BusinessDateOfIncorporationAcceptableVerification));
             }
             finally
             {
