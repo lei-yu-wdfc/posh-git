@@ -112,7 +112,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Assert.LessThan(repaymentPredictionScore, ScoreCutoffNewUsers);
 		}
 
-		[Test, AUT(AUT.Za),Explicit]
+		[Test, AUT(AUT.Za)]
 		public void CheckpointRepaymentPredictionPositiveLnAccept()
 		{
 			var customer = CustomerBuilder.New().Build();

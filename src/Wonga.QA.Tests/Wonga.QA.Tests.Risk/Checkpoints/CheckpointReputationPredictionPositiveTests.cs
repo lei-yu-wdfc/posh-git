@@ -146,7 +146,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Assert.IsTrue((bool) currentInArrears);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1938"), Explicit]
+		[Test, AUT(AUT.Za), JIRA("ZA-1938")]
 		public void CheckpointReputationPredictionPositiveTablesUpdateWhenAccountRankIncreases()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(GetPostcode().ToString()).Build();

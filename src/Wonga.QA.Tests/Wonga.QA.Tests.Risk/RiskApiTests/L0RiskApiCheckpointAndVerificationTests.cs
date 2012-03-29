@@ -46,18 +46,6 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 
             L0ApplicationWithSingleCheckPointAndSingleVerification(RiskCheckpointDefinitionEnum.CustomerIsEmployed, "CustomerIsEmployedVerification");
 		}
-		
-		//TODO:
-		/*
-        
-		[Test, AUT(AUT.Ca)]
-		[Explicit]
-		public void GivenL0Applicant_WhenElementNotOnCsBlacklistFailed()
-		{
-			//need to send a RegisterFraudMessage with AccountId and HasFraud = true			
-			L0ApplicationWithSingleCheckPointAndSingleVerification(CheckpointDefinitionEnum.FraudListCheck, "FraudBlacklistVerification", RiskMask.ApplicationElementNotOnCSBlacklist", CheckpointStatus.Failed);
-		}
-		*/
 
 		[Test, AUT(AUT.Ca)]
 		public void GivenL0Applicant_WhenElementNotOnCsBlacklist_ThenIsAccepted()

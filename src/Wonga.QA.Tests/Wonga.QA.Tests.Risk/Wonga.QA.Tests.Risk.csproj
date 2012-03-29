@@ -54,7 +54,7 @@
     <Compile Include="Checkpoints\CheckpointCustomerNameIsCorrectTests.cs" />
     <Compile Include="Checkpoints\CheckpointMonthlyIncomeEnoughForRepaymentTests.cs" />
     <Compile Include="Checkpoints\CheckpointRepaymentPredictionPositiveTests.cs" />
-    <Compile Include="Checkpoints\EidCheckpointTests.cs" />
+    <Compile Include="Checkpoints\CheckpointDirectFraudTests.cs" />
     <Compile Include="Checkpoints\CheckpointApplicationDeviceNotOnBlacklistTests.cs" />
     <Compile Include="ICustomerData.cs" />
     <Compile Include="MobilePhone\MobilePhoneIsUniqueTests.cs" />
