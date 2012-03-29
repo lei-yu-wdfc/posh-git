@@ -37,6 +37,8 @@
     <Compile Include="AddBusinessBankAccountTests.cs" />
     <Compile Include="BusinessRemoveFromArrearsTests.cs" />
     <Compile Include="CollectionsTests.cs" />
+    <Compile Include="Command\AddPersonalPaymentCardCsApiCommandTests.cs" />
+    <Compile Include="Command\DeletePersonalPaymentCardCsApiCommandTests.cs" />
     <Compile Include="Command\SavePaymentCardBillingAddress.cs" />
     <Compile Include="CsapiCreateTransactionTest.cs" />
     <Compile Include="EarlyRepaymentTests.cs" />
