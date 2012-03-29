@@ -17,6 +17,7 @@ namespace Wonga.QA.Tests.Payments
 		private static readonly int[] PayDayPlusToMaxTerm = Drive.Db.GetServiceConfiguration("Payments.PayDayPlusToMaxTerm").Value.Split(',').Select(Int32.Parse).ToArray();
 		private static readonly int SliderTermAddDays = Int32.Parse(Drive.Db.GetServiceConfiguration("Payments.SliderTermAddDays").Value);
     	private const int MaxDefaultTerm = 30;
+    	private const int NumOfDaysToTest = 7;
 
 		[FixtureTearDown]
 		public void TearDownOverride()
@@ -44,25 +45,79 @@ namespace Wonga.QA.Tests.Payments
             Assert.AreEqual(maxTerm, int.Parse(response.Values["TermMax"].Single()));
         }
 
-		[Test, AUT(AUT.Za), Explicit("Release")]
-		public void MaxLoanTermIsLastDayOfMonth()
+		[Test, AUT(AUT.Za), Pending]
+		public void DefaultTermIsDefaultPayDay()
 		{
-			for(int i = 0; i < 12; i++)
+			for( int i = 0; i < NumOfDaysToTest; i++)
 			{
-				var payDayOfMonth = PayDayPerMonth[i];
-				var payDayPlusToMaxTerm = PayDayPlusToMaxTerm[i];
-
-				var now = new DateTime(DateTime.UtcNow.Year, i + 1, 1);
+				var now = DateTime.Today.AddDays(i);
 				Drive.Db.SetServiceConfiguration(DateOverrideKey, now.ToString("yyyy-MM-dd HH:mm:ss"));
 
 				var response = Drive.Api.Queries.Post(new GetFixedTermLoanOfferZaQuery());
 
-				var expectedMax = payDayOfMonth + payDayPlusToMaxTerm;
-				Assert.AreEqual(expectedMax, DateTime.DaysInMonth(now.Year, now.Month));
-
-				var actualMax = int.Parse(response.Values["TermMax"].Single());
-				Assert.AreEqual(expectedMax, actualMax);
+				var expectedTerm = GetExpectedDefaultTerm(now);
+				var actualTerm = int.Parse(response.Values["TermDefault"].Single());
+				
+				Assert.AreEqual(expectedTerm, actualTerm);
 			}
 		}
+
+		[Test, AUT(AUT.Za), Pending]
+		public void MaxLoanTermIsLastDayOfMonth()
+		{
+			for (int i = 0; i < NumOfDaysToTest; i++)
+			{
+				var now = DateTime.Today.AddDays(i);
+				Drive.Db.SetServiceConfiguration(DateOverrideKey, now.ToString("yyyy-MM-dd HH:mm:ss"));
+
+				var response = Drive.Api.Queries.Post(new GetFixedTermLoanOfferZaQuery());
+
+				var expectedMaxTerm = GetExpectedMaxTerm(now);
+				var actualMaxTerm = int.Parse(response.Values["TermMax"].Single());
+
+				Assert.AreEqual(expectedMaxTerm, actualMaxTerm);
+			}
+		}
+
+    	#region Helpers
+
+		private DateTime GetExpectedDefaultPromiseDate(DateTime dateTime )
+		{
+			var iMonth = dateTime.Month - 1;
+
+			var payDayOfMonth = PayDayPerMonth[iMonth];
+
+			var promiseDate = new DateTime(dateTime.Year, iMonth + 1, payDayOfMonth);
+			promiseDate = Drive.Db.GetPreviousWorkingDay(new Date(promiseDate));
+
+			if ((promiseDate - dateTime).Days < SliderTermAddDays)
+			{
+				iMonth = iMonth < 11 ? iMonth + 1 : 0;
+				var year = iMonth == 0 ? dateTime.Year + 1 : dateTime.Year;
+
+				payDayOfMonth = PayDayPerMonth[iMonth];
+
+				promiseDate = new DateTime(year, iMonth + 1, payDayOfMonth);
+				promiseDate = Drive.Db.GetPreviousWorkingDay(new Date(promiseDate));
+			}
+
+			return promiseDate;
+		}
+
+		private int GetExpectedDefaultTerm(DateTime dateTime)
+		{
+			return (GetExpectedDefaultPromiseDate(dateTime) - dateTime).Days;
+		}
+
+		private int GetExpectedMaxTerm(DateTime dateTime)
+		{
+			var promiseDate = GetExpectedDefaultPromiseDate(dateTime);
+
+			var payDayPlusToMaxTerm = PayDayPlusToMaxTerm[promiseDate.Month - 1];
+
+			return (promiseDate - dateTime).Days + payDayPlusToMaxTerm;
+		}
+
+		#endregion
 	}
 }
