@@ -29,7 +29,7 @@ namespace Wonga.QA.Tests.Risk.MobilePhone
             var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber,
                                                            RiskMask.TESTMobilePhoneIsUnique,
                                                            ApplicationDecisionStatus.Accepted);
-            var mainApplicantRiskWorkflows = Application.GetWorkflowsForApplication(application.Id,
+            var mainApplicantRiskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id,
                                                                                     RiskWorkflowTypes.MainApplicant);
             Assert.AreEqual(mainApplicantRiskWorkflows.Count, 1, "There should be 1 risk workflow");
 
@@ -60,7 +60,7 @@ namespace Wonga.QA.Tests.Risk.MobilePhone
             var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber,
                                                            RiskMask.TESTMobilePhoneIsUnique,
                                                            ApplicationDecisionStatus.Declined);
-            var mainApplicantRiskWorkflows = Application.GetWorkflowsForApplication(application.Id,
+            var mainApplicantRiskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id,
                                                                                     RiskWorkflowTypes.MainApplicant);
             Assert.AreEqual(mainApplicantRiskWorkflows.Count, 1, "There should be 1 risk workflow");
 
@@ -99,7 +99,7 @@ namespace Wonga.QA.Tests.Risk.MobilePhone
                                                            ApplicationDecisionStatus.Accepted,listOfGuarantors);
 
 
-            var guarantorsWorkflow = Application.GetWorkflowsForApplication(application.Id,
+            var guarantorsWorkflow = Drive.Db.GetWorkflowsForApplication(application.Id,
                                                                                     RiskWorkflowTypes.Guarantor);
             Assert.AreEqual(guarantorsWorkflow.Count, listOfGuarantors.Count, "There should be "+listOfGuarantors.Count+" risk workflow");
 
@@ -136,7 +136,7 @@ namespace Wonga.QA.Tests.Risk.MobilePhone
                                                            RiskMask.TESTNoCheck,
                                                            ApplicationDecisionStatus.PreAccepted, listOfGuarantors);
             Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
-            var guarantorsWorkflow = Application.GetWorkflowsForApplication(application.Id,
+            var guarantorsWorkflow = Drive.Db.GetWorkflowsForApplication(application.Id,
                                                                                     RiskWorkflowTypes.Guarantor);
             Assert.AreEqual(guarantorsWorkflow.Count, listOfGuarantors.Count, "There should be " + listOfGuarantors.Count + " risk workflow");
 
