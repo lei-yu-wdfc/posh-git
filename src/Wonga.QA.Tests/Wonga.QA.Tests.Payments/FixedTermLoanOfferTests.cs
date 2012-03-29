@@ -45,7 +45,7 @@ namespace Wonga.QA.Tests.Payments
             Assert.AreEqual(maxTerm, int.Parse(response.Values["TermMax"].Single()));
         }
 
-		[Test, AUT(AUT.Za), Pending]
+		[Test, AUT(AUT.Za)]
 		public void DefaultTermIsDefaultPayDay()
 		{
 			for( int i = 0; i < NumOfDaysToTest; i++)
