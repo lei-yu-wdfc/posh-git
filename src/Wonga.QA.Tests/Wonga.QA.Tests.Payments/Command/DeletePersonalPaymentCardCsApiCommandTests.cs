@@ -6,16 +6,18 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Cs;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Helpers;
+using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments.Command
 {
     [TestFixture]
+    [AUT(AUT.Uk)]
     public class DeletePersonalPaymentCardCsApiCommandTests
     {
         [Test]
+        [AUT(AUT.Uk)]
         [Description("Populates customer account with payment cards, deletes one of them using DeletePersonalPaymentCard Cs API" +
                      " command and then verifies that this card has been marked as deleted")]
-
         public void Command_DeletesPaymentCard_FromCustomersPaymentCards()
         {
             DateTime today = DateTime.Today;
