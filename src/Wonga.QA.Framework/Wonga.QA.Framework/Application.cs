@@ -127,22 +127,6 @@ namespace Wonga.QA.Framework
 			Do.With.While(ftl.Refresh);
 		}
 
-        public Application MakeDueStatusToday()
-        {
-            ApplicationEntity application = Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id);
-            MakeDueStatusToday(application);
-            return this;
-        }
-
-	    public void MakeDueStatusToday(ApplicationEntity application)
-        {
-            RewindAppDates(application);
-
-            LoanDueDateNotificationSagaEntity dueNotificationSaga = Drive.Db.OpsSagas.LoanDueDateNotificationSagaEntities.Single(s => s.ApplicationId == Id);
-            Drive.Msmq.Payments.Send(new TimeoutMessage() { SagaId = dueNotificationSaga.Id });
-            Do.With.While(dueNotificationSaga.Refresh);
-        }
-
 		public virtual Application PutApplicationIntoArrears(int daysInArrears)
 		{
 			PutApplicationIntoArrears();
