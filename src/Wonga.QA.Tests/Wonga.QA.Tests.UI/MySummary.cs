@@ -24,7 +24,7 @@ namespace Wonga.QA.Tests.Ui
             var summary = loginPage.LoginAs(email);
 
             summary.Client.Driver.Navigate().GoToUrl(Config.Ui.Home + "/repay-canada");
-            var xpath = summary.Client.Driver.FindElement(By.XPath("//div[@id='content-area']/p[1]"));
+            var xpath = summary.Client.Driver.FindElement(By.CssSelector("#content-area p:nth-child(1)"));
             Assert.IsTrue(xpath.Text.Contains("via online banking"));
         }
 

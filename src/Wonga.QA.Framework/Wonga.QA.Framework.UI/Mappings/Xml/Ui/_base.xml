@@ -4,7 +4,7 @@
     <Username>#edit-name</Username>
     <Password>#edit-pass</Password>
     <LoginButton>#edit-login</LoginButton>
-    <ForgotPassword>.//*[@id='wonga-login-form']/div/div[5]/a</ForgotPassword>
+    <ForgotPassword>#wonga-login-form div div:nth-child(5) a</ForgotPassword>
   </LoginPage>
 
   <ForgotPasswordPage>
@@ -125,14 +125,14 @@
   </JargonBusterPage>
 
   <FAQElement>
-    <SelectQuestion>.//*[@id='faqQuestions']/option[@selected='selected']</SelectQuestion>
-    <AnswerQuestion>.//*[@id='containerAnswer']/h2</AnswerQuestion>
+    <SelectQuestion>#faqQuestions option[selected="selected"]</SelectQuestion>
+    <AnswerQuestion>#containerAnswer h2</AnswerQuestion>
   </FAQElement>
 
   <InternationalElement>
-    <InternationalTrigger>.//*[@id='international-trigger']</InternationalTrigger>
-    <InternationalPanelZa>.//*[@id='international-panel']/div/ul/li[1]/a</InternationalPanelZa>
-    <InternationalPanelUk>.//*[@id='international-panel']/div/ul/li[2]/a</InternationalPanelUk>
+    <InternationalTrigger>#international-trigger</InternationalTrigger>
+    <InternationalPanelZa>#international-panel div ul li:nth-child(1) a</InternationalPanelZa>
+    <InternationalPanelUk>#international-panel div ul li:nth-child(2) a</InternationalPanelUk>
   </InternationalElement>
 
   <PersonalDetailsPage>
