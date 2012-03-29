@@ -49,7 +49,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _flatNumber = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.FlatNumber));
             _addressPeriod = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.AddressPeriod));
             _next = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.NextButton));
-
+           
             switch (Config.AUT)
             {
                 case (AUT.Wb):
