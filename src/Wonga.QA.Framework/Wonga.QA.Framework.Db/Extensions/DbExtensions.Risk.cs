@@ -62,13 +62,17 @@ namespace Wonga.QA.Framework.Db.Extensions
 			riskDb.SubmitChanges();
 		}
 
-		/// <summary>
-		/// This metod ASSUMES that there is only one workflow for an application and returns a list of executed checkpoints for it
-		/// </summary>
-		/// <param name="applicationId">The GUID of the application</param>
-		/// <param name="expectedStatus">Optional:The expected status</param>
-		/// <returns>Returns a list of CheckpointDefinitions.Name</returns>
-		public static List<String> GetExecutedCheckpointsDefinitionsForApplicationId(this DbDriver db, Guid applicationId, params RiskCheckpointStatus[] expectedStatus)
+		public static List<RiskWorkflowEntity> GetWorkflowsForApplication(this DbDriver db, Guid applicationId)
+		{
+			return db.Risk.RiskWorkflows.Where(p => p.ApplicationId == applicationId).ToList();
+		}
+
+		public static List<RiskWorkflowEntity> GetWorkflowsForApplication(this DbDriver db, Guid applicationId, RiskWorkflowTypes workflowType)
+		{
+			return db.Risk.RiskWorkflows.Where(p => p.ApplicationId == applicationId && (RiskWorkflowTypes)p.WorkflowType == workflowType).ToList();
+		}
+
+		public static List<String> GetExecutedCheckpointsDefinitionNamesForApplicationId(this DbDriver db, Guid applicationId, params RiskCheckpointStatus[] expectedStatus)
 		{
 			var riskWorkflowEntity = db.Risk.RiskWorkflows.SingleOrDefault(r => r.ApplicationId == applicationId);
 			var executedCheckpoints = new List<string>();
@@ -90,13 +94,7 @@ namespace Wonga.QA.Framework.Db.Extensions
 			return executedCheckpoints;
 		}
 
-		/// <summary>
-		/// This method returns a list of checkpoints that were executed for a given Risk Workflow id and an optional array of statuses.
-		/// </summary>
-		/// <param name="workflowId">The GUID of the workflow</param>
-		/// <param name="expectedStatus">Optional:The expected status</param>
-		/// <returns>Returns a list of CheckpointDefinitions.Name</returns>
-		public static List<String> GetExecutedCheckpointDefinitionsForRiskWorkflow(this DbDriver db, Guid workflowId, params RiskCheckpointStatus[] expectedStatus)
+		public static List<String> GetExecutedCheckpointDefinitionNamesForRiskWorkflow(this DbDriver db, Guid workflowId, params RiskCheckpointStatus[] expectedStatus)
 		{
 			var riskWorkflowEntity = db.Risk.RiskWorkflows.SingleOrDefault(r => r.WorkflowId == workflowId);
 			var executedCheckpoints = new List<string>();
@@ -118,12 +116,7 @@ namespace Wonga.QA.Framework.Db.Extensions
 			return executedCheckpoints;
 		}
 
-		/// <summary>
-		/// This method returns a list of verifications that were executed for a given Risk Workflow id and an optional array of statuses.
-		/// </summary>
-		/// <param name="workflowId">The GUID of the workflow</param>
-		/// <returns>Returns a list of CheckpointDefinitions.Name</returns>
-		public static List<String> GetExecutedVerificationDefinitionsForRiskWorkflow(this DbDriver db, Guid workflowId)
+		public static List<String> GetExecutedVerificationDefinitionNamesForRiskWorkflow(this DbDriver db, Guid workflowId)
 		{
 			var riskWorkflowEntity = db.Risk.RiskWorkflows.SingleOrDefault(r => r.WorkflowId == workflowId);
 			var executedVerifications = new List<string>();
@@ -138,27 +131,6 @@ namespace Wonga.QA.Framework.Db.Extensions
 				return executedVerifications;
 			}
 			return executedVerifications;
-		}
-
-		/// <summary>
-		/// This function returns a list of Workflow entities for a given ApplicationId
-		/// </summary>
-		/// <param name="applicationId">The GUID of the application</param>
-		/// <returns></returns>
-		public static List<RiskWorkflowEntity> GetWorkflowsForApplication(this DbDriver db, Guid applicationId)
-		{
-			return db.Risk.RiskWorkflows.Where(p => p.ApplicationId == applicationId).ToList();
-		}
-
-		/// <summary>
-		/// This function returns a list of Workflow entities for a given ApplicationId
-		/// </summary>
-		/// <param name="applicationId">The GUID of the application</param>
-		/// <param name="workflowType">The type of the workflow(enum RiskWorkflowTypes)</param>
-		/// <returns></returns>
-		public static List<RiskWorkflowEntity> GetWorkflowsForApplication(this DbDriver db, Guid applicationId, RiskWorkflowTypes workflowType)
-		{
-			return db.Risk.RiskWorkflows.Where(p => p.ApplicationId == applicationId && (RiskWorkflowTypes)p.WorkflowType == workflowType).ToList();
 		}
 	}
 }

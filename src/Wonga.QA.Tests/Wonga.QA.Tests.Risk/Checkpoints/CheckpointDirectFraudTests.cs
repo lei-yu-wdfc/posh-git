@@ -26,7 +26,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             Application lNApp = ApplicationBuilder.New(customer).Build();
             var riskWorkflows = Drive.Db.GetWorkflowsForApplication(lNApp.Id);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.UserAssistedFraudCheck));
+            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.UserAssistedFraudCheck));
         }
     }
 }
