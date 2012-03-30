@@ -38,7 +38,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 																		"Fraud list check"
 		                                                         	};
 
-		private static readonly List<string> ExpectedCheckpojeintNamesLnZa = new List<string>()
+		private static readonly List<string> ExpectedCheckpointNamesLnZa = new List<string>()
 		                                                                    	{
 		                                                                    		"Customer is employed",
 		                                                                    		"Monthly income limit check",
@@ -53,7 +53,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 		                                                                    		"Bank account is valid"
 		                                                                    	};
 
-		private static List<string> _expectedVerificationNamesL0Za = new List<string>()
+		private static readonly List<string> ExpectedVerificationNamesL0Za = new List<string>()
 		                                                             	{
 		                                                             		"CustomerIsEmployedVerification",
 		                                                             		"MonthlyIncomeVerification",
@@ -74,7 +74,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 		                                                             		"BankAccountIsValidVerification"
 		                                                             	};
 
-		private static List<string> _expectedVerificationNamesLnZa = new List<string>()
+		private static readonly List<string> ExpectedVerificationNamesLnZa = new List<string>()
 		                                                             	{
 		                                                             		"CustomerIsEmployedVerification",
 		                                                             		"MonthlyIncomeVerification",
@@ -204,7 +204,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 			{
 				case AUT.Za:
 					{
-						return _expectedVerificationNamesL0Za;
+						return ExpectedVerificationNamesL0Za;
 					}
 					break;
 
@@ -221,7 +221,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 			{
 				case AUT.Za:
 					{
-						return _expectedVerificationNamesLnZa;
+						return ExpectedVerificationNamesLnZa;
 					}
 					break;
 
