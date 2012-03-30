@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
-using Wonga.QA.Framework.Api.Exceptions;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Cs;
-using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
