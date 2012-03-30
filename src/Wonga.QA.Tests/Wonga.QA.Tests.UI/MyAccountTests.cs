@@ -84,7 +84,10 @@ namespace Wonga.QA.Tests.Ui
                 Thread.Sleep(2000); // Wait some time to load popup
 
                 var paymentPage = payment1.AddBankAccount("Capitec", "Current", "7434567", "2 to 3 years");
-                Thread.Sleep(2000); // Wait some time before assert
+                while (paymentPage.IfHasAnExeption()==false)
+                {
+                    Thread.Sleep(1000);
+                }
                 Assert.IsTrue(paymentPage.IfHasAnExeption());
             }
             else
@@ -101,7 +104,10 @@ namespace Wonga.QA.Tests.Ui
                 Thread.Sleep(2000); // Wait some time to load popup
 
                 var paymentPage = payment1.AddBankAccount("Capitec", "Current", "7534567", "2 to 3 years");
-                Thread.Sleep(2000); // Wait some time before assert
+                while (paymentPage.IfHasAnExeption() == false)
+                {
+                    Thread.Sleep(1000);
+                }
                 Assert.IsTrue(paymentPage.IfHasAnExeption());
             }
             else
