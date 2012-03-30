@@ -50,7 +50,7 @@ namespace Wonga.QA.Tests.Ui
             _termMin = Int32.Parse(_response.Values["TermMin"].Single(), CultureInfo.InvariantCulture);
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-192")]
+        [Test, AUT(AUT.Za), JIRA("QA-192"), Pending("Known issue")]
         public void CorrectDataShouldBeDisplayedOnApplicationSuccessPageForZa()
         {
             int randomAmount = _amountMin + (new Random()).Next(_amountMax - _amountMin);
