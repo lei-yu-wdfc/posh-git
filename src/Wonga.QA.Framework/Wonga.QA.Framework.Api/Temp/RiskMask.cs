@@ -69,6 +69,7 @@ namespace Wonga.QA.Framework.Api
         TESTNoCheck,
         TESTTooManyLoansAtAddress,
         TESTGuarantorNamesMatchBusinessBureauData,
-        TESTBlacklistSME
+        TESTBlacklistSME,
+		TESTGeneralManualVerification
     }
 }
