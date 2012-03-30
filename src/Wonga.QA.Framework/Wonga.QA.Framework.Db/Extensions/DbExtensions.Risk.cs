@@ -88,13 +88,47 @@ namespace Wonga.QA.Framework.Db.Extensions
 
 		public static IEnumerable<CheckpointDefinitionEntity> GetCheckpointDefinitionsForWorkflow(this DbDriver db, int workflowId)
 		{
-			var result = (from r in db.Risk.RiskWorkflows
-			              where r.RiskWorkflowId == workflowId
-			              select r) as IEnumerable<CheckpointDefinitionEntity>;
+			var checkpointIds = (from rw in db.Risk.RiskWorkflows
+						  join wc in db.Risk.WorkflowCheckpoints on rw.RiskWorkflowId equals wc.RiskWorkflowId
+						  where rw.RiskWorkflowId == workflowId
+			              select wc.CheckpointDefinitionEntity);
+
+			var result = (from c in checkpointIds
+			              join cd in db.Risk.CheckpointDefinitions on c.CheckpointDefinitionId equals cd.CheckpointDefinitionId
+			              select cd);
 			
 			return result;
 		}
 
+		public static IEnumerable<VerificationDefinitionEntity> GetVerificationDefinitionsForApplication(this DbDriver db, Guid applicationId)
+		{
+			var workflows = GetWorkflowsForApplication(db, applicationId);
+
+			var verifications = new List<VerificationDefinitionEntity>();
+
+			foreach (var workflow in workflows)
+			{
+				verifications.AddRange(GetVerificationDefinitionsForWorkflow(db, workflow.RiskWorkflowId));
+			}
+
+			return verifications;
+		}
+
+		public static IEnumerable<VerificationDefinitionEntity> GetVerificationDefinitionsForWorkflow(this DbDriver db, int workflowId)
+		{
+			var verifcationDefinitionIds = (from rw in db.Risk.RiskWorkflows
+			                                where rw.RiskWorkflowId == workflowId
+			                                join wv in db.Risk.WorkflowVerifications on rw.RiskWorkflowId equals
+			                                	wv.RiskWorkflowId
+												orderby wv.SortOrder
+			                                select wv.VerificationDefinitionId);
+
+			var result = (from v in verifcationDefinitionIds
+			              join vd in db.Risk.VerificationDefinitions on v equals vd.VerificationDefinitionId
+			              select vd);
+
+			return result;
+		}
 
 		public static List<String> GetExecutedCheckpointsDefinitionNamesForApplicationId(this DbDriver db, Guid applicationId, params RiskCheckpointStatus[] expectedStatus)
 		{
