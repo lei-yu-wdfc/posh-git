@@ -10,5 +10,6 @@ namespace Wonga.QA.Framework.Api
         MainApplicant = 0,
         Guarantor = 1,
         ManualVerification = 2,
+        BusinessVerification = 3,
     }
 }
