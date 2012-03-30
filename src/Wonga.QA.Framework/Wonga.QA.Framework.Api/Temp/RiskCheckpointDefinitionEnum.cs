@@ -39,5 +39,7 @@ namespace Wonga.QA.Framework.Api
         [Description("Guarantor Names Match Business Bureau Data")] GuarantorNamesMatchBusinessBureauData,
         [Description("There are to many active loans at same address")] TooManyLoansAtAddress,
         [Description("Mobile phone is unique")] MobilePhoneIsUnique,
+		[Description("Repayment prediction check")] RepaymentPredictionPositive,
+		[Description("Application has been accepted by customer service")] GeneralManualVerificationAccepted
     }
 }

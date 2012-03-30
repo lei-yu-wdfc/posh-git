@@ -37,6 +37,7 @@
     <Compile Include="Checkpoints\CheckpointApplicantIsNotDeceasedTest.cs" />
     <Compile Include="Checkpoints\CheckpointApplicantIsSolventTest.cs" />
     <Compile Include="Checkpoints\CheckpointApplicationElementNotCifasFlaggedTest.cs" />
+    <Compile Include="Checkpoints\CheckpointGeneralManualVerificationAccepted.cs" />
     <Compile Include="Checkpoints\CheckpointGuarantorNameMatchMainApplicant.cs" />
     <Compile Include="Checkpoints\CheckpointTooManyLoansAtAddressTest.cs" />
     <Compile Include="Checkpoints\CheckpointRepaymentPredictionPositiveTestsCa.cs" />
@@ -90,6 +91,10 @@
     </Reference>
     <Reference Include="Wonga.QA.Framework.Core">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Wonga.QA.Framework.Cs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Cs.dll</HintPath>
     </Reference>
     <Reference Include="Wonga.QA.Framework.Db">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Db.dll</HintPath>
