@@ -49,5 +49,11 @@
   <AcceptedPage>
     <NodeWrap>.node-type-wonga-decision-page</NodeWrap>
   </AcceptedPage>
+
+  <ApplicationSection>
+    <FormId>#wonga-apply-ln-form</FormId>
+    <SecurityCode>#edit-security-code</SecurityCode>
+    <MinCash>#edit-min-cash</MinCash>
+  </ApplicationSection>
   
 </Ui>

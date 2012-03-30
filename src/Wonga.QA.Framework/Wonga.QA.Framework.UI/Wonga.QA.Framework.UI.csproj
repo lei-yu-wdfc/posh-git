@@ -61,14 +61,17 @@
     <Compile Include="Journey\ILnConsumerJourney.cs" />
     <Compile Include="Journey\JourneyFactory.cs" />
     <Compile Include="Journey\UkL0Journey.cs" />
+    <Compile Include="Journey\UkLnJourney.cs" />
     <Compile Include="Journey\ZaL0Journey.cs" />
     <Compile Include="Journey\CaLnJourney.cs" />
+    <Compile Include="Journey\ZaLnJourney.cs" />
     <Compile Include="Mappings\Content\Content.cs" />
     <Compile Include="Mappings\Content\Agreements\LoanAgreement.cs" />
     <Compile Include="Mappings\Ui\Elements\ContactElement.cs" />
     <Compile Include="Mappings\Ui\Elements\MyAccountNavigationElement.cs" />
     <Compile Include="Mappings\Ui\Elements\SurveyElement.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\AboutUsPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\ApplyPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\BlogPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ForgotPasswordPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\HomePage.cs" />
@@ -82,6 +85,7 @@
     <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceHomePage.cs" />
     <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceLoginPage.cs" />
     <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceSearchResultPage.cs" />
+    <Compile Include="Mappings\Ui\Sections\ApplicationSection.cs" />
     <Compile Include="Mappings\Ui\Ui.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\DealDonePage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\DeclinedPage.cs" />
@@ -125,6 +129,7 @@
     <Compile Include="Ui\Elements\MyAccountNavigationElement.cs" />
     <Compile Include="Ui\Elements\SurveyElement.cs" />
     <Compile Include="Ui\Pages\Common\AboutUsPage.cs" />
+    <Compile Include="Ui\Pages\Common\ApplyPage.cs" />
     <Compile Include="Ui\Pages\Common\BlogPage.cs" />
     <Compile Include="Ui\Pages\Common\DealDonePage.cs" />
     <Compile Include="Ui\Pages\Common\DeclinedPage.cs" />
@@ -145,6 +150,7 @@
     <Compile Include="Ui\Pages\SalesForce\SalesForceLoginPage.cs" />
     <Compile Include="Ui\Pages\SalesForce\SalesForceSearchResultPage.cs" />
     <Compile Include="Ui\Sections\AccountDetailsSection.cs" />
+    <Compile Include="Ui\Sections\ApplicationSection.cs" />
     <Compile Include="Ui\Sections\BankAccountSection.cs" />
     <Compile Include="Ui\Sections\BaseSection.cs" />
     <Compile Include="Ui\Sections\ContactingYouSection.cs" />

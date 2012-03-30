@@ -212,6 +212,10 @@
     <SecretAnswer>#edit-secret-answer</SecretAnswer>
   </AccountDetailsSection>
 
+  <ApplyPage>
+    <Submit>#wonga-apply-ln-form #edit-submit</Submit>
+  </ApplyPage>
+
   <ProcessingPage>
     <!--<FormId>wonga-processing</FormId>-->
     <!--<ProcessingImage>#wonga-processing>img</ProcessingImage>-->
