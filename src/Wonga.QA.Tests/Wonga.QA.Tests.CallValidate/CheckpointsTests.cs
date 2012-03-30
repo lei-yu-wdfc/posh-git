@@ -57,7 +57,7 @@ namespace Wonga.QA.Tests.CallValidate
             customerBuilder.ScrubForename(mainApplicant.Forename);
             customerBuilder.ScrubSurname(mainApplicant.Surname);
 
-            if (!string.IsNullOrEmpty(mainApplicant.CardNumber.ToString()))
+            if (mainApplicant.CardNumber != 0)
                 customerBuilder.WithPaymentCardNumber(mainApplicant.CardNumber);
 
             if (!string.IsNullOrEmpty(mainApplicant.MobilePhoneNumber))
