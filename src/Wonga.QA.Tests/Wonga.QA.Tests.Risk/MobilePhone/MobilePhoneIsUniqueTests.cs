@@ -29,8 +29,8 @@ namespace Wonga.QA.Tests.Risk.MobilePhone
             var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber,
                                                            RiskMask.TESTMobilePhoneIsUnique,
                                                            ApplicationDecisionStatus.Accepted);
-            var mainApplicantRiskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id,
-                                                                                    RiskWorkflowTypes.MainApplicant);
+            Drive.Db.WaitForRiskWorkflowData(application.Id,RiskWorkflowTypes.MainApplicant,1,RiskWorkflowStatus.Verified);
+            var mainApplicantRiskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id,RiskWorkflowTypes.MainApplicant);
             Assert.AreEqual(mainApplicantRiskWorkflows.Count, 1, "There should be 1 risk workflow");
 
             var workflowCheckpointsWithDefinitions = mainApplicantRiskWorkflows[0].WorkflowCheckpoints.ToDictionary(checkpoint => checkpoint, p => p.CheckpointDefinitionEntity.Name);
@@ -60,8 +60,9 @@ namespace Wonga.QA.Tests.Risk.MobilePhone
             var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber,
                                                            RiskMask.TESTMobilePhoneIsUnique,
                                                            ApplicationDecisionStatus.Declined);
-            var mainApplicantRiskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id,
-                                                                                    RiskWorkflowTypes.MainApplicant);
+            Drive.Db.WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant, 1, RiskWorkflowStatus.Failed);
+            var mainApplicantRiskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
+
             Assert.AreEqual(mainApplicantRiskWorkflows.Count, 1, "There should be 1 risk workflow");
 
             var workflowCheckpointsWithDefinitions = mainApplicantRiskWorkflows[0].WorkflowCheckpoints.ToDictionary(checkpoint => checkpoint, p => p.CheckpointDefinitionEntity.Name);
@@ -98,7 +99,7 @@ namespace Wonga.QA.Tests.Risk.MobilePhone
                                                            RiskMask.TESTNoCheck,
                                                            ApplicationDecisionStatus.Accepted,listOfGuarantors);
 
-
+            Drive.Db.WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.Guarantor, 1, RiskWorkflowStatus.Verified);
             var guarantorsWorkflow = Drive.Db.GetWorkflowsForApplication(application.Id,
                                                                                     RiskWorkflowTypes.Guarantor);
             Assert.AreEqual(guarantorsWorkflow.Count, listOfGuarantors.Count, "There should be "+listOfGuarantors.Count+" risk workflow");
@@ -135,7 +136,9 @@ namespace Wonga.QA.Tests.Risk.MobilePhone
             var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber,
                                                            RiskMask.TESTNoCheck,
                                                            ApplicationDecisionStatus.PreAccepted, listOfGuarantors);
+
             Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
+            Drive.Db.WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.Guarantor, 1, RiskWorkflowStatus.Failed);
             var guarantorsWorkflow = Drive.Db.GetWorkflowsForApplication(application.Id,
                                                                                     RiskWorkflowTypes.Guarantor);
             Assert.AreEqual(guarantorsWorkflow.Count, listOfGuarantors.Count, "There should be " + listOfGuarantors.Count + " risk workflow");

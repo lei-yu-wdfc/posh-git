@@ -7,6 +7,7 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Extensions;
+using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.CallValidate
@@ -25,12 +26,13 @@ namespace Wonga.QA.Tests.CallValidate
                                              Get.GetMobilePhone()) { CardNumber = Int64.Parse("1111222233334444") };
             var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTCallValidatePaymentCardIsValid, ApplicationDecisionStatus.Accepted);
 
-            WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
-            var mainApplicantRiskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
-            Assert.AreEqual(1, mainApplicantRiskWorkflows.Count, "There should be 1 risk workflow");
-            Do.Until(() => Drive.Db.Risk.WorkflowCheckpoints.Any(p => p.RiskWorkflowId == mainApplicantRiskWorkflows[0].RiskWorkflowId && p.CheckpointStatus != 0));
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.PaymentCardIsValid));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.CallValidatePaymentCardIsValidVerification));
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
+            var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(businessRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.PaymentCardIsValid,
+                                                                     RiskCheckpointStatus.Verified,
+                                                                     RiskVerificationDefinitions.CallValidatePaymentCardIsValidVerification);
         }
 
         [Test, AUT(AUT.Wb)]
@@ -43,12 +45,12 @@ namespace Wonga.QA.Tests.CallValidate
                                              Get.GetMobilePhone()) { CardNumber = Int64.Parse("9999888877776666") };
             var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTCallValidatePaymentCardIsValid, ApplicationDecisionStatus.Declined);
 
-            WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
-            var mainApplicantRiskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
-            Assert.AreEqual(1, mainApplicantRiskWorkflows.Count, "There should be 1 risk workflow");
-            Do.Until(() => Drive.Db.Risk.WorkflowCheckpoints.Any(p => p.RiskWorkflowId == mainApplicantRiskWorkflows[0].RiskWorkflowId && p.CheckpointStatus != 0));
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.PaymentCardIsValid));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.CallValidatePaymentCardIsValidVerification));
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.PaymentCardIsValid,
+                                                                     RiskCheckpointStatus.Failed,
+                                                                     RiskVerificationDefinitions.CallValidatePaymentCardIsValidVerification);
         }
 
         private static Application CreateApplicationWithAsserts(Customer mainApplicant, String companyRegisteredNumber, RiskMask middlenameMask, ApplicationDecisionStatus applicationDecision, List<Customer> guarantors = null)
@@ -108,13 +110,25 @@ namespace Wonga.QA.Tests.CallValidate
             return application;
 
         }
-
-        private void WaitForRiskWorkflowData(Guid applicationId, RiskWorkflowTypes riskWorkflowType)
+        private List<RiskWorkflowEntity> VerifyRiskWorkflows(Guid applicationId, RiskWorkflowTypes riskWorkflowType, RiskWorkflowStatus expectedRiskWorkflowStatus, Int32 expectedNumberOfWorkflows)
         {
-            Do.Until(
-                () =>
-                Drive.Db.Risk.RiskWorkflows.Any(
-                    p => p.ApplicationId == applicationId && (RiskWorkflowTypes)p.WorkflowType == riskWorkflowType));
+            Drive.Db.WaitForRiskWorkflowData(applicationId, riskWorkflowType, expectedNumberOfWorkflows, expectedRiskWorkflowStatus);
+            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(applicationId, riskWorkflowType);
+            Assert.AreEqual(expectedNumberOfWorkflows, riskWorkflows.Count, "There should be " + expectedNumberOfWorkflows + " workflows");
+
+            foreach (var riskWorkflow in riskWorkflows)
+            {
+                Assert.AreEqual(expectedRiskWorkflowStatus, (RiskWorkflowStatus)riskWorkflow.Decision);
+            }
+
+            return riskWorkflows;
         }
+        private void VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(RiskWorkflowEntity riskWorkflowEntity, RiskCheckpointDefinitionEnum checkpointDefinition, RiskCheckpointStatus checkpointStatus, RiskVerificationDefinitions riskVerification)
+        {
+            Do.Until(() => Drive.Db.Risk.WorkflowCheckpoints.Any(p => p.RiskWorkflowId == riskWorkflowEntity.RiskWorkflowId && p.CheckpointStatus != 0));
+            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflowEntity.WorkflowId, checkpointStatus), Get.EnumToString(checkpointDefinition));
+            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(riskWorkflowEntity.WorkflowId), Get.EnumToString(riskVerification));
+        }
+
     }
 }

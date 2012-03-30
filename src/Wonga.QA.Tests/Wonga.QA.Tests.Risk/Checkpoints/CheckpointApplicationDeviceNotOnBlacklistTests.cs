@@ -29,6 +29,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
                 application =
                     ApplicationBuilder.New(customer).WithIovationBlackBox("Deny").WithExpectedDecision(
                         ApplicationDecisionStatus.Declined).Build();
+
             var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id,RiskWorkflowTypes.MainApplicant);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
 			Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.HardwareBlacklistCheck));

@@ -8,6 +8,7 @@ using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Db.Extensions;
+using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Experian
@@ -29,11 +30,13 @@ namespace Wonga.QA.Tests.Experian
             var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(), Get.GetMobilePhone());
             var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTExperianApplicantIsNotDeceased,ApplicationDecisionStatus.Accepted);
 
-            WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
-            var mainApplicantRiskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
-            Assert.AreEqual(1, mainApplicantRiskWorkflows.Count, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicantIsAlive));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.CreditBureauCustomerIsAliveVerification));
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
+            var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.ApplicantIsAlive,
+                                                                     RiskCheckpointStatus.Verified,
+                                                                     RiskVerificationDefinitions.CreditBureauCustomerIsAliveVerification);
         }
 
         [Test, AUT(AUT.Wb)]
@@ -45,11 +48,13 @@ namespace Wonga.QA.Tests.Experian
             var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(), Get.GetMobilePhone());
             var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTExperianApplicantIsNotDeceased,ApplicationDecisionStatus.Accepted);
 
-            WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
-            var mainApplicantRiskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
-            Assert.AreEqual(1, mainApplicantRiskWorkflows.Count, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicantIsAlive));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.CreditBureauCustomerIsAliveVerification));
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
+            var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.ApplicantIsAlive,
+                                                                     RiskCheckpointStatus.Verified,
+                                                                     RiskVerificationDefinitions.CreditBureauCustomerIsAliveVerification);
         }
 
         [Test, AUT(AUT.Wb)]
@@ -61,11 +66,12 @@ namespace Wonga.QA.Tests.Experian
             var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(), Get.GetMobilePhone());
             var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTExperianApplicantIsNotDeceased,ApplicationDecisionStatus.Declined);
 
-            WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
-            var mainApplicantRiskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
-            Assert.AreEqual(1, mainApplicantRiskWorkflows.Count, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicantIsAlive));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.CreditBureauCustomerIsAliveVerification));
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.ApplicantIsAlive,
+                                                                     RiskCheckpointStatus.Failed,
+                                                                     RiskVerificationDefinitions.CreditBureauCustomerIsAliveVerification);
         }
 
         /* Main Applicant CIFAS */
@@ -79,11 +85,12 @@ namespace Wonga.QA.Tests.Experian
             var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(), Get.GetMobilePhone());
             var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTExperianApplicationElementNotCIFASFlagged,ApplicationDecisionStatus.Accepted);
 
-            WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
-            var mainApplicantRiskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
-            Assert.AreEqual(1, mainApplicantRiskWorkflows.Count, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.CIFASFraudCheck));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.CreditBureauCifasFraudCheckVerification));
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.CIFASFraudCheck,
+                                                                     RiskCheckpointStatus.Verified,
+                                                                     RiskVerificationDefinitions.CreditBureauCifasFraudCheckVerification);
         }
 
         [Test, AUT(AUT.Wb)]
@@ -95,11 +102,12 @@ namespace Wonga.QA.Tests.Experian
             var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(), Get.GetMobilePhone());
             var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTExperianApplicationElementNotCIFASFlagged, ApplicationDecisionStatus.Declined);
 
-            WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
-            var mainApplicantRiskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
-            Assert.AreEqual(1, mainApplicantRiskWorkflows.Count, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.CIFASFraudCheck));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.CreditBureauCifasFraudCheckVerification));
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.CIFASFraudCheck,
+                                                                     RiskCheckpointStatus.Failed,
+                                                                     RiskVerificationDefinitions.CreditBureauCifasFraudCheckVerification);
         }
 
         /* Main Applicant Data is Available */
@@ -113,12 +121,12 @@ namespace Wonga.QA.Tests.Experian
             var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(), Get.GetMobilePhone());
             var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTExperianCreditBureauDataIsAvailable, ApplicationDecisionStatus.Accepted);
 
-            WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
-            var mainApplicantRiskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
-            Assert.AreEqual(mainApplicantRiskWorkflows.Count, 1, "There should be 1 risk workflow");
-            Do.Until(() => Drive.Db.Risk.WorkflowCheckpoints.Any(p => p.RiskWorkflowId == mainApplicantRiskWorkflows[0].RiskWorkflowId && p.CheckpointStatus != 0));
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.CreditBureauDataIsAvailable));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.CreditBureauDataIsAvailableVerification));
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.CreditBureauDataIsAvailable,
+                                                                     RiskCheckpointStatus.Verified,
+                                                                     RiskVerificationDefinitions.CreditBureauDataIsAvailableVerification);
         }
 
         [Test, AUT(AUT.Wb),]
@@ -130,13 +138,12 @@ namespace Wonga.QA.Tests.Experian
             var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(), Get.GetMobilePhone());
             var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTExperianCreditBureauDataIsAvailable, ApplicationDecisionStatus.Declined);
 
-            WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
-            Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
-            var guarantorRiskWorkflow = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
-            Assert.AreEqual(guarantorRiskWorkflow.Count, 1, "There should be 1 risk workflow");
-            Do.Until(() => Drive.Db.Risk.WorkflowCheckpoints.Any(p => p.RiskWorkflowId == guarantorRiskWorkflow[0].RiskWorkflowId && p.CheckpointStatus != 0));
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(guarantorRiskWorkflow[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.CreditBureauDataIsAvailable));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(guarantorRiskWorkflow[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.CreditBureauDataIsAvailableVerification));
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.CreditBureauDataIsAvailable,
+                                                                     RiskCheckpointStatus.Failed,
+                                                                     RiskVerificationDefinitions.CreditBureauDataIsAvailableVerification);
         }
 
         /* Main Applciant Solvent */
@@ -150,11 +157,12 @@ namespace Wonga.QA.Tests.Experian
             var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(), Get.GetMobilePhone());
             var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTExperianApplicantIsSolvent,ApplicationDecisionStatus.Accepted);
 
-            WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
-            var mainApplicantRiskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
-            Assert.AreEqual(1, mainApplicantRiskWorkflows.Count, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.CustomerIsSolvent));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.CreditBureauCustomerIsSolventVerification));
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.CustomerIsSolvent,
+                                                                     RiskCheckpointStatus.Verified,
+                                                                     RiskVerificationDefinitions.CreditBureauCustomerIsSolventVerification);
         }
 
         [Test, AUT(AUT.Wb)]
@@ -166,11 +174,13 @@ namespace Wonga.QA.Tests.Experian
             var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(), Get.GetMobilePhone());
             var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTExperianApplicantIsSolvent, ApplicationDecisionStatus.Declined);
 
-            WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
-            var mainApplicantRiskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
-            Assert.AreEqual(1, mainApplicantRiskWorkflows.Count, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.CustomerIsSolvent));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.CreditBureauCustomerIsSolventVerification));
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.CustomerIsSolvent,
+                                                                     RiskCheckpointStatus.Failed,
+                                                                     RiskVerificationDefinitions.CreditBureauCustomerIsSolventVerification);
+
         }
 
         /* Main applicant DOB check */
@@ -185,11 +195,12 @@ namespace Wonga.QA.Tests.Experian
             var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, correctDateOfBirth, Get.GetMobilePhone());
             var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTExperianCustomerDateOfBirthIsCorrect, ApplicationDecisionStatus.Accepted);
 
-            WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
-            var mainApplicantRiskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
-            Assert.AreEqual(1, mainApplicantRiskWorkflows.Count, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.DateOfBirthIsCorrect));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.DateOfBirthIsCorrectVerification));
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.DateOfBirthIsCorrect,
+                                                                     RiskCheckpointStatus.Verified,
+                                                                     RiskVerificationDefinitions.DateOfBirthIsCorrectVerification);
         }
 
         [Test, AUT(AUT.Wb)]
@@ -202,11 +213,12 @@ namespace Wonga.QA.Tests.Experian
             var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
             var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTExperianCustomerDateOfBirthIsCorrect,ApplicationDecisionStatus.Declined);
 
-            WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
-            var mainApplicantRiskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
-            Assert.AreEqual(1, mainApplicantRiskWorkflows.Count, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.DateOfBirthIsCorrect));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.DateOfBirthIsCorrectVerification));
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.DateOfBirthIsCorrect,
+                                                                     RiskCheckpointStatus.Failed,
+                                                                     RiskVerificationDefinitions.DateOfBirthIsCorrectVerification);
         }
 
         [Test, AUT(AUT.Wb)]
@@ -219,11 +231,12 @@ namespace Wonga.QA.Tests.Experian
             var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
             var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTExperianCustomerDateOfBirthIsCorrect, ApplicationDecisionStatus.Accepted);
 
-            WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
-            var mainApplicantRiskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
-            Assert.AreEqual(1, mainApplicantRiskWorkflows.Count, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.DateOfBirthIsCorrect));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.DateOfBirthIsCorrectVerification));
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.DateOfBirthIsCorrect,
+                                                                     RiskCheckpointStatus.Verified,
+                                                                     RiskVerificationDefinitions.DateOfBirthIsCorrectVerification);
         }
 
         /* Main Applicant Payment Card Is Valid */
@@ -238,12 +251,12 @@ namespace Wonga.QA.Tests.Experian
                                              Get.GetMobilePhone()) {CardNumber = Int64.Parse("4929188001506313")};
             var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTExperianPaymentCardIsValid, ApplicationDecisionStatus.Accepted);
 
-            WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
-            var mainApplicantRiskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
-            Assert.AreEqual(1, mainApplicantRiskWorkflows.Count, "There should be 1 risk workflow");
-            Do.Until(() => Drive.Db.Risk.WorkflowCheckpoints.Any(p => p.RiskWorkflowId == mainApplicantRiskWorkflows[0].RiskWorkflowId && p.CheckpointStatus != 0));
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.PaymentCardIsValid));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.ExperianPaymentCardIsValidVerification));
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.PaymentCardIsValid,
+                                                                     RiskCheckpointStatus.Verified,
+                                                                     RiskVerificationDefinitions.ExperianPaymentCardIsValidVerification);
         }
 
         [Test, AUT(AUT.Wb)]
@@ -256,12 +269,12 @@ namespace Wonga.QA.Tests.Experian
                                              Get.GetMobilePhone()) { CardNumber = Int64.Parse("9999888877776666") };
             var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTExperianPaymentCardIsValid, ApplicationDecisionStatus.Declined);
 
-            WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
-            var mainApplicantRiskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
-            Assert.AreEqual(1, mainApplicantRiskWorkflows.Count, "There should be 1 risk workflow");
-            Do.Until(() => Drive.Db.Risk.WorkflowCheckpoints.Any(p => p.RiskWorkflowId == mainApplicantRiskWorkflows[0].RiskWorkflowId && p.CheckpointStatus != 0));
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.PaymentCardIsValid));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.ExperianPaymentCardIsValidVerification));
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.PaymentCardIsValid,
+                                                                     RiskCheckpointStatus.Failed,
+                                                                     RiskVerificationDefinitions.ExperianPaymentCardIsValidVerification);
         }
 
         #endregion
@@ -289,12 +302,12 @@ namespace Wonga.QA.Tests.Experian
 
             var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTNoCheck, ApplicationDecisionStatus.Accepted, guarantorList);
 
-            WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.Guarantor);
-            var guarantorRiskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.Guarantor);
-            Assert.AreEqual(guarantorRiskWorkflows.Count, 1, "There should be 1 risk workflow");
-            Do.Until(() => Drive.Db.Risk.WorkflowCheckpoints.Any(p => p.RiskWorkflowId == guarantorRiskWorkflows[0].RiskWorkflowId && p.CheckpointStatus != 0));
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(guarantorRiskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicantIsAlive));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(guarantorRiskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.CreditBureauCustomerIsAliveVerification));
+            var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.ApplicantIsAlive,
+                                                                     RiskCheckpointStatus.Verified,
+                                                                     RiskVerificationDefinitions.CreditBureauCustomerIsAliveVerification);
         }
 
         [Test, AUT(AUT.Wb)]
@@ -316,12 +329,12 @@ namespace Wonga.QA.Tests.Experian
 
             var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTNoCheck, ApplicationDecisionStatus.Accepted, guarantorList);
 
-            WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.Guarantor);
-            var guarantorRiskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.Guarantor);
-            Assert.AreEqual(guarantorRiskWorkflows.Count, 1, "There should be 1 risk workflow");
-            Do.Until(() => Drive.Db.Risk.WorkflowCheckpoints.Any(p => p.RiskWorkflowId == guarantorRiskWorkflows[0].RiskWorkflowId && p.CheckpointStatus != 0));
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(guarantorRiskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicantIsAlive));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(guarantorRiskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.CreditBureauCustomerIsAliveVerification));
+            var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.ApplicantIsAlive,
+                                                                     RiskCheckpointStatus.Verified,
+                                                                     RiskVerificationDefinitions.CreditBureauCustomerIsAliveVerification);
         }
 
         [Test, AUT(AUT.Wb)]
@@ -344,12 +357,12 @@ namespace Wonga.QA.Tests.Experian
             var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTNoCheck, ApplicationDecisionStatus.PreAccepted, guarantorList);
             Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
 
-            WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.Guarantor);
-            var guarantorRiskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.Guarantor);
-            Assert.AreEqual(guarantorRiskWorkflows.Count, 1, "There should be 1 risk workflow");
-            Do.Until(() => Drive.Db.Risk.WorkflowCheckpoints.Any(p => p.RiskWorkflowId == guarantorRiskWorkflows[0].RiskWorkflowId && p.CheckpointStatus != 0));
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(guarantorRiskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicantIsAlive));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(guarantorRiskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.CreditBureauCustomerIsAliveVerification));
+            var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Failed, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.ApplicantIsAlive,
+                                                                     RiskCheckpointStatus.Failed,
+                                                                     RiskVerificationDefinitions.CreditBureauCustomerIsAliveVerification);
         }
 
         /* Guarantor CIFAS check */
@@ -372,14 +385,12 @@ namespace Wonga.QA.Tests.Experian
 
             var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTNoCheck, ApplicationDecisionStatus.Accepted, guarantorList);
 
-            WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.Guarantor);
-            var guarantorRiskWorkflow = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.Guarantor);
-            Assert.AreEqual(guarantorRiskWorkflow.Count, 1, "There should be 1 risk workflow");
-            Do.Until(
-                () =>
-                Drive.Db.Risk.WorkflowCheckpoints.Any(p => p.RiskWorkflowId == guarantorRiskWorkflow[0].RiskWorkflowId && p.CheckpointStatus != 0));
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(guarantorRiskWorkflow[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.CIFASFraudCheck));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(guarantorRiskWorkflow[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.CreditBureauCifasFraudCheckVerification));
+            var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.CIFASFraudCheck,
+                                                                     RiskCheckpointStatus.Verified,
+                                                                     RiskVerificationDefinitions.CreditBureauCifasFraudCheckVerification);
         }
 
         [Test, AUT(AUT.Wb)]
@@ -399,13 +410,15 @@ namespace Wonga.QA.Tests.Experian
                                     };
 
             var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTNoCheck, ApplicationDecisionStatus.PreAccepted, guarantorList);
+            Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
 
-            WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.Guarantor);
-            var guarantorRiskWorkflow = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.Guarantor);
-            Assert.AreEqual(guarantorRiskWorkflow.Count, 1, "There should be 1 risk workflow");
-            Do.Until(() =>Drive.Db.Risk.WorkflowCheckpoints.Any(p => p.RiskWorkflowId == guarantorRiskWorkflow[0].RiskWorkflowId && p.CheckpointStatus != 0));
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(guarantorRiskWorkflow[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.CIFASFraudCheck));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(guarantorRiskWorkflow[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.CreditBureauCifasFraudCheckVerification));
+            var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Failed, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.CIFASFraudCheck,
+                                                                     RiskCheckpointStatus.Failed,
+                                                                     RiskVerificationDefinitions.CreditBureauCifasFraudCheckVerification);
+
         }
 
         /* Guarantor Data is available */
@@ -432,13 +445,12 @@ namespace Wonga.QA.Tests.Experian
 
             var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTNoCheck, ApplicationDecisionStatus.Accepted, guarantorList);
 
-            WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.Guarantor);
-            var guarantorRiskWorkflow = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.Guarantor);
-            Assert.AreEqual(guarantorRiskWorkflow.Count, 1, "There should be 1 risk workflow");
-            Do.Until(() => Drive.Db.Risk.WorkflowCheckpoints.Any(p => p.RiskWorkflowId == guarantorRiskWorkflow[0].RiskWorkflowId && p.CheckpointStatus != 0));
+            var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
 
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(guarantorRiskWorkflow[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.CreditBureauDataIsAvailable));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(guarantorRiskWorkflow[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.CreditBureauDataIsAvailableVerification));
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.CreditBureauDataIsAvailable,
+                                                                     RiskCheckpointStatus.Verified,
+                                                                     RiskVerificationDefinitions.CreditBureauDataIsAvailableVerification);
         }
 
         [Test, AUT(AUT.Wb), JIRA("SME-1141")]
@@ -464,13 +476,12 @@ namespace Wonga.QA.Tests.Experian
             var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTNoCheck, ApplicationDecisionStatus.PreAccepted, guarantorList);
             Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
 
-            WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.Guarantor);
-            var guarantorRiskWorkflow = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.Guarantor);
-            Assert.AreEqual(guarantorRiskWorkflow.Count, 1, "There should be 1 risk workflow");
-            Do.Until(() => Drive.Db.Risk.WorkflowCheckpoints.Any(p => p.RiskWorkflowId == guarantorRiskWorkflow[0].RiskWorkflowId && p.CheckpointStatus != 0));
+            var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Failed, 1);
 
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(guarantorRiskWorkflow[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.CreditBureauDataIsAvailable));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(guarantorRiskWorkflow[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.CreditBureauDataIsAvailableVerification));
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.CreditBureauDataIsAvailable,
+                                                                     RiskCheckpointStatus.Failed,
+                                                                     RiskVerificationDefinitions.CreditBureauDataIsAvailableVerification);
         }
 
         /* Guarantor is solvent */
@@ -497,12 +508,12 @@ namespace Wonga.QA.Tests.Experian
 
             var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTNoCheck, ApplicationDecisionStatus.Accepted, guarantorList);
 
-            WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.Guarantor);
-            var guarantorRiskWorkflow = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.Guarantor);
-            Assert.AreEqual(guarantorRiskWorkflow.Count, 1, "There should be 1 risk workflow");
-            Do.Until(() => Drive.Db.Risk.WorkflowCheckpoints.Any(p => p.RiskWorkflowId == guarantorRiskWorkflow[0].RiskWorkflowId && p.CheckpointStatus != 0));
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(guarantorRiskWorkflow[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.CustomerIsSolvent));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(guarantorRiskWorkflow[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.CreditBureauCustomerIsSolventVerification));
+            var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.CustomerIsSolvent,
+                                                                     RiskCheckpointStatus.Verified,
+                                                                     RiskVerificationDefinitions.CreditBureauCustomerIsSolventVerification);
         }
 
         [Test, AUT(AUT.Wb), JIRA("SME-1150")]
@@ -528,12 +539,12 @@ namespace Wonga.QA.Tests.Experian
             var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTNoCheck, ApplicationDecisionStatus.PreAccepted, guarantorList);
             Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
 
-            WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.Guarantor);
-            var guarantorRiskWorkflow = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.Guarantor);
-            Assert.AreEqual(guarantorRiskWorkflow.Count, 1, "There should be 1 risk workflow");
-            Do.Until(() => Drive.Db.Risk.WorkflowCheckpoints.Any(p => p.RiskWorkflowId == guarantorRiskWorkflow[0].RiskWorkflowId && p.CheckpointStatus != 0));
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(guarantorRiskWorkflow[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.CustomerIsSolvent));
-            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(guarantorRiskWorkflow[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.CreditBureauCustomerIsSolventVerification));
+            var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Failed, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.CustomerIsSolvent,
+                                                                     RiskCheckpointStatus.Failed,
+                                                                     RiskVerificationDefinitions.CreditBureauCustomerIsSolventVerification);
         }
 
         #endregion
@@ -595,13 +606,25 @@ namespace Wonga.QA.Tests.Experian
             return application;
 
         }
-
-        private void WaitForRiskWorkflowData(Guid applicationId, RiskWorkflowTypes riskWorkflowType)
+        private List<RiskWorkflowEntity> VerifyRiskWorkflows(Guid applicationId, RiskWorkflowTypes riskWorkflowType, RiskWorkflowStatus expectedRiskWorkflowStatus, Int32 expectedNumberOfWorkflows)
         {
-            Do.Until(
-                () =>
-                Drive.Db.Risk.RiskWorkflows.Any(
-                    p => p.ApplicationId == applicationId && (RiskWorkflowTypes)p.WorkflowType == riskWorkflowType));
+            Drive.Db.WaitForRiskWorkflowData(applicationId, riskWorkflowType, expectedNumberOfWorkflows, expectedRiskWorkflowStatus);
+            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(applicationId, riskWorkflowType);
+            Assert.AreEqual(expectedNumberOfWorkflows, riskWorkflows.Count, "There should be " + expectedNumberOfWorkflows + " workflows");
+
+            foreach (var riskWorkflow in riskWorkflows)
+            {
+                Assert.AreEqual(expectedRiskWorkflowStatus, (RiskWorkflowStatus)riskWorkflow.Decision);
+            }
+
+            return riskWorkflows;
         }
+        private void VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(RiskWorkflowEntity riskWorkflowEntity, RiskCheckpointDefinitionEnum checkpointDefinition, RiskCheckpointStatus checkpointStatus, RiskVerificationDefinitions riskVerification)
+        {
+            Do.Until(() => Drive.Db.Risk.WorkflowCheckpoints.Any(p => p.RiskWorkflowId == riskWorkflowEntity.RiskWorkflowId && p.CheckpointStatus != 0));
+            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflowEntity.WorkflowId, checkpointStatus), Get.EnumToString(checkpointDefinition));
+            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(riskWorkflowEntity.WorkflowId), Get.EnumToString(riskVerification));
+        }
+
     }
 }
