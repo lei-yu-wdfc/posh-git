@@ -27,9 +27,8 @@ namespace Wonga.QA.Tests.CallValidate
             var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTCallValidatePaymentCardIsValid, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
-            var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
 
-            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(businessRiskWorkflows[0],
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
                                                                      RiskCheckpointDefinitionEnum.PaymentCardIsValid,
                                                                      RiskCheckpointStatus.Verified,
                                                                      RiskVerificationDefinitions.CallValidatePaymentCardIsValidVerification);
