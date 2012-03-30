@@ -10,7 +10,7 @@ namespace Wonga.QA.Tests.Salesforce
     [TestFixture]
     public class SalesforcePushBusinessBankAccountDetails : SalesforceTestBase
     {
-        [Test, AUT(AUT.Wb), JIRA("SME-192")]
+        [Test, AUT(AUT.Wb), JIRA("SME-192"), Ignore("SF tests are failing because message congestion in SF TC queue, explicit until fixed")]
         public void SalesforceTC_ShouldPushBusinessBankAccountToSF_WhenBankAccountIsvalidated()
         {
             var customer = CustomerBuilder.New().Build();

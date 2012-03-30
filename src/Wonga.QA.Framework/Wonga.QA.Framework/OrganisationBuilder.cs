@@ -37,16 +37,7 @@ namespace Wonga.QA.Framework
         public OrganisationBuilder WithOrganisationNumber(String orgNo)
         {
             _organisationNumber = orgNo;
-            var db = new DbDriver();
-            var existingOrgs = db.ContactManagement.OrganisationDetails.Where(o => o.RegisteredNumber == orgNo);
-            if (existingOrgs.Any())
-            {
-                db.ContactManagement.OrganisationDetails.DeleteAllOnSubmit(existingOrgs);
-                foreach (var org in existingOrgs)
-                {
-                    org.Submit();   
-                }
-            }
+            Drive.Data.ContactManagement.Db.OrganisationDetails.Delete(RegisteredNumber: orgNo);
 
             return this;
         }
@@ -89,7 +80,7 @@ namespace Wonga.QA.Framework
         [Obsolete]
         public void BuildSecondaryDirectors()
         {
-            List<ApiRequest> requests = new List<ApiRequest>();
+            var requests = new List<ApiRequest>();
 
             for (int x = 0; x < _numberOfSecondaryDirector; x++)
             {

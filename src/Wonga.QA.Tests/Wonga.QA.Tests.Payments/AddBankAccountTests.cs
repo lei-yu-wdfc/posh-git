@@ -259,13 +259,11 @@ namespace Wonga.QA.Tests.Payments
 			Drive.Api.Commands.Post(addAnotherPrimaryBankAccountMessage);
 			var baseSecondBankAccountPrimaryEntity = Do.Until(() => db.BankAccountsBases.SingleOrDefault(p => p.ExternalId == (Guid)addAnotherPrimaryBankAccountMessage.BankAccountId && p.ValidatedOn != null));
 
-			var accountPreferencesEntity = Do.Until(() => db.AccountPreferences.SingleOrDefault(p => p.AccountId == accountId));
-
+			var accountPreferencesEntity = Do.Until(() => db.AccountPreferences.SingleOrDefault(p => p.AccountId == accountId && p.PrimaryBankAccountId == baseSecondBankAccountPrimaryEntity.BankAccountId));
+            
 			Assert.IsNotNull(baseFirstBankAccountPrimaryEntity);
 			Assert.IsNotNull(baseSecondBankAccountPrimaryEntity);
 			Assert.IsNotNull(accountPreferencesEntity);
-
-			Assert.AreEqual(accountPreferencesEntity.PrimaryBankAccountId, baseSecondBankAccountPrimaryEntity.BankAccountId);
 		}
 
 		/// <summary>

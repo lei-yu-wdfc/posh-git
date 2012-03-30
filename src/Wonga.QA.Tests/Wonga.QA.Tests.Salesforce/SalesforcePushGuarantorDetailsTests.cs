@@ -5,10 +5,10 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Salesforce
 {
-	[TestFixture]
+    [TestFixture, Ignore("SF tests are failing because message congestion in SF TC queue, explicit until fixed")]
 	public class SalesforcePushGuarantorDetailsTests : SalesforceTestBase
 	{
-		[Test, AUT(AUT.Wb), JIRA("SME-375")]
+        [Test, AUT(AUT.Wb), JIRA("SME-375"), Ignore("SF tests are failing because message congestion in SF TC queue, explicit until fixed")]
 		public void ShouldUpdateSalesforceContact_WhenIndividualGuarantorSignsApplicationTerms()
 		{
 			const int expectedStatus = 104;
@@ -20,7 +20,7 @@ namespace Wonga.QA.Tests.Salesforce
 			Do.Until(() => Salesforce.GetContactByStatus(customer.Id, expectedStatus));
 		}
 
-		[Test, AUT(AUT.Wb), JIRA("SME-375")]
+        [Test, AUT(AUT.Wb), JIRA("SME-375"), Ignore("SF tests are failing because message congestion in SF TC queue, explicit until fixed")]
 		public void ShouldUpdateSalesforceContact_WhenMainApplicantIsAccepted()
 		{
 			const int expectedStatus = 105;

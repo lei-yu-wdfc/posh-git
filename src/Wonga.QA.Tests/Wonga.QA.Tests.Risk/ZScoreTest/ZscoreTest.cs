@@ -28,7 +28,7 @@ namespace Wonga.QA.Tests.Risk.ZScoreTest
             Drive.Db.SetServiceConfiguration(CallReportMockMode, "true");
         }
         [Test, AUT(AUT.Wb)]
-        [JIRA("SME-956"), Description("score card test with CallCredit")]
+        [JIRA("SME-956"), Description("score card test with CallCredit"), Explicit("This test is disabling CallReport mock and as tests are being run in parallel, this makes other tests fail.")]
         public void ScoreCardTest1000WithCallCredit()
         {
             var data = Resources.CustomerDataforCallCredit;
