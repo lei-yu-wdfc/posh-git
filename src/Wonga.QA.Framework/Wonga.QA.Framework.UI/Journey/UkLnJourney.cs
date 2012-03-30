@@ -21,6 +21,13 @@ namespace Wonga.QA.Framework.UI
             LastName = Get.RandomString(10);
         }
 
+        public ILnConsumerJourney SetName(string forename, string surname)
+        {
+            FirstName = forename;
+            LastName = surname;
+            return this;
+        }
+
         public ILnConsumerJourney ApplyForLoan(int amount, int duration)
         {
             var homePage = CurrentPage as HomePage;

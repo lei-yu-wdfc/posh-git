@@ -269,7 +269,7 @@ namespace Wonga.QA.Framework.UI
             switch (Config.AUT)
             {
                 case AUT.Ca:
-                    acceptedPage.SignConfirmCA(date, FirstName, LastName);
+                    acceptedPage.SignConfirmCaL0(date, FirstName, LastName);
                     CurrentPage = acceptedPage.Submit() as DealDonePage;
                     break;
                 case AUT.Za:

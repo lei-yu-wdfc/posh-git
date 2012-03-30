@@ -110,5 +110,12 @@
   <HomePage>
     <Title>div#block-wonga-1 h2:nth-child(1)</Title>
     <TitleText>Flexible, short term loans that give you lots of control</TitleText>
+    <ProvincePopupTitle>h1#select-province-title</ProvincePopupTitle>
+    <YourProvince>select#selectprovince</YourProvince>
+    <ThisIsMyProvince>a#province_right</ThisIsMyProvince>
   </HomePage>
+
+  <ApplicationSection>
+    <FormId>#wonga-apply-ln-form</FormId>
+  </ApplicationSection>
 </Ui>
