@@ -180,7 +180,7 @@ namespace Wonga.QA.Framework
 
                 case AUT.Ca:
                     // Start of Loan is different for CA
-                    //_getDaysUntilStartOfLoan = Drive.Db.GetNumberOfDaysUntilStartOfLoan();
+					_getDaysUntilStartOfLoan = GetDaysUntilStartOfLoanForCa;
                     _setPromiseDateAndLoanTerm();
 
                     requests.AddRange(new ApiRequest[]{
@@ -323,5 +323,10 @@ namespace Wonga.QA.Framework
         }
         
         #endregion
+
+		private int GetDaysUntilStartOfLoanForCa()
+		{
+			return DateHelper.GetNumberOfDaysUntilStartOfLoanForCa();
+		}
     }
 }
