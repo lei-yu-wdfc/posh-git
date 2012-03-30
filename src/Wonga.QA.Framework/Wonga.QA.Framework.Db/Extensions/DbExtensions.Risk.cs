@@ -190,5 +190,18 @@ namespace Wonga.QA.Framework.Db.Extensions
 			}
 			return executedVerifications;
 		}
+
+        public static void WaitForRiskWorkflowData(this DbDriver db, Guid applicationId, RiskWorkflowTypes riskWorkflowType,Int32 expectedNumberOfWorkflows,RiskWorkflowStatus workflowStatus)
+        {
+            Do.Until(
+                () =>
+                db.Risk.RiskWorkflows.Count(
+                    p => p.ApplicationId == applicationId && (RiskWorkflowStatus) p.Decision == workflowStatus && (RiskWorkflowTypes)p.WorkflowType == riskWorkflowType) == expectedNumberOfWorkflows);
+        }
+
+        public static void WaitForWorkflowCheckpointData(this DbDriver db ,int riskWorkflowId)
+        {
+            Do.Until(() => db.Risk.WorkflowCheckpoints.Any(p => p.RiskWorkflowId == riskWorkflowId && p.CheckpointStatus != 0));
+        }
 	}
 }

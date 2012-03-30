@@ -766,17 +766,9 @@ namespace Wonga.QA.Tests.Graydon
 
         }
 
-        private void WaitForRiskWorkflowData(Guid applicationId, RiskWorkflowTypes riskWorkflowType,Int32 expectedNumberOfWorkflows)
-        {
-            Do.Until(
-                () =>
-                Drive.Db.Risk.RiskWorkflows.Count(
-                    p => p.ApplicationId == applicationId && (RiskWorkflowTypes)p.WorkflowType == riskWorkflowType) == expectedNumberOfWorkflows);
-        }
-
         private List<RiskWorkflowEntity> VerifyRiskWorkflows(Guid applicationId,RiskWorkflowTypes riskWorkflowType,RiskWorkflowStatus expectedRiskWorkflowStatus,Int32 expectedNumberOfWorkflows)
         {
-            WaitForRiskWorkflowData(applicationId, riskWorkflowType,expectedNumberOfWorkflows);
+            Drive.Db.WaitForRiskWorkflowData(applicationId, riskWorkflowType,expectedNumberOfWorkflows,expectedRiskWorkflowStatus);
             var riskWorkflows = Drive.Db.GetWorkflowsForApplication(applicationId, riskWorkflowType);
             Assert.AreEqual(expectedNumberOfWorkflows,riskWorkflows.Count,"There should be "+expectedNumberOfWorkflows+ " workflows");
 
