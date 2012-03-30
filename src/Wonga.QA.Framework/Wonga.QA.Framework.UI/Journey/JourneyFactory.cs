@@ -23,5 +23,19 @@ namespace Wonga.QA.Framework.UI
                     throw new NotImplementedException();
             }
         }
+        public static ILnConsumerJourney GetLnJourney(BasePage homePage)
+        {
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    return new ZaLnJourney(homePage);
+                    case AUT.Ca:
+                    throw new NotImplementedException();
+                    case AUT.Uk:
+                    return new UkLnJourney(homePage);
+                default:
+                    throw new NotImplementedException();
+            }
+        }
     }
 }

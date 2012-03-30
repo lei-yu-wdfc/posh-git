@@ -24,7 +24,8 @@ namespace Wonga.QA.Framework.UI.Elements
         private readonly IWebElement _durationMinusButton;
         private readonly IWebElement _durationPlusButton;
 
-        public SlidersElement(BasePage page) : base(page)
+        public SlidersElement(BasePage page)
+            : base(page)
         {
             _form = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.SlidersElement.FormId));
             _loanAmount = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.LoanAmount));
@@ -33,10 +34,10 @@ namespace Wonga.QA.Framework.UI.Elements
             _amountPlusButton = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.AmountPlusButton));
             _durationMinusButton = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.DurationMinusButton));
             _durationPlusButton = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.DurationPlusButton));
-            switch(Config.AUT)
+            switch (Config.AUT)
             {
-                case(AUT.Ca):
-                case(AUT.Za):
+                case (AUT.Ca):
+                case (AUT.Za):
                     _totalAmount = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.TotalAmount));
                     _totalFees = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.TotalFees));
                     _totalToRepay = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.TotalToRepay));
@@ -98,6 +99,22 @@ namespace Wonga.QA.Framework.UI.Elements
             if (Config.AUT == AUT.Uk || Config.AUT == AUT.Za || Config.AUT == AUT.Ca)
                 return new PersonalDetailsPage(Page.Client);
             return null;
+        }
+
+        public IApplyPage ApplyLn()
+        {
+            _submit = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.SubmitButton));
+            _submit.Click();
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                case AUT.Uk:
+                    return new ApplyPage(Page.Client);
+                default:
+                    throw new NotImplementedException();
+
+
+            }
         }
         public bool IsSubmitButtonPresent()
         {

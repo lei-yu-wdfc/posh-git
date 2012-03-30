@@ -333,9 +333,17 @@ namespace Wonga.QA.Tests.Ui
             Application application = ApplicationBuilder.New(customer)
                 .Build();
             application.RepayOnDueDate();
-            var mySummaryPage = loginPage.LoginAs(email);
-            
-            
+            loginPage.LoginAs(email);
+
+            var journey = JourneyFactory.GetLnJourney(Client.Home());
+            var page = journey.ApplyForLoan(100, 31)
+                           .FillApplicationDetails()
+                           .WaitForAcceptedPage()
+                           .FillAcceptedPage()
+                           .GoToMySummaryPage()
+                           .CurrentPage as MySummaryPage;
+
+
         }
 
     }
