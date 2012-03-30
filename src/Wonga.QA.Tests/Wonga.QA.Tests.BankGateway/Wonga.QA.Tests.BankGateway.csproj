@@ -34,6 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BankGatewayCaTests.cs" />
     <Compile Include="BankGatewayServiceTests.cs" />
     <Compile Include="Enums\BankGatewayTransactionStatus.cs" />
     <Compile Include="Helpers\TimeoutBankGatewayFunctions.cs" />
