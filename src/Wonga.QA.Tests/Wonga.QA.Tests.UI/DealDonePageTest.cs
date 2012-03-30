@@ -21,7 +21,6 @@ namespace Wonga.QA.Tests.Ui
         private int _amountMin;
         private int _termMax;
         private int _termMin;
-        private string _repaymentDate;
         private ApiResponse _response;
         private DateTime _actualDate;
 

@@ -67,9 +67,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 					{
 						return _expectedCheckpointNamesZa;
 					}
-					break;
-
-				default:
+				    default:
 					{
 						throw new NotImplementedException(Config.AUT.ToString());
 					}
@@ -84,8 +82,6 @@ namespace Wonga.QA.Tests.Risk.Workflows
 					{
 						return _expectedVerificationNamesZa;
 					}
-					break;
-
 				default:
 					{
 						throw new NotImplementedException(Config.AUT.ToString());

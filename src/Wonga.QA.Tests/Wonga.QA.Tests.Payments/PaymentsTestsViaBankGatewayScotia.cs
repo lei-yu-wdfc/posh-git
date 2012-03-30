@@ -252,7 +252,7 @@ namespace Wonga.QA.Tests.Payments
         {
             const int loanTerm = 15;
             const decimal loanAmount = 100;
-            const int dayOfLoanTermToRepay = 5;
+            //const int dayOfLoanTermToRepay = 5;
             const int earlyRepaymentAmount = 104;
             ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
 
