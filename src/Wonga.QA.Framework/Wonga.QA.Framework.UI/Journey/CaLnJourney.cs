@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.UiElements.Pages;
+using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 
 namespace Wonga.QA.Framework.UI
 {
@@ -13,40 +14,67 @@ namespace Wonga.QA.Framework.UI
         public string LastName { get; set; }
         public BasePage CurrentPage { get; set; }
 
-        public CaLnJourney(BasePage basePage)
+        public CaLnJourney(BasePage homePage)
         {
+            CurrentPage = homePage as HomePage;
             FirstName = Get.GetName();
             LastName = Get.RandomString(10);
         }
+
+        public ILnConsumerJourney SetName(string forename, string surname)
+        {
+            FirstName = forename;
+            LastName = surname;
+            return this;
+        }
+      
         public ILnConsumerJourney ApplyForLoan(int amount, int duration)
         {
+            var homePage = CurrentPage as HomePage;
+            homePage.Sliders.HowMuch = amount.ToString();
+            homePage.Sliders.HowLong = duration.ToString();
+            homePage.Sliders.ApplyLn();
+            homePage.PopupSetProvince = "British Columbia";
 
+            CurrentPage = homePage.PopupClickThisIsMyProvince() as ApplyPage;
             return this;
         }
 
         public ILnConsumerJourney FillApplicationDetails()
         {
-            throw new NotImplementedException();
+            var applyPage = CurrentPage as ApplyPage;
+            CurrentPage = applyPage.Submit() as ProcessingPage;
+            return this;
         }
 
         public ILnConsumerJourney WaitForAcceptedPage()
         {
-            throw new NotImplementedException();
+            var processingPage = CurrentPage as ProcessingPage;
+            CurrentPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
+            return this;
         }
 
         public ILnConsumerJourney WaitForDeclinedPage()
         {
-            throw new NotImplementedException();
+            var processingPage = CurrentPage as ProcessingPage;
+            CurrentPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
+            return this;
         }
 
         public ILnConsumerJourney FillAcceptedPage()
         {
-            throw new NotImplementedException();
+            var acceptedPage = CurrentPage as AcceptedPage;
+            string date = String.Format("{0:d MMM yyyy}", DateTime.Today);
+            acceptedPage.SignConfirmCaLn(date, FirstName, LastName);
+            CurrentPage = acceptedPage.Submit() as DealDonePage;
+            return this;
         }
 
         public ILnConsumerJourney GoToMySummaryPage()
         {
-            throw new NotImplementedException();
+            var dealDonePage = CurrentPage as DealDonePage;
+            CurrentPage = dealDonePage.ContinueToMyAccount() as MySummaryPage;
+            return this;
         }
     }
 }

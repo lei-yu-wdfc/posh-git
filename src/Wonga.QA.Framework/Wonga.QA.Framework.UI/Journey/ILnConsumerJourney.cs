@@ -13,6 +13,7 @@ namespace Wonga.QA.Framework.UI
 
         BasePage CurrentPage { get; set; }
 
+        ILnConsumerJourney SetName(string forename, string surname);
         ILnConsumerJourney ApplyForLoan(int amount, int duration);
         ILnConsumerJourney FillApplicationDetails();
         ILnConsumerJourney WaitForAcceptedPage();

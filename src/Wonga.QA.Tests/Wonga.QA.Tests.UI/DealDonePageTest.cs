@@ -92,7 +92,7 @@ namespace Wonga.QA.Tests.Ui
                                  .CurrentPage as ProcessingPage;
 
             var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
-            acceptedPage.SignConfirmCA(DateTime.Now.ToString("d MMM yyyy"), journey.FirstName, journey.LastName);
+            acceptedPage.SignConfirmCaL0(DateTime.Now.ToString("d MMM yyyy"), journey.FirstName, journey.LastName);
             var dealDone = acceptedPage.Submit() as DealDonePage;
             // Check data
             DateTime _date = DateTime.Parse(dealDone.GetRepaymentDate());

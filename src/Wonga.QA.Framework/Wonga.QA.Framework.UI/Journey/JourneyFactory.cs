@@ -30,7 +30,7 @@ namespace Wonga.QA.Framework.UI
                 case AUT.Za:
                     return new ZaLnJourney(homePage);
                     case AUT.Ca:
-                    throw new NotImplementedException();
+                    return new CaLnJourney(homePage);
                     case AUT.Uk:
                     return new UkLnJourney(homePage);
                 default:

@@ -321,30 +321,10 @@ namespace Wonga.QA.Tests.Ui
                 .FillAcceptedPage()
                 .GoToMySummaryPage()
                 .CurrentPage as MySummaryPage;
-            
-        }
-
-        [Test, AUT(AUT.Za, AUT.Uk, AUT.Ca), Pending("Example of Ln journey")]
-        public void LnJourneyTest()
-        {
-            var loginPage = Client.Login();
-            string email = Get.RandomEmail();
-            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            Application application = ApplicationBuilder.New(customer)
-                .Build();
-            application.RepayOnDueDate();
-            loginPage.LoginAs(email);
-
-            var journey = JourneyFactory.GetLnJourney(Client.Home());
-            var page = journey.ApplyForLoan(100, 31)
-                           .FillApplicationDetails()
-                           .WaitForAcceptedPage()
-                           .FillAcceptedPage()
-                           .GoToMySummaryPage()
-                           .CurrentPage as MySummaryPage;
-
 
         }
+
+       
 
     }
 }

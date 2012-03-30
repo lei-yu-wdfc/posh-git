@@ -123,7 +123,7 @@ namespace Wonga.QA.Framework.UI
         {
             var acceptedPage = CurrentPage as AcceptedPage;
             string date = String.Format("{0:d MMM yyyy}", DateTime.Today);
-            acceptedPage.SignConfirmCA(date, FirstName, LastName);
+            acceptedPage.SignConfirmCaL0(date, FirstName, LastName);
             CurrentPage = acceptedPage.Submit() as DealDonePage;
             return this;
         }
