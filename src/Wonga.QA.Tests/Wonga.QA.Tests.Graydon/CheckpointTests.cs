@@ -777,7 +777,7 @@ namespace Wonga.QA.Tests.Graydon
         private List<RiskWorkflowEntity> VerifyRiskWorkflows(Guid applicationId,RiskWorkflowTypes riskWorkflowType,RiskWorkflowStatus expectedRiskWorkflowStatus,Int32 expectedNumberOfWorkflows)
         {
             WaitForRiskWorkflowData(applicationId, riskWorkflowType,expectedNumberOfWorkflows);
-            var riskWorkflows = Application.GetWorkflowsForApplication(applicationId, riskWorkflowType);
+            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(applicationId, riskWorkflowType);
             Assert.AreEqual(expectedNumberOfWorkflows,riskWorkflows.Count,"There should be "+expectedNumberOfWorkflows+ " workflows");
 
             foreach (var riskWorkflow in riskWorkflows)
@@ -791,8 +791,8 @@ namespace Wonga.QA.Tests.Graydon
         private void VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(RiskWorkflowEntity riskWorkflowEntity,RiskCheckpointDefinitionEnum checkpointDefinition, RiskCheckpointStatus checkpointStatus, RiskVerificationDefinitions riskVerification)
         {
             Do.Until(() => Drive.Db.Risk.WorkflowCheckpoints.Any(p => p.RiskWorkflowId == riskWorkflowEntity.RiskWorkflowId && p.CheckpointStatus != 0));
-            Assert.Contains(Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflowEntity.WorkflowId, checkpointStatus), Get.EnumToString(checkpointDefinition));
-            Assert.Contains(Application.GetExecutedVerificationDefinitionsForRiskWorkflow(riskWorkflowEntity.WorkflowId), Get.EnumToString(riskVerification));
+            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflowEntity.WorkflowId, checkpointStatus), Get.EnumToString(checkpointDefinition));
+            Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(riskWorkflowEntity.WorkflowId), Get.EnumToString(riskVerification));
         }
     }
 }
