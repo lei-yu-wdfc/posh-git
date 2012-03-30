@@ -6,6 +6,7 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Extensions;
+using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Tests.Core;
 using System.Linq;
 using System;
@@ -26,6 +27,8 @@ namespace Wonga.QA.Tests.Ui
         private string _repaymentDate;
         private ApiResponse _response;
         private DateTime _actualDate;
+
+        private const int DefaultLoanTerm = 11;
 
 
         [SetUp, JIRA("QA-149")]
@@ -193,7 +196,7 @@ namespace Wonga.QA.Tests.Ui
                     Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate.DateTime), _repaymentDate);
                     break;
                 case AUT.Ca:
-                    Assert.AreEqual(page.Sliders.HowLong, "11");
+                    Assert.AreEqual(page.Sliders.HowLong, DefaultLoanTerm.ToString());
                     break;
             }
 
@@ -350,41 +353,48 @@ namespace Wonga.QA.Tests.Ui
 		{
 			DateTime defaultPromiseDate;
 			var now = DateTime.Today;
+           
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    {
+                        var iMonth = DateTime.UtcNow.Month - 1;
 
-			switch (Config.AUT)
-			{
-					case AUT.Za:
-					{
-						var iMonth = DateTime.UtcNow.Month - 1;
+                        var payDayPerMonths = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.PayDayPerMonth").Value.Split(',');
+                        var sliderTermAddDays = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.SliderTermAddDays").Value;
 
-						var payDayPerMonths = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.PayDayPerMonth").Value.Split(',');
-						var sliderTermAddDays = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.SliderTermAddDays").Value;
+                        var payDayPerMonth = Int32.Parse(payDayPerMonths[iMonth]);
+                        var minimumTerm = Int32.Parse(sliderTermAddDays);
 
-						var payDayPerMonth = Int32.Parse(payDayPerMonths[iMonth]);
-						var minimumTerm = Int32.Parse(sliderTermAddDays);
+                        defaultPromiseDate = new DateTime(now.Year, now.Month, payDayPerMonth);
+                        var expectedTermDefault = defaultPromiseDate.Subtract(now).Days;
 
-						defaultPromiseDate = new DateTime(now.Year, now.Month, payDayPerMonth);
-						var expectedTermDefault = defaultPromiseDate.Subtract(now).Days;
+                        //Check if we should snap to the next month's payday
+                        if (expectedTermDefault < minimumTerm)
+                        {
+                            iMonth = iMonth + 1 >= 12 ? 1 : iMonth + 1;
+                            payDayPerMonth = Int32.Parse(payDayPerMonths[iMonth]);
+                            defaultPromiseDate = defaultPromiseDate.AddMonths(1);
+                            defaultPromiseDate = new DateTime(defaultPromiseDate.Year, defaultPromiseDate.Month, payDayPerMonth);
+                        }
 
-						//Check if we should snap to the next month's payday
-						if (expectedTermDefault < minimumTerm)
-						{
-							iMonth = iMonth + 1 >= 12 ? 1 : iMonth + 1;
-							payDayPerMonth = Int32.Parse(payDayPerMonths[iMonth]);
-							defaultPromiseDate = defaultPromiseDate.AddMonths(1);
-							defaultPromiseDate = new DateTime(defaultPromiseDate.Year, defaultPromiseDate.Month, payDayPerMonth);
-						}
+                        defaultPromiseDate = Drive.Db.GetPreviousWorkingDay(new Date(defaultPromiseDate));
+                    }
+                    break;
+                case AUT.Ca:
+                    {
+                        //CA starts all loans from the next working day
+                        int daysTillStartOfLoan = DateHelper.GetNumberOfDaysUntilStartOfLoanForCa(now);
+                        defaultPromiseDate = now.AddDays(DefaultLoanTerm + daysTillStartOfLoan);
+                    }
+                    break;
 
-						defaultPromiseDate = Drive.Db.GetPreviousWorkingDay(new Date(defaultPromiseDate));
-					}
-					break;
-
-				default:
-					{
-						defaultPromiseDate = now.AddDays(11 + 1); //CA starts all loans from the next working day
-					}
-					break;
-			}
+                default:
+                    {
+                        defaultPromiseDate = now.AddDays(DefaultLoanTerm); 
+                    }
+                    break;
+            }
 			return defaultPromiseDate;
 		}
 
