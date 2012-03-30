@@ -324,8 +324,8 @@ namespace Wonga.QA.Tests.Ui
             
         }
 
-        [Test, AUT(AUT.Ca), Pending("Example of Ca Ln journey")]
-        public void CaLnJourneyTest()
+        [Test, AUT(AUT.Za, AUT.Uk, AUT.Ca), Pending("Example of Ln journey")]
+        public void LnJourneyTest()
         {
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
