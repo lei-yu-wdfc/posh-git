@@ -21,7 +21,7 @@ namespace Wonga.QA.Tests.Comms.PaymentFailureEmailTests
         [SetUp]
         public void Setup()
         {
-            var customer = CustomerBuilder.New().WithEmailAddress("qa.wb.wonga.com+dsjhsd@gmail.com").Build();
+            var customer = CustomerBuilder.New().Build();
             var organization = OrganisationBuilder.New(customer).Build();
             _applicationInfo = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build() as BusinessApplication;
         }
