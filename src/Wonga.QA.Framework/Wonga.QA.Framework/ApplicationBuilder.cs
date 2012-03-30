@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Xml;
-using System.Xml.Linq;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Helpers;
 
 namespace Wonga.QA.Framework
@@ -27,7 +22,7 @@ namespace Wonga.QA.Framework
         //WB specific members
         protected List<Customer> Guarantors;
 
-        private Action _setPromiseDateAndLoanTerm;
+        protected Action _setPromiseDateAndLoanTerm;
         private Func<int> _getDaysUntilStartOfLoan;
 
         #region Private Members 
@@ -147,7 +142,7 @@ namespace Wonga.QA.Framework
             _setPromiseDateAndLoanTerm();
             PromiseDate.DateFormat = DateFormat.Date;
 
-            List<ApiRequest> requests = new List<ApiRequest>
+            var requests = new List<ApiRequest>
             {
                 SubmitApplicationBehaviourCommand.New(r => r.ApplicationId = Id),
                 SubmitClientWatermarkCommand.New(r => { r.ApplicationId=Id; r.AccountId = Customer.Id;
