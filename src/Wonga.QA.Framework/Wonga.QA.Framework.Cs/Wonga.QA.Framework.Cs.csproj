@@ -51,6 +51,7 @@
     <Compile Include="Requests\GetLoanAgreementsQuery.cs" />
     <Compile Include="Requests\GetPersonalPaymentCardsQuery.cs" />
     <Compile Include="Requests\GetRepaymentArrangementsQuery.cs" />
+    <Compile Include="Requests\GetScheduledPaymentsQuery.cs" />
     <Compile Include="Requests\GetTransactionsQuery.cs" />
     <Compile Include="Requests\GetValidTransactionTypesQuery.cs" />
     <Compile Include="Requests\RevokeApplicationFromDcaCommand.cs" />
