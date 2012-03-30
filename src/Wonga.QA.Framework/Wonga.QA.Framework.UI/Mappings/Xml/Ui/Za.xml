@@ -7,8 +7,7 @@
 		<PopupLengthOfTime>#edit-bank-period</PopupLengthOfTime>
 		<PopupAddBankAccountButton>#edit-submit</PopupAddBankAccountButton>
 		<PopupExeption>#wonga-my-account-edit-bank-form div:nth-child(1) ul li</PopupExeption>
-		<FirstAccountNumber>#accounts tbody tr td table tbody tr:nth-child(2) td table tbody tr:nth-child(4) td b span</FirstAccountNumber>
-		<SecondAccountNumber>#accounts tbody tr td table tbody tr:nth-child(3) td table tbody tr:nth-child(4) td b span</SecondAccountNumber>
+		<AccountNumber>.info.bank-account.bank-account-primary tbody tr:nth-child(4) td b span</AccountNumber>
 	</MyPaymentsPage>
 	
   <ContactingYouSection>
