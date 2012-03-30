@@ -28,7 +28,7 @@ namespace Wonga.QA.Tests.BankGateway
 		[FixtureSetUp]
 		public void FixtureSetUp()
 		{
-			//Driver.Db.SetServiceConfigurations(_testModesToSetup);
+			Drive.Db.SetServiceConfigurations(_testModesToSetup);
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-2061")]
@@ -39,7 +39,6 @@ namespace Wonga.QA.Tests.BankGateway
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-2061")]
-		[Ignore("Feature not turned on in live")]
 		public void AccountHolderVerificationRequestForSingleApplication()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();

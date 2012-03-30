@@ -20,7 +20,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 		private readonly List<string> ExpectedVerificationNamesL0 = GetExpectedVerificationNamesL0();
 		private readonly List<string> ExpectedVerificationNamesLn = GetExpectedVerificationNamesLn();
 
-		private static List<string> _expectedCheckpointNamesL0Za = new List<string>()
+		private static readonly List<string> ExpectedCheckpointNamesL0Za = new List<string>()
 		                                                         	{
 		                                                         		"Customer has provided correct forename & surname",
 		                                                         		"Mobile phone is unique",
@@ -38,20 +38,20 @@ namespace Wonga.QA.Tests.Risk.Workflows
 																		"Fraud list check"
 		                                                         	};
 
-		private static List<string> _expectedCheckpointNamesLnZa = new List<string>()
-		                                                           	{
-		                                                           		"Customer is employed",
-		                                                           		"Monthly income limit check",
-		                                                           		"Application terms are acceptable for business",
-		                                                           		"Hardware blacklist check",
-		                                                           		"Application data blacklist check",
-		                                                           		"Fraud list check",
-		                                                           		"Credit bureau data is available",
-		                                                           		"Customer is solvent",
-		                                                           		"Applicant is alive",
-		                                                           		"Repayment prediction check",
-		                                                           		"Bank account is valid"
-		                                                           	};
+		private static readonly List<string> ExpectedCheckpojeintNamesLnZa = new List<string>()
+		                                                                    	{
+		                                                                    		"Customer is employed",
+		                                                                    		"Monthly income limit check",
+		                                                                    		"Application terms are acceptable for business",
+		                                                                    		"Hardware blacklist check",
+		                                                                    		"Application data blacklist check",
+		                                                                    		"Fraud list check",
+		                                                                    		"Credit bureau data is available",
+		                                                                    		"Customer is solvent",
+		                                                                    		"Applicant is alive",
+		                                                                    		"Repayment prediction check",
+		                                                                    		"Bank account is valid"
+		                                                                    	};
 
 		private static List<string> _expectedVerificationNamesL0Za = new List<string>()
 		                                                             	{
@@ -174,7 +174,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 			{
 					case AUT.Za:
 					{
-						return _expectedCheckpointNamesL0Za;
+						return ExpectedCheckpointNamesL0Za;
 					}
 				    default:
 					{
@@ -189,7 +189,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 			{
 				case AUT.Za:
 					{
-						return _expectedCheckpointNamesLnZa;
+						return ExpectedCheckpointNamesLnZa;
 					}
 				default:
 					{
