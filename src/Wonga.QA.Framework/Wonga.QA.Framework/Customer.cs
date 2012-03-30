@@ -20,6 +20,7 @@ namespace Wonga.QA.Framework
         public String MiddleName { get; set; }
         public Date DateOfBirth { get; private set; }
         public String MobilePhoneNumber { get; private set; }
+        public Int64 CardNumber { get; set; }
 
         public Customer(Guid id)
         {

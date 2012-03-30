@@ -64,10 +64,7 @@ namespace Wonga.QA.Tests.Meta
             Assert.IsTrue(service.IsRunning());
         }
 
-
-        //REENABLE THIS
         [Test, DependsOn("EndpointIsWarmedUpAndSchemaIsValid")]
-        [Ignore]
         public void HomePageCanBeLoaded()
         {
             Assert.Contains(new WebClient().DownloadString(Config.Ui.Home), "Wonga");
