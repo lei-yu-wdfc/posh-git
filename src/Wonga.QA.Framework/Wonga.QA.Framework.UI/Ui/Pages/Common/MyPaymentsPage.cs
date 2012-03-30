@@ -92,7 +92,15 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public bool IsAccountNumberRight(string number)
         {
-            _accountNumber = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPaymentsPage.AccountNumber));
+            try
+            {
+                _accountNumber = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPaymentsPage.SecondAccountNumber));
+            }
+            catch (Exception)
+            {
+                _accountNumber = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPaymentsPage.FirstAccountNumber));
+            }
+
             if (_accountNumber.Text.Remove(0, 3) == number.Remove(0, 3))
             {
                 return true;
