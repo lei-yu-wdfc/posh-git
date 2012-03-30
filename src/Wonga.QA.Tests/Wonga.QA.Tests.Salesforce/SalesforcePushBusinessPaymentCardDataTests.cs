@@ -29,7 +29,7 @@ namespace Wonga.QA.Tests.Salesforce
 
             var paymentCard = Do.With.Message("SF should contain the newly inserted payment card").Until(() => Salesforce.GetPaymentCardById(paymentCardId, "AND p.Masked_Number__c != null"));
 
-            var dbPaymentCard = Drive.Data.Payments.PaymentCardsBase.FindByExternalId(paymentCardId);
+            var dbPaymentCard = Drive.Data.Payments.Db.PaymentCardsBase.FindByExternalId(paymentCardId);
 
             Assert.AreEqual(dbPaymentCard.Type, paymentCard.Type__c, "PaymentCard Type should match");
             Assert.AreEqual(dbPaymentCard.HolderName, paymentCard.Holder_Name__c, "Payment Card HolderName should match");
@@ -44,8 +44,8 @@ namespace Wonga.QA.Tests.Salesforce
 
             var paymentCard = Do.With.Message("SF should contain the newly inserted payment card").Until(() => Salesforce.GetPaymentCardById(paymentCardId, "AND p.V3_Billing_Address_Id__c != null"));
 
-            var dbPaymentCard = Drive.Data.Payments.PaymentCardsBase.FindByExternalId(paymentCardId);
-            var dbBillingAddress = Drive.Data.Payments.BillingAddress.FindByBillingAddressId(dbPaymentCard.BillingAddressId);
+            var dbPaymentCard = Drive.Data.Payments.Db.PaymentCardsBase.FindByExternalId(paymentCardId);
+            var dbBillingAddress = Drive.Data.Payments.Db.BillingAddress.FindByBillingAddressId(dbPaymentCard.BillingAddressId);
 
             Assert.AreEqual(dbBillingAddress.ExternalId.ToString(), paymentCard.V3_Billing_Address_Id__c, "BillingAddress ExternalId should match");
             Assert.AreEqual(dbBillingAddress.AddressLine1, paymentCard.Address_Line_1__c, "BillingAddress AddressLine1 should match");

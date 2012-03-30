@@ -177,7 +177,7 @@ namespace Wonga.QA.Tests.Ui
                         myPersonalDetailsPage.Submit();
                         Thread.Sleep(10000);
 
-                        var happy = Drive.Data.Comms.ContactPreferences.FindAllBy(AccountId: customer.Id).FirstOrDefault().AcceptMarketingContact;
+                        var happy = Drive.Data.Comms.Db.ContactPreferences.FindAllBy(AccountId: customer.Id).FirstOrDefault().AcceptMarketingContact;
                         Assert.IsTrue(happy);
                         Assert.AreEqual(
                             "You are happy to receive updates and other communications from Wonga via email and SMS.",
@@ -194,7 +194,7 @@ namespace Wonga.QA.Tests.Ui
                         myPersonalDetailsPage.Submit();
                         Thread.Sleep(10000);
 
-                        var happy = Drive.Data.Comms.ContactPreferences.FindAllBy(AccountId: customer.Id).FirstOrDefault().AcceptMarketingContact;
+                        var happy = Drive.Data.Comms.Db.ContactPreferences.FindAllBy(AccountId: customer.Id).FirstOrDefault().AcceptMarketingContact;
                         Assert.IsFalse(happy);
                         Assert.AreEqual(
                             "You are not happy to receive updates and other communications from Wonga via email and SMS.",

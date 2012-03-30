@@ -412,9 +412,8 @@ namespace Wonga.QA.Tests.Ui
 
 				default:
 					{
-						return (int) Drive.Db.Payments.Products.FirstOrDefault().TermMax;
+						return Drive.Db.Payments.Products.FirstOrDefault().TermMax;
 					}
-					break;
 			}
 
 			return maxTerm;
