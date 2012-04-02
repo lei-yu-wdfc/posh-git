@@ -61,18 +61,19 @@ namespace Wonga.QA.Framework.Db.Extensions
 			return daysToRewind;
 		}
 
-		public static int GetNumberOfDaysUntilStartOfLoan(this DbDriver db, DateTime? fromDate = null)
+		public static int GetNumberOfDaysUntilStartOfLoan(this DbDriver db, DateTime? loanCreatedOn = null)
 		{
 			switch (Config.AUT)
 			{
 					case AUT.Ca:
 					{
-						if (!fromDate.HasValue)
-							fromDate = DateTime.Now;
+						if (!loanCreatedOn.HasValue)
+							loanCreatedOn = DateTime.Now;
 
-						var nextWorkingDay = db.GetNextWorkingDay(new Date(fromDate.Value));
+					    // In CA loans start the day after the loan is created
+                        DateTime firstDayOfLoan = db.GetNextWorkingDay(new Date(loanCreatedOn.Value.AddDays(1)));
 
-						return (int)(nextWorkingDay.DateTime.Subtract(fromDate.Value)).TotalDays;
+                        return (int)(firstDayOfLoan.Subtract(loanCreatedOn.Value)).TotalDays;
 					}
 					break;
 
