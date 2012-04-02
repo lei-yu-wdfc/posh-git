@@ -91,6 +91,10 @@
       <Project>{BACA1D90-F604-476F-ACDE-A9839E85147F}</Project>
       <Name>Wonga.QA.Framework.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Wonga.QA.Framework.Data\Wonga.QA.Framework.Data.csproj">
+      <Project>{6DB7E1BD-C5B2-4BEE-A0A3-E2C635768203}</Project>
+      <Name>Wonga.QA.Framework.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

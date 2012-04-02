@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Wonga.QA.Framework.Api
+namespace Wonga.QA.Framework.Data.Enums.Risk
 {
     public enum RiskCheckpointDefinitionEnum
     {
