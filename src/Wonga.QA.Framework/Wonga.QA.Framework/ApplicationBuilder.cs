@@ -145,8 +145,7 @@ namespace Wonga.QA.Framework
             var requests = new List<ApiRequest>
             {
                 SubmitApplicationBehaviourCommand.New(r => r.ApplicationId = Id),
-                SubmitClientWatermarkCommand.New(r => { r.ApplicationId=Id; r.AccountId = Customer.Id;
-                                                          r.BlackboxData = IovationBlackBox;
+                SubmitClientWatermarkCommand.New(r => { r.ApplicationId=Id; r.AccountId = Customer.Id; r.BlackboxData = IovationBlackBox;
                 })
             };
 
