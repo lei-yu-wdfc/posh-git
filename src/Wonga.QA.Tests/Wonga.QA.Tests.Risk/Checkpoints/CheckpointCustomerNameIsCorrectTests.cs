@@ -190,6 +190,11 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
             ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
-		
+
+		[Test, AUT(AUT.Za), Pending]
+		public void CheckpointCustomerNameIsCorrectCompoundSurnameReversedAccepts()
+		{
+		}
+
 	}
 }
