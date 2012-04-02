@@ -140,6 +140,7 @@ namespace Wonga.QA.Tests.Ui
                 Thread.Sleep(3000);
                 paymentPage.CloseButtonClick();
                 payment = Client.Payments();
+                Thread.Sleep(5000);
                 Assert.AreEqual(accountNumber.Remove(0,3), payment.DefaultAccountNumber);
             }
             else
