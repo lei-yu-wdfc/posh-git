@@ -36,6 +36,7 @@
     <Compile Include="AddBankAccountTests.cs" />
     <Compile Include="AddBusinessBankAccountTests.cs" />
     <Compile Include="BusinessRemoveFromArrearsTests.cs" />
+    <Compile Include="CollectionsCommunicationsChaseForDca.cs" />
     <Compile Include="CollectionsTests.cs" />
     <Compile Include="Command\AddPersonalPaymentCardCsApiCommandTests.cs" />
     <Compile Include="Command\DeletePersonalPaymentCardCsApiCommandTests.cs" />
