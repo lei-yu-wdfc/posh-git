@@ -59,6 +59,7 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-575"), Description("Experian -> This test creates a loan for the customer that is dead, then checks the risk checkpoint")]
+        [Pending("Waiting for Risk to fix this issue")]
         public void TestExperianMainApplicantIsDeceased_LoanIsDeclined()
         {
             const String forename = "Johnny";
@@ -95,6 +96,7 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-584"), Description("Experian -> This test creates a loan for a customer that IS CIFAS flagged, then checks the risk checkpoint")]
+        [Pending("Waiting for Risk to fix this issue")]
         public void TestExperianMainApplicantIsCifasFlagged_LoanIsDeclined()
         {
             const String forename = "laura";
@@ -131,6 +133,7 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb),]
         [Description("Experian -> This test creates a loan and checks if the main applicant has data available")]
+        [Pending("Waiting for Risk to fix this issue")]
         public void TestExperianMainApplicantIsNotAvailable_LoanIsDeclined()
         {
             const String forename = "Unknown";
@@ -167,6 +170,7 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-638"), Description("Experian -> This test creates a loan for the insolvent customer, then checks the risk checkpoint")]
+        [Pending("Waiting for Risk to fix this issue")]
         public void TestExperianMainApplicantIsInsolvent_LoanIsDeclined()
         {
             const String forename = "laura";
@@ -205,6 +209,7 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-644"), Description("Experian -> This test creates a loan for a customer with the incorrect date of birth, then checks the risk checkpoint")]
+        [Pending("Waiting for Risk to fix this issue")]
         public void TestExperianMainApplicantDateOfBirthIsIncorrect_LoanIsDeclined()
         {
             const String forename = "kathleen";
@@ -261,6 +266,7 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-136")]
+        [Pending("Waiting for Risk to fix this issue")]
         public void TestExperianMainApplicantPaymentCardIsNotValid_LoanIsDeclined()
         {
             const String forename = "kathleen";
@@ -339,6 +345,7 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-1147"), Description("Experian -> This test creates a loan for the unknown guarantor that is alive, then checks the risk checkpoint")]
+        [Pending("Waiting for Risk to fix this issue")]
         public void TestExperianGuarantorIsDeceased_LoanIsDeclined()
         {
             const String forename = "Johnny";
@@ -395,6 +402,7 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-1144"), Description("Experian -> This test creates a loan for a guarantor that is  CIFAS flagged, then checks the risk checkpoint")]
+        [Pending("Waiting for Risk to fix this issue")]
         public void TestExperianGuarantorIsCifasFlagged_LoanIsDeclined()
         {
             const String forename = "laura";
@@ -455,6 +463,7 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb), JIRA("SME-1141")]
         [Description("Experian -> This test creates a loan and checks if the guarantors has data available")]
+        [Pending("Waiting for Risk to fix this issue")]
         public void TestExperianGuarantorDataIsNotAvailable_LoanIsDeclined()
         {
             const String forename = "Unknown";
@@ -518,6 +527,7 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb), JIRA("SME-1150")]
         [Description("Experian -> This test creates a loan and checks if the guarantor is solvent")]
+        [Pending("Waiting for Risk to fix this issue")]
         public void TestExperianGuarantorIsInsolvent_LoanIsDeclined()
         {
             const String forename = "laura";
