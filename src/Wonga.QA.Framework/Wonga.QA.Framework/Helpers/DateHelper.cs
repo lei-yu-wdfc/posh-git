@@ -13,12 +13,12 @@ namespace Wonga.QA.Framework.Helpers
 			if (!fromDate.HasValue)
 				fromDate = DateTime.Now;
 
-			var nextWorkingDay = GetNextWorkingDay(fromDate.Value);
+			var nextWorkingDay = GetNextWorkingDayForCa(fromDate.Value);
 
 			return (int)(nextWorkingDay.Subtract(fromDate.Value)).TotalDays;
 		}
 
-		public static DateTime GetNextWorkingDay(DateTime date)
+		public static DateTime GetNextWorkingDayForCa(DateTime date)
 		{
 			List<CalendarDateEntity> bankHolidays = GetBankHolidays(date, date.AddMonths(1));
 
