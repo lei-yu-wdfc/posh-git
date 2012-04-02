@@ -64,6 +64,14 @@
     </Compile>
     <Compile Include="Databases\RiskDatabase.cs" />
     <Compile Include="DataDriver.cs" />
+    <Compile Include="Enums\Ops\ServiceConfigurationKeys.cs" />
+    <Compile Include="Enums\Risk\CreditBureauEnum.cs" />
+    <Compile Include="Enums\Risk\IovationMockResponse.cs" />
+    <Compile Include="Enums\Risk\RiskCheckpointDefinitionEnum.cs" />
+    <Compile Include="Enums\Risk\RiskCheckpointStatusEnum.cs" />
+    <Compile Include="Enums\Risk\RiskVerificationDefinitionsEnum.cs" />
+    <Compile Include="Enums\Risk\RiskWorkflowStatusEnum.cs" />
+    <Compile Include="Enums\Risk\RiskWorkflowTypesEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

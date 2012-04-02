@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
+﻿using System.ComponentModel;
 
-namespace Wonga.QA.Framework.Api
+namespace Wonga.QA.Framework.Data.Enums.Risk
 {
     public enum RiskVerificationDefinitions
     {

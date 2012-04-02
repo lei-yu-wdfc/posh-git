@@ -6,6 +6,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Data.Enums.Risk;
 using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Db.Risk;
@@ -191,6 +192,7 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-644"), Description("Experian -> This test creates a loan for a customer with the correct date of birth, then checks the risk checkpoint")]
+        [Ignore("Known Risk issue")]
         public void TestExperianMainApplicantDateOfBirthIsCorrect_LoanIsApproved()
         {
             const String forename = "kathleen";
@@ -228,6 +230,7 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-644"), Description("Experian -> This test creates a loan for a customer with the not provided date of birth, then checks the risk checkpoint")]
+        [Ignore("Known Risk Issue")]
         public void TestExperianMainApplicantDateOfBirthIsNotProvided_LoanIsApproved()
         {
             const String forename = "kathleen";

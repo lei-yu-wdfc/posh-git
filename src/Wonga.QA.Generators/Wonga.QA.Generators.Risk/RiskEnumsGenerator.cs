@@ -23,6 +23,7 @@ namespace Wonga.QA.Generators.Risk
 		{
 			var riskQaConfig = GetRiskQaConfig();
 
+            //We cannot use the same project as Api Generator since the old values are removed when that is run.
             var riskEnumFile = Repo.File("NewRiskMasks.cs", Repo.Directory("Enums"));
 
 			var stringBuilder = new StringBuilder().AppendFormatLine(new[]{

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Data.Enums.Risk;
 using Wonga.QA.Framework.Db.Risk;
 
 namespace Wonga.QA.Tests.Risk.RiskApiTests

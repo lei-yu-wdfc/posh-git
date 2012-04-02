@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Wonga.QA.Framework.Api
+﻿namespace Wonga.QA.Framework.Data.Enums.Risk
 {
     public enum CreditBureauEnum
     {
