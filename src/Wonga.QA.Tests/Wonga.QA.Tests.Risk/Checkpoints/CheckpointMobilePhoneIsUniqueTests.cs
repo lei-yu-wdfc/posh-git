@@ -12,7 +12,7 @@ using Wonga.QA.Framework.Db;
 
 namespace Wonga.QA.Tests.Risk.MobilePhone
 {
-    public class MobilePhoneIsUniqueTests
+    public class CheckpointMobilePhoneIsUniqueTests
     {
         private const String GoodCompanyRegNumber = "00000086";
         private const String MobilePhoneNumber = "07771269999";
