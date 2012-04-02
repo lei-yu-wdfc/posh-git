@@ -57,6 +57,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual FAQElement FAQElement { get; set; }
         public virtual SurveyElement SurveyElement { get; set; }
         public virtual ContactElement ContactElement { get; set; }
+        public virtual TabsElement TabsElement { get; set; }
 
         #endregion
 

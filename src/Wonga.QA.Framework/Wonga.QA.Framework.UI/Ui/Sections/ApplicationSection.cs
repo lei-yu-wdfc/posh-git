@@ -35,5 +35,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
 
             }
         }
+
+        public void ClickChangeMobileButton()
+        {
+            Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.ApplicationSection.ChangeMobileButton)).Click();
+        }
     }
 }

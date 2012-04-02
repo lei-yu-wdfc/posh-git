@@ -7,7 +7,7 @@ using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
 
 namespace Wonga.QA.Framework.UI.UiElements.Pages
 {
-    public class HomePage : BasePage
+    public class HomePage : BasePage, IApplyPage
     {
         //public IWebElement MenuContent;
         public SlidersElement Sliders { get; set; }
@@ -17,7 +17,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
         public SurveyElement Survey { get; set; }
         public ContactElement Contact { get; set; }
 
-        //public TabsElement Tabs { get; set; }
+        public TabsElement Tabs { get; set; }
 
         public HomePage(UiClient client)
             : base(client)
@@ -30,12 +30,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
                     Help = new HelpElement(this);
                     Survey = new SurveyElement(this);
                     Login = new LoginElement(this);
+                    Tabs = new TabsElement(this);
                     break;
                 case (AUT.Za):
                     Contact = new ContactElement(this);
                     Help = new HelpElement(this);
                     InternationalElements = new InternationalElement(this);
                     Login = new LoginElement(this);
+                    Tabs = new TabsElement(this);
                     break;
             }
             //Tabs = new TabsElement(this);

@@ -12,6 +12,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
     public class ApplyPage : BasePage, IApplyPage
     {
+        private IWebElement _editMobileNumber;
         public ApplicationSection ApplicationSection { get; set; }
         public ApplyPage(UiClient client)
             : base(client)
@@ -31,6 +32,23 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                 default:
                     throw new NotImplementedException();
             }
+        }
+
+        public string SetNewMobilePhone
+        {
+            set
+            { 
+                ApplicationSection.ClickChangeMobileButton();
+                Do.Until(IsEditMobileNumberDisplayed);
+                _editMobileNumber.SendValue(value);
+                Client.Driver.FindElement(By.CssSelector(Ui.Get.ApplyPage.Submit)).Click();
+
+            }
+        }
+        private bool IsEditMobileNumberDisplayed()
+        {
+            _editMobileNumber = Client.Driver.FindElement(By.CssSelector(Ui.Get.ApplyPage.EditMobileNumber));
+            return _editMobileNumber.Displayed;
         }
     }
 }

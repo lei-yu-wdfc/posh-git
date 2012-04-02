@@ -115,6 +115,10 @@
     <ThisIsMyProvince>a#province_right</ThisIsMyProvince>
   </HomePage>
 
+  <TabsElement>
+    <MyAccount>li:nth-child(5)>a</MyAccount>
+  </TabsElement>
+
   <ApplicationSection>
     <FormId>#wonga-apply-ln-form</FormId>
   </ApplicationSection>

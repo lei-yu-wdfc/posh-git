@@ -8,5 +8,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
     public sealed class ApplyPage
     {
         public String Submit { get; set; }
+        public String EditMobileNumber { get; set; }
     }
 }

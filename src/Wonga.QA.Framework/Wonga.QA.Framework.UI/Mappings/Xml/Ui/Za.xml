@@ -110,9 +110,19 @@
     <TitleText>Flexible, short-term loans that give you lots of control</TitleText>
   </HomePage>
 
+  <TabsElement>
+    <MyAccount>li:nth-child(5)>a</MyAccount>
+  </TabsElement>
+
   <ApplicationSection>
     <FormId>#wonga-apply-ln-form</FormId>
+    <EditPin>#edit-mobile-pin</EditPin>
+    <ChangeMobileButton>#add-mobile-ln</ChangeMobileButton>  
   </ApplicationSection>
+
+  <ApplyPage>
+    <EditMobileNumber>#edit-new-mobile-number-za</EditMobileNumber>
+  </ApplyPage>
 
   
 </Ui>
