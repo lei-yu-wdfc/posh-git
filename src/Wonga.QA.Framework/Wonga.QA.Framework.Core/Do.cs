@@ -12,16 +12,42 @@ namespace Wonga.QA.Framework.Core
         public static TimeSpan Interval { get { return TimeSpan.FromSeconds(2); } }
         public static DoBuilder With { get { return new DoBuilder(Timeout, Interval); } }
 
+        /// <summary>
+        /// Until will take your function and execute it until the result is not equal to it's default value.
+        /// eg bool return should return true, objects should return something other than null etc. If this does not
+        /// happen for the Timeout duration it will throw an exception.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public static T Until<T>(Func<T> predicate)
         {
             return With.Until(predicate);
         }
 
+        /// <summary>
+        /// While will try to execute your function per Interval until your function returns 
+        /// the default value of it's returning type. eg false for boolean, null for objects etc.
+        /// In the case that the default value is not returned after the timeout has elapsed it will
+        /// throw an exception.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="predicate"></param>
         public static void While<T>(Func<T> predicate)
         {
             With.While(predicate);
         }
 
+        /// <summary>
+        /// This method will wait until the returned object of your function has a constant value
+        /// for duration you set on the Timeout property.
+        /// Please note that if your value keeps changing before the Timeout has elapsed
+        /// then it will run indefinetly. Each time the return value of your function changes
+        /// then the time count resets.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="predicate">A function with return type T</param>
+        /// <returns>T</returns>
         public static T Watch<T>(Func<T> predicate) where T : struct
         {
             return With.Watch(predicate);
@@ -76,6 +102,14 @@ namespace Wonga.QA.Framework.Core
             return this;
         }
 
+        /// <summary>
+        /// Until will take your function and execute it until the result is not equal to it's default value.
+        /// eg bool return should return true, objects should return something other than null etc. If this does not
+        /// happen for the Timeout duration it will throw an exception.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public T Until<T>(Func<T> predicate)
         {
             var exception = new DoException(_message);
@@ -98,6 +132,14 @@ namespace Wonga.QA.Framework.Core
             throw exception;
         }
 
+        /// <summary>
+        /// While will try to execute your function per Interval until your function returns 
+        /// the default value of it's returning type. eg false for boolean, null for objects etc.
+        /// In the case that the default value is not returned after the timeout has elapsed it will
+        /// throw an exception.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="predicate"></param>
         public void While<T>(Func<T> predicate)
         {
             var stopwatch = Stopwatch.StartNew();
@@ -115,6 +157,16 @@ namespace Wonga.QA.Framework.Core
             throw new TimeoutException(_message == null ? stopwatch.Elapsed.ToString() : _message());
         }
 
+        /// <summary>
+        /// This method will wait until the returned object of your function has a constant value
+        /// for duration you set on the Timeout property.
+        /// Please note that if your value keeps changing before the Timeout has elapsed
+        /// then it will run indefinetly. Each time the return value of your function changes
+        /// then the time count resets.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="predicate">A function with return type T</param>
+        /// <returns>T</returns>
         public T Watch<T>(Func<T> predicate) where T : struct
         {
             var t = predicate();
