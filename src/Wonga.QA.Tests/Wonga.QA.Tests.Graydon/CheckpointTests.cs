@@ -24,16 +24,13 @@ namespace Wonga.QA.Tests.Graydon
         {
             /*This consts need to be externalized. I know how to do it but dont have the time.
              * All your base are belong to us*/
-
             const String goodCompanyRegNumber = "00000086";
             const String forename = "JOHN";
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth,Get.GetMobilePhone());
 
-            var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
-                                                           RiskMask.TESTMainApplicantMatchesBusinessBureauData,
-                                                           ApplicationDecisionStatus.Accepted);
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTMainApplicantMatchesBusinessBureauData);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id,RiskWorkflowTypes.MainApplicant,RiskWorkflowStatus.Verified,1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
@@ -52,11 +49,9 @@ namespace Wonga.QA.Tests.Graydon
             const String forename = "JOHN";
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1977, 12, 21), DateFormat.Date); //wrong DOB
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
 
-            var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
-                                                           RiskMask.TESTMainApplicantMatchesBusinessBureauData,
-                                                           ApplicationDecisionStatus.Declined);
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTMainApplicantMatchesBusinessBureauData);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Failed, 1);
@@ -74,11 +69,9 @@ namespace Wonga.QA.Tests.Graydon
             const String goodCompanyRegNumber = "00000086";
             const String forename = "Kathleen";
             const String surname = "Bridson";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(), Get.GetMobilePhone());
 
-            var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
-                                                           RiskMask.TESTMainApplicantMatchesBusinessBureauData,
-                                                           ApplicationDecisionStatus.Declined);
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTMainApplicantMatchesBusinessBureauData);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Failed, 1);
@@ -97,11 +90,9 @@ namespace Wonga.QA.Tests.Graydon
             const String forename = "ROBERT";
             const String surname = "COOMBE";
             var dateOfBirth = new Date(new DateTime(1960, 01, 09), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
 
-            var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
-                                                           RiskMask.TESTMainApplicantMatchesBusinessBureauData,
-                                                           ApplicationDecisionStatus.Declined);
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTMainApplicantMatchesBusinessBureauData);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Failed, 1);
@@ -121,12 +112,9 @@ namespace Wonga.QA.Tests.Graydon
         public void TestGraydonBusinessBureauMainApplicantDataIsAvailable_LoanIsApproved()
         {
             const String goodCompanyRegNumber = "00000086";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB(), Get.GetMobilePhone());
 
-            var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
-                                                           RiskMask.TESTBusinessBureauDataIsAvailable,
-                                                           ApplicationDecisionStatus.Accepted);
+            var mainApplicantBuilder = CustomerBuilder.New().WithMiddleName(RiskMask.TESTBusinessBureauDataIsAvailable);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
@@ -142,12 +130,8 @@ namespace Wonga.QA.Tests.Graydon
         public void TestGraydonBusinessBureauMainApplicantDataIsUnavailable_LoanIsDeclined()
         {
             const String goodCompanyRegNumber = "99999999";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB(), Get.GetMobilePhone());
-
-            var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
-                                                           RiskMask.TESTBusinessBureauDataIsAvailable,
-                                                           ApplicationDecisionStatus.Declined);
+            var mainApplicantBuilder = CustomerBuilder.New().WithMiddleName(RiskMask.TESTBusinessBureauDataIsAvailable);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Failed, 1);
@@ -167,12 +151,8 @@ namespace Wonga.QA.Tests.Graydon
         public void TestGraydonBusinessIsTrading_LoanIsApproved()
         {
             const String goodCompanyRegNumber = "00000086";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB(), Get.GetMobilePhone());
-
-            var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
-                                                           RiskMask.TESTBusinessIsCurrentlyTrading,
-                                                           ApplicationDecisionStatus.Accepted);
+            var mainApplicantBuilder = CustomerBuilder.New().WithMiddleName(RiskMask.TESTBusinessIsCurrentlyTrading);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
@@ -188,12 +168,8 @@ namespace Wonga.QA.Tests.Graydon
         public void TestGraydonBusinessIsNotTrading_LoanIsDeclined()
         {
             const String goodCompanyRegNumber = "90000001";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB(), Get.GetMobilePhone());
-
-            var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
-                                                           RiskMask.TESTBusinessIsCurrentlyTrading,
-                                                           ApplicationDecisionStatus.Declined);
+            var mainApplicantBuilder = CustomerBuilder.New().WithMiddleName(RiskMask.TESTBusinessIsCurrentlyTrading);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Failed, 1);
@@ -214,12 +190,8 @@ namespace Wonga.QA.Tests.Graydon
         {
             //good score = 60
             const String goodCompanyRegNumber = "00000086";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB(), Get.GetMobilePhone());
-
-            var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
-                                                           RiskMask.TESTBusinessPaymentScoreIsAcceptable,
-                                                           ApplicationDecisionStatus.Accepted);
+            var mainApplicantBuilder = CustomerBuilder.New().WithMiddleName(RiskMask.TESTBusinessPaymentScoreIsAcceptable);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
@@ -236,12 +208,8 @@ namespace Wonga.QA.Tests.Graydon
         {
             //bad score = 59
             const String goodCompanyRegNumber = "99999903";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB(), Get.GetMobilePhone());
-
-            var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
-                                                           RiskMask.TESTBusinessPaymentScoreIsAcceptable,
-                                                           ApplicationDecisionStatus.Declined);
+            var mainApplicantBuilder = CustomerBuilder.New().WithMiddleName(RiskMask.TESTBusinessPaymentScoreIsAcceptable);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Failed, 1);
@@ -258,12 +226,8 @@ namespace Wonga.QA.Tests.Graydon
         {
             //bad score = 59
             const String goodCompanyRegNumber = "99999904";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB(), Get.GetMobilePhone());
-
-            var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
-                                                           RiskMask.TESTBusinessPaymentScoreIsAcceptable,
-                                                           ApplicationDecisionStatus.Accepted);
+            var mainApplicantBuilder = CustomerBuilder.New().WithMiddleName(RiskMask.TESTBusinessPaymentScoreIsAcceptable);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
@@ -284,12 +248,8 @@ namespace Wonga.QA.Tests.Graydon
         {
             //good augur score = 446
             const String goodCompanyRegNumber = "00000086";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB(), Get.GetMobilePhone());
-
-            var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
-                                                           RiskMask.TESTBusinessPerformanceScoreIsAcceptaple,
-                                                           ApplicationDecisionStatus.Accepted);
+            var mainApplicantBuilder = CustomerBuilder.New().WithMiddleName(RiskMask.TESTBusinessPerformanceScoreIsAcceptaple);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
@@ -306,12 +266,8 @@ namespace Wonga.QA.Tests.Graydon
         {
             //good augur score = 300
             const String goodCompanyRegNumber = "99999902";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB(), Get.GetMobilePhone());
-
-            var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
-                                                           RiskMask.TESTBusinessPerformanceScoreIsAcceptaple,
-                                                           ApplicationDecisionStatus.Declined);
+            var mainApplicantBuilder = CustomerBuilder.New().WithMiddleName(RiskMask.TESTBusinessPerformanceScoreIsAcceptaple);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Failed, 1);
@@ -334,11 +290,9 @@ namespace Wonga.QA.Tests.Graydon
             const String forename = "JOHN";
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
 
-            var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
-                                                           RiskMask.TESTMainApplicantDurationAcceptable,
-                                                           ApplicationDecisionStatus.Accepted);
+            var mainApplicantBuilder = CustomerBuilder.New().WithSurname(surname).WithForename(forename).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTMainApplicantDurationAcceptable);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
@@ -361,16 +315,13 @@ namespace Wonga.QA.Tests.Graydon
             const String forename = "JOHN";
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
 
+            var mainApplicantBuilder = CustomerBuilder.New().WithSurname(surname).WithForename(forename).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTMainApplicantDurationAcceptable);
             Drive.Db.SetServiceConfiguration(configKey,newThreshold.ToString());
 
             try
             {
-                var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
-                                                               RiskMask.TESTMainApplicantDurationAcceptable,
-                                                               ApplicationDecisionStatus.Declined);
-
+                var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Declined);
                 var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
                 var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Failed, 1);
 
@@ -395,11 +346,9 @@ namespace Wonga.QA.Tests.Graydon
             const String forename = "ROBERT";
             const String surname = "COOMBE";
             var dateOfBirth = new Date(new DateTime(1960, 01, 09), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
 
-            var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
-                                                           RiskMask.TESTMainApplicantDurationAcceptable,
-                                                           ApplicationDecisionStatus.Declined);
+            var mainApplicantBuilder = CustomerBuilder.New().WithSurname(surname).WithForename(forename).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTMainApplicantDurationAcceptable);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Failed, 1);
@@ -416,12 +365,8 @@ namespace Wonga.QA.Tests.Graydon
         public void TestGraydonDirectorAppointedDate_DirectorIsSecretary_LoanIsDeclined()
         {
             const String goodCompanyRegNumber = "00000086";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB(), Get.GetMobilePhone());
-
-            var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
-                                                           RiskMask.TESTMainApplicantDurationAcceptable,
-                                                           ApplicationDecisionStatus.Declined);
+            var mainApplicantBuilder = CustomerBuilder.New().WithMiddleName(RiskMask.TESTMainApplicantDurationAcceptable);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Failed, 1);
@@ -447,16 +392,16 @@ namespace Wonga.QA.Tests.Graydon
             const String forename = "JOHN";
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
-            var listOfGuarantors = new List<Customer>();
 
-            for (int i = 0; i < numberOfGuarantors; i++)
+            var mainApplicantBuilder = CustomerBuilder.New().WithSurname(surname).WithForename(forename).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTNoCheck);
+            var listOfGuarantors = new List<CustomerBuilder>();
+
+            for (var i = 0; i < numberOfGuarantors; i++)
             {
-                listOfGuarantors.Add(new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8), Get.GetDoB(), Get.GetMobilePhone()));
+                listOfGuarantors.Add(CustomerBuilder.New());
             }
 
-            var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber, RiskMask.TESTNoCheck,
-                                                           ApplicationDecisionStatus.Accepted,listOfGuarantors);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Accepted,listOfGuarantors);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
@@ -474,17 +419,16 @@ namespace Wonga.QA.Tests.Graydon
             const String forename = "JOHN";
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
-            var listOfGuarantors = new List<Customer>();
 
-            for (int i = 0; i < numberOfGuarantors; i++)
+            var mainApplicantBuilder = CustomerBuilder.New().WithSurname(surname).WithForename(forename).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTNumberOfDirectorsMatchesBusinessBureauData);
+            var listOfGuarantors = new List<CustomerBuilder>();
+
+            for (var i = 0; i < numberOfGuarantors; i++)
             {
-                listOfGuarantors.Add(new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8), Get.GetDoB(), Get.GetMobilePhone()));
+                listOfGuarantors.Add(CustomerBuilder.New());
             }
 
-            var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
-                                                           RiskMask.TESTNumberOfDirectorsMatchesBusinessBureauData,
-                                                           ApplicationDecisionStatus.Declined, listOfGuarantors);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Declined, listOfGuarantors);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Failed, 1);
@@ -502,11 +446,9 @@ namespace Wonga.QA.Tests.Graydon
             const String forename = "JOHN";
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
 
-            var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
-                                                           RiskMask.TESTBusinessDateOfIncorporationAcceptable,
-                                                           ApplicationDecisionStatus.Accepted);
+            var mainApplicantBuilder = CustomerBuilder.New().WithSurname(surname).WithForename(forename).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTBusinessDateOfIncorporationAcceptable);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Accepted);
             
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
@@ -526,11 +468,9 @@ namespace Wonga.QA.Tests.Graydon
             const String forename = "JOHN";
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
 
-            var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
-                                                           RiskMask.TESTBusinessDateOfIncorporationAcceptable,
-                                                           ApplicationDecisionStatus.Declined);
+            var mainApplicantBuilder = CustomerBuilder.New().WithSurname(surname).WithForename(forename).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTBusinessDateOfIncorporationAcceptable);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Failed, 1);
@@ -553,15 +493,13 @@ namespace Wonga.QA.Tests.Graydon
             const String forename = "JOHN";
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
 
+            var mainApplicantBuilder = CustomerBuilder.New().WithSurname(surname).WithForename(forename).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTBusinessDateOfIncorporationAcceptable);
             Drive.Db.SetServiceConfiguration(configKey, newThreshold.ToString());
 
             try
             {
-                var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
-                                                               RiskMask.TESTBusinessDateOfIncorporationAcceptable,
-                                                               ApplicationDecisionStatus.Declined);
+                var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Declined);
 
                 var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
                 var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Failed, 1);
@@ -591,19 +529,15 @@ namespace Wonga.QA.Tests.Graydon
             const String forename = "JOHN";
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
-            var listOfGuarantors = new List<Customer>
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithSurname(surname).WithForename(forename).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTGuarantorNamesMatchBusinessBureauData);
+            var listOfGuarantors = new List<CustomerBuilder>
                                        {
-                                           new Customer(Guid.NewGuid(), Get.RandomEmail(), "Roger John", "Clarke",
-                                                        Get.GetDoB(),Get.GetMobilePhone()),
-                                           new Customer(Guid.NewGuid(), Get.RandomEmail(), "Anthony Charles Bramham",
-                                                        "Lister", Get.GetDoB(),Get.GetMobilePhone()),
-                                           new Customer(Guid.NewGuid(), Get.RandomEmail(), "Timothy Charles", "Monckton",
-                                                        Get.GetDoB(),Get.GetMobilePhone())
+                                           CustomerBuilder.New().WithForename("Roger John").WithSurname("Clarke"),
+                                           CustomerBuilder.New().WithForename("Anthony Charles Bramham").WithSurname("Lister"),
+                                           CustomerBuilder.New().WithForename("Timothy Charles").WithSurname("Monckton"),
                                        };
-            var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
-                                                           RiskMask.TESTGuarantorNamesMatchBusinessBureauData,
-                                                           ApplicationDecisionStatus.Accepted, listOfGuarantors);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Accepted, listOfGuarantors);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
@@ -623,19 +557,15 @@ namespace Wonga.QA.Tests.Graydon
             const String forename = "JOHN";
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
-            var listOfGuarantors = new List<Customer>
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithSurname(surname).WithForename(forename).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTGuarantorNamesMatchBusinessBureauData);
+            var listOfGuarantors = new List<CustomerBuilder>
                                        {
-                                           new Customer(Guid.NewGuid(), Get.RandomEmail(), "RXXXXXXXXX", "Clarke",
-                                                        Get.GetDoB(),Get.GetMobilePhone()),
-                                           new Customer(Guid.NewGuid(), Get.RandomEmail(), "AXXXXXXXXX",
-                                                        "Lister", Get.GetDoB(),Get.GetMobilePhone()),
-                                           new Customer(Guid.NewGuid(), Get.RandomEmail(), "TXXXXXXXXX", "Monckton",
-                                                        Get.GetDoB(),Get.GetMobilePhone())
+                                           CustomerBuilder.New().WithForename("RXXXXXXXXX").WithSurname("Clarke"),
+                                           CustomerBuilder.New().WithForename("AXXXXXXXXX").WithSurname("Lister"),
+                                           CustomerBuilder.New().WithForename("TXXXXXXXXX").WithSurname("Monckton"),
                                        };
-            var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
-                                                           RiskMask.TESTGuarantorNamesMatchBusinessBureauData,
-                                                           ApplicationDecisionStatus.Accepted, listOfGuarantors);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Accepted, listOfGuarantors);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
@@ -655,22 +585,18 @@ namespace Wonga.QA.Tests.Graydon
             const String forename = "JOHN";
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
-            var listOfGuarantors = new List<Customer>
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithSurname(surname).WithForename(forename).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTGuarantorNamesMatchBusinessBureauData);
+            var listOfGuarantors = new List<CustomerBuilder>
                                        {
-                                           new Customer(Guid.NewGuid(), Get.RandomEmail(), "Roger John", "Clarke",
-                                                        Get.GetDoB(),Get.GetMobilePhone()),
-                                           new Customer(Guid.NewGuid(), Get.RandomEmail(), "Anthony Charles Bramham",
-                                                        "Lister", Get.GetDoB(),Get.GetMobilePhone()),
-                                           new Customer(Guid.NewGuid(), Get.RandomEmail(), "Timothy Charles", "Monckton",
-                                                        Get.GetDoB(),Get.GetMobilePhone()),
-                                                        //Secretary
-                                           new Customer(Guid.NewGuid(), Get.RandomEmail(), "Robert Nigel James", "Coombe",
-                                                        Get.GetDoB(),Get.GetMobilePhone())
+                                           CustomerBuilder.New().WithForename("Roger John").WithSurname("Clarke"),
+                                           CustomerBuilder.New().WithForename("Anthony Charles Bramham").WithSurname("Lister"),
+                                           CustomerBuilder.New().WithForename("Timothy Charles").WithSurname("Monckton"),
+                                           //Secretary
+                                           CustomerBuilder.New().WithForename("Robert Nigel James").WithSurname("Coombe"),
                                        };
-            var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
-                                                           RiskMask.TESTGuarantorNamesMatchBusinessBureauData,
-                                                           ApplicationDecisionStatus.Declined, listOfGuarantors);
+
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Declined, listOfGuarantors);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Failed, 1);
@@ -690,20 +616,15 @@ namespace Wonga.QA.Tests.Graydon
             const String forename = "JOHN";
             const String surname = "WILKINS";
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
-            var listOfGuarantors = new List<Customer>
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithSurname(surname).WithForename(forename).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTGuarantorNamesMatchBusinessBureauData);
+            var listOfGuarantors = new List<CustomerBuilder>
                                        {
-                                           //The wrong one
-                                           new Customer(Guid.NewGuid(), Get.RandomEmail(), "Roger John", "Wrong",
-                                                        Get.GetDoB(),Get.GetMobilePhone()),
-                                           new Customer(Guid.NewGuid(), Get.RandomEmail(), "Anthony Charles Bramham",
-                                                        "Lister", Get.GetDoB(),Get.GetMobilePhone()),
-                                           new Customer(Guid.NewGuid(), Get.RandomEmail(), "Timothy Charles", "Monckton",
-                                                        Get.GetDoB(),Get.GetMobilePhone()),
+                                           CustomerBuilder.New().WithForename("Roger John").WithSurname("Wrong"),
+                                           CustomerBuilder.New().WithForename("Anthony Charles Bramham").WithSurname("Lister"),
+                                           CustomerBuilder.New().WithForename("Timothy Charles").WithSurname("Monckton"),
                                        };
-            var application = CreateApplicationWithAsserts(mainApplicant, goodCompanyRegNumber,
-                                                           RiskMask.TESTGuarantorNamesMatchBusinessBureauData,
-                                                           ApplicationDecisionStatus.Declined, listOfGuarantors);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Declined, listOfGuarantors);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Failed, 1);
@@ -716,18 +637,17 @@ namespace Wonga.QA.Tests.Graydon
 
         #endregion
 
-        private static Application CreateApplicationWithAsserts(Customer mainApplicant, String companyRegisteredNumber, RiskMask middlenameMask ,ApplicationDecisionStatus applicationDecision, List<Customer> guarantors = null )
+        private static Application CreateApplicationWithAsserts(CustomerBuilder mainApplicantBuilder, String companyRegisteredNumber ,ApplicationDecisionStatus applicationDecision, List<CustomerBuilder> guarantors = null )
         {
-            var customerBuilder = CustomerBuilder.New(mainApplicant.Id);
-            customerBuilder.ScrubForename(mainApplicant.Forename);
-            customerBuilder.ScrubSurname(mainApplicant.Surname);
+            mainApplicantBuilder.ScrubForename(mainApplicantBuilder.Forename);
+            mainApplicantBuilder.ScrubSurname(mainApplicantBuilder.Surname);
+
             //STEP 1 - Create the main director
-            var mainDirector = customerBuilder.WithMiddleName(middlenameMask.ToString()).WithForename(mainApplicant.Forename).WithSurname(mainApplicant.Surname).WithDateOfBirth(mainApplicant.DateOfBirth).WithMobileNumber(mainApplicant.MobilePhoneNumber).Build();
+            var mainDirector = mainApplicantBuilder.Build();
 
             //STEP2 - Create the company
             var organisationBuilder = OrganisationBuilder.New(mainDirector).WithOrganisationNumber(companyRegisteredNumber);
             var organisation = organisationBuilder.Build();
-
 
             //STEP3 - Create the application
             var applicationBuilder = ApplicationBuilder.New(mainDirector, organisation).WithExpectedDecision(applicationDecision) as BusinessApplicationBuilder;
@@ -740,16 +660,6 @@ namespace Wonga.QA.Tests.Graydon
 
             //STEP5 - Build the application + send the list of guarantors
             var application = applicationBuilder.Build();
-
-            if (applicationDecision != ApplicationDecisionStatus.Declined)
-            {
-                //STE6 - Build the extra guarantors + sign
-                if (guarantors!=null)
-                {
-                    applicationBuilder.BuildGuarantors();
-                    applicationBuilder.SignApplicationForSecondaryDirectors();
-                }
-            }
 
             Assert.IsNotNull(application);
 
@@ -766,7 +676,6 @@ namespace Wonga.QA.Tests.Graydon
             return application;
 
         }
-
         private List<RiskWorkflowEntity> VerifyRiskWorkflows(Guid applicationId,RiskWorkflowTypes riskWorkflowType,RiskWorkflowStatus expectedRiskWorkflowStatus,Int32 expectedNumberOfWorkflows)
         {
             Drive.Db.WaitForRiskWorkflowData(applicationId, riskWorkflowType,expectedNumberOfWorkflows,expectedRiskWorkflowStatus);
@@ -780,7 +689,6 @@ namespace Wonga.QA.Tests.Graydon
 
             return riskWorkflows;
         }
-
         private void VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(RiskWorkflowEntity riskWorkflowEntity,RiskCheckpointDefinitionEnum checkpointDefinition, RiskCheckpointStatus checkpointStatus, RiskVerificationDefinitions riskVerification)
         {
             Do.Until(() => Drive.Db.Risk.WorkflowCheckpoints.Any(p => p.RiskWorkflowId == riskWorkflowEntity.RiskWorkflowId && p.CheckpointStatus != 0));

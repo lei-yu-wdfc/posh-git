@@ -15,16 +15,21 @@ namespace Wonga.QA.Tests.Comms
     {
         protected const int NumberOfSecondaryDirectors=2;
 
-        [Test,AUT(AUT.Wb), JIRA("SME-976"), Description("This test verifies documents being generated as part of L0 process, which is a key prerequisite for emails to be sent (this last step involves 3rd party)")]
+        [Test,AUT(AUT.Wb), JIRA("SME-976")]
+        [Description("This test verifies documents being generated as part of L0 process, which is a key prerequisite for emails to be sent (this last step involves 3rd party)")]
         public void RunPartialL0AndCheckForGuarantorUnsignedDocumentsAndEmailGenerated()
         {
-            Customer cust = CustomerBuilder.New().Build();
-            var organisationBuilder = OrganisationBuilder.New(cust);
-            var company = organisationBuilder.WithSoManySecondaryDirectors(NumberOfSecondaryDirectors).Build();
+            var mainApplicant = CustomerBuilder.New().Build();
+            var listOfGuarantors = new List<CustomerBuilder>();
+            for (var i = 0; i < NumberOfSecondaryDirectors; i++)
+            {
+                listOfGuarantors.Add(CustomerBuilder.New());
+            }
 
-            var businessApplicationBuilder = ApplicationBuilder.New(cust, company) as BusinessApplicationBuilder;
-            var application = businessApplicationBuilder.Build();
-            organisationBuilder.BuildSecondaryDirectors();
+            var company = OrganisationBuilder.New(mainApplicant).Build();
+
+            var businessApplicationBuilder = ApplicationBuilder.New(mainApplicant, company) as BusinessApplicationBuilder;
+            var application = businessApplicationBuilder.WithGuarantors(listOfGuarantors).WithUnsignedGuarantors().Build();
 
             var emailCorrelationRecords = Do.With.Timeout(2).Interval(20).Until(() => Drive.Db.Comms.EmailReturnLinkCorrelationWbUks.Count(p => p.OrganisationId == company.Id) == NumberOfSecondaryDirectors);
 
@@ -36,52 +41,72 @@ namespace Wonga.QA.Tests.Comms
             }
         }
 
-        [Test, AUT(AUT.Wb), JIRA("SME-951"), Description("This test verifies documents being generated as part of L0 process, which is a key prerequisite for emails to be sent (this last step involves 3rd party)")]
+        [Test, AUT(AUT.Wb), JIRA("SME-951")]
+        [Description("This test verifies documents being generated as part of L0 process, which is a key prerequisite for emails to be sent (this last step involves 3rd party)")]
         public void RunPartialL0AndCheckForPrimaryUnsignedDirectorDocumentsAndEmailGenerated()
         {
-            Customer cust = CustomerBuilder.New().Build();
-            var organisationBuilder = OrganisationBuilder.New(cust);
-            var company = organisationBuilder.WithSoManySecondaryDirectors(NumberOfSecondaryDirectors).Build();
+            //Vaklav can you please double check what exactly needs to be done here?
+            var mainDirector = CustomerBuilder.New().Build();
+            var listOfGuarantors = new List<CustomerBuilder>();
+            for (var i = 0; i < NumberOfSecondaryDirectors; i++)
+            {
+                listOfGuarantors.Add(CustomerBuilder.New());
+            }
+
+            var company = OrganisationBuilder.New(mainDirector).Build();
             
-            var businessApplicationBuilder = ApplicationBuilder.New(cust, company) as BusinessApplicationBuilder;
-            var application = businessApplicationBuilder.Build();            
-            organisationBuilder.BuildSecondaryDirectors();
-            businessApplicationBuilder.SignApplicationForSecondaryDirectors();
+            var businessApplicationBuilder = ApplicationBuilder.New(mainDirector, company) as BusinessApplicationBuilder;
+            var application = businessApplicationBuilder.WithGuarantors(listOfGuarantors).Build();            
                         
-            Do.With.Timeout(2).Interval(20).Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId == cust.Id && p.DocumentType == 9) == 1);
-            Do.With.Timeout(2).Interval(20).Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId == cust.Id && p.DocumentType == 10) == 1);
-            Do.With.Timeout(2).Interval(20).Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId == cust.Id && p.DocumentType == 11) == 1);            
+            Do.With.Timeout(2).Interval(20).Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId == mainDirector.Id && p.DocumentType == 9) == 1);
+            Do.With.Timeout(2).Interval(20).Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId == mainDirector.Id && p.DocumentType == 10) == 1);
+            Do.With.Timeout(2).Interval(20).Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId == mainDirector.Id && p.DocumentType == 11) == 1);            
         }
 
-        [Test, AUT(AUT.Wb), JIRA("SME-209"), Description("This test verifies documents being generated as part of L0 process, which is a key prerequisite for emails to be sent (this last step involves 3rd party)")]
+        [Test, AUT(AUT.Wb), JIRA("SME-209")]
+        [Description("This test verifies documents being generated as part of L0 process, which is a key prerequisite for emails to be sent (this last step involves 3rd party)")]
         public void RunPartialL0AndCheckForPrimaryDirectorFundsAdvancedDocumentsAndEmail()
         {
-            Customer cust = CustomerBuilder.New().Build();
-            var organisationBuilder = OrganisationBuilder.New(cust);
-            var company = organisationBuilder.WithSoManySecondaryDirectors(NumberOfSecondaryDirectors).Build();
+            //This too -> Looking at the code you want to build and not sign for secondary 
+            var mainDirector = CustomerBuilder.New().Build();
+            var listOfGuarantors = new List<CustomerBuilder>();
+            for (var i = 0; i < NumberOfSecondaryDirectors; i++)
+            {
+                listOfGuarantors.Add(CustomerBuilder.New());
+            }
 
-            var businessApplicationBuilder = ApplicationBuilder.New(cust, company) as BusinessApplicationBuilder;
-            var application = businessApplicationBuilder.Build();
-            Drive.Api.Commands.Post(new SignBusinessApplicationWbUkCommand { AccountId = cust.Id, ApplicationId = application.Id });
-            organisationBuilder.BuildSecondaryDirectors();
+            var company = OrganisationBuilder.New(mainDirector).Build();
+
+            var businessApplicationBuilder = ApplicationBuilder.New(mainDirector, company) as BusinessApplicationBuilder;
+            var application = businessApplicationBuilder.WithGuarantors(listOfGuarantors).WithUnsignedGuarantors().Build();
+            //SignBusinessApplicationWbUkCommand -> It is in the build()
+            //Drive.Api.Commands.Post(new SignBusinessApplicationWbUkCommand { AccountId = mainDirector.Id, ApplicationId = application.Id });
+            //organisationBuilder.BuildSecondaryDirectors();
             //businessApplicationBuilder.SignApplicationForSecondaryDirectors();
 
-            Do.With.Timeout(2).Interval(20).Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId == cust.Id && p.DocumentType == 15) == 1);
-            Do.With.Timeout(2).Interval(20).Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId == cust.Id && p.DocumentType == 16) == 1);            
+            Do.With.Timeout(2).Interval(20).Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId == mainDirector.Id && p.DocumentType == 15) == 1);
+            Do.With.Timeout(2).Interval(20).Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId == mainDirector.Id && p.DocumentType == 16) == 1);            
         }
 
-        [Test, AUT(AUT.Wb), JIRA("SME-1043"), Description("This test verifies documents being generated as part of L0 process, which is a key prerequisite for emails to be sent (this last step involves 3rd party)")]
+        [Test, AUT(AUT.Wb), JIRA("SME-1043")] 
+        [Description("This test verifies documents being generated as part of L0 process, which is a key prerequisite for emails to be sent (this last step involves 3rd party)")]
         public void RunPartialL0AndCheckForGuarantorsFundsAdvancedDocumentsAndEmail()
         {
-            Customer cust = CustomerBuilder.New().Build();
-            var organisationBuilder = OrganisationBuilder.New(cust);
-            var company = organisationBuilder.WithSoManySecondaryDirectors(NumberOfSecondaryDirectors).Build();
+            var mainDirector = CustomerBuilder.New().Build();
+            var listOfGuarantors = new List<CustomerBuilder>();
+            for (var i = 0; i < NumberOfSecondaryDirectors; i++)
+            {
+                listOfGuarantors.Add(CustomerBuilder.New());
+            }
 
-            var businessApplicationBuilder = ApplicationBuilder.New(cust, company) as BusinessApplicationBuilder;
-            var application = businessApplicationBuilder.Build();
-            Drive.Api.Commands.Post(new SignBusinessApplicationWbUkCommand { AccountId = cust.Id, ApplicationId = application.Id });
-            organisationBuilder.BuildSecondaryDirectors();
-            businessApplicationBuilder.SignApplicationForSecondaryDirectors();
+            var company = OrganisationBuilder.New(mainDirector).Build();
+            //var company = organisationBuilder.WithSoManySecondaryDirectors(NumberOfSecondaryDirectors).Build();
+
+            var businessApplicationBuilder = ApplicationBuilder.New(mainDirector, company) as BusinessApplicationBuilder;
+            var application = businessApplicationBuilder.WithGuarantors(listOfGuarantors).Build();
+            //Drive.Api.Commands.Post(new SignBusinessApplicationWbUkCommand { AccountId = mainDirector.Id, ApplicationId = application.Id });
+            //organisationBuilder.BuildSecondaryDirectors();
+            //businessApplicationBuilder.SignApplicationForSecondaryDirectors();
 
             var directors = company.GetSecondaryDirectors();
             foreach (var director in directors)
@@ -97,14 +122,10 @@ namespace Wonga.QA.Tests.Comms
         {
             //main applicant will fail because the riskMaks is disabled
             var mainApplicant = CustomerBuilder.New().WithMiddleName("hahaha").Build();
-            var guarantorList = new List<Customer>
+            var guarantorList = new List<CustomerBuilder>
                                     {
-                                        new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8),
-                                                     Get.RandomString(8), Get.GetDoB(),
-                                                     Get.GetMobilePhone()),
-                                        new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8),
-                                                     Get.RandomString(8), Get.GetDoB(),
-                                                     Get.GetMobilePhone()),
+                                        CustomerBuilder.New(),
+                                        CustomerBuilder.New()
                                     };
 
 

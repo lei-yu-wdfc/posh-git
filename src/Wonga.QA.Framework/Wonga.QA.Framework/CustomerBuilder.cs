@@ -40,7 +40,11 @@ namespace Wonga.QA.Framework
 		private String _mobileNumber;
     	private Int64? _bankAccountNumber;
         private Int64 _paymentCardNumber;
-        
+
+        public Guid Id { get { return _id; } }
+        public String Email { get { return _email; } }
+        public String Forename { get { return _foreName; } }
+        public String Surname { get { return _surname; } }
 
         private CustomerBuilder()
         {
@@ -98,12 +102,6 @@ namespace Wonga.QA.Framework
         {
             return new CustomerBuilder { _id = id };
         }
-
-        //public CustomerBuilder WithEmail(string email)
-        //{
-        //    _email = email;
-        //    return this;
-        //}
 
         public CustomerBuilder WithEmployer(string employerName)
         {

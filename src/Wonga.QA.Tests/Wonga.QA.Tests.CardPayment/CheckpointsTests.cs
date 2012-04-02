@@ -22,9 +22,10 @@ namespace Wonga.QA.Tests.CardPayment
         {
             const String forename = "kathleen";
             const String surname = "bridson";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(),
-                                             Get.GetMobilePhone()) { CardNumber = Int64.Parse("4444333322221111") };
-            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTRiskPaymentCardIsValid, ApplicationDecisionStatus.Accepted);
+            var mainApplicantBuilder =
+                CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithPaymentCardNumber(
+                    Int64.Parse("4444333322221111")).WithMiddleName(RiskMask.TESTRiskPaymentCardIsValid);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
 
             WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
             var mainApplicantRiskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
@@ -41,9 +42,12 @@ namespace Wonga.QA.Tests.CardPayment
         {
             const String forename = "kathleen";
             const String surname = "bridson";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(),
-                                             Get.GetMobilePhone()) { CardNumber = Int64.Parse("9999888877776666") };
-            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTRiskPaymentCardIsValid, ApplicationDecisionStatus.Declined);
+
+            var mainApplicantBuilder =
+               CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithPaymentCardNumber(
+                   Int64.Parse("9999888877776666")).WithMiddleName(RiskMask.TESTRiskPaymentCardIsValid);
+
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
 
             WaitForRiskWorkflowData(application.Id, RiskWorkflowTypes.MainApplicant);
             var mainApplicantRiskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
@@ -53,25 +57,17 @@ namespace Wonga.QA.Tests.CardPayment
             Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(mainApplicantRiskWorkflows[0].WorkflowId), Get.EnumToString(RiskVerificationDefinitions.CardPaymentPaymentCardIsValidVerification));
         }
 
-        private static Application CreateApplicationWithAsserts(Customer mainApplicant, String companyRegisteredNumber, RiskMask middlenameMask, ApplicationDecisionStatus applicationDecision, List<Customer> guarantors = null)
+        private static Application CreateApplicationWithAsserts(CustomerBuilder mainApplicantBuilder, String companyRegisteredNumber, ApplicationDecisionStatus applicationDecision, List<CustomerBuilder> guarantors = null)
         {
-            var customerBuilder = CustomerBuilder.New(mainApplicant.Id);
-            customerBuilder.ScrubForename(mainApplicant.Forename);
-            customerBuilder.ScrubSurname(mainApplicant.Surname);
-
-            if (mainApplicant.CardNumber != 0)
-                customerBuilder.WithPaymentCardNumber(mainApplicant.CardNumber);
-
-            if (!string.IsNullOrEmpty(mainApplicant.MobilePhoneNumber))
-                customerBuilder.WithMobileNumber(mainApplicant.MobilePhoneNumber);
+            mainApplicantBuilder.ScrubForename(mainApplicantBuilder.Forename);
+            mainApplicantBuilder.ScrubSurname(mainApplicantBuilder.Surname);
 
             //STEP 1 - Create the main director
-            var mainDirector = customerBuilder.WithMiddleName(middlenameMask.ToString()).WithForename(mainApplicant.Forename).WithSurname(mainApplicant.Surname).WithDateOfBirth(mainApplicant.DateOfBirth).Build();
+            var mainDirector = mainApplicantBuilder.Build();
 
             //STEP2 - Create the company
             var organisationBuilder = OrganisationBuilder.New(mainDirector).WithOrganisationNumber(companyRegisteredNumber);
             var organisation = organisationBuilder.Build();
-
 
             //STEP3 - Create the application
             var applicationBuilder = ApplicationBuilder.New(mainDirector, organisation).WithExpectedDecision(applicationDecision) as BusinessApplicationBuilder;
@@ -84,16 +80,6 @@ namespace Wonga.QA.Tests.CardPayment
 
             //STEP5 - Build the application + send the list of guarantors
             var application = applicationBuilder.Build();
-
-            if (applicationDecision != ApplicationDecisionStatus.Declined)
-            {
-                //STE6 - Build the extra guarantors + sign
-                if (guarantors != null)
-                {
-                    applicationBuilder.BuildGuarantors();
-                    applicationBuilder.SignApplicationForSecondaryDirectors();
-                }
-            }
 
             Assert.IsNotNull(application);
 
@@ -110,7 +96,6 @@ namespace Wonga.QA.Tests.CardPayment
             return application;
 
         }
-
         private void WaitForRiskWorkflowData(Guid applicationId, RiskWorkflowTypes riskWorkflowType)
         {
             Do.Until(

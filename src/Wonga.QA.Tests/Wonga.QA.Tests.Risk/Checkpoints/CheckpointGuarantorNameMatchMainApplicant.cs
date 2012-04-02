@@ -24,22 +24,19 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
                 CustomerBuilder.New().WithForename(mainApplicantForename).WithSurname(mainApplicantSurname).WithMiddleName(RiskMask.TESTNoCheck).
                     WithDateOfBirth(mainApplicantDateOfBirth).Build();
 
-            var guarantorList = new List<Customer>
+            var guarantorList = new List<CustomerBuilder>
                                     {
-                                        new Customer(Guid.NewGuid(), Get.RandomEmail(), mainApplicantForename,mainApplicantSurname, mainApplicantDateOfBirth,
-                                                     Get.GetMobilePhone())
-                                            {
-                                                MiddleName = RiskMask.TESTNoCheck.ToString(),
-                                            }
+                                        CustomerBuilder.New().WithForename(mainApplicantForename).WithSurname(mainApplicantSurname).WithDateOfBirth(mainApplicantDateOfBirth),
                                     };
 
             //CreateApplicationWithAsserts
             var organisation = OrganisationBuilder.New(mainApplicant).Build();
             var applicationBuilder = ((BusinessApplicationBuilder)ApplicationBuilder.New(mainApplicant, organisation)).WithGuarantors(guarantorList);
-            var application = applicationBuilder.Build();
+            //var application = applicationBuilder.Build();
 
             //Comms will throw an exception here
-            Assert.Throws<ValidatorException>( () => applicationBuilder.BuildGuarantors(false));
+            var error =  Assert.Throws<ValidatorException>(() => applicationBuilder.Build());
+            Assert.Contains(error.Message, "Comms_Customer_Recognised");
         }
     }
 }

@@ -29,11 +29,11 @@ namespace Wonga.QA.Tests.CallReport
         {
             const String forename = "unknown";
             const String surname = "customer";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(), Get.GetMobilePhone());
-            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTApplicantIsNotDeceased, ApplicationDecisionStatus.Accepted);
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTApplicantIsNotDeceased);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
-
             VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
                                                                      RiskCheckpointDefinitionEnum.ApplicantIsAlive,
                                                                      RiskCheckpointStatus.Verified,
@@ -46,11 +46,11 @@ namespace Wonga.QA.Tests.CallReport
         {
             const String forename = "kathleen";
             const String surname = "bridson";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(), Get.GetMobilePhone());
-            var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTApplicantIsNotDeceased, ApplicationDecisionStatus.Accepted);
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTApplicantIsNotDeceased);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
-
             VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
                                                                      RiskCheckpointDefinitionEnum.ApplicantIsAlive,
                                                                      RiskCheckpointStatus.Verified,
@@ -63,11 +63,11 @@ namespace Wonga.QA.Tests.CallReport
         {
             const String forename = "Johnny";
             const String surname = "DeadGuy";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(), Get.GetMobilePhone());
-            var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTApplicantIsNotDeceased, ApplicationDecisionStatus.Declined);
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTApplicantIsNotDeceased);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
-
             VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
                                                                      RiskCheckpointDefinitionEnum.ApplicantIsAlive,
                                                                      RiskCheckpointStatus.Failed,
@@ -82,11 +82,11 @@ namespace Wonga.QA.Tests.CallReport
         {
             const String forename = "kathleen";
             const String surname = "Bridson";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(), Get.GetMobilePhone());
-            var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTApplicationElementNotCIFASFlagged,ApplicationDecisionStatus.Accepted);
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTApplicationElementNotCIFASFlagged);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
-
             VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
                                                                      RiskCheckpointDefinitionEnum.CIFASFraudCheck,
                                                                      RiskCheckpointStatus.Verified,
@@ -100,11 +100,11 @@ namespace Wonga.QA.Tests.CallReport
         {
             const String forename = "laura";
             const String surname = "insolvent";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(), Get.GetMobilePhone());
-            var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTApplicationElementNotCIFASFlagged,ApplicationDecisionStatus.Declined);
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTApplicationElementNotCIFASFlagged);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
-
             VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
                                                                      RiskCheckpointDefinitionEnum.CIFASFraudCheck,
                                                                      RiskCheckpointStatus.Failed,
@@ -119,11 +119,11 @@ namespace Wonga.QA.Tests.CallReport
         {
             const String forename = "kathleen";
             const String surname = "bridson";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename,surname,Get.GetDoB(), Get.GetMobilePhone());
-            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTCreditBureauDataIsAvailable, ApplicationDecisionStatus.Accepted);
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTCreditBureauDataIsAvailable);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
-
             VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
                                                                      RiskCheckpointDefinitionEnum.CreditBureauDataIsAvailable,
                                                                      RiskCheckpointStatus.Verified,
@@ -136,11 +136,11 @@ namespace Wonga.QA.Tests.CallReport
         {
             const String forename = "Unknown";
             const String surname = "Customer";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname,Get.GetDoB(), Get.GetMobilePhone());
-            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTCreditBureauDataIsAvailable, ApplicationDecisionStatus.Declined);
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTCreditBureauDataIsAvailable);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
-
             VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
                                                                      RiskCheckpointDefinitionEnum.CreditBureauDataIsAvailable,
                                                                      RiskCheckpointStatus.Failed,
@@ -155,8 +155,9 @@ namespace Wonga.QA.Tests.CallReport
         {
             const String forename = "kathleen";
             const String surname = "Bridson";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(), Get.GetMobilePhone());
-            var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTApplicantIsSolvent, ApplicationDecisionStatus.Accepted);
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTApplicantIsSolvent);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
 
@@ -172,8 +173,9 @@ namespace Wonga.QA.Tests.CallReport
         {
             const String forename = "laura";
             const String surname = "insolvent";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(), Get.GetMobilePhone());
-            var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTApplicantIsSolvent,ApplicationDecisionStatus.Declined);
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTApplicantIsSolvent);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
 
@@ -193,11 +195,11 @@ namespace Wonga.QA.Tests.CallReport
             const String forename = "kathleen";
             const String surname = "bridson";
             var dateOfBirth = new Date(new DateTime(1992, 1, 24), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
-            var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTCustomerDateOfBirthIsCorrectSME, ApplicationDecisionStatus.Accepted);
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTCustomerDateOfBirthIsCorrectSME);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
-
             VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
                                                                      RiskCheckpointDefinitionEnum.DateOfBirthIsCorrect,
                                                                      RiskCheckpointStatus.Verified,
@@ -211,11 +213,11 @@ namespace Wonga.QA.Tests.CallReport
             const String forename = "kathleen";
             const String surname = "bridson";
             var dateOfBirth = new Date(new DateTime(1990, 3, 21), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
-            var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTCustomerDateOfBirthIsCorrectSME, ApplicationDecisionStatus.Declined);
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTCustomerDateOfBirthIsCorrectSME);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
-
             VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
                                                                      RiskCheckpointDefinitionEnum.DateOfBirthIsCorrect,
                                                                      RiskCheckpointStatus.Failed,
@@ -230,8 +232,9 @@ namespace Wonga.QA.Tests.CallReport
             const String forename = "kathleen";
             const String surname = "bridson";
             var wrongDateOfBirth = new Date(new DateTime(1973, 5, 11), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, wrongDateOfBirth, Get.GetMobilePhone());
-            var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTCustomerDateOfBirthIsCorrectSME, ApplicationDecisionStatus.Declined);
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithDateOfBirth(wrongDateOfBirth).WithMiddleName(RiskMask.TESTCustomerDateOfBirthIsCorrectSME);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
 
@@ -254,21 +257,16 @@ namespace Wonga.QA.Tests.CallReport
         {
             const String forename = "unknown";
             const String surname = "customer";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8), Get.GetDoB(), Get.GetMobilePhone());
 
-            var guarantorList = new List<Customer>
+            var mainApplicantBuilder = CustomerBuilder.New();
+            var guarantorList = new List<CustomerBuilder>
                                     {
-                                        new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(),
-                                                     Get.GetMobilePhone())
-                                            {
-                                                MiddleName = RiskMask.TESTApplicantIsNotDeceased.ToString(),
-                                            }
+                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTApplicantIsNotDeceased),
                                     };
 
-            var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTNoCheck,ApplicationDecisionStatus.Accepted,guarantorList);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted, guarantorList);
 
             var guarantorWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
-
             VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorWorkflows[0],
                                                                      RiskCheckpointDefinitionEnum.ApplicantIsAlive,
                                                                      RiskCheckpointStatus.Verified,
@@ -281,21 +279,15 @@ namespace Wonga.QA.Tests.CallReport
         {
             const String forename = "kathleen";
             const String surname = "bridson";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8), Get.GetDoB(), Get.GetMobilePhone());
 
-            var guarantorList = new List<Customer>
+            var mainApplicantBuilder = CustomerBuilder.New();
+            var guarantorList = new List<CustomerBuilder>
                                     {
-                                        new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(),
-                                                     Get.GetMobilePhone())
-                                            {
-                                                MiddleName = RiskMask.TESTApplicantIsNotDeceased.ToString(),
-                                            }
+                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTApplicantIsNotDeceased),
                                     };
-
-            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTNoCheck, ApplicationDecisionStatus.Accepted, guarantorList);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted, guarantorList);
 
             var guarantorWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
-
             VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorWorkflows[0],
                                                                      RiskCheckpointDefinitionEnum.ApplicantIsAlive,
                                                                      RiskCheckpointStatus.Verified,
@@ -308,22 +300,18 @@ namespace Wonga.QA.Tests.CallReport
         {
             const String forename = "Johnny";
             const String surname = "DeadGuy";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8), Get.GetDoB(), Get.GetMobilePhone());
 
-            var guarantorList = new List<Customer>
+            var mainApplicantBuilder = CustomerBuilder.New();
+            var guarantorList = new List<CustomerBuilder>
                                     {
-                                        new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(),
-                                                     Get.GetMobilePhone())
-                                            {
-                                                MiddleName = RiskMask.TESTApplicantIsNotDeceased.ToString(),
-                                            }
+                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTApplicantIsNotDeceased),
                                     };
 
-            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTNoCheck, ApplicationDecisionStatus.PreAccepted, guarantorList);
+
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.PreAccepted, guarantorList);
             Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
 
             var guarantorWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Failed, 1);
-
             VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorWorkflows[0],
                                                                      RiskCheckpointDefinitionEnum.ApplicantIsAlive,
                                                                      RiskCheckpointStatus.Failed,
@@ -339,21 +327,15 @@ namespace Wonga.QA.Tests.CallReport
             const String forename = "kathleen";
             const String surname = "Bridson";
 
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8), Get.GetDoB(), Get.GetMobilePhone());
-            var guarantorList = new List<Customer>
+            var mainApplicantBuilder = CustomerBuilder.New();
+            var guarantorList = new List<CustomerBuilder>
                                     {
-                                        new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(),
-                                                     Get.GetMobilePhone())
-                                            {
-                                                MiddleName = RiskMask.TESTApplicationElementNotCIFASFlagged.ToString(),
-                                            }
+                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTApplicationElementNotCIFASFlagged),
                                     };
 
-
-            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTNoCheck, ApplicationDecisionStatus.Accepted, guarantorList);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted, guarantorList);
 
             var guarantorWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
-
             VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorWorkflows[0],
                                                                      RiskCheckpointDefinitionEnum.CIFASFraudCheck,
                                                                      RiskCheckpointStatus.Verified,
@@ -368,22 +350,16 @@ namespace Wonga.QA.Tests.CallReport
             const String forename = "laura";
             const String surname = "insolvent";
 
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8), Get.GetDoB(), Get.GetMobilePhone());
-            var guarantorList = new List<Customer>
+            var mainApplicantBuilder = CustomerBuilder.New();
+            var guarantorList = new List<CustomerBuilder>
                                     {
-                                        new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(),
-                                                     Get.GetMobilePhone())
-                                            {
-                                                MiddleName = RiskMask.TESTApplicationElementNotCIFASFlagged.ToString(),
-                                            }
+                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTApplicationElementNotCIFASFlagged),
                                     };
 
-            //THIS IS A BIG PROBLEM AS EXPECTED DECISION IS BASED ON CONSUMER LOGIC!!! - I actually send preaccepted and get declined at the end
-            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTNoCheck, ApplicationDecisionStatus.PreAccepted, guarantorList);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.PreAccepted, guarantorList);
             Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
 
             var guarantorWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Failed, 1);
-
             VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorWorkflows[0],
                                                                      RiskCheckpointDefinitionEnum.CIFASFraudCheck,
                                                                      RiskCheckpointStatus.Failed,
@@ -400,23 +376,15 @@ namespace Wonga.QA.Tests.CallReport
             const String forename = "kathleen";
             const String surname = "bridson";
 
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB(), Get.GetMobilePhone());
-
-            var guarantorList = new List<Customer>
+            var mainApplicantBuilder = CustomerBuilder.New();
+            var guarantorList = new List<CustomerBuilder>
                                     {
-                                        new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(),
-                                                     Get.GetMobilePhone())
-                                            {
-                                                MiddleName = RiskMask.TESTCreditBureauDataIsAvailable.ToString(),
-                                            }
+                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTCreditBureauDataIsAvailable),
                                     };
 
-
-            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTNoCheck, ApplicationDecisionStatus.Accepted, guarantorList);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted, guarantorList);
 
             var guarantorWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
-
             VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorWorkflows[0],
                                                                      RiskCheckpointDefinitionEnum.CreditBureauDataIsAvailable,
                                                                      RiskCheckpointStatus.Verified,
@@ -430,24 +398,16 @@ namespace Wonga.QA.Tests.CallReport
             const String forename = "Unknown";
             const String surname = "Customer";
 
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB(), Get.GetMobilePhone());
-
-            var guarantorList = new List<Customer>
+            var mainApplicantBuilder = CustomerBuilder.New();
+            var guarantorList = new List<CustomerBuilder>
                                     {
-                                        new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(),
-                                                     Get.GetMobilePhone())
-                                            {
-                                                MiddleName = RiskMask.TESTCreditBureauDataIsAvailable.ToString(),
-                                            }
+                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTCreditBureauDataIsAvailable),
                                     };
 
-
-            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTNoCheck, ApplicationDecisionStatus.PreAccepted, guarantorList);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.PreAccepted, guarantorList);
             Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
 
             var guarantorWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Failed, 1);
-
             VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorWorkflows[0],
                                                                      RiskCheckpointDefinitionEnum.CreditBureauDataIsAvailable,
                                                                      RiskCheckpointStatus.Failed,
@@ -463,23 +423,14 @@ namespace Wonga.QA.Tests.CallReport
             const String forename = "kathleen";
             const String surname = "bridson";
 
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB(), Get.GetMobilePhone());
-
-            var guarantorList = new List<Customer>
+            var mainApplicantBuilder = CustomerBuilder.New();
+            var guarantorList = new List<CustomerBuilder>
                                     {
-                                        new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(),
-                                                     Get.GetMobilePhone())
-                                            {
-                                                MiddleName = RiskMask.TESTApplicantIsSolvent.ToString(),
-                                            }
+                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTApplicantIsSolvent),
                                     };
-
-
-            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTNoCheck, ApplicationDecisionStatus.Accepted, guarantorList);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted, guarantorList);
 
             var guarantorWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
-
             VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorWorkflows[0],
                                                                      RiskCheckpointDefinitionEnum.CustomerIsSolvent,
                                                                      RiskCheckpointStatus.Verified,
@@ -493,20 +444,13 @@ namespace Wonga.QA.Tests.CallReport
             const String forename = "laura";
             const String surname = "insolvent";
 
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB(), Get.GetMobilePhone());
-
-            var guarantorList = new List<Customer>
+            var mainApplicantBuilder = CustomerBuilder.New();
+            var guarantorList = new List<CustomerBuilder>
                                     {
-                                        new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(),
-                                                     Get.GetMobilePhone())
-                                            {
-                                                MiddleName = RiskMask.TESTApplicantIsSolvent.ToString(),
-                                            }
+                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTApplicantIsSolvent),
                                     };
 
-
-            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTNoCheck, ApplicationDecisionStatus.PreAccepted, guarantorList);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.PreAccepted, guarantorList);
             Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
 
             var guarantorWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Failed, 1);
@@ -519,18 +463,17 @@ namespace Wonga.QA.Tests.CallReport
 
         #endregion
 
-        private static Application CreateApplicationWithAsserts(Customer mainApplicant, String companyRegisteredNumber, RiskMask middlenameMask, ApplicationDecisionStatus applicationDecision, List<Customer> guarantors = null)
+        private static Application CreateApplicationWithAsserts(CustomerBuilder mainApplicantBuilder, String companyRegisteredNumber, ApplicationDecisionStatus applicationDecision, List<CustomerBuilder> guarantors = null)
         {
-            var customerBuilder = CustomerBuilder.New(mainApplicant.Id);
-            customerBuilder.ScrubForename(mainApplicant.Forename);
-            customerBuilder.ScrubSurname(mainApplicant.Surname);
+            mainApplicantBuilder.ScrubForename(mainApplicantBuilder.Forename);
+            mainApplicantBuilder.ScrubSurname(mainApplicantBuilder.Surname);
+
             //STEP 1 - Create the main director
-            var mainDirector = customerBuilder.WithMiddleName(middlenameMask.ToString()).WithForename(mainApplicant.Forename).WithSurname(mainApplicant.Surname).WithDateOfBirth(mainApplicant.DateOfBirth).WithMobileNumber(mainApplicant.MobilePhoneNumber).Build();
+            var mainDirector = mainApplicantBuilder.Build();
 
             //STEP2 - Create the company
             var organisationBuilder = OrganisationBuilder.New(mainDirector).WithOrganisationNumber(companyRegisteredNumber);
             var organisation = organisationBuilder.Build();
-
 
             //STEP3 - Create the application
             var applicationBuilder = ApplicationBuilder.New(mainDirector, organisation).WithExpectedDecision(applicationDecision) as BusinessApplicationBuilder;
@@ -543,16 +486,6 @@ namespace Wonga.QA.Tests.CallReport
 
             //STEP5 - Build the application + send the list of guarantors
             var application = applicationBuilder.Build();
-
-            if (applicationDecision != ApplicationDecisionStatus.Declined)
-            {
-                //STE6 - Build the extra guarantors + sign
-                if (guarantors != null)
-                {
-                    applicationBuilder.BuildGuarantors();
-                    applicationBuilder.SignApplicationForSecondaryDirectors();
-                }
-            }
 
             Assert.IsNotNull(application);
 
