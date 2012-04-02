@@ -12,86 +12,9 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Workflows
 {
-	[Parallelizable(TestScope.All), AUT(AUT.Za)]
-	class WorkflowTests
+	[AUT(AUT.Za)]
+	public partial class WorkflowTests
 	{
-		private readonly List<string> ExpectedCheckpointNamesL0 = GetExpectedCheckpointNamesL0();
-		private readonly List<string> ExpectedCheckpointNamesLn = GetExpectedCheckpointNamesLn(); 
-		private readonly List<string> ExpectedVerificationNamesL0 = GetExpectedVerificationNamesL0();
-		private readonly List<string> ExpectedVerificationNamesLn = GetExpectedVerificationNamesLn();
-
-		private static readonly List<string> ExpectedCheckpointNamesL0Za = new List<string>()
-		                                                         	{
-		                                                         		"Customer has provided correct forename & surname",
-		                                                         		"Mobile phone is unique",
-		                                                         		"Reputation prediction check",
-		                                                         		"Customer is employed",
-		                                                         		"Monthly income limit check",
-		                                                         		"Application terms are acceptable for business",
-		                                                         		"Hardware blacklist check",
-		                                                         		"Application data blacklist check",
-		                                                         		"Credit bureau data is available",
-		                                                         		"Customer is solvent",
-		                                                         		"Applicant is alive",
-		                                                         		"Repayment prediction check",
-		                                                         		"Bank account is valid",
-																		"Fraud list check"
-		                                                         	};
-
-		private static readonly List<string> ExpectedCheckpointNamesLnZa = new List<string>()
-		                                                                    	{
-		                                                                    		"Customer is employed",
-		                                                                    		"Monthly income limit check",
-		                                                                    		"Application terms are acceptable for business",
-		                                                                    		"Hardware blacklist check",
-		                                                                    		"Application data blacklist check",
-		                                                                    		"Fraud list check",
-		                                                                    		"Credit bureau data is available",
-		                                                                    		"Customer is solvent",
-		                                                                    		"Applicant is alive",
-		                                                                    		"Repayment prediction check",
-		                                                                    		"Bank account is valid"
-		                                                                    	};
-
-		private static readonly List<string> ExpectedVerificationNamesL0Za = new List<string>()
-		                                                             	{
-		                                                             		"CustomerIsEmployedVerification",
-		                                                             		"MonthlyIncomeVerification",
-		                                                             		"ApplicationTermNotLessThan4DaysVerification",
-		                                                             		"MobilePhoneIsUniqueVerification",
-		                                                             		"BlackListVerification",
-		                                                             		"IovationAutoReviewVerification",
-		                                                             		"IovationVerification",
-		                                                             		"DoNotRelendVerification",
-		                                                             		"FraudBlacklistVerification",
-		                                                             		"ReputationPredictionVerification",
-		                                                             		"CreditBureauDataIsAvailableVerification",
-		                                                             		"CustomerNameIsCorrectVerification",
-		                                                             		"ApplicantIsSolventNoticeVerification",
-		                                                             		"ApplicantIsSolventVerification",
-		                                                             		"CustomerIsAliveVerification",
-		                                                             		"RepaymentPredictionVerification",
-		                                                             		"BankAccountIsValidVerification"
-		                                                             	};
-
-		private static readonly List<string> ExpectedVerificationNamesLnZa = new List<string>()
-		                                                             	{
-		                                                             		"CustomerIsEmployedVerification",
-		                                                             		"MonthlyIncomeVerification",
-		                                                             		"ApplicationTermNotLessThan4DaysVerification",
-		                                                             		"BlackListVerification",
-		                                                             		"IovationAutoReviewVerification",
-		                                                             		"IovationVerification",
-		                                                             		"DoNotRelendVerification",
-		                                                             		"FraudBlacklistVerification",
-		                                                             		"CreditBureauDataIsAvailableVerification",
-		                                                             		"ApplicantIsSolventNoticeVerification",
-		                                                             		"ApplicantIsSolventVerification",
-		                                                             		"CustomerIsAliveVerification",
-		                                                             		"RepaymentPredictionVerification",
-		                                                             		"BankAccountIsValidVerification"
-		                                                             	};
-
 		[Test, AUT(AUT.Za), Explicit]
 		public void WorkflowL0SingleWorkflowUsed()
 		{
@@ -106,105 +29,29 @@ namespace Wonga.QA.Tests.Risk.Workflows
 			Assert.AreEqual(1, workflows.Count);
 		}
 
-		[Test, AUT(AUT.Za)]
-		public void WorkflowCorrectCheckpointsUsedL0()
+		[Test, AUT(AUT.Za), Pending]
+		public void WorkflowApplicationL0Accepted()
 		{
-			var customer = CustomerBuilder.New().WithEmployer("Wonga").Build();
-			var application =
-				ApplicationBuilder.New(customer)
-                .WithExpectedDecision(ApplicationDecisionStatus.Declined)
-				.Build();
+			var customer = BuildCustomerToBeAccepted();
 
-			var actualCheckpointNames = Drive.Db.GetCheckpointDefinitionsForApplication(application.Id).Select(a => a.Name);
-			Assert.AreElementsEqualIgnoringOrder(ExpectedCheckpointNamesL0, actualCheckpointNames);
-		}
-
-		[Test, AUT(AUT.Za)]
-		public void WorkflowCorrectCheckpointsUsedLn()
-		{
-			var customer = CustomerBuilder.New().Build();
-			ApplicationBuilder.New(customer).Build().RepayOnDueDate();
-
-			Drive.Db.UpdateEmployerName(customer.Id, "Wonga");
-
-			var application =
-				ApplicationBuilder.New(customer)
-				.WithExpectedDecision(ApplicationDecisionStatus.Declined)
-				.Build();
-
-			var actualCheckpointNames = Drive.Db.GetCheckpointDefinitionsForApplication(application.Id).Select(a => a.Name);
-			Assert.AreElementsEqualIgnoringOrder(ExpectedCheckpointNamesLn, actualCheckpointNames);
-		}
-
-		[Test, AUT(AUT.Za)]
-		public void WorkflowCorrectVerificationsUsedL0()
-		{
-			var customer = CustomerBuilder.New().WithEmployer("Wonga").Build();
-			var application =
-				ApplicationBuilder.New(customer)
-				.WithExpectedDecision(ApplicationDecisionStatus.Declined)
-				.Build();
-
-			var actualVerificationNames = Drive.Db.GetVerificationDefinitionsForApplication(application.Id).Select(a => a.Name);
-			Assert.AreElementsEqual(ExpectedVerificationNamesL0, actualVerificationNames);
-		}
-
-		[Test, AUT(AUT.Za)]
-		public void WorkflowCorrectVerificationsUsedLn()
-		{
-			var customer = CustomerBuilder.New().Build();
-			ApplicationBuilder.New(customer).Build().RepayOnDueDate();
-
-			Drive.Db.UpdateEmployerName(customer.Id, "Wonga");
-
-			var application =
-				ApplicationBuilder.New(customer)
-				.WithExpectedDecision(ApplicationDecisionStatus.Declined)
-				.Build();
-
-			var actualVerificationNames = Drive.Db.GetVerificationDefinitionsForApplication(application.Id).Select(a => a.Name);
-			Assert.AreElementsEqual(ExpectedVerificationNamesLn, actualVerificationNames);
+			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Pending).WithIovationBlackBox("Accept").WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
 
 		#region Helpers
 
-		private static List<string> GetExpectedCheckpointNamesL0()
+		private Customer BuildCustomerToBeAccepted()
 		{
 			switch (Config.AUT)
 			{
-					case AUT.Za:
+				case(AUT.Za):
 					{
-						return ExpectedCheckpointNamesL0Za;
-					}
-				    default:
-					{
-						throw new NotImplementedException(Config.AUT.ToString());
-					}
-			}
-		}
-
-		private static List<string> GetExpectedCheckpointNamesLn()
-		{
-			switch (Config.AUT)
-			{
-				case AUT.Za:
-					{
-						return ExpectedCheckpointNamesLnZa;
-					}
-				default:
-					{
-						throw new NotImplementedException(Config.AUT.ToString());
-					}
-			}
-		}
-
-		private static List<string> GetExpectedVerificationNamesL0()
-		{
-			switch (Config.AUT)
-			{
-				case AUT.Za:
-					{
-						return ExpectedVerificationNamesL0Za;
+						return
+							CustomerBuilder.New()
+							.WithEmployer("Wonga")
+							.WithForename("ANITHA")
+							.WithSurname("ESSACK")
+							.WithDateOfBirth(new Date(new DateTime(1957, 12, 19)))
+							.WithNationalNumber("5712190106083").Build();
 					}
 					break;
 
@@ -213,24 +60,9 @@ namespace Wonga.QA.Tests.Risk.Workflows
 						throw new NotImplementedException(Config.AUT.ToString());
 					}
 			}
+			
 		}
 
-		private static List<string> GetExpectedVerificationNamesLn()
-		{
-			switch (Config.AUT)
-			{
-				case AUT.Za:
-					{
-						return ExpectedVerificationNamesLnZa;
-					}
-					break;
-
-				default:
-					{
-						throw new NotImplementedException(Config.AUT.ToString());
-					}
-			}
-		}
 		#endregion
 	}
 }
