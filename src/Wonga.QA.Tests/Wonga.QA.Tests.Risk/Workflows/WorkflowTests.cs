@@ -24,10 +24,11 @@ namespace Wonga.QA.Tests.Risk.Workflows
 			{
 				case (AUT.Za):
 					{
-						var mock = Drive.Db.GetServiceConfiguration("Mocks.HyphenAHVWebServiceEnabled");
-
-						_originalServiceConfiguration.Add("Mocks.HyphenAHVWebServiceEnabled", mock.Value);
+						_originalServiceConfiguration.Add("Mocks.HyphenAHVWebServiceEnabled", Drive.Db.GetServiceConfiguration("Mocks.HyphenAHVWebServiceEnabled").Value);
 						Drive.Db.SetServiceConfiguration("Mocks.HyphenAHVWebServiceEnabled", "false");
+
+						_originalServiceConfiguration.Add("Mocks.IovationEnabled", "true");
+						Drive.Db.SetServiceConfiguration("Mocks.IovationEnabled", "true");
 					}
 					break;
 
@@ -63,7 +64,19 @@ namespace Wonga.QA.Tests.Risk.Workflows
 		{
 			var customer = BuildCustomerToBeAccepted();
 
-			ApplicationBuilder.New(customer).WithIovationBlackBox("Allow").WithExpectedDecision(ApplicationDecisionStatus.ReadyToSign).Build();
+			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.ReadyToSign).Build();
+		}
+
+		[Test, AUT(AUT.Za), Pending]
+		public void WorkflowApplicationLnAccepted()
+		{
+			var customer = BuildCustomerToBeAccepted();
+			customer.UpdateEmployer(RiskMask.TESTCustomerIsEmployed.ToString());
+			ApplicationBuilder.New(customer).Build().RepayOnDueDate();
+
+			customer.UpdateEmployer("Wonga");
+
+			ApplicationBuilder.New(customer).Build();
 		}
 
 		#region Helpers
