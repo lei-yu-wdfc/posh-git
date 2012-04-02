@@ -26,11 +26,11 @@ namespace Wonga.QA.Framework.Core
 
         static Config()
         {
-            Ui = new UiConfig();
-            SalesforceUi = new SalesforceConfig("test.salesforce.com");
-
             SUT = GetValue<SUT>();
             AUT = GetValue<AUT>();
+
+            Ui = new UiConfig();
+            SalesforceUi = new SalesforceConfig("test.salesforce.com");            
 
             Proxy = GetValue<Boolean>(false, "QAFProxyMode");
 
