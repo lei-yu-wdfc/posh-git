@@ -25,16 +25,68 @@ namespace Wonga.QA.Tests.Payments
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1810"), Ignore("Not fully implemented, do not run")]
-        public void WhenLoanTaggedAsMovedToDcaThenLoanShouldNotBeAddedToCollectionsQueueForCustomerSupport()
+        public void WhenLoanGoesIntoArrearsThenA2EmailShouldBeSentOnDay0()
         {
             var customer = CustomerBuilder.New().Build();
             var application = ApplicationBuilder.New(customer).Build();
 
             application.PutApplicationIntoArrears();
 
-            application.MoveToDebtCollectionAgency();
+            //TODO: Send in X number of timeouts...
 
-            //TODO: Verify loan has been removed from Collections Queue of Customer Support...
+            //TODO: Verify emails have been sent...
+        }
+
+        [Test, AUT(AUT.Ca), JIRA("CA-1810"), Ignore("Not fully implemented, do not run")]
+        public void WhenLoanGoesIntoArrearsThenA3EmailShouldBeSentOnDay6()
+        {
+            var customer = CustomerBuilder.New().Build();
+            var application = ApplicationBuilder.New(customer).Build();
+
+            application.PutApplicationIntoArrears();
+
+            //TODO: Send in X number of timeouts...
+
+            //TODO: Verify emails have been sent...
+        }
+
+        [Test, AUT(AUT.Ca), JIRA("CA-1810"), Ignore("Not fully implemented, do not run")]
+        public void WhenLoanGoesIntoArrearsThenA4EmailShouldBeSentOnDay13()
+        {
+            var customer = CustomerBuilder.New().Build();
+            var application = ApplicationBuilder.New(customer).Build();
+
+            application.PutApplicationIntoArrears();
+
+            //TODO: Send in X number of timeouts...
+
+            //TODO: Verify emails have been sent...
+        }
+
+        [Test, AUT(AUT.Ca), JIRA("CA-1810"), Ignore("Not fully implemented, do not run")]
+        public void WhenLoanGoesIntoArrearsThenA5EmailShouldBeSentOnDay20()
+        {
+            var customer = CustomerBuilder.New().Build();
+            var application = ApplicationBuilder.New(customer).Build();
+
+            application.PutApplicationIntoArrears();
+
+            //TODO: Send in X number of timeouts...
+
+            //TODO: Verify emails have been sent...
+        }
+
+        [Test, AUT(AUT.Ca), JIRA("CA-1810"), Ignore("Not fully implemented, do not run")]
+        public void WhenLoanGoesIntoArrearsThenA6EmailShouldBeSentOnDay27()
+        {
+            var customer = CustomerBuilder.New().Build();
+            var application = ApplicationBuilder.New(customer).Build();
+
+            application.PutApplicationIntoArrears();
+
+            //TODO: Send in X number of timeouts...
+
+            //TODO: Verify emails have been sent...
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1810"), Ignore("Not fully implemented, do not run")]
