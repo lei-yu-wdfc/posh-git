@@ -116,7 +116,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-201"), Pending("Broken on RC4") ]
+        [Test, AUT(AUT.Za), JIRA("QA-201")]
         public void WhenLoggedCustomerWithoutLiveLoanAddsNewBankAccountItShouldBecomePrimary()
         {
             string accountNumber = "1234567";
@@ -140,7 +140,7 @@ namespace Wonga.QA.Tests.Ui
                 Thread.Sleep(3000);
                 paymentPage.CloseButtonClick();
                 payment = Client.Payments();
-                Assert.IsTrue(payment.IsAccountNumberRight(accountNumber));
+                Assert.AreEqual(accountNumber.Remove(0,3), payment.DefaultAccountNumber);
             }
             else
             {
