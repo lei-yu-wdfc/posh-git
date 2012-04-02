@@ -71,7 +71,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     _paymentDueDate = _detailsTable.FindElement(By.CssSelector(Ui.Get.AcceptedPage.PaymentDueDate));
                     break;
                 case (AUT.Uk):
-                    _nodeWrapper = Content.FindElement(By.CssSelector(Ui.Get.AcceptedPage.NodeWrap));
+                    //_nodeWrapper = Content.FindElement(By.CssSelector(Ui.Get.AcceptedPage.NodeWrap));
                     break;
             }
         }

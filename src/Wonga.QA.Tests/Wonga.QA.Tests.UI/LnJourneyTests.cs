@@ -63,9 +63,33 @@ namespace Wonga.QA.Tests.Ui
             var page = journey.ApplyForLoan(200, 10)
                            .FillApplicationDetails()
                            .WaitForAcceptedPage()
+                           .GoToMySummaryPage()
+                           .CurrentPage as MySummaryPage;
+        }
+
+        [Test, AUT(AUT.Uk), Pending("Example of uk Ln journey")]
+        public void UkFullLnJourneyTest()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder
+                .New()
+                .WithEmailAddress(email)
+                .Build();
+            Application application = ApplicationBuilder
+                .New(customer)
+                .Build();
+            application.RepayOnDueDate();
+            loginPage.LoginAs(email);
+
+            var journey = JourneyFactory.GetLnJourney(Client.Home());
+            var page = journey.ApplyForLoan(200, 10)
+                           .FillApplicationDetails()
+                           .WaitForAcceptedPage()
                            .FillAcceptedPage()
                            .GoToMySummaryPage()
                            .CurrentPage as MySummaryPage;
         }
+
     }
 }
