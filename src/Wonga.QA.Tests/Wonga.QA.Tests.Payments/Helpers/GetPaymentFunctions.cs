@@ -122,7 +122,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             var expectedRates = new List<TransactionEntity>();
             var counter = 1;
             var loanCreatedDate = DateTime.Today;
-            int numberOfDaysUntilStartOfLoan = Drive.Db.GetNumberOfDaysUntilStartOfLoan();
+            int numberOfDaysUntilStartOfLoan = DateHelper.GetNumberOfDaysUntilStartOfLoanForCa();
             var loanStartDate = DateTime.Today.AddDays(numberOfDaysUntilStartOfLoan);
 
             expectedRates.Add(CreatePaymentFunctions.CreateRowOfTypeTransaction());
