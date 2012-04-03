@@ -28,7 +28,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 						Drive.Db.SetServiceConfiguration("Mocks.HyphenAHVWebServiceEnabled", "false");
 
 						_originalServiceConfiguration.Add("Mocks.IovationEnabled", "true");
-						Drive.Db.SetServiceConfiguration("Mocks.IovationEnabled", "true");
+						Drive.Db.SetServiceConfiguration("Mocks.IovationEnabled", "false");
 					}
 					break;
 
@@ -45,7 +45,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 			Drive.Db.SetServiceConfigurations(_originalServiceConfiguration);
 		}
 
-		[Test, AUT(AUT.Za), Explicit]
+		[Test, AUT(AUT.Za), Pending]
 		public void WorkflowL0SingleWorkflowUsed()
 		{
 			var customer = CustomerBuilder.New().WithEmployer("Wonga").Build();

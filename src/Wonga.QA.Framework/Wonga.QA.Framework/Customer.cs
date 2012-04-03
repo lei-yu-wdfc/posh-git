@@ -113,6 +113,7 @@ namespace Wonga.QA.Framework
             var row = Drive.Db.Risk.EmploymentDetails.Single(cd => cd.AccountId == Id);
             row.EmployerName = employer;
             row.Submit();
+        	Do.Until(row.Refresh);
         }
 
         public string GetCcin()
