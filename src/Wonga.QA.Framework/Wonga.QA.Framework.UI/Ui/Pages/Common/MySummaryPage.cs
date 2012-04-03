@@ -12,6 +12,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
     {
         public MyAccountNavigationElement Navigation { get; set; }
         public SlidersElement Sliders { get; set; }
+        public TabsElement Tabs { get; set; }
         
         public MySummaryPage(UiClient client) : base(client)
         {
@@ -20,10 +21,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             {
                 case (AUT.Za) :
                     Navigation = new MyAccountNavigationElement(this);
+                    Tabs = new TabsElement(this);
                     break;
 
                 case (AUT.Ca) :
                     Navigation = new MyAccountNavigationElement(this);
+                    Tabs = new TabsElement(this);
                     LookForSliders();
                     break;
 

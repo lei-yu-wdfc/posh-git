@@ -10,5 +10,8 @@ namespace Wonga.QA.Framework.UI.Mappings.Sections
         public String FormId { get; set; }
         public String SecurityCode { get; set; }
         public String MinCash { get; set; }
+        public String ChangeMobileButton { get; set; }
+        public String EditPin { get; set; }
     }
+
 }

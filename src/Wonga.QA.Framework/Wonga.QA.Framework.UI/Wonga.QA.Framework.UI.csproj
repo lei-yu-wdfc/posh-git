@@ -70,6 +70,7 @@
     <Compile Include="Mappings\Ui\Elements\ContactElement.cs" />
     <Compile Include="Mappings\Ui\Elements\MyAccountNavigationElement.cs" />
     <Compile Include="Mappings\Ui\Elements\SurveyElement.cs" />
+    <Compile Include="Mappings\Ui\Elements\TabsElement.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\AboutUsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ApplyPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\BlogPage.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="Ui\Elements\LoginElement.cs" />
     <Compile Include="Ui\Elements\MyAccountNavigationElement.cs" />
     <Compile Include="Ui\Elements\SurveyElement.cs" />
+    <Compile Include="Ui\Elements\TabsElement.cs" />
     <Compile Include="Ui\Pages\Common\AboutUsPage.cs" />
     <Compile Include="Ui\Pages\Common\ApplyPage.cs" />
     <Compile Include="Ui\Pages\Common\BlogPage.cs" />

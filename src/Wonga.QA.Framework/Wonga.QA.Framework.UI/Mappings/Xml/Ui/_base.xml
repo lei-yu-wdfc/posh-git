@@ -268,4 +268,12 @@
     <WongaMoments>div.wongaTabs li:nth-child(4) a</WongaMoments>
     <WongaMomentsTitle>div.panes div:nth-child(4) h2</WongaMomentsTitle>
   </AboutUsPage>
+
+  <TabsElement>
+    <TabsForm>ul.menu</TabsForm>
+    <Home>li:nth-child(1)>a</Home>
+    <HowItWorks>li:nth-child(2)>a</HowItWorks>
+    <AboutUs>li:nth-child(3)>a</AboutUs>
+    <Advice>li:nth-child(4)>a</Advice>
+  </TabsElement>
 </Ui>
