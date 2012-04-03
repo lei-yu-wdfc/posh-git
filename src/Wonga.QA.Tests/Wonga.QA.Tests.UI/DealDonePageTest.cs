@@ -55,7 +55,7 @@ namespace Wonga.QA.Tests.Ui
             int randomAmount = _amountMin + (new Random()).Next(_amountMax - _amountMin);
             int randomDuration = _termMin + (new Random()).Next(_termMax - _termMin);
 
-            var journey = new Journey(Client.Home());
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
             var processingPage = journey.ApplyForLoan(randomAmount, randomDuration)
                                  .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                                  .FillAddressDetails()
@@ -83,7 +83,7 @@ namespace Wonga.QA.Tests.Ui
             int randomAmount = _amountMin + (new Random()).Next(_amountMax - _amountMin);
             int randomDuration = _termMin + (new Random()).Next(_termMax - _termMin);
 
-            var journey = new Journey(Client.Home());
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
             var processingPage = journey.ApplyForLoan(randomAmount, randomDuration)
                                  .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                                  .FillAddressDetails()
