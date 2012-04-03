@@ -45,7 +45,6 @@ namespace Wonga.QA.Tests.Comms
         [Description("This test verifies documents being generated as part of L0 process, which is a key prerequisite for emails to be sent (this last step involves 3rd party)")]
         public void RunPartialL0AndCheckForPrimaryUnsignedDirectorDocumentsAndEmailGenerated()
         {
-            //Vaklav can you please double check what exactly needs to be done here?
             var mainDirector = CustomerBuilder.New().Build();
             var listOfGuarantors = new List<CustomerBuilder>();
             for (var i = 0; i < NumberOfSecondaryDirectors; i++)
@@ -67,7 +66,6 @@ namespace Wonga.QA.Tests.Comms
         [Description("This test verifies documents being generated as part of L0 process, which is a key prerequisite for emails to be sent (this last step involves 3rd party)")]
         public void RunPartialL0AndCheckForPrimaryDirectorFundsAdvancedDocumentsAndEmail()
         {
-            //This too -> Looking at the code you want to build and not sign for secondary 
             var mainDirector = CustomerBuilder.New().Build();
             var listOfGuarantors = new List<CustomerBuilder>();
             for (var i = 0; i < NumberOfSecondaryDirectors; i++)

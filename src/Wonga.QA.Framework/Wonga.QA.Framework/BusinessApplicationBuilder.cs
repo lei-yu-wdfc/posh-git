@@ -133,6 +133,7 @@ namespace Wonga.QA.Framework
              * TODO : Make public signing/buildign methods in application (or Organisation?) / Throw Exception for WithUnsignedGuarantors with WithPartialGuarantors
              * TODO : Delete all the obsolete functions / Clean up Customer class / Create private functions for Build ?
              * TODO : Think of the implication of ExpectedDecision(...) with WithPartialGuarantors() and WithUnsignedGuarantors()
+             * TODO : Sign/Build only some of the guarantors
              */
             if (Guarantors.Count > 0 && CreateGuarantors)
             {

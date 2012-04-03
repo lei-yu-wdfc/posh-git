@@ -655,7 +655,7 @@ namespace Wonga.QA.Tests.Graydon
             //STEP4 - Create the guarantors list + send it to the application
             if (guarantors!=null)
             {
-                applicationBuilder.WithGuarantors(guarantors);
+                applicationBuilder.WithGuarantors(guarantors).WithPartialGuarantors();
             }
 
             //STEP5 - Build the application + send the list of guarantors
