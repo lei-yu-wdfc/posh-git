@@ -140,7 +140,17 @@ namespace Wonga.QA.Tests.Ui
                 Thread.Sleep(3000);
                 paymentPage.CloseButtonClick();
                 payment = Client.Payments();
-                Thread.Sleep(60000); // just for experement
+                int whileCount = 0;
+                while (accountNumber.Remove(0,3) != payment.DefaultAccountNumber)
+                {
+                    whileCount++;
+                    payment = Client.Payments();
+                    if (whileCount>50)
+                    {
+                        break;
+                    }
+                }
+                Console.WriteLine(whileCount);
                 Assert.AreEqual(accountNumber.Remove(0,3), payment.DefaultAccountNumber);
             }
             else
