@@ -14,7 +14,7 @@ using Wonga.QA.Framework.Db;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-    [Parallelizable(TestScope.All), AUT(AUT.Za, AUT.Wb)]
+    [AUT(AUT.Za, AUT.Wb)]
     class CheckpointApplicationElementNotOnBlacklistTests
     {
         //private const RiskMask TestMask = RiskMask.TESTBlacklist;
@@ -102,21 +102,14 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             var mainApplicant = CustomerBuilder.New().WithMiddleName(RiskMask.TESTNoCheck).Build();
             var organisation = OrganisationBuilder.New(mainApplicant).Build();
 
-            var guarantorList = new List<Customer>
+            var guarantorList = new List<CustomerBuilder>
                                     {
-                                        new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8), Get.GetDoB(),
-                                                     Get.GetMobilePhone())
-                                            {
-                                                MiddleName = _testMask.ToString(),
-                                            }
+                                        CustomerBuilder.New().WithMiddleName(_testMask),
                                     };
 
             var applicationBuilder = ApplicationBuilder.New(mainApplicant, organisation) as BusinessApplicationBuilder;
             applicationBuilder.WithGuarantors(guarantorList);
             var application = applicationBuilder.Build();
-
-            applicationBuilder.BuildGuarantors();
-            applicationBuilder.SignApplicationForSecondaryDirectors();
 
             Assert.IsNotNull(application);
 
@@ -159,21 +152,13 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             var mainApplicant = CustomerBuilder.New().WithMiddleName(RiskMask.TESTNoCheck).Build();
             var organisation = OrganisationBuilder.New(mainApplicant).Build();
 
-            var guarantorList = new List<Customer>
+            var guarantorList = new List<CustomerBuilder>
                                     {
-                                        new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), blacklistSurname, Get.GetDoB(),
-                                                     Get.GetMobilePhone())
-                                            {
-                                                MiddleName = _testMask.ToString(),
-                                            }
+                                        CustomerBuilder.New().WithSurname(blacklistSurname).WithMiddleName(_testMask),
                                     };
-
             var applicationBuilder = ApplicationBuilder.New(mainApplicant, organisation) as BusinessApplicationBuilder;
             applicationBuilder.WithGuarantors(guarantorList);
             var application = applicationBuilder.Build();
-
-            applicationBuilder.BuildGuarantors();
-            applicationBuilder.SignApplicationForSecondaryDirectors();
 
             Assert.IsNotNull(application);
 

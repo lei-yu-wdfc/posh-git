@@ -20,7 +20,9 @@ namespace Wonga.QA.Framework
         protected Dictionary<int, List<bool>> EidSessionInteraction = new Dictionary<int, List<bool>>();
 
         //WB specific members
-        protected List<Customer> Guarantors;
+        protected List<CustomerBuilder> Guarantors;
+        protected Boolean SignGuarantors;
+        protected Boolean CreateGuarantors;
 
         protected Action _setPromiseDateAndLoanTerm;
         private Func<int> _getDaysUntilStartOfLoan;

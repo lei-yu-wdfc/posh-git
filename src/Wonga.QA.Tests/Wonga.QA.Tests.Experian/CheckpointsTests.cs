@@ -28,8 +28,9 @@ namespace Wonga.QA.Tests.Experian
         {
             const String forename = "Unknown";
             const String surname = "Customer";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(), Get.GetMobilePhone());
-            var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTExperianApplicantIsNotDeceased,ApplicationDecisionStatus.Accepted);
+
+            var mainApplicantBuilder =CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicantIsNotDeceased);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
@@ -46,8 +47,9 @@ namespace Wonga.QA.Tests.Experian
         {
             const String forename = "kathleen";
             const String surname = "bridson";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(), Get.GetMobilePhone());
-            var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTExperianApplicantIsNotDeceased,ApplicationDecisionStatus.Accepted);
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicantIsNotDeceased);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
@@ -65,8 +67,9 @@ namespace Wonga.QA.Tests.Experian
         {
             const String forename = "Johnny";
             const String surname = "DeadGuy";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(), Get.GetMobilePhone());
-            var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTExperianApplicantIsNotDeceased,ApplicationDecisionStatus.Declined);
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicantIsNotDeceased);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
 
@@ -84,8 +87,9 @@ namespace Wonga.QA.Tests.Experian
         {
             const String forename = "kathleen";
             const String surname = "nicole";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(), Get.GetMobilePhone());
-            var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTExperianApplicationElementNotCIFASFlagged,ApplicationDecisionStatus.Accepted);
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicationElementNotCIFASFlagged);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
 
@@ -102,8 +106,9 @@ namespace Wonga.QA.Tests.Experian
         {
             const String forename = "laura";
             const String surname = "insolvent";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(), Get.GetMobilePhone());
-            var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTExperianApplicationElementNotCIFASFlagged, ApplicationDecisionStatus.Declined);
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicationElementNotCIFASFlagged);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
 
@@ -121,8 +126,9 @@ namespace Wonga.QA.Tests.Experian
         {
             const String forename = "kathleen";
             const String surname = "bridson";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(), Get.GetMobilePhone());
-            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTExperianCreditBureauDataIsAvailable, ApplicationDecisionStatus.Accepted);
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianCreditBureauDataIsAvailable);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
 
@@ -139,8 +145,9 @@ namespace Wonga.QA.Tests.Experian
         {
             const String forename = "Unknown";
             const String surname = "Customer";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(), Get.GetMobilePhone());
-            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTExperianCreditBureauDataIsAvailable, ApplicationDecisionStatus.Declined);
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianCreditBureauDataIsAvailable);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
 
@@ -158,8 +165,9 @@ namespace Wonga.QA.Tests.Experian
         {
             const String forename = "kathleen";
             const String surname = "nicole";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(), Get.GetMobilePhone());
-            var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTExperianApplicantIsSolvent,ApplicationDecisionStatus.Accepted);
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicantIsSolvent);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
 
@@ -176,8 +184,9 @@ namespace Wonga.QA.Tests.Experian
         {
             const String forename = "laura";
             const String surname = "insolvent";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(), Get.GetMobilePhone());
-            var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTExperianApplicantIsSolvent, ApplicationDecisionStatus.Declined);
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicantIsSolvent);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
 
@@ -198,8 +207,9 @@ namespace Wonga.QA.Tests.Experian
             const String forename = "kathleen";
             const String surname = "bridson";
             var correctDateOfBirth = new Date(new DateTime(1992, 1, 24), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, correctDateOfBirth, Get.GetMobilePhone());
-            var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTExperianCustomerDateOfBirthIsCorrect, ApplicationDecisionStatus.Accepted);
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithDateOfBirth(correctDateOfBirth).WithMiddleName(RiskMask.TESTExperianCustomerDateOfBirthIsCorrect);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
 
@@ -217,8 +227,9 @@ namespace Wonga.QA.Tests.Experian
             const String forename = "kathleen";
             const String surname = "bridson";
             var dateOfBirth = new Date(new DateTime(1990, 3, 21), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
-            var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTExperianCustomerDateOfBirthIsCorrect,ApplicationDecisionStatus.Declined);
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTExperianCustomerDateOfBirthIsCorrect);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
 
@@ -236,8 +247,9 @@ namespace Wonga.QA.Tests.Experian
             const String forename = "kathleen";
             const String surname = "bridson";
             var dateOfBirth = new Date(new DateTime(1973, 5, 11), DateFormat.Date);
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, dateOfBirth, Get.GetMobilePhone());
-            var application = CreateApplicationWithAsserts(mainApplicant,GoodCompanyRegNumber,RiskMask.TESTExperianCustomerDateOfBirthIsCorrect, ApplicationDecisionStatus.Accepted);
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTExperianCustomerDateOfBirthIsCorrect);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
 
@@ -255,9 +267,9 @@ namespace Wonga.QA.Tests.Experian
         {
             const String forename = "kathleen";
             const String surname = "bridson";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(),
-                                             Get.GetMobilePhone()) {CardNumber = Int64.Parse("4929188001506313")};
-            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTExperianPaymentCardIsValid, ApplicationDecisionStatus.Accepted);
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithPaymentCardNumber(Int64.Parse("4929188001506313")).WithMiddleName(RiskMask.TESTExperianPaymentCardIsValid);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
 
@@ -274,9 +286,9 @@ namespace Wonga.QA.Tests.Experian
         {
             const String forename = "kathleen";
             const String surname = "bridson";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(),
-                                             Get.GetMobilePhone()) { CardNumber = Int64.Parse("9999888877776666") };
-            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTExperianPaymentCardIsValid, ApplicationDecisionStatus.Declined);
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithPaymentCardNumber(Int64.Parse("9999888877776666")).WithMiddleName(RiskMask.TESTExperianPaymentCardIsValid);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
 
@@ -298,18 +310,15 @@ namespace Wonga.QA.Tests.Experian
         {
             const String forename = "unknown";
             const String surname = "customer";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8), Get.GetDoB(), Get.GetMobilePhone());
 
-            var guarantorList = new List<Customer>
+            var mainApplicantBuilder = CustomerBuilder.New();
+
+            var guarantorList = new List<CustomerBuilder>
                                     {
-                                        new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(),
-                                                     Get.GetMobilePhone())
-                                            {
-                                                MiddleName = RiskMask.TESTExperianApplicantIsNotDeceased.ToString(),
-                                            }
+                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicantIsNotDeceased),
                                     };
 
-            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTNoCheck, ApplicationDecisionStatus.Accepted, guarantorList);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted, guarantorList);
 
             var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
 
@@ -325,18 +334,15 @@ namespace Wonga.QA.Tests.Experian
         {
             const String forename = "kathleen";
             const String surname = "bridson";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8), Get.GetDoB(), Get.GetMobilePhone());
 
-            var guarantorList = new List<Customer>
+            var mainApplicantBuilder = CustomerBuilder.New();
+
+            var guarantorList = new List<CustomerBuilder>
                                     {
-                                        new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(),
-                                                     Get.GetMobilePhone())
-                                            {
-                                                MiddleName = RiskMask.TESTExperianApplicantIsNotDeceased.ToString(),
-                                            }
+                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicantIsNotDeceased),
                                     };
 
-            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTNoCheck, ApplicationDecisionStatus.Accepted, guarantorList);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted, guarantorList);
 
             var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
 
@@ -353,18 +359,16 @@ namespace Wonga.QA.Tests.Experian
         {
             const String forename = "Johnny";
             const String surname = "DeadGuy";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8), Get.GetDoB(), Get.GetMobilePhone());
 
-            var guarantorList = new List<Customer>
+            var mainApplicantBuilder = CustomerBuilder.New();
+
+            var guarantorList = new List<CustomerBuilder>
                                     {
-                                        new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(),
-                                                     Get.GetMobilePhone())
-                                            {
-                                                MiddleName = RiskMask.TESTExperianApplicantIsNotDeceased.ToString(),
-                                            }
+                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicantIsNotDeceased),
                                     };
 
-            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTNoCheck, ApplicationDecisionStatus.PreAccepted, guarantorList);
+
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.PreAccepted, guarantorList);
             Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
 
             var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Failed, 1);
@@ -383,17 +387,15 @@ namespace Wonga.QA.Tests.Experian
         {
             const String forename = "kathleen";
             const String surname = "nicole";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8), Get.GetDoB(), Get.GetMobilePhone());
-            var guarantorList = new List<Customer>
+
+            var mainApplicantBuilder = CustomerBuilder.New();
+
+            var guarantorList = new List<CustomerBuilder>
                                     {
-                                        new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(),
-                                                     Get.GetMobilePhone())
-                                            {
-                                                MiddleName = RiskMask.TESTExperianApplicationElementNotCIFASFlagged.ToString(),
-                                            }
+                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicationElementNotCIFASFlagged),
                                     };
 
-            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTNoCheck, ApplicationDecisionStatus.Accepted, guarantorList);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted, guarantorList);
 
             var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
 
@@ -410,17 +412,15 @@ namespace Wonga.QA.Tests.Experian
         {
             const String forename = "laura";
             const String surname = "insolvent";
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8), Get.GetDoB(), Get.GetMobilePhone());
-            var guarantorList = new List<Customer>
+
+            var mainApplicantBuilder = CustomerBuilder.New();
+
+            var guarantorList = new List<CustomerBuilder>
                                     {
-                                        new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(),
-                                                     Get.GetMobilePhone())
-                                            {
-                                                MiddleName = RiskMask.TESTExperianApplicationElementNotCIFASFlagged.ToString(),
-                                            }
+                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicationElementNotCIFASFlagged),
                                     };
 
-            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTNoCheck, ApplicationDecisionStatus.PreAccepted, guarantorList);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.PreAccepted, guarantorList);
             Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
 
             var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Failed, 1);
@@ -441,20 +441,14 @@ namespace Wonga.QA.Tests.Experian
             const String forename = "kathleen";
             const String surname = "bridson";
 
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB(), Get.GetMobilePhone());
+            var mainApplicantBuilder = CustomerBuilder.New();
 
-            var guarantorList = new List<Customer>
+            var guarantorList = new List<CustomerBuilder>
                                     {
-                                        new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(),
-                                                     Get.GetMobilePhone())
-                                            {
-                                                MiddleName = RiskMask.TESTExperianCreditBureauDataIsAvailable.ToString(),
-                                            }
+                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianCreditBureauDataIsAvailable),
                                     };
 
-
-            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTNoCheck, ApplicationDecisionStatus.Accepted, guarantorList);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted, guarantorList);
 
             var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
 
@@ -472,20 +466,14 @@ namespace Wonga.QA.Tests.Experian
             const String forename = "Unknown";
             const String surname = "Customer";
 
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB(), Get.GetMobilePhone());
+            var mainApplicantBuilder = CustomerBuilder.New();
 
-            var guarantorList = new List<Customer>
+            var guarantorList = new List<CustomerBuilder>
                                     {
-                                        new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(),
-                                                     Get.GetMobilePhone())
-                                            {
-                                                MiddleName = RiskMask.TESTExperianCreditBureauDataIsAvailable.ToString(),
-                                            }
+                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianCreditBureauDataIsAvailable),
                                     };
 
-
-            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTNoCheck, ApplicationDecisionStatus.PreAccepted, guarantorList);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.PreAccepted, guarantorList);
             Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
 
             var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Failed, 1);
@@ -505,20 +493,13 @@ namespace Wonga.QA.Tests.Experian
             const String forename = "kathleen";
             const String surname = "bridson";
 
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB(), Get.GetMobilePhone());
-
-            var guarantorList = new List<Customer>
+            var mainApplicantBuilder = CustomerBuilder.New();
+            var guarantorList = new List<CustomerBuilder>
                                     {
-                                        new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(),
-                                                     Get.GetMobilePhone())
-                                            {
-                                                MiddleName = RiskMask.TESTExperianApplicantIsSolvent.ToString(),
-                                            }
+                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicantIsSolvent),
                                     };
 
-
-            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTNoCheck, ApplicationDecisionStatus.Accepted, guarantorList);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted, guarantorList);
 
             var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
 
@@ -536,20 +517,14 @@ namespace Wonga.QA.Tests.Experian
             const String forename = "laura";
             const String surname = "insolvent";
 
-            var mainApplicant = new Customer(Guid.NewGuid(), Get.RandomEmail(), Get.RandomString(8), Get.RandomString(8),
-                                             Get.GetDoB(), Get.GetMobilePhone());
-
-            var guarantorList = new List<Customer>
+            var mainApplicantBuilder = CustomerBuilder.New();
+            var guarantorList = new List<CustomerBuilder>
                                     {
-                                        new Customer(Guid.NewGuid(), Get.RandomEmail(), forename, surname, Get.GetDoB(),
-                                                     Get.GetMobilePhone())
-                                            {
-                                                MiddleName = RiskMask.TESTExperianApplicantIsSolvent.ToString(),
-                                            }
+                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicantIsSolvent),
                                     };
 
 
-            var application = CreateApplicationWithAsserts(mainApplicant, GoodCompanyRegNumber, RiskMask.TESTNoCheck, ApplicationDecisionStatus.PreAccepted, guarantorList);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.PreAccepted, guarantorList);
             Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
 
             var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Failed, 1);
@@ -562,25 +537,17 @@ namespace Wonga.QA.Tests.Experian
 
         #endregion
 
-        private static Application CreateApplicationWithAsserts(Customer mainApplicant, String companyRegisteredNumber, RiskMask middlenameMask, ApplicationDecisionStatus applicationDecision, List<Customer> guarantors = null)
+        private static Application CreateApplicationWithAsserts(CustomerBuilder mainApplicantBuilder, String companyRegisteredNumber, ApplicationDecisionStatus applicationDecision, List<CustomerBuilder> guarantors = null)
         {
-            var customerBuilder = CustomerBuilder.New(mainApplicant.Id);
-            customerBuilder.ScrubForename(mainApplicant.Forename);
-            customerBuilder.ScrubSurname(mainApplicant.Surname);
-
-            if (mainApplicant.CardNumber != 0)
-                customerBuilder.WithPaymentCardNumber(mainApplicant.CardNumber);
-
-            if(!string.IsNullOrEmpty(mainApplicant.MobilePhoneNumber))
-                customerBuilder.WithMobileNumber(mainApplicant.MobilePhoneNumber);
+            mainApplicantBuilder.ScrubForename(mainApplicantBuilder.Forename);
+            mainApplicantBuilder.ScrubSurname(mainApplicantBuilder.Surname);
 
             //STEP 1 - Create the main director
-            var mainDirector = customerBuilder.WithMiddleName(middlenameMask.ToString()).WithForename(mainApplicant.Forename).WithSurname(mainApplicant.Surname).WithDateOfBirth(mainApplicant.DateOfBirth).Build();
+            var mainDirector = mainApplicantBuilder.Build();
 
             //STEP2 - Create the company
             var organisationBuilder = OrganisationBuilder.New(mainDirector).WithOrganisationNumber(companyRegisteredNumber);
             var organisation = organisationBuilder.Build();
-
 
             //STEP3 - Create the application
             var applicationBuilder = ApplicationBuilder.New(mainDirector, organisation).WithExpectedDecision(applicationDecision) as BusinessApplicationBuilder;
@@ -593,16 +560,6 @@ namespace Wonga.QA.Tests.Experian
 
             //STEP5 - Build the application + send the list of guarantors
             var application = applicationBuilder.Build();
-
-            if (applicationDecision != ApplicationDecisionStatus.Declined)
-            {
-                //STE6 - Build the extra guarantors + sign
-                if (guarantors != null)
-                {
-                    applicationBuilder.BuildGuarantors();
-                    applicationBuilder.SignApplicationForSecondaryDirectors();
-                }
-            }
 
             Assert.IsNotNull(application);
 

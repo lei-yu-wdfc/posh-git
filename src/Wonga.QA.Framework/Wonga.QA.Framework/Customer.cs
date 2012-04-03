@@ -31,7 +31,6 @@ namespace Wonga.QA.Framework
         {
             return Drive.Db.Ops.Accounts.Single(c => c.ExternalId == Id).Login;
         }
-
         public Customer(Guid id, string email, Guid bankAccountId)
         {
             Id = id;
@@ -39,6 +38,7 @@ namespace Wonga.QA.Framework
             BankAccountId = bankAccountId;
         }
 
+        [Obsolete("This is obsolete")]
         public Customer(Guid id,String email,String forename, String surname, Date dateOfBirth, String mobilePhoneNumber)
         {
             Id = id;

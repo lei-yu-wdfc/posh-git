@@ -14,12 +14,19 @@ namespace Wonga.QA.Framework
         {
             Company = company;
             Customer = customer;
-            Guarantors = new List<Customer>();
+            Guarantors = new List<CustomerBuilder>();
+            SignGuarantors = true;
+            CreateGuarantors = true;
         }
 
         public override Application Build()
         {
             _setPromiseDateAndLoanTerm();
+
+            /* STEP 0 - If i have guarantors i need to send the preaccepted decision
+             * The accepted one comes only after the guarantors did their part (created+signed)
+             */
+
             if (Guarantors.Count > 0 && Decision != ApplicationDecisionStatus.Declined)
             {
                 Decision = ApplicationDecisionStatus.PreAccepted;
@@ -60,9 +67,7 @@ namespace Wonga.QA.Framework
                                                                             {
                                                                                 r.AccountId = Customer.Id;
                                                                                 r.ApplicationId = Id;
-                                                                                //r.NumberOfGuarantors =Company.GetSecondaryDirectors().ToList().Count;
-                                                                                r.NumberOfGuarantors =
-                                                                                    Guarantors.Count;
+                                                                                r.NumberOfGuarantors = Guarantors.Count;
                                                                             }));
                 
 
@@ -121,6 +126,32 @@ namespace Wonga.QA.Framework
             * Set timeout to two minutes to compensate for long risk decision */
             WaitForRiskDecisionToBeMade();
 
+            /* STEP 7.1
+             * I create the guarantors 
+             * I wait for them to be present into the comms db
+             * For each -> I sign
+             * TODO : Make public signing/buildign methods in application (or Organisation?) / Throw Exception for WithUnsignedGuarantors with WithPartialGuarantors
+             * TODO : Delete all the obsolete functions / Clean up Customer class / Create private functions for Build ?
+             * TODO : Think of the implication of ExpectedDecision(...) with WithPartialGuarantors() and WithUnsignedGuarantors()
+             * TODO : Sign/Build only some of the guarantors
+             */
+            if (Guarantors.Count > 0 && CreateGuarantors)
+            {
+                foreach (var guarantorCustomerBuilder in Guarantors)
+                {
+                    guarantorCustomerBuilder.Build();
+                }
+
+                Do.With.Message("The guarantors and company mappings has not been created").Until(
+                    () =>
+                    Drive.Db.ContactManagement.DirectorOrganisationMappings.Count(
+                        p => p.OrganisationId == Company.Id && p.DirectorLevel > 0) == Guarantors.Count);
+
+                if(SignGuarantors)
+                    SignApplicationForSecondaryDirectors();
+            }
+
+
             /* STEP 8
              * And I wait for Payments to create the application, but only when the expected decision is Accepted */
             if (Decision == ApplicationDecisionStatus.Accepted)
@@ -142,6 +173,7 @@ namespace Wonga.QA.Framework
 
         #region Public Methods
 
+        [Obsolete]
         public void SignApplicationForSecondaryDirectors()
         {
             var guarantors = Drive.Db.ContactManagement.DirectorOrganisationMappings.Where(
@@ -152,6 +184,8 @@ namespace Wonga.QA.Framework
 
             Drive.Api.Commands.Post(requests);
         }
+
+        [Obsolete]
         public void BuildGuarantors(Boolean scrubNames = true)
         {
             foreach (var guarantor in Guarantors)
@@ -163,9 +197,7 @@ namespace Wonga.QA.Framework
                     guarantorCustomerBuilder.ScrubSurname(guarantor.Surname);
                 }
 
-                //THIS IS A HACK! WE NEED TO EXTEND THE QAF TO PROPERLY BUILD AND CREATE SECONDARY DIRECTORS AND ALL THIS STUFF.
-                guarantorCustomerBuilder.WithEmailAddress(guarantor.Email).WithForename(guarantor.Forename)
-                    .WithSurname(guarantor.Surname).WithDateOfBirth(guarantor.DateOfBirth).WithMobileNumber(guarantor.MobilePhoneNumber).WithMiddleName(!String.IsNullOrEmpty(guarantor.MiddleName) ? guarantor.MiddleName : RiskMask.TESTNoCheck.ToString()).Build();
+                guarantorCustomerBuilder.Build();
             }
         }
 
@@ -173,10 +205,29 @@ namespace Wonga.QA.Framework
 
         #region "With" Helper Methods
 
-        //TODO: Return BusinessApplicationBuilder not ApplicationBuilder
-        public BusinessApplicationBuilder WithGuarantors(List<Customer> guarantors)
+        public BusinessApplicationBuilder WithGuarantors(List<CustomerBuilder> guarantors)
         {
             Guarantors = guarantors;
+            return this;
+        }
+
+        /// <summary>
+        /// Choose this option if you want an incomplete L0 jurney when the guarantors didnt start their jurney yet
+        /// </summary>
+        /// <returns></returns>
+        public BusinessApplicationBuilder WithPartialGuarantors()
+        {
+            CreateGuarantors = false;
+            return this;
+        }
+
+        /// <summary>
+        /// Choose this option if you want an incomplete L0 when the guarantors did start their jurney but they didnt sign yet
+        /// </summary>
+        /// <returns></returns>
+        public BusinessApplicationBuilder WithUnsignedGuarantors()
+        {
+            SignGuarantors = false;
             return this;
         }
 
