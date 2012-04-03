@@ -9,7 +9,7 @@ namespace Wonga.QA.Framework.UI
 {
     public class SourceTestHelper
     {
-        public static void VerifyDoubleclickTagValues(UiClient client, List<KeyValuePair<string, string>> list)
+        public static void SourceContainsTokens(UiClient client, List<KeyValuePair<string, string>> list)
         {
             foreach(var pair in list)
             {
