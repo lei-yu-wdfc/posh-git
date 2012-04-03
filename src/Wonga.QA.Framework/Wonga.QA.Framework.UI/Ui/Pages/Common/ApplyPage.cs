@@ -45,6 +45,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                 Client.Driver.FindElement(By.CssSelector(Ui.Get.ApplyPage.PopupSaveButton)).Click();
                 Do.Until(IsPopupCloseButtonDisplayed);
                 _popupCloseButton.Click();
+                Do.While(IsPopupCloseButtonDisplayed);
             }
         }
         private bool IsEditMobileNumberDisplayed()

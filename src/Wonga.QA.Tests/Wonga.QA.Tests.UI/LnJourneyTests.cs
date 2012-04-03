@@ -14,7 +14,7 @@ namespace Wonga.QA.Tests.Ui
 {
     class LnJourneyTests : UiTest
     {
-        [Test, AUT(AUT.Za), JIRA("QA-196")]
+        [Test, AUT(AUT.Za), JIRA("QA-196"), Pending("Fixing")]
         public void LnCustomerTakesNewLoanAndChangesTheMobilePhoneThenChangesShouldBeReflected()
         {
             var loginPage = Client.Login();
@@ -58,6 +58,32 @@ namespace Wonga.QA.Tests.Ui
             //.FillAcceptedPage()
             //.GoToMySummaryPage()
             //.CurrentPage as MySummaryPage;
+        }
+
+        [Test, AUT(AUT.Za), Pending("Not completed yet")]
+        public void LnCustomerChangesMobilePhoneAndEntersInvalidPinShouldNotBeAbleToTakeLoan()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            string name = Get.GetName();
+            string surname = Get.RandomString(10);
+            Customer customer = CustomerBuilder
+                .New()
+                .WithEmailAddress(email)
+                .WithForename(name)
+                .WithSurname(surname)
+                .Build();
+            Application application = ApplicationBuilder
+                .New(customer)
+                .Build();
+            application.RepayOnDueDate();
+            var mySummaryPage = loginPage.LoginAs(email);
+            var journey = JourneyFactory.GetLnJourney(Client.Home());
+            var applyPage = journey.ApplyForLoan(200, 10).CurrentPage as ApplyPage;
+
+            applyPage.SetNewMobilePhone = "0111111111";
+            applyPage.ApplicationSection.SetPin = "1111";
+
         }
 
         [Test, AUT(AUT.Ca), Pending("Example of CA Ln journey")]
