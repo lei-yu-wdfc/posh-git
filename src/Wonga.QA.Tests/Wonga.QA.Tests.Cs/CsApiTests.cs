@@ -29,14 +29,6 @@ namespace Wonga.QA.Tests.Cs
             ConfigurationFunctions.SetBankGatewayTestMode(_bankGatewayTestModeOriginal);
         }
 
-        [Test, Explicit]
-        [Description("Demo test for CsApi driver")]
-        public void ThisIsSparta()
-        {
-            ValidatorException exception = Assert.Throws<ValidatorException>(() => Drive.Cs.Queries.Post(new GetRepaymentArrangementsQuery { ApplicationId = Guid.NewGuid() }));
-            Assert.Contains(exception.Errors, "Payments_Application_NotFound");
-        }
-
         [Test]
         public void GetScheduledPaymentsTest()
         {
