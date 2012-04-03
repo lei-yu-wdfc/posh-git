@@ -30,7 +30,6 @@ namespace Wonga.QA.Tests.Ui
             acceptedPage.SignAgreementConfirm();
             acceptedPage.SignDirectDebitConfirm();
             var dealDone = acceptedPage.Submit();
-
         }
 
        [Test, AUT(AUT.Ca), Pending("CA WIP,RC FE seems broken - postponing the push of the selenium tests")]
