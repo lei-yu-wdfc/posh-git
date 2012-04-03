@@ -14,7 +14,7 @@ namespace Wonga.QA.Tests.Ui
 {
     class LnJourneyTests : UiTest
     {
-        [Test, AUT(AUT.Za), JIRA("QA-196")]
+        [Test, AUT(AUT.Za), JIRA("QA-196"), Pending("Fixing")]
         public void LnCustomerTakesNewLoanAndChangesTheMobilePhoneThenChangesShouldBeReflected()
         {
             var loginPage = Client.Login();
