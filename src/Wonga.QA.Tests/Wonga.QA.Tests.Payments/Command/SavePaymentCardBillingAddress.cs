@@ -20,10 +20,12 @@ namespace Wonga.QA.Tests.Payments.Command
             var customer = CustomerBuilder.New().Build();
             var organisation = OrganisationBuilder.New(customer).Build();
 
-            var billingAddress = Do.With.Message("No billing address was added for a payment card").Until(() => Drive.Db.Payments.PaymentCardsBases.Single(c => c.ExternalId == organisation.GetPaymentCard()).BillingAddressEntity);
+            var billingAddressId = Do.With.Message("No billing address was added for a payment card").Until(() => Drive.Data.Payments.Db.PaymentCardsBase.FindByExternalId(organisation.GetPaymentCard()).BillingAddressId);
+            var billingAddress = Drive.Data.Payments.Db.BillingAddress.FindByBillingAddressId(billingAddressId);
 
-            Assert.IsFalse(string.IsNullOrEmpty(billingAddress.AddressLine1));
-            Assert.IsFalse(string.IsNullOrEmpty(billingAddress.AddressLine2));
+            Assert.IsFalse(string.IsNullOrEmpty(billingAddress.Flat));
+            Assert.IsFalse(string.IsNullOrEmpty(billingAddress.HouseName) && string.IsNullOrEmpty(billingAddress.HouseNumber));
+            Assert.IsFalse(string.IsNullOrEmpty(billingAddress.Street));
             Assert.IsFalse(string.IsNullOrEmpty(billingAddress.Country));
             Assert.IsFalse(string.IsNullOrEmpty(billingAddress.County));
             Assert.IsFalse(string.IsNullOrEmpty(billingAddress.PostCode));

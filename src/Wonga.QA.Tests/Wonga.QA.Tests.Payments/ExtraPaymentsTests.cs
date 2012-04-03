@@ -28,19 +28,21 @@ namespace Wonga.QA.Tests.Payments
 
         private void CreateExtraPayment(decimal extraPaymentAmount, Guid applicationId)
         {
-            Drive.Msmq.Payments.Send(new CreateTransactionCommand
-                                          {
-                                              Amount = extraPaymentAmount,
-                                              ApplicationId = applicationId,
-                                              Currency = CurrencyCodeIso4217Enum.GBP,
-                                              ExternalId = Guid.NewGuid(),
-                                              ComponentTransactionId = Guid.Empty,
-                                              PostedOn = DateTime.Now,
-                                              Scope = PaymentTransactionScopeEnum.Credit,
-                                              Source = PaymentTransactionSourceEnum.System,
-                                              Type = PaymentTransactionEnum.Cheque
-                                          });
+            var command = new CreateTransactionCommand
+                              {
+                                  Amount = extraPaymentAmount,
+                                  ApplicationId = applicationId,
+                                  Currency = CurrencyCodeIso4217Enum.GBP,
+                                  ExternalId = Guid.NewGuid(),
+                                  ComponentTransactionId = Guid.Empty,
+                                  PostedOn = DateTime.Now,
+                                  Scope = PaymentTransactionScopeEnum.Credit,
+                                  Source = PaymentTransactionSourceEnum.System,
+                                  Type = PaymentTransactionEnum.Cheque
+                              };
 
+            Drive.Msmq.Payments.Send(command);
+            Do.With.Timeout(2).Message("Transaction was not created").Until(() => Drive.Data.Payments.Db.Transations.FindExternalId(command.ExternalId));
             // Wait for the TX to be processed
             Thread.Sleep(15000);
         }
