@@ -14,7 +14,7 @@ namespace Wonga.QA.Tests.Ui
 {
     class LnJourneyTests : UiTest
     {
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-196"), Pending("Not completed yet")]
+        [Test, AUT(AUT.Za), JIRA("QA-196")]
         public void LnCustomerTakesNewLoanAndChangesTheMobilePhoneThenChangesShouldBeReflected()
         {
             var loginPage = Client.Login();
@@ -40,9 +40,19 @@ namespace Wonga.QA.Tests.Ui
             var applyPage = journey.ApplyForLoan(200, 10)
                 .SetName(name, surname).CurrentPage as ApplyPage;
             applyPage.SetNewMobilePhone = "0111111111";
-            
+            applyPage.ApplicationSection.SetPin = "0000";
+            journey.CurrentPage = applyPage.Submit() as ProcessingPage;
+            mySummaryPage = journey.WaitForAcceptedPage()
+                                .FillAcceptedPage()
+                                .GoToMySummaryPage()
+                                .CurrentPage as MySummaryPage;
+            myPersonalDetails = mySummaryPage.Navigation.MyPersonalDetailsButtonClick();
+            Assert.AreNotEqual(oldMobilePhone, myPersonalDetails.GetMobilePhone);
+            Assert.AreEqual("0111111111", myPersonalDetails.GetMobilePhone);
+            var mobileFromDb =
+                Drive.Data.Comms.Db.CustomerDetails.FindAllBy(AccountId: customer.Id).FirstOrDefault().MobilePhone;
 
-
+            Assert.AreEqual("0111111111", mobileFromDb);
             //.FillApplicationDetails()
             //.WaitForAcceptedPage()
             //.FillAcceptedPage()

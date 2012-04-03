@@ -23,6 +23,13 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         {
             set { _minCash.SendValue(value); }
         }
+        public String SetPin
+        {
+            set
+            {
+                Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.ApplicationSection.EditPin)).SendValue(value);
+            }
+        }
         public ApplicationSection(BasePage page)
             : base(Ui.Get.ApplicationSection.FormId, page)
         {

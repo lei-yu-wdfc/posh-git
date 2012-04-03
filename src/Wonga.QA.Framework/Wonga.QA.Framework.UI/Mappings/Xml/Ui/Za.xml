@@ -122,6 +122,8 @@
 
   <ApplyPage>
     <EditMobileNumber>#edit-new-mobile-number-za</EditMobileNumber>
+    <PopupSaveButton>#edit-submit[value='Save']</PopupSaveButton>
+    <PopupCloseButton>#edit-submit[value='Close']</PopupCloseButton>
   </ApplyPage>
 
   

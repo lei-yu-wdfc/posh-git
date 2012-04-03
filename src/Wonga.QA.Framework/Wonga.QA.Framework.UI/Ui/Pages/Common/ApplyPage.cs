@@ -13,6 +13,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
     public class ApplyPage : BasePage, IApplyPage
     {
         private IWebElement _editMobileNumber;
+        private IWebElement _popupCloseButton;
         public ApplicationSection ApplicationSection { get; set; }
         public ApplyPage(UiClient client)
             : base(client)
@@ -41,14 +42,20 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                 ApplicationSection.ClickChangeMobileButton();
                 Do.Until(IsEditMobileNumberDisplayed);
                 _editMobileNumber.SendValue(value);
-                Client.Driver.FindElement(By.CssSelector(Ui.Get.ApplyPage.Submit)).Click();
-
+                Client.Driver.FindElement(By.CssSelector(Ui.Get.ApplyPage.PopupSaveButton)).Click();
+                Do.Until(IsPopupCloseButtonDisplayed);
+                _popupCloseButton.Click();
             }
         }
         private bool IsEditMobileNumberDisplayed()
         {
             _editMobileNumber = Client.Driver.FindElement(By.CssSelector(Ui.Get.ApplyPage.EditMobileNumber));
             return _editMobileNumber.Displayed;
+        }
+        private bool IsPopupCloseButtonDisplayed()
+        {
+            _popupCloseButton = Client.Driver.FindElement(By.CssSelector(Ui.Get.ApplyPage.PopupCloseButton));
+            return _popupCloseButton.Displayed;
         }
     }
 }
