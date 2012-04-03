@@ -116,7 +116,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-201"), Pending]
+        [Test, AUT(AUT.Za), JIRA("QA-201")]
         public void WhenLoggedCustomerWithoutLiveLoanAddsNewBankAccountItShouldBecomePrimary()
         {
             string accountNumber = "1234567";
@@ -140,7 +140,17 @@ namespace Wonga.QA.Tests.Ui
                 Thread.Sleep(3000);
                 paymentPage.CloseButtonClick();
                 payment = Client.Payments();
-                Thread.Sleep(5000);
+                int whileCount = 0;
+                while (accountNumber.Remove(0,3) != payment.DefaultAccountNumber)
+                {
+                    whileCount++;
+                    payment = Client.Payments();
+                    if (whileCount>50)
+                    {
+                        break;
+                    }
+                }
+                Console.WriteLine(whileCount);
                 Assert.AreEqual(accountNumber.Remove(0,3), payment.DefaultAccountNumber);
             }
             else
