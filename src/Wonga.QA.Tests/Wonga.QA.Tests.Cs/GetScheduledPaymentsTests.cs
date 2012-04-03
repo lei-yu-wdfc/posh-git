@@ -7,12 +7,12 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Cs;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Msmq;
+using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
 
 namespace Wonga.QA.Tests.Cs
 {
-    [Parallelizable(TestScope.All)]
-    public class CsApiTests
+    public class GetScheduledPaymentsTests
     {
         private bool _bankGatewayTestModeOriginal;
 
@@ -29,7 +29,7 @@ namespace Wonga.QA.Tests.Cs
             ConfigurationFunctions.SetBankGatewayTestMode(_bankGatewayTestModeOriginal);
         }
 
-        [Test]
+        [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
         public void GetScheduledPaymentsTest()
         {
             Customer customer = CustomerBuilder.New().Build();
