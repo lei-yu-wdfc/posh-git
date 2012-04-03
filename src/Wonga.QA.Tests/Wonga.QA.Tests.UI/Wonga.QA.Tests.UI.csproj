@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AboutUsTest.cs" />
+    <Compile Include="BehaviourAndAdvertTracking.cs" />
     <Compile Include="DealDonePageTest.cs" />
     <Compile Include="ForgotPassword.cs" />
     <Compile Include="HelpTest.cs" />
