@@ -34,6 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="SalesforceApplicationStatusUpdateTests.cs" />
     <Compile Include="SalesforcePushBusinessBankAccountDetails.cs" />
     <Compile Include="SalesforcePushBusinessLoanApplicationDetails.cs" />
     <Compile Include="SalesforcePushBusinessPaymentCardDataTests.cs" />

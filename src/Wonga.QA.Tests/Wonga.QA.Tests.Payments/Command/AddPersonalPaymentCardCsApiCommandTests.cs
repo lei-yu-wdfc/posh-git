@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
@@ -38,9 +37,9 @@ namespace Wonga.QA.Tests.Payments.Command
                                      new
                                          {
                                              Type = "American Express",
-                                             Number = "1141226233334844",
+                                             Number = "4444333322221113",
                                              SecurityCode = "227",
-                                             ExpiryDate = lastDayOfThisMonth.AddMonths(20),
+                                             ExpiryDate = lastDayOfThisMonth.AddMonths(19),
                                              IsPrimary = false,
                                              IsCreditCard = false,
                                              HolderName="John Smith"

@@ -38,7 +38,7 @@ namespace Wonga.QA.Tests.Payments.Command
                                      new
                                          {
                                              Type = "American Express",
-                                             Number = "1141226233334844",
+                                             Number = "1111222233334444",
                                              SecurityCode = "227",
                                              ExpiryDate = lastDayOfThisMonth.AddMonths(20),
                                              IsPrimary = false,

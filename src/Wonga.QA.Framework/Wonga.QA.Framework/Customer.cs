@@ -81,8 +81,9 @@ namespace Wonga.QA.Framework
                 r.CardType = cardType;
             });
             Drive.Api.Commands.Post(cmd);
-            Do.Until(() => Drive.Db.Payments.PersonalPaymentCards
+            Do.With.Timeout(2).Until(() => Drive.Db.Payments.PersonalPaymentCards
                          .Single(c => c.AccountId == this.Id
+                                      && c.PaymentCardsBaseEntity.Type == cardType
                                       && c.PaymentCardsBaseEntity.MaskedNumber == cardNumber.MaskedCardNumber()));
         }
 
