@@ -83,6 +83,7 @@ namespace Wonga.QA.Framework
             Drive.Api.Commands.Post(cmd);
             Do.Until(() => Drive.Db.Payments.PersonalPaymentCards
                          .Single(c => c.AccountId == this.Id
+                                      && c.PaymentCardsBaseEntity.Type == cardType
                                       && c.PaymentCardsBaseEntity.MaskedNumber == cardNumber.MaskedCardNumber()));
         }
 
