@@ -30,6 +30,8 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 					{
 						Drive.Db.SetServiceConfiguration("FeatureSwitch.ZA.ReputationPredictionCheckpoint", "true");
 						ResetReputationScoreCutoff();
+
+						Drive.Db.SetServiceConfiguration("Mocks.IovationEnabled", "true");
 					}
 					break;
 				default:
@@ -177,8 +179,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			        where ra.ApplicationId == application.Id
 			        join pf in db.Risk.PmmlFactors on ra.RiskApplicationId equals pf.RiskApplicationId
 			        join f in db.Risk.Factors on pf.FactorId equals f.FactorId
-			        select f.Name).ToArray();
-
+			        select f.Name);
 		}
 
 		private void SetReputationScoreCutoff(double cutoff)

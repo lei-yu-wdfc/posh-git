@@ -12,7 +12,11 @@ namespace Wonga.QA.Framework.UI
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+		public string NationalId { get; set; } //Not used yet
+    	public DateTime DateOfBirth { get; set; } //not used yet
+
         public BasePage CurrentPage { get; set; }
+		
 
          public CaL0Journey(BasePage homePage)
         {

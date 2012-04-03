@@ -10,10 +10,10 @@ namespace Wonga.QA.Framework.UI
 {
     class ZaL0Journey : IL0ConsumerJourney
     {
-        public string FirstName { get; set; }
-
-        public string LastName { get; set; }
-
+        public String FirstName { get; set; }
+        public String LastName { get; set; }
+		public String NationalId { get; set; }
+		public DateTime DateOfBirth { get; set; }
         public BasePage CurrentPage { get; set; }
 
         public ZaL0Journey(BasePage homePage)
@@ -21,6 +21,8 @@ namespace Wonga.QA.Framework.UI
             CurrentPage = homePage as HomePage;
             FirstName = Get.GetName();
             LastName = Get.RandomString(10);
+        	DateOfBirth = new DateTime(1957, 10, 30);
+        	NationalId = Get.GetNIN(DateOfBirth, true);
         }
         public IL0ConsumerJourney ApplyForLoan(int amount, int duration)
         {
@@ -39,8 +41,8 @@ namespace Wonga.QA.Framework.UI
             personalDetailsPage.YourName.FirstName = FirstName;
             personalDetailsPage.YourName.LastName = LastName;
             personalDetailsPage.YourName.Title = "Mr";
-            personalDetailsPage.YourDetails.Number = "5710300020087";
-            personalDetailsPage.YourDetails.DateOfBirth = "30/Oct/1957";
+        	personalDetailsPage.YourDetails.Number = NationalId.ToString();//"5710300020087";
+        	personalDetailsPage.YourDetails.DateOfBirth = DateOfBirth.ToString("dd/MMM/yyyy");
             personalDetailsPage.YourDetails.Gender = "Female";
             personalDetailsPage.YourDetails.HomeStatus = "Owner Occupier";
             personalDetailsPage.YourDetails.HomeLanguage = "English";
@@ -57,7 +59,7 @@ namespace Wonga.QA.Framework.UI
             personalDetailsPage.EmploymentDetails.SalaryPaidToBank = true;
             personalDetailsPage.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("dd MMM yyyy");
             personalDetailsPage.EmploymentDetails.IncomeFrequency = "Monthly";
-            personalDetailsPage.ContactingYou.CellPhoneNumber = "0720000098";
+        	personalDetailsPage.ContactingYou.CellPhoneNumber = Get.GetMobilePhone();
             personalDetailsPage.ContactingYou.EmailAddress = email;
             personalDetailsPage.ContactingYou.ConfirmEmailAddress = email;
             personalDetailsPage.PrivacyPolicy = true;
@@ -75,7 +77,7 @@ namespace Wonga.QA.Framework.UI
             addressPage.Street = "high road";
             addressPage.Town = "Kuku";
             addressPage.County = "Province";
-            addressPage.PostCode = "1234";
+            addressPage.PostCode = Get.GetPostcode();
             addressPage.AddressPeriod = "2 to 3 years";
             CurrentPage = addressPage.Next() as AccountDetailsPage;
             return this;

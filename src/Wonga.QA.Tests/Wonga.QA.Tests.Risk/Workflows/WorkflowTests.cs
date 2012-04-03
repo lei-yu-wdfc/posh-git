@@ -15,7 +15,37 @@ namespace Wonga.QA.Tests.Risk.Workflows
 	[AUT(AUT.Za)]
 	public partial class WorkflowTests
 	{
-		[Test, AUT(AUT.Za), Explicit]
+		private Dictionary<string, string> _originalServiceConfiguration = new Dictionary<string, string>();
+		
+		[FixtureSetUp]
+		public void FixtureSetUp()
+		{
+			switch (Config.AUT)
+			{
+				case (AUT.Za):
+					{
+						_originalServiceConfiguration.Add("Mocks.HyphenAHVWebServiceEnabled", Drive.Db.GetServiceConfiguration("Mocks.HyphenAHVWebServiceEnabled").Value);
+						Drive.Db.SetServiceConfiguration("Mocks.HyphenAHVWebServiceEnabled", "false");
+
+						_originalServiceConfiguration.Add("Mocks.IovationEnabled", "true");
+						Drive.Db.SetServiceConfiguration("Mocks.IovationEnabled", "false");
+					}
+					break;
+
+				default:
+					{
+						return;
+					}
+			}
+		}
+
+		[FixtureTearDown]
+		public void FixtureTearDown()
+		{
+			Drive.Db.SetServiceConfigurations(_originalServiceConfiguration);
+		}
+
+		[Test, AUT(AUT.Za), Pending]
 		public void WorkflowL0SingleWorkflowUsed()
 		{
 			var customer = CustomerBuilder.New().WithEmployer("Wonga").Build();
@@ -34,7 +64,19 @@ namespace Wonga.QA.Tests.Risk.Workflows
 		{
 			var customer = BuildCustomerToBeAccepted();
 
-			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Pending).WithIovationBlackBox("Accept").WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.ReadyToSign).Build();
+		}
+
+		[Test, AUT(AUT.Za), Pending]
+		public void WorkflowApplicationLnAccepted()
+		{
+			var customer = BuildCustomerToBeAccepted();
+			customer.UpdateEmployer(RiskMask.TESTCustomerIsEmployed.ToString());
+			ApplicationBuilder.New(customer).Build().RepayOnDueDate();
+
+			customer.UpdateEmployer("Wonga");
+
+			ApplicationBuilder.New(customer).Build();
 		}
 
 		#region Helpers
@@ -51,7 +93,11 @@ namespace Wonga.QA.Tests.Risk.Workflows
 							.WithForename("ANITHA")
 							.WithSurname("ESSACK")
 							.WithDateOfBirth(new Date(new DateTime(1957, 12, 19)))
-							.WithNationalNumber("5712190106083").Build();
+							.WithNationalNumber("5712190106083")
+							.WithMobileNumber(Get.GetMobilePhone())
+							.WithBankAccountNumber(Get.GetBankAccountNumber())
+							.WithPostcodeInAddress(Get.GetPostcode())
+							.Build();
 					}
 					break;
 
