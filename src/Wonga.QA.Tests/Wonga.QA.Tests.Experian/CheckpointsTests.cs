@@ -535,6 +535,61 @@ namespace Wonga.QA.Tests.Experian
                                                                      RiskVerificationDefinitions.CreditBureauCustomerIsSolventVerification);
         }
 
+        /* Payment card is valid */
+
+        [Test, AUT(AUT.Wb)]
+        [JIRA("SME-1155")]
+        public void TestExperianGuarantorPaymentCardIsValid_LoanIsApproved()
+        {
+            const String forename = "Ashely";
+            const String surname = "Marma";
+            var paymentCardNumber = Int64.Parse("4929188001506313");
+
+            var mainApplicantBuilder = CustomerBuilder.New();
+            var listOfGuarantors = new List<CustomerBuilder>
+                                       {
+                                           CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithPaymentCardNumber(paymentCardNumber).WithMiddleName(RiskMask.TESTExperianPaymentCardIsValid),
+                                       };
+
+
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted, listOfGuarantors);
+
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
+            var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.PaymentCardIsValid,
+                                                                     RiskCheckpointStatus.Verified,
+                                                                     RiskVerificationDefinitions.ExperianPaymentCardIsValidVerification);
+        }
+
+        [Test, AUT(AUT.Wb)]
+        [JIRA("SME-1155")]
+        public void TestExperianGuarantorPaymentCardIsInValid_LoanIsDeclined()
+        {
+            const String forename = "Ashely";
+            const String surname = "Marma";
+            var paymentCardNumber = Int64.Parse("9999888877776666");
+
+            var mainApplicantBuilder = CustomerBuilder.New();
+            var listOfGuarantors = new List<CustomerBuilder>
+                                       {
+                                           CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithPaymentCardNumber(paymentCardNumber).WithMiddleName(RiskMask.TESTExperianPaymentCardIsValid),
+                                       };
+
+
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.PreAccepted, listOfGuarantors);
+            Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
+
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
+            var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Failed, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.PaymentCardIsValid,
+                                                                     RiskCheckpointStatus.Failed,
+                                                                     RiskVerificationDefinitions.ExperianPaymentCardIsValidVerification);
+        }
+
         #endregion
 
         private static Application CreateApplicationWithAsserts(CustomerBuilder mainApplicantBuilder, String companyRegisteredNumber, ApplicationDecisionStatus applicationDecision, List<CustomerBuilder> guarantors = null)
