@@ -97,6 +97,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual OurCustomersPage OurCustomersPage { get; set; }
         public virtual ResponsibleLendingPage ResponsibleLendingPage { get; set; }
         public virtual WhyUseUsPage WhyUseUsPage { get; set; }
+        public virtual TopupAgreementPage TopupAgreementPage { get; set; }
 
         #endregion
 
