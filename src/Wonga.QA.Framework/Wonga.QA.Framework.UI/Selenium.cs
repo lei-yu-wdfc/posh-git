@@ -77,6 +77,12 @@ namespace Wonga.QA.Framework.UI
             if (element.Selected != value)
                 element.Click();
         }
+        
+        public static void DragAndDropToOffset(this IWebElement element, int xOffset, int yOffset)
+        {
+            Actions actions = new Actions(element.Driver());
+            actions.DragAndDropToOffset(element, xOffset, yOffset).Perform();
+        }
 
         //Does not work in Firefox and IE only Chrome atm.
         //public static void MouseOver(this IWebElement element)

@@ -208,6 +208,79 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-175")]
+        public void ChangeLoanAmountAndDurationOnPersonalDetailsViaSlidersMotion()
+        {
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var personalDetailsPage = journey.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
+            personalDetailsPage.ClickSliderToggler();
+            var firstTotalToRepayValue = personalDetailsPage.GetTotalToRepay;
+
+            personalDetailsPage.MoveAmountSlider = 20;
+            personalDetailsPage.MoveDurationSlider = 20;
+
+            string totalToRepayAtPersonalDetails = personalDetailsPage.GetTotalToRepay;
+            string repaymentDateAtPersonalDetails = personalDetailsPage.GetRepaymentDate;
+
+            Assert.AreNotEqual(firstTotalToRepayValue, totalToRepayAtPersonalDetails);
+
+            var acceptedPage = journey.FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                     .FillAddressDetails()
+                                     .FillAccountDetails()
+                                     .FillBankDetails()
+                                     .WaitForAcceptedPage().CurrentPage as AcceptedPage;
+
+            string actualTotalToRepay = acceptedPage.GetTotalToRepay;
+            string actualRepaymentDate = acceptedPage.GetRepaymentDate;
+
+            Assert.AreEqual(totalToRepayAtPersonalDetails, actualTotalToRepay);
+            Assert.AreEqual(repaymentDateAtPersonalDetails, actualRepaymentDate);
+            var dealDonePage = journey.FillAcceptedPage().CurrentPage as DealDonePage;
+
+            actualTotalToRepay = dealDonePage.GetRapaymentAmount();
+
+            var date = DateTime.ParseExact(dealDonePage.GetRepaymentDate(), "d MMMM yyyy", null);
+
+            switch (date.Day % 10)
+            {
+                case 1:
+                    actualRepaymentDate = (date.Day > 10 && date.Day < 20)
+                                                ? String.Format("{0:dddd d\\t\\h MMM yyyy}", date)
+                                                : String.Format("{0:dddd d\\s\\t MMM yyyy}", date);
+                    break;
+                case 2:
+                    actualRepaymentDate = (date.Day > 10 && date.Day < 20)
+                                                ? String.Format("{0:dddd d\\t\\h MMM yyyy}", date)
+                                                : String.Format("{0:dddd d\\n\\d MMM yyyy}", date);
+                    break;
+                case 3:
+                    actualRepaymentDate = (date.Day > 10 && date.Day < 20)
+                                                ? String.Format("{0:dddd d\\t\\h MMM yyyy}", date)
+                                                : String.Format("{0:dddd d\\r\\d MMM yyyy}", date);
+                    break;
+                default:
+                    actualRepaymentDate = String.Format("{0:dddd d\\t\\h MMM yyyy}", date);
+                    break;
+
+            }
+
+            Assert.AreEqual(totalToRepayAtPersonalDetails, actualTotalToRepay);
+            Assert.AreEqual(repaymentDateAtPersonalDetails, actualRepaymentDate);
+
+            switch (Config.AUT)
+            {
+                case AUT.Ca:
+                    var mySummaryPage = journey.GoToMySummaryPage().CurrentPage as MySummaryPage;
+
+                    actualTotalToRepay = mySummaryPage.GetTotalToRepay;
+
+                    Assert.AreEqual(totalToRepayAtPersonalDetails, actualTotalToRepay);
+                    //TODO add the dates comparison
+                    break;
+                //TODO case AUT.Za:
+            }
+        }
+
         [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-183")]
         public void EnterDifferentPasswordsAtAccountDetailsPageShouldCauseWarningMessage()
         {

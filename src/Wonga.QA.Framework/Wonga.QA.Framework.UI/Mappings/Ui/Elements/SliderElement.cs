@@ -7,6 +7,8 @@ namespace Wonga.QA.Framework.UI.Mappings.Elements
     public sealed class SlidersElement
     {
         public String FormId { get; set; }
+        public String AmountSlider { get; set; }
+        public String DurationSlider { get; set; }
         public String LoanAmount { get; set; }
         public String LoanDuration { get; set; }
         public String SubmitButton { get; set; }
