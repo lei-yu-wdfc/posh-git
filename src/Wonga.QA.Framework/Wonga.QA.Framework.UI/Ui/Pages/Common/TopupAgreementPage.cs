@@ -1,14 +1,15 @@
 ﻿using OpenQA.Selenium;
+using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
 using Wonga.QA.Framework.UI.Mappings;
 
 namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
-    public class TopUpAgreementPage : BasePage
+    public class TopupAgreementPage : BasePage, ITopupDecisionPage
     {
         private IWebElement _nextButton;
         private IWebElement _agreementLegals;
 
-        public TopUpAgreementPage(UiClient client) : base(client)
+        public TopupAgreementPage(UiClient client) : base(client)
         {
             
             _nextButton = Content.FindElement(By.CssSelector(Ui.Get.TopupAgreementPage.TopupAgreementAcceptButton));

@@ -73,6 +73,7 @@
     <Compile Include="Mappings\Ui\Pages\Common\AboutUsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ApplyPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\BlogPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\TopupProcessingPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ForgotPasswordPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\HomePage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\HowItWorksPage.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="Ui\Pages\Common\AboutUsPage.cs" />
     <Compile Include="Ui\Pages\Common\ApplyPage.cs" />
     <Compile Include="Ui\Pages\Common\BlogPage.cs" />
+    <Compile Include="Ui\Pages\Common\TopupProcessingPage.cs" />
     <Compile Include="Ui\Pages\Common\TopupDealDonePage.cs" />
     <Compile Include="Ui\Pages\Common\DealDonePage.cs" />
     <Compile Include="Ui\Pages\Common\DeclinedPage.cs" />
@@ -151,6 +153,7 @@
     <Compile Include="Ui\Pages\Common\ResponsibleLendingPage.cs" />
     <Compile Include="Ui\Pages\Common\TopupAgreementPage.cs" />
     <Compile Include="Ui\Pages\Common\WhyUseUsPage.cs" />
+    <Compile Include="Ui\Pages\Interfaces\ITopupDecisionPage.cs" />
     <Compile Include="Ui\Pages\SalesForce\BaseSfPage.cs" />
     <Compile Include="Ui\Pages\SalesForce\SalesForceCustomerDetailPage.cs" />
     <Compile Include="Ui\Pages\SalesForce\SalesForceHomePage.cs" />
