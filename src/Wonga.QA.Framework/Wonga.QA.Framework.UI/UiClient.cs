@@ -116,6 +116,12 @@ namespace Wonga.QA.Framework.UI
             return new AboutUsPage(this);
         }
 
+        public HowItWorksPage HowItWorks()
+        {
+            Driver.Navigate().GoToUrl(Config.Ui.Home + "/how-it-works");
+            return new HowItWorksPage(this);
+        }
+
         public Image Screen()
         {
             var screenshot = ((ITakesScreenshot)Driver).GetScreenshot();

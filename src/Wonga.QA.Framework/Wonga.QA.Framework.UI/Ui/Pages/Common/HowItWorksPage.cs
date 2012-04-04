@@ -6,9 +6,9 @@ using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
 using Wonga.QA.Framework.UI.Mappings;
 
-namespace Wonga.QA.Framework.UI.Ui.Pages.Common
+namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
-    class HowItWorksPage : BasePage
+    public class HowItWorksPage : BasePage
     {
         public SlidersElement Sliders { get; set; }
 
@@ -16,6 +16,14 @@ namespace Wonga.QA.Framework.UI.Ui.Pages.Common
             : base(client)
         {
             Sliders = new SlidersElement(this);
+        }
+
+        public PersonalDetailsPage ApplyForLoan(int amount, int duration)
+        {
+
+            Sliders.HowMuch = amount.ToString();
+            Sliders.HowLong = duration.ToString();
+            return Sliders.Apply() as PersonalDetailsPage;
         }
     }
 }
