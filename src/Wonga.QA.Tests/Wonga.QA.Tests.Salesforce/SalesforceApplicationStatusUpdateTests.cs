@@ -44,13 +44,13 @@ namespace Wonga.QA.Tests.Salesforce
                          {
                              var app = Salesforce.GetApplicationById(application.Id);
                              //NOTE: this string should not be hardcoded or we shoud use Status_ID__c
-                             return app.Status__c == @"Due Today";
+                             return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.DueToday;
                          });
         }
 
         [Test]
         [AUT(AUT.Uk), JIRA("UK-924")]
-        [Ignore("PaymentSchedulingSaga issue in UK prevents this from working atm")]
+        //[Ignore("PaymentSchedulingSaga issue in UK prevents this from working atm")]
         public void PutIntoArrears_ChangesSalesforceApplicationStatus_ToInArrears()
         {
             Customer customer;
@@ -61,15 +61,14 @@ namespace Wonga.QA.Tests.Salesforce
             application.MakeDueToday();
             Do.Until(() => paymentSagaEntity = Drive.Db.OpsSagas.ScheduledPaymentSagaEntities.SingleOrDefault(s => s.ApplicationGuid == application.Id));
             Drive.Msmq.Payments.Send(new TimeoutMessage() { SagaId = paymentSagaEntity.Id });
-            Do.With.While(paymentSagaEntity.Refresh);
-            Do.Until(() => paymentSagaEntity = Drive.Db.OpsSagas.ScheduledPaymentSagaEntities
-                .SingleOrDefault(s => s.ApplicationGuid == application.Id && s.PaymentsAttempted == 2));
-            Drive.Msmq.Payments.Send(new TimeoutMessage() { SagaId = paymentSagaEntity.Id });
+            Do.While(paymentSagaEntity.Refresh);
+            Do.While(() => paymentSagaEntity = Drive.Db.OpsSagas.ScheduledPaymentSagaEntities
+                .SingleOrDefault(s => s.ApplicationGuid == application.Id));
             Do.Until(() =>
             {
                 var app = Salesforce.GetApplicationById(application.Id);
                 //NOTE: this string should not be hardcoded or we shoud use Status_ID__c
-                return app.Status__c == @"In Arrears";
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.InArrears;
             });
 
         }

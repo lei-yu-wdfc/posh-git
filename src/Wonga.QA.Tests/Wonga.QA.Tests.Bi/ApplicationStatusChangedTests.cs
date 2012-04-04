@@ -39,7 +39,7 @@ namespace Wonga.QA.Tests.Bi
             Do.Until(() =>
                          {
                              var app = sales.GetApplicationById(application.Id);
-                             return app.Status__c == "Live (not Due)";
+                             return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live;
                          });
         }
     }
