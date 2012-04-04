@@ -48,6 +48,10 @@
 		<RepayAmount>#content-area span.blue-text</RepayAmount>
 	</DealDonePage>
 
+  <TopupDealDonePage>
+    <AccountLink>#content-area h2 a</AccountLink>
+  </TopupDealDonePage>
+
   <AcceptedPage>
     <FormId>#wonga-loan-approve-form</FormId>
     <TotalToRepay>div#content-area span.blue-text</TotalToRepay>
