@@ -81,6 +81,7 @@
     <Compile Include="Mappings\Ui\Pages\Common\MySummaryPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\OurCustomersPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ResponsibleLendingPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\TopupAgreementPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\WhyUseUsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceCustomerDetailPage.cs" />
     <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceHomePage.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="Ui\Pages\Common\MySummaryPage.cs" />
     <Compile Include="Ui\Pages\Common\OurCustomersPage.cs" />
     <Compile Include="Ui\Pages\Common\ResponsibleLendingPage.cs" />
+    <Compile Include="Ui\Pages\Common\TopupAgreementPage.cs" />
     <Compile Include="Ui\Pages\Common\WhyUseUsPage.cs" />
     <Compile Include="Ui\Pages\SalesForce\BaseSfPage.cs" />
     <Compile Include="Ui\Pages\SalesForce\SalesForceCustomerDetailPage.cs" />

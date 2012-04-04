@@ -277,4 +277,10 @@
     <AboutUs>li:nth-child(3)>a</AboutUs>
     <Advice>li:nth-child(4)>a</Advice>
   </TabsElement>
+  
+  <TopupAgreementPage>
+    <TopupAgreementAcceptButton>div#id-accept</TopupAgreementAcceptButton>
+    <TopupAgreementscroll>div#id-agreementscroll</TopupAgreementscroll>
+  </TopupAgreementPage>
+  
 </Ui>
