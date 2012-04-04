@@ -131,8 +131,9 @@
 
   <InternationalElement>
     <InternationalTrigger>#international-trigger</InternationalTrigger>
-    <InternationalPanelZa>#international-panel div ul li:nth-child(1) a</InternationalPanelZa>
-    <InternationalPanelUk>#international-panel div ul li:nth-child(2) a</InternationalPanelUk>
+    <InternationalPanelZa>.en-ZA.first a</InternationalPanelZa>
+    <InternationalPanelCa>.en-CA.first a</InternationalPanelCa>
+    <InternationalPanelUk>.en-UK.last a</InternationalPanelUk>
   </InternationalElement>
 
   <PersonalDetailsPage>
