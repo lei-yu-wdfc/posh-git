@@ -4,6 +4,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Gallio.Framework.Assertions;
+using MbUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
@@ -143,6 +145,26 @@ namespace Wonga.QA.Framework.UI
         {
             Driver.Navigate().GoToUrl(Config.SalesforceUi.Home);
             return new SalesForceLoginPage(this);
+        }
+
+        public void SourceContains(List<KeyValuePair<string, string>> list)
+        {
+            foreach (var pair in list)
+            {
+                try
+                {
+                    Assert.IsTrue(Driver.PageSource.Contains(String.Format("{0}: {1}", pair.Key, pair.Value)));
+                }
+                catch (AssertionException exception)
+                {
+                    throw new AssertionException(String.Format("{0} - failed on {1}: {2}", exception.Message, pair.Key, pair.Value));
+                }
+            }
+        }
+
+        public void SourceContains(string token)
+        {
+            Assert.IsTrue(Driver.PageSource.Contains(token));
         }
 
     }
