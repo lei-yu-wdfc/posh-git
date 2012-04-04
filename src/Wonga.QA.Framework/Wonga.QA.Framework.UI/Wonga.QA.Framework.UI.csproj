@@ -119,7 +119,6 @@
     <Compile Include="Mappings\Ui\Sections\YourDetailsSection.cs" />
     <Compile Include="Mappings\Ui\Sections\YourNameSection.cs" />
     <Compile Include="Mappings\Xml\XmlMapper.cs" />
-    <Compile Include="SourceTestHelper.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="Ui\Elements\BaseElement.cs" />
     <Compile Include="Ui\Elements\ContactElement.cs" />
