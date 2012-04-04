@@ -324,7 +324,13 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-       
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-170")]
+        public void CustomerOnHowItWorksPageShouldBeAbleUseSlidersProperly()
+        {
+            var howItWorks = Client.HowItWorks();
+            var personalDetailsPage = howItWorks.ApplyForLoan(200, 10);
+            Assert.IsTrue(personalDetailsPage is PersonalDetailsPage);
+        }
 
     }
 }
