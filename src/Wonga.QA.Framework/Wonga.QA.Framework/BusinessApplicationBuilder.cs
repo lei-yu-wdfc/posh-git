@@ -130,8 +130,7 @@ namespace Wonga.QA.Framework
              * I create the guarantors 
              * I wait for them to be present into the comms db
              * For each -> I sign
-             * TODO : Make public signing/buildign methods in application (or Organisation?) / Throw Exception for WithUnsignedGuarantors with WithPartialGuarantors
-             * TODO : Delete all the obsolete functions / Clean up Customer class / Create private functions for Build ?
+             * TODO : Throw Exception for WithUnsignedGuarantors with WithPartialGuarantors
              * TODO : Think of the implication of ExpectedDecision(...) with WithPartialGuarantors() and WithUnsignedGuarantors()
              * TODO : Sign/Build only some of the guarantors
              */
@@ -173,7 +172,6 @@ namespace Wonga.QA.Framework
 
         #region Public Methods
 
-        [Obsolete]
         public void SignApplicationForSecondaryDirectors()
         {
             var guarantors = Drive.Db.ContactManagement.DirectorOrganisationMappings.Where(
@@ -184,8 +182,6 @@ namespace Wonga.QA.Framework
 
             Drive.Api.Commands.Post(requests);
         }
-
-        [Obsolete]
         public void BuildGuarantors(Boolean scrubNames = true)
         {
             foreach (var guarantor in Guarantors)
