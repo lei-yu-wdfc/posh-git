@@ -5,7 +5,6 @@ using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Db.OpsSagas;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Comms.Helpers;
 using Wonga.QA.Tests.Core;
@@ -184,9 +183,8 @@ namespace Wonga.QA.Tests.Comms
 
 		private static void TimeoutNotificationSagaForDays(Application application, int days)
 		{
-			InArrearsNoticeSagaEntity saga =
+			var saga =
 				Do.Until(() =>
-				         (InArrearsNoticeSagaEntity)
 				         InArrearsNoticeSagaEntities.FindByAccountId(application.AccountId));
 			Assert.IsNotNull(saga);
 
@@ -196,7 +194,6 @@ namespace Wonga.QA.Tests.Comms
 			}
 			Assert.IsNotNull(Do.Until(
 				() =>
-				(InArrearsNoticeSagaEntity)
 				InArrearsNoticeSagaEntities.FindBy(AccountId: application.AccountId, DaysInArrears: days)));
 		}
 
