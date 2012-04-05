@@ -127,6 +127,7 @@
     <Compile Include="Test.cs" />
     <Compile Include="Ui\Elements\BaseElement.cs" />
     <Compile Include="Ui\Elements\ContactElement.cs" />
+    <Compile Include="Ui\Elements\SmallTopupSliders.cs" />
     <Compile Include="Ui\Elements\FAQElement.cs" />
     <Compile Include="Ui\Elements\HelpElement.cs" />
     <Compile Include="Ui\Elements\InternationalElement.cs" />
