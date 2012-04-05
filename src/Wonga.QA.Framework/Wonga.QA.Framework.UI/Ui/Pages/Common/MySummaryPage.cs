@@ -13,6 +13,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public MyAccountNavigationElement Navigation { get; set; }
         public SlidersElement Sliders { get; set; }
         public TabsElement Tabs { get; set; }
+        public TopupSlidersElement TopupSliders { get; set; }
         
         public MySummaryPage(UiClient client) : base(client)
         {
@@ -34,6 +35,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     Tabs = new TabsElement(this);
                     break;
 
+                case (AUT.Uk):
+                    Navigation = new MyAccountNavigationElement(this);
+                    Tabs = new TabsElement(this);
+                    LookForSliders();
+                    LookForTopupSliders();
+                    break;
             }
                 
             
@@ -53,6 +60,20 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                 return false;
             }
         }
+
+        public bool LookForTopupSliders()
+        {
+            try
+            {
+                TopupSliders = new TopupSlidersElement(this);
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+        }
+
         private bool IsMySummaryTitleExists()
         {
 

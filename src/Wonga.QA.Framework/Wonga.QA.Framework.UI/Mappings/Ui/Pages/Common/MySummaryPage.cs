@@ -24,5 +24,12 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String PopupMySummaryTitle { get; set; }
         public String PopupSummaryDetailsTable { get; set; }
 
+        //--FE elements--
+        public String YouCan { get; set; }
+        public String Promise { get; set; }
+        public String OptionsCloud { get; set; }
+        public String IntroText { get; set; }
+        public String StatusMessage { get; set; }
+
     }
 }

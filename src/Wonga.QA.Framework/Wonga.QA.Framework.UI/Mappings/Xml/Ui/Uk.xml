@@ -69,4 +69,21 @@
     <MinCash>#edit-min-cash</MinCash>
   </ApplicationSection>
 
+  <MyAccountNavigationSection>
+    <MySummary>.menu-mlid-2869</MySummary>
+    <MyPaymentsDetails>.menu-mlid-2870</MyPaymentsDetails>
+    <MyPersonalDetails>.menu-mlid-2871</MyPersonalDetails>
+  </MyAccountNavigationSection>
+  
+  <TopupSlidersElement>
+    <FormId>#wonga-sliders-form</FormId>
+    <LoanAmount>#edit-loan-amount</LoanAmount>
+    <SubmitButton>#edit-submit</SubmitButton>
+    <TotalAmount>span.loan-amount</TotalAmount>
+    <TotalFees>span.loan-fees</TotalFees>
+    <TotalToRepay>span.loan-total</TotalToRepay>
+    <AmountMinusButton>#wonga-amount-slider-wrapper button.slider-minus</AmountMinusButton>
+    <AmountPlusButton>#wonga-amount-slider-wrapper button.slider-plus</AmountPlusButton>
+  </TopupSlidersElement>
+
 </Ui>

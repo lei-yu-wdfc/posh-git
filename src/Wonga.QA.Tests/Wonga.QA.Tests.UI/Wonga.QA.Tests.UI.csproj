@@ -54,7 +54,10 @@
     <Compile Include="SecondLoanTest.cs" />
     <Compile Include="SliderTests.cs" />
     <Compile Include="SurveyTest.cs" />
+
     <Compile Include="TagCloudTests.cs" />
+    <Compile Include="TopupSliderTests.cs" />
+
     <Compile Include="UiTest.cs" />
     <Compile Include="L0DeclinedLoan.cs" />
   </ItemGroup>
