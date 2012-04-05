@@ -5,6 +5,7 @@ using Wonga.QA.Framework.UI.Mappings.Pages.Wb;
 using Wonga.QA.Framework.UI.Mappings.Sections;
 using Wonga.QA.Framework.UI.Mappings.Pages.SalesForce;
 
+
 namespace Wonga.QA.Framework.UI.Mappings
 {
     public class Ui
@@ -98,7 +99,8 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual ResponsibleLendingPage ResponsibleLendingPage { get; set; }
         public virtual WhyUseUsPage WhyUseUsPage { get; set; }
         public virtual TopupAgreementPage TopupAgreementPage { get; set; }
-
+        public virtual TopupDealDonePage TopupDealDonePage { get; set; }
+        public virtual TopupProcessingPage TopupProcessingPage { get; set; }
         #endregion
 
         #region SalesForcePages
