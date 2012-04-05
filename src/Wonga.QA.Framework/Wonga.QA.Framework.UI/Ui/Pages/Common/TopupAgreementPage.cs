@@ -4,7 +4,7 @@ using Wonga.QA.Framework.UI.Mappings;
 
 namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
-    public class TopupAgreementPage : BasePage/*, ITopupDecisionPage*/
+    public class TopupAgreementPage : BasePage, ITopupDecisionPage
     {
         private IWebElement _nextButton;
         private IWebElement _agreementLegals;
