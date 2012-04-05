@@ -38,7 +38,6 @@ namespace Wonga.QA.Tests.Ui
 						_surname = "ESSACK";
 						_nationalId = "5712190106083";
 						_dateOfBirth = new DateTime(1957, 12, 19);
-
 					}
 					break;
 
@@ -55,7 +54,7 @@ namespace Wonga.QA.Tests.Ui
 			Drive.Db.SetServiceConfigurations(_originalServiceConfiguration);
 		}
 
-		[Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za), Pending()]
 		public void EndToEndApplicationZaL0()
 		{
 			var journey = JourneyFactory.GetL0Journey(Client.Home());
