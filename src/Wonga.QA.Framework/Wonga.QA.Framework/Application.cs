@@ -110,6 +110,27 @@ namespace Wonga.QA.Framework
 			return this;
 		}
 
+        public Application UpdateNextDueDate(int days)
+        {
+            ApplicationEntity application = Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id);
+            FixedTermLoanApplicationEntity fixedApp = Drive.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationId == application.ApplicationId);
+
+            var span = new TimeSpan(days, 0, 0, 0);
+            Drive.Db.UpdateNextDueDate(fixedApp, span);
+
+            return this;
+        }
+
+        public Application UpdateAcceptedOnDate(int days)
+        {
+            ApplicationEntity application = Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id);
+
+            var span = new TimeSpan(days, 0, 0, 0);
+            Drive.Db.MoveAcceptedOnDate(application, span);
+            return this;
+        }
+
+        
         private void RewindAppDates(ApplicationEntity application)
         {
             TimeSpan span = application.FixedTermLoanApplicationEntity.NextDueDate.Value - DateTime.Today;
