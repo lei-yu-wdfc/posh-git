@@ -421,7 +421,7 @@ namespace Wonga.QA.Tests.Ui
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             Application application = ApplicationBuilder.New(customer)
                 .Build();
-            application.RepayOnDueDate();  // to take LN status
+            application.RepayOnDueDate(); // to take LN status
             foreach (string account in accounts)
             {
                 var page = loginPage.LoginAs(email);
@@ -450,5 +450,52 @@ namespace Wonga.QA.Tests.Ui
                 }
             }
         }
+
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-215")]
+        public void MyAccountPostcodeMustBeTheSameAsUserEntered()
+        {
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var addressPage = journey.ApplyForLoan(200, 10)
+                                         .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                         .CurrentPage as AddressDetailsPage;
+            string postcode;
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    postcode = Get.GetPostcode();
+                    addressPage.FlatNumber = "25";
+                    addressPage.Street = "high road";
+                    addressPage.Town = "Kuku";
+                    addressPage.County = "Province";
+                    addressPage.PostCode = postcode;
+                    addressPage.AddressPeriod = "2 to 3 years";
+                    journey.CurrentPage = addressPage.Next() as AccountDetailsPage;
+                    break;
+
+                case AUT.Ca:
+                    postcode = "V4F3A9";
+                    addressPage.FlatNumber = "1403";
+                    addressPage.Street = "Edward";
+                    addressPage.Town = "Hearst";
+                    addressPage.PostCode = postcode;
+                    addressPage.AddressPeriod = "2 to 3 years";
+                    addressPage.PostOfficeBox = "C12345";
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+
+            }
+            var mySummaryPage = journey.FillAccountDetails()
+                                    .FillBankDetails()
+                                    .WaitForAcceptedPage()
+                                    .FillAcceptedPage()
+                                    .GoToMySummaryPage()
+                                    .CurrentPage as MySummaryPage;
+            var myPersonalDetailsPage = mySummaryPage.Navigation.MyPersonalDetailsButtonClick();
+
+            Assert.AreEqual(postcode, myPersonalDetailsPage.GetPostcode);
+        }
+
     }
 }
