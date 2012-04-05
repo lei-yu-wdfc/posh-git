@@ -44,7 +44,7 @@ namespace Wonga.QA.Tests.Ui
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_Homepage"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "995820"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
-            SourceTestHelper.SourceContainsTokens(page.Client, doubleClickTokensList);
+            SourceContains(doubleClickTokensList);
 
             // Check that the page contains the wonga_doubleclick module v1.0 signature:
             Assert.IsTrue(page.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
@@ -72,12 +72,12 @@ namespace Wonga.QA.Tests.Ui
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_L0_PersonalDetails"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "995827"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
-            SourceTestHelper.SourceContainsTokens(personalDetailsPage.Client, doubleClickTokensList);
+            SourceContains(doubleClickTokensList);
 
             // Check that we don't have an empty u1 value (e.g. "u1: []"):
             doubleClickTokensBlackList.Clear();
             doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
-            SourceTestHelper.SourceDoesNotContainTokens(personalDetailsPage.Client, doubleClickTokensBlackList);
+            SourceDoesNotContain(doubleClickTokensBlackList);
 
             // Go to the second page:
             var addressDetailsPage = journey.FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask)).CurrentPage as AddressDetailsPage;
@@ -96,12 +96,12 @@ namespace Wonga.QA.Tests.Ui
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_L0_Address"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "995828"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
-            SourceTestHelper.SourceContainsTokens(addressDetailsPage.Client, doubleClickTokensList);
+            SourceContains(doubleClickTokensList);
 
             // Check that we don't have an empty u1 value (e.g. "u1: []"):
             doubleClickTokensBlackList.Clear();
             doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
-            SourceTestHelper.SourceDoesNotContainTokens(addressDetailsPage.Client, doubleClickTokensBlackList);
+            SourceDoesNotContain(doubleClickTokensBlackList);
 
             // Go to the third page:
             var accountDetailsPage = journey.FillAddressDetails().CurrentPage as AccountDetailsPage;
@@ -120,12 +120,12 @@ namespace Wonga.QA.Tests.Ui
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_L0_Account"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "995832"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
-            SourceTestHelper.SourceContainsTokens(accountDetailsPage.Client, doubleClickTokensList);
+            SourceContains(doubleClickTokensList);
 
             // Check that we don't have an empty u1 value (e.g. "u1: []"):
             doubleClickTokensBlackList.Clear();
             doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
-            SourceTestHelper.SourceDoesNotContainTokens(accountDetailsPage.Client, doubleClickTokensBlackList);
+            SourceDoesNotContain(doubleClickTokensBlackList);
 
             // Go to the fourth page:
             var personalBankAccountPage = journey.FillAccountDetails().CurrentPage as PersonalBankAccountPage;
@@ -144,12 +144,12 @@ namespace Wonga.QA.Tests.Ui
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_L0_Bank"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "996615"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
-            SourceTestHelper.SourceContainsTokens(personalBankAccountPage.Client, doubleClickTokensList);
+            SourceContains(doubleClickTokensList);
 
             // Check that we don't have an empty u1 value (e.g. "u1: []"):
             doubleClickTokensBlackList.Clear();
             doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
-            SourceTestHelper.SourceDoesNotContainTokens(personalBankAccountPage.Client, doubleClickTokensBlackList);
+            SourceDoesNotContain(doubleClickTokensBlackList);
 
             // Go to the fifth (processing) page:
             var waitForAcceptedPage = journey.FillBankDetails().CurrentPage as ProcessingPage;
@@ -168,12 +168,12 @@ namespace Wonga.QA.Tests.Ui
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_L0_Processing"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "996616"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
-            SourceTestHelper.SourceContainsTokens(waitForAcceptedPage.Client, doubleClickTokensList);
+            SourceContains( doubleClickTokensList);
 
             // Check that we don't have an empty u1 value (e.g. "u1: []"):
             doubleClickTokensBlackList.Clear();
             doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
-            SourceTestHelper.SourceDoesNotContainTokens(waitForAcceptedPage.Client, doubleClickTokensBlackList);
+            SourceDoesNotContain(doubleClickTokensBlackList);
 
             // Go to the sixth (accepted) page:
             var acceptedPage = journey.WaitForAcceptedPage().CurrentPage as AcceptedPage;
@@ -192,12 +192,12 @@ namespace Wonga.QA.Tests.Ui
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_L0_Accept"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "996618"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
-            SourceTestHelper.SourceContainsTokens(acceptedPage.Client, doubleClickTokensList);
+            SourceContains(doubleClickTokensList);
 
             // Check that we don't have an empty u1 value (e.g. "u1: []"):
             doubleClickTokensBlackList.Clear();
             doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
-            SourceTestHelper.SourceDoesNotContainTokens(acceptedPage.Client, doubleClickTokensBlackList);
+            SourceDoesNotContain(doubleClickTokensBlackList);
 
             // Complete the accept page:
             var dealDonePage = journey.FillAcceptedPage().CurrentPage as DealDonePage;
@@ -216,12 +216,12 @@ namespace Wonga.QA.Tests.Ui
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_L0_DealDone"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "996620"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
-            SourceTestHelper.SourceContainsTokens(acceptedPage.Client, doubleClickTokensList);
+            SourceContains(doubleClickTokensList);
 
             // Check that we don't have an empty u1 value (e.g. "u1: []"):
             doubleClickTokensBlackList.Clear();
             doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
-            SourceTestHelper.SourceDoesNotContainTokens(acceptedPage.Client, doubleClickTokensBlackList);
+            SourceDoesNotContain(doubleClickTokensBlackList);
 
             // Go to the eigth (my-account) page:
             Client.Driver.Navigate().GoToUrl(Config.Ui.Home + "my-account");
@@ -240,12 +240,12 @@ namespace Wonga.QA.Tests.Ui
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_Ln_MyAccount"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "996622"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
-            SourceTestHelper.SourceContainsTokens(page.Client, doubleClickTokensList);
+            SourceContains(doubleClickTokensList);
 
             // Check that we don't have an empty u1 value (e.g. "u1: []"):
             doubleClickTokensBlackList.Clear();
             doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
-            SourceTestHelper.SourceDoesNotContainTokens(page.Client, doubleClickTokensBlackList);
+            SourceDoesNotContain(doubleClickTokensBlackList);
         }
     }
 }

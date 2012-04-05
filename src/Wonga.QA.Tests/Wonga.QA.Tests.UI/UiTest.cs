@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using Gallio.Framework;
+using Gallio.Framework.Assertions;
 using MbUnit.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI;
@@ -147,5 +149,37 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
+        public void SourceContains(string token)
+        {
+            Assert.IsTrue(Client.Driver.PageSource.Contains(token));
+        }
+        public void SourceContains(List<KeyValuePair<string, string>> list)
+        {
+            foreach (var pair in list)
+            {
+                try
+                {
+                    Assert.IsTrue(Client.Driver.PageSource.Contains(String.Format("{0}: {1}", pair.Key, pair.Value)));
+                }
+                catch (AssertionException exception)
+                {
+                    throw new AssertionException(String.Format("{0} - failed on {1}: {2}", exception.Message, pair.Key, pair.Value));
+                }
+            }
+        }
+        public void SourceDoesNotContain(List<KeyValuePair<string, string>> list)
+        {
+            foreach (var pair in list)
+            {
+                try
+                {
+                    Assert.IsFalse(Client.Driver.PageSource.Contains(String.Format("{0}: {1}", pair.Key, pair.Value)));
+                }
+                catch (AssertionException exception)
+                {
+                    throw new AssertionException(String.Format("{0} - failed on {1}: {2}", exception.Message, pair.Key, pair.Value));
+                }
+            }
+        }
     }
 }

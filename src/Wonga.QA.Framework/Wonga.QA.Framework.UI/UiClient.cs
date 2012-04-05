@@ -148,26 +148,5 @@ namespace Wonga.QA.Framework.UI
             Driver.Navigate().GoToUrl(Config.SalesforceUi.Home);
             return new SalesForceLoginPage(this);
         }
-
-        public void SourceContains(List<KeyValuePair<string, string>> list)
-        {
-            foreach (var pair in list)
-            {
-                try
-                {
-                    Assert.IsTrue(Driver.PageSource.Contains(String.Format("{0}: {1}", pair.Key, pair.Value)));
-                }
-                catch (AssertionException exception)
-                {
-                    throw new AssertionException(String.Format("{0} - failed on {1}: {2}", exception.Message, pair.Key, pair.Value));
-                }
-            }
-        }
-
-        public void SourceContains(string token)
-        {
-            Assert.IsTrue(Driver.PageSource.Contains(token));
-        }
-
     }
 }
