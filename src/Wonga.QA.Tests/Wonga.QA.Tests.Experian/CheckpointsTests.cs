@@ -62,11 +62,10 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-575"), Description("Experian -> This test creates a loan for the customer that is dead, then checks the risk checkpoint")]
-        [Pending("Waiting for Risk to fix this issue")]
         public void TestExperianMainApplicantIsDeceased_LoanIsDeclined()
         {
             const String forename = "Johnny";
-            const String surname = "DeadGuy";
+			const String surname = "DeceasedFlagDetected";
 
             var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicantIsNotDeceased);
             var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
@@ -101,11 +100,10 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-584"), Description("Experian -> This test creates a loan for a customer that IS CIFAS flagged, then checks the risk checkpoint")]
-        [Pending("Waiting for Risk to fix this issue")]
         public void TestExperianMainApplicantIsCifasFlagged_LoanIsDeclined()
         {
             const String forename = "laura";
-            const String surname = "insolvent";
+			const String surname = "CIFASFlagDetected";
 
             var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicationElementNotCIFASFlagged);
             var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
@@ -125,7 +123,7 @@ namespace Wonga.QA.Tests.Experian
         public void TestExperianMainApplicantDataIsAvailable_LoanIsApproved()
         {
             const String forename = "kathleen";
-            const String surname = "bridson";
+			const String surname = "InsufficientBureauData";
 
             var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianCreditBureauDataIsAvailable);
             var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
@@ -140,11 +138,10 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb),]
         [Description("Experian -> This test creates a loan and checks if the main applicant has data available")]
-        [Pending("Waiting for Risk to fix this issue")]
         public void TestExperianMainApplicantIsNotAvailable_LoanIsDeclined()
         {
             const String forename = "Unknown";
-            const String surname = "Customer";
+			const String surname = "InsufficientBureauData";
 
             var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianCreditBureauDataIsAvailable);
             var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
@@ -179,11 +176,10 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-638"), Description("Experian -> This test creates a loan for the insolvent customer, then checks the risk checkpoint")]
-        [Pending("Waiting for Risk to fix this issue")]
         public void TestExperianMainApplicantIsInsolvent_LoanIsDeclined()
         {
             const String forename = "laura";
-            const String surname = "insolvent";
+			const String surname = "ApplicantIsInsolvent";
 
             var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicantIsSolvent);
             var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
@@ -201,14 +197,13 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-644"), Description("Experian -> This test creates a loan for a customer with the correct date of birth, then checks the risk checkpoint")]
-        [Ignore("Known Risk issue")]
         public void TestExperianMainApplicantDateOfBirthIsCorrect_LoanIsApproved()
         {
             const String forename = "kathleen";
             const String surname = "bridson";
-            var correctDateOfBirth = new Date(new DateTime(1992, 1, 24), DateFormat.Date);
+            var correctDateOfBirth = new Date(new DateTime(1988, 10, 22), DateFormat.Date);
 
-            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithDateOfBirth(correctDateOfBirth).WithMiddleName(RiskMask.TESTExperianCustomerDateOfBirthIsCorrect);
+			var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithDateOfBirth(correctDateOfBirth).WithMiddleName(RiskMask.TESTExperianCustomerDateOfBirthIsCorrectSME);
             var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
@@ -221,14 +216,13 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-644"), Description("Experian -> This test creates a loan for a customer with the incorrect date of birth, then checks the risk checkpoint")]
-        [Pending("Waiting for Risk to fix this issue")]
         public void TestExperianMainApplicantDateOfBirthIsIncorrect_LoanIsDeclined()
         {
             const String forename = "kathleen";
             const String surname = "bridson";
             var dateOfBirth = new Date(new DateTime(1990, 3, 21), DateFormat.Date);
 
-            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTExperianCustomerDateOfBirthIsCorrect);
+			var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTExperianCustomerDateOfBirthIsCorrectSME);
             var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
@@ -241,14 +235,13 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-644"), Description("Experian -> This test creates a loan for a customer with the not provided date of birth, then checks the risk checkpoint")]
-        [Ignore("Known Risk Issue")]
         public void TestExperianMainApplicantDateOfBirthIsNotProvided_LoanIsApproved()
         {
             const String forename = "kathleen";
-            const String surname = "bridson";
+			const String surname = "DOBIsNotProvided";
             var dateOfBirth = new Date(new DateTime(1973, 5, 11), DateFormat.Date);
 
-            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTExperianCustomerDateOfBirthIsCorrect);
+			var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTExperianCustomerDateOfBirthIsCorrectSME);
             var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
@@ -281,7 +274,6 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-136")]
-        [Pending("Waiting for Risk to fix this issue")]
         public void TestExperianMainApplicantPaymentCardIsNotValid_LoanIsDeclined()
         {
             const String forename = "kathleen";
@@ -354,11 +346,10 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-1147"), Description("Experian -> This test creates a loan for the unknown guarantor that is alive, then checks the risk checkpoint")]
-        [Pending("Waiting for Risk to fix this issue")]
         public void TestExperianGuarantorIsDeceased_LoanIsDeclined()
         {
             const String forename = "Johnny";
-            const String surname = "DeadGuy";
+			const String surname = "DeceasedFlagDetected";
 
             var mainApplicantBuilder = CustomerBuilder.New();
 
@@ -407,11 +398,10 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-1144"), Description("Experian -> This test creates a loan for a guarantor that is  CIFAS flagged, then checks the risk checkpoint")]
-        [Pending("Waiting for Risk to fix this issue")]
         public void TestExperianGuarantorIsCifasFlagged_LoanIsDeclined()
         {
             const String forename = "laura";
-            const String surname = "insolvent";
+			const String surname = "CIFASFlagDetected";
 
             var mainApplicantBuilder = CustomerBuilder.New();
 
@@ -460,7 +450,6 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb), JIRA("SME-1141")]
         [Description("Experian -> This test creates a loan and checks if the guarantors has data available")]
-        [Pending("Waiting for Risk to fix this issue")]
         public void TestExperianGuarantorDataIsNotAvailable_LoanIsDeclined()
         {
             const String forename = "Unknown";
@@ -511,11 +500,10 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb), JIRA("SME-1150")]
         [Description("Experian -> This test creates a loan and checks if the guarantor is solvent")]
-        [Pending("Waiting for Risk to fix this issue")]
         public void TestExperianGuarantorIsInsolvent_LoanIsDeclined()
         {
             const String forename = "laura";
-            const String surname = "insolvent";
+			const String surname = "ApplicantIsInsolvent";
 
             var mainApplicantBuilder = CustomerBuilder.New();
             var guarantorList = new List<CustomerBuilder>
