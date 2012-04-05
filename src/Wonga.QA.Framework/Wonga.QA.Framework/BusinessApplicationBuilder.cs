@@ -54,6 +54,7 @@ namespace Wonga.QA.Framework
                             {
                                 r.Term = LoanTerm;
                             }
+                            r.LoanAmount = LoanAmount;
                         }),
             };
 

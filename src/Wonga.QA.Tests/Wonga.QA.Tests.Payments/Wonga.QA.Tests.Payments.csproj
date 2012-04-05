@@ -47,6 +47,7 @@
     <Compile Include="Helpers\AccountSummarySetupFunctions.cs" />
     <Compile Include="Helpers\VerifyPaymentFunctions.cs" />
     <Compile Include="InArrearsNoticeTests.cs" />
+    <Compile Include="LoanCalculations\BusinessLoanCalculationTests.cs" />
     <Compile Include="NaedoRetryTests.cs" />
     <Compile Include="Queries\GetBusinessApplicationSummaryCsapiQuery.cs" />
     <Compile Include="Queries\GetLoanAgreementsCsapiQueryTests.cs" />
