@@ -462,6 +462,28 @@ namespace Wonga.QA.Tests.Ui
                     Assert.IsTrue(addressDetailsPage.IsAddressPeriodWarningOccurred());
                     break;
                 #endregion
+                #region case Uk
+                case AUT.Uk:
+                    addressDetailsPage.PostCodeLookup = "SW6 6PN";
+                    addressDetailsPage.LookupByPostCode();
+                    addressDetailsPage.GetAddressesDropDown();
+                    Do.Until(() => addressDetailsPage.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN");
+                    Do.Until(() => addressDetailsPage.HouseNumber = "93");
+                    Assert.IsTrue(addressDetailsPage.IsAddressPeriodWarningOccurred());
+                    addressDetailsPage.AddressPeriod = "3 to 4 years";
+                    addressDetailsPage.HouseNumber = "";
+                    Assert.IsTrue(addressDetailsPage.IsHouseNumberWarningOccurred());
+                    addressDetailsPage.HouseNumber = "93";
+                    addressDetailsPage.Street = "";
+                    Assert.IsTrue(addressDetailsPage.IsStreetWarningOccurred());
+                    addressDetailsPage.Street = "Harbord Street";
+                    addressDetailsPage.Town = "";
+                    Assert.IsTrue(addressDetailsPage.IsTownWarningOccurred());
+                    addressDetailsPage.Town = "LONDON";
+                    addressDetailsPage.PostcodeInForm = "";
+                    Assert.IsTrue(addressDetailsPage.IsPostcodeWarningOccurred());
+                    break;
+                #endregion
             }
 
             // Assert.Throws<AssertionFailureException>(() => { var processingPage = addressDetailsPage.Next(); });
