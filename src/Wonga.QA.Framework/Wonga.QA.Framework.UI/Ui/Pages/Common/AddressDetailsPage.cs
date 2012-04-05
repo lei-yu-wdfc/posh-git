@@ -12,6 +12,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
     {
         public AccountDetailsSection AccountDetailsSection { get; set; }
         private readonly IWebElement _postCode;
+        private readonly IWebElement _postCodeInForm;
         private readonly IWebElement _postCodeLookup;
         private readonly IWebElement _form;
         private readonly IWebElement _lookup;
@@ -36,6 +37,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public String PostCodeLookup { set { _postCodeLookup.SendValue(value); } }
         public String PostCode { set { _postCode.SendValue(value); } }
+        public String PostcodeInForm { set { _postCodeInForm.SendValue(value); } }
         public String SelectedAddress { set { _addressOptions.SelectOption(value); } }
         public String HouseNumber { set { _houseNumber.SendValue(value); } }
         public String District { set { _district.SendValue(value); } }
@@ -75,6 +77,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     AccountDetailsSection = new AccountDetailsSection(this);
                     break;
                 case (AUT.Uk):
+                    _postCodeInForm = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.PostcodeInForm));
+                    _street = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.Street));
+                    _town = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.Town));
                     _postCodeLookup = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.PostcodeLookup));
                     _lookup = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.LookupButton));
                     break;
@@ -137,8 +142,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _next.Click();
             try
             {
-                _houseNumberErrorForm =
-                           _form.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.HouseNumberErrorForm));
+                _houseNumberErrorForm =Client.Driver.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.HouseNumberErrorForm));
                 string houseNumberErrorFormClass = _houseNumberErrorForm.GetAttribute("class");
 
                 if (houseNumberErrorFormClass.Equals("invalid"))

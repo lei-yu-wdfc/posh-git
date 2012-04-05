@@ -18,11 +18,19 @@
     <PostcodeLookup>#edit-postcode-lookup-uk</PostcodeLookup>
     <Postcode>#edit-postcode-lookup-uk</Postcode>
     <District>#edit-district</District>
-    <HouseNumber>#edit-flat</HouseNumber>
+    <HouseNumber>#edit-house-number</HouseNumber>
     <County>#edit-county</County>
+    <Street>#edit-street</Street>
+    <Town>#edit-town</Town>
+    <PostcodeInForm>#edit-postcode-uk</PostcodeInForm>
     <AddressPeriod>#edit-address-period</AddressPeriod>
     <NextButton>#edit-submit</NextButton>
     <AddressOptions>#edit-address-options</AddressOptions>
+    <HouseNumberErrorForm>#edit-house-number-wrapper div.invalid</HouseNumberErrorForm>
+    <StreetErrorForm>#edit-street-wrapper div.invalid</StreetErrorForm>
+    <TownErrorForm>#edit-town-wrapper div.invalid</TownErrorForm>
+    <PostcodeErrorForm>#edit-postcode-uk-wrapper div.form-error div.invalid</PostcodeErrorForm>
+    <AddressPeriodErrorForm>#edit-address-period-wrapper div.invalid</AddressPeriodErrorForm>
   </AddressDetailsPage>
   
   <BankAccountPage>
