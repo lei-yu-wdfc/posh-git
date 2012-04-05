@@ -26,5 +26,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String EditPasswordErrorMessage { get; set; }
         public String EditPasswordPopupErrorMessage { get; set; }
         public String SubmitButton { get; set; }
+        public String PopupErrorMessage { get; set; }
     }
 }

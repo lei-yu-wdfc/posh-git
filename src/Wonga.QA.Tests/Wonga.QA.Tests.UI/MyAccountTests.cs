@@ -269,8 +269,8 @@ namespace Wonga.QA.Tests.Ui
             var myPersonalDetailsPage = mySummaryPage.Navigation.MyPersonalDetailsButtonClick();
 
             myPersonalDetailsPage.PhoneClick();
-            Thread.Sleep(10000);
-            myPersonalDetailsPage.ChangePhone("0123000000", "0212571908", "0000");
+            
+            Do.Until(()=>myPersonalDetailsPage.ChangePhone("0123000000", "0212571908", "0000"));
 
             myPersonalDetailsPage.Submit();
             Thread.Sleep(10000);
@@ -282,6 +282,27 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual("0123000000", myPersonalDetailsPage.GetHomePhone);
             Assert.AreEqual("0123000000", homePhone);
             //TODO check SF
+        }
+
+        [Test, AUT(AUT.Za), JIRA("QA-211")]
+        public void ChangingPhoneNumberWithWrongPinShouldCauseWarningMessage()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            var mySummaryPage = loginPage.LoginAs(email);
+            var myPersonalDetailsPage = mySummaryPage.Navigation.MyPersonalDetailsButtonClick();
+
+            myPersonalDetailsPage.PhoneClick();
+
+            Do.Until(() => myPersonalDetailsPage.ChangePhone("0210000000", "0211234567", "1111"));
+            myPersonalDetailsPage.Submit();
+            Assert.IsTrue(myPersonalDetailsPage.GetPopupErrorMessage.Equals("The Pin was incorrect."));
+           
+
+         
         }
 
         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-193"), Pending("need refinement")]
