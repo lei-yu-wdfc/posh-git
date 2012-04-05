@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using Gallio.Framework.Assertions;
@@ -378,6 +379,41 @@ namespace Wonga.QA.Tests.Ui
             }
 
 
+        }
+
+        [Test, AUT(AUT.Za), JIRA("ZA-2108")]
+        public void L0VerifyWongaLzeroZaModuleSignatureInsertedInPage()
+        {
+            // Checks for the presence of "<!-- Output from wonga_lzero_za/<$_GET['q']> -->" in page source.
+            // This test complements the normal ZA L0 tests since the L0 journey should be functionally the
+            // same as before the refactor.
+
+            // Create a journey:
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+
+            // Go to the first page:
+            var personalDetailsPage = journey.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
+
+            // Check that the page contains the wonga_doubleclick module v1.0 signature:
+            Assert.IsTrue(personalDetailsPage.Client.Source().Contains("<!-- Output from wonga_lzero_za/apply-details -->"));
+
+            // Go to the second page:
+            var addressDetailsPage = journey.FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask)).CurrentPage as AddressDetailsPage;
+
+            // Check that the page contains the wonga_doubleclick module v1.0 signature:
+            Assert.IsTrue(addressDetailsPage.Client.Source().Contains("<!-- Output from wonga_lzero_za/apply-address -->"));
+
+            // Go to the third page:
+            var accountDetailsPage = journey.FillAddressDetails().CurrentPage as AccountDetailsPage;
+
+            // Check that the page contains the wonga_doubleclick module v1.0 signature:
+            Assert.IsTrue(accountDetailsPage.Client.Source().Contains("<!-- Output from wonga_lzero_za/apply-account -->"));
+
+            // Go to the fourth page:
+            var personalBankAccountPage = journey.FillAccountDetails().CurrentPage as PersonalBankAccountPage;
+
+            // Check that the page contains the wonga_doubleclick module v1.0 signature:
+            Assert.IsTrue(personalBankAccountPage.Client.Source().Contains("<!-- Output from wonga_lzero_za/apply-bank -->"));
         }
 
         [Test, AUT(AUT.Uk), Pending("Example of full Uk L0 journey")]

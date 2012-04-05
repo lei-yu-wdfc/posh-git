@@ -21,35 +21,33 @@ namespace Wonga.QA.Tests.Ui
 {
     class BehaviourAndAdvertTracking : UiTest
     {
-        [Test, AUT(AUT.Za)]
+        [Test, AUT(AUT.Za), JIRA("ZA-2115")]
         public void L0VerifyDoubleclickTagInsertedInPage()
         {
             ////////////////////////////////////////////////////////////////
-            // @TODO create a method that we can call to check all these details in one easy shot
+            var doubleClickTokensList = new List<KeyValuePair<string, string>>();
+            var doubleClickTokensBlackList = new List<KeyValuePair<string, string>>();
 
             // Load the homepage:
             var page = Client.Home();
 
+            // Check that the page contains the correct doubleclick HTML comment identifiers for this AUT:
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("src", "3567941"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("cat", "za_ho244"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("type", "homepage"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("u1", "1"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("u2", "1"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "<front>"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "home"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "homepages/*"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("group_name", "Homepage"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_Homepage"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "995820"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
+            SourceTestHelper.SourceContainsTokens(page.Client, doubleClickTokensList);
+
             // Check that the page contains the wonga_doubleclick module v1.0 signature:
             Assert.IsTrue(page.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
-
-            // Check that the page contains the correct doubleclick HTML comment identifiers for this AUT:
-            Assert.IsTrue(page.Client.Source().Contains("src: [3567941]"));
-            Assert.IsTrue(page.Client.Source().Contains("cat: [za_ho244]"));
-            Assert.IsTrue(page.Client.Source().Contains("type: [homepage]"));
-            Assert.IsTrue(page.Client.Source().Contains("u1: [1]"));
-            Assert.IsTrue(page.Client.Source().Contains("u2: [1]"));
-            Assert.IsTrue(page.Client.Source().Contains("paths: [<front>]"));
-            Assert.IsTrue(page.Client.Source().Contains("group_name: [Homepage]"));
-            Assert.IsTrue(page.Client.Source().Contains("activity_name: [ZA_Homepage]"));
-            Assert.IsTrue(page.Client.Source().Contains("activity_id: [995820]"));
-            Assert.IsTrue(page.Client.Source().Contains("html_override: []"));
-
-            // Check that the page contains the correct Doubleclick JS code (brittle?):
-            //Assert.IsTrue(page.Client.Source().Contains("document.write('<iframe src=\"https://fls.doubleclick.net/activityi;src=3567941;cat=za_ho244;type=homepage;u1=1;u2=1;ord=' + a + '?\" width=\"1\" height=\"1\" frameborder=\"0\" style=\"display:none\"></iframe>');"));
-
-            // Check that the page contains the correct no-JS Doubleclick code (also brittle?):
-            //Assert.IsTrue(page.Client.Source().Contains("<iframe src=\"https://fls.doubleclick.net/activityi;src=3567941;cat=za_ho244;type=homepage;u1=1;u2=1;ord=1?\" width=\"1\" height=\"1\" frameborder=\"0\" style=\"display:none\"></iframe>"));
 
             ////////////////////////////////////////////////////////////////
             // Application pages
@@ -64,17 +62,22 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(personalDetailsPage.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
 
             // Check that the page contains the correct doubleclick HTML comment identifiers for this AUT:
-            Assert.IsTrue(personalDetailsPage.Client.Source().Contains("src: [3567941]"));
-            Assert.IsTrue(personalDetailsPage.Client.Source().Contains("cat: [za_l0571]"));
-            Assert.IsTrue(personalDetailsPage.Client.Source().Contains("type: [za_l0]"));
-            Assert.IsTrue(personalDetailsPage.Client.Source().Contains("u1: [")); // Note u1 is the [ApplicationId] so will change for each app
-            Assert.IsFalse(personalDetailsPage.Client.Source().Contains("u1: []")); // Check that the ApplicationId is not null
-            Assert.IsTrue(personalDetailsPage.Client.Source().Contains("u2: [1]"));
-            Assert.IsTrue(personalDetailsPage.Client.Source().Contains("paths: [apply-details]"));
-            Assert.IsTrue(personalDetailsPage.Client.Source().Contains("group_name: [ZA_L0]"));
-            Assert.IsTrue(personalDetailsPage.Client.Source().Contains("activity_name: [ZA_L0_PersonalDetails]"));
-            Assert.IsTrue(personalDetailsPage.Client.Source().Contains("activity_id: [995827]"));
-            Assert.IsTrue(personalDetailsPage.Client.Source().Contains("html_override: []"));
+            doubleClickTokensList.Clear();
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("src", "3567941"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("cat", "za_l0571"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("type", "za_l0"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("u2", "1"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "apply-details"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("group_name", "ZA_L0"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_L0_PersonalDetails"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "995827"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
+            SourceTestHelper.SourceContainsTokens(personalDetailsPage.Client, doubleClickTokensList);
+
+            // Check that we don't have an empty u1 value (e.g. "u1: []"):
+            doubleClickTokensBlackList.Clear();
+            doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
+            SourceTestHelper.SourceDoesNotContainTokens(personalDetailsPage.Client, doubleClickTokensBlackList);
 
             // Go to the second page:
             var addressDetailsPage = journey.FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask)).CurrentPage as AddressDetailsPage;
@@ -83,17 +86,22 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(addressDetailsPage.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
 
             // Check that the page contains the correct doubleclick HTML comment identifiers for this AUT:
-            Assert.IsTrue(addressDetailsPage.Client.Source().Contains("src: [3567941]"));
-            Assert.IsTrue(addressDetailsPage.Client.Source().Contains("cat: [za_l0642]"));
-            Assert.IsTrue(addressDetailsPage.Client.Source().Contains("type: [za_l0]"));
-            Assert.IsTrue(addressDetailsPage.Client.Source().Contains("u1: ["));
-            Assert.IsFalse(addressDetailsPage.Client.Source().Contains("u1: []"));
-            Assert.IsTrue(addressDetailsPage.Client.Source().Contains("u2: [1]"));
-            Assert.IsTrue(addressDetailsPage.Client.Source().Contains("paths: [apply-address]"));
-            Assert.IsTrue(addressDetailsPage.Client.Source().Contains("group_name: [ZA_L0]"));
-            Assert.IsTrue(addressDetailsPage.Client.Source().Contains("activity_name: [ZA_L0_Address]"));
-            Assert.IsTrue(addressDetailsPage.Client.Source().Contains("activity_id: [995828]"));
-            Assert.IsTrue(addressDetailsPage.Client.Source().Contains("html_override: []"));
+            doubleClickTokensList.Clear();
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("src", "3567941"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("cat", "za_l0642"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("type", "za_l0"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("u2", "1"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "apply-address"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("group_name", "ZA_L0"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_L0_Address"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "995828"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
+            SourceTestHelper.SourceContainsTokens(addressDetailsPage.Client, doubleClickTokensList);
+
+            // Check that we don't have an empty u1 value (e.g. "u1: []"):
+            doubleClickTokensBlackList.Clear();
+            doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
+            SourceTestHelper.SourceDoesNotContainTokens(addressDetailsPage.Client, doubleClickTokensBlackList);
 
             // Go to the third page:
             var accountDetailsPage = journey.FillAddressDetails().CurrentPage as AccountDetailsPage;
@@ -102,17 +110,22 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(accountDetailsPage.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
 
             // Check that the page contains the correct doubleclick HTML comment identifiers for this AUT:
-            Assert.IsTrue(accountDetailsPage.Client.Source().Contains("src: [3567941]"));
-            Assert.IsTrue(accountDetailsPage.Client.Source().Contains("cat: [za_l0281]"));
-            Assert.IsTrue(accountDetailsPage.Client.Source().Contains("type: [za_l0]"));
-            Assert.IsTrue(accountDetailsPage.Client.Source().Contains("u1: ["));
-            Assert.IsFalse(accountDetailsPage.Client.Source().Contains("u1: []"));
-            Assert.IsTrue(accountDetailsPage.Client.Source().Contains("u2: [1]"));
-            Assert.IsTrue(accountDetailsPage.Client.Source().Contains("paths: [apply-account]"));
-            Assert.IsTrue(accountDetailsPage.Client.Source().Contains("group_name: [ZA_L0]"));
-            Assert.IsTrue(accountDetailsPage.Client.Source().Contains("activity_name: [ZA_L0_Account]"));
-            Assert.IsTrue(accountDetailsPage.Client.Source().Contains("activity_id: [995832]"));
-            Assert.IsTrue(accountDetailsPage.Client.Source().Contains("html_override: []"));
+            doubleClickTokensList.Clear();
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("src", "3567941"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("cat", "za_l0281"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("type", "za_l0"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("u2", "1"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "apply-account"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("group_name", "ZA_L0"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_L0_Account"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "995832"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
+            SourceTestHelper.SourceContainsTokens(accountDetailsPage.Client, doubleClickTokensList);
+
+            // Check that we don't have an empty u1 value (e.g. "u1: []"):
+            doubleClickTokensBlackList.Clear();
+            doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
+            SourceTestHelper.SourceDoesNotContainTokens(accountDetailsPage.Client, doubleClickTokensBlackList);
 
             // Go to the fourth page:
             var personalBankAccountPage = journey.FillAccountDetails().CurrentPage as PersonalBankAccountPage;
@@ -121,17 +134,22 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(personalBankAccountPage.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
 
             // Check that the page contains the correct doubleclick HTML comment identifiers for this AUT:
-            Assert.IsTrue(personalBankAccountPage.Client.Source().Contains("src: [3567941]"));
-            Assert.IsTrue(personalBankAccountPage.Client.Source().Contains("cat: [za_l0346]"));
-            Assert.IsTrue(personalBankAccountPage.Client.Source().Contains("type: [za_l0]"));
-            Assert.IsTrue(personalBankAccountPage.Client.Source().Contains("u1: ["));
-            Assert.IsFalse(personalBankAccountPage.Client.Source().Contains("u1: []"));
-            Assert.IsTrue(personalBankAccountPage.Client.Source().Contains("u2: [1]"));
-            Assert.IsTrue(personalBankAccountPage.Client.Source().Contains("paths: [apply-bank]"));
-            Assert.IsTrue(personalBankAccountPage.Client.Source().Contains("group_name: [ZA_L0]"));
-            Assert.IsTrue(personalBankAccountPage.Client.Source().Contains("activity_name: [ZA_L0_Bank]"));
-            Assert.IsTrue(personalBankAccountPage.Client.Source().Contains("activity_id: [996615]"));
-            Assert.IsTrue(personalBankAccountPage.Client.Source().Contains("html_override: []"));
+            doubleClickTokensList.Clear();
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("src", "3567941"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("cat", "za_l0346"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("type", "za_l0"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("u2", "1"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "apply-bank"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("group_name", "ZA_L0"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_L0_Bank"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "996615"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
+            SourceTestHelper.SourceContainsTokens(personalBankAccountPage.Client, doubleClickTokensList);
+
+            // Check that we don't have an empty u1 value (e.g. "u1: []"):
+            doubleClickTokensBlackList.Clear();
+            doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
+            SourceTestHelper.SourceDoesNotContainTokens(personalBankAccountPage.Client, doubleClickTokensBlackList);
 
             // Go to the fifth (processing) page:
             var waitForAcceptedPage = journey.FillBankDetails().CurrentPage as ProcessingPage;
@@ -140,17 +158,22 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(waitForAcceptedPage.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
 
             // Check that the page contains the correct doubleclick HTML comment identifiers for this AUT:
-            Assert.IsTrue(waitForAcceptedPage.Client.Source().Contains("src: [3567941]"));
-            Assert.IsTrue(waitForAcceptedPage.Client.Source().Contains("cat: [za_l0882]"));
-            Assert.IsTrue(waitForAcceptedPage.Client.Source().Contains("type: [za_l0]"));
-            Assert.IsTrue(waitForAcceptedPage.Client.Source().Contains("u1: ["));
-            Assert.IsFalse(waitForAcceptedPage.Client.Source().Contains("u1: []"));
-            Assert.IsTrue(waitForAcceptedPage.Client.Source().Contains("u2: [1]"));
-            Assert.IsTrue(waitForAcceptedPage.Client.Source().Contains("paths: [processing]"));
-            Assert.IsTrue(waitForAcceptedPage.Client.Source().Contains("group_name: [ZA_L0]"));
-            Assert.IsTrue(waitForAcceptedPage.Client.Source().Contains("activity_name: [ZA_L0_Processing]"));
-            Assert.IsTrue(waitForAcceptedPage.Client.Source().Contains("activity_id: [996616]"));
-            Assert.IsTrue(waitForAcceptedPage.Client.Source().Contains("html_override: []"));
+            doubleClickTokensList.Clear();
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("src", "3567941"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("cat", "za_l0882"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("type", "za_l0"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("u2", "1"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "processing"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("group_name", "ZA_L0"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_L0_Processing"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "996616"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
+            SourceTestHelper.SourceContainsTokens(waitForAcceptedPage.Client, doubleClickTokensList);
+
+            // Check that we don't have an empty u1 value (e.g. "u1: []"):
+            doubleClickTokensBlackList.Clear();
+            doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
+            SourceTestHelper.SourceDoesNotContainTokens(waitForAcceptedPage.Client, doubleClickTokensBlackList);
 
             // Go to the sixth (accepted) page:
             var acceptedPage = journey.WaitForAcceptedPage().CurrentPage as AcceptedPage;
@@ -159,40 +182,46 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(acceptedPage.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
 
             // Check that the page contains the correct doubleclick HTML comment identifiers for this AUT:
-            Assert.IsTrue(acceptedPage.Client.Source().Contains("src: [3567941]"));
-            Assert.IsTrue(acceptedPage.Client.Source().Contains("cat: [za_l0817]"));
-            Assert.IsTrue(acceptedPage.Client.Source().Contains("type: [za_l0]"));
-            Assert.IsTrue(acceptedPage.Client.Source().Contains("u1: ["));
-            Assert.IsFalse(acceptedPage.Client.Source().Contains("u1: []"));
-            Assert.IsTrue(acceptedPage.Client.Source().Contains("u2: [1]"));
-            Assert.IsTrue(acceptedPage.Client.Source().Contains("paths: [apply-accept]"));
-            Assert.IsTrue(acceptedPage.Client.Source().Contains("group_name: [ZA_L0]"));
-            Assert.IsTrue(acceptedPage.Client.Source().Contains("activity_name: [ZA_L0_Accept]"));
-            Assert.IsTrue(acceptedPage.Client.Source().Contains("activity_id: [996618]"));
-            Assert.IsTrue(acceptedPage.Client.Source().Contains("html_override: []"));
+            doubleClickTokensList.Clear();
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("src", "3567941"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("cat", "za_l0817"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("type", "za_l0"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("u2", "1"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "apply-accept"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("group_name", "ZA_L0"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_L0_Accept"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "996618"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
+            SourceTestHelper.SourceContainsTokens(acceptedPage.Client, doubleClickTokensList);
+
+            // Check that we don't have an empty u1 value (e.g. "u1: []"):
+            doubleClickTokensBlackList.Clear();
+            doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
+            SourceTestHelper.SourceDoesNotContainTokens(acceptedPage.Client, doubleClickTokensBlackList);
 
             // Complete the accept page:
             var dealDonePage = journey.FillAcceptedPage().CurrentPage as DealDonePage;
-
-            // Go to the seventh (deal-done) page:
-            //Client.Driver.Navigate().GoToUrl(Config.Ui.Home + "deal-done");
-            //var dealDonePage = new DealDonePage(Client);
 
             // Check that the page contains the wonga_doubleclick module v1.0 signature:
             Assert.IsTrue(dealDonePage.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
 
             // Check that the page contains the correct doubleclick HTML comment identifiers for this AUT:
-            Assert.IsTrue(dealDonePage.Client.Source().Contains("src: [3567941]"));
-            Assert.IsTrue(dealDonePage.Client.Source().Contains("cat: [za_l0643]"));
-            Assert.IsTrue(dealDonePage.Client.Source().Contains("type: [za_l0_s]"));
-            Assert.IsTrue(dealDonePage.Client.Source().Contains("u1: ["));
-            Assert.IsFalse(dealDonePage.Client.Source().Contains("u1: []"));
-            Assert.IsTrue(dealDonePage.Client.Source().Contains("u2: [1]"));
-            Assert.IsTrue(dealDonePage.Client.Source().Contains("paths: [deal-done]"));
-            Assert.IsTrue(dealDonePage.Client.Source().Contains("group_name: [ZA_L0_Sale]"));
-            Assert.IsTrue(dealDonePage.Client.Source().Contains("activity_name: [ZA_L0_DealDone]"));
-            Assert.IsTrue(dealDonePage.Client.Source().Contains("activity_id: [996620]"));
-            Assert.IsTrue(dealDonePage.Client.Source().Contains("html_override: []"));
+            doubleClickTokensList.Clear();
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("src", "3567941"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("cat", "za_l0643"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("type", "za_l0_s"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("u2", "1"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "deal-done"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("group_name", "ZA_L0_Sale"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_L0_DealDone"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "996620"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
+            SourceTestHelper.SourceContainsTokens(acceptedPage.Client, doubleClickTokensList);
+
+            // Check that we don't have an empty u1 value (e.g. "u1: []"):
+            doubleClickTokensBlackList.Clear();
+            doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
+            SourceTestHelper.SourceDoesNotContainTokens(acceptedPage.Client, doubleClickTokensBlackList);
 
             // Go to the eigth (my-account) page:
             Client.Driver.Navigate().GoToUrl(Config.Ui.Home + "my-account");
@@ -201,18 +230,22 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(page.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
 
             // Check that the page contains the correct doubleclick HTML comment identifiers for this AUT:
-            Assert.IsTrue(page.Client.Source().Contains("src: [3567941]"));
-            Assert.IsTrue(page.Client.Source().Contains("cat: [za_ln060]"));
-            Assert.IsTrue(page.Client.Source().Contains("type: [za_ln]"));
-            Assert.IsTrue(page.Client.Source().Contains("u1: ["));
-            Assert.IsFalse(page.Client.Source().Contains("u1: []"));
-            Assert.IsTrue(page.Client.Source().Contains("u2: [1]"));
-            Assert.IsTrue(page.Client.Source().Contains("paths: [my-account]"));
-            Assert.IsTrue(page.Client.Source().Contains("group_name: [ZA_Ln]"));
-            Assert.IsTrue(page.Client.Source().Contains("activity_name: [ZA_Ln_MyAccount]"));
-            Assert.IsTrue(page.Client.Source().Contains("activity_id: [996622]"));
-            Assert.IsTrue(page.Client.Source().Contains("html_override: []"));
+            doubleClickTokensList.Clear();
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("src", "3567941"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("cat", "za_ln060"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("type", "za_ln"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("u2", "1"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "my-account"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("group_name", "ZA_Ln"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_Ln_MyAccount"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "996622"));
+            doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
+            SourceTestHelper.SourceContainsTokens(page.Client, doubleClickTokensList);
 
+            // Check that we don't have an empty u1 value (e.g. "u1: []"):
+            doubleClickTokensBlackList.Clear();
+            doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
+            SourceTestHelper.SourceDoesNotContainTokens(page.Client, doubleClickTokensBlackList);
         }
     }
 }
