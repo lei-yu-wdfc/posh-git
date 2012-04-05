@@ -80,7 +80,7 @@ namespace Wonga.QA.Tests.Ui
             Thread.Sleep(4000);
             addressDetailsPage.GetAddressesDropDown();
             Do.Until(() => addressDetailsPage.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN");
-            Do.Until(() => addressDetailsPage.FlatNumber = "666");
+            Do.Until(() => addressDetailsPage.HouseNumber = "666");
             addressDetailsPage.District = "Central";
             addressDetailsPage.County = "South Wales";
             addressDetailsPage.AddressPeriod = "3 to 4 years";

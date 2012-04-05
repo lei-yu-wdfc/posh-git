@@ -405,5 +405,47 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(personalDetailsPage is PersonalDetailsPage);
         }
 
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk, AUT.Wb), JIRA("QA-181")]
+        public void L0JourneyCustomerOnCurrentAddressPageDoesNotEnterSomeRequiredFieldsWarningMessageDisplayed()
+        {
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var addressDetailsPage = journey.ApplyForLoan(200, 10)
+                                      .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                      .CurrentPage as AddressDetailsPage;
+
+
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    addressDetailsPage.HouseNumber = "25";
+                    addressDetailsPage.Street = "high road";
+                    addressDetailsPage.Town = "Kuku";
+                    addressDetailsPage.County = "Province";
+                    addressDetailsPage.AddressPeriod = "2 to 3 years";
+                    Assert.IsTrue(addressDetailsPage.IsPostcodeWarningOccurred());
+                    addressDetailsPage.PostCode = Get.GetPostcode();
+                    addressDetailsPage.HouseNumber = "";
+                    Assert.IsTrue(addressDetailsPage.IsHouseNumberWarningOccurred());
+                    addressDetailsPage.HouseNumber = "25";
+                    addressDetailsPage.Street = "";
+                    Assert.IsTrue(addressDetailsPage.IsStreetWarningOccurred());
+                    addressDetailsPage.Street = "high road";
+                    addressDetailsPage.Town = "";
+                    Assert.IsTrue(addressDetailsPage.IsTownWarningOccurred());
+                    addressDetailsPage.Town = "Kuku";
+                    addressDetailsPage.County = "";
+                    Assert.IsTrue(addressDetailsPage.IsCountyWarningOccurred());
+                    addressDetailsPage.County = "Province";
+                    addressDetailsPage.AddressPeriod = "--- Please select ---";
+                    Assert.IsTrue(addressDetailsPage.IsAddressPeriodWarningOccurred());
+                    break;
+                case AUT.Ca:
+
+                    // addressDetailsPage
+                    break;
+            }
+
+            // Assert.Throws<AssertionFailureException>(() => { var processingPage = addressDetailsPage.Next(); });
+        }
     }
 }
