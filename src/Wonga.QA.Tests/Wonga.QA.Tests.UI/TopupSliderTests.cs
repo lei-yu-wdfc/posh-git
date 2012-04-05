@@ -30,13 +30,13 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk), JIRA("UK-826")]
         public void MovingTopupSlidersLoanSummaryShouldBeCorrect()
         {
-            string email = Get.RandomEmail();      
-            
+            string email = Get.RandomEmail();
+
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(30).Build();
 
-            var responseLimit = Drive.Api.Queries.Post(new GetFixedTermLoanTopupOfferQuery { AccountId = customer.Id });
-            _amountMax = (int)Decimal.Parse(responseLimit.Values["AmountMax"].Single(), CultureInfo.InvariantCulture);
+            var responseLimit = Drive.Api.Queries.Post(new GetFixedTermLoanTopupOfferQuery {AccountId = customer.Id});
+            _amountMax = (int) Decimal.Parse(responseLimit.Values["AmountMax"].Single(), CultureInfo.InvariantCulture);
             _amountMin = 1;
 
             int randomAmount = _amountMin + (new Random()).Next(_amountMax - _amountMin);
@@ -44,19 +44,50 @@ namespace Wonga.QA.Tests.Ui
             var loginPage = Client.Login();
             var myAccountPage = loginPage.LoginAs(email);
             var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
-            
-            decimal topupAmountDec = (decimal) randomAmount ;
+
+            decimal topupAmountDec = (decimal) randomAmount;
             var topupAmount = randomAmount.ToString();
 
             mySummaryPage.TopupSliders.HowMuch = topupAmount;
-            
-            _response = Drive.Api.Queries.Post(new GetFixedTermLoanTopupCalculationQuery { ApplicationId = application.Id, TopupAmount = topupAmountDec  });
+
+            _response =
+                Drive.Api.Queries.Post(new GetFixedTermLoanTopupCalculationQuery
+                                           {ApplicationId = application.Id, TopupAmount = topupAmountDec});
             var totalRepayable = _response.Values["TotalRepayable"].Single();
             var interestAndFees = _response.Values["InterestAndFeesAmount"].Single();
 
             Assert.AreEqual(mySummaryPage.TopupSliders.GetTotalToRepay.Remove(0, 1), totalRepayable);
             Assert.AreEqual(mySummaryPage.TopupSliders.GetTotalAmount.Remove(0, 1), topupAmount);
             Assert.AreEqual(mySummaryPage.TopupSliders.GetTotalFees.Remove(0, 1), interestAndFees);
+
+            //The saga contd
+            var requestPage =
+                mySummaryPage.TopupSliders.Apply();
+
+            //Runs assertions internally
+            requestPage.IsTopupRequestPageSliderReturningCorrrectValuesOnChange(application.Id.ToString());
+
+            requestPage.SubmitButtonClick();
+            //Procesing page mystery TBC
+            var processPage = new TopupProcessingPage(this.Client);
+            var agreementPage = processPage.WaitForAgreementPage(Client);
+
+            //make sure that certain text doesnt appear
+            Assert.IsFalse(agreementPage.IsTopupAgreementPageDateNotPresent());
+            Assert.IsTrue(agreementPage.IsTopupAgreementPageLegalInfoDisplayed());
+            Assert.IsFalse(agreementPage.IsTopupAgreementPageTopupAmountNotPresent());
+            Assert.IsFalse(agreementPage.IsTopupTotalAmountTokenBeingReplaced());
+
+            //click accept and load the Deal Done page
+            var dealDonePage = agreementPage.Accept();
+            Assert.IsFalse(dealDonePage.IsDealDonePageDateNotPresent());
+            Assert.IsFalse(dealDonePage.IsDealDonePageJiffyNotPresent());
+            Assert.IsFalse(dealDonePage.IsDealDonePageTopupAmountNotPresent());
+
+            dealDonePage.ContinueToMyAccount();
+            //const string summaryURL = "my-account/summary";
+            //Test my account summary page
+            Assert.IsTrue(this.Client.Driver.Url.Contains("my-account"));
         }
 	}
 }

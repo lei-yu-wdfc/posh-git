@@ -86,4 +86,18 @@
     <AmountPlusButton>#wonga-amount-slider-wrapper button.slider-plus</AmountPlusButton>
   </TopupSlidersElement>
 
+  <SmallTopupSlidersElement>
+    <FormId>#wonga-account-topup-form</FormId>
+    <AmountSlider>#wonga-single-slider a</AmountSlider>
+    <TopupLoanAmount>#edit-topup-amount-wrapper input#edit-topup-amount</TopupLoanAmount>
+    <SubmitButton>#edit-submit</SubmitButton>
+    <TopupAmount>span.credit-request-amount</TopupAmount>
+    <TopupFees>span.credit-request-fees</TopupFees>
+    <TopupToRepay>span.credit-request-subtotal</TopupToRepay>
+    <TotalToRepay>span.credit-request-total</TotalToRepay>
+    <RepaymentDate>span.loan-period-clarification</RepaymentDate>
+    <AmountMinusButton>#wonga-single-slider-wrapper button.slider-minus</AmountMinusButton>
+    <AmountPlusButton>#wonga-single-slider-wrapper button.slider-plus</AmountPlusButton>
+  </SmallTopupSlidersElement>
+
 </Ui>

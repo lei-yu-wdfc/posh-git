@@ -62,13 +62,13 @@ namespace Wonga.QA.Framework.UI.Elements
         }
 
 
-        public TopupAgreementPage Apply()
+        public TopupRequestPage Apply()
         {
             _submit = _form.FindElement(By.CssSelector(Ui.Get.TopupSlidersElement.SubmitButton));
             _submit.Click();
 
             //return null;
-            return new TopupAgreementPage(Page.Client);
+            return new TopupRequestPage(Page.Client);
         }
         public bool IsSubmitButtonPresent()
         {
