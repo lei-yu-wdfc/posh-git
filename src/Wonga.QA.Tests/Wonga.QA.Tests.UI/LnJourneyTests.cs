@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Gallio.Framework.Assertions;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
@@ -14,7 +15,7 @@ namespace Wonga.QA.Tests.Ui
 {
     class LnJourneyTests : UiTest
     {
-        [Test, AUT(AUT.Za), JIRA("QA-196"), Pending("Fixing")]
+        [Test, AUT(AUT.Za), JIRA("QA-196")]
         public void LnCustomerTakesNewLoanAndChangesTheMobilePhoneThenChangesShouldBeReflected()
         {
             var loginPage = Client.Login();
@@ -53,14 +54,9 @@ namespace Wonga.QA.Tests.Ui
                 Drive.Data.Comms.Db.CustomerDetails.FindAllBy(AccountId: customer.Id).FirstOrDefault().MobilePhone;
 
             Assert.AreEqual("0111111111", mobileFromDb);
-            //.FillApplicationDetails()
-            //.WaitForAcceptedPage()
-            //.FillAcceptedPage()
-            //.GoToMySummaryPage()
-            //.CurrentPage as MySummaryPage;
         }
 
-        [Test, AUT(AUT.Za), Pending("Not completed yet")]
+        [Test, AUT(AUT.Za), JIRA("QA-198")]
         public void LnCustomerChangesMobilePhoneAndEntersInvalidPinShouldNotBeAbleToTakeLoan()
         {
             var loginPage = Client.Login();
@@ -83,7 +79,14 @@ namespace Wonga.QA.Tests.Ui
 
             applyPage.SetNewMobilePhone = "0111111111";
             applyPage.ApplicationSection.SetPin = "1111";
-
+            try
+            {
+                applyPage.Submit();
+            }
+            catch(AssertionFailureException exception)
+            {
+                Assert.IsTrue(exception.Message.Contains("The Pin was incorrect."));
+            }
         }
 
         [Test, AUT(AUT.Ca), Pending("Example of CA Ln journey")]
