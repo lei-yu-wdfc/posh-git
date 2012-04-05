@@ -84,7 +84,7 @@ namespace Wonga.QA.Tests.Ui
                 Thread.Sleep(2000); // Wait some time to load popup
 
                 var paymentPage = payment1.AddBankAccount("Capitec", "Current", "7434567", "2 to 3 years");
-                while (paymentPage.IfHasAnExeption()==false)
+                while (paymentPage.IfHasAnExeption() == false)
                 {
                     Thread.Sleep(1000);
                 }
@@ -141,17 +141,17 @@ namespace Wonga.QA.Tests.Ui
                 paymentPage.CloseButtonClick();
                 payment = Client.Payments();
                 int whileCount = 0;
-                while (accountNumber.Remove(0,3) != payment.DefaultAccountNumber)
+                while (accountNumber.Remove(0, 3) != payment.DefaultAccountNumber)
                 {
                     whileCount++;
                     payment = Client.Payments();
-                    if (whileCount>50)
+                    if (whileCount > 50)
                     {
                         break;
                     }
                 }
                 Console.WriteLine(whileCount);
-                Assert.AreEqual(accountNumber.Remove(0,3), payment.DefaultAccountNumber);
+                Assert.AreEqual(accountNumber.Remove(0, 3), payment.DefaultAccountNumber);
             }
             else
             {
@@ -300,7 +300,7 @@ namespace Wonga.QA.Tests.Ui
             switch (Config.AUT)
             {
                 case (AUT.Za):
-                    date = DateTime.Now.AddDays(-arrearsdays-1);
+                    date = DateTime.Now.AddDays(-arrearsdays - 1);
                     email = Get.RandomEmail();
                     customer = CustomerBuilder.New().WithEmailAddress(email).Build();
                     application = ApplicationBuilder.New(customer)
@@ -378,7 +378,7 @@ namespace Wonga.QA.Tests.Ui
 
                     #endregion
                     Assert.AreEqual("$130.00", mySummaryPage.GetTotalToRepay); //must be $130.45 it's bug, well change whan it's well be resolved 
-                    Assert.AreEqual("$130.00", mySummaryPage.GetPromisedRepayAmount); 
+                    Assert.AreEqual("$130.00", mySummaryPage.GetPromisedRepayAmount);
                     Assert.AreEqual(actualPromisedRepayDate, mySummaryPage.GetPromisedRepayDate);
                     mySummaryPage.RepayButtonClick();
                     Thread.Sleep(10000);
@@ -410,6 +410,45 @@ namespace Wonga.QA.Tests.Ui
                     break;
             }
             // need to add check data in SF whan it well be ready for this
+        }
+
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk, AUT.Wb), JIRA("QA-187"), Pending("need refinement")]
+        public void CustomerEntersInvalidBankAccountWarningMessageShouldBeDisplyaed()
+        {
+            var accounts = new List<string> {"dfgsfgfgsdf", "123 342", "123f445", "+135-6887"};
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            application.RepayOnDueDate();  // to take LN status
+            foreach (string account in accounts)
+            {
+                var page = loginPage.LoginAs(email);
+                var payment1 = Client.Payments();
+                switch (Config.AUT)
+                {
+                    case (AUT.Za):
+                        if (payment1.IsAddBankAccountButtonExists())
+                        {
+                            payment1.AddBankAccountButtonClick();
+
+                            Thread.Sleep(2000); // Wait some time to load popup
+
+                            var paymentPage = payment1.AddBankAccount("Capitec", "Current", "7434567", "2 to 3 years");
+                            while (paymentPage.IfHasAnExeption() == false)
+                            {
+                                Thread.Sleep(1000);
+                            }
+                            Assert.IsTrue(paymentPage.IfHasAnExeption());
+                        }
+                        else
+                        {
+                            throw new NullReferenceException("Add bank account button not found");
+                        }
+                        break;
+                }
+            }
         }
     }
 }
