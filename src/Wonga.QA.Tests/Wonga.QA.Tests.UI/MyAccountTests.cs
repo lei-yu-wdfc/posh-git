@@ -421,7 +421,7 @@ namespace Wonga.QA.Tests.Ui
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             Application application = ApplicationBuilder.New(customer)
                 .Build();
-            application.RepayOnDueDate();  // to take LN status
+            application.RepayOnDueDate(); // to take LN status
             foreach (string account in accounts)
             {
                 var page = loginPage.LoginAs(email);
@@ -449,7 +449,8 @@ namespace Wonga.QA.Tests.Ui
                         break;
                 }
             }
-            
+        }
+
         [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-215")]
         public void MyAccountPostcodeMustBeTheSameAsUserEntered()
         {
