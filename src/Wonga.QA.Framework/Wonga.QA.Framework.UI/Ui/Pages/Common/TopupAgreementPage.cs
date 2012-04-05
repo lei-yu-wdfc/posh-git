@@ -35,13 +35,13 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             return result;
         }
 
-        public bool IsAgreementPageTopupScrollEmpty()
+        public bool IsTopupAgreementPageLegalInfoDisplayed()
         {
-            bool legalResult2 = _agreementLegals.Displayed;
             bool legalResult = _agreementLegals.Displayed;
-            return legalResult2 | legalResult;
+            return legalResult;
 
         }
+        
 
     }
 

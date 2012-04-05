@@ -101,6 +101,9 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual TopupAgreementPage TopupAgreementPage { get; set; }
         public virtual TopupDealDonePage TopupDealDonePage { get; set; }
         public virtual TopupProcessingPage TopupProcessingPage { get; set; }
+        //public virtual TopupProcessingPage TopupProcessingPage { get; set; }
+        public virtual TopupRequestPage TopupRequestPage { get; set; }
+
         #endregion
 
         #region SalesForcePages

@@ -283,10 +283,22 @@
     <AboutUs>li:nth-child(3)>a</AboutUs>
     <Advice>li:nth-child(4)>a</Advice>
   </TabsElement>
+
+  <TopupRequestPage>
+    <TopupRequestPageSubmitButton>div#edit-submit</TopupRequestPageSubmitButton>
+    <TopupRequestPageInformativeBox>div.inner-box-informative</TopupRequestPageInformativeBox>
+    <TopupRequestPageNewCreditRequest>span.credit-request-amount</TopupRequestPageNewCreditRequest>
+    <TopupRequestPageNewInterestAndFees>span.credit-request-fees</TopupRequestPageNewInterestAndFees>
+    <TopupRequestPageNewGrandTotal>span.credit-request-total</TopupRequestPageNewGrandTotal>
+    <TopupRequestPageSliders>#wonga-single-slider</TopupRequestPageSliders>
+  </TopupRequestPage>
+  
   
   <TopupAgreementPage>
     <TopupAgreementAcceptButton>div#id-accept</TopupAgreementAcceptButton>
     <TopupAgreementscroll>div#id-agreementscroll</TopupAgreementscroll>
   </TopupAgreementPage>
+  
+  
   
 </Ui>
