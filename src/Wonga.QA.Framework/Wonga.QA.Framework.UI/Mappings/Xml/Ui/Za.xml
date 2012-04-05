@@ -99,6 +99,7 @@
     <EditPasswordErrorMessage>div#edit-password-wrapper div.form-error div[class='invalid']</EditPasswordErrorMessage>
     <EditPasswordPopupErrorMessage>form#wonga-my-account-profile-edit-password-form div.messages.error</EditPasswordPopupErrorMessage>
     <SubmitButton>input#edit-submit</SubmitButton>
+    <PopupErrorMessage>#fancybox-content div.messages.error ul li:nth-child(1)</PopupErrorMessage>
   </MyPersonalDetailsPage>
   
   <AboutUsPage>
