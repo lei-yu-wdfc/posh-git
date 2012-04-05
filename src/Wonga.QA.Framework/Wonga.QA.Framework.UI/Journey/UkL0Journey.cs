@@ -75,7 +75,7 @@ namespace Wonga.QA.Framework.UI
             addressPage.LookupByPostCode();
             addressPage.GetAddressesDropDown();
             Do.Until(() => addressPage.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN");
-            Do.Until(() => addressPage.FlatNumber = "666");
+            Do.Until(() => addressPage.HouseNumber = "666");
             addressPage.AddressPeriod = "3 to 4 years";
             CurrentPage = addressPage.Next();
             return this;

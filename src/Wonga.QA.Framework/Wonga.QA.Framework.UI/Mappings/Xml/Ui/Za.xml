@@ -47,13 +47,18 @@
   <AddressDetailsPage>
     <FormId>#wonga-apply-lzero-form</FormId>
     <District>#edit-district-za</District>
-    <FlatNumber>#edit-house-number-za</FlatNumber>
+    <HouseNumber>#edit-house-number-za</HouseNumber>
     <Town>#edit-town-za</Town>
     <County>#edit-county-za</County>
     <AddressPeriod>#edit-address-period-za</AddressPeriod>
     <Street>#edit-street-za</Street>
     <Postcode>#edit-postcode-za</Postcode>
-    <PostcodeErrorForm>div#edit-postcode-za-wrapper div.invalid</PostcodeErrorForm>
+    <PostcodeErrorForm>#edit-postcode-za-wrapper div.form-error div.invalid</PostcodeErrorForm>
+    <CountyErrorForm>#edit-county-za-wrapper div.invalid</CountyErrorForm>
+    <TownErrorForm>#edit-town-za-wrapper div.invalid</TownErrorForm>
+    <StreetErrorForm>#edit-street-za-wrapper div.invalid</StreetErrorForm>
+    <HouseNumberErrorForm>#edit-house-number-za-wrapper div.invalid</HouseNumberErrorForm>
+    <AddressPeriodErrorForm>#edit-address-period-za-wrapper div.invalid</AddressPeriodErrorForm>
   </AddressDetailsPage>
 
   <AcceptedPage>

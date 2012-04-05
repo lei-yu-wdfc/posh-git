@@ -72,7 +72,7 @@ namespace Wonga.QA.Framework.UI
         public IL0ConsumerJourney FillAddressDetails()
         {
             var addressPage = CurrentPage as AddressDetailsPage;
-            addressPage.FlatNumber = "1403";
+            addressPage.HouseNumber = "1403";
             addressPage.Street = "Edward";
             addressPage.Town = "Hearst";
             addressPage.PostCode = "V4F3A9";

@@ -35,7 +35,7 @@
   <AddressDetailsPage>
     <Postcode>#edit-postcode-ca</Postcode>
     <PostcodeErrorForm>div#edit-postcode-ca-wrapper div.invalid</PostcodeErrorForm>
-    <FlatNumber>#edit-street-number-ca</FlatNumber>
+    <HouseNumber>#edit-street-number-ca</HouseNumber>
     <Street>#edit-street-ca</Street>
     <PostOfficeBox>#edit-pobox-ca</PostOfficeBox>
     <Town>#edit-town-ca</Town>

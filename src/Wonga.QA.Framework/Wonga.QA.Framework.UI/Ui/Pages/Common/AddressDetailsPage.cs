@@ -16,7 +16,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private readonly IWebElement _form;
         private readonly IWebElement _lookup;
         private readonly IWebElement _next;
-        private readonly IWebElement _flatNumber;
+        private readonly IWebElement _houseNumber;
         private readonly IWebElement _district;
         private readonly IWebElement _county;
         private readonly IWebElement _town;
@@ -26,13 +26,18 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         private IWebElement _addressOptions;
         private IWebElement _postCodeErrorForm;
+        private IWebElement _houseNumberErrorForm;
+        private IWebElement _streetErrorForm;
+        private IWebElement _townErrorForm;
+        private IWebElement _countyErrorForm;
+        private IWebElement _addressPeriodErrorForm;
         private IWebElement _addressOptionsWrapper;
         private IWebElement _postcodeValid;
 
         public String PostCodeLookup { set { _postCodeLookup.SendValue(value); } }
         public String PostCode { set { _postCode.SendValue(value); } }
         public String SelectedAddress { set { _addressOptions.SelectOption(value); } }
-        public String FlatNumber { set { _flatNumber.SendValue(value); } }
+        public String HouseNumber { set { _houseNumber.SendValue(value); } }
         public String District { set { _district.SendValue(value); } }
         public String County { set { _county.SendValue(value); } }
         public String Town { set { _town.SendValue(value); } }
@@ -46,10 +51,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
             _form = Content.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.FormId));
             _postCode = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.Postcode));
-            _flatNumber = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.FlatNumber));
+            _houseNumber = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.HouseNumber));
             _addressPeriod = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.AddressPeriod));
             _next = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.NextButton));
-           
+
             switch (Config.AUT)
             {
                 case (AUT.Wb):
@@ -109,6 +114,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         }
         public bool IsPostcodeWarningOccurred()
         {
+            _next.Click();
             try
             {
                 _postCodeErrorForm =
@@ -124,10 +130,107 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             {
                 return false;
             }
-
             return false;
-
         }
+        public bool IsHouseNumberWarningOccurred()
+        {
+            _next.Click();
+            try
+            {
+                _houseNumberErrorForm =
+                           _form.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.HouseNumberErrorForm));
+                string houseNumberErrorFormClass = _houseNumberErrorForm.GetAttribute("class");
 
+                if (houseNumberErrorFormClass.Equals("invalid"))
+                {
+                    return true;
+                }
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+            return false;
+        }
+        public bool IsStreetWarningOccurred()
+        {
+            _next.Click();
+            try
+            {
+                _streetErrorForm =
+                           _form.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.StreetErrorForm));
+                string streetErrorFormClass = _streetErrorForm.GetAttribute("class");
+
+                if (streetErrorFormClass.Equals("invalid"))
+                {
+                    return true;
+                }
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+            return false;
+        }
+        public bool IsTownWarningOccurred()
+        {
+            _next.Click();
+            try
+            {
+                _townErrorForm =
+                           _form.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.TownErrorForm));
+                string townErrorFormClass = _townErrorForm.GetAttribute("class");
+
+                if (townErrorFormClass.Equals("invalid"))
+                {
+                    return true;
+                }
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+            return false;
+        }
+        public bool IsCountyWarningOccurred()
+        {
+            _next.Click();
+            try
+            {
+                _countyErrorForm =
+                           _form.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.CountyErrorForm));
+                string countyErrorFormClass = _countyErrorForm.GetAttribute("class");
+
+                if (countyErrorFormClass.Equals("invalid"))
+                {
+                    return true;
+                }
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+            return false;
+        }
+        public bool IsAddressPeriodWarningOccurred()
+        {
+            _next.Click();
+            try
+            {
+                _addressPeriodErrorForm =
+                           _form.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.AddressPeriodErrorForm));
+                string addressPeriodErrorFormClass = _addressPeriodErrorForm.GetAttribute("class");
+
+                if (addressPeriodErrorFormClass.Equals("invalid"))
+                {
+                    return true;
+                }
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+            return false;
+        }
     }
 }
