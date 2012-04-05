@@ -38,7 +38,7 @@ namespace Wonga.QA.Framework.UI
 
         private IWebDriver GetWebDriver(DesiredCapabilities capabilities)
         {
-            if(Config.Ui.ExternalAccess)
+            if(Config.Ui.RemoteMode)
                 return new RemoteWebDriver(Config.Ui.RemoteUri, capabilities);
             else
                 switch (Config.Ui.Browser)
@@ -126,6 +126,8 @@ namespace Wonga.QA.Framework.UI
 
         public Image Screen()
         {
+            if(!Driver.GetType().IsAssignableFrom(typeof(ITakesScreenshot)))
+                return null;
             var screenshot = ((ITakesScreenshot)Driver).GetScreenshot();
             var stream = new MemoryStream(screenshot.AsByteArray);
             return Image.FromStream(stream);

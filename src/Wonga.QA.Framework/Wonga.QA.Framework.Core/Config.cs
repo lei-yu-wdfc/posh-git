@@ -35,7 +35,7 @@ namespace Wonga.QA.Framework.Core
             Proxy = GetValue<Boolean>(false, "QAFProxyMode");
 
             Ui.Browser = GetValue<UiConfig.BrowserType>("FireFox", "QAFBrowser");
-            Ui.BrowserVersion = GetValue<string>("9", "QAFBrowserVersion");
+            Ui.BrowserVersion = GetValue<string>("", "QAFBrowserVersion");
             Ui.RemoteMode = GetValue<Boolean>(false, "QAFUiRemoteMode");
             Ui.ExternalAccess = GetValue<Boolean>(false, "QAFExternalAccessMode");
 
