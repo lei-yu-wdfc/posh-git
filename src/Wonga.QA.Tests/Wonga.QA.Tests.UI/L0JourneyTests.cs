@@ -416,6 +416,7 @@ namespace Wonga.QA.Tests.Ui
 
             switch (Config.AUT)
             {
+                #region case Za
                 case AUT.Za:
                     addressDetailsPage.HouseNumber = "25";
                     addressDetailsPage.Street = "high road";
@@ -439,10 +440,28 @@ namespace Wonga.QA.Tests.Ui
                     addressDetailsPage.AddressPeriod = "--- Please select ---";
                     Assert.IsTrue(addressDetailsPage.IsAddressPeriodWarningOccurred());
                     break;
+                #endregion
+                #region case Ca
                 case AUT.Ca:
-
-                    // addressDetailsPage
+                    addressDetailsPage.Street = "Edward";
+                    addressDetailsPage.Town = "Hearst";
+                    addressDetailsPage.PostCode = "V4F3A9";
+                    addressDetailsPage.AddressPeriod = "2 to 3 years";
+                    Assert.IsTrue(addressDetailsPage.IsHouseNumberWarningOccurred());
+                    addressDetailsPage.HouseNumber = "1403";
+                    addressDetailsPage.Street = "";
+                    Assert.IsTrue(addressDetailsPage.IsStreetWarningOccurred());
+                    addressDetailsPage.Street = "Edward";
+                    addressDetailsPage.Town = "";
+                    Assert.IsTrue(addressDetailsPage.IsTownWarningOccurred());
+                    addressDetailsPage.Town = "Hearst";
+                    addressDetailsPage.PostCode = "";
+                    Assert.IsTrue(addressDetailsPage.IsPostcodeWarningOccurred());
+                    addressDetailsPage.PostCode = "V4F3A9";
+                    addressDetailsPage.AddressPeriod = "--- Please select ---";
+                    Assert.IsTrue(addressDetailsPage.IsAddressPeriodWarningOccurred());
                     break;
+                #endregion
             }
 
             // Assert.Throws<AssertionFailureException>(() => { var processingPage = addressDetailsPage.Next(); });

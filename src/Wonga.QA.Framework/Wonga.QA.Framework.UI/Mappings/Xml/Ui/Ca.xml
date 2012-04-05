@@ -40,6 +40,11 @@
     <PostOfficeBox>#edit-pobox-ca</PostOfficeBox>
     <Town>#edit-town-ca</Town>
     <AddressPeriod>#edit-address-period-ca</AddressPeriod>
+    <PostcodeErrorForm>#edit-postcode-ca-wrapper div.form-error div.invalid</PostcodeErrorForm>
+    <TownErrorForm>#edit-town-ca-wrapper div.invalid</TownErrorForm>
+    <StreetErrorForm>#edit-street-ca-wrapper div.invalid</StreetErrorForm>
+    <HouseNumberErrorForm>#edit-street-number-ca-wrapper div.invalid</HouseNumberErrorForm>
+    <AddressPeriodErrorForm>#edit-address-period-ca-wrapper div.invalid</AddressPeriodErrorForm>
   </AddressDetailsPage>
 
   <AccountDetailsSection>
