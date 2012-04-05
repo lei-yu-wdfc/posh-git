@@ -86,6 +86,8 @@
 
   <SlidersElement>
     <FormId>#wonga-sliders-form</FormId>
+    <AmountSlider>#wonga-amount-slider a</AmountSlider>
+    <DurationSlider>#wonga-duration-slider a</DurationSlider>
     <LoanAmount>#edit-loan-amount</LoanAmount>
     <LoanDuration>#edit-loan-duration</LoanDuration>
     <SubmitButton>#edit-submit</SubmitButton>

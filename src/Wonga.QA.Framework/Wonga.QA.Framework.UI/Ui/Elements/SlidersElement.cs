@@ -12,6 +12,8 @@ namespace Wonga.QA.Framework.UI.Elements
     public class SlidersElement : BaseElement
     {
         private readonly IWebElement _form;
+        private readonly IWebElement _amountSlider;
+        private readonly IWebElement _durationSlider;
         private readonly IWebElement _loanAmount;
         private readonly IWebElement _loanDuration;
         private IWebElement _submit;
@@ -28,6 +30,8 @@ namespace Wonga.QA.Framework.UI.Elements
             : base(page)
         {
             _form = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.SlidersElement.FormId));
+            _amountSlider = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.AmountSlider));
+            _durationSlider = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.DurationSlider));
             _loanAmount = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.LoanAmount));
             _loanDuration = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.LoanDuration));
             _amountMinusButton = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.AmountMinusButton));
@@ -55,6 +59,14 @@ namespace Wonga.QA.Framework.UI.Elements
         {
             get { return _loanDuration.GetValue(); }
             set { _loanDuration.SendValue(value); }
+        }
+        public int MoveAmountSlider //Moving by pixels NOT by cash value
+        {
+            set { _amountSlider.DragAndDropToOffset(value,0); }
+        }
+        public int MoveDurationSlider //Moving by pixels NOT by cash value
+        {
+            set { _durationSlider.DragAndDropToOffset(value,0); }
         }
         public String GetTotalAmount
         {
