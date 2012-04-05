@@ -463,7 +463,7 @@ namespace Wonga.QA.Tests.Ui
             {
                 case AUT.Za:
                     postcode = Get.GetPostcode();
-                    addressPage.FlatNumber = "25";
+                    addressPage.HouseNumber = "25";
                     addressPage.Street = "high road";
                     addressPage.Town = "Kuku";
                     addressPage.County = "Province";
@@ -474,7 +474,7 @@ namespace Wonga.QA.Tests.Ui
 
                 case AUT.Ca:
                     postcode = "V4F3A9";
-                    addressPage.FlatNumber = "1403";
+                    addressPage.HouseNumber = "1403";
                     addressPage.Street = "Edward";
                     addressPage.Town = "Hearst";
                     addressPage.PostCode = postcode;
