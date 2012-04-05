@@ -18,7 +18,7 @@
     <PostcodeLookup>#edit-postcode-lookup-uk</PostcodeLookup>
     <Postcode>#edit-postcode-lookup-uk</Postcode>
     <District>#edit-district</District>
-    <FlatNumber>#edit-flat</FlatNumber>
+    <HouseNumber>#edit-flat</HouseNumber>
     <County>#edit-county</County>
     <AddressPeriod>#edit-address-period</AddressPeriod>
     <NextButton>#edit-submit</NextButton>
