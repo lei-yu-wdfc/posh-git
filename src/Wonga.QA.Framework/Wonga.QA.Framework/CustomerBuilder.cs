@@ -271,6 +271,15 @@ namespace Wonga.QA.Framework
             return this;
         }
 
+        public CustomerBuilder WithSpecificAge(int age)
+        {
+            var rightNow = DateTime.Today;
+            var then = rightNow.AddYears(-age);
+            _dateOfBirth = new Date(then);
+
+            return this;
+        }
+
         public Customer Build()
         {
 			_nextPayDate.DateFormat = DateFormat.Date;

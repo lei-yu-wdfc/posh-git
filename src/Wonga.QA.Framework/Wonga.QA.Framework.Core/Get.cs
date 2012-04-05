@@ -134,7 +134,7 @@ namespace Wonga.QA.Framework.Core
                     }
                 case AUT.Wb:
                     {
-                        return 1000;
+                        return 10000;
                     }
 
                 default:
