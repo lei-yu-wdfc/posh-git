@@ -122,4 +122,8 @@
   <ApplicationSection>
     <FormId>#wonga-apply-ln-form</FormId>
   </ApplicationSection>
+
+  <MyPersonalDetailsPage>
+    <Postcode>table#profile tr#address tbody tr:nth-child(3) td</Postcode>
+  </MyPersonalDetailsPage>
 </Ui>

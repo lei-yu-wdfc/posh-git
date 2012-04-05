@@ -23,6 +23,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                 _communicationPrefs.SelectLabel(value);
             }
         }
+        public string GetPostcode
+        {
+            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.Postcode)).Text; }
+        }
         public string GetHomePhone
         {
             get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.HomePhone)).Text; }
@@ -59,14 +63,16 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             switch (Config.AUT)
             {
                 case AUT.Za:
+                    _address = Content.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.Address));
+                    _password = Content.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.Password));
+                    _phone = Content.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.Phone));
+                    _communication = Content.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.Communication));
+                    break; 
                 case AUT.Ca:
                     Tabs = new TabsElement(this);
                     break;
             }
-            _address = Content.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.Address));
-            _password = Content.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.Password));
-            _phone = Content.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.Phone));
-            _communication = Content.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.Communication));
+
         }
 
         public void AddressClick()

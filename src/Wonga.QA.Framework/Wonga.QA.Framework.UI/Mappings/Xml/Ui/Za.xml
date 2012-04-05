@@ -77,6 +77,7 @@
 
   <MyPersonalDetailsPage>
     <Address>table#profile tr#address</Address>
+    <Postcode>table#profile tr#address tbody tr:nth-child(3) td</Postcode>
     <Password>table#profile tr#password</Password>
     <Phone>table#profile tr#phone</Phone>
     <Communication>table#profile tr#communication</Communication>
