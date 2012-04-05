@@ -4,28 +4,6 @@ using Wonga.QA.Framework.UI.Mappings.Pages;
 using Wonga.QA.Framework.UI.Mappings.Pages.Wb;
 using Wonga.QA.Framework.UI.Mappings.Sections;
 using Wonga.QA.Framework.UI.Mappings.Pages.SalesForce;
-using Wonga.QA.Framework.UI.UiElements.Pages.Common;
-using AboutUsPage = Wonga.QA.Framework.UI.Mappings.Pages.AboutUsPage;
-using AcceptedPage = Wonga.QA.Framework.UI.Mappings.Pages.AcceptedPage;
-using AccountDetailsPage = Wonga.QA.Framework.UI.Mappings.Pages.AccountDetailsPage;
-using AddressDetailsPage = Wonga.QA.Framework.UI.Mappings.Pages.AddressDetailsPage;
-using ApplyPage = Wonga.QA.Framework.UI.Mappings.Pages.ApplyPage;
-using BlogPage = Wonga.QA.Framework.UI.Mappings.Pages.BlogPage;
-using DealDonePage = Wonga.QA.Framework.UI.Mappings.Pages.DealDonePage;
-using DeclinedPage = Wonga.QA.Framework.UI.Mappings.Pages.DeclinedPage;
-using ForgotPasswordPage = Wonga.QA.Framework.UI.Mappings.Pages.ForgotPasswordPage;
-using JargonBusterPage = Wonga.QA.Framework.UI.Mappings.Pages.JargonBusterPage;
-using LoginPage = Wonga.QA.Framework.UI.Mappings.Pages.LoginPage;
-using MyPaymentsPage = Wonga.QA.Framework.UI.Mappings.Pages.MyPaymentsPage;
-using MyPersonalDetailsPage = Wonga.QA.Framework.UI.Mappings.Pages.MyPersonalDetailsPage;
-using MySummaryPage = Wonga.QA.Framework.UI.Mappings.Pages.MySummaryPage;
-using OurCustomersPage = Wonga.QA.Framework.UI.Mappings.Pages.OurCustomersPage;
-using PersonalDebitCardPage = Wonga.QA.Framework.UI.Mappings.Pages.PersonalDebitCardPage;
-using PersonalDetailsPage = Wonga.QA.Framework.UI.Mappings.Pages.PersonalDetailsPage;
-using ProcessingPage = Wonga.QA.Framework.UI.Mappings.Pages.ProcessingPage;
-using ResponsibleLendingPage = Wonga.QA.Framework.UI.Mappings.Pages.ResponsibleLendingPage;
-using TopupRequestPage = Wonga.QA.Framework.UI.Mappings.Pages.TopupRequestPage;
-using WhyUseUsPage = Wonga.QA.Framework.UI.Mappings.Pages.WhyUseUsPage;
 
 
 namespace Wonga.QA.Framework.UI.Mappings
