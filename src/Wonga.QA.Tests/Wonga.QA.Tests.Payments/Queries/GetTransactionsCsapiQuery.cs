@@ -1,16 +1,65 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Xml;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Tests.Core;
+using Wonga.QA.Tests.Payments.Enums;
 
 namespace Wonga.QA.Tests.Payments.Queries
 {
     [TestFixture]
     public class GetTransactionsCsapiQuery
     {
+        private dynamic _transactions = Drive.Data.Payments.Db.Transactions;
+		[Test, AUT(AUT.Za), JIRA("ZA-2227")]
+		public void GetTransactions_ShouldOnlyShowServiceFeeTransactionsPostedTillPostingDate()
+		{
+			//Arrange
+			var customer = CustomerBuilder.New().Build();
+			var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+
+			Do.Until(() => _transactions.GetCount(_transactions.Applications.ExternalId == app.Id));
+
+			var query = new Framework.Cs.GetTransactionsQuery
+			{
+				ApplicationGuid = app.Id
+			};
+
+			//Act
+			var response = Drive.Cs.Queries.Post(query);
+
+			Dictionary<PaymentTransactionType, int> retrievedTransactionTypes = new Dictionary<PaymentTransactionType, int>();
+
+			XmlDocument _doc = new XmlDocument();
+			_doc.LoadXml(response.Body.ToString());
+
+			XmlNodeList xmlNodeList = _doc.GetElementsByTagName("Type");
+
+			foreach (XmlElement element in xmlNodeList)
+			{
+				PaymentTransactionType transactionType;
+				Enum.TryParse<PaymentTransactionType>(element.InnerText, true, out transactionType);
+
+				if (retrievedTransactionTypes.ContainsKey(transactionType))
+				{
+					retrievedTransactionTypes[transactionType]++;
+				}
+				else
+				{
+					retrievedTransactionTypes[transactionType] = 1;
+				}
+			}
+
+			//Assert
+			Assert.AreEqual(1, retrievedTransactionTypes[PaymentTransactionType.ServiceFee]);
+		}
+
+
         [Test, AUT(AUT.Wb), JIRA("SME-375")]
         public void PaymentsShouldReturnAllTransactionsWhenThereAreTransactionsForAGivenApplication()
         {
