@@ -12,8 +12,9 @@ namespace Wonga.QA.Framework.Mocks
     {
         private readonly DbDriver _dbDriver;
         private const string OnlineBillPaymentRemittanceReport = "EBBADATA";
+    	private const string _gatewayName = "Scotia";
 
-        public Scotia()
+    	public Scotia()
         {
             _dbDriver = new DbDriver();
         }
@@ -25,19 +26,17 @@ namespace Wonga.QA.Framework.Mocks
             OnlineBillPaymentRemittanceReportCustomerBatch batch =
                 OnlineBillPaymentRemittanceReportCustomerBatch.CreateWith(transactionsToInclude);
 
-            IncomingBankGatewayScotiaFile file = CreateFrom(fileId, batch);
+            IncomingBankGatewayFile file = CreateFrom(fileId, batch);
 
-            _dbDriver.QaData.IncomingBankGatewayScotiaFiles.InsertOnSubmit(file);
+            _dbDriver.QaData.IncomingBankGatewayFiles.InsertOnSubmit(file);
             file.Submit();
         }
 
-        private IncomingBankGatewayScotiaFile CreateFrom(string fileId,
-                                                                OnlineBillPaymentRemittanceReportCustomerBatch batch)
+        private IncomingBankGatewayFile CreateFrom(string fileId, OnlineBillPaymentRemittanceReportCustomerBatch batch)
         {
             byte[] file = batch.ToFileFormat();
 
-            return new IncomingBankGatewayScotiaFile
-                       {FileData = file, FileName = string.Format("{0}.{1}", OnlineBillPaymentRemittanceReport, fileId)};
+            return new IncomingBankGatewayFile { FileData = file, FileName = string.Format("{0}.{1}", OnlineBillPaymentRemittanceReport, fileId), Gateway = _gatewayName };
         }
 
         #region Nested type: OnlineBillPaymentRemittanceReportCustomerBatch
