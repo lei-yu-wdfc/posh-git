@@ -194,6 +194,19 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test, AUT(AUT.Za), Pending]
 		public void CheckpointCustomerNameIsCorrectCompoundSurnameReversedAccepts()
 		{
+			var maidenName = Get.GetName();
+			var surname = String.Format("{0}-{1}", _surname, maidenName);
+
+			var customer = CustomerBuilder.New()
+				.WithEmployer(TestMask)
+				.WithForename(_forename)
+				.WithMiddleName(_middleName)
+				.WithSurname(_surname)
+				.WithDateOfBirth(_dateOfBirth)
+				.WithNationalNumber(_nationalNumber)
+				.Build();
+
+			ApplicationBuilder.New(customer).Build();
 		}
 
 	}
