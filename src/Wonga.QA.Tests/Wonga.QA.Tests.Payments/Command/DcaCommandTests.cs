@@ -7,6 +7,7 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Exceptions;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db.Ops;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
 using System.Threading;
@@ -27,6 +28,12 @@ namespace Wonga.QA.Tests.Payments.Command
 		[SetUp]
 		public void SetUp()
 		{
+			ServiceConfigurationEntity entity = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == BankGatewayIsTestModeKey);
+			_bankGatewayIsTestMode = entity.Value;
+
+			entity = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == FeatureSwitchMoveLoanToDca);
+			_featureSwitchMoveLoanToDcaMode = entity.Value;
+
 		    Drive.Data.Ops.Db.ServiceConfigurations.UpdateByKey(Key: BankGatewayIsTestModeKey, Value: "false");
             Drive.Data.Ops.Db.ServiceConfigurations.UpdateByKey(Key: FeatureSwitchMoveLoanToDca, Value: "true");
 		}
