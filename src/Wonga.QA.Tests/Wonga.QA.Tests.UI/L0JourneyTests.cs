@@ -441,7 +441,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(personalDetailsPage is PersonalDetailsPage);
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk, AUT.Wb), JIRA("QA-181")]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk), JIRA("QA-181")]
         public void L0JourneyCustomerOnCurrentAddressPageDoesNotEnterSomeRequiredFieldsWarningMessageDisplayed()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());

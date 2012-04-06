@@ -443,9 +443,9 @@ namespace Wonga.QA.Tests.Ui
             Application application = ApplicationBuilder.New(customer)
                 .Build();
             application.RepayOnDueDate(); // to take LN status
+            var page = loginPage.LoginAs(email);
             foreach (string account in accounts)
             {
-                var page = loginPage.LoginAs(email);
                 var payment = Client.Payments();
                 switch (Config.AUT)
                 {
