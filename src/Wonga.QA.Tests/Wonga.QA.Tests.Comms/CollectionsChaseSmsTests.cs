@@ -204,20 +204,23 @@ namespace Wonga.QA.Tests.Comms
 				         SmsMessages.Find(
 				         	SmsMessages.CreatedOn >= _atTheBeginningOfThisTest &&
 				         	SmsMessages.MobilePhoneNumber == formattedPhoneNumber &&
-				         	SmsMessages.MessageText == text)
+				         	SmsMessages.MessageText == text &&
+							SmsMessages.Status == 2
+							)
 				         != null));
 		}
 
 		private void AssertSmsIsNotSent(string formattedPhoneNumber, string text)
 		{
-			Assert.IsFalse(
+			Assert.IsTrue(
 				Do.With.Timeout(TimeSpan.FromSeconds(10))
 					.Watch(() =>
 					       (bool) (
 					              	SmsMessages.Find(
 					              		SmsMessages.CreatedOn >= _atTheBeginningOfThisTest &&
 					              		SmsMessages.MobilePhoneNumber == formattedPhoneNumber &&
-					              		SmsMessages.MessageText == text)
+					              		SmsMessages.MessageText == text &&
+										SmsMessages.Status == 3)
 					              	!= null)));
 		}
 
