@@ -467,9 +467,22 @@ namespace Wonga.QA.Tests.Ui
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            Application application = ApplicationBuilder.New(customer)
+            switch (Config.AUT)
+            {
+                case AUT.Ca:
+                case AUT.Za:
+                case AUT.Uk:
+                    Application application1 = ApplicationBuilder.New(customer)
                 .Build();
-            application.RepayOnDueDate(); // to take LN status
+                    application1.RepayOnDueDate(); // to take LN status
+                    break;
+
+                case AUT.Wb:
+                    Application application2 = BusinessApplicationBuilder.New(customer)
+                .Build();
+                    application2.RepayOnDueDate(); // to take LN status
+                    break;
+            }
             var page = loginPage.LoginAs(email);
             foreach (string account in accounts)
             {
@@ -517,6 +530,30 @@ namespace Wonga.QA.Tests.Ui
                                 //  button add bank account is broken
                                 //  payment.AddBankAccount("Capitec", "Current", account, "2 to 3 years");
                                 //  throw new Exception("Invalid bank account was pass: " + account);
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e.Message);
+                                Assert.IsTrue(e.Message.Contains("Please enter a valid bank account number"));
+                            }
+                        }
+                        else
+                        {
+                            throw new NullReferenceException("Add bank account button not found");
+                        }
+                        break;
+                    #endregion
+                    #region case Wb
+                    case (AUT.Wb):
+                        if (payment.IsAddBankAccountButtonExists())
+                        {
+                            payment.AddBankAccountButtonClick();
+
+                            Thread.Sleep(2000); // Wait some time to load popup
+                            try
+                            {
+                                payment.AddBankAccount("Capitec", "Current", account, "2 to 3 years");
+                                throw new Exception("Invalid bank account was pass: " + account);
                             }
                             catch (Exception e)
                             {
