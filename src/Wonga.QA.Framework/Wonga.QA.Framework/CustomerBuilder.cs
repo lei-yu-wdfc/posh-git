@@ -40,6 +40,7 @@ namespace Wonga.QA.Framework
 		private String _mobileNumber;
     	private Int64? _bankAccountNumber;
         private Int64 _paymentCardNumber;
+        private int _numberOfDependants;
 
         public Guid Id { get { return _id; } }
         public String Email { get { return _email; } }
@@ -241,6 +242,12 @@ namespace Wonga.QA.Framework
             return this;
         }
 
+        public CustomerBuilder WithNumberOfDependants(int numberOfDependants)
+        {
+            _numberOfDependants = numberOfDependants;
+            return this;
+        }
+
         public CustomerBuilder WithPhoneNumber(String phoneNumber)
         {
             _phoneNumber = phoneNumber;
@@ -290,7 +297,11 @@ namespace Wonga.QA.Framework
                 CreateAccountCommand.New(r => { r.AccountId = _id;
                                                   r.Login = _email;
                 }),
-                SaveSocialDetailsCommand.New(r => r.AccountId = _id),
+                SaveSocialDetailsCommand.New(r =>
+                                                 {
+                                                     r.AccountId = _id;
+                                                     r.Dependants = _numberOfDependants;
+                                                 }),
                 SavePasswordRecoveryDetailsCommand.New(r => r.AccountId = _id),
                 SaveContactPreferencesCommand.New(r => r.AccountId = _id),
             };
@@ -411,6 +422,7 @@ namespace Wonga.QA.Framework
                                                                  r.Forename = _foreName;
                                                                  r.DateOfBirth = _dateOfBirth;
                                                                  r.Email = _email;
+                                                                 r.Gender = _gender;
                                                              }),
                         SaveCustomerAddressUkCommand.New(r=>
                                                              {
