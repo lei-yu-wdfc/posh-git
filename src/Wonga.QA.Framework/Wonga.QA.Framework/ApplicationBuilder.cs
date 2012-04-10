@@ -249,6 +249,11 @@ namespace Wonga.QA.Framework
             Do.With.Timeout(3).Until(() => (ApplicationDecisionStatus)
                 Enum.Parse(typeof(ApplicationDecisionStatus), (response = Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = Id })).Values["ApplicationDecisionStatus"].Single()) == Decision);
 
+			if( Decision == ApplicationDecisionStatus.Pending )
+			{
+				return new Application(Id);
+			}
+
             if (Decision == ApplicationDecisionStatus.Declined)
             {
                 return new Application(Id, GetFailedCheckpointFromApplicationDecisionResponse(response));
