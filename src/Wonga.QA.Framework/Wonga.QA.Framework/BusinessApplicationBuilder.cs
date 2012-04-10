@@ -125,6 +125,7 @@ namespace Wonga.QA.Framework
             /* STEP 7 
             * And I wait for the decision i want - PLEASE REMEBER THAT THE DEFAULT ONE IS ACCEPTED 
             * Set timeout to two minutes to compensate for long risk decision */
+
             WaitForRiskDecisionToBeMade();
 
             /* STEP 7.1
