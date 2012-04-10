@@ -95,18 +95,22 @@ namespace Wonga.QA.Framework.Core
 
         public static string GetMobilePhone()
         {
-        	switch (Config.AUT)
-        	{
-        		case AUT.Za:
-        			{
-        				return "021" + RandomLong(1000000, 9999999);
-        			}
-						
-				default:
-        		{
-        			return "07500000000";
-        		}
-        	}
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    {
+                        return "021" + RandomLong(1000000, 9999999);
+                    }
+                case AUT.Wb:
+                    {
+                        return "075" + RandomLong(10000000, 99999999);
+                    }
+
+                default:
+                    {
+                        return "07500000000";
+                    }
+            }
         }
 
         public static String GetNationalNumber()

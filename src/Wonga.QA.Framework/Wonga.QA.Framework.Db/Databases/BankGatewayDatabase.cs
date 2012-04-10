@@ -5679,6 +5679,8 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		
 		private System.Nullable<int> _NaedoDocTypeId;
 		
+		private string _BankIntegration;
+		
 		private EntityRef<BankAccountDetailEntity> _BankAccountDetailEntity;
 		
 		private EntityRef<NaedoDocTypeEntity> _NaedoDocTypeEntity;
@@ -5731,6 +5733,8 @@ namespace Wonga.QA.Framework.Db.BankGateway
     partial void OnTrackingDaysChanged();
     partial void OnNaedoDocTypeIdChanging(System.Nullable<int> value);
     partial void OnNaedoDocTypeIdChanged();
+    partial void OnBankIntegrationChanging(string value);
+    partial void OnBankIntegrationChanged();
     #endregion
 		
 		public TransactionEntity()
@@ -6105,6 +6109,26 @@ namespace Wonga.QA.Framework.Db.BankGateway
 					this._NaedoDocTypeId = value;
 					this.SendPropertyChanged("NaedoDocTypeId");
 					this.OnNaedoDocTypeIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BankIntegration", DbType="VarChar(10)")]
+		public string BankIntegration
+		{
+			get
+			{
+				return this._BankIntegration;
+			}
+			set
+			{
+				if ((this._BankIntegration != value))
+				{
+					this.OnBankIntegrationChanging(value);
+					this.SendPropertyChanging();
+					this._BankIntegration = value;
+					this.SendPropertyChanged("BankIntegration");
+					this.OnBankIntegrationChanged();
 				}
 			}
 		}

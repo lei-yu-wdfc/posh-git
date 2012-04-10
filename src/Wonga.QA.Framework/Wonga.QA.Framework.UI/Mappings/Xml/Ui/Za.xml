@@ -8,6 +8,7 @@
 		<PopupAddBankAccountButton>#edit-submit</PopupAddBankAccountButton>
 		<PopupExeption>#wonga-my-account-edit-bank-form div:nth-child(1) ul li</PopupExeption>
 		<AccountNumber>.info.bank-account.bank-account-primary tbody tr:nth-child(4) td b span</AccountNumber>
+		<PopupBankAccountException>#edit-account-number-za-wrapper div.form-error div.invalid </PopupBankAccountException>
 	</MyPaymentsPage>
 	
   <ContactingYouSection>

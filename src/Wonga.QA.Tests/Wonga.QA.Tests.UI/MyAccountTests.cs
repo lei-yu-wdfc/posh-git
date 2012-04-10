@@ -436,32 +436,29 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk, AUT.Wb), JIRA("QA-187"), Pending("need refinement")]
         public void CustomerEntersInvalidBankAccountWarningMessageShouldBeDisplyaed()
         {
-            var accounts = new List<string> {"dfgsfgfgsdf", "123 342", "123f445", "+135-6887"};
+            var accounts = new List<string> {"1234567", "dfgsfgfgsdf", "123 342", "123f445", "+135-6887"};
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             Application application = ApplicationBuilder.New(customer)
                 .Build();
             application.RepayOnDueDate(); // to take LN status
+            var page = loginPage.LoginAs(email);
             foreach (string account in accounts)
             {
-                var page = loginPage.LoginAs(email);
-                var payment1 = Client.Payments();
+                var payment = Client.Payments();
                 switch (Config.AUT)
                 {
                     case (AUT.Za):
-                        if (payment1.IsAddBankAccountButtonExists())
+                        if (payment.IsAddBankAccountButtonExists())
                         {
-                            payment1.AddBankAccountButtonClick();
+                            payment.AddBankAccountButtonClick();
 
                             Thread.Sleep(2000); // Wait some time to load popup
 
-                            var paymentPage = payment1.AddBankAccount("Capitec", "Current", "7434567", "2 to 3 years");
-                            while (paymentPage.IfHasAnExeption() == false)
-                            {
-                                Thread.Sleep(1000);
-                            }
-                            Assert.IsTrue(paymentPage.IfHasAnExeption());
+                            payment.AddBankAccount("Capitec", "Current", account, "2 to 3 years");
+                            payment.IsChengedBankAccountHasException();
+                            
                         }
                         else
                         {
