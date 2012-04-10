@@ -60,7 +60,6 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(mySummaryPage.TopupSliders.GetTotalAmount.Remove(0, 1), topupAmount);
             Assert.AreEqual(mySummaryPage.TopupSliders.GetTotalFees.Remove(0, 1), interestAndFees);
 
-            //The saga contd
             var requestPage =
                 mySummaryPage.TopupSliders.Apply();
 
@@ -68,24 +67,22 @@ namespace Wonga.QA.Tests.Ui
             requestPage.IsTopupRequestPageSliderReturningCorrrectValuesOnChange(application.Id.ToString());
 
             requestPage.SubmitButtonClick();
-            //Procesing page mystery TBC
+            
             var processPage = new TopupProcessingPage(this.Client);
             var agreementPage = processPage.WaitForAgreementPage(Client);
 
-            //make sure that certain text doesnt appear
             Assert.IsFalse(agreementPage.IsTopupAgreementPageDateNotPresent());
             Assert.IsTrue(agreementPage.IsTopupAgreementPageLegalInfoDisplayed());
             Assert.IsFalse(agreementPage.IsTopupAgreementPageTopupAmountNotPresent());
             Assert.IsFalse(agreementPage.IsTopupTotalAmountTokenBeingReplaced());
 
-            //click accept and load the Deal Done page
             var dealDonePage = agreementPage.Accept();
             Assert.IsFalse(dealDonePage.IsDealDonePageDateNotPresent());
             Assert.IsFalse(dealDonePage.IsDealDonePageJiffyNotPresent());
             Assert.IsFalse(dealDonePage.IsDealDonePageTopupAmountNotPresent());
 
             dealDonePage.ContinueToMyAccount();
-            //const string summaryURL = "my-account/summary";
+            
             //Test my account summary page
             Assert.IsTrue(this.Client.Driver.Url.Contains("my-account"));
         }
