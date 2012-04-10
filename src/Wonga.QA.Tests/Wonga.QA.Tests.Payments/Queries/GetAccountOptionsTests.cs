@@ -25,47 +25,9 @@ namespace Wonga.QA.Tests.Payments.Queries
     /// <summary>
     /// Not paralellizable because it is altering 
     /// </summary>
-    [TestFixture, Parallelizable (TestScope.Self)]
+    [TestFixture]
     public class GetAccountOptionsTests
     {
-        private string _resetExtendLoanDays = null;
-        private string _resetExtendLoanDaysBeforeDueDate = null;
-        private string _resetextendLoanEnabled = null;
-        private string _resetInArrearsMinDays = null;
-        [FixtureSetUp]
-        public void Setup()
-        {
-            // Record value(s)
-            _resetExtendLoanDays = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays").Value;
-            _resetExtendLoanDaysBeforeDueDate = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanDaysBeforeDueDate").Value;
-            _resetextendLoanEnabled = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanEnabled").Value;
-            _resetInArrearsMinDays = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.InArrearsMinDays").Value;
-            _resetInArrearsMinDays = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.InArrearsMinDays").Value;
-
-            // Ensure Extend is Enabled
-            var cfg3 = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanEnabled");
-            cfg3.Value = "true";
-            cfg3.Submit();
-        }
-
-        [FixtureTearDown]
-        public void TearDown()
-        {
-            // Reset value(s)
-            var cfg1 = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays");
-            cfg1.Value = _resetExtendLoanDays;
-            cfg1.Submit();
-            var cfg2 = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanDaysBeforeDueDate");
-            cfg2.Value = _resetExtendLoanDaysBeforeDueDate;
-            cfg2.Submit();
-            var cfg3 = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanEnabled");
-            cfg3.Value = _resetextendLoanEnabled;
-            cfg3.Submit();
-            var cfg4 = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.InArrearsMinDays");
-            cfg4.Value = _resetInArrearsMinDays;
-            cfg4.Submit();
-
-        }
 
         [Test, AUT(AUT.Uk), JIRA("UK-823")]
         public void Scenario01ExistingCustomerWithoutLiveLoan()
@@ -170,7 +132,7 @@ namespace Wonga.QA.Tests.Payments.Queries
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-823")]
-        public void Scenario07CustomerWithLiveLoanWithoutAvailableCreditCanExtend()
+        public void Scenario07CustomerWithLiveLoanWithoutAvailableCreditCannotExtendTooManyExts()
         {
             var accountId = Guid.NewGuid();
             var bankAccountId = Guid.NewGuid();
