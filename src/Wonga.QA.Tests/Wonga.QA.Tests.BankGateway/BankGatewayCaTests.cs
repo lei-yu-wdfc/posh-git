@@ -15,7 +15,7 @@ namespace Wonga.QA.Tests.BankGateway
 	{
 		// TODO: Additional full end-to-end tests will be added here once we have the Scotia and BMO mock
 
-		[Test, JIRA("CA-1880"), Ignore("This is not a full end-to-end test but used to explicitly excercise the routing logic in the CA gateway.")]
+		[Test, JIRA("CA-1931")]
 		public void SendPaymentMessageShouldBeRoutedToBmo()
 		{
 			var customer = CustomerBuilder.New().
@@ -24,7 +24,7 @@ namespace Wonga.QA.Tests.BankGateway
 			ApplicationBuilder.New(customer).Build();
 		}
 
-		[Test, JIRA("CA-1880"), Ignore("This is not a full end-to-end test but used to explicitly excercise the routing logic in the CA gateway.")]
+        [Test, JIRA("CA-1931")]
 		public void SendPaymentMessageShouldBeRoutedToScotia()
 		{
             var customer = CustomerBuilder.New().
