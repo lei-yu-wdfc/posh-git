@@ -52,6 +52,7 @@
     <Compile Include="SecondLoanTest.cs" />
     <Compile Include="SliderTests.cs" />
     <Compile Include="SurveyTest.cs" />
+    <Compile Include="TagCloudTests.cs" />
     <Compile Include="UiTest.cs" />
     <Compile Include="L0DeclinedLoan.cs" />
   </ItemGroup>
@@ -86,6 +87,10 @@
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Data.dll</HintPath>
     </Reference>
     <Reference Include="Wonga.QA.Framework.Db, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Wonga.QA.Framework.Msmq, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Msmq.dll</HintPath>
+    </Reference>
     <Reference Include="Wonga.QA.Framework.ThirdParties, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Wonga.QA.Framework.Ui">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Ui.dll</HintPath>
