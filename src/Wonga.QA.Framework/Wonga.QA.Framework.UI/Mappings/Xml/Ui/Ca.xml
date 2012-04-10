@@ -121,6 +121,7 @@
   </HomePage>
 
   <TabsElement>
+    <Advice>li:nth-child(4)>a</Advice>
     <MyAccount>li:nth-child(5)>a</MyAccount>
   </TabsElement>
 

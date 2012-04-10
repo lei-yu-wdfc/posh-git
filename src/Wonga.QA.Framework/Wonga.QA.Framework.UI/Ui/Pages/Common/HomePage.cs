@@ -1,4 +1,6 @@
-﻿using OpenQA.Selenium;
+﻿using MbUnit.Framework;
+using NHamcrest.Core;
+using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Elements;
 using Wonga.QA.Framework.UI.Mappings;
@@ -40,8 +42,11 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
                     Tabs = new TabsElement(this);
                     break;
                 case (AUT.Wb):
-                    Help = new HelpElement(this);
+                Help = new HelpElement(this);
+                    Tabs= new TabsElement(this);
+                    Login = new LoginElement(this);
                     break;
+
             }
             //Tabs = new TabsElement(this);
 
@@ -65,6 +70,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
         {
             var popupTitle = Client.Driver.FindElement(By.CssSelector(Ui.Get.HomePage.ProvincePopupTitle));
             return !popupTitle.Displayed;
+        }
+
+        public void AssertThatIsWbHomePage()
+        {
+            Assert.That(Headers, Has.Item(Ui.Get.HomePage.BusinessTitleText));
+
         }
 
     }

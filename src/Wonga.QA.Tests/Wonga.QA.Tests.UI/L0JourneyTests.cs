@@ -441,6 +441,13 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(personalDetailsPage is PersonalDetailsPage);
         }
 
+        [Test, AUT(AUT.Wb), JIRA("QA-251")]
+        public void WbFrontendLoadsCorrectly()
+        {
+            var homePage = Client.Home();
+            homePage.AssertThatIsWbHomePage();
+        }
+
         [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk), JIRA("QA-181")]
         public void L0JourneyCustomerOnCurrentAddressPageDoesNotEnterSomeRequiredFieldsWarningMessageDisplayed()
         {
