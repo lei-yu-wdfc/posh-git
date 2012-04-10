@@ -16,5 +16,9 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String WereFastTitle { get; set; }
         public String WereResponsibleTitle { get; set; }
         public String WongaMomentsTitle { get; set; }
+        public String AboutUsText { get; set; }
+        public String WereDifferentText { get; set; }
+        public String WereFastText { get; set; }
+        public String WereResponsibleText { get; set; }
     }
 }

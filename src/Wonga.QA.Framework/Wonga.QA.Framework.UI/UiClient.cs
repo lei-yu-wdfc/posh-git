@@ -114,7 +114,17 @@ namespace Wonga.QA.Framework.UI
         
         public AboutUsPage About()
         {
-            Driver.Navigate().GoToUrl(Config.Ui.Home + "/about");
+            switch(Config.AUT)
+            {
+                case AUT.Za:
+                case AUT.Ca:
+                    Driver.Navigate().GoToUrl(Config.Ui.Home + "/about");
+                    break;
+                case AUT.Wb:
+                    Driver.Navigate().GoToUrl(Config.Ui.Home + "/about-us");
+                    break;
+            }
+            
             return new AboutUsPage(this);
         }
 

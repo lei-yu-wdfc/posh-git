@@ -138,4 +138,13 @@
   
 </MyAccountNavigationSection>
   
+    <AboutUsPage>
+      <AboutUsText>.wonga-box-type-text div div</AboutUsText>
+      <WereDifferent>#quicktabs-tab-wonga-tabs-0</WereDifferent>
+      <WereDifferentText>#node-896 div p</WereDifferentText>
+      <WereFast>#quicktabs-tab-wonga-tabs-1</WereFast>
+      <WereFastText>#node-897 div p</WereFastText>
+      <WereResponsible>#quicktabs-tab-wonga-tabs-2</WereResponsible>
+      <WereResponsibleText>#node-899 div p</WereResponsibleText>
+    </AboutUsPage>
 </Ui>
