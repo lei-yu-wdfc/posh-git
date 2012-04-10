@@ -4,7 +4,7 @@
     <Username>#edit-name</Username>
     <Password>#edit-pass</Password>
     <LoginButton>#edit-login</LoginButton>
-    <ForgotPassword>.//*[@id='wonga-login-form']/div/div[5]/a</ForgotPassword>
+    <ForgotPassword>#wonga-login-form div div:nth-child(5) a</ForgotPassword>
   </LoginPage>
 
   <ForgotPasswordPage>
@@ -25,7 +25,7 @@
   <AddressDetailsPage>
     <FormId>#wonga-apply-lzero-form</FormId>
     <District>#edit-district</District>
-    <FlatNumber>#edit-flat</FlatNumber>
+    <HouseNumber>#edit-flat</HouseNumber>
     <Town>#edit-town</Town>
     <County>#edit-county</County>
     <Street>#edit-street</Street>
@@ -47,6 +47,10 @@
 		<RepayDate>#content-area em</RepayDate>
 		<RepayAmount>#content-area span.blue-text</RepayAmount>
 	</DealDonePage>
+
+  <TopupDealDonePage>
+    <AccountLink>#content-area h2 a</AccountLink>
+  </TopupDealDonePage>
 
   <AcceptedPage>
     <FormId>#wonga-loan-approve-form</FormId>
@@ -86,6 +90,8 @@
 
   <SlidersElement>
     <FormId>#wonga-sliders-form</FormId>
+    <AmountSlider>#wonga-amount-slider a</AmountSlider>
+    <DurationSlider>#wonga-duration-slider a</DurationSlider>
     <LoanAmount>#edit-loan-amount</LoanAmount>
     <LoanDuration>#edit-loan-duration</LoanDuration>
     <SubmitButton>#edit-submit</SubmitButton>
@@ -125,14 +131,15 @@
   </JargonBusterPage>
 
   <FAQElement>
-    <SelectQuestion>.//*[@id='faqQuestions']/option[@selected='selected']</SelectQuestion>
-    <AnswerQuestion>.//*[@id='containerAnswer']/h2</AnswerQuestion>
+    <SelectQuestion>#faqQuestions option[selected="selected"]</SelectQuestion>
+    <AnswerQuestion>#containerAnswer h2</AnswerQuestion>
   </FAQElement>
 
   <InternationalElement>
-    <InternationalTrigger>.//*[@id='international-trigger']</InternationalTrigger>
-    <InternationalPanelZa>.//*[@id='international-panel']/div/ul/li[1]/a</InternationalPanelZa>
-    <InternationalPanelUk>.//*[@id='international-panel']/div/ul/li[2]/a</InternationalPanelUk>
+    <InternationalTrigger>#international-trigger</InternationalTrigger>
+    <InternationalPanelZa>.en-ZA.first a</InternationalPanelZa>
+    <InternationalPanelCa>.en-CA.first a</InternationalPanelCa>
+    <InternationalPanelUk>.en-UK.last a</InternationalPanelUk>
   </InternationalElement>
 
   <PersonalDetailsPage>
@@ -212,6 +219,10 @@
     <SecretAnswer>#edit-secret-answer</SecretAnswer>
   </AccountDetailsSection>
 
+  <ApplyPage>
+    <Submit>#wonga-apply-ln-form #edit-submit</Submit>
+  </ApplyPage>
+
   <ProcessingPage>
     <!--<FormId>wonga-processing</FormId>-->
     <!--<ProcessingImage>#wonga-processing>img</ProcessingImage>-->
@@ -264,4 +275,30 @@
     <WongaMoments>div.wongaTabs li:nth-child(4) a</WongaMoments>
     <WongaMomentsTitle>div.panes div:nth-child(4) h2</WongaMomentsTitle>
   </AboutUsPage>
+
+  <TabsElement>
+    <TabsForm>ul.menu</TabsForm>
+    <Home>li:nth-child(1)>a</Home>
+    <HowItWorks>li:nth-child(2)>a</HowItWorks>
+    <AboutUs>li:nth-child(3)>a</AboutUs>
+    <Advice>li:nth-child(4)>a</Advice>
+  </TabsElement>
+
+  <TopupRequestPage>
+    <TopupRequestPageSubmitButton>div#edit-submit</TopupRequestPageSubmitButton>
+    <TopupRequestPageInformativeBox>div.inner-box-informative</TopupRequestPageInformativeBox>
+    <TopupRequestPageNewCreditRequest>span.credit-request-amount</TopupRequestPageNewCreditRequest>
+    <TopupRequestPageNewInterestAndFees>span.credit-request-fees</TopupRequestPageNewInterestAndFees>
+    <TopupRequestPageNewGrandTotal>span.credit-request-total</TopupRequestPageNewGrandTotal>
+    <TopupRequestPageSliders>#wonga-single-slider</TopupRequestPageSliders>
+  </TopupRequestPage>
+  
+  
+  <TopupAgreementPage>
+    <TopupAgreementAcceptButton>div#id-accept</TopupAgreementAcceptButton>
+    <TopupAgreementscroll>div#id-agreementscroll</TopupAgreementscroll>
+  </TopupAgreementPage>
+  
+  
+  
 </Ui>

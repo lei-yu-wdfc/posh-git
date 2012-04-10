@@ -17,15 +17,27 @@ namespace Wonga.QA.Framework.UI.Elements
     {
         private readonly IWebElement _internationalTrigger;
         private readonly IWebElement _internationalPanelZa;
+        private readonly IWebElement _internationalPanelCa;
         private readonly IWebElement _internationalPanelUk;
+
 
 
         public InternationalElement(BasePage page)
             : base(page)
         {
-            _internationalTrigger = Page.Client.Driver.FindElement(By.XPath(Ui.Get.InternationalElement.InternationalTrigger));
-            _internationalPanelZa = Page.Client.Driver.FindElement(By.XPath(Ui.Get.InternationalElement.InternationalPanelZa));
-            _internationalPanelUk = Page.Client.Driver.FindElement(By.XPath(Ui.Get.InternationalElement.InternationalPanelUk));
+            _internationalTrigger =
+                Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.InternationalElement.InternationalTrigger));
+            switch (Config.AUT)
+            {
+                case (AUT.Ca):
+                    _internationalPanelZa = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.InternationalElement.InternationalPanelZa));
+                    _internationalPanelUk = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.InternationalElement.InternationalPanelUk));
+                    break;
+                case (AUT.Za):
+                    _internationalPanelCa = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.InternationalElement.InternationalPanelCa));
+                    _internationalPanelUk = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.InternationalElement.InternationalPanelUk));
+                    break;
+            }
         }
 
         public void InternationalTriggerClick()
@@ -36,6 +48,11 @@ namespace Wonga.QA.Framework.UI.Elements
         public void InternationalPanelZaClick()
         {
             _internationalPanelZa.Click();
+        }
+
+        public void InternationalPanelCaClick()
+        {
+            _internationalPanelCa.Click();
         }
 
         public void InternationalPanelUkClick()

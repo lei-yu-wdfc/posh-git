@@ -34,6 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BankGatewayCaTests.cs" />
     <Compile Include="BankGatewayServiceTests.cs" />
     <Compile Include="Enums\BankGatewayTransactionStatus.cs" />
     <Compile Include="Helpers\TimeoutBankGatewayFunctions.cs" />
@@ -59,6 +60,9 @@
     </Reference>
     <Reference Include="Wonga.QA.Framework.Core">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Wonga.QA.Framework.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Data.dll</HintPath>
     </Reference>
     <Reference Include="Wonga.QA.Framework.Db">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Db.dll</HintPath>

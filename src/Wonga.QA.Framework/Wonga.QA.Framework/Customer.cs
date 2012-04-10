@@ -13,12 +13,10 @@ namespace Wonga.QA.Framework
     public class Customer
     {
         public Guid Id { get; set; }
-        public string Email { get; set; }
+        public String Email { get; set; }
         public Guid BankAccountId { get; set; }
-        public string Forename { get; private set; }
-        public string Surname { get; private set; }
-        public Date DateOfBirth { get; private set; }
-        public String MobilePhoneNumber { get; private set; }
+        public String MiddleName { get; set; }
+        public Int64 CardNumber { get; set; }
 
         public Customer(Guid id)
         {
@@ -29,7 +27,6 @@ namespace Wonga.QA.Framework
         {
             return Drive.Db.Ops.Accounts.Single(c => c.ExternalId == Id).Login;
         }
-
         public Customer(Guid id, string email, Guid bankAccountId)
         {
             Id = id;
@@ -37,15 +34,18 @@ namespace Wonga.QA.Framework
             BankAccountId = bankAccountId;
         }
 
-        public Customer(Guid id,String email,String forename, String surname, Date dateOfBirth, String mobilePhoneNumber)
-        {
-            Id = id;
-            Email = email;
-            Forename = forename;
-            Surname = surname;
-            DateOfBirth = dateOfBirth;
-            MobilePhoneNumber = mobilePhoneNumber;
-        }
+        //[Obsolete("This is obsolete")]
+        //public Customer(Guid id,String email,String forename, String surname, Date dateOfBirth, String mobilePhoneNumber)
+        //{
+        //    Id = id;
+        //    Email = email;
+        //    Forename = forename;
+        //    Surname = surname;
+        //    DateOfBirth = dateOfBirth;
+        //    MobilePhoneNumber = mobilePhoneNumber;
+        //}
+
+        #region Public Methods
 
         public Application GetApplication()
         {
@@ -64,7 +64,7 @@ namespace Wonga.QA.Framework
 
         public PersonalPaymentCardEntity[] GetPersonalPaymentCards()
         {
-            return Drive.Db.Payments.PersonalPaymentCards.Where(c=>c.AccountId == this.Id).ToArray();
+            return Drive.Db.Payments.PersonalPaymentCards.Where(c => c.AccountId == this.Id).ToArray();
         }
 
         public void AddPaymentCard(string cardType, string cardNumber, string securityCode, DateTime expiryDate, bool isPrimary)
@@ -81,6 +81,7 @@ namespace Wonga.QA.Framework
             Drive.Api.Commands.Post(cmd);
             Do.Until(() => Drive.Db.Payments.PersonalPaymentCards
                          .Single(c => c.AccountId == this.Id
+                                      && c.PaymentCardsBaseEntity.Type == cardType
                                       && c.PaymentCardsBaseEntity.MaskedNumber == cardNumber.MaskedCardNumber()));
         }
 
@@ -110,6 +111,7 @@ namespace Wonga.QA.Framework
             var row = Drive.Db.Risk.EmploymentDetails.Single(cd => cd.AccountId == Id);
             row.EmployerName = employer;
             row.Submit();
+        	Do.Until(row.Refresh);
         }
 
         public string GetCcin()
@@ -120,15 +122,18 @@ namespace Wonga.QA.Framework
         public string GetCustomerFullName()
         {
             var customerDetailsRow = Drive.Db.Comms.CustomerDetails.Single(cd => cd.AccountId == Id);
-            return customerDetailsRow.Forename +" "+ customerDetailsRow.Surname;
+            return customerDetailsRow.Forename + " " + customerDetailsRow.Surname;
         }
 
         public void ScrubCcin()
         {
             var db = new DbDriver();
             AccountPreferenceEntity accountPreferenceEntity = db.Payments.AccountPreferences.Single(ap => ap.AccountId == Id);
-            accountPreferenceEntity.Ccin = "ScrubbedCcin_"+Get.RandomInt(10000, 99999);
+            accountPreferenceEntity.Ccin = "ScrubbedCcin_" + Get.RandomInt(10000, 99999);
             db.Payments.SubmitChanges();
         }
+
+        #endregion
+        
     }
 }

@@ -7,7 +7,8 @@
 		<PopupLengthOfTime>#edit-bank-period</PopupLengthOfTime>
 		<PopupAddBankAccountButton>#edit-submit</PopupAddBankAccountButton>
 		<PopupExeption>#wonga-my-account-edit-bank-form div:nth-child(1) ul li</PopupExeption>
-		<AccountNumber>#accounts tbody tr td table tbody tr:nth-child(2) td table tbody tr:nth-child(4) td b span</AccountNumber>
+		<AccountNumber>.info.bank-account.bank-account-primary tbody tr:nth-child(4) td b span</AccountNumber>
+		<PopupBankAccountException>#edit-account-number-za-wrapper div.form-error div.invalid </PopupBankAccountException>
 	</MyPaymentsPage>
 	
   <ContactingYouSection>
@@ -47,13 +48,18 @@
   <AddressDetailsPage>
     <FormId>#wonga-apply-lzero-form</FormId>
     <District>#edit-district-za</District>
-    <FlatNumber>#edit-house-number-za</FlatNumber>
+    <HouseNumber>#edit-house-number-za</HouseNumber>
     <Town>#edit-town-za</Town>
     <County>#edit-county-za</County>
     <AddressPeriod>#edit-address-period-za</AddressPeriod>
     <Street>#edit-street-za</Street>
     <Postcode>#edit-postcode-za</Postcode>
-    <PostcodeErrorForm>div#edit-postcode-za-wrapper div.invalid</PostcodeErrorForm>
+    <PostcodeErrorForm>#edit-postcode-za-wrapper div.form-error div.invalid</PostcodeErrorForm>
+    <CountyErrorForm>#edit-county-za-wrapper div.invalid</CountyErrorForm>
+    <TownErrorForm>#edit-town-za-wrapper div.invalid</TownErrorForm>
+    <StreetErrorForm>#edit-street-za-wrapper div.invalid</StreetErrorForm>
+    <HouseNumberErrorForm>#edit-house-number-za-wrapper div.invalid</HouseNumberErrorForm>
+    <AddressPeriodErrorForm>#edit-address-period-za-wrapper div.invalid</AddressPeriodErrorForm>
   </AddressDetailsPage>
 
   <AcceptedPage>
@@ -77,6 +83,7 @@
 
   <MyPersonalDetailsPage>
     <Address>table#profile tr#address</Address>
+    <Postcode>table#profile tr#address tbody tr:nth-child(3) td</Postcode>
     <Password>table#profile tr#password</Password>
     <Phone>table#profile tr#phone</Phone>
     <Communication>table#profile tr#communication</Communication>
@@ -93,6 +100,7 @@
     <EditPasswordErrorMessage>div#edit-password-wrapper div.form-error div[class='invalid']</EditPasswordErrorMessage>
     <EditPasswordPopupErrorMessage>form#wonga-my-account-profile-edit-password-form div.messages.error</EditPasswordPopupErrorMessage>
     <SubmitButton>input#edit-submit</SubmitButton>
+    <PopupErrorMessage>#fancybox-content div.messages.error ul li:nth-child(1)</PopupErrorMessage>
   </MyPersonalDetailsPage>
   
   <AboutUsPage>
@@ -104,4 +112,27 @@
 	 <PromisedRepayAmount>#content-area p span</PromisedRepayAmount>
 	 <PromisedRepayDate>#content-area p strong em</PromisedRepayDate>
   </MySummaryPage>
+
+  <HomePage>
+    <Title>div#block-wonga-1 h2:nth-child(1)</Title>
+    <TitleText>Flexible, short-term loans that give you lots of control</TitleText>
+  </HomePage>
+
+  <TabsElement>
+    <MyAccount>li:nth-child(5)>a</MyAccount>
+  </TabsElement>
+
+  <ApplicationSection>
+    <FormId>#wonga-apply-ln-form</FormId>
+    <EditPin>#edit-mobile-pin</EditPin>
+    <ChangeMobileButton>#add-mobile-ln</ChangeMobileButton>  
+  </ApplicationSection>
+
+  <ApplyPage>
+    <EditMobileNumber>#edit-new-mobile-number-za</EditMobileNumber>
+    <PopupSaveButton>#edit-submit[value='Save']</PopupSaveButton>
+    <PopupCloseButton>#edit-submit[value='Close']</PopupCloseButton>
+  </ApplyPage>
+
+  
 </Ui>

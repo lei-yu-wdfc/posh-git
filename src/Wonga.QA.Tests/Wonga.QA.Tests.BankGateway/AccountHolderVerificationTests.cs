@@ -8,6 +8,7 @@ using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Db.BankGateway;
+using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.BankGateway
@@ -27,7 +28,7 @@ namespace Wonga.QA.Tests.BankGateway
 		[FixtureSetUp]
 		public void FixtureSetUp()
 		{
-			//Driver.Db.SetServiceConfigurations(_testModesToSetup);
+			Drive.Db.SetServiceConfigurations(_testModesToSetup);
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-2061")]
@@ -38,11 +39,10 @@ namespace Wonga.QA.Tests.BankGateway
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-2061")]
-		[Ignore("Feature not turned on in live")]
 		public void AccountHolderVerificationRequestForSingleApplication()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
-			var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.ReadyToSign).Build();
+			var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
 			var response = WaitForAccountHolderVerificationResponse(application);
 

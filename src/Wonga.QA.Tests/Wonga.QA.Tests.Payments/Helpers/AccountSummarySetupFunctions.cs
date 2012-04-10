@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Wonga.QA.Framework;
@@ -16,20 +17,20 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
             var bankAccountId = Guid.NewGuid();
             var paymentCardId = Guid.NewGuid();
-
+            
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
 
-            // Check App Exists in DB
             Guid id = appId;
-            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == id));
-
-            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-
             // Check App Exists in DB
-            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == id && a.SignedOn != null && a.AcceptedOn != null));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == id));
 
+            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.UtcNow });
+            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.UtcNow });
+            
+            // Check App Exists in DB
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == id && a.SignedOn != null && a.AcceptedOn != null));
+            
             // Go to DB and set Application to closed
             ApplicationEntity app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == id);
             app.ClosedOn = DateTime.UtcNow.AddDays(-1);
@@ -62,14 +63,12 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
-            Do.Until(
-                () =>
-                Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
 
             var trnGuid1 = CreateLoanAdvanceTransaction(appId);
             var trnGuid2 = CreateTransmissionFeeTransaction(appId);
 
-            Do.Until(() => Drive.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2) == 2);
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2) == 2);
         }
 
         public void Scenario03Setup(Guid appId, Guid paymentCardId, Guid bankAccountId, Guid accountId, decimal trustRating)
@@ -97,12 +96,12 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
-            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
 
             var trnGuid1 = CreateLoanAdvanceTransaction(appId);
             var trnGuid2 = CreateTransmissionFeeTransaction(appId);
 
-            Do.Until(() => Drive.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2) == 2);
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2) == 2);
         }
 
         public void Scenario04Setup(Guid paymentCardId, Guid appId, Guid bankAccountId, Guid accountId,decimal trustRating)
@@ -130,7 +129,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
-            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
 
             var trnGuid1 = CreateLoanAdvanceTransaction(appId);
             var trnGuid2 = CreateTransmissionFeeTransaction(appId);
@@ -139,9 +138,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             var trnGuid5 = CreateExtensionFeeTransaction(appId);
 
             // Check transactions have been created
-            Do.Until(
-                () =>
-                Drive.Db.Payments.Transactions.Count(
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Transactions.Count(
                     itm =>
                     itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2 || itm.ExternalId == trnGuid3 ||
                     itm.ExternalId == trnGuid4 || itm.ExternalId == trnGuid5) == 5);
@@ -173,7 +170,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
-            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
 
             var trnGuid1 = CreateLoanAdvanceTransaction(appId);
             var trnGuid2 = CreateTransmissionFeeTransaction(appId);
@@ -182,9 +179,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             var trnGuid5 = CreateExtensionFeeTransaction(appId);
 
             // Check transactions have been created
-            Do.Until(
-                () =>
-                Drive.Db.Payments.Transactions.Count(
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Transactions.Count(
                     itm =>
                     itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2 || itm.ExternalId == trnGuid3 ||
                     itm.ExternalId == trnGuid4 || itm.ExternalId == trnGuid5) == 5);
@@ -215,7 +210,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
-            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
 
             var trnGuid1 = CreateLoanAdvanceTransaction(appId);
             var trnGuid2 = CreateTransmissionFeeTransaction(appId);
@@ -259,14 +254,13 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
-            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
 
             var trnGuid1 = CreateLoanAdvanceTransaction(appId);
             var trnGuid2 = CreateTransmissionFeeTransaction(appId);
 
             // Check transactions have been created
-            Do.Until(
-                () => Drive.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2) == 2);
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2) == 2);
         }
 
         public void Scenario08Setup(Guid paymentCardId, Guid bankAccountId, Guid accountId, Guid appId)
@@ -303,7 +297,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
-            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
 
             var trnGuid1 = CreateLoanAdvanceTransaction(appId);
             var trnGuid2 = CreateTransmissionFeeTransaction(appId);
@@ -330,31 +324,28 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
             // Create Account so that time zone can be looked up
             Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
-            Do.Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
 
             // Create Application & Check it Exists in DB
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
-            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
 
             // Set SignedOn + AcceptedOn & check statuses have been updated
             Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-            Do.Until(
-                () =>
-                Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
 
             // Create transactions & Check transactions have been created
             var trnGuid1 = CreateLoanAdvanceTransaction(appId);
             var trnGuid2 = CreateTransmissionFeeTransaction(appId);
-            Do.Until(
-                () => Drive.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2) == 2);
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2) == 2);
 
             // Send command to create scheduled payment request
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
 
-            Do.Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
-            Do.Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
 
             // Go to DB and set Application NextDueDate to today.
             ApplicationEntity app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId);
@@ -368,34 +359,30 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
             // Create Account so that time zone can be looked up
             Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
-            Do.Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
 
             // Create Application & Check it Exists in DB
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
-            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
 
             // Set SignedOn + AcceptedOn & check statuses have been updated
             Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-            Do.Until(
-                () =>
-                Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
 
             // Create transactions & Check transactions have been created
             var trnGuid1 = CreateLoanAdvanceTransaction(appId);
             var trnGuid2 = CreateTransmissionFeeTransaction(appId);
             var trnGuid3 = CreateMissedPaymentChargeTransaction(appId);
-            Do.Until(
-                () =>
-                Drive.Db.Payments.Transactions.Count(
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Transactions.Count(
                     itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2 || itm.ExternalId == trnGuid3) == 3);
 
             // Send command to create scheduled payment request
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
 
-            Do.Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
-            Do.Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
 
             // Go to DB and set Application NextDueDate to yesterday.
             ApplicationEntity app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId);
@@ -409,34 +396,30 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
             // Create Account so that time zone can be looked up
             Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
-            Do.Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
 
             // Create Application & Check it Exists in DB
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
-            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
 
             // Set SignedOn + AcceptedOn & check statuses have been updated
             Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-            Do.Until(
-                () =>
-                Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
 
             // Create transactions & Check transactions have been created
             var trnGuid1 = CreateLoanAdvanceTransaction(appId);
             var trnGuid2 = CreateTransmissionFeeTransaction(appId);
             var trnGuid3 = CreateMissedPaymentChargeTransaction(appId);
-            Do.Until(
-                () =>
-                Drive.Db.Payments.Transactions.Count(
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Transactions.Count(
                     itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2 || itm.ExternalId == trnGuid3) == 3);
 
             // Send command to create scheduled payment request
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
 
-            Do.Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
-            Do.Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
 
             // Go to DB and set Application NextDueDate to yesterday.
             ApplicationEntity app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId);
@@ -449,34 +432,30 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
             // Create Account so that time zone can be looked up
             Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
-            Do.Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
 
             // Create Application & Check it Exists in DB
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
-            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
 
             // Set SignedOn + AcceptedOn & check statuses have been updated
             Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-            Do.Until(
-                () =>
-                Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
 
             // Create transactions & Check transactions have been created
             var trnGuid1 = CreateLoanAdvanceTransaction(appId);
             var trnGuid2 = CreateTransmissionFeeTransaction(appId);
             var trnGuid3 = CreateMissedPaymentChargeTransaction(appId);
-            Do.Until(
-                () =>
-                Drive.Db.Payments.Transactions.Count(
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Transactions.Count(
                     itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2 || itm.ExternalId == trnGuid3) == 3);
 
             // Send command to create scheduled payment request
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
 
-            Do.Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
-            Do.Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
 
             // Go to DB and set Application NextDueDate to yesterday.
             ApplicationEntity app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId);
@@ -490,29 +469,29 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
             // Create Account so that time zone can be looked up
             Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
-            Do.Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
 
             // Create Application & Check it Exists in DB
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
-            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
 
             // Set SignedOn + AcceptedOn & check statuses have been updated
             Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
 
             // Create transactions & Check transactions have been created
             var trnGuid1 = CreateLoanAdvanceTransaction(appId);
             var trnGuid2 = CreateTransmissionFeeTransaction(appId);
             var trnGuid3 = CreateMissedPaymentChargeTransaction(appId);
-            Do.Until(() => Drive.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2 || itm.ExternalId == trnGuid3) == 3);
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Transactions.Count(itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2 || itm.ExternalId == trnGuid3) == 3);
 
             // Send command to create scheduled payment request
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
 
-            Do.Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
-            Do.Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
 
             // Go to DB and set Application NextDueDate to yesterday.
             ApplicationEntity app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId);
@@ -532,34 +511,30 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
             // Create Account so that time zone can be looked up
             Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
-            Do.Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
 
             // Create Application & Check it Exists in DB
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
-            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
 
             // Set SignedOn + AcceptedOn & check statuses have been updated
             Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-            Do.Until(
-                () =>
-                Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
 
             // Create transactions & Check transactions have been created
             var trnGuid1 = CreateLoanAdvanceTransaction(appId);
             var trnGuid2 = CreateTransmissionFeeTransaction(appId);
             var trnGuid3 = CreateMissedPaymentChargeTransaction(appId);
-            Do.Until(
-                () =>
-                Drive.Db.Payments.Transactions.Count(
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Transactions.Count(
                     itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2 || itm.ExternalId == trnGuid3) == 3);
 
             // Send command to create scheduled payment request
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
 
-            Do.Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
-            Do.Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
 
             // Go to DB and set Application NextDueDate to yesterday.
             ApplicationEntity app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId);
@@ -576,7 +551,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 PaymentTransactionType = PaymentTransactionEnum.CardPayment,
                 ReferenceId = Guid.NewGuid()
             });
-            Do.Until(() => Drive.Db.Payments.Arrears.Single(a => a.ApplicationId == applicationId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Arrears.Single(a => a.ApplicationId == applicationId));
 
             // Create Repayment Arrangement
             var dateTimes = new DateTime[]
@@ -591,7 +566,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 RepaymentDates = dateTimes,
                 CreatedOn = DateTime.UtcNow
             });
-            Do.Until(() => Drive.Db.Payments.RepaymentArrangements.Single(a => a.ApplicationId == applicationId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentArrangements.Single(a => a.ApplicationId == applicationId));
         }
 
         public void Scenario15Setup(Guid requestId1, Guid requestId2, int applicationId, Guid accountId, Guid appId,
@@ -605,34 +580,30 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
             // Create Account so that time zone can be looked up
             Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
-            Do.Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
 
             // Create Application & Check it Exists in DB
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
-            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
 
             // Set SignedOn + AcceptedOn & check statuses have been updated
             Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-            Do.Until(
-                () =>
-                Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
 
             // Create transactions & Check transactions have been created
             var trnGuid1 = CreateLoanAdvanceTransaction(appId);
             var trnGuid2 = CreateTransmissionFeeTransaction(appId);
             var trnGuid3 = CreateMissedPaymentChargeTransaction(appId);
-            Do.Until(
-                () =>
-                Drive.Db.Payments.Transactions.Count(
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Transactions.Count(
                     itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2 || itm.ExternalId == trnGuid3) == 3);
 
             // Send command to create scheduled payment request
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
 
-            Do.Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
-            Do.Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
 
             // Go to DB and set Application NextDueDate to yesterday.
             ApplicationEntity app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId);
@@ -649,7 +620,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 PaymentTransactionType = PaymentTransactionEnum.CardPayment,
                 ReferenceId = Guid.NewGuid()
             });
-            Do.Until(() => Drive.Db.Payments.Arrears.Single(a => a.ApplicationId == applicationId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Arrears.Single(a => a.ApplicationId == applicationId));
 
             // Create Repayment Arrangement
             DateTime dueDate = DateTime.UtcNow.AddDays(10).Date;
@@ -666,7 +637,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 CreatedOn = DateTime.UtcNow
             });
 
-            RepaymentArrangementEntity ra = Do.Until(() => Drive.Db.Payments.RepaymentArrangements.Single(a => a.ApplicationId == applicationId));
+            RepaymentArrangementEntity ra = Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentArrangements.Single(a => a.ApplicationId == applicationId));
 
             // Put Repayment Arrangement into a state of missed payment
             RepaymentArrangementDetailEntity ras = Drive.Db.Payments.RepaymentArrangementDetails.Single(itm => itm.RepaymentArrangementId == ra.RepaymentArrangementId && itm.DueDate == dueDate);
@@ -685,34 +656,30 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
             // Create Account so that time zone can be looked up
             Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
-            Do.Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
 
             // Create Application & Check it Exists in DB
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
-            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
 
             // Set SignedOn + AcceptedOn & check statuses have been updated
             Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-            Do.Until(
-                () =>
-                Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
 
             // Create transactions & Check transactions have been created
             var trnGuid1 = CreateLoanAdvanceTransaction(appId);
             var trnGuid2 = CreateTransmissionFeeTransaction(appId);
             var trnGuid3 = CreateMissedPaymentChargeTransaction(appId);
-            Do.Until(
-                () =>
-                Drive.Db.Payments.Transactions.Count(
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Transactions.Count(
                     itm => itm.ExternalId == trnGuid1 || itm.ExternalId == trnGuid2 || itm.ExternalId == trnGuid3) == 3);
 
             // Send command to create scheduled payment request
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
 
-            Do.Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
-            Do.Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
 
             // Go to DB and set Application NextDueDate to yesterday.
             ApplicationEntity app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId);
@@ -729,7 +696,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 PaymentTransactionType = PaymentTransactionEnum.CardPayment,
                 ReferenceId = Guid.NewGuid()
             });
-            Do.Until(() => Drive.Db.Payments.Arrears.Single(a => a.ApplicationId == applicationId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Arrears.Single(a => a.ApplicationId == applicationId));
 
             // Create Repayment Arrangement
             DateTime dueDate = DateTime.UtcNow.AddDays(10).Date;
@@ -747,7 +714,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             });
 
             // Set Repayment Arrangement to Broken
-            RepaymentArrangementEntity ra = Do.Until(() => Drive.Db.Payments.RepaymentArrangements.Single(a => a.ApplicationId == applicationId));
+            RepaymentArrangementEntity ra = Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentArrangements.Single(a => a.ApplicationId == applicationId));
             ra.IsBroken = true;
             ra.Submit();
 
@@ -758,11 +725,11 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
             // Create Account so that time zone can be looked up
             Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
-            Do.Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
 
             // Create Application & Check it Exists in DB
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
-            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
 
         }
 
@@ -771,15 +738,15 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
             // Create Account so that time zone can be looked up
             Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
-            Do.Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
 
             // Create Application & Check it Exists in DB
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
-            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
 
             // Set DeclinedOn & check status has been updated
             Drive.Msmq.Payments.Send(new IApplicationDeclinedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.UtcNow, FailedCheckpointName = "Test"});
-            Do.Until(() =>Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.DeclinedOn != null));
+            Do.With.Interval(1).Until(() =>Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.DeclinedOn != null));
 
         }
 
@@ -788,15 +755,15 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
             // Create Account so that time zone can be looked up
             Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
-            Do.Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
 
             // Create Application & Check it Exists in DB
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
-            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId));
 
             // Set AcceptedOn & check status has been updated
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.UtcNow});
-            Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.AcceptedOn != null));
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.AcceptedOn != null));
 
         }
 

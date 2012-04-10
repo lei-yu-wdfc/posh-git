@@ -13,7 +13,10 @@ namespace Wonga.QA.Framework.UI
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+		public string NationalId { get; set; } //not used yet
+		public DateTime DateOfBirth { get; set; } //Not used yet
         public BasePage CurrentPage { get; set; }
+		
 
         public UkL0Journey(BasePage homePage)
         {
@@ -52,7 +55,7 @@ namespace Wonga.QA.Framework.UI
             personalDetailsPage.EmploymentDetails.TimeWithEmployerYears = "1";
             personalDetailsPage.EmploymentDetails.TimeWithEmployerMonths = "0";
             personalDetailsPage.EmploymentDetails.SalaryPaidToBank = true;
-            personalDetailsPage.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("dd/MMM/yyyy");
+            personalDetailsPage.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d/MMM/yyyy");
             personalDetailsPage.EmploymentDetails.IncomeFrequency = "Monthly";
             personalDetailsPage.EmploymentDetails.WorkPhone = "02087111222";
             personalDetailsPage.ContactingYou.CellPhoneNumber = "07707111222";
@@ -72,7 +75,7 @@ namespace Wonga.QA.Framework.UI
             addressPage.LookupByPostCode();
             addressPage.GetAddressesDropDown();
             Do.Until(() => addressPage.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN");
-            Do.Until(() => addressPage.FlatNumber = "666");
+            Do.Until(() => addressPage.HouseNumber = "666");
             addressPage.AddressPeriod = "3 to 4 years";
             CurrentPage = addressPage.Next();
             return this;

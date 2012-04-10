@@ -134,7 +134,7 @@ namespace Wonga.QA.Framework.Core
                     }
                 case AUT.Wb:
                     {
-                        return 1000;
+                        return 10000;
                     }
 
                 default:
@@ -175,6 +175,11 @@ namespace Wonga.QA.Framework.Core
                     }
             }
         }
+
+		public static String GetPostcode()
+		{
+			return RandomInt(0000, 9999).ToString().PadLeft(4);
+		}
 
         public static Uri GetSchema(Uri uri)
         {

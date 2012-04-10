@@ -34,11 +34,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AboutUsTest.cs" />
+    <Compile Include="BehaviourAndAdvertTracking.cs" />
     <Compile Include="DealDonePageTest.cs" />
+    <Compile Include="EndToEndApplicationTests.cs" />
     <Compile Include="ForgotPassword.cs" />
     <Compile Include="HelpTest.cs" />
     <Compile Include="L0AcceptedLoan.cs" />
     <Compile Include="L0JourneyTests.cs" />
+    <Compile Include="LnJourneyTests.cs" />
     <Compile Include="LoginTest.cs" />
     <Compile Include="LogoutTest.cs" />
     <Compile Include="MyAccountTests.cs" />
@@ -54,15 +57,20 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="MbUnit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
-    <Reference Include="WebDriver, Version=2.18.0.0, Culture=neutral, PublicKeyToken=1c2bd1631853048f, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\WebDriver\WebDriver.dll</HintPath>
+    <Reference Include="WebDriver">
+      <HintPath>..\packages\Selenium.WebDriver.2.20.0\lib\net40\WebDriver.dll</HintPath>
     </Reference>
     <Reference Include="Wonga.QA.Framework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -88,6 +96,9 @@
       <Project>{36C48933-F3DA-468A-8529-212601FC0FA5}</Project>
       <Name>Wonga.QA.Tests.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

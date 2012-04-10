@@ -4,29 +4,35 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
 using UpdateLoanTermWbUkCommand = Wonga.QA.Framework.Api.UpdateLoanTermWbUkCommand;
 
 namespace Wonga.QA.Tests.Salesforce
 {
+    // Can't run in parallel for the moment, as this overloads SF TC and all of them timeout :)
+    //[Parallelizable(TestScope.All)]
     [TestFixture]
     public class SalesforcePushBusinessLoanApplicationDetails : SalesforceTestBase
     {
-    	private const string getApplicationWithUpdatedTerm =
+    	private const string GetApplicationWithUpdatedTerm =
     		"Select l.Number_Of_Weeks__c From Loan_Application__c l Where l.V3_Application_Id__c = '{0}' and l.Number_Of_Weeks__c = {1}";
 
-    	private const string getApplicationWithSignedOnDate =
+    	private const string GetApplicationWithSignedOnDate =
     		"Select l.SignedOn__c From Loan_Application__c l Where l.V3_Application_Id__c = '{0}' and l.SignedOn__c != null";
 
-    	private const string getApplicationWithUpdatedStatus =
+    	private const string GetApplicationWithUpdatedStatus =
     		"Select l.Status_ID__c From Loan_Application__c l Where l.V3_Application_Id__c = '{0}' and l.Status_ID__c = {1}";
 
-		[Test, AUT(AUT.Wb), JIRA("SME-375")]
+        [Test, AUT(AUT.Wb), JIRA("SME-375")] 
+        [Ignore("SF tests are failing because message congestion in SF TC queue, explicit until fixed")]
 		public void PaymentsShouldPushBusinessLoanApplicationDetailsToSF_WhenApplicationIsCreated()
 		{
 			var customer = CustomerBuilder.New().Build();
-			var organisation = OrganisationBuilder.New(customer).WithSoManySecondaryDirectors(3).Build();
-            var application = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+            //IF ANYONE LOOKS HERE ! PLEASE TELL ALEX P WHY YOU NEED 3 GUARANTORS ??? EVENT SO, WITH THE OLD CODE YOU DID NOT BUILD THEM
+			//var organisation = OrganisationBuilder.New(customer).WithSoManySecondaryDirectors(3).Build();
+            var organisation = OrganisationBuilder.New(customer).Build();
+			var application = ApplicationBuilder.New(customer, organisation).Build();
 
 			var applicationEntity = Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id));
 
@@ -36,11 +42,13 @@ namespace Wonga.QA.Tests.Salesforce
 			Assert.AreEqual(applicationEntity.ApplicationDate, salesforceApplication.Application_Date__c, "Expected applicationDate is incorrect.");
 		}
 
-		[Test, AUT(AUT.Wb), JIRA("SME-375")]
+        [Test, AUT(AUT.Wb), JIRA("SME-375")] 
+        [Ignore("SF tests are failing because message congestion in SF TC queue, explicit until fixed")]
 		public void PaymentsShouldPushRelationshipBetweenBusinessLoanApplicationAndOrganisationToSF_WhenApplicationAndOrganisationAreBothCreated()
 		{
 			var customer = CustomerBuilder.New().Build();
-			var organisation = OrganisationBuilder.New(customer).WithSoManySecondaryDirectors(3).Build();
+			//var organisation = OrganisationBuilder.New(customer).WithSoManySecondaryDirectors(3).Build();
+            var organisation = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
 			var salesforceApplication = Do.Until(() => Salesforce.GetApplicationWithOrganisationById(application.Id, organisation.Id));
@@ -48,7 +56,8 @@ namespace Wonga.QA.Tests.Salesforce
 			Assert.AreEqual(organisation.Id.ToString(), salesforceApplication.Customer_Account__r.V3_Organization_Id__c, "Expected organisationId is incorrect.");
 		}
 
-		[Test, AUT(AUT.Wb), JIRA("SME-375")]
+        [Test, AUT(AUT.Wb), JIRA("SME-375")] 
+        [Ignore("SF tests are failing because message congestion in SF TC queue, explicit until fixed")]
 		public void PaymentsShouldPushBusinessLoanApplicationDetailsToSF_WhenApplicationTermIsUpdated()
 		{
 			var customer = CustomerBuilder.New().Build();
@@ -67,37 +76,41 @@ namespace Wonga.QA.Tests.Salesforce
 			Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id
 				&& a.BusinessFixedInstallmentLoanApplicationEntity.Term == newLoanTerm));
 
-			var query = string.Format(getApplicationWithUpdatedTerm, application.Id, newLoanTerm);
+			var query = string.Format(GetApplicationWithUpdatedTerm, application.Id, newLoanTerm);
 
 			Do.Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, query));
 		}
 
-		[Test, AUT(AUT.Wb), JIRA("SME-375")]
+        [Test, AUT(AUT.Wb), JIRA("SME-375")] 
+        [Ignore("SF tests are failing because message congestion in SF TC queue, explicit until fixed")]
 		public void PaymentsShouldPushBusinessLoanApplicationSignOnDateToSF_WhenAllGuarantorsHaveSignedApplicationTerms()
 		{
 			var customer = CustomerBuilder.New().Build();
 			var organisation = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organisation).Build();
 
-			var query = string.Format(getApplicationWithSignedOnDate, application.Id);
+			var query = string.Format(GetApplicationWithSignedOnDate, application.Id);
 
 			Do.Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, query));
 		}
 
-		[Test, AUT(AUT.Wb), JIRA("SME-375"), Explicit]
+		[Test, AUT(AUT.Wb), JIRA("SME-375")] 
+        [Ignore]
 		public void PaymentsShouldPushNewBusinessLoanApplicationStatusToSF_WhenMainApplicantIsAccepted()
 		{
 			const int acceptedInPrincipleStatus = 101;
 			var customer = CustomerBuilder.New().Build();
-			var organisation = OrganisationBuilder.New(customer).WithSoManySecondaryDirectors(2).Build();
+			//var organisation = OrganisationBuilder.New(customer).WithSoManySecondaryDirectors(2).Build();
+            var organisation = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organisation).Build();
 
-			var query = String.Format(getApplicationWithUpdatedStatus, application.Id, acceptedInPrincipleStatus);
+			var query = String.Format(GetApplicationWithUpdatedStatus, application.Id, acceptedInPrincipleStatus);
 
 			Do.Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, query));
 		}
 
-		[Test, AUT(AUT.Wb), JIRA("SME-375")]
+        [Test, AUT(AUT.Wb), JIRA("SME-375")]
+        [Ignore("SF tests are failing because message congestion in SF TC queue, explicit until fixed")]
 		public void PaymentsShouldPushNewBusinessLoanApplicationStatusToSF_WhenApplicationIsAccepted()
 		{
 			const int acceptedStatus = 111;
@@ -105,12 +118,13 @@ namespace Wonga.QA.Tests.Salesforce
 			var organisation = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
-			var query = String.Format(getApplicationWithUpdatedStatus, application.Id, acceptedStatus);
+			var query = String.Format(GetApplicationWithUpdatedStatus, application.Id, acceptedStatus);
 
 			Do.Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, query));
 		}
 
-		[Test, AUT(AUT.Wb), JIRA("SME-375")]
+        [Test, AUT(AUT.Wb), JIRA("SME-375")] 
+        [Ignore("SF tests are failing because message congestion in SF TC queue, explicit until fixed")]
 		public void PaymentsShouldPushNewBusinessLoanApplicationStatusToSF_WhenApplicationIsDeclined()
 		{
 			const int declinedStatus = 110;
@@ -119,54 +133,60 @@ namespace Wonga.QA.Tests.Salesforce
 			var organisation = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 
-			var query = String.Format(getApplicationWithUpdatedStatus, application.Id, declinedStatus);
+			var query = String.Format(GetApplicationWithUpdatedStatus, application.Id, declinedStatus);
 
 			Do.Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, query));
 		}
 
-		[Test, AUT(AUT.Wb), JIRA("SME-811"), Ignore]
+        [Test, AUT(AUT.Wb), JIRA("SME-811")] 
+        [Ignore("SF tests are failing because message congestion in SF TC queue, explicit until fixed")]
 		public void PaymentsShouldPushNewBusinessLoanApplicationStatusToSF_WhenApplicationIsAddedToInArrears()
 		{
 			const int inArrearsStatus = 113;
 
 			var customer = CustomerBuilder.New().Build();
 			var organization = OrganisationBuilder.New(customer).Build();
-			var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build() as BusinessApplication;
+			var application = ApplicationBuilder.New(customer, organization)
+				.WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutApplicationIntoArrears();
 
-			application.GetPaymentPlan();
-			application.FirstCollectionAttempt(null, false, false);
-			application.SecondCollectionAttempt(false);
-			//arrears event is fired at this point
-
-			var query = String.Format(getApplicationWithUpdatedStatus, application.Id, inArrearsStatus);
+			var query = string.Format(GetApplicationWithUpdatedStatus, application.Id, inArrearsStatus);
 
 			Do.With.Timeout(2).Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, query));													
 		}
 
-		[Test, AUT(AUT.Wb), JIRA("SME-892"), Ignore]
+        [Test, AUT(AUT.Wb), JIRA("SME-892")] 
+        [Ignore("SF tests are failing because message congestion in SF TC queue, explicit until fixed")]
 		public void PaymentsShouldPushNewBusinessLoanApplicationStatusToSF_WhenApplicationIsRemovedFromArrears()
 		{
-			const int inArrearsStatus = 113;
 			const int loanLiveStatus = 112;
 
 			var customer = CustomerBuilder.New().Build();
 			var organization = OrganisationBuilder.New(customer).Build();
-			var application = ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build() as BusinessApplication;
+			var application = ApplicationBuilder.New(customer, organization)
+				.WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutApplicationIntoArrears() as BusinessApplication;
 
-			application.GetPaymentPlan();
-			application.FirstCollectionAttempt(null, false, false);
-			application.SecondCollectionAttempt(false);
-			//arrears event is fired at this point
-
-			var inArrearsQuery = String.Format(getApplicationWithUpdatedStatus, application.Id, inArrearsStatus);
-			Do.Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, inArrearsQuery));
+			var arrearsAmount = application.GetArrearsAmount();
 
 			//fire transaction for pay off arrears
-			var removedFromArrearsQuery = String.Format(getApplicationWithUpdatedStatus, application.Id, loanLiveStatus);
-			Do.Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, removedFromArrearsQuery));
+			Drive.Msmq.Payments.Send(new CreateTransactionCommand
+			{
+				Amount = arrearsAmount,
+				ApplicationId = application.Id,
+				Currency = CurrencyCodeIso4217Enum.GBP,
+				ExternalId = Guid.NewGuid(),
+				ComponentTransactionId = Guid.Empty,
+				PostedOn = DateTime.Now,
+				Scope = PaymentTransactionScopeEnum.Credit,
+				Source = PaymentTransactionSourceEnum.System,
+				Type = PaymentTransactionEnum.Cheque
+			});
+
+			var removedFromArrearsQuery = string.Format(GetApplicationWithUpdatedStatus, application.Id, loanLiveStatus);
+			Do.With.Timeout(2).Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, removedFromArrearsQuery));													
 		}
 
-        [Test, AUT(AUT.Wb), JIRA("SME-849")]
+        [Test, AUT(AUT.Wb), JIRA("SME-849")] 
+        [Ignore("SF tests are failing because message congestion in SF TC queue, explicit until fixed")]
         public void PaymentsShouldPushLoanReferenceNumberToSFWhenApplicationIsCreated()
         {
             var customer = CustomerBuilder.New().Build();

@@ -54,9 +54,9 @@ namespace Wonga.QA.Framework.Db.QaData
     partial void InsertGraydonCompanyReport(GraydonCompanyReport instance);
     partial void UpdateGraydonCompanyReport(GraydonCompanyReport instance);
     partial void DeleteGraydonCompanyReport(GraydonCompanyReport instance);
-    partial void InsertIncomingBankGatewayScotiaFile(IncomingBankGatewayScotiaFile instance);
-    partial void UpdateIncomingBankGatewayScotiaFile(IncomingBankGatewayScotiaFile instance);
-    partial void DeleteIncomingBankGatewayScotiaFile(IncomingBankGatewayScotiaFile instance);
+    partial void InsertIncomingBankGatewayFile(IncomingBankGatewayFile instance);
+    partial void UpdateIncomingBankGatewayFile(IncomingBankGatewayFile instance);
+    partial void DeleteIncomingBankGatewayFile(IncomingBankGatewayFile instance);
     partial void InsertIovationDataOutput(IovationDataOutput instance);
     partial void UpdateIovationDataOutput(IovationDataOutput instance);
     partial void DeleteIovationDataOutput(IovationDataOutput instance);
@@ -153,11 +153,11 @@ namespace Wonga.QA.Framework.Db.QaData
 			}
 		}
 		
-		public System.Data.Linq.Table<IncomingBankGatewayScotiaFile> IncomingBankGatewayScotiaFiles
+		public System.Data.Linq.Table<IncomingBankGatewayFile> IncomingBankGatewayFiles
 		{
 			get
 			{
-				return this.GetTable<IncomingBankGatewayScotiaFile>();
+				return this.GetTable<IncomingBankGatewayFile>();
 			}
 		}
 		
@@ -793,7 +793,7 @@ namespace Wonga.QA.Framework.Db.QaData
 		
 		private int _WaitTimeInSeconds;
 		
-		private string _CVV;
+		private string _Pan;
 		
 		private string _Response;
 		
@@ -805,8 +805,8 @@ namespace Wonga.QA.Framework.Db.QaData
     partial void OnExperianBWCardResponseIdChanged();
     partial void OnWaitTimeInSecondsChanging(int value);
     partial void OnWaitTimeInSecondsChanged();
-    partial void OnCVVChanging(string value);
-    partial void OnCVVChanged();
+    partial void OnPanChanging(string value);
+    partial void OnPanChanged();
     partial void OnResponseChanging(string value);
     partial void OnResponseChanged();
     #endregion
@@ -856,22 +856,22 @@ namespace Wonga.QA.Framework.Db.QaData
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CVV", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
-		public string CVV
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pan", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
+		public string Pan
 		{
 			get
 			{
-				return this._CVV;
+				return this._Pan;
 			}
 			set
 			{
-				if ((this._CVV != value))
+				if ((this._Pan != value))
 				{
-					this.OnCVVChanging(value);
+					this.OnPanChanging(value);
 					this.SendPropertyChanging();
-					this._CVV = value;
-					this.SendPropertyChanged("CVV");
-					this.OnCVVChanged();
+					this._Pan = value;
+					this.SendPropertyChanged("Pan");
+					this.OnPanChanged();
 				}
 			}
 		}
@@ -1415,11 +1415,13 @@ namespace Wonga.QA.Framework.Db.QaData
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.IncomingBankGatewayScotiaFile")]
-	public partial class IncomingBankGatewayScotiaFile : DbEntity<IncomingBankGatewayScotiaFile>, INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.IncomingBankGatewayFile")]
+	public partial class IncomingBankGatewayFile : DbEntity<IncomingBankGatewayFile>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _Gateway;
 		
 		private string _FileName;
 		
@@ -1429,15 +1431,37 @@ namespace Wonga.QA.Framework.Db.QaData
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
+    partial void OnGatewayChanging(string value);
+    partial void OnGatewayChanged();
     partial void OnFileNameChanging(string value);
     partial void OnFileNameChanged();
     partial void OnFileDataChanging(System.Data.Linq.Binary value);
     partial void OnFileDataChanged();
     #endregion
 		
-		public IncomingBankGatewayScotiaFile()
+		public IncomingBankGatewayFile()
 		{
 			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Gateway", DbType="VarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string Gateway
+		{
+			get
+			{
+				return this._Gateway;
+			}
+			set
+			{
+				if ((this._Gateway != value))
+				{
+					this.OnGatewayChanging(value);
+					this.SendPropertyChanging();
+					this._Gateway = value;
+					this.SendPropertyChanged("Gateway");
+					this.OnGatewayChanged();
+				}
+			}
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FileName", DbType="NVarChar(150) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
@@ -1460,7 +1484,7 @@ namespace Wonga.QA.Framework.Db.QaData
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FileData", DbType="VarBinary(MAX)", CanBeNull=true, UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FileData", DbType="VarBinary(MAX) NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
 		public System.Data.Linq.Binary FileData
 		{
 			get

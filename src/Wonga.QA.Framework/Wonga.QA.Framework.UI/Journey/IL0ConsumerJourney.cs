@@ -13,6 +13,8 @@ namespace Wonga.QA.Framework.UI
     {
         String FirstName { get; set; }
         String LastName { get; set; }
+		String NationalId { get; set; }
+		DateTime DateOfBirth { get; set; }
 
         BasePage CurrentPage { get; set; }
         

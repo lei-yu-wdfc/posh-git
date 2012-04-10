@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using OpenQA.Selenium;
+using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Elements;
 using Wonga.QA.Framework.UI.Mappings;
 
@@ -14,12 +15,21 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
     {
         public MyAccountNavigationElement Navigation { get; set; }
         public LoginElement Login { get; set; }
+        public TabsElement Tabs { get; set; }
         public string SetCommunicationPrefs
         {
             set
             {
                 _communicationPrefs.SelectLabel(value);
             }
+        }
+        public String GetPopupErrorMessage
+        {
+            get { return Do.Until(()=>Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.PopupErrorMessage)).Text);  }
+        }
+        public string GetPostcode
+        {
+            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.Postcode)).Text; }
         }
         public string GetHomePhone
         {
@@ -49,15 +59,24 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private IWebElement _editPasswordPopupErrorMessage;
         private IWebElement _submitButton;
 
-        public MyPersonalDetailsPage(UiClient client) : base(client)
+        public MyPersonalDetailsPage(UiClient client)
+            : base(client)
         {
             Navigation = new MyAccountNavigationElement(this);
             Login = new LoginElement(this);
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    _address = Content.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.Address));
+                    _password = Content.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.Password));
+                    _phone = Content.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.Phone));
+                    _communication = Content.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.Communication));
+                    break; 
+                case AUT.Ca:
+                    Tabs = new TabsElement(this);
+                    break;
+            }
 
-            _address = Content.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.Address));
-            _password = Content.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.Password));
-            _phone = Content.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.Phone));
-            _communication = Content.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.Communication));
         }
 
         public void AddressClick()
@@ -80,23 +99,28 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _editPasswordConfirm.SendKeys(confirmPass);
         }
 
-        public void ChangePhone(string homePhone, string mobilePhone, string pin)
+        public bool ChangePhone(string homePhone, string mobilePhone, string pin)
         {
             _editPhoneHome = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.EditPhoneHome));
             _editPhoneMobile = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.EditPhoneMobile));
             _submitButton = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.SubmitButton));
-            
+
             _editPhoneHome.Clear();
             _editPhoneHome.SendKeys(homePhone);
             _editPhoneMobile.Clear();
             _editPhoneMobile.SendKeys(mobilePhone);
 
             _submitButton.Click();
-            Thread.Sleep(5000);
-            _editPhonePin = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.EditPhonePin));
+            Do.Until(LookForEditPinField);
             _editPhonePin.SendKeys(pin);
+            return true;
         }
-        
+        private bool LookForEditPinField()
+        {
+            _editPhonePin = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.EditPhonePin));
+            return _editPhonePin.Displayed;
+        }
+
         public bool Submit()
         {
             _submitButton = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.SubmitButton));
@@ -130,7 +154,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.EditPasswordErrorMessage));
                 return true;
             }
-            catch(NoSuchElementException)
+            catch (NoSuchElementException)
             {
                 return false;
             }
@@ -143,14 +167,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.EditPasswordPopupErrorMessage));
                 return true;
             }
-            catch(NoSuchElementException)
+            catch (NoSuchElementException)
             {
                 return false;
             }
-            
+
         }
 
-       
+
 
     }
 }

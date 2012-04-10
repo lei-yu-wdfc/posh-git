@@ -7,7 +7,9 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Data.Enums.Risk;
 using Wonga.QA.Framework.Db;
+using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Db.Risk;
 
 namespace Wonga.QA.Tests.Risk.RiskApiTests
@@ -23,8 +25,8 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 
         protected static void AssertCheckpointOnWorkflowDbEntity(RiskCheckpointStatus expectedStatus, RiskCheckpointDefinitionEnum checkpoint, RiskWorkflowEntity riskWorkflow)
 		{
-			List<string> checkpointNames = Application.GetExecutedCheckpointDefinitionsForRiskWorkflow(riskWorkflow.WorkflowId, expectedStatus);
-			Assert.AreEqual(1, checkpointNames.Count);
+			var checkpointNames = Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflow.WorkflowId, expectedStatus);
+			Assert.AreEqual(1, checkpointNames.Count());
 			Assert.AreEqual(Get.EnumToString(checkpoint), checkpointNames.First());
 
 		}

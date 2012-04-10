@@ -5,6 +5,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Tests.Core;
 using System.Linq;
@@ -28,6 +29,7 @@ namespace Wonga.QA.Tests.Ui
         private DateTime _actualDate;
 
         private const int DefaultLoanTerm = 11;
+    	private const int MinimumMaxLoanTerm = 30;
 
 
         [SetUp, JIRA("QA-149")]
@@ -416,14 +418,15 @@ namespace Wonga.QA.Tests.Ui
 						var payDayPlusToMaxTerm = Int32.Parse(Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.PayDayPlusToMaxTerm").Value.Split(',')[iMonth]);
 
 						maxTerm = (promiseDate.AddDays(payDayPlusToMaxTerm) - DateTime.Today).Days;
+
+						if (maxTerm < MinimumMaxLoanTerm) maxTerm = MinimumMaxLoanTerm;
 					}
 					break;
 
 				default:
 					{
-						return (int) Drive.Db.Payments.Products.FirstOrDefault().TermMax;
+						return Drive.Db.Payments.Products.FirstOrDefault().TermMax;
 					}
-					break;
 			}
 
 			return maxTerm;

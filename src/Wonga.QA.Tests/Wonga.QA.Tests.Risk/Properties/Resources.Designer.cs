@@ -61,11 +61,20 @@ namespace Wonga.QA.Tests.Risk.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ankit,patel,1990-05-23,5B,HA9 9JS;Jeffrey,Bocking,1990-10-11,183,RM10 8ED;Abdul,Muhith,1992-01-16,48,NW1 3PR;peter,wilson,1978-12-16,15,PE15 9JZ;amy,powell,1991-01-29,2,LE9 9PS;dale,bowman,1990-11-19,12,ST2 8HX;Andrea,Thomas,1971-06-24,17,OL10 3AR;ian,edwards,1977-06-22,25,LE12 9HZ;kate,irvine,1982-05-21,6,L17 9RQ;robert,donnelly,1968-12-20,54,ML11 7BT;aktar,hossain,1979-03-02,21,E12 5JX;andy,murray,1979-04-14,7,LL32 8LR;richard,odebode,1966-03-01,100,PE15 9AD;catherine,steele,1955-12-21,3D,KA8 9RY;catherin [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to steven,lee,hilton,1977-09-29,5,CF33 6JG,Ffordd Ddu,Bridgend;Kerry,ann,Tumilty,1981-03-02,14,NE28 9DS,bellingham close,wallsend;gareth,damon,horvath,1992-05-25,27,M33 5NQ,Witley Drive,Sale;Neil,Anthony,Ashmore,1987-10-23,28,NG11 8RQ,Wilkins Gardens,Nottingham;charlotte,l,omalley,1978-01-02,40,PO13 9JY,Bayntun Drive,Lee-on-the-Solent;paula,a,mitchell,1978-09-07,543,DD2 4FP,South Road,Dundee;emma,jane,potgieter,1981-07-06,54,BN13 2SZ,Vancouver Road,Worthing;victoria,sheila joan,lawrence,1988-08-10,47,NR31 6SQ, [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string CustomerDataforCallCredit {
             get {
                 return ResourceManager.GetString("CustomerDataforCallCredit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to samantha,jane,gettings,29669,8,M18 8AH,Bealey Close,Manchester,8447444;Christopher,James,Hatfield,33935,12,TS23 3XJ,Wallington Walk,Billingham,8447116;linda,christine,greer,31380,13,G84 7LH,Williamson Drive,Helensburgh,8447107;rebekah louise,NULL,lewis,33270,6,B67 6JF,Valley Road,Smethwick,8446990;Kevin,NULL,Wardman,31744,21,BD5 7PA,Lindley Road,Bradford,8446926;DONNA,LOUISE,LAMBERT,29020,107,YO24 4PS,Green Lane,York,8446889;shahmus,NULL,hussain,31877,85,WF13 3NJ,Pilgrim Crescent,Dewsbury,8446843;Joanne,NUL [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ZScoreCustomers {
+            get {
+                return ResourceManager.GetString("ZScoreCustomers", resourceCulture);
             }
         }
     }
