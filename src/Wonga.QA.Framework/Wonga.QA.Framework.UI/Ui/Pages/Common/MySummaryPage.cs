@@ -175,5 +175,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         }
 
+        public void CheckScenarioElementsExist()
+        {
+            Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.Promise));
+            Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.YouCan));
+            Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.IntroText));
+            Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.StatusMessage));
+            Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.OptionsCloud));
+
+        }
     }
 }

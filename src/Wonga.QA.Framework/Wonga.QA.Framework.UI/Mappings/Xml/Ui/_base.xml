@@ -251,6 +251,11 @@
     <PromisedRepayDate>#content-area p strong em</PromisedRepayDate>
     <TagCloud>#cloud</TagCloud>
     <LoanStatusMessage>.wonga-box-type-warning</LoanStatusMessage>
+    <Promise>.summary-text .blue-text</Promise>
+    <OptionsCloud>#cloud ul</OptionsCloud>
+    <YouCan>.summary-text .you-can</YouCan>
+    <IntroText>p.summary-intro-text</IntroText>
+    <StatusMessage>div.wonga-box-1 div.wonga-box-top-right</StatusMessage>
   </MySummaryPage>
 
   <MyPaymentsPage>
