@@ -1,6 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Ui>
     <!--PAGES SECTION-->
+
+    <HomePage>
+      <BusinessTitleText>Fast and flexible short term loans for your business</BusinessTitleText>
+    </HomePage>
+  
     <EligibilityQuestionsPage>
       <FormId>#lzero-questions-form</FormId>
       <CheckDirector>#edit-director</CheckDirector>
