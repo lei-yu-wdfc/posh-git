@@ -29,7 +29,7 @@ namespace Wonga.QA.Tests.Ui
         public void TearDown()
         {
             var name = TestContext.CurrentContext.Test.Name;
-            if(!Config.Ui.RemoteMode)
+            //if(!Config.Ui.RemoteMode)
                 TestLog.EmbedImage(name + ".Screen", Client.Screen());
             TestLog.AttachHtml(name + ".Source", Client.Source());
             Client.Dispose();
