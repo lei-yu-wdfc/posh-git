@@ -131,8 +131,8 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 		private double GetRepaymentPredictionScore(Application application)
 		{
-			var riskWorkflowId = Drive.Data.Risk.Db.RiskWorkflows.FindByApplicationId(application.Id);
-			var score = Drive.Data.Risk.Db.RiskDecisionData.FindByRiskWorkflowId(riskWorkflowId);
+			var riskWorkflowId = (int)Do.Until(() => Drive.Data.Risk.Db.RiskWorkflows.FindByApplicationId(application.Id)).RiskWorkflowId;
+			var score = (double)Drive.Data.Risk.Db.RiskDecisionData.FindByRiskWorkflowId(riskWorkflowId).ValueDouble;
 
 			return score;
 		}
