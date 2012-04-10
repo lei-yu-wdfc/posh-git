@@ -9,6 +9,7 @@ namespace Wonga.QA.Framework.Msmq
     public partial class BusinessApplicantBlackListRequestWbUkCommand : MsmqMessage<BusinessApplicantBlackListRequestWbUkCommand>
     {
         public Guid OrganisationId { get; set; }
+        public Guid AccountId { get; set; }
         public Guid ApplicationId { get; set; }
         public Guid SagaId { get; set; }
         public DateTime CreatedOn { get; set; }

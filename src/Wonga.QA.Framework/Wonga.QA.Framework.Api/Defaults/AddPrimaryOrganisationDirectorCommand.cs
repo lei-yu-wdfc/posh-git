@@ -19,8 +19,11 @@ namespace Wonga.QA.Framework.Api
     {
          public override void Default()
          {
-             AddressLine1 = Get.RandomString(Get.RandomInt(10,30));
-             AddressLine2 = Get.RandomString(Get.RandomInt(10, 20));
+             Flat = Get.RandomString(Get.RandomInt(1,3));
+             HouseName = Get.RandomBoolean() ? Get.RandomString(5, 20) : null;
+             HouseNumber = HouseName != null ? null : Get.RandomString(1, 5);
+             Street = Get.RandomString(5, 25);
+             District = Get.RandomBoolean() ? Get.RandomString(5, 15) : null;
              CountryCode = "UK";
              County = Get.RandomString(Get.RandomInt(5, 15));
              PostCode = Get.RandomString(Get.RandomInt(3, 6));

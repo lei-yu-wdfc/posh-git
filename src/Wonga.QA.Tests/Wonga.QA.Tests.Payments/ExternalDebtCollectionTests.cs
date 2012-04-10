@@ -259,9 +259,9 @@ namespace Wonga.QA.Tests.Payments
 
             Drive.Msmq.Payments.Send(command);
 
-            var applicationRow = Do.Until(() => Drive.Db.Payments.Applications.SingleOrDefault(e => e.ExternalId == command.ApplicationId));
-            var debtCollectionRow = Do.Until(() => Drive.Db.Payments.DebtCollections.SingleOrDefault(e => e.ApplicationId == applicationRow.ApplicationId));
-            Assert.IsNotNull(debtCollectionRow);
+            var applicationEntity = Do.Until(() => Drive.Db.Payments.Applications.Single(e => e.ExternalId == command.ApplicationId));
+            var debtCollectionEntity = Do.Until(() => Drive.Db.Payments.DebtCollections.SingleOrDefault(e => e.ApplicationId == applicationEntity.ApplicationId));
+            Assert.IsNotNull(debtCollectionEntity);
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1862")]
@@ -286,9 +286,9 @@ namespace Wonga.QA.Tests.Payments
 
             Thread.Sleep(10000);
 
-            var applicationRow = Drive.Db.Payments.Applications.SingleOrDefault(e => e.ExternalId == command.ApplicationId);
-            var debtCollectionRow = Drive.Db.Payments.DebtCollections.SingleOrDefault(e => e.ApplicationId == applicationRow.ApplicationId);
-            Assert.IsNull(debtCollectionRow);
+            var applicationEntity = Drive.Db.Payments.Applications.Single(e => e.ExternalId == command.ApplicationId);
+            var debtCollectionEntity = Drive.Db.Payments.DebtCollections.SingleOrDefault(e => e.ApplicationId == applicationEntity.ApplicationId);
+            Assert.IsNull(debtCollectionEntity);
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1862")]
@@ -313,9 +313,9 @@ namespace Wonga.QA.Tests.Payments
 
             Thread.Sleep(10000);
 
-            var applicationRow = Drive.Db.Payments.Applications.SingleOrDefault(e => e.ExternalId == command.ApplicationId);
-            var debtCollectionRow = Drive.Db.Payments.DebtCollections.SingleOrDefault(e => e.ApplicationId == applicationRow.ApplicationId);
-            Assert.IsNull(debtCollectionRow);
+            var applicationEntity = Drive.Db.Payments.Applications.Single(e => e.ExternalId == command.ApplicationId);
+            var debtCollectionEntity = Drive.Db.Payments.DebtCollections.SingleOrDefault(e => e.ApplicationId == applicationEntity.ApplicationId);
+            Assert.IsNull(debtCollectionEntity);
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1862")]
@@ -335,9 +335,26 @@ namespace Wonga.QA.Tests.Payments
 
             Thread.Sleep(10000);
 
-            var applicationRow = Drive.Db.Payments.Applications.SingleOrDefault(e => e.ExternalId == command.ApplicationId);
-            var debtCollectionRow = Drive.Db.Payments.DebtCollections.SingleOrDefault(e => e.ApplicationId == applicationRow.ApplicationId);
-            Assert.IsNull(debtCollectionRow);
+            var applicationEntity = Drive.Db.Payments.Applications.Single(e => e.ExternalId == command.ApplicationId);
+            var debtCollectionEntity = Drive.Db.Payments.DebtCollections.SingleOrDefault(e => e.ApplicationId == applicationEntity.ApplicationId);
+            Assert.IsNull(debtCollectionEntity);
+        }
+
+        [Test, AUT(AUT.Ca), JIRA("CA-1862")]
+        public void WhenApplicationMovedToDcaSalesForceStatusShouldBeUpdated()
+        {
+            var customer = CustomerBuilder.New().Build();
+            var application = ApplicationBuilder.New(customer).Build();
+
+            application.PutApplicationIntoArrears();
+
+            application.MoveToDebtCollectionAgency();
+
+            Do.Until(() =>
+            {
+                var salesForceLoan = Drive.ThirdParties.Salesforce.GetApplicationById(application.Id);
+                return (int)Wonga.QA.Framework.ThirdParties.Salesforce.ApplicationStatus.DCA == (int)salesForceLoan.Status_ID__c.Value;
+            });
         }
 	}
 }

@@ -18,11 +18,19 @@
     <PostcodeLookup>#edit-postcode-lookup-uk</PostcodeLookup>
     <Postcode>#edit-postcode-lookup-uk</Postcode>
     <District>#edit-district</District>
-    <FlatNumber>#edit-flat</FlatNumber>
+    <HouseNumber>#edit-house-number</HouseNumber>
     <County>#edit-county</County>
+    <Street>#edit-street</Street>
+    <Town>#edit-town</Town>
+    <PostcodeInForm>#edit-postcode-uk</PostcodeInForm>
     <AddressPeriod>#edit-address-period</AddressPeriod>
     <NextButton>#edit-submit</NextButton>
     <AddressOptions>#edit-address-options</AddressOptions>
+    <HouseNumberErrorForm>#edit-house-number-wrapper div.invalid</HouseNumberErrorForm>
+    <StreetErrorForm>#edit-street-wrapper div.invalid</StreetErrorForm>
+    <TownErrorForm>#edit-town-wrapper div.invalid</TownErrorForm>
+    <PostcodeErrorForm>#edit-postcode-uk-wrapper div.form-error div.invalid</PostcodeErrorForm>
+    <AddressPeriodErrorForm>#edit-address-period-wrapper div.invalid</AddressPeriodErrorForm>
   </AddressDetailsPage>
   
   <BankAccountPage>
@@ -33,6 +41,10 @@
   <DealDonePage>
     <HeaderText>Your application has been accepted</HeaderText>
   </DealDonePage>
+
+  <TopupDealDonePage>
+    <AccountLink>#content-area h2 a</AccountLink>
+  </TopupDealDonePage>
 
   <DebitCardSection>
     <Fieldset>#card-details</Fieldset>
@@ -45,5 +57,15 @@
     <CardStartDateMonth>#edit-card-start-date-month</CardStartDateMonth>
     <CardStartDateYear>#edit-card-start-date-year</CardStartDateYear>
   </DebitCardSection>
-  
+
+  <AcceptedPage>
+    <NodeWrap>.node-type-wonga-decision-page</NodeWrap>
+  </AcceptedPage>
+
+  <ApplicationSection>
+    <FormId>#wonga-apply-ln-form</FormId>
+    <SecurityCode>#edit-security-code</SecurityCode>
+    <MinCash>#edit-min-cash</MinCash>
+  </ApplicationSection>
+
 </Ui>

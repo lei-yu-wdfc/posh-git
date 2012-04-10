@@ -33,20 +33,59 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Databases\ContactManagement.cs" />
+    <Compile Include="Databases\CommsDatabase.cs" />
+    <Compile Include="Databases\BiDatabase.cs" />
+    <Compile Include="Databases\BankGatewayDatabase.cs" />
+    <Compile Include="Databases\BlacklistDatabase.cs" />
+    <Compile Include="Databases\CallReportDatabase.cs" />
+    <Compile Include="Databases\CallValidateDatabase.cs" />
+    <Compile Include="Databases\CardPaymentDatabase.cs" />
+    <Compile Include="Databases\ColdStorageDatabase.cs" />
+    <Compile Include="Databases\SchedulerDatabase.cs" />
+    <Compile Include="Databases\WongaPayDatabase.cs" />
+    <Compile Include="Databases\UruDatabase.cs" />
+    <Compile Include="Databases\TransUnionDatabase.cs" />
+    <Compile Include="Databases\TimeZoneDatabase.cs" />
+    <Compile Include="Databases\SmsDatabase.cs" />
+    <Compile Include="Databases\SalesforceDatabase.cs" />
+    <Compile Include="Databases\QaDataDatabase.cs" />
+    <Compile Include="Databases\IpLookupDatabase.cs" />
+    <Compile Include="Databases\HpiDatabase.cs" />
+    <Compile Include="Databases\FileStorageDatabase.cs" />
+    <Compile Include="Databases\ExperianBulkDatabase.cs" />
+    <Compile Include="Databases\ExperianDatabase.cs" />
+    <Compile Include="Databases\OpsDatabase.cs" />
+    <Compile Include="Databases\OpsLogsDatabase.cs" />
+    <Compile Include="Databases\OpsSagasDatabase.cs" />
+    <Compile Include="Databases\PaymentsDatabase.cs" />
+    <Compile Include="Databases\QAFDatabase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Databases\RiskDatabase.cs" />
     <Compile Include="DataDriver.cs" />
+    <Compile Include="Enums\Ops\ServiceConfigurationKeys.cs" />
+    <Compile Include="Enums\Risk\CreditBureauEnum.cs" />
+    <Compile Include="Enums\Risk\IovationMockResponse.cs" />
+    <Compile Include="Enums\Risk\RiskCheckpointDefinitionEnum.cs" />
+    <Compile Include="Enums\Risk\RiskCheckpointStatusEnum.cs" />
+    <Compile Include="Enums\Risk\RiskVerificationDefinitionsEnum.cs" />
+    <Compile Include="Enums\Risk\RiskWorkflowStatusEnum.cs" />
+    <Compile Include="Enums\Risk\RiskWorkflowTypesEnum.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Simple.Data">
-      <HintPath>..\packages\Simple.Data.Core.0.14.0.3\lib\net40\Simple.Data.dll</HintPath>
+      <HintPath>..\packages\Simple.Data.Core.0.16.0.0\lib\net40\Simple.Data.dll</HintPath>
     </Reference>
     <Reference Include="Simple.Data.Ado">
-      <HintPath>..\packages\Simple.Data.Ado.0.14.0.3\lib\net40\Simple.Data.Ado.dll</HintPath>
+      <HintPath>..\packages\Simple.Data.Ado.0.16.0.0\lib\net40\Simple.Data.Ado.dll</HintPath>
+    </Reference>
+    <Reference Include="Simple.Data.SqlServer">
+      <HintPath>..\packages\Simple.Data.SqlServer.0.16.0.0\lib\net40\Simple.Data.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Wonga.QA.Framework.Core\Wonga.QA.Framework.Core.csproj">
@@ -55,7 +94,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Properties\" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

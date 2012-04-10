@@ -12,7 +12,11 @@ namespace Wonga.QA.Framework.UI
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+		public string NationalId { get; set; } //Not used yet
+    	public DateTime DateOfBirth { get; set; } //not used yet
+
         public BasePage CurrentPage { get; set; }
+		
 
          public CaL0Journey(BasePage homePage)
         {
@@ -68,7 +72,7 @@ namespace Wonga.QA.Framework.UI
         public IL0ConsumerJourney FillAddressDetails()
         {
             var addressPage = CurrentPage as AddressDetailsPage;
-            addressPage.FlatNumber = "1403";
+            addressPage.HouseNumber = "1403";
             addressPage.Street = "Edward";
             addressPage.Town = "Hearst";
             addressPage.PostCode = "V4F3A9";
@@ -123,7 +127,7 @@ namespace Wonga.QA.Framework.UI
         {
             var acceptedPage = CurrentPage as AcceptedPage;
             string date = String.Format("{0:d MMM yyyy}", DateTime.Today);
-            acceptedPage.SignConfirmCA(date, FirstName, LastName);
+            acceptedPage.SignConfirmCaL0(date, FirstName, LastName);
             CurrentPage = acceptedPage.Submit() as DealDonePage;
             return this;
         }

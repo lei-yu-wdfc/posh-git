@@ -13,17 +13,39 @@ namespace Wonga.QA.Tests.Comms
 {
 	public class CollectionsChaseSmsTests
 	{
+		#region constants
+
 		private const string A2Text =
-			"We have just tried to collect your Wonga repayment but it was declined by your bank. Please pay today to avoid further charges.  Call us on 0861966421";
+			"We have just tried to collect your Wonga repayment but it was declined by your bank. " +
+			"Please pay today to avoid further charges. Call us on 0861966421";
 
 		private const string A3Text =
-			"We still haven't received full payment for your Wonga.com loan and it is now overdue. Please pay your overdue account or call us to discuss on 08619664221";
+			"We still haven't received full payment for your Wonga.com loan and it is now overdue. " +
+			"Please pay your overdue account or call us to discuss on 08619664221";
 
 		private const string A4Text =
-			"Despite our efforts to contact you, your Wonga.com loan remains unpaid. Act now to avoid a possible impact on your credit rating. Call us on 0861966421";
+			"Despite our efforts to contact you, your Wonga.com loan remains unpaid. " +
+			"Act now to avoid a possible impact on your credit rating. Call us on 0861966421";
+
+		private const string A5Text =
+			"Please contact Wonga urgently as your account is overdue and interest is accruing. " +
+			"Call us on 0861966421 - Our agents are waiting to help you resolve this";
+
+		private const string A6Text =
+			"Your wonga.com loan remains in arrears. Please don't ignore this message. " +
+			"Contact us urgently on 0861966421 to avoid us taking further steps against you.";
+
+		private const string A7Text =
+			"Your wonga.com loan remains in arrears. Please don't ignore this message. " +
+			"Contact us urgently on 0861966421 to avoid us taking further steps against you.";
+
+		#endregion
 
 		private bool _bankGatewayTestModeOriginal;
 		private DateTime _atTheBeginningOfThisTest;
+		private static readonly dynamic AccountPreferences = Drive.Data.Payments.Db.AccountPreferences;
+		private static readonly dynamic SmsMessages = Drive.Data.Sms.Db.SmsMessages;
+		private static readonly dynamic InArrearsNoticeSagaEntities = Drive.Data.OpsSagas.Db.InArrearsNoticeSagaEntity;
 
 		[FixtureSetUp]
 		public void FixtureSetup()
@@ -44,38 +66,100 @@ namespace Wonga.QA.Tests.Comms
 			_atTheBeginningOfThisTest = DateTime.Now;
 		}
 
-		[Test, JIRA("ZA-1676"), AUT(AUT.Za), Parallelizable]
+		[Test, JIRA("ZA-1676"), AUT(AUT.Za)]
 		public void A2SmsIsSentTest()
 		{
-			string phoneNumberChunk = GetPhoneNumberChunk();
-			string formattedPhoneNumber = GetFormattedPhoneNumber(phoneNumberChunk);
-			ArrangeApplication(phoneNumberChunk);
-
-			WaitForSms(formattedPhoneNumber, A2Text);
+			VerifySmsIsSentAfterDaysInArrears(0, A2Text);
 		}
 
-		[Test, JIRA("ZA-1676"), AUT(AUT.Za), Parallelizable]
+		[Test, JIRA("ZA-1676"), AUT(AUT.Za)]
 		public void A3SmsIsSentTest()
 		{
-			string phoneNumberChunk = GetPhoneNumberChunk();
-			string formattedPhoneNumber = GetFormattedPhoneNumber(phoneNumberChunk);
-			Application application = ArrangeApplication(phoneNumberChunk);
-
-			TimeoutNotificationSagaForDays(application, 5);
-
-			WaitForSms(formattedPhoneNumber, A3Text);
+			VerifySmsIsSentAfterDaysInArrears(5, A3Text);
 		}
 
-		[Test, JIRA("ZA-1676"), AUT(AUT.Za), Parallelizable]
+		[Test, JIRA("ZA-1676"), AUT(AUT.Za)]
 		public void A4SmsIsSentTest()
+		{
+			VerifySmsIsSentAfterDaysInArrears(15, A4Text);
+		}
+
+		[Test, JIRA("ZA-2233", "ZA-1676"), AUT(AUT.Za)]
+		public void A5SmsIsSentTest()
+		{
+			VerifySmsIsSentAfterDaysInArrears(20, A5Text);
+		}
+
+		[Test, JIRA("ZA-2233", "ZA-1676"), AUT(AUT.Za)]
+		public void A6SmsIsSentTest()
+		{
+			VerifySmsIsSentAfterDaysInArrears(30, A6Text);
+		}
+
+		[Test, JIRA("ZA-2233", "ZA-1676"), AUT(AUT.Za)]
+		public void A7SmsIsSentTest()
+		{
+			VerifySmsIsSentAfterDaysInArrears(40, A7Text);
+		}
+
+		[Test, JIRA("ZA-1676"), AUT(AUT.Za)]
+		public void WhenInHardshipSmsIsNotSent()
+		{
+			VerifyA2SentA3SuppressedA4Sent(
+				a => AccountPreferences.UpdateByAccountId(AccountId: a.AccountId, IsHardship: true),
+				a => AccountPreferences.UpdateByAccountId(AccountId: a.AccountId, IsHardship: false));
+		}
+
+		[Test, JIRA("ZA-1676"), AUT(AUT.Za)]
+		public void WhenInDisputeSmsIsNotSent()
+		{
+			VerifyA2SentA3SuppressedA4Sent(
+				a => AccountPreferences.UpdateByAccountId(AccountId: a.AccountId, IsDispute: true),
+				a => AccountPreferences.UpdateByAccountId(AccountId: a.AccountId, IsDispute: false));
+		}
+
+		#region helpers
+
+		private void VerifySmsIsSentAfterDaysInArrears(int daysInArrears, string smsText)
 		{
 			string phoneNumberChunk = GetPhoneNumberChunk();
 			string formattedPhoneNumber = GetFormattedPhoneNumber(phoneNumberChunk);
 			Application application = ArrangeApplication(phoneNumberChunk);
 
+			TimeoutNotificationSagaForDays(application, daysInArrears);
+
+			AssertSmsIsSent(formattedPhoneNumber, smsText);
+		}
+
+		private void VerifyA2SentA3SuppressedA4Sent(Action<Application> suppressAction, Action<Application> resumeAction)
+		{
+			string phoneNumberChunk = GetPhoneNumberChunk();
+			string formattedPhoneNumber = GetFormattedPhoneNumber(phoneNumberChunk);
+			Application application = ArrangeApplication(phoneNumberChunk);
+
+			// wait unit A2 is sent
+			AssertSmsIsSent(formattedPhoneNumber, A2Text);
+
+			// set suppress
+			suppressAction(application);
+
+			// time out to after the A3 point
+			TimeoutNotificationSagaForDays(application, 7);
+
+			// verify A3 is not sent
+			AssertSmsIsNotSent(formattedPhoneNumber, A3Text);
+
+			// resume
+			resumeAction(application);
+
+			// time out to the A4 point
 			TimeoutNotificationSagaForDays(application, 15);
 
-			WaitForSms(formattedPhoneNumber, A4Text);
+			// verify A3 is still not sent
+			AssertSmsIsNotSent(formattedPhoneNumber, A3Text);
+
+			// wait unit A4 is sent
+			AssertSmsIsSent(formattedPhoneNumber, A4Text);
 		}
 
 		private static string GetPhoneNumberChunk()
@@ -97,29 +181,49 @@ namespace Wonga.QA.Tests.Comms
 			return ApplicationBuilder.New(customer).Build().PutApplicationIntoArrears(20);
 		}
 
-		private void WaitForSms(string formattedPhoneNumber, string text)
-		{
-			Do.Until(() => Drive.Db.Sms.SmsMessages.Where(
-				m =>
-				m.CreatedOn >= _atTheBeginningOfThisTest &&
-				m.MobilePhoneNumber == formattedPhoneNumber &&
-				m.MessageText == text));
-		}
-
 		private static void TimeoutNotificationSagaForDays(Application application, int days)
 		{
 			var saga =
-				Do.Until(() => Drive.Db.OpsSagas.InArrearsNoticeSagaEntities.Single(e => e.AccountId == application.AccountId));
-			Assert.AreEqual(0, saga.DaysInArrears);
+				Do.Until(() =>
+				         InArrearsNoticeSagaEntities.FindByAccountId(application.AccountId));
+			Assert.IsNotNull(saga);
 
-			for (int i = 0; i < days; i++)
+			for (int i = 0; i < days - saga.DaysInArrears; i++)
 			{
 				Drive.Msmq.Payments.Send(new TimeoutMessage {Expires = DateTime.UtcNow, SagaId = saga.Id});
 			}
-			Do.Until(
+			Assert.IsNotNull(Do.Until(
 				() =>
-				Drive.Db.OpsSagas.InArrearsNoticeSagaEntities.Single(
-					e => e.AccountId == application.AccountId && e.DaysInArrears == days));
+				InArrearsNoticeSagaEntities.FindBy(AccountId: application.AccountId, DaysInArrears: days)));
 		}
+
+		private void AssertSmsIsSent(string formattedPhoneNumber, string text)
+		{
+			Assert.IsTrue(
+				Do.Until(() =>
+				         SmsMessages.Find(
+				         	SmsMessages.CreatedOn >= _atTheBeginningOfThisTest &&
+				         	SmsMessages.MobilePhoneNumber == formattedPhoneNumber &&
+				         	SmsMessages.MessageText == text &&
+							SmsMessages.Status == 2
+							)
+				         != null));
+		}
+
+		private void AssertSmsIsNotSent(string formattedPhoneNumber, string text)
+		{
+			Assert.IsTrue(
+				Do.With.Timeout(TimeSpan.FromSeconds(10))
+					.Watch(() =>
+					       (bool) (
+					              	SmsMessages.Find(
+					              		SmsMessages.CreatedOn >= _atTheBeginningOfThisTest &&
+					              		SmsMessages.MobilePhoneNumber == formattedPhoneNumber &&
+					              		SmsMessages.MessageText == text &&
+										SmsMessages.Status == 3)
+					              	!= null)));
+		}
+
+		#endregion
 	}
 }

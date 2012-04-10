@@ -5,6 +5,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Elements
     {
         public String InternationalTrigger { get; set; }
         public String InternationalPanelZa { get; set; }
+        public String InternationalPanelCa { get; set; }
         public String InternationalPanelUk { get; set; }
     }
 }

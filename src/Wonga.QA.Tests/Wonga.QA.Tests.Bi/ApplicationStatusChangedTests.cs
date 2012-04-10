@@ -39,8 +39,7 @@ namespace Wonga.QA.Tests.Bi
             Do.Until(() =>
                          {
                              var app = sales.GetApplicationById(application.Id);
-                             int status = int.Parse(app.Status__c);
-                             return status == (int)ApplicationStatusEnum.Live;
+                             return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live;
                          });
         }
     }

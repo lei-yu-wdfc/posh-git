@@ -19,17 +19,21 @@ namespace Wonga.QA.Tests.Ui
 {
     public class RedirectedToSelectedSiteTest : UiTest
     {
-        [Test, AUT(AUT.Ca), JIRA("QA-240"), Pending("FE bug, button in top of page are broken")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-240, QA-168"), Pending("FE bug, button in top of page are broken")]
         public void RedirectedToSelectedSite()
         {
             const string ukUrl = "www.wonga.com";
             const string zaUrl = "www.wonga.co.za";
-            //const string caUrl = "www.wonga.co.ca";
+            const string caUrl = "www.wonga.ca";
             switch (Config.AUT)
             {
                 case (AUT.Ca):
                     NavigateToRegionAndTest(AUT.Za, zaUrl);
                     NavigateToRegionAndTest(AUT.Uk, ukUrl);
+                    break;
+                case (AUT.Za):
+                    NavigateToRegionAndTest(AUT.Uk, ukUrl);
+                    NavigateToRegionAndTest(AUT.Ca, caUrl);
                     break;
             }
         }
@@ -45,6 +49,9 @@ namespace Wonga.QA.Tests.Ui
                     break;
                 case (AUT.Uk):
                     page.InternationalElements.InternationalPanelUkClick();
+                    break;
+                case (AUT.Ca):
+                    page.InternationalElements.InternationalPanelCaClick();
                     break;
             }
             Assert.IsTrue(page.Url.Contains(domain));

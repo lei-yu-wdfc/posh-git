@@ -16,7 +16,7 @@ ECHO   3. Rebase from Upstream
 ECHO   4. Run Wonga.QA.Tests
 ECHO   5. Run Wonga.QA.Tests.Meta for all AUTs against RC
 ECHO   6. Run Wonga.QA.Generators
-ECHO   7. Set Proxy
+ECHO   7. Set ProxyMode
 ECHO   0. Exit
 ECHO.
 
@@ -74,8 +74,8 @@ GOTO MENU
 
 :7
 	CHOICE /C YN /M "Are you working through a proxy"
-	IF ERRORLEVEL 2 SETX Proxy False > NUL
-	IF ERRORLEVEL 1 SETX Proxy True > NUL
+	IF ERRORLEVEL 2 SETX QAFProxyMode False > NUL
+	IF ERRORLEVEL 1 SETX QAFProxyMode True > NUL
 GOTO MENU
 
 :META

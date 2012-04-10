@@ -12,7 +12,6 @@ namespace Wonga.QA.Framework.Msmq
         public Guid PaymentCardId { get; set; }
         public String CardType { get; set; }
         public String HolderName { get; set; }
-        public Object CardNumber { get; set; }
         public Object CV2 { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime ExpiryDate { get; set; }

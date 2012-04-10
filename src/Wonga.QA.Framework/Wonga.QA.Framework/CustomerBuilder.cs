@@ -40,7 +40,11 @@ namespace Wonga.QA.Framework
 		private String _mobileNumber;
     	private Int64? _bankAccountNumber;
         private Int64 _paymentCardNumber;
-        
+
+        public Guid Id { get { return _id; } }
+        public String Email { get { return _email; } }
+        public String Forename { get { return _foreName; } }
+        public String Surname { get { return _surname; } }
 
         private CustomerBuilder()
         {
@@ -98,12 +102,6 @@ namespace Wonga.QA.Framework
         {
             return new CustomerBuilder { _id = id };
         }
-
-        //public CustomerBuilder WithEmail(string email)
-        //{
-        //    _email = email;
-        //    return this;
-        //}
 
         public CustomerBuilder WithEmployer(string employerName)
         {
@@ -273,6 +271,15 @@ namespace Wonga.QA.Framework
             return this;
         }
 
+        public CustomerBuilder WithSpecificAge(int age)
+        {
+            var rightNow = DateTime.Today;
+            var then = rightNow.AddYears(-age);
+            _dateOfBirth = new Date(then);
+
+            return this;
+        }
+
         public Customer Build()
         {
 			_nextPayDate.DateFormat = DateFormat.Date;
@@ -420,6 +427,7 @@ namespace Wonga.QA.Framework
                         AddBankAccountUkCommand.New(r=>
                                                     	{
                                                     		r.AccountId = _id;
+                                                    	    r.BankAccountId = _bankAccountId;
                                                     		if (_bankAccountNumber.HasValue)
                                                     		{
                                                     			r.AccountNumber = _bankAccountNumber;

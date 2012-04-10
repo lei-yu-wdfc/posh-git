@@ -2,6 +2,7 @@
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
+using Wonga.QA.Framework.Data.Enums.Risk;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {

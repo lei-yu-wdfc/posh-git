@@ -22,16 +22,16 @@ namespace Wonga.QA.Tests.Payments.Queries
                                  {
                                      new
                                          {
-                                             Type = "Visa Debit",
-                                             Number = "1111222233334444",
+                                             Type = "Mastercard",
+                                             Number = "4444333322221111",
                                              SecurityCode = "222",
                                              ExpiryDate = lastDayOfThisMonth.AddMonths(7),
                                              IsPrimary = true,
                                          },
                                      new
                                          {
-                                             Type = "American Express",
-                                             Number = "1141226233334844",
+                                             Type = "Visa Debit",
+                                             Number = "4444333322221111",
                                              SecurityCode = "227",
                                              ExpiryDate = lastDayOfThisMonth.AddMonths(20),
                                              IsPrimary = false,
@@ -43,22 +43,23 @@ namespace Wonga.QA.Tests.Payments.Queries
             foreach (var card in cardsToAdd)
             {
                 customer.AddPaymentCard(card.Type, card.Number, card.SecurityCode, card.ExpiryDate, card.IsPrimary);
-            } 
+            }
 
             PersonalPaymentCardEntity[] cards = customer.GetPersonalPaymentCards();
-
-            GetPersonalPaymentCardsQuery query = new GetPersonalPaymentCardsQuery() {AccountId = customer.Id};
-            CsResponse response = Drive.Cs.Queries.Post(query);
-            Assert.IsNotNull(response);
-            //all cards are assigned to the right customer
-            Assert.IsTrue(response.Values["Account"].All(v=>v == customer.Id.ToString()));
-            //all cards have been returned
-            foreach (var addedCard in cards)
-            {
-                Assert.IsTrue(response.Values["CardType"].Any(v => v == addedCard.PaymentCardsBaseEntity.Type));
-                Assert.IsTrue(response.Values["MaskedNumber"].Any(v => v == addedCard.PaymentCardsBaseEntity.MaskedNumber));
-                Assert.IsTrue(response.Values["ExpiryDate"].Any(v => DateTime.Parse(v) == addedCard.PaymentCardsBaseEntity.ExpiryDate));
-            }
+            Do.Until(() =>
+                          {
+                              GetPersonalPaymentCardsQuery query = new GetPersonalPaymentCardsQuery() { AccountId = customer.Id };
+                              CsResponse response = Drive.Cs.Queries.Post(query);
+                              if (response == null) return false;
+                              if (response.Values["Account"].Any(v => v != customer.Id.ToString())) return false;
+                              foreach (var addedCard in cards)
+                              {
+                                  if (!(response.Values["CardType"].Any(v => v == addedCard.PaymentCardsBaseEntity.Type))) return false;
+                                  if (!(response.Values["MaskedNumber"].Any(v => v == addedCard.PaymentCardsBaseEntity.MaskedNumber))) return false;
+                                  if (!(response.Values["ExpiryDate"].Any(v => DateTime.Parse(v) == addedCard.PaymentCardsBaseEntity.ExpiryDate))) return false;
+                              }
+                              return true;
+                          });
         }
     }
 }

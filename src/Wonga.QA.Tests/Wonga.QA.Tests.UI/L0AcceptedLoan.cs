@@ -30,7 +30,6 @@ namespace Wonga.QA.Tests.Ui
             acceptedPage.SignAgreementConfirm();
             acceptedPage.SignDirectDebitConfirm();
             var dealDone = acceptedPage.Submit();
-
         }
 
        [Test, AUT(AUT.Ca), Pending("CA WIP,RC FE seems broken - postponing the push of the selenium tests")]
@@ -45,7 +44,7 @@ namespace Wonga.QA.Tests.Ui
                                  .CurrentPage as ProcessingPage;
 
             var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
-            acceptedPage.SignConfirmCA(DateTime.Now.ToString("d MMM yyyy"), _firstName, _lastName);
+            acceptedPage.SignConfirmCaL0(DateTime.Now.ToString("d MMM yyyy"), _firstName, _lastName);
             var dealDone = acceptedPage.Submit();
         }
 
@@ -71,6 +70,7 @@ namespace Wonga.QA.Tests.Ui
                                      .FillBankDetails()
                                      .FillCardDetails()
                                      .WaitForAcceptedPage().CurrentPage as AcceptedPage;
+
         }
     }
 }

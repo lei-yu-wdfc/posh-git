@@ -7,12 +7,13 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
+using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
 	
-    [Pending, AUT(AUT.Za)]
+    [AUT(AUT.Za)]
 	class CheckpointReputationPredictionPositiveTests
 	{
 		private const RiskMask TestMask = RiskMask.TESTReputationtPredictionPositive;
@@ -28,6 +29,9 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				case AUT.Za:
 					{
 						Drive.Db.SetServiceConfiguration("FeatureSwitch.ZA.ReputationPredictionCheckpoint", "true");
+						ResetReputationScoreCutoff();
+
+						Drive.Db.SetServiceConfiguration("Mocks.IovationEnabled", "true");
 					}
 					break;
 				default:
@@ -42,6 +46,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		{
 			var customer = CustomerBuilder.New()
 				.WithEmployer(TestMask)
+				.WithPostcodeInAddress(GetPostcode().ToString())
 				.Build();
 
             var application = ApplicationBuilder.New(customer).WithIovationBlackBox("Accept").WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
@@ -78,6 +83,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		public void CheckpointReputationPredictionPositiveCorrectFactorsUsed()
 		{
 			var customer = CustomerBuilder.New()
+				.WithPostcodeInAddress(GetPostcode().ToString())
 				.WithEmployer(TestMask)
 				.Build();
 
@@ -90,7 +96,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test, AUT(AUT.Za), JIRA("ZA-1938")]
 		public void CheckpointReputationPredictionPositiveIdentialCustomersHaveEqualScores()
 		{
-			int postcodeWithHighArrearsRate = Get.RandomInt(1000, 9999);
+			int postcodeWithHighArrearsRate = GetPostcode();
 
 			var customer1 = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(postcodeWithHighArrearsRate.ToString()).Build();
 			var application1 = ApplicationBuilder.New(customer1).Build();
@@ -108,7 +114,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test, AUT(AUT.Za), JIRA("ZA-1938")]
 		public void CheckpointReputationPredictionPositivePostCodeWithHighArrearsRateLowersScore()
 		{
-			int postcode = Get.RandomInt(1000, 9999);
+			int postcode = GetPostcode();
 
 			var customer1 = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(postcode.ToString()).Build();
 			var application1 = ApplicationBuilder.New(customer1).Build();
@@ -128,9 +134,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test, AUT(AUT.Za), JIRA("ZA-1938")]
 		public void CheckpointReputationPredictionPositiveTablesUpdateWhenInArrears()
 		{
-			int postcode = Get.RandomInt(1000, 9999);
-
-			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(postcode.ToString()).Build();
+			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(GetPostcode().ToString()).Build();
 			var application = ApplicationBuilder.New(customer).Build();
 
 			var prevInArrears = Drive.Db.Risk.RiskIovationPostcodes.Single(a => a.ApplicationId == application.Id).InArrears;
@@ -147,9 +151,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test, AUT(AUT.Za), JIRA("ZA-1938")]
 		public void CheckpointReputationPredictionPositiveTablesUpdateWhenAccountRankIncreases()
 		{
-			int postcode = Get.RandomInt(1000, 9999);
-
-			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(postcode.ToString()).Build();
+			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(GetPostcode().ToString()).Build();
 			var application = ApplicationBuilder.New(customer).Build();
 
 			var prevAccountRank = Drive.Db.Risk.RiskIovationPostcodes.Single(a => a.ApplicationId == application.Id).AccountRank;
@@ -177,8 +179,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			        where ra.ApplicationId == application.Id
 			        join pf in db.Risk.PmmlFactors on ra.RiskApplicationId equals pf.RiskApplicationId
 			        join f in db.Risk.Factors on pf.FactorId equals f.FactorId
-			        select f.Name).ToArray();
-
+			        select f.Name);
 		}
 
 		private void SetReputationScoreCutoff(double cutoff)
@@ -191,6 +192,11 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			SetReputationScoreCutoff(ReputationScoreCutoff);
 		}
 
+		private int GetPostcode()
+		{
+			return Get.RandomInt(1000, 9999);
+		}
+		
 		#endregion
 	}
 }

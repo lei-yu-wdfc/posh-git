@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Xml;
-using System.Xml.Linq;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Helpers;
@@ -24,9 +20,11 @@ namespace Wonga.QA.Framework
         protected Dictionary<int, List<bool>> EidSessionInteraction = new Dictionary<int, List<bool>>();
 
         //WB specific members
-        protected List<Customer> Guarantors;
+        protected List<CustomerBuilder> Guarantors;
+        protected Boolean SignGuarantors;
+        protected Boolean CreateGuarantors;
 
-        private Action _setPromiseDateAndLoanTerm;
+        protected Action _setPromiseDateAndLoanTerm;
         private Func<int> _getDaysUntilStartOfLoan;
 
         #region Private Members 
@@ -52,11 +50,6 @@ namespace Wonga.QA.Framework
         private int GetDaysUntilStartOfLoan()
         {
             return 0;
-        }
-
-        private int GetDaysUntilStartOfLoanForCa()
-        {
-            return DateHelper.GetNumberOfDaysUntilStartOfLoanForCa();
         }
 
         private static String UserActionId(String xmlString)
@@ -151,11 +144,10 @@ namespace Wonga.QA.Framework
             _setPromiseDateAndLoanTerm();
             PromiseDate.DateFormat = DateFormat.Date;
 
-            List<ApiRequest> requests = new List<ApiRequest>
+            var requests = new List<ApiRequest>
             {
                 SubmitApplicationBehaviourCommand.New(r => r.ApplicationId = Id),
-                SubmitClientWatermarkCommand.New(r => { r.ApplicationId=Id; r.AccountId = Customer.Id;
-                                                          r.BlackboxData = IovationBlackBox;
+                SubmitClientWatermarkCommand.New(r => { r.ApplicationId=Id; r.AccountId = Customer.Id; r.BlackboxData = IovationBlackBox;
                 })
             };
 
@@ -184,7 +176,7 @@ namespace Wonga.QA.Framework
 
                 case AUT.Ca:
                     // Start of Loan is different for CA
-                    _getDaysUntilStartOfLoan = GetDaysUntilStartOfLoanForCa;
+					_getDaysUntilStartOfLoan = GetDaysUntilStartOfLoanForCa;
                     _setPromiseDateAndLoanTerm();
 
                     requests.AddRange(new ApiRequest[]{
@@ -325,9 +317,12 @@ namespace Wonga.QA.Framework
             IovationBlackBox = iovationBlackBox;
             return this;
         }
-
         
-
         #endregion
+
+		private int GetDaysUntilStartOfLoanForCa()
+		{
+			return DateHelper.GetNumberOfDaysUntilStartOfLoanForCa();
+		}
     }
 }

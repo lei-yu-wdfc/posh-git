@@ -21,7 +21,6 @@ namespace Wonga.QA.Tests.Ui
         private int _amountMin;
         private int _termMax;
         private int _termMin;
-        private string _repaymentDate;
         private ApiResponse _response;
         private DateTime _actualDate;
 
@@ -50,13 +49,13 @@ namespace Wonga.QA.Tests.Ui
             _termMin = Int32.Parse(_response.Values["TermMin"].Single(), CultureInfo.InvariantCulture);
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-192")]
+        [Test, AUT(AUT.Za), JIRA("QA-192"), Pending("Known issue")]
         public void CorrectDataShouldBeDisplayedOnApplicationSuccessPageForZa()
         {
             int randomAmount = _amountMin + (new Random()).Next(_amountMax - _amountMin);
             int randomDuration = _termMin + (new Random()).Next(_termMax - _termMin);
 
-            var journey = new Journey(Client.Home());
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
             var processingPage = journey.ApplyForLoan(randomAmount, randomDuration)
                                  .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                                  .FillAddressDetails()
@@ -84,7 +83,7 @@ namespace Wonga.QA.Tests.Ui
             int randomAmount = _amountMin + (new Random()).Next(_amountMax - _amountMin);
             int randomDuration = _termMin + (new Random()).Next(_termMax - _termMin);
 
-            var journey = new Journey(Client.Home());
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
             var processingPage = journey.ApplyForLoan(randomAmount, randomDuration)
                                  .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                                  .FillAddressDetails()
@@ -93,7 +92,7 @@ namespace Wonga.QA.Tests.Ui
                                  .CurrentPage as ProcessingPage;
 
             var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
-            acceptedPage.SignConfirmCA(DateTime.Now.ToString("d MMM yyyy"), journey.FirstName, journey.LastName);
+            acceptedPage.SignConfirmCaL0(DateTime.Now.ToString("d MMM yyyy"), journey.FirstName, journey.LastName);
             var dealDone = acceptedPage.Submit() as DealDonePage;
             // Check data
             DateTime _date = DateTime.Parse(dealDone.GetRepaymentDate());

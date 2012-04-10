@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using Gallio.Framework.Assertions;
@@ -208,6 +209,79 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-175")]
+        public void ChangeLoanAmountAndDurationOnPersonalDetailsViaSlidersMotion()
+        {
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var personalDetailsPage = journey.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
+            personalDetailsPage.ClickSliderToggler();
+            var firstTotalToRepayValue = personalDetailsPage.GetTotalToRepay;
+
+            personalDetailsPage.MoveAmountSlider = 20;
+            personalDetailsPage.MoveDurationSlider = 20;
+
+            string totalToRepayAtPersonalDetails = personalDetailsPage.GetTotalToRepay;
+            string repaymentDateAtPersonalDetails = personalDetailsPage.GetRepaymentDate;
+
+            Assert.AreNotEqual(firstTotalToRepayValue, totalToRepayAtPersonalDetails);
+
+            var acceptedPage = journey.FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                     .FillAddressDetails()
+                                     .FillAccountDetails()
+                                     .FillBankDetails()
+                                     .WaitForAcceptedPage().CurrentPage as AcceptedPage;
+
+            string actualTotalToRepay = acceptedPage.GetTotalToRepay;
+            string actualRepaymentDate = acceptedPage.GetRepaymentDate;
+
+            Assert.AreEqual(totalToRepayAtPersonalDetails, actualTotalToRepay);
+            Assert.AreEqual(repaymentDateAtPersonalDetails, actualRepaymentDate);
+            var dealDonePage = journey.FillAcceptedPage().CurrentPage as DealDonePage;
+
+            actualTotalToRepay = dealDonePage.GetRapaymentAmount();
+
+            var date = DateTime.ParseExact(dealDonePage.GetRepaymentDate(), "d MMMM yyyy", null);
+
+            switch (date.Day % 10)
+            {
+                case 1:
+                    actualRepaymentDate = (date.Day > 10 && date.Day < 20)
+                                                ? String.Format("{0:dddd d\\t\\h MMM yyyy}", date)
+                                                : String.Format("{0:dddd d\\s\\t MMM yyyy}", date);
+                    break;
+                case 2:
+                    actualRepaymentDate = (date.Day > 10 && date.Day < 20)
+                                                ? String.Format("{0:dddd d\\t\\h MMM yyyy}", date)
+                                                : String.Format("{0:dddd d\\n\\d MMM yyyy}", date);
+                    break;
+                case 3:
+                    actualRepaymentDate = (date.Day > 10 && date.Day < 20)
+                                                ? String.Format("{0:dddd d\\t\\h MMM yyyy}", date)
+                                                : String.Format("{0:dddd d\\r\\d MMM yyyy}", date);
+                    break;
+                default:
+                    actualRepaymentDate = String.Format("{0:dddd d\\t\\h MMM yyyy}", date);
+                    break;
+
+            }
+
+            Assert.AreEqual(totalToRepayAtPersonalDetails, actualTotalToRepay);
+            Assert.AreEqual(repaymentDateAtPersonalDetails, actualRepaymentDate);
+
+            switch (Config.AUT)
+            {
+                case AUT.Ca:
+                    var mySummaryPage = journey.GoToMySummaryPage().CurrentPage as MySummaryPage;
+
+                    actualTotalToRepay = mySummaryPage.GetTotalToRepay;
+
+                    Assert.AreEqual(totalToRepayAtPersonalDetails, actualTotalToRepay);
+                    //TODO add the dates comparison
+                    break;
+                //TODO case AUT.Za:
+            }
+        }
+
         [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-183")]
         public void EnterDifferentPasswordsAtAccountDetailsPageShouldCauseWarningMessage()
         {
@@ -307,6 +381,41 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
+        [Test, AUT(AUT.Za), JIRA("ZA-2108")]
+        public void L0VerifyWongaLzeroZaModuleSignatureInsertedInPage()
+        {
+            // Checks for the presence of "<!-- Output from wonga_lzero_za/<$_GET['q']> -->" in page source.
+            // This test complements the normal ZA L0 tests since the L0 journey should be functionally the
+            // same as before the refactor.
+
+            // Create a journey:
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+
+            // Go to the first page:
+            var personalDetailsPage = journey.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
+
+            // Check that the page contains the wonga_doubleclick module v1.0 signature:
+            Assert.IsTrue(personalDetailsPage.Client.Source().Contains("<!-- Output from wonga_lzero_za/apply-details -->"));
+
+            // Go to the second page:
+            var addressDetailsPage = journey.FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask)).CurrentPage as AddressDetailsPage;
+
+            // Check that the page contains the wonga_doubleclick module v1.0 signature:
+            Assert.IsTrue(addressDetailsPage.Client.Source().Contains("<!-- Output from wonga_lzero_za/apply-address -->"));
+
+            // Go to the third page:
+            var accountDetailsPage = journey.FillAddressDetails().CurrentPage as AccountDetailsPage;
+
+            // Check that the page contains the wonga_doubleclick module v1.0 signature:
+            Assert.IsTrue(accountDetailsPage.Client.Source().Contains("<!-- Output from wonga_lzero_za/apply-account -->"));
+
+            // Go to the fourth page:
+            var personalBankAccountPage = journey.FillAccountDetails().CurrentPage as PersonalBankAccountPage;
+
+            // Check that the page contains the wonga_doubleclick module v1.0 signature:
+            Assert.IsTrue(personalBankAccountPage.Client.Source().Contains("<!-- Output from wonga_lzero_za/apply-bank -->"));
+        }
+
         [Test, AUT(AUT.Uk), Pending("Example of full Uk L0 journey")]
         public void UKL0JourneyTest()
         {
@@ -321,22 +430,99 @@ namespace Wonga.QA.Tests.Ui
                 .FillAcceptedPage()
                 .GoToMySummaryPage()
                 .CurrentPage as MySummaryPage;
-            
+
         }
 
-        [Test, AUT(AUT.Ca), Pending("Example of Ca Ln journey")]
-        public void CaLnJourneyTest()
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-170")]
+        public void CustomerOnHowItWorksPageShouldBeAbleUseSlidersProperly()
         {
-            var loginPage = Client.Login();
-            string email = Get.RandomEmail();
-            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            Application application = ApplicationBuilder.New(customer)
-                .Build();
-            application.RepayOnDueDate();
-            var mySummaryPage = loginPage.LoginAs(email);
-            
-            
+            var howItWorks = Client.HowItWorks();
+            var personalDetailsPage = howItWorks.ApplyForLoan(200, 10);
+            Assert.IsTrue(personalDetailsPage is PersonalDetailsPage);
         }
 
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk), JIRA("QA-181")]
+        public void L0JourneyCustomerOnCurrentAddressPageDoesNotEnterSomeRequiredFieldsWarningMessageDisplayed()
+        {
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var addressDetailsPage = journey.ApplyForLoan(200, 10)
+                                      .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                      .CurrentPage as AddressDetailsPage;
+
+
+            switch (Config.AUT)
+            {
+                #region case Za
+                case AUT.Za:
+                    addressDetailsPage.HouseNumber = "25";
+                    addressDetailsPage.Street = "high road";
+                    addressDetailsPage.Town = "Kuku";
+                    addressDetailsPage.County = "Province";
+                    addressDetailsPage.AddressPeriod = "2 to 3 years";
+                    Assert.IsTrue(addressDetailsPage.IsPostcodeWarningOccurred());
+                    addressDetailsPage.PostCode = Get.GetPostcode();
+                    addressDetailsPage.HouseNumber = "";
+                    Assert.IsTrue(addressDetailsPage.IsHouseNumberWarningOccurred());
+                    addressDetailsPage.HouseNumber = "25";
+                    addressDetailsPage.Street = "";
+                    Assert.IsTrue(addressDetailsPage.IsStreetWarningOccurred());
+                    addressDetailsPage.Street = "high road";
+                    addressDetailsPage.Town = "";
+                    Assert.IsTrue(addressDetailsPage.IsTownWarningOccurred());
+                    addressDetailsPage.Town = "Kuku";
+                    addressDetailsPage.County = "";
+                    Assert.IsTrue(addressDetailsPage.IsCountyWarningOccurred());
+                    addressDetailsPage.County = "Province";
+                    addressDetailsPage.AddressPeriod = "--- Please select ---";
+                    Assert.IsTrue(addressDetailsPage.IsAddressPeriodWarningOccurred());
+                    break;
+                #endregion
+                #region case Ca
+                case AUT.Ca:
+                    addressDetailsPage.Street = "Edward";
+                    addressDetailsPage.Town = "Hearst";
+                    addressDetailsPage.PostCode = "V4F3A9";
+                    addressDetailsPage.AddressPeriod = "2 to 3 years";
+                    Assert.IsTrue(addressDetailsPage.IsHouseNumberWarningOccurred());
+                    addressDetailsPage.HouseNumber = "1403";
+                    addressDetailsPage.Street = "";
+                    Assert.IsTrue(addressDetailsPage.IsStreetWarningOccurred());
+                    addressDetailsPage.Street = "Edward";
+                    addressDetailsPage.Town = "";
+                    Assert.IsTrue(addressDetailsPage.IsTownWarningOccurred());
+                    addressDetailsPage.Town = "Hearst";
+                    addressDetailsPage.PostCode = "";
+                    Assert.IsTrue(addressDetailsPage.IsPostcodeWarningOccurred());
+                    addressDetailsPage.PostCode = "V4F3A9";
+                    addressDetailsPage.AddressPeriod = "--- Please select ---";
+                    Assert.IsTrue(addressDetailsPage.IsAddressPeriodWarningOccurred());
+                    break;
+                #endregion
+                #region case Uk
+                case AUT.Uk:
+                    addressDetailsPage.PostCodeLookup = "SW6 6PN";
+                    addressDetailsPage.LookupByPostCode();
+                    addressDetailsPage.GetAddressesDropDown();
+                    Do.Until(() => addressDetailsPage.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN");
+                    Do.Until(() => addressDetailsPage.HouseNumber = "93");
+                    Assert.IsTrue(addressDetailsPage.IsAddressPeriodWarningOccurred());
+                    addressDetailsPage.AddressPeriod = "3 to 4 years";
+                    addressDetailsPage.HouseNumber = "";
+                    Assert.IsTrue(addressDetailsPage.IsHouseNumberWarningOccurred());
+                    addressDetailsPage.HouseNumber = "93";
+                    addressDetailsPage.Street = "";
+                    Assert.IsTrue(addressDetailsPage.IsStreetWarningOccurred());
+                    addressDetailsPage.Street = "Harbord Street";
+                    addressDetailsPage.Town = "";
+                    Assert.IsTrue(addressDetailsPage.IsTownWarningOccurred());
+                    addressDetailsPage.Town = "LONDON";
+                    addressDetailsPage.PostcodeInForm = "";
+                    Assert.IsTrue(addressDetailsPage.IsPostcodeWarningOccurred());
+                    break;
+                #endregion
+            }
+
+            // Assert.Throws<AssertionFailureException>(() => { var processingPage = addressDetailsPage.Next(); });
+        }
     }
 }

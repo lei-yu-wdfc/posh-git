@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using MbUnit.Framework;
@@ -39,6 +40,12 @@ namespace Wonga.QA.Tests.Payments.Queries
             _resetExtendLoanDaysBeforeDueDate = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanDaysBeforeDueDate").Value;
             _resetextendLoanEnabled = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanEnabled").Value;
             _resetInArrearsMinDays = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.InArrearsMinDays").Value;
+            _resetInArrearsMinDays = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.InArrearsMinDays").Value;
+
+            // Ensure Extend is Enabled
+            var cfg3 = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanEnabled");
+            cfg3.Value = "true";
+            cfg3.Submit();
         }
 
         [FixtureTearDown]
@@ -67,7 +74,14 @@ namespace Wonga.QA.Tests.Payments.Queries
             var applicationId = Guid.NewGuid();
             var accountId = Guid.NewGuid();
             var setupData = new AccountSummarySetupFunctions();
+            var startedAt = DateTime.UtcNow;
+
+            var stopwatch = new Stopwatch();
+            stopwatch.Start(); 
             setupData.Scenario01Setup(accountId, applicationId, trustRating);
+            stopwatch.Stop();
+            Debug.WriteLine("### Data Setup Took {0}", stopwatch.Elapsed);
+
 
             var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating});
             Assert.AreEqual(1, int.Parse(response.Values["ScenarioId"].Single()));
@@ -390,6 +404,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
             Assert.AreEqual(21, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
+
         #region "Helpers"
 
             private void CreateFixedTermLoanApplication(Guid appId, Guid accountId, Guid bankAccountId, Guid paymentCardId, int dueInDays = 10)

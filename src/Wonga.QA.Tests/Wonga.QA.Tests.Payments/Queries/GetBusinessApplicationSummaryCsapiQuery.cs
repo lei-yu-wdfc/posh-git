@@ -16,7 +16,7 @@ namespace Wonga.QA.Tests.Payments.Queries
         {
             var customer = CustomerBuilder.New().Build();
             var organisation = OrganisationBuilder.New(customer).Build();
-            var app = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+            var app = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).WithLoanTerm(20).Build();
 
             var response = Drive.Cs.Queries.Post(new Framework.Cs.GetBusinessApplicationSummaryWbUkQuery
                                                         {

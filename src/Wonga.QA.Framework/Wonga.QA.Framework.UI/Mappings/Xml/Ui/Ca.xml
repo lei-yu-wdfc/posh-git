@@ -35,11 +35,16 @@
   <AddressDetailsPage>
     <Postcode>#edit-postcode-ca</Postcode>
     <PostcodeErrorForm>div#edit-postcode-ca-wrapper div.invalid</PostcodeErrorForm>
-    <FlatNumber>#edit-street-number-ca</FlatNumber>
+    <HouseNumber>#edit-street-number-ca</HouseNumber>
     <Street>#edit-street-ca</Street>
     <PostOfficeBox>#edit-pobox-ca</PostOfficeBox>
     <Town>#edit-town-ca</Town>
     <AddressPeriod>#edit-address-period-ca</AddressPeriod>
+    <PostcodeErrorForm>#edit-postcode-ca-wrapper div.form-error div.invalid</PostcodeErrorForm>
+    <TownErrorForm>#edit-town-ca-wrapper div.invalid</TownErrorForm>
+    <StreetErrorForm>#edit-street-ca-wrapper div.invalid</StreetErrorForm>
+    <HouseNumberErrorForm>#edit-street-number-ca-wrapper div.invalid</HouseNumberErrorForm>
+    <AddressPeriodErrorForm>#edit-address-period-ca-wrapper div.invalid</AddressPeriodErrorForm>
   </AddressDetailsPage>
 
   <AccountDetailsSection>
@@ -106,4 +111,24 @@
 		<TotalToRepayAmountPopup>#fancybox-content div div b:first-of-type</TotalToRepayAmountPopup>
 		<PromisedRepayDatePopup>#fancybox-content div div b:last-of-type</PromisedRepayDatePopup>
 	</MySummaryPage>
+
+  <HomePage>
+    <Title>div#block-wonga-1 h2:nth-child(1)</Title>
+    <TitleText>Flexible, short term loans that give you lots of control</TitleText>
+    <ProvincePopupTitle>h1#select-province-title</ProvincePopupTitle>
+    <YourProvince>select#selectprovince</YourProvince>
+    <ThisIsMyProvince>a#province_right</ThisIsMyProvince>
+  </HomePage>
+
+  <TabsElement>
+    <MyAccount>li:nth-child(5)>a</MyAccount>
+  </TabsElement>
+
+  <ApplicationSection>
+    <FormId>#wonga-apply-ln-form</FormId>
+  </ApplicationSection>
+
+  <MyPersonalDetailsPage>
+    <Postcode>table#profile tr#address tbody tr:nth-child(3) td</Postcode>
+  </MyPersonalDetailsPage>
 </Ui>

@@ -8,6 +8,6 @@ namespace Wonga.QA.Framework.Msmq
     [XmlRoot("UpdateSortCodeTableMessage", Namespace = "Wonga.BankGateway.InternalMessages.HSBC.Uk", DataType = "")]
     public partial class UpdateSortCodeTableUkCommand : MsmqMessage<UpdateSortCodeTableUkCommand>
     {
-        public Byte InstanceId { get; set; }
+        public Byte ServiceId { get; set; }
     }
 }

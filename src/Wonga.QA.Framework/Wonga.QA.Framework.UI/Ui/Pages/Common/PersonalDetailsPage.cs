@@ -46,6 +46,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private readonly IWebElement _repaymentDate;
         private readonly IWebElement _totalAmount;
         private readonly IWebElement _totalFees;
+        private IWebElement _amountSlider;
+        private IWebElement _durationSlider;
         private IWebElement _loanAmount;
         private IWebElement _loanDuration;
         private IWebElement _amountMinusButton;
@@ -91,6 +93,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             var sliderToggler = Client.Driver.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.SliderToggler));
             sliderToggler.Click();
+            _amountSlider = _slidersForm.FindElement(By.CssSelector(Ui.Get.SlidersElement.AmountSlider));
+            _durationSlider = _slidersForm.FindElement(By.CssSelector(Ui.Get.SlidersElement.DurationSlider));
             _loanAmount = _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.LoanAmount));
             _loanDuration = _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.LoanDuration));
             _amountMinusButton = _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.AmountMinusButton));
@@ -99,6 +103,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                 _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.DurationMinusButton));
             _durationPlusButton = _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.DurationPlusButton));
 
+        }
+        public int MoveAmountSlider
+        {
+            set { _amountSlider.DragAndDropToOffset(value, 0); }
+        }
+        public int MoveDurationSlider
+        {
+            set { _durationSlider.DragAndDropToOffset(value, 0); }
         }
         public String GetTotalAmount
         {

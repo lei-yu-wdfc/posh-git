@@ -18,19 +18,21 @@ namespace Wonga.QA.Tests.Comms
     public class OrganisationTests
     {
         [Test, AUT(AUT.Wb)]
-        [Ignore]
         public void TestOrganisationIsBuilt_DirectorsPersisted()
         {
-            Customer primaryApplicant = CustomerBuilder.New().Build();
-            OrganisationBuilder organisationBuilder =
-                OrganisationBuilder.New(primaryApplicant).WithSoManySecondaryDirectors(2);
+            var primaryApplicant = CustomerBuilder.New().Build();
+            var listOfGuarantors = new List<CustomerBuilder>()
+                                       {
+                                           CustomerBuilder.New(),
+                                           CustomerBuilder.New(),
+                                           CustomerBuilder.New()
+                                       };
 
-            Organisation org = organisationBuilder.Build();
-
-            Thread.Sleep(10000);
+            var org = OrganisationBuilder.New(primaryApplicant).Build();
+            var application = (ApplicationBuilder.New(primaryApplicant, org) as BusinessApplicationBuilder).WithGuarantors(listOfGuarantors).Build();
             IEnumerable<DirectorOrganisationMappingEntity> list = org.GetSecondaryDirectors();
             
-            Assert.IsTrue(list.Count()==2);
+            Assert.IsTrue(list.Count()==3);
         }
     }
 }

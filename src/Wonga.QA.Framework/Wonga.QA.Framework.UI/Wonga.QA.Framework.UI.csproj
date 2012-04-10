@@ -35,10 +35,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="MbUnit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NHamcrest, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31c3ea0b6fcf8c4a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Gallio\bin\NHamcrest.dll</HintPath>
+      <HintPath>..\packages\NHamcrest.1.2.1\lib\NHamcrest.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -46,36 +51,46 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="WebDriver">
-      <HintPath>..\..\..\lib\WebDriver\WebDriver.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>..\packages\Selenium.WebDriver.2.20.0\lib\net40\WebDriver.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Journey.cs" />
     <Compile Include="Journey\CaL0Journey.cs" />
     <Compile Include="Journey\IL0ConsumerJourney.cs" />
     <Compile Include="Journey\ILnConsumerJourney.cs" />
     <Compile Include="Journey\JourneyFactory.cs" />
     <Compile Include="Journey\UkL0Journey.cs" />
+    <Compile Include="Journey\UkLnJourney.cs" />
     <Compile Include="Journey\ZaL0Journey.cs" />
+    <Compile Include="Journey\CaLnJourney.cs" />
+    <Compile Include="Journey\ZaLnJourney.cs" />
     <Compile Include="Mappings\Content\Content.cs" />
     <Compile Include="Mappings\Content\Agreements\LoanAgreement.cs" />
     <Compile Include="Mappings\Ui\Elements\ContactElement.cs" />
     <Compile Include="Mappings\Ui\Elements\MyAccountNavigationElement.cs" />
     <Compile Include="Mappings\Ui\Elements\SurveyElement.cs" />
+    <Compile Include="Mappings\Ui\Elements\TabsElement.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\AboutUsPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\ApplyPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\BlogPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ForgotPasswordPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\HomePage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\HowItWorksPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\MyPersonalDetailsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\JargonBusterPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\MySummaryPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\OurCustomersPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ResponsibleLendingPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\TopupAgreementPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\TopupDealDonePage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\TopupProcessingPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\TopupRequestPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\WhyUseUsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceCustomerDetailPage.cs" />
     <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceHomePage.cs" />
     <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceLoginPage.cs" />
     <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceSearchResultPage.cs" />
+    <Compile Include="Mappings\Ui\Sections\ApplicationSection.cs" />
     <Compile Include="Mappings\Ui\Ui.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\DealDonePage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\DeclinedPage.cs" />
@@ -112,18 +127,23 @@
     <Compile Include="Test.cs" />
     <Compile Include="Ui\Elements\BaseElement.cs" />
     <Compile Include="Ui\Elements\ContactElement.cs" />
+    <Compile Include="Ui\Elements\SmallTopupSliders.cs" />
     <Compile Include="Ui\Elements\FAQElement.cs" />
     <Compile Include="Ui\Elements\HelpElement.cs" />
     <Compile Include="Ui\Elements\InternationalElement.cs" />
     <Compile Include="Ui\Elements\LoginElement.cs" />
     <Compile Include="Ui\Elements\MyAccountNavigationElement.cs" />
     <Compile Include="Ui\Elements\SurveyElement.cs" />
+    <Compile Include="Ui\Elements\TabsElement.cs" />
     <Compile Include="Ui\Pages\Common\AboutUsPage.cs" />
+    <Compile Include="Ui\Pages\Common\ApplyPage.cs" />
     <Compile Include="Ui\Pages\Common\BlogPage.cs" />
+    <Compile Include="Ui\Pages\Common\TopupDealDonePage.cs" />
     <Compile Include="Ui\Pages\Common\DealDonePage.cs" />
     <Compile Include="Ui\Pages\Common\DeclinedPage.cs" />
     <Compile Include="Ui\Pages\Common\FAQPage.cs" />
     <Compile Include="Ui\Pages\Common\ForgotPasswordPage.cs" />
+    <Compile Include="Ui\Pages\Common\HowItWorksPage.cs" />
     <Compile Include="Ui\Pages\Common\JargonBusterPage.cs" />
     <Compile Include="Ui\Pages\Common\LoginPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\MyPaymentsPage.cs" />
@@ -132,13 +152,18 @@
     <Compile Include="Ui\Pages\Common\MySummaryPage.cs" />
     <Compile Include="Ui\Pages\Common\OurCustomersPage.cs" />
     <Compile Include="Ui\Pages\Common\ResponsibleLendingPage.cs" />
+    <Compile Include="Ui\Pages\Common\TopupAgreementPage.cs" />
+    <Compile Include="Ui\Pages\Common\TopupProcessingPage.cs" />
+    <Compile Include="Ui\Pages\Common\TopupRequestPage.cs" />
     <Compile Include="Ui\Pages\Common\WhyUseUsPage.cs" />
+    <Compile Include="Ui\Pages\Interfaces\ITopupDecisionPage.cs" />
     <Compile Include="Ui\Pages\SalesForce\BaseSfPage.cs" />
     <Compile Include="Ui\Pages\SalesForce\SalesForceCustomerDetailPage.cs" />
     <Compile Include="Ui\Pages\SalesForce\SalesForceHomePage.cs" />
     <Compile Include="Ui\Pages\SalesForce\SalesForceLoginPage.cs" />
     <Compile Include="Ui\Pages\SalesForce\SalesForceSearchResultPage.cs" />
     <Compile Include="Ui\Sections\AccountDetailsSection.cs" />
+    <Compile Include="Ui\Sections\ApplicationSection.cs" />
     <Compile Include="Ui\Sections\BankAccountSection.cs" />
     <Compile Include="Ui\Sections\BaseSection.cs" />
     <Compile Include="Ui\Sections\ContactingYouSection.cs" />
@@ -172,12 +197,18 @@
     <Compile Include="UiClient.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Wonga.QA.Framework.Api\Wonga.QA.Framework.Api.csproj">
+      <Project>{87FC18E9-2B6B-4B8C-BDA0-544E51AC8D96}</Project>
+      <Name>Wonga.QA.Framework.Api</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Wonga.QA.Framework.Core\Wonga.QA.Framework.Core.csproj">
       <Project>{BACA1D90-F604-476F-ACDE-A9839E85147F}</Project>
       <Name>Wonga.QA.Framework.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mappings\Xml\Ui\Wb.xml">
       <SubType>Designer</SubType>
