@@ -116,5 +116,26 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.TagCloud)).Text; }
         }
+
+        public bool IsLoanStatusMessageAvailable()
+        {
+            try
+            {
+                var loanStatusMessageText = Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.LoanStatusMessage)).Text;
+            }
+
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public String GetLoanStatusMessage
+        {
+            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.LoanStatusMessage)).Text; }
+
+        }
+
     }
 }
