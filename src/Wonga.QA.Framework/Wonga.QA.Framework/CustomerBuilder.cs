@@ -40,6 +40,8 @@ namespace Wonga.QA.Framework
 		private String _mobileNumber;
     	private Int64? _bankAccountNumber;
         private Int64 _paymentCardNumber;
+        private String _institutionNumber;
+        private String _branchNumber;
 
         public Guid Id { get { return _id; } }
         public String Email { get { return _email; } }
@@ -76,7 +78,7 @@ namespace Wonga.QA.Framework
             else if (Config.AUT == AUT.Ca)
             {
                 _postcode = "K0A0A0";
-            	_province = ProvinceEnum.ON;
+                _province = ProvinceEnum.ON;
             }
             _street = Get.RandomString(15);
             _flat = Get.RandomString(4);
@@ -91,6 +93,8 @@ namespace Wonga.QA.Framework
         	_bankAccountNumber = null;
             _paymentCardNumber = 4444333322221111;
             _mobileNumber = Get.GetMobilePhone();
+            _institutionNumber = "001";
+            _branchNumber = "00011";
         }
 
         public static CustomerBuilder New()
@@ -280,6 +284,18 @@ namespace Wonga.QA.Framework
             return this;
         }
 
+        public CustomerBuilder WithInstitutionNumber(String institutionNumber)
+        {
+            _institutionNumber = institutionNumber;
+            return this;
+        }
+
+        public CustomerBuilder WithBranchNumber(String branchNumber)
+        {
+            _branchNumber = branchNumber;
+            return this;
+        }
+
         public Customer Build()
         {
 			_nextPayDate.DateFormat = DateFormat.Date;
@@ -381,6 +397,8 @@ namespace Wonga.QA.Framework
                                                     	{
                                                     		r.AccountId = _id;
                                                     		r.BankAccountId = _bankAccountId;
+                                                    	    r.InstitutionNumber = _institutionNumber;
+                                                    	    r.BranchNumber = _branchNumber;
                                                     		if (_bankAccountNumber.HasValue)
                                                     		{
                                                     			r.AccountNumber = _bankAccountNumber;
