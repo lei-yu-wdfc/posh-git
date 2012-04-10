@@ -6,14 +6,26 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Cs;
+using Wonga.QA.Framework.Db;
+using Wonga.QA.Framework.Db.OpsSagas;
+using Wonga.QA.Framework.Db.Payments;
+using Wonga.QA.Framework.Db.QaData;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
+using Wonga.QA.Tests.Payments.Enums;
 using Wonga.QA.Tests.Payments.Helpers;
+using ProvinceEnum = Wonga.QA.Framework.Api.ProvinceEnum;
 
 namespace Wonga.QA.Tests.Payments
 {
     public class CollectionsCommunicationsChaseForDca
     {
+        private const string SendCollectionsReminderA2Email = "Email.SendCollectionsReminderA2Email";
+        private const string SendCollectionsReminderA3Email = "Email.SendCollectionsReminderA3Email";
+        private const string SendCollectionsReminderA4Email = "Email.SendCollectionsReminderA4Email";
+        private const string SendCollectionsReminderA5Email = "Email.SendCollectionsReminderA5Email";
+        private const string SendCollectionsReminderA6Email = "Email.SendCollectionsReminderA6Email";
+
         [FixtureSetUp]
         public static void FixtureSetUp()
         {
@@ -24,166 +36,161 @@ namespace Wonga.QA.Tests.Payments
         {
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1810"), Ignore("Not fully implemented, do not run")]
+        [Test, AUT(AUT.Ca), JIRA("CA-1810")]
         public void WhenLoanGoesIntoArrearsThenA2EmailShouldBeSentOnDay0()
         {
-            var customer = CustomerBuilder.New().Build();
-            var application = ApplicationBuilder.New(customer).Build();
+            const String amount = "130.00";
+            var customerBuilder = CustomerBuilder.New().WithProvinceInAddress(ProvinceEnum.ON);
+            var customer = customerBuilder.Build();
+            var application = ApplicationBuilder.New(customer).WithLoanTerm(10).Build();
+            var customerForename = customerBuilder.Forename;
 
             application.PutApplicationIntoArrears();
 
-            //TODO: Send in X number of timeouts...
+            var emailTokens = GetEmailTokens(customer, SendCollectionsReminderA2Email);
 
-            //TODO: Verify emails have been sent...
+            Assert.IsFalse(emailTokens.Count == 0, "Could not find email for template {0}", SendCollectionsReminderA2Email);
+            Assert.IsTrue(emailTokens.Count == 3);
+            Assert.IsTrue(emailTokens[0].Value == customerForename);
+            Assert.IsTrue(emailTokens[1].Value == amount, "{0} is not equal to {1}", emailTokens[1].Value, amount);
+            Assert.IsTrue(emailTokens[2].Value == customer.Email);
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1810"), Ignore("Not fully implemented, do not run")]
+        [Test, AUT(AUT.Ca), JIRA("CA-1810")]
         public void WhenLoanGoesIntoArrearsThenA3EmailShouldBeSentOnDay6()
         {
-            var customer = CustomerBuilder.New().Build();
-            var application = ApplicationBuilder.New(customer).Build();
+            const String amount = "130.54";
+            const int numberOfDaysInArrears = 6;
+            var customerBuilder = CustomerBuilder.New().WithProvinceInAddress(ProvinceEnum.ON);
+            var customer = customerBuilder.Build();
+            var application = ApplicationBuilder.New(customer).WithLoanTerm(10).Build();
+            var customerForename = customerBuilder.Forename;
 
-            application.PutApplicationIntoArrears();
+            application.PutApplicationIntoArrears(numberOfDaysInArrears);
 
-            //TODO: Send in X number of timeouts...
+            TimeoutInArrearsNoticeSaga(application, numberOfDaysInArrears);
 
-            //TODO: Verify emails have been sent...
+            var emailTokens = GetEmailTokens(customer, SendCollectionsReminderA3Email);
+
+            Assert.IsFalse(emailTokens.Count == 0, "Could not find email for template {0}", SendCollectionsReminderA3Email);
+            Assert.IsTrue(emailTokens.Count == 3);
+            Assert.IsTrue(emailTokens[0].Value == customerForename);
+            Assert.IsTrue(emailTokens[1].Value == amount, "{0} is not equal to {1}", emailTokens[1].Value, amount);
+            Assert.IsTrue(emailTokens[2].Value == customer.Email);
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1810"), Ignore("Not fully implemented, do not run")]
+        [Test, AUT(AUT.Ca), JIRA("CA-1810")]
         public void WhenLoanGoesIntoArrearsThenA4EmailShouldBeSentOnDay13()
         {
-            var customer = CustomerBuilder.New().Build();
-            var application = ApplicationBuilder.New(customer).Build();
+            const String amount = "131.18";
+            const int numberOfDaysInArrears = 13;
+            var customerBuilder = CustomerBuilder.New().WithProvinceInAddress(ProvinceEnum.ON);
+            var customer = customerBuilder.Build();
+            var application = ApplicationBuilder.New(customer).WithLoanTerm(10).Build();
+            var customerForename = customerBuilder.Forename;
 
-            application.PutApplicationIntoArrears();
+            application.PutApplicationIntoArrears(numberOfDaysInArrears);
 
-            //TODO: Send in X number of timeouts...
+            TimeoutInArrearsNoticeSaga(application, numberOfDaysInArrears);
 
-            //TODO: Verify emails have been sent...
+            var emailTokens = GetEmailTokens(customer, SendCollectionsReminderA4Email);
+
+            Assert.IsFalse(emailTokens.Count == 0, "Could not find email for template {0}", SendCollectionsReminderA4Email);
+            Assert.IsTrue(emailTokens.Count == 3);
+            Assert.IsTrue(emailTokens[0].Value == customerForename);
+            Assert.IsTrue(emailTokens[1].Value == amount, "{0} is not equal to {1}", emailTokens[1].Value, amount);
+            Assert.IsTrue(emailTokens[2].Value == customer.Email);
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1810"), Ignore("Not fully implemented, do not run")]
+        [Test, AUT(AUT.Ca), JIRA("CA-1810")]
         public void WhenLoanGoesIntoArrearsThenA5EmailShouldBeSentOnDay20()
         {
-            var customer = CustomerBuilder.New().Build();
-            var application = ApplicationBuilder.New(customer).Build();
+            const String amount = "131.81";
+            const int numberOfDaysInArrears = 20;
+            var customerBuilder = CustomerBuilder.New().WithProvinceInAddress(ProvinceEnum.ON);
+            var customer = customerBuilder.Build();
+            var application = ApplicationBuilder.New(customer).WithLoanTerm(10).Build();
+            var customerForename = customerBuilder.Forename;
 
-            application.PutApplicationIntoArrears();
+            application.PutApplicationIntoArrears(numberOfDaysInArrears);
 
-            //TODO: Send in X number of timeouts...
+            TimeoutInArrearsNoticeSaga(application, numberOfDaysInArrears);
 
-            //TODO: Verify emails have been sent...
+            var emailTokens = GetEmailTokens(customer, SendCollectionsReminderA5Email);
+
+            Assert.IsFalse(emailTokens.Count == 0, "Could not find email for template {0}", SendCollectionsReminderA5Email);
+            Assert.IsTrue(emailTokens.Count == 3);
+            Assert.IsTrue(emailTokens[0].Value == customerForename);
+            Assert.IsTrue(emailTokens[1].Value == amount, "{0} is not equal to {1}", emailTokens[1].Value, amount);
+            Assert.IsTrue(emailTokens[2].Value == customer.Email);
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1810"), Ignore("Not fully implemented, do not run")]
+        [Test, AUT(AUT.Ca), JIRA("CA-1810")]
         public void WhenLoanGoesIntoArrearsThenA6EmailShouldBeSentOnDay27()
         {
-            var customer = CustomerBuilder.New().Build();
-            var application = ApplicationBuilder.New(customer).Build();
+            const String amount = "132.44";
+            const int numberOfDaysInArrears = 27;
+            var customerBuilder = CustomerBuilder.New().WithProvinceInAddress(ProvinceEnum.ON);
+            var customer = customerBuilder.Build();
+            var application = ApplicationBuilder.New(customer).WithLoanTerm(10).Build();
+            var customerForename = customerBuilder.Forename;
 
-            application.PutApplicationIntoArrears();
+            application.PutApplicationIntoArrears(numberOfDaysInArrears);
 
-            //TODO: Send in X number of timeouts...
+            TimeoutInArrearsNoticeSaga(application, numberOfDaysInArrears);
 
-            //TODO: Verify emails have been sent...
+            var emailTokens = GetEmailTokens(customer, SendCollectionsReminderA6Email);
+
+            Assert.IsFalse(emailTokens.Count == 0, "Could not find email for template {0}", SendCollectionsReminderA6Email);
+            Assert.IsTrue(emailTokens.Count == 3);
+            Assert.IsTrue(emailTokens[0].Value == customerForename);
+            Assert.IsTrue(emailTokens[1].Value == amount, "{0} is not equal to {1}", emailTokens[1].Value, amount);
+            Assert.IsTrue(emailTokens[2].Value == customer.Email);
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1810"), Ignore("Not fully implemented, do not run")]
-        public void WhenLoanTaggedAsMovedToDcaThenLoanShouldHaveCollectionsChaseSuppressed()
+        [Test, AUT(AUT.Ca), JIRA("CA-1810"), ExpectedException(typeof(DoException))]
+        public void WhenLoanGoesIntoArrearsThenThereShouldBeNoEmailSentOnDay34()
         {
-            var customer = CustomerBuilder.New().Build();
-            var application = ApplicationBuilder.New(customer).Build();
+            const int numberOfDaysInArrears = 34;
+            var customerBuilder = CustomerBuilder.New().WithProvinceInAddress(ProvinceEnum.ON);
+            var customer = customerBuilder.Build();
+            var application = ApplicationBuilder.New(customer).WithLoanTerm(10).Build();
 
-            application.PutApplicationIntoArrears();
+            application.PutApplicationIntoArrears(numberOfDaysInArrears);
 
-            application.MoveToDebtCollectionAgency();
+            TimeoutInArrearsNoticeSaga(application, numberOfDaysInArrears);
 
-            //TODO: Verify Collections chase has been suppressed...
+            Assert.IsTrue(VerifyTotalNumberOfEmailsSent(customer, 7));
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1810"), Ignore("Not fully implemented, do not run")]
-        public void WhenDcaTagHasBeenRemovedByCsAgentThenLoanReEntersAgentQueue()
+
+        private string getEmailTemplateId(string emailTemplateName)
         {
-            var customer = CustomerBuilder.New().Build();
-            var application = ApplicationBuilder.New(customer).Build();
+            return Drive.Db.Ops.ServiceConfigurations.Single(v => v.Key == emailTemplateName).Value;
+        }
 
-            application.PutApplicationIntoArrears();
+        private static void TimeoutInArrearsNoticeSaga(Application application, int numberOfDaysInArrears)
+        {
+            var inArrearsNoticeSaga =
+                Do.Until(() => Drive.Db.OpsSagas.InArrearsNoticeSagaEntities.Single(e => e.ApplicationId == application.Id));
 
-            application.MoveToDebtCollectionAgency();
-
-            Drive.Cs.Commands.Post(new RevokeApplicationFromDcaCommand
+            for (var i = 0; i < numberOfDaysInArrears; i++)
             {
-                ApplicationId = application.Id
-            });
-
-            //TODO: Verify loan has re-entered agents queue...
+                Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = inArrearsNoticeSaga.Id });
+            }
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1810"), Ignore("Not fully implemented, do not run")]
-        public void WhenDcaTagHasBeenRemovedByCsAgentThenLoanReEntersCollectionsChase()
+        private List<EmailToken> GetEmailTokens(Customer customer, String emailTemplateName)
         {
-            var customer = CustomerBuilder.New().Build();
-            var application = ApplicationBuilder.New(customer).Build();
-
-            application.PutApplicationIntoArrears();
-
-            application.MoveToDebtCollectionAgency();
-
-            Drive.Cs.Commands.Post(new RevokeApplicationFromDcaCommand
-            {
-                ApplicationId = application.Id
-            });
-
-            //TODO: Verify loan has re-entered collections chase...
+            var db = new DbDriver().QaData;
+            var emailId = Do.Until(() => db.Emails.Single( e => e.EmailAddress == customer.Email && e.TemplateName == getEmailTemplateId(emailTemplateName)).EmailId);
+            return db.EmailTokens.Where(et => et.EmailId == emailId).ToList();
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1810"), Ignore("Not fully implemented, do not run")]
-        public void WhenDcaTagHasBeenRemovedAutomaticallyAfterSixMonthsThenLoanReEntersAgentQueue()
+        private bool VerifyTotalNumberOfEmailsSent(Customer customer, int toltalSent)
         {
-            var customer = CustomerBuilder.New().Build();
-            var application = ApplicationBuilder.New(customer).Build();
-
-            application.PutApplicationIntoArrears();
-
-            application.MoveToDebtCollectionAgency();
-
-            //TODO: Wait 6 months?
-
-            //TODO: Auto removed from dca?
-
-            //TODO: Verify loan has re-entered agents queue...
-        }
-
-        [Test, AUT(AUT.Ca), JIRA("CA-1810"), Ignore("Not fully implemented, do not run")]
-        public void WhenDcaTagHasBeenRemovedAutomaticallyAfterSixMonthsThenLoanReEntersCollectionsChase()
-        {
-            var customer = CustomerBuilder.New().Build();
-            var application = ApplicationBuilder.New(customer).Build();
-
-            application.PutApplicationIntoArrears();
-
-            application.MoveToDebtCollectionAgency();
-
-            //TODO: Wait 6 months?
-
-            //TODO: Auto removed from dca?
-
-            //TODO: Verify loan has re-entered collections chase...
-        }
-
-        [Test, AUT(AUT.Ca), JIRA("CA-1810"), Ignore("Not fully implemented, do not run")]
-        public void WhenCollectionsChaseHasCompletedThenOnlySixEmailsHaveBeenSent()
-        {
-            var customer = CustomerBuilder.New().Build();
-            var application = ApplicationBuilder.New(customer).Build();
-        }
-
-        [Test, AUT(AUT.Ca), JIRA("CA-1810"), Ignore("Not fully implemented, do not run")]
-        public void WhenCollectionsEmailsAreSentThenCorrectTemplateShouldBeUsed()
-        {
-            var customer = CustomerBuilder.New().Build();
-            var application = ApplicationBuilder.New(customer).Build();
+            var db = new DbDriver().QaData;
+            return Do.With.Timeout(2).Until(() => db.Emails.Where(e => e.EmailAddress == customer.Email).Count() > toltalSent);
         }
     }
 }
