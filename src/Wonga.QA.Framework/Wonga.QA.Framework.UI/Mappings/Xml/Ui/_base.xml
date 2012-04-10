@@ -245,7 +245,7 @@
   </MySummaryPage>
 
   <MyPaymentsPage>
-    <AddBankAccountButton>#accounts tbody tr td table tbody tr:nth-child(3) td a</AddBankAccountButton>
+    <AddBankAccountButton>.accounts-add-bank td .hover-link.mod.reload-on-close</AddBankAccountButton>
   </MyPaymentsPage>
 
   <SalesForceLoginPage>
