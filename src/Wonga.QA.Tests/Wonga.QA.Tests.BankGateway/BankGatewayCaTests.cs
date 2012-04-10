@@ -18,39 +18,20 @@ namespace Wonga.QA.Tests.BankGateway
 		[Test, JIRA("CA-1880"), Ignore("This is not a full end-to-end test but used to explicitly excercise the routing logic in the CA gateway.")]
 		public void SendPaymentMessageShouldBeRoutedToBmo()
 		{
-			var customer = CustomerBuilder.New().Build();
-			var application = ApplicationBuilder.New(customer).Build();
-
-			var sendPaymentMessage = new SendPaymentCommand
-			                         	{
-			                         		AccountId = customer.Id,
-											Amount = 100,
-											ApplicationId = application.Id,
-											BankAccount = "1234567890",
-											BankCode = "001-00001",
-											Currency = CurrencyCodeIso4217Enum.CAD
-			                         	};
-
-			Drive.Msmq.BankGateway.Send(sendPaymentMessage);
+			var customer = CustomerBuilder.New().
+                                WithInstitutionNumber("001").
+                                Build();
+			ApplicationBuilder.New(customer).Build();
 		}
 
 		[Test, JIRA("CA-1880"), Ignore("This is not a full end-to-end test but used to explicitly excercise the routing logic in the CA gateway.")]
 		public void SendPaymentMessageShouldBeRoutedToScotia()
 		{
-			var customer = CustomerBuilder.New().Build();
-			var application = ApplicationBuilder.New(customer).Build();
-
-			var sendPaymentMessage = new SendPaymentCommand
-										{
-											AccountId = customer.Id,
-											Amount = 100,
-											ApplicationId = application.Id,
-											BankAccount = "1234567890",
-											BankCode = "011-12345",
-											Currency = CurrencyCodeIso4217Enum.CAD
-										};
-
-			Drive.Msmq.BankGateway.Send(sendPaymentMessage);
+            var customer = CustomerBuilder.New().
+                                WithInstitutionNumber("002").
+                                WithBranchNumber("00018").
+                                Build();
+            ApplicationBuilder.New(customer).Build();
 		}
 	}
 }
