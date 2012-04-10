@@ -93,5 +93,24 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.PromisedRepayDatePopup)).Text; }
         }
+
+        public bool IsTagCloudAvailable()
+        {
+            try
+            {
+                var TagCloudText = Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.TagCloud)).Text;
+            }
+
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public String GetTagCloud
+        {
+            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.TagCloud)).Text; }
+        }
     }
 }

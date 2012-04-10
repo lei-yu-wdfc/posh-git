@@ -242,6 +242,7 @@
     <RepaymentDate>div.summary-box-content i</RepaymentDate>
 	<PromisedRepayAmount>#content-area p span</PromisedRepayAmount>
 	<PromisedRepayDate>#content-area p strong em</PromisedRepayDate>  
+    <TagCloud>#cloud</TagCloud>
   </MySummaryPage>
 
   <MyPaymentsPage>
