@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using MbUnit.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI;
@@ -77,5 +73,24 @@ namespace Wonga.QA.Tests.Ui
                                      .WaitForAcceptedPage().CurrentPage as AcceptedPage;
 
         }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-730")]
+        public void CheckLoanAgreement()
+        {
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+
+            var acceptedPage = journey.ApplyForLoan(200, 10)
+                                     .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                     .FillAddressDetails()
+                                     .FillAccountDetails()
+                                     .FillBankDetails()
+                                     .FillCardDetails()
+                                     .WaitForAcceptedPage().CurrentPage as AcceptedPage;
+
+            Assert.IsTrue(acceptedPage.IsAgreementFormDisplayed());
+
+        }
+
+
     }
 }

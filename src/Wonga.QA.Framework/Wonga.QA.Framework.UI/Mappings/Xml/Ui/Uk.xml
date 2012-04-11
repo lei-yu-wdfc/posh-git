@@ -59,6 +59,7 @@
   </DebitCardSection>
 
   <AcceptedPage>
+    <FormId>#vanilla-agreement-form</FormId>
     <NodeWrap>.node-type-wonga-decision-page</NodeWrap>
   </AcceptedPage>
 
