@@ -13,15 +13,18 @@ namespace Wonga.QA.Tests.BankGateway
 	[TestFixture, AUT(AUT.Ca), Parallelizable(TestScope.All)]
 	public class BankGatewayCaTests
 	{
-		// TODO: Additional full end-to-end tests will be added here once we have the Scotia and BMO mock
-
 		[Test, JIRA("CA-1931")]
-		public void SendPaymentMessageShouldBeRoutedToBmo()
+		public void SendPaymentMessageWithRealAccountShouldBeRoutedToBmo()
 		{
 			var customer = CustomerBuilder.New().
                                 WithInstitutionNumber("001").
+								WithBranchNumber("00022").
+								WithBankAccountNumber(1641421).
+								WithSurname("Wonga").WithForename("Canada Inc").
                                 Build();
-			ApplicationBuilder.New(customer).Build();
+			var application = ApplicationBuilder.New(customer).Build();
+
+			Do.Until(() => Drive.Db.BankGateway.Transactions.Single(t => t.ApplicationId == application.Id && t.BankIntegrationId == 2));
 		}
 
         [Test, JIRA("CA-1931")]
@@ -31,7 +34,9 @@ namespace Wonga.QA.Tests.BankGateway
                                 WithInstitutionNumber("002").
                                 WithBranchNumber("00018").
                                 Build();
-            ApplicationBuilder.New(customer).Build();
+            var application = ApplicationBuilder.New(customer).Build();
+
+			Do.Until(() => Drive.Db.BankGateway.Transactions.Single(t => t.ApplicationId == application.Id && t.BankIntegrationId == 1));
 		}
 	}
 }

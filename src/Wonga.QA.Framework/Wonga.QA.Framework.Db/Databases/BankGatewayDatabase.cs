@@ -2639,6 +2639,8 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		
 		private EntitySet<BankIntegrationHolidayEntity> _BankIntegrationHolidays;
 		
+		private EntitySet<TransactionEntity> _Transactions;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -2673,6 +2675,7 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		{
 			this._AcknowledgeTypes = new EntitySet<AcknowledgeTypeEntity>(new Action<AcknowledgeTypeEntity>(this.attach_AcknowledgeTypes), new Action<AcknowledgeTypeEntity>(this.detach_AcknowledgeTypes));
 			this._BankIntegrationHolidays = new EntitySet<BankIntegrationHolidayEntity>(new Action<BankIntegrationHolidayEntity>(this.attach_BankIntegrationHolidays), new Action<BankIntegrationHolidayEntity>(this.detach_BankIntegrationHolidays));
+			this._Transactions = new EntitySet<TransactionEntity>(new Action<TransactionEntity>(this.attach_Transactions), new Action<TransactionEntity>(this.detach_Transactions));
 			OnCreated();
 		}
 		
@@ -2942,6 +2945,19 @@ namespace Wonga.QA.Framework.Db.BankGateway
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Transactions_BankIntegrations", Storage="_Transactions", ThisKey="BankIntegrationId", OtherKey="BankIntegrationId", DeleteRule="NO ACTION")]
+		public EntitySet<TransactionEntity> Transactions
+		{
+			get
+			{
+				return this._Transactions;
+			}
+			set
+			{
+				this._Transactions.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2981,6 +2997,18 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		}
 		
 		private void detach_BankIntegrationHolidays(BankIntegrationHolidayEntity entity)
+		{
+			this.SendPropertyChanging();
+			entity.BankIntegrationEntity = null;
+		}
+		
+		private void attach_Transactions(TransactionEntity entity)
+		{
+			this.SendPropertyChanging();
+			entity.BankIntegrationEntity = this;
+		}
+		
+		private void detach_Transactions(TransactionEntity entity)
 		{
 			this.SendPropertyChanging();
 			entity.BankIntegrationEntity = null;
@@ -5679,11 +5707,13 @@ namespace Wonga.QA.Framework.Db.BankGateway
 		
 		private System.Nullable<int> _NaedoDocTypeId;
 		
-		private string _BankIntegration;
+		private System.Nullable<int> _BankIntegrationId;
 		
 		private EntityRef<BankAccountDetailEntity> _BankAccountDetailEntity;
 		
 		private EntityRef<NaedoDocTypeEntity> _NaedoDocTypeEntity;
+		
+		private EntityRef<BankIntegrationEntity> _BankIntegrationEntity;
 		
 		private EntityRef<OrderingClientEntity> _OrderingClientEntity;
 		
@@ -5733,14 +5763,15 @@ namespace Wonga.QA.Framework.Db.BankGateway
     partial void OnTrackingDaysChanged();
     partial void OnNaedoDocTypeIdChanging(System.Nullable<int> value);
     partial void OnNaedoDocTypeIdChanged();
-    partial void OnBankIntegrationChanging(string value);
-    partial void OnBankIntegrationChanged();
+    partial void OnBankIntegrationIdChanging(System.Nullable<int> value);
+    partial void OnBankIntegrationIdChanged();
     #endregion
 		
 		public TransactionEntity()
 		{
 			this._BankAccountDetailEntity = default(EntityRef<BankAccountDetailEntity>);
 			this._NaedoDocTypeEntity = default(EntityRef<NaedoDocTypeEntity>);
+			this._BankIntegrationEntity = default(EntityRef<BankIntegrationEntity>);
 			this._OrderingClientEntity = default(EntityRef<OrderingClientEntity>);
 			this._PaymentTypeEntity = default(EntityRef<PaymentTypeEntity>);
 			this._ServiceTypeEntity = default(EntityRef<ServiceTypeEntity>);
@@ -6113,22 +6144,26 @@ namespace Wonga.QA.Framework.Db.BankGateway
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BankIntegration", DbType="VarChar(10)")]
-		public string BankIntegration
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BankIntegrationId", DbType="Int")]
+		public System.Nullable<int> BankIntegrationId
 		{
 			get
 			{
-				return this._BankIntegration;
+				return this._BankIntegrationId;
 			}
 			set
 			{
-				if ((this._BankIntegration != value))
+				if ((this._BankIntegrationId != value))
 				{
-					this.OnBankIntegrationChanging(value);
+					if (this._BankIntegrationEntity.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnBankIntegrationIdChanging(value);
 					this.SendPropertyChanging();
-					this._BankIntegration = value;
-					this.SendPropertyChanged("BankIntegration");
-					this.OnBankIntegrationChanged();
+					this._BankIntegrationId = value;
+					this.SendPropertyChanged("BankIntegrationId");
+					this.OnBankIntegrationIdChanged();
 				}
 			}
 		}
@@ -6197,6 +6232,40 @@ namespace Wonga.QA.Framework.Db.BankGateway
 						this._NaedoDocTypeId = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("NaedoDocTypeEntity");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_Transactions_BankIntegrations", Storage="_BankIntegrationEntity", ThisKey="BankIntegrationId", OtherKey="BankIntegrationId", IsForeignKey=true)]
+		public BankIntegrationEntity BankIntegrationEntity
+		{
+			get
+			{
+				return this._BankIntegrationEntity.Entity;
+			}
+			set
+			{
+				BankIntegrationEntity previousValue = this._BankIntegrationEntity.Entity;
+				if (((previousValue != value) 
+							|| (this._BankIntegrationEntity.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._BankIntegrationEntity.Entity = null;
+						previousValue.Transactions.Remove(this);
+					}
+					this._BankIntegrationEntity.Entity = value;
+					if ((value != null))
+					{
+						value.Transactions.Add(this);
+						this._BankIntegrationId = value.BankIntegrationId;
+					}
+					else
+					{
+						this._BankIntegrationId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("BankIntegrationEntity");
 				}
 			}
 		}
