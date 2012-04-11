@@ -62,7 +62,7 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-575"), Description("Experian -> This test creates a loan for the customer that is dead, then checks the risk checkpoint")]
-        //[Pending("Experian still not working")]
+        [Pending("Experian still not working")]
         public void TestExperianMainApplicantIsDeceased_LoanIsDeclined()
         {
             const String forename = "Johnny";
