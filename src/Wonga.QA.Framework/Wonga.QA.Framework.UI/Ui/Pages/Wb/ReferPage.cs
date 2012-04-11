@@ -21,9 +21,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
             _returnToHomepage = Content.FindElement(By.CssSelector(Ui.Get.ReferPage.ReturnToHomepage));
         }
 
-        public void GoHome()
+        public HomePage GoHome()
         {
             _returnToHomepage.Click();
+            return new HomePage(Client);
         }
     }
 }

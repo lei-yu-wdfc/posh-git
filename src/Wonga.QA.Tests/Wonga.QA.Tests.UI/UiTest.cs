@@ -59,7 +59,7 @@ namespace Wonga.QA.Tests.Ui
 
             var personalDetailsPage = eligibilityQuestionsPage.Submit();
             personalDetailsPage.YourName.FirstName = _firstName;
-            personalDetailsPage.YourName.MiddleName = "TESTNoCheck"; //middleName;
+            personalDetailsPage.YourName.MiddleName = middleName;
             personalDetailsPage.YourName.LastName = _lastName;
             personalDetailsPage.YourName.Title = "Mr";
 
