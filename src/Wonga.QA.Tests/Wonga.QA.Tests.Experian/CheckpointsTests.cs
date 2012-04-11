@@ -62,7 +62,7 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-575"), Description("Experian -> This test creates a loan for the customer that is dead, then checks the risk checkpoint")]
-        [Pending("Experian still not working")]
+        //[Pending("Experian still not working")]
         public void TestExperianMainApplicantIsDeceased_LoanIsDeclined()
         {
             const String forename = "Johnny";
@@ -221,7 +221,7 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-644"), Description("Experian -> This test creates a loan for a customer with the incorrect date of birth, then checks the risk checkpoint")]
-        //[Pending("Experian still not working")]
+        [Pending("Experian still not working")]
         public void TestExperianMainApplicantDateOfBirthIsIncorrect_LoanIsDeclined()
         {
             const String forename = "kathleen";
@@ -733,11 +733,12 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-1138"), Description("Experian -> This test creates a loan for a guarantor with the correct date of birth, then checks the risk checkpoint")]
+        [Pending("Experian not working yet!")]
         public void TestExperianGuarantorDateOfBirthIsIncorrect_LoanIsDeclined()
         {
             const String forename = "kathleen";
             const String surname = "bridson";
-            var correctDateOfBirth = new Date(new DateTime(1990, 1, 24), DateFormat.Date);
+            var correctDateOfBirth = new Date(new DateTime(1990, 3, 21), DateFormat.Date);
 
             var mainApplicantBuilder = CustomerBuilder.New();
 
