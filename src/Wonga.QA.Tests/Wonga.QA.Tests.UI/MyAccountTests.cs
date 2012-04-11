@@ -582,7 +582,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
         [Test, AUT(AUT.Wb), JIRA("QA-250")]
-        public void CustomerOnMySummaryClicksRepayButtonCorrectMessageShouldAppear()
+        public void WbFrontendMyAccountPageLoadsCorrectly()
         {
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
@@ -592,6 +592,20 @@ namespace Wonga.QA.Tests.Ui
                 .New(customer,organisation)
                 .Build();
             
+            var mySummaryPage = loginPage.LoginAs(email);
+        }
+
+        [Test, AUT(AUT.Za)]
+        public void AfterThreeDaysOfLoanTest()
+        {
+
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder
+                .New(customer)
+                .Build();
+            application.DaysFromStart(3);
             var mySummaryPage = loginPage.LoginAs(email);
         }
 
