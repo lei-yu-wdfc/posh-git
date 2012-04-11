@@ -6,6 +6,7 @@ using Gallio.Framework.Assertions;
 using MbUnit.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI;
+using Wonga.QA.Framework.UI.Mappings.Sections;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Framework.UI.UiElements.Pages.Wb;
 
@@ -64,7 +65,7 @@ namespace Wonga.QA.Tests.Ui
 
             personalDetailsPage.YourDetails.Gender = "Female";
             personalDetailsPage.YourDetails.DateOfBirth = "1/Jan/1990";
-            personalDetailsPage.YourDetails.HomeStatus = "Tenant furnished";
+            personalDetailsPage.YourDetails.HomeStatus = "Tenant Furnished";
             personalDetailsPage.YourDetails.MaritalStatus = "Single";
             personalDetailsPage.YourDetails.NumberOfDependants = "0";
 
@@ -78,9 +79,7 @@ namespace Wonga.QA.Tests.Ui
 
             var addressDetailsPage = personalDetailsPage.Submit() as AddressDetailsPage;
             addressDetailsPage.PostCode = "SW6 6PN";
-            Thread.Sleep(1000);
             addressDetailsPage.LookupByPostCode();
-            Thread.Sleep(4000);
             addressDetailsPage.GetAddressesDropDown();
             Do.Until(() => addressDetailsPage.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN");
             Do.Until(() => addressDetailsPage.HouseNumber = "666");
@@ -144,6 +143,14 @@ namespace Wonga.QA.Tests.Ui
             businessPaymentCardPage.DebitCardSection.CardType = "Visa Debit";
             businessPaymentCardPage.DebitCardSection.ExpiryDate = "Jan/2015";
             businessPaymentCardPage.DebitCardSection.StartDate = "Jan/2007";
+
+            businessPaymentCardPage.AddressDetailsSection.PostCode = "SW6 6PN";
+            businessPaymentCardPage.AddressDetailsSection.LookupByPostCode();
+            businessPaymentCardPage.AddressDetailsSection.GetAddressesDropDown();
+            Do.Until(() => businessPaymentCardPage.AddressDetailsSection.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN");
+            Do.Until(() => businessPaymentCardPage.AddressDetailsSection.FlatNumber = "15");
+            businessPaymentCardPage.AddressDetailsSection.District = "London";
+            businessPaymentCardPage.AddressDetailsSection.County = "Camden";
 
             return businessPaymentCardPage.Next();
 

@@ -27,7 +27,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
         public Boolean CheckVat { set { _vat.Toggle(value); } }
         public Boolean CheckOnlineAccess { set { _onlineAccess.Toggle(value); } }
         public Boolean CheckGuarantee { set { _guarantee.Toggle(value); } }
-        public Boolean CheckDebitCard{set{_debitCard.Toggle(value);}}
+        public Boolean CheckDebitCard { set { _debitCard.Toggle(value); } }
 
         public EligibilityQuestionsPage(UiClient client)
             : base(client)

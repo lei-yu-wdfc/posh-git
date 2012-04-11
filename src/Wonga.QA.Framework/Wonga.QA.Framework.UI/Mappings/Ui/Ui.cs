@@ -48,6 +48,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual ProvinceSection ProvinceSection { get; set; }
         public virtual MyAccountNavigationSection MyAccountNavigationSection { get; set; }
         public virtual ApplicationSection ApplicationSection { get; set; }
+        public virtual AddressDetailsSection AddressDetailsSection { get; set; }
         #endregion
 
         #region Elements
@@ -69,6 +70,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual AdditionalDirectorsPage AdditionalDirectorsPage { get; set; }
         public virtual AddAditionalDirectorsPage AddAditionalDirectorsPage { get; set; }
         public virtual BusinessDebitCardPage BusinessDebitCardPage { get; set; }
+        public virtual ReferPage ReferPage { get; set; }
 
         #endregion
 
@@ -104,6 +106,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual TopupProcessingPage TopupProcessingPage { get; set; }
         //public virtual TopupProcessingPage TopupProcessingPage { get; set; }
         public virtual TopupRequestPage TopupRequestPage { get; set; }
+        public virtual ApplyTermsPage ApplyTermsPage { get; set; }
 
         #endregion
 

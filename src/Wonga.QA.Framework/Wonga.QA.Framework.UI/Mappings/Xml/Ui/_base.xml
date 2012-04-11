@@ -40,13 +40,13 @@
     <NextButton>#edit-submit</NextButton>
   </PersonalBankAccountDetailsPage>
 
-	<DealDonePage>
-		<HeaderText>Your application has been approved</HeaderText>
-		<ContinueButtonLink>.application-success-button</ContinueButtonLink>
-		<ContinueButton>#edit-submit</ContinueButton>
-		<RepayDate>#content-area em</RepayDate>
-		<RepayAmount>#content-area span.blue-text</RepayAmount>
-	</DealDonePage>
+  <DealDonePage>
+    <HeaderText>Your application has been approved</HeaderText>
+    <ContinueButtonLink>.application-success-button</ContinueButtonLink>
+    <ContinueButton>#edit-submit</ContinueButton>
+    <RepayDate>#content-area em</RepayDate>
+    <RepayAmount>#content-area span.blue-text</RepayAmount>
+  </DealDonePage>
 
   <TopupDealDonePage>
     <AccountLink>#content-area h2 a</AccountLink>
@@ -121,7 +121,7 @@
   <HelpElement>
     <HelpTrigger>help-trigger</HelpTrigger>
     <HelplistQuestions>#listQuestions</HelplistQuestions>
-	  <TroubleshootingQuestions>div#help-panel div.control-bar-panel div.panel:nth-child(2)>#listQuestions</TroubleshootingQuestions>
+    <TroubleshootingQuestions>div#help-panel div.control-bar-panel div.panel:nth-child(2)>#listQuestions</TroubleshootingQuestions>
     <JargonBuster>#help-panel div div:nth-child(3) p:nth-child(1) a</JargonBuster>
     <ContactUs>#help-panel div div:nth-child(3) p:nth-child(2) a</ContactUs>
   </HelpElement>
@@ -223,6 +223,12 @@
     <Submit>#wonga-apply-ln-form #edit-submit</Submit>
   </ApplyPage>
 
+  <ApplyTermsPage>
+    <NextButton>#edit-submit</NextButton>
+    <SummaryHeader>#wonga-slider-loan-summary-header</SummaryHeader>
+    <Summary>#wonga-slider-loan-summary</Summary>
+  </ApplyTermsPage>
+
   <ProcessingPage>
     <!--<FormId>wonga-processing</FormId>-->
     <!--<ProcessingImage>#wonga-processing>img</ProcessingImage>-->
@@ -240,8 +246,8 @@
     <Title>#my-summary</Title>
     <TotalToRepay>div.summary-box-content span.blue-text</TotalToRepay>
     <RepaymentDate>div.summary-box-content i</RepaymentDate>
-	<PromisedRepayAmount>#content-area p span</PromisedRepayAmount>
-	<PromisedRepayDate>#content-area p strong em</PromisedRepayDate>  
+    <PromisedRepayAmount>#content-area p span</PromisedRepayAmount>
+    <PromisedRepayDate>#content-area p strong em</PromisedRepayDate>
     <TagCloud>#cloud</TagCloud>
   </MySummaryPage>
 
@@ -254,7 +260,7 @@
     <Password>#password</Password>
     <LoginButton>#Login</LoginButton>
   </SalesForceLoginPage>
-  
+
   <SalesForceHomePage>
     <SearchBox>#phSearchInput</SearchBox>
     <SearchButton>#phSearchButton</SearchButton>
