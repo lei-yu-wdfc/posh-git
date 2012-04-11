@@ -122,6 +122,11 @@
   <MySummaryPage>
 	 <PromisedRepayAmount>#content-area p span</PromisedRepayAmount>
 	 <PromisedRepayDate>#content-area p strong em</PromisedRepayDate>
+    <ViewLoanDetailsButton>#cloud a.mod.details</ViewLoanDetailsButton>
+    <!-- Loan details popup-->
+   <PopupForm>#fancybox-content</PopupForm>
+   <PopupMySummaryTitle>h1#my-summary</PopupMySummaryTitle>
+   <PopupSummaryDetailsTable>table#summary-details</PopupSummaryDetailsTable>
   </MySummaryPage>
 
   <HomePage>
