@@ -1,19 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Cs;
 using Wonga.QA.Framework.Db;
-using Wonga.QA.Framework.Db.OpsSagas;
-using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Db.QaData;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
-using Wonga.QA.Tests.Payments.Enums;
-using Wonga.QA.Tests.Payments.Helpers;
 using ProvinceEnum = Wonga.QA.Framework.Api.ProvinceEnum;
 
 namespace Wonga.QA.Tests.Payments
@@ -163,6 +157,25 @@ namespace Wonga.QA.Tests.Payments
             Assert.IsTrue(VerifyTotalNumberOfEmailsSent(customer, 7));
         }
 
+        [Test, AUT(AUT.Ca), JIRA("CA-1810")]
+        public void WhenLoanGoesIntoArrearsForBcCustomerThenA2EmailShouldBeSentOnDay0WithoutDefaultChargeBeingApplied()
+        {
+            const String amount = "110.00";
+            var customerBuilder = CustomerBuilder.New().WithProvinceInAddress(ProvinceEnum.BC);
+            var customer = customerBuilder.Build();
+            var application = ApplicationBuilder.New(customer).WithLoanTerm(10).Build();
+            var customerForename = customerBuilder.Forename;
+
+            application.PutApplicationIntoArrears();
+
+            var emailTokens = GetEmailTokens(customer, SendCollectionsReminderA2Email);
+
+            Assert.IsFalse(emailTokens.Count == 0, "Could not find email for template {0}", SendCollectionsReminderA2Email);
+            Assert.IsTrue(emailTokens.Count == 3);
+            Assert.IsTrue(emailTokens[0].Value == customerForename);
+            Assert.IsTrue(emailTokens[1].Value == amount, "{0} is not equal to {1}", emailTokens[1].Value, amount);
+            Assert.IsTrue(emailTokens[2].Value == customer.Email);
+        }
 
         private string getEmailTemplateId(string emailTemplateName)
         {
