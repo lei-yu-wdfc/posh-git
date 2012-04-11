@@ -121,6 +121,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             return _editPhonePin.Displayed;
         }
 
+        public void WaitForSuccessPopup()
+        {
+            Do.With.Timeout(10).Until(
+                () =>
+                Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.PopupSuccessTitle)).Displayed);
+        }
         public bool Submit()
         {
             _submitButton = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.SubmitButton));

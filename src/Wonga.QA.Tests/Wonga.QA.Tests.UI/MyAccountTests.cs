@@ -273,14 +273,41 @@ namespace Wonga.QA.Tests.Ui
             Do.Until(() => myPersonalDetailsPage.ChangePhone("0123000000", "0212571908", "0000"));
 
             myPersonalDetailsPage.Submit();
-            Thread.Sleep(10000);
+            myPersonalDetailsPage.WaitForSuccessPopup();
             myPersonalDetailsPage.Submit();
 
-            Thread.Sleep(10000);
+            Do.With.Timeout(10).Until(() => Drive.Db.Comms.CustomerDetails.Single(c => c.Email == email).HomePhone != "0210000000");
             var homePhone = Drive.Db.Comms.CustomerDetails.FirstOrDefault(c => c.Email == email).HomePhone;
 
             Assert.AreEqual("0123000000", myPersonalDetailsPage.GetHomePhone);
             Assert.AreEqual("0123000000", homePhone);
+            //TODO check SF
+        }
+
+        [Test, AUT(AUT.Za), JIRA("QA-212")]
+        public void CustomerShouldBeAbleToChangeMobileNumber()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            var mySummaryPage = loginPage.LoginAs(email);
+            var myPersonalDetailsPage = mySummaryPage.Navigation.MyPersonalDetailsButtonClick();
+
+            myPersonalDetailsPage.PhoneClick();
+
+            Do.Until(() => myPersonalDetailsPage.ChangePhone("0210000000", "0213456789", "0000"));
+
+            myPersonalDetailsPage.Submit();
+            myPersonalDetailsPage.WaitForSuccessPopup();
+            myPersonalDetailsPage.Submit();
+
+            Do.With.Timeout(10).Until(() => Drive.Db.Comms.CustomerDetails.Single(c => c.Email == email).MobilePhone != "0212571908");
+            var mobilePhone = Drive.Db.Comms.CustomerDetails.FirstOrDefault(c => c.Email == email).MobilePhone;
+
+            Assert.AreEqual("0213456789", myPersonalDetailsPage.GetMobilePhone);
+            Assert.AreEqual("0213456789", mobilePhone);
             //TODO check SF
         }
 
@@ -555,7 +582,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
         [Test, AUT(AUT.Wb), JIRA("QA-250")]
-        public void CustomerOnMySummaryClicksRepayButtonCorrectMessageShouldAppear()
+        public void WbFrontendMyAccountPageLoadsCorrectly()
         {
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
@@ -565,6 +592,20 @@ namespace Wonga.QA.Tests.Ui
                 .New(customer,organisation)
                 .Build();
             
+            var mySummaryPage = loginPage.LoginAs(email);
+        }
+
+        [Test, AUT(AUT.Za)]
+        public void AfterThreeDaysOfLoanTest()
+        {
+
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder
+                .New(customer)
+                .Build();
+            application.DaysFromStart(3);
             var mySummaryPage = loginPage.LoginAs(email);
         }
 
