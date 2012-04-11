@@ -595,8 +595,8 @@ namespace Wonga.QA.Tests.Ui
             var mySummaryPage = loginPage.LoginAs(email);
         }
 
-        [Test, AUT(AUT.Za)]
-        public void AfterThreeDaysOfLoanTest()
+        [Test, AUT(AUT.Za), JIRA("QA-208")]
+        public void LoanOlderThanThreeDaysThenViewLoanDetailsLinkShouldBeDisplayedAndCorrect()
         {
 
             var loginPage = Client.Login();
@@ -605,8 +605,12 @@ namespace Wonga.QA.Tests.Ui
             Application application = ApplicationBuilder
                 .New(customer)
                 .Build();
-            application.DaysFromStart(3);
+            application.DaysFromStart(5);
             var mySummaryPage = loginPage.LoginAs(email);
+
+            mySummaryPage.ClickViewLoanDetailsButton();
+            mySummaryPage.WaitForMySummaryPopup();
+            Assert.IsTrue(mySummaryPage.IsPopupContainsSummaryDetailsTable());
         }
 
     }

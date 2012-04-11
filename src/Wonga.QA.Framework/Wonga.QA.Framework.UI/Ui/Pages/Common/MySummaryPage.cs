@@ -117,6 +117,23 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.TagCloud)).Text; }
         }
 
+        public void ClickViewLoanDetailsButton()
+        {
+            Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.ViewLoanDetailsButton)).Click();
+        }
+
+        public void WaitForMySummaryPopup()
+        {
+            var popup = Do.With.Interval(10).Until(() => Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.PopupForm)));
+            Do.Until(() => popup.FindElement(By.CssSelector(Ui.Get.MySummaryPage.PopupMySummaryTitle)).Displayed);
+        }
+
+        public bool IsPopupContainsSummaryDetailsTable()
+        {
+            var popup = Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.PopupForm));
+            return popup.FindElement(By.CssSelector(Ui.Get.MySummaryPage.PopupSummaryDetailsTable)).Displayed;
+        }
+
         public bool IsLoanStatusMessageAvailable()
         {
             try
