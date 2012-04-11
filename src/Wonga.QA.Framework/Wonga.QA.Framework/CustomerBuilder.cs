@@ -38,9 +38,11 @@ namespace Wonga.QA.Framework
         private Guid _bankAccountId;
         private String _phoneNumber;
 		private String _mobileNumber;
-    	private Int64? _bankAccountNumber;
+    	private String _bankAccountNumber;
         private Int64 _paymentCardNumber;
         private int _numberOfDependants;
+        private String _bankCode;
+
 
         public Guid Id { get { return _id; } }
         public String Email { get { return _email; } }
@@ -89,9 +91,10 @@ namespace Wonga.QA.Framework
             _bankAccountId = Get.GetId();
         	
             _province = ProvinceEnum.ON;
-        	_bankAccountNumber = null;
             _paymentCardNumber = 4444333322221111;
             _mobileNumber = Get.GetMobilePhone();
+            _bankCode = null;
+            _bankAccountNumber = null;
         }
 
         public static CustomerBuilder New()
@@ -260,12 +263,13 @@ namespace Wonga.QA.Framework
 		    return this;
 	    }
 
-		public CustomerBuilder WithBankAccountNumber(Int64 bankAccountNumber)
-		{
-			_bankAccountNumber = bankAccountNumber;
-			return this;
-		}
-
+        public CustomerBuilder WithBankAccountNumber(String bankAccountNumber,String sortCode=null)
+        {
+            _bankAccountNumber = bankAccountNumber;
+            _bankCode = sortCode;
+            return this;
+        }
+       
         public CustomerBuilder WithPaymentCardNumber(Int64 cardNumber)
         {
             _paymentCardNumber = cardNumber;
@@ -339,7 +343,7 @@ namespace Wonga.QA.Framework
                                                     	{
                                                     		r.AccountId = _id;
                                                     		r.BankAccountId = _bankAccountId;
-                                                    		if (_bankAccountNumber.HasValue)
+                                                    		if (!string.IsNullOrEmpty(_bankAccountNumber))
                                                     		{
                                                     			r.AccountNumber = _bankAccountNumber;
                                                     		}
@@ -392,7 +396,7 @@ namespace Wonga.QA.Framework
                                                     	{
                                                     		r.AccountId = _id;
                                                     		r.BankAccountId = _bankAccountId;
-                                                    		if (_bankAccountNumber.HasValue)
+                                                            if (!string.IsNullOrEmpty(_bankAccountNumber))
                                                     		{
                                                     			r.AccountNumber = _bankAccountNumber;
                                                     		}
@@ -440,10 +444,12 @@ namespace Wonga.QA.Framework
                                                     	{
                                                     		r.AccountId = _id;
                                                     	    r.BankAccountId = _bankAccountId;
-                                                    		if (_bankAccountNumber.HasValue)
+                                                            if (!string.IsNullOrEmpty(_bankAccountNumber))
                                                     		{
                                                     			r.AccountNumber = _bankAccountNumber;
                                                     		}
+                                                            if (!string.IsNullOrEmpty(_bankCode))
+                                                                r.BankCode = _bankCode;
                                                     	}),
                         AddPaymentCardCommand.New(r =>
 						                              {
@@ -489,7 +495,7 @@ namespace Wonga.QA.Framework
 						                            	{
 						                            		r.AccountId = _id;
 						                            	    r.BankAccountId = _bankAccountId;
-						                            		if (_bankAccountNumber.HasValue)
+                                                            if (!string.IsNullOrEmpty(_bankAccountNumber))
 						                            		{
 						                            			r.AccountNumber = _bankAccountNumber;
 						                            		}
