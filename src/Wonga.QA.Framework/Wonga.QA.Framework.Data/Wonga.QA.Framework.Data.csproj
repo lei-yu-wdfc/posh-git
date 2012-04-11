@@ -72,6 +72,7 @@
     <Compile Include="Enums\Risk\RiskVerificationDefinitionsEnum.cs" />
     <Compile Include="Enums\Risk\RiskWorkflowStatusEnum.cs" />
     <Compile Include="Enums\Risk\RiskWorkflowTypesEnum.cs" />
+    <Compile Include="Enums\Risk\SliderPositionTypeEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
