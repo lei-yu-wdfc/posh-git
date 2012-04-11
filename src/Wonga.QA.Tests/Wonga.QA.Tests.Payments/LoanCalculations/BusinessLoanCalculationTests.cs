@@ -14,9 +14,8 @@ namespace Wonga.QA.Tests.Payments.LoanCalculations
     public class BusinessLoanCalculationTests
     {
         [Test, AUT(AUT.Wb)]
-        [Ignore("WIP")]
-        //[Row(9850/*loanAmount*/, 3/*Term*/, 1.75 /*interestRate*/, 517.12 /*totalInterest*/, 492.50 /*arrangementFee*/ , 3619.88/*weeklyRepaymentAmount*/, 10859.62 /*totalRepay*/, 3619.86/*finalRepaymentAmount*/)]
-        [Row(5000, 10, 1.75 , 875, 250, 612.5, 6125, 0)]
+        [Row(9850/*loanAmount*/, 3/*Term*/, 1.75 /*interestRate*/, 517.12 /*totalInterest*/, 492.50 /*arrangementFee*/ , 3619.88/*weeklyRepaymentAmount*/, 10859.62 /*totalRepay*/, 3619.86/*finalRepaymentAmount*/)]
+        [Row(5000, 10, 1.75, 875, 250, 612.5, 6125, 0)]
         [Row(3150, 11, 1.75, 606.38, 157.5, 355.81, 3913.88, 0)]
         [Row(3300, 13, 1.75, 750.75, 165, 324.29, 4215.75, 0)]
         [Row(3050, 51, 1.75, 2722.12, 152.50, 116.17, 5924.62, 0)]

@@ -37,7 +37,9 @@ namespace Wonga.QA.Framework
              * If something is missing please let Alex P know */
             var requests = new List<ApiRequest>
             {
-                SubmitApplicationBehaviourCommand.New(r => r.ApplicationId = Id),
+                SubmitApplicationBehaviourCommand.New(r => { r.ApplicationId = Id;
+                                                               r.TermSliderPosition = SliderPositionEnum.Default;
+                }),
                 SubmitClientWatermarkCommand.New(r => { r.ApplicationId=Id; r.AccountId = Customer.Id;
                                                           r.BlackboxData = IovationBlackBox;
                 }),
