@@ -8,6 +8,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
     public class AcceptedPage
     {
         public String FormId { get; set; }
+        public String AgreementTitle { get; set; }
         public String NodeWrap { get; set; }
         public String TotalToRepay { get; set; }
         public String RepaymentDate { get; set; }

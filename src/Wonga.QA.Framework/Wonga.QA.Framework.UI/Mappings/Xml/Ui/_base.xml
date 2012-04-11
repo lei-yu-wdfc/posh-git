@@ -68,6 +68,7 @@
     <DateOfAgreement>#edit-date-of-agreement-ca-datepicker-popup-0</DateOfAgreement>
     <ContinueTermsButton>#edit-continue-terms</ContinueTermsButton>
     <ContinueDirectDebitButton>#edit-continue-debit</ContinueDirectDebitButton>
+    <AgreementTitle>span#agreement_title</AgreementTitle>
   </AcceptedPage>
 
   <BankAccountSection>
