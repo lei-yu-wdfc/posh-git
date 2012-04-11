@@ -284,6 +284,33 @@ namespace Wonga.QA.Tests.Ui
             //TODO check SF
         }
 
+        [Test, AUT(AUT.Za), JIRA("QA-212")]
+        public void CustomerShouldBeAbleToChangeMobileNumber()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            var mySummaryPage = loginPage.LoginAs(email);
+            var myPersonalDetailsPage = mySummaryPage.Navigation.MyPersonalDetailsButtonClick();
+
+            myPersonalDetailsPage.PhoneClick();
+
+            Do.Until(() => myPersonalDetailsPage.ChangePhone("0210000000", "0213456789", "0000"));
+
+            myPersonalDetailsPage.Submit();
+            Thread.Sleep(10000);
+            myPersonalDetailsPage.Submit();
+
+            Thread.Sleep(10000);
+            var mobilePhone = Drive.Db.Comms.CustomerDetails.FirstOrDefault(c => c.Email == email).MobilePhone;
+
+            Assert.AreEqual("0213456789", myPersonalDetailsPage.GetMobilePhone);
+            Assert.AreEqual("0213456789", mobilePhone);
+            //TODO check SF
+        }
+
         [Test, AUT(AUT.Za), JIRA("QA-211")]
         public void ChangingPhoneNumberWithWrongPinShouldCauseWarningMessage()
         {
