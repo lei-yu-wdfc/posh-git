@@ -147,4 +147,17 @@
       <WereResponsible>#quicktabs-tab-wonga-tabs-2</WereResponsible>
       <WereResponsibleText>#node-899 div p</WereResponsibleText>
     </AboutUsPage>
+
+    <HowItWorksPage>
+      <HowItWorksText>.wonga-box-type-text div div</HowItWorksText>
+      <Transparency>.wongaTabs ul li:nth-child(1) a</Transparency>
+      <TransparencyHeader>.panes div:nth-child(1) h2</TransparencyHeader>
+      <TransparencyText>.panes div:nth-child(1) p</TransparencyText>
+      <PersonalGuarantee>.wongaTabs ul li:nth-child(2) a</PersonalGuarantee>
+      <PersonalGuaranteeHeader>.panes div:nth-child(2) h2</PersonalGuaranteeHeader>
+      <PersonalGuaranteeText>.panes div:nth-child(2) p</PersonalGuaranteeText>
+      <FailureToStick>.wongaTabs ul li:nth-child(3) a</FailureToStick>
+      <FailureToStickHeader>.panes div:nth-child(3) h2</FailureToStickHeader>
+      <FailureToStickText>.panes div:nth-child(3)</FailureToStickText>
+    </HowItWorksPage>
 </Ui>
