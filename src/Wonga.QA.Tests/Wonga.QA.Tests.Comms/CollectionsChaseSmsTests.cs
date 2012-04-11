@@ -32,17 +32,16 @@ namespace Wonga.QA.Tests.Comms
 			"Call us on 0861966421 - Our agents are waiting to help you resolve this";
 
 		private const string A6Text =
-			"Your wonga.com loan remains in arrears. Please don't ignore this message. " +
+			"Your Wonga.com loan remains in arrears. Please don't ignore this message. " +
 			"Contact us urgently on 0861966421 to avoid us taking further steps against you.";
 
 		private const string A7Text =
-			"Your wonga.com loan remains in arrears. Please don't ignore this message. " +
+			"Your Wonga.com loan remains in arrears. Please don't ignore this message. " +
 			"Contact us urgently on 0861966421 to avoid us taking further steps against you.";
 
 		#endregion
 
 		private bool _bankGatewayTestModeOriginal;
-		private DateTime _atTheBeginningOfThisTest;
 		private static readonly dynamic AccountPreferences = Drive.Data.Payments.Db.AccountPreferences;
 		private static readonly dynamic SmsMessages = Drive.Data.Sms.Db.SmsMessages;
 		private static readonly dynamic InArrearsNoticeSagaEntities = Drive.Data.OpsSagas.Db.InArrearsNoticeSagaEntity;
@@ -58,12 +57,6 @@ namespace Wonga.QA.Tests.Comms
 		public void FixtureTearDown()
 		{
 			ConfigurationFunctions.SetBankGatewayTestMode(_bankGatewayTestModeOriginal);
-		}
-
-		[SetUp]
-		public void Setup()
-		{
-			_atTheBeginningOfThisTest = DateTime.Now;
 		}
 
 		[Test, JIRA("ZA-1676"), AUT(AUT.Za)]
@@ -122,23 +115,25 @@ namespace Wonga.QA.Tests.Comms
 
 		private void VerifySmsIsSentAfterDaysInArrears(int daysInArrears, string smsText)
 		{
+			DateTime atTheBeginningOfThisTest = DateTime.Now;
 			string phoneNumberChunk = GetPhoneNumberChunk();
 			string formattedPhoneNumber = GetFormattedPhoneNumber(phoneNumberChunk);
 			Application application = ArrangeApplication(phoneNumberChunk);
 
 			TimeoutNotificationSagaForDays(application, daysInArrears);
 
-			AssertSmsIsSent(formattedPhoneNumber, smsText);
+			AssertSmsIsSent(formattedPhoneNumber, smsText, atTheBeginningOfThisTest);
 		}
 
 		private void VerifyA2SentA3SuppressedA4Sent(Action<Application> suppressAction, Action<Application> resumeAction)
 		{
+			DateTime atTheBeginningOfThisTest = DateTime.Now;
 			string phoneNumberChunk = GetPhoneNumberChunk();
 			string formattedPhoneNumber = GetFormattedPhoneNumber(phoneNumberChunk);
 			Application application = ArrangeApplication(phoneNumberChunk);
 
 			// wait unit A2 is sent
-			AssertSmsIsSent(formattedPhoneNumber, A2Text);
+			AssertSmsIsSent(formattedPhoneNumber, A2Text, atTheBeginningOfThisTest);
 
 			// set suppress
 			suppressAction(application);
@@ -147,7 +142,7 @@ namespace Wonga.QA.Tests.Comms
 			TimeoutNotificationSagaForDays(application, 7);
 
 			// verify A3 is not sent
-			AssertSmsIsNotSent(formattedPhoneNumber, A3Text);
+			AssertSmsIsNotSent(formattedPhoneNumber, A3Text, atTheBeginningOfThisTest);
 
 			// resume
 			resumeAction(application);
@@ -155,11 +150,11 @@ namespace Wonga.QA.Tests.Comms
 			// time out to the A4 point
 			TimeoutNotificationSagaForDays(application, 15);
 
-			// verify A3 is still not sent
-			AssertSmsIsNotSent(formattedPhoneNumber, A3Text);
-
 			// wait unit A4 is sent
-			AssertSmsIsSent(formattedPhoneNumber, A4Text);
+			AssertSmsIsSent(formattedPhoneNumber, A4Text, atTheBeginningOfThisTest);
+
+			// verify A3 is still not sent
+			AssertSmsIsNotSent(formattedPhoneNumber, A3Text, atTheBeginningOfThisTest);
 		}
 
 		private static string GetPhoneNumberChunk()
@@ -197,31 +192,31 @@ namespace Wonga.QA.Tests.Comms
 				InArrearsNoticeSagaEntities.FindBy(AccountId: application.AccountId, DaysInArrears: days)));
 		}
 
-		private void AssertSmsIsSent(string formattedPhoneNumber, string text)
+		private void AssertSmsIsSent(string formattedPhoneNumber, string text, DateTime atTheBeginningOfThisTest)
 		{
 			Assert.IsTrue(
 				Do.Until(() =>
 				         SmsMessages.Find(
-				         	SmsMessages.CreatedOn >= _atTheBeginningOfThisTest &&
+				         	SmsMessages.CreatedOn >= atTheBeginningOfThisTest &&
 				         	SmsMessages.MobilePhoneNumber == formattedPhoneNumber &&
-				         	SmsMessages.MessageText == text &&
-							SmsMessages.Status == 2
-							)
+				         	SmsMessages.MessageText == text
+				         	//&& SmsMessages.Status == 2
+				         	)
 				         != null));
 		}
 
-		private void AssertSmsIsNotSent(string formattedPhoneNumber, string text)
+		private void AssertSmsIsNotSent(string formattedPhoneNumber, string text, DateTime atTheBeginningOfThisTest)
 		{
 			Assert.IsTrue(
-				Do.With.Timeout(TimeSpan.FromSeconds(10))
-					.Watch(() =>
-					       (bool) (
-					              	SmsMessages.Find(
-					              		SmsMessages.CreatedOn >= _atTheBeginningOfThisTest &&
-					              		SmsMessages.MobilePhoneNumber == formattedPhoneNumber &&
-					              		SmsMessages.MessageText == text &&
-										SmsMessages.Status == 3)
-					              	!= null)));
+				Do.Watch(() =>
+				         (bool) (
+				                	SmsMessages.Find(
+				                		SmsMessages.CreatedOn >= atTheBeginningOfThisTest &&
+				                		SmsMessages.MobilePhoneNumber == formattedPhoneNumber &&
+				                		SmsMessages.MessageText == text
+				                		//&& SmsMessages.Status == 3
+				                		)
+				                	!= null)));
 		}
 
 		#endregion
