@@ -192,30 +192,26 @@ namespace Wonga.QA.Tests.Comms
 				InArrearsNoticeSagaEntities.FindBy(AccountId: application.AccountId, DaysInArrears: days)));
 		}
 
-		private void AssertSmsIsSent(string formattedPhoneNumber, string text, DateTime atTheBeginningOfThisTest)
+		private static void AssertSmsIsSent(string formattedPhoneNumber, string text, DateTime createdAfter)
 		{
 			Assert.IsTrue(
 				Do.Until(() =>
 				         SmsMessages.Find(
-				         	SmsMessages.CreatedOn >= atTheBeginningOfThisTest &&
+				         	SmsMessages.CreatedOn >= createdAfter &&
 				         	SmsMessages.MobilePhoneNumber == formattedPhoneNumber &&
-				         	SmsMessages.MessageText == text
-				         	//&& SmsMessages.Status == 2
-				         	)
+				         	SmsMessages.MessageText == text)
 				         != null));
 		}
 
-		private void AssertSmsIsNotSent(string formattedPhoneNumber, string text, DateTime atTheBeginningOfThisTest)
+		private static void AssertSmsIsNotSent(string formattedPhoneNumber, string text, DateTime createdAfter)
 		{
 			Assert.IsTrue(
 				Do.Watch(() =>
 				         (bool) (
 				                	SmsMessages.Find(
-				                		SmsMessages.CreatedOn >= atTheBeginningOfThisTest &&
+				                		SmsMessages.CreatedOn >= createdAfter &&
 				                		SmsMessages.MobilePhoneNumber == formattedPhoneNumber &&
-				                		SmsMessages.MessageText == text
-				                		//&& SmsMessages.Status == 3
-				                		)
+				                		SmsMessages.MessageText == text)
 				                	!= null)));
 		}
 
