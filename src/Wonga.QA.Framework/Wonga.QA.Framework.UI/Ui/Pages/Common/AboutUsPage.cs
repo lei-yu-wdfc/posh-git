@@ -22,10 +22,16 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public AboutUsPage(UiClient client)
             : base(client)
         {
-            _news = Client.Driver.FindElement(By.CssSelector(Ui.Get.AboutUsPage.News));
-            _ourCustomers = Client.Driver.FindElement(By.CssSelector(Ui.Get.AboutUsPage.OurCustomers));
-            _responsibleLending = Client.Driver.FindElement(By.CssSelector(Ui.Get.AboutUsPage.ResponsibleLending));
-            _whyUseUs = Client.Driver.FindElement(By.CssSelector(Ui.Get.AboutUsPage.WhyUseUs));
+            switch (Config.AUT)
+            {
+                case (AUT.Ca):
+                case (AUT.Za):
+                    _news = Client.Driver.FindElement(By.CssSelector(Ui.Get.AboutUsPage.News));
+                    _ourCustomers = Client.Driver.FindElement(By.CssSelector(Ui.Get.AboutUsPage.OurCustomers));
+                    _responsibleLending = Client.Driver.FindElement(By.CssSelector(Ui.Get.AboutUsPage.ResponsibleLending));
+                    _whyUseUs = Client.Driver.FindElement(By.CssSelector(Ui.Get.AboutUsPage.WhyUseUs));
+                    break;
+            }
         }
 
         public BlogPage NewsClick()
@@ -109,6 +115,53 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             else
             {
                 return false;
+            }
+        }
+
+        public string GetTextFromPage
+        {
+            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.AboutUsPage.AboutUsText)).Text; }
+        }
+
+        public string GetWereDifferentText
+        {
+            get
+            {
+                switch (Config.AUT)
+                {
+                        case AUT.Wb:
+                        Client.Driver.FindElement(By.CssSelector(Ui.Get.AboutUsPage.WereDifferent)).Click();
+                        break;
+                }
+                return Client.Driver.FindElement(By.CssSelector(Ui.Get.AboutUsPage.WereDifferentText)).Text;
+            }
+        }
+
+        public string GetWereFastText
+        {
+            get
+            {
+                switch (Config.AUT)
+                {
+                    case AUT.Wb:
+                        Client.Driver.FindElement(By.CssSelector(Ui.Get.AboutUsPage.WereFast)).Click();
+                        break;
+                }
+                return Client.Driver.FindElement(By.CssSelector(Ui.Get.AboutUsPage.WereFastText)).Text;
+            }
+        }
+
+        public string GetWereResponsibleText
+        {
+            get
+            {
+                switch (Config.AUT)
+                {
+                    case AUT.Wb:
+                        Client.Driver.FindElement(By.CssSelector(Ui.Get.AboutUsPage.WereResponsible)).Click();
+                        break;
+                }
+                return Client.Driver.FindElement(By.CssSelector(Ui.Get.AboutUsPage.WereResponsibleText)).Text;
             }
         }
     }
