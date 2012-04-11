@@ -273,10 +273,10 @@ namespace Wonga.QA.Tests.Ui
             Do.Until(() => myPersonalDetailsPage.ChangePhone("0123000000", "0212571908", "0000"));
 
             myPersonalDetailsPage.Submit();
-            Thread.Sleep(10000);
+            myPersonalDetailsPage.WaitForSuccessPopup();
             myPersonalDetailsPage.Submit();
 
-            Thread.Sleep(10000);
+            Do.With.Timeout(10).Until(() => Drive.Db.Comms.CustomerDetails.Single(c => c.Email == email).HomePhone != "0210000000");
             var homePhone = Drive.Db.Comms.CustomerDetails.FirstOrDefault(c => c.Email == email).HomePhone;
 
             Assert.AreEqual("0123000000", myPersonalDetailsPage.GetHomePhone);
@@ -300,10 +300,10 @@ namespace Wonga.QA.Tests.Ui
             Do.Until(() => myPersonalDetailsPage.ChangePhone("0210000000", "0213456789", "0000"));
 
             myPersonalDetailsPage.Submit();
-            Thread.Sleep(10000);
+            myPersonalDetailsPage.WaitForSuccessPopup();
             myPersonalDetailsPage.Submit();
 
-            Thread.Sleep(10000);
+            Do.With.Timeout(10).Until(() => Drive.Db.Comms.CustomerDetails.Single(c => c.Email == email).MobilePhone != "0212571908");
             var mobilePhone = Drive.Db.Comms.CustomerDetails.FirstOrDefault(c => c.Email == email).MobilePhone;
 
             Assert.AreEqual("0213456789", myPersonalDetailsPage.GetMobilePhone);
