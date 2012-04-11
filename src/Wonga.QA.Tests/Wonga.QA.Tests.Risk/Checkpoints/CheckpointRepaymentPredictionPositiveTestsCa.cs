@@ -281,23 +281,21 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
         }
 
         private double GetRepaymentPredictionScore(Application application)
-		{
-			var db = new DbDriver();
-			return (double)(from ra in db.Risk.RiskApplications
-							join dd in db.Risk.RiskDecisionDatas
-								on ra.RiskApplicationId equals dd.RiskApplicationId
-							where ra.ApplicationId == application.Id
-							select dd.ValueDouble).First();
-		}
+        {
+            var riskWorkflowId = (int)Do.Until(() => Drive.Data.Risk.Db.RiskWorkflows.FindByApplicationId(application.Id)).RiskWorkflowId;
+            var score = (double)Do.Until(() => Drive.Data.Risk.Db.RiskDecisionData.FindByRiskWorkflowId(riskWorkflowId).ValueDouble);
+
+            return score;
+        }
 
         private static bool ScoreGeneratedForApplication(Application application)
         {
             var db = new DbDriver();
-            return (from ra in db.Risk.RiskApplications
-                    join dd in db.Risk.RiskDecisionDatas
-                        on ra.RiskApplicationId equals dd.RiskApplicationId
-                    where ra.ApplicationId == application.Id
-                    select dd.ValueDouble).Count() == 1;
+            return (from rw in db.Risk.RiskWorkflows
+                    join rd in db.Risk.RiskDecisionDatas
+                        on rw.RiskWorkflowId equals rd.RiskWorkflowId
+                    where rw.ApplicationId == application.Id
+                    select rd.ValueDouble).Count() == 1;
         }
 
 	    //verify factors in table
