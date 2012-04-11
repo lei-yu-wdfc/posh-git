@@ -10,5 +10,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Sections
         public String MySummary { get; set; }
         public String MyPersonalDetails { get; set; }
         public String MyPaymentsDetails { get; set; }
+        public String AccountDetails { get; set; }
+        public String YourDetails { get; set; }
     }
 }

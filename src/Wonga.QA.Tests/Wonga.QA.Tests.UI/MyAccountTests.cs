@@ -554,5 +554,19 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(postcode, myPersonalDetailsPage.GetPostcode);
         }
 
+        [Test, AUT(AUT.Wb), JIRA("QA-250")]
+        public void CustomerOnMySummaryClicksRepayButtonCorrectMessageShouldAppear()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Organisation organisation = OrganisationBuilder.New(customer).Build();
+            Application application = ApplicationBuilder
+                .New(customer,organisation)
+                .Build();
+            
+            var mySummaryPage = loginPage.LoginAs(email);
+        }
+
     }
 }

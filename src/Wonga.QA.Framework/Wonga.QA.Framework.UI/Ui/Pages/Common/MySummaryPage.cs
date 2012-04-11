@@ -29,6 +29,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     Tabs = new TabsElement(this);
                     LookForSliders();
                     break;
+                case AUT.Wb:
+                    Navigation = new MyAccountNavigationElement(this);
+                    Tabs = new TabsElement(this);
+                    break;
 
             }
                 
