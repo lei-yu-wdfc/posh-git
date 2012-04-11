@@ -249,6 +249,7 @@
     <PromisedRepayAmount>#content-area p span</PromisedRepayAmount>
     <PromisedRepayDate>#content-area p strong em</PromisedRepayDate>
     <TagCloud>#cloud</TagCloud>
+    <LoanStatusMessage>.wonga-box-type-warning</LoanStatusMessage>
   </MySummaryPage>
 
   <MyPaymentsPage>
