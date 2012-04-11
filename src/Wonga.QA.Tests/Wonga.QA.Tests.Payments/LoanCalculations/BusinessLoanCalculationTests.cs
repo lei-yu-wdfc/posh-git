@@ -15,14 +15,22 @@ namespace Wonga.QA.Tests.Payments.LoanCalculations
     {
         [Test, AUT(AUT.Wb)]
         [Ignore("WIP")]
-        [Row(9850, 3, 517.12, 492.50, 3619.88, 3619.86, 10859.62)]
-        public void BusinessLoanCalculations_PriceTier5(decimal loanAmount, int term, decimal expectedInterest, decimal expectedFee, decimal weeklyRepaymentAmount, decimal finalRepaymentAmount, decimal totalRepay)
+        //[Row(9850/*loanAmount*/, 3/*Term*/, 1.75 /*interestRate*/, 517.12 /*totalInterest*/, 492.50 /*arrangementFee*/ , 3619.88/*weeklyRepaymentAmount*/, 10859.62 /*totalRepay*/, 3619.86/*finalRepaymentAmount*/)]
+        [Row(5000, 10, 1.75 , 875, 250, 612.5, 6125, 0)]
+        [Row(3150, 11, 1.75, 606.38, 157.5, 355.81, 3913.88, 0)]
+        [Row(3300, 13, 1.75, 750.75, 165, 324.29, 4215.75, 0)]
+        [Row(3050, 51, 1.75, 2722.12, 152.50, 116.17, 5924.62, 0)]
+        [Row(3000, 52, 1.75, 2730, 150, 113.08, 5880.00, 0)]
+        [Row(7750, 27, 1.75, 3661.88, 387.5, 437.02, 11799, 0)]
+        [Row(5550, 22, 1.75, 2136.75, 277.5, 362.02, 7964, 0)]
+        [Row(3000, 1, 1.75, 52.50, 150, 3202.5, 3202.5, 0)]
+        [Row(9950, 5, 1.75, 870.62, 497.5, 2263.63, 11318.12, 0)]
+        public void BusinessLoanCalculations_PriceTier5(decimal loanAmount, int term, decimal interestRate, decimal totalInterest, decimal arrangementFee, decimal weeklyRepaymentAmount, decimal totalRepay, decimal finalRepaymentAmount)
         {
-            const decimal interestRate = 1.5m;
-            const String tier = "4";
+            const String tier = "5";
 
             /*************************************************************************************************************************************************
-             * This test will check the calculations on the payments side of things                                                                          *
+             * This test will check the calculations on the payments side of things or PANNI`s Nightmare                                                     *
              * 1 -Check the price tier from -> [RiskApplications]                                                                                            *
              * 2 -Check the LoanAmount / Interest Rate / Application Fee / Term -> from [BusinessFixedInstallmentLoanApplications]                           * 
              * 3 -Check the ArragementFee / Total Interest -> from [Payments].[payment].[Transactions] - the initial 3 transactions                          *
@@ -31,8 +39,8 @@ namespace Wonga.QA.Tests.Payments.LoanCalculations
             var riskDb = Drive.Data.Risk.Db;
             var paymentsDb = Drive.Data.Payments.Db;
 
-            var mainApplicant = CustomerBuilder.New().WithMiddleName(RiskMask.TESTBusinessBureauDataIsAvailable).Build();
-            var organisation = OrganisationBuilder.New(mainApplicant).Build();
+            var mainApplicant = CustomerBuilder.New().WithSpecificAge(37).WithNumberOfDependants(0).WithGender(GenderEnum.Female).Build();
+            var organisation = OrganisationBuilder.New(mainApplicant).WithOrganisationNumber("00000086").Build();
             var application = (ApplicationBuilder.New(mainApplicant, organisation) as BusinessApplicationBuilder).WithLoanAmount(loanAmount).WithLoanTerm(term).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
             /******************** RISK **********************************/
@@ -50,8 +58,8 @@ namespace Wonga.QA.Tests.Payments.LoanCalculations
                     ApplicationId: paymentsApplication.ApplicationId);
             Assert.IsNotNull(businessFixedTermLoan, "Payments.BusinessFixedInstallmentLoanApplications should exist");
 
-            Assert.AreEqual(loanAmount,businessFixedTermLoan.LoanAmount,"The loan ammount should be the same");
-            Assert.AreEqual(interestRate,businessFixedTermLoan.InterestRate,"The interest rate should be the same");
+            Assert.AreEqual(loanAmount, decimal.Parse(businessFixedTermLoan.LoanAmount.ToString()), "The loan ammount should be the same");
+            Assert.AreEqual(interestRate, decimal.Parse(businessFixedTermLoan.InterestRate.ToString()), "The interest rate should be the same");
             Assert.AreEqual(term,businessFixedTermLoan.Term,"The term should be the same");
 
             /******************** Payments.Applications.Transactions **********************************/
@@ -64,13 +72,13 @@ namespace Wonga.QA.Tests.Payments.LoanCalculations
             var interestTransacation = initialPaymentsTransactions.FindBy(Type: "Interest");
 
             Assert.IsNotNull(cashAdvanceTransaction, "Cash advance transaction should be there");
-            Assert.AreEqual(cashAdvanceTransaction.Amount, loanAmount, "The loan amount should be the same");
+            Assert.AreEqual(loanAmount, decimal.Parse(cashAdvanceTransaction.Amount.ToString()), "The loan amount should be the same");
 
             Assert.IsNotNull(feeTransaction, "Fee transaction should be there");
-            Assert.AreEqual(feeTransaction.Amount, expectedFee, "The fee should be the same");
+            Assert.AreEqual(arrangementFee, decimal.Parse(feeTransaction.Amount.ToString()), "The fee should be the same");
 
             Assert.IsNotNull(interestTransacation, "Interest transaction should be there");
-            Assert.AreEqual(interestTransacation.Amount, expectedInterest, "The interest amount should be the same");
+            Assert.AreEqual(totalInterest, decimal.Parse(interestTransacation.Amount.ToString()), "The interest amount should be the same");
 
             /******************** GetBusinessAccountSummaryWbUkQuery **********************************/
 
@@ -79,7 +87,9 @@ namespace Wonga.QA.Tests.Payments.LoanCalculations
                 AccountId = paymentsApplication.AccountId
             });
 
-            Assert.AreEqual(weeklyRepaymentAmount.ToString(), response.Values["WeeklyRepaymentAmount"].SingleOrDefault());
+            Assert.AreEqual(weeklyRepaymentAmount, decimal.Parse(response.Values["WeeklyRepaymentAmount"].SingleOrDefault()), "The weekly amount should be equal");
+            Assert.AreEqual(term.ToString(), response.Values["RemainingNumberOfPayments"].SingleOrDefault(),"The number of repayments should be equal");
+            Assert.AreEqual((loanAmount + totalInterest + arrangementFee),  decimal.Parse(response.Values["TotalOutstandingAmount"].SingleOrDefault()), "The total amount should be equal");
         }
     }
 }
