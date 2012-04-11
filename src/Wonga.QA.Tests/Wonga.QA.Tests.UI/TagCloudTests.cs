@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -41,10 +41,10 @@ namespace Wonga.QA.Tests.Ui
          {21, ""},
 	    };
 
-        /*
+        
         [Test, AUT(AUT.Uk), JIRA("UK-785")]
         public void TagCloudScenario02() {TagCloud(2, 2); } // passed
-
+        
         [Test, AUT(AUT.Uk), JIRA("UK-785")]
         public void TagCloudScenario03() { TagCloud(3, 3); } // passed
 
@@ -63,11 +63,11 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk), JIRA("UK-785")]
         public void TagCloudScenario08() { TagCloud(8, 10); } // passed
              
-        [Test, AUT(AUT.Uk), JIRA("UK-785")]
-        public void TagCloudScenario09() { TagCloud(9, 3); } // not ready, need help
+        //[Test, AUT(AUT.Uk), JIRA("UK-785")]
+        //public void TagCloudScenario09() { TagCloud(9, 3); } // not ready, need help
                 
-        [Test, AUT(AUT.Uk), JIRA("UK-785")]
-        public void TagCloudScenario10() { TagCloud(10); } // not ready, need help
+        //[Test, AUT(AUT.Uk), JIRA("UK-785")]
+        //public void TagCloudScenario10() { TagCloud(10); } // not ready, need help
         
         [Test, AUT(AUT.Uk), JIRA("UK-785")]
         public void TagCloudScenario11() { TagCloud(11, 14); } //passed
@@ -78,28 +78,28 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk), JIRA("UK-785")]
         public void TagCloudScenario13() { TagCloud(13, 64); } //passed
         
-        [Test, AUT(AUT.Uk), JIRA("UK-785")]
-        public void TagCloudScenario14() { TagCloud(14, 20); } // failed
+        //[Test, AUT(AUT.Uk), JIRA("UK-785")]
+        //public void TagCloudScenario14() { TagCloud(14, 20); } // not ready
         
-        [Test, AUT(AUT.Uk), JIRA("UK-785")]
-        public void TagCloudScenario15() { TagCloud(15, 11); } // not ready
+        //[Test, AUT(AUT.Uk), JIRA("UK-785")]
+        //public void TagCloudScenario15() { TagCloud(15, 11); } // not ready
 
-        [Test, AUT(AUT.Uk), JIRA("UK-785")]
-        public void TagCloudScenario16() { TagCloud(16, 11); } // not ready
+        //[Test, AUT(AUT.Uk), JIRA("UK-785")]
+        //public void TagCloudScenario16() { TagCloud(16, 11); } // not ready
         
-        [Test, AUT(AUT.Uk), JIRA("UK-785")]
-        public void TagCloudScenario17() { TagCloud(17, 0); } // hangs
+        //[Test, AUT(AUT.Uk), JIRA("UK-785")]
+        //public void TagCloudScenario17() { TagCloud(17, 0); } // hangs
             
-        [Test, AUT(AUT.Uk), JIRA("UK-785")]
-        public void TagCloudScenario19() { TagCloud(19, 0); } // not ready
+        //[Test, AUT(AUT.Uk), JIRA("UK-785")]
+        //public void TagCloudScenario19() { TagCloud(19, 0); } // not ready
         
         [Test, AUT(AUT.Uk), JIRA("UK-785")]
         public void TagCloudScenario20() { TagCloud(20, 1); } // passed
         
-        [Test, AUT(AUT.Uk), JIRA("UK-785")]
-        public void TagCloudScenario21() { TagCloud(21, 0); } // not ready
+        //[Test, AUT(AUT.Uk), JIRA("UK-785")]
+        //public void TagCloudScenario21() { TagCloud(21, 0); } // not ready
          
-         */
+         
 
         private void TagCloud(int scenarioId, int daysShift)
         {
@@ -125,7 +125,7 @@ namespace Wonga.QA.Tests.Ui
             else if (scenarioId == 17)
                 application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Pending).Build(); //hangs
             else if (scenarioId == 20)
-                application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build(); //hangs
+                application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
             else
             {
                 application = ApplicationBuilder.New(customer).Build();
@@ -159,11 +159,14 @@ namespace Wonga.QA.Tests.Ui
 											                   	    }
 			                          	    });
 
-                /*var dbApplication = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
-                 
-                Thread.Sleep(10000);
-                var repaymentArrangement = Drive.Db.Payments.RepaymentArrangements.Single(x => x.ApplicationId == dbApplication.ApplicationId);
-                Assert.AreEqual(1, repaymentArrangement.RepaymentArrangementDetails.Count);*/ // throws exception
+                    /* Throws exception; alternative to the code above
+                     * 
+                     * var dbApplication = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
+                     * Thread.Sleep(10000);
+                     * var repaymentArrangement = Drive.Db.Payments.RepaymentArrangements.Single(x => x.ApplicationId == dbApplication.ApplicationId);
+                     * Assert.AreEqual(1, repaymentArrangement.RepaymentArrangementDetails.Count);
+                     *                  
+                     */ 
     
                 }
 
