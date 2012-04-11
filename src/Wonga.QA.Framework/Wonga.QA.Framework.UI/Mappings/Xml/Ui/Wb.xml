@@ -129,5 +129,13 @@
       <CardStartDateMonth>#edit-card-start-date-month</CardStartDateMonth>
       <CardStartDateYear>#edit-card-start-date-year</CardStartDateYear>
     </DebitCardSection>
+
+
+  <MyAccountNavigationSection>
+    <MySummary>div#block-wonga-6 ul.menu>li:nth-child(1)>a</MySummary>
+    <AccountDetails>div#block-wonga-6 ul.menu>li:nth-child(2)>a</AccountDetails>
+    <YourDetails>div#block-wonga-6 ul.menu>li:nth-child(3)>a</YourDetails>
+  
+</MyAccountNavigationSection>
   
 </Ui>
