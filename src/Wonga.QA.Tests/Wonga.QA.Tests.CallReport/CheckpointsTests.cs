@@ -227,20 +227,20 @@ namespace Wonga.QA.Tests.CallReport
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-644"), Description("CallReport -> This test creates a loan for a customer with the not provided date of birth, then checks the risk checkpoint")]
-        public void TestCallReportMainApplicantDateOfBirthNotProvided_LoanIsDeclined()
+        public void TestCallReportMainApplicantDateOfBirthNotProvided_LoanIsApproved()
         {
-            const String forename = "kathleen";
-            const String surname = "bridson";
+            const String forename = "unknown";
+            const String surname = "customer";
             var wrongDateOfBirth = new Date(new DateTime(1973, 5, 11), DateFormat.Date);
 
             var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithDateOfBirth(wrongDateOfBirth).WithMiddleName(RiskMask.TESTCustomerDateOfBirthIsCorrectSME);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
 
-            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
 
             VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
                                                                      RiskCheckpointDefinitionEnum.DateOfBirthIsCorrect,
-                                                                     RiskCheckpointStatus.Failed,
+                                                                     RiskCheckpointStatus.Verified,
                                                                      RiskVerificationDefinitions.DateOfBirthIsCorrectVerification);
 
         }
@@ -461,6 +461,76 @@ namespace Wonga.QA.Tests.CallReport
                                                                      RiskVerificationDefinitions.CreditBureauCustomerIsSolventVerification);
         }
 
+        /* Guarantor DOB is correct */
+
+        [Test, AUT(AUT.Wb), JIRA("SME-1138")]
+        [Description("Callreport -> This test creates a loan and checks if the guarantors entered the correct DOB")]
+        public void TestCallReportGuarantorDateOfBirthIsCorrect_LoanIsApproved()
+        {
+            const String forename = "kathleen";
+            const String surname = "bridson";
+            var dateOfBirth = new Date(new DateTime(1992, 1, 24), DateFormat.Date);
+
+            var mainApplicantBuilder = CustomerBuilder.New();
+            var guarantorList = new List<CustomerBuilder>
+                                    {
+                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTCustomerDateOfBirthIsCorrectSME).WithDateOfBirth(dateOfBirth),
+                                    };
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted, guarantorList);
+
+            var guarantorWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.DateOfBirthIsCorrect,
+                                                                     RiskCheckpointStatus.Verified,
+                                                                     RiskVerificationDefinitions.DateOfBirthIsCorrectVerification);
+        }
+
+        [Test, AUT(AUT.Wb), JIRA("SME-1138")]
+        [Description("Callreport -> This test creates a loan and checks if the guarantors entered the correct DOB")]
+        public void TestCallReportGuarantorDateOfBirthNotProvided_LoanIsApproved()
+        {
+            const String forename = "unknown";
+            const String surname = "customer";
+            
+            var dateOfBirth = new Date(new DateTime(1973, 5, 11), DateFormat.Date);
+
+            var mainApplicantBuilder = CustomerBuilder.New();
+            var guarantorList = new List<CustomerBuilder>
+                                    {
+                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTCustomerDateOfBirthIsCorrectSME).WithDateOfBirth(dateOfBirth),
+                                    };
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted, guarantorList);
+
+            var guarantorWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.DateOfBirthIsCorrect,
+                                                                     RiskCheckpointStatus.Verified,
+                                                                     RiskVerificationDefinitions.DateOfBirthIsCorrectVerification);
+        }
+
+        [Test, AUT(AUT.Wb), JIRA("SME-1138")]
+        [Description("Callreport -> This test creates a loan and checks if the guarantors entered the correct DOB")]
+        public void TestCallReportGuarantorDateOfBirthIsInCorrect_LoanIsDeclined()
+        {
+            const String forename = "kathleen";
+            const String surname = "bridson";
+            var dateOfBirth = new Date(new DateTime(1990, 1, 24), DateFormat.Date);
+
+            var mainApplicantBuilder = CustomerBuilder.New();
+            var guarantorList = new List<CustomerBuilder>
+                                    {
+                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTCustomerDateOfBirthIsCorrectSME).WithDateOfBirth(dateOfBirth),
+                                    };
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.PreAccepted, guarantorList);
+            Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
+
+            var guarantorWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Failed, 1);
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.DateOfBirthIsCorrect,
+                                                                     RiskCheckpointStatus.Failed,
+                                                                     RiskVerificationDefinitions.DateOfBirthIsCorrectVerification);
+        }
+
         #endregion
 
         private static Application CreateApplicationWithAsserts(CustomerBuilder mainApplicantBuilder, String companyRegisteredNumber, ApplicationDecisionStatus applicationDecision, List<CustomerBuilder> guarantors = null)
@@ -482,6 +552,12 @@ namespace Wonga.QA.Tests.CallReport
             if (guarantors != null)
             {
                 applicationBuilder.WithGuarantors(guarantors);
+
+                foreach (var customerBuilder in guarantors)
+                {
+                    customerBuilder.ScrubForename(customerBuilder.Forename);
+                    customerBuilder.ScrubSurname(customerBuilder.Surname);
+                }
             }
 
             //STEP5 - Build the application + send the list of guarantors

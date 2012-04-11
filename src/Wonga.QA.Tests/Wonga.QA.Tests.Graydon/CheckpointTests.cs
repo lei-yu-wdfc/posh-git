@@ -656,6 +656,12 @@ namespace Wonga.QA.Tests.Graydon
             if (guarantors!=null)
             {
                 applicationBuilder.WithGuarantors(guarantors);
+
+                foreach (var customerBuilder in guarantors)
+                {
+                    customerBuilder.ScrubForename(customerBuilder.Forename);
+                    customerBuilder.ScrubSurname(customerBuilder.Surname);
+                }
             }
 
             //STEP5 - Build the application + send the list of guarantors
