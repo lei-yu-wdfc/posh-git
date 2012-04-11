@@ -72,6 +72,7 @@
     <Compile Include="Mappings\Ui\Elements\TabsElement.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\AboutUsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ApplyPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\ApplyTermsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\BlogPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ForgotPasswordPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\HomePage.cs" />
@@ -90,6 +91,8 @@
     <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceHomePage.cs" />
     <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceLoginPage.cs" />
     <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceSearchResultPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Wb\ReferPage.cs" />
+    <Compile Include="Mappings\Ui\Sections\AddressDetailsSection.cs" />
     <Compile Include="Mappings\Ui\Sections\ApplicationSection.cs" />
     <Compile Include="Mappings\Ui\Ui.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\DealDonePage.cs" />
@@ -137,6 +140,7 @@
     <Compile Include="Ui\Elements\TabsElement.cs" />
     <Compile Include="Ui\Pages\Common\AboutUsPage.cs" />
     <Compile Include="Ui\Pages\Common\ApplyPage.cs" />
+    <Compile Include="Ui\Pages\Common\ApplyTermsPage.cs" />
     <Compile Include="Ui\Pages\Common\BlogPage.cs" />
     <Compile Include="Ui\Pages\Common\TopupDealDonePage.cs" />
     <Compile Include="Ui\Pages\Common\DealDonePage.cs" />
@@ -162,7 +166,9 @@
     <Compile Include="Ui\Pages\SalesForce\SalesForceHomePage.cs" />
     <Compile Include="Ui\Pages\SalesForce\SalesForceLoginPage.cs" />
     <Compile Include="Ui\Pages\SalesForce\SalesForceSearchResultPage.cs" />
+    <Compile Include="Ui\Pages\Wb\ReferPage.cs" />
     <Compile Include="Ui\Sections\AccountDetailsSection.cs" />
+    <Compile Include="Ui\Sections\AddressDetailsSection.cs" />
     <Compile Include="Ui\Sections\ApplicationSection.cs" />
     <Compile Include="Ui\Sections\BankAccountSection.cs" />
     <Compile Include="Ui\Sections\BaseSection.cs" />

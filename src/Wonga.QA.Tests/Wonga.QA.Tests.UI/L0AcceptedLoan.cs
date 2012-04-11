@@ -48,14 +48,19 @@ namespace Wonga.QA.Tests.Ui
             var dealDone = acceptedPage.Submit();
         }
 
-        [Test, AUT(AUT.Wb), Pending("Broken, waiting for FE to stabilize changes..")]
+        [Test, AUT(AUT.Wb)] //, Pending("Broken, waiting for FE to stabilize changes..")]
         public void WbAcceptedLoan()
         {
             var processingPage = WbL0Path("TESTNoCheck");
+            var applyTermsPage = processingPage.WaitFor<ApplyTermsPage>() as ApplyTermsPage;
+            applyTermsPage.EditDurationOfLoan("22");
+            applyTermsPage.Next();
             var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
             acceptedPage.SignTermsMainApplicant();
             acceptedPage.SignTermsGuarantor();
-            var dealDonePage = acceptedPage.Submit() as DealDonePage;
+           
+            var dealDonePage = acceptedPage.Submit() as ReferPage;
+            //var dealDonePage = acceptedPage.Submit() as DealDonePage;
         }
 
         [Test, AUT(AUT.Uk)]

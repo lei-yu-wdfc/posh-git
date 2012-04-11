@@ -4,6 +4,7 @@ using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
 using Wonga.QA.Framework.UI.Mappings;
+using Wonga.QA.Framework.UI.UiElements.Pages.Wb;
 
 namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
@@ -204,6 +205,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public IApplyPage Submit()
         {
             _form.FindElement(By.CssSelector(Ui.Get.AcceptedPage.SubmitButton)).Click();
+            if (Config.AUT.Equals(AUT.Wb))
+                return new ReferPage(Client);
             return new DealDonePage(Client);
         }
 
