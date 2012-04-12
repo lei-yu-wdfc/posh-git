@@ -101,6 +101,10 @@
     <ReturnToHomepage>.button.default</ReturnToHomepage>
   </ReferPage>
 
+  <MySummaryPage>
+    <Title>#business-summary</Title>
+  </MySummaryPage>
+
   <!--SectionS SECTION-->
 
   <YourNameSection>
