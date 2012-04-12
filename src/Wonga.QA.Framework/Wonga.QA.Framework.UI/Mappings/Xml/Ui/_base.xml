@@ -45,7 +45,7 @@
     <ContinueButtonLink>.application-success-button</ContinueButtonLink>
     <ContinueButton>#edit-submit</ContinueButton>
     <RepayDate>#content-area em</RepayDate>
-    <RepayAmount>#content-area span.blue-text</RepayAmount>
+    <RepayAmount>.blue-text</RepayAmount>
   </DealDonePage>
 
   <TopupDealDonePage>
