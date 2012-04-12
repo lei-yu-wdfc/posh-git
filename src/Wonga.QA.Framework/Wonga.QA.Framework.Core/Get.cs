@@ -178,7 +178,7 @@ namespace Wonga.QA.Framework.Core
 
 		public static String GetPostcode()
 		{
-			return RandomInt(0000, 9999).ToString().PadLeft(4);
+			return RandomInt(0000, 9999).ToString().PadLeft(4,'0');
 		}
 
         public static Uri GetSchema(Uri uri)
