@@ -460,7 +460,7 @@ namespace Wonga.QA.Tests.Ui
             // need to add check data in SF whan it well be ready for this
         }
 
-        [Test, AUT(AUT.Za, AUT.Uk, AUT.Wb), JIRA("QA-187")]
+        [Test, AUT(AUT.Za, AUT.Uk, AUT.Ca), JIRA("QA-187")]
         public void CustomerEntersInvalidBankAccountWarningMessageShouldBeDisplyaed()
         {
             var accounts = new List<string> { "dfgsfgfgsdf", "123 342", "123f445", "+135-6887" };
