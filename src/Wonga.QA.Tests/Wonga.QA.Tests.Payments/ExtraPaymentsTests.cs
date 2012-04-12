@@ -12,7 +12,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments
 {
-    [Parallelizable(TestScope.All)]
+    //[Parallelizable(TestScope.All)]
     public class ExtraPaymentsTests
     {
         private static void InitApplication(out PaymentPlanEntity paymentPlan, out BusinessApplication application)
