@@ -32,7 +32,7 @@ namespace Wonga.QA.Tests.Payments
 
             ServiceConfigurationEntity mocksScotiaEnabledKeyEntity = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == MocksScotiaEnabledKey);
             _mocksScotiaEnabled = mocksScotiaEnabledKeyEntity.Value;
-            mocksScotiaEnabledKeyEntity.Value = "false";
+            mocksScotiaEnabledKeyEntity.Value = "true";
             mocksScotiaEnabledKeyEntity.Submit();
         }
 
