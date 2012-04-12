@@ -65,7 +65,7 @@ namespace Wonga.QA.Tests.Experian
         public void TestExperianMainApplicantIsDeceased_LoanIsDeclined()
         {
             const String forename = "Johnny";
-			const String surname = "DeceasedFlagDetected";
+			const String surname = "DeadGuy";
 
             var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicantIsNotDeceased);
             var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
@@ -103,7 +103,7 @@ namespace Wonga.QA.Tests.Experian
         public void TestExperianMainApplicantIsCifasFlagged_LoanIsDeclined()
         {
             const String forename = "laura";
-			const String surname = "CIFASFlagDetected";
+			const String surname = "Insolvent";
 
             var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicationElementNotCIFASFlagged);
             var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
@@ -122,8 +122,8 @@ namespace Wonga.QA.Tests.Experian
         [Description("Experian -> This test creates a loan and checks if the main applicant has data available")]
         public void TestExperianMainApplicantDataIsAvailable_LoanIsApproved()
         {
-            const String forename = "kathleen";
-			const String surname = "InsufficientBureauData";
+            const String forename = "john";
+			const String surname = "konor";
 
             var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianCreditBureauDataIsAvailable);
             var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
@@ -140,7 +140,7 @@ namespace Wonga.QA.Tests.Experian
         [Description("Experian -> This test creates a loan and checks if the main applicant has data available")]
         public void TestExperianMainApplicantIsNotAvailable_LoanIsDeclined()
         {
-            const String forename = "Unknown";
+            const String forename = "John";
 			const String surname = "InsufficientBureauData";
 
             var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianCreditBureauDataIsAvailable);
@@ -179,7 +179,7 @@ namespace Wonga.QA.Tests.Experian
         public void TestExperianMainApplicantIsInsolvent_LoanIsDeclined()
         {
             const String forename = "laura";
-			const String surname = "ApplicantIsInsolvent";
+			const String surname = "Insolvent";
 
             var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicantIsSolvent);
             var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
@@ -201,7 +201,7 @@ namespace Wonga.QA.Tests.Experian
         {
             const String forename = "kathleen";
             const String surname = "bridson";
-            var correctDateOfBirth = new Date(new DateTime(1988, 10, 22), DateFormat.Date);
+            var correctDateOfBirth = new Date(new DateTime(1992, 01, 24), DateFormat.Date);
 
 			var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithDateOfBirth(correctDateOfBirth).WithMiddleName(RiskMask.TESTExperianCustomerDateOfBirthIsCorrectSME);
             var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
@@ -237,7 +237,7 @@ namespace Wonga.QA.Tests.Experian
         [JIRA("SME-644"), Description("Experian -> This test creates a loan for a customer with the not provided date of birth, then checks the risk checkpoint")]
         public void TestExperianMainApplicantDateOfBirthIsNotProvided_LoanIsApproved()
         {
-            const String forename = "kathleen";
+            const String forename = "john";
 			const String surname = "DOBIsNotProvided";
             var dateOfBirth = new Date(new DateTime(1973, 5, 11), DateFormat.Date);
 
@@ -349,7 +349,7 @@ namespace Wonga.QA.Tests.Experian
         public void TestExperianGuarantorIsDeceased_LoanIsDeclined()
         {
             const String forename = "Johnny";
-			const String surname = "DeceasedFlagDetected";
+			const String surname = "DeadGuy";
 
             var mainApplicantBuilder = CustomerBuilder.New();
 
@@ -401,7 +401,7 @@ namespace Wonga.QA.Tests.Experian
         public void TestExperianGuarantorIsCifasFlagged_LoanIsDeclined()
         {
             const String forename = "laura";
-			const String surname = "CIFASFlagDetected";
+			const String surname = "Insolvent";
 
             var mainApplicantBuilder = CustomerBuilder.New();
 
@@ -503,7 +503,7 @@ namespace Wonga.QA.Tests.Experian
         public void TestExperianGuarantorIsInsolvent_LoanIsDeclined()
         {
             const String forename = "laura";
-			const String surname = "ApplicantIsInsolvent";
+			const String surname = "Insolvent";
 
             var mainApplicantBuilder = CustomerBuilder.New();
             var guarantorList = new List<CustomerBuilder>
