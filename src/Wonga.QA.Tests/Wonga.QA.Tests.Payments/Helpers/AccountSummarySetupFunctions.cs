@@ -20,11 +20,47 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 throw new Exception("Unable to run test, LoanExtension must be enabled in service configuration");
         }
 
-        private int NotTooEarlyToExtendDays()
+        private void MakeAppNotTooNearDueDateToExtend(Guid appId)
+        {
+            var cfg = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Payments.ExtendLoanDaysBeforeDueDate");
+            UpdateNextDueDate(appId, int.Parse(cfg.Value) - 3);
+        }
+
+        private void MakeAppDueToday(Guid appId)
+        {
+            UpdateNextDueDate(appId, 0);
+        }
+
+        private void MakeAppDueYesterday(Guid appId)
+        {
+            UpdateNextDueDate(appId, -1);
+        }
+
+        private void MakeAppNotTooEarlyToExtendDays(Guid appId)
         {
             // Check extend loan min days
             var cfg1 = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Payments.ExtendLoanMinDays");
-            return int.Parse(cfg1.Value + 5);
+            UpdateAcceptedOn(appId, int.Parse(cfg1.Value + 5));
+        }
+
+        private void MakeAppTooEarlyToExtendDays(Guid appId)
+        {
+            // Check extend loan min days
+            var cfg1 = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Payments.ExtendLoanMinDays");
+            UpdateAcceptedOn(appId, 0);
+        }
+
+        private void UpdateAcceptedOn(Guid appId, int days)
+        {
+            var dt = DateTime.UtcNow.AddDays(days);                
+            Drive.Data.Payments.Db.Applications.UpdateByExternalId(ExternalId: appId, AcceptedOn: dt);
+        }
+
+        private void UpdateNextDueDate(Guid appId, int days)
+        {
+            var dt = DateTime.UtcNow.AddDays(days).Date;
+            var app = Drive.Data.Payments.Db.Applications.FindByExternalId(appId);
+            Drive.Data.Payments.Db.FixedTermLoanApplications.UpdateByApplicationId(ApplicationId: app.ApplicationId, NextDueDate: dt);
         }
 
         private int TooEarlyToExtendDays()
@@ -92,7 +128,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             // Alter NextDueDate & AcceptedOn
             var app = new Application(appId);
             app.UpdateNextDueDate(DueDateTooFarInFutureDays());
-            app.UpdateAcceptedOnDate(NotTooEarlyToExtendDays());
+            MakeAppNotTooEarlyToExtendDays(appId);
             
             // Create Transactions
             var trnGuid1 = CreateLoanAdvanceTransaction(appId);
@@ -120,7 +156,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             // Alter NextDueDate & AcceptedOn
             var app = new Application(appId);
             app.UpdateNextDueDate(NotDueDateTooFarInFutureDays());
-            app.UpdateAcceptedOnDate(NotTooEarlyToExtendDays());
+            MakeAppNotTooEarlyToExtendDays(appId);
             
             var trnGuid1 = CreateLoanAdvanceTransaction(appId);
             var trnGuid2 = CreateTransmissionFeeTransaction(appId);
@@ -154,12 +190,71 @@ namespace Wonga.QA.Tests.Payments.Helpers
             var trnGuid5 = CreateExtensionFeeTransaction(appId);
 
             // Alter NextDueDate & AcceptedOn
-            var app = new Application(appId);
-            app.UpdateNextDueDate(NotDueDateTooFarInFutureDays());
-            app.UpdateAcceptedOnDate(NotTooEarlyToExtendDays());
+            MakeAppNotTooNearDueDateToExtend(appId);
+            MakeAppNotTooEarlyToExtendDays(appId);
 
             // Check transactions have been created
             Do.Until(() => Drive.Data.Payments.Db.Transactions.FindAllByExternalId(new[] { trnGuid1, trnGuid2, trnGuid3, trnGuid4, trnGuid5 }).Count() == 5);
+        }
+
+        /// <summary>
+        /// Setup for Cannot Extend On Due Date
+        /// </summary>
+        public void Scenario04SetupCannotExtendOnDueDate(Guid paymentCardId, Guid appId, Guid bankAccountId, Guid accountId, decimal trustRating)
+        {
+            CheckExtensionIsEnabled();
+
+            // Create Account so that time zone can be looked up
+            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+
+            // Create Application 
+            CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
+
+            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+
+            // Check App Exists in DB
+            Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
+
+            var trnGuid1 = CreateLoanAdvanceTransaction(appId);
+            var trnGuid2 = CreateTransmissionFeeTransaction(appId);
+
+            // Alter NextDueDate & AcceptedOn
+            MakeAppDueToday(appId);
+            MakeAppTooEarlyToExtendDays(appId);
+
+            // Check transactions have been created
+            Do.Until(() => Drive.Data.Payments.Db.Transactions.FindAllByExternalId(new[] { trnGuid1, trnGuid2 }).Count() == 2);
+        }
+
+        /// <summary>
+        /// Setup for Cannot Extend On Day Before Due Date
+        /// </summary>
+        public void Scenario04SetupCannotExtendOnDayBeforeDueDate(Guid paymentCardId, Guid appId, Guid bankAccountId, Guid accountId, decimal trustRating)
+        {
+            CheckExtensionIsEnabled();
+
+            // Create Account so that time zone can be looked up
+            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+
+            // Create Application 
+            CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
+
+            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+
+            // Check App Exists in DB
+            Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
+
+            var trnGuid1 = CreateLoanAdvanceTransaction(appId);
+            var trnGuid2 = CreateTransmissionFeeTransaction(appId);
+
+            // Alter NextDueDate & AcceptedOn
+            MakeAppDueYesterday(appId);
+            MakeAppTooEarlyToExtendDays(appId);
+
+            // Check transactions have been created
+            Do.Until(() => Drive.Data.Payments.Db.Transactions.FindAllByExternalId(new[] { trnGuid1, trnGuid2 }).Count() == 2);
         }
 
         public void Scenario05Setup(Guid paymentCardId, Guid appId, Guid bankAccountId, Guid accountId, decimal trustRating)
@@ -209,7 +304,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             // Alter NextDueDate & AcceptedOn
             var app = new Application(appId);
             app.UpdateNextDueDate(NotDueDateTooFarInFutureDays());
-            app.UpdateAcceptedOnDate(NotTooEarlyToExtendDays());
+            MakeAppNotTooEarlyToExtendDays(appId);
 
             var trnGuid1 = CreateLoanAdvanceTransaction(appId);
             var trnGuid2 = CreateTransmissionFeeTransaction(appId);
@@ -240,7 +335,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             // Alter NextDueDate & AcceptedOn
             var app = new Application(appId);
             app.UpdateNextDueDate(NotDueDateTooFarInFutureDays());
-            app.UpdateAcceptedOnDate(NotTooEarlyToExtendDays());
+            MakeAppNotTooEarlyToExtendDays(appId);
 
             var trnGuid1 = CreateLoanAdvanceTransaction(appId);
             var trnGuid2 = CreateTransmissionFeeTransaction(appId);
