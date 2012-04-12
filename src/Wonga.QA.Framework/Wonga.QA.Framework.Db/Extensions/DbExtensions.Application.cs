@@ -26,7 +26,20 @@ namespace Wonga.QA.Framework.Db.Extensions
 			db.RewindApplicationDates(application, riskApplication, duration);
 		}
 
-		public static void RewindApplicationDates(this DbDriver db, ApplicationEntity application, RiskApplicationEntity riskApp, TimeSpan span)
+        public static void UpdateNextDueDate(this DbDriver db, FixedTermLoanApplicationEntity fixedApp, TimeSpan span)
+        {
+            var dt = DateTime.UtcNow;
+            fixedApp.NextDueDate = (dt += span);
+            fixedApp.Submit(true);
+        }
+
+        public static void MoveAcceptedOnDate(this DbDriver db, ApplicationEntity app, TimeSpan span)
+        {
+            app.AcceptedOn += span;
+            app.Submit(true);
+        }
+
+	    public static void RewindApplicationDates(this DbDriver db, ApplicationEntity application, RiskApplicationEntity riskApp, TimeSpan span)
 		{
 			application.ApplicationDate -= span;
 			application.SignedOn -= span;
