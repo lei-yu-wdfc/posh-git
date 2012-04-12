@@ -10,6 +10,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String TopupRequestPageNewInterestAndFees { get; set; }
         public String TopupRequestPageNewGrandTotal { get; set; }
         public String TopupRequestPageSliders { get; set; }
+        public String TopupRequestPageSlidersSmall { get; set; }
 
     }
 }

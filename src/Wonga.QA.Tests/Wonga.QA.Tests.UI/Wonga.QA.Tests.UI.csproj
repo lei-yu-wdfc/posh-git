@@ -48,13 +48,17 @@
     <Compile Include="LogoutTest.cs" />
     <Compile Include="MyAccountTests.cs" />
     <Compile Include="MySummary.cs" />
+    <Compile Include="MySummaryScenarioTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RedirectedToSelectedSiteTest.cs" />
     <Compile Include="SalesForceTest.cs" />
     <Compile Include="SecondLoanTest.cs" />
     <Compile Include="SliderTests.cs" />
     <Compile Include="SurveyTest.cs" />
+
     <Compile Include="TagCloudTests.cs" />
+    <Compile Include="TopupSliderTests.cs" />
+
     <Compile Include="UiTest.cs" />
     <Compile Include="L0DeclinedLoan.cs" />
   </ItemGroup>
