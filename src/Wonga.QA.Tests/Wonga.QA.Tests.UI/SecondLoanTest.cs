@@ -22,7 +22,7 @@ namespace Wonga.QA.Tests.Ui
 {
     class SecondLoanTest : UiTest
     {
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-195"), Pending("need refinement")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-195")]
         public void InformationAboutSecondLoanShouldBeDisplayed()
         {
             string actualRepaymentDate;
@@ -77,10 +77,11 @@ namespace Wonga.QA.Tests.Ui
                             break;
                     }
                     Assert.AreEqual(actualRepaymentDate, summaryZa.GetPromisedRepayDate);
-
-                    var applicationEntity = Do.Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(application.Id));
+                    var lastApplication = customer.GetApplications().Single(a => !a.IsClosed);
+                    var applicationEntity = Do.Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(lastApplication.Id));
                     var fixedTermApplicationEntity = Do.Until(() => Drive.Data.Payments.Db.FixedTermLoanApplications.FindByApplicationId(applicationEntity.ApplicationId));
                     Assert.AreEqual(String.Format("{0:d MMMM yyyy}", date), String.Format("{0:d MMMM yyyy}", fixedTermApplicationEntity.PromiseDate));
+                    Assert.AreEqual("500.00", fixedTermApplicationEntity.LoanAmount.ToString());
                     break;
 
                 case AUT.Ca:
@@ -117,10 +118,11 @@ namespace Wonga.QA.Tests.Ui
                             break;
                     }
                     Assert.AreEqual(actualRepaymentDate, summaryCa.GetPromisedRepayDate);
-
-                    var applicationEntity2 = Do.Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(application.Id));
+                    var lastApplication2 = customer.GetApplications().Single(a=>!a.IsClosed);
+                    var applicationEntity2 = Do.Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(lastApplication2.Id));
                     var fixedTermApplicationEntity2 = Do.Until(() => Drive.Data.Payments.Db.FixedTermLoanApplications.FindByApplicationId(applicationEntity2.ApplicationId));
                     Assert.AreEqual(String.Format("{0:d MMMM yyyy}", date), String.Format("{0:d MMMM yyyy}", fixedTermApplicationEntity2.PromiseDate));
+                    Assert.AreEqual("200.00", fixedTermApplicationEntity2.LoanAmount.ToString());
                     break;
             }
         }
