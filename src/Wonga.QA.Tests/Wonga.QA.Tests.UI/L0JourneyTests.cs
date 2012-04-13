@@ -7,6 +7,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
@@ -528,6 +529,55 @@ namespace Wonga.QA.Tests.Ui
                     break;
                 #endregion
             }
+        }
+
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-191")]
+        public void CustomerClicksAcceptButtonChosenLoanAmountShouldDepositedIntoAccountCheckDatabase()
+        {
+            DateTime date;
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            MySummaryPage mySummary;
+            switch (Config.AUT)
+            {
+                case AUT.Ca:
+                    date = DateTime.Now.AddDays(DateHelper.GetNumberOfDaysUntilStartOfLoanForCa()+20);
+                    mySummary = journey.ApplyForLoan(200, 20)
+                                          .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                          .FillAddressDetails()
+                                          .FillAccountDetails().FillBankDetails()
+                                          .WaitForAcceptedPage()
+                                          .FillAcceptedPage()
+                                          .GoToMySummaryPage().CurrentPage as MySummaryPage;
+                    var customerCa = Do.Until(() => Drive.Data.Comms.Db.CustomerDetails.FindBy(Forename: journey.FirstName, Surname: journey.LastName));
+                    Console.WriteLine(customerCa.Email.ToString());
+                    Console.WriteLine(customerCa.AccountId.ToString());
+                    var applicationCa = Do.Until(() => Drive.Data.Payments.Db.Applications.FindBy(AccountId: customerCa.AccountId));
+                    Console.WriteLine(applicationCa.AccountId.ToString());
+                    var fixedTermApplicationCa = Do.Until(() => Drive.Data.Payments.Db.FixedTermLoanApplications.FindByApplicationId(applicationCa.ApplicationId));
+                    Assert.AreEqual("200.00", fixedTermApplicationCa.LoanAmount.ToString());
+                    Assert.AreEqual(String.Format("{0:dddd MMMM yyyy}", date), String.Format("{0:dddd MMMM yyyy}", fixedTermApplicationCa.PromiseDate));
+                    break;
+                case AUT.Za:
+                    date = DateTime.Now.AddDays(20);
+                    mySummary = journey.ApplyForLoan(200, 20)
+                                          .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                          .FillAddressDetails()
+                                          .FillAccountDetails().FillBankDetails()
+                                          .WaitForAcceptedPage()
+                                          .FillAcceptedPage()
+                                          .GoToMySummaryPage().CurrentPage as MySummaryPage;
+                    var customerZa = Do.Until(() => Drive.Data.Comms.Db.CustomerDetails.FindBy(Forename: journey.FirstName, Surname: journey.LastName));
+                    Console.WriteLine(customerZa.Email.ToString());
+                    Console.WriteLine(customerZa.AccountId.ToString());
+                    var applicationZa = Do.Until(() => Drive.Data.Payments.Db.Applications.FindBy(AccountId: customerZa.AccountId));
+                    Console.WriteLine(applicationZa.AccountId.ToString());
+                    var fixedTermApplicationZa = Do.Until(() => Drive.Data.Payments.Db.FixedTermLoanApplications.FindByApplicationId(applicationZa.ApplicationId));
+                    Assert.AreEqual("200.00", fixedTermApplicationZa.LoanAmount.ToString());
+                    Assert.AreEqual(String.Format("{0:d MMMM yyyy}", date), String.Format("{0:d MMMM yyyy}", fixedTermApplicationZa.PromiseDate));
+                    break;
+            }
+
+
         }
     }
 }
