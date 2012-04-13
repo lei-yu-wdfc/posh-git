@@ -36,7 +36,8 @@ namespace Wonga.QA.Tests.Payments.Command
         {
             protected decimal _startingBalance;
             protected decimal _paymentAmount;
-            
+            protected dynamic _paymentCardRepaymentRequests = Drive.Data.Payments.Db.PaymentCardRepaymentRequests;
+
             [SetUp]
             public override void Setup()
             {
@@ -78,11 +79,12 @@ namespace Wonga.QA.Tests.Payments.Command
                 [Test, AUT(AUT.Uk)]
                 public void TheLoanAmountHasBeenReducedByPaymentAmountPaymentRequestAdded()
                 {
-                    Do.With.Timeout(5).Interval(20).Until(() => _application.GetBalance() == _startingBalance - _paymentAmount );
-                    Do.With.Timeout(5).Interval(20).Until(() => Drive.Db.Payments.PaymentCardRepaymentRequests.SingleOrDefault(r => r.ApplicationEntity.ExternalId == _application.Id &&
-                                                                                                                                    r.Amount == _paymentAmount &&
-                                                                                                                                    r.FailedOn == null &&
-                                                                                                                                    r.SuccessOn != null));
+                    Do.With.Timeout(2).Interval(20).Until(() => null != _paymentCardRepaymentRequests.FindAll(_paymentCardRepaymentRequests.Applications.ExternalId == _application.Id &&
+                                                                                                              _paymentCardRepaymentRequests.Amount == _paymentAmount &&
+                                                                                                              _paymentCardRepaymentRequests.FailedOn == null &&
+                                                                                                              _paymentCardRepaymentRequests.SuccessOn != null).FirstOrDefault());
+
+                    Do.With.Timeout(5).Interval(20).Until(() => _application.GetBalance() == _startingBalance - _paymentAmount);
                 }
             }
 
@@ -98,10 +100,11 @@ namespace Wonga.QA.Tests.Payments.Command
                 [Test, AUT(AUT.Uk)]
                 public void TheLoanAmountRemainsTheSameFailedPaymentRequestAdded()
                 {
-                    Do.With.Timeout(2).Interval(20).Until(() => Drive.Db.Payments.PaymentCardRepaymentRequests.SingleOrDefault(r => r.ApplicationEntity.ExternalId == _application.Id &&
-                                                                                                                                    r.Amount == _paymentAmount &&
-                                                                                                                                    r.FailedOn != null &&
-                                                                                                                                    r.SuccessOn == null));
+                    Do.With.Timeout(2).Interval(20).Until(() => null != _paymentCardRepaymentRequests.FindAll(_paymentCardRepaymentRequests.Applications.ExternalId == _application.Id &&
+                                                                                                              _paymentCardRepaymentRequests.Amount == _paymentAmount &&
+                                                                                                              _paymentCardRepaymentRequests.FailedOn != null &&
+                                                                                                              _paymentCardRepaymentRequests.SuccessOn == null).FirstOrDefault() );
+
                     Assert.IsTrue(_application.GetBalance() == _startingBalance);
                 }
             }
