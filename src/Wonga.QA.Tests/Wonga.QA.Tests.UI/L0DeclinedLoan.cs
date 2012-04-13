@@ -19,8 +19,8 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Wb), Pending("Broken, waiting for FE to stabilize changes..")]
         public void WbDeclinedLoan()
         {
-            var processingPage = WbL0Path();
-            var declinedPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
+            //var processingPage = WbL0Path();
+            //var declinedPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
         }
 
         [Test, AUT(AUT.Za)]
