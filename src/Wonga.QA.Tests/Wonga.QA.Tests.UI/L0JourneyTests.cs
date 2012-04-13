@@ -528,8 +528,6 @@ namespace Wonga.QA.Tests.Ui
                     break;
                 #endregion
             }
-
-            // Assert.Throws<AssertionFailureException>(() => { var processingPage = addressDetailsPage.Next(); });
         }
     }
 }

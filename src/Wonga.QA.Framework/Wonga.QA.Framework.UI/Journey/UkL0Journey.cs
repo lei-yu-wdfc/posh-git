@@ -44,10 +44,10 @@ namespace Wonga.QA.Framework.UI
             personalDetailsPage.YourName.Title = "Mr";
             personalDetailsPage.YourDetails.DateOfBirth = "1/Jan/1980";
             personalDetailsPage.YourDetails.Gender = "Male";
-            personalDetailsPage.YourDetails.HomeStatus = "Tenant furnished";
+            personalDetailsPage.YourDetails.HomeStatus = "Tenant Furnished";
             personalDetailsPage.YourDetails.MaritalStatus = "Single";
             personalDetailsPage.YourDetails.NumberOfDependants = "0";
-            personalDetailsPage.EmploymentDetails.EmploymentStatus = "Employed - full time";
+            personalDetailsPage.EmploymentDetails.EmploymentStatus = "Employed Full Time";
             personalDetailsPage.EmploymentDetails.MonthlyIncome = "1000";
             personalDetailsPage.EmploymentDetails.EmployerName = employerName;
             personalDetailsPage.EmploymentDetails.EmployerIndustry = "Finance";
