@@ -16,16 +16,16 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
             _addAnother = _form.FindElement(By.CssSelector(Ui.Get.AdditionalDirectorsPage.AddAnotherDirector));
         }
 
-        public Wb.BusinessBankAccountPage Next()
+        public BusinessBankAccountPage Next()
         {
             _done.Click();
-            return new Wb.BusinessBankAccountPage(Client);
+            return new BusinessBankAccountPage(Client);
         }
 
-        public Wb.AddAditionalDirectorsPage AddAditionalDirector()
+        public AddAditionalDirectorsPage AddAditionalDirector()
         {
             _addAnother.Click();
-            return new Wb.AddAditionalDirectorsPage(Client);
+            return new AddAditionalDirectorsPage(Client);
         }
     }
 }
