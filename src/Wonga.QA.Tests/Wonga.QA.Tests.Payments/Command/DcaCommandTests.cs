@@ -28,8 +28,8 @@ namespace Wonga.QA.Tests.Payments.Command
 	    private dynamic _schedulePaymentSagas = Drive.Data.OpsSagas.Db.ScheduledPaymentSagaEntity;
 		private const int delay = 15000;
         
-		[SetUp]
-		public void SetUp()
+		[FixtureSetUp]
+		public void FixtureSetUp()
 		{
 			//ServiceConfigurationEntity entity = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == BankGatewayIsTestModeKey);
 			//_bankGatewayIsTestMode = entity.Value;
@@ -42,8 +42,8 @@ namespace Wonga.QA.Tests.Payments.Command
 		}
 
 
-		[TearDown]
-		public void TearDown()
+		[FixtureTearDown]
+		public void FixtureTearDown()
 		{
 			//Drive.Data.Ops.Db.ServiceConfigurations.UpdateByKey(Key: BankGatewayIsTestModeKey, Value: _bankGatewayIsTestMode);
 			//Drive.Data.Ops.Db.ServiceConfigurations.UpdateByKey(Key: FeatureSwitchMoveLoanToDca, Value: _featureSwitchMoveLoanToDcaMode);
@@ -120,7 +120,6 @@ namespace Wonga.QA.Tests.Payments.Command
 			//Act
 			Drive.Cs.Commands.Post(flagToDcaCommand);
 		}
-
 
 		[Test, AUT(AUT.Za), JIRA("ZA-2147")]
 		public void RevokeApplicationFromDca_ShouldMoveApplicationFromDCA()
