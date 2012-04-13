@@ -30,6 +30,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String OptionsCloud { get; set; }
         public String IntroText { get; set; }
         public String StatusMessage { get; set; }
-
+        public String MaxAvailableCredit { get; set; }
     }
 }
