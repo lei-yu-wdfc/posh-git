@@ -26,6 +26,7 @@ namespace Wonga.QA.Tests.Payments.Command
 	    private dynamic _fixedTermLoanSagas = Drive.Data.OpsSagas.Db.FixedTermLoanSagaEntity;
 	    private dynamic _externalDebtCollectionSagas = Drive.Data.OpsSagas.Db.ExternalDebtCollectionSagaEntity;
 	    private dynamic _schedulePaymentSagas = Drive.Data.OpsSagas.Db.ScheduledPaymentSagaEntity;
+		private const int delay = 15000;
         
 		[SetUp]
 		public void SetUp()
@@ -56,6 +57,8 @@ namespace Wonga.QA.Tests.Payments.Command
 			var customer = CustomerBuilder.New().Build();
 			var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
+			Thread.Sleep(delay);
+
 			var flagToDcaCommand = new Framework.Cs.FlagApplicationToDcaCommand
 			{
 				ApplicationId = app.Id
@@ -64,6 +67,7 @@ namespace Wonga.QA.Tests.Payments.Command
 			//Act
 			Drive.Cs.Commands.Post(flagToDcaCommand);
 
+			Thread.Sleep(delay);
 			//Assert
             var debtCollection = Do.Until(() => _debtCollections.FindAll(_debtCollections.Applications.ExternalId == app.Id)
                                                     .OrderByDescending(_debtCollections.CreatedOn)
@@ -81,6 +85,8 @@ namespace Wonga.QA.Tests.Payments.Command
 			var customer = CustomerBuilder.New().Build();
 			var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
+			Thread.Sleep(delay);
+
 			var flagToDcaCommand = new Framework.Cs.FlagApplicationToDcaCommand
 			{
 				ApplicationId = Guid.NewGuid()
@@ -88,13 +94,6 @@ namespace Wonga.QA.Tests.Payments.Command
 
 			//Act
 			Drive.Cs.Commands.Post(flagToDcaCommand);
-
-			//Assert
-			var debtCollection = Do.Until(() => _debtCollections.FindAll(_debtCollections.Applications.ExternalId == app.Id)
-													.OrderByDescending(_debtCollections.CreatedOn)
-													.FirstOrDefault());
-			Assert.IsNotNull(debtCollection);
-			Assert.AreEqual(true, debtCollection.MovedToAgency);
 
 		}
 
@@ -111,6 +110,8 @@ namespace Wonga.QA.Tests.Payments.Command
 			loanApp.ClosedOn = DateTime.Now;
 			Drive.Data.Payments.Db.Applications.Update(loanApp);
 
+			Thread.Sleep(delay);
+
 			var flagToDcaCommand = new Framework.Cs.FlagApplicationToDcaCommand
 			{
 				ApplicationId = app.Id
@@ -118,14 +119,6 @@ namespace Wonga.QA.Tests.Payments.Command
 
 			//Act
 			Drive.Cs.Commands.Post(flagToDcaCommand);
-
-			//Assert
-			var debtCollection = Do.Until(() => _debtCollections.FindAll(_debtCollections.Applications.ExternalId == app.Id)
-													.OrderByDescending(_debtCollections.CreatedOn)
-													.FirstOrDefault());
-			Assert.IsNotNull(debtCollection);
-			Assert.AreEqual(true, debtCollection.MovedToAgency);
-
 		}
 
 
@@ -159,7 +152,7 @@ namespace Wonga.QA.Tests.Payments.Command
 				SagaId = externalDebtCollectionSagaEntities.Id,
 			});
 
-			Thread.Sleep(5000);
+			Thread.Sleep(delay);
 
 			var revokeFromDcaCommand = new Framework.Cs.RevokeApplicationFromDcaCommand
 			{
@@ -169,7 +162,7 @@ namespace Wonga.QA.Tests.Payments.Command
 			//Act
 			Drive.Cs.Commands.Post(revokeFromDcaCommand);
 
-			Thread.Sleep(5000);
+			Thread.Sleep(delay);
 
 			var debtCollection = Do.Until(() => _debtCollections.FindAll(_debtCollections.Applications.ExternalId == app.Id)
 													.OrderByDescending(_debtCollections.CreatedOn)
@@ -210,7 +203,7 @@ namespace Wonga.QA.Tests.Payments.Command
 				SagaId = externalDebtCollectionSagaEntities.Id,
 			});
 
-			Thread.Sleep(5000);
+			Thread.Sleep(delay);
 
 			var revokeFromDcaCommand = new Framework.Cs.RevokeApplicationFromDcaCommand
 			{
@@ -219,15 +212,6 @@ namespace Wonga.QA.Tests.Payments.Command
 
 			//Act
 			Drive.Cs.Commands.Post(revokeFromDcaCommand);
-
-			Thread.Sleep(5000);
-
-			var debtCollection = Do.Until(() => _debtCollections.FindAll(_debtCollections.Applications.ExternalId == app.Id)
-													.OrderByDescending(_debtCollections.CreatedOn)
-													.FirstOrDefault());
-
-			//Assert
-			Assert.AreEqual(false, debtCollection.MovedToAgency);
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-2147")]
@@ -261,7 +245,7 @@ namespace Wonga.QA.Tests.Payments.Command
 				SagaId = externalDebtCollectionSagaEntities.Id,
 			});
 
-			Thread.Sleep(5000);
+			Thread.Sleep(delay);
 
 			//Close the Application
 			var loanApp = Do.Until(() => Drive.Data.Payments.Db.Applications.FindAllByExternalId(app.Id).Single());
@@ -276,15 +260,6 @@ namespace Wonga.QA.Tests.Payments.Command
 
 			//Act
 			Drive.Cs.Commands.Post(revokeFromDcaCommand);
-
-			Thread.Sleep(5000);
-
-			var debtCollection = Do.Until(() => _debtCollections.FindAll(_debtCollections.Applications.ExternalId == app.Id)
-													.OrderByDescending(_debtCollections.CreatedOn)
-													.FirstOrDefault());
-
-			//Assert
-			Assert.AreEqual(false, debtCollection.MovedToAgency);
 		}
 	}
 }
