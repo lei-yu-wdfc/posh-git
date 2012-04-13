@@ -256,6 +256,7 @@
     <YouCan>.summary-text .you-can</YouCan>
     <IntroText>p.summary-intro-text</IntroText>
     <StatusMessage>div.wonga-box-1 div.wonga-box-top-right</StatusMessage>
+    <MaxAvailableCredit>.description</MaxAvailableCredit>
   </MySummaryPage>
 
   <MyPaymentsPage>

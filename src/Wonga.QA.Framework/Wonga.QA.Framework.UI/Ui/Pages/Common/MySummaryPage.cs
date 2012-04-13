@@ -184,5 +184,16 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.OptionsCloud));
 
         }
+
+        public String GetIntroText
+        {
+            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.IntroText)).Text; }
+        }
+
+        public String GetMaxAvailableCredit
+        {
+            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.MaxAvailableCredit)).Text; }
+        }
+
     }
 }
