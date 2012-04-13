@@ -113,24 +113,25 @@ namespace Wonga.QA.Tests.Comms
 
 		#region helpers
 
-		private void VerifySmsIsSentAfterDaysInArrears(int daysInArrears, string smsText)
+		private static void VerifySmsIsSentAfterDaysInArrears(int daysInArrears, string smsText)
 		{
 			DateTime atTheBeginningOfThisTest = DateTime.Now;
 			string phoneNumberChunk = GetPhoneNumberChunk();
 			string formattedPhoneNumber = GetFormattedPhoneNumber(phoneNumberChunk);
-			Application application = ArrangeApplication(phoneNumberChunk);
+			Application application = ArrangeApplicationInArrears(phoneNumberChunk);
 
 			TimeoutNotificationSagaForDays(application, daysInArrears);
 
 			AssertSmsIsSent(formattedPhoneNumber, smsText, atTheBeginningOfThisTest);
 		}
 
-		private void VerifyA2SentA3SuppressedA4Sent(Action<Application> suppressAction, Action<Application> resumeAction)
+		private static void VerifyA2SentA3SuppressedA4Sent(
+			Action<Application> suppressAction, Action<Application> resumeAction)
 		{
 			DateTime atTheBeginningOfThisTest = DateTime.Now;
 			string phoneNumberChunk = GetPhoneNumberChunk();
 			string formattedPhoneNumber = GetFormattedPhoneNumber(phoneNumberChunk);
-			Application application = ArrangeApplication(phoneNumberChunk);
+			Application application = ArrangeApplicationInArrears(phoneNumberChunk);
 
 			// wait unit A2 is sent
 			AssertSmsIsSent(formattedPhoneNumber, A2Text, atTheBeginningOfThisTest);
@@ -167,7 +168,7 @@ namespace Wonga.QA.Tests.Comms
 			return string.Format("27{0}", phoneNumberChunk);
 		}
 
-		private static Application ArrangeApplication(string phoneNumberChunk)
+		private static Application ArrangeApplicationInArrears(string phoneNumberChunk)
 		{
 			Customer customer = CustomerBuilder.New()
 				.WithMobileNumber(string.Format("0{0}", phoneNumberChunk))
@@ -194,13 +195,12 @@ namespace Wonga.QA.Tests.Comms
 
 		private static void AssertSmsIsSent(string formattedPhoneNumber, string text, DateTime createdAfter)
 		{
-			Assert.IsTrue(
+			Assert.IsNotNull(
 				Do.Until(() =>
 				         SmsMessages.Find(
 				         	SmsMessages.CreatedOn >= createdAfter &&
 				         	SmsMessages.MobilePhoneNumber == formattedPhoneNumber &&
-				         	SmsMessages.MessageText == text)
-				         != null));
+				         	SmsMessages.MessageText == text)));
 		}
 
 		private static void AssertSmsIsNotSent(string formattedPhoneNumber, string text, DateTime createdAfter)
@@ -211,8 +211,11 @@ namespace Wonga.QA.Tests.Comms
 				                	SmsMessages.Find(
 				                		SmsMessages.CreatedOn >= createdAfter &&
 				                		SmsMessages.MobilePhoneNumber == formattedPhoneNumber &&
-				                		SmsMessages.MessageText == text)
-				                	!= null)));
+				                		SmsMessages.MessageText == text &&
+				                		(SmsMessages.Status != 3 ||
+				                		 SmsMessages.ErrorMessage != null || // TODO: error message is set to null by mistake in sms
+				                		 SmsMessages.ServiceMsgId != null))
+				                	== null)));
 		}
 
 		#endregion
