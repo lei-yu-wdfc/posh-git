@@ -528,7 +528,7 @@ namespace Wonga.QA.Tests.Payments
 
         [Test, AUT(AUT.Ca), JIRA("CA-1472")]
         [Row(18, 4)]
-        public void VerifyDefaultChargeNotAppliedToBcCustomer(int loanTerm, int daysOverdue)
+        public void VerifyDefaultChargeNotAppliedToBcCustomer(int loanTerm, uint daysOverdue)
         {
             const decimal loanAmount = 100;
 

@@ -336,7 +336,7 @@ namespace Wonga.QA.Tests.Ui
         public void ArrearsCustomerCheckDataOnMySummaryAndSF()
         {
             int loanTerm = 10;
-            int arrearsdays = 5;
+            uint arrearsdays = 5;
             string actualPromisedRepayDate;
             DateTime date;
             string email;

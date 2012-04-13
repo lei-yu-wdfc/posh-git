@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using System.Linq;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
@@ -47,10 +48,12 @@ namespace Wonga.QA.Framework.Db.Extensions
 			application.AcceptedOn -= span;
 			application.FixedTermLoanApplicationEntity.PromiseDate -= span;
 			application.FixedTermLoanApplicationEntity.NextDueDate -= span;
-			application.Transactions.ForEach(t => t.PostedOn -= span);
 			if (application.ClosedOn != null)
 				application.ClosedOn -= span;
 			application.Submit(true);
+
+			application.Transactions.ForEach(t => t.CreatedOn -= span);
+	    	application.Transactions.ForEach(t => t.Submit(true));
 
 			riskApp.ApplicationDate -= span;
 			riskApp.PromiseDate -= span;
