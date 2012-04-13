@@ -11,6 +11,8 @@ namespace Wonga.QA.Tests.Ui
 {
     public class L0AcceptedLoan : UiTest
     {
+        private const String MiddleNameMask = "TESTNoCheck";
+
         [Test, AUT(AUT.Za)]
         public void ZaAcceptedLoan()
         {
@@ -44,20 +46,92 @@ namespace Wonga.QA.Tests.Ui
             var dealDone = acceptedPage.Submit();
         }
 
-        [Test, AUT(AUT.Wb)]
-        public void WbAcceptedLoan()
-        {
-            var processingPage = WbL0Path("TESTNoCheck");
-            var applyTermsPage = processingPage.WaitFor<ApplyTermsPage>() as ApplyTermsPage;
-            applyTermsPage.EditDurationOfLoan("22");
-            
-            var acceptedPage = applyTermsPage.Next();
-            acceptedPage.SignTermsMainApplicant();
-            acceptedPage.SignTermsGuarantor();
-           
-            var referPage = acceptedPage.Submit() as ReferPage;
-            var homepage = referPage.GoHome();
-        }
+       [Test, AUT(AUT.Wb)]
+       public void WbAcceptedLoan()
+       {
+           var journey = JourneyFactory.GetL0JourneyWB(Client.Home());
+           var homePage = journey.ApplyForLoan(5500, 30)
+               .AnswerEligibilityQuestions()
+               .FillPersonalDetails(MiddleNameMask)
+               .FillAddressDetails("More than 4 years")
+               .FillAccountDetails()
+               .FillBankDetails()
+               .FillCardDetails()
+               .EnterBusinessDetails()
+               .DeclineAddAdditionalDirector()
+               .EnterBusinessBankAccountDetails()
+               .EnterBusinessDebitCardDetails()
+               .WaitForApplyTermsPage()
+               .ApplyTerms()
+               .FillAcceptedPage()
+               .GoHomePage();
+       }
+
+       [Test, AUT(AUT.Wb)]
+       public void WbAcceptedLoanAddAdditionalDirector()
+       {
+           var journey = JourneyFactory.GetL0JourneyWB(Client.Home());
+           var homePage = journey.ApplyForLoan(5500, 30)
+               .AnswerEligibilityQuestions()
+               .FillPersonalDetails(MiddleNameMask)
+               .FillAddressDetails("2 to 3 years")
+               .FillAccountDetails()
+               .FillBankDetails()
+               .FillCardDetails()
+               .EnterBusinessDetails()
+               .AddAdditionalDirector()
+               .EnterBusinessBankAccountDetails()
+               .EnterBusinessDebitCardDetails()
+               .WaitForApplyTermsPage()
+               .ApplyTerms()
+               .FillAcceptedPage()
+               .GoHomePage();
+       }
+
+       [Test, AUT(AUT.Wb)]
+       public void WbAcceptedLoanUpdateLoanDurationOnApplyTermsPage()
+       {
+           var journey = JourneyFactory.GetL0JourneyWB(Client.Home());
+           var homePage = journey.ApplyForLoan(5500, 30)
+               .AnswerEligibilityQuestions()
+               .FillPersonalDetails(MiddleNameMask)
+               .FillAddressDetails("3 to 4 years")
+               .FillAccountDetails()
+               .FillBankDetails()
+               .FillCardDetails()
+               .EnterBusinessDetails()
+               .DeclineAddAdditionalDirector()
+               .EnterBusinessBankAccountDetails()
+               .EnterBusinessDebitCardDetails()
+               .WaitForApplyTermsPage()
+               .UpdateLoanDuration()
+               .ApplyTerms()
+               .FillAcceptedPage()
+               .GoHomePage();
+       }     
+
+       [Test, AUT(AUT.Wb)]
+       public void WbAcceptedLoanAddressLessThan2Years()
+       {
+           var journey = JourneyFactory.GetL0JourneyWB(Client.Home());
+           var homePage = journey.ApplyForLoan(5500, 30)
+               .AnswerEligibilityQuestions()
+               .FillPersonalDetails(MiddleNameMask)
+               .FillAddressDetails("Between 4 months and 2 years")
+               .EnterAdditionalAddressDetails()
+               .FillAccountDetails()
+               .FillBankDetails()
+               .FillCardDetails()
+               .EnterBusinessDetails()
+               .DeclineAddAdditionalDirector()
+               .EnterBusinessBankAccountDetails()
+               .EnterBusinessDebitCardDetails()
+               .WaitForApplyTermsPage()
+               .ApplyTerms()
+               .FillAcceptedPage()
+               .GoHomePage();
+
+       }
 
         [Test, AUT(AUT.Uk)]
         public void UkAcceptedLoan()
