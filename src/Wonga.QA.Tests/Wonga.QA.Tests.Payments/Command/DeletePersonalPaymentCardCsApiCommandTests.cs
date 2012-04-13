@@ -38,7 +38,7 @@ namespace Wonga.QA.Tests.Payments.Command
                                      new
                                          {
                                              Type = "American Express",
-                                             Number = "1111222233334444",
+                                             Number = "1111222233334445",
                                              SecurityCode = "227",
                                              ExpiryDate = lastDayOfThisMonth.AddMonths(20),
                                              IsPrimary = false,
@@ -65,21 +65,21 @@ namespace Wonga.QA.Tests.Payments.Command
                              foreach (var cardToAdd in cardsToAdd)
                              {
                                  var c = customerCards
-                                     .SingleOrDefault(p => p.AccountId == customer.Id
-                                                           &&
-                                                           p.PaymentCardsBaseEntity.ExpiryDate == cardToAdd.ExpiryDate
-                                                           &&
-                                                           p.PaymentCardsBaseEntity.MaskedNumber ==
-                                                           cardToAdd.Number.MaskedCardNumber()
-                                                           && p.PaymentCardsBaseEntity.Type == cardToAdd.Type
-                                                           && p.PaymentCardsBaseEntity.DeletedOn == null);
+                                     .SingleOrDefault(p => p.AccountId == customer.Id &&
+                                                           // SH: The basic date comparison will fail if the current month has 30 days, but the calculated expiry date has 31.
+                                                           p.PaymentCardsBaseEntity.ExpiryDate.Month == cardToAdd.ExpiryDate.Month &&
+                                                           p.PaymentCardsBaseEntity.ExpiryDate.Year == cardToAdd.ExpiryDate.Year && 
+                                                           p.PaymentCardsBaseEntity.MaskedNumber == cardToAdd.Number.MaskedCardNumber() && 
+                                                           p.PaymentCardsBaseEntity.Type == cardToAdd.Type && 
+                                                           p.PaymentCardsBaseEntity.DeletedOn == null);
                                  if (c == null) return false;
                              }
                              return true;
                          });
             PersonalPaymentCardEntity[] pCards = customer.GetPersonalPaymentCards();
 
-            PersonalPaymentCardEntity firstCard = pCards.Where(p => p.PaymentCardsBaseEntity.MaskedNumber == cardsToAdd[0].Number.MaskedCardNumber()).Single();
+            //Cannot delete the first card - it's the primary.. deleting the second.
+            PersonalPaymentCardEntity firstCard = pCards.Where(p => p.PaymentCardsBaseEntity.MaskedNumber == cardsToAdd[1].Number.MaskedCardNumber()).Single();
 
             var deleteRequest = new DeletePersonalPaymentCardCommand()
                                     {

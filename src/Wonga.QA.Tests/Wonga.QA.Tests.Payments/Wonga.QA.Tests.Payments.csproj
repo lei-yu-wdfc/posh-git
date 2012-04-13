@@ -39,6 +39,7 @@
     <Compile Include="CollectionsCommunicationsChaseForDca.cs" />
     <Compile Include="CollectionsTests.cs" />
     <Compile Include="Command\AddPersonalPaymentCardCsApiCommandTests.cs" />
+    <Compile Include="Command\CsRepayWithExternalCardCommandTests.cs" />
     <Compile Include="Command\CsRepayWithPaymentCardCommandTests.cs" />
     <Compile Include="Command\DcaCommandTests.cs" />
     <Compile Include="Command\DeletePersonalPaymentCardCsApiCommandTests.cs" />

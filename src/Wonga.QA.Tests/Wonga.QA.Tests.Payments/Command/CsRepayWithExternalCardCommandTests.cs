@@ -12,7 +12,7 @@ using Wonga.QA.Framework.Db.Payments;
 
 namespace Wonga.QA.Tests.Payments.Command
 {
-    public abstract class CsRepayWithPaymentCardCommandTests
+    public abstract class CsRepayWithExternalCardCommandTests
     {
         protected Application _application;
         protected Customer _customer;
@@ -32,49 +32,58 @@ namespace Wonga.QA.Tests.Payments.Command
                                              .Build();
         }
 
-        public abstract class GivenACustomerWithAnApprovedLoan : CsRepayWithPaymentCardCommandTests
+        public abstract class GivenACustomerWithAnApprovedLoan : CsRepayWithExternalCardCommandTests
         {
             protected decimal _startingBalance;
             protected decimal _paymentAmount;
-
-            protected abstract void UpdateCardExpiryDate();
-
+            
             [SetUp]
             public override void Setup()
             {
                 base.Setup();
 
                 _startingBalance = _application.GetBalance();
-                _paymentAmount = 50m;
                 //Issue a payment command.
-                UpdateCardExpiryDate();
-                Drive.Cs.Commands.Post(new CsRepayWithPaymentCardCommand { AccountId = _application.AccountId, 
-                                                                           Amount = _paymentAmount, 
-                                                                           CSUser = "csUser", 
-                                                                           CV2 = "111",
-                                                                           Currency = "GBP", 
-                                                                           PaymentCardId = _cardId });
+                Drive.Cs.Commands.Post( GetExternalCard() );
             }
-            
+
+            protected virtual CsRepayWithExternalCardCommand GetExternalCard()
+            {
+                return new CsRepayWithExternalCardCommand { AccountId = _application.AccountId,
+                                                            AddressLine1 = "line 1",
+                                                            AddressLine2 = "line 2",
+                                                            Amount = _paymentAmount,
+                                                            CardNumber = "5411111111111111", 
+                                                            CardType = "visaDebit",
+                                                            Country = "UK",
+                                                            County = "county",
+                                                            CSUser = "csUser",
+                                                            Currency = "GBP",
+                                                            CV2 = "121",
+                                                            ExpiryDate = new DateTime(DateTime.Today.Year + 1, 1, 31),
+                                                            HolderName = "holder name", 
+                                                            PostCode = "12345",
+                                                            Town = "town" };
+            }
+     
             public class GivenAPaymentHasBeenRequestedWithAValidCard : GivenACustomerWithAnApprovedLoan
             {
                 [SetUp]
                 public override void Setup()
                 {
+                    _paymentAmount = 50;
                     base.Setup();
                 }
 
                 [Test, AUT(AUT.Uk)]
                 public void TheLoanAmountHasBeenReducedByPaymentAmountPaymentRequestAdded()
                 {
-                    Do.With.Timeout(2).Interval(20).Until(() => _application.GetBalance() == _startingBalance - _paymentAmount );
-                    Do.With.Timeout(2).Interval(20).Until(() => Drive.Db.Payments.PaymentCardRepaymentRequests.SingleOrDefault(r => r.ApplicationEntity.ExternalId == _application.Id &&
+                    Do.With.Timeout(5).Interval(20).Until(() => _application.GetBalance() == _startingBalance - _paymentAmount );
+                    Do.With.Timeout(5).Interval(20).Until(() => Drive.Db.Payments.PaymentCardRepaymentRequests.SingleOrDefault(r => r.ApplicationEntity.ExternalId == _application.Id &&
                                                                                                                                     r.Amount == _paymentAmount &&
                                                                                                                                     r.FailedOn == null &&
                                                                                                                                     r.SuccessOn != null));
                 }
-
-                protected override void UpdateCardExpiryDate() { } //Do nothing.
             }
 
             public class GivenAPaymentHasBeenRequestedWithAnInvalidCard : GivenACustomerWithAnApprovedLoan
@@ -82,9 +91,9 @@ namespace Wonga.QA.Tests.Payments.Command
                 [SetUp]
                 public override void Setup()
                 {
+                    _paymentAmount = 13m; //Make it fail.
                     base.Setup();
-                    
-               }
+                }
 
                 [Test, AUT(AUT.Uk)]
                 public void TheLoanAmountRemainsTheSameFailedPaymentRequestAdded()
@@ -94,16 +103,6 @@ namespace Wonga.QA.Tests.Payments.Command
                                                                                                                                     r.FailedOn != null &&
                                                                                                                                     r.SuccessOn == null));
                     Assert.IsTrue(_application.GetBalance() == _startingBalance);
-                }
-
-                protected override void UpdateCardExpiryDate()
-                {
-                    //Get the id of the card and manually adjust its expiry
-                    PaymentCardsBaseEntity card = Drive.Db.Payments.PaymentCardsBases.Single(c => c.ExternalId == _cardId);
-
-                    card.ExpiryDate = new DateTime(DateTime.Now.Year -1, 1, 31);
-
-                    card.Submit();
                 }
             }
         }
