@@ -33,6 +33,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String TotalAmountDueUnderTheAgreement { get; set; }
         public String PaymentDueDate { get; set; }
         public String LoanAmount { get; set; }
-        public String TotalToPayOnPaymentDate { get; set; }
+        public String TotalToPayOnPaymentDate { get; set; }    
     }
 }

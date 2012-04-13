@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using MbUnit.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI;
@@ -165,6 +166,34 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
+        [Test, AUT(AUT.Uk), JIRA("UK-731")]
+        public void LoanCompletionConfirmed()
+        {
+            const int loanAmount = 100;
+            const int days = 10;
+            string paymentAmount = 115.91M.ToString("#.00");
+            DateTime paymentDate = DateTime.Now.AddDays(days);
 
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+
+            var dealDonePage = journey.ApplyForLoan(loanAmount, days)
+                                   .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                   .FillAddressDetails()
+                                   .FillAccountDetails()
+                                   .FillBankDetails()
+                                   .FillCardDetails()
+                                   .WaitForAcceptedPage()
+                                   .FillAcceptedPage().CurrentPage as DealDonePage;
+
+            string actualDealDoneText = dealDonePage.GetDealDonePageText;
+
+            // Check text on the Deal Done page is displayed correctly
+            Assert.Contains(actualDealDoneText, "The cash will be winging its way into your bank account in the next 15 minutes!");
+            Assert.Contains(actualDealDoneText, paymentAmount);
+            Assert.Contains(actualDealDoneText, paymentDate.ToString("dd"));
+            Assert.Contains(actualDealDoneText, paymentDate.ToString("MMM"));
+            Assert.Contains(actualDealDoneText, paymentDate.ToString("yyyy"));
+            Assert.Contains(actualDealDoneText, paymentDate.ToString("dddd"));
+        }
     }
 }

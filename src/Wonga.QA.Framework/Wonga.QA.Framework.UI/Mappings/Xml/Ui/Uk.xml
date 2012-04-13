@@ -60,6 +60,7 @@
 
   <AcceptedPage>
     <FormId>#vanilla-agreement-form</FormId>
+    <AgreementConfirm>#edit-accept</AgreementConfirm>
     <NodeWrap>.node-type-wonga-decision-page</NodeWrap>
   </AcceptedPage>
 

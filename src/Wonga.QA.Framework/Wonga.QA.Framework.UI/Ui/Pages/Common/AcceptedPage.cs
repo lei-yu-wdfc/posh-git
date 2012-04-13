@@ -214,6 +214,5 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             return _form.FindElement(By.CssSelector(Ui.Get.AcceptedPage.AgreementTitle)).Displayed;
         }
-
     }
 }
