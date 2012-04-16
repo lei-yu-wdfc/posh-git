@@ -53,7 +53,6 @@ namespace Wonga.QA.Tests.Payments.Command
 
 
 
-
 		[Test, AUT(AUT.Za), JIRA("ZA-2147")]
 		public void FlagApplicationToDca_ShouldMoveApplicationToDCA()
 		{
