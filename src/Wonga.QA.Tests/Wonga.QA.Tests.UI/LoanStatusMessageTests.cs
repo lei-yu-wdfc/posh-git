@@ -38,17 +38,31 @@ namespace Wonga.QA.Tests.Ui
 	    };
 
 
+        [Test, AUT(AUT.Uk), JIRA("UK-795")]
+        public void LoanStatusMessageScenario2A() { LoanStatusMessage(2, 0); }
 
         [Test, AUT(AUT.Uk), JIRA("UK-795")]
-        public void LoanStatusMessageScenario2() { LoanStatusMessage(2, 1); } 
-
-        [Test, AUT(AUT.Uk), JIRA("UK-795")] 
-        public void LoanStatusMessageScenario3() { LoanStatusMessage(3, 3); }
+        public void LoanStatusMessageScenario2B() { LoanStatusMessage(2, 1); }
 
         [Test, AUT(AUT.Uk), JIRA("UK-795")]
-        public void LoanStatusMessageScenario4() { LoanStatusMessage(4, 10); }
+        public void LoanStatusMessageScenario2C() { LoanStatusMessage(2, 2); }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795")] 
+        [Test, AUT(AUT.Uk), JIRA("UK-795")]
+        public void LoanStatusMessageScenario3A() { LoanStatusMessage(3, 3); }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-795")]
+        public void LoanStatusMessageScenario3B() { LoanStatusMessage(3, 7); }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-795")]
+        public void LoanStatusMessageScenario3C() { LoanStatusMessage(3, 9); }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-795")]
+        public void LoanStatusMessageScenario4A() { LoanStatusMessage(4, 10); }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-795")]
+        public void LoanStatusMessageScenario4B() { LoanStatusMessage(4, 11); }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-795")]
         public void LoanStatusMessageScenario5() { LoanStatusMessage(5, 2); }
 
         [Test, AUT(AUT.Uk), JIRA("UK-795")]
@@ -145,27 +159,13 @@ namespace Wonga.QA.Tests.Ui
 							new ArrangementDetail{Amount = application.GetBalance(), Currency = CurrencyCodeIso4217Enum.GBP, DueDate = DateTime.Today.AddDays(7)}
 						}
                 });
-
-                /* THIS IS ALTERNATIVE TO CODE ABOVE BUT THIS THROWS EXCEPTION
-                 * 
-                 * var dbApplication = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
-                 * Thread.Sleep(10000);
-                 * var repaymentArrangement = Drive.Db.Payments.RepaymentArrangements.Single(x => x.ApplicationId == dbApplication.ApplicationId);
-                 * Assert.AreEqual(1, repaymentArrangement.RepaymentArrangementDetails.Count);
-                 * 
-                 */
-                
-
             }
-
-
 
             // Login and open my summary page
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
 
-
-            // Check Tag Cloud is displayed/correct
+            // Check Loan Message is displayed/correct
             if ((scenarioId == 8) || (scenarioId == 20))
             {
                 Assert.IsFalse(mySummaryPage.IsLoanStatusMessageAvailable());
@@ -178,13 +178,22 @@ namespace Wonga.QA.Tests.Ui
                 var extensionStartDate = applicationEntity.FixedTermLoanApplicationEntity.NextDueDate.Value.AddDays(-7);
                 if (extensionStartDate >= applicationEntity.SignedOn.Value)
                 {
-                    expectedLoanMessageText = expectedLoanMessageText.Replace("{date extensions available}", extensionStartDate.ToString("dd-MMM-yyyy"));    
+                    expectedLoanMessageText = expectedLoanMessageText.Replace("{date extensions available}", getOrdinalDate(extensionStartDate));
+
                 }
                 else // if loan period is less than 7 days
                 {
                     expectedLoanMessageText = loanStatusMessages[3];  // can extend right now  
                 }
             }
+
+            if (scenarioId == 4)
+            {
+                //{total to repay 300.00} on {promise date}
+                expectedLoanMessageText = expectedLoanMessageText.Replace("{total to repay 300.00}", application.GetBalance().ToString("#.##")).Replace("{promise date}", getOrdinalDate(applicationEntity.FixedTermLoanApplicationEntity.NextDueDate.Value));
+            }
+
+
             string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage;
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
         }
@@ -207,7 +216,6 @@ namespace Wonga.QA.Tests.Ui
             if (riskApp.ClosedOn != null)
                 riskApp.ClosedOn -= span;
             riskApp.Submit(true);
-
         }
 
         //Needed for serialization in CreateExtendedRepaymentArrangementCommand
@@ -218,29 +226,28 @@ namespace Wonga.QA.Tests.Ui
             public DateTime DueDate { get; set; }
         }
 
-        /*private void LoanStatusMessage_old(string message, int days) // outdated
+        public string getOrdinalDate(DateTime date)
         {
-            string email = Get.RandomEmail();
+            //Returns date as string in the format "Wed 18th Apr 2012"
+            var cDate = date.Day.ToString("d")[date.Day.ToString("d").Length - 1];
+            string suffix;
+            switch (cDate)
+            {
+                case '1':
+                    suffix = "st";
+                    break;
+                case '2':
+                    suffix = "nd";
+                    break;
+                case '3':
+                    suffix = "rd";
+                    break;
+                default:
+                    suffix = "th";
+                    break;
+            }
 
-            Console.WriteLine("email:{0}", email);
-
-            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            Application application = ApplicationBuilder.New(customer).Build();
-
-            // Hack DB to change "NextDueDate" related fields
-            ApplicationEntity applicationEntity = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
-            TimeSpan span = TimeSpan.FromDays(days);
-            application.MoveDueDates(applicationEntity, span);
-            
-            // Login and open my summary page
-            var loginPage = Client.Login();
-            var mySummaryPage = loginPage.LoginAs(email);
-
-            // Check Loan Status message
-            string expectedLoanStatusMessage = message;
-            //string actualLoanStatusMessage = mySummaryPage.WarningBox.GetLoanStatusMessage; // outdated
-            string actualLoanStatusMessage = mySummaryPage.GetLoanStatusMessage;
-            Assert.AreEqual(expectedLoanStatusMessage, actualLoanStatusMessage);
-        }*/
+            return date.ToString("ddd d MMM yyyy").Replace(date.Day.ToString("d"), date.Day.ToString("d") + suffix);
+        }
     }
 }
