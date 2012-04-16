@@ -96,7 +96,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk), JIRA("UK-789")]
         public void CheckAvailableCreditScenario03() { CheckAvailableCredit(4); }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-789"), IgnoreAttribute("Blocked by UK-1433")]
+        [Test, AUT(AUT.Uk), JIRA("UK-789")]
         public void CheckAvailableCreditScenario04() { CheckAvailableCredit(10); } 
 
         private void CheckAvailableCredit(int daysShift)
