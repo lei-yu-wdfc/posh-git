@@ -48,11 +48,6 @@ namespace Wonga.QA.Tests.Payments.Command
 			bankGatewayTestMode.Submit(true);
 		}
 
-
-
-
-
-
 		[Test, AUT(AUT.Za), JIRA("ZA-2147")]
 		public void FlagApplicationToDca_ShouldMoveApplicationToDCA()
 		{

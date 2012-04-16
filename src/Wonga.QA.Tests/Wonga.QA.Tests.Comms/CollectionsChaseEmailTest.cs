@@ -27,7 +27,7 @@ namespace Wonga.QA.Tests.Comms
 		{
 			var application = ApplicationBuilder.New(CustomerBuilder.New().Build()).Build();
 
-			application.PutApplicationIntoArrears(1);
+			application.PutApplicationIntoArrears(2);
 		}
 
 		[Test, JIRA("QA-206"), Pending]
