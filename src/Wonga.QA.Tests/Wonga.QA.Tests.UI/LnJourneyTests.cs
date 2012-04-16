@@ -149,9 +149,11 @@ namespace Wonga.QA.Tests.Ui
         {
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
+            string mobile = Get.GetMobilePhone();
             Customer customer = CustomerBuilder
                 .New()
                 .WithEmailAddress(email)
+                .WithMobileNumber(mobile)
                 .Build();
             Application application = ApplicationBuilder
                 .New(customer)
@@ -165,7 +167,7 @@ namespace Wonga.QA.Tests.Ui
                            .WaitForAcceptedPage()
                            .FillAcceptedPage()
                            .GoToMySummaryPage()
-                           .CurrentPage as MySummaryPage;
+                           .CurrentPage as MySummaryPage;            
         }
 
     }

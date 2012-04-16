@@ -68,6 +68,7 @@
     <FormId>#wonga-apply-ln-form</FormId>
     <SecurityCode>#edit-security-code</SecurityCode>
     <MinCash>#edit-min-cash</MinCash>
+    <ChangeMobileButton>.mod</ChangeMobileButton>
   </ApplicationSection>
 
   <MyAccountNavigationSection>
@@ -101,4 +102,10 @@
     <AmountPlusButton>#wonga-single-slider-wrapper button.slider-plus</AmountPlusButton>
   </SmallTopupSlidersElement>
 
+  <ApplyPage>
+    <EditMobileNumber>#edit-mobile-phone</EditMobileNumber>
+    <PopupSaveButton>#edit-submit[value='Save']</PopupSaveButton>
+    <PopupCloseButton>#edit-submit[value='Close']</PopupCloseButton>
+  </ApplyPage>
+  
 </Ui>
