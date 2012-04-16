@@ -16,6 +16,7 @@ using System.Threading;
 
 namespace Wonga.QA.Tests.Payments.Command
 {
+	[TestFixture, Parallelizable(TestScope.All)]
 	public class DcaCommandTests
 	{
 		private const string BankGatewayIsTestModeKey = "BankGateway.IsTestMode";
@@ -28,26 +29,28 @@ namespace Wonga.QA.Tests.Payments.Command
 	    private dynamic _schedulePaymentSagas = Drive.Data.OpsSagas.Db.ScheduledPaymentSagaEntity;
 		private const int delay = 15000;
         
-		[SetUp]
-		public void SetUp()
+		[FixtureSetUp]
+		public void FixtureSetUp()
 		{
-			//ServiceConfigurationEntity entity = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == BankGatewayIsTestModeKey);
-			//_bankGatewayIsTestMode = entity.Value;
+			_bankGatewayIsTestMode = (string)Drive.Data.Ops.Db.ServiceConfigurations.FindByKey(BankGatewayIsTestModeKey).Value;
 
-			//entity = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == FeatureSwitchMoveLoanToDca);
-			//_featureSwitchMoveLoanToDcaMode = entity.Value;
+			var bankGatewayTestMode = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == BankGatewayIsTestModeKey);
+			_bankGatewayIsTestMode = bankGatewayTestMode.Value;
+			bankGatewayTestMode.Value = "false";
+			bankGatewayTestMode.Submit(true);
+		}
 
-			//Drive.Data.Ops.Db.ServiceConfigurations.UpdateByKey(Key: BankGatewayIsTestModeKey, Value: "false");
-			//Drive.Data.Ops.Db.ServiceConfigurations.UpdateByKey(Key: FeatureSwitchMoveLoanToDca, Value: "true");
+		[FixtureTearDown]
+		public void FixtureTearDown()
+		{
+			var bankGatewayTestMode = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == BankGatewayIsTestModeKey);
+			bankGatewayTestMode.Value = _bankGatewayIsTestMode;
+			bankGatewayTestMode.Submit(true);
 		}
 
 
-		[TearDown]
-		public void TearDown()
-		{
-			//Drive.Data.Ops.Db.ServiceConfigurations.UpdateByKey(Key: BankGatewayIsTestModeKey, Value: _bankGatewayIsTestMode);
-			//Drive.Data.Ops.Db.ServiceConfigurations.UpdateByKey(Key: FeatureSwitchMoveLoanToDca, Value: _featureSwitchMoveLoanToDcaMode);
-		}
+
+
 
 
 		[Test, AUT(AUT.Za), JIRA("ZA-2147")]
@@ -120,7 +123,6 @@ namespace Wonga.QA.Tests.Payments.Command
 			//Act
 			Drive.Cs.Commands.Post(flagToDcaCommand);
 		}
-
 
 		[Test, AUT(AUT.Za), JIRA("ZA-2147")]
 		public void RevokeApplicationFromDca_ShouldMoveApplicationFromDCA()

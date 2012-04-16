@@ -148,23 +148,21 @@ namespace Wonga.QA.Framework
 			Do.With.While(ftl.Refresh);
 		}
 
-		public virtual Application PutApplicationIntoArrears(int daysInArrears)
+		public virtual Application PutApplicationIntoArrears()
 		{
-			PutApplicationIntoArrears();
-
-			Drive.Db.Rewind(Id, daysInArrears);
+			PutApplicationIntoArrears(0);
 
 			return this;
 		}
 
-		public virtual Application PutApplicationIntoArrears()
+		public virtual Application PutApplicationIntoArrears(uint daysInArrears)
 		{
 			ApplicationEntity application = Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id);
 			DateTime dueDate = application.FixedTermLoanApplicationEntity.NextDueDate ??
 							  application.FixedTermLoanApplicationEntity.PromiseDate;
 			RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == Id);
 
-			TimeSpan span = dueDate - DateTime.Today;
+			TimeSpan span = dueDate - DateTime.Today.AddDays(-daysInArrears);
 
 			Drive.Db.RewindApplicationDates(application, riskApplication, span);
 
@@ -174,6 +172,8 @@ namespace Wonga.QA.Framework
 			FixedTermLoanSagaEntity ftl = Drive.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
 			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
 			Do.While(ftl.Refresh);
+
+			Drive.Db.Rewind(Id, (int)daysInArrears);
 
 			ScheduledPaymentSagaEntity sp = Do.Until(() => Drive.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationGuid == Id));
 			Drive.Msmq.Payments.Send(new TakePaymentFailedCommand { SagaId = sp.Id, CreatedOn = DateTime.UtcNow, ValueDate = DateTime.UtcNow });
