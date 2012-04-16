@@ -45,6 +45,7 @@
     <Compile Include="Requests\ConfirmManualVerificationDeclinedCommand.cs" />
     <Compile Include="Requests\ConfirmNotFraudCommand.cs" />
     <Compile Include="Requests\CreateTransactionCommand.cs" />
+    <Compile Include="Requests\CsExtendFixedTermLoanCommand.cs" />
     <Compile Include="Requests\CsGetAccountSummaryQuery.cs" />
     <Compile Include="Requests\CsGetFixedTermLoanExtensionQuoteQuery.cs" />
     <Compile Include="Requests\CsGetLoanExtensionStatusQuery.cs" />

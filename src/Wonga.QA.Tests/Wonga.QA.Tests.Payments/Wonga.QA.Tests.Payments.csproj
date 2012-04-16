@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -39,6 +39,8 @@
     <Compile Include="CollectionsCommunicationsChaseForDca.cs" />
     <Compile Include="CollectionsTests.cs" />
     <Compile Include="Command\AddPersonalPaymentCardCsApiCommandTests.cs" />
+    <Compile Include="Command\CsRepayWithExternalCardCommandTests.cs" />
+    <Compile Include="Command\CsRepayWithPaymentCardCommandTests.cs" />
     <Compile Include="Command\DcaCommandTests.cs" />
     <Compile Include="Command\DeletePersonalPaymentCardCsApiCommandTests.cs" />
     <Compile Include="Command\SavePaymentCardBillingAddress.cs" />
@@ -51,6 +53,7 @@
     <Compile Include="LoanCalculations\BusinessLoanCalculationTests.cs" />
     <Compile Include="MoveApplicationToDcaTests.cs" />
     <Compile Include="NaedoRetryTests.cs" />
+    <Compile Include="Queries\CsGetLoanExtensionStatusQueryTests.cs" />
     <Compile Include="Queries\GetBusinessApplicationSummaryCsapiQuery.cs" />
     <Compile Include="Queries\GetLoanAgreementsCsapiQueryTests.cs" />
     <Compile Include="Queries\GetPersonalPaymentCardsCsapiQueryTests.cs" />
