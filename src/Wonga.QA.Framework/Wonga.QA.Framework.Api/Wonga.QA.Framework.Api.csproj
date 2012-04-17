@@ -144,7 +144,7 @@
     <Compile Include="Requests\GetLoanAgreementDataZaQuery.cs" />
     <Compile Include="Requests\GetLoanAgreementQuery.cs" />
     <Compile Include="Requests\GetLoanExtensionAgreementQuery.cs" />
-    <Compile Include="Requests\GetLoanExtensionStatusUkQuery.cs" />
+    <Compile Include="Requests\GetLoanExtensionPaymentStatusUkQuery.cs" />
     <Compile Include="Requests\GetLoanTopUpAgreementQuery.cs" />
     <Compile Include="Requests\GetMatchedOrganizationsWbQuery.cs" />
     <Compile Include="Requests\GetMatchingAccountsQuery.cs" />
