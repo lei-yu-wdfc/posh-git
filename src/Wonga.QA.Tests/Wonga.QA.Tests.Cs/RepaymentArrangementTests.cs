@@ -116,7 +116,7 @@ namespace Wonga.QA.Tests.Cs
             Application application = ApplicationBuilder.New(customer).Build();
             application.PutApplicationIntoArrears(20);
 
-            var response = Drive.Cs.Queries.Post(new GetRepaymentArrangementCalculationQuery()
+            var response = Drive.Cs.Queries.Post(new GetRepaymentArrangementCalculationQuery
                                                      {
                                                          AccountId = customer.Id,
                                                          RepaymentFrequency = PaymentFrequency.Monthly,
