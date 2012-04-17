@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
+using System.Threading;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Payments;
@@ -30,14 +31,35 @@ namespace Wonga.QA.Framework.Db.Extensions
         public static void UpdateNextDueDate(this DbDriver db, FixedTermLoanApplicationEntity fixedApp, TimeSpan span)
         {
             var dt = DateTime.UtcNow;
-            fixedApp.NextDueDate = (dt += span);
-            fixedApp.Submit(true);
+
+            try
+            {
+                fixedApp.NextDueDate = (dt += span);
+                fixedApp.Submit(true);
+            }
+            catch (Exception)
+            {
+               // Retry in case of deadlocks
+               Thread.Sleep(1000);
+               fixedApp.NextDueDate = (dt += span);
+               fixedApp.Submit(true);
+            }
         }
 
         public static void MoveAcceptedOnDate(this DbDriver db, ApplicationEntity app, TimeSpan span)
         {
-            app.AcceptedOn += span;
-            app.Submit(true);
+            try
+            {
+                app.AcceptedOn += span;
+                app.Submit(true);
+            }
+            catch (Exception)
+            {
+                // Retry in case of deadlocks
+                Thread.Sleep(1000);
+                app.AcceptedOn += span;
+                app.Submit(true);
+            }
         }
 
 	    public static void RewindApplicationDates(this DbDriver db, ApplicationEntity application, RiskApplicationEntity riskApp, TimeSpan span)

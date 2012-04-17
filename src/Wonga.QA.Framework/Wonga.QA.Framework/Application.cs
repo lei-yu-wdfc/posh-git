@@ -262,5 +262,32 @@ namespace Wonga.QA.Framework
 
             return this;
         }
-	}
+
+        #region "Methods for testing my account scenarios"
+        // Move NextDueDate before range of days where loan extension is permitted. Useful for testing GetAccountOptions.
+        public void NextDueDateTooEarlyToExtendLoan()
+        {
+            var cfg = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Payments.ExtendLoanDaysBeforeDueDate");
+            this.UpdateNextDueDate(int.Parse(cfg.Value) + 3);
+        }
+
+        /// Move NextDueDate into range of days where extensions are permitted. Useful for testing GetAccountOptions.
+        public void NextDueNotTooEarlyToExtendLoan()
+        {
+            var cfg = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Payments.ExtendLoanDaysBeforeDueDate");
+            this.UpdateNextDueDate(int.Parse(cfg.Value) - 3);
+        }
+
+        /// Move AcceptedOn past range of days after AcceptedOn where extension is not permitted. Useful for testing GetAccountOptions.
+        public void AcceptedOnNotTooEarlyToExtend()
+        {
+            var cfg1 = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Payments.ExtendLoanMinDays");
+            this.UpdateAcceptedOnDate(int.Parse(cfg1.Value + 5));
+        }
+
+        
+        
+	    #endregion
+
+    }
 }

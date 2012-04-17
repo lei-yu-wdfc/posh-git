@@ -7,8 +7,6 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 
-using Wonga.QA.Framework.Db;
-using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
@@ -92,7 +90,7 @@ namespace Wonga.QA.Tests.Payments.Queries
                 var setupData = new AccountSummarySetupFunctions();
                 const decimal trustRating = 400.00M;
 
-                setupData.Scenario04Setup(paymentCardId, appId, bankAccountId, accountId, trustRating);
+                setupData.Scenario04SetupMaxExtensionsReached(paymentCardId, appId, bankAccountId, accountId, trustRating);
 
                 var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
                 Assert.AreEqual(4, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
