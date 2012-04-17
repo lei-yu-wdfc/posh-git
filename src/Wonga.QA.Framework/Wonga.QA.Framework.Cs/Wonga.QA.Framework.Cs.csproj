@@ -44,11 +44,13 @@
     <Compile Include="Requests\ConfirmManualVerificationAcceptedCommand.cs" />
     <Compile Include="Requests\ConfirmManualVerificationDeclinedCommand.cs" />
     <Compile Include="Requests\ConfirmNotFraudCommand.cs" />
+    <Compile Include="Requests\CreateRepaymentArrangementCommand.cs" />
     <Compile Include="Requests\CreateTransactionCommand.cs" />
     <Compile Include="Requests\CsExtendFixedTermLoanCommand.cs" />
     <Compile Include="Requests\CsGetAccountSummaryQuery.cs" />
     <Compile Include="Requests\CsGetFixedTermLoanExtensionQuoteQuery.cs" />
-    <Compile Include="Requests\CsGetLoanExtensionStatusQuery.cs" />
+    <Compile Include="Requests\CsGetLoanExtensionPaymentStatusQuery.cs" />
+    <Compile Include="Requests\CsGetRepaymentArrangementAllowedQuery.cs" />
     <Compile Include="Requests\CsRepayWithExternalCardCommand.cs" />
     <Compile Include="Requests\CsRepayWithPaymentCardCommand.cs" />
     <Compile Include="Requests\DeletePersonalPaymentCardCommand.cs" />
@@ -58,6 +60,8 @@
     <Compile Include="Requests\GetDirectDebitFormZaQuery.cs" />
     <Compile Include="Requests\GetLoanAgreementsQuery.cs" />
     <Compile Include="Requests\GetPersonalPaymentCardsQuery.cs" />
+    <Compile Include="Requests\GetRepaymentArrangementCalculationQuery.cs" />
+    <Compile Include="Requests\GetRepaymentArrangementParametersQuery.cs" />
     <Compile Include="Requests\GetRepaymentArrangementsQuery.cs" />
     <Compile Include="Requests\GetScheduledPaymentsQuery.cs" />
     <Compile Include="Requests\GetTransactionsQuery.cs" />

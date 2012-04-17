@@ -51,7 +51,7 @@ namespace Wonga.QA.Tests.Payments.Queries
                 [Test, AUT(AUT.Uk)]
                 public void TheStatusOfTheExensionCanBeObtained()
                 {
-                    CsResponse res = Drive.Cs.Queries.Post(new CsGetLoanExtensionStatusQuery { CsUser = "csUser", ExtensionId = _extensionId });
+                    CsResponse res = Drive.Cs.Queries.Post(new CsGetLoanExtensionPaymentStatusQuery { CsUser = "csUser", ExtensionId = _extensionId });
 
                     //Assert.IsTrue(res.Values["ExtensionId"].Count() == 1);
                     

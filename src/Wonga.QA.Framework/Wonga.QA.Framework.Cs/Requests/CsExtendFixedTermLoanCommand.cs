@@ -9,6 +9,7 @@ namespace Wonga.QA.Framework.Cs
     {
         public Object ApplicationId { get; set; }
         public Object PaymentCardId { get; set; }
+        public Object LoanExtensionId { get; set; }
         public Object CV2 { get; set; }
         public Object PartPaymentAmount { get; set; }
         public Object AgentId { get; set; }
