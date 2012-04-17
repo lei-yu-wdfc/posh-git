@@ -60,6 +60,7 @@
     <Compile Include="Requests\GetDirectDebitFormZaQuery.cs" />
     <Compile Include="Requests\GetLoanAgreementsQuery.cs" />
     <Compile Include="Requests\GetPersonalPaymentCardsQuery.cs" />
+    <Compile Include="Requests\GetRepaymentArrangementAllowedQuery.cs" />
     <Compile Include="Requests\GetRepaymentArrangementCalculationQuery.cs" />
     <Compile Include="Requests\GetRepaymentArrangementParametersQuery.cs" />
     <Compile Include="Requests\GetRepaymentArrangementsQuery.cs" />

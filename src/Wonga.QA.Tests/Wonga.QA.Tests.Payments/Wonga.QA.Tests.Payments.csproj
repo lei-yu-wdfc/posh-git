@@ -53,7 +53,7 @@
     <Compile Include="LoanCalculations\BusinessLoanCalculationTests.cs" />
     <Compile Include="MoveApplicationToDcaTests.cs" />
     <Compile Include="NaedoRetryTests.cs" />
-    <Compile Include="Queries\CsGetLoanExtensionStatusQueryTests.cs" />
+    <Compile Include="Queries\CsGetLoanExtensionPaymentStatusQueryTests.cs" />
     <Compile Include="Queries\GetBusinessApplicationSummaryCsapiQuery.cs" />
     <Compile Include="Queries\GetLoanAgreementsCsapiQueryTests.cs" />
     <Compile Include="Queries\GetPersonalPaymentCardsCsapiQueryTests.cs" />
