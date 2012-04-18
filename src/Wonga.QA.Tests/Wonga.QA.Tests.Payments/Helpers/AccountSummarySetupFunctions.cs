@@ -17,7 +17,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
             // Check Loan Extension is Enabled
             var cfg1 = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanEnabled");
-            if (cfg1.Value != "true")
+            if (cfg1.Value.ToLower() != "true")
                 throw new Exception("Unable to run test, LoanExtension must be enabled in service configuration");
         }
 
