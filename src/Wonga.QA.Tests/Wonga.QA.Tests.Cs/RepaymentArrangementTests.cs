@@ -72,7 +72,7 @@ namespace Wonga.QA.Tests.Cs
             application.PutApplicationIntoArrears(20);
             CreatePlan(application, customer);
 
-            var response = Drive.Cs.Queries.Post(new GetRepaymentArrangementsQuery() {ApplicationId = application.Id});
+            var response = Do.Until(() => Drive.Cs.Queries.Post(new GetRepaymentArrangementsQuery() {ApplicationId = application.Id}));
             Assert.IsNotNull(response);
         }
 
