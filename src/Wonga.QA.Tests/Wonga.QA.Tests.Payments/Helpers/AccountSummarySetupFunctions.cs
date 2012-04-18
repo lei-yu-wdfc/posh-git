@@ -177,6 +177,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             // Alter NextDueDate & AcceptedOn
             var app = new Application(appId);
             app.NextDueNotTooEarlyToExtendLoan();
+            Thread.Sleep(300);
             app.AcceptedOnNotTooEarlyToExtend();
 
             // Check transactions have been created
