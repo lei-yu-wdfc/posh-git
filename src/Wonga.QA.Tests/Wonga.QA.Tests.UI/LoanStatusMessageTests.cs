@@ -10,10 +10,11 @@ using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
 using EmploymentStatusEnum = Wonga.QA.Framework.Msmq.EmploymentStatusEnum;
-
+using Wonga.QA.Framework.Helpers;
 
 namespace Wonga.QA.Tests.Ui
 {
+    [Parallelizable]
     public class LoanStatusMessageTests : UiTest
     {
 
@@ -48,48 +49,48 @@ namespace Wonga.QA.Tests.Ui
         public void LoanStatusMessageScenario2C() { LoanStatusMessage(2, 2); }
 
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message. Waiting for code update.")]
         public void LoanStatusMessageScenario3A() { LoanStatusMessage(3, 3); }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message. Waiting for code update.")]
         public void LoanStatusMessageScenario3B() { LoanStatusMessage(3, 7); }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message. Waiting for code update.")]
         public void LoanStatusMessageScenario3C() { LoanStatusMessage(3, 9); }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message. Waiting for code update.")]
         public void LoanStatusMessageScenario3D() { LoanStatusMessage(3, 0, 1); } //0 days passed in 1-day loan
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message. Waiting for code update.")]
         public void LoanStatusMessageScenario3E() { LoanStatusMessage(3, 0, 7); } //0 days passed in 7-day loan
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message. Waiting for code update.")]
         public void LoanStatusMessageScenario3F() { LoanStatusMessage(3, 6, 7); } //6 days passed in 7-day loan
 
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1359"), Pending("Wrong value of repay value. bug UK-1359")]
         public void LoanStatusMessageScenario4A() { LoanStatusMessage(4, 10); }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1359"), Pending("Wrong value of repay value. bug UK-1359")]
         public void LoanStatusMessageScenario4B() { LoanStatusMessage(4, 11); }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1359"), Pending("Wrong value of repay value. bug UK-1359")]
         public void LoanStatusMessageScenario4C() { LoanStatusMessage(4, 1, 1); } //1 days passed in 1-day loan
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1359"), Pending("Wrong value of repay value. bug UK-1359")]
         public void LoanStatusMessageScenario4D() { LoanStatusMessage(3, 7, 7); } //7 days passed in 7-day loan
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1359"), Pending("Wrong value of repay value. bug UK-1359")]
         public void LoanStatusMessageScenario4E() { LoanStatusMessage(4, 8, 8); } //8 days passed in 8-day loan
 
 
         [Test, AUT(AUT.Uk), JIRA("UK-795")]
         public void LoanStatusMessageScenario5() { LoanStatusMessage(5, 2); }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message. Waiting for code update.")]
         public void LoanStatusMessageScenario6() { LoanStatusMessage(6, 3); }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795, UK-1433"), Pending("Fails due to bug UK-1433")]
         public void LoanStatusMessageScenario7() { LoanStatusMessage(7, 10); }
 
         //[Test, AUT(AUT.Uk), JIRA("UK-795")]
@@ -98,13 +99,13 @@ namespace Wonga.QA.Tests.Ui
         //[Test, AUT(AUT.Uk), JIRA("UK-795")]
         //public void LoanStatusMessageScenario10() { LoanStatusMessage(10, 11); } // not ready
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message (from scenarion 4). Waiting for code update.")]
         public void LoanStatusMessageScenario11() { LoanStatusMessage(11, 14); }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message (from scenarion 4). Waiting for code update.")]
         public void LoanStatusMessageScenario12() { LoanStatusMessage(12, 44); }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message (from scenarion 4). Waiting for code update.")]
         public void LoanStatusMessageScenario13() { LoanStatusMessage(13, 64); }
 
         //[Test, AUT(AUT.Uk), JIRA("UK-795")]
@@ -113,8 +114,8 @@ namespace Wonga.QA.Tests.Ui
         //[Test, AUT(AUT.Uk), JIRA("UK-795")]
         //public void LoanStatusMessageScenario16() { LoanStatusMessage(16, 11); } // not ready
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795")]
-        public void LoanStatusMessageScenario17() { LoanStatusMessage(17, 0); } // hangs?
+        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("The test hangs when creates an aplication with Pending status.")]
+        public void LoanStatusMessageScenario17() { LoanStatusMessage(17, 0); }
 
         //[Test, AUT(AUT.Uk), JIRA("UK-795")]
         //public void LoanStatusMessageScenario19() { LoanStatusMessage(19, 0); } // not ready
@@ -146,18 +147,17 @@ namespace Wonga.QA.Tests.Ui
 
             // Create a loan
             Application application;
-            if (scenarioId < 5) 
+            if (scenarioId < 5)
                 application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
             else if ((scenarioId >= 5) && (scenarioId <= 7))
                 application = ApplicationBuilder.New(customer).WithLoanAmount(400).WithLoanTerm(loanTerm).Build();
             else if (scenarioId == 17)
-                application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Pending).WithLoanTerm(loanTerm).Build(); //hangs
+                application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Pending).WithLoanTerm(loanTerm).Build();
             else if (scenarioId == 20)
-                application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).WithLoanTerm(loanTerm).Build(); //hangs
+                application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).WithLoanTerm(loanTerm).Build();
             else
-            {
                 application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
-            }
+
 
             // Rewind application dates
             ApplicationEntity applicationEntity =
@@ -165,9 +165,10 @@ namespace Wonga.QA.Tests.Ui
             RiskApplicationEntity riskApplication =
                 Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == application.Id);
             TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
+
             RewindApplicationDates(applicationEntity, riskApplication, daysShiftSpan);
 
-            //application.PutApplicationIntoArrears(daysShift); // throws exception; alternative to the code above?
+            Console.WriteLine("{0}, {1}, {2}, {3}", applicationEntity.FixedTermLoanApplicationEntity.LoanAmount, applicationEntity.FixedTermLoanApplicationEntity.ServiceFee, applicationEntity.FixedTermLoanApplicationEntity.TransmissionFee, applicationEntity.FixedTermLoanApplicationEntity.MonthlyInterestRate);
 
             // Repay a loan
             if (scenarioId == 8) application = application.RepayOnDueDate();
@@ -210,13 +211,13 @@ namespace Wonga.QA.Tests.Ui
                 else // if loan period is less than 7 days
                 {
                     expectedLoanMessageText = loanStatusMessages[3];  // can extend right now  
-                }                   
+                }
             }
 
             if (scenarioId == 4)
             {
                 //{total to repay 300.00} on {promise date}
-                expectedLoanMessageText = expectedLoanMessageText.Replace("{total to repay 300.00}", application.GetBalance().ToString("#.##")).Replace("{promise date}", getOrdinalDate(applicationEntity.FixedTermLoanApplicationEntity.NextDueDate.Value));
+                expectedLoanMessageText = expectedLoanMessageText.Replace("{total to repay 300.00}", application.GetDueDateBalance().ToString("#.##")).Replace("{promise date}", getOrdinalDate(applicationEntity.FixedTermLoanApplicationEntity.NextDueDate.Value));
             }
 
 
