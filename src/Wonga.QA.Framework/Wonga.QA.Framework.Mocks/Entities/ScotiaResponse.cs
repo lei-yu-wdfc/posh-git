@@ -4,11 +4,11 @@ using Wonga.QA.Framework.Db;
 
 namespace Wonga.QA.Framework.Mocks.Entities
 {
-	public class ScotiaSetup
+	public class ScotiaResponse
 	{
 		private readonly int _setupId;
 
-		public ScotiaSetup(int setupId)
+		public ScotiaResponse(int setupId)
 		{
 			_setupId = setupId;
 		}

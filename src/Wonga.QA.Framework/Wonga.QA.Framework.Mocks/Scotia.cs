@@ -19,9 +19,9 @@ namespace Wonga.QA.Framework.Mocks
 			_dbDriver = new DbDriver();
         }
 
-		public ScotiaSetupBuilder Setup()
+		public ScotiaResponseBuilder Setup()
 		{
-			return new ScotiaSetupBuilder();
+			return new ScotiaResponseBuilder();
 		}
 
     	public void AddOnlineBillPaymentFile(string fileId,

@@ -6,35 +6,35 @@ using Wonga.QA.Framework.Mocks.Entities;
 
 namespace Wonga.QA.Framework.Mocks
 {
-	public class ScotiaSetupBuilder
+	public class ScotiaResponseBuilder
 	{
 		private readonly DbDriver _dbDriver;
 		private long _bankAccountNumber;
 		private decimal? _amount;
 
-		public ScotiaSetupBuilder()
+		public ScotiaResponseBuilder()
 		{
 			_dbDriver = new DbDriver();
 		}
 
-		public static ScotiaSetupBuilder New()
+		public static ScotiaResponseBuilder New()
 		{
-			return new ScotiaSetupBuilder();
+			return new ScotiaResponseBuilder();
 		}
 
-		public ScotiaSetupBuilder ForBankAccountNumber(long bankAccountNumber)
+		public ScotiaResponseBuilder ForBankAccountNumber(long bankAccountNumber)
 		{
 			_bankAccountNumber = bankAccountNumber;
 			return this;
 		}
 
-		public ScotiaSetupBuilder ForAmount(decimal amount)
+		public ScotiaResponseBuilder ForAmount(decimal amount)
 		{
 			_amount = amount;
 			return this;
 		}
 
-		public ScotiaSetup Reject(string message = "Rejected through QAF setup.")
+		public ScotiaResponse Reject(string message = "Rejected through QAF setup.")
 		{
 			var response = new XElement("Setup",
 			                            new XElement("InputValidationTransaction",
@@ -43,7 +43,7 @@ namespace Wonga.QA.Framework.Mocks
 
 			var entity = InsertSetup(response);
 
-			return new ScotiaSetup(entity.BankGatewayResponseSetupId);
+			return new ScotiaResponse(entity.BankGatewayResponseSetupId);
 		}
 
 		private BankGatewayResponseSetup InsertSetup(XElement response)
