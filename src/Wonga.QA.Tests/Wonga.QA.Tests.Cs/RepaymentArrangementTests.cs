@@ -54,18 +54,7 @@ namespace Wonga.QA.Tests.Cs
             Application application = ApplicationBuilder.New(customer).Build();
 
             application.PutApplicationIntoArrears(20);
-            Drive.Cs.Commands.Post(new Framework.Cs.CreateRepaymentArrangementCommand()
-                                       {
-                                           AccountId = customer.Id,
-                                           ApplicationId = application.Id,
-                                           EffectiveBalance = 100,
-                                           RepaymentAmount = 100,
-                                           ArrangementDetails = new[]
-											                   	{
-											                   		new RepaymentArrangementDetailCsapi{Amount = 49, Currency = CurrencyCodeIso4217Enum.ZAR, DueDate = DateTime.Today},
-																	new RepaymentArrangementDetailCsapi{Amount = 51, Currency = CurrencyCodeIso4217Enum.ZAR, DueDate = DateTime.Today.AddDays(7)}
-											                   	}
-                                       });
+            CreatePlan(application, customer);
 
             var dbApplication = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
             Do.Until(() => Drive.Db.Payments.RepaymentArrangements.Single(x => x.ApplicationId == dbApplication.ApplicationId));
@@ -81,18 +70,7 @@ namespace Wonga.QA.Tests.Cs
             Application application = ApplicationBuilder.New(customer).Build();
 
             application.PutApplicationIntoArrears(20);
-            Drive.Cs.Commands.Post(new Framework.Cs.CreateRepaymentArrangementCommand()
-            {
-                AccountId = customer.Id,
-                ApplicationId = application.Id,
-                EffectiveBalance = 100,
-                RepaymentAmount = 100,
-                ArrangementDetails = new[]
-											                   	{
-											                   		new RepaymentArrangementDetailCsapi{Amount = 49, Currency = CurrencyCodeIso4217Enum.ZAR, DueDate = DateTime.Today},
-																	new RepaymentArrangementDetailCsapi{Amount = 51, Currency = CurrencyCodeIso4217Enum.ZAR, DueDate = DateTime.Today.AddDays(7)}
-											                   	}
-            });
+            CreatePlan(application, customer);
 
             var response = Drive.Cs.Queries.Post(new GetRepaymentArrangementsQuery() {ApplicationId = application.Id});
             Assert.IsNotNull(response);
@@ -132,18 +110,7 @@ namespace Wonga.QA.Tests.Cs
             Customer customer = CustomerBuilder.New().Build();
             Application application = ApplicationBuilder.New(customer).Build();
             application.PutApplicationIntoArrears(20);
-            Drive.Cs.Commands.Post(new Framework.Cs.CreateRepaymentArrangementCommand()
-            {
-                AccountId = customer.Id,
-                ApplicationId = application.Id,
-                EffectiveBalance = 100,
-                RepaymentAmount = 100,
-                ArrangementDetails = new[]
-											                   	{
-											                   		new RepaymentArrangementDetailCsapi{Amount = 49, Currency = CurrencyCodeIso4217Enum.ZAR, DueDate = DateTime.Today},
-																	new RepaymentArrangementDetailCsapi{Amount = 51, Currency = CurrencyCodeIso4217Enum.ZAR, DueDate = DateTime.Today.AddDays(7)}
-											                   	}
-            });
+            CreatePlan(application, customer);
 
             var dbApplication = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
             Do.Until(() => Drive.Db.Payments.RepaymentArrangements.Single(x => x.ApplicationId == dbApplication.ApplicationId));
@@ -171,6 +138,32 @@ namespace Wonga.QA.Tests.Cs
             public decimal Amount { get; set; }
             public CurrencyCodeIso4217Enum Currency { get; set; }
             public DateTime DueDate { get; set; }
+        }
+
+        private static void CreatePlan(Application application, Customer customer)
+        {
+            Drive.Cs.Commands.Post(new Framework.Cs.CreateRepaymentArrangementCommand()
+            {
+                AccountId = customer.Id,
+                ApplicationId = application.Id,
+                EffectiveBalance = 100,
+                RepaymentAmount = 100,
+                ArrangementDetails = new[]
+                                                                    {
+                                                                        new RepaymentArrangementDetailCsapi
+                                                                            {
+                                                                                Amount = 49,
+                                                                                Currency = CurrencyCodeIso4217Enum.ZAR,
+                                                                                DueDate = DateTime.Today.AddDays(7)
+                                                                            },
+                                                                        new RepaymentArrangementDetailCsapi
+                                                                            {
+                                                                                Amount = 51,
+                                                                                Currency = CurrencyCodeIso4217Enum.ZAR,
+                                                                                DueDate = DateTime.Today.AddDays(15)
+                                                                            }
+                                                                    }
+            });
         }
     }
 }
