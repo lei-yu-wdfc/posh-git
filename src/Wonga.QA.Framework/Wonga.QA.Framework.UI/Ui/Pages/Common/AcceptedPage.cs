@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
@@ -42,7 +41,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
        
         public AcceptedPage(UiClient client) : base(client)
         {
-            _form = Content.FindElement(By.CssSelector(Ui.Get.AcceptedPage.FormId));
+            //_form = Content.FindElement(By.CssSelector(Ui.Get.AcceptedPage.FormId));
+            _form = Content.FindEitherElement(By.CssSelector(Ui.Get.AcceptedPage.FormId), By.CssSelector("#wonga-loan-approve-form"));
             switch(Config.AUT)
             {
                 case(AUT.Wb):
