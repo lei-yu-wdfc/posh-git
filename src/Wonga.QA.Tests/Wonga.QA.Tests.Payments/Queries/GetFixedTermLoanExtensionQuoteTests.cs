@@ -25,12 +25,12 @@ namespace Wonga.QA.Tests.Payments.Queries
             var appId = Guid.NewGuid();
             const decimal trustRating = 400.00M;
 
-            var setupData = new AccountSummarySetupFunctions();
+            var setupData = new ExtendLoanFunctions();
 
-            setupData.Scenario03Setup(appId, paymentCardId, bankAccountId, accountId, trustRating);
+            setupData.NewLoanAbleToExtendSetup(appId, paymentCardId, bankAccountId, accountId, trustRating);
 
             var response = Drive.Api.Queries.Post(new GetFixedTermLoanExtensionQuoteUkQuery() {ApplicationId = appId});
-            Assert.AreEqual(265, int.Parse(response.Values["TotalAmountDueToday"].Single()), "Incorrect ScenarioId");
+            Assert.AreEqual("109.86", response.Values["TotalAmountDueToday"].Single(), "TotalAmountDueToday incorrect");
         }
     }
 }
