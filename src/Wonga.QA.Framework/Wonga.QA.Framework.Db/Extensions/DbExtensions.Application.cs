@@ -85,6 +85,13 @@ namespace Wonga.QA.Framework.Db.Extensions
 			riskApp.Submit(true);
 		}
 
+        public static void MoveApplicationTransactionDates(this DbDriver db, ApplicationEntity application, TimeSpan span)
+        {
+            application.Transactions.ForEach(t => t.CreatedOn += span);
+            application.Transactions.ForEach(t => t.PostedOn += span);
+            application.Transactions.ForEach(t => t.Submit(true));
+        }
+
 		public static void RewindToDayOfLoanTerm(this DbDriver db, Guid applicationId, int dayOfLoanTerm)
 		{
 			var daysToRewind = db.GetAbsoluteDaysToRewind(dayOfLoanTerm);

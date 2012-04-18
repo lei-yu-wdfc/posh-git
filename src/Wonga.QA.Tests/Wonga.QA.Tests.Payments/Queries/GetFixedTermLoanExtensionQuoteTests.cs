@@ -17,7 +17,7 @@ namespace Wonga.QA.Tests.Payments.Queries
     public class GetFixedTermLoanExtensionQuoteTests
     {
         [Test]
-        public void NewLoanAbleToExtend()
+        public void TenDayLoanQuoteOnDayFiveToExtendForTenDays()
         {
             var accountId = Guid.NewGuid();
             var bankAccountId = Guid.NewGuid();
@@ -27,10 +27,10 @@ namespace Wonga.QA.Tests.Payments.Queries
 
             var setupData = new ExtendLoanFunctions();
 
-            setupData.NewLoanAbleToExtendSetup(appId, paymentCardId, bankAccountId, accountId, trustRating);
+            setupData.TenDayLoanQuoteOnDayFiveToExtendForTenDaysSetup(appId, paymentCardId, bankAccountId, accountId, trustRating);
 
             var response = Drive.Api.Queries.Post(new GetFixedTermLoanExtensionQuoteUkQuery() {ApplicationId = appId});
-            Assert.AreEqual("109.86", response.Values["TotalAmountDueToday"].Single(), "TotalAmountDueToday incorrect");
+            Assert.AreEqual("110.70", response.Values["TotalAmountDueToday"].Single(), "TotalAmountDueToday incorrect");
         }
     }
 }
