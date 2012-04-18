@@ -20,9 +20,6 @@ using SignApplicationCommand = Wonga.QA.Framework.Msmq.SignApplicationCommand;
 
 namespace Wonga.QA.Tests.Payments.Queries
 {
-    /// <summary>
-    /// Not paralellizable because it is altering 
-    /// </summary>
     [TestFixture]
     public class GetAccountOptionsTests
     {
@@ -34,14 +31,8 @@ namespace Wonga.QA.Tests.Payments.Queries
             var applicationId = Guid.NewGuid();
             var accountId = Guid.NewGuid();
             var setupData = new AccountSummarySetupFunctions();
-            var startedAt = DateTime.UtcNow;
 
-            var stopwatch = new Stopwatch();
-            stopwatch.Start(); 
             setupData.Scenario01Setup(accountId, applicationId, trustRating);
-            stopwatch.Stop();
-            Debug.WriteLine("### Data Setup Took {0}", stopwatch.Elapsed);
-
 
             var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating});
             Assert.AreEqual(1, int.Parse(response.Values["ScenarioId"].Single()));
