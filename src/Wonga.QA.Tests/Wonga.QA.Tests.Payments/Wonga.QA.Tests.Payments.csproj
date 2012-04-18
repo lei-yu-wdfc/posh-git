@@ -48,6 +48,7 @@
     <Compile Include="EarlyRepaymentTests.cs" />
     <Compile Include="ExternalDebtCollectionTests.cs" />
     <Compile Include="Helpers\AccountSummarySetupFunctions.cs" />
+    <Compile Include="Helpers\ExtendLoanFunctions.cs" />
     <Compile Include="Helpers\VerifyPaymentFunctions.cs" />
     <Compile Include="InArrearsNoticeTests.cs" />
     <Compile Include="LoanCalculations\BusinessLoanCalculationTests.cs" />
