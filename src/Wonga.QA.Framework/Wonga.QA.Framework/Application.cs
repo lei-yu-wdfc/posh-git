@@ -211,6 +211,14 @@ namespace Wonga.QA.Framework
 					a => a.Scope != (decimal)PaymentTransactionScopeEnum.Other).Sum(a => a.Amount);
 		}
 
+        public Decimal GetDueDateBalance()
+        {
+            var query = Config.AUT == AUT.Za ? (ApiRequest)
+                new GetFixedTermLoanApplicationZaQuery { ApplicationId = Id } :
+                new GetFixedTermLoanApplicationQuery { ApplicationId = Id };
+            return Convert.ToDecimal(Drive.Api.Queries.Post(query).Values["BalanceNextDueDate"].Single());
+        }
+
 		public Application RepayEarly(decimal amount, int dayOfLoanToMakeRepayment)
 		{
             Drive.Db.RewindToDayOfLoanTerm(Id, dayOfLoanToMakeRepayment);
