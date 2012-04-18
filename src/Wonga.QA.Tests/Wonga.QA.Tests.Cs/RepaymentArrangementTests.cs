@@ -74,6 +74,8 @@ namespace Wonga.QA.Tests.Cs
 
             var response = Do.Until(() => Drive.Cs.Queries.Post(new GetRepaymentArrangementsQuery() {ApplicationId = application.Id}));
             Assert.IsNotNull(response);
+
+            Assert.AreEqual(application.Id, Guid.Parse(response.Values["ApplicationId"].Single()));
         }
 
         [Test, AUT(AUT.Za)]
@@ -85,6 +87,7 @@ namespace Wonga.QA.Tests.Cs
 
             var response = Drive.Cs.Queries.Post(new GetRepaymentArrangementParametersQuery() {AccountId = customer.Id});
             Assert.IsNotNull(response);
+            Assert.AreEqual(6, int.Parse(response.Values["MaxLengthMonths"].Single()));
         }
 
         [Test, AUT(AUT.Za)]
