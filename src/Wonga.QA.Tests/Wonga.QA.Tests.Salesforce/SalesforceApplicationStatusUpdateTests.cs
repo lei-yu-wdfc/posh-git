@@ -50,7 +50,6 @@ namespace Wonga.QA.Tests.Salesforce
 
         [Test]
         [AUT(AUT.Uk), JIRA("UK-924")]
-        //[Ignore("PaymentSchedulingSaga issue in UK prevents this from working atm")]
         public void PutIntoArrears_ChangesSalesforceApplicationStatus_ToInArrears()
         {
             Customer customer;
@@ -67,10 +66,35 @@ namespace Wonga.QA.Tests.Salesforce
             Do.Until(() =>
             {
                 var app = Salesforce.GetApplicationById(application.Id);
-                //NOTE: this string should not be hardcoded or we shoud use Status_ID__c
                 return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.InArrears;
             });
+        }
 
+        [Test]
+        [AUT(AUT.Uk), JIRA("UK-923")]
+        public void CreditCsTransactionThatPaysOffTheLoan_ChangesSalesforceApplicationStatus_ToPaidInFull()
+        {
+            Customer customer;
+            Application application = CreateApplication(out customer);
+            FixedTermLoanSagaEntity loanSagaEntity = null;
+            Do.Until(() => loanSagaEntity = Drive.Db.OpsSagas.FixedTermLoanSagaEntities.SingleOrDefault(s => s.ApplicationGuid == application.Id));
+            Wonga.QA.Framework.Cs.CreateTransactionCommand createTransactionCsCommand = new Wonga.QA.Framework.Cs.CreateTransactionCommand()
+                                                                        {
+                                                                            Amount = application.LoanAmount * -2,
+                                                                            ApplicationGuid = application.Id,
+                                                                            Currency = CurrencyCodeIso4217Enum.GBP,
+                                                                            Reference = "Christmas present",
+                                                                            SalesForceUser = "acceptancetest",
+                                                                            Scope = PaymentTransactionScopeEnum.Credit,
+                                                                            Type = PaymentTransactionEnum.CardPayment,
+                                                                        };
+            Drive.Cs.Commands.Post(createTransactionCsCommand);
+            Do.Until(() =>
+            {
+                var app = Salesforce.GetApplicationById(application.Id);
+                return app.Status_ID__c != null 
+                    && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.PaidInFull;
+            });
         }
 
         private void MakeDueStatusToday(Application application)

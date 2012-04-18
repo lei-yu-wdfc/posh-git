@@ -65,12 +65,18 @@
     <Reference Include="Wonga.QA.Framework.Svc">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Svc.dll</HintPath>
     </Reference>
-    <Reference Include="Wonga.QA.Framework.ThirdParties, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Wonga.QA.Framework.ThirdParties">
+      <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.ThirdParties.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Wonga.QA.Tests.Core\Wonga.QA.Tests.Core.csproj">
       <Project>{7243F3C0-71B0-4679-960A-687052AFFDAD}</Project>
       <Name>Wonga.QA.Tests.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wonga.QA.Tests.Salesforce\Wonga.QA.Tests.Salesforce.csproj">
+      <Project>{E149DC99-4254-4659-AD72-574B2A5DD67D}</Project>
+      <Name>Wonga.QA.Tests.Salesforce</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
