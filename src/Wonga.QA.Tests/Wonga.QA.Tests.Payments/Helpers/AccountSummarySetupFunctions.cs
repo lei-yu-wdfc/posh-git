@@ -21,12 +21,15 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 throw new Exception("Unable to run test, LoanExtension must be enabled in service configuration");
         }
 
-        private void MakeAppNotTooNearDueDateToExtend(Guid appId)
+        private void CheckExtendMinSetting()
         {
-            var cfg = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Payments.ExtendLoanDaysBeforeDueDate");
-            UpdateNextDueDate(appId, int.Parse(cfg.Value) - 3);
+            // Check Loan Extension is Enabled
+            var cfg1 = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays");
+            if (cfg1.Value != "1")
+                throw new Exception("Unable to run test, ExtendLoanMinDays must be set to 1 in service configuration");
         }
 
+       
         private void MakeAppDueToday(Guid appId)
         {
             UpdateNextDueDate(appId, 0);
@@ -37,43 +40,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             UpdateNextDueDate(appId, -1);
         }
 
-        private void MakeAppAcceptedOnNotTooEarlyToExtendDays(Guid appId)
-        {
-            // Check extend loan min days
-            var cfg1 = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Payments.ExtendLoanMinDays");
-            try
-            {
-                UpdateAcceptedOn(appId, int.Parse(cfg1.Value + 5));
-            }
-            catch (Exception)
-            {
-                Thread.Sleep(1000);
-                UpdateAcceptedOn(appId, int.Parse(cfg1.Value + 5));
-            }
-        }
-
-        private void MakeAppTooEarlyToExtendDays(Guid appId)
-        {
-            // Check extend loan min days
-            var cfg1 = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Payments.ExtendLoanMinDays");
-            UpdateAcceptedOn(appId, 0);
-        }
-
-        private void UpdateAcceptedOn(Guid appId, int days)
-        {
-            var dt = DateTime.UtcNow.AddDays(days);                
-            try
-            {
-                Drive.Data.Payments.Db.Applications.UpdateByExternalId(ExternalId: appId, AcceptedOn: dt);
-            }
-            catch (Exception)
-            {
-                Thread.Sleep(1000);
-            Drive.Data.Payments.Db.Applications.UpdateByExternalId(ExternalId: appId, AcceptedOn: dt);
-        }
-
-        }
-
+       
         private void UpdateNextDueDate(Guid appId, int days)
         {
             var dt = DateTime.UtcNow.AddDays(days).Date;
@@ -95,13 +62,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             return int.Parse(cfg.Value) + 3;
         }
 
-        private int NotDueDateTooFarInFutureDays()
-        {
-            // Return number of days that will be 3 days too early from due date to be extended
-            var cfg = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Payments.ExtendLoanDaysBeforeDueDate");
-            return int.Parse(cfg.Value) - 3;
-        }
-
+      
         public void Scenario01Setup(Guid accountId, Guid appId, decimal trustRating)
         {
             var bankAccountId = Guid.NewGuid();
@@ -150,7 +111,6 @@ namespace Wonga.QA.Tests.Payments.Helpers
             // Alter NextDueDate & AcceptedOn
             var app = new Application(appId);
             app.NextDueDateTooEarlyToExtendLoan();
-            app.AcceptedOnNotTooEarlyToExtend();
 
             // Check transactions have been created
             var application = Drive.Data.Payments.Db.Applications.FindByExternalId(appId);
@@ -160,6 +120,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         public void Scenario03Setup(Guid appId, Guid paymentCardId, Guid bankAccountId, Guid accountId, decimal trustRating)
         {
             CheckExtensionIsEnabled();
+            CheckExtendMinSetting();
 
             // Create Account so that time zone can be looked up
             Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
@@ -177,8 +138,6 @@ namespace Wonga.QA.Tests.Payments.Helpers
             // Alter NextDueDate & AcceptedOn
             var app = new Application(appId);
             app.NextDueNotTooEarlyToExtendLoan();
-            Thread.Sleep(300);
-            app.AcceptedOnNotTooEarlyToExtend();
 
             // Check transactions have been created
             var application = Drive.Data.Payments.Db.Applications.FindByExternalId(appId);
@@ -214,7 +173,6 @@ namespace Wonga.QA.Tests.Payments.Helpers
             // Alter NextDueDate & AcceptedOn
             var app = new Application(appId);
             app.NextDueNotTooEarlyToExtendLoan();
-            app.AcceptedOnNotTooEarlyToExtend();
 
             // Check transactions have been created
             var application = Drive.Data.Payments.Db.Applications.FindByExternalId(appId);
@@ -243,7 +201,6 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
             // Alter NextDueDate & AcceptedOn
             MakeAppDueToday(appId);
-            MakeAppTooEarlyToExtendDays(appId);
 
             // Check transactions have been created
             var application = Drive.Data.Payments.Db.Applications.FindByExternalId(appId);
@@ -272,7 +229,6 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
             // Alter NextDueDate & AcceptedOn
             MakeAppDueYesterday(appId);
-            MakeAppTooEarlyToExtendDays(appId);
 
             // Check transactions have been created
             var application = Drive.Data.Payments.Db.Applications.FindByExternalId(appId);
@@ -326,7 +282,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             // Alter NextDueDate & AcceptedOn
             var app = new Application(appId);
             app.NextDueNotTooEarlyToExtendLoan();
-            app.AcceptedOnNotTooEarlyToExtend();
+            //app.AcceptedOnNotTooEarlyToExtend();
 
             // Check transactions have been created
             var application = Drive.Data.Payments.Db.Applications.FindByExternalId(appId);
@@ -356,7 +312,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             // Alter NextDueDate & AcceptedOn
             var app = new Application(appId);
             app.NextDueNotTooEarlyToExtendLoan();
-            app.AcceptedOnNotTooEarlyToExtend();
+            //app.AcceptedOnNotTooEarlyToExtend();
 
             CreateExtensionFeeTransaction(appId);
             CreateExtensionFeeTransaction(appId);
