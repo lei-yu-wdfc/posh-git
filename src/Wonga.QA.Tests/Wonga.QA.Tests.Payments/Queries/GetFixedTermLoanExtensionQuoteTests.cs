@@ -30,7 +30,12 @@ namespace Wonga.QA.Tests.Payments.Queries
             setupData.TenDayLoanQuoteOnDayFiveToExtendForTenDaysSetup(appId, paymentCardId, bankAccountId, accountId, trustRating);
 
             var response = Drive.Api.Queries.Post(new GetFixedTermLoanExtensionQuoteUkQuery() {ApplicationId = appId});
+            Assert.AreEqual(appId.ToString(), response.Values["ApplicationId"].Single(), "ApplicationId incorrect");
+            Assert.AreEqual("1", response.Values["SliderMinDays"].Single(), "SliderMinDays incorrect");
+            Assert.AreEqual("30", response.Values["SliderMaxDays"].Single(), "SliderMaxDays incorrect");
+            Assert.AreEqual("100.00", response.Values["CurrentPrincipleAmount"].Single(), "CurrentPrincipleAmount incorrect");
             Assert.AreEqual("110.70", response.Values["TotalAmountDueToday"].Single(), "TotalAmountDueToday incorrect");
+            Assert.AreEqual("10.70", response.Values["ExtensionPartPaymentAmount"].Single(), "ExtensionPartPaymentAmount incorrect");
         }
     }
 }

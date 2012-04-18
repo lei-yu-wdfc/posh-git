@@ -11,7 +11,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
 {
     public class ExtendLoanFunctions
     {
-        public void TenDayLoanQuoteOnDayFiveToExtendForTenDaysSetup(Guid appId, Guid paymentCardId, Guid bankAccountId, Guid accountId, decimal trustRating)
+        public void TenDayLoanQuoteOnDayFiveSetup(Guid appId, Guid paymentCardId, Guid bankAccountId, Guid accountId, decimal trustRating)
         {
             const int extendOnDay = 5;
             CheckExtendMinSetting();
