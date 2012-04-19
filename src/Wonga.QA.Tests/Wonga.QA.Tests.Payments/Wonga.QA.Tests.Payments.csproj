@@ -51,6 +51,7 @@
     <Compile Include="Helpers\ExtendLoanFunctions.cs" />
     <Compile Include="Helpers\VerifyPaymentFunctions.cs" />
     <Compile Include="InArrearsNoticeTests.cs" />
+    <Compile Include="InDuplumViolationTest.cs" />
     <Compile Include="LoanCalculations\BusinessLoanCalculationTests.cs" />
     <Compile Include="MoveApplicationToDcaTests.cs" />
     <Compile Include="NaedoRetryTests.cs" />
