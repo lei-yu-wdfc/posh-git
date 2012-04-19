@@ -8,7 +8,8 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments
 {
-	public class GetApplicationSummaryTests
+	[TestFixture]
+	public class GetAccountSummaryQueryTests
 	{
 		[Test, AUT(AUT.Uk), JIRA("UK-795")]
 		[Ignore]
@@ -23,6 +24,17 @@ namespace Wonga.QA.Tests.Payments
 			//£100 loan for 10 days.
 			Assert.AreEqual(115.91M, decimal.Parse(response.Values["CurrentLoanRepaymentAmountOnDueDate"].Single()));
 			Assert.AreEqual(DateTime.Today.AddDays(10), DateTime.Parse(response.Values["CurrentLoanDueDate"].Single()));
+		}
+
+		[Test, AUT(AUT.Ca), JIRA("CA-1951")]
+		public void GetAccountSummary_WhenL0Customer_ThenNoPreferredCashoutPaymentMethod()
+		{
+			Customer customer = CustomerBuilder.New().Build();
+			ApplicationBuilder.New(customer).Build();
+
+			var response = Drive.Api.Queries.Post(new GetAccountSummaryQuery { AccountId = customer.Id });
+			
+			Assert.IsNull(response.Values["CashoutPaymentMethod"]);
 		}
 	}
 }

@@ -69,7 +69,7 @@
     <Compile Include="FixedTermLoanExtensionTests.cs" />
     <Compile Include="FixedTermLoanOfferTests.cs" />
     <Compile Include="FixedTermLoanTopUpTests.cs" />
-    <Compile Include="GetApplicationSummaryTests.cs" />
+    <Compile Include="Queries\GetAccountSummaryQueryTests.cs" />
     <Compile Include="FixedTermLoanRepayTest.cs" />
     <Compile Include="GetBusinessFixedInstallmentLoanCalculationTests.cs" />
     <Compile Include="GetBusinessFixedInstallmentLoanOfferTests.cs" />

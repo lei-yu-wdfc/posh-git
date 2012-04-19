@@ -125,6 +125,7 @@
     <Compile Include="Requests\GetCustomerSubRegionCaQuery.cs" />
     <Compile Include="Requests\GetDirectDebitFormZaQuery.cs" />
     <Compile Include="Requests\GetEmailReturnLinkCorrelationRecordWbUkQuery.cs" />
+    <Compile Include="Requests\GetExtensionSecciQuery.cs" />
     <Compile Include="Requests\GetFixedInstallmentAgreementWbUkQuery.cs" />
     <Compile Include="Requests\GetFixedTermLoanApplicationQuery.cs" />
     <Compile Include="Requests\GetFixedTermLoanApplicationZaQuery.cs" />
@@ -195,6 +196,7 @@
     <Compile Include="Requests\SendExtensionWindowOpenedReminderCommand.cs" />
     <Compile Include="Requests\SendPasswordResetEmailCommand.cs" />
     <Compile Include="Requests\SendVerificationEmailCommand.cs" />
+    <Compile Include="Requests\SetAccountPaymentMethodCaCommand.cs" />
     <Compile Include="Requests\SetAccountPreferenceCommand.cs" />
     <Compile Include="Requests\SetBankAccountPrimaryCommand.cs" />
     <Compile Include="Requests\SetPaymentCardPrimaryCommand.cs" />
@@ -239,6 +241,7 @@
     <Compile Include="Enums\OccupancyStatusEnum.cs" />
     <Compile Include="Enums\PasswordResetKeyComplexityEnum.cs" />
     <Compile Include="Enums\PaymentFrequencyEnum.cs" />
+    <Compile Include="Enums\PaymentMethodEnum.cs" />
     <Compile Include="Enums\ProvinceEnum.cs" />
     <Compile Include="Enums\SliderPositionEnum.cs" />
     <Compile Include="Enums\TitleEnum.cs" />
