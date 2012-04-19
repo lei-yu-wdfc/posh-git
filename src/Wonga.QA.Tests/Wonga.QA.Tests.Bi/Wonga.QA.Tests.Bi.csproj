@@ -65,7 +65,9 @@
     <Reference Include="Wonga.QA.Framework.Svc">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Svc.dll</HintPath>
     </Reference>
-    <Reference Include="Wonga.QA.Framework.ThirdParties, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Wonga.QA.Framework.ThirdParties">
+      <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.ThirdParties.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Wonga.QA.Tests.Core\Wonga.QA.Tests.Core.csproj">

@@ -5,10 +5,74 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Cs;
 using Wonga.QA.Framework.Db.Payments;
+using Wonga.QA.Framework.Helpers;
+using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments.Queries
 {
+    [TestFixture]
+    [AUT(AUT.Uk), JIRA("UK-1103")]
+    public class CardRepaymentRequestCsApiTests
+    {
+        private Guid _cardId;
+        private decimal _loanAmount;
+
+        [SetUp]
+        public void Setup()
+        {
+            _cardId = Guid.NewGuid();
+            _loanAmount = 202.72m;
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-1196")]
+        public void RepayWithCard_CreatesCardPaymentRequestEntry()
+        {
+            Customer customer = CustomerBuilder.New().Build();
+
+            const string cardType = "Mastercard";
+            const string cardNumber = "1111222233334444";
+            const string cardCode = "777";
+            DateTime expiryDate = DateTime.UtcNow.AddMonths(5);
+            customer.AddPaymentCard(cardType, cardNumber, cardCode, expiryDate, false);
+
+            int? paymentCardId = null;
+            Do.Until(() =>
+                         {
+                             var paymentCardsData = Drive.Data.Payments.Db.PaymentCardsBase;
+                             var d = paymentCardsData.FindAll(paymentCardsData.Type == cardType 
+                                 && paymentCardsData.MaskedNumber == cardNumber.MaskedCardNumber()).Single();
+                             paymentCardId = d.PaymentCardId;
+                             return d;
+            });
+
+            Application application = ApplicationBuilder.New(customer).WithLoanAmount(_loanAmount).Build();
+
+
+            var repayCommand = new CsRepayWithPaymentCardCommand()
+                                   {
+                                       AccountId = customer.Id,
+                                       Amount = _loanAmount,
+                                       CSUser = "Mr Agent",
+                                       Currency = CurrencyCodeIso4217Enum.GBP,
+                                       CV2 = cardCode,
+                                       PaymentCardId = _cardId,
+                                   };
+
+            Drive.Cs.Commands.Post(repayCommand);
+
+            Do.Until(()=>
+                         {
+                             var repaymentRequests = Drive.Data.Payments.Db.PaymentCardRepaymentRequests;
+                             var result = repaymentRequests.FindAll(repaymentRequests.ApplicationId == application.Id
+                                                                    && repaymentRequests.Amount == _loanAmount
+                                                                    && repaymentRequests.PaymentCardId == paymentCardId);
+                             return result;
+                         });
+        }
+    }
+
+
     [TestFixture]
     public class GetPersonalPaymentCardsCsapiQueryTests
     {
