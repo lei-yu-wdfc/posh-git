@@ -65,9 +65,8 @@
   </AddAditionalDirectorsPage>
 
   <ApplyTermsPage>
-    <NextButton>#edit-submit</NextButton>    
-    <EditLoan>#slider-toggler</EditLoan>
-    <EditLoanDuration>#edit-loan-duration</EditLoanDuration>
+    <NextButton>#edit-submit</NextButton>
+    <EditLoanDurationField>#edit-loan-duration</EditLoanDurationField>
   </ApplyTermsPage>
 
   <BankAccountPage>

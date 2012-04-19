@@ -12,22 +12,17 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
     {
 
         private readonly IWebElement _next;
-        private readonly IWebElement _editLoan;
-
-        private IWebElement _editLoanDuration;
-        
+        private readonly IWebElement _editLoanDurationField;
         
         public ApplyTermsPage(UiClient client) : base(client)
         {
             _next = Content.FindElement(By.CssSelector(Ui.Get.ApplyTermsPage.NextButton));
-            _editLoan = Content.FindElement(By.CssSelector(Ui.Get.ApplyTermsPage.EditLoan));
+            _editLoanDurationField = Content.FindElement(By.CssSelector(Ui.Get.ApplyTermsPage.EditLoanDurationField));
         }
 
         public void EditDurationOfLoan(String value)
         {
-            _editLoan.Click();
-            _editLoanDuration = Content.FindElement(By.CssSelector(Ui.Get.ApplyTermsPage.EditLoanDuration));
-            _editLoanDuration.SendValue(value);
+            _editLoanDurationField.SendValue(value);
         }
 
         public AcceptedPage Next()
