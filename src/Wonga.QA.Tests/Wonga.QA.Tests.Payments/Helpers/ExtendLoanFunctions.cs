@@ -11,8 +11,9 @@ namespace Wonga.QA.Tests.Payments.Helpers
 {
     public class ExtendLoanFunctions
     {
-        public void NewLoanAbleToExtendSetup(Guid appId, Guid paymentCardId, Guid bankAccountId, Guid accountId, decimal trustRating)
+        public void TenDayLoanQuoteOnDayFiveSetup(Guid appId, Guid paymentCardId, Guid bankAccountId, Guid accountId, decimal trustRating)
         {
+            const int extendOnDay = 5;
             CheckExtendMinSetting();
 
             // Create Account so that time zone can be looked up
@@ -34,13 +35,13 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 .Message(() => String.Format("there are currently {0} trans", Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count()))
                 .Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 2);
 
-            // ToDo: Rewind Application 5 days
+            // Rewind Application & Transactions 5 days
             var app = new Application(appId);
-            app.AcceptedOnNotTooEarlyToExtend();
+            app.MoveTransactionDates(extendOnDay * -1);
         }
 
 
-        private void CreateFixedTermLoanApplication(Guid appId, Guid accountId, Guid bankAccountId, Guid paymentCardId, int dueInDays = 10)
+        private void CreateFixedTermLoanApplication(Guid appId, Guid accountId, Guid bankAccountId, Guid paymentCardId, int dueInDays = 5)
         {
             Drive.Msmq.Payments.Send(new AddBankAccountUkCommand()
             {

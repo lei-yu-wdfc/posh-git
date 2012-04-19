@@ -282,7 +282,6 @@ namespace Wonga.QA.Tests.Payments.Helpers
             // Alter NextDueDate & AcceptedOn
             var app = new Application(appId);
             app.NextDueNotTooEarlyToExtendLoan();
-            //app.AcceptedOnNotTooEarlyToExtend();
 
             // Check transactions have been created
             var application = Drive.Data.Payments.Db.Applications.FindByExternalId(appId);
@@ -312,7 +311,6 @@ namespace Wonga.QA.Tests.Payments.Helpers
             // Alter NextDueDate & AcceptedOn
             var app = new Application(appId);
             app.NextDueNotTooEarlyToExtendLoan();
-            //app.AcceptedOnNotTooEarlyToExtend();
 
             CreateExtensionFeeTransaction(appId);
             CreateExtensionFeeTransaction(appId);
