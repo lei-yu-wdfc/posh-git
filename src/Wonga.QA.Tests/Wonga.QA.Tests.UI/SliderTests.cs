@@ -226,6 +226,20 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(maxLoanDuration.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
         }
 
+        [Test, AUT(AUT.Za), JIRA("QA-154"), Pending]
+        public void MaxAmountSliderValueShouldBeCorrectL0()
+        {
+            var serviceConfigurations = Drive.Data.Ops.Db.ServiceConfigurations;
+            var defaultCreditLimit = serviceConfigurations.Find(serviceConfigurations.Key.Like("Risk.DefaultCreditLimit")).Value;
+            int setAmount = Int32.Parse(defaultCreditLimit) + 100;
+
+            var page = Client.Home();
+            page.Sliders.HowMuch = setAmount.ToString(CultureInfo.InvariantCulture);
+            page.Sliders.HowLong = "10";
+            Assert.AreEqual(defaultCreditLimit, page.Sliders.GetTotalAmount.Remove(0,1));
+
+        }
+
         [Test, AUT(AUT.Ca), JIRA("QA-239", "QA-158")]
         public void MaxDurationSliderValueShouldBeCorrectLn()
         {
