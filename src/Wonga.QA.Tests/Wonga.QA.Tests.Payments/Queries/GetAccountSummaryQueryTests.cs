@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
@@ -27,14 +28,38 @@ namespace Wonga.QA.Tests.Payments
 		}
 
 		[Test, AUT(AUT.Ca), JIRA("CA-1951")]
-		public void GetAccountSummary_WhenL0Customer_ThenNoPreferredCashoutPaymentMethod()
+		public void GetAccountSummary_WhenNoPreferredCashoutPaymentMethod_ThenGetNullCashoutPaymentMethod()
 		{
-			Customer customer = CustomerBuilder.New().Build();
+			Customer customer = CustomerBuilder.New().WithMiddleName(RiskMask.TESTNoCheck).Build();
 			ApplicationBuilder.New(customer).Build();
 
 			var response = Drive.Api.Queries.Post(new GetAccountSummaryQuery { AccountId = customer.Id });
 			
-			Assert.IsNull(response.Values["CashoutPaymentMethod"]);
+			Assert.IsNull(response.Values["CashoutPaymentMethod"].Single());
 		}
+
+		[Test, AUT(AUT.Ca), JIRA("CA-1951")]
+		[Row(PaymentMethodEnum.BankAccount)]
+		[Row(PaymentMethodEnum.ETransfer)]
+		[Row(PaymentMethodEnum.PayPal)]
+		public void GetAccountSummary_WhenPreferredCashoutPaymentMethod_ThenGetExpectedCashoutPaymentMethod(PaymentMethodEnum expectedPaymentMethod)
+		{
+			Customer customer = CustomerBuilder.New().WithMiddleName(RiskMask.TESTNoCheck).Build();
+			Application application = ApplicationBuilder.New(customer).Build();
+
+			UpdateDbCashoutPaymentMethodForAccountPreference(application.AccountId, expectedPaymentMethod);
+
+			var response = Drive.Api.Queries.Post(new GetAccountSummaryQuery { AccountId = customer.Id });
+
+			Assert.AreEqual(expectedPaymentMethod.ToString(), response.Values["CashoutPaymentMethod"].Single());
+		}
+
+
+		private void UpdateDbCashoutPaymentMethodForAccountPreference(Guid accountId, PaymentMethodEnum paymentMethod)
+		{
+			//DB payment method starts in 1
+			Drive.Data.Payments.Db.AccountPreferences.UpdateByAccountId(AccountId: accountId, CashoutPaymentMethodId: (int)(paymentMethod) + 1);
+		}
+		
 	}
 }

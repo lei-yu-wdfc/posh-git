@@ -39,6 +39,7 @@
     <Compile Include="CsResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\AddPersonalPaymentCardCommand.cs" />
+    <Compile Include="Requests\CancelApplicationCommand.cs" />
     <Compile Include="Requests\CancelRepaymentArrangementCommand.cs" />
     <Compile Include="Requests\ConfirmFraudCommand.cs" />
     <Compile Include="Requests\ConfirmManualVerificationAcceptedCommand.cs" />
@@ -60,7 +61,6 @@
     <Compile Include="Requests\GetDirectDebitFormZaQuery.cs" />
     <Compile Include="Requests\GetLoanAgreementsQuery.cs" />
     <Compile Include="Requests\GetPersonalPaymentCardsQuery.cs" />
-    <Compile Include="Requests\GetRepaymentArrangementAllowedQuery.cs" />
     <Compile Include="Requests\GetRepaymentArrangementCalculationQuery.cs" />
     <Compile Include="Requests\GetRepaymentArrangementParametersQuery.cs" />
     <Compile Include="Requests\GetRepaymentArrangementsQuery.cs" />
@@ -69,6 +69,7 @@
     <Compile Include="Requests\GetValidTransactionTypesQuery.cs" />
     <Compile Include="Requests\RevokeApplicationFromDcaCommand.cs" />
     <Compile Include="Requests\SuspectFraudCommand.cs" />
+    <Compile Include="Requests\WriteOffApplicationCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
