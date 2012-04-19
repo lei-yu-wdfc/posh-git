@@ -174,8 +174,6 @@ namespace Wonga.QA.Framework
 			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
 			Do.While(ftl.Refresh);
 
-			Drive.Db.Rewind(Id, (int)daysInArrears);
-
 			ScheduledPaymentSagaEntity sp = Do.Until(() => Drive.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationGuid == Id));
 			Drive.Msmq.Payments.Send(new TakePaymentFailedCommand { SagaId = sp.Id, CreatedOn = DateTime.UtcNow, ValueDate = DateTime.UtcNow });
             if (Config.AUT != AUT.Ca)
