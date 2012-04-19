@@ -70,7 +70,7 @@ namespace Wonga.QA.Tests.BankGateway
 								WithBranchNumber("00018").
 								Build();
 
-			var setup = ScotiaSetupBuilder.New().
+			var setup = ScotiaResponseBuilder.New().
 								ForBankAccountNumber(bankAccountNumber).
 								Reject();
 
