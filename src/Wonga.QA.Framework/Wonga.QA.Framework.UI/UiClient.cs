@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Gallio.Framework;
 using Gallio.Framework.Assertions;
 using MbUnit.Framework;
 using OpenQA.Selenium;
@@ -33,13 +35,14 @@ namespace Wonga.QA.Framework.UI
         {
             var capabillities = GetDesiredCapabilities();
             Driver = GetWebDriver(capabillities);
-            
+            if (Driver is CustomRemoteWebDriver)
+                TestContext.CurrentContext.AddMetadata("JobURL", string.Format("https://saucelabs.com/jobs/{0}", ((CustomRemoteWebDriver)Driver).GetSessionId().ToString()));
         }
 
         private IWebDriver GetWebDriver(DesiredCapabilities capabilities)
         {
             if(Config.Ui.RemoteMode)
-                return new RemoteWebDriver(Config.Ui.RemoteUri, capabilities);
+                return new CustomRemoteWebDriver(Config.Ui.RemoteUri, capabilities);
             else
                 switch (Config.Ui.Browser)
                 {
