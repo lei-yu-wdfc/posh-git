@@ -94,7 +94,7 @@ namespace Wonga.QA.Framework
                 SetCardExpirationDate(true);
             }
             var businessLoansScheduledPaymentsSaga =
-                Do.Until(() => Drive.Db.OpsSagas.BusinessLoanScheduledPaymentSagaEntities.Single(
+                Do.With.Timeout(2).Until(() => Drive.Db.OpsSagas.BusinessLoanScheduledPaymentSagaEntities.Single(
                     s => s.ApplicationGuid == Id));
 
             // Trigger repeated collection
