@@ -46,20 +46,16 @@ namespace Wonga.QA.Framework.UI
             else
                 switch (Config.Ui.Browser)
                 {
-                        case(Config.UiConfig.BrowserType.Chrome):
+                    case(Config.UiConfig.BrowserType.Chrome):
                         return new ChromeDriver();
-                        break;
                     case(Config.UiConfig.BrowserType.Firefox):
                         return new FirefoxDriver();
-                        break;
                     case(Config.UiConfig.BrowserType.InternetExplorer):
                         var ieOps = new InternetExplorerOptions();
                         ieOps.IntroduceInstabilityByIgnoringProtectedModeSettings = true;
                         return new InternetExplorerDriver(ieOps);
-                        break;
                     case(Config.UiConfig.BrowserType.Opera):
                         throw new NotImplementedException("Safari is not supported yet");
-                        break;
                     case(Config.UiConfig.BrowserType.Safari):
                         throw new NotImplementedException("Safari is not supported by WebDriver");
                     default:
