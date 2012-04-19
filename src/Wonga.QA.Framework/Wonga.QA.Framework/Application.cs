@@ -165,6 +165,7 @@ namespace Wonga.QA.Framework
 			TimeSpan span = dueDate - DateTime.Today.AddDays(-daysInArrears);
 
 			Drive.Db.RewindApplicationDates(application, riskApplication, span);
+			
 			ScheduledPostAccruedInterestSagaEntity entity = Drive.Db.OpsSagas.ScheduledPostAccruedInterestSagaEntities.Single(a => a.ApplicationGuid == Id);
 			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = entity.Id });
 
