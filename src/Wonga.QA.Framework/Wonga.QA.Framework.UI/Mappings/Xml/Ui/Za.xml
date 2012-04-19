@@ -94,6 +94,7 @@
     <EditPhoneHome>input#edit-home-phone-za</EditPhoneHome>
     <EditPhoneMobile>input#edit-mobile-phone-za</EditPhoneMobile>
     <EditPhonePin>input#edit-mobile-pin</EditPhonePin>
+	<EditPhoneErrorMessage>.messages.error ul li</EditPhoneErrorMessage>
     <EditPasswordCurrent>input#edit-current-password</EditPasswordCurrent>
     <EditPasswordNew>input#edit-password</EditPasswordNew>
     <EditPasswordConfirm>input#edit-password-confirm</EditPasswordConfirm>

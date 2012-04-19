@@ -115,6 +115,22 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _editPhonePin.SendKeys(pin);
             return true;
         }
+        public bool DontChangePhone()
+        {
+            Thread.Sleep(5000);
+            _submitButton = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.SubmitButton));
+            _submitButton.Click();
+            try
+            {
+                Do.Until(() => Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.EditPhoneErrorMessage)));
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            
+        }
         private bool LookForEditPinField()
         {
             _editPhonePin = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.EditPhonePin));
