@@ -86,6 +86,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual ProcessingPage ProcessingPage { get; set; }
         public virtual DealDonePage DealDonePage { get; set; }
         public virtual DeclinedPage DeclinedPage { get; set; }
+        public virtual ExtensionDealDonePage ExtensionDealDonePage { get; set; }
         public virtual AddressDetailsPage AddressDetailsPage { get; set; }
         public virtual AccountDetailsPage AccountDetailsPage { get; set; }
         public virtual BankAccountPage BankAccountPage { get; set; }

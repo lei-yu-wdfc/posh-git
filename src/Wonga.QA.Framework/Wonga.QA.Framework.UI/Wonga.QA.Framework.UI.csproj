@@ -77,6 +77,7 @@
     <Compile Include="Mappings\Ui\Pages\Common\ApplyPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ApplyTermsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\BlogPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\ExtensionDealDonePage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ForgotPasswordPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\HomePage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\HowItWorksPage.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="Ui\Pages\Common\ApplyPage.cs" />
     <Compile Include="Ui\Pages\Common\ApplyTermsPage.cs" />
     <Compile Include="Ui\Pages\Common\BlogPage.cs" />
+    <Compile Include="Ui\Pages\Common\ExtensionDealDonePage.cs" />
     <Compile Include="Ui\Pages\Common\TopupDealDonePage.cs" />
     <Compile Include="Ui\Pages\Common\DealDonePage.cs" />
     <Compile Include="Ui\Pages\Common\DeclinedPage.cs" />
