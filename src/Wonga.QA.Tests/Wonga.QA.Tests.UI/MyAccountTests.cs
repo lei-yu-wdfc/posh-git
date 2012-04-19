@@ -650,5 +650,19 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(mySummaryPage.IsPopupContainsSummaryDetailsTable());
         }
 
+        [Test, AUT(AUT.Za), JIRA("QA-213")]
+        public void  CustomerUpdatesPhoneNumbersAndDoesntMakeChangesShouldSeeMessageOnTopWindow()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder
+                .New(customer)
+                .Build();
+            var mySummaryPage = loginPage.LoginAs(email);
+            var myPersonalDetails = mySummaryPage.Navigation.MyPersonalDetailsButtonClick();
+            myPersonalDetails.PhoneClick();
+            Assert.IsTrue(myPersonalDetails.DontChangePhone());
+        }
     }
 }
