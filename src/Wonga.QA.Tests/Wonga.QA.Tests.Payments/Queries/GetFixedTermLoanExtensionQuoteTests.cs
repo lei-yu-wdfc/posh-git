@@ -27,7 +27,7 @@ namespace Wonga.QA.Tests.Payments.Queries
 
             var setupData = new ExtendLoanFunctions();
 
-            setupData.TenDayLoanQuoteOnDayFiveToExtendForTenDaysSetup(appId, paymentCardId, bankAccountId, accountId, trustRating);
+            setupData.TenDayLoanQuoteOnDayFiveSetup(appId, paymentCardId, bankAccountId, accountId, trustRating);
 
             var response = Drive.Api.Queries.Post(new GetFixedTermLoanExtensionQuoteUkQuery() {ApplicationId = appId});
             Assert.AreEqual(appId.ToString(), response.Values["ApplicationId"].Single(), "ApplicationId incorrect");
