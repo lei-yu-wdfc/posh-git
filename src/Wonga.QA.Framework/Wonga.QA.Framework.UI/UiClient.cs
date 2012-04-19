@@ -90,6 +90,8 @@ namespace Wonga.QA.Framework.UI
             capabilities.SetCapability("name", TestContext.CurrentContext.Test.Name);
             capabilities.SetCapability("username", Config.Ui.RemoteUsername);
             capabilities.SetCapability("accessKey", Config.Ui.RemoteApiKey);
+            var tags = new List<String> { Config.SUT.ToString(), Config.AUT.ToString() };
+            capabilities.SetCapability("tags", tags);
             return capabilities;
         }
 
