@@ -149,7 +149,7 @@ namespace Wonga.QA.Tests.Cs
             {
                 AccountId = customer.Id,
                 ApplicationId = application.Id,
-                EffectiveBalance = 100,
+                EffectiveBalance = 0,
                 RepaymentAmount = 100,
                 ArrangementDetails = new[]
                                                                     {
