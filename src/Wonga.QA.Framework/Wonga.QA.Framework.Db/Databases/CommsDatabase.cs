@@ -4474,7 +4474,7 @@ namespace Wonga.QA.Framework.Db.Comms
 		
 		private string _MD5;
 		
-		private System.Nullable<int> _Revision;
+		private string _Revision;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -4488,7 +4488,7 @@ namespace Wonga.QA.Framework.Db.Comms
     partial void OnNameChanged();
     partial void OnMD5Changing(string value);
     partial void OnMD5Changed();
-    partial void OnRevisionChanging(System.Nullable<int> value);
+    partial void OnRevisionChanging(string value);
     partial void OnRevisionChanged();
     #endregion
 		
@@ -4537,7 +4537,7 @@ namespace Wonga.QA.Framework.Db.Comms
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(255)")]
 		public string Name
 		{
 			get
@@ -4557,7 +4557,7 @@ namespace Wonga.QA.Framework.Db.Comms
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MD5", DbType="VarChar(32) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MD5", DbType="VarChar(32)")]
 		public string MD5
 		{
 			get
@@ -4577,8 +4577,8 @@ namespace Wonga.QA.Framework.Db.Comms
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Revision", DbType="Int")]
-		public System.Nullable<int> Revision
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Revision", DbType="NVarChar(MAX)", UpdateCheck=UpdateCheck.Never)]
+		public string Revision
 		{
 			get
 			{
