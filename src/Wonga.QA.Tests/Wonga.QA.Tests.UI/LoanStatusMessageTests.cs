@@ -168,7 +168,7 @@ namespace Wonga.QA.Tests.Ui
 
             RewindApplicationDates(applicationEntity, riskApplication, daysShiftSpan);
 
-            Console.WriteLine("{0}, {1}, {2}, {3}", applicationEntity.FixedTermLoanApplicationEntity.LoanAmount, applicationEntity.FixedTermLoanApplicationEntity.ServiceFee, applicationEntity.FixedTermLoanApplicationEntity.TransmissionFee, applicationEntity.FixedTermLoanApplicationEntity.MonthlyInterestRate);
+            //Console.WriteLine("{0}, {1}, {2}, {3}", applicationEntity.FixedTermLoanApplicationEntity.LoanAmount, applicationEntity.FixedTermLoanApplicationEntity.ServiceFee, applicationEntity.FixedTermLoanApplicationEntity.TransmissionFee, applicationEntity.FixedTermLoanApplicationEntity.MonthlyInterestRate);
 
             // Repay a loan
             if (scenarioId == 8) application = application.RepayOnDueDate();
@@ -273,8 +273,9 @@ namespace Wonga.QA.Tests.Ui
                     suffix = "th";
                     break;
             }
-
-            return date.ToString("ddd d MMM yyyy").Replace(date.Day.ToString("d"), date.Day.ToString("d") + suffix);
+            var sDate = " " + date.Day.ToString("d") + " ";
+            var sDateOrdinial = " " + date.Day.ToString("d") + suffix + " ";
+            return date.ToString("ddd d MMM yyyy").Replace(sDate, sDateOrdinial);
         }
     }
 }
