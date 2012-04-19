@@ -99,6 +99,7 @@ namespace Wonga.QA.Tests.Salesforce
         }
 
         [Test]
+        [AUT(AUT.Uk)]
         public void NotFraudConfirmed_ChangesSalesforceApplicationStatus_ToPreviousStatus()
         {
             //Make due today
