@@ -87,11 +87,11 @@ namespace Wonga.QA.Framework.UI
                 case(Config.UiConfig.BrowserType.Safari):
                     throw new NotImplementedException("Safari is not supported yet");
                 default:
-                    throw new ArgumentException("Please select a Browser Type via the BrowserType user session variable");
+                    throw new ArgumentException("Please select a QAFBrowser environment variable.");
             }
             capabilities.SetCapability(CapabilityType.Version, Config.Ui.BrowserVersion);
             capabilities.SetCapability(CapabilityType.Platform, new Platform(PlatformType.XP));
-            capabilities.SetCapability("name", "Testing Selenium 2 with C# on Sauce");
+            capabilities.SetCapability("name", TestContext.CurrentContext.Test.Name);
             capabilities.SetCapability("username", Config.Ui.RemoteUsername);
             capabilities.SetCapability("accessKey", Config.Ui.RemoteApiKey);
             return capabilities;
