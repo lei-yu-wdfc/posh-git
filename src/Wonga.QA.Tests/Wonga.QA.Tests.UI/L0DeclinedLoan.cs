@@ -48,7 +48,7 @@ namespace Wonga.QA.Tests.Ui
             var declinedPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
         }
 
-        [Test, AUT(AUT.Ca), Pending("CA WIP,RC FE seems broken - postponing the push of the selenium tests")]
+        [Test, AUT(AUT.Ca)]
         public void CaDeclinedLoan()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
