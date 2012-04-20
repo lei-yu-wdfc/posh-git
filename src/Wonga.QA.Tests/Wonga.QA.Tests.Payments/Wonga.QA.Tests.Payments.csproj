@@ -44,6 +44,7 @@
     <Compile Include="Command\DcaCommandTests.cs" />
     <Compile Include="Command\DeletePersonalPaymentCardCsApiCommandTests.cs" />
     <Compile Include="Command\SavePaymentCardBillingAddress.cs" />
+    <Compile Include="Command\SetAccountPaymentMethodCommandCaTests.cs" />
     <Compile Include="CsapiCreateTransactionTest.cs" />
     <Compile Include="EarlyRepaymentTests.cs" />
     <Compile Include="ExternalDebtCollectionTests.cs" />
@@ -69,7 +70,7 @@
     <Compile Include="FixedTermLoanExtensionTests.cs" />
     <Compile Include="FixedTermLoanOfferTests.cs" />
     <Compile Include="FixedTermLoanTopUpTests.cs" />
-    <Compile Include="GetApplicationSummaryTests.cs" />
+    <Compile Include="Queries\GetAccountSummaryQueryTests.cs" />
     <Compile Include="FixedTermLoanRepayTest.cs" />
     <Compile Include="GetBusinessFixedInstallmentLoanCalculationTests.cs" />
     <Compile Include="GetBusinessFixedInstallmentLoanOfferTests.cs" />
