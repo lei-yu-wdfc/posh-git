@@ -540,7 +540,7 @@ namespace Wonga.QA.Tests.Ui
             switch (Config.AUT)
             {
                 case AUT.Ca:
-                    date = DateTime.Now.AddDays(DateHelper.GetNumberOfDaysUntilStartOfLoanForCa()+20);
+                    date = DateTime.Now.AddDays(DateHelper.GetNumberOfDaysUntilStartOfLoanForCa() + 20);
                     mySummary = journey.ApplyForLoan(200, 20)
                                           .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                                           .FillAddressDetails()
@@ -576,8 +576,35 @@ namespace Wonga.QA.Tests.Ui
                     Assert.AreEqual(String.Format("{0:d MMMM yyyy}", date), String.Format("{0:d MMMM yyyy}", fixedTermApplicationZa.PromiseDate));
                     break;
             }
+        }
 
-
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-186")]
+        public void InvalidFormatPasswordShouldCauseWarningMessageAndValidPasswordShouldDissmissWarning()
+        {
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            switch (Config.AUT)
+            {
+                case AUT.Ca:
+                    var myAccountCa = journey.ApplyForLoan(200, 10)
+                                        .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                        .FillAddressDetails().CurrentPage as AddressDetailsPage;
+                    myAccountCa.AccountDetailsSection.Password = "sdfsdfs";
+                    Thread.Sleep(1000);
+                    Assert.IsTrue(myAccountCa.AccountDetailsSection.IsPasswordInvalidFormatWarningOccured());
+                    myAccountCa.AccountDetailsSection.Password = "Sdfdfs123";
+                    Assert.IsFalse(myAccountCa.AccountDetailsSection.IsPasswordInvalidFormatWarningOccured());
+                    break;
+                case AUT.Za:
+                    var myAccountZa = journey.ApplyForLoan(200, 10)
+                                        .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                        .FillAddressDetails().CurrentPage as AccountDetailsPage;
+                    myAccountZa.AccountDetailsSection.Password = "sdfsdfs";
+                    Thread.Sleep(1000);
+                    Assert.IsTrue(myAccountZa.AccountDetailsSection.IsPasswordInvalidFormatWarningOccured());
+                    myAccountZa.AccountDetailsSection.Password = "Sdfdfs123";
+                    Assert.IsFalse(myAccountZa.AccountDetailsSection.IsPasswordInvalidFormatWarningOccured());
+                    break;
+            }
         }
     }
 }
