@@ -16,6 +16,8 @@
   <MobilePinVerificationSection>
     <Fieldset>#pin-verification</Fieldset>
     <Pin>#edit-pin</Pin>
+    <ResendPin>.resend-pin.mod</ResendPin>
+    <ResendPinMessage>#fancybox-content div div p</ResendPinMessage>
   </MobilePinVerificationSection>
 
   <DeclinedPage>

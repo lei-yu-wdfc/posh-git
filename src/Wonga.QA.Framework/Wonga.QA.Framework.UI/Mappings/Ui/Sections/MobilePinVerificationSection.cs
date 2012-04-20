@@ -12,5 +12,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Sections
     {
         public String Fieldset { get; set; }
         public String Pin { get; set; }
+        public String ResendPin { get; set; }
+        public String ResendPinMessage { get; set; }
     }
 }
