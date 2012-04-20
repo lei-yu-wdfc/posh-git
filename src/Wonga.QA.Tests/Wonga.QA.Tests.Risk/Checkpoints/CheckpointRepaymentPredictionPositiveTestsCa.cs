@@ -12,9 +12,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	[AUT(AUT.Ca)]
 	public class CheckpointRepaymentPredictionPositiveTestsCa
 	{
-        //TODO: The L0 scorecard was implemneted incorrectly for CA. 
-        //TODO: This will be refactored in the near future. 
-        //TODO: Only then can these tests be merged into ZA TESTRepaymentPredictionPositive tests 
+        //TODO: When LN score card is implemented then we can merge into ZA TESTRepaymentPredictionPositive tests 
 
         private const RiskMask TestMask = RiskMask.TESTRepaymentPredictionPositive;
         CustomerBuilder _customerBuilder;
@@ -117,6 +115,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
         }
 
 		[Test, AUT(AUT.Ca), JIRA("CA-1956")]
+		[Ignore("This Checkpoint is not part of the LN workflow any more.. keeping this to be used in future when we implement LN scorecard")]
         public void VerifyLnCustomersAreNotBlockedByScoreCardForAccepted()
         {
             const string forename = "MALCOLM";
@@ -154,6 +153,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
         }
 
 		[Test, AUT(AUT.Ca), JIRA("CA-1956")]
+		[Ignore("This Checkpoint is not part of the LN workflow any more.. keeping this to be used in future when we implement LN scorecard")]
         public void VerifyTurningOnScorecardDoesNotAfftectLnForAccepted()
         {
             const string forename = "MALCOLM";
