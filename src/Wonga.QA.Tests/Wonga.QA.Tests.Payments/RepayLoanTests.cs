@@ -101,7 +101,6 @@ namespace Wonga.QA.Tests.Payments
         [Row("2012/3/10 6:00:01", "2012/3/13", Order = 3)]
         public void GetRepayLoanParameterQueryTest(DateTime now, DateTime expectedActionDate)
         {            
-            TearDown();
             SetPaymentsUtcNow(now);
             var response = Drive.Api.Queries.Post(new GetRepayLoanParametersQuery()
                                         {
