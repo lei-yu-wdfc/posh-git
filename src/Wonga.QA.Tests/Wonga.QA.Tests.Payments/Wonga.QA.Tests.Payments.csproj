@@ -59,6 +59,7 @@
     <Compile Include="Queries\GetBusinessApplicationSummaryCsapiQuery.cs" />
     <Compile Include="Queries\GetFixedTermLoanExtensionQuoteTests.cs" />
     <Compile Include="Queries\GetLoanAgreementsCsapiQueryTests.cs" />
+    <Compile Include="Queries\GetLoanExtensionPaymentStatusQueryTest.cs" />
     <Compile Include="Queries\GetPersonalPaymentCardsCsapiQueryTests.cs" />
     <Compile Include="Queries\GetTransactionsCsapiQuery.cs" />
     <Compile Include="Queries\GetValidTransactionTypesQueryTest.cs" />
