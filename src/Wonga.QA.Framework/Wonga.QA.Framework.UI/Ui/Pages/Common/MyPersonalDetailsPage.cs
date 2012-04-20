@@ -16,6 +16,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public MyAccountNavigationElement Navigation { get; set; }
         public LoginElement Login { get; set; }
         public TabsElement Tabs { get; set; }
+        public ChangeMyAddressElement ChangeMyAddressElement { get; set; }
         public string SetCommunicationPrefs
         {
             set
@@ -26,6 +27,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public String GetPopupErrorMessage
         {
             get { return Do.Until(()=>Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.PopupErrorMessage)).Text);  }
+        }
+        public string GetHouseNumberAndStreet
+        {
+            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.HouseNumberAndStreet)).Text; }
+        }
+        public string GetTown
+        {
+            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.Town)).Text; }
         }
         public string GetPostcode
         {
@@ -71,6 +80,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     _password = Content.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.Password));
                     _phone = Content.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.Phone));
                     _communication = Content.FindElement(By.CssSelector(Ui.Get.MyPersonalDetailsPage.Communication));
+                    ChangeMyAddressElement = new ChangeMyAddressElement(this);
                     break; 
                 case AUT.Ca:
                     Tabs = new TabsElement(this);

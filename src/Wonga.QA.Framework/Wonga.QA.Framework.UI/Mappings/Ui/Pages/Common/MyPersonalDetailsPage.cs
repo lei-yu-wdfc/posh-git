@@ -9,6 +9,8 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
     public class MyPersonalDetailsPage
     {
         public String Address { get; set; }
+        public String HouseNumberAndStreet { get; set; }
+        public String Town { get; set; }
         public String Postcode { get; set; }
         public String Password { get; set; }
         public String Phone { get; set; }

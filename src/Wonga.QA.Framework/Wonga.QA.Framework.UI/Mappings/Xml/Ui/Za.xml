@@ -83,6 +83,8 @@
 
   <MyPersonalDetailsPage>
     <Address>table#profile tr#address</Address>
+    <HouseNumberAndStreet>table#profile tr#address tbody tr:nth-child(1) td</HouseNumberAndStreet>
+    <Town>table#profile tr#address tbody tr:nth-child(2) td</Town>
     <Postcode>table#profile tr#address tbody tr:nth-child(3) td</Postcode>
     <Password>table#profile tr#password</Password>
     <Phone>table#profile tr#phone</Phone>
@@ -104,6 +106,19 @@
     <SubmitButton>input#edit-submit</SubmitButton>
     <PopupErrorMessage>#fancybox-content div.messages.error ul li:nth-child(1)</PopupErrorMessage>
   </MyPersonalDetailsPage>
+
+  <ChangeMyAddressElement>
+    <Title>#change-my-address</Title>
+    <Flat>#edit-flat-za</Flat>
+    <District>#edit-district-za</District>
+    <HouseNumber>#edit-house-number-za</HouseNumber>
+    <Town>#edit-town-za</Town>
+    <County>#edit-county-za</County>
+    <AddressPeriod>#edit-address-period-za</AddressPeriod>
+    <Street>#edit-street-za</Street>
+    <Postcode>#edit-postcode-za</Postcode>
+    <PostcodeErrorForm>#edit-postcode-za-wrapper div.form-error div.invalid</PostcodeErrorForm>
+  </ChangeMyAddressElement>
   
   <AboutUsPage>
     <OurCustomers>#block-wonga-6 div div ul li:nth-child(2) a</OurCustomers>
