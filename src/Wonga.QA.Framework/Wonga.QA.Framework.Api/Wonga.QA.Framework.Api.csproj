@@ -125,7 +125,9 @@
     <Compile Include="Requests\GetCustomerSubRegionCaQuery.cs" />
     <Compile Include="Requests\GetDirectDebitFormZaQuery.cs" />
     <Compile Include="Requests\GetEmailReturnLinkCorrelationRecordWbUkQuery.cs" />
+    <Compile Include="Requests\GetExtensionAeDocumentQuery.cs" />
     <Compile Include="Requests\GetExtensionSecciQuery.cs" />
+    <Compile Include="Requests\GetExtensionTsAndCsDocumentQuery.cs" />
     <Compile Include="Requests\GetFixedInstallmentAgreementWbUkQuery.cs" />
     <Compile Include="Requests\GetFixedTermLoanApplicationQuery.cs" />
     <Compile Include="Requests\GetFixedTermLoanApplicationZaQuery.cs" />
