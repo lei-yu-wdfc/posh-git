@@ -10,6 +10,7 @@
 		<Root>$(MSBuildProjectDirectory)\..</Root>
 		<Src>$(Root)\src</Src>
 		<Bin>$(Root)\bin</Bin>
+		<Lib>$(Root)\lib</Lib>
 	</PropertyGroup>	
 	
 	<Target Name="Config">
@@ -23,6 +24,10 @@
 			<Projects Include="$(Src)\$(Tests)\$(Tests).sln" />
 		</ItemGroup>
 		<MSBuild Projects="@(Projects)" />
+	</Target>
+	
+	<Target Name="PreGenerateSerializers">
+		<Exec Command="$(lib)\sgen\sgen.exe $(Bin)\$(Tests)\Wonga.QA.Framework.Cs.dll /force" />
 	</Target>
 	
 	<Target Name="Merge">
@@ -52,7 +57,7 @@
 	</Target>
 	
 	<Target Name="Default">
-		<CallTarget Targets="Config;Build" />
+		<CallTarget Targets="Config;Build;PreGenerateSerializers" />
 		<MsBuild Condition="'$(Files)'==''" Projects="$(MSBuildProjectFullPath)" Targets="Test" Properties="Files=Meta" />
 		<CallTarget Condition="'$(Files)'==''" Targets="Merge" />
 		<CallTarget Targets="Test" />
