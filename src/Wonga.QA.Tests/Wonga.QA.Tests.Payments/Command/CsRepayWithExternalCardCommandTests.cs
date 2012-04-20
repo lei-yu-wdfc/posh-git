@@ -58,7 +58,7 @@ namespace Wonga.QA.Tests.Payments.Command
                                                             CardType = "visaDebit",
                                                             Country = "UK",
                                                             County = "county",
-                                                            CSUser = "csUser",
+                                                            SalesforceUser = "csUser",
                                                             Currency = "GBP",
                                                             CV2 = "121",
                                                             ExpiryDate = new DateTime(DateTime.Today.Year + 1, 1, 31),

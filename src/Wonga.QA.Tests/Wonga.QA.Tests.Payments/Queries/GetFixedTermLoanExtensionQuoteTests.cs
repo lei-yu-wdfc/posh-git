@@ -37,5 +37,76 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual("110.70", response.Values["TotalAmountDueToday"].Single(), "TotalAmountDueToday incorrect");
             Assert.AreEqual("10.70", response.Values["ExtensionPartPaymentAmount"].Single(), "ExtensionPartPaymentAmount incorrect");
         }
+
+        [Test]
+        [AUT(AUT.Uk), JIRA("UK-1351")]
+        public void Query_ShouldReturnAllDataRequiredForLoanExtension_WhenCustomerHasApplicationAcceptedMoreThanOneDayAgo()
+        {
+            Customer customer = CustomerBuilder.New().Build();
+            var application = ApplicationBuilder.New(customer).WithPromiseDate(new Date(DateTime.UtcNow.AddDays(4))).Build();
+            Drive.Data.Payments.Db.Applications.UpdateByExternalId(ExternalId: application.Id, AcceptedOn: DateTime.UtcNow.AddDays((-10)));
+
+            var query = new CsGetFixedTermLoanExtensionQuoteQuery { ApplicationId = application.Id};            
+
+            var response = Drive.Cs.Queries.Post(query);
+           
+            Assert.IsTrue(response.Values["ApplicationId"].SingleOrDefault(i => i == application.Id.ToString()) != null);
+            Assert.IsTrue(response.Values["SliderMinDays"].SingleOrDefault(i => i == 1.ToString()) != null);
+            Assert.IsTrue(response.Values["SliderMaxDays"].SingleOrDefault(i => i == 30.ToString()) != null);
+            Assert.IsTrue(response.Values["TotalAmountDueToday"].SingleOrDefault(isDecimal) != null);
+            Assert.IsTrue(response.Values["CurrentPrincipleAmount"].SingleOrDefault(isDecimal) != null);
+            Assert.IsTrue(response.Values["ExtensionPartPaymentAmount"].SingleOrDefault(isDecimal) != null);
+            Assert.IsTrue(response.Values["LoanExtensionFee"].SingleOrDefault(isDecimal) != null);
+            Assert.IsTrue(response.Values["IsExtendable"].ElementAt(0)=="true" );
+
+            for( var pos=1;pos<30;pos++ )
+            {
+                Assert.IsTrue(isDecimal( response.Values["FutureInterestAndFees"].ToArray()[pos]));
+                Assert.IsTrue(isDecimal(response.Values["TotalAmountDueOnExtensionDate"].ToArray()[pos]));
+                Assert.IsTrue(isDate(response.Values["ExtensionDate"].ToArray()[pos]));
+                Assert.IsTrue(isDate(response.Values["ExtensionDate"].ToArray()[pos]));
+            }
+        }
+
+        [Test]
+        [AUT(AUT.Uk), JIRA("UK-1351")]
+        public void Query_ShouldReturnNoQuotes_WhenCustomerHasApplicationAcceptedToday()
+        {
+            Customer customer = CustomerBuilder.New().Build();
+            var application = ApplicationBuilder.New(customer).WithPromiseDate(new Date(DateTime.UtcNow.AddDays(4))).Build();
+
+            var query = new CsGetFixedTermLoanExtensionQuoteQuery { ApplicationId = application.Id };
+
+            var response = Drive.Cs.Queries.Post(query);
+
+            Assert.IsTrue(response.Values["ApplicationId"].SingleOrDefault(i => i == application.Id.ToString()) != null);
+            Assert.IsTrue(response.Values["SliderMinDays"].SingleOrDefault(i => i == 1.ToString()) != null);
+            Assert.IsTrue(response.Values["SliderMaxDays"].SingleOrDefault(i => i == 30.ToString()) != null);
+            Assert.IsTrue(response.Values["TotalAmountDueToday"].SingleOrDefault(isDecimal) != null);
+            Assert.IsTrue(response.Values["CurrentPrincipleAmount"].SingleOrDefault(isDecimal) != null);
+            Assert.IsTrue(response.Values["ExtensionPartPaymentAmount"].SingleOrDefault(isDecimal) != null);
+            Assert.IsTrue(response.Values["LoanExtensionFee"].SingleOrDefault(isDecimal) != null);
+            Assert.IsTrue(response.Values["IsExtendable"].ElementAt(0) == "false");
+            Assert.IsTrue(response.Values["ErrorMessage"].ElementAt(0) == "TooEarlyToExtend");
+
+            Assert.IsTrue(response.Values["FutureInterestAndFees"].ToList().Count==0, "No quote data should be returned");
+            Assert.IsTrue(response.Values["TotalAmountDueOnExtensionDate"].ToList().Count==0, "No quote data should be returned");
+            Assert.IsTrue(response.Values["ExtensionDate"].ToList().Count==0, "No quote data should be returned");
+          
+        }
+
+        bool isDecimal(string val)
+        {
+            decimal test=0;
+            return decimal.TryParse(val, out test);
+        }
+
+        public bool isDate(string val)
+        {
+            DateTime test;
+            return DateTime.TryParse(val, out test);
+        }
+
+
     }
 }

@@ -53,7 +53,7 @@ namespace Wonga.QA.Tests.Payments.Queries
                                    {
                                        AccountId = customer.Id,
                                        Amount = _loanAmount,
-                                       CSUser = "Mr Agent",
+                                       SalesforceUser = "Mr Agent",
                                        Currency = CurrencyCodeIso4217Enum.GBP,
                                        CV2 = cardCode,
                                        PaymentCardId = _cardId,

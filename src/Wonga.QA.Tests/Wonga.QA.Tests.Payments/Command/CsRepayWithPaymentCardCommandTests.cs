@@ -51,7 +51,7 @@ namespace Wonga.QA.Tests.Payments.Command
                 UpdateCardExpiryDate();
                 Drive.Cs.Commands.Post(new CsRepayWithPaymentCardCommand { AccountId = _application.AccountId, 
                                                                            Amount = _paymentAmount, 
-                                                                           CSUser = "csUser", 
+                                                                           SalesforceUser = "csUser", 
                                                                            CV2 = "111",
                                                                            Currency = "GBP", 
                                                                            PaymentCardId = _cardId });
