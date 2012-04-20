@@ -40,6 +40,7 @@
     <Compile Include="ForgotPassword.cs" />
     <Compile Include="HelpTest.cs" />
     <Compile Include="HowItWorksTest.cs" />
+    <Compile Include="IntroTextTests.cs" />
     <Compile Include="L0AcceptedLoan.cs" />
     <Compile Include="L0JourneyTests.cs" />
     <Compile Include="LnJourneyTests.cs" />

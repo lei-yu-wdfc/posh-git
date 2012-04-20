@@ -69,6 +69,41 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
+        public IL0ConsumerJourney FillPersonalDetailsWithEmail(string employerNameMask = null, string email = null)
+        {
+            string employerName = employerNameMask ?? Get.GetMiddleName();
+            var personalDetailsPage = CurrentPage as PersonalDetailsPage;
+            personalDetailsPage.ProvinceSection.Province = "British Columbia";
+            Do.Until(() => personalDetailsPage.ProvinceSection.ClosePopup());
+
+            personalDetailsPage.YourName.FirstName = FirstName;
+            personalDetailsPage.YourName.MiddleName = Get.GetMiddleName();
+            personalDetailsPage.YourName.LastName = LastName;
+            personalDetailsPage.YourName.Title = "Mr";
+            personalDetailsPage.YourDetails.Number = "123213126";
+            personalDetailsPage.YourDetails.DateOfBirth = "1/Jan/1980";
+            personalDetailsPage.YourDetails.Gender = "Male";
+            personalDetailsPage.YourDetails.HomeStatus = "Tenant Furnished";
+            personalDetailsPage.YourDetails.MaritalStatus = "Single";
+            personalDetailsPage.EmploymentDetails.EmploymentStatus = "Employed Full Time";
+            personalDetailsPage.EmploymentDetails.MonthlyIncome = "1000";
+            personalDetailsPage.EmploymentDetails.EmployerName = employerName;
+            personalDetailsPage.EmploymentDetails.EmployerIndustry = "Finance";
+            personalDetailsPage.EmploymentDetails.EmploymentPosition = "Professional (finance, accounting, legal, HR)";
+            personalDetailsPage.EmploymentDetails.TimeWithEmployerYears = "1";
+            personalDetailsPage.EmploymentDetails.TimeWithEmployerMonths = "0";
+            personalDetailsPage.EmploymentDetails.SalaryPaidToBank = true;
+            personalDetailsPage.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("dd MMM yyyy");
+            personalDetailsPage.EmploymentDetails.IncomeFrequency = "Monthly";
+            personalDetailsPage.ContactingYou.CellPhoneNumber = "9876543210";
+            personalDetailsPage.ContactingYou.EmailAddress = email;
+            personalDetailsPage.ContactingYou.ConfirmEmailAddress = email;
+            personalDetailsPage.PrivacyPolicy = true;
+            personalDetailsPage.CanContact = true;
+            CurrentPage = personalDetailsPage.Submit() as AddressDetailsPage;
+            return this;
+        }
+
         public IL0ConsumerJourney FillAddressDetails()
         {
             var addressPage = CurrentPage as AddressDetailsPage;
