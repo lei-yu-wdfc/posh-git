@@ -35,7 +35,6 @@
   <ItemGroup>
     <Compile Include="Checkpoints\BaseCheckpointTest.cs" />
     <Compile Include="Checkpoints\CheckpointApplicantIsNotDeceasedTest.cs" />
-    <Compile Include="Checkpoints\CheckpointApplicantIsSolventTest.cs" />
     <Compile Include="Checkpoints\CheckpointApplicationElementNotCifasFlaggedTest.cs" />
     <Compile Include="Checkpoints\CheckpointGeneralManualVerificationAccepted.cs" />
     <Compile Include="Checkpoints\CheckpointGuarantorNameMatchMainApplicant.cs" />

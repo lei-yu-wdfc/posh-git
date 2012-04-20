@@ -20,17 +20,129 @@ namespace Wonga.QA.Tests.Experian
 
         #region MainApplicant
 
+        /*********************************************************************************************************
+         * This region should be used for all consumer for all regions (UK,CA,etc)                               *
+         * Please check CreateApplicationWithAsserts for splitting the code between Consumer and Business        *
+         * Please create all Experian tests in this solution                                                     *
+         * ******************************************************************************************************/
+
+        /* Main Applicant Solvent L0 */
+
+        [Test, AUT(AUT.Wb,AUT.Uk)]
+        [JIRA("SME-638", "UK-854"), Description("Experian -> This test creates a loan for the solvent customer, then checks the risk checkpoint")]
+        public void TestExperianMainApplicantIsSolvent_LoanIsApproved()
+        {
+            const String forename = "kathleen";
+            const String surname = "nicole";
+
+            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTExperianApplicantIsSolvent);
+            ScrubNames(mainApplicantBuilder);
+            var mainApplicant = mainApplicantBuilder.Build();
+
+            //STEP 2 - We create the application - here is where the code is split
+            var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted);
+
+            /*STEP 3 - We verify the Risk Workflow + Checkpoints + Definitions
+             * Please use the RiskWorkflowTypes enum */
+
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.CustomerIsSolvent,
+                                                                     RiskCheckpointStatus.Verified,
+                                                                     RiskVerificationDefinitions.CreditBureauCustomerIsSolventVerification);
+        }
+
+        [Test, AUT(AUT.Wb,AUT.Uk)]
+        [JIRA("SME-638"), Description("Experian -> This test creates a loan for the insolvent customer, then checks the risk checkpoint")]
+        public void TestExperianMainApplicantIsInsolvent_LoanIsDeclined()
+        {
+            const String forename = "laura";
+            const String surname = "Insolvent";
+
+            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTExperianApplicantIsSolvent);
+            ScrubNames(mainApplicantBuilder);
+            var mainApplicant = mainApplicantBuilder.Build();
+
+            var application = CreateL0Application(mainApplicant,  ApplicationDecisionStatus.Declined);
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.CustomerIsSolvent,
+                                                                     RiskCheckpointStatus.Failed,
+                                                                     RiskVerificationDefinitions.CreditBureauCustomerIsSolventVerification);
+        }
+
+        /* Main Applicant Solvent LN */
+
+        [Test, AUT(AUT.Uk)]
+        [JIRA( "UK-854"), Description("Experian -> This test creates a loan for the solvent customer, then checks the risk checkpoint")]
+        public void Ln_TestExperianMainApplicantIsSolvent_LoanIsApproved()
+        {
+            const String forename = "kathleen";
+            const String surname = "nicole";
+
+            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTExperianApplicantIsSolvent);
+            ScrubNames(mainApplicantBuilder);
+            var mainApplicant = mainApplicantBuilder.Build();
+
+            //STEP 2 - We create the application - here is where the code is split
+            var l0Application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted);
+            l0Application.RepayOnDueDate();
+
+            var lnApplication = CreateLnApplication(mainApplicant, ApplicationDecisionStatus.Accepted);
+
+            /*STEP 3 - We verify the Risk Workflow + Checkpoints + Definitions
+             * Please use the RiskWorkflowTypes enum */
+
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(lnApplication.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.CustomerIsSolvent,
+                                                                     RiskCheckpointStatus.Verified,
+                                                                     RiskVerificationDefinitions.CreditBureauCustomerIsSolventVerification);
+        }
+
+        [Test, AUT(AUT.Uk)]
+        [JIRA("UK-854"), Description("Experian -> This test creates a loan for the insolvent customer, then checks the risk checkpoint")]
+        public void Ln_TestExperianMainApplicantIsInsolvent_LoanIsDeclined()
+        {
+            const String forename = "laura";
+            const String surname = "Insolvent";
+
+            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTEmployedMask);
+            ScrubNames(mainApplicantBuilder);
+            var mainApplicant = mainApplicantBuilder.Build();
+
+            var l0Application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted);
+            l0Application.RepayOnDueDate();
+
+            Drive.Db.UpdateEmployerName(mainApplicant.Id, RiskMask.TESTExperianApplicantIsSolvent.ToString());
+
+            var lnApplication = CreateLnApplication(mainApplicant, ApplicationDecisionStatus.Declined);
+
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(lnApplication.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.CustomerIsSolvent,
+                                                                     RiskCheckpointStatus.Failed,
+                                                                     RiskVerificationDefinitions.CreditBureauCustomerIsSolventVerification);
+        }
+
         /* Main Applicant is Alive */
 
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
         [JIRA("SME-575"), Description("Experian -> This test creates a loan for the unknown customer that is alive and with no consumer bureau data, then checks the risk checkpoint")]
         public void TestExperianUnknownMainApplicant_LoanIsApproved()
         {
             const String forename = "Unknown";
             const String surname = "Customer";
 
-            var mainApplicantBuilder =CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicantIsNotDeceased);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
+            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTExperianApplicantIsNotDeceased);
+            ScrubNames(mainApplicantBuilder);
+            var mainApplicant = mainApplicantBuilder.Build();
+
+            var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
@@ -41,15 +153,18 @@ namespace Wonga.QA.Tests.Experian
                                                                      RiskVerificationDefinitions.CreditBureauCustomerIsAliveVerification);
         }
 
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb, AUT.Uk)]
         [JIRA("SME-575"), Description("Experian -> This test creates a loan for the Kathleen customer that is alive, then checks the risk checkpoint")]
         public void TestExperianMainApplicantIsNotDeceased_LoanIsApproved()
         {
             const String forename = "kathleen";
             const String surname = "bridson";
 
-            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicantIsNotDeceased);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
+            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTExperianApplicantIsNotDeceased);
+            ScrubNames(mainApplicantBuilder);
+            var mainApplicant = mainApplicantBuilder.Build();
+
+            var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
@@ -60,18 +175,20 @@ namespace Wonga.QA.Tests.Experian
                                                                      RiskVerificationDefinitions.CreditBureauCustomerIsAliveVerification);
         }
 
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb, AUT.Uk)]
         [JIRA("SME-575"), Description("Experian -> This test creates a loan for the customer that is dead, then checks the risk checkpoint")]
         public void TestExperianMainApplicantIsDeceased_LoanIsDeclined()
         {
             const String forename = "Johnny";
-			const String surname = "DeadGuy";
+            const String surname = "DeadGuy";
 
-            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicantIsNotDeceased);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
+            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTExperianApplicantIsNotDeceased);
+            ScrubNames(mainApplicantBuilder);
+            var mainApplicant = mainApplicantBuilder.Build();
+
+            var application = CreateL0Application(mainApplicant,  ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
-
             VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
                                                                      RiskCheckpointDefinitionEnum.ApplicantIsAlive,
                                                                      RiskCheckpointStatus.Failed,
@@ -87,8 +204,11 @@ namespace Wonga.QA.Tests.Experian
             const String forename = "kathleen";
             const String surname = "nicole";
 
-            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicationElementNotCIFASFlagged);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
+            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTExperianApplicationElementNotCIFASFlagged);
+            ScrubNames(mainApplicantBuilder);
+            var mainApplicant = mainApplicantBuilder.Build();
+
+            var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
 
@@ -103,10 +223,13 @@ namespace Wonga.QA.Tests.Experian
         public void TestExperianMainApplicantIsCifasFlagged_LoanIsDeclined()
         {
             const String forename = "laura";
-			const String surname = "Insolvent";
+            const String surname = "Insolvent";
 
-            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicationElementNotCIFASFlagged);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
+            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTExperianApplicationElementNotCIFASFlagged);
+            ScrubNames(mainApplicantBuilder);
+            var mainApplicant = mainApplicantBuilder.Build();
+
+            var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
 
@@ -123,10 +246,13 @@ namespace Wonga.QA.Tests.Experian
         public void TestExperianMainApplicantDataIsAvailable_LoanIsApproved()
         {
             const String forename = "john";
-			const String surname = "konor";
+            const String surname = "konor";
 
-            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianCreditBureauDataIsAvailable);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
+            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTExperianCreditBureauDataIsAvailable);
+            ScrubNames(mainApplicantBuilder);
+            var mainApplicant = mainApplicantBuilder.Build();
+
+            var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
 
@@ -141,10 +267,13 @@ namespace Wonga.QA.Tests.Experian
         public void TestExperianMainApplicantIsNotAvailable_LoanIsDeclined()
         {
             const String forename = "John";
-			const String surname = "InsufficientBureauData";
+            const String surname = "InsufficientBureauData";
 
-            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianCreditBureauDataIsAvailable);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
+            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTExperianCreditBureauDataIsAvailable);
+            ScrubNames(mainApplicantBuilder);
+            var mainApplicant = mainApplicantBuilder.Build();
+
+            var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
 
@@ -152,45 +281,6 @@ namespace Wonga.QA.Tests.Experian
                                                                      RiskCheckpointDefinitionEnum.CreditBureauDataIsAvailable,
                                                                      RiskCheckpointStatus.Failed,
                                                                      RiskVerificationDefinitions.CreditBureauDataIsAvailableVerification);
-        }
-
-        /* Main Applciant Solvent */
-
-        [Test, AUT(AUT.Wb)]
-        [JIRA("SME-638"), Description("Experian -> This test creates a loan for the solvent customer, then checks the risk checkpoint")]
-        public void TestExperianMainApplicantIsSolvent_LoanIsApproved()
-        {
-            const String forename = "kathleen";
-            const String surname = "nicole";
-
-            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicantIsSolvent);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
-
-            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
-
-            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
-                                                                     RiskCheckpointDefinitionEnum.CustomerIsSolvent,
-                                                                     RiskCheckpointStatus.Verified,
-                                                                     RiskVerificationDefinitions.CreditBureauCustomerIsSolventVerification);
-        }
-
-        [Test, AUT(AUT.Wb)]
-        [JIRA("SME-638"), Description("Experian -> This test creates a loan for the insolvent customer, then checks the risk checkpoint")]
-        public void TestExperianMainApplicantIsInsolvent_LoanIsDeclined()
-        {
-            const String forename = "laura";
-			const String surname = "Insolvent";
-
-            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicantIsSolvent);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
-
-            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
-
-            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
-                                                                     RiskCheckpointDefinitionEnum.CustomerIsSolvent,
-                                                                     RiskCheckpointStatus.Failed,
-                                                                     RiskVerificationDefinitions.CreditBureauCustomerIsSolventVerification);
-
         }
 
         /* Main applicant DOB check */
@@ -203,11 +293,20 @@ namespace Wonga.QA.Tests.Experian
             const String surname = "bridson";
             var correctDateOfBirth = new Date(new DateTime(1992, 01, 24), DateFormat.Date);
 
-			var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithDateOfBirth(correctDateOfBirth).WithMiddleName(RiskMask.TESTExperianCustomerDateOfBirthIsCorrectSME);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
+            //Cannot use the CreateCustomerBuilder here because the masks are different
+            var mainApplicantBuilder = Config.AUT == AUT.Wb
+                                           ? CustomerBuilder.New().WithForename(forename).WithSurname(surname).
+                                                 WithDateOfBirth(correctDateOfBirth).WithMiddleName(
+                                                     RiskMask.TESTExperianCustomerDateOfBirthIsCorrectSME)
+                                           : CustomerBuilder.New().WithForename(forename).WithSurname(surname).
+                                                 WithDateOfBirth(correctDateOfBirth).WithEmployer(
+                                                     RiskMask.TESTExperianCustomerDateOfBirthIsCorrect);
+
+            ScrubNames(mainApplicantBuilder);
+            var mainApplicant = mainApplicantBuilder.Build();
+            var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
-
             VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
                                                                      RiskCheckpointDefinitionEnum.DateOfBirthIsCorrect,
                                                                      RiskCheckpointStatus.Verified,
@@ -222,8 +321,17 @@ namespace Wonga.QA.Tests.Experian
             const String surname = "bridson";
             var dateOfBirth = new Date(new DateTime(1990, 3, 21), DateFormat.Date);
 
-			var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTExperianCustomerDateOfBirthIsCorrectSME);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
+            var mainApplicantBuilder = Config.AUT == AUT.Wb
+                                           ? CustomerBuilder.New().WithForename(forename).WithSurname(surname).
+                                                 WithDateOfBirth(dateOfBirth).WithMiddleName(
+                                                     RiskMask.TESTExperianCustomerDateOfBirthIsCorrectSME)
+                                           : CustomerBuilder.New().WithForename(forename).WithSurname(surname).
+                                                 WithDateOfBirth(dateOfBirth).WithEmployer(
+                                                     RiskMask.TESTExperianCustomerDateOfBirthIsCorrect);
+            ScrubNames(mainApplicantBuilder);
+            var mainApplicant = mainApplicantBuilder.Build();
+
+            var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
 
@@ -238,14 +346,21 @@ namespace Wonga.QA.Tests.Experian
         public void TestExperianMainApplicantDateOfBirthIsNotProvided_LoanIsApproved()
         {
             const String forename = "john";
-			const String surname = "DOBIsNotProvided";
+            const String surname = "DOBIsNotProvided";
             var dateOfBirth = new Date(new DateTime(1973, 5, 11), DateFormat.Date);
 
-			var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTExperianCustomerDateOfBirthIsCorrectSME);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
+            var mainApplicantBuilder = Config.AUT == AUT.Wb
+                               ? CustomerBuilder.New().WithForename(forename).WithSurname(surname).
+                                     WithDateOfBirth(dateOfBirth).WithMiddleName(
+                                         RiskMask.TESTExperianCustomerDateOfBirthIsCorrectSME)
+                               : CustomerBuilder.New().WithForename(forename).WithSurname(surname).
+                                     WithDateOfBirth(dateOfBirth).WithEmployer(
+                                         RiskMask.TESTExperianCustomerDateOfBirthIsCorrect);
+            ScrubNames(mainApplicantBuilder);
+            var mainApplicant = mainApplicantBuilder.Build();
+            var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
-
             VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
                                                                      RiskCheckpointDefinitionEnum.DateOfBirthIsCorrect,
                                                                      RiskCheckpointStatus.Verified,
@@ -261,8 +376,11 @@ namespace Wonga.QA.Tests.Experian
             const String forename = "kathleen";
             const String surname = "bridson";
 
-            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithPaymentCardNumber(Int64.Parse("4929188001506313")).WithMiddleName(RiskMask.TESTExperianPaymentCardIsValid);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
+            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTExperianPaymentCardIsValid, null, Int64.Parse("4929188001506313"));
+            ScrubNames(mainApplicantBuilder);
+            var mainApplicant = mainApplicantBuilder.Build();
+
+            var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
 
@@ -279,8 +397,10 @@ namespace Wonga.QA.Tests.Experian
             const String forename = "kathleen";
             const String surname = "bridson";
 
-            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithPaymentCardNumber(Int64.Parse("9999888877776666")).WithMiddleName(RiskMask.TESTExperianPaymentCardIsValid);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
+            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTExperianPaymentCardIsValid, null, Int64.Parse("9999888877776666"));
+            ScrubNames(mainApplicantBuilder);
+            var mainApplicant = mainApplicantBuilder.Build();
+            var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
 
@@ -292,7 +412,7 @@ namespace Wonga.QA.Tests.Experian
 
         #endregion
 
-        #region Guarantor
+        #region Guarantor (SME Specific)
 
         /* Guarantor Is Alive */
 
@@ -303,14 +423,14 @@ namespace Wonga.QA.Tests.Experian
             const String forename = "unknown";
             const String surname = "customer";
 
-            var mainApplicantBuilder = CustomerBuilder.New();
+            var mainApplicant = CustomerBuilder.New().Build();
 
             var guarantorList = new List<CustomerBuilder>
                                     {
                                         CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicantIsNotDeceased),
                                     };
 
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted, guarantorList);
+            var application = CreateL0Application(mainApplicant,  ApplicationDecisionStatus.Accepted, guarantorList);
 
             var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
 
@@ -327,14 +447,14 @@ namespace Wonga.QA.Tests.Experian
             const String forename = "kathleen";
             const String surname = "bridson";
 
-            var mainApplicantBuilder = CustomerBuilder.New();
+            var mainApplicant = CustomerBuilder.New().Build();
 
             var guarantorList = new List<CustomerBuilder>
                                     {
                                         CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicantIsNotDeceased),
                                     };
 
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted, guarantorList);
+            var application = CreateL0Application(mainApplicant,  ApplicationDecisionStatus.Accepted, guarantorList);
 
             var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
 
@@ -349,9 +469,9 @@ namespace Wonga.QA.Tests.Experian
         public void TestExperianGuarantorIsDeceased_LoanIsDeclined()
         {
             const String forename = "Johnny";
-			const String surname = "DeadGuy";
+            const String surname = "DeadGuy";
 
-            var mainApplicantBuilder = CustomerBuilder.New();
+            var mainApplicant = CustomerBuilder.New().Build();
 
             var guarantorList = new List<CustomerBuilder>
                                     {
@@ -359,7 +479,7 @@ namespace Wonga.QA.Tests.Experian
                                     };
 
 
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.PreAccepted, guarantorList);
+            var application = CreateL0Application(mainApplicant,  ApplicationDecisionStatus.PreAccepted, guarantorList);
             Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
 
             var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Failed, 1);
@@ -379,14 +499,14 @@ namespace Wonga.QA.Tests.Experian
             const String forename = "kathleen";
             const String surname = "nicole";
 
-            var mainApplicantBuilder = CustomerBuilder.New();
+            var mainApplicant = CustomerBuilder.New().Build();
 
             var guarantorList = new List<CustomerBuilder>
                                     {
                                         CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicationElementNotCIFASFlagged),
                                     };
 
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted, guarantorList);
+            var application = CreateL0Application(mainApplicant,  ApplicationDecisionStatus.Accepted, guarantorList);
 
             var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
 
@@ -401,16 +521,16 @@ namespace Wonga.QA.Tests.Experian
         public void TestExperianGuarantorIsCifasFlagged_LoanIsDeclined()
         {
             const String forename = "laura";
-			const String surname = "Insolvent";
+            const String surname = "Insolvent";
 
-            var mainApplicantBuilder = CustomerBuilder.New();
+            var mainApplicant = CustomerBuilder.New().Build();
 
             var guarantorList = new List<CustomerBuilder>
                                     {
                                         CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicationElementNotCIFASFlagged),
                                     };
 
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.PreAccepted, guarantorList);
+            var application = CreateL0Application(mainApplicant,  ApplicationDecisionStatus.PreAccepted, guarantorList);
             Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
 
             var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Failed, 1);
@@ -431,14 +551,14 @@ namespace Wonga.QA.Tests.Experian
             const String forename = "kathleen";
             const String surname = "bridson";
 
-            var mainApplicantBuilder = CustomerBuilder.New();
+            var mainApplicant = CustomerBuilder.New().Build();
 
             var guarantorList = new List<CustomerBuilder>
                                     {
                                         CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianCreditBureauDataIsAvailable),
                                     };
 
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted, guarantorList);
+            var application = CreateL0Application(mainApplicant,  ApplicationDecisionStatus.Accepted, guarantorList);
 
             var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
 
@@ -455,14 +575,14 @@ namespace Wonga.QA.Tests.Experian
             const String forename = "Unknown";
             const String surname = "Customer";
 
-            var mainApplicantBuilder = CustomerBuilder.New();
+            var mainApplicant = CustomerBuilder.New().Build();
 
             var guarantorList = new List<CustomerBuilder>
                                     {
                                         CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianCreditBureauDataIsAvailable),
                                     };
 
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.PreAccepted, guarantorList);
+            var application = CreateL0Application(mainApplicant,  ApplicationDecisionStatus.PreAccepted, guarantorList);
             Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
 
             var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Failed, 1);
@@ -482,13 +602,13 @@ namespace Wonga.QA.Tests.Experian
             const String forename = "kathleen";
             const String surname = "bridson";
 
-            var mainApplicantBuilder = CustomerBuilder.New();
+            var mainApplicant = CustomerBuilder.New().Build();
             var guarantorList = new List<CustomerBuilder>
                                     {
                                         CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicantIsSolvent),
                                     };
 
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted, guarantorList);
+            var application = CreateL0Application(mainApplicant,  ApplicationDecisionStatus.Accepted, guarantorList);
 
             var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
 
@@ -503,16 +623,16 @@ namespace Wonga.QA.Tests.Experian
         public void TestExperianGuarantorIsInsolvent_LoanIsDeclined()
         {
             const String forename = "laura";
-			const String surname = "Insolvent";
+            const String surname = "Insolvent";
 
-            var mainApplicantBuilder = CustomerBuilder.New();
+            var mainApplicant = CustomerBuilder.New().Build();
             var guarantorList = new List<CustomerBuilder>
                                     {
                                         CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicantIsSolvent),
                                     };
 
 
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.PreAccepted, guarantorList);
+            var application = CreateL0Application(mainApplicant,  ApplicationDecisionStatus.PreAccepted, guarantorList);
             Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
 
             var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Failed, 1);
@@ -533,14 +653,14 @@ namespace Wonga.QA.Tests.Experian
             const String surname = "Marma";
             var paymentCardNumber = Int64.Parse("4929188001506313");
 
-            var mainApplicantBuilder = CustomerBuilder.New();
+            var mainApplicant = CustomerBuilder.New().Build();
             var listOfGuarantors = new List<CustomerBuilder>
                                        {
                                            CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithPaymentCardNumber(paymentCardNumber).WithMiddleName(RiskMask.TESTExperianPaymentCardIsValid),
                                        };
 
 
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted, listOfGuarantors);
+            var application = CreateL0Application(mainApplicant,  ApplicationDecisionStatus.Accepted, listOfGuarantors);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
@@ -559,14 +679,14 @@ namespace Wonga.QA.Tests.Experian
             const String surname = "Marma";
             var paymentCardNumber = Int64.Parse("9999888877776666");
 
-            var mainApplicantBuilder = CustomerBuilder.New();
+            var mainApplicant = CustomerBuilder.New().Build();
             var listOfGuarantors = new List<CustomerBuilder>
                                        {
                                            CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithPaymentCardNumber(paymentCardNumber).WithMiddleName(RiskMask.TESTExperianPaymentCardIsValid),
                                        };
 
 
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.PreAccepted, listOfGuarantors);
+            var application = CreateL0Application(mainApplicant,  ApplicationDecisionStatus.PreAccepted, listOfGuarantors);
             Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
@@ -580,16 +700,40 @@ namespace Wonga.QA.Tests.Experian
 
         #endregion
 
-        private static Application CreateApplicationWithAsserts(CustomerBuilder mainApplicantBuilder, String companyRegisteredNumber, ApplicationDecisionStatus applicationDecision, List<CustomerBuilder> guarantors = null)
+        private static CustomerBuilder CreateCustomerBuilder(String forename, String surname, RiskMask riskMask, Date? dateOfBirth = null, Int64? cardNumber = null)
         {
-            mainApplicantBuilder.ScrubForename(mainApplicantBuilder.Forename);
-            mainApplicantBuilder.ScrubSurname(mainApplicantBuilder.Surname);
+            if (dateOfBirth == null)
+                dateOfBirth = Get.GetDoB();
 
-            //STEP 1 - Create the main director
-            var mainDirector = mainApplicantBuilder.Build();
+            return Config.AUT == AUT.Wb
+                       ? CustomerBuilder.New().WithForename(forename).WithDateOfBirth((Date)dateOfBirth).WithSurname(surname).
+                             WithMiddleName(riskMask)
+                       : CustomerBuilder.New().WithForename(forename).WithDateOfBirth((Date)dateOfBirth).WithSurname(surname).WithEmployer(riskMask);
+        }
 
-            //STEP2 - Create the company
-            var organisationBuilder = OrganisationBuilder.New(mainDirector).WithOrganisationNumber(companyRegisteredNumber);
+        private static Application CreateL0Application(Customer mainApplicant, ApplicationDecisionStatus applicationDecision, List<CustomerBuilder> guarantors = null)
+        {
+            return Config.AUT == AUT.Wb ? CreateBusinessL0Application(mainApplicant, guarantors, applicationDecision) : CreateConsumerL0Application(mainApplicant, applicationDecision);
+        }
+        private static Application CreateLnApplication(Customer mainApplicant, ApplicationDecisionStatus applicationDecision, List<Customer> guarantors = null)
+        {
+            //STEP 2 - Create the application with code split
+            return Config.AUT == AUT.Wb ? CreateBusinessLnApplication(mainApplicant, guarantors, applicationDecision) : CreateConsumerLnApplication(mainApplicant, applicationDecision);
+        }
+        private static Application CreateConsumerL0Application(Customer customer, ApplicationDecisionStatus applicationDecision)
+        {
+            var application = ApplicationBuilder.New(customer).WithExpectedDecision(applicationDecision).Build();
+            return RunApplicationAsserts(application);
+        }
+        private static Application CreateConsumerLnApplication(Customer customer, ApplicationDecisionStatus applicationDecision)
+        {
+            var application = ApplicationBuilder.New(customer).WithExpectedDecision(applicationDecision).Build();
+            return RunApplicationAsserts(application);
+        }
+        private static Application CreateBusinessL0Application(Customer mainDirector, List<CustomerBuilder> guarantors, ApplicationDecisionStatus applicationDecision)
+        {
+            //STEP2 - Create the company 
+            var organisationBuilder = OrganisationBuilder.New(mainDirector).WithOrganisationNumber(GoodCompanyRegNumber);
             var organisation = organisationBuilder.Build();
 
             //STEP3 - Create the application
@@ -604,6 +748,40 @@ namespace Wonga.QA.Tests.Experian
             //STEP5 - Build the application + send the list of guarantors
             var application = applicationBuilder.Build();
 
+            return RunApplicationAsserts(application);
+        }
+        private static Application CreateBusinessLnApplication(Customer mainDirector, List<Customer> guarantors, ApplicationDecisionStatus applicationDecision)
+        {
+            //THIS IS NOT IMPLEMENTED YET
+
+            #region OLD CODE TO REFACTOR AT PROPER TIME
+
+            ////STEP2 - Create the company 
+            //var organisationBuilder = OrganisationBuilder.New(mainDirector).WithOrganisationNumber(GoodCompanyRegNumber);
+            //var organisation = organisationBuilder.Build();
+
+            ////STEP3 - Create the application
+            //var applicationBuilder = ApplicationBuilder.New(mainDirector, organisation).WithExpectedDecision(applicationDecision) as BusinessApplicationBuilder;
+
+            ////STEP4 - Create the guarantors list + send it to the application
+            //if (guarantors != null)
+            //{
+            //    applicationBuilder.WithGuarantors(guarantors);
+            //}
+
+            ////STEP5 - Build the application + send the list of guarantors
+            //var application = applicationBuilder.Build();
+
+            //return RunApplicationAsserts(application);
+
+            #endregion
+
+            return null;
+
+        }
+
+        private static Application RunApplicationAsserts(Application application)
+        {
             Assert.IsNotNull(application);
 
             var riskDb = Drive.Db.Risk;
@@ -617,8 +795,8 @@ namespace Wonga.QA.Tests.Experian
             Assert.IsNotNull(socialDetailsEntity, "Risk Social details should exist");
 
             return application;
-
         }
+
         private List<RiskWorkflowEntity> VerifyRiskWorkflows(Guid applicationId, RiskWorkflowTypes riskWorkflowType, RiskWorkflowStatus expectedRiskWorkflowStatus, Int32 expectedNumberOfWorkflows)
         {
             Drive.Db.WaitForRiskWorkflowData(applicationId, riskWorkflowType, expectedNumberOfWorkflows, expectedRiskWorkflowStatus);
@@ -639,5 +817,10 @@ namespace Wonga.QA.Tests.Experian
             Assert.Contains(Drive.Db.GetExecutedVerificationDefinitionNamesForRiskWorkflow(riskWorkflowEntity.WorkflowId), Get.EnumToString(riskVerification));
         }
 
+        private static void ScrubNames(CustomerBuilder customerBuilder)
+        {
+            customerBuilder.ScrubForename(customerBuilder.Forename);
+            customerBuilder.ScrubSurname(customerBuilder.Surname);
+        }
     }
 }
