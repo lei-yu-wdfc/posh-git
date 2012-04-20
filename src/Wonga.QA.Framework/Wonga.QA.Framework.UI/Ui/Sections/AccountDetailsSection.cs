@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using OpenQA.Selenium;
+using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.Mappings;
 
@@ -31,6 +32,11 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         {
             var passwordWarning = Section.FindElement(By.CssSelector(Ui.Get.AccountDetailsSection.PasswordErrorForm));
             return passwordWarning.Text.Equals("Passwords must match");
+        }
+        public bool IsPasswordInvalidFormatWarningOccured()
+        {
+            var passwordWarning = Section.FindElement(By.CssSelector(Ui.Get.AccountDetailsSection.PasswordErrorForm));
+            return passwordWarning.Text.Equals("Your password must be 8 or more characters and must include a capital letter and a number.");
         }
     }
 }
