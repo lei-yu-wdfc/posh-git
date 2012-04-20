@@ -664,5 +664,63 @@ namespace Wonga.QA.Tests.Ui
             myPersonalDetails.PhoneClick();
             Assert.IsTrue(myPersonalDetails.DontChangePhone());
         }
+
+        [Test, AUT(AUT.Za), JIRA("QA-217")]
+        public void CustomerChangesAddressWithNotValidDataThenWarningMessageShouldOccur()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            var mySummaryPage = loginPage.LoginAs(email);
+            var myPersonalDetailsPage = mySummaryPage.Navigation.MyPersonalDetailsButtonClick();
+
+            var oldTown = myPersonalDetailsPage.GetTown; //to check if changes in db occured
+
+            myPersonalDetailsPage.AddressClick();
+            Do.Until(myPersonalDetailsPage.ChangeMyAddressElement.IsChangeMyAddressTitleDisplayed);
+
+            var newFlat = Get.RandomInt(100).ToString();
+            var newStreet = Get.RandomString(3, 10);
+            var newHouseNumber = Get.RandomString(3, 10);
+            var newDistrict = Get.RandomString(3, 10);
+            var newTown = Get.RandomString(3, 10);
+            var newPostcode = Get.GetPostcode();
+
+            myPersonalDetailsPage.ChangeMyAddressElement.Postcode = "123";
+            myPersonalDetailsPage.ChangeMyAddressElement.Flat = newFlat;
+            Assert.IsTrue(myPersonalDetailsPage.ChangeMyAddressElement.IsPostcodeWarningOccurred());
+
+            myPersonalDetailsPage.ChangeMyAddressElement.Postcode = newPostcode;
+            myPersonalDetailsPage.ChangeMyAddressElement.Street = newStreet;
+            myPersonalDetailsPage.ChangeMyAddressElement.HouseNumber = newHouseNumber;
+            myPersonalDetailsPage.ChangeMyAddressElement.District = newDistrict;
+            myPersonalDetailsPage.ChangeMyAddressElement.Town = newTown;
+            myPersonalDetailsPage.ChangeMyAddressElement.AddressPeriod = "2 to 3 years";
+
+            myPersonalDetailsPage.Submit();
+            myPersonalDetailsPage.WaitForSuccessPopup();
+            myPersonalDetailsPage.Submit();
+
+            var addresses = Drive.Data.Comms.Db.Addresses;
+            var currentAddress = addresses.FindAllByAccountId(customer.Id).FirstOrDefault();
+            Do.With.Timeout(10).Until(() => currentAddress.Town != oldTown);
+
+            //Check changes in DB
+            Assert.AreEqual(currentAddress.Flat, newFlat);
+            Assert.AreEqual(currentAddress.Street, newStreet);
+            Assert.AreEqual(currentAddress.HouseNumber, newHouseNumber);
+            Assert.AreEqual(currentAddress.District, newDistrict);
+            Assert.AreEqual(currentAddress.Town, newTown);
+            Assert.AreEqual(currentAddress.PostCode, newPostcode);
+
+            //Check changes in UI
+            Assert.AreEqual(myPersonalDetailsPage.GetHouseNumberAndStreet, newHouseNumber + " " + newStreet);
+            Assert.AreEqual(myPersonalDetailsPage.GetTown, newTown);
+            Assert.AreEqual(myPersonalDetailsPage.GetPostcode, newPostcode);
+
+
+        }
     }
 }

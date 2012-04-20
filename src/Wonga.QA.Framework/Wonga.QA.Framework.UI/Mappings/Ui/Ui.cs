@@ -62,6 +62,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual TabsElement TabsElement { get; set; }
         public virtual TopupSlidersElement TopupSlidersElement { get; set; }
         public virtual SmallTopupSlidersElement SmallTopupSlidersElement { get; set; }
+        public virtual ChangeMyAddressElement ChangeMyAddressElement { get; set; }
         
         #endregion
 

@@ -68,6 +68,7 @@
     <Compile Include="Journey\ZaLnJourney.cs" />
     <Compile Include="Mappings\Content\Content.cs" />
     <Compile Include="Mappings\Content\Agreements\LoanAgreement.cs" />
+    <Compile Include="Mappings\Ui\Elements\ChangeMyAddressElement.cs" />
     <Compile Include="Mappings\Ui\Elements\ContactElement.cs" />
     <Compile Include="Mappings\Ui\Elements\SmallTopupSlidersElement.cs" />
     <Compile Include="Mappings\Ui\Elements\MyAccountNavigationElement.cs" />
@@ -133,6 +134,7 @@
     <Compile Include="Mappings\Xml\XmlMapper.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="Ui\Elements\BaseElement.cs" />
+    <Compile Include="Ui\Elements\ChangeMyAddressElement.cs" />
     <Compile Include="Ui\Elements\ContactElement.cs" />
     <Compile Include="Ui\Elements\SmallTopupSlidersElement.cs" />
     <Compile Include="Ui\Elements\FAQElement.cs" />

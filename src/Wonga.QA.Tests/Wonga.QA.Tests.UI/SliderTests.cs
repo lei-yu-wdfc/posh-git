@@ -226,7 +226,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(maxLoanDuration.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-154"), Pending]
+        [Test, AUT(AUT.Za), JIRA("QA-154")]
         public void MaxAmountSliderValueShouldBeCorrectL0()
         {
             var serviceConfigurations = Drive.Data.Ops.Db.ServiceConfigurations;
