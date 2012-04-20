@@ -5,6 +5,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Framework.Msmq;
@@ -134,47 +135,29 @@ namespace Wonga.QA.Tests.Ui
             // Create a customer
             string email = Get.RandomEmail();
             Console.WriteLine("email:{0}", email);
-
             Customer customer;
-            if (scenarioId == 20)
-            {
-                customer = CustomerBuilder.New().WithEmailAddress(email).WithEmployerStatus(EmploymentStatusEnum.Unemployed.ToString()).WithMiddleName(RiskMask.TESTEmployedMask).Build();
-            }
-            else
-            {
-                customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            }
+            if (scenarioId == 20) customer = CustomerBuilder.New().WithEmailAddress(email).WithEmployerStatus(EmploymentStatusEnum.Unemployed.ToString()).WithMiddleName(RiskMask.TESTEmployedMask).Build();
+            else customer = CustomerBuilder.New().WithEmailAddress(email).Build();
 
             // Create a loan
             Application application;
-            if (scenarioId < 5)
-                application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
-            else if ((scenarioId >= 5) && (scenarioId <= 7))
-                application = ApplicationBuilder.New(customer).WithLoanAmount(400).WithLoanTerm(loanTerm).Build();
-            else if (scenarioId == 17)
-                application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Pending).WithLoanTerm(loanTerm).Build();
-            else if (scenarioId == 20)
-                application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).WithLoanTerm(loanTerm).Build();
-            else
-                application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
+            if (scenarioId < 5) application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
+            else if ((scenarioId >= 5) && (scenarioId <= 7)) application = ApplicationBuilder.New(customer).WithLoanAmount(400).WithLoanTerm(loanTerm).Build();
+            // else if (scenarioId == 17) application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Pending).WithLoanTerm(loanTerm).Build();
+            else if (scenarioId == 20) application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).WithLoanTerm(loanTerm).Build();
+            else application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
 
 
             // Rewind application dates
-            ApplicationEntity applicationEntity =
-                Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
-            RiskApplicationEntity riskApplication =
-                Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == application.Id);
+            ApplicationEntity applicationEntity = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
+            RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == application.Id);
             TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
-
-            RewindApplicationDates(applicationEntity, riskApplication, daysShiftSpan);
-
-            //Console.WriteLine("{0}, {1}, {2}, {3}", applicationEntity.FixedTermLoanApplicationEntity.LoanAmount, applicationEntity.FixedTermLoanApplicationEntity.ServiceFee, applicationEntity.FixedTermLoanApplicationEntity.TransmissionFee, applicationEntity.FixedTermLoanApplicationEntity.MonthlyInterestRate);
-
-            // Repay a loan
-            if (scenarioId == 8) application = application.RepayOnDueDate();
+            Drive.Db.RewindApplicationDates(applicationEntity, riskApplication, daysShiftSpan);
+            
+            if (scenarioId == 8) application = application.RepayOnDueDate(); // Repay a loan
 
             // Create repayment plan
-            if ((scenarioId >= 14) && (scenarioId <= 16))
+            /*if ((scenarioId >= 14) && (scenarioId <= 16))
             {
                 Drive.Msmq.Payments.Send(new CreateExtendedRepaymentArrangementCommand
                 {
@@ -187,7 +170,7 @@ namespace Wonga.QA.Tests.Ui
 							new ArrangementDetail{Amount = application.GetBalance(), Currency = CurrencyCodeIso4217Enum.GBP, DueDate = DateTime.Today.AddDays(7)}
 						}
                 });
-            }
+            } */
 
             // Login and open my summary page
             var loginPage = Client.Login();
@@ -206,7 +189,7 @@ namespace Wonga.QA.Tests.Ui
                 if (application.LoanTerm > 7)
                 {
                     var extensionStartDate = applicationEntity.FixedTermLoanApplicationEntity.NextDueDate.Value.AddDays(-7);
-                    expectedLoanMessageText = expectedLoanMessageText.Replace("{date extensions available}", getOrdinalDate(extensionStartDate));
+                    expectedLoanMessageText = expectedLoanMessageText.Replace("{date extensions available}", GetOrdinalDate(extensionStartDate));
                 }
                 else // if loan period is less than 7 days
                 {
@@ -214,46 +197,13 @@ namespace Wonga.QA.Tests.Ui
                 }
             }
 
-            if (scenarioId == 4)
-            {
-                //{total to repay 300.00} on {promise date}
-                expectedLoanMessageText = expectedLoanMessageText.Replace("{total to repay 300.00}", application.GetDueDateBalance().ToString("#.##")).Replace("{promise date}", getOrdinalDate(applicationEntity.FixedTermLoanApplicationEntity.NextDueDate.Value));
-            }
-
+            if (scenarioId == 4) expectedLoanMessageText = expectedLoanMessageText.Replace("{total to repay 300.00}", application.GetDueDateBalance().ToString("#.##")).Replace("{promise date}", GetOrdinalDate(applicationEntity.FixedTermLoanApplicationEntity.NextDueDate.Value));
 
             string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage;
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
         }
 
-        private static void RewindApplicationDates(ApplicationEntity application, RiskApplicationEntity riskApp, TimeSpan span)
-        {
-            application.ApplicationDate -= span;
-            application.SignedOn -= span;
-            application.CreatedOn -= span;
-            application.AcceptedOn -= span;
-            application.FixedTermLoanApplicationEntity.PromiseDate -= span;
-            application.FixedTermLoanApplicationEntity.NextDueDate -= span;
-            application.Transactions.ForEach(t => t.PostedOn -= span);
-            if (application.ClosedOn != null)
-                application.ClosedOn -= span;
-            application.Submit(true);
-
-            riskApp.ApplicationDate -= span;
-            riskApp.PromiseDate -= span;
-            if (riskApp.ClosedOn != null)
-                riskApp.ClosedOn -= span;
-            riskApp.Submit(true);
-        }
-
-        //Needed for serialization in CreateExtendedRepaymentArrangementCommand
-        private class ArrangementDetail
-        {
-            public decimal Amount { get; set; }
-            public CurrencyCodeIso4217Enum Currency { get; set; }
-            public DateTime DueDate { get; set; }
-        }
-
-        public string getOrdinalDate(DateTime date)
+        public string GetOrdinalDate(DateTime date)
         {
             //Returns date as string in the format "Wed 18th Apr 2012"
             var cDate = date.Day.ToString("d")[date.Day.ToString("d").Length - 1];
