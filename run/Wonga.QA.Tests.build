@@ -59,7 +59,7 @@
 	<Target Name="Default">
 		<CallTarget Targets="Config;Build;PreGenerateSerializers" />
 		<MsBuild Condition="'$(Files)'==''" Projects="$(MSBuildProjectFullPath)" Targets="Test" Properties="Files=Meta" />
-		<CallTarget Condition="'$(Files)'==''" Targets="Merge" />
+		<CallTarget Condition="'$(Files)'==''" Targets="Merge;PreGenerateSerializers" />
 		<CallTarget Targets="Test" />
 	</Target>
 </Project>
