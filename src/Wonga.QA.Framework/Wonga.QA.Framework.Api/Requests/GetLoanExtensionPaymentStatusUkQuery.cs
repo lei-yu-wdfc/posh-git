@@ -8,6 +8,6 @@ namespace Wonga.QA.Framework.Api
     public partial class GetLoanExtensionPaymentStatusUkQuery : ApiRequest<GetLoanExtensionPaymentStatusUkQuery>
     {
         public Object ExtensionId { get; set; }
-        public Object CsUser { get; set; }
+        public Object SalesforceUser { get; set; }
     }
 }
