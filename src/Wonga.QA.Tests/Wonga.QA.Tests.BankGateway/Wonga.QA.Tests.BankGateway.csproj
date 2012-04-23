@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BankGatewayBmo.cs" />
+    <Compile Include="BankGatewayBmoSendBatch.cs" />
     <Compile Include="BankGatewayCaTests.cs" />
     <Compile Include="BankGatewayServiceTests.cs" />
     <Compile Include="Enums\BankGatewayTransactionStatus.cs" />
