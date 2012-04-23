@@ -317,5 +317,13 @@
   <ExtensionDealDonePage>
     <AccountLink>#content-area h2 a</AccountLink>
   </ExtensionDealDonePage>
+
+  <ExtensionProcessingPage>
+    <!--<FormId>wonga-processing</FormId>-->
+    <!--<ProcessingImage>#wonga-processing>img</ProcessingImage>-->
+    <ProcessingText>We are processing your application</ProcessingText>
+    <ProcessingTextContainer>.processing-text</ProcessingTextContainer>
+  </ExtensionProcessingPage>
+
   
 </Ui>
