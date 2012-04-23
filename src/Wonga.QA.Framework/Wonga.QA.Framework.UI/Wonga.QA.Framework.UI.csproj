@@ -81,6 +81,7 @@
     <Compile Include="Mappings\Ui\Pages\Common\BlogPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ExtensionAgreementPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ExtensionDealDonePage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\ExtensionErrorPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ExtensionPaymentFailedPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ExtensionProcessingPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ForgotPasswordPage.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="Ui\Pages\Common\BlogPage.cs" />
     <Compile Include="Ui\Pages\Common\ExtensionAgreementPage.cs" />
     <Compile Include="Ui\Pages\Common\ExtensionDealDonePage.cs" />
+    <Compile Include="Ui\Pages\Common\ExtensionErrorPage.cs" />
     <Compile Include="Ui\Pages\Common\ExtensionPaymentFailedPage.cs" />
     <Compile Include="Ui\Pages\Common\ExtensionProcessingPage.cs" />
     <Compile Include="Ui\Pages\Common\TopupDealDonePage.cs" />

@@ -9,14 +9,13 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
 using Wonga.QA.Framework.UI.Mappings;
 
-namespace Wonga.QA.Framework.UI.Ui.Pages.Common
+namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
-    class ExtensionErrorPage
+    class ExtensionErrorPage : BasePage
     {
         public ExtensionErrorPage(UiClient client) : base(client)
         {
-            Assert.That(Header, Has.Item("Ouch! We're sorry"));
-            _accountLink = Content.FindElement(By.CssSelector(Ui.Get.ExtensionErrorPage.AccountLink));
+            Assert.That(Headers, Has.Item("Ouch! We're sorry"));
         }
 
         public bool IsErrorPageSorryNotPresent()
