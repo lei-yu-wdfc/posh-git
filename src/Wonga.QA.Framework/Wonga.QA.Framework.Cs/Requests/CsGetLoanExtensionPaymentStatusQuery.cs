@@ -7,7 +7,7 @@ namespace Wonga.QA.Framework.Cs
     [XmlRoot("CsGetLoanExtensionPaymentStatus")]
     public partial class CsGetLoanExtensionPaymentStatusQuery : CsRequest<CsGetLoanExtensionPaymentStatusQuery>
     {
-        public Object ExtensionId { get; set; }
         public Object SalesforceUser { get; set; }
+        public Object ExtensionId { get; set; }
     }
 }
