@@ -4,11 +4,11 @@ using Wonga.QA.Framework.Db;
 
 namespace Wonga.QA.Framework.Mocks.Entities
 {
-	public class BmoSetup
+	public class BmoResponse
 	{
 		private readonly int _setupId;
 
-		public BmoSetup(int setupId)
+		public BmoResponse(int setupId)
 		{
 			_setupId = setupId;
 		}

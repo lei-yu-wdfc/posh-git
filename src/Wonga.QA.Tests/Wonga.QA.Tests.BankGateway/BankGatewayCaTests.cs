@@ -17,7 +17,7 @@ namespace Wonga.QA.Tests.BankGateway
 		private const int BankIntegrationIdScotia = 1;
 		private static readonly Random Random = new Random(Environment.TickCount);
 
-		[Test, JIRA("CA-1931")]
+		[Test, AUT(AUT.Ca), JIRA("CA-1931")]
 		public void SendPaymentMessageWithRealAccountShouldBeRoutedToBmo()
 		{
 			var customer = CustomerBuilder.New().
@@ -28,10 +28,61 @@ namespace Wonga.QA.Tests.BankGateway
                                 Build();
 			var application = ApplicationBuilder.New(customer).Build();
 
-			Do.Until(() => Drive.Db.BankGateway.Transactions.Single(t => t.ApplicationId == application.Id && t.BankIntegrationId == 2));
+			Do.Until(() => Drive.Db.BankGateway.Transactions.Single(
+				t => t.ApplicationId == application.Id &&
+					t.BankIntegrationId == 2 &&
+					t.TransactionStatus == 4));
 		}
 
-		[Test, JIRA("CA-1931")]
+		[Test, AUT(AUT.Ca), JIRA("CA-1931")]
+		public void SendPaymentMessageWithRealAccountShouldBeRoutedToBmoAndRejected()
+		{
+			var bankAccountNumber = Random.Next(1000000, 9999999);
+			
+			var customer = CustomerBuilder.New().
+								WithInstitutionNumber("001").
+								WithBranchNumber("00022").
+								WithBankAccountNumber(bankAccountNumber).
+								WithSurname("Wonga").WithForename("Canada Inc").
+								Build();
+
+			var setup = BmoResponseBuilder.New().
+								ForBankAccountNumber(bankAccountNumber).
+								RejectTransaction();
+
+			var application = ApplicationBuilder.New(customer).Build();
+
+			Do.Until(() => Drive.Db.BankGateway.Transactions.Single(
+				t => t.ApplicationId == application.Id &&
+					t.BankIntegrationId == 2 &&
+					t.TransactionStatus == 4));
+		}
+
+		[Test, AUT(AUT.Ca), JIRA("CA-1931")]
+		public void SendPaymentMessageWithRealAccountShouldBeRoutedToBmoAndRejectedFile()
+		{
+			var bankAccountNumber = Random.Next(1000000, 9999999);
+
+			var customer = CustomerBuilder.New().
+								WithInstitutionNumber("001").
+								WithBranchNumber("00022").
+								WithBankAccountNumber(bankAccountNumber).
+								WithSurname("Wonga").WithForename("Canada Inc").
+								Build();
+
+			var setup = BmoResponseBuilder.New().
+								ForBankAccountNumber(bankAccountNumber).
+								RejectFile();
+
+			var application = ApplicationBuilder.New(customer).Build();
+
+			Do.Until(() => Drive.Db.BankGateway.Transactions.Single(
+				t => t.ApplicationId == application.Id &&
+					t.BankIntegrationId == 2 &&
+					t.TransactionStatus == 4));
+		}
+
+		[Test, AUT(AUT.Ca), JIRA("CA-1931")]
 		public void SendPaymentMessageWithFakeAccountShouldBeRoutedToBmo()
 		{
 			var customer = CustomerBuilder.New().
@@ -45,7 +96,7 @@ namespace Wonga.QA.Tests.BankGateway
 			Do.Until(() => Drive.Db.BankGateway.Transactions.Single(t => t.ApplicationId == application.Id && t.BankIntegrationId == 2));
 		}
 
-        [Test, JIRA("CA-1931")]
+		[Test, AUT(AUT.Ca), JIRA("CA-1931")]
 		public void SendPaymentMessageShouldBeRoutedToScotia()
 		{
             var customer = CustomerBuilder.New().
@@ -59,7 +110,7 @@ namespace Wonga.QA.Tests.BankGateway
 					t.BankIntegrationId == BankIntegrationIdScotia));
 		}
 
-		[Test, JIRA("CA-1931")]
+		[Test, AUT(AUT.Ca), JIRA("CA-1931")]
 		public void SendPaymentMessageShouldBeRoutedToScotiaAndRejected()
 		{
 			var bankAccountNumber = Random.Next(1000000, 9999999);
