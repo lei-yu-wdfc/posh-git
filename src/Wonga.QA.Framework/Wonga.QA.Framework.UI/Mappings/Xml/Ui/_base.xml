@@ -15,7 +15,7 @@
 
   <MobilePinVerificationSection>
     <Fieldset>#pin-verification</Fieldset>
-    <Pin>#edit-pin</Pin>
+    <Pin>#edit-pin</Pin>   
   </MobilePinVerificationSection>
 
   <DeclinedPage>
