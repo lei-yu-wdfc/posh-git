@@ -13,24 +13,17 @@ namespace Wonga.QA.Framework.UI.Ui.Pages.Common
 {
     class ExtensionErrorPage
     {
-        private IWebElement _accountLink;
-
         public ExtensionErrorPage(UiClient client) : base(client)
         {
-            Assert.That(Headers, Has.Item("Ouch! We're sorry"));
+            Assert.That(Header, Has.Item("Ouch! We're sorry"));
             _accountLink = Content.FindElement(By.CssSelector(Ui.Get.ExtensionErrorPage.AccountLink));
         }
 
-        public bool IsDealDonePageJiffyNotPresent()
+        public bool IsErrorPageSorryNotPresent()
         {
-            bool tokenResult = Content.Driver().PageSource.Contains("jiffy");
+            bool tokenResult = Content.Driver().PageSource.Contains("We're sorry");
             return !tokenResult;
         }
 
-        public IApplyPage ContinueToMyAccount()
-        {
-            _accountLink.Click();
-            return new MySummaryPage(Client);
-        }
     }
 }
