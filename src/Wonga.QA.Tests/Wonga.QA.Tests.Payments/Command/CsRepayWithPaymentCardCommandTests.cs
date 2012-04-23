@@ -37,6 +37,7 @@ namespace Wonga.QA.Tests.Payments.Command
             protected decimal _startingBalance;
             protected decimal _paymentAmount;
             protected dynamic _paymentCardRepaymentRequests = Drive.Data.Payments.Db.PaymentCardRepaymentRequests;
+            protected Guid _paymentId = Guid.NewGuid();
 
             protected abstract void UpdateCardExpiryDate();
 

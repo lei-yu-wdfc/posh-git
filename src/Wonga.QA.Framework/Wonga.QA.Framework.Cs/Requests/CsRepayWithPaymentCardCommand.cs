@@ -13,5 +13,6 @@ namespace Wonga.QA.Framework.Cs
         public Object Currency { get; set; }
         public Object CV2 { get; set; }
         public Object SalesforceUser { get; set; }
+        public Object PaymentId { get; set; }
     }
 }
