@@ -31,7 +31,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             protected decimal _paymentAmount;
             protected Guid _paymentId;
 
-            [Test]
+            [SetUp]
             public override void Setup()
             {
                 base.Setup();
@@ -79,7 +79,7 @@ namespace Wonga.QA.Tests.Payments.Queries
                     base.Setup();
                 }
 
-                [Test, AUT(AUT.Uk)]
+                [Test, AUT(AUT.Uk), JIRA("UK-1622")]
                 public void TheStatusOfThePaymentCanBeObtained()
                 {
                     ConfirmPaymentStatus("PaymentTaken");
@@ -99,7 +99,7 @@ namespace Wonga.QA.Tests.Payments.Queries
                     base.Setup();
                 }
 
-                [Test, AUT(AUT.Uk)]
+                [Test, AUT(AUT.Uk), JIRA("UK-1622")]
                 public void TheStatusOfThePaymentCanBeObtained()
                 {
                     ConfirmPaymentStatus("PaymentFailed");
