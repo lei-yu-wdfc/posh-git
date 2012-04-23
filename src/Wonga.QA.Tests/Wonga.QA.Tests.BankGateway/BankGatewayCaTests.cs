@@ -138,7 +138,7 @@ namespace Wonga.QA.Tests.BankGateway
 					t.TransactionStatus == TransactionStatusFailed ));
 		}
 
-		[Test, AUT(AUT.Ca), JIRA("CA-1931")]
+        [Test, AUT(AUT.Ca), JIRA("CA-1931"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
 		public void PositiveFileAcknowledgementShouldBePersisted()
 		{
 			var ackType = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == 2 && a.Name == "DEFT200");
@@ -163,7 +163,7 @@ namespace Wonga.QA.Tests.BankGateway
 			         	});
 		}
 
-		[Test, AUT(AUT.Ca), JIRA("CA-1931"), Ignore("Requires fix in Mock to not send any reports after ack file rejected.")]
+        [Test, AUT(AUT.Ca), JIRA("CA-1931"), Ignore("Requires fix in Mock to not send any reports after ack file rejected."), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
 		public void NegativeFileAcknowledgementShouldBePersistedAndAllTransactionsRejected()
 		{
 			Guid applicationIdAccepted = Guid.Empty;
@@ -212,7 +212,7 @@ namespace Wonga.QA.Tests.BankGateway
 			Do.With.Timeout(TimeSpan.FromSeconds(2)).While(() => Drive.Db.BankGateway.Acknowledges.Single(t => t.TransactionID == transaction.TransactionId && t.AcknowledgeTypeID == ackTypeRejected.AcknowledgeTypeId));
 		}
 
-		[Test, AUT(AUT.Ca), JIRA("CA-1931")]
+        [Test, AUT(AUT.Ca), JIRA("CA-1931"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
 		public void SettlementSendPaymentShouldUpdateTransactionStatusAndPersistAck()
 		{
 			var customer = CustomerBuilder.New().
@@ -231,7 +231,7 @@ namespace Wonga.QA.Tests.BankGateway
 			Do.Until(() => Drive.Db.BankGateway.Acknowledges.Single(t => t.TransactionID == transaction.TransactionId && t.AcknowledgeTypeID == ackType.AcknowledgeTypeId));
 		}
 
-		[Test, AUT(AUT.Ca), JIRA("CA-1931")]
+        [Test, AUT(AUT.Ca), JIRA("CA-1931"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
 		public void SettlementSendPaymentsInOneBatchShouldUpdateTransactionStatusAndPersistAck()
 		{
 			var applicationIds = new List<Guid>();
@@ -262,7 +262,7 @@ namespace Wonga.QA.Tests.BankGateway
 			}
 		}
 
-		[Test, AUT(AUT.Ca), JIRA("CA-1931")]
+        [Test, AUT(AUT.Ca), JIRA("CA-1931"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
 		public void SettlementSendPaymentsAcceptedAndRejectedInOneBatchShouldUpdateTransactionStatusAndPersistAck()
 		{
 			Guid applicationIdAccepted = Guid.Empty;
