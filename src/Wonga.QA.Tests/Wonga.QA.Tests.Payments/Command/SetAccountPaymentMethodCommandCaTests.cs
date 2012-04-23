@@ -85,7 +85,7 @@ namespace Wonga.QA.Tests.Payments.Command
 			}
 		}
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1951")]
+        [Test, AUT(AUT.Ca), JIRA("CA-1951"), Ignore("Not Completed")]
         public void GivenAL0Customer_WhenTheyTryToSetAccountPaymentMethod_ThenApiReturnsError()
         {
             const string expectedError = "Payments_Customer_HasNotCompletedLoan";
