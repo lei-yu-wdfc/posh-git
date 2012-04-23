@@ -56,6 +56,8 @@ namespace Wonga.QA.Framework.Mocks
 
 			return new BmoResponse(entity.BankGatewayResponseSetupId);
 		}
+       
+
 
 		private BankGatewayResponseSetup InsertSetup(XElement response)
 		{

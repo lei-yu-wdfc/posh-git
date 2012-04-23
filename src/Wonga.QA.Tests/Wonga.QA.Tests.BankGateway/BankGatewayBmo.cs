@@ -1,20 +1,28 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
-using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db.BankGateway;
 using Wonga.QA.Framework.Db.Ops;
+using Wonga.QA.Framework.Db.OpsSagasCa;
+using Wonga.QA.Framework.Mocks;
+using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.BankGateway.Helpers;
 using Wonga.QA.Tests.Core;
+using ProvinceEnum = Wonga.QA.Framework.Api.ProvinceEnum;
 
 namespace Wonga.QA.Tests.BankGateway
 {
+    [TestFixture]
     public class BankGatewayBmo
     {
         private const string BankGatewayIsTestModeKey = "BankGateway.IsTestMode";
         private string _bankGatewayIsTestMode;
         private const string MocksBmoEnabledKey = "Mocks.BmoEnabled";
         private string _mocksBmoEnabled;
+        private static readonly Random Random = new Random(Environment.TickCount);
 
         [SetUp]
         public void SetUp()
@@ -53,9 +61,12 @@ namespace Wonga.QA.Tests.BankGateway
                                 WithBranchNumber("00022").
                                 ForProvince(ProvinceEnum.ON).
                                 Build();
+
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
 
-            WaitBankGatewayFunctions.WaitForStatusOfTransaction(application.Id);
+            TransactionEntity transaction = WaitBankGatewayFunctions.WaitForStatusOfTransaction(application.Id);
+
+            WaitBankGatewayFunctions.WaitForAckForTransaction(transaction);
         }
     }
 }
