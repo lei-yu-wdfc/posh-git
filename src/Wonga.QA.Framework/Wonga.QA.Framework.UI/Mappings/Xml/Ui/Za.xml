@@ -42,6 +42,7 @@
   <AccountDetailsSection>
     <Fieldset>#account-setup</Fieldset>
 	<PasswordErrorForm>#edit-password-wrapper .form-error .invalid</PasswordErrorForm>
+    <PasswordConfirmErrorForm>#edit-password-confirm-wrapper .form-error .invalid</PasswordConfirmErrorForm>
   </AccountDetailsSection>
 
   <DealDonePage>
