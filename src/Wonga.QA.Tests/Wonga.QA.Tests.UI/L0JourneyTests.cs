@@ -579,7 +579,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-186")]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-186")]
         public void InvalidFormatPasswordShouldCauseWarningMessageAndValidPasswordShouldDissmissWarning()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -604,6 +604,24 @@ namespace Wonga.QA.Tests.Ui
                     Assert.IsTrue(myAccountZa.AccountDetailsSection.IsPasswordInvalidFormatWarningOccured());
                     myAccountZa.AccountDetailsSection.Password = "Sdfdfs123";
                     Assert.IsFalse(myAccountZa.AccountDetailsSection.IsPasswordInvalidFormatWarningOccured());
+                    break;
+                case AUT.Wb:
+                    var journeyWb = JourneyFactory.GetL0JourneyWB(Client.Home());
+                    var homePage = journeyWb.ApplyForLoan(5500, 30)
+                        .AnswerEligibilityQuestions()
+                        .FillPersonalDetails("TESTNoCheck")
+                        .FillAddressDetails("2 to 3 years")
+                        .FillAccountDetails()
+                        .FillBankDetails()
+                        .FillCardDetails()
+                        .EnterBusinessDetails()
+                        .AddAdditionalDirector()
+                        .EnterBusinessBankAccountDetails()
+                        .EnterBusinessDebitCardDetails()
+                        .WaitForApplyTermsPage()
+                        .ApplyTerms()
+                        .FillAcceptedPage()
+                        .GoHomePage();
                     break;
             }
         }
