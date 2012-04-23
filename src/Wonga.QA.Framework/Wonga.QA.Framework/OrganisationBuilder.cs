@@ -17,7 +17,7 @@ namespace Wonga.QA.Framework
         private OrganisationBuilder(Customer primaryApplicant)
         {
             _id = Guid.NewGuid();
-            _organisationNumber = Get.RandomInt(1, 99999999).ToString();
+            _organisationNumber = Get.RandomAlphaNumeric(1, 8).PadLeft(8, '0');
             _primaryApplicant = primaryApplicant;
         }
 

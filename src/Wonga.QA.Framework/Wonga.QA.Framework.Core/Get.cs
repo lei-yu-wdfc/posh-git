@@ -17,6 +17,7 @@ namespace Wonga.QA.Framework.Core
     public static class Get
     {
         private static String _alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        private static String _alphaNumeric = _alpha + "0123456789";
         private static Random _random = new Random(Guid.NewGuid().GetHashCode());
     	private static readonly string EmailSafeMachineName;
 
@@ -282,6 +283,14 @@ namespace Wonga.QA.Framework.Core
             StringBuilder builder = new StringBuilder();
             for (Int32 i = 0; i < _random.Next(min, max); i++)
                 builder.Append(_alpha[_random.Next(0, _alpha.Length)]);
+            return builder.ToString();
+        }
+
+        public static String RandomAlphaNumeric(Int32 min, Int32 max)
+        {
+            StringBuilder builder = new StringBuilder();
+            for (Int32 i = 0; i < _random.Next(min, max); i++)
+                builder.Append(_alphaNumeric[_random.Next(0, _alphaNumeric.Length)]);
             return builder.ToString();
         }
 
