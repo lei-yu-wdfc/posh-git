@@ -329,5 +329,10 @@
     <HeaderText>We couldn't collect your partial payment</HeaderText>
   </ExtensionPaymentFailedPage>
 
+  <ExtensionAgreementPage>
+    <ExtensionAgreementAcceptButton>#edit-accept</ExtensionAgreementAcceptButton>
+    <ExtensionAgreementscroll>#agreementscroll</ExtensionAgreementscroll>
+  </ExtensionAgreementPage>
+
   
 </Ui>
