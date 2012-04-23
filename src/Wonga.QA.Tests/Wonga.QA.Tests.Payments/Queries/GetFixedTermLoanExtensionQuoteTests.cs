@@ -16,7 +16,7 @@ namespace Wonga.QA.Tests.Payments.Queries
     [TestFixture]
     public class GetFixedTermLoanExtensionQuoteTests
     {
-        [Test]
+        [Test, AUT(AUT.Uk)]
         public void TenDayLoanQuoteOnDayFiveToExtendForTenDays()
         {
             var accountId = Guid.NewGuid();

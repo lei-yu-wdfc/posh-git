@@ -7,6 +7,8 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Exceptions;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db;
+using Wonga.QA.Framework.Db.QaData;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments.Command
@@ -23,9 +25,9 @@ namespace Wonga.QA.Tests.Payments.Command
 		[Row(PaymentMethodEnum.PayPal)]
 		public void SetAccountPaymentMethodCaCommand_WhenValidPaymentMethod_ThenPreferredCashoutPaymentMethodIdIsUpdatedOnDatabase(PaymentMethodEnum paymentMethod)
 		{
-			var application = ApplyForALoan();
+			var customer = ApplyForALoanAndRepay();
 
-			var preference = PostSetAccountPaymentMethodCaCommandAndWait(paymentMethod, application.AccountId);
+            var preference = PostSetAccountPaymentMethodCaCommandAndWait(paymentMethod, customer.Id);
 
 			Assert.AreEqual(GetDbPaymentMethodId(paymentMethod), preference.CashoutPaymentMethodId);
 		}
@@ -36,11 +38,11 @@ namespace Wonga.QA.Tests.Payments.Command
 		[Row(PaymentMethodEnum.PayPal)]
 		public void SetAccountPaymentMethodCaCommand_WhenValidPaymentMethod_ThenGetAccountSummaryQueryResponseHasExpectedValue(PaymentMethodEnum expectedPaymentMethod)
 		{
-			var application = ApplyForALoan();
+            var customer = ApplyForALoanAndRepay();
 
-			PostSetAccountPaymentMethodCaCommandAndWait(expectedPaymentMethod, application.AccountId);
+            PostSetAccountPaymentMethodCaCommandAndWait(expectedPaymentMethod, customer.Id);
 
-			var response = Drive.Api.Queries.Post(new GetAccountSummaryQuery { AccountId = application.AccountId});
+            var response = Drive.Api.Queries.Post(new GetAccountSummaryQuery { AccountId = customer.Id});
 
 			Assert.AreEqual(expectedPaymentMethod.ToString(), response.Values["CashoutPaymentMethod"].Single());
 		}
@@ -83,14 +85,34 @@ namespace Wonga.QA.Tests.Payments.Command
 			}
 		}
 
+        [Test, AUT(AUT.Ca), JIRA("CA-1951")]
+        public void GivenAL0Customer_WhenTheyTryToSetAccountPaymentMethod_ThenApiReturnsError()
+        {
+            const string expectedError = "Payments_Customer_HasNotCompletedLoan";
 
-		[Test, AUT(AUT.Ca), JIRA("CA-1951")]
+            Customer customer = CreateCustomer();
+            ApplicationBuilder.New(customer).Build();
+
+            try
+            {
+                PostSetAccountPaymentMethodCaCommand(customer.Id, PaymentMethodEnum.BankAccount);
+
+                Assert.Fail("Posting an invalid command should have failed");
+            }
+            catch (ValidatorException e)
+            {
+                Assert.Contains(e.Errors, expectedError);
+            }
+        }
+
+
+        [Test, AUT(AUT.Ca), JIRA("CA-1896")]
 		[Row(PaymentMethodEnum.BankAccount, true)]
 		[Row(PaymentMethodEnum.ETransfer, false)]
 		[Row(PaymentMethodEnum.PayPal, false)]
 		public void SetAccountPaymentMethodCaCommand_WhenValidPaymentMethod_ThenCheckBankGatewayTransaction(PaymentMethodEnum paymentMethod, bool expectedBankGatewayTransaction)
 		{
-			var customer = CreateCustomer();
+            var customer = ApplyForALoanAndRepay();
 
 			PostSetAccountPaymentMethodCaCommandAndWait(paymentMethod, customer.Id);
 
@@ -100,6 +122,30 @@ namespace Wonga.QA.Tests.Payments.Command
 
 			Assert.IsTrue((transaction != null) == expectedBankGatewayTransaction);
 		}
+
+        [Test, AUT(AUT.Ca), JIRA("CA-1896")]      
+        [Row(PaymentMethodEnum.ETransfer)]
+        [Row(PaymentMethodEnum.PayPal)]
+        public void SetAccountPaymentMethodCaCommand_WhenValidPaymentMethod_ThenEmailShouldBeSent(PaymentMethodEnum paymentMethod)
+        {
+            var customer = ApplyForALoanAndRepay();
+
+            PostSetAccountPaymentMethodCaCommandAndWait(paymentMethod, customer.Id);
+
+            ApplicationBuilder.New(customer).Build();
+
+            var emailTokens = GetEmailTokens("qa.wonga.com@gmail.com", "Email.ManualPaymentNotificationEmailTemplate");
+
+            Assert.IsTrue(emailTokens.Any(et => et.Key == "Html_body"));
+        }
+
+        private List<EmailToken> GetEmailTokens(string email, String emailTemplateName)
+        {
+            var templateId = Drive.Db.Ops.ServiceConfigurations.Single(v => v.Key == emailTemplateName).Value;
+            var db = new DbDriver().QaData;
+            var emailId = Do.Until(() => db.Emails.Single(e => e.EmailAddress == email && e.TemplateName == templateId).EmailId);
+            return db.EmailTokens.Where(et => et.EmailId == emailId).ToList();
+        }
 
 		private dynamic PostSetAccountPaymentMethodCaCommandAndWait(PaymentMethodEnum paymentMethod, Guid accountId)
 		{
@@ -119,10 +165,13 @@ namespace Wonga.QA.Tests.Payments.Command
 			return Drive.Api.Commands.Post(command);
 		}
 
-		private static Application ApplyForALoan()
+		private static Customer ApplyForALoanAndRepay()
 		{
 			Customer customer = CreateCustomer();
-			return ApplicationBuilder.New(customer).Build();
+			var application = ApplicationBuilder.New(customer).Build();
+		    application.RepayOnDueDate();
+
+            return customer;
 		}
 
 		private static Customer CreateCustomer()
