@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using MbUnit.Framework;
@@ -18,6 +19,7 @@ namespace Wonga.QA.Tests.Payments.Command
 	{
 		private readonly dynamic _dbAccountPreferences = Drive.Data.Payments.Db.AccountPreferences;
 		private readonly dynamic _dbBankGateWayTransactions = Drive.Data.BankGateway.Db.Transactions;
+		private readonly dynamic _dbEmails = Drive.Data.QaData.Db.Email;
 
 		[Test, AUT(AUT.Ca), JIRA("CA-1951")]
 		[Row(PaymentMethodEnum.BankAccount)]
@@ -85,17 +87,16 @@ namespace Wonga.QA.Tests.Payments.Command
 			}
 		}
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1951"), Ignore("Not Completed")]
-        public void GivenAL0Customer_WhenTheyTryToSetAccountPaymentMethod_ThenApiReturnsError()
+        [Test, AUT(AUT.Ca), JIRA("CA-1951")]
+        public void GivenAL0Customer_WhenHeTriesToSetAccountPaymentMethod_ThenApiReturnsError()
         {
             const string expectedError = "Payments_Customer_HasNotCompletedLoan";
 
-            Customer customer = CreateCustomer();
-            ApplicationBuilder.New(customer).Build();
+        	var application = ApplyForALoan();
 
             try
             {
-                PostSetAccountPaymentMethodCaCommand(customer.Id, PaymentMethodEnum.BankAccount);
+                PostSetAccountPaymentMethodCaCommand(application.AccountId, PaymentMethodEnum.BankAccount);
 
                 Assert.Fail("Posting an invalid command should have failed");
             }
@@ -104,6 +105,28 @@ namespace Wonga.QA.Tests.Payments.Command
                 Assert.Contains(e.Errors, expectedError);
             }
         }
+
+
+		[Test, AUT(AUT.Ca), JIRA("CA-1951")]
+		public void GivenALNCustomerWithALiveLoan_WhenHeTriesToSetAccountPaymentMethod_ThenApiReturnsError()
+		{
+			const string expectedError = "Payments_Customer_HasLiveLoans";
+
+			Customer customer = ApplyForALoanAndRepay();
+
+			ApplicationBuilder.New(customer).Build();
+
+			try
+			{
+				PostSetAccountPaymentMethodCaCommand(customer.Id, PaymentMethodEnum.BankAccount);
+
+				Assert.Fail("Posting an invalid command should have failed");
+			}
+			catch (ValidatorException e)
+			{
+				Assert.Contains(e.Errors, expectedError);
+			}
+		}
 
 
         [Test, AUT(AUT.Ca), JIRA("CA-1896")]
@@ -123,27 +146,79 @@ namespace Wonga.QA.Tests.Payments.Command
 			Assert.IsTrue((transaction != null) == expectedBankGatewayTransaction);
 		}
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1896")]      
+		[Test, AUT(AUT.Ca), JIRA("CA-1896")]
+		[Row(PaymentMethodEnum.BankAccount)]
+		[Row(PaymentMethodEnum.ETransfer)]
+		[Row(PaymentMethodEnum.PayPal)]
+		public void SetAccountPaymentMethodCaCommand_WhenNewLoanIsPaid_ThenItShouldBeClosed(PaymentMethodEnum paymentMethod)
+		{
+			var customer = ApplyForALoanAndRepay();
+
+			PostSetAccountPaymentMethodCaCommandAndWait(paymentMethod, customer.Id);
+
+			var application = ApplyForAnotherLoanAndRepay(customer);
+
+			Assert.IsTrue(application.IsClosed);
+		}
+
+
+        [Test, AUT(AUT.Ca), JIRA("CA-1896")]
         [Row(PaymentMethodEnum.ETransfer)]
         [Row(PaymentMethodEnum.PayPal)]
         public void SetAccountPaymentMethodCaCommand_WhenValidPaymentMethod_ThenEmailShouldBeSent(PaymentMethodEnum paymentMethod)
         {
+        	const string emailAddress = "qa.wonga.com@gmail.com";
+        	const string emailTemplate = "Email.ManualPaymentNotificationEmailTemplate";
+
+        	int ? currentEmailId = GetMostRecentEmailId(emailAddress, emailTemplate);
             var customer = ApplyForALoanAndRepay();
 
             PostSetAccountPaymentMethodCaCommandAndWait(paymentMethod, customer.Id);
 
-            ApplicationBuilder.New(customer).Build();
+            var application = ApplicationBuilder.New(customer).Build();
 
-            var emailTokens = GetEmailTokens("qa.wonga.com@gmail.com", "Email.ManualPaymentNotificationEmailTemplate");
+			var emailTokens = GetEmailTokens(emailAddress, "Email.ManualPaymentNotificationEmailTemplate", currentEmailId);
 
-            Assert.IsTrue(emailTokens.Any(et => et.Key == "Html_body"));
+        	AssertManualPaymentNotificationEmailTokens(paymentMethod, application, customer, emailTokens);
         }
 
-        private List<EmailToken> GetEmailTokens(string email, String emailTemplateName)
+		private static void AssertManualPaymentNotificationEmailTokens(PaymentMethodEnum expectedPaymentMethod, Application application,
+		                                                               Customer customer, IEnumerable<EmailToken> emailTokens)
+		{
+			EmailToken emailToken = emailTokens.SingleOrDefault(et => et.Key == "Html_body");
+			Assert.IsNotNull(emailToken);
+			Assert.IsTrue(emailToken.Value.Contains(customer.GetEmail()));
+			Assert.IsTrue(emailToken.Value.Contains(application.LoanAmount.ToString("C2", new CultureInfo("en-CA"))));
+			Assert.IsTrue(emailToken.Value.Contains(application.AccountId.ToString()));
+			Assert.IsTrue(emailToken.Value.Contains(expectedPaymentMethod.ToString()));
+		}
+
+		private int ? GetMostRecentEmailId(string email, string emailTemplateName)
+		{
+			var templateId = Drive.Db.Ops.ServiceConfigurations.Single(v => v.Key == emailTemplateName).Value;
+			
+			//there can be more than one email sent (get latest)
+			var emailFound =
+				_dbEmails.FindAll(_dbEmails.EmailAddress == email && _dbEmails.TemplateName == templateId)
+					.OrderByDescending(_dbEmails.EmailId)
+					.FirstOrDefault();
+
+			return
+				emailFound != null
+					? emailFound.EmailId
+					: null;
+		}
+
+        private List<EmailToken> GetEmailTokens(string email, String emailTemplateName, int ? higherThanEmailId)
         {
             var templateId = Drive.Db.Ops.ServiceConfigurations.Single(v => v.Key == emailTemplateName).Value;
             var db = new DbDriver().QaData;
-            var emailId = Do.Until(() => db.Emails.Single(e => e.EmailAddress == email && e.TemplateName == templateId).EmailId);
+
+			//there can be more than one email sent
+            var emailId = Do.Until(() => db.Emails.Single(
+				e => e.EmailAddress == email 
+					&& e.TemplateName == templateId 
+					&& (higherThanEmailId == null || e.EmailId > higherThanEmailId)).EmailId);
             return db.EmailTokens.Where(et => et.EmailId == emailId).ToList();
         }
 
@@ -172,6 +247,19 @@ namespace Wonga.QA.Tests.Payments.Command
 		    application.RepayOnDueDate();
 
             return customer;
+		}
+
+		private static Application ApplyForAnotherLoanAndRepay(Customer customer)
+		{
+			var application = ApplicationBuilder.New(customer).Build();
+			application.RepayOnDueDate();
+			return application;
+		}
+
+		private static Application ApplyForALoan()
+		{
+			Customer customer = CreateCustomer();
+			return ApplicationBuilder.New(customer).Build();
 		}
 
 		private static Customer CreateCustomer()
