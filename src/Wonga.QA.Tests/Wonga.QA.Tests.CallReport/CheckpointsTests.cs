@@ -139,10 +139,10 @@ namespace Wonga.QA.Tests.CallReport
                                                                      RiskVerificationDefinitions.CreditBureauCustomerIsAliveVerification);
         }
 
-        /* Main Applicant CIFAS check */
+        /* Main Applicant CIFAS check L0 */
 
-        [Test, AUT(AUT.Wb)]
-        [JIRA("SME-584"), Description("CallReport -> This test creates a loan for a customer that is not CIFAS flagged, then checks the risk checkpoint")]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
+        [JIRA("SME-584", "UK-852"), Description("CallReport -> This test creates a loan for a customer that is not CIFAS flagged, then checks the risk checkpoint")]
         public void TestCallReportMainApplicantIsNotCifasFlagged_LoanIsApproved()
         {
             const String forename = "kathleen";
@@ -162,8 +162,8 @@ namespace Wonga.QA.Tests.CallReport
 
         }
 
-        [Test, AUT(AUT.Wb)]
-        [JIRA("SME-584"), Description("CallReport -> This test creates a loan for a customer that IS CIFAS flagged, then checks the risk checkpoint")]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
+        [JIRA("SME-584", "UK-852"), Description("CallReport -> This test creates a loan for a customer that IS CIFAS flagged, then checks the risk checkpoint")]
         public void TestCallReportMainApplicantIsCifasFlagged_LoanIsDeclined()
         {
             const String forename = "laura";
@@ -176,6 +176,56 @@ namespace Wonga.QA.Tests.CallReport
             var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.CIFASFraudCheck,
+                                                                     RiskCheckpointStatus.Failed,
+                                                                     RiskVerificationDefinitions.CreditBureauCifasFraudCheckVerification);
+        }
+
+        /* Main Applicant CIFAS check LN */
+
+        [Test, AUT(AUT.Uk)]
+        [JIRA("UK-852")]
+        public void Ln_TestCallReportMainApplicantIsNotCifasFlagged_LoanIsApproved()
+        {
+            const String forename = "kathleen";
+            const String surname = "Bridson";
+
+            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTApplicationElementNotCIFASFlagged);
+            ScrubNames(mainApplicantBuilder);
+            var mainApplicant = mainApplicantBuilder.Build();
+
+            var l0Application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted);
+            l0Application.RepayOnDueDate();
+
+            var lnAplication = CreateLnApplication(mainApplicant, ApplicationDecisionStatus.Accepted);
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(lnAplication.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.CIFASFraudCheck,
+                                                                     RiskCheckpointStatus.Verified,
+                                                                     RiskVerificationDefinitions.CreditBureauCifasFraudCheckVerification);
+        }
+
+        [Test, AUT(AUT.Uk)]
+        [JIRA("UK-852")]
+        public void Ln_TestCallReportMainApplicantIsCifasFlagged_LoanIsDeclined()
+        {
+            const String forename = "Laura";
+            const String surname = "Insolvent";
+
+            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTEmployedMask);
+            ScrubNames(mainApplicantBuilder);
+            var mainApplicant = mainApplicantBuilder.Build();
+
+            var l0Application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted);
+            l0Application.RepayOnDueDate();
+
+            Drive.Db.UpdateEmployerName(mainApplicant.Id, RiskMask.TESTApplicationElementNotCIFASFlagged.ToString());
+
+            var lnAplication = CreateLnApplication(mainApplicant, ApplicationDecisionStatus.Declined);
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(lnAplication.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
+
             VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
                                                                      RiskCheckpointDefinitionEnum.CIFASFraudCheck,
                                                                      RiskCheckpointStatus.Failed,
