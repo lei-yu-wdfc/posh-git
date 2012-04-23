@@ -325,5 +325,9 @@
     <ProcessingTextContainer>.processing-text</ProcessingTextContainer>
   </ExtensionProcessingPage>
 
+  <ExtensionPaymentFailedPage>
+    <HeaderText>We couldn't collect your partial payment</HeaderText>
+  </ExtensionPaymentFailedPage>
+
   
 </Ui>

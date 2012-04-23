@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Wonga.QA.Framework.UI.Mappings.Pages
 {
-    public class DeclinedPage
+    public class ExtensionPaymentFailedPage
     {
         public String HeaderText { get; set; }
     }
