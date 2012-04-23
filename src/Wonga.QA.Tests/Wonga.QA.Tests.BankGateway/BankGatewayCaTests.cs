@@ -55,7 +55,7 @@ namespace Wonga.QA.Tests.BankGateway
 			Do.Until(() => Drive.Db.BankGateway.Transactions.Single(
 				t => t.ApplicationId == application.Id &&
 					t.BankIntegrationId == 2 &&
-					t.TransactionStatus == 4));
+					t.TransactionStatus == 5));
 		}
 
 		[Test, AUT(AUT.Ca), JIRA("CA-1931")]
@@ -79,7 +79,7 @@ namespace Wonga.QA.Tests.BankGateway
 			Do.Until(() => Drive.Db.BankGateway.Transactions.Single(
 				t => t.ApplicationId == application.Id &&
 					t.BankIntegrationId == 2 &&
-					t.TransactionStatus == 4));
+					t.TransactionStatus == 5));
 		}
 
 		[Test, AUT(AUT.Ca), JIRA("CA-1931")]
