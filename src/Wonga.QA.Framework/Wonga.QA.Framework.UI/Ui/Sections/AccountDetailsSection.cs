@@ -30,7 +30,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         }
         public bool IsPasswordMismatchWarningOccured()
         {
-            var passwordWarning = Section.FindElement(By.CssSelector(Ui.Get.AccountDetailsSection.PasswordErrorForm));
+            var passwordWarning = Section.FindElement(By.CssSelector(Ui.Get.AccountDetailsSection.PasswordConfirmErrorForm));
             return passwordWarning.Text.Equals("Passwords must match");
         }
         public bool IsPasswordInvalidFormatWarningOccured()
