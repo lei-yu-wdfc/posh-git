@@ -6,44 +6,55 @@ using Wonga.QA.Framework.Mocks.Entities;
 
 namespace Wonga.QA.Framework.Mocks
 {
-	public class BmoSetupBuilder
+	public class BmoResponseBuilder
 	{
 		private readonly DbDriver _dbDriver;
 		private long _bankAccountNumber;
 		private decimal? _amount;
 
-		public BmoSetupBuilder()
+		public BmoResponseBuilder()
 		{
 			_dbDriver = new DbDriver();
 		}
 
-		public static BmoSetupBuilder New()
+		public static BmoResponseBuilder New()
 		{
-			return new BmoSetupBuilder();
+			return new BmoResponseBuilder();
 		}
 
-		public BmoSetupBuilder ForBankAccountNumber(long bankAccountNumber)
+		public BmoResponseBuilder ForBankAccountNumber(long bankAccountNumber)
 		{
 			_bankAccountNumber = bankAccountNumber;
 			return this;
 		}
 
-		public BmoSetupBuilder ForAmount(decimal amount)
+		public BmoResponseBuilder ForAmount(decimal amount)
 		{
 			_amount = amount;
 			return this;
 		}
 
-		public BmoSetup Reject(string message = "Rejected through QAF setup.")
+		public BmoResponse RejectFile(string message = "Rejected through QAF setup.")
 		{
 			var response = new XElement("Setup",
-			                            new XElement("InputValidationTransaction",
-			                                         new XAttribute("ResultCode", "R"),
-			                                         new XAttribute("RejectMessage", message)));
+				new XElement("AcknowledgeFile",
+					new XAttribute("Accepted", "false")),
+				new XElement("SettlementReportDetail", new XAttribute("LogicalRecordNumber", -1)));
 
 			var entity = InsertSetup(response);
 
-			return new BmoSetup(entity.BankGatewayResponseSetupId);
+			return new BmoResponse(entity.BankGatewayResponseSetupId);
+		}
+
+		public BmoResponse RejectTransaction(string message = "Rejected through QAF setup.")
+		{
+			var response = new XElement("Setup",
+				new XElement("RejectedTransactionsReportDetail"),
+				new XElement("SettlementReportDetail", new XAttribute("LogicalRecordNumber", -1)));
+
+			var entity = InsertSetup(response);
+
+			return new BmoResponse(entity.BankGatewayResponseSetupId);
 		}
 
 		private BankGatewayResponseSetup InsertSetup(XElement response)
