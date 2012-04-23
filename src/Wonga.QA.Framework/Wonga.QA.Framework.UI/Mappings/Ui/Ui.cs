@@ -112,7 +112,6 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual TopupRequestPage TopupRequestPage { get; set; }
         public virtual ApplyTermsPage ApplyTermsPage { get; set; }
         public virtual ExtensionProcessingPage ExtensionProcessingPage { get; set; }
-        public virtual ExtensionDealDonePage ExtensionDealDonePage { get; set; }
         public virtual ExtensionPaymentFailedPage ExtensionPaymentFailedPage { get; set; }
         #endregion
 

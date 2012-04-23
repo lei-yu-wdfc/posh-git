@@ -20,11 +20,11 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public IExtensionPaymentPage WaitFor<T>() where T : IExtensionPaymentPage
         {
-            if (typeof(T) == typeof(ExtensionAcceptedPage))
-                return Do.With.Timeout(2).Until(() => new ExtensionAcceptedPage(Client));
+            if (typeof(T) == typeof(ExtensionPaymentTakenPage))
+                return Do.With.Timeout(2).Until(() => new ExtensionPaymentTakenPage(Client));
 
-            if (typeof(T) == typeof(ExensionDeclinedPage))
-                return Do.With.Timeout(2).Until(() => new ExtensionDeclinedPage(Client));
+            if (typeof(T) == typeof(ExtensionPaymentFailedPage))
+                return Do.With.Timeout(2).Until(() => new ExtensionPaymentFailedPage(Client));
             throw new NotImplementedException();
         }
     }
