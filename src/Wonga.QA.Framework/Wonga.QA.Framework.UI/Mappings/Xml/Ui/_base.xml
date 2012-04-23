@@ -338,5 +338,32 @@
     <Header>#node-1003 h2</Header>
     <BodyText>#node-1003 p</BodyText>
   </ExtensionErrorPage>
-  
+
+  <SmallExtensionSlidersElement>
+    <FormId>#wonga-account-extension-form</FormId>
+    <DurationSlider>#wonga-single-slider a</DurationSlider>
+    <ExtensionLoanDuration>#edit-extend-amount-wrapper input#edit-extend-amount</ExtensionLoanDuration>
+    <SubmitButton>#edit-submit</SubmitButton>
+    <ExtensionDuration>input.edit-extend-amount</ExtensionDuration>
+    <ExtensionRepayToday>span.extend-repay-today</ExtensionRepayToday>
+    <ExtensionNewCredit>span.extend-new-credit</ExtensionNewCredit>
+    <ExtensionInterestFees>span.extend-interest-and-fees</ExtensionInterestFees>
+    <TotalToRepay>span.extend-request-total</TotalToRepay>
+    <RepaymentDate>span.load-period-clarification span.slider-extend-date</RepaymentDate>
+    <AmountMinusButton>#wonga-single-slider-wrapper button.slider-minus</AmountMinusButton>
+    <AmountPlusButton>#wonga-single-slider-wrapper button.slider-plus</AmountPlusButton>
+  </SmallExtensionSlidersElement>
+
+  <ExtensionRequestPage>
+    <ExtensionRequestPageSubmitButton>#edit-submit</ExtensionRequestPageSubmitButton>
+    <ExtensionRequestPageInformativeBox>div.inner-box-informative</ExtensionRequestPageInformativeBox>
+    <ExtensionRequestPageExtensionDuration>input.edit-extend-amount</ExtensionRequestPageExtensionDuration>
+    <ExtensionRequestPageNewGrandTotal>span.extend-request-total</ExtensionRequestPageNewGrandTotal>
+    <ExtensionRequestPageRepaymentDate>span.load-period-clarification span.slider-extend-date</ExtensionRequestPageRepaymentDate>
+    <ExtensionRequestPageSliders>#wonga-single-slider</ExtensionRequestPageSliders>
+    <ExtensionRequestPageSliderSmall>#wonga-account-extension-form</ExtensionRequestPageSliderSmall>
+    <ExtensionRequestPageCard>#edit-card</ExtensionRequestPageCard>
+    <ExtensionRequestPageSecurityCode>#edit-security-card</ExtensionRequestPageSecurityCode>
+  </ExtensionRequestPage>
+
 </Ui>

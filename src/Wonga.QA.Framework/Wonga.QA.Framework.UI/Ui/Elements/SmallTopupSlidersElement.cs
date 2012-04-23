@@ -18,8 +18,8 @@ namespace Wonga.QA.Framework.UI.Elements
         private readonly IWebElement _grandTotalAmount;
         private readonly IWebElement _totalFees;
         private readonly IWebElement _subTotalAmount;
-        private readonly IWebElement _amountMinusButton;
-        private readonly IWebElement _amountPlusButton;
+        //private readonly IWebElement _amountMinusButton;
+        //private readonly IWebElement _amountPlusButton;
 
         public SmallTopupSlidersElement(BasePage page)
             : base(page)

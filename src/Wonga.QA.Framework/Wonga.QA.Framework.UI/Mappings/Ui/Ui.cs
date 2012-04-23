@@ -62,6 +62,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual TabsElement TabsElement { get; set; }
         public virtual TopupSlidersElement TopupSlidersElement { get; set; }
         public virtual SmallTopupSlidersElement SmallTopupSlidersElement { get; set; }
+        public virtual SmallExtensionSlidersElement SmallExtensionSlidersElement { get; set; }
         public virtual ChangeMyAddressElement ChangeMyAddressElement { get; set; }
         
         #endregion
@@ -114,6 +115,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual ExtensionAgreementPage ExtensionAgreementPage { get; set; }
         public virtual ExtensionDealDonePage ExtensionDealDonePage { get; set; }
         public virtual ExtensionErrorPage ExtensionErrorPage { get; set; }
+        public virtual ExtensionRequestPage ExtensionRequestPage { get; set; }
         #endregion
 
         #region SalesForcePages
