@@ -78,7 +78,13 @@ namespace Wonga.QA.Framework.Db.Extensions
 			application.Transactions.ForEach(t => t.PostedOn -= span);
 	    	application.Transactions.ForEach(t => t.Submit(true));
 
-			riskApp.ApplicationDate -= span;
+			if (application.ArrearEntity != null)
+			{
+				application.ArrearEntity.CreatedOn -= span;
+				application.ArrearEntity.Submit(true);
+			}
+
+	    	riskApp.ApplicationDate -= span;
 			riskApp.PromiseDate -= span;
 			if (riskApp.ClosedOn != null)
 				riskApp.ClosedOn -= span;

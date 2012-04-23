@@ -116,8 +116,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		public void CheckpointRepaymentPredictionPositiveLnAccept()
 		{
 			var customer = CustomerBuilder.New().Build();
-			var application1 = ApplicationBuilder.New(customer).Build();
-			application1.RepayOnDueDate();
+			ApplicationBuilder.New(customer).Build().RepayOnDueDate();
 
 			Drive.Db.UpdateEmployerName(customer.Id, Get.EnumToString(TestMask));
 
