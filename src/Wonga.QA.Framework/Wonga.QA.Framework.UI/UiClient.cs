@@ -54,11 +54,11 @@ namespace Wonga.QA.Framework.UI
                     ieOps.IntroduceInstabilityByIgnoringProtectedModeSettings = true;
                     return new InternetExplorerDriver(ieOps);
                 case(Config.UiConfig.BrowserType.Opera):
-                    throw new NotImplementedException("Safari is not supported yet");
+                    throw new NotImplementedException("Opera is not supported yet");
                 case(Config.UiConfig.BrowserType.Safari):
                     throw new NotImplementedException("Safari is not supported by WebDriver");
                 default:
-                    throw new ArgumentException("Please select a Browser Type via the BrowserType user session variable");    
+                    throw new ArgumentException("Please select a Browser Type via the QAFBrowser environment variable");    
             }
         }
 
