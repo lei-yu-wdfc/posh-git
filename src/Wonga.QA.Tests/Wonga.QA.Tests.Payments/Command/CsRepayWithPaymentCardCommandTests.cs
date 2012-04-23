@@ -12,6 +12,7 @@ using Wonga.QA.Framework.Db.Payments;
 
 namespace Wonga.QA.Tests.Payments.Command
 {
+    [TestFixture]
     public abstract class CsRepayWithPaymentCardCommandTests
     {
         protected Application _application;
@@ -55,7 +56,8 @@ namespace Wonga.QA.Tests.Payments.Command
                                                                            SalesforceUser = "csUser", 
                                                                            CV2 = "111",
                                                                            Currency = "GBP", 
-                                                                           PaymentCardId = _cardId });
+                                                                           PaymentCardId = _cardId,
+                                                                           PaymentId = _paymentId});
             }
             
             public class GivenAPaymentHasBeenRequestedWithAValidCard : GivenACustomerWithAnApprovedLoan
@@ -70,6 +72,7 @@ namespace Wonga.QA.Tests.Payments.Command
                 public void TheLoanAmountHasBeenReducedByPaymentAmountPaymentRequestAdded()
                 {
                     Do.With.Timeout(2).Interval(20).Until(() => null != _paymentCardRepaymentRequests.FindAll(_paymentCardRepaymentRequests.Applications.ExternalId == _application.Id &&
+                                                                                                              _paymentCardRepaymentRequests.ExternalId == _paymentId &&
                                                                                                               _paymentCardRepaymentRequests.Amount == _paymentAmount &&
                                                                                                               _paymentCardRepaymentRequests.FailedOn == null &&
                                                                                                               _paymentCardRepaymentRequests.SuccessOn != null).FirstOrDefault());
@@ -91,6 +94,7 @@ namespace Wonga.QA.Tests.Payments.Command
                 public void TheLoanAmountRemainsTheSameFailedPaymentRequestAdded()
                 {
                     Do.With.Timeout(2).Interval(20).Until(() => null != _paymentCardRepaymentRequests.FindAll(_paymentCardRepaymentRequests.Applications.ExternalId == _application.Id &&
+                                                                                                              _paymentCardRepaymentRequests.ExternalId == _paymentId &&
                                                                                                               _paymentCardRepaymentRequests.Amount == _paymentAmount &&
                                                                                                               _paymentCardRepaymentRequests.FailedOn != null &&
                                                                                                               _paymentCardRepaymentRequests.SuccessOn == null).FirstOrDefault());

@@ -12,6 +12,7 @@ using Wonga.QA.Framework.Db.Payments;
 
 namespace Wonga.QA.Tests.Payments.Command
 {
+    [TestFixture]
     public abstract class CsRepayWithExternalCardCommandTests
     {
         protected Application _application;
