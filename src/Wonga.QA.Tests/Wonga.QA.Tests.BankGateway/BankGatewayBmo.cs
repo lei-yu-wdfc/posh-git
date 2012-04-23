@@ -15,7 +15,7 @@ using ProvinceEnum = Wonga.QA.Framework.Api.ProvinceEnum;
 
 namespace Wonga.QA.Tests.BankGateway
 {
-    [TestFixture]
+    [TestFixture, FeatureSwitch(Constants.BmoFeatureSwitchKey)]
     public class BankGatewayBmo
     {
         private const string BankGatewayIsTestModeKey = "BankGateway.IsTestMode";
