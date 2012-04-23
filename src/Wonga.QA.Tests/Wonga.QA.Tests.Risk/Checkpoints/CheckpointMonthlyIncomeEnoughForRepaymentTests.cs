@@ -14,7 +14,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	{
         private const RiskMask TestMask = RiskMask.TESTMonthlyIncomeEnoughForRepayment;
 
-		[Test, AUT(AUT.Za, AUT.Uk)]
+		[Test, AUT(AUT.Za, AUT.Uk), JIRA("SME-866")]
 		public void CheckpointMonthlyIncomeEnoughForRepaymentAccept()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
@@ -24,7 +24,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.Build();
 		}
 
-		[Test, AUT(AUT.Za, AUT.Uk)]
+		[Test, AUT(AUT.Za, AUT.Uk), JIRA("SME-866")]
 		public void CheckpointMonthlyIncomeEnoughForRepaymentDecline()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
