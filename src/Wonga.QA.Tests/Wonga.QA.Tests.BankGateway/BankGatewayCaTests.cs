@@ -163,7 +163,7 @@ namespace Wonga.QA.Tests.BankGateway
 			         	});
 		}
 
-		[Test, AUT(AUT.Ca), JIRA("CA-1931")]
+		[Test, AUT(AUT.Ca), JIRA("CA-1931"), Ignore("Requires fix in Mock to not send any reports after ack file rejected.")]
 		public void NegativeFileAcknowledgementShouldBePersistedAndAllTransactionsRejected()
 		{
 			Guid applicationIdAccepted = Guid.Empty;
