@@ -132,6 +132,7 @@
     <Compile Include="Mappings\Ui\Sections\YourDetailsSection.cs" />
     <Compile Include="Mappings\Ui\Sections\YourNameSection.cs" />
     <Compile Include="Mappings\Xml\XmlMapper.cs" />
+    <Compile Include="SauceRestClient.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="Ui\Elements\BaseElement.cs" />
     <Compile Include="Ui\Elements\ChangeMyAddressElement.cs" />

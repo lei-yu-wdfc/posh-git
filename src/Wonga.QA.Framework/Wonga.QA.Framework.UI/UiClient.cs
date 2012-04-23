@@ -36,31 +36,30 @@ namespace Wonga.QA.Framework.UI
             var capabillities = GetDesiredCapabilities();
             Driver = GetWebDriver(capabillities);
             if (Driver is CustomRemoteWebDriver)
-                TestContext.CurrentContext.AddMetadata("JobURL", string.Format("https://saucelabs.com/jobs/{0}", ((CustomRemoteWebDriver)Driver).GetSessionId().ToString()));
+                TestContext.CurrentContext.AddMetadata("JobURL", string.Format("https://saucelabs.com/jobs/{0}", ((CustomRemoteWebDriver)Driver).GetSessionId()));
         }
 
         private IWebDriver GetWebDriver(DesiredCapabilities capabilities)
         {
             if(Config.Ui.RemoteMode)
                 return new CustomRemoteWebDriver(Config.Ui.RemoteUri, capabilities);
-            else
-                switch (Config.Ui.Browser)
-                {
-                    case(Config.UiConfig.BrowserType.Chrome):
-                        return new ChromeDriver();
-                    case(Config.UiConfig.BrowserType.Firefox):
-                        return new FirefoxDriver();
-                    case(Config.UiConfig.BrowserType.InternetExplorer):
-                        var ieOps = new InternetExplorerOptions();
-                        ieOps.IntroduceInstabilityByIgnoringProtectedModeSettings = true;
-                        return new InternetExplorerDriver(ieOps);
-                    case(Config.UiConfig.BrowserType.Opera):
-                        throw new NotImplementedException("Safari is not supported yet");
-                    case(Config.UiConfig.BrowserType.Safari):
-                        throw new NotImplementedException("Safari is not supported by WebDriver");
-                    default:
-                        throw new ArgumentException("Please select a Browser Type via the BrowserType user session variable");    
-                }
+            switch (Config.Ui.Browser)
+            {
+                case(Config.UiConfig.BrowserType.Chrome):
+                    return new ChromeDriver();
+                case(Config.UiConfig.BrowserType.Firefox):
+                    return new FirefoxDriver();
+                case(Config.UiConfig.BrowserType.InternetExplorer):
+                    var ieOps = new InternetExplorerOptions();
+                    ieOps.IntroduceInstabilityByIgnoringProtectedModeSettings = true;
+                    return new InternetExplorerDriver(ieOps);
+                case(Config.UiConfig.BrowserType.Opera):
+                    throw new NotImplementedException("Safari is not supported yet");
+                case(Config.UiConfig.BrowserType.Safari):
+                    throw new NotImplementedException("Safari is not supported by WebDriver");
+                default:
+                    throw new ArgumentException("Please select a Browser Type via the BrowserType user session variable");    
+            }
         }
 
         private DesiredCapabilities GetDesiredCapabilities()
@@ -92,6 +91,10 @@ namespace Wonga.QA.Framework.UI
             capabilities.SetCapability("accessKey", Config.Ui.RemoteApiKey);
             var tags = new List<String> { Config.SUT.ToString(), Config.AUT.ToString() };
             capabilities.SetCapability("tags", tags);
+            capabilities.SetCapability("public", true);
+            capabilities.SetCapability("idle-timeout", 60);
+            capabilities.SetCapability("sauce-advisor", false);
+            capabilities.SetCapability("record-screenshots", false);
             return capabilities;
         }
 
