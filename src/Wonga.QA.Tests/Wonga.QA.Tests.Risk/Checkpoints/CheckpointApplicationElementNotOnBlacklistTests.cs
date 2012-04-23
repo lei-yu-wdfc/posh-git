@@ -48,7 +48,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
         }
 
         [Test, AUT(AUT.Za, AUT.Wb)]
-        [JIRA("SME-131")]
+		[JIRA("SME-131", "SME-1363")]
         public void CheckpointApplicationElementNotOnBlacklistAccept()
         {
             switch (Config.AUT)
@@ -77,7 +77,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
         }
 
         [Test, AUT(AUT.Wb)]
-        [JIRA("SME-131")]
+        [JIRA("SME-131","SME-1363")]
         public void CheckpointApplicationElementOnBlacklistDeclined()
         {
             //cannot use randomemail since max lenght is 5
@@ -96,7 +96,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
         }
 
         [Test, AUT(AUT.Wb)]
-        [JIRA("SME-1170")]
+		[JIRA("SME-1170", "SME-1363")]
         public void CheckpointApplicationGuarantorNotOnBlacklistAccept()
         {
             var mainApplicant = CustomerBuilder.New().WithMiddleName(RiskMask.TESTNoCheck).Build();
@@ -140,7 +140,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
         }
 
         [Test, AUT(AUT.Wb)]
-        [JIRA("SME-1170")]
+		[JIRA("SME-1170", "SME-1363")]
         public void CheckpointApplicationGuarantorOnBlacklistDecline()
         {
             //add a specific name to blacklist

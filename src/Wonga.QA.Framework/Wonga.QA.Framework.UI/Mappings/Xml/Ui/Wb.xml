@@ -1,128 +1,197 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Ui>
-    <!--PAGES SECTION-->
-    <EligibilityQuestionsPage>
-      <FormId>#lzero-questions-form</FormId>
-      <CheckDirector>#edit-director</CheckDirector>
-      <CheckResident>#edit-resident</CheckResident>
-      <CheckActiveCompany>#edit-active-company</CheckActiveCompany>
-      <CheckTurnover>#edit-turnover</CheckTurnover>
-      <CheckVat>#edit-vat</CheckVat>
-      <CheckOnlineAccess>#edit-online-access</CheckOnlineAccess>
-      <CheckGuarantee>#edit-guarantee</CheckGuarantee>
-      <NextButton>#edit-submit</NextButton>
-      <CheckDebitCard>#edit-debit-card</CheckDebitCard>
-    </EligibilityQuestionsPage>
-    
-    <PersonalDetailsPage>
-      <FormId>#lzero-personal-form</FormId>
-      <CheckPrivacyPolicy>#edit-privacy</CheckPrivacyPolicy>
-      <CheckCanContact>input[type="radio"][name="update_option"]</CheckCanContact>
-      <NextButton>#edit-submit</NextButton>
-    </PersonalDetailsPage>
-    
-    <AddressDetailsPage>
-      <FormId>#lzero-address-form</FormId>
-      <LookupButton>#edit-submit-lookup</LookupButton>
-      <AddressOptionsWrapper>#edit-address-options-wrapper</AddressOptionsWrapper>
-      <Postcode>#edit-postcode-lookup-uk</Postcode>
-      <District>#edit-district</District>
-      <FlatNumber>#edit-flat</FlatNumber>
-      <County>#edit-county</County>
-      <AddressPeriod>#edit-address-period</AddressPeriod>
-      <NextButton>#edit-submit</NextButton>
-      <AddressOptions>#edit-address-options</AddressOptions>
-    </AddressDetailsPage>
+  <!--PAGES SECTION-->
 
-    <BusinessDetailsPage>
-      <FormId>#lzero-business-form</FormId>
-      <NextButton>#edit-submit</NextButton>
-      <BusinessNumber>#edit-biz-number</BusinessNumber>
-      <BusinessName>#edit-biz-name</BusinessName>
-    </BusinessDetailsPage>
-
-    <AdditionalDirectorsPage>
-      <FormId>#lzero-directors-form</FormId>
-      <DoneButton>#edit-submit</DoneButton>
-      <AddAnotherDirector>#edit-add</AddAnotherDirector>
-    </AdditionalDirectorsPage>
-
-    <AddAditionalDirectorsPage>
-      <FormId>#lzero-directors-form</FormId>
-      <Title>#edit-title</Title>
-      <FirstName>#edit-first-name</FirstName>
-      <LastName>#edit-last-name</LastName>
-      <EmailAddress>#edit-email</EmailAddress>
-      <ConfirmEmailAddress>#edit-email-confirm</ConfirmEmailAddress>
-      <DoneButton>#edit-submit</DoneButton>
-      <AddAnotherButton>#edit-add</AddAnotherButton>
-    </AddAditionalDirectorsPage>
-    
-    <BankAccountPage>
-      <FormId>#lzero-business-bank-form</FormId>
-      <NextButton>#edit-submit</NextButton>
-    </BankAccountPage>
-
-    <BusinessDebitCardPage>
-      <FormId>#lzero-business-card-form</FormId>
-      <NextButton>#edit-submit</NextButton>
-    </BusinessDebitCardPage>
-
-    <AcceptedPage>
-      <FormId>#vanilla-agreement-form</FormId>
-      <AcceptBusinessLoan>#terms-accept .button</AcceptBusinessLoan>
-      <AcceptGuarantorLoan>#guarantor-accept .button</AcceptGuarantorLoan>
-      <SubmitButton>#edit-accept</SubmitButton>
-    </AcceptedPage>
-
-    <DealDonePage>
-      <HeaderText>Your application has been approved</HeaderText>
-      <ContinueButtonLink>.application-success-button</ContinueButtonLink>
-    </DealDonePage>
-
-    <DeclinedPage>
-      <HeaderText>Application declined</HeaderText>
-    </DeclinedPage>
-
-    <!--SectionS SECTION-->
-
-    <YourNameSection>
-      <Fieldset>fieldset[id="name"]</Fieldset>
-      <Title>#edit-title</Title>
-      <FirstName>#edit-first-name</FirstName>
-      <MiddleName>#edit-middle-name</MiddleName>
-      <LastName>#edit-last-name</LastName>
-    </YourNameSection>
-
-    <YourDetailsSection>
-      <Fieldset>fieldset[id="details"]</Fieldset>
-      <Dependants>#edit-dependants</Dependants>
-      <Gender>input[type="radio"][name="gender"]</Gender>
-      <DateOfBirthDay>#edit-date-of-birth-day</DateOfBirthDay>
-      <DateOfBirthMonth>#edit-date-of-birth-month</DateOfBirthMonth>
-      <DateOfBirthYear>#edit-date-of-birth-year</DateOfBirthYear>
-      <HomeStatus>#edit-home-status</HomeStatus>
-      <MaritalStatus>#edit-marital-status</MaritalStatus>
-    </YourDetailsSection>
-
-    <ContactingYouSection>
-      <Fieldset>fieldset[id="contact"]</Fieldset>
-      <Email>#edit-email</Email>
-      <EmailConfirm>#edit-email-confirm</EmailConfirm>
-      <HomePhone>#edit-home-phone</HomePhone>
-      <MobilePhone>#edit-mobile-phone</MobilePhone>
-    </ContactingYouSection>
-
-    <DebitCardSection>
-      <Fieldset>#card-details</Fieldset>
-      <CardType>#edit-card-type</CardType>
-      <CardNumber>#edit-card-number</CardNumber>
-      <CardName>#edit-card-name</CardName>
-      <CardExpiryDateMonth>#edit-card-expiry-date-month</CardExpiryDateMonth>
-      <CardExpiryDateYear>#edit-card-expiry-date-year</CardExpiryDateYear>
-      <CardSecurityNumber>#edit-card-security</CardSecurityNumber>
-      <CardStartDateMonth>#edit-card-start-date-month</CardStartDateMonth>
-      <CardStartDateYear>#edit-card-start-date-year</CardStartDateYear>
-    </DebitCardSection>
+    <HomePage>
+      <BusinessTitleText>Fast and flexible short term loans for your business</BusinessTitleText>
+    </HomePage>
   
+  <EligibilityQuestionsPage>
+    <FormId>#lzero-questions-form</FormId>
+    <CheckDirector>#edit-director</CheckDirector>
+    <CheckResident>#edit-resident</CheckResident>
+    <CheckActiveCompany>#edit-active-company</CheckActiveCompany>
+    <CheckTurnover>#edit-turnover</CheckTurnover>
+    <CheckVat>#edit-vat</CheckVat>
+    <CheckOnlineAccess>#edit-online-access</CheckOnlineAccess>
+    <CheckGuarantee>#edit-guarantee</CheckGuarantee>
+    <NextButton>#edit-submit</NextButton>
+    <CheckDebitCard>#edit-debit-card</CheckDebitCard>
+  </EligibilityQuestionsPage>
+
+  <PersonalDetailsPage>
+    <FormId>#lzero-personal-form</FormId>
+    <CheckPrivacyPolicy>#edit-privacy</CheckPrivacyPolicy>
+    <CheckCanContact>input[type="radio"][name="update_option"]</CheckCanContact>
+    <NextButton>#edit-submit</NextButton>
+  </PersonalDetailsPage>
+
+  <AddressDetailsPage>
+    <FormId>#lzero-address-form</FormId>
+    <LookupButton>#edit-submit-lookup</LookupButton>
+    <PostcodeValid>#edit-postcode-lookup-uk-wrapper .form-error</PostcodeValid>
+    <AddressOptionsWrapper>#edit-address-options-wrapper</AddressOptionsWrapper>
+    <Postcode>#edit-postcode-lookup-uk</Postcode>
+    <District>#edit-district</District>
+    <FlatNumber>#edit-flat</FlatNumber>
+    <County>#edit-county</County>
+    <AddressPeriod>#edit-address-period</AddressPeriod>
+    <NextButton>#edit-submit</NextButton>
+    <AddressOptions>#edit-address-options</AddressOptions>
+  </AddressDetailsPage>
+
+  <BusinessDetailsPage>
+    <FormId>#lzero-business-form</FormId>
+    <NextButton>#edit-submit</NextButton>
+    <BusinessNumber>#edit-biz-number</BusinessNumber>
+    <BusinessName>#edit-biz-name</BusinessName>
+  </BusinessDetailsPage>
+
+  <AdditionalDirectorsPage>
+    <FormId>#lzero-directors-form</FormId>
+    <DoneButton>#edit-submit</DoneButton>
+    <AddAnotherDirector>#edit-add</AddAnotherDirector>
+  </AdditionalDirectorsPage>
+
+  <AddAditionalDirectorsPage>
+    <FormId>#lzero-directors-form</FormId>
+    <Title>#edit-title</Title>
+    <FirstName>#edit-first-name</FirstName>
+    <LastName>#edit-last-name</LastName>
+    <EmailAddress>#edit-email</EmailAddress>
+    <ConfirmEmailAddress>#edit-email-confirm</ConfirmEmailAddress>
+    <DoneButton>#edit-submit</DoneButton>
+    <AddAnotherButton>#edit-add</AddAnotherButton>
+  </AddAditionalDirectorsPage>
+
+  <ApplyTermsPage>
+    <NextButton>#edit-submit</NextButton>
+    <EditLoanDurationField>#edit-loan-duration</EditLoanDurationField>
+  </ApplyTermsPage>
+
+  <BankAccountPage>
+    <FormId>#lzero-business-bank-form</FormId>
+    <NextButton>#edit-submit</NextButton>
+  </BankAccountPage>
+
+  <BusinessDebitCardPage>
+    <FormId>#lzero-business-card-form</FormId>
+    <NextButton>#edit-submit</NextButton>
+  </BusinessDebitCardPage>
+
+  <AcceptedPage>
+    <FormId>#vanilla-agreement-form</FormId>
+    <AcceptBusinessLoan>#terms-accept .button</AcceptBusinessLoan>
+    <AcceptGuarantorLoan>#guarantor-accept .button</AcceptGuarantorLoan>
+    <SubmitButton>#edit-accept</SubmitButton>
+  </AcceptedPage>
+
+  <DealDonePage>
+    <HeaderText>Your application has been approved</HeaderText>
+    <ContinueButtonLink>.application-success-button</ContinueButtonLink>
+  </DealDonePage>
+
+  <DeclinedPage>
+    <HeaderText>Application declined</HeaderText>
+  </DeclinedPage>
+
+  <ReferPage>
+    <HeaderText>Refer</HeaderText>
+    <ReturnToHomepage>.button.default</ReturnToHomepage>
+  </ReferPage>
+
+  <MySummaryPage>
+    <Title>#business-summary</Title>
+  </MySummaryPage>
+
+  <!--SectionS SECTION-->
+
+  <YourNameSection>
+    <Fieldset>fieldset[id="name"]</Fieldset>
+    <Title>#edit-title</Title>
+    <FirstName>#edit-first-name</FirstName>
+    <MiddleName>#edit-middle-name</MiddleName>
+    <LastName>#edit-last-name</LastName>
+  </YourNameSection>
+
+  <YourDetailsSection>
+    <Fieldset>fieldset[id="details"]</Fieldset>
+    <Dependants>#edit-dependants</Dependants>
+    <Gender>input[type="radio"][name="gender"]</Gender>
+    <DateOfBirthDay>#edit-date-of-birth-day</DateOfBirthDay>
+    <DateOfBirthMonth>#edit-date-of-birth-month</DateOfBirthMonth>
+    <DateOfBirthYear>#edit-date-of-birth-year</DateOfBirthYear>
+    <HomeStatus>#edit-home-status</HomeStatus>
+    <MaritalStatus>#edit-marital-status</MaritalStatus>
+  </YourDetailsSection>
+
+  <ContactingYouSection>
+    <Fieldset>fieldset[id="contact"]</Fieldset>
+    <Email>#edit-email</Email>
+    <EmailConfirm>#edit-email-confirm</EmailConfirm>
+    <HomePhone>#edit-home-phone</HomePhone>
+    <MobilePhone>#edit-mobile-phone</MobilePhone>
+  </ContactingYouSection>
+
+  <DebitCardSection>
+    <Fieldset>#card-details</Fieldset>
+    <CardType>#edit-card-type</CardType>
+    <CardNumber>#edit-card-number</CardNumber>
+    <CardName>#edit-card-name</CardName>
+    <CardExpiryDateMonth>#edit-card-expiry-date-month</CardExpiryDateMonth>
+    <CardExpiryDateYear>#edit-card-expiry-date-year</CardExpiryDateYear>
+    <CardSecurityNumber>#edit-card-security</CardSecurityNumber>
+    <CardStartDateMonth>#edit-card-start-date-month</CardStartDateMonth>
+    <CardStartDateYear>#edit-card-start-date-year</CardStartDateYear>
+  </DebitCardSection>
+
+
+  <MyAccountNavigationSection>
+    <MySummary>div#block-wonga-6 ul.menu>li:nth-child(1)>a</MySummary>
+    <AccountDetails>div#block-wonga-6 ul.menu>li:nth-child(2)>a</AccountDetails>
+    <YourDetails>div#block-wonga-6 ul.menu>li:nth-child(3)>a</YourDetails>
+  
+</MyAccountNavigationSection>
+
+    <AboutUsPage>
+      <AboutUsText>.wonga-box-type-text div div</AboutUsText>
+      <WereDifferent>#quicktabs-tab-wonga-tabs-0</WereDifferent>
+      <WereDifferentText>#node-896 div p</WereDifferentText>
+      <WereFast>#quicktabs-tab-wonga-tabs-1</WereFast>
+      <WereFastText>#node-897 div p</WereFastText>
+      <WereResponsible>#quicktabs-tab-wonga-tabs-2</WereResponsible>
+      <WereResponsibleText>#node-899 div p</WereResponsibleText>
+    </AboutUsPage>
+
+    <HowItWorksPage>
+      <HowItWorksText>.wonga-box-type-text div div</HowItWorksText>
+      <Transparency>.wongaTabs ul li:nth-child(1) a</Transparency>
+      <TransparencyHeader>.panes div:nth-child(1) h2</TransparencyHeader>
+      <TransparencyText>.panes div:nth-child(1) p</TransparencyText>
+      <PersonalGuarantee>.wongaTabs ul li:nth-child(2) a</PersonalGuarantee>
+      <PersonalGuaranteeHeader>.panes div:nth-child(2) h2</PersonalGuaranteeHeader>
+      <PersonalGuaranteeText>.panes div:nth-child(2) p</PersonalGuaranteeText>
+      <FailureToStick>.wongaTabs ul li:nth-child(3) a</FailureToStick>
+      <FailureToStickHeader>.panes div:nth-child(3) h2</FailureToStickHeader>
+      <FailureToStickText>.panes div:nth-child(3)</FailureToStickText>
+    </HowItWorksPage>
+
+  <AddressDetailsSection>
+    <Fieldset>#lzero-business-card-form</Fieldset>
+    <LookupButton>#edit-submit-lookup</LookupButton>
+    <Postcode>#edit-postcode-lookup-uk</Postcode>
+    <PostcodeValid>#edit-postcode-lookup-uk-wrapper .form-error</PostcodeValid>
+    <AddressOptionsWrapper>#edit-address-options-wrapper</AddressOptionsWrapper>
+    <District>#edit-district</District>
+    <FlatNumber>#edit-flat</FlatNumber>
+    <City>#edit-town</City>
+    <Street>#edit-street</Street>
+    <County>#edit-county</County>
+    <AddressOptions>#edit-address-options</AddressOptions>
+  </AddressDetailsSection>
+
+  <MobilePinVerificationSection>
+		<ResendPin>#edit-resend-pin</ResendPin>
+		<ResendPinMessage>.pin_resend</ResendPinMessage>
+  </MobilePinVerificationSection>
 </Ui>

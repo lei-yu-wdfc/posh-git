@@ -110,6 +110,26 @@ namespace Wonga.QA.Framework
 			return this;
 		}
 
+        public Application UpdateNextDueDate(int days)
+        {
+            ApplicationEntity application = Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id);
+            FixedTermLoanApplicationEntity fixedApp = Drive.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationId == application.ApplicationId);
+
+            var span = new TimeSpan(days, 0, 0, 0);
+            Drive.Db.UpdateNextDueDate(fixedApp, span);
+
+            return this;
+        }
+
+        public Application UpdateAcceptedOnDate(int days)
+        {
+            ApplicationEntity application = Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id);
+
+            var span = new TimeSpan(days, 0, 0, 0);
+            Drive.Db.MoveAcceptedOnDate(application, span);
+            return this;
+        }
+        
         private void RewindAppDates(ApplicationEntity application)
         {
             TimeSpan span = application.FixedTermLoanApplicationEntity.NextDueDate.Value - DateTime.Today;
@@ -127,11 +147,11 @@ namespace Wonga.QA.Framework
 			Do.With.While(ftl.Refresh);
 		}
 
-		public virtual Application PutApplicationIntoArrears(int daysInArrears)
+		public virtual Application PutApplicationIntoArrears(uint daysInArrears)
 		{
 			PutApplicationIntoArrears();
 
-			Drive.Db.Rewind(Id, daysInArrears);
+			Drive.Db.Rewind(Id, (int)daysInArrears);
 
 			return this;
 		}
@@ -190,6 +210,14 @@ namespace Wonga.QA.Framework
 					a => a.Scope != (decimal)PaymentTransactionScopeEnum.Other).Sum(a => a.Amount);
 		}
 
+        public Decimal GetDueDateBalance()
+        {
+            var query = Config.AUT == AUT.Za ? (ApiRequest)
+                new GetFixedTermLoanApplicationZaQuery { ApplicationId = Id } :
+                new GetFixedTermLoanApplicationQuery { ApplicationId = Id };
+            return Convert.ToDecimal(Drive.Api.Queries.Post(query).Values["BalanceNextDueDate"].Single());
+        }
+
 		public Application RepayEarly(decimal amount, int dayOfLoanToMakeRepayment)
 		{
             Drive.Db.RewindToDayOfLoanTerm(Id, dayOfLoanToMakeRepayment);
@@ -241,5 +269,30 @@ namespace Wonga.QA.Framework
 
             return this;
         }
-	}
+
+        #region "Methods for testing my account scenarios"
+
+        // Move NextDueDate before range of days where loan extension is permitted. Useful for testing GetAccountOptions.
+        public void NextDueDateTooEarlyToExtendLoan()
+        {
+            var cfg = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Payments.ExtendLoanDaysBeforeDueDate");
+            this.UpdateNextDueDate(int.Parse(cfg.Value) + 3);
+        }
+
+        /// Move NextDueDate into range of days where extensions are permitted. Useful for testing GetAccountOptions.
+        public void NextDueNotTooEarlyToExtendLoan()
+        {
+            var cfg = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Payments.ExtendLoanDaysBeforeDueDate");
+            this.UpdateNextDueDate(int.Parse(cfg.Value) - 3);
+        }
+	    
+        #endregion
+
+        public void MoveTransactionDates(int days)
+        {
+            var span = new TimeSpan(days, 0, 0, 0);
+            ApplicationEntity application = Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id);
+            Drive.Db.MoveApplicationTransactionDates(application, span);
+        }
+    }
 }

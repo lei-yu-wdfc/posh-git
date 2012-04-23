@@ -117,6 +117,13 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
             }
         }
+
+        public BasePage NextAddressLessThan2()
+        {
+            _next.Click();
+            return new AddressDetailsPage(Client);
+
+        }
         public bool IsPostcodeWarningOccurred()
         {
             _next.Click();

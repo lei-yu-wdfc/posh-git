@@ -116,8 +116,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		public void CheckpointRepaymentPredictionPositiveLnAccept()
 		{
 			var customer = CustomerBuilder.New().Build();
-			var application1 = ApplicationBuilder.New(customer).Build();
-			application1.RepayOnDueDate();
+			ApplicationBuilder.New(customer).Build().RepayOnDueDate();
 
 			Drive.Db.UpdateEmployerName(customer.Id, Get.EnumToString(TestMask));
 
@@ -131,12 +130,10 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 		private double GetRepaymentPredictionScore(Application application)
 		{
-			var db = new DbDriver();
-			return (double)(from ra in db.Risk.RiskApplications
-							join dd in db.Risk.RiskDecisionDatas
-								on ra.RiskApplicationId equals dd.RiskApplicationId
-							where ra.ApplicationId == application.Id
-							select dd.ValueDouble).First();
+			var riskWorkflowId = (int)Do.Until(() => Drive.Data.Risk.Db.RiskWorkflows.FindByApplicationId(application.Id)).RiskWorkflowId;
+			var score = (double)Do.Until(() =>Drive.Data.Risk.Db.RiskDecisionData.FindByRiskWorkflowId(riskWorkflowId).ValueDouble);
+
+			return score;
 		}
 
 		private void AssertFactorsStoredInTable(Application application)

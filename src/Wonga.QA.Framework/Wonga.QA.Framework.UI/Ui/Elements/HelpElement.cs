@@ -24,11 +24,18 @@ namespace Wonga.QA.Framework.UI.Elements
         public HelpElement(BasePage page)
             : base(page)
         {
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                case AUT.Ca:
+                    _troubleshooting =
+                    Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.HelpElement.TroubleshootingQuestions));
+                    _jargonBuster = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.HelpElement.JargonBuster));
+                    break;
+            }
             _helpTrigger = Page.Client.Driver.FindElement(By.Id(Ui.Get.HelpElement.HelpTrigger));
             _listQuestions = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.HelpElement.HelplistQuestions));
-            _troubleshooting =
-                Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.HelpElement.TroubleshootingQuestions));
-            _jargonBuster = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.HelpElement.JargonBuster));
+
         }
 
         public void HelpTriggerClick()

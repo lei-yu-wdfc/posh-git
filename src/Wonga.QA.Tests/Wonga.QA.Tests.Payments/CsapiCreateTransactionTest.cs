@@ -119,5 +119,26 @@ namespace Wonga.QA.Tests.Payments
                                                                         && t.Scope == (int)PaymentTransactionScopeEnum.Credit
                                                                         && t.Type == PaymentTransactionEnum.Cheque.ToString()));
         }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-1110")]
+        public void SubmittingANegativeAmountWillThrow()
+        {
+            var customer = CustomerBuilder.New().Build();
+            var app = ApplicationBuilder.New(customer).Build();
+
+            var createTransactionCommand = new Wonga.QA.Framework.Cs.CreateTransactionCommand
+            {
+                Amount = -500.50m,
+                ApplicationGuid = app.Id,
+                Currency = CurrencyCodeEnum.GBP,
+                Reference = String.Empty,
+                SalesForceUser = "test.user@wonga.com",
+                Scope = PaymentTransactionScopeEnum.Credit,
+                Type = PaymentTransactionEnum.Cheque
+            };
+
+
+            Assert.Throws<ValidatorException>(() => Drive.Cs.Commands.Post(createTransactionCommand));
+        }
     }
 }

@@ -90,7 +90,7 @@ namespace Wonga.QA.Tests.Bi
 
 		private void WaitForTransactionExistsInBi(TransactionEntity transaction)
 		{
-			Do.Until(() => Drive.Db.Bi.Transactions.Single(t => t.TransactionNKey == transaction.ExternalId));
+			//Do.Until(() => Drive.Db.Bi.Transactions.Single(t => t.TransactionNKey == transaction.ExternalId));
 		}
 
 		#endregion

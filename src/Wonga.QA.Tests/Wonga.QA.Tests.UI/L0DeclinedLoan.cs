@@ -16,11 +16,22 @@ namespace Wonga.QA.Tests.Ui
 {
     public class L0DeclinedLoan : UiTest
     {
-        [Test, AUT(AUT.Wb), Pending("Broken, waiting for FE to stabilize changes..")]
+        [Test, AUT(AUT.Wb)]
         public void WbDeclinedLoan()
         {
-            var processingPage = WbL0Path();
-            var declinedPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
+            var journey = JourneyFactory.GetL0JourneyWB(Client.Home());
+            journey.ApplyForLoan(5500, 30)
+                .AnswerEligibilityQuestions()
+                .FillPersonalDetails()
+                .FillAddressDetails("More than 4 years")
+                .FillAccountDetails()
+                .FillBankDetails()
+                .FillCardDetails()
+                .EnterBusinessDetails()
+                .DeclineAddAdditionalDirector()
+                .EnterBusinessBankAccountDetails()
+                .EnterBusinessDebitCardDetails()
+                .WaitForDeclinedPage();
         }
 
         [Test, AUT(AUT.Za)]
@@ -37,7 +48,7 @@ namespace Wonga.QA.Tests.Ui
             var declinedPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
         }
 
-        [Test, AUT(AUT.Ca), Pending("CA WIP,RC FE seems broken - postponing the push of the selenium tests")]
+        [Test, AUT(AUT.Ca)]
         public void CaDeclinedLoan()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());

@@ -32,17 +32,6 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 			var application = ApplicationBuilder.New(customer).Build();
 		}
-
-		[Test, AUT(AUT.Uk), JIRA("UK-851")]
-		public void DeclineIfNoData()
-		{
-            RunSingleWorkflowTest(TestMask, new CustomerJanetUk { ForeName = "NoData" }, RiskCheckpointDefinitionEnum.CreditBureauDataIsAvailable, RiskCheckpointStatus.Failed);
-		}
-
-		[Test, AUT(AUT.Uk), JIRA("UK-851")]
-		public void AcceptIfCallReport()
-		{
-            RunSingleWorkflowTest(TestMask, new CustomerJanetUk(), RiskCheckpointDefinitionEnum.CreditBureauDataIsAvailable, RiskCheckpointStatus.Failed);
-		}
+		
 	}
 }

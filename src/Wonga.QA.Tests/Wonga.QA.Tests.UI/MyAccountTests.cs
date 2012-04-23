@@ -269,18 +269,45 @@ namespace Wonga.QA.Tests.Ui
             var myPersonalDetailsPage = mySummaryPage.Navigation.MyPersonalDetailsButtonClick();
 
             myPersonalDetailsPage.PhoneClick();
-            
-            Do.Until(()=>myPersonalDetailsPage.ChangePhone("0123000000", "0212571908", "0000"));
+
+            Do.Until(() => myPersonalDetailsPage.ChangePhone("0123000000", "0212571908", "0000"));
 
             myPersonalDetailsPage.Submit();
-            Thread.Sleep(10000);
+            myPersonalDetailsPage.WaitForSuccessPopup();
             myPersonalDetailsPage.Submit();
 
-            Thread.Sleep(10000);
+            Do.With.Timeout(10).Until(() => Drive.Db.Comms.CustomerDetails.Single(c => c.Email == email).HomePhone != "0210000000");
             var homePhone = Drive.Db.Comms.CustomerDetails.FirstOrDefault(c => c.Email == email).HomePhone;
 
             Assert.AreEqual("0123000000", myPersonalDetailsPage.GetHomePhone);
             Assert.AreEqual("0123000000", homePhone);
+            //TODO check SF
+        }
+
+        [Test, AUT(AUT.Za), JIRA("QA-212")]
+        public void CustomerShouldBeAbleToChangeMobileNumber()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            var mySummaryPage = loginPage.LoginAs(email);
+            var myPersonalDetailsPage = mySummaryPage.Navigation.MyPersonalDetailsButtonClick();
+
+            myPersonalDetailsPage.PhoneClick();
+
+            Do.Until(() => myPersonalDetailsPage.ChangePhone("0210000000", "0213456789", "0000"));
+
+            myPersonalDetailsPage.Submit();
+            myPersonalDetailsPage.WaitForSuccessPopup();
+            myPersonalDetailsPage.Submit();
+
+            Do.With.Timeout(10).Until(() => Drive.Db.Comms.CustomerDetails.Single(c => c.Email == email).MobilePhone != "0212571908");
+            var mobilePhone = Drive.Db.Comms.CustomerDetails.FirstOrDefault(c => c.Email == email).MobilePhone;
+
+            Assert.AreEqual("0213456789", myPersonalDetailsPage.GetMobilePhone);
+            Assert.AreEqual("0213456789", mobilePhone);
             //TODO check SF
         }
 
@@ -300,16 +327,16 @@ namespace Wonga.QA.Tests.Ui
             Do.Until(() => myPersonalDetailsPage.ChangePhone("0210000000", "0211234567", "1111"));
             myPersonalDetailsPage.Submit();
             Assert.IsTrue(myPersonalDetailsPage.GetPopupErrorMessage.Equals("The Pin was incorrect."));
-           
 
-         
+
+
         }
 
         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-193"), Pending("need refinement")]
         public void ArrearsCustomerCheckDataOnMySummaryAndSF()
         {
             int loanTerm = 10;
-            int arrearsdays = 5;
+            uint arrearsdays = 5;
             string actualPromisedRepayDate;
             DateTime date;
             string email;
@@ -433,39 +460,115 @@ namespace Wonga.QA.Tests.Ui
             // need to add check data in SF whan it well be ready for this
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk, AUT.Wb), JIRA("QA-187"), Pending("need refinement")]
+        [Test, AUT(AUT.Za), JIRA("QA-187")]
         public void CustomerEntersInvalidBankAccountWarningMessageShouldBeDisplyaed()
         {
-            var accounts = new List<string> {"1234567", "dfgsfgfgsdf", "123 342", "123f445", "+135-6887"};
+            var accounts = new List<string> { "dfgsfgfgsdf", "123 342", "123f445", "+135-6887" };
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            Application application = ApplicationBuilder.New(customer)
+            switch (Config.AUT)
+            {
+                case AUT.Ca:
+                case AUT.Za:
+                case AUT.Uk:
+                    Application application1 = ApplicationBuilder.New(customer)
                 .Build();
-            application.RepayOnDueDate(); // to take LN status
+                    application1.RepayOnDueDate(); // to take LN status
+                    break;
+
+                case AUT.Wb:
+                    Application application2 = BusinessApplicationBuilder.New(customer)
+                .Build();
+                    application2.RepayOnDueDate(); // to take LN status
+                    break;
+            }
             var page = loginPage.LoginAs(email);
             foreach (string account in accounts)
             {
                 var payment = Client.Payments();
                 switch (Config.AUT)
                 {
+                    #region case Za
                     case (AUT.Za):
                         if (payment.IsAddBankAccountButtonExists())
                         {
                             payment.AddBankAccountButtonClick();
 
                             Thread.Sleep(2000); // Wait some time to load popup
-
-                            payment.AddBankAccount("Capitec", "Current", account, "2 to 3 years");
-                            payment.IsChengedBankAccountHasException();
-                            
+                            try
+                            {
+                                payment.AddBankAccount("Capitec", "Current", account, "2 to 3 years");
+                                throw new Exception("Invalid bank account was pass: " + account);
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e.Message);
+                                Assert.IsTrue(e.Message.Contains("Please enter a valid bank account number"));
+                            }
                         }
                         else
                         {
                             throw new NullReferenceException("Add bank account button not found");
                         }
                         break;
+                    #endregion
+                    #region case Ca
+                    case (AUT.Ca):
+                        // there is no addaccount button on Ca
+                        break;
+                    #endregion
+                    #region case Uk
+                    case (AUT.Uk):
+                        if (payment.IsAddBankAccountButtonExists())
+                        {
+                            payment.AddBankAccountButtonClick();
+
+                            Thread.Sleep(2000); // Wait some time to load popup
+                            try
+                            {
+                                //  button add bank account is broken
+                                //  payment.AddBankAccount("Capitec", "Current", account, "2 to 3 years");
+                                //  throw new Exception("Invalid bank account was pass: " + account);
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e.Message);
+                                Assert.IsTrue(e.Message.Contains("Please enter a valid bank account number"));
+                            }
+                        }
+                        else
+                        {
+                            throw new NullReferenceException("Add bank account button not found");
+                        }
+                        break;
+                    #endregion
+                    #region case Wb
+                    case (AUT.Wb):
+                        if (payment.IsAddBankAccountButtonExists())
+                        {
+                            payment.AddBankAccountButtonClick();
+
+                            Thread.Sleep(2000); // Wait some time to load popup
+                            try
+                            {
+                                payment.AddBankAccount("Capitec", "Current", account, "2 to 3 years");
+                                throw new Exception("Invalid bank account was pass: " + account);
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e.Message);
+                                Assert.IsTrue(e.Message.Contains("Please enter a valid bank account number"));
+                            }
+                        }
+                        else
+                        {
+                            throw new NullReferenceException("Add bank account button not found");
+                        }
+                        break;
+                    #endregion
                 }
+                var home = Client.Home();
             }
         }
 
@@ -515,5 +618,109 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(postcode, myPersonalDetailsPage.GetPostcode);
         }
 
+        [Test, AUT(AUT.Wb), JIRA("QA-250")]
+        public void WbFrontendMyAccountPageLoadsCorrectly()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Organisation organisation = OrganisationBuilder.New(customer).Build();
+            Application application = ApplicationBuilder
+                .New(customer,organisation)
+                .Build();
+            
+            var mySummaryPage = loginPage.LoginAs(email);
+        }
+
+        [Test, AUT(AUT.Za), JIRA("QA-208")]
+        public void LoanOlderThanThreeDaysThenViewLoanDetailsLinkShouldBeDisplayedAndCorrect()
+        {
+
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder
+                .New(customer)
+                .Build();
+            application.DaysFromStart(5);
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            mySummaryPage.ClickViewLoanDetailsButton();
+            mySummaryPage.WaitForMySummaryPopup();
+            Assert.IsTrue(mySummaryPage.IsPopupContainsSummaryDetailsTable());
+        }
+
+        [Test, AUT(AUT.Za), JIRA("QA-213")]
+        public void  CustomerUpdatesPhoneNumbersAndDoesntMakeChangesShouldSeeMessageOnTopWindow()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder
+                .New(customer)
+                .Build();
+            var mySummaryPage = loginPage.LoginAs(email);
+            var myPersonalDetails = mySummaryPage.Navigation.MyPersonalDetailsButtonClick();
+            myPersonalDetails.PhoneClick();
+            Assert.IsTrue(myPersonalDetails.DontChangePhone());
+        }
+
+        [Test, AUT(AUT.Za), JIRA("QA-217")]
+        public void CustomerChangesAddressWithNotValidDataThenWarningMessageShouldOccur()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            var mySummaryPage = loginPage.LoginAs(email);
+            var myPersonalDetailsPage = mySummaryPage.Navigation.MyPersonalDetailsButtonClick();
+
+            var oldTown = myPersonalDetailsPage.GetTown; //to check if changes in db occured
+
+            myPersonalDetailsPage.AddressClick();
+            Do.Until(myPersonalDetailsPage.ChangeMyAddressElement.IsChangeMyAddressTitleDisplayed);
+
+            var newFlat = Get.RandomInt(100).ToString();
+            var newStreet = Get.RandomString(3, 10);
+            var newHouseNumber = Get.RandomString(3, 10);
+            var newDistrict = Get.RandomString(3, 10);
+            var newTown = Get.RandomString(3, 10);
+            var newPostcode = Get.GetPostcode();
+
+            myPersonalDetailsPage.ChangeMyAddressElement.Postcode = "123";
+            myPersonalDetailsPage.ChangeMyAddressElement.Flat = newFlat;
+            Assert.IsTrue(myPersonalDetailsPage.ChangeMyAddressElement.IsPostcodeWarningOccurred());
+
+            myPersonalDetailsPage.ChangeMyAddressElement.Postcode = newPostcode;
+            myPersonalDetailsPage.ChangeMyAddressElement.Street = newStreet;
+            myPersonalDetailsPage.ChangeMyAddressElement.HouseNumber = newHouseNumber;
+            myPersonalDetailsPage.ChangeMyAddressElement.District = newDistrict;
+            myPersonalDetailsPage.ChangeMyAddressElement.Town = newTown;
+            myPersonalDetailsPage.ChangeMyAddressElement.AddressPeriod = "2 to 3 years";
+
+            myPersonalDetailsPage.Submit();
+            myPersonalDetailsPage.WaitForSuccessPopup();
+            myPersonalDetailsPage.Submit();
+
+            var addresses = Drive.Data.Comms.Db.Addresses;
+            var currentAddress = addresses.FindAllByAccountId(customer.Id).FirstOrDefault();
+            Do.With.Timeout(10).Until(() => currentAddress.Town != oldTown);
+
+            //Check changes in DB
+            Assert.AreEqual(currentAddress.Flat, newFlat);
+            Assert.AreEqual(currentAddress.Street, newStreet);
+            Assert.AreEqual(currentAddress.HouseNumber, newHouseNumber);
+            Assert.AreEqual(currentAddress.District, newDistrict);
+            Assert.AreEqual(currentAddress.Town, newTown);
+            Assert.AreEqual(currentAddress.PostCode, newPostcode);
+
+            //Check changes in UI
+            Assert.AreEqual(myPersonalDetailsPage.GetHouseNumberAndStreet, newHouseNumber + " " + newStreet);
+            Assert.AreEqual(myPersonalDetailsPage.GetTown, newTown);
+            Assert.AreEqual(myPersonalDetailsPage.GetPostcode, newPostcode);
+
+
+        }
     }
 }
