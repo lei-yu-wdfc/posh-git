@@ -138,6 +138,9 @@ namespace Wonga.QA.Framework.Db.Payments
     partial void InsertPaymentCardsBaseEntity(PaymentCardsBaseEntity instance);
     partial void UpdatePaymentCardsBaseEntity(PaymentCardsBaseEntity instance);
     partial void DeletePaymentCardsBaseEntity(PaymentCardsBaseEntity instance);
+    partial void InsertPaymentMethodEntity(PaymentMethodEntity instance);
+    partial void UpdatePaymentMethodEntity(PaymentMethodEntity instance);
+    partial void DeletePaymentMethodEntity(PaymentMethodEntity instance);
     partial void InsertPaymentPlanEntity(PaymentPlanEntity instance);
     partial void UpdatePaymentPlanEntity(PaymentPlanEntity instance);
     partial void DeletePaymentPlanEntity(PaymentPlanEntity instance);
@@ -509,6 +512,14 @@ namespace Wonga.QA.Framework.Db.Payments
 			get
 			{
 				return this.GetTable<PaymentCardsBaseEntity>();
+			}
+		}
+		
+		public System.Data.Linq.Table<PaymentMethodEntity> PaymentMethods
+		{
+			get
+			{
+				return this.GetTable<PaymentMethodEntity>();
 			}
 		}
 		
@@ -920,22 +931,6 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		public System.Data.Linq.Table<V00002_Payment_AccountPreferences_CTEntity> V00002_Payment_AccountPreferences_CTs
-		{
-			get
-			{
-				return this.GetTable<V00002_Payment_AccountPreferences_CTEntity>();
-			}
-		}
-		
-		public System.Data.Linq.Table<V00002_Payment_Applications_CTEntity> V00002_Payment_Applications_CTs
-		{
-			get
-			{
-				return this.GetTable<V00002_Payment_Applications_CTEntity>();
-			}
-		}
-		
 		public System.Data.Linq.Table<V00002_Payment_PaymentCardsBase_CTEntity> V00002_Payment_PaymentCardsBase_CTs
 		{
 			get
@@ -949,6 +944,22 @@ namespace Wonga.QA.Framework.Db.Payments
 			get
 			{
 				return this.GetTable<V00002_Payment_ScheduledPayments_CTEntity>();
+			}
+		}
+		
+		public System.Data.Linq.Table<V00003_Payment_AccountPreferences_CTEntity> V00003_Payment_AccountPreferences_CTs
+		{
+			get
+			{
+				return this.GetTable<V00003_Payment_AccountPreferences_CTEntity>();
+			}
+		}
+		
+		public System.Data.Linq.Table<V00003_Payment_Applications_CTEntity> V00003_Payment_Applications_CTs
+		{
+			get
+			{
+				return this.GetTable<V00003_Payment_Applications_CTEntity>();
 			}
 		}
 		
@@ -1081,9 +1092,13 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private System.Nullable<decimal> _CreditLimit;
 		
+		private System.Nullable<int> _CashoutPaymentMethodId;
+		
 		private EntityRef<BankAccountsBaseEntity> _BankAccountsBaseEntity;
 		
 		private EntityRef<PaymentCardsBaseEntity> _PaymentCardsBaseEntity;
+		
+		private EntityRef<PaymentMethodEntity> _PaymentMethodEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1117,12 +1132,15 @@ namespace Wonga.QA.Framework.Db.Payments
     partial void OnNextPayDateChanged();
     partial void OnCreditLimitChanging(System.Nullable<decimal> value);
     partial void OnCreditLimitChanged();
+    partial void OnCashoutPaymentMethodIdChanging(System.Nullable<int> value);
+    partial void OnCashoutPaymentMethodIdChanged();
     #endregion
 		
 		public AccountPreferenceEntity()
 		{
 			this._BankAccountsBaseEntity = default(EntityRef<BankAccountsBaseEntity>);
 			this._PaymentCardsBaseEntity = default(EntityRef<PaymentCardsBaseEntity>);
+			this._PaymentMethodEntity = default(EntityRef<PaymentMethodEntity>);
 			OnCreated();
 		}
 		
@@ -1414,6 +1432,30 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CashoutPaymentMethodId", DbType="Int")]
+		public System.Nullable<int> CashoutPaymentMethodId
+		{
+			get
+			{
+				return this._CashoutPaymentMethodId;
+			}
+			set
+			{
+				if ((this._CashoutPaymentMethodId != value))
+				{
+					if (this._PaymentMethodEntity.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCashoutPaymentMethodIdChanging(value);
+					this.SendPropertyChanging();
+					this._CashoutPaymentMethodId = value;
+					this.SendPropertyChanged("CashoutPaymentMethodId");
+					this.OnCashoutPaymentMethodIdChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_AccountPreferences_BankAccountsBase", Storage="_BankAccountsBaseEntity", ThisKey="PrimaryBankAccountId", OtherKey="BankAccountId", IsForeignKey=true)]
 		public BankAccountsBaseEntity BankAccountsBaseEntity
 		{
@@ -1478,6 +1520,40 @@ namespace Wonga.QA.Framework.Db.Payments
 						this._PrimaryPaymentCardId = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("PaymentCardsBaseEntity");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_AccountPreferences_PaymentMethods", Storage="_PaymentMethodEntity", ThisKey="CashoutPaymentMethodId", OtherKey="PaymentMethodId", IsForeignKey=true)]
+		public PaymentMethodEntity PaymentMethodEntity
+		{
+			get
+			{
+				return this._PaymentMethodEntity.Entity;
+			}
+			set
+			{
+				PaymentMethodEntity previousValue = this._PaymentMethodEntity.Entity;
+				if (((previousValue != value) 
+							|| (this._PaymentMethodEntity.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._PaymentMethodEntity.Entity = null;
+						previousValue.AccountPreferences.Remove(this);
+					}
+					this._PaymentMethodEntity.Entity = value;
+					if ((value != null))
+					{
+						value.AccountPreferences.Add(this);
+						this._CashoutPaymentMethodId = value.PaymentMethodId;
+					}
+					else
+					{
+						this._CashoutPaymentMethodId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("PaymentMethodEntity");
 				}
 			}
 		}
@@ -1854,6 +1930,8 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private System.Nullable<System.DateTime> _DeclinedOn;
 		
+		private System.Nullable<System.DateTime> _AbandonedOn;
+		
 		private string _LoanReference;
 		
 		private System.Nullable<System.DateTime> _CashAdvanceFailedOn;
@@ -1918,6 +1996,8 @@ namespace Wonga.QA.Framework.Db.Payments
     partial void OnAcceptedOnChanged();
     partial void OnDeclinedOnChanging(System.Nullable<System.DateTime> value);
     partial void OnDeclinedOnChanged();
+    partial void OnAbandonedOnChanging(System.Nullable<System.DateTime> value);
+    partial void OnAbandonedOnChanged();
     partial void OnLoanReferenceChanging(string value);
     partial void OnLoanReferenceChanged();
     partial void OnCashAdvanceFailedOnChanging(System.Nullable<System.DateTime> value);
@@ -2261,6 +2341,26 @@ namespace Wonga.QA.Framework.Db.Payments
 					this._DeclinedOn = value;
 					this.SendPropertyChanged("DeclinedOn");
 					this.OnDeclinedOnChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AbandonedOn", DbType="DateTime", UpdateCheck=UpdateCheck.Never)]
+		public System.Nullable<System.DateTime> AbandonedOn
+		{
+			get
+			{
+				return this._AbandonedOn;
+			}
+			set
+			{
+				if ((this._AbandonedOn != value))
+				{
+					this.OnAbandonedOnChanging(value);
+					this.SendPropertyChanging();
+					this._AbandonedOn = value;
+					this.SendPropertyChanged("AbandonedOn");
+					this.OnAbandonedOnChanged();
 				}
 			}
 		}
@@ -7608,7 +7708,7 @@ namespace Wonga.QA.Framework.Db.Payments
 		
 		private string _MD5;
 		
-		private System.Nullable<int> _Revision;
+		private string _Revision;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -7622,7 +7722,7 @@ namespace Wonga.QA.Framework.Db.Payments
     partial void OnNameChanged();
     partial void OnMD5Changing(string value);
     partial void OnMD5Changed();
-    partial void OnRevisionChanging(System.Nullable<int> value);
+    partial void OnRevisionChanging(string value);
     partial void OnRevisionChanged();
     #endregion
 		
@@ -7671,7 +7771,7 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(255)")]
 		public string Name
 		{
 			get
@@ -7691,7 +7791,7 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MD5", DbType="VarChar(32) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MD5", DbType="VarChar(32)")]
 		public string MD5
 		{
 			get
@@ -7711,8 +7811,8 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Revision", DbType="Int")]
-		public System.Nullable<int> Revision
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Revision", DbType="NVarChar(MAX)", UpdateCheck=UpdateCheck.Never)]
+		public string Revision
 		{
 			get
 			{
@@ -10092,6 +10192,120 @@ namespace Wonga.QA.Framework.Db.Payments
 		{
 			this.SendPropertyChanging();
 			entity.PaymentCardsBaseEntity = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="payment.PaymentMethods")]
+	public partial class PaymentMethodEntity : DbEntity<PaymentMethodEntity>, INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _PaymentMethodId;
+		
+		private string _Name;
+		
+		private EntitySet<AccountPreferenceEntity> _AccountPreferences;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnPaymentMethodIdChanging(int value);
+    partial void OnPaymentMethodIdChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public PaymentMethodEntity()
+		{
+			this._AccountPreferences = new EntitySet<AccountPreferenceEntity>(new Action<AccountPreferenceEntity>(this.attach_AccountPreferences), new Action<AccountPreferenceEntity>(this.detach_AccountPreferences));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentMethodId", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int PaymentMethodId
+		{
+			get
+			{
+				return this._PaymentMethodId;
+			}
+			set
+			{
+				if ((this._PaymentMethodId != value))
+				{
+					this.OnPaymentMethodIdChanging(value);
+					this.SendPropertyChanging();
+					this._PaymentMethodId = value;
+					this.SendPropertyChanged("PaymentMethodId");
+					this.OnPaymentMethodIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(128)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FK_AccountPreferences_PaymentMethods", Storage="_AccountPreferences", ThisKey="PaymentMethodId", OtherKey="CashoutPaymentMethodId", DeleteRule="NO ACTION")]
+		public EntitySet<AccountPreferenceEntity> AccountPreferences
+		{
+			get
+			{
+				return this._AccountPreferences;
+			}
+			set
+			{
+				this._AccountPreferences.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_AccountPreferences(AccountPreferenceEntity entity)
+		{
+			this.SendPropertyChanging();
+			entity.PaymentMethodEntity = this;
+		}
+		
+		private void detach_AccountPreferences(AccountPreferenceEntity entity)
+		{
+			this.SendPropertyChanging();
+			entity.PaymentMethodEntity = null;
 		}
 	}
 	
@@ -22568,780 +22782,6 @@ namespace Wonga.QA.Framework.Db.Payments
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="cdc.V00002_Payment_AccountPreferences_CT")]
-	public partial class V00002_Payment_AccountPreferences_CTEntity : DbEntity<V00002_Payment_AccountPreferences_CTEntity>
-	{
-		
-		private System.Data.Linq.Binary ____Start_lsn;
-		
-		private System.Data.Linq.Binary ____End_lsn;
-		
-		private System.Data.Linq.Binary ____Seqval;
-		
-		private int ____Operation;
-		
-		private System.Data.Linq.Binary ____Update_mask;
-		
-		private System.Nullable<int> _AccountPreferenceId;
-		
-		private System.Nullable<System.Guid> _AccountId;
-		
-		private System.Nullable<int> _PrimaryBankAccountId;
-		
-		private System.Nullable<int> _PrimaryPaymentCardId;
-		
-		private System.Nullable<int> _TimeZone;
-		
-		private System.Nullable<bool> _IsHardship;
-		
-		private System.Nullable<System.DateTime> _CreatedOn;
-		
-		private System.Nullable<bool> _RemindBeforeEndLoan;
-		
-		private System.Nullable<bool> _IsDispute;
-		
-		private string _Ccin;
-		
-		private System.Nullable<bool> _CanAddBankAccount;
-		
-		private System.Nullable<int> _IncomeFrequency;
-		
-		private System.Nullable<System.DateTime> _NextPayDate;
-		
-		private System.Nullable<decimal> _CreditLimit;
-		
-		public V00002_Payment_AccountPreferences_CTEntity()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="__$start_lsn", Storage="____Start_lsn", DbType="Binary(10) NOT NULL", CanBeNull=false)]
-		public System.Data.Linq.Binary ___Start_lsn
-		{
-			get
-			{
-				return this.____Start_lsn;
-			}
-			set
-			{
-				if ((this.____Start_lsn != value))
-				{
-					this.____Start_lsn = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="__$end_lsn", Storage="____End_lsn", DbType="Binary(10)", CanBeNull=true)]
-		public System.Data.Linq.Binary ___End_lsn
-		{
-			get
-			{
-				return this.____End_lsn;
-			}
-			set
-			{
-				if ((this.____End_lsn != value))
-				{
-					this.____End_lsn = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="__$seqval", Storage="____Seqval", DbType="Binary(10) NOT NULL", CanBeNull=false)]
-		public System.Data.Linq.Binary ___Seqval
-		{
-			get
-			{
-				return this.____Seqval;
-			}
-			set
-			{
-				if ((this.____Seqval != value))
-				{
-					this.____Seqval = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="__$operation", Storage="____Operation", DbType="Int NOT NULL")]
-		public int ___Operation
-		{
-			get
-			{
-				return this.____Operation;
-			}
-			set
-			{
-				if ((this.____Operation != value))
-				{
-					this.____Operation = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="__$update_mask", Storage="____Update_mask", DbType="VarBinary(128)", CanBeNull=true)]
-		public System.Data.Linq.Binary ___Update_mask
-		{
-			get
-			{
-				return this.____Update_mask;
-			}
-			set
-			{
-				if ((this.____Update_mask != value))
-				{
-					this.____Update_mask = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccountPreferenceId", DbType="Int")]
-		public System.Nullable<int> AccountPreferenceId
-		{
-			get
-			{
-				return this._AccountPreferenceId;
-			}
-			set
-			{
-				if ((this._AccountPreferenceId != value))
-				{
-					this._AccountPreferenceId = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccountId", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> AccountId
-		{
-			get
-			{
-				return this._AccountId;
-			}
-			set
-			{
-				if ((this._AccountId != value))
-				{
-					this._AccountId = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PrimaryBankAccountId", DbType="Int")]
-		public System.Nullable<int> PrimaryBankAccountId
-		{
-			get
-			{
-				return this._PrimaryBankAccountId;
-			}
-			set
-			{
-				if ((this._PrimaryBankAccountId != value))
-				{
-					this._PrimaryBankAccountId = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PrimaryPaymentCardId", DbType="Int")]
-		public System.Nullable<int> PrimaryPaymentCardId
-		{
-			get
-			{
-				return this._PrimaryPaymentCardId;
-			}
-			set
-			{
-				if ((this._PrimaryPaymentCardId != value))
-				{
-					this._PrimaryPaymentCardId = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TimeZone", DbType="Int")]
-		public System.Nullable<int> TimeZone
-		{
-			get
-			{
-				return this._TimeZone;
-			}
-			set
-			{
-				if ((this._TimeZone != value))
-				{
-					this._TimeZone = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsHardship", DbType="Bit")]
-		public System.Nullable<bool> IsHardship
-		{
-			get
-			{
-				return this._IsHardship;
-			}
-			set
-			{
-				if ((this._IsHardship != value))
-				{
-					this._IsHardship = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedOn", DbType="DateTime")]
-		public System.Nullable<System.DateTime> CreatedOn
-		{
-			get
-			{
-				return this._CreatedOn;
-			}
-			set
-			{
-				if ((this._CreatedOn != value))
-				{
-					this._CreatedOn = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RemindBeforeEndLoan", DbType="Bit")]
-		public System.Nullable<bool> RemindBeforeEndLoan
-		{
-			get
-			{
-				return this._RemindBeforeEndLoan;
-			}
-			set
-			{
-				if ((this._RemindBeforeEndLoan != value))
-				{
-					this._RemindBeforeEndLoan = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsDispute", DbType="Bit")]
-		public System.Nullable<bool> IsDispute
-		{
-			get
-			{
-				return this._IsDispute;
-			}
-			set
-			{
-				if ((this._IsDispute != value))
-				{
-					this._IsDispute = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Ccin", DbType="NVarChar(255)")]
-		public string Ccin
-		{
-			get
-			{
-				return this._Ccin;
-			}
-			set
-			{
-				if ((this._Ccin != value))
-				{
-					this._Ccin = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CanAddBankAccount", DbType="Bit")]
-		public System.Nullable<bool> CanAddBankAccount
-		{
-			get
-			{
-				return this._CanAddBankAccount;
-			}
-			set
-			{
-				if ((this._CanAddBankAccount != value))
-				{
-					this._CanAddBankAccount = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IncomeFrequency", DbType="Int")]
-		public System.Nullable<int> IncomeFrequency
-		{
-			get
-			{
-				return this._IncomeFrequency;
-			}
-			set
-			{
-				if ((this._IncomeFrequency != value))
-				{
-					this._IncomeFrequency = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NextPayDate", DbType="Date")]
-		public System.Nullable<System.DateTime> NextPayDate
-		{
-			get
-			{
-				return this._NextPayDate;
-			}
-			set
-			{
-				if ((this._NextPayDate != value))
-				{
-					this._NextPayDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreditLimit", DbType="Decimal(18,0)")]
-		public System.Nullable<decimal> CreditLimit
-		{
-			get
-			{
-				return this._CreditLimit;
-			}
-			set
-			{
-				if ((this._CreditLimit != value))
-				{
-					this._CreditLimit = value;
-				}
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="cdc.V00002_Payment_Applications_CT")]
-	public partial class V00002_Payment_Applications_CTEntity : DbEntity<V00002_Payment_Applications_CTEntity>
-	{
-		
-		private System.Data.Linq.Binary ____Start_lsn;
-		
-		private System.Data.Linq.Binary ____End_lsn;
-		
-		private System.Data.Linq.Binary ____Seqval;
-		
-		private int ____Operation;
-		
-		private System.Data.Linq.Binary ____Update_mask;
-		
-		private System.Nullable<int> _ApplicationId;
-		
-		private System.Nullable<System.Guid> _ExternalId;
-		
-		private System.Nullable<System.Guid> _AccountId;
-		
-		private System.Nullable<int> _ProductId;
-		
-		private System.Nullable<int> _Currency;
-		
-		private System.Nullable<System.Guid> _BankAccountGuid;
-		
-		private System.Nullable<System.Guid> _PaymentCardGuid;
-		
-		private System.Nullable<int> _PromoCodeId;
-		
-		private System.Nullable<System.DateTime> _ApplicationDate;
-		
-		private System.Nullable<System.DateTime> _SignedOn;
-		
-		private System.Nullable<System.DateTime> _ClosedOn;
-		
-		private System.Nullable<System.DateTime> _CreatedOn;
-		
-		private System.Data.Linq.Binary _Version;
-		
-		private System.Nullable<System.DateTime> _CanceledOn;
-		
-		private System.Nullable<System.DateTime> _AcceptedOn;
-		
-		private System.Nullable<System.DateTime> _DeclinedOn;
-		
-		private string _LoanReference;
-		
-		private System.Nullable<System.DateTime> _CashAdvanceFailedOn;
-		
-		public V00002_Payment_Applications_CTEntity()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="__$start_lsn", Storage="____Start_lsn", DbType="Binary(10) NOT NULL", CanBeNull=false)]
-		public System.Data.Linq.Binary ___Start_lsn
-		{
-			get
-			{
-				return this.____Start_lsn;
-			}
-			set
-			{
-				if ((this.____Start_lsn != value))
-				{
-					this.____Start_lsn = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="__$end_lsn", Storage="____End_lsn", DbType="Binary(10)", CanBeNull=true)]
-		public System.Data.Linq.Binary ___End_lsn
-		{
-			get
-			{
-				return this.____End_lsn;
-			}
-			set
-			{
-				if ((this.____End_lsn != value))
-				{
-					this.____End_lsn = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="__$seqval", Storage="____Seqval", DbType="Binary(10) NOT NULL", CanBeNull=false)]
-		public System.Data.Linq.Binary ___Seqval
-		{
-			get
-			{
-				return this.____Seqval;
-			}
-			set
-			{
-				if ((this.____Seqval != value))
-				{
-					this.____Seqval = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="__$operation", Storage="____Operation", DbType="Int NOT NULL")]
-		public int ___Operation
-		{
-			get
-			{
-				return this.____Operation;
-			}
-			set
-			{
-				if ((this.____Operation != value))
-				{
-					this.____Operation = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="__$update_mask", Storage="____Update_mask", DbType="VarBinary(128)", CanBeNull=true)]
-		public System.Data.Linq.Binary ___Update_mask
-		{
-			get
-			{
-				return this.____Update_mask;
-			}
-			set
-			{
-				if ((this.____Update_mask != value))
-				{
-					this.____Update_mask = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplicationId", DbType="Int")]
-		public System.Nullable<int> ApplicationId
-		{
-			get
-			{
-				return this._ApplicationId;
-			}
-			set
-			{
-				if ((this._ApplicationId != value))
-				{
-					this._ApplicationId = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ExternalId", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> ExternalId
-		{
-			get
-			{
-				return this._ExternalId;
-			}
-			set
-			{
-				if ((this._ExternalId != value))
-				{
-					this._ExternalId = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccountId", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> AccountId
-		{
-			get
-			{
-				return this._AccountId;
-			}
-			set
-			{
-				if ((this._AccountId != value))
-				{
-					this._AccountId = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProductId", DbType="Int")]
-		public System.Nullable<int> ProductId
-		{
-			get
-			{
-				return this._ProductId;
-			}
-			set
-			{
-				if ((this._ProductId != value))
-				{
-					this._ProductId = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Currency", DbType="Int")]
-		public System.Nullable<int> Currency
-		{
-			get
-			{
-				return this._Currency;
-			}
-			set
-			{
-				if ((this._Currency != value))
-				{
-					this._Currency = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BankAccountGuid", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> BankAccountGuid
-		{
-			get
-			{
-				return this._BankAccountGuid;
-			}
-			set
-			{
-				if ((this._BankAccountGuid != value))
-				{
-					this._BankAccountGuid = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentCardGuid", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> PaymentCardGuid
-		{
-			get
-			{
-				return this._PaymentCardGuid;
-			}
-			set
-			{
-				if ((this._PaymentCardGuid != value))
-				{
-					this._PaymentCardGuid = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PromoCodeId", DbType="Int")]
-		public System.Nullable<int> PromoCodeId
-		{
-			get
-			{
-				return this._PromoCodeId;
-			}
-			set
-			{
-				if ((this._PromoCodeId != value))
-				{
-					this._PromoCodeId = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplicationDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> ApplicationDate
-		{
-			get
-			{
-				return this._ApplicationDate;
-			}
-			set
-			{
-				if ((this._ApplicationDate != value))
-				{
-					this._ApplicationDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SignedOn", DbType="DateTime")]
-		public System.Nullable<System.DateTime> SignedOn
-		{
-			get
-			{
-				return this._SignedOn;
-			}
-			set
-			{
-				if ((this._SignedOn != value))
-				{
-					this._SignedOn = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClosedOn", DbType="DateTime")]
-		public System.Nullable<System.DateTime> ClosedOn
-		{
-			get
-			{
-				return this._ClosedOn;
-			}
-			set
-			{
-				if ((this._ClosedOn != value))
-				{
-					this._ClosedOn = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedOn", DbType="DateTime")]
-		public System.Nullable<System.DateTime> CreatedOn
-		{
-			get
-			{
-				return this._CreatedOn;
-			}
-			set
-			{
-				if ((this._CreatedOn != value))
-				{
-					this._CreatedOn = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Version", DbType="Binary(8)", CanBeNull=true)]
-		public System.Data.Linq.Binary Version
-		{
-			get
-			{
-				return this._Version;
-			}
-			set
-			{
-				if ((this._Version != value))
-				{
-					this._Version = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CanceledOn", DbType="DateTime")]
-		public System.Nullable<System.DateTime> CanceledOn
-		{
-			get
-			{
-				return this._CanceledOn;
-			}
-			set
-			{
-				if ((this._CanceledOn != value))
-				{
-					this._CanceledOn = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AcceptedOn", DbType="DateTime")]
-		public System.Nullable<System.DateTime> AcceptedOn
-		{
-			get
-			{
-				return this._AcceptedOn;
-			}
-			set
-			{
-				if ((this._AcceptedOn != value))
-				{
-					this._AcceptedOn = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DeclinedOn", DbType="DateTime")]
-		public System.Nullable<System.DateTime> DeclinedOn
-		{
-			get
-			{
-				return this._DeclinedOn;
-			}
-			set
-			{
-				if ((this._DeclinedOn != value))
-				{
-					this._DeclinedOn = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoanReference", DbType="NVarChar(30)")]
-		public string LoanReference
-		{
-			get
-			{
-				return this._LoanReference;
-			}
-			set
-			{
-				if ((this._LoanReference != value))
-				{
-					this._LoanReference = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CashAdvanceFailedOn", DbType="DateTime")]
-		public System.Nullable<System.DateTime> CashAdvanceFailedOn
-		{
-			get
-			{
-				return this._CashAdvanceFailedOn;
-			}
-			set
-			{
-				if ((this._CashAdvanceFailedOn != value))
-				{
-					this._CashAdvanceFailedOn = value;
-				}
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="cdc.V00002_Payment_PaymentCardsBase_CT")]
 	public partial class V00002_Payment_PaymentCardsBase_CTEntity : DbEntity<V00002_Payment_PaymentCardsBase_CTEntity>
 	{
@@ -24093,6 +23533,816 @@ namespace Wonga.QA.Framework.Db.Payments
 				if ((this._IntegrationTransactionId != value))
 				{
 					this._IntegrationTransactionId = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="cdc.V00003_Payment_AccountPreferences_CT")]
+	public partial class V00003_Payment_AccountPreferences_CTEntity : DbEntity<V00003_Payment_AccountPreferences_CTEntity>
+	{
+		
+		private System.Data.Linq.Binary ____Start_lsn;
+		
+		private System.Data.Linq.Binary ____End_lsn;
+		
+		private System.Data.Linq.Binary ____Seqval;
+		
+		private int ____Operation;
+		
+		private System.Data.Linq.Binary ____Update_mask;
+		
+		private System.Nullable<int> _AccountPreferenceId;
+		
+		private System.Nullable<System.Guid> _AccountId;
+		
+		private System.Nullable<int> _PrimaryBankAccountId;
+		
+		private System.Nullable<int> _PrimaryPaymentCardId;
+		
+		private System.Nullable<int> _TimeZone;
+		
+		private System.Nullable<bool> _IsHardship;
+		
+		private System.Nullable<System.DateTime> _CreatedOn;
+		
+		private System.Nullable<bool> _RemindBeforeEndLoan;
+		
+		private System.Nullable<bool> _IsDispute;
+		
+		private string _Ccin;
+		
+		private System.Nullable<bool> _CanAddBankAccount;
+		
+		private System.Nullable<int> _IncomeFrequency;
+		
+		private System.Nullable<System.DateTime> _NextPayDate;
+		
+		private System.Nullable<decimal> _CreditLimit;
+		
+		private System.Nullable<int> _CashoutPaymentMethodId;
+		
+		public V00003_Payment_AccountPreferences_CTEntity()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="__$start_lsn", Storage="____Start_lsn", DbType="Binary(10) NOT NULL", CanBeNull=false)]
+		public System.Data.Linq.Binary ___Start_lsn
+		{
+			get
+			{
+				return this.____Start_lsn;
+			}
+			set
+			{
+				if ((this.____Start_lsn != value))
+				{
+					this.____Start_lsn = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="__$end_lsn", Storage="____End_lsn", DbType="Binary(10)", CanBeNull=true)]
+		public System.Data.Linq.Binary ___End_lsn
+		{
+			get
+			{
+				return this.____End_lsn;
+			}
+			set
+			{
+				if ((this.____End_lsn != value))
+				{
+					this.____End_lsn = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="__$seqval", Storage="____Seqval", DbType="Binary(10) NOT NULL", CanBeNull=false)]
+		public System.Data.Linq.Binary ___Seqval
+		{
+			get
+			{
+				return this.____Seqval;
+			}
+			set
+			{
+				if ((this.____Seqval != value))
+				{
+					this.____Seqval = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="__$operation", Storage="____Operation", DbType="Int NOT NULL")]
+		public int ___Operation
+		{
+			get
+			{
+				return this.____Operation;
+			}
+			set
+			{
+				if ((this.____Operation != value))
+				{
+					this.____Operation = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="__$update_mask", Storage="____Update_mask", DbType="VarBinary(128)", CanBeNull=true)]
+		public System.Data.Linq.Binary ___Update_mask
+		{
+			get
+			{
+				return this.____Update_mask;
+			}
+			set
+			{
+				if ((this.____Update_mask != value))
+				{
+					this.____Update_mask = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccountPreferenceId", DbType="Int")]
+		public System.Nullable<int> AccountPreferenceId
+		{
+			get
+			{
+				return this._AccountPreferenceId;
+			}
+			set
+			{
+				if ((this._AccountPreferenceId != value))
+				{
+					this._AccountPreferenceId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccountId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> AccountId
+		{
+			get
+			{
+				return this._AccountId;
+			}
+			set
+			{
+				if ((this._AccountId != value))
+				{
+					this._AccountId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PrimaryBankAccountId", DbType="Int")]
+		public System.Nullable<int> PrimaryBankAccountId
+		{
+			get
+			{
+				return this._PrimaryBankAccountId;
+			}
+			set
+			{
+				if ((this._PrimaryBankAccountId != value))
+				{
+					this._PrimaryBankAccountId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PrimaryPaymentCardId", DbType="Int")]
+		public System.Nullable<int> PrimaryPaymentCardId
+		{
+			get
+			{
+				return this._PrimaryPaymentCardId;
+			}
+			set
+			{
+				if ((this._PrimaryPaymentCardId != value))
+				{
+					this._PrimaryPaymentCardId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TimeZone", DbType="Int")]
+		public System.Nullable<int> TimeZone
+		{
+			get
+			{
+				return this._TimeZone;
+			}
+			set
+			{
+				if ((this._TimeZone != value))
+				{
+					this._TimeZone = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsHardship", DbType="Bit")]
+		public System.Nullable<bool> IsHardship
+		{
+			get
+			{
+				return this._IsHardship;
+			}
+			set
+			{
+				if ((this._IsHardship != value))
+				{
+					this._IsHardship = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedOn", DbType="DateTime")]
+		public System.Nullable<System.DateTime> CreatedOn
+		{
+			get
+			{
+				return this._CreatedOn;
+			}
+			set
+			{
+				if ((this._CreatedOn != value))
+				{
+					this._CreatedOn = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RemindBeforeEndLoan", DbType="Bit")]
+		public System.Nullable<bool> RemindBeforeEndLoan
+		{
+			get
+			{
+				return this._RemindBeforeEndLoan;
+			}
+			set
+			{
+				if ((this._RemindBeforeEndLoan != value))
+				{
+					this._RemindBeforeEndLoan = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsDispute", DbType="Bit")]
+		public System.Nullable<bool> IsDispute
+		{
+			get
+			{
+				return this._IsDispute;
+			}
+			set
+			{
+				if ((this._IsDispute != value))
+				{
+					this._IsDispute = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Ccin", DbType="NVarChar(255)")]
+		public string Ccin
+		{
+			get
+			{
+				return this._Ccin;
+			}
+			set
+			{
+				if ((this._Ccin != value))
+				{
+					this._Ccin = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CanAddBankAccount", DbType="Bit")]
+		public System.Nullable<bool> CanAddBankAccount
+		{
+			get
+			{
+				return this._CanAddBankAccount;
+			}
+			set
+			{
+				if ((this._CanAddBankAccount != value))
+				{
+					this._CanAddBankAccount = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IncomeFrequency", DbType="Int")]
+		public System.Nullable<int> IncomeFrequency
+		{
+			get
+			{
+				return this._IncomeFrequency;
+			}
+			set
+			{
+				if ((this._IncomeFrequency != value))
+				{
+					this._IncomeFrequency = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NextPayDate", DbType="Date")]
+		public System.Nullable<System.DateTime> NextPayDate
+		{
+			get
+			{
+				return this._NextPayDate;
+			}
+			set
+			{
+				if ((this._NextPayDate != value))
+				{
+					this._NextPayDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreditLimit", DbType="Decimal(18,0)")]
+		public System.Nullable<decimal> CreditLimit
+		{
+			get
+			{
+				return this._CreditLimit;
+			}
+			set
+			{
+				if ((this._CreditLimit != value))
+				{
+					this._CreditLimit = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CashoutPaymentMethodId", DbType="Int")]
+		public System.Nullable<int> CashoutPaymentMethodId
+		{
+			get
+			{
+				return this._CashoutPaymentMethodId;
+			}
+			set
+			{
+				if ((this._CashoutPaymentMethodId != value))
+				{
+					this._CashoutPaymentMethodId = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="cdc.V00003_Payment_Applications_CT")]
+	public partial class V00003_Payment_Applications_CTEntity : DbEntity<V00003_Payment_Applications_CTEntity>
+	{
+		
+		private System.Data.Linq.Binary ____Start_lsn;
+		
+		private System.Data.Linq.Binary ____End_lsn;
+		
+		private System.Data.Linq.Binary ____Seqval;
+		
+		private int ____Operation;
+		
+		private System.Data.Linq.Binary ____Update_mask;
+		
+		private System.Nullable<int> _ApplicationId;
+		
+		private System.Nullable<System.Guid> _ExternalId;
+		
+		private System.Nullable<System.Guid> _AccountId;
+		
+		private System.Nullable<int> _ProductId;
+		
+		private System.Nullable<int> _Currency;
+		
+		private System.Nullable<System.Guid> _BankAccountGuid;
+		
+		private System.Nullable<System.Guid> _PaymentCardGuid;
+		
+		private System.Nullable<int> _PromoCodeId;
+		
+		private System.Nullable<System.DateTime> _ApplicationDate;
+		
+		private System.Nullable<System.DateTime> _SignedOn;
+		
+		private System.Nullable<System.DateTime> _ClosedOn;
+		
+		private System.Nullable<System.DateTime> _CreatedOn;
+		
+		private System.Data.Linq.Binary _Version;
+		
+		private System.Nullable<System.DateTime> _CanceledOn;
+		
+		private System.Nullable<System.DateTime> _AcceptedOn;
+		
+		private System.Nullable<System.DateTime> _DeclinedOn;
+		
+		private System.Nullable<System.DateTime> _AbandonedOn;
+		
+		private string _LoanReference;
+		
+		private System.Nullable<System.DateTime> _CashAdvanceFailedOn;
+		
+		public V00003_Payment_Applications_CTEntity()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="__$start_lsn", Storage="____Start_lsn", DbType="Binary(10) NOT NULL", CanBeNull=false)]
+		public System.Data.Linq.Binary ___Start_lsn
+		{
+			get
+			{
+				return this.____Start_lsn;
+			}
+			set
+			{
+				if ((this.____Start_lsn != value))
+				{
+					this.____Start_lsn = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="__$end_lsn", Storage="____End_lsn", DbType="Binary(10)", CanBeNull=true)]
+		public System.Data.Linq.Binary ___End_lsn
+		{
+			get
+			{
+				return this.____End_lsn;
+			}
+			set
+			{
+				if ((this.____End_lsn != value))
+				{
+					this.____End_lsn = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="__$seqval", Storage="____Seqval", DbType="Binary(10) NOT NULL", CanBeNull=false)]
+		public System.Data.Linq.Binary ___Seqval
+		{
+			get
+			{
+				return this.____Seqval;
+			}
+			set
+			{
+				if ((this.____Seqval != value))
+				{
+					this.____Seqval = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="__$operation", Storage="____Operation", DbType="Int NOT NULL")]
+		public int ___Operation
+		{
+			get
+			{
+				return this.____Operation;
+			}
+			set
+			{
+				if ((this.____Operation != value))
+				{
+					this.____Operation = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="__$update_mask", Storage="____Update_mask", DbType="VarBinary(128)", CanBeNull=true)]
+		public System.Data.Linq.Binary ___Update_mask
+		{
+			get
+			{
+				return this.____Update_mask;
+			}
+			set
+			{
+				if ((this.____Update_mask != value))
+				{
+					this.____Update_mask = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplicationId", DbType="Int")]
+		public System.Nullable<int> ApplicationId
+		{
+			get
+			{
+				return this._ApplicationId;
+			}
+			set
+			{
+				if ((this._ApplicationId != value))
+				{
+					this._ApplicationId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ExternalId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> ExternalId
+		{
+			get
+			{
+				return this._ExternalId;
+			}
+			set
+			{
+				if ((this._ExternalId != value))
+				{
+					this._ExternalId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccountId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> AccountId
+		{
+			get
+			{
+				return this._AccountId;
+			}
+			set
+			{
+				if ((this._AccountId != value))
+				{
+					this._AccountId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProductId", DbType="Int")]
+		public System.Nullable<int> ProductId
+		{
+			get
+			{
+				return this._ProductId;
+			}
+			set
+			{
+				if ((this._ProductId != value))
+				{
+					this._ProductId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Currency", DbType="Int")]
+		public System.Nullable<int> Currency
+		{
+			get
+			{
+				return this._Currency;
+			}
+			set
+			{
+				if ((this._Currency != value))
+				{
+					this._Currency = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BankAccountGuid", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> BankAccountGuid
+		{
+			get
+			{
+				return this._BankAccountGuid;
+			}
+			set
+			{
+				if ((this._BankAccountGuid != value))
+				{
+					this._BankAccountGuid = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentCardGuid", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> PaymentCardGuid
+		{
+			get
+			{
+				return this._PaymentCardGuid;
+			}
+			set
+			{
+				if ((this._PaymentCardGuid != value))
+				{
+					this._PaymentCardGuid = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PromoCodeId", DbType="Int")]
+		public System.Nullable<int> PromoCodeId
+		{
+			get
+			{
+				return this._PromoCodeId;
+			}
+			set
+			{
+				if ((this._PromoCodeId != value))
+				{
+					this._PromoCodeId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplicationDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> ApplicationDate
+		{
+			get
+			{
+				return this._ApplicationDate;
+			}
+			set
+			{
+				if ((this._ApplicationDate != value))
+				{
+					this._ApplicationDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SignedOn", DbType="DateTime")]
+		public System.Nullable<System.DateTime> SignedOn
+		{
+			get
+			{
+				return this._SignedOn;
+			}
+			set
+			{
+				if ((this._SignedOn != value))
+				{
+					this._SignedOn = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClosedOn", DbType="DateTime")]
+		public System.Nullable<System.DateTime> ClosedOn
+		{
+			get
+			{
+				return this._ClosedOn;
+			}
+			set
+			{
+				if ((this._ClosedOn != value))
+				{
+					this._ClosedOn = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedOn", DbType="DateTime")]
+		public System.Nullable<System.DateTime> CreatedOn
+		{
+			get
+			{
+				return this._CreatedOn;
+			}
+			set
+			{
+				if ((this._CreatedOn != value))
+				{
+					this._CreatedOn = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Version", DbType="Binary(8)", CanBeNull=true)]
+		public System.Data.Linq.Binary Version
+		{
+			get
+			{
+				return this._Version;
+			}
+			set
+			{
+				if ((this._Version != value))
+				{
+					this._Version = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CanceledOn", DbType="DateTime")]
+		public System.Nullable<System.DateTime> CanceledOn
+		{
+			get
+			{
+				return this._CanceledOn;
+			}
+			set
+			{
+				if ((this._CanceledOn != value))
+				{
+					this._CanceledOn = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AcceptedOn", DbType="DateTime")]
+		public System.Nullable<System.DateTime> AcceptedOn
+		{
+			get
+			{
+				return this._AcceptedOn;
+			}
+			set
+			{
+				if ((this._AcceptedOn != value))
+				{
+					this._AcceptedOn = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DeclinedOn", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DeclinedOn
+		{
+			get
+			{
+				return this._DeclinedOn;
+			}
+			set
+			{
+				if ((this._DeclinedOn != value))
+				{
+					this._DeclinedOn = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AbandonedOn", DbType="DateTime")]
+		public System.Nullable<System.DateTime> AbandonedOn
+		{
+			get
+			{
+				return this._AbandonedOn;
+			}
+			set
+			{
+				if ((this._AbandonedOn != value))
+				{
+					this._AbandonedOn = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoanReference", DbType="NVarChar(30)")]
+		public string LoanReference
+		{
+			get
+			{
+				return this._LoanReference;
+			}
+			set
+			{
+				if ((this._LoanReference != value))
+				{
+					this._LoanReference = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CashAdvanceFailedOn", DbType="DateTime")]
+		public System.Nullable<System.DateTime> CashAdvanceFailedOn
+		{
+			get
+			{
+				return this._CashAdvanceFailedOn;
+			}
+			set
+			{
+				if ((this._CashAdvanceFailedOn != value))
+				{
+					this._CashAdvanceFailedOn = value;
 				}
 			}
 		}

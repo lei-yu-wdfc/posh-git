@@ -24,5 +24,6 @@ namespace Wonga.QA.Framework.Cs
         public Object PostCode { get; set; }
         public Object Country { get; set; }
         public Object SalesforceUser { get; set; }
+        public Object PaymentId { get; set; }
     }
 }

@@ -23,8 +23,12 @@ namespace Wonga.QA.Tests.Payments.Queries
             _customer = CustomerBuilder.New().Build();
             _application = ApplicationBuilder.New(_customer)
                                              .WithLoanAmount(100)
-                                             .WithLoanTerm(7)
+                                             .WithLoanTerm(14)
+                                             .WithPromiseDate(DateTime.UtcNow.AddDays(4).ToDate())
                                              .Build();
+
+            //Wait until the application has been accepted.
+            //Do.With.Until(() => _application.)
         }
 
         public abstract class GivenACustomerWithAnApprovedLoan : CsGetLoanExtensionPaymentStatusQueryTests
@@ -77,7 +81,7 @@ namespace Wonga.QA.Tests.Payments.Queries
 
                     Do.With.Until(() => _loanExtensionStatusRepo.FindAll(_loanExtensionStatusRepo.PaymentCardId == _customer.GetPaymentCard() &&
                                                                          _loanExtensionStatusRepo.PartPaymentAmount == _amount &&
-                                                                         _loanExtensionStatusRepo.ExtendDate == DateTime.Today + TimeSpan.FromDays(7)));
+                                                                         _loanExtensionStatusRepo.ExtendDate == DateTime.Today + TimeSpan.FromDays(21)));
                 }
 
                 [Test, AUT(AUT.Uk)]

@@ -12,6 +12,7 @@ using Wonga.QA.Framework.Db.Payments;
 
 namespace Wonga.QA.Tests.Payments.Command
 {
+    [TestFixture]
     public abstract class CsRepayWithExternalCardCommandTests
     {
         protected Application _application;
@@ -37,6 +38,7 @@ namespace Wonga.QA.Tests.Payments.Command
             protected decimal _startingBalance;
             protected decimal _paymentAmount;
             protected dynamic _paymentCardRepaymentRequests = Drive.Data.Payments.Db.PaymentCardRepaymentRequests;
+            protected Guid _paymentId = Guid.NewGuid();
 
             [SetUp]
             public override void Setup()
@@ -64,7 +66,8 @@ namespace Wonga.QA.Tests.Payments.Command
                                                             ExpiryDate = new DateTime(DateTime.Today.Year + 1, 1, 31),
                                                             HolderName = "holder name", 
                                                             PostCode = "12345",
-                                                            Town = "town" };
+                                                            Town = "town", 
+                                                            PaymentId = _paymentId };
             }
      
             public class GivenAPaymentHasBeenRequestedWithAValidCard : GivenACustomerWithAnApprovedLoan
@@ -80,6 +83,7 @@ namespace Wonga.QA.Tests.Payments.Command
                 public void TheLoanAmountHasBeenReducedByPaymentAmountPaymentRequestAdded()
                 {
                     Do.With.Timeout(2).Interval(20).Until(() => null != _paymentCardRepaymentRequests.FindAll(_paymentCardRepaymentRequests.Applications.ExternalId == _application.Id &&
+                                                                                                              _paymentCardRepaymentRequests.ExternalId == _paymentId &&
                                                                                                               _paymentCardRepaymentRequests.Amount == _paymentAmount &&
                                                                                                               _paymentCardRepaymentRequests.FailedOn == null &&
                                                                                                               _paymentCardRepaymentRequests.SuccessOn != null).FirstOrDefault());
@@ -101,6 +105,7 @@ namespace Wonga.QA.Tests.Payments.Command
                 public void TheLoanAmountRemainsTheSameFailedPaymentRequestAdded()
                 {
                     Do.With.Timeout(2).Interval(20).Until(() => null != _paymentCardRepaymentRequests.FindAll(_paymentCardRepaymentRequests.Applications.ExternalId == _application.Id &&
+                                                                                                              _paymentCardRepaymentRequests.ExternalId == _paymentId &&
                                                                                                               _paymentCardRepaymentRequests.Amount == _paymentAmount &&
                                                                                                               _paymentCardRepaymentRequests.FailedOn != null &&
                                                                                                               _paymentCardRepaymentRequests.SuccessOn == null).FirstOrDefault() );
