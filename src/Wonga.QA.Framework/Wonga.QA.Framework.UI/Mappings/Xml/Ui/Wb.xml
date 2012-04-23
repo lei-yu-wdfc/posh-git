@@ -189,4 +189,9 @@
     <County>#edit-county</County>
     <AddressOptions>#edit-address-options</AddressOptions>
   </AddressDetailsSection>
+
+  <MobilePinVerificationSection>
+		<ResendPin>#edit-resend-pin</ResendPin>
+		<ResendPinMessage>.pin_resend</ResendPinMessage>
+  </MobilePinVerificationSection>
 </Ui>

@@ -608,13 +608,15 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-188")]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-188")]
         public void CustomerOnBankDetailsPageClicksOnResendPinLinkMessageShouldDisplayedAndPinShouldResent()
         {
-            string telephone = Get.GetMobilePhone();
+            Random rand = new Random();
+            string telephone = Get.RandomLong(1000000, 9999999).ToString();
             switch (Config.AUT)
             {
-                    case AUT.Ca:
+                #region Ca
+                case AUT.Ca:
                     var journeyCa = JourneyFactory.GetL0Journey(Client.Home());
                     var personalDetailsPageCa = journeyCa.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
                     var emailCa = Get.RandomEmail();
@@ -639,25 +641,31 @@ namespace Wonga.QA.Tests.Ui
                     personalDetailsPageCa.EmploymentDetails.SalaryPaidToBank = true;
                     personalDetailsPageCa.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("dd MMM yyyy");
                     personalDetailsPageCa.EmploymentDetails.IncomeFrequency = "Monthly";
-                    personalDetailsPageCa.ContactingYou.CellPhoneNumber = telephone;
+                    personalDetailsPageCa.ContactingYou.CellPhoneNumber = "075" + telephone;
                     personalDetailsPageCa.ContactingYou.EmailAddress = emailCa;
                     personalDetailsPageCa.ContactingYou.ConfirmEmailAddress = emailCa;
                     personalDetailsPageCa.PrivacyPolicy = true;
                     personalDetailsPageCa.CanContact = true;
                     journeyCa.CurrentPage = personalDetailsPageCa.Submit() as AddressDetailsPage;
                     var myBankAccountCa = journeyCa.FillAddressDetails().FillAccountDetails().CurrentPage as PersonalBankAccountPage;
-                    myBankAccountCa.PinVerificationSection.ResendPinClickAndCheck();
-                    var sms = Drive.Data.Sms.Db.SmsMessages.FindBy(MobilePhoneNumber: telephone);
-                    Console.WriteLine(sms.ToString());
+                    Assert.IsTrue(myBankAccountCa.PinVerificationSection.ResendPinClickAndCheck());
+                    var smsCa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber("175" + telephone));
+                    foreach (var sms in smsCa)
+                    {
+                        Console.WriteLine(sms.MessageText + "/" + sms.CreatedOn);
+                        Assert.IsTrue(sms.MessageText.Contains("You will need it to complete your application back at Wonga.ca."));
+                    }
                     break;
+                #endregion
+                #region Za
                 case AUT.Za:
                     var journeyZa = JourneyFactory.GetL0Journey(Client.Home());
                     var personalDetailsPageZa = journeyZa.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
                     var emailZa = Get.RandomEmail();
-                    personalDetailsPageZa.YourName.FirstName = Get.RandomString(3, 10);;
-                    personalDetailsPageZa.YourName.LastName = Get.RandomString(3, 10);;
+                    personalDetailsPageZa.YourName.FirstName = Get.RandomString(3, 10);
+                    personalDetailsPageZa.YourName.LastName = Get.RandomString(3, 10);
                     personalDetailsPageZa.YourName.Title = "Mr";
-                    personalDetailsPageZa.YourDetails.Number = Get.GetNIN(new DateTime(1957,3,10), true);
+                    personalDetailsPageZa.YourDetails.Number = Get.GetNIN(new DateTime(1957, 3, 10), true);
                     personalDetailsPageZa.YourDetails.DateOfBirth = "10/Mar/1957";
                     personalDetailsPageZa.YourDetails.Gender = "Female";
                     personalDetailsPageZa.YourDetails.HomeStatus = "Owner Occupier";
@@ -675,7 +683,7 @@ namespace Wonga.QA.Tests.Ui
                     personalDetailsPageZa.EmploymentDetails.SalaryPaidToBank = true;
                     personalDetailsPageZa.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("dd MMM yyyy");
                     personalDetailsPageZa.EmploymentDetails.IncomeFrequency = "Monthly";
-                    personalDetailsPageZa.ContactingYou.CellPhoneNumber = telephone;
+                    personalDetailsPageZa.ContactingYou.CellPhoneNumber = "075" + telephone;
                     personalDetailsPageZa.ContactingYou.EmailAddress = emailZa;
                     personalDetailsPageZa.ContactingYou.ConfirmEmailAddress = emailZa;
                     personalDetailsPageZa.PrivacyPolicy = true;
@@ -684,8 +692,54 @@ namespace Wonga.QA.Tests.Ui
                         "I am not married in community of property (I am single, married with antenuptial contract, divorced etc.)";
                     journeyZa.CurrentPage = personalDetailsPageZa.Submit() as AddressDetailsPage;
                     var myBankAccountZa = journeyZa.FillAddressDetails().FillAccountDetails().CurrentPage as PersonalBankAccountPage;
-                    myBankAccountZa.PinVerificationSection.ResendPinClickAndCheck();
+                    Assert.IsTrue(myBankAccountZa.PinVerificationSection.ResendPinClickAndCheck());
+                    var smsZa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber("2775" + telephone));
+                    foreach (var sms in smsZa)
+                    {
+                        Console.WriteLine(sms.MessageText + "/" + sms.CreatedOn);
+                        Assert.IsTrue(sms.MessageText.Contains("You will need it to complete your application back at Wonga.com."));
+                    }
                     break;
+                #endregion
+                #region Wb
+                case AUT.Wb:
+                    var emailWb = Get.RandomEmail();
+                    var journeyWb = JourneyFactory.GetL0JourneyWB(Client.Home());
+                    var personalDetailsPageWb = journeyWb.ApplyForLoan(5500, 30)
+                    .AnswerEligibilityQuestions().CurrentPage as PersonalDetailsPage;
+                    personalDetailsPageWb.YourName.FirstName = Get.RandomString(3, 10);
+                    personalDetailsPageWb.YourName.MiddleName = Get.RandomString(3, 10);
+                    personalDetailsPageWb.YourName.LastName = Get.RandomString(3, 10);
+                    personalDetailsPageWb.YourName.Title = "Mr";
+
+                    personalDetailsPageWb.YourDetails.Gender = "Female";
+                    personalDetailsPageWb.YourDetails.DateOfBirth = "1/Jan/1990";
+                    personalDetailsPageWb.YourDetails.HomeStatus = "Tenant Furnished";
+                    personalDetailsPageWb.YourDetails.MaritalStatus = "Single";
+                    personalDetailsPageWb.YourDetails.NumberOfDependants = "0";
+
+                    personalDetailsPageWb.ContactingYou.HomePhoneNumber = "02071111234";
+                    personalDetailsPageWb.ContactingYou.CellPhoneNumber = "077" + "0" + telephone;
+                    personalDetailsPageWb.ContactingYou.EmailAddress = emailWb;
+                    personalDetailsPageWb.ContactingYou.ConfirmEmailAddress = emailWb;
+
+                    personalDetailsPageWb.CanContact = "No";
+                    personalDetailsPageWb.PrivacyPolicy = true;
+                    journeyWb.CurrentPage = personalDetailsPageWb.Submit() as AddressDetailsPage;
+                    var debitCardPage = journeyWb.FillAddressDetails("Between 4 months and 2 years")
+                      .EnterAdditionalAddressDetails()
+                      .FillAccountDetails()
+                      .FillBankDetails().CurrentPage as PersonalDebitCardPage;
+                    Assert.IsTrue(debitCardPage.MobilePinVerification.ResendPinClickAndCheck());
+                    Console.WriteLine("077" + "0" + telephone);
+                    var smsWb = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber("4477" + "0" + telephone));
+                    foreach (var sms in smsWb)
+                    {
+                        Console.WriteLine(sms.MessageText + "/" + sms.CreatedOn);
+                        Assert.IsTrue(sms.MessageText.Contains("You will need it to complete your application back at WongaBusiness.com."));
+                    }
+                    break;
+                #endregion
             }
 
         }

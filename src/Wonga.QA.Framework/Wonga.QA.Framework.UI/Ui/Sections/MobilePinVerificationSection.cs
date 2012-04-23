@@ -17,13 +17,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             : base(Ui.Get.MobilePinVerificationSection.Fieldset, page)
         {
             _pin = Section.FindElement(By.CssSelector(Ui.Get.MobilePinVerificationSection.Pin));
-            switch (Config.AUT)
-            {
-                case AUT.Ca:
-                case AUT.Za:
-                    _resendPin = Section.FindElement(By.CssSelector(Ui.Get.MobilePinVerificationSection.ResendPin));
-                    break;
-            }
+            _resendPin = Section.FindElement(By.CssSelector(Ui.Get.MobilePinVerificationSection.ResendPin));
         }
         public String Pin { set { _pin.SendValue(value); } }
         public bool ResendPinClickAndCheck()
@@ -31,20 +25,20 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             _resendPin.Click();
             try
             {
-
-                Do.Until(() => Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.MobilePinVerificationSection.ResendPinMessage)));
-                _resendPinMessege = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.MobilePinVerificationSection.ResendPinMessage));
-                if (_resendPinMessege.Text.Equals("Your pin has now been resent to your phone. Your should receive it within minutes."))
+                _resendPinMessege = Do.Until(() => Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.MobilePinVerificationSection.ResendPinMessage)));
+                if (_resendPinMessege.Text.Equals("Your pin has now been resent to your phone. Your should receive it within minutes.") || _resendPinMessege.Text.Equals("We have resent your PIN."))
                 {
                     return true;
                 }
                 else
                 {
+                    Console.WriteLine("Text wrong");
                     return false;
                 }
             }
             catch (Exception)
             {
+                Console.WriteLine("Can't find button");
                 return false;
             }
 
