@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Tests.Core;
 
@@ -17,7 +14,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	{
         private const RiskMask TestMask = RiskMask.TESTMonthlyIncomeEnoughForRepayment;
 
-		[Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za, AUT.Uk), JIRA("SME-866")]
 		public void CheckpointMonthlyIncomeEnoughForRepaymentAccept()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
@@ -27,7 +24,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.Build();
 		}
 
-		[Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za, AUT.Uk), JIRA("SME-866")]
 		public void CheckpointMonthlyIncomeEnoughForRepaymentDecline()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
