@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using System.Threading;
 using Gallio.Framework;
 using Gallio.Framework.Assertions;
+using Gallio.Model;
 using MbUnit.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI;
@@ -30,13 +33,13 @@ namespace Wonga.QA.Tests.Ui
         public void TearDown()
         {
             var name = TestContext.CurrentContext.Test.Name;
+            if (Client.Driver is CustomRemoteWebDriver)
+                SauceRestClient.UpdateJobPassFailStatus(((CustomRemoteWebDriver)Client.Driver).GetSessionId());
             if (!Config.Ui.RemoteMode)
                 TestLog.EmbedImage(name + ".Screen", Client.Screen());
             TestLog.AttachHtml(name + ".Source", Client.Source());
             Client.Dispose();
         }
-
-        
 
         public void SourceContains(string token)
         {
