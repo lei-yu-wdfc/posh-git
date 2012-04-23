@@ -132,9 +132,9 @@ namespace Wonga.QA.Tests.CallReport
                                                                      RiskVerificationDefinitions.CreditBureauCifasFraudCheckVerification);
         }
          
-        /* Main Applicant Data is Available */
+        /* Main Applicant Data is Available - L0 */
 
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb,AUT.Uk), JIRA("UK-851")]
         [Description("Callreport -> This test creates a loan and checks if the main applicant has data available")]
         public void TestCallReportMainApplicantDataIsAvailable_LoanIsApproved()
         {
@@ -154,9 +154,9 @@ namespace Wonga.QA.Tests.CallReport
                                                                      RiskVerificationDefinitions.CreditBureauDataIsAvailableVerification);
         }
 
-        [Test, AUT(AUT.Wb),]
+        [Test, AUT(AUT.Wb, AUT.Uk), JIRA("UK-851")]
         [Description("Callreport -> This test creates a loan and checks if the main applicant has data available")]
-        public void TestCallReportMainApplicantIsNotAvailable_LoanIsDeclined()
+        public void TestCallReportMainApplicantDataIsNotAvailable_LoanIsDeclined()
         {
             const String forename = "Unknown";
             const String surname = "Customer";
@@ -173,6 +173,57 @@ namespace Wonga.QA.Tests.CallReport
                                                                      RiskCheckpointStatus.Failed,
                                                                      RiskVerificationDefinitions.CreditBureauDataIsAvailableVerification);
         }
+
+        /* Main Applicant Data is Available - LN */
+
+        [Test, AUT(AUT.Uk)]
+        [JIRA("UK-851"), Description("CallReport -> This test creates a loan for the solvent customer, then checks the risk checkpoint for LN Jurney")]
+        public void Ln_TestCallReportMainApplicantDataIsAvailable_LoanIsApproved()
+        {
+            const String forename = "kathleen";
+            const String surname = "Bridson";
+
+            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTCreditBureauDataIsAvailable);
+            ScrubNames(mainApplicantBuilder);
+            var mainApplicant = mainApplicantBuilder.Build();
+
+            var l0Application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted);
+            l0Application.RepayOnDueDate();
+
+            var lnAplication = CreateLnApplication(mainApplicant, ApplicationDecisionStatus.Accepted);
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(lnAplication.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.CreditBureauDataIsAvailable,
+                                                                     RiskCheckpointStatus.Verified,
+                                                                     RiskVerificationDefinitions.CreditBureauDataIsAvailableVerification);
+        }
+
+        [Test, AUT(AUT.Uk)]
+        [JIRA("UK-851"), Description("CallReport -> This test creates a loan for the solvent customer, then checks the risk checkpoint for LN Jurney")]
+        public void Ln_TestCallReportMainApplicantDataIsNotAvailable_LoanIsDeclined()
+        {
+            const String forename = "Unknown";
+            const String surname = "Customer";
+
+            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTEmployedMask);
+            ScrubNames(mainApplicantBuilder);
+            var mainApplicant = mainApplicantBuilder.Build();
+
+            var l0Application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted);
+            l0Application.RepayOnDueDate();
+
+            Drive.Db.UpdateEmployerName(mainApplicant.Id, RiskMask.TESTCreditBureauDataIsAvailable.ToString());
+
+            var lnAplication = CreateLnApplication(mainApplicant, ApplicationDecisionStatus.Declined);
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(lnAplication.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.CreditBureauDataIsAvailable,
+                                                                     RiskCheckpointStatus.Failed,
+                                                                     RiskVerificationDefinitions.CreditBureauDataIsAvailableVerification);
+        }
+
 
         /* Main Applicant is Insolvent L0 */
 
