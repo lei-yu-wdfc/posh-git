@@ -41,5 +41,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _continueButton.Click();
             return new MySummaryPage(Client);
         }
+
+        public String GetDealDonePageText
+        {
+            get { return Content.Text; }
+        }
     }
 }

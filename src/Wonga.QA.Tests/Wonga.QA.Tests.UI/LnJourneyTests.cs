@@ -35,7 +35,7 @@ namespace Wonga.QA.Tests.Ui
             var mySummaryPage = loginPage.LoginAs(email);
             var myPersonalDetails = mySummaryPage.Navigation.MyPersonalDetailsButtonClick();
             var oldMobilePhone = myPersonalDetails.GetMobilePhone;
-            var homePage = myPersonalDetails.Tabs.GoHome() as HomePage;
+            var homePage = Client.Home();
             
             var journey = JourneyFactory.GetLnJourney(homePage);
             var applyPage = journey.ApplyForLoan(200, 10)
@@ -144,7 +144,7 @@ namespace Wonga.QA.Tests.Ui
                            .CurrentPage as MySummaryPage;
         }
 
-        [Test, AUT(AUT.Uk), Pending("Example of uk Ln journey")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1533")]
         public void UkFullLnJourneyTest()
         {
             var loginPage = Client.Login();
@@ -165,7 +165,7 @@ namespace Wonga.QA.Tests.Ui
                            .WaitForAcceptedPage()
                            .FillAcceptedPage()
                            .GoToMySummaryPage()
-                           .CurrentPage as MySummaryPage;
+                           .CurrentPage as MySummaryPage;            
         }
 
     }

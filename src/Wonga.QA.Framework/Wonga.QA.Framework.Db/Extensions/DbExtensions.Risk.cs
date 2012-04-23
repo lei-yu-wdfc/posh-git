@@ -17,6 +17,12 @@ namespace Wonga.QA.Framework.Db.Extensions
 			db.Risk.SubmitChanges();
 		}
 
+        public static void UpdateMiddleName(this DbDriver db, Guid accountId, string middleName)
+        {
+            db.Risk.RiskAccounts.Single(a => a.AccountId == accountId).Middlename = middleName;
+            db.Risk.SubmitChanges();
+        }
+
 		public static void RemovePhoneNumberFromRiskDb(this DbDriver db, String mobilePhoneNumber)
 		{
 			//Clean the mobile number from DB 

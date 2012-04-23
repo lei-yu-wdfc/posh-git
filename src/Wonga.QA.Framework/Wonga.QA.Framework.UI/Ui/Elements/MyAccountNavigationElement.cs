@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using OpenQA.Selenium;
+using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Elements;
 using Wonga.QA.Framework.UI.Mappings;
 using Wonga.QA.Framework.UI.UiElements.Pages;
@@ -19,11 +20,28 @@ namespace Wonga.QA.Framework.UI.Elements
         public MyAccountNavigationElement(BasePage page)
             : base(page)
         {
-            _myPaymentDetailsButton =
-                Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.MyAccountNavigationSection.MyPaymentsDetails));
-            _mySummaryButton = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.MyAccountNavigationSection.MySummary));
-            _myPersonalDetailsButton =
-                Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.MyAccountNavigationSection.MyPersonalDetails));
+            _mySummaryButton =
+                        Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.MyAccountNavigationSection.MySummary));
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                case AUT.Ca:
+                    _myPaymentDetailsButton =
+                        Page.Client.Driver.FindElement(
+                            By.CssSelector(Ui.Get.MyAccountNavigationSection.MyPaymentsDetails));
+                    _myPersonalDetailsButton =
+                        Page.Client.Driver.FindElement(
+                            By.CssSelector(Ui.Get.MyAccountNavigationSection.MyPersonalDetails));
+                    break;
+                case AUT.Wb:
+                    _myPersonalDetailsButton =
+                        Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.MyAccountNavigationSection.YourDetails));
+                    _myPaymentDetailsButton =
+                        Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.MyAccountNavigationSection.AccountDetails));
+                    break;
+
+
+            }
         }
         public MyPaymentsPage MyPaymentDetailsButtonClick()
         {
@@ -40,6 +58,6 @@ namespace Wonga.QA.Framework.UI.Elements
             _mySummaryButton.Click();
             return new MySummaryPage(Page.Client);
         }
-        
+
     }
 }

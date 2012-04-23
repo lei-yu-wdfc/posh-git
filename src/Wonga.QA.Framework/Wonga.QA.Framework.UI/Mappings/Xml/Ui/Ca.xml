@@ -49,6 +49,8 @@
 
   <AccountDetailsSection>
     <Fieldset>fieldset#account-setup</Fieldset>
+	<PasswordErrorForm>#edit-password-wrapper .form-error .invalid</PasswordErrorForm>
+    <PasswordConfirmErrorForm>#edit-password-confirm-wrapper .form-error .invalid</PasswordConfirmErrorForm>
   </AccountDetailsSection>
 
   <PersonalBankAccountDetailsPage>
@@ -65,6 +67,8 @@
 
   <MobilePinVerificationSection>
     <Pin>#edit-pin-ca</Pin>
+	<ResendPin>.resend-pin.mod</ResendPin>
+	<ResendPinMessage>#fancybox-content div div p</ResendPinMessage>
   </MobilePinVerificationSection>
 
   <AcceptedPage>
@@ -102,6 +106,16 @@
   <AboutUsPage>
     <OurCustomers>#block-wonga-6 div div ul li:nth-child(3) a</OurCustomers>
     <ResponsibleLending>#block-wonga-6 div div ul li:nth-child(2) a</ResponsibleLending>
+    <News>#block-wonga-6 div div ul li:nth-child(1) a</News>
+    <WhyUseUs>#block-wonga-6 div div ul li:nth-child(4) a</WhyUseUs>
+    <WereDifferent>div.wongaTabs li:nth-child(1) a</WereDifferent>
+    <WereDifferentTitle>div.panes div:nth-child(1) h2</WereDifferentTitle>
+    <WereFast>div.wongaTabs li:nth-child(2) a</WereFast>
+    <WereFastTitle>div.panes div:nth-child(2) h2</WereFastTitle>
+    <WereResponsible>div.wongaTabs li:nth-child(3) a</WereResponsible>
+    <WereResponsibleTitle>div.panes div:nth-child(3) h2</WereResponsibleTitle>
+    <WongaMoments>div.wongaTabs li:nth-child(4) a</WongaMoments>
+    <WongaMomentsTitle>div.panes div:nth-child(4) h2</WongaMomentsTitle>
   </AboutUsPage>
 
 	<MySummaryPage>
@@ -121,6 +135,7 @@
   </HomePage>
 
   <TabsElement>
+    <Advice>li:nth-child(4)>a</Advice>
     <MyAccount>li:nth-child(5)>a</MyAccount>
   </TabsElement>
 
@@ -131,4 +146,6 @@
   <MyPersonalDetailsPage>
     <Postcode>table#profile tr#address tbody tr:nth-child(3) td</Postcode>
   </MyPersonalDetailsPage>
+  
+  
 </Ui>

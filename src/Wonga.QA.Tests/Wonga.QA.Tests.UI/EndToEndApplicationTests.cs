@@ -16,6 +16,10 @@ namespace Wonga.QA.Tests.Ui
 	class EndToEndApplicationTests : UiTest
 	{
 		private Dictionary<string, string> _originalServiceConfiguration = new Dictionary<string, string>();
+		private string _forename;
+		private string _surname;
+		private string _nationalId;
+		private DateTime _dateOfBirth;
 
 		[FixtureSetUp]
 		public void FixtureSetUp()
@@ -29,6 +33,11 @@ namespace Wonga.QA.Tests.Ui
 
 						_originalServiceConfiguration.Add("Mocks.IovationEnabled", "true");
 						Drive.Db.SetServiceConfiguration("Mocks.IovationEnabled", "true");
+
+						_forename = "ANITHA";
+						_surname = "ESSACK";
+						_nationalId = "5712190106083";
+						_dateOfBirth = new DateTime(1957, 12, 19);
 					}
 					break;
 
@@ -45,15 +54,15 @@ namespace Wonga.QA.Tests.Ui
 			Drive.Db.SetServiceConfigurations(_originalServiceConfiguration);
 		}
 
-		[Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za), Pending()]
 		public void EndToEndApplicationZaL0()
 		{
 			var journey = JourneyFactory.GetL0Journey(Client.Home());
 
-			journey.FirstName = "ANITHA";
-			journey.LastName = "ESSACK";
-			journey.NationalId = "5712190106083";
-			journey.DateOfBirth = new DateTime(1957, 12, 19);
+			journey.FirstName = _forename;
+			journey.LastName = _surname;
+			journey.NationalId = _nationalId;
+			journey.DateOfBirth = _dateOfBirth;
 			
 			var processingPage = journey.ApplyForLoan(200, 10)
 								 .FillPersonalDetails(employerNameMask: "Wonga")

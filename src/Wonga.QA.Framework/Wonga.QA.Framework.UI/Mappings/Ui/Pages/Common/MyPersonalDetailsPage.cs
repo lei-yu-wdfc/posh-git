@@ -9,6 +9,8 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
     public class MyPersonalDetailsPage
     {
         public String Address { get; set; }
+        public String HouseNumberAndStreet { get; set; }
+        public String Town { get; set; }
         public String Postcode { get; set; }
         public String Password { get; set; }
         public String Phone { get; set; }
@@ -20,6 +22,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String EditPhoneHome { get; set; }
         public String EditPhoneMobile { get; set; }
         public String EditPhonePin { get; set; }
+        public String EditPhoneErrorMessage { get; set; }
         public String EditPasswordCurrent { get; set; }
         public String EditPasswordNew { get; set; }
         public String EditPasswordConfirm { get; set; }
@@ -27,5 +30,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String EditPasswordPopupErrorMessage { get; set; }
         public String SubmitButton { get; set; }
         public String PopupErrorMessage { get; set; }
+        public String PopupSuccessTitle { get; set; }
     }
 }

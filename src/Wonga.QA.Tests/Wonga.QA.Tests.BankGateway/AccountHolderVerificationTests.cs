@@ -42,8 +42,8 @@ namespace Wonga.QA.Tests.BankGateway
 		public void AccountHolderVerificationRequestForSingleApplication()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
-			var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
-
+			var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.ReadyToSign).Build();
+			
 			var response = WaitForAccountHolderVerificationResponse(application);
 
 			var requestUsedWebService = AccountHolderVerificationResponseIsXml(response);
@@ -75,6 +75,7 @@ namespace Wonga.QA.Tests.BankGateway
 			var requestUsedWebService = AccountHolderVerificationResponseIsXml(response);
 			Assert.IsTrue(requestUsedWebService);
 		}
+
 
 		#region Helpers
 

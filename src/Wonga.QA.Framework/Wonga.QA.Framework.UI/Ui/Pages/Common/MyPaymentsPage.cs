@@ -27,7 +27,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public MyPaymentsPage(UiClient client)
             : base(client)
         {
-            Navigation = new MyAccountNavigationElement(this);
+            
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                case AUT.Ca:  //TODO find out what xpath for button on Ca
+                    Navigation = new MyAccountNavigationElement(this);
+                    break;
+            }
         }
         public bool IsAddBankAccountButtonExists()
         {

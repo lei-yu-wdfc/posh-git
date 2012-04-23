@@ -41,7 +41,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			}
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1938")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1938"), Pending]                                                             
 		public void CheckpointReputationPredictionPositiveAccept()
 		{
 			var customer = CustomerBuilder.New()
@@ -55,7 +55,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Assert.GreaterThan(actualScore, ReputationScoreCutoff);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1938")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1938"), Pending]
 		public void CheckpointReputationPredictionPositiveDecline()
 		{
 			int newCutoff = 800;
@@ -79,7 +79,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			}
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1938")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1938"), Pending]
 		public void CheckpointReputationPredictionPositiveCorrectFactorsUsed()
 		{
 			var customer = CustomerBuilder.New()
@@ -93,7 +93,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Assert.AreElementsEqualIgnoringOrder(FactorNames, actualFactorNames);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1938")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1938"), Pending]
 		public void CheckpointReputationPredictionPositiveIdentialCustomersHaveEqualScores()
 		{
 			int postcodeWithHighArrearsRate = GetPostcode();
@@ -111,7 +111,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Assert.AreEqual(score2, score1);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1938")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1938"), Pending]
 		public void CheckpointReputationPredictionPositivePostCodeWithHighArrearsRateLowersScore()
 		{
 			int postcode = GetPostcode();
@@ -131,7 +131,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Assert.LessThan(score2, score1);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1938")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1938"), Pending]
 		public void CheckpointReputationPredictionPositiveTablesUpdateWhenInArrears()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(GetPostcode().ToString()).Build();
@@ -148,7 +148,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Assert.IsTrue((bool) currentInArrears);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1938")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1938"), Pending]
 		public void CheckpointReputationPredictionPositiveTablesUpdateWhenAccountRankIncreases()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(GetPostcode().ToString()).Build();
@@ -167,19 +167,21 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 		private double GetReputationPredictionScore(Application application)
 		{
-			var db = new DbDriver();
-			return (double) (db.Risk.RiskApplications.Where(ra => ra.ApplicationId == application.Id).Join(
-				db.Risk.RiskDecisionDatas, ra => ra.RiskApplicationId, dd => dd.RiskApplicationId, (ra, dd) => dd.ValueDouble)).First();
+			var riskWorkflowId = (int)Do.Until(() => Drive.Data.Risk.Db.RiskWorkflows.FindByApplicationId(application.Id)).RiskWorkflowId;
+			var score = (double)Do.Until(() => Drive.Data.Risk.Db.RiskDecisionData.FindByRiskWorkflowId(riskWorkflowId).ValueDouble);
+
+			return score;
 		}
 
 		private IEnumerable<string> GetFactorNamesUsed(Application application)
 		{
-			var db = new DbDriver();
-			return (from ra in db.Risk.RiskApplications
-			        where ra.ApplicationId == application.Id
-			        join pf in db.Risk.PmmlFactors on ra.RiskApplicationId equals pf.RiskApplicationId
-			        join f in db.Risk.Factors on pf.FactorId equals f.FactorId
-			        select f.Name);
+			var riskWorkflowId = Drive.Data.Risk.Db.RiskWorkflows.FindByApplicationId(application.Id).RiskWorkflowId;
+			var pmmlFactors = Drive.Data.Risk.Db.PmmlFactors.FindAllByRiskWorkflowId(riskWorkflowId)
+								.Select(Drive.Data.Risk.Db.PmmlFactors.FactorId);
+
+			var factorNames = Drive.Data.Risk.Db.Factors.FindAllByFactorId(pmmlFactors).Select(Drive.Data.Risk.Db.Factors.Name);
+
+			return factorNames as IEnumerable<string>;
 		}
 
 		private void SetReputationScoreCutoff(double cutoff)

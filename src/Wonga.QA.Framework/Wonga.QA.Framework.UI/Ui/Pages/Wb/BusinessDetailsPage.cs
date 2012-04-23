@@ -23,10 +23,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
             _bizNumber = _form.FindElement(By.CssSelector(Ui.Get.BusinessDetailsPage.BusinessNumber));
         }
 
-        public Wb.AdditionalDirectorsPage Next()
+        public AdditionalDirectorsPage Next()
         {
             _next.Click();
-            return new Wb.AdditionalDirectorsPage(Client);
+            return new AdditionalDirectorsPage(Client);
         }
     }
 }

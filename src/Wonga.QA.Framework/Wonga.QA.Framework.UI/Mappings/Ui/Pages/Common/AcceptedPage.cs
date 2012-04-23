@@ -8,6 +8,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
     public class AcceptedPage
     {
         public String FormId { get; set; }
+        public String AgreementTitle { get; set; }
         public String NodeWrap { get; set; }
         public String TotalToRepay { get; set; }
         public String RepaymentDate { get; set; }
@@ -32,6 +33,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String TotalAmountDueUnderTheAgreement { get; set; }
         public String PaymentDueDate { get; set; }
         public String LoanAmount { get; set; }
-        public String TotalToPayOnPaymentDate { get; set; }
+        public String TotalToPayOnPaymentDate { get; set; }    
     }
 }

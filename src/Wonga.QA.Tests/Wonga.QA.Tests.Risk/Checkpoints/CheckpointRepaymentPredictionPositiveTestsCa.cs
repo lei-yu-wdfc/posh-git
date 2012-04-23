@@ -12,13 +12,12 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	[AUT(AUT.Ca)]
 	public class CheckpointRepaymentPredictionPositiveTestsCa
 	{
-        //TODO: The L0 scorecard was implemneted incorrectly for CA. 
-        //TODO: This will be refactored in the near future. 
-        //TODO: Only then can these tests be merged into ZA TESTRepaymentPredictionPositive tests 
+        //TODO: When LN score card is implemented then we can merge into ZA TESTRepaymentPredictionPositive tests 
 
-        //private const RiskMask TestMask = RiskMask.TESTRepaymentPredictionPositive;
+        private const RiskMask TestMask = RiskMask.TESTRepaymentPredictionPositive;
         CustomerBuilder _customerBuilder;
         Customer _customer;
+		private bool _resetUseScorecardModelValue;
 		
 		private string _expectedScorecardNameL0;
 		private int _expectedScoreCutoffNewUsers;
@@ -33,21 +32,21 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             _expectedScoreCutoffNewUsers = ScoreCutoffNewUsersCa;
 		}
 
-        [Test, AUT(AUT.Ca)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1956")]
 		public void CheckpointRepaymentPredictionPositiveCorrectScorecardUsedL0()
 		{
 			var scorecardName = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Risk.RepaymentModelForNewUsers").Value;
 			Assert.AreEqual(_expectedScorecardNameL0, scorecardName);
 		}
 
-        [Test, AUT(AUT.Ca)]
+		[Test, AUT(AUT.Ca), JIRA("CA-1956")]
         public void CheckpointRepaymentPredictionPositiveCorrectCutoffL0()
         {
             var scoreCutoffNewUsers = Int32.Parse(Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Risk.RepaymentScoreNewUsersCutOff").Value);
             Assert.AreEqual(_expectedScoreCutoffNewUsers, scoreCutoffNewUsers);
         }
 
-        [Test, AUT(AUT.Ca)]
+		[Test, AUT(AUT.Ca), JIRA("CA-1956")]
         public void CheckpointRepaymentPredictionPositiveL0Accept()
         {
             const string forename = "MALCOLM";
@@ -59,7 +58,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             _customerBuilder.ScrubSurname(surname);
 
             _customerBuilder.WithForename(forename);
-            _customerBuilder.WithMiddleName("TESTCreditBureauScoreIsAcceptable");
+            _customerBuilder.WithMiddleName(TestMask);
             _customerBuilder.WithSurname(surname);
 
             _customerBuilder.WithFlatInAddress(null);
@@ -81,7 +80,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             Assert.GreaterThan(repaymentPredictionScore, ScoreCutoffNewUsersCa);
         }
 
-        [Test, AUT(AUT.Ca)]
+		[Test, AUT(AUT.Ca), JIRA("CA-1956")]
         public void CheckpointRepaymentPredictionPositiveL0Decline()
         {
             const string forename = "DAWN";
@@ -93,7 +92,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             _customerBuilder.ScrubSurname(surname);
 
             _customerBuilder.WithForename(forename);
-            _customerBuilder.WithMiddleName("TESTCreditBureauScoreIsAcceptable");
+			_customerBuilder.WithMiddleName(TestMask);
             _customerBuilder.WithSurname(surname);
 
             _customerBuilder.WithFlatInAddress(null);
@@ -115,7 +114,8 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             Assert.LessThan(repaymentPredictionScore, ScoreCutoffNewUsersCa);
         }
 
-        [Test, AUT(AUT.Ca)]
+		[Test, AUT(AUT.Ca), JIRA("CA-1956")]
+		[Ignore("This Checkpoint is not part of the LN workflow any more.. keeping this to be used in future when we implement LN scorecard")]
         public void VerifyLnCustomersAreNotBlockedByScoreCardForAccepted()
         {
             const string forename = "MALCOLM";
@@ -127,7 +127,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             _customerBuilder.ScrubSurname(surname);
 
             _customerBuilder.WithForename(forename);
-            _customerBuilder.WithMiddleName("TESTCreditBureauScoreIsAcceptable");
+            _customerBuilder.WithMiddleName(TestMask);
             _customerBuilder.WithSurname(surname);
 
             _customerBuilder.WithFlatInAddress(null);
@@ -152,11 +152,13 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             Assert.IsFalse(ScoreGeneratedForApplication(lNapplication));
         }
 
-        [Test, AUT(AUT.Ca)]
+		[Test, AUT(AUT.Ca), JIRA("CA-1956")]
+		[Ignore("This Checkpoint is not part of the LN workflow any more.. keeping this to be used in future when we implement LN scorecard")]
         public void VerifyTurningOnScorecardDoesNotAfftectLnForAccepted()
         {
             const string forename = "MALCOLM";
             const string surname = "MCCOOL";
+        	_resetUseScorecardModelValue = true;
 
             SetRiskUseScorecardModelValue(false);
 
@@ -166,7 +168,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             _customerBuilder.ScrubSurname(surname);
 
             _customerBuilder.WithForename(forename);
-            _customerBuilder.WithMiddleName("TESTCreditBureauScoreIsAcceptable");
+            _customerBuilder.WithMiddleName(TestMask);
             _customerBuilder.WithSurname(surname);
 
             _customerBuilder.WithFlatInAddress(null);
@@ -193,7 +195,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             Assert.IsFalse(ScoreGeneratedForApplication(lNapplication));
         }
 
-        [Test, AUT(AUT.Ca)]
+		[Test, AUT(AUT.Ca), JIRA("CA-1956")]
         public void VerifyLnCustomersAreNotBlockedByScoreCardForDeclined()
         {
             const string forename = "DAWN";
@@ -205,7 +207,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             _customerBuilder.ScrubSurname(surname);
 
             _customerBuilder.WithForename(forename);
-            _customerBuilder.WithMiddleName("TESTCreditBureauScoreIsAcceptable");
+            _customerBuilder.WithMiddleName(TestMask);
             _customerBuilder.WithSurname(surname);
 
             _customerBuilder.WithFlatInAddress(null);
@@ -228,11 +230,12 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             Assert.IsTrue(ScoreGeneratedForApplication(lNapplication));
         }
 
-        [Test, AUT(AUT.Ca)]
+		[Test, AUT(AUT.Ca), JIRA("CA-1956")]
         public void VerifyTurningOnScorecardDoesNotAfftectLnForDeclined()
         {
             const string forename = "DAWN";
             const string surname = "KALINICH";
+        	_resetUseScorecardModelValue = true;
 
             SetRiskUseScorecardModelValue(false);
 
@@ -242,7 +245,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             _customerBuilder.ScrubSurname(surname);
 
             _customerBuilder.WithForename(forename);
-            _customerBuilder.WithMiddleName("TESTCreditBureauScoreIsAcceptable");
+            _customerBuilder.WithMiddleName(TestMask);
             _customerBuilder.WithSurname(surname);
 
             _customerBuilder.WithFlatInAddress(null);
@@ -277,15 +280,21 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
                 _customer.ScrubCcin();
             }
 
-            SetRiskUseScorecardModelValue(true);
+			if(_resetUseScorecardModelValue)
+			{
+				SetRiskUseScorecardModelValue(true);
+			}
+            
         }
 
         private double GetRepaymentPredictionScore(Application application)
         {
-            var riskWorkflowId = (int)Do.Until(() => Drive.Data.Risk.Db.RiskWorkflows.FindByApplicationId(application.Id)).RiskWorkflowId;
-            var score = (double)Do.Until(() => Drive.Data.Risk.Db.RiskDecisionData.FindByRiskWorkflowId(riskWorkflowId).ValueDouble);
-
-            return score;
+            var db = new DbDriver();
+            return (double) (from rw in db.Risk.RiskWorkflows
+                    join rd in db.Risk.RiskDecisionDatas
+                        on rw.RiskWorkflowId equals rd.RiskWorkflowId
+                    where rw.ApplicationId == application.Id
+                    select rd.ValueDouble).First();
         }
 
         private static bool ScoreGeneratedForApplication(Application application)

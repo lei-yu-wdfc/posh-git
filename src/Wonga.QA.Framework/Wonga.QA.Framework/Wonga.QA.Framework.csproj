@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="Application.cs" />
     <Compile Include="ApplicationBuilder.cs" />
+    <Compile Include="ApplicationOperations.cs" />
     <Compile Include="BusinessApplicationBuilder.cs" />
     <Compile Include="BusinessApplication.cs" />
     <Compile Include="Helpers\DateHelper.cs" />

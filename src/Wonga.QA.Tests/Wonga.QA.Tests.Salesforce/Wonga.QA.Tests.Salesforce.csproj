@@ -61,6 +61,10 @@
     <Reference Include="Wonga.QA.Framework.Core">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Wonga.QA.Framework.Cs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Cs.dll</HintPath>
+    </Reference>
     <Reference Include="Wonga.QA.Framework.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Data.dll</HintPath>

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using MbUnit.Framework;
 using Wonga.QA.Framework.Core;
@@ -15,6 +12,8 @@ namespace Wonga.QA.Tests.Ui
 {
     public class L0AcceptedLoan : UiTest
     {
+        private const String MiddleNameMask = "TESTNoCheck";
+
         [Test, AUT(AUT.Za)]
         public void ZaAcceptedLoan()
         {
@@ -48,15 +47,92 @@ namespace Wonga.QA.Tests.Ui
             var dealDone = acceptedPage.Submit();
         }
 
-        [Test, AUT(AUT.Wb), Pending("Broken, waiting for FE to stabilize changes..")]
-        public void WbAcceptedLoan()
-        {
-            var processingPage = WbL0Path("TESTNoCheck");
-            var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
-            acceptedPage.SignTermsMainApplicant();
-            acceptedPage.SignTermsGuarantor();
-            var dealDonePage = acceptedPage.Submit() as DealDonePage;
-        }
+       [Test, AUT(AUT.Wb)]
+       public void WbAcceptedLoan()
+       {
+           var journey = JourneyFactory.GetL0JourneyWB(Client.Home());
+           var homePage = journey.ApplyForLoan(5500, 30)
+               .AnswerEligibilityQuestions()
+               .FillPersonalDetails(MiddleNameMask)
+               .FillAddressDetails("More than 4 years")
+               .FillAccountDetails()
+               .FillBankDetails()
+               .FillCardDetails()
+               .EnterBusinessDetails()
+               .DeclineAddAdditionalDirector()
+               .EnterBusinessBankAccountDetails()
+               .EnterBusinessDebitCardDetails()
+               .WaitForApplyTermsPage()
+               .ApplyTerms()
+               .FillAcceptedPage()
+               .GoHomePage();
+       }
+
+       [Test, AUT(AUT.Wb)]
+       public void WbAcceptedLoanAddAdditionalDirector()
+       {
+           var journey = JourneyFactory.GetL0JourneyWB(Client.Home());
+           var homePage = journey.ApplyForLoan(5500, 30)
+               .AnswerEligibilityQuestions()
+               .FillPersonalDetails(MiddleNameMask)
+               .FillAddressDetails("2 to 3 years")
+               .FillAccountDetails()
+               .FillBankDetails()
+               .FillCardDetails()
+               .EnterBusinessDetails()
+               .AddAdditionalDirector()
+               .EnterBusinessBankAccountDetails()
+               .EnterBusinessDebitCardDetails()
+               .WaitForApplyTermsPage()
+               .ApplyTerms()
+               .FillAcceptedPage()
+               .GoHomePage();
+       }
+
+       [Test, AUT(AUT.Wb)]
+       public void WbAcceptedLoanUpdateLoanDurationOnApplyTermsPage()
+       {
+           var journey = JourneyFactory.GetL0JourneyWB(Client.Home());
+           var homePage = journey.ApplyForLoan(5500, 30)
+               .AnswerEligibilityQuestions()
+               .FillPersonalDetails(MiddleNameMask)
+               .FillAddressDetails("3 to 4 years")
+               .FillAccountDetails()
+               .FillBankDetails()
+               .FillCardDetails()
+               .EnterBusinessDetails()
+               .DeclineAddAdditionalDirector()
+               .EnterBusinessBankAccountDetails()
+               .EnterBusinessDebitCardDetails()
+               .WaitForApplyTermsPage()
+               .UpdateLoanDuration()
+               .ApplyTerms()
+               .FillAcceptedPage()
+               .GoHomePage();
+       }     
+
+       [Test, AUT(AUT.Wb)]
+       public void WbAcceptedLoanAddressLessThan2Years()
+       {
+           var journey = JourneyFactory.GetL0JourneyWB(Client.Home());
+           var homePage = journey.ApplyForLoan(5500, 30)
+               .AnswerEligibilityQuestions()
+               .FillPersonalDetails(MiddleNameMask)
+               .FillAddressDetails("Between 4 months and 2 years")
+               .EnterAdditionalAddressDetails()
+               .FillAccountDetails()
+               .FillBankDetails()
+               .FillCardDetails()
+               .EnterBusinessDetails()
+               .DeclineAddAdditionalDirector()
+               .EnterBusinessBankAccountDetails()
+               .EnterBusinessDebitCardDetails()
+               .WaitForApplyTermsPage()
+               .ApplyTerms()
+               .FillAcceptedPage()
+               .GoHomePage();
+
+       }
 
         [Test, AUT(AUT.Uk)]
         public void UkAcceptedLoan()
@@ -71,6 +147,53 @@ namespace Wonga.QA.Tests.Ui
                                      .FillCardDetails()
                                      .WaitForAcceptedPage().CurrentPage as AcceptedPage;
 
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-730")]
+        public void CheckLoanAgreement()
+        {
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+
+            var acceptedPage = journey.ApplyForLoan(200, 10)
+                                     .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                     .FillAddressDetails()
+                                     .FillAccountDetails()
+                                     .FillBankDetails()
+                                     .FillCardDetails()
+                                     .WaitForAcceptedPage().CurrentPage as AcceptedPage;
+
+            Assert.IsTrue(acceptedPage.IsAgreementFormDisplayed());
+
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-731")]
+        public void LoanCompletionConfirmed()
+        {
+            const int loanAmount = 100;
+            const int days = 10;
+            string paymentAmount = 115.91M.ToString("#.00");
+            DateTime paymentDate = DateTime.Now.AddDays(days);
+
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+
+            var dealDonePage = journey.ApplyForLoan(loanAmount, days)
+                                   .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                   .FillAddressDetails()
+                                   .FillAccountDetails()
+                                   .FillBankDetails()
+                                   .FillCardDetails()
+                                   .WaitForAcceptedPage()
+                                   .FillAcceptedPage().CurrentPage as DealDonePage;
+
+            string actualDealDoneText = dealDonePage.GetDealDonePageText;
+
+            // Check text on the Deal Done page is displayed correctly
+            Assert.Contains(actualDealDoneText, "The cash will be winging its way into your bank account in the next 15 minutes!");
+            Assert.Contains(actualDealDoneText, paymentAmount);
+            Assert.Contains(actualDealDoneText, paymentDate.ToString("dd"));
+            Assert.Contains(actualDealDoneText, paymentDate.ToString("MMM"));
+            Assert.Contains(actualDealDoneText, paymentDate.ToString("yyyy"));
+            Assert.Contains(actualDealDoneText, paymentDate.ToString("dddd"));
         }
     }
 }

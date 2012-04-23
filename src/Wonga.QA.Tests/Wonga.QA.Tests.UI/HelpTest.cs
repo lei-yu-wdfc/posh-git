@@ -21,20 +21,35 @@ namespace Wonga.QA.Tests.Ui
     public class HelpTest : UiTest
     {
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-164"), Pending("FE bug")]
+        [Test, AUT(AUT.Za, AUT.Ca, AUT.Wb), JIRA("QA-164, QA-254"), Pending("FE bug")]
         public void SelectingAHelpQuestionTakesMeToFAQPageWithCorrectQuestionSelected()
         {
             var page = Client.Home();
             page.Help.HelpTriggerClick();
             List<String> listQuestions = page.Help.GetListQuestions();
-            foreach (string question in listQuestions)
+            switch (Config.AUT)
             {
-                page.Help.HelpTriggerClick();
-                FAQPage faqPage = page.Help.SelectQuestion(question);
-                Assert.AreEqual(question, faqPage.Faq.GetSelectedQuestionText());
-                Assert.AreEqual(question, faqPage.Faq.GetAnswerQuestionText());
-                page = Client.Home();
-
+                case AUT.Ca:
+                case AUT.Za:
+                    foreach (string question in listQuestions)
+                    {
+                        page.Help.HelpTriggerClick();
+                        FAQPage faqPage = page.Help.SelectQuestion(question);
+                        Assert.AreEqual(question, faqPage.Faq.GetSelectedQuestionText());
+                        Assert.AreEqual(question, faqPage.Faq.GetAnswerQuestionText());
+                        page = Client.Home();
+                    }
+                    break;
+                case AUT.Wb:
+                    var listQuestionsWb = new List<string> { "How does Wonga Business work?", "What do I need to apply for a Wonga Business loan?", "How much cash can my business borrow?", "How much does a Wonga loan cost?", "Does Wonga require a credit check?", "What if the business or I have bad credit?", "What personal information does Wonga need?", "Can my business get a loan if it has no assets?", "Does my business need a bank account?", "Do I need a bank account?", "Do I need to give a reason why the business wants to borrow the money on the application?", "Is Wonga Business a member of any financial bodies?", "Is Wonga Business right for my business?", "What if the business is already in debt?", "How long will it take for the business to get the loan?", "How long before I have to repay a loan in full?", "How do I repay a loan?", "What happens if the business does not repay the loan?", "How do bank holidays and weekends affect the service?", "What if I have a complaint?", "The business still has not received the cash", "I can’t login", "I can’t remember my password", "I haven’t received my email during application", "I haven't received my PIN via text message", "I can’t find my house or business address", "My business loan application has been ‘referred’ – what’s happening?", "My business has had loans before but its just been rejected" };
+                    Assert.AreEqual(listQuestionsWb.Count, listQuestions.Count);
+                    listQuestions.Sort();
+                    listQuestionsWb.Sort();
+                    for (int i = 0; i < listQuestions.Count; i++)
+                    {
+                        Assert.AreEqual(listQuestionsWb[i], listQuestions[i]);
+                    }
+                    break;
             }
         }
 
@@ -60,12 +75,12 @@ namespace Wonga.QA.Tests.Ui
         {
             var page = Client.Home();
             page.Help.HelpTriggerClick();
-            var jargonBasterPage =  page.Help.JargonBusterClick();
-            var alphabetLinks =  jargonBasterPage.GetAlphabetLinks();
+            var jargonBasterPage = page.Help.JargonBusterClick();
+            var alphabetLinks = jargonBasterPage.GetAlphabetLinks();
             foreach (var element in alphabetLinks)
             {
-                    element.Click();
-                    Assert.IsTrue(jargonBasterPage.Url.Contains("#"+element.Text.ToLower()));
+                element.Click();
+                Assert.IsTrue(jargonBasterPage.Url.Contains("#" + element.Text.ToLower()));
             }
         }
 
@@ -76,8 +91,8 @@ namespace Wonga.QA.Tests.Ui
             page.Help.HelpTriggerClick();
             page.Help.ContactUsClick();
             Thread.Sleep(5000); //wait for ajax load the popup
-            Assert.IsTrue(page.Contact.IsContactPopupPresent()); 
-            
+            Assert.IsTrue(page.Contact.IsContactPopupPresent());
+
         }
     }
 }

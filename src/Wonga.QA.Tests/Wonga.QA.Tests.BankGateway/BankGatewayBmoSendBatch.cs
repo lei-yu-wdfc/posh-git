@@ -1,0 +1,35 @@
+using System;
+using System.Linq;
+using Wonga.QA.Framework;
+using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Msmq;
+
+namespace Wonga.QA.Tests.BankGateway
+{
+	public class BankGatewayBmoSendBatch : IDisposable
+	{
+		private readonly string _originalSchedule;
+
+		public BankGatewayBmoSendBatch()
+		{
+			// Pause Cash-out schedule
+			var driver = Drive.Db.Ops;
+			var config = driver.ServiceConfigurations.First(sc => sc.Key == "BankGateway.Bmo.FileTransferTimes");
+			_originalSchedule = config.Value;
+			config.Value = DateTime.UtcNow.AddHours(2).TimeOfDay.ToString();
+			driver.SubmitChanges();
+		}
+
+		public void Dispose()
+		{
+			// Restore cash-out schedule
+			var driver = Drive.Db.Ops;
+			var config = driver.ServiceConfigurations.First(sc => sc.Key == "BankGateway.Bmo.FileTransferTimes");
+			config.Value = _originalSchedule;
+			driver.SubmitChanges();
+
+			var batchSaga = Do.Until(() => Drive.Db.OpsSagasCa.SendBmoPaymentSagaEntities.First());
+			Drive.Msmq.BankGatewayBmo.Send(new TimeoutMessage { SagaId = batchSaga.Id });
+		}
+	}
+}

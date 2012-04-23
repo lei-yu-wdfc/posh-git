@@ -26,6 +26,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             if (typeof(T) == typeof(AcceptedPage))
                 return Do.With.Timeout(2).Until(() => new AcceptedPage(Client));
 
+            if (typeof(T) == typeof(ApplyTermsPage))
+                return Do.With.Timeout(2).Until(() => new ApplyTermsPage(Client));
+
             if (typeof(T) == typeof(DeclinedPage))
                 return Do.With.Timeout(2).Until(() => new DeclinedPage(Client));
             throw new NotImplementedException();

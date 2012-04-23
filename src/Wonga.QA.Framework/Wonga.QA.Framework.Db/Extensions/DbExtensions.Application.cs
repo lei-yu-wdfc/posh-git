@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using System.Linq;
+using System.Threading;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Payments;
@@ -26,7 +28,41 @@ namespace Wonga.QA.Framework.Db.Extensions
 			db.RewindApplicationDates(application, riskApplication, duration);
 		}
 
-		public static void RewindApplicationDates(this DbDriver db, ApplicationEntity application, RiskApplicationEntity riskApp, TimeSpan span)
+        public static void UpdateNextDueDate(this DbDriver db, FixedTermLoanApplicationEntity fixedApp, TimeSpan span)
+        {
+            var dt = DateTime.UtcNow;
+
+            try
+            {
+                fixedApp.NextDueDate = (dt += span);
+                fixedApp.Submit(true);
+            }
+            catch (Exception)
+            {
+               // Retry in case of deadlocks
+               Thread.Sleep(1000);
+               fixedApp.NextDueDate = (dt += span);
+               fixedApp.Submit(true);
+            }
+        }
+
+        public static void MoveAcceptedOnDate(this DbDriver db, ApplicationEntity app, TimeSpan span)
+        {
+            try
+            {
+                app.AcceptedOn += span;
+                app.Submit(true);
+            }
+            catch (Exception)
+            {
+                // Retry in case of deadlocks
+                Thread.Sleep(1000);
+                app.AcceptedOn += span;
+                app.Submit(true);
+            }
+        }
+
+	    public static void RewindApplicationDates(this DbDriver db, ApplicationEntity application, RiskApplicationEntity riskApp, TimeSpan span)
 		{
 			application.ApplicationDate -= span;
 			application.SignedOn -= span;
@@ -34,17 +70,33 @@ namespace Wonga.QA.Framework.Db.Extensions
 			application.AcceptedOn -= span;
 			application.FixedTermLoanApplicationEntity.PromiseDate -= span;
 			application.FixedTermLoanApplicationEntity.NextDueDate -= span;
-			application.Transactions.ForEach(t => t.PostedOn -= span);
 			if (application.ClosedOn != null)
 				application.ClosedOn -= span;
 			application.Submit(true);
 
-			riskApp.ApplicationDate -= span;
+			application.Transactions.ForEach(t => t.CreatedOn -= span);
+			application.Transactions.ForEach(t => t.PostedOn -= span);
+	    	application.Transactions.ForEach(t => t.Submit(true));
+
+			if (application.ArrearEntity != null)
+			{
+				application.ArrearEntity.CreatedOn -= span;
+				application.ArrearEntity.Submit(true);
+			}
+
+	    	riskApp.ApplicationDate -= span;
 			riskApp.PromiseDate -= span;
 			if (riskApp.ClosedOn != null)
 				riskApp.ClosedOn -= span;
 			riskApp.Submit(true);
 		}
+
+        public static void MoveApplicationTransactionDates(this DbDriver db, ApplicationEntity application, TimeSpan span)
+        {
+            application.Transactions.ForEach(t => t.CreatedOn += span);
+            application.Transactions.ForEach(t => t.PostedOn += span);
+            application.Transactions.ForEach(t => t.Submit(true));
+        }
 
 		public static void RewindToDayOfLoanTerm(this DbDriver db, Guid applicationId, int dayOfLoanTerm)
 		{

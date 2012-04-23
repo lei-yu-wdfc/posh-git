@@ -100,13 +100,14 @@ namespace Wonga.QA.Tests.Payments
         [Row("2012/3/10 5:00:00", "2012/3/12", Order = 2)]
         [Row("2012/3/10 6:00:01", "2012/3/13", Order = 3)]
         public void GetRepayLoanParameterQueryTest(DateTime now, DateTime expectedActionDate)
-        {
+        {            
             SetPaymentsUtcNow(now);
             var response = Drive.Api.Queries.Post(new GetRepayLoanParametersQuery()
                                         {
                                             AccountId = _accountId
                                         });
             Assert.AreEqual(expectedActionDate, DateTime.Parse(response.Values["ActionDate"].Single()));
+
         }
 
         [Test, AUT(AUT.Za), JIRA("ZA-2099")]

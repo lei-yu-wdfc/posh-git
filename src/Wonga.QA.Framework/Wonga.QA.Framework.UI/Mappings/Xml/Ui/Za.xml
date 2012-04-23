@@ -18,6 +18,8 @@
 
   <MobilePinVerificationSection>
     <Pin>#edit-pin-za</Pin>
+	<ResendPin>.resend-pin.mod</ResendPin>
+	<ResendPinMessage>#fancybox-content div div p</ResendPinMessage>  
   </MobilePinVerificationSection>
   
   <EmploymentDetailsSection>
@@ -39,6 +41,8 @@
 
   <AccountDetailsSection>
     <Fieldset>#account-setup</Fieldset>
+	<PasswordErrorForm>#edit-password-wrapper .form-error .invalid</PasswordErrorForm>
+    <PasswordConfirmErrorForm>#edit-password-confirm-wrapper .form-error .invalid</PasswordConfirmErrorForm>
   </AccountDetailsSection>
 
   <DealDonePage>
@@ -83,6 +87,8 @@
 
   <MyPersonalDetailsPage>
     <Address>table#profile tr#address</Address>
+    <HouseNumberAndStreet>table#profile tr#address tbody tr:nth-child(1) td</HouseNumberAndStreet>
+    <Town>table#profile tr#address tbody tr:nth-child(2) td</Town>
     <Postcode>table#profile tr#address tbody tr:nth-child(3) td</Postcode>
     <Password>table#profile tr#password</Password>
     <Phone>table#profile tr#phone</Phone>
@@ -94,23 +100,53 @@
     <EditPhoneHome>input#edit-home-phone-za</EditPhoneHome>
     <EditPhoneMobile>input#edit-mobile-phone-za</EditPhoneMobile>
     <EditPhonePin>input#edit-mobile-pin</EditPhonePin>
+	<EditPhoneErrorMessage>.messages.error ul li</EditPhoneErrorMessage>
     <EditPasswordCurrent>input#edit-current-password</EditPasswordCurrent>
     <EditPasswordNew>input#edit-password</EditPasswordNew>
     <EditPasswordConfirm>input#edit-password-confirm</EditPasswordConfirm>
     <EditPasswordErrorMessage>div#edit-password-wrapper div.form-error div[class='invalid']</EditPasswordErrorMessage>
     <EditPasswordPopupErrorMessage>form#wonga-my-account-profile-edit-password-form div.messages.error</EditPasswordPopupErrorMessage>
+    <PopupSuccessTitle>h1#success</PopupSuccessTitle>
     <SubmitButton>input#edit-submit</SubmitButton>
     <PopupErrorMessage>#fancybox-content div.messages.error ul li:nth-child(1)</PopupErrorMessage>
   </MyPersonalDetailsPage>
+
+  <ChangeMyAddressElement>
+    <Title>#change-my-address</Title>
+    <Flat>#edit-flat-za</Flat>
+    <District>#edit-district-za</District>
+    <HouseNumber>#edit-house-number-za</HouseNumber>
+    <Town>#edit-town-za</Town>
+    <County>#edit-county-za</County>
+    <AddressPeriod>#edit-address-period-za</AddressPeriod>
+    <Street>#edit-street-za</Street>
+    <Postcode>#edit-postcode-za</Postcode>
+    <PostcodeErrorForm>#edit-postcode-za-wrapper div.form-error div.invalid</PostcodeErrorForm>
+  </ChangeMyAddressElement>
   
   <AboutUsPage>
     <OurCustomers>#block-wonga-6 div div ul li:nth-child(2) a</OurCustomers>
     <ResponsibleLending>#block-wonga-6 div div ul li:nth-child(3) a</ResponsibleLending>
+    <News>#block-wonga-6 div div ul li:nth-child(1) a</News>
+    <WhyUseUs>#block-wonga-6 div div ul li:nth-child(4) a</WhyUseUs>
+    <WereDifferent>div.wongaTabs li:nth-child(1) a</WereDifferent>
+    <WereDifferentTitle>div.panes div:nth-child(1) h2</WereDifferentTitle>
+    <WereFast>div.wongaTabs li:nth-child(2) a</WereFast>
+    <WereFastTitle>div.panes div:nth-child(2) h2</WereFastTitle>
+    <WereResponsible>div.wongaTabs li:nth-child(3) a</WereResponsible>
+    <WereResponsibleTitle>div.panes div:nth-child(3) h2</WereResponsibleTitle>
+    <WongaMoments>div.wongaTabs li:nth-child(4) a</WongaMoments>
+    <WongaMomentsTitle>div.panes div:nth-child(4) h2</WongaMomentsTitle>
   </AboutUsPage>
 
   <MySummaryPage>
 	 <PromisedRepayAmount>#content-area p span</PromisedRepayAmount>
 	 <PromisedRepayDate>#content-area p strong em</PromisedRepayDate>
+    <ViewLoanDetailsButton>#cloud a.mod.details</ViewLoanDetailsButton>
+    <!-- Loan details popup-->
+   <PopupForm>#fancybox-content</PopupForm>
+   <PopupMySummaryTitle>h1#my-summary</PopupMySummaryTitle>
+   <PopupSummaryDetailsTable>table#summary-details</PopupSummaryDetailsTable>
   </MySummaryPage>
 
   <HomePage>
@@ -119,6 +155,7 @@
   </HomePage>
 
   <TabsElement>
+    <Advice>li:nth-child(4)>a</Advice>
     <MyAccount>li:nth-child(5)>a</MyAccount>
   </TabsElement>
 

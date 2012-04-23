@@ -49,12 +49,11 @@ namespace Wonga.QA.Tests.Ui
             _termMin = Int32.Parse(_response.Values["TermMin"].Single(), CultureInfo.InvariantCulture);
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-192"), Pending("Known issue")]
-        public void CorrectDataShouldBeDisplayedOnApplicationSuccessPageForZa()
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-192"), Pending("GetFixedTermLoanCalculationQuery don't work for Ca Wonga.QA.Framework.Api.Exceptions.ValidatorException: Could not process query")]
+        public void CorrectDataShouldBeDisplayedOnApplicationSuccessPage()
         {
             int randomAmount = _amountMin + (new Random()).Next(_amountMax - _amountMin);
             int randomDuration = _termMin + (new Random()).Next(_termMax - _termMin);
-
             var journey = JourneyFactory.GetL0Journey(Client.Home());
             var processingPage = journey.ApplyForLoan(randomAmount, randomDuration)
                                  .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
@@ -62,46 +61,42 @@ namespace Wonga.QA.Tests.Ui
                                  .FillAccountDetails()
                                  .FillBankDetails()
                                  .CurrentPage as ProcessingPage;
-
             var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
-            acceptedPage.SignAgreementConfirm();
-            acceptedPage.SignDirectDebitConfirm();
-            var dealDone = acceptedPage.Submit() as DealDonePage;
-            // Check date
-            DateTime _date = DateTime.Parse(dealDone.GetRepaymentDate());
-            _actualDate = DateTime.Now.AddDays(randomDuration);
-            Assert.AreEqual(String.Format(CultureInfo.InvariantCulture, "{0:d MMM yyyy}", _date), String.Format(CultureInfo.InvariantCulture, "{0:d MMM yyyy}", _actualDate));
-            // Check amount
-            _response = Drive.Api.Queries.Post(new GetFixedTermLoanCalculationZaQuery { LoanAmount = randomAmount, Term = randomDuration });
-            string totalRepayable = _response.Values["TotalRepayable"].Single();
-            Assert.AreEqual(dealDone.GetRapaymentAmount().Remove(0, 1), totalRepayable);
+            switch (Config.AUT)
+            {
+                #region case Za
+                case AUT.Za:
+                    acceptedPage.SignAgreementConfirm();
+                    acceptedPage.SignDirectDebitConfirm();
+                    var dealDoneZa = acceptedPage.Submit() as DealDonePage;
+                    // Check date
+                    DateTime _dateZa = DateTime.Parse(dealDoneZa.GetRepaymentDate());
+                    _actualDate = DateTime.Now.AddDays(randomDuration);
+                    Assert.AreEqual(String.Format(CultureInfo.InvariantCulture, "{0:d MMM yyyy}", _dateZa), String.Format(CultureInfo.InvariantCulture, "{0:d MMM yyyy}", _actualDate));
+                    // Check amount
+                    _response = Drive.Api.Queries.Post(new GetFixedTermLoanCalculationZaQuery { LoanAmount = randomAmount, Term = randomDuration });
+                    string totalRepayableZa = _response.Values["TotalRepayable"].Single();
+                    Assert.AreEqual(dealDoneZa.GetRapaymentAmount().Remove(0, 1), totalRepayableZa);
+                    break;
+                #endregion
+                #region case Ca
+                case AUT.Ca:
+                    acceptedPage.SignConfirmCaL0(DateTime.Now.ToString("d MMM yyyy"), journey.FirstName, journey.LastName);
+                    var dealDoneCa = acceptedPage.Submit() as DealDonePage;
+                    // Check data
+                    DateTime _dateCa = DateTime.Parse(dealDoneCa.GetRepaymentDate());
+                    _actualDate = DateTime.Now.AddDays(randomDuration + 1);
+                    Assert.AreEqual(String.Format(CultureInfo.InvariantCulture, "{0:d MMM yyyy}", _actualDate), String.Format(CultureInfo.InvariantCulture, "{0:d MMM yyyy}", _dateCa));
+                    // Check amount
+                    _response = Drive.Api.Queries.Post(new GetFixedTermLoanCalculationQuery { LoanAmount = randomAmount, Term = randomDuration });
+                    string totalRepayable = _response.Values["TotalRepayable"].Single();
+                    Assert.AreEqual(dealDoneCa.GetRapaymentAmount().Remove(0, 1), totalRepayable);
+                    break;
+                #endregion
+            }
+
         }
 
-        [Test, AUT(AUT.Ca), JIRA("QA-192"), Pending("GetFixedTermLoanCalculationQuery don't work Wonga.QA.Framework.Api.Exceptions.ValidatorException: Could not process query")]
-        public void CorrectDataShouldBeDisplayedOnApplicationSuccessPageForCa()
-        {
-            int randomAmount = _amountMin + (new Random()).Next(_amountMax - _amountMin);
-            int randomDuration = _termMin + (new Random()).Next(_termMax - _termMin);
 
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var processingPage = journey.ApplyForLoan(randomAmount, randomDuration)
-                                 .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
-                                 .FillAddressDetails()
-                                 .FillAccountDetails()
-                                 .FillBankDetails()
-                                 .CurrentPage as ProcessingPage;
-
-            var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
-            acceptedPage.SignConfirmCaL0(DateTime.Now.ToString("d MMM yyyy"), journey.FirstName, journey.LastName);
-            var dealDone = acceptedPage.Submit() as DealDonePage;
-            // Check data
-            DateTime _date = DateTime.Parse(dealDone.GetRepaymentDate());
-            _actualDate = DateTime.Now.AddDays(randomDuration+1);
-            Assert.AreEqual( String.Format(CultureInfo.InvariantCulture, "{0:d MMM yyyy}", _actualDate), String.Format(CultureInfo.InvariantCulture, "{0:d MMM yyyy}", _date));
-            // Check amount
-            _response = Drive.Api.Queries.Post(new GetFixedTermLoanCalculationQuery { LoanAmount = randomAmount, Term = randomDuration });
-            string totalRepayable = _response.Values["TotalRepayable"].Single();
-            Assert.AreEqual(dealDone.GetRapaymentAmount().Remove(0, 1), totalRepayable);
-        }
     }
 }

@@ -27,12 +27,12 @@ namespace Wonga.QA.Framework.UI.Elements
             _home = _form.FindElement(By.CssSelector(Ui.Get.TabsElement.Home));
             _howItWorks = _form.FindElement(By.CssSelector(Ui.Get.TabsElement.HowItWorks));
             _aboutUs = _form.FindElement(By.CssSelector(Ui.Get.TabsElement.AboutUs));
-            _advice = _form.FindElement(By.CssSelector(Ui.Get.TabsElement.Advice));
-
+            
             switch (Config.AUT)
             {
                 case AUT.Za:
                 case AUT.Ca:
+                    _advice = _form.FindElement(By.CssSelector(Ui.Get.TabsElement.Advice));
                     _myAccount = _form.FindElement(By.CssSelector(Ui.Get.TabsElement.MyAccount));
                     break;
             }

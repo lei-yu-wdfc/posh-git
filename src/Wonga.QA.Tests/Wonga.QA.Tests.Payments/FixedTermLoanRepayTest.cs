@@ -41,7 +41,9 @@ namespace Wonga.QA.Tests.Payments
 				Amount = repayAmount,
 				PaymentCardCv2 = "111",
 				CashEntityId = cardId,
-				RepaymentRequestId = Guid.NewGuid()
+				RepaymentRequestId = Guid.NewGuid(),
+                //SH: Added this - test failing otherwise.
+                ActionDate = (DateTime.Now + TimeSpan.FromDays(1)).ToString("yyyy-MM-dd")
 			};
 
 			var cmdAct = new Gallio.Common.Action(() => Drive.Api.Commands.Post(cmd));

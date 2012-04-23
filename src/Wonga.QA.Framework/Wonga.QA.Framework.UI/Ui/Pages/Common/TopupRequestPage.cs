@@ -16,7 +16,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private IWebElement _interestAndFees;
         private IWebElement _grandTotal;
         private IWebElement _topupAmount;
-        private SmallTopupSliders Sliders { get; set; }
+        private SmallTopupSlidersElement Sliders { get; set; }
         public TopupRequestPage(UiClient client) : base(client)
         {
             _submitButton = Content.FindElement(By.CssSelector(Ui.Get.TopupRequestPage.TopupRequestPageSubmitButton));
@@ -38,28 +38,23 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             //return new TopupProcessingPage(Client);
         }
        
-
         public void IsTopupRequestPageSliderReturningCorrrectValuesOnChange(string applicationId)
         {
             const string topupRequestAmount = "50";
+            Sliders = new SmallTopupSlidersElement(this);
             Sliders.HowMuch = topupRequestAmount;
             
             //Expected values
             var api = new ApiDriver();
             _response = api.Queries.Post(new GetFixedTermLoanTopupCalculationQuery
                                  {ApplicationId = applicationId, TopupAmount = topupRequestAmount});
-           
 
             var totalRepayable = _response.Values["TotalRepayable"].Single();
             var interestAndFees = _response.Values["InterestAndFeesAmount"].Single();
             
             //check the output matches the returned values for 50 quid topupRequestAmount
-            Assert.AreEqual(expectedValue: Sliders.GetTotalToRepay.Remove(0, 1), actualValue: totalRepayable);
-            Assert.AreEqual(expectedValue: Sliders.GetTotalAmount.Remove(0, 1), actualValue: topupRequestAmount);
-            Assert.AreEqual(expectedValue: Sliders.GetTotalFees.Remove(0, 1), actualValue: interestAndFees);
+            Assert.AreEqual(Decimal.Parse(Sliders.GetSubTotal.Remove(0, 1)),Decimal.Parse(totalRepayable));
+            Assert.AreEqual(Decimal.Parse(Sliders.GetTotalFees.Remove(0, 1)),Decimal.Parse(interestAndFees));
         }
-
-
     }
-
 }
