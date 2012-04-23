@@ -334,5 +334,9 @@
     <ExtensionAgreementscroll>#agreementscroll</ExtensionAgreementscroll>
   </ExtensionAgreementPage>
 
+  <ExtensionErrorPage>
+    <Header>#node-1003 h2</Header>
+    <BodyText>#node-1003 p</BodyText>
+  </ExtensionErrorPage>
   
 </Ui>
