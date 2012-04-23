@@ -317,5 +317,22 @@
   <ExtensionDealDonePage>
     <AccountLink>#content-area h2 a</AccountLink>
   </ExtensionDealDonePage>
+
+  <ExtensionProcessingPage>
+    <!--<FormId>wonga-processing</FormId>-->
+    <!--<ProcessingImage>#wonga-processing>img</ProcessingImage>-->
+    <ProcessingText>We are processing your application</ProcessingText>
+    <ProcessingTextContainer>.processing-text</ProcessingTextContainer>
+  </ExtensionProcessingPage>
+
+  <ExtensionPaymentFailedPage>
+    <HeaderText>We couldn't collect your partial payment</HeaderText>
+  </ExtensionPaymentFailedPage>
+
+  <ExtensionAgreementPage>
+    <ExtensionAgreementAcceptButton>#edit-accept</ExtensionAgreementAcceptButton>
+    <ExtensionAgreementscroll>#agreementscroll</ExtensionAgreementscroll>
+  </ExtensionAgreementPage>
+
   
 </Ui>
