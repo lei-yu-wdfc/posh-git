@@ -17,6 +17,9 @@ namespace Wonga.QA.Tests.Cs
     {
         private bool _bankGatewayTestModeOriginal;
 
+    	private const uint MinDaysInArrears = 3;
+    	private const uint MaxDaysInArrears = 90;
+
         [FixtureSetUp]
         public void FixtureSetup()
         {
@@ -30,25 +33,53 @@ namespace Wonga.QA.Tests.Cs
             ConfigurationFunctions.SetBankGatewayTestMode(_bankGatewayTestModeOriginal);
         }
 
-        [Test, AUT(AUT.Za)]
-        public void IsAllowedTest()
+        [Test, AUT(AUT.Za), JIRA("ZA-1864")]
+		[Column(2,20,91)]
+        public void RepaymentPlanIsAllowedTest(uint daysInArrears)
         {
             Customer customer = CustomerBuilder.New().Build();
             Application application = ApplicationBuilder.New(customer).Build();
 
-            application.PutApplicationIntoArrears(20);
+            application.PutApplicationIntoArrears(daysInArrears);
 
-            var response = Drive.Cs.Queries.Post(new CsGetRepaymentArrangementAllowedQuery()
-                    {
-                        ApplicationId = application.Id
-                    });
+        	var expectedPlanIsAllowed = !(daysInArrears < MinDaysInArrears || daysInArrears > MaxDaysInArrears);
+        	var actualPlanIsAllowed = PlanIsAllowed(application);
 
-            Assert.IsNotNull(response);
-            Assert.IsTrue(bool.Parse(response.Values["IsAllowed"].Single()));    
+			Assert.AreEqual(expectedPlanIsAllowed, actualPlanIsAllowed);
         }
 
-        [Test, AUT(AUT.Za)]
-        public void CreateTest()
+		[Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending]
+		public void RepyamentPlanNotAllowedWhenInDisputeTest()
+		{
+			Customer customer = CustomerBuilder.New().Build();
+			Application application = ApplicationBuilder.New(customer).Build();
+
+			Drive.Msmq.Payments.Send(new IDisputeStatusChangedEvent{AccountId =  customer.Id, HasDispute =  true});
+			Do.Until(() => (bool)Drive.Data.Payments.Db.AccountPreferences.FindByAccountId(customer.Id).IsDispute == true);
+
+			var planIsAllowed = PlanIsAllowed(application);
+			Assert.IsFalse(planIsAllowed);
+		}
+
+		[Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending]
+		public void RepyamentPlanNotAllowedWhenPreviousPlanWasBrokenTest()
+		{
+
+		}
+
+		[Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending]
+		public void RepyamentPlanNotAllowedWhenPlanAlreadyExistsTest()
+		{
+
+		}
+
+		[Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending]
+		public void RepayingFirstInstallmentSuspendsInterestTest(){
+
+		}
+
+		[Test, AUT(AUT.Za), JIRA("ZA-1864")]
+        public void CreateRepaymentPlanTest()
         {
             Customer customer = CustomerBuilder.New().Build();
             Application application = ApplicationBuilder.New(customer).Build();
@@ -63,8 +94,8 @@ namespace Wonga.QA.Tests.Cs
             Assert.IsNotNull(Drive.Db.Payments.Transactions.Where(x => x.ApplicationId == dbApplication.ApplicationId && x.Type == "SuspendInterestAccrual"));
         }
 
-        [Test, AUT(AUT.Za)]
-        public void GetTest()
+		[Test, AUT(AUT.Za), JIRA("ZA-1864")]
+        public void GetRepaymentPlanTest()
         {
             Customer customer = CustomerBuilder.New().Build();
             Application application = ApplicationBuilder.New(customer).Build();
@@ -78,7 +109,7 @@ namespace Wonga.QA.Tests.Cs
             Assert.AreEqual(application.Id, Guid.Parse(response.Values["ApplicationId"].Single()));
         }
 
-        [Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za), JIRA("ZA-1864")]
         public void GetParametersTest()
         {
             Customer customer = CustomerBuilder.New().Build();
@@ -87,10 +118,10 @@ namespace Wonga.QA.Tests.Cs
 
             var response = Drive.Cs.Queries.Post(new GetRepaymentArrangementParametersQuery() {AccountId = customer.Id});
             Assert.IsNotNull(response);
-            Assert.AreEqual(3, int.Parse(response.Values["MaxLengthMonths"].Single()));
+            Assert.AreEqual(6, int.Parse(response.Values["MaxLengthMonths"].Single()));
         }
 
-        [Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za), JIRA("ZA-1864")]
         public void GetCalculationTest()
         {
             Customer customer = CustomerBuilder.New().Build();
@@ -107,7 +138,7 @@ namespace Wonga.QA.Tests.Cs
             Assert.IsNotNull(response);            
         }
 
-        [Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za), JIRA("ZA-1864")]
         public void CancelTest()
         {
             Customer customer = CustomerBuilder.New().Build();
@@ -168,5 +199,18 @@ namespace Wonga.QA.Tests.Cs
                                                                     }
             });
         }
+
+		private static bool PlanIsAllowed(Application application)
+		{
+			var response = Drive.Cs.Queries.Post(new CsGetRepaymentArrangementAllowedQuery()
+			{
+				ApplicationId = application.Id
+			});
+
+			Assert.IsNotNull(response);
+
+			var allowed = bool.Parse(response.Values["IsAllowed"].Single());
+			return allowed;
+		}
     }
 }
