@@ -3,6 +3,7 @@ using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Tests.Risk
 {
+    [Obsolete]
 	public class CustomerKathleenUk : CustomerData
 	{
 		public CustomerKathleenUk()

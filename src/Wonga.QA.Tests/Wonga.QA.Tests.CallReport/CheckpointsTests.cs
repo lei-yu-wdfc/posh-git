@@ -27,10 +27,10 @@ namespace Wonga.QA.Tests.CallReport
 
         #region Main Applicant
         
-        /* Main Appplicant Is Alive  */
+        /* Main Appplicant Is Alive L0  */
 
-        [Test, AUT(AUT.Wb)]
-        [JIRA("SME-575"), Description("CallReport -> This test creates a loan for the unknown customer that is alive and with no consumer bureau data, then checks the risk checkpoint")]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
+        [JIRA("SME-575","UK-853"), Description("CallReport -> This test creates a loan for the unknown customer that is alive and with no consumer bureau data, then checks the risk checkpoint")]
         public void TestCallReportUnknownMainApplicant_LoanIsApproved()
         {
             const String forename = "unknown";
@@ -49,8 +49,8 @@ namespace Wonga.QA.Tests.CallReport
                                                                      RiskVerificationDefinitions.CreditBureauCustomerIsAliveVerification);
         }
 
-        [Test, AUT(AUT.Wb)]
-        [JIRA("SME-575"), Description("CallReport -> This test creates a loan for the Kathleen customer that is alive according to call report, then checks the risk checkpoint")]
+        [Test, AUT(AUT.Wb, AUT.Uk)]
+        [JIRA("SME-575", "UK-853"), Description("CallReport -> This test creates a loan for the Kathleen customer that is alive according to call report, then checks the risk checkpoint")]
         public void TestCallReportMainApplicantIsNotDeceased_LoanIsApproved()
         {
             const String forename = "kathleen";
@@ -69,8 +69,8 @@ namespace Wonga.QA.Tests.CallReport
                                                                      RiskVerificationDefinitions.CreditBureauCustomerIsAliveVerification);
         }
 
-        [Test, AUT(AUT.Wb)]
-        [JIRA("SME-575"), Description("CallReport -> This test creates a loan for the customer that is dead according to call report, then checks the risk checkpoint")]
+        [Test, AUT(AUT.Wb, AUT.Uk)]
+        [JIRA("SME-575", "UK-853"), Description("CallReport -> This test creates a loan for the customer that is dead according to call report, then checks the risk checkpoint")]
         public void TestCallReportMainApplicantIsDeceased_LoanIsDeclined()
         {
             const String forename = "Johnny";
@@ -83,6 +83,56 @@ namespace Wonga.QA.Tests.CallReport
             var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.ApplicantIsAlive,
+                                                                     RiskCheckpointStatus.Failed,
+                                                                     RiskVerificationDefinitions.CreditBureauCustomerIsAliveVerification);
+        }
+
+        /* Main Appplicant Is Alive LN  */
+
+        [Test, AUT(AUT.Uk)]
+        [JIRA("UK-853")]
+        public void Ln_TestCallReportMainApplicantIsNotDeceased_LoanIsApproved()
+        {
+            const String forename = "kathleen";
+            const String surname = "Bridson";
+
+            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTApplicantIsNotDeceased);
+            ScrubNames(mainApplicantBuilder);
+            var mainApplicant = mainApplicantBuilder.Build();
+
+            var l0Application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted);
+            l0Application.RepayOnDueDate();
+
+            var lnAplication = CreateLnApplication(mainApplicant, ApplicationDecisionStatus.Accepted);
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(lnAplication.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.ApplicantIsAlive,
+                                                                     RiskCheckpointStatus.Verified,
+                                                                     RiskVerificationDefinitions.CreditBureauCustomerIsAliveVerification);
+        }
+
+        [Test, AUT(AUT.Uk)]
+        [JIRA("UK-853")]
+        public void Ln_TestCallReportMainApplicantIsDeceased_LoanIsDeclined()
+        {
+            const String forename = "Johnny";
+            const String surname = "DeadGuy";
+
+            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTEmployedMask);
+            ScrubNames(mainApplicantBuilder);
+            var mainApplicant = mainApplicantBuilder.Build();
+
+            var l0Application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted);
+            l0Application.RepayOnDueDate();
+
+            Drive.Db.UpdateEmployerName(mainApplicant.Id, RiskMask.TESTApplicantIsNotDeceased.ToString());
+
+            var lnAplication = CreateLnApplication(mainApplicant, ApplicationDecisionStatus.Declined);
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(lnAplication.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
+
             VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
                                                                      RiskCheckpointDefinitionEnum.ApplicantIsAlive,
                                                                      RiskCheckpointStatus.Failed,
