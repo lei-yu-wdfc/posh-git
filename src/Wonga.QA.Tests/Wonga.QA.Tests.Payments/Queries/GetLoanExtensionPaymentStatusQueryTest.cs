@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
@@ -118,7 +116,7 @@ namespace Wonga.QA.Tests.Payments.Queries
 
 			Thread.Sleep(500);
 
-			var resp = Do.With.Interval(1).Until(() => Drive.Api.Queries.Post(new GetLoanExtensionPaymentStatusUkQuery { ExtensionId = extensionId }));
+			var resp = Do.With.Interval(1).Until(() => Drive.Api.Queries.Post(new GetLoanExtensionPaymentStatusUkQuery {ExtensionId = extensionId}));
 
 			Assert.Contains(resp.Values["ExtensionStatus"], "PaymentFailed");
 		}
