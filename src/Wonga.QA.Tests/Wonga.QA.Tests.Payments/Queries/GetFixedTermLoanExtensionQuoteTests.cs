@@ -70,10 +70,10 @@ namespace Wonga.QA.Tests.Payments.Queries
 
         [Test]
         [AUT(AUT.Uk), JIRA("UK-1351")]
-        public void Query_ShouldReturnNoQuotes_WhenCustomerHasApplicationAcceptedToday()
+        public void Query_ShouldReturnNoQuotes_WhenNextDueDateIsInMoreThanOneWeek()
         {
             Customer customer = CustomerBuilder.New().Build();
-            var application = ApplicationBuilder.New(customer).WithPromiseDate(new Date(DateTime.UtcNow.AddDays(4))).Build();
+            var application = ApplicationBuilder.New(customer).WithPromiseDate(new Date(DateTime.UtcNow.AddDays(14))).Build();
 
             var query = new CsGetFixedTermLoanExtensionQuoteQuery { ApplicationId = application.Id };
 
@@ -87,7 +87,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.IsTrue(response.Values["ExtensionPartPaymentAmount"].SingleOrDefault(isDecimal) != null);
             Assert.IsTrue(response.Values["LoanExtensionFee"].SingleOrDefault(isDecimal) != null);
             Assert.IsTrue(response.Values["IsExtendable"].ElementAt(0) == "false");
-            Assert.IsTrue(response.Values["ErrorMessage"].ElementAt(0) == "TooEarlyToExtend");
+            Assert.IsTrue(response.Values["ErrorMessage"].ElementAt(0) == "DueDateTooFarInFuture");
 
             Assert.IsTrue(response.Values["FutureInterestAndFees"].ToList().Count==0, "No quote data should be returned");
             Assert.IsTrue(response.Values["TotalAmountDueOnExtensionDate"].ToList().Count==0, "No quote data should be returned");
