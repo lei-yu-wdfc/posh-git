@@ -17,7 +17,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private IWebElement _securityCode;
         private ApiResponse _response;
         private IWebElement _extensionRequestDate;
-        //private IWebElement _interestAndFees;
+        private IWebElement _interestAndFees;
         private IWebElement _grandTotal;
         //private IWebElement _extensionDuration;
         private SmallExtensionSlidersElement Sliders { get; set; }
@@ -27,7 +27,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _informativeBox = Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageInformativeBox));
             _card = Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageCard));
             _securityCode = Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageSecurityCode));
-            //_interestAndFees = Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageInterestFees));
+            _interestAndFees = Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageInterestFees));
             _grandTotal = Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageNewGrandTotal));   
         }
 
@@ -45,10 +45,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
         
         public void SubmitButtonClick()

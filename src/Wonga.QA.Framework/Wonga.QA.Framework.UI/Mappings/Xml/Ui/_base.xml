@@ -358,6 +358,7 @@
     <ExtensionRequestPageSubmitButton>#edit-submit</ExtensionRequestPageSubmitButton>
     <ExtensionRequestPageInformativeBox>div.inner-box-informative</ExtensionRequestPageInformativeBox>
     <ExtensionRequestPageExtensionDuration>input.edit-extend-amount</ExtensionRequestPageExtensionDuration>
+    <ExtensionRequestPageInterestFees>span.extend-interest-and-fees</ExtensionRequestPageInterestFees>
     <ExtensionRequestPageNewGrandTotal>span.extend-request-total</ExtensionRequestPageNewGrandTotal>
     <ExtensionRequestPageRepaymentDate>span.load-period-clarification span.slider-extend-date</ExtensionRequestPageRepaymentDate>
     <ExtensionRequestPageSliders>#wonga-single-slider</ExtensionRequestPageSliders>
