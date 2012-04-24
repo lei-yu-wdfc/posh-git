@@ -102,7 +102,7 @@ namespace Wonga.QA.Tests.BankGateway
 			Do.Until(() => Drive.Db.BankGateway.Acknowledges.Single(t => t.TransactionID == transaction.TransactionId && t.AcknowledgeTypeID == ackType.AcknowledgeTypeId));
 		}
 
-		[Test, AUT(AUT.Ca), JIRA("CA-1931")]
+		[Test, AUT(AUT.Ca), JIRA("CA-1931"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
 		public void SendPaymentMessageShouldBeRoutedToScotia()
 		{
             var customer = CustomerBuilder.New().
@@ -116,7 +116,7 @@ namespace Wonga.QA.Tests.BankGateway
 					t.BankIntegrationId == BankIntegrationIdScotia));
 		}
 
-		[Test, AUT(AUT.Ca), JIRA("CA-1931")]
+		[Test, AUT(AUT.Ca), JIRA("CA-1931"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
 		public void SendPaymentMessageShouldBeRoutedToScotiaAndRejected()
 		{
 			var bankAccountNumber = Random.Next(1000000, 9999999);
@@ -243,7 +243,7 @@ namespace Wonga.QA.Tests.BankGateway
 				t => t.ApplicationId == applicationId && t.BankIntegrationId == 2 && t.TransactionStatus == 4));
 		}
 
-		[Test, AUT(AUT.Ca), JIRA("CA-1931")]
+		[Test, AUT(AUT.Ca), JIRA("CA-1931"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
 		public void SettlementValidAndInvalidCrossreferenceNumberShouldBePersisted()
 		{
 			Guid applicationWithInvalidResponseFromBank;
