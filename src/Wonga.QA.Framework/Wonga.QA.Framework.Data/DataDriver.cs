@@ -37,6 +37,7 @@ namespace Wonga.QA.Framework.Data
         private Lazy<TransUnionDatabase> _transUnion = new Lazy<TransUnionDatabase>(() => new TransUnionDatabase(Config.Db.TransUnion));
         private Lazy<UruDatabase> _uru = new Lazy<UruDatabase>(() => new UruDatabase(Config.Db.Uru));
         private Lazy<WongaPayDatabase> _wongaPay = new Lazy<WongaPayDatabase>(() => new WongaPayDatabase(Config.Db.WongaPay));
+        private Lazy<MarketingDatabase> _marketing = new Lazy<MarketingDatabase>(() => new MarketingDatabase(Config.Db.Marketing));
 
         public OpsSagasDatabase OpsSagas { get { return _opsSagas.Value;} }
         public OpsDatabase Ops { get { return _ops.Value; } }
@@ -65,5 +66,6 @@ namespace Wonga.QA.Framework.Data
         public TransUnionDatabase TransUnion { get { return _transUnion.Value; } }
         public UruDatabase Uru { get { return _uru.Value; } }
         public WongaPayDatabase WongaPay { get { return _wongaPay.Value; } }
+        public MarketingDatabase Marketing { get { return _marketing.Value; } }
     }
 }
