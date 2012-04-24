@@ -151,7 +151,23 @@ namespace Wonga.QA.Framework.Core
 
 		public static Int64 GetBankAccountNumber()
 		{
-			return RandomLong(10000000000, 99999999999);
+            switch (Config.AUT)
+            {
+                case AUT.Uk:
+                case AUT.Wb:
+                    {
+                        return RandomLong(10000000, 99999999);
+                    }
+                case AUT.Za:
+                //case AUT.Ca:
+                    {
+                        return RandomLong(10000000000, 99999999999);
+                    }
+                    default:
+                    {
+                        throw new NotImplementedException(Config.AUT.ToString());
+                    }
+            }
 		}
 
         public static Guid GetCsAuthorization()
