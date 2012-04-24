@@ -190,6 +190,7 @@
     <PostcodeValid>#edit-postcode-lookup-uk-wrapper .form-error</PostcodeValid>
     <AddressOptionsWrapper>#edit-address-options-wrapper</AddressOptionsWrapper>
     <District>#edit-district</District>
+    <FlatNumber>#edit-flat</FlatNumber>
 	<HouseNumber>#edit-house-number</HouseNumber>	
     <City>#edit-town</City>
     <Street>#edit-street</Street>
