@@ -10,6 +10,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String FormId { get; set; }
         public String SlidersFormId { get; set; }
         public String CheckPrivacyPolicy { get; set; }
+        public String PrivacyPolicyLink { get; set; }
         public String CheckCanContact { get; set; }
         public String NextButton { get; set; }
         public String MarriedInCommunityProperty { get; set; }

@@ -24,6 +24,7 @@
     <CheckPrivacyPolicy>#edit-privacy</CheckPrivacyPolicy>
     <CheckCanContact>input[type="radio"][name="update_option"]</CheckCanContact>
     <NextButton>#edit-submit</NextButton>
+	  <PrivacyPolicyLink>#edit-privacy-wrapper div:nth-child(1) label a</PrivacyPolicyLink>  
   </PersonalDetailsPage>
 
   <AddressDetailsPage>

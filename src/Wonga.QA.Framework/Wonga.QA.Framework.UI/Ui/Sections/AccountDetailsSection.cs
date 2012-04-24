@@ -38,5 +38,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             var passwordWarning = Section.FindElement(By.CssSelector(Ui.Get.AccountDetailsSection.PasswordErrorForm));
             return passwordWarning.Text.Equals("Your password must be 8 or more characters and must include a capital letter and a number.");
         }
+        public bool IsPasswordEqualsEmailWarningOccured()
+        {
+            var passwordWarning = Section.FindElement(By.CssSelector(Ui.Get.AccountDetailsSection.PasswordErrorForm));
+            return passwordWarning.Text.Equals("Password must not contain user name.");
+       }
     }
 }
