@@ -27,7 +27,6 @@ namespace Wonga.QA.Tests.Payments.Queries
 
         public abstract class GivenACustomerWithAnApprovedLoan : CsGetCardPaymentStatusQueryTests
         {
-            protected dynamic _paymentCardRepaymentRequests = Drive.Data.Payments.Db.RepaymentRequests;
             protected decimal _paymentAmount;
             protected Guid _paymentId;
 
