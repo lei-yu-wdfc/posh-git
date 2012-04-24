@@ -63,7 +63,7 @@ namespace Wonga.QA.Tests.Cs
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-1864")]
-		public void RepyamentPlanNotAllowedWhenPreviousPlanWasCancelledTest()
+		public void RepaymentPlanIsAllowedWhenPreviousPlanWasCancelledTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
 			Application application = ApplicationBuilder.New(customer).Build().PutApplicationIntoArrears(20);
@@ -74,7 +74,7 @@ namespace Wonga.QA.Tests.Cs
 			CancelRepaymentArrangement(repaymentArrangement);
 
 			var planIsAllowed = PlanIsAllowed(application);
-			Assert.IsFalse(planIsAllowed);
+			Assert.IsTrue(planIsAllowed);
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-1864")]
