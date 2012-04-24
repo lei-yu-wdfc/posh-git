@@ -107,5 +107,9 @@
     <PopupSaveButton>#edit-submit[value='Save']</PopupSaveButton>
     <PopupCloseButton>#edit-submit[value='Close']</PopupCloseButton>
   </ApplyPage>
-  
+
+  <MobilePinVerificationSection>
+	<ResendPin>#edit-resend-pin</ResendPin>
+	<ResendPinMessage>.pin_resend</ResendPinMessage>
+  </MobilePinVerificationSection>
 </Ui>
