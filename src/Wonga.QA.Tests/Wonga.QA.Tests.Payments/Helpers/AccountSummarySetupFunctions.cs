@@ -573,6 +573,12 @@ namespace Wonga.QA.Tests.Payments.Helpers
             });
             Do.With.Interval(1).Until(() => Drive.Db.Payments.Arrears.Single(a => a.ApplicationId == applicationId));
 
+            // Make arrears old enough for Repayment Arrangement
+            var cfg = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Payments.InArrearsMinDays");
+            int days = (int.Parse(cfg.Value) + 1)*-1;
+            DateTime arrearsDate = DateTime.UtcNow.AddDays(days);
+            Drive.Data.Payments.Db.Arrears.UpdateByApplicationId(ApplicationId: applicationId, CreatedOn: arrearsDate);
+
             // Create Repayment Arrangement
             var dateTimes = new DateTime[]
                                 {
@@ -635,6 +641,13 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 ReferenceId = Guid.NewGuid()
             });
             Do.With.Interval(1).Until(() => Drive.Db.Payments.Arrears.Single(a => a.ApplicationId == applicationId));
+
+            // Make arrears old enough for Repayment Arrangement
+            var cfg = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Payments.InArrearsMinDays");
+            int days = (int.Parse(cfg.Value) + 1) * -1;
+            DateTime arrearsDate = DateTime.UtcNow.AddDays(days);
+            Drive.Data.Payments.Db.Arrears.UpdateByApplicationId(ApplicationId: applicationId, CreatedOn: arrearsDate);
+
 
             // Create Repayment Arrangement
             DateTime dueDate = DateTime.UtcNow.AddDays(10).Date;
@@ -706,6 +719,13 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 ReferenceId = Guid.NewGuid()
             });
             Do.With.Interval(1).Until(() => Drive.Db.Payments.Arrears.Single(a => a.ApplicationId == applicationId));
+
+            // Make arrears old enough for Repayment Arrangement
+            var cfg = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Payments.InArrearsMinDays");
+            int days = (int.Parse(cfg.Value) + 1) * -1;
+            DateTime arrearsDate = DateTime.UtcNow.AddDays(days);
+            Drive.Data.Payments.Db.Arrears.UpdateByApplicationId(ApplicationId: applicationId, CreatedOn: arrearsDate);
+
 
             // Create Repayment Arrangement
             DateTime dueDate = DateTime.UtcNow.AddDays(10).Date;
@@ -795,7 +815,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 AccountNumber = "10032650",
                 AccountOpenDate = DateTime.UtcNow.AddYears(-3),
                 BankAccountId = bankAccountId,
-                BankCode = "101627",
+                BankCode = "161027",
                 BankName = "Royal Bank of Scotland",
                 HolderName = "Mr Test Test",
                 CountryCode = "UK",

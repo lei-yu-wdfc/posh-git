@@ -13,7 +13,7 @@ using Wonga.QA.Tests.Payments.Helpers;
 
 namespace Wonga.QA.Tests.Cs
 {
-	[Parallelizable(TestScope.All)]
+	[TestFixture, Parallelizable(TestScope.All)]
     public class RepaymentArrangementTests
     {
         private bool _bankGatewayTestModeOriginal;
@@ -34,20 +34,20 @@ namespace Wonga.QA.Tests.Cs
             ConfigurationFunctions.SetBankGatewayTestMode(_bankGatewayTestModeOriginal);
         }
 
-        [Test, AUT(AUT.Za), JIRA("ZA-1864")]
-		[Column(2,20,91)]
-        public void RepaymentPlanIsAllowedTest(uint daysInArrears)
-        {
-            Customer customer = CustomerBuilder.New().Build();
-            Application application = ApplicationBuilder.New(customer).Build();
+		[Test, AUT(AUT.Za), JIRA("ZA-1864")]
+		[Column(2, 20, 91)]
+		public void RepaymentPlanIsAllowedTest(uint daysInArrears)
+		{
+			Customer customer = CustomerBuilder.New().Build();
+			Application application = ApplicationBuilder.New(customer).Build();
 
-            application.PutApplicationIntoArrears(daysInArrears);
+			application.PutApplicationIntoArrears(daysInArrears);
 
-        	var expectedPlanIsAllowed = !(daysInArrears < MinDaysInArrears || daysInArrears > MaxDaysInArrears);
-        	var actualPlanIsAllowed = PlanIsAllowed(application);
+			var expectedPlanIsAllowed = !(daysInArrears < MinDaysInArrears || daysInArrears > MaxDaysInArrears);
+			var actualPlanIsAllowed = PlanIsAllowed(application);
 
 			Assert.AreEqual(expectedPlanIsAllowed, actualPlanIsAllowed);
-        }
+		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-1864")]
 		public void RepyamentPlanNotAllowedWhenInDisputeTest()
@@ -55,7 +55,7 @@ namespace Wonga.QA.Tests.Cs
 			Customer customer = CustomerBuilder.New().Build();
 			Application application = ApplicationBuilder.New(customer).Build().PutApplicationIntoArrears(20);
 
-			Drive.Msmq.Payments.Send(new IDisputeStatusChangedEvent{AccountId =  customer.Id, HasDispute =  true});
+			Drive.Msmq.Payments.Send(new IDisputeStatusChangedEvent { AccountId = customer.Id, HasDispute = true });
 			Do.Until(() => (bool)Drive.Data.Payments.Db.AccountPreferences.FindByAccountId(customer.Id).IsDispute == true);
 
 			var planIsAllowed = PlanIsAllowed(application);
@@ -89,8 +89,8 @@ namespace Wonga.QA.Tests.Cs
 			Assert.IsTrue((bool)GetRepaymentArrangement(application).IsBroken);
 		}
 
-    	[Test, AUT(AUT.Za), JIRA("ZA-1864")]
-		public void RepyamentPlanNotAllowedWhenPreviousPlanWasBrokenTest()
+		[Test, AUT(AUT.Za), JIRA("ZA-1864")]
+		public void RepaymentPlanNotAllowedWhenPreviousPlanWasBrokenTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
 			Application application = ApplicationBuilder.New(customer).Build().PutApplicationIntoArrears(20);
@@ -98,7 +98,7 @@ namespace Wonga.QA.Tests.Cs
 			CreatePlan(application, customer);
 			FailToMakeRepayment(customer, application);
 
-    		var planIsAllowed = PlanIsAllowed(application);
+			var planIsAllowed = PlanIsAllowed(application);
 			Assert.IsFalse(planIsAllowed);
 		}
 
@@ -116,76 +116,87 @@ namespace Wonga.QA.Tests.Cs
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-1864")]
-        public void CreateRepaymentPlanTest()
-        {
-            Customer customer = CustomerBuilder.New().Build();
-            Application application = ApplicationBuilder.New(customer).Build();
+		public void CreateRepaymentPlanTest()
+		{
+			Customer customer = CustomerBuilder.New().Build();
+			Application application = ApplicationBuilder.New(customer).Build().PutApplicationIntoArrears(20);
 
-            application.PutApplicationIntoArrears(20);
-            CreatePlan(application, customer);
+			CreatePlan(application, customer);
 
 			var repaymentArrangement = GetRepaymentArrangement(application);
 			Assert.AreEqual(2, repaymentArrangement.RepaymentArrangementDetails.Count);
 
 			var paymentsApplicationId = (int)Drive.Data.Payments.Db.Applications.FindByExternalId(application.Id).ApplicationId;
 			Assert.IsNotNull(Drive.Db.Payments.Transactions.Where(x => x.ApplicationId == paymentsApplicationId && x.Type == "SuspendInterestAccrual"));
-        }
+		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-1864")]
-        public void GetRepaymentPlanTest()
-        {
-            Customer customer = CustomerBuilder.New().Build();
-            Application application = ApplicationBuilder.New(customer).Build();
+		public void RepayAllInstallmentsClosesPlanTest()
+		{
+			Customer customer = CustomerBuilder.New().Build();
+			Application application = ApplicationBuilder.New(customer).Build().PutApplicationIntoArrears(20);
 
-            application.PutApplicationIntoArrears(20);
-            CreatePlan(application, customer);
+			CreatePlan(application, customer);
+			RepayAllInstallments(customer, application);
 
-            var response = Do.Until(() => Drive.Cs.Queries.Post(new GetRepaymentArrangementsQuery() {ApplicationId = application.Id}));
-            Assert.IsNotNull(response);
-
-            Assert.AreEqual(application.Id, Guid.Parse(response.Values["ApplicationId"].Single()));
-        }
+			Do.Until(() => GetRepaymentArrangement(application).ClosedOn != null);
+		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-1864")]
-        public void GetParametersTest()
-        {
-            Customer customer = CustomerBuilder.New().Build();
-            Application application = ApplicationBuilder.New(customer).Build();
-            application.PutApplicationIntoArrears(20);
+		public void GetRepaymentPlanTest()
+		{
+			Customer customer = CustomerBuilder.New().Build();
+			Application application = ApplicationBuilder.New(customer).Build();
 
-            var response = Drive.Cs.Queries.Post(new GetRepaymentArrangementParametersQuery() {AccountId = customer.Id});
-            Assert.IsNotNull(response);
-            Assert.AreEqual(3, int.Parse(response.Values["MaxLengthMonths"].Single()));
-        }
+			application.PutApplicationIntoArrears(20);
+			CreatePlan(application, customer);
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1864")]
-        public void GetCalculationTest()
-        {
-            Customer customer = CustomerBuilder.New().Build();
-            Application application = ApplicationBuilder.New(customer).Build();
-            application.PutApplicationIntoArrears(20);
+			var response = Do.Until(() => Drive.Cs.Queries.Post(new GetRepaymentArrangementsQuery() { ApplicationId = application.Id }));
+			Assert.IsNotNull(response);
 
-            var response = Drive.Cs.Queries.Post(new GetRepaymentArrangementCalculationQuery
-                                                     {
-                                                         AccountId = customer.Id,
-                                                         RepaymentFrequency = PaymentFrequency.Monthly,
-                                                         NumberOfMonths = 4,
-                                                         FirstRepaymentDate = DateTime.Today.AddDays(7)
-                                                     });
-            Assert.IsNotNull(response);            
-        }
+			Assert.AreEqual(application.Id, Guid.Parse(response.Values["ApplicationId"].Single()));
+		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-1864")]
-        public void CancelTest()
-        {
-            Customer customer = CustomerBuilder.New().Build();
-            Application application = ApplicationBuilder.New(customer).Build().PutApplicationIntoArrears(20);
+		public void GetParametersTest()
+		{
+			Customer customer = CustomerBuilder.New().Build();
+			Application application = ApplicationBuilder.New(customer).Build();
+			application.PutApplicationIntoArrears(20);
 
-            CreatePlan(application, customer);
+			var response = Drive.Cs.Queries.Post(new GetRepaymentArrangementParametersQuery() { AccountId = customer.Id });
+			Assert.IsNotNull(response);
+			Assert.AreEqual(3, int.Parse(response.Values["MaxLengthMonths"].Single()));
+		}
+
+		[Test, AUT(AUT.Za), JIRA("ZA-1864")]
+		public void GetCalculationTest()
+		{
+			Customer customer = CustomerBuilder.New().Build();
+			Application application = ApplicationBuilder.New(customer).Build();
+			application.PutApplicationIntoArrears(20);
+
+			var response = Drive.Cs.Queries.Post(new GetRepaymentArrangementCalculationQuery
+			{
+				AccountId = customer.Id,
+				RepaymentFrequency = PaymentFrequency.Monthly,
+				NumberOfMonths = 4,
+				FirstRepaymentDate = DateTime.Today.AddDays(7)
+			});
+			Assert.IsNotNull(response);
+		}
+
+		[Test, AUT(AUT.Za), JIRA("ZA-1864")]
+		public void CancelTest()
+		{
+			Customer customer = CustomerBuilder.New().Build();
+			Application application = ApplicationBuilder.New(customer).Build().PutApplicationIntoArrears(20);
+
+			CreatePlan(application, customer);
 			var repaymentArrangement = GetRepaymentArrangement(application);
 
 			CancelRepaymentArrangement(repaymentArrangement);
-        }
+		}
 
         public enum PaymentFrequency
         {
@@ -247,13 +258,14 @@ namespace Wonga.QA.Tests.Cs
 			Do.Until(() => Drive.Data.Payments.Db.RepaymentArrangements.FindByRepaymentArrangementId(repaymentArrangement.RepaymentArrangementId).CanceledOn != null);
 		}
 
-		private static void RepayAllInstallments(RepaymentArrangementEntity repaymentArrangement)
+		private static void RepayAllInstallments(Customer customer, Application application)
 		{
+			var repaymentArrangement = GetRepaymentArrangement(application);
 			var count = repaymentArrangement.RepaymentArrangementDetails.Count;
 			
 			for( int i = 0; i < count; i++)
 			{
-				
+				MakeNextRepayment(customer, application);
 			}
 		}
 
