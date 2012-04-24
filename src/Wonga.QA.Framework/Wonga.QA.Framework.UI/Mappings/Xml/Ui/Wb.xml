@@ -32,12 +32,19 @@
     <PostcodeValid>#edit-postcode-lookup-uk-wrapper .form-error</PostcodeValid>
     <AddressOptionsWrapper>#edit-address-options-wrapper</AddressOptionsWrapper>
     <Postcode>#edit-postcode-lookup-uk</Postcode>
+	<PostcodeInForm>#edit-postcode-uk</PostcodeInForm>
     <District>#edit-district</District>
     <FlatNumber>#edit-flat</FlatNumber>
-    <County>#edit-county</County>
+	<HouseNumber>#edit-house-number</HouseNumber>  
+	<County>#edit-county</County>
     <AddressPeriod>#edit-address-period</AddressPeriod>
     <NextButton>#edit-submit</NextButton>
     <AddressOptions>#edit-address-options</AddressOptions>
+	<HouseNumberErrorForm>#edit-house-number-wrapper .form-error .invalid</HouseNumberErrorForm>
+	<PostcodeErrorForm>#edit-postcode-uk-wrapper div.form-error div.invalid</PostcodeErrorForm>
+	<TownErrorForm>#edit-town-wrapper div.invalid</TownErrorForm>
+	<StreetErrorForm>#edit-street-wrapper .form-error .invalid</StreetErrorForm>
+	<AddressPeriodErrorForm>#edit-address-period-wrapper div.invalid</AddressPeriodErrorForm>
   </AddressDetailsPage>
 
   <BusinessDetailsPage>
@@ -183,7 +190,7 @@
     <PostcodeValid>#edit-postcode-lookup-uk-wrapper .form-error</PostcodeValid>
     <AddressOptionsWrapper>#edit-address-options-wrapper</AddressOptionsWrapper>
     <District>#edit-district</District>
-    <FlatNumber>#edit-flat</FlatNumber>
+	<HouseNumber>#edit-house-number</HouseNumber>	
     <City>#edit-town</City>
     <Street>#edit-street</Street>
     <County>#edit-county</County>

@@ -529,7 +529,35 @@ namespace Wonga.QA.Tests.Ui
                     Assert.IsTrue(addressDetailsPage.IsPostcodeWarningOccurred());
                     break;
                 #endregion
+
             }
+        }
+
+        [Test, AUT(AUT.Wb), JIRA("QA-181")]
+        public void L0JourneyCustomerOnCurrentAddressPageDoesNotEnterSomeRequiredFieldsWarningMessageDisplayedWb()
+        {
+            var journeyWb = JourneyFactory.GetL0JourneyWB(Client.Home());
+            var addressDetailsPage = journeyWb.ApplyForLoan(5500, 30)
+                .AnswerEligibilityQuestions()
+                .FillPersonalDetails("TESTNoCheck").CurrentPage as AddressDetailsPage;
+            addressDetailsPage.PostCode = "SW6 6PN";
+            addressDetailsPage.LookupByPostCode();
+            addressDetailsPage.GetAddressesDropDown();
+            Do.Until(() => addressDetailsPage.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN");
+            Do.Until(() => addressDetailsPage.AddressPeriod = "2 to 3 years");
+            addressDetailsPage.HouseNumber = "";
+            Assert.IsTrue(addressDetailsPage.IsHouseNumberWarningOccurred());
+            addressDetailsPage.HouseNumber = "1";
+            addressDetailsPage.Street = "";
+            Assert.IsTrue(addressDetailsPage.IsStreetWarningOccurred());
+            addressDetailsPage.Street = "Harbord Street";
+            addressDetailsPage.Town = "";
+            Assert.IsTrue(addressDetailsPage.IsTownWarningOccurred());
+            addressDetailsPage.Town = "LONDON";
+            addressDetailsPage.AddressPeriod = "--- Please select ---";
+            Assert.IsTrue(addressDetailsPage.IsAddressPeriodWarningOccurred());
+            addressDetailsPage.PostcodeInForm = "";
+            Assert.IsTrue(addressDetailsPage.IsPostcodeWarningOccurred());
         }
 
         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-191")]
@@ -604,6 +632,24 @@ namespace Wonga.QA.Tests.Ui
                     Assert.IsTrue(myAccountZa.AccountDetailsSection.IsPasswordInvalidFormatWarningOccured());
                     myAccountZa.AccountDetailsSection.Password = "Sdfdfs123";
                     Assert.IsFalse(myAccountZa.AccountDetailsSection.IsPasswordInvalidFormatWarningOccured());
+                    break;
+                case AUT.Wb:
+                    var journeyWb = JourneyFactory.GetL0JourneyWB(Client.Home());
+                    var homePage = journeyWb.ApplyForLoan(5500, 30)
+                        .AnswerEligibilityQuestions()
+                        .FillPersonalDetails("TESTNoCheck")
+                        .FillAddressDetails("2 to 3 years")
+                        .FillAccountDetails()
+                        .FillBankDetails()
+                        .FillCardDetails()
+                        .EnterBusinessDetails()
+                        .AddAdditionalDirector()
+                        .EnterBusinessBankAccountDetails()
+                        .EnterBusinessDebitCardDetails()
+                        .WaitForApplyTermsPage()
+                        .ApplyTerms()
+                        .FillAcceptedPage()
+                        .GoHomePage();
                     break;
             }
         }
