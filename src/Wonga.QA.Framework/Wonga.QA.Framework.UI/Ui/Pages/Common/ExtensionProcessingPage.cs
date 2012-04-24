@@ -25,6 +25,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
             if (typeof(T) == typeof(ExtensionPaymentFailedPage))
                 return Do.With.Timeout(2).Until(() => new ExtensionPaymentFailedPage(Client));
+
+            if (typeof(T) == typeof(ExtensionErrorPage))
+                return Do.With.Timeout(2).Until(() => new ExtensionErrorPage(Client));
+            
             throw new NotImplementedException();
         }
     }

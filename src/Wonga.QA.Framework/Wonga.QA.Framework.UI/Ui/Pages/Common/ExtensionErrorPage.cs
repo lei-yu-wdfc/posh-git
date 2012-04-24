@@ -11,7 +11,7 @@ using Wonga.QA.Framework.UI.Mappings;
 
 namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
-    class ExtensionErrorPage : BasePage
+    class ExtensionErrorPage : BasePage, IExtensionPaymentPage
     {
         public ExtensionErrorPage(UiClient client) : base(client)
         {
