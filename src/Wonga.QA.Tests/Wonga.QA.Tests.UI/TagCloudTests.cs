@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
@@ -9,9 +8,9 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Db.Risk;
-using Wonga.QA.Framework.Msmq;
+using Wonga.QA.Framework.UI;
 using Wonga.QA.Tests.Core;
-using Wonga.QA.Tests.Ui;
+using Wonga.QA.Tests.Payments.Helpers;
 using EmploymentStatusEnum = Wonga.QA.Framework.Api.EmploymentStatusEnum;
 
 namespace Wonga.QA.Tests.Ui
@@ -40,6 +39,50 @@ namespace Wonga.QA.Tests.Ui
          {20, ""},
          {21, ""},
 	    };
+
+        [Test, AUT(AUT.Uk), JIRA("UK-785", "UK-1614"), Pending("Fails due to bug UK-1614")]
+        public void TagCloudScenario1A()
+        {
+            const int loanAmount = 100;
+            const int days = 10;
+            string email = Get.RandomEmail();
+            Console.WriteLine("email:{0}", email);
+
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var aPage = journey.ApplyForLoan(loanAmount, days)
+                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                .FillAddressDetails()
+                .FillAccountDetails();
+
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
+        }
+        
+        [Test, AUT(AUT.Uk), JIRA("UK-795")]
+        public void TagCloudScenario1B()
+        // Ln journey
+        {
+            string email = Get.RandomEmail();
+            const decimal trustRating = 400.00M;
+            var applicationId = Guid.NewGuid();
+
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            var accountId = customer.Id;
+
+            var setupData = new AccountSummarySetupFunctions();
+
+            setupData.Scenario01Setup(accountId, applicationId, trustRating);
+
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(1, int.Parse(response.Values["ScenarioId"].Single()));
+
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
+        }
 
 
         [Test, AUT(AUT.Uk), JIRA("UK-785")]
@@ -87,18 +130,74 @@ namespace Wonga.QA.Tests.Ui
         //[Test, AUT(AUT.Uk), JIRA("UK-785")]
         //public void TagCloudScenario16() { TagCloud(16, 11); } // not ready
 
-        //[Test, AUT(AUT.Uk), JIRA("UK-785")]
-        //public void TagCloudScenario17() { TagCloud(17, 0); } // not ready
+        [Test, AUT(AUT.Uk), JIRA("UK-785", "UK-1624"), Pending("Fails due to bug UK-1624")]
+        public void TagCloudScenario17A()
+        {
+            const int loanAmount = 100;
+            const int days = 10;
+            string email = Get.RandomEmail();
+            Console.WriteLine("email:{0}", email);
 
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var aPage = journey.ApplyForLoan(loanAmount, days)
+                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                .FillAddressDetails()
+                .FillAccountDetails()
+                .FillBankDetails();
+
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-785", "UK-1624"), Pending("Fails due to bug UK-1624")]
+        public void TagCloudScenario17B()
+        {
+            const int loanAmount = 100;
+            const int days = 10;
+            string email = Get.RandomEmail();
+            Console.WriteLine("email:{0}", email);
+
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var aPage = journey.ApplyForLoan(loanAmount, days)
+                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                .FillAddressDetails()
+                .FillAccountDetails()
+                .FillBankDetails()
+                .FillCardDetails();
+
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
+        }
         //[Test, AUT(AUT.Uk), JIRA("UK-785")]
         //public void TagCloudScenario19() { TagCloud(19, 0); } // not ready
 
         [Test, AUT(AUT.Uk), JIRA("UK-785")]
         public void TagCloudScenario20() { TagCloud(20, 1); }
 
-        //[Test, AUT(AUT.Uk), JIRA("UK-785")]
-        //public void TagCloudScenario21() { TagCloud(21, 0); } // not ready
+        [Test, AUT(AUT.Uk), JIRA("UK-785")]
+        public void TagCloudScenario21()
+        {
+            const int loanAmount = 100;
+            const int days = 10;
+            string email = Get.RandomEmail();
+            Console.WriteLine("email:{0}", email);
 
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var aPage = journey.ApplyForLoan(loanAmount, days)
+                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                .FillAddressDetails()
+                .FillAccountDetails()
+                .FillBankDetails();
+
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
+        }
 
 
         private void TagCloud(int scenarioId, int daysShift)

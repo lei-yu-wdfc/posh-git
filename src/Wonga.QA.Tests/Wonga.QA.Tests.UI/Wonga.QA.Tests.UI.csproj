@@ -106,6 +106,10 @@
       <Project>{36C48933-F3DA-468A-8529-212601FC0FA5}</Project>
       <Name>Wonga.QA.Tests.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Wonga.QA.Tests.Payments\Wonga.QA.Tests.Payments.csproj">
+      <Project>{FD73C73F-E2AE-4610-9A64-C024144F0A51}</Project>
+      <Name>Wonga.QA.Tests.Payments</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
