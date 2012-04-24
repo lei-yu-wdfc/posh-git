@@ -607,14 +607,14 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-186")]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-186")]
         public void InvalidFormatPasswordShouldCauseWarningMessageAndValidPasswordShouldDissmissWarning()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
             switch (Config.AUT)
             {
                 case AUT.Ca:
-                    var myAccountCa = journey.ApplyForLoan(200, 10)
+                    var journeyCa = JourneyFactory.GetL0Journey(Client.Home());
+                    var myAccountCa = journeyCa.ApplyForLoan(200, 10)
                                         .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                                         .FillAddressDetails().CurrentPage as AddressDetailsPage;
                     myAccountCa.AccountDetailsSection.Password = "sdfsdfs";
@@ -624,7 +624,8 @@ namespace Wonga.QA.Tests.Ui
                     Assert.IsFalse(myAccountCa.AccountDetailsSection.IsPasswordInvalidFormatWarningOccured());
                     break;
                 case AUT.Za:
-                    var myAccountZa = journey.ApplyForLoan(200, 10)
+                    var journeyZa = JourneyFactory.GetL0Journey(Client.Home());
+                    var myAccountZa = journeyZa.ApplyForLoan(200, 10)
                                         .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                                         .FillAddressDetails().CurrentPage as AccountDetailsPage;
                     myAccountZa.AccountDetailsSection.Password = "sdfsdfs";
@@ -635,21 +636,15 @@ namespace Wonga.QA.Tests.Ui
                     break;
                 case AUT.Wb:
                     var journeyWb = JourneyFactory.GetL0JourneyWB(Client.Home());
-                    var homePage = journeyWb.ApplyForLoan(5500, 30)
+                    var accountDetailsPage = journeyWb.ApplyForLoan(5500, 30)
                         .AnswerEligibilityQuestions()
                         .FillPersonalDetails("TESTNoCheck")
-                        .FillAddressDetails("2 to 3 years")
-                        .FillAccountDetails()
-                        .FillBankDetails()
-                        .FillCardDetails()
-                        .EnterBusinessDetails()
-                        .AddAdditionalDirector()
-                        .EnterBusinessBankAccountDetails()
-                        .EnterBusinessDebitCardDetails()
-                        .WaitForApplyTermsPage()
-                        .ApplyTerms()
-                        .FillAcceptedPage()
-                        .GoHomePage();
+                        .FillAddressDetails("2 to 3 years").CurrentPage as AccountDetailsPage;
+                    accountDetailsPage.AccountDetailsSection.Password = "sdfsdfs";
+                    Thread.Sleep(1000);
+                    Assert.IsTrue(accountDetailsPage.AccountDetailsSection.IsPasswordInvalidFormatWarningOccured());
+                    accountDetailsPage.AccountDetailsSection.Password = "Sdfdfs123";
+                    Assert.IsFalse(accountDetailsPage.AccountDetailsSection.IsPasswordInvalidFormatWarningOccured());
                     break;
             }
         }
