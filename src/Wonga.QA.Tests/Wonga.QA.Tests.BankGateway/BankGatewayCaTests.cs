@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
@@ -101,7 +102,7 @@ namespace Wonga.QA.Tests.BankGateway
 			Do.Until(() => Drive.Db.BankGateway.Acknowledges.Single(t => t.TransactionID == transaction.TransactionId && t.AcknowledgeTypeID == ackType.AcknowledgeTypeId));
 		}
 
-		[Test, AUT(AUT.Ca), JIRA("CA-1931")]
+		[Test, AUT(AUT.Ca), JIRA("CA-1931"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
 		public void SendPaymentMessageShouldBeRoutedToScotia()
 		{
             var customer = CustomerBuilder.New().
@@ -115,7 +116,7 @@ namespace Wonga.QA.Tests.BankGateway
 					t.BankIntegrationId == BankIntegrationIdScotia));
 		}
 
-		[Test, AUT(AUT.Ca), JIRA("CA-1931")]
+		[Test, AUT(AUT.Ca), JIRA("CA-1931"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
 		public void SendPaymentMessageShouldBeRoutedToScotiaAndRejected()
 		{
 			var bankAccountNumber = Random.Next(1000000, 9999999);
@@ -163,7 +164,7 @@ namespace Wonga.QA.Tests.BankGateway
 			         	});
 		}
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1931"), Ignore("Requires fix in Mock to not send any reports after ack file rejected."), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1931"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
 		public void NegativeFileAcknowledgementShouldBePersistedAndAllTransactionsRejected()
 		{
 			Guid applicationIdAccepted = Guid.Empty;
@@ -213,21 +214,70 @@ namespace Wonga.QA.Tests.BankGateway
 		}
 
         [Test, AUT(AUT.Ca), JIRA("CA-1931"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
-		public void SettlementSendPaymentShouldUpdateTransactionStatusAndPersistAck()
+		public void SettlementInvalidCrossreferenceNumberShouldBePersisted()
 		{
+			var bankAccountNumber = Random.Next(1000000, 9999999);
 			var customer = CustomerBuilder.New().
 								WithInstitutionNumber("001").
 								WithBranchNumber("00022").
-								WithBankAccountNumber(9999999).
-								WithSurname("Surname").WithForename("Forename").
+								WithBankAccountNumber(bankAccountNumber).
+								WithSurname("Wonga").WithForename("Canada Inc").
 								Build();
-			var application = ApplicationBuilder.New(customer).Build();
+			
+			var customResponseOverride = new XElement("SettlementReportDetail",
+				new XElement("Segments", new XAttribute("SenderReference", "INVALID DATA")));
 
-			Framework.Db.BankGateway.TransactionEntity transaction = null;
+			var setup = BmoResponseBuilder.New().
+								ForBankAccountNumber(bankAccountNumber).
+								CustomOverride(customResponseOverride);
+
+			var applicationId = ApplicationBuilder.New(customer).Build().Id;
 
 			var ackType = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == 2 && a.Name == "DEFT220");
 
-			Do.Until(() => transaction = Drive.Db.BankGateway.Transactions.Single(t => t.ApplicationId == application.Id && t.BankIntegrationId == 2 && t.TransactionStatus == 4));
+			var pendingTransaction = Do.Until(() => Drive.Db.BankGateway.Transactions.Single(
+				t => t.ApplicationId == applicationId && t.BankIntegrationId == 2 && t.TransactionStatus == 3));
+
+			// Transaction should NOT go into success status - we corrupted the response with invalid data
+			Do.With.Timeout(TimeSpan.FromSeconds(5)).While(() => Drive.Db.BankGateway.Transactions.Single(
+				t => t.ApplicationId == applicationId && t.BankIntegrationId == 2 && t.TransactionStatus == 4));
+		}
+
+		[Test, AUT(AUT.Ca), JIRA("CA-1931"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
+		public void SettlementValidAndInvalidCrossreferenceNumberShouldBePersisted()
+		{
+			Guid applicationWithInvalidResponseFromBank;
+			Guid applicationWithValidResponseFromBank;
+
+			using (new BankGatewayBmoSendBatch())
+			{
+				var bankAccountNumber = Random.Next(1000000, 9999999);
+				var customer = CustomerBuilder.New().
+					WithInstitutionNumber("001").
+					WithBranchNumber("00022").
+					WithBankAccountNumber(bankAccountNumber).
+					WithSurname("Wonga").WithForename("Canada Inc").
+					Build();
+				var customResponseOverride = new XElement("SettlementReportDetail",
+				                                          new XElement("Segments", new XAttribute("SenderReference", "INVALID DATA")));
+				var setup = BmoResponseBuilder.New().
+					ForBankAccountNumber(bankAccountNumber).
+					CustomOverride(customResponseOverride);
+				applicationWithInvalidResponseFromBank = ApplicationBuilder.New(customer).Build().Id;
+
+				customer = CustomerBuilder.New().
+					WithInstitutionNumber("001").
+					WithBranchNumber("00022").
+					WithBankAccountNumber(9999999).
+					WithSurname("Surname").WithForename("Forename").
+					Build();
+				applicationWithValidResponseFromBank = ApplicationBuilder.New(customer).Build().Id;
+			}
+
+			var ackType = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == 2 && a.Name == "DEFT220");
+			Framework.Db.BankGateway.TransactionEntity transaction = null;
+
+			Do.Until(() => transaction = Drive.Db.BankGateway.Transactions.Single(t => t.ApplicationId == applicationWithValidResponseFromBank && t.BankIntegrationId == 2 && t.TransactionStatus == 4));
 			Do.Until(() => Drive.Db.BankGateway.Acknowledges.Single(t => t.TransactionID == transaction.TransactionId && t.AcknowledgeTypeID == ackType.AcknowledgeTypeId));
 		}
 
