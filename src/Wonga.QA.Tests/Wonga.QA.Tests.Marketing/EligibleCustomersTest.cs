@@ -26,7 +26,7 @@ namespace Wonga.QA.Tests.Marketing
         private static readonly String ELIGIBLE_CUSTOMER_RESPONSE = "true";
         private static readonly String NON_ELIGIBLE_CUSTOMER_RESPONSE = "false";
 
-        [SetUp,AUT(AUT.Uk)]
+        [SetUp]
         public void Init()
         {
             _eligibleCustomer = CustomerBuilder.New().Build();
@@ -64,7 +64,7 @@ namespace Wonga.QA.Tests.Marketing
             
         }
 
-        [TearDown,AUT(AUT.Uk)]
+        [TearDown]
         public void Rollback()
         {
             Do.Until(()=> _eligibleCustomersEntity.Delete(EligibleCustomerId: _eligibleCustomer.Id));
