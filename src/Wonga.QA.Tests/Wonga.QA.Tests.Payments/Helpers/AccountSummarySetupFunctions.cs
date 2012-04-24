@@ -795,7 +795,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 AccountNumber = "10032650",
                 AccountOpenDate = DateTime.UtcNow.AddYears(-3),
                 BankAccountId = bankAccountId,
-                BankCode = "101627",
+                BankCode = "161027",
                 BankName = "Royal Bank of Scotland",
                 HolderName = "Mr Test Test",
                 CountryCode = "UK",

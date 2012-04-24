@@ -36,6 +36,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual("100.00", response.Values["CurrentPrincipleAmount"].Single(), "CurrentPrincipleAmount incorrect");
             Assert.AreEqual("110.70", response.Values["TotalAmountDueToday"].Single(), "TotalAmountDueToday incorrect");
             Assert.AreEqual("10.70", response.Values["ExtensionPartPaymentAmount"].Single(), "ExtensionPartPaymentAmount incorrect");
+            Assert.AreEqual("10.00", response.Values["LoanExtensionFee"].Single(), "LoanExtensionFee incorrect");
         }
 
         [Test]
