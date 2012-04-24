@@ -166,7 +166,7 @@ namespace Wonga.QA.Tests.Cs
 
 			var response = Drive.Cs.Queries.Post(new GetRepaymentArrangementParametersQuery() { AccountId = customer.Id });
 			Assert.IsNotNull(response);
-			Assert.AreEqual(6, int.Parse(response.Values["MaxLengthMonths"].Single()));
+			Assert.AreEqual(3, int.Parse(response.Values["MaxLengthMonths"].Single()));
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-1864")]

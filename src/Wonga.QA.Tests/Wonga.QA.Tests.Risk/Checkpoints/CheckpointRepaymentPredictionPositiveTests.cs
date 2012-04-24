@@ -29,7 +29,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		private int _expectedScoreCutoffExistingUsers;
 
 		private const string ScorecardNameL0Za = "ZARiskScorecard_v_1_2_L0";
-		private const string ScorecardNameLnZa = "v_1_0_Ln";
+		private const string ScorecardNameLnZa = "ZARiskScorecard_v_1_2_LN";
 		private const int ScoreCutoffNewUsersZa = 600;
 		private const int ScoreCutoffExistingUsersZa = 610;
 
