@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.BankGateway;
 using Wonga.QA.Framework.Db.Ops;
-using Wonga.QA.Framework.Db.OpsSagasCa;
 using Wonga.QA.Framework.Mocks;
-using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.BankGateway.Helpers;
 using Wonga.QA.Tests.Core;
 using ProvinceEnum = Wonga.QA.Framework.Api.ProvinceEnum;
@@ -67,6 +64,32 @@ namespace Wonga.QA.Tests.BankGateway
             TransactionEntity transaction = WaitBankGatewayFunctions.WaitForStatusOfTransaction(application.Id);
 
             WaitBankGatewayFunctions.WaitForAckForTransaction(transaction);
+        }
+
+        [Test, AUT(AUT.Ca), JIRA("CA-1972"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
+        public void RejectedSendPaymentShouldUpdateTransactionStatusAndPersistAck()
+        {
+            var bankAccountNumber = Random.Next(1000000, 9999999);
+
+            var customer = CustomerBuilder.New().
+                    WithInstitutionNumber("001").
+                    WithBranchNumber("00022").
+                    WithBankAccountNumber(bankAccountNumber).
+                    WithSurname("Surname").WithForename("Forename").
+                    Build();
+
+            var setup = BmoResponseBuilder.New().
+                    ForBankAccountNumber(bankAccountNumber).
+                    RejectTransaction();
+
+            var application = ApplicationBuilder.New(customer).Build();
+            
+            Framework.Db.BankGateway.TransactionEntity transaction = null;
+
+            var ackType = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == 2 && a.Name == "DEFT210-211-260");
+
+            Do.Until(() => transaction = Drive.Db.BankGateway.Transactions.Single(t => t.ApplicationId == application.Id && t.BankIntegrationId == 2 && t.TransactionStatus == 5));
+            Do.Until(() => Drive.Db.BankGateway.Acknowledges.Single(t => t.TransactionID == transaction.TransactionId && t.AcknowledgeTypeID == ackType.AcknowledgeTypeId));
         }
     }
 }
