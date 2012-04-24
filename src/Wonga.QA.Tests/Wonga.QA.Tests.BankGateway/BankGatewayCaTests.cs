@@ -214,7 +214,7 @@ namespace Wonga.QA.Tests.BankGateway
 		}
 
         [Test, AUT(AUT.Ca), JIRA("CA-1931"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
-		public void SettlementInvalidCrossreferenceNumberShouldBePersisted()
+		public void SettlementInvalidCrossreferenceNumberShouldPersistAck()
 		{
 			var bankAccountNumber = Random.Next(1000000, 9999999);
 			var customer = CustomerBuilder.New().
@@ -244,7 +244,7 @@ namespace Wonga.QA.Tests.BankGateway
 		}
 
 		[Test, AUT(AUT.Ca), JIRA("CA-1931"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
-		public void SettlementValidAndInvalidCrossreferenceNumberShouldBePersisted()
+		public void SettlementValidAndInvalidCrossreferenceNumberShouldProcessValid()
 		{
 			Guid applicationWithInvalidResponseFromBank;
 			Guid applicationWithValidResponseFromBank;
@@ -359,6 +359,88 @@ namespace Wonga.QA.Tests.BankGateway
 			Do.Until(() => transaction = Drive.Db.BankGateway.Transactions.Single(t => t.ApplicationId == applicationIdRejected && t.BankIntegrationId == 2 && t.TransactionStatus == 5));
 			Do.Until(() => Drive.Db.BankGateway.Acknowledges.Single(t => t.TransactionID == transaction.TransactionId && t.AcknowledgeTypeID == ackTypeRejected.AcknowledgeTypeId));
 			Do.With.Timeout(TimeSpan.FromSeconds(2)).While(() => Drive.Db.BankGateway.Acknowledges.Single(t => t.TransactionID == transaction.TransactionId && t.AcknowledgeTypeID == ackTypeSettled.AcknowledgeTypeId));
+		}
+
+		[Test, AUT(AUT.Ca), JIRA("CA-1931"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
+		public void RejectedValidAndInvalidCrossreferenceNumberShouldProcessValid()
+		{
+			Guid applicationWithInvalidResponseFromBank;
+			Guid applicationWithValidResponseFromBank;
+
+			using (new BankGatewayBmoSendBatch())
+			{
+				// Rejected transaction with invalid crossreference number
+				var bankAccountNumber = Random.Next(1000000, 9999999);
+				var customer = CustomerBuilder.New().
+					WithInstitutionNumber("001").
+					WithBranchNumber("00022").
+					WithBankAccountNumber(bankAccountNumber).
+					WithSurname("Wonga").WithForename("Canada Inc").
+					Build();
+				var customResponseOverride = new[]
+						{
+							new XElement("RejectedTransactionsReportDetail",
+											new XElement("Segments", new XAttribute("CrossReferenceNumber", "INVALID DATA"))),
+							new XElement("SettlementReportDetail", new XAttribute("LogicalRecordNumber", -1))
+						};
+				var setup = BmoResponseBuilder.New().
+					ForBankAccountNumber(bankAccountNumber).
+					CustomOverride(customResponseOverride);
+				applicationWithInvalidResponseFromBank = ApplicationBuilder.New(customer).Build().Id;
+
+				// Rejected transaction with valid crossreference number
+				bankAccountNumber = Random.Next(1000000, 9999999);
+				customer = CustomerBuilder.New().
+					WithInstitutionNumber("001").
+					WithBranchNumber("00022").
+					WithBankAccountNumber(bankAccountNumber).
+					WithSurname("Surname").WithForename("Forename").
+					Build();
+				setup = BmoResponseBuilder.New().
+					ForBankAccountNumber(bankAccountNumber).
+					RejectTransaction();
+				applicationWithValidResponseFromBank = ApplicationBuilder.New(customer).Build().Id;
+			}
+
+			var ackType = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == 2 && a.Name == "DEFT210-211-260");
+			Framework.Db.BankGateway.TransactionEntity transaction = null;
+
+			Do.Until(() => transaction = Drive.Db.BankGateway.Transactions.Single(t => t.ApplicationId == applicationWithValidResponseFromBank && t.BankIntegrationId == 2 && t.TransactionStatus == 5));
+			Do.Until(() => Drive.Db.BankGateway.Acknowledges.Single(t => t.TransactionID == transaction.TransactionId && t.AcknowledgeTypeID == ackType.AcknowledgeTypeId));
+		}
+
+		[Test, AUT(AUT.Ca), JIRA("CA-1931"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
+		public void RejectedInvalidCrossreferenceNumberShouldPersistAck()
+		{
+			var bankAccountNumber = Random.Next(1000000, 9999999);
+			var customer = CustomerBuilder.New().
+								WithInstitutionNumber("001").
+								WithBranchNumber("00022").
+								WithBankAccountNumber(bankAccountNumber).
+								WithSurname("Wonga").WithForename("Canada Inc").
+								Build();
+
+			var customResponseOverride = new[]
+					{
+						new XElement("RejectedTransactionsReportDetail",
+						             new XElement("Segments", new XAttribute("CrossReferenceNumber", "INVALID DATA"))),
+						new XElement("SettlementReportDetail", new XAttribute("LogicalRecordNumber", -1))
+					};
+
+			var setup = BmoResponseBuilder.New().
+				ForBankAccountNumber(bankAccountNumber).
+				CustomOverride(customResponseOverride);
+
+			var applicationId = ApplicationBuilder.New(customer).Build().Id;
+
+			var ackType = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == 2 && a.Name == "DEFT210-211-260");
+
+			var pendingTransaction = Do.Until(() => Drive.Db.BankGateway.Transactions.Single(
+				t => t.ApplicationId == applicationId && t.BankIntegrationId == 2 && t.TransactionStatus == 3));
+
+			// Transaction should NOT go into success status - we corrupted the response with invalid data
+			Do.With.Timeout(TimeSpan.FromSeconds(5)).While(() => Drive.Db.BankGateway.Transactions.Single(
+				t => t.ApplicationId == applicationId && t.BankIntegrationId == 2 && t.TransactionStatus == 4));
 		}
 	}
 }
