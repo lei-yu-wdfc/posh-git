@@ -201,4 +201,8 @@
 		<ResendPin>#edit-resend-pin</ResendPin>
 		<ResendPinMessage>.pin_resend</ResendPinMessage>
   </MobilePinVerificationSection>
+
+  <AccountDetailsSection>
+		<PasswordErrorForm>div#edit-password-wrapper div.invalid</PasswordErrorForm>		
+  </AccountDetailsSection>
 </Ui>
