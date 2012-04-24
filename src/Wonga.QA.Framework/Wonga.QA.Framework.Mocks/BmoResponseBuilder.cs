@@ -56,9 +56,16 @@ namespace Wonga.QA.Framework.Mocks
 
 			return new BmoResponse(entity.BankGatewayResponseSetupId);
 		}
-       
 
+		public BmoResponse CustomOverride(XElement customResponseOverride)
+		{
+			var response = new XElement("Setup", customResponseOverride);
 
+			var entity = InsertSetup(response);
+
+			return new BmoResponse(entity.BankGatewayResponseSetupId);
+		}
+ 
 		private BankGatewayResponseSetup InsertSetup(XElement response)
 		{
 			var setup = new BankGatewayResponseSetup
