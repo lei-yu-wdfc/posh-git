@@ -32,6 +32,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         public String Town { set { _city.SendValue(value); } }
         public String Street { set { _street.SendValue(value); } }
 
+
+
         public AddressDetailsSection(BasePage page)
             : base(Ui.Get.AddressDetailsSection.Fieldset, page)
         {
@@ -45,12 +47,17 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             _addressOptionsWrapper = Section.FindElement(By.CssSelector(Ui.Get.AddressDetailsSection.AddressOptionsWrapper));
             Do.With.Interval(1).Until(ClickLookupAddress);
             Do.Until(() => _addressOptionsWrapper.Displayed);
-            _flatNumber = Section.FindElement(By.CssSelector(Ui.Get.AddressDetailsSection.FlatNumber));
-            _flatNumber = Section.FindElement(By.CssSelector(Ui.Get.AddressDetailsSection.FlatNumber));
             _district = Section.FindElement(By.CssSelector(Ui.Get.AddressDetailsSection.District));
             _county = Section.FindElement(By.CssSelector(Ui.Get.AddressDetailsSection.County));
             _city = Section.FindElement(By.CssSelector(Ui.Get.AddressDetailsSection.City));
             _street = Section.FindElement(By.CssSelector(Ui.Get.AddressDetailsSection.Street));
+
+            switch(Config.AUT)
+            {
+                case AUT.Wb:
+                    _flatNumber = Section.FindElement(By.CssSelector(Ui.Get.AddressDetailsSection.FlatNumber));
+                    break;
+            }
         }
 
         private IWebElement ClickLookupAddress()
