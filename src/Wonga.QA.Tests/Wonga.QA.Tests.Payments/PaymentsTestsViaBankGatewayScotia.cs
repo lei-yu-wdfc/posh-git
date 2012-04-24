@@ -19,22 +19,33 @@ namespace Wonga.QA.Tests.Payments
     {
         private const string BankGatewayIsTestModeKey = "BankGateway.IsTestMode";
         private string _bankGatewayIsTestMode;
+        private const string MocksScotiaEnabledKey = "Mocks.ScotiaEnabled";
+        private string _mocksScotiaEnabled;
 
         [SetUp]
         public void SetUp()
         {
-            ServiceConfigurationEntity entity = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == BankGatewayIsTestModeKey);
-            _bankGatewayIsTestMode = entity.Value;
-            entity.Value = "false";
-            entity.Submit();
+            ServiceConfigurationEntity bankGatewayIsTestModeKeyEntity = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == BankGatewayIsTestModeKey);
+            _bankGatewayIsTestMode = bankGatewayIsTestModeKeyEntity.Value;
+            bankGatewayIsTestModeKeyEntity.Value = "false";
+            bankGatewayIsTestModeKeyEntity.Submit();
+
+            ServiceConfigurationEntity mocksScotiaEnabledKeyEntity = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == MocksScotiaEnabledKey);
+            _mocksScotiaEnabled = mocksScotiaEnabledKeyEntity.Value;
+            mocksScotiaEnabledKeyEntity.Value = "true";
+            mocksScotiaEnabledKeyEntity.Submit();
         }
 
         [TearDown]
         public void TearDown()
         {
-            ServiceConfigurationEntity entity = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == BankGatewayIsTestModeKey);
-            entity.Value = _bankGatewayIsTestMode;
-            entity.Submit();
+            ServiceConfigurationEntity bankGatewayIsTestModeKeyEntity = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == BankGatewayIsTestModeKey);
+            bankGatewayIsTestModeKeyEntity.Value = _bankGatewayIsTestMode;
+            bankGatewayIsTestModeKeyEntity.Submit();
+
+            ServiceConfigurationEntity mocksScotiaEnabledKeyEntity = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == MocksScotiaEnabledKey);
+            mocksScotiaEnabledKeyEntity.Value = _mocksScotiaEnabled;
+            mocksScotiaEnabledKeyEntity.Submit();
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1441")]

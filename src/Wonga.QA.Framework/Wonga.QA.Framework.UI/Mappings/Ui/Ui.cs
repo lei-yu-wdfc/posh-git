@@ -48,6 +48,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual ProvinceSection ProvinceSection { get; set; }
         public virtual MyAccountNavigationSection MyAccountNavigationSection { get; set; }
         public virtual ApplicationSection ApplicationSection { get; set; }
+        public virtual AddressDetailsSection AddressDetailsSection { get; set; }
         #endregion
 
         #region Elements
@@ -59,7 +60,11 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual SurveyElement SurveyElement { get; set; }
         public virtual ContactElement ContactElement { get; set; }
         public virtual TabsElement TabsElement { get; set; }
-
+        public virtual TopupSlidersElement TopupSlidersElement { get; set; }
+        public virtual SmallTopupSlidersElement SmallTopupSlidersElement { get; set; }
+        public virtual SmallExtensionSlidersElement SmallExtensionSlidersElement { get; set; }
+        public virtual ChangeMyAddressElement ChangeMyAddressElement { get; set; }
+        
         #endregion
 
         #region WbPages
@@ -69,6 +74,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual AdditionalDirectorsPage AdditionalDirectorsPage { get; set; }
         public virtual AddAditionalDirectorsPage AddAditionalDirectorsPage { get; set; }
         public virtual BusinessDebitCardPage BusinessDebitCardPage { get; set; }
+        public virtual ReferPage ReferPage { get; set; }
 
         #endregion
 
@@ -94,6 +100,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual MyPersonalDetailsPage MyPersonalDetailsPage { get; set; }
         public virtual JargonBusterPage JargonBusterPage { get; set; }
         public virtual AboutUsPage AboutUsPage { get; set; }
+        public virtual HowItWorksPage HowItWorksPage { get; set; }
         public virtual BlogPage BlogPage { get; set; }
         public virtual OurCustomersPage OurCustomersPage { get; set; }
         public virtual ResponsibleLendingPage ResponsibleLendingPage { get; set; }
@@ -101,9 +108,14 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual TopupAgreementPage TopupAgreementPage { get; set; }
         public virtual TopupDealDonePage TopupDealDonePage { get; set; }
         public virtual TopupProcessingPage TopupProcessingPage { get; set; }
-        //public virtual TopupProcessingPage TopupProcessingPage { get; set; }
         public virtual TopupRequestPage TopupRequestPage { get; set; }
-
+        public virtual ApplyTermsPage ApplyTermsPage { get; set; }
+        public virtual ExtensionProcessingPage ExtensionProcessingPage { get; set; }
+        public virtual ExtensionPaymentFailedPage ExtensionPaymentFailedPage { get; set; }
+        public virtual ExtensionAgreementPage ExtensionAgreementPage { get; set; }
+        public virtual ExtensionDealDonePage ExtensionDealDonePage { get; set; }
+        public virtual ExtensionErrorPage ExtensionErrorPage { get; set; }
+        public virtual ExtensionRequestPage ExtensionRequestPage { get; set; }
         #endregion
 
         #region SalesForcePages

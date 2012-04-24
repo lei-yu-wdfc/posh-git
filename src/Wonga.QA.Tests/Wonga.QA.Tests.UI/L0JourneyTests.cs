@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using Gallio.Framework.Assertions;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
@@ -338,7 +340,7 @@ namespace Wonga.QA.Tests.Ui
                 case AUT.Ca:
                     string[] date = acceptedPage.GetPaymentDueDate.Replace(",", "").Split(' ');
                     string day = date[2][0] == '0' ? date[2].Remove(0, 1) : date[2];
-                    string paymentDate = date[0] + " " + day + " " + date[1].Remove(3) + " " + date[3];
+                    string paymentDate = date[0] + " " + day + " " + date[1] + " " + date[3]; // Note: Temp fix, need better solutions
 
                     Assert.AreEqual(totalAmountOnPersonalDetails, acceptedPage.GetPrincipalAmountBorrowed);
                     Assert.AreEqual(totalAmountOnPersonalDetails, acceptedPage.GetPrincipalAmountToBeTransfered);
@@ -527,9 +529,260 @@ namespace Wonga.QA.Tests.Ui
                     Assert.IsTrue(addressDetailsPage.IsPostcodeWarningOccurred());
                     break;
                 #endregion
+
+            }
+        }
+
+        [Test, AUT(AUT.Wb), JIRA("QA-181")]
+        public void L0JourneyCustomerOnCurrentAddressPageDoesNotEnterSomeRequiredFieldsWarningMessageDisplayedWb()
+        {
+            var journeyWb = JourneyFactory.GetL0JourneyWB(Client.Home());
+            var addressDetailsPage = journeyWb.ApplyForLoan(5500, 30)
+                .AnswerEligibilityQuestions()
+                .FillPersonalDetails("TESTNoCheck").CurrentPage as AddressDetailsPage;
+            addressDetailsPage.PostCode = "SW6 6PN";
+            addressDetailsPage.LookupByPostCode();
+            addressDetailsPage.GetAddressesDropDown();
+            Do.Until(() => addressDetailsPage.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN");
+            Do.Until(() => addressDetailsPage.AddressPeriod = "2 to 3 years");
+            addressDetailsPage.HouseNumber = "";
+            Assert.IsTrue(addressDetailsPage.IsHouseNumberWarningOccurred());
+            addressDetailsPage.HouseNumber = "1";
+            addressDetailsPage.Street = "";
+            Assert.IsTrue(addressDetailsPage.IsStreetWarningOccurred());
+            addressDetailsPage.Street = "Harbord Street";
+            addressDetailsPage.Town = "";
+            Assert.IsTrue(addressDetailsPage.IsTownWarningOccurred());
+            addressDetailsPage.Town = "LONDON";
+            addressDetailsPage.AddressPeriod = "--- Please select ---";
+            Assert.IsTrue(addressDetailsPage.IsAddressPeriodWarningOccurred());
+            addressDetailsPage.PostcodeInForm = "";
+            Assert.IsTrue(addressDetailsPage.IsPostcodeWarningOccurred());
+        }
+
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-191")]
+        public void CustomerClicksAcceptButtonChosenLoanAmountShouldDepositedIntoAccountCheckDatabase()
+        {
+            DateTime date;
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            MySummaryPage mySummary;
+            switch (Config.AUT)
+            {
+                case AUT.Ca:
+                    date = DateTime.Now.AddDays(DateHelper.GetNumberOfDaysUntilStartOfLoanForCa() + 20);
+                    mySummary = journey.ApplyForLoan(200, 20)
+                                          .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                          .FillAddressDetails()
+                                          .FillAccountDetails().FillBankDetails()
+                                          .WaitForAcceptedPage()
+                                          .FillAcceptedPage()
+                                          .GoToMySummaryPage().CurrentPage as MySummaryPage;
+                    var customerCa = Do.Until(() => Drive.Data.Comms.Db.CustomerDetails.FindBy(Forename: journey.FirstName, Surname: journey.LastName));
+                    Console.WriteLine(customerCa.Email.ToString());
+                    Console.WriteLine(customerCa.AccountId.ToString());
+                    var applicationCa = Do.Until(() => Drive.Data.Payments.Db.Applications.FindBy(AccountId: customerCa.AccountId));
+                    Console.WriteLine(applicationCa.AccountId.ToString());
+                    var fixedTermApplicationCa = Do.Until(() => Drive.Data.Payments.Db.FixedTermLoanApplications.FindByApplicationId(applicationCa.ApplicationId));
+                    Assert.AreEqual("200.00", fixedTermApplicationCa.LoanAmount.ToString());
+                    Assert.AreEqual(String.Format("{0:dddd MMMM yyyy}", date), String.Format("{0:dddd MMMM yyyy}", fixedTermApplicationCa.PromiseDate));
+                    break;
+                case AUT.Za:
+                    date = DateTime.Now.AddDays(20);
+                    mySummary = journey.ApplyForLoan(200, 20)
+                                          .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                          .FillAddressDetails()
+                                          .FillAccountDetails().FillBankDetails()
+                                          .WaitForAcceptedPage()
+                                          .FillAcceptedPage()
+                                          .GoToMySummaryPage().CurrentPage as MySummaryPage;
+                    var customerZa = Do.Until(() => Drive.Data.Comms.Db.CustomerDetails.FindBy(Forename: journey.FirstName, Surname: journey.LastName));
+                    Console.WriteLine(customerZa.Email.ToString());
+                    Console.WriteLine(customerZa.AccountId.ToString());
+                    var applicationZa = Do.Until(() => Drive.Data.Payments.Db.Applications.FindBy(AccountId: customerZa.AccountId));
+                    Console.WriteLine(applicationZa.AccountId.ToString());
+                    var fixedTermApplicationZa = Do.Until(() => Drive.Data.Payments.Db.FixedTermLoanApplications.FindByApplicationId(applicationZa.ApplicationId));
+                    Assert.AreEqual("200.00", fixedTermApplicationZa.LoanAmount.ToString());
+                    Assert.AreEqual(String.Format("{0:d MMMM yyyy}", date), String.Format("{0:d MMMM yyyy}", fixedTermApplicationZa.PromiseDate));
+                    break;
+            }
+        }
+
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-186")]
+        public void InvalidFormatPasswordShouldCauseWarningMessageAndValidPasswordShouldDissmissWarning()
+        {
+            switch (Config.AUT)
+            {
+                case AUT.Ca:
+                    var journeyCa = JourneyFactory.GetL0Journey(Client.Home());
+                    var myAccountCa = journeyCa.ApplyForLoan(200, 10)
+                                        .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                        .FillAddressDetails().CurrentPage as AddressDetailsPage;
+                    myAccountCa.AccountDetailsSection.Password = "sdfsdfs";
+                    Thread.Sleep(1000);
+                    Assert.IsTrue(myAccountCa.AccountDetailsSection.IsPasswordInvalidFormatWarningOccured());
+                    myAccountCa.AccountDetailsSection.Password = "Sdfdfs123";
+                    Assert.IsFalse(myAccountCa.AccountDetailsSection.IsPasswordInvalidFormatWarningOccured());
+                    break;
+                case AUT.Za:
+                    var journeyZa = JourneyFactory.GetL0Journey(Client.Home());
+                    var myAccountZa = journeyZa.ApplyForLoan(200, 10)
+                                        .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                        .FillAddressDetails().CurrentPage as AccountDetailsPage;
+                    myAccountZa.AccountDetailsSection.Password = "sdfsdfs";
+                    Thread.Sleep(1000);
+                    Assert.IsTrue(myAccountZa.AccountDetailsSection.IsPasswordInvalidFormatWarningOccured());
+                    myAccountZa.AccountDetailsSection.Password = "Sdfdfs123";
+                    Assert.IsFalse(myAccountZa.AccountDetailsSection.IsPasswordInvalidFormatWarningOccured());
+                    break;
+                case AUT.Wb:
+                    var journeyWb = JourneyFactory.GetL0JourneyWB(Client.Home());
+                    var accountDetailsPage = journeyWb.ApplyForLoan(5500, 30)
+                        .AnswerEligibilityQuestions()
+                        .FillPersonalDetails("TESTNoCheck")
+                        .FillAddressDetails("2 to 3 years").CurrentPage as AccountDetailsPage;
+                    accountDetailsPage.AccountDetailsSection.Password = "sdfsdfs";
+                    Thread.Sleep(1000);
+                    Assert.IsTrue(accountDetailsPage.AccountDetailsSection.IsPasswordInvalidFormatWarningOccured());
+                    accountDetailsPage.AccountDetailsSection.Password = "Sdfdfs123";
+                    Assert.IsFalse(accountDetailsPage.AccountDetailsSection.IsPasswordInvalidFormatWarningOccured());
+                    break;
+            }
+        }
+
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-188")]
+        public void CustomerOnBankDetailsPageClicksOnResendPinLinkMessageShouldDisplayedAndPinShouldResent()
+        {
+            Random rand = new Random();
+            string telephone = Get.RandomLong(1000000, 9999999).ToString();
+            switch (Config.AUT)
+            {
+                #region Ca
+                case AUT.Ca:
+                    var journeyCa = JourneyFactory.GetL0Journey(Client.Home());
+                    var personalDetailsPageCa = journeyCa.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
+                    var emailCa = Get.RandomEmail();
+                    personalDetailsPageCa.ProvinceSection.Province = "British Columbia";
+                    Do.Until(() => personalDetailsPageCa.ProvinceSection.ClosePopup());
+                    personalDetailsPageCa.YourName.FirstName = Get.RandomString(3, 10);
+                    personalDetailsPageCa.YourName.MiddleName = Get.GetMiddleName();
+                    personalDetailsPageCa.YourName.LastName = Get.RandomString(3, 10);
+                    personalDetailsPageCa.YourName.Title = "Mr";
+                    personalDetailsPageCa.YourDetails.Number = "123213126";
+                    personalDetailsPageCa.YourDetails.DateOfBirth = "1/Jan/1980";
+                    personalDetailsPageCa.YourDetails.Gender = "Male";
+                    personalDetailsPageCa.YourDetails.HomeStatus = "Tenant Furnished";
+                    personalDetailsPageCa.YourDetails.MaritalStatus = "Single";
+                    personalDetailsPageCa.EmploymentDetails.EmploymentStatus = "Employed Full Time";
+                    personalDetailsPageCa.EmploymentDetails.MonthlyIncome = "1000";
+                    personalDetailsPageCa.EmploymentDetails.EmployerName = Get.EnumToString(RiskMask.TESTEmployedMask);
+                    personalDetailsPageCa.EmploymentDetails.EmployerIndustry = "Finance";
+                    personalDetailsPageCa.EmploymentDetails.EmploymentPosition = "Professional (finance, accounting, legal, HR)";
+                    personalDetailsPageCa.EmploymentDetails.TimeWithEmployerYears = "1";
+                    personalDetailsPageCa.EmploymentDetails.TimeWithEmployerMonths = "0";
+                    personalDetailsPageCa.EmploymentDetails.SalaryPaidToBank = true;
+                    personalDetailsPageCa.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("dd MMM yyyy");
+                    personalDetailsPageCa.EmploymentDetails.IncomeFrequency = "Monthly";
+                    personalDetailsPageCa.ContactingYou.CellPhoneNumber = "075" + telephone;
+                    personalDetailsPageCa.ContactingYou.EmailAddress = emailCa;
+                    personalDetailsPageCa.ContactingYou.ConfirmEmailAddress = emailCa;
+                    personalDetailsPageCa.PrivacyPolicy = true;
+                    personalDetailsPageCa.CanContact = true;
+                    journeyCa.CurrentPage = personalDetailsPageCa.Submit() as AddressDetailsPage;
+                    var myBankAccountCa = journeyCa.FillAddressDetails().FillAccountDetails().CurrentPage as PersonalBankAccountPage;
+                    Assert.IsTrue(myBankAccountCa.PinVerificationSection.ResendPinClickAndCheck());
+                    var smsCa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber("175" + telephone));
+                    foreach (var sms in smsCa)
+                    {
+                        Console.WriteLine(sms.MessageText + "/" + sms.CreatedOn);
+                        Assert.IsTrue(sms.MessageText.Contains("You will need it to complete your application back at Wonga.ca."));
+                    }
+                    break;
+                #endregion
+                #region Za
+                case AUT.Za:
+                    var journeyZa = JourneyFactory.GetL0Journey(Client.Home());
+                    var personalDetailsPageZa = journeyZa.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
+                    var emailZa = Get.RandomEmail();
+                    personalDetailsPageZa.YourName.FirstName = Get.RandomString(3, 10);
+                    personalDetailsPageZa.YourName.LastName = Get.RandomString(3, 10);
+                    personalDetailsPageZa.YourName.Title = "Mr";
+                    personalDetailsPageZa.YourDetails.Number = Get.GetNIN(new DateTime(1957, 3, 10), true);
+                    personalDetailsPageZa.YourDetails.DateOfBirth = "10/Mar/1957";
+                    personalDetailsPageZa.YourDetails.Gender = "Female";
+                    personalDetailsPageZa.YourDetails.HomeStatus = "Owner Occupier";
+                    personalDetailsPageZa.YourDetails.HomeLanguage = "English";
+                    personalDetailsPageZa.YourDetails.NumberOfDependants = "0";
+                    personalDetailsPageZa.YourDetails.MaritalStatus = "Single";
+                    personalDetailsPageZa.EmploymentDetails.EmploymentStatus = "Employed Full Time";
+                    personalDetailsPageZa.EmploymentDetails.MonthlyIncome = "3000";
+                    personalDetailsPageZa.EmploymentDetails.EmployerName = Get.EnumToString(RiskMask.TESTEmployedMask);
+                    personalDetailsPageZa.EmploymentDetails.EmployerIndustry = "Accountancy";
+                    personalDetailsPageZa.EmploymentDetails.EmploymentPosition = "Administration";
+                    personalDetailsPageZa.EmploymentDetails.TimeWithEmployerYears = "9";
+                    personalDetailsPageZa.EmploymentDetails.TimeWithEmployerMonths = "5";
+                    personalDetailsPageZa.EmploymentDetails.WorkPhone = "0123456789";
+                    personalDetailsPageZa.EmploymentDetails.SalaryPaidToBank = true;
+                    personalDetailsPageZa.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("dd MMM yyyy");
+                    personalDetailsPageZa.EmploymentDetails.IncomeFrequency = "Monthly";
+                    personalDetailsPageZa.ContactingYou.CellPhoneNumber = "075" + telephone;
+                    personalDetailsPageZa.ContactingYou.EmailAddress = emailZa;
+                    personalDetailsPageZa.ContactingYou.ConfirmEmailAddress = emailZa;
+                    personalDetailsPageZa.PrivacyPolicy = true;
+                    personalDetailsPageZa.CanContact = "Yes";
+                    personalDetailsPageZa.MarriedInCommunityProperty =
+                        "I am not married in community of property (I am single, married with antenuptial contract, divorced etc.)";
+                    journeyZa.CurrentPage = personalDetailsPageZa.Submit() as AddressDetailsPage;
+                    var myBankAccountZa = journeyZa.FillAddressDetails().FillAccountDetails().CurrentPage as PersonalBankAccountPage;
+                    Assert.IsTrue(myBankAccountZa.PinVerificationSection.ResendPinClickAndCheck());
+                    var smsZa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber("2775" + telephone));
+                    foreach (var sms in smsZa)
+                    {
+                        Console.WriteLine(sms.MessageText + "/" + sms.CreatedOn);
+                        Assert.IsTrue(sms.MessageText.Contains("You will need it to complete your application back at Wonga.com."));
+                    }
+                    break;
+                #endregion
+                #region Wb
+                case AUT.Wb:
+                    var emailWb = Get.RandomEmail();
+                    var journeyWb = JourneyFactory.GetL0JourneyWB(Client.Home());
+                    var personalDetailsPageWb = journeyWb.ApplyForLoan(5500, 30)
+                    .AnswerEligibilityQuestions().CurrentPage as PersonalDetailsPage;
+                    personalDetailsPageWb.YourName.FirstName = Get.RandomString(3, 10);
+                    personalDetailsPageWb.YourName.MiddleName = Get.RandomString(3, 10);
+                    personalDetailsPageWb.YourName.LastName = Get.RandomString(3, 10);
+                    personalDetailsPageWb.YourName.Title = "Mr";
+
+                    personalDetailsPageWb.YourDetails.Gender = "Female";
+                    personalDetailsPageWb.YourDetails.DateOfBirth = "1/Jan/1990";
+                    personalDetailsPageWb.YourDetails.HomeStatus = "Tenant Furnished";
+                    personalDetailsPageWb.YourDetails.MaritalStatus = "Single";
+                    personalDetailsPageWb.YourDetails.NumberOfDependants = "0";
+
+                    personalDetailsPageWb.ContactingYou.HomePhoneNumber = "02071111234";
+                    personalDetailsPageWb.ContactingYou.CellPhoneNumber = "077" + "0" + telephone;
+                    personalDetailsPageWb.ContactingYou.EmailAddress = emailWb;
+                    personalDetailsPageWb.ContactingYou.ConfirmEmailAddress = emailWb;
+
+                    personalDetailsPageWb.CanContact = "No";
+                    personalDetailsPageWb.PrivacyPolicy = true;
+                    journeyWb.CurrentPage = personalDetailsPageWb.Submit() as AddressDetailsPage;
+                    var debitCardPage = journeyWb.FillAddressDetails("Between 4 months and 2 years")
+                      .EnterAdditionalAddressDetails()
+                      .FillAccountDetails()
+                      .FillBankDetails().CurrentPage as PersonalDebitCardPage;
+                    Assert.IsTrue(debitCardPage.MobilePinVerification.ResendPinClickAndCheck());
+                    Console.WriteLine("077" + "0" + telephone);
+                    var smsWb = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber("4477" + "0" + telephone));
+                    foreach (var sms in smsWb)
+                    {
+                        Console.WriteLine(sms.MessageText + "/" + sms.CreatedOn);
+                        Assert.IsTrue(sms.MessageText.Contains("You will need it to complete your application back at WongaBusiness.com."));
+                    }
+                    break;
+                #endregion
             }
 
-            // Assert.Throws<AssertionFailureException>(() => { var processingPage = addressDetailsPage.Next(); });
         }
     }
 }

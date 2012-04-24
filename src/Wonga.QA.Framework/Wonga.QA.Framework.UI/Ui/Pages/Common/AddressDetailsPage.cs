@@ -17,7 +17,6 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private readonly IWebElement _form;
         private readonly IWebElement _lookup;
         private readonly IWebElement _next;
-        private readonly IWebElement _houseNumber;
         private readonly IWebElement _district;
         private readonly IWebElement _county;
         private readonly IWebElement _town;
@@ -25,6 +24,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private readonly IWebElement _addressPeriod;
         private readonly IWebElement _postOfficeBox;
 
+        private IWebElement _houseNumber;
         private IWebElement _addressOptions;
         private IWebElement _postCodeErrorForm;
         private IWebElement _houseNumberErrorForm;
@@ -39,7 +39,13 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public String PostCode { set { _postCode.SendValue(value); } }
         public String PostcodeInForm { set { _postCodeInForm.SendValue(value); } }
         public String SelectedAddress { set { _addressOptions.SelectOption(value); } }
-        public String HouseNumber { set { _houseNumber.SendValue(value); } }
+        public String HouseNumber
+        {
+            set
+            {
+                Client.Driver.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.HouseNumber)).SendValue(value);
+            }
+        }
         public String District { set { _district.SendValue(value); } }
         public String County { set { _county.SendValue(value); } }
         public String Town { set { _town.SendValue(value); } }
@@ -63,6 +69,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     _county = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.County));
                     _district = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.District));
                     _lookup = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.LookupButton));
+                    _street = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.Street));
+                    _town = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.Town));
+                    _postCodeInForm = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.PostcodeInForm));
                     break;
                 case (AUT.Za):
                     _county = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.County));
@@ -117,6 +126,13 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
             }
         }
+
+        public BasePage NextAddressLessThan2()
+        {
+            _next.Click();
+            return new AddressDetailsPage(Client);
+
+        }
         public bool IsPostcodeWarningOccurred()
         {
             _next.Click();
@@ -133,6 +149,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             }
             catch (NoSuchElementException)
             {
+                Console.WriteLine("Can't find error form");
                 return false;
             }
             return false;
@@ -142,7 +159,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _next.Click();
             try
             {
-                _houseNumberErrorForm =Client.Driver.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.HouseNumberErrorForm));
+                _houseNumberErrorForm = Client.Driver.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.HouseNumberErrorForm));
                 string houseNumberErrorFormClass = _houseNumberErrorForm.GetAttribute("class");
 
                 if (houseNumberErrorFormClass.Equals("invalid"))
@@ -152,6 +169,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             }
             catch (NoSuchElementException)
             {
+                Console.WriteLine("Can't find error form");
                 return false;
             }
             return false;
@@ -172,6 +190,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             }
             catch (NoSuchElementException)
             {
+                Console.WriteLine("Can't find error form");
                 return false;
             }
             return false;

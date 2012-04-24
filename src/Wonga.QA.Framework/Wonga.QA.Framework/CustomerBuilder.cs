@@ -40,6 +40,8 @@ namespace Wonga.QA.Framework
 		private String _mobileNumber;
     	private Int64? _bankAccountNumber;
         private Int64 _paymentCardNumber;
+        private string _paymentCardSecurityCode;
+        private string _paymentCardType;
         private String _institutionNumber;
         private String _branchNumber;
 
@@ -92,6 +94,8 @@ namespace Wonga.QA.Framework
             _province = ProvinceEnum.ON;
         	_bankAccountNumber = null;
             _paymentCardNumber = 4444333322221111;
+            _paymentCardSecurityCode = "777";
+            _paymentCardType = "Visa";
             _mobileNumber = Get.GetMobilePhone();
             _institutionNumber = "001";
             _branchNumber = "00011";
@@ -266,6 +270,18 @@ namespace Wonga.QA.Framework
         public CustomerBuilder WithPaymentCardNumber(Int64 cardNumber)
         {
             _paymentCardNumber = cardNumber;
+            return this;
+        }
+
+        public CustomerBuilder WithPaymentCardSecurityCode(string securityCode)
+        {
+            _paymentCardSecurityCode = securityCode;
+            return this;
+        }
+
+        public CustomerBuilder WithPaymentCardType(string cardType)
+        {
+            _paymentCardType = cardType;
             return this;
         }
 
@@ -504,6 +520,11 @@ namespace Wonga.QA.Framework
 						                              {
 						                                  r.AccountId = _id;
 						                                  r.Number = _paymentCardNumber;
+						                                  r.HolderName = String.Format("{0} {1}", _foreName, _surname);
+                                                          r.IsPrimary = true;
+						                                  r.ExpiryDate = DateTime.Today.AddYears(2).ToString(@"yyyy-MM");
+						                                  r.SecurityCode = _paymentCardSecurityCode;
+						                                  r.CardType = _paymentCardType;
 						                              }),
 						SaveEmploymentDetailsUkCommand.New(r =>
 						{
@@ -515,6 +536,7 @@ namespace Wonga.QA.Framework
 						{
 						    r.AccountId = _id;
 						    r.VerificationId = _verification;
+                            r.MobilePhone = _mobileNumber;
 						})
 					});
                     break;

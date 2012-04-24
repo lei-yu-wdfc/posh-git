@@ -56,14 +56,19 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private IWebElement _durationPlusButton;
 
 
-        public PersonalDetailsPage(UiClient client) : base(client)
+        public PersonalDetailsPage(UiClient client)
+            : base(client)
         {
             _form = Content.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.FormId));
-            _slidersForm = Content.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.SlidersFormId));
-            _totalToRepay = _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.TotalToRepay));
-            _repaymentDate = _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.RepaymentDate));
-            _totalAmount = _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.TotalAmount));
-            _totalFees = _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.TotalFees));
+            if (!Config.AUT.Equals(AUT.Wb))
+            {
+                //On WB you cannot edit your loan details on the Personal Details page
+                _slidersForm = Content.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.SlidersFormId));
+                _totalToRepay = _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.TotalToRepay));
+                _repaymentDate = _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.RepaymentDate));
+                _totalAmount = _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.TotalAmount));
+                _totalFees = _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.TotalFees));
+            }
             _privacy = _form.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.CheckPrivacyPolicy));
             _contact = _form.FindElements(By.CssSelector(Ui.Get.PersonalDetailsPage.CheckCanContact));
             _next = _form.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.NextButton));
@@ -72,9 +77,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             YourDetails = new YourDetailsSection(this);
             ContactingYou = new ContactingYouSection(this);
 
-            switch(Config.AUT)
+            switch (Config.AUT)
             {
-                case(AUT.Ca):
+                case (AUT.Ca):
                     EmploymentDetails = new EmploymentDetailsSection(this);
                     ProvinceSection = new ProvinceSection(this);
                     break;

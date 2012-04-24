@@ -3,6 +3,7 @@ using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Cs;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Db.OpsSagas;
 using Wonga.QA.Framework.Db.Payments;
@@ -50,7 +51,6 @@ namespace Wonga.QA.Tests.Salesforce
 
         [Test]
         [AUT(AUT.Uk), JIRA("UK-924")]
-        //[Ignore("PaymentSchedulingSaga issue in UK prevents this from working atm")]
         public void PutIntoArrears_ChangesSalesforceApplicationStatus_ToInArrears()
         {
             Customer customer;
@@ -67,8 +67,80 @@ namespace Wonga.QA.Tests.Salesforce
             Do.Until(() =>
             {
                 var app = Salesforce.GetApplicationById(application.Id);
-                //NOTE: this string should not be hardcoded or we shoud use Status_ID__c
                 return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.InArrears;
+            });
+        }
+
+        [Test]
+        [AUT(AUT.Uk), JIRA("UK-923")]
+        public void CreditCsTransactionThatPaysOffTheLoan_ChangesSalesforceApplicationStatus_ToPaidInFull()
+        {
+            Customer customer;
+            Application application = CreateApplication(out customer);
+            FixedTermLoanSagaEntity loanSagaEntity = null;
+            Do.Until(() => loanSagaEntity = Drive.Db.OpsSagas.FixedTermLoanSagaEntities.SingleOrDefault(s => s.ApplicationGuid == application.Id));
+            Wonga.QA.Framework.Cs.CreateTransactionCommand createTransactionCsCommand = new Wonga.QA.Framework.Cs.CreateTransactionCommand()
+                                                                        {
+                                                                            Amount = application.LoanAmount * -2,
+                                                                            ApplicationGuid = application.Id,
+                                                                            Currency = CurrencyCodeIso4217Enum.GBP,
+                                                                            Reference = "Christmas present",
+                                                                            SalesForceUser = "acceptancetest",
+                                                                            Scope = PaymentTransactionScopeEnum.Credit,
+                                                                            Type = PaymentTransactionEnum.CardPayment,
+                                                                        };
+            Drive.Cs.Commands.Post(createTransactionCsCommand);
+            Do.Until(() =>
+            {
+                var app = Salesforce.GetApplicationById(application.Id);
+                return app.Status_ID__c != null 
+                    && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.PaidInFull;
+            });
+        }
+
+        [Test]
+        [AUT(AUT.Uk)]
+        public void NotFraudConfirmed_ChangesSalesforceApplicationStatus_ToPreviousStatus()
+        {
+            //Make due today
+            Customer customer;
+            Application application = CreateApplication(out customer);
+            Do.Until(() => Drive.Db.OpsSagas.LoanDueDateNotificationSagaEntities
+                               .Single(saga => saga.AccountId == customer.Id
+                                               && saga.ApplicationId == application.Id
+                                               && saga.TermsAgreed == true
+                                               && saga.ApplicationAccepted == true));
+            MakeDueStatusToday(application);
+            Do.Until(() =>
+            {
+                var app = Salesforce.GetApplicationById(application.Id);
+                //NOTE: this string should not be hardcoded or we shoud use Status_ID__c
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.DueToday;
+            });
+
+            Guid newCaseID = Guid.NewGuid();
+
+            //Suspect fraud through cs api
+            var suspectFraudCommand = new SuspectFraudCommand()
+                                          {
+                                              AccountId = customer.Id,
+                                              CaseId = newCaseID
+                                          };
+
+            Drive.Cs.Commands.Post(suspectFraudCommand);
+
+            var notFraudCommand = new ConfirmNotFraudCommand()
+                                      {
+                                          AccountId = customer.Id,
+                                          CaseId = newCaseID
+                                      };
+            Drive.Cs.Commands.Post(notFraudCommand);
+
+            Do.Until(() =>
+            {
+                var app = Salesforce.GetApplicationById(application.Id);
+                //NOTE: this string should not be hardcoded or we shoud use Status_ID__c
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.DueToday;
             });
 
         }

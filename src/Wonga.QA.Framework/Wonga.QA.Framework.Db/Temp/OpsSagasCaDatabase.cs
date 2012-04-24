@@ -1909,6 +1909,22 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
                 return this.GetTable<ExternalDebtCollectionSagaEntity>();
             }
         }
+
+        public System.Data.Linq.Table<PollingOnIntervalEntity> PollingOnIntervalSagaEntities
+        {
+            get
+            {
+                return this.GetTable<PollingOnIntervalEntity>();
+            }
+        }
+
+        public System.Data.Linq.Table<SendBmoPaymentSagaEntity> SendBmoPaymentSagaEntities
+        {
+            get
+            {
+                return this.GetTable<SendBmoPaymentSagaEntity>();
+            }
+        }
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AccountVerificationsToBeMade")]
@@ -34218,6 +34234,394 @@ namespace Wonga.QA.Framework.Db.OpsSagasCa
                     this._ChargeBackOccured = value;
                     this.SendPropertyChanged("ChargeBackOccured");
                     this.OnChargeBackOccuredChanged();
+                }
+            }
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_OriginalMessageId", DbType = "NVarChar(255)")]
+        public string OriginalMessageId
+        {
+            get
+            {
+                return this._OriginalMessageId;
+            }
+            set
+            {
+                if ((this._OriginalMessageId != value))
+                {
+                    this.OnOriginalMessageIdChanging(value);
+                    this.SendPropertyChanging();
+                    this._OriginalMessageId = value;
+                    this.SendPropertyChanged("OriginalMessageId");
+                    this.OnOriginalMessageIdChanged();
+                }
+            }
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_Originator", DbType = "NVarChar(255)")]
+        public string Originator
+        {
+            get
+            {
+                return this._Originator;
+            }
+            set
+            {
+                if ((this._Originator != value))
+                {
+                    this.OnOriginatorChanging(value);
+                    this.SendPropertyChanging();
+                    this._Originator = value;
+                    this.SendPropertyChanged("Originator");
+                    this.OnOriginatorChanged();
+                }
+            }
+        }
+
+        public event PropertyChangingEventHandler PropertyChanging;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void SendPropertyChanging()
+        {
+            if ((this.PropertyChanging != null))
+            {
+                this.PropertyChanging(this, emptyChangingEventArgs);
+            }
+        }
+
+        protected virtual void SendPropertyChanged(String propertyName)
+        {
+            if ((this.PropertyChanged != null))
+            {
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+
+    [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.PollingOnIntervalEntity")]
+    public partial class PollingOnIntervalEntity : INotifyPropertyChanging, INotifyPropertyChanged
+    {
+
+        private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+
+        private System.Guid _Id;
+
+        private string _Originator;
+
+        private string _OriginalMessageId;
+
+        private string _ScheduleName;
+
+        private System.Nullable<System.DateTime> _LastPollingOn;
+
+        private System.Nullable<int> _Last24Hours;
+
+        private System.Nullable<long> _PollingInterval;
+
+        private System.Nullable<bool> _Active;
+
+        #region Extensibility Method Definitions
+        partial void OnLoaded();
+        partial void OnValidate(System.Data.Linq.ChangeAction action);
+        partial void OnCreated();
+        partial void OnIdChanging(System.Guid value);
+        partial void OnIdChanged();
+        partial void OnOriginatorChanging(string value);
+        partial void OnOriginatorChanged();
+        partial void OnOriginalMessageIdChanging(string value);
+        partial void OnOriginalMessageIdChanged();
+        partial void OnScheduleNameChanging(string value);
+        partial void OnScheduleNameChanged();
+        partial void OnLastPollingOnChanging(System.Nullable<System.DateTime> value);
+        partial void OnLastPollingOnChanged();
+        partial void OnLast24HoursChanging(System.Nullable<int> value);
+        partial void OnLast24HoursChanged();
+        partial void OnPollingIntervalChanging(System.Nullable<long> value);
+        partial void OnPollingIntervalChanged();
+        partial void OnActiveChanging(System.Nullable<bool> value);
+        partial void OnActiveChanged();
+        #endregion
+
+        public PollingOnIntervalEntity()
+        {
+            OnCreated();
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_Id", DbType = "UniqueIdentifier NOT NULL", IsPrimaryKey = true)]
+        public System.Guid Id
+        {
+            get
+            {
+                return this._Id;
+            }
+            set
+            {
+                if ((this._Id != value))
+                {
+                    this.OnIdChanging(value);
+                    this.SendPropertyChanging();
+                    this._Id = value;
+                    this.SendPropertyChanged("Id");
+                    this.OnIdChanged();
+                }
+            }
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_Originator", DbType = "NVarChar(255)")]
+        public string Originator
+        {
+            get
+            {
+                return this._Originator;
+            }
+            set
+            {
+                if ((this._Originator != value))
+                {
+                    this.OnOriginatorChanging(value);
+                    this.SendPropertyChanging();
+                    this._Originator = value;
+                    this.SendPropertyChanged("Originator");
+                    this.OnOriginatorChanged();
+                }
+            }
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_OriginalMessageId", DbType = "NVarChar(255)")]
+        public string OriginalMessageId
+        {
+            get
+            {
+                return this._OriginalMessageId;
+            }
+            set
+            {
+                if ((this._OriginalMessageId != value))
+                {
+                    this.OnOriginalMessageIdChanging(value);
+                    this.SendPropertyChanging();
+                    this._OriginalMessageId = value;
+                    this.SendPropertyChanged("OriginalMessageId");
+                    this.OnOriginalMessageIdChanged();
+                }
+            }
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_ScheduleName", DbType = "NVarChar(255)")]
+        public string ScheduleName
+        {
+            get
+            {
+                return this._ScheduleName;
+            }
+            set
+            {
+                if ((this._ScheduleName != value))
+                {
+                    this.OnScheduleNameChanging(value);
+                    this.SendPropertyChanging();
+                    this._ScheduleName = value;
+                    this.SendPropertyChanged("ScheduleName");
+                    this.OnScheduleNameChanged();
+                }
+            }
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_LastPollingOn", DbType = "DateTime")]
+        public System.Nullable<System.DateTime> LastPollingOn
+        {
+            get
+            {
+                return this._LastPollingOn;
+            }
+            set
+            {
+                if ((this._LastPollingOn != value))
+                {
+                    this.OnLastPollingOnChanging(value);
+                    this.SendPropertyChanging();
+                    this._LastPollingOn = value;
+                    this.SendPropertyChanged("LastPollingOn");
+                    this.OnLastPollingOnChanged();
+                }
+            }
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_Last24Hours", DbType = "Int")]
+        public System.Nullable<int> Last24Hours
+        {
+            get
+            {
+                return this._Last24Hours;
+            }
+            set
+            {
+                if ((this._Last24Hours != value))
+                {
+                    this.OnLast24HoursChanging(value);
+                    this.SendPropertyChanging();
+                    this._Last24Hours = value;
+                    this.SendPropertyChanged("Last24Hours");
+                    this.OnLast24HoursChanged();
+                }
+            }
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_PollingInterval", DbType = "BigInt")]
+        public System.Nullable<long> PollingInterval
+        {
+            get
+            {
+                return this._PollingInterval;
+            }
+            set
+            {
+                if ((this._PollingInterval != value))
+                {
+                    this.OnPollingIntervalChanging(value);
+                    this.SendPropertyChanging();
+                    this._PollingInterval = value;
+                    this.SendPropertyChanged("PollingInterval");
+                    this.OnPollingIntervalChanged();
+                }
+            }
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_Active", DbType = "Bit")]
+        public System.Nullable<bool> Active
+        {
+            get
+            {
+                return this._Active;
+            }
+            set
+            {
+                if ((this._Active != value))
+                {
+                    this.OnActiveChanging(value);
+                    this.SendPropertyChanging();
+                    this._Active = value;
+                    this.SendPropertyChanged("Active");
+                    this.OnActiveChanged();
+                }
+            }
+        }
+
+        public event PropertyChangingEventHandler PropertyChanging;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void SendPropertyChanging()
+        {
+            if ((this.PropertyChanging != null))
+            {
+                this.PropertyChanging(this, emptyChangingEventArgs);
+            }
+        }
+
+        protected virtual void SendPropertyChanged(String propertyName)
+        {
+            if ((this.PropertyChanged != null))
+            {
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+
+    [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.SendBmoPaymentSagaEntity")]
+    public partial class SendBmoPaymentSagaEntity : INotifyPropertyChanging, INotifyPropertyChanged
+    {
+
+        private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+
+        private System.Guid _Id;
+
+        private System.Nullable<int> _SendingAttempts;
+
+        private System.Nullable<bool> _IsSchedulerActivated;
+
+        private string _OriginalMessageId;
+
+        private string _Originator;
+
+        #region Extensibility Method Definitions
+        partial void OnLoaded();
+        partial void OnValidate(System.Data.Linq.ChangeAction action);
+        partial void OnCreated();
+        partial void OnIdChanging(System.Guid value);
+        partial void OnIdChanged();
+        partial void OnSendingAttemptsChanging(System.Nullable<int> value);
+        partial void OnSendingAttemptsChanged();
+        partial void OnIsSchedulerActivatedChanging(System.Nullable<bool> value);
+        partial void OnIsSchedulerActivatedChanged();
+        partial void OnOriginalMessageIdChanging(string value);
+        partial void OnOriginalMessageIdChanged();
+        partial void OnOriginatorChanging(string value);
+        partial void OnOriginatorChanged();
+        #endregion
+
+        public SendBmoPaymentSagaEntity()
+        {
+            OnCreated();
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_Id", DbType = "UniqueIdentifier NOT NULL", IsPrimaryKey = true)]
+        public System.Guid Id
+        {
+            get
+            {
+                return this._Id;
+            }
+            set
+            {
+                if ((this._Id != value))
+                {
+                    this.OnIdChanging(value);
+                    this.SendPropertyChanging();
+                    this._Id = value;
+                    this.SendPropertyChanged("Id");
+                    this.OnIdChanged();
+                }
+            }
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_SendingAttempts", DbType = "Int")]
+        public System.Nullable<int> SendingAttempts
+        {
+            get
+            {
+                return this._SendingAttempts;
+            }
+            set
+            {
+                if ((this._SendingAttempts != value))
+                {
+                    this.OnSendingAttemptsChanging(value);
+                    this.SendPropertyChanging();
+                    this._SendingAttempts = value;
+                    this.SendPropertyChanged("SendingAttempts");
+                    this.OnSendingAttemptsChanged();
+                }
+            }
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_IsSchedulerActivated", DbType = "Bit")]
+        public System.Nullable<bool> IsSchedulerActivated
+        {
+            get
+            {
+                return this._IsSchedulerActivated;
+            }
+            set
+            {
+                if ((this._IsSchedulerActivated != value))
+                {
+                    this.OnIsSchedulerActivatedChanging(value);
+                    this.SendPropertyChanging();
+                    this._IsSchedulerActivated = value;
+                    this.SendPropertyChanged("IsSchedulerActivated");
+                    this.OnIsSchedulerActivatedChanged();
                 }
             }
         }

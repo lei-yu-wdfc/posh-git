@@ -90,5 +90,10 @@ namespace Wonga.QA.Framework.UI
         //    Actions actions = new Actions(element.Driver());
         //    actions.MoveToElement(element);
         //}
+
+        public static IWebElement FindEitherElement(this IWebElement parent, params By[] selectors)
+        {
+            return selectors.SelectMany(parent.FindElements).Single();
+        }
     }
 }

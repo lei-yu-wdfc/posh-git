@@ -12,14 +12,19 @@ namespace Wonga.QA.Framework.Mocks
     {
         private readonly DbDriver _dbDriver;
         private const string OnlineBillPaymentRemittanceReport = "EBBADATA";
-    	private const string _gatewayName = "Scotia";
+    	private const string GatewayName = "Scotia";
 
     	public Scotia()
         {
-            _dbDriver = new DbDriver();
+			_dbDriver = new DbDriver();
         }
 
-        public void AddOnlineBillPaymentFile(string fileId,
+		public ScotiaResponseBuilder Setup()
+		{
+			return new ScotiaResponseBuilder();
+		}
+
+    	public void AddOnlineBillPaymentFile(string fileId,
                                                           IEnumerable<OnlineBillPaymentTransaction>
                                                               transactionsToInclude)
         {
@@ -36,7 +41,7 @@ namespace Wonga.QA.Framework.Mocks
         {
             byte[] file = batch.ToFileFormat();
 
-            return new IncomingBankGatewayFile { FileData = file, FileName = string.Format("{0}.{1}", OnlineBillPaymentRemittanceReport, fileId), Gateway = _gatewayName };
+            return new IncomingBankGatewayFile { FileData = file, FileName = string.Format("{0}.{1}", OnlineBillPaymentRemittanceReport, fileId), Gateway = GatewayName };
         }
 
         #region Nested type: OnlineBillPaymentRemittanceReportCustomerBatch
@@ -133,5 +138,4 @@ namespace Wonga.QA.Framework.Mocks
 
         #endregion
     }
-
 }

@@ -13,6 +13,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public MyAccountNavigationElement Navigation { get; set; }
         public SlidersElement Sliders { get; set; }
         public TabsElement Tabs { get; set; }
+        public TopupSlidersElement TopupSliders { get; set; }
         
         public MySummaryPage(UiClient client) : base(client)
         {
@@ -34,6 +35,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     Tabs = new TabsElement(this);
                     break;
 
+                case (AUT.Uk):
+                    Navigation = new MyAccountNavigationElement(this);
+                    Tabs = new TabsElement(this);
+                    LookForSliders();
+                    LookForTopupSliders();
+                    break;
             }
                 
             
@@ -53,6 +60,20 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                 return false;
             }
         }
+
+        public bool LookForTopupSliders()
+        {
+            try
+            {
+                TopupSliders = new TopupSlidersElement(this);
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+        }
+
         private bool IsMySummaryTitleExists()
         {
 
@@ -116,5 +137,63 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.TagCloud)).Text; }
         }
+
+        public void ClickViewLoanDetailsButton()
+        {
+            Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.ViewLoanDetailsButton)).Click();
+        }
+
+        public void WaitForMySummaryPopup()
+        {
+            var popup = Do.With.Interval(10).Until(() => Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.PopupForm)));
+            Do.Until(() => popup.FindElement(By.CssSelector(Ui.Get.MySummaryPage.PopupMySummaryTitle)).Displayed);
+        }
+
+        public bool IsPopupContainsSummaryDetailsTable()
+        {
+            var popup = Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.PopupForm));
+            return popup.FindElement(By.CssSelector(Ui.Get.MySummaryPage.PopupSummaryDetailsTable)).Displayed;
+        }
+
+        public bool IsLoanStatusMessageAvailable()
+        {
+            try
+            {
+                var loanStatusMessageText = Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.LoanStatusMessage)).Text;
+            }
+
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public String GetLoanStatusMessage
+        {
+            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.LoanStatusMessage)).Text; }
+
+        }
+
+        public void CheckScenarioElementsExist()
+        {
+            Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.Promise));
+            Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.YouCan));
+            Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.IntroText));
+            Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.StatusMessage));
+            Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.OptionsCloud));
+
+        }
+
+        public String GetIntroText
+        {
+            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.IntroText)).Text; }
+        }
+
+        public String GetMaxAvailableCredit
+        {
+            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.MaxAvailableCredit)).Text; }
+        }
+
     }
 }

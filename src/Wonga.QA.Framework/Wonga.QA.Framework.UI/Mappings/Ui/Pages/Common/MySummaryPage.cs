@@ -16,5 +16,20 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String TotalToRepayAmountPopup { get; set; }
         public String PromisedRepayDatePopup { get; set; }
         public String TagCloud { get; set; }
+        public String ViewLoanDetailsButton { get; set; }
+        public String LoanStatusMessage { get; set; }
+
+        //--loan details popup--
+        public String PopupForm { get; set; }
+        public String PopupMySummaryTitle { get; set; }
+        public String PopupSummaryDetailsTable { get; set; }
+
+        //--FE elements--
+        public String YouCan { get; set; }
+        public String Promise { get; set; }
+        public String OptionsCloud { get; set; }
+        public String IntroText { get; set; }
+        public String StatusMessage { get; set; }
+        public String MaxAvailableCredit { get; set; }
     }
 }

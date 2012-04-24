@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Gallio.Framework;
 using Gallio.Framework.Assertions;
 using MbUnit.Framework;
 using OpenQA.Selenium;
@@ -33,35 +35,31 @@ namespace Wonga.QA.Framework.UI
         {
             var capabillities = GetDesiredCapabilities();
             Driver = GetWebDriver(capabillities);
-            
+            if (Driver is CustomRemoteWebDriver)
+                TestContext.CurrentContext.AddMetadata("JobURL", string.Format("https://saucelabs.com/jobs/{0}", ((CustomRemoteWebDriver)Driver).GetSessionId()));
         }
 
         private IWebDriver GetWebDriver(DesiredCapabilities capabilities)
         {
             if(Config.Ui.RemoteMode)
-                return new RemoteWebDriver(Config.Ui.RemoteUri, capabilities);
-            else
-                switch (Config.Ui.Browser)
-                {
-                        case(Config.UiConfig.BrowserType.Chrome):
-                        return new ChromeDriver();
-                        break;
-                    case(Config.UiConfig.BrowserType.Firefox):
-                        return new FirefoxDriver();
-                        break;
-                    case(Config.UiConfig.BrowserType.InternetExplorer):
-                        var ieOps = new InternetExplorerOptions();
-                        ieOps.IntroduceInstabilityByIgnoringProtectedModeSettings = true;
-                        return new InternetExplorerDriver(ieOps);
-                        break;
-                    case(Config.UiConfig.BrowserType.Opera):
-                        throw new NotImplementedException("Safari is not supported yet");
-                        break;
-                    case(Config.UiConfig.BrowserType.Safari):
-                        throw new NotImplementedException("Safari is not supported by WebDriver");
-                    default:
-                        throw new ArgumentException("Please select a Browser Type via the BrowserType user session variable");    
-                }
+                return new CustomRemoteWebDriver(Config.Ui.RemoteUri, capabilities);
+            switch (Config.Ui.Browser)
+            {
+                case(Config.UiConfig.BrowserType.Chrome):
+                    return new ChromeDriver();
+                case(Config.UiConfig.BrowserType.Firefox):
+                    return new FirefoxDriver();
+                case(Config.UiConfig.BrowserType.InternetExplorer):
+                    var ieOps = new InternetExplorerOptions();
+                    ieOps.IntroduceInstabilityByIgnoringProtectedModeSettings = true;
+                    return new InternetExplorerDriver(ieOps);
+                case(Config.UiConfig.BrowserType.Opera):
+                    throw new NotImplementedException("Opera is not supported yet");
+                case(Config.UiConfig.BrowserType.Safari):
+                    throw new NotImplementedException("Safari is not supported by WebDriver");
+                default:
+                    throw new ArgumentException("Please select a Browser Type via the QAFBrowser environment variable");    
+            }
         }
 
         private DesiredCapabilities GetDesiredCapabilities()
@@ -84,13 +82,19 @@ namespace Wonga.QA.Framework.UI
                 case(Config.UiConfig.BrowserType.Safari):
                     throw new NotImplementedException("Safari is not supported yet");
                 default:
-                    throw new ArgumentException("Please select a Browser Type via the BrowserType user session variable");
+                    throw new ArgumentException("Please select a QAFBrowser environment variable.");
             }
             capabilities.SetCapability(CapabilityType.Version, Config.Ui.BrowserVersion);
             capabilities.SetCapability(CapabilityType.Platform, new Platform(PlatformType.XP));
-            capabilities.SetCapability("name", "Testing Selenium 2 with C# on Sauce");
+            capabilities.SetCapability("name", TestContext.CurrentContext.Test.Name);
             capabilities.SetCapability("username", Config.Ui.RemoteUsername);
             capabilities.SetCapability("accessKey", Config.Ui.RemoteApiKey);
+            var tags = new List<String> { Config.SUT.ToString(), Config.AUT.ToString() };
+            capabilities.SetCapability("tags", tags);
+            capabilities.SetCapability("public", true);
+            capabilities.SetCapability("idle-timeout", 60);
+            capabilities.SetCapability("sauce-advisor", false);
+            capabilities.SetCapability("record-screenshots", false);
             return capabilities;
         }
 
@@ -114,7 +118,17 @@ namespace Wonga.QA.Framework.UI
         
         public AboutUsPage About()
         {
-            Driver.Navigate().GoToUrl(Config.Ui.Home + "/about");
+            switch(Config.AUT)
+            {
+                case AUT.Za:
+                case AUT.Ca:
+                    Driver.Navigate().GoToUrl(Config.Ui.Home + "/about");
+                    break;
+                case AUT.Wb:
+                    Driver.Navigate().GoToUrl(Config.Ui.Home + "/about-us");
+                    break;
+            }
+            
             return new AboutUsPage(this);
         }
 

@@ -59,6 +59,8 @@
   </DebitCardSection>
 
   <AcceptedPage>
+    <FormId>#vanilla-agreement-form</FormId>
+    <AgreementConfirm>#edit-accept</AgreementConfirm>
     <NodeWrap>.node-type-wonga-decision-page</NodeWrap>
   </AcceptedPage>
 
@@ -66,6 +68,44 @@
     <FormId>#wonga-apply-ln-form</FormId>
     <SecurityCode>#edit-security-code</SecurityCode>
     <MinCash>#edit-min-cash</MinCash>
+    <ChangeMobileButton>.mod</ChangeMobileButton>
   </ApplicationSection>
 
+  <MyAccountNavigationSection>
+    <MySummary>.menu-mlid-2869</MySummary>
+    <MyPaymentsDetails>.menu-mlid-2870</MyPaymentsDetails>
+    <MyPersonalDetails>.menu-mlid-2871</MyPersonalDetails>
+  </MyAccountNavigationSection>
+  
+  <TopupSlidersElement>
+    <FormId>#wonga-sliders-form</FormId>
+    <LoanAmount>#edit-loan-amount</LoanAmount>
+    <SubmitButton>#edit-submit</SubmitButton>
+    <TotalAmount>span.loan-amount</TotalAmount>
+    <TotalFees>span.loan-fees</TotalFees>
+    <TotalToRepay>span.loan-total</TotalToRepay>
+    <AmountMinusButton>#wonga-amount-slider-wrapper button.slider-minus</AmountMinusButton>
+    <AmountPlusButton>#wonga-amount-slider-wrapper button.slider-plus</AmountPlusButton>
+  </TopupSlidersElement>
+
+  <SmallTopupSlidersElement>
+    <FormId>#wonga-account-topup-form</FormId>
+    <AmountSlider>#wonga-single-slider a</AmountSlider>
+    <TopupLoanAmount>#edit-topup-amount-wrapper input#edit-topup-amount</TopupLoanAmount>
+    <SubmitButton>#edit-submit</SubmitButton>
+    <TopupAmount>span.credit-request-amount</TopupAmount>
+    <TopupFees>span.credit-request-fees</TopupFees>
+    <TopupToRepay>span.credit-request-subtotal</TopupToRepay>
+    <TotalToRepay>span.credit-request-total</TotalToRepay>
+    <RepaymentDate>span.loan-period-clarification</RepaymentDate>
+    <AmountMinusButton>#wonga-single-slider-wrapper button.slider-minus</AmountMinusButton>
+    <AmountPlusButton>#wonga-single-slider-wrapper button.slider-plus</AmountPlusButton>
+  </SmallTopupSlidersElement>
+
+  <ApplyPage>
+    <EditMobileNumber>#edit-mobile-phone</EditMobileNumber>
+    <PopupSaveButton>#edit-submit[value='Save']</PopupSaveButton>
+    <PopupCloseButton>#edit-submit[value='Close']</PopupCloseButton>
+  </ApplyPage>
+  
 </Ui>

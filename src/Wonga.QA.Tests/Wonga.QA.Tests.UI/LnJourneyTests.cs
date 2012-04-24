@@ -144,7 +144,7 @@ namespace Wonga.QA.Tests.Ui
                            .CurrentPage as MySummaryPage;
         }
 
-        [Test, AUT(AUT.Uk), Pending("Example of uk Ln journey")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1533")]
         public void UkFullLnJourneyTest()
         {
             var loginPage = Client.Login();
@@ -165,7 +165,7 @@ namespace Wonga.QA.Tests.Ui
                            .WaitForAcceptedPage()
                            .FillAcceptedPage()
                            .GoToMySummaryPage()
-                           .CurrentPage as MySummaryPage;
+                           .CurrentPage as MySummaryPage;            
         }
 
     }

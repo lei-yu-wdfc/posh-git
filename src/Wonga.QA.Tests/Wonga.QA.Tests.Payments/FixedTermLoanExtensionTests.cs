@@ -15,10 +15,11 @@ namespace Wonga.QA.Tests.Payments
 	[TestFixture]
 	public class FixedTermLoanExtensionTests
 	{
-		[Test, AUT(AUT.Uk), JIRA("UK-598"), Ignore("API tests should be unignored when Extend Functionality will be implemented"),
-			Description("Check that customer can extend, when 7 days (or more) left to repayment date"),
-			Description("Check that customer can't extend when less than 7 days left to reapyment date"),
-			Description("Check that customer can't extend to earlier date than his reapayment date")]
+		[Test, AUT(AUT.Uk), JIRA("UK-598"),
+		 Ignore("API tests should be unignored when Extend Functionality will be implemented"),
+		 Description("Check that customer can extend, when 7 days (or more) left to repayment date"),
+		 Description("Check that customer can't extend when less than 7 days left to reapyment date"),
+		 Description("Check that customer can't extend to earlier date than his reapayment date")]
 		[Row(10, 5, true, 8, Order = 0)]
 		[Row(10, 10, true, 8, Order = 1)]
 		[Row(10, 50, false, 8, Order = 2)]
@@ -30,7 +31,7 @@ namespace Wonga.QA.Tests.Payments
 			Do.Until(cust.GetBankAccount);
 			Do.Until(cust.GetPaymentCard);
 			Application app = ApplicationBuilder.New(cust)
-                .WithExpectedDecision(ApplicationDecisionStatus.Accepted)
+				.WithExpectedDecision(ApplicationDecisionStatus.Accepted)
 				.WithLoanAmount(100)
 				.WithLoanTerm(loanTerm)
 				.Build();
@@ -41,9 +42,9 @@ namespace Wonga.QA.Tests.Payments
 			ConfigurationFunctions.SetupQaUtcNowOverride((ftApp.NextDueDate ?? ftApp.PromiseDate).AddDays(-daysToDueDate));
 			//Check Extension available.
 			ApiResponse parm = Drive.Api.Queries.Post(new GetFixedTermLoanExtensionParametersQuery
-			{
-				AccountId = cust.Id,
-			});
+			                                          	{
+			                                          		AccountId = cust.Id,
+			                                          	});
 
 			var dueDate = (ftApp.NextDueDate ?? ftApp.PromiseDate);
 			Assert.GreaterThanOrEqualTo(available ? 0 : 1, parm.GetErrors().Length);
@@ -52,32 +53,33 @@ namespace Wonga.QA.Tests.Payments
 
 			//Check calculations for extend
 			ApiResponse calc = Drive.Api.Queries.Post(new GetFixedTermLoanExtensionCalculationQuery
-			{
-				ApplicationId = app.Id,
-				ExtendDate = new Date(DateTime.Today.AddDays(extendTerm + loanTerm), DateFormat.Date)
-			});
+			                                          	{
+			                                          		ApplicationId = app.Id,
+			                                          		ExtendDate =
+			                                          			new Date(DateTime.Today.AddDays(extendTerm + loanTerm), DateFormat.Date)
+			                                          	});
 
 			if (available)
 			{
 				Assert.IsEmpty(calc.Values["ErrorMessage"]);
-				
+
 			}
 			else
 			{
-				Assert.IsNotEmpty(calc.Values["ErrorMessage"]);				
+				Assert.IsNotEmpty(calc.Values["ErrorMessage"]);
 			}
 
-			
+
 
 		}
 
-		[Test, AUT(AUT.Uk), JIRA("UK-598"), 
-		Description("Check that extend is not done when invalid data used"), 
-		Ignore("API tests should be unignored when Extend Functionality will be implemented")]
-		[Row(true, true, false, true, Order = 0)]//has valid loan data
-		[Row(false, false, false, false, Order = 1)]//no application exists
-		[Row(true, false, false, false, Order = 2)]//no active loan
-		[Row(true, true, true, false, Order = 3)]//in arrears
+		[Test, AUT(AUT.Uk), JIRA("UK-598"),
+		 Description("Check that extend is not done when invalid data used"),
+		 Ignore("API tests should be unignored when Extend Functionality will be implemented")]
+		[Row(true, true, false, true, Order = 0)] //has valid loan data
+		[Row(false, false, false, false, Order = 1)] //no application exists
+		[Row(true, false, false, false, Order = 2)] //no active loan
+		[Row(true, true, true, false, Order = 3)] //in arrears
 		public void LoanNotExtendsWithWrongData(bool appExists, bool hasActiveLoan, bool inArrears, bool shouldPass)
 		{
 			//create customer
@@ -103,8 +105,8 @@ namespace Wonga.QA.Tests.Payments
 
 			var cardId = (appExists ? cust.GetPaymentCard() : Guid.NewGuid());
 			var extendDate = new Date(appExists
-			                 	? (ftApp.NextDueDate ?? ftApp.PromiseDate).AddDays(3)
-			                 	: Get.RandomDate(DateTime.Now.AddYears(-1), DateTime.Now.AddYears(1)), DateFormat.Date);
+			                          	? (ftApp.NextDueDate ?? ftApp.PromiseDate).AddDays(3)
+			                          	: Get.RandomDate(DateTime.Now.AddYears(-1), DateTime.Now.AddYears(1)), DateFormat.Date);
 
 			ConfigurationFunctions.SetupQaUtcNowOverride((ftApp.NextDueDate ?? ftApp.PromiseDate).AddDays(-3));
 
@@ -131,6 +133,181 @@ namespace Wonga.QA.Tests.Payments
 			ConfigurationFunctions.ResetQaUtcNowOverride();
 		}
 
+		[Test, AUT(AUT.Uk), JIRA("UK-427")]
+		public void CreateFixedTermLoanExtensionTest()
+		{
+			const decimal trustRating = 400.00M;
+			var accountId = Guid.NewGuid();
+			var bankAccountId = Guid.NewGuid();
+			var paymentCardId = Guid.NewGuid();
+			var appId = Guid.NewGuid();
+			var extensionId = Guid.NewGuid();
 
+			var setupData = new AccountSummarySetupFunctions();
+
+			setupData.Scenario03Setup(appId, paymentCardId, bankAccountId, accountId, trustRating);
+
+			var app = Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(x => x.ExternalId == appId));
+			var fixedTermApp =
+				Do.With.Interval(1).Until(
+					() => Drive.Db.Payments.FixedTermLoanApplications.Single(x => x.ApplicationId == app.ApplicationId));
+
+			Drive.Api.Commands.Post(new AddPaymentCardCommand
+			                        	{
+			                        		AccountId = accountId,
+			                        		PaymentCardId = paymentCardId,
+			                        		CardType = "VISA",
+			                        		Number = "4444333322221111",
+			                        		HolderName = "Test Holder",
+			                        		StartDate = DateTime.Today.AddYears(-1).ToDate(DateFormat.YearMonth),
+			                        		ExpiryDate = DateTime.Today.AddMonths(6).ToDate(DateFormat.YearMonth),
+			                        		IssueNo = "000",
+			                        		SecurityCode = "666",
+			                        		IsCreditCard = false,
+			                        		IsPrimary = true,
+			                        	});
+
+			Do.With.Interval(1).Until(
+				() => Drive.Db.Payments.PaymentCardsBases.Single(x => x.ExternalId == paymentCardId && x.AuthorizedOn != null));
+
+			Drive.Api.Commands.Post(new CreateFixedTermLoanExtensionCommand
+			                        	{
+			                        		ApplicationId = appId,
+			                        		ExtendDate = new Date(fixedTermApp.NextDueDate.Value.AddDays(2), DateFormat.Date),
+			                        		ExtensionId = extensionId,
+			                        		PartPaymentAmount = 20M,
+			                        		PaymentCardCv2 = "000",
+			                        		PaymentCardId = paymentCardId
+			                        	});
+
+			var loanExtension =
+				Do.With.Interval(1).Until(
+					() =>
+					Drive.Db.Payments.LoanExtensions.Single(x => x.ExternalId == extensionId && x.ApplicationId == app.ApplicationId));
+
+
+			Assert.IsNotNull(loanExtension, "A loan extension should be created");
+			Assert.IsNotNull(loanExtension.PartPaymentTakenOn, "Loan extension payment should be taken");
+		}
+
+		[Test, AUT(AUT.Uk), JIRA("UK-427")]
+		public void CreateFixedTermLoanExtensionFailedPaymentTest()
+		{
+			const decimal trustRating = 400.00M;
+			var accountId = Guid.NewGuid();
+			var bankAccountId = Guid.NewGuid();
+			var paymentCardId = Guid.NewGuid();
+			var appId = Guid.NewGuid();
+			var extensionId = Guid.NewGuid();
+
+			var setupData = new AccountSummarySetupFunctions();
+
+			setupData.Scenario03Setup(appId, paymentCardId, bankAccountId, accountId, trustRating);
+
+			var app = Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(x => x.ExternalId == appId));
+			var fixedTermApp =
+				Do.With.Interval(1).Until(
+					() => Drive.Db.Payments.FixedTermLoanApplications.Single(x => x.ApplicationId == app.ApplicationId));
+
+			Drive.Api.Commands.Post(new AddPaymentCardCommand
+			                        	{
+			                        		AccountId = app.AccountId,
+			                        		PaymentCardId = app.PaymentCardGuid,
+			                        		CardType = "Other",
+			                        		Number = "1111111111111111",
+			                        		HolderName = "Test Holder",
+			                        		StartDate = DateTime.Today.AddYears(-1).ToDate(DateFormat.YearMonth),
+			                        		ExpiryDate = DateTime.Today.AddMonths(-1).ToDate(DateFormat.YearMonth),
+			                        		IssueNo = "000",
+			                        		SecurityCode = "666",
+			                        		IsCreditCard = false,
+			                        		IsPrimary = true,
+			                        	});
+
+			Do.With.Interval(1).Until(() => Drive.Db.Payments.PaymentCardsBases.Single(x => x.ExternalId == paymentCardId));
+
+			Drive.Api.Commands.Post(new CreateFixedTermLoanExtensionCommand
+			                        	{
+			                        		ApplicationId = appId,
+			                        		ExtendDate = new Date(fixedTermApp.NextDueDate.Value.AddDays(2), DateFormat.Date),
+			                        		ExtensionId = extensionId,
+			                        		PartPaymentAmount = 20M,
+			                        		PaymentCardCv2 = "000",
+			                        		PaymentCardId = paymentCardId
+			                        	});
+
+			var loanExtension =
+				Do.With.Interval(1).Until(
+					() =>
+					Drive.Db.Payments.LoanExtensions.Single(x => x.ExternalId == extensionId && x.ApplicationId == app.ApplicationId));
+
+
+			Assert.IsNotNull(loanExtension, "A loan extension should be created");
+			Assert.IsNull(loanExtension.PartPaymentTakenOn,
+			              "Loan extension payment should not be taken, PartPaymentTakenOn should be null");
+			Assert.IsNotNull(loanExtension.PartPaymentFailedOn, "Loan extension payment should not be taken");
+		}
+
+		[Test, AUT(AUT.Uk), JIRA("Uk-971")]
+		public void SignFixedTermLoanExtensionTest()
+		{
+			const decimal trustRating = 400.00M;
+			var accountId = Guid.NewGuid();
+			var bankAccountId = Guid.NewGuid();
+			var paymentCardId = Guid.NewGuid();
+			var appId = Guid.NewGuid();
+			var extensionId = Guid.NewGuid();
+
+			var setupData = new AccountSummarySetupFunctions();
+
+			setupData.Scenario03Setup(appId, paymentCardId, bankAccountId, accountId, trustRating);
+
+			var app = Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(x => x.ExternalId == appId));
+			var fixedTermApp =
+				Do.With.Interval(1).Until(
+					() => Drive.Db.Payments.FixedTermLoanApplications.Single(x => x.ApplicationId == app.ApplicationId));
+
+			Drive.Api.Commands.Post(new AddPaymentCardCommand
+			                        	{
+			                        		AccountId = accountId,
+			                        		PaymentCardId = paymentCardId,
+			                        		CardType = "VISA",
+			                        		Number = "4444333322221111",
+			                        		HolderName = "Test Holder",
+			                        		StartDate = DateTime.Today.AddYears(-1).ToDate(DateFormat.YearMonth),
+			                        		ExpiryDate = DateTime.Today.AddMonths(6).ToDate(DateFormat.YearMonth),
+			                        		IssueNo = "000",
+			                        		SecurityCode = "666",
+			                        		IsCreditCard = false,
+			                        		IsPrimary = true,
+			                        	});
+
+			Do.With.Interval(1).Until(
+				() => Drive.Db.Payments.PaymentCardsBases.Single(x => x.ExternalId == paymentCardId && x.AuthorizedOn != null));
+
+			Drive.Api.Commands.Post(new CreateFixedTermLoanExtensionCommand
+			                        	{
+			                        		ApplicationId = appId,
+			                        		ExtendDate = new Date(fixedTermApp.NextDueDate.Value.AddDays(2), DateFormat.Date),
+			                        		ExtensionId = extensionId,
+			                        		PartPaymentAmount = 20M,
+			                        		PaymentCardCv2 = "000",
+			                        		PaymentCardId = paymentCardId
+			                        	});
+
+			var loanExtension =
+				Do.With.Interval(1).Until(() =>Drive.Db.Payments.LoanExtensions.Single(x => x.ExternalId == extensionId && x.ApplicationId == app.ApplicationId));
+
+			Drive.Api.Commands.Post(new SignFixedTermLoanExtensionCommand
+			                        	{
+			                        		ApplicationId = appId,
+			                        		ExtensionId = extensionId
+			                        	});
+
+			loanExtension.Refresh();
+
+			Assert.IsNotNull(loanExtension.SignedOn, "Loan Extension should be signed");
+		}
 	}
 }
+ 

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -39,20 +39,30 @@
     <Compile Include="CollectionsCommunicationsChaseForDca.cs" />
     <Compile Include="CollectionsTests.cs" />
     <Compile Include="Command\AddPersonalPaymentCardCsApiCommandTests.cs" />
+    <Compile Include="Command\CsExtendFixedTermLoanTest.cs" />
+    <Compile Include="Command\CsRepayWithExternalCardCommandTests.cs" />
+    <Compile Include="Command\CsRepayWithPaymentCardCommandTests.cs" />
     <Compile Include="Command\DcaCommandTests.cs" />
     <Compile Include="Command\DeletePersonalPaymentCardCsApiCommandTests.cs" />
     <Compile Include="Command\SavePaymentCardBillingAddress.cs" />
+    <Compile Include="Command\SetAccountPaymentMethodCommandCaTests.cs" />
     <Compile Include="CsapiCreateTransactionTest.cs" />
     <Compile Include="EarlyRepaymentTests.cs" />
     <Compile Include="ExternalDebtCollectionTests.cs" />
     <Compile Include="Helpers\AccountSummarySetupFunctions.cs" />
+    <Compile Include="Helpers\ExtendLoanFunctions.cs" />
     <Compile Include="Helpers\VerifyPaymentFunctions.cs" />
     <Compile Include="InArrearsNoticeTests.cs" />
+    <Compile Include="InDuplumViolationTest.cs" />
     <Compile Include="LoanCalculations\BusinessLoanCalculationTests.cs" />
     <Compile Include="MoveApplicationToDcaTests.cs" />
     <Compile Include="NaedoRetryTests.cs" />
+    <Compile Include="Queries\CsGetLoanExtensionPaymentStatusQueryTests.cs" />
     <Compile Include="Queries\GetBusinessApplicationSummaryCsapiQuery.cs" />
+    <Compile Include="Queries\CsGetCardPaymentStatusQueryTests.cs" />
+    <Compile Include="Queries\GetFixedTermLoanExtensionQuoteTests.cs" />
     <Compile Include="Queries\GetLoanAgreementsCsapiQueryTests.cs" />
+    <Compile Include="Queries\GetLoanExtensionPaymentStatusQueryTest.cs" />
     <Compile Include="Queries\GetPersonalPaymentCardsCsapiQueryTests.cs" />
     <Compile Include="Queries\GetTransactionsCsapiQuery.cs" />
     <Compile Include="Queries\GetValidTransactionTypesQueryTest.cs" />
@@ -63,7 +73,7 @@
     <Compile Include="FixedTermLoanExtensionTests.cs" />
     <Compile Include="FixedTermLoanOfferTests.cs" />
     <Compile Include="FixedTermLoanTopUpTests.cs" />
-    <Compile Include="GetApplicationSummaryTests.cs" />
+    <Compile Include="Queries\GetAccountSummaryQueryTests.cs" />
     <Compile Include="FixedTermLoanRepayTest.cs" />
     <Compile Include="GetBusinessFixedInstallmentLoanCalculationTests.cs" />
     <Compile Include="GetBusinessFixedInstallmentLoanOfferTests.cs" />

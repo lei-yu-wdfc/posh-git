@@ -63,13 +63,12 @@ namespace Wonga.QA.Tests.Payments.Command
                              foreach (var cardToAdd in cardsToAdd)
                              {
                                  var c = customerCards
-                                     .SingleOrDefault(p => p.AccountId == customer.Id
-                                                           &&
-                                                           p.PaymentCardsBaseEntity.ExpiryDate == cardToAdd.ExpiryDate
-                                                           &&
-                                                           p.PaymentCardsBaseEntity.MaskedNumber ==
-                                                           cardToAdd.Number.MaskedCardNumber()
-                                                           && p.PaymentCardsBaseEntity.Type == cardToAdd.Type);
+                                     .SingleOrDefault(p => p.AccountId == customer.Id &&
+                                                           //Comparing expiry dates doesn't work properly if the current month has 31 days and the expiry date month has 30. Hence this...
+                                                           p.PaymentCardsBaseEntity.ExpiryDate.Month == cardToAdd.ExpiryDate.Month &&
+                                                           p.PaymentCardsBaseEntity.ExpiryDate.Year == cardToAdd.ExpiryDate.Year && 
+                                                           p.PaymentCardsBaseEntity.MaskedNumber == cardToAdd.Number.MaskedCardNumber() && 
+                                                           p.PaymentCardsBaseEntity.Type == cardToAdd.Type);
                                  if (c == null) return false;
                              }
                              return true;

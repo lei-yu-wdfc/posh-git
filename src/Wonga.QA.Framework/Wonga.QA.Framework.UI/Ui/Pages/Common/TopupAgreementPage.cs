@@ -18,7 +18,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public bool IsTopupAgreementPageTopupAmountNotPresent()
         {
-            bool amountResult = Content.Driver().PageSource.Contains("0.00");
+            bool amountResult = Content.Driver().PageSource.Contains("£0.00");
             bool tokenResult = Content.Driver().PageSource.Contains("[topup-amount]");
             return amountResult | tokenResult ;
         }
@@ -40,6 +40,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             bool legalResult = _agreementLegals.Displayed;
             return legalResult;
 
+        }
+
+        public TopupDealDonePage Accept()
+        {
+            _nextButton.Click();
+            return new TopupDealDonePage(Client);
         }
         
 

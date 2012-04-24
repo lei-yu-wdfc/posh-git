@@ -40,6 +40,7 @@ namespace Wonga.QA.Framework.UI
         public ILnConsumerJourney FillApplicationDetails()
         {
             var applyPage = CurrentPage as ApplyPage;
+            applyPage.SetNewMobilePhone = Get.GetMobilePhone();
             applyPage.ApplicationSection.SetSecurityCode = "000";
             applyPage.ApplicationSection.SetMinCash = "100";
             CurrentPage = applyPage.Submit() as ProcessingPage;
