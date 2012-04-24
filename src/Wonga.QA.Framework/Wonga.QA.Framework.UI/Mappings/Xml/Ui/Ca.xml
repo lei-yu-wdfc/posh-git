@@ -44,7 +44,7 @@
     <TownErrorForm>#edit-town-ca-wrapper div.invalid</TownErrorForm>
     <StreetErrorForm>#edit-street-ca-wrapper div.invalid</StreetErrorForm>
     <HouseNumberErrorForm>#edit-street-number-ca-wrapper div.invalid</HouseNumberErrorForm>
-    <AddressPeriodErrorForm>#edit-address-period-ca-wrapper div.invalid</AddressPeriodErrorForm>
+	<AddressPeriodErrorForm>#edit-address-period-ca-wrapper div.invalid</AddressPeriodErrorForm>
   </AddressDetailsPage>
 
   <AccountDetailsSection>

@@ -25,7 +25,7 @@
   <AddressDetailsPage>
     <FormId>#wonga-apply-lzero-form</FormId>
     <District>#edit-district</District>
-    <HouseNumber>#edit-flat</HouseNumber>
+	<HouseNumber>#edit-flat</HouseNumber>
     <Town>#edit-town</Town>
     <County>#edit-county</County>
     <Street>#edit-street</Street>
