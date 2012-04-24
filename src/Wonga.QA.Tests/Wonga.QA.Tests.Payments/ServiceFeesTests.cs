@@ -97,7 +97,10 @@ namespace Wonga.QA.Tests.Payments
 			var response = Drive.Api.Queries.Post(query);
 
 			Assert.AreEqual("200.00", response.Values["BalanceNextDueDate"].Single());
-			Assert.AreEqual("100.00", response.Values["Fees"].Single());
+
+			//17.1 + 57 + 18.17
+			//18.17 calculated as follow: 57 - (getBal -loanCap)
+			Assert.AreEqual("92.27", response.Values["Fees"].Single()); 
 		}
 
 		private void SetUtcNow(string nowServiceConfigKey, DateTime dateTime)
