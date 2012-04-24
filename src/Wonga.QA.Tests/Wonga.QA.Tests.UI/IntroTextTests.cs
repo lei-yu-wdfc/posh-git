@@ -11,6 +11,7 @@ using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
+using Wonga.QA.Tests.Payments.Helpers;
 using EmploymentStatusEnum = Wonga.QA.Framework.Msmq.EmploymentStatusEnum;
 using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Framework.Db.Extensions;
@@ -64,7 +65,86 @@ namespace Wonga.QA.Tests.Ui
             // Check the actual text
             string actuallntroText = mySummaryPage.GetIntroText;
             string expectedlntroText = introTexts[1];
-            expectedlntroText = expectedlntroText.Replace("{first name}", journey.FirstName).Replace("{500}", "400"); 
+            expectedlntroText = expectedlntroText.Replace("{first name}", journey.FirstName).Replace("{500}", "400.00"); 
+            Assert.AreEqual(expectedlntroText, actuallntroText);
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-788")]
+        public void IntroTextScenario1B()
+        // Ln journey
+        {
+            string email = Get.RandomEmail();
+            const decimal trustRating = 400.00M;
+            var applicationId = Guid.NewGuid();
+
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            var accountId = customer.Id;
+
+            var setupData = new AccountSummarySetupFunctions();
+
+            setupData.Scenario01Setup(accountId, applicationId, trustRating);
+
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(1, int.Parse(response.Values["ScenarioId"].Single()));
+
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            // Check the actual text
+            string actuallntroText = mySummaryPage.GetIntroText;
+            string expectedlntroText = introTexts[1];
+            expectedlntroText = expectedlntroText.Replace("{first name}", customer.GetCustomerFullName().Split(' ')[0]).Replace("{500}", "400.00");
+            Assert.AreEqual(expectedlntroText, actuallntroText);
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-788")]
+        public void IntroTextScenario17()
+        {
+            const int loanAmount = 100;
+            const int days = 10;
+            string email = Get.RandomEmail();
+            Console.WriteLine("email:{0}", email);
+
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var aPage = journey.ApplyForLoan(loanAmount, days)
+                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                .FillAddressDetails()
+                .FillAccountDetails()
+                .FillBankDetails();
+
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            // Check the actual text
+            string actuallntroText = mySummaryPage.GetIntroText;
+            string expectedlntroText = introTexts[17];
+            expectedlntroText = expectedlntroText.Replace("{first name}", journey.FirstName);
+            Assert.AreEqual(expectedlntroText, actuallntroText);
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-788")]
+        public void IntroTextScenario21()
+        {
+            const int loanAmount = 100;
+            const int days = 10;
+            string email = Get.RandomEmail();
+            Console.WriteLine("email:{0}", email);
+
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var aPage = journey.ApplyForLoan(loanAmount, days)
+                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                .FillAddressDetails()
+                .FillAccountDetails()
+                .FillBankDetails()
+                .FillCardDetails();
+
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            // Check the actual text
+            string actuallntroText = mySummaryPage.GetIntroText;
+            string expectedlntroText = introTexts[21];
+            expectedlntroText = expectedlntroText.Replace("{first name}", journey.FirstName);
             Assert.AreEqual(expectedlntroText, actuallntroText);
         }
     }

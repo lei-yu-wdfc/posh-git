@@ -8,17 +8,15 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Db.Risk;
-using Wonga.QA.Framework.Msmq;
+using Wonga.QA.Framework.UI;
 using Wonga.QA.Tests.Core;
+using Wonga.QA.Tests.Payments.Helpers;
 using EmploymentStatusEnum = Wonga.QA.Framework.Msmq.EmploymentStatusEnum;
-using Wonga.QA.Framework.Helpers;
 
 namespace Wonga.QA.Tests.Ui
 {
-    [Parallelizable]
     public class LoanStatusMessageTests : UiTest
     {
-
         Dictionary<int, string> loanStatusMessages = new Dictionary<int, string> 
 	    {
 	    {2, @"If you would like to change your repayment date it's too early to do it just yet, but you can request a new one from {date extensions available}. You can set a handy reminder to do that below. Please bear in mind that you will need to pay any interest and fees up to that point, in order for a new date to be approved."},
@@ -39,6 +37,50 @@ namespace Wonga.QA.Tests.Ui
         {21, @"One last step to receive your cash.\n\nYour application has been approved! Now you just need to read and accept your new agreement and the loan conditions by clicking the ‘I accept’ button in the agreement below. You will then receive {£loan amount} in your account.\n\nWe’ll then collect {£xx.xx total repayable on due date} from your debit card on {repayment date in format 15th March 2011.}\n\nThanks for using Wonga!"},
 	    };
 
+        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1614"), Pending("Fails as not covered by the Spec")]
+        public void LoanStatusMessageScenario1A()
+        // part of L0 journey where the user fill in Personal, Address and Account details and stops the journey.
+        {
+            const int loanAmount = 100;
+            const int days = 10;
+            string email = Get.RandomEmail();
+            Console.WriteLine("email:{0}", email);
+
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var aPage = journey.ApplyForLoan(loanAmount, days)
+                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                .FillAddressDetails()
+                .FillAccountDetails();
+
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            Assert.IsFalse(mySummaryPage.IsLoanStatusMessageAvailable());
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-795")]
+        public void LoanStatusMessageScenario1B()
+        // Ln journey
+        {
+            string email = Get.RandomEmail();
+            const decimal trustRating = 400.00M;
+            var applicationId = Guid.NewGuid();
+
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            var accountId = customer.Id;
+
+            var setupData = new AccountSummarySetupFunctions();
+
+            setupData.Scenario01Setup(accountId, applicationId, trustRating);
+
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(1, int.Parse(response.Values["ScenarioId"].Single()));
+
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            Assert.IsFalse(mySummaryPage.IsLoanStatusMessageAvailable());
+        }
 
         [Test, AUT(AUT.Uk), JIRA("UK-795")]
         public void LoanStatusMessageScenario2A() { LoanStatusMessage(2, 0); }
@@ -69,20 +111,26 @@ namespace Wonga.QA.Tests.Ui
         public void LoanStatusMessageScenario3F() { LoanStatusMessage(3, 6, 7); } //6 days passed in 7-day loan
 
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1359"), Pending("Wrong value of repay value. bug UK-1359")]
-        public void LoanStatusMessageScenario4A() { LoanStatusMessage(4, 10); }
+        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1359")]
+        public void LoanStatusMessageScenario4A() { LoanStatusMessage(4, 10); } // payment missed and Next Due Date is today
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1359"), Pending("Wrong value of repay value. bug UK-1359")]
-        public void LoanStatusMessageScenario4B() { LoanStatusMessage(4, 11); }
+        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1359")]
+        public void LoanStatusMessageScenario4B() { LoanStatusMessage(4, 1, 1); } //1 day passed in 1-day loan, // payment missed and Next Due Date is today
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1359"), Pending("Wrong value of repay value. bug UK-1359")]
-        public void LoanStatusMessageScenario4C() { LoanStatusMessage(4, 1, 1); } //1 days passed in 1-day loan
+        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1359")]
+        public void LoanStatusMessageScenario4C() { LoanStatusMessage(4, 7, 7); } //7 days passed in 7-day loan, // payment missed and Next Due Date is today
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1359"), Pending("Wrong value of repay value. bug UK-1359")]
-        public void LoanStatusMessageScenario4D() { LoanStatusMessage(3, 7, 7); } //7 days passed in 7-day loan
+        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("TBD: create test for the variant when 3 (=maximum) extensions have been made and it is 1st day after a 7 day loan is taken")]
+        public void LoanStatusMessageScenario4D() { LoanStatusMessage(4, 1, 7); }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1359"), Pending("Wrong value of repay value. bug UK-1359")]
-        public void LoanStatusMessageScenario4E() { LoanStatusMessage(4, 8, 8); } //8 days passed in 8-day loan
+        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("TBD: create test for the variant when 3 (=maximum) extensions have been made and it is 10th day after a 10 day loan is taken")]
+        public void LoanStatusMessageScenario4E() { LoanStatusMessage(4, 10, 10); }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("TBD: create test for the variant when 2 (< maximum) extensions have been made and it is 6th day after a 10 day loan is taken. The message shold like from scenario 3")]
+        public void LoanStatusMessageScenario4F() { LoanStatusMessage(3, 6); }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("TBD: create test for the variant when 1 (< maximum) extensions have been made and it is 1st day after a 10 day loan is taken. The message shold like from scenario 2")]
+        public void LoanStatusMessageScenarioG() { LoanStatusMessage(2, 1); } 
 
 
         [Test, AUT(AUT.Uk), JIRA("UK-795")]
@@ -94,11 +142,74 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk), JIRA("UK-795, UK-1433"), Pending("Fails due to bug UK-1433")]
         public void LoanStatusMessageScenario7() { LoanStatusMessage(7, 10); }
 
-        //[Test, AUT(AUT.Uk), JIRA("UK-795")]
-        //public void LoanStatusMessageScenario9() { LoanStatusMessage(9, 3); } // not ready
+        [Test, AUT(AUT.Uk), JIRA("UK-795")]
+        public void LoanStatusMessageScenario8() { LoanStatusMessage(8, 10); }
 
-        //[Test, AUT(AUT.Uk), JIRA("UK-795")]
-        //public void LoanStatusMessageScenario10() { LoanStatusMessage(10, 11); } // not ready
+
+        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Hangs")]
+        public void LoanStatusMessageScenario9()
+        {
+            string email = Get.RandomEmail();
+            Console.WriteLine("email:{0}", email);
+
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanTerm(10).Build();
+
+            var accountId = customer.Id;
+            var bankAccountId = customer.BankAccountId;
+            var paymentCardId = Guid.NewGuid();
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            var appId = application.Id;
+            const decimal trustRating = 400.00M;
+
+            var setupData = new AccountSummarySetupFunctions();
+            setupData.Scenario09Setup(requestId2, requestId1, accountId, paymentCardId, appId, bankAccountId);
+
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(9, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
+
+            // Login and open my summary page
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            // Check Loan Status message
+            var expectedLoanMessageText = loanStatusMessages[9];
+            string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage;
+            Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Hangs")]
+        public void LoanStatusMessageScenario10()
+        {
+            string email = Get.RandomEmail();
+            Console.WriteLine("email:{0}", email);
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+
+            var accountId = customer.Id;
+            var bankAccountId = Guid.NewGuid();
+            var paymentCardId = Guid.NewGuid();
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            var appId = Guid.NewGuid();
+            const decimal trustRating = 400.00M;
+
+            var setupData = new AccountSummarySetupFunctions();
+            setupData.Scenario10Setup(requestId1, requestId2, appId, bankAccountId, accountId, paymentCardId);
+
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(10, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
+
+            // Login and open my summary page
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            // Check Loan Status message
+            var expectedLoanMessageText = loanStatusMessages[10];
+            string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage;
+            Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
+        } 
+
 
         [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message (from scenarion 4). Waiting for code update.")]
         public void LoanStatusMessageScenario11() { LoanStatusMessage(11, 14); }
@@ -109,20 +220,179 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message (from scenarion 4). Waiting for code update.")]
         public void LoanStatusMessageScenario13() { LoanStatusMessage(13, 64); }
 
-        //[Test, AUT(AUT.Uk), JIRA("UK-795")]
-        //public void LoanStatusMessageScenario15() { LoanStatusMessage(15, 11); } // not ready
+        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Hangs.")]
+        public void LoanStatusMessageScenario14()
+        {
+            string email = Get.RandomEmail();
+            Console.WriteLine("email:{0}", email);
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
 
-        //[Test, AUT(AUT.Uk), JIRA("UK-795")]
-        //public void LoanStatusMessageScenario16() { LoanStatusMessage(16, 11); } // not ready
+            var accountId = customer.Id;
+            var bankAccountId = Guid.NewGuid();
+            var paymentCardId = Guid.NewGuid();
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            var appId = Guid.NewGuid();
+            const int applicationId = 0;
+            const decimal trustRating = 400.00M;
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("The test hangs when creates an aplication with Pending status.")]
-        public void LoanStatusMessageScenario17() { LoanStatusMessage(17, 0); }
+            var setupData = new AccountSummarySetupFunctions();
+            setupData.Scenario14Setup(requestId1, requestId2, applicationId, accountId, appId, paymentCardId, bankAccountId);
 
-        //[Test, AUT(AUT.Uk), JIRA("UK-795")]
-        //public void LoanStatusMessageScenario19() { LoanStatusMessage(19, 0); } // not ready
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(14, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
 
-        //[Test, AUT(AUT.Uk), JIRA("UK-795")]
-        //public void LoanStatusMessageScenario21() { LoanStatusMessage(21, 0); } // not ready
+            // Login and open my summary page
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            // Check Loan Status message
+            Assert.IsFalse(mySummaryPage.IsLoanStatusMessageAvailable());
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Hangs.")]
+        public void LoanStatusMessageScenario15()
+        {
+            string email = Get.RandomEmail();
+            Console.WriteLine("email:{0}", email);
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+
+            var accountId = customer.Id;
+            var bankAccountId = Guid.NewGuid();
+            var paymentCardId = Guid.NewGuid();
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            var appId = Guid.NewGuid();
+            const int applicationId = 0;
+            const decimal trustRating = 400.00M;
+
+            var setupData = new AccountSummarySetupFunctions();
+            setupData.Scenario15Setup(requestId1, requestId2, applicationId, accountId, appId, paymentCardId, bankAccountId);
+
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(15, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
+
+            // Login and open my summary page
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            // Check Loan Status message
+            var expectedLoanMessageText = loanStatusMessages[15];
+            string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage;
+            Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Hangs.")]
+        public void LoanStatusMessageScenario16()
+        {
+            string email = Get.RandomEmail();
+            Console.WriteLine("email:{0}", email);
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+
+            var accountId = customer.Id;
+            var bankAccountId = Guid.NewGuid();
+            var paymentCardId = Guid.NewGuid();
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            var appId = Guid.NewGuid();
+            const int applicationId = 0;
+            const decimal trustRating = 400.00M;
+
+            var setupData = new AccountSummarySetupFunctions();
+            setupData.Scenario16Setup(requestId1, requestId2, applicationId, accountId, appId, paymentCardId, bankAccountId);
+
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(16, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
+
+            // Login and open my summary page
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            // Check Loan Status message
+            var expectedLoanMessageText = loanStatusMessages[16];
+            string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage;
+            Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
+        } 
+
+ [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1624"), Pending("Fails due to bug UK-1624")]
+        public void LoanStatusMessageScenario17A()
+        {
+            const int loanAmount = 100;
+            const int days = 10;
+            string email = Get.RandomEmail();
+            Console.WriteLine("email:{0}", email);
+
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var aPage = journey.ApplyForLoan(loanAmount, days)
+                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                .FillAddressDetails()
+                .FillAccountDetails()
+                .FillBankDetails();
+                
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            var expectedLoanMessageText = loanStatusMessages[17];
+            string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage.Replace("{within the next 6 hours}", "within the next 6 hours"); //TBD - replace hardcoded hours with a calculated value
+            Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1624"), Pending("Fails due to bug UK-1624")]
+        public void LoanStatusMessageScenario17B()
+        {
+            const int loanAmount = 100;
+            const int days = 10;
+            string email = Get.RandomEmail();
+            Console.WriteLine("email:{0}", email);
+
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var aPage = journey.ApplyForLoan(loanAmount, days)
+                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                .FillAddressDetails()
+                .FillAccountDetails()
+                .FillBankDetails()
+                .FillCardDetails();
+            
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            var expectedLoanMessageText = loanStatusMessages[17];
+            string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage.Replace("{within the next 6 hours}", "within the next 6 hours"); //TBD - replace hardcoded hours with a calculated value
+            Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
+        }
+
+
+        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("not ready")]
+        public void LoanStatusMessageScenario19()
+        {
+            
+        } 
+
+        [Test, AUT(AUT.Uk), JIRA("UK-795")]
+        public void LoanStatusMessageScenario21()
+        {
+            const int loanAmount = 100;
+            const int days = 10;
+            string email = Get.RandomEmail();
+            Console.WriteLine("email:{0}", email);
+
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var aPage = journey.ApplyForLoan(loanAmount, days)
+                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                .FillAddressDetails()
+                .FillAccountDetails()
+                .FillBankDetails()
+                .FillCardDetails()
+                .WaitForAcceptedPage();
+
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            //{£xx.xx total repayable on due date} from your debit card on {repayment date in format 15th March 2011.}
+            var expectedLoanMessageText = loanStatusMessages[21].Replace("{£loan amount}", "£100").Replace("{£xx.xx total repayable on due date}", "£115.91").Replace("{repayment date in format 15th March 2011.}", GetOrdinalDate(DateTime.Today.AddDays(days)));
+            string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage;
+            Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
+        }
 
 
         //private void LoanStatusMessage(int scenarioId, int daysShift)
