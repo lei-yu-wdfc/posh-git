@@ -123,6 +123,7 @@
     <Compile Include="Requests\GetCurrentAddressQuery.cs" />
     <Compile Include="Requests\GetCustomerDetailsQuery.cs" />
     <Compile Include="Requests\GetCustomerSubRegionCaQuery.cs" />
+	<Compile Include="Requests\GetCustomerPrePaidEligibilityQuery.cs" />
     <Compile Include="Requests\GetDirectDebitFormZaQuery.cs" />
     <Compile Include="Requests\GetEmailReturnLinkCorrelationRecordWbUkQuery.cs" />
     <Compile Include="Requests\GetExtensionAeDocumentQuery.cs" />

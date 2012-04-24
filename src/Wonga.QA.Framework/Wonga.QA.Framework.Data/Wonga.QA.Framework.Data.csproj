@@ -59,6 +59,7 @@
     <Compile Include="Databases\OpsLogsDatabase.cs" />
     <Compile Include="Databases\OpsSagasDatabase.cs" />
     <Compile Include="Databases\PaymentsDatabase.cs" />
+	<Compile Include="Databases\MarketingDatabase.cs" />
     <Compile Include="Databases\QAFDatabase.cs">
       <SubType>Code</SubType>
     </Compile>
