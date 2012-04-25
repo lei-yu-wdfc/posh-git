@@ -13,7 +13,7 @@ namespace Wonga.QA.Tests.Salesforce
     [TestFixture]
     public class SalesforcePushDirectorData : SalesforceTestBase
     {
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb), JIRA("SME-1404", "SME-1405")]
         public void ShouldCreateSalesForceContactWithCustomerDetailsAndAddressForPrimaryDirector()
         {
             CustomerBuilder customer;
@@ -27,7 +27,7 @@ namespace Wonga.QA.Tests.Salesforce
                                                customer.DateOfBirth.DateTime, customer.Town, customer.Id.ToString()));
         }
 
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb), JIRA("SME-1404", "SME-1405")]
         public void ShouldCreateSalesForceContactWithCustomerDetailsAndAddressForSecondaryDirector()
         {
             CustomerBuilder customer;
