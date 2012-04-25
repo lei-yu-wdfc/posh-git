@@ -84,7 +84,7 @@ GOTO EOF
 
 :GENERATE
 	%MsBuild% %Src%\Wonga.QA.Generators\Wonga.QA.Generators.sln /v:m || PAUSE
-	%Bin%\Wonga.QA.Generators\Wonga.QA.Generators.%1.exe %Origin%
+	%Bin%\Wonga.QA.Generators.%1.exe %Origin%
 GOTO EOF
 
 :EOF

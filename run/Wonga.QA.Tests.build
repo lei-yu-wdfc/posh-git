@@ -27,18 +27,18 @@
 	</Target>
 	
 	<Target Name="PreGenerateSerializers">
-		<Exec Command="$(lib)\sgen\sgen.exe $(Bin)\$(Tests)\Wonga.QA.Framework.Cs.dll /force" />
+		<Exec Command="$(lib)\sgen\sgen.exe $(Bin)\Wonga.QA.Framework.Cs.dll /force" />
 	</Target>
 	
 	<Target Name="Merge">
 		<ItemGroup>
-			<Exclude Include="$(Bin)\$(Tests)\$(Tests).Core.dll" />
-			<Exclude Include="$(Bin)\$(Tests)\$(Tests).Meta.dll" />
-			<Exclude Include="$(Bin)\$(Tests)\$(Tests).Ui.dll" />
+			<Exclude Include="$(Bin)\$(Tests).Core.dll" />
+			<Exclude Include="$(Bin)\$(Tests).Meta.dll" />
+			<Exclude Include="$(Bin)\$(Tests).Ui.dll" />
 			<Command Include='"$(MSBuildProgramFiles32)\Microsoft\ILMerge\ILMerge.exe"' />
 			<Command Include="/targetplatform:v4,$(MSBuildToolsPath)" />
-			<Command Include="/out:$(Bin)\$(Tests)\$(Tests).dll" />
-			<Command Include="$(Bin)\$(Tests)\$(Tests).*.dll" Exclude="@(Exclude)" />
+			<Command Include="/out:$(Bin)\$(Tests).dll" />
+			<Command Include="$(Bin)\$(Tests).*.dll" Exclude="@(Exclude)" />
 		</ItemGroup>
 		<Exec Command="@(Command, ' ')" />
 	</Target>
@@ -46,8 +46,8 @@
 	<Target Name="Test">
 		<ItemGroup>
 			<Split Include="$(Files.Split(';'))" />
-			<Files Include="$(Bin)\$(Tests)\$(Tests).dll" Condition="'$(Files)'==''" />
-			<Files Include="$(Bin)\$(Tests)\$(Tests).%(Split.Identity).dll" Condition="'$(Files)'!=''" />
+			<Files Include="$(Bin)\$(Tests).dll" Condition="'$(Files)'==''" />
+			<Files Include="$(Bin)\$(Tests).%(Split.Identity).dll" Condition="'$(Files)'!=''" />
 		</ItemGroup>
 		<Gallio
 			Files="@(Files)"
