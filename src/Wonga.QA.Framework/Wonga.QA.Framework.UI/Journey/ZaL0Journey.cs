@@ -57,7 +57,7 @@ namespace Wonga.QA.Framework.UI
             personalDetailsPage.EmploymentDetails.TimeWithEmployerMonths = "5";
             personalDetailsPage.EmploymentDetails.WorkPhone = "0123456789";
             personalDetailsPage.EmploymentDetails.SalaryPaidToBank = true;
-            personalDetailsPage.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("dd MMM yyyy");
+            personalDetailsPage.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("dd/MMM/yyyy");
             personalDetailsPage.EmploymentDetails.IncomeFrequency = "Monthly";
         	personalDetailsPage.ContactingYou.CellPhoneNumber = Get.GetMobilePhone();
             personalDetailsPage.ContactingYou.EmailAddress = email;
