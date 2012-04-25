@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
@@ -73,8 +74,7 @@ namespace Wonga.QA.Tests.Cs
 
 			CancelRepaymentArrangement(repaymentArrangement);
 
-			var planIsAllowed = PlanIsAllowed(application);
-			Assert.IsTrue(planIsAllowed);
+			Do.Until(() => PlanIsAllowed(application) == true);
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-1864")]
@@ -139,7 +139,11 @@ namespace Wonga.QA.Tests.Cs
 			CreatePlan(application, customer);
 			RepayAllInstallments(customer, application);
 
+			Trace.WriteLine(DateTime.UtcNow);
+
 			Do.Until(() => GetRepaymentArrangement(application).ClosedOn != null);
+
+			Trace.WriteLine(DateTime.UtcNow);
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-1864")]
