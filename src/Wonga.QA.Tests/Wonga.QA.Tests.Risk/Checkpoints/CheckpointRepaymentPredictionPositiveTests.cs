@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
@@ -6,6 +7,7 @@ using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Db.Extensions;
+using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
@@ -27,11 +29,29 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		private string _expectedScorecardNameLn;
 		private int _expectedScoreCutoffNewUsers;
 		private int _expectedScoreCutoffExistingUsers;
+		private string[] _expectedFactorNamesL0;
+		private string[] _expectedFactorNamesLn;
 
 		private const string ScorecardNameL0Za = "ZARiskScorecard_v_1_2_L0";
 		private const string ScorecardNameLnZa = "ZARiskScorecard_v_1_2_LN";
 		private const int ScoreCutoffNewUsersZa = 600;
 		private const int ScoreCutoffExistingUsersZa = 580;
+		//private static readonly string[] ExpectedFactorNamesL0Za = new string[];
+		private static readonly string[] FactorNamesLnZa = new string[]
+		                                                   	{
+		                                                   		"NumAccounts",
+		                                                   		"TotalCurBalance",
+		                                                   		"OverdueRatio",
+		                                                   		"EmpiricaScore",
+		                                                   		"LoanAmount",
+		                                                   		"LoanTerm",
+		                                                   		"LoanNumber",
+		                                                   		"LnSkey",
+		                                                   		"AvgDel",
+		                                                   		"ArrearsPresent",
+		                                                   		"DaysSinceLastLoan",
+		                                                   		"AppNetMonthlyIncome"
+		                                                   	};
 
 
 		[FixtureSetUp]
@@ -45,6 +65,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 						_expectedScorecardNameLn = ScorecardNameLnZa;
 						_expectedScoreCutoffNewUsers = ScoreCutoffNewUsersZa;
 						_expectedScoreCutoffExistingUsers = ScoreCutoffExistingUsersZa;
+						_expectedFactorNamesLn = FactorNamesLnZa;
 
 						_forename = "ANITHA";
 						_surname = "ESSACK";
@@ -88,14 +109,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test, AUT(AUT.Za)]
 		public void CheckpointRepaymentPredictionPositiveL0Accept()
 		{
-			var customer = CustomerBuilder.New()
-				.WithEmployer(TestMask)
-				.WithForename(_forename)
-				.WithSurname(_surname)
-				.WithDateOfBirth(_dateOfBirth)
-				.WithNationalNumber(_nationalNumber)
-				.Build();
-
+			var customer = BuildCustomerForScorecardAccept();
 			var application = ApplicationBuilder.New(customer).WithLoanTerm(5).WithLoanAmount(100).Build();
 
 			var repaymentPredictionScore = GetRepaymentPredictionScore(application);
@@ -115,7 +129,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test, AUT(AUT.Za)]
 		public void CheckpointRepaymentPredictionPositiveLnAccept()
 		{
-			var customer = CustomerBuilder.New().WithForename(_forename).WithSurname(_surname).WithDateOfBirth(_dateOfBirth).WithNationalNumber(_nationalNumber).Build();
+			var customer = BuildCustomerForScorecardAccept();
 			ApplicationBuilder.New(customer).Build().RepayOnDueDate();
 
 			Drive.Db.UpdateEmployerName(customer.Id, Get.EnumToString(TestMask));
@@ -128,16 +142,30 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 		[Test, AUT(AUT.Za)]
 		public void CheckpointRepaymentPredicitionPositiveFactorsUsedAreCorrectLn()
-		{GetFactors();
-			var customer = CustomerBuilder.New().Build();
+		{
+			var customer = BuildCustomerForScorecardAccept();
 			ApplicationBuilder.New(customer).Build().RepayOnDueDate();
 
 			Drive.Db.UpdateEmployerName(customer.Id, Get.EnumToString(TestMask));
 
 			var application = ApplicationBuilder.New(customer).WithLoanTerm(5).WithLoanAmount(100).Build();
+
+			var factorNames = GetFactors(application);
+			Assert.AreElementsEqualIgnoringOrder(_expectedFactorNamesLn, factorNames);
 		}
 
 		#region Helpers
+
+		private Customer BuildCustomerForScorecardAccept()
+		{
+			return CustomerBuilder.New()
+				.WithEmployer(TestMask)
+				.WithForename(_forename)
+				.WithSurname(_surname)
+				.WithDateOfBirth(_dateOfBirth)
+				.WithNationalNumber(_nationalNumber)
+				.Build();
+		}
 
 		private double GetRepaymentPredictionScore(Application application)
 		{
@@ -147,13 +175,14 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			return score;
 		}
 
-		private void GetFactors()
+		private List<string> GetFactors(Application application)
 		{
-			//var workflowId = (int)Drive.Data.Risk.Db.RiskWorkflows.FindByApplicationId(application.Id).RiskWorkflowId;
-			int workflowId = 2576;
-			var factorNames = Drive.Data.Risk.Db.Factors(
-				Drive.Data.Risk.Db.PmmlFactors.RiskWorkflowId == workflowId);
+			int workflowId = (int)Drive.Data.Risk.Db.RiskWorkflows.FindByApplicationId(application.Id).RiskWorkflowId;
 
+			var pmmlFactorIds = ((List<PmmlFactorEntity>)Drive.Data.Risk.Db.PmmlFactors.FindAllByRiskWorkflowId(workflowId).ToList<PmmlFactorEntity>()).Select(a => a.FactorId);
+			var factorNames = ((List<FactorEntity>)Drive.Data.Risk.Db.Factors.FindAllByFactorId(pmmlFactorIds).ToList<FactorEntity>()).Select(a => a.Name).ToList();
+
+			return factorNames;
 		}
 
 		#endregion
