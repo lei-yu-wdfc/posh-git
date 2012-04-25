@@ -23,6 +23,7 @@ namespace Wonga.QA.Framework.Core
         public static UiConfig Ui { get; set; }
         public static SalesforceConfig SalesforceUi { get; set; }
 		public static SalesforceConfig SalesforceApi { get; set; }
+        public static EmailConfig Email { get; set; }
 
         static Config()
         {
@@ -39,6 +40,7 @@ namespace Wonga.QA.Framework.Core
             Ui.RemoteMode = GetValue<Boolean>(false, "QAFUiRemoteMode");
             Ui.ExternalAccess = GetValue<Boolean>(false, "QAFExternalAccessMode");
 
+            Email = new EmailConfig() { QA = new EmailConfig.EmailAddressConfig() { Host = "imap.gmail.com", Username = "qa.wonga.com@gmail.com", Password = "Allw0nga", Port = 993, IsSsl = true } };
         	switch (SUT)
             {
                 case SUT.Dev:
@@ -528,6 +530,20 @@ namespace Wonga.QA.Framework.Core
     		
     		}
     	}
+
+        public class EmailConfig
+        {
+            public struct EmailAddressConfig
+            {
+                public string Host { get; set; }
+                public string Username { get; set; }
+                public string Password { get; set; }
+                public bool IsSsl { get; set; }
+                public int Port { get; set; }
+            }
+
+            public EmailAddressConfig QA { get; set; }
+        }
     }
 
     public static class Connections
