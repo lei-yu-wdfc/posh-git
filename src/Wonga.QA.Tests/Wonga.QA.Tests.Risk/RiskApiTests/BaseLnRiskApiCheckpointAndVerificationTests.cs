@@ -49,7 +49,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
             RiskCheckpointStatus expectedStatus = GetExpectedCheckpointStatus(_builderConfig.ExpectedDecisionStatus);
 
 			Application secondApplication = ApplicationBuilder.New(firstApplication.GetCustomer())
-				.WithIovationBlackBox(_builderConfig.IovationBlackBox.ToString())
+				.WithIovationBlackBox(_builderConfig.IovationBlackBox)
 				.WithExpectedDecision(_builderConfig.ExpectedDecisionStatus).Build();
 
 			AssertCheckpointAndVerifications(expectedStatus, expectedVerificationNames, checkpointDefinition, secondApplication);

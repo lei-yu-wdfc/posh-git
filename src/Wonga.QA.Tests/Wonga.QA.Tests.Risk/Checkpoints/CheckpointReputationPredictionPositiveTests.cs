@@ -9,6 +9,7 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Tests.Core;
+using Wonga.QA.Framework.Data.Enums.Risk;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
@@ -49,7 +50,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.WithPostcodeInAddress(GetPostcode().ToString())
 				.Build();
 
-            var application = ApplicationBuilder.New(customer).WithIovationBlackBox("Accept").WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+            var application = ApplicationBuilder.New(customer).WithIovationBlackBox(IovationMockResponse.Allow).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
 			var actualScore = GetReputationPredictionScore(application);
 			Assert.GreaterThan(actualScore, ReputationScoreCutoff);
