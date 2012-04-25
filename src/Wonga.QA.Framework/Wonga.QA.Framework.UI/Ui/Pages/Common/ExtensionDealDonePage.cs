@@ -13,12 +13,13 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
     public class ExtensionDealDonePage : BasePage, IApplyPage
     {
-        private IWebElement _accountLink;
+        private IWebElement _header;
+        private IWebElement _bodyContent;
 
         public ExtensionDealDonePage(UiClient client) : base(client)
         {
-            Assert.That(Headers, Has.Item("Success! Your new promise date has been approved."));
-            _accountLink = Content.FindElement(By.CssSelector(Ui.Get.ExtensionDealDonePage.AccountLink));
+            _header = Content.FindElement(By.CssSelector(Ui.Get.ExtensionDealDonePage.Header));
+            _bodyContent = Content.FindElement(By.CssSelector(Ui.Get.ExtensionDealDonePage.ContentArea));
         }
 
         public bool IsDealDonePageExtensionAmountNotPresent()
@@ -28,22 +29,16 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             return amountResult | tokenResult ;
         }
 
-        public bool IsDealDonePageDateNotPresent()
+        public bool IsDealDonePageDateTokenPresent()
         {
             bool tokenResult = Content.Driver().PageSource.Contains("[extension-repayment-date]");
             return tokenResult ;
         }
 
-        public bool IsDealDonePageJiffyNotPresent()
+        public bool IsDealDonePageSorryNotPresent()
         {
-            bool tokenResult = Content.Driver().PageSource.Contains("jiffy");
+            bool tokenResult = Content.Driver().PageSource.Contains("sorry");
             return !tokenResult;
-        }
-
-        public IApplyPage ContinueToMyAccount()
-        {
-            _accountLink.Click();
-            return new MySummaryPage(Client);
         }
     }
 }

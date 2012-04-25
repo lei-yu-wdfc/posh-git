@@ -110,6 +110,11 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.RepayButton)).Click();
         }
 
+        public void ChangePromiseDateButtonClick()
+        {
+            Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.ChangePromiseDateButton)).Click();
+        }
+
         public String GetTotalToRepayAmountPopup
         {
             get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.TotalToRepayAmountPopup)).Text; }

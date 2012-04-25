@@ -35,6 +35,7 @@
   <ItemGroup>
     <Compile Include="AboutUsTest.cs" />
     <Compile Include="BehaviourAndAdvertTracking.cs" />
+    <Compile Include="ExtensionJourneyTest.cs" />
     <Compile Include="DealDonePageTest.cs" />
     <Compile Include="EndToEndApplicationTests.cs" />
     <Compile Include="ForgotPassword.cs" />
