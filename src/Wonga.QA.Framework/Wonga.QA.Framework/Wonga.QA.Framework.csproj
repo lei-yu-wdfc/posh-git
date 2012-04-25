@@ -40,6 +40,7 @@
     <Compile Include="ApplicationOperations.cs" />
     <Compile Include="BusinessApplicationBuilder.cs" />
     <Compile Include="BusinessApplication.cs" />
+    <Compile Include="DateOperations.cs" />
     <Compile Include="Helpers\DateHelper.cs" />
     <Compile Include="Helpers\EidAnswers.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
