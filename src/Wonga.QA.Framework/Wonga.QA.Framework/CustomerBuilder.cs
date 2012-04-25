@@ -49,6 +49,10 @@ namespace Wonga.QA.Framework
         public String Forename { get { return _foreName; } }
         public String Surname { get { return _surname; } }
 
+        public Date DateOfBirth { get { return _dateOfBirth; } }
+
+        public string Town { get { return _town; } }
+
         private CustomerBuilder()
         {
             _id = Get.GetId();
