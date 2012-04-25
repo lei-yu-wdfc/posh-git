@@ -79,7 +79,7 @@ namespace Wonga.QA.Tests.Payments
 			//Refund = 150
 			//LoanCap = 200
 			//Therefore TrackedAmount 124.1 = (150 + 174.1) - 200
-			Assert.AreEqual(124.1m ,compensatingTransaction.Amount);
+			Assert.AreEqual(-124.1m ,compensatingTransaction.Amount);
 
 		}
 
