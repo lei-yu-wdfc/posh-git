@@ -138,6 +138,18 @@ namespace Wonga.QA.Framework.UI
             return new HowItWorksPage(this);
         }
 
+        public PaymentCardsPage PaymentCards()
+        {
+            Driver.Navigate().GoToUrl(Config.Admin.Home + "/PaymentCards/GetList/00000000-0000-0000-0000-000000000000");
+            return new PaymentCardsPage(this);
+        }
+
+        public AccountingPage Accounting()
+        {
+            Driver.Navigate().GoToUrl(Config.Admin.Home + "/Accounting");
+            return new AccountingPage(this);
+        }
+
         public Image Screen()
         {
             if (!(Driver is ITakesScreenshot))

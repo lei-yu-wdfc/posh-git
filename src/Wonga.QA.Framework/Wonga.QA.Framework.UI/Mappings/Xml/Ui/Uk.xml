@@ -107,5 +107,24 @@
     <PopupSaveButton>#edit-submit[value='Save']</PopupSaveButton>
     <PopupCloseButton>#edit-submit[value='Close']</PopupCloseButton>
   </ApplyPage>
-  
+
+  <PaymentCardsPage>
+    <AddCardLink>a.bottom-link</AddCardLink>
+  </PaymentCardsPage>
+
+  <AccountingPage>
+    <AddFileLink>li#liAddFile.ui-state-default a</AddFileLink>
+    <CashOutLink>li#liTransactionsSearch.ui-state-default a</CashOutLink>
+  </AccountingPage>
+
+  <CashOutPage>
+    <TransactionTypeOptions>select#TransactionType</TransactionTypeOptions>
+    <FilterOptions>select#SearchBy</FilterOptions>
+    <FilterValue>input#SearchByValue</FilterValue>
+    <SearchButton>input#btnSearch</SearchButton>
+    <SendPaymentCheckBox>PaymentSelected</SendPaymentCheckBox>
+    <CancelCheckBox>CancelSelected</CancelCheckBox>
+    <UpdateButton>//input[@value='Update']</UpdateButton>
+  </CashOutPage>
+
 </Ui>

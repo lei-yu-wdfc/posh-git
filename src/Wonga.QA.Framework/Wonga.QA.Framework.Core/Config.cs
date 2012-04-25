@@ -21,6 +21,7 @@ namespace Wonga.QA.Framework.Core
         public static MsmqConfig Msmq { get; set; }
         public static DbConfig Db { get; set; }
         public static UiConfig Ui { get; set; }
+        public static AdminConfig Admin { get; set; }
         public static SalesforceConfig SalesforceUi { get; set; }
 		public static SalesforceConfig SalesforceApi { get; set; }
 
@@ -48,6 +49,7 @@ namespace Wonga.QA.Framework.Core
                     Msmq = new MsmqConfig(".");
                     Db = new DbConfig(".");
                     Ui.SetUri("localhost");
+                    Admin = new AdminConfig("localhost/admin");					
                     SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.wip", "Allw0nga");
             		SalesforceApi =
 						AUT == AUT.Ca ? new SalesforceApiConfig("v3integration@wonga.com.int") :
@@ -205,6 +207,7 @@ namespace Wonga.QA.Framework.Core
             public KeyValuePair<String, String> Marketing { get; set; }
             public KeyValuePair<String, String> Bi { get; set; }
 
+            public KeyValuePair<String, String> Accounting { get; set; }
             public KeyValuePair<String, String> BankGateway { get; set; }
             public KeyValuePair<String, String> Blacklist { get; set; }
             public KeyValuePair<String, String> BottomLine { get; set; }
@@ -356,6 +359,7 @@ namespace Wonga.QA.Framework.Core
 
         public class DbConfig
         {
+            public String Accounting { get; set; }
             public String Ops { get; set; }
             public String Comms { get; set; }
             public String Payments { get; set; }
@@ -390,6 +394,7 @@ namespace Wonga.QA.Framework.Core
             {
                 Func<String, String> builder = catalog => new SqlConnectionStringBuilder { DataSource = server, InitialCatalog = catalog, IntegratedSecurity = true }.ConnectionString;
 
+                Accounting = builder("Accounting");
                 Ops = builder("Ops");
                 OpsLogs = builder("OpsLogs");
                 OpsSagas = builder("OpsSagas");
@@ -491,6 +496,17 @@ namespace Wonga.QA.Framework.Core
             }
 
             public bool RemoteMode { get; set; }
+        }
+
+        public class AdminConfig
+        {
+
+            public Uri Home { get; set; }
+
+            public AdminConfig(String host)
+            {
+                Home = new UriBuilder {Host = host}.Uri;
+            }
         }
 
         public class SalesforceConfig
