@@ -175,7 +175,7 @@ namespace Wonga.QA.Framework.ThirdParties
 							  "l.Promise_Date__c, l.Number_Of_Weeks__c, l.Next_Due_Date__c, l.Monthly_Interest_Rate__c, " +
 							  "l.Loan_Amount__c, l.Initiation_Fee__c, l.Customer_Account__c, l.CurrencyIsoCode, l.Application_Fee__c, " +
 							  "l.SignedOn__c, l.Customer_Account__r.V3_Organization_Id__c, " +
-                              "l.Application_Date__, l.Status_ID__c From Loan_Application__c l Where l.V3_Application_Id__c = '{0}' and l.Customer_Account__r.V3_Organization_Id__c = '{1}'",
+                              "l.Application_Date__c, l.Status_ID__c From Loan_Application__c l Where l.V3_Application_Id__c = '{0}' and l.Customer_Account__r.V3_Organization_Id__c = '{1}'",
 							  applicationId, organisationId);
 
 			var result = client.query(sessionHeader, null, null, null, query);
@@ -256,6 +256,42 @@ namespace Wonga.QA.Framework.ThirdParties
             if (result == null || result.records == null) throw new Exception(string.Format("Unable to retrieve payment card by id={0}", paymentCardId));
 
             return result.records.FirstOrDefault() as Billing_Card__c;
+        }
+
+        public Contact GetContactByAccountId(string accountId)
+        {
+            SessionHeader sessionHeader;
+            SoapClient client = Login(out sessionHeader);
+
+            var query =
+                String.Format(@"Select p.Birthdate,p.CCIN__c,p.Email,p.FirstName,p.Guarantor_Status_ID__c,p.HomePhone,p.Is_Primary_Applicant__c,
+                              p.LastName,p.MailingCity,p.MailingCountry,p.MailingPostalCode,p.MailingState,p.MailingStreet,p.MobilePhone,p.PO_Box__c,
+                              p.Phone,p.V3_Account_Id__c
+                              From Contact p 
+                              Where p.V3_Account_Id__c = '{0}'",
+                              accountId);
+
+            QueryResult result = client.query(sessionHeader, null, null, null, query);
+
+            if (result == null || result.records == null) return null;
+
+            var contact = result.records.FirstOrDefault() as Contact;
+
+            return contact;
+        }
+
+        private string GetAllPropertyNames(string prefix,Type targetType)
+        {
+            StringBuilder sb = new StringBuilder();
+            var properties = targetType.GetProperties().Where(p => !p.Name.EndsWith("Specified") 
+                && !p.PropertyType.FullName.StartsWith("Wonga.QA.Framework.ThirdParties.SalesforceApi"));
+
+            foreach (var property in properties)
+            {
+                sb.AppendFormat("{0}.{1},",prefix,property.Name);
+            }
+
+            return sb.ToString().TrimEnd(',');
         }
     }
 }
