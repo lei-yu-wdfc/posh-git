@@ -24,7 +24,8 @@
     <CheckPrivacyPolicy>#edit-privacy</CheckPrivacyPolicy>
     <CheckCanContact>input[type="radio"][name="update_option"]</CheckCanContact>
     <NextButton>#edit-submit</NextButton>
-	  <PrivacyPolicyLink>#edit-privacy-wrapper div:nth-child(1) label a</PrivacyPolicyLink>  
+	<PrivacyPolicyLink>#edit-privacy-wrapper div:nth-child(1) label a</PrivacyPolicyLink>
+	<PrivacyPolicyPopup>#fancybox-content</PrivacyPolicyPopup>
   </PersonalDetailsPage>
 
   <AddressDetailsPage>
@@ -59,6 +60,7 @@
     <FormId>#lzero-directors-form</FormId>
     <DoneButton>#edit-submit</DoneButton>
     <AddAnotherDirector>#edit-add</AddAnotherDirector>
+	<Directors>.wonga-tip</Directors>
   </AdditionalDirectorsPage>
 
   <AddAditionalDirectorsPage>

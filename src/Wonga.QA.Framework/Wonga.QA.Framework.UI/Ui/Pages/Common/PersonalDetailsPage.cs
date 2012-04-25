@@ -175,7 +175,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public List<string> GetHrefsOfLinksOnPrivacyPopup()
         {
             List<string> hrefs = new List<string>();
-            ReadOnlyCollection<IWebElement> links = Client.Driver.FindElement(By.CssSelector("#fancybox-content")).FindElements(By.TagName("a"));
+            ReadOnlyCollection<IWebElement> links = Client.Driver.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.PrivacyPolicyPopup)).FindElements(By.TagName("a"));
             foreach (var link in links)
             {
                 string href = link.GetAttribute("href");

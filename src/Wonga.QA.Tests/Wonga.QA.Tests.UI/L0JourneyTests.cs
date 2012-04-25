@@ -11,6 +11,7 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
+using Wonga.QA.Framework.UI.UiElements.Pages.Wb;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Framework.UI;
 
@@ -924,6 +925,32 @@ namespace Wonga.QA.Tests.Ui
                     break;
                 #endregion
             }
+        }
+
+        [Test, AUT(AUT.Wb), JIRA("QA-256")]
+        public void EnsureCustomerCanAddGuarantorsToL0()
+        {
+            var firstName = Get.RandomString(3, 15);
+            var lastName = Get.RandomString(3, 15);
+            var journey = JourneyFactory.GetL0JourneyWB(Client.Home());
+            var additionalDirectorsPage = journey.ApplyForLoan(5500, 30)
+             .AnswerEligibilityQuestions()
+             .FillPersonalDetails("TESTNoCheck")
+             .FillAddressDetails("More than 4 years")
+             .FillAccountDetails()
+             .FillBankDetails()
+             .FillCardDetails()
+             .EnterBusinessDetails().CurrentPage as AdditionalDirectorsPage;
+            var addAdditionalDirectorPage = additionalDirectorsPage.AddAditionalDirector();
+            var additionalDirectorEmail = String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
+            addAdditionalDirectorPage.Title = "Mr";
+            addAdditionalDirectorPage.FirstName = firstName;
+            addAdditionalDirectorPage.LastName = lastName;
+            addAdditionalDirectorPage.EmailAddress = additionalDirectorEmail;
+            addAdditionalDirectorPage.ConfirmEmailAddress = additionalDirectorEmail;
+            addAdditionalDirectorPage = additionalDirectorsPage.AddAditionalDirector();
+            string directors = additionalDirectorsPage.GetDirectors();
+            Assert.IsTrue(directors.Contains(firstName + " " + lastName));
         }
     }
 }

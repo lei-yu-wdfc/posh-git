@@ -7,13 +7,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
     {
         private readonly IWebElement _form;
         private readonly IWebElement _done;
-        private readonly IWebElement _addAnother;
+        private IWebElement _addAnother;
 
         public AdditionalDirectorsPage(UiClient client) : base(client)
         {
             _form = Content.FindElement(By.CssSelector(Ui.Get.AdditionalDirectorsPage.FormId));
             _done = _form.FindElement(By.CssSelector(Ui.Get.AdditionalDirectorsPage.DoneButton));
-            _addAnother = _form.FindElement(By.CssSelector(Ui.Get.AdditionalDirectorsPage.AddAnotherDirector));
         }
 
         public BusinessBankAccountPage Next()
@@ -24,8 +23,13 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
 
         public AddAditionalDirectorsPage AddAditionalDirector()
         {
-            _addAnother.Click();
+            Client.Driver.FindElement(By.CssSelector(Ui.Get.AdditionalDirectorsPage.AddAnotherDirector)).Click();
             return new AddAditionalDirectorsPage(Client);
+        }
+
+        public string GetDirectors()
+        {
+            return Client.Driver.FindElement(By.CssSelector(Ui.Get.AdditionalDirectorsPage.Directors)).Text;
         }
     }
 }
