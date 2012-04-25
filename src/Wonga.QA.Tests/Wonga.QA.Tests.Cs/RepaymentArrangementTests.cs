@@ -272,6 +272,7 @@ namespace Wonga.QA.Tests.Cs
 		private static void MakeNextRepayment(Customer customer, Application application)
 		{
 			var repaymentArrangement = GetRepaymentArrangement(application);
+
 			var repaymentArrangementSagaId = (Guid)Do.Until(() => Drive.Data.OpsSagas.Db.RepaymentArrangementSagaEntity.FindByRepaymentArrangementId(repaymentArrangement.RepaymentArrangementId).Id);
 
 			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = repaymentArrangementSagaId });
@@ -294,6 +295,8 @@ namespace Wonga.QA.Tests.Cs
 				CreatedOn = DateTime.UtcNow,
 				ValueDate = DateTime.UtcNow,
 			});
+
+			Do.Until(() => Drive.Data.OpsSagas.Db.RepaymentArrangementSagaEntity.FindByRepaymentArrangementId(repaymentArrangementSagaId) == null);
 		}
 
 		private static void FailToMakeRepayment(Customer customer, Application application)

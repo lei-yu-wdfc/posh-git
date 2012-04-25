@@ -31,7 +31,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		private const string ScorecardNameL0Za = "ZARiskScorecard_v_1_2_L0";
 		private const string ScorecardNameLnZa = "ZARiskScorecard_v_1_2_LN";
 		private const int ScoreCutoffNewUsersZa = 600;
-		private const int ScoreCutoffExistingUsersZa = 610;
+		private const int ScoreCutoffExistingUsersZa = 580;
 
 
 		[FixtureSetUp]
@@ -115,7 +115,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test, AUT(AUT.Za)]
 		public void CheckpointRepaymentPredictionPositiveLnAccept()
 		{
-			var customer = CustomerBuilder.New().Build();
+			var customer = CustomerBuilder.New().WithForename(_forename).WithSurname(_surname).WithDateOfBirth(_dateOfBirth).WithNationalNumber(_nationalNumber).Build();
 			ApplicationBuilder.New(customer).Build().RepayOnDueDate();
 
 			Drive.Db.UpdateEmployerName(customer.Id, Get.EnumToString(TestMask));
@@ -124,6 +124,17 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 			var repaymentPredictionScore = GetRepaymentPredictionScore(application);
 			Assert.GreaterThan(repaymentPredictionScore, ScoreCutoffExistingUsers);
+		}
+
+		[Test, AUT(AUT.Za)]
+		public void CheckpointRepaymentPredicitionPositiveFactorsUsedAreCorrectLn()
+		{GetFactors();
+			var customer = CustomerBuilder.New().Build();
+			ApplicationBuilder.New(customer).Build().RepayOnDueDate();
+
+			Drive.Db.UpdateEmployerName(customer.Id, Get.EnumToString(TestMask));
+
+			var application = ApplicationBuilder.New(customer).WithLoanTerm(5).WithLoanAmount(100).Build();
 		}
 
 		#region Helpers
@@ -136,8 +147,12 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			return score;
 		}
 
-		private void AssertFactorsStoredInTable(Application application)
+		private void GetFactors()
 		{
+			//var workflowId = (int)Drive.Data.Risk.Db.RiskWorkflows.FindByApplicationId(application.Id).RiskWorkflowId;
+			int workflowId = 2576;
+			var factorNames = Drive.Data.Risk.Db.Factors(
+				Drive.Data.Risk.Db.PmmlFactors.RiskWorkflowId == workflowId);
 
 		}
 
