@@ -48,6 +48,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                 Do.While(IsPopupCloseButtonDisplayed);
             }
         }
+        public string GetCurrentBankAccount
+        {
+            get 
+            {
+                var currentBankAccount = Client.Driver.FindElement(By.CssSelector(Ui.Get.ApplyPage.BankAccount));
+                return currentBankAccount.GetValue().Remove(0, 3);
+            }
+        }
         private bool IsEditMobileNumberDisplayed()
         {
             _editMobileNumber = Client.Driver.FindElement(By.CssSelector(Ui.Get.ApplyPage.EditMobileNumber));

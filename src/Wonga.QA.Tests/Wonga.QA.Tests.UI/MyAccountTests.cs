@@ -81,14 +81,10 @@ namespace Wonga.QA.Tests.Ui
             {
                 payment1.AddBankAccountButtonClick();
 
-                Thread.Sleep(2000); // Wait some time to load popup
-
-                var paymentPage = payment1.AddBankAccount("Capitec", "Current", "7434567", "2 to 3 years");
-                while (paymentPage.IfHasAnExeption() == false)
-                {
-                    Thread.Sleep(1000);
-                }
-                Assert.IsTrue(paymentPage.IfHasAnExeption());
+               
+                payment1.AddBankAccount("Capitec", "Current", "7434567", "2 to 3 years");
+                Do.With.Timeout(2).Until(payment1.IfHasAnExeption);
+                Assert.IsTrue(payment1.IfHasAnExeption());
             }
             else
             {
@@ -103,12 +99,9 @@ namespace Wonga.QA.Tests.Ui
 
                 Thread.Sleep(2000); // Wait some time to load popup
 
-                var paymentPage = payment1.AddBankAccount("Capitec", "Current", "7534567", "2 to 3 years");
-                while (paymentPage.IfHasAnExeption() == false)
-                {
-                    Thread.Sleep(1000);
-                }
-                Assert.IsTrue(paymentPage.IfHasAnExeption());
+                payment1.AddBankAccount("Capitec", "Current", "7534567", "2 to 3 years");
+                Do.With.Timeout(2).Until(payment2.IfHasAnExeption);
+                Assert.IsTrue(payment2.IfHasAnExeption());
             }
             else
             {
@@ -133,12 +126,9 @@ namespace Wonga.QA.Tests.Ui
             if (payment.IsAddBankAccountButtonExists())
             {
                 payment.AddBankAccountButtonClick();
-
-                Thread.Sleep(2000); // Wait some time to load popup
-
-                var paymentPage = payment.AddBankAccount("Capitec", "Current", accountNumber, "2 to 3 years");
-                Thread.Sleep(3000);
-                paymentPage.CloseButtonClick();
+                payment.AddBankAccount("Capitec", "Current", accountNumber, "2 to 3 years");
+                payment.ClickCloseButton();
+              
                 payment = Client.Payments();
                 int whileCount = 0;
                 while (accountNumber.Remove(0, 3) != payment.DefaultAccountNumber)
@@ -720,6 +710,47 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(myPersonalDetailsPage.GetTown, newTown);
             Assert.AreEqual(myPersonalDetailsPage.GetPostcode, newPostcode);
 
+
+        }
+
+        [Test, AUT(AUT.Za), JIRA("QA-219")]
+        public void CustomerShouldBeAbleToAddBankAccount()
+        {
+            var accountPreferences = Drive.Data.Payments.Db.AccountPreferences;
+            var bankAccountsBase = Drive.Data.Payments.Db.BankAccountsBase;
+            string accountNumber = "1234567";
+
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            application.RepayOnDueDate();
+
+            loginPage.LoginAs(email);
+            var firstMyPaymentsPage = Client.Payments();
+
+            Do.Until(firstMyPaymentsPage.IsAddBankAccountButtonExists);
+            firstMyPaymentsPage.AddBankAccountButtonClick();
+            firstMyPaymentsPage.AddBankAccount("Capitec", "Current", accountNumber, "2 to 3 years");
+            firstMyPaymentsPage.ClickCloseButton();
+            var newMyPaymentsPage = Client.Payments();
+
+            Assert.AreEqual(accountNumber.Remove(0, 3), newMyPaymentsPage.DefaultAccountNumber);
+
+            var primaryBankAccountId = accountPreferences.FindByAccountId(customer.Id).PrimaryBankAccountId;
+            var bankAccount = bankAccountsBase.FindByBankAccountId(primaryBankAccountId);
+
+            Assert.AreEqual("Capitec", bankAccount.BankName);
+            Assert.AreEqual("Current", bankAccount.AccountType);
+            Assert.AreEqual(accountNumber, bankAccount.AccountNumber);
+
+            var journey = JourneyFactory.GetLnJourney(Client.Home());
+
+            var applyPage = journey.ApplyForLoan(200, 10)
+                                .CurrentPage as ApplyPage;
+
+            Assert.AreEqual(accountNumber.Remove(0,3), applyPage.GetCurrentBankAccount);
 
         }
     }

@@ -27,7 +27,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public MyPaymentsPage(UiClient client)
             : base(client)
         {
-            
+
             switch (Config.AUT)
             {
                 case AUT.Za:
@@ -62,20 +62,35 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _addBankAccountButton.Click();
         }
 
-        public MyPaymentsPage AddBankAccount(string bankName, string bankType, string accountNumber, string lenghtOfTime)
+        public void AddBankAccount(string bankName, string bankType, string accountNumber, string lenghtOfTime)
         {
-            _popupBankName = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPaymentsPage.PopupBankName));
-            _popupBankAccountType = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPaymentsPage.PopupBankAccountType));
-            _popupAccountNumber = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPaymentsPage.PopupAccountNumber));
-            _popupLengthOfTime = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPaymentsPage.PopupLengthOfTime));
-            _popupAddBankAccountButton = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPaymentsPage.PopupAddBankAccountButton));
+            _popupBankName = Do.With.Timeout(3).Until(() => Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPaymentsPage.PopupBankName)));
+            _popupBankAccountType = Do.Until(() => Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPaymentsPage.PopupBankAccountType)));
+            _popupAccountNumber = Do.Until(() => Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPaymentsPage.PopupAccountNumber)));
+            _popupLengthOfTime = Do.Until(() => Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPaymentsPage.PopupLengthOfTime)));
+            _popupAddBankAccountButton = Do.Until(() => Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPaymentsPage.PopupAddBankAccountButton)));
 
             _popupBankName.SelectOption(bankName);
             _popupBankAccountType.SelectOption(bankType);
             _popupAccountNumber.SendKeys(accountNumber);
             _popupLengthOfTime.SelectOption(lenghtOfTime);
             _popupAddBankAccountButton.Click();
-            return new MyPaymentsPage(Client);
+            
+        }
+
+        public void ClickCloseButton()
+        {
+            WaitForSuccessPopup();
+            _popupAddBankAccountButton = Do.Until(() => Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPaymentsPage.PopupAddBankAccountButton)));
+            _popupAddBankAccountButton.Click();
+            Do.While(() => Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPaymentsPage.PopupSuccessTitle)).Displayed);
+        }
+
+        private void WaitForSuccessPopup()
+        {
+            Do.With.Timeout(10).Until(
+                () =>
+                Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPaymentsPage.PopupSuccessTitle)).Displayed);
         }
 
         public bool IfHasAnExeption()
@@ -90,12 +105,6 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
                 return false;
             }
-        }
-
-        public void CloseButtonClick()
-        {
-            _popupAddBankAccountButton = Client.Driver.FindElement(By.CssSelector(Ui.Get.MyPaymentsPage.PopupAddBankAccountButton));
-            _popupAddBankAccountButton.Click();
         }
 
         public string DefaultAccountNumber
