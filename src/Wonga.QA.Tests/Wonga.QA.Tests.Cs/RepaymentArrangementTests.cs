@@ -296,7 +296,7 @@ namespace Wonga.QA.Tests.Cs
 				ValueDate = DateTime.UtcNow,
 			});
 
-			Do.Until(() => Drive.Data.OpsSagas.Db.RepaymentArrangementSagaEntity.FindByRepaymentArrangementId(repaymentArrangementSagaId) == null);
+			Do.Until(() => Drive.Data.OpsSagas.Db.ScheduledRepaymentSagaEntity.FindByScheduledPaymentSagaEntity_id(scheduledRepaymentSagaId) == null);
 		}
 
 		private static void FailToMakeRepayment(Customer customer, Application application)
