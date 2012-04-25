@@ -30,133 +30,97 @@ namespace Wonga.QA.Tests.Ui
         private DateTime _actualDate;
 
 
-        [Test, AUT(AUT.Uk), JIRA("UK-826", "UK-789")]
-        public void MovingExtensionSlidersLoanSummaryShouldBeCorrect()
+        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1627")]
+        public void ExtensionJourneyPass()
         {
             string email = Get.RandomEmail();
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(30).Build();
-
-            var responseLimit = Drive.Api.Queries.Post(new GetFixedTermLoanExtensionOfferQuery { AccountId = customer.Id });
-            _amountMax = (int)Decimal.Parse(responseLimit.Values["AmountMax"].Single(), CultureInfo.InvariantCulture);
-            _amountMin = 1;
-
-            int randomAmount = _amountMin + (new Random()).Next(_amountMax - _amountMin);
+            var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
 
             var loginPage = Client.Login();
             var myAccountPage = loginPage.LoginAs(email);
+
             var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
 
-            decimal extensionAmountDec = (decimal)randomAmount;
-            var extensionAmount = randomAmount.ToString();
-
-            mySummaryPage.ExtensionSliders.HowMuch = extensionAmount;
-
-            _response =
-                Drive.Api.Queries.Post(new GetFixedTermLoanExtensionCalculationQuery { ApplicationId = application.Id, ExtensionAmount = extensionAmountDec });
-            var totalRepayable = _response.Values["TotalRepayable"].Single();
-            var interestAndFees = _response.Values["InterestAndFeesAmount"].Single();
-
-            Assert.AreEqual(mySummaryPage.ExtensionSliders.GetTotalToRepay.Remove(0, 1), totalRepayable);
-            Assert.AreEqual(mySummaryPage.ExtensionSliders.GetTotalAmount.Remove(0, 1), extensionAmount);
-            Assert.AreEqual(mySummaryPage.ExtensionSliders.GetTotalFees.Remove(0, 1), interestAndFees);
-
-            var requestPage =
-                mySummaryPage.ExtensionSliders.Apply();
-
+            mySummaryPage.ChangePromiseDateButtonClick();
+            var requestPage = new ExtensionRequestPage(this.Client);
+                
             //Runs assertions internally
-            requestPage.IsExtensionRequestPageSliderReturningCorrrectValuesOnChange(application.Id.ToString());
+            requestPage.IsExtensionRequestPageSliderReturningCorrectValuesOnChange(application.Id.ToString());
 
+            //Branch point - Add Cv2 for each path and proceed
+            requestPage.setSecurityCode("123");
             requestPage.SubmitButtonClick();
 
             var processPage = new ExtensionProcessingPage(this.Client);
-            var agreementPage = processPage.WaitForAgreementPage(Client);
 
-            Assert.IsFalse(agreementPage.IsExtensionAgreementPageDateNotPresent());
-            Assert.IsTrue(agreementPage.IsExtensionAgreementPageLegalInfoDisplayed());
-            Assert.IsFalse(agreementPage.IsExtensionAgreementPageExtensionAmountNotPresent());
-            Assert.IsFalse(agreementPage.IsExtensionTotalAmountTokenBeingReplaced());
+            var agreementPage =  processPage.WaitFor<ExtensionAgreementPage>() as ExtensionAgreementPage;
+            agreementPage.Accept();
 
-            var dealDonePage = agreementPage.Accept();
-            Assert.IsFalse(dealDonePage.IsDealDonePageDateNotPresent());
-            Assert.IsFalse(dealDonePage.IsDealDonePageJiffyNotPresent());
+            var dealDonePage = new ExtensionDealDonePage(this.Client);
             Assert.IsFalse(dealDonePage.IsDealDonePageExtensionAmountNotPresent());
-
-            dealDonePage.ContinueToMyAccount();
-
-            //Test my account summary page
-            Assert.IsTrue(this.Client.Driver.Url.Contains("my-account"));
+            Assert.IsFalse(dealDonePage.IsDealDonePageDateTokenPresent());
         }
-        /*
-        [Test, AUT(AUT.Uk), JIRA("UK-789")]
-        public void CheckAvailableCreditScenario02() { CheckAvailableCredit(1); }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-789")]
-        public void CheckAvailableCreditScenario03() { CheckAvailableCredit(4); }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-789")]
-        public void CheckAvailableCreditScenario04() { CheckAvailableCredit(10); }
-
-        private void CheckAvailableCredit(int daysShift)
+        [Test, AUT(AUT.Uk), JIRA("UK-1321", "UK-1522")]
+        public void ExtensionJourneyDecline()
         {
-            // Create a customer and loan
             string email = Get.RandomEmail();
+
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            var application = ApplicationBuilder.New(customer).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
 
-            // Rewind application dates
-            ApplicationEntity applicationEntity =
-                Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
-            RiskApplicationEntity riskApplication =
-                Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == application.Id);
-            TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
-            RewindApplicationDates(applicationEntity, riskApplication, daysShiftSpan);
-
-            // Log in and open MySummary page
             var loginPage = Client.Login();
             var myAccountPage = loginPage.LoginAs(email);
             var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
 
-            // Get expected Available Credit
-            ApiResponse FixedTermLoanExtensionOfferResponse = Drive.Api.Queries.Post(new GetFixedTermLoanExtensionOfferQuery { AccountId = customer.Id });
-            string expectedAvailableCredit = (int.Parse(FixedTermLoanExtensionOfferResponse.Values["AmountMax"].Single().Split('.')[0])).ToString("#");
+            mySummaryPage.ChangePromiseDateButtonClick();
+            var requestPage = new ExtensionRequestPage(this.Client);
 
-            // Compare expected Available Credit with actual values
-            string actualIntroText = mySummaryPage.GetIntroText; // in Introduction Text
-            string actualMaxAvailableCredit = mySummaryPage.GetMaxAvailableCredit; // near slide bars
-            Assert.Contains(actualIntroText, expectedAvailableCredit);
-            Assert.Contains(actualMaxAvailableCredit, expectedAvailableCredit);
+            //Runs assertions internally
+            requestPage.IsExtensionRequestPageSliderReturningCorrectValuesOnChange(application.Id.ToString());
+
+            //Branch point - Add Cv2 for each path and proceed
+            requestPage.setSecurityCode("888");
+            requestPage.SubmitButtonClick();
+
+            var processPage = new ExtensionProcessingPage(this.Client);
+
+            var declinedPage = processPage.WaitFor<ExtensionPaymentFailedPage>() as ExtensionPaymentFailedPage;
+
+            Assert.IsFalse(declinedPage.IsPaymentFailedAmountNotPresent());
+            Assert.IsFalse(declinedPage.IsPaymentFailedDateNotPresent());
+
         }
 
-        private static void RewindApplicationDates(ApplicationEntity application, RiskApplicationEntity riskApp, TimeSpan span)
+        [Test, AUT(AUT.Uk), JIRA("UK-1323", "UK-1523")]
+        public void ExtensionJourneyError()
         {
-            application.ApplicationDate -= span;
-            application.SignedOn -= span;
-            application.CreatedOn -= span;
-            application.AcceptedOn -= span;
-            application.FixedTermLoanApplicationEntity.PromiseDate -= span;
-            application.FixedTermLoanApplicationEntity.NextDueDate -= span;
-            application.Transactions.ForEach(t => t.PostedOn -= span);
-            if (application.ClosedOn != null)
-                application.ClosedOn -= span;
-            application.Submit(true);
+            string email = Get.RandomEmail();
 
-            riskApp.ApplicationDate -= span;
-            riskApp.PromiseDate -= span;
-            if (riskApp.ClosedOn != null)
-                riskApp.ClosedOn -= span;
-            riskApp.Submit(true);
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
+
+            var loginPage = Client.Login();
+            var myAccountPage = loginPage.LoginAs(email);
+            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+
+            mySummaryPage.ChangePromiseDateButtonClick();
+            var requestPage = new ExtensionRequestPage(this.Client);
+
+            //Runs assertions internally
+            requestPage.IsExtensionRequestPageSliderReturningCorrectValuesOnChange(application.Id.ToString());
+
+            //Branch point - Add Cv2 for each path and proceed
+            requestPage.setSecurityCode("999");
+            requestPage.SubmitButtonClick();
+
+            var processPage = new ExtensionProcessingPage(this.Client);
+
+            var errorPage = processPage.WaitFor<ExtensionErrorPage>() as ExtensionErrorPage;
 
         }
-
-        //Needed for serialization in CreateExtendedRepaymentArrangementCommand
-        private class ArrangementDetail
-        {
-            public decimal Amount { get; set; }
-            public CurrencyCodeIso4217Enum Currency { get; set; }
-            public DateTime DueDate { get; set; }
-        }
-         */
     }
 }

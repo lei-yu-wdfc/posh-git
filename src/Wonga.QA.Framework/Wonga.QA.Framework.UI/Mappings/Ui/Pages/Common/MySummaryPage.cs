@@ -18,6 +18,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String TagCloud { get; set; }
         public String ViewLoanDetailsButton { get; set; }
         public String LoanStatusMessage { get; set; }
+        public String ChangePromiseDateButton { get; set; }
 
         //--loan details popup--
         public String PopupForm { get; set; }

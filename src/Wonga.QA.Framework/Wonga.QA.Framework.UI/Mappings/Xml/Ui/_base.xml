@@ -257,6 +257,7 @@
     <IntroText>p.summary-intro-text</IntroText>
     <StatusMessage>div.wonga-box-1 div.wonga-box-top-right</StatusMessage>
     <MaxAvailableCredit>.description</MaxAvailableCredit>
+    <ChangePromiseDateButton>#cloud ul a.ChangePromiseDate</ChangePromiseDateButton>
   </MySummaryPage>
 
   <MyPaymentsPage>
@@ -315,7 +316,8 @@
   </SmallTopupSlidersElement>
 
   <ExtensionDealDonePage>
-    <AccountLink>#content-area h2 a</AccountLink>
+    <Header>#content-area .wonga-box-top-right h2</Header>
+    <ContentArea>#content-area .wonga-box-top-right</ContentArea>
   </ExtensionDealDonePage>
 
   <ExtensionProcessingPage>
@@ -335,8 +337,8 @@
   </ExtensionAgreementPage>
 
   <ExtensionErrorPage>
-    <Header>#node-1003 h2</Header>
-    <BodyText>#node-1003 p</BodyText>
+    <Header>#content-area .wonga-box-top-right h2</Header>
+    <BodyText>#content-area .wonga-box-top-right</BodyText>
   </ExtensionErrorPage>
 
   <SmallExtensionSlidersElement>
@@ -349,7 +351,7 @@
     <ExtensionNewCredit>span.extend-new-credit</ExtensionNewCredit>
     <ExtensionInterestFees>span.extend-interest-and-fees</ExtensionInterestFees>
     <TotalToRepay>span.extend-request-total</TotalToRepay>
-    <RepaymentDate>span.load-period-clarification span.slider-extend-date</RepaymentDate>
+    <RepaymentDate>span.loan-period-clarification span.slider-extend-date</RepaymentDate>
     <AmountMinusButton>#wonga-single-slider-wrapper button.slider-minus</AmountMinusButton>
     <AmountPlusButton>#wonga-single-slider-wrapper button.slider-plus</AmountPlusButton>
   </SmallExtensionSlidersElement>
@@ -360,11 +362,11 @@
     <ExtensionRequestPageExtensionDuration>input.edit-extend-amount</ExtensionRequestPageExtensionDuration>
     <ExtensionRequestPageInterestFees>span.extend-interest-and-fees</ExtensionRequestPageInterestFees>
     <ExtensionRequestPageNewGrandTotal>span.extend-request-total</ExtensionRequestPageNewGrandTotal>
-    <ExtensionRequestPageRepaymentDate>span.load-period-clarification span.slider-extend-date</ExtensionRequestPageRepaymentDate>
+    <ExtensionRequestPageRepaymentDate>span.loan-period-clarification span.slider-extend-date</ExtensionRequestPageRepaymentDate>
     <ExtensionRequestPageSliders>#wonga-single-slider</ExtensionRequestPageSliders>
     <ExtensionRequestPageSliderSmall>#wonga-account-extension-form</ExtensionRequestPageSliderSmall>
     <ExtensionRequestPageCard>#edit-card</ExtensionRequestPageCard>
-    <ExtensionRequestPageSecurityCode>#edit-security-card</ExtensionRequestPageSecurityCode>
+    <ExtensionRequestPageSecurityCode>#edit-security-code</ExtensionRequestPageSecurityCode>
   </ExtensionRequestPage>
 
 </Ui>
