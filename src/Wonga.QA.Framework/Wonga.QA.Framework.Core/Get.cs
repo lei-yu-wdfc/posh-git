@@ -154,6 +154,11 @@ namespace Wonga.QA.Framework.Core
 			return RandomLong(10000000000, 99999999999);
 		}
 
+        public static Int64 GetBankAccountNumberCa()
+        {
+            return RandomLong(1000000, 9999999);
+        }
+
         public static Guid GetCsAuthorization()
         {
             return Guid.Parse("93370527-1BEE-461B-B825-07A6BE7AB8FE");

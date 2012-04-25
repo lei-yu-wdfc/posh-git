@@ -415,10 +415,13 @@ namespace Wonga.QA.Framework
                                                     		r.BankAccountId = _bankAccountId;
                                                     	    r.InstitutionNumber = _institutionNumber;
                                                     	    r.BranchNumber = _branchNumber;
-                                                    		if (_bankAccountNumber.HasValue)
-                                                    		{
-                                                    			r.AccountNumber = _bankAccountNumber;
-                                                    		}
+                                                    	    if (_bankAccountNumber.HasValue)
+                                                    	        r.AccountNumber = _bankAccountNumber;
+                                                    	    else
+                                                    	    {
+                                                    	        _bankAccountNumber = Get.GetBankAccountNumberCa();
+                                                    	        r.AccountNumber = _bankAccountNumber;
+                                                    	    }
                                                     	}),
                         SaveEmploymentDetailsCaCommand.New(r =>
                         {
@@ -579,7 +582,7 @@ namespace Wonga.QA.Framework
             		break;
             }
             
-            return new Customer(_id, _email, _bankAccountId);
+            return new Customer(_id, _email, _bankAccountId, _bankAccountNumber);
         }
 
         public void ScrubForename(String forename)
