@@ -19,7 +19,7 @@ namespace Wonga.QA.Tests.Ui
     {
         Dictionary<int, string> tagCloudTexts = new Dictionary<int, string> 
 	    {
-	     {2, "Request Credit\r\nChange Promise Date\r\nView Loan Details\r\nRepay"},
+	     {2, "Request Credit\r\nChange Promise Date\r\nView Loan Details\r\nRepay"}, //Change Promise Date should be only a tooltip
          {3, "Request Credit\r\nChange Promise Date\r\nView Loan Details\r\nRepay"},
          {4, "Request Credit\r\nChange Promise Date\r\nView Loan Details\r\nRepay"}, //Change Promise Date is disabled
          {5, "Change Promise Date\r\nView Loan Details\r\nRepay"},
@@ -85,7 +85,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Uk), JIRA("UK-785")]
+        [Test, AUT(AUT.Uk), JIRA("UK-785", "UK-1737"), Pending("Fails due to bug UK-1737")]
         public void TagCloudScenario02() { TagCloud(2, 2); }
 
         [Test, AUT(AUT.Uk), JIRA("UK-785")]
@@ -112,13 +112,13 @@ namespace Wonga.QA.Tests.Ui
         //[Test, AUT(AUT.Uk), JIRA("UK-785")]
         //public void TagCloudScenario10() { TagCloud(10); } // not ready
 
-        [Test, AUT(AUT.Uk), JIRA("UK-785")]
+        [Test, AUT(AUT.Uk), JIRA("UK-785"), Pending("Wrong actual text message (from scenario 4). Waiting for code update.")]
         public void TagCloudScenario11() { TagCloud(11, 14); }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-785")]
+        [Test, AUT(AUT.Uk), JIRA("UK-785"), Pending("Wrong actual text message (from scenario 4). Waiting for code update.")]
         public void TagCloudScenario12() { TagCloud(12, 44); }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-785")]
+        [Test, AUT(AUT.Uk), JIRA("UK-785"), Pending("Wrong actual text message (from scenario 4). Waiting for code update.")]
         public void TagCloudScenario13() { TagCloud(13, 64); }
 
         //[Test, AUT(AUT.Uk), JIRA("UK-785")]

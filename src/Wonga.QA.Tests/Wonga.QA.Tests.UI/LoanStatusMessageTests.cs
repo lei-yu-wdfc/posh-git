@@ -211,13 +211,13 @@ namespace Wonga.QA.Tests.Ui
         } 
 
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message (from scenarion 4). Waiting for code update.")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message (from scenario 4). Waiting for code update.")]
         public void LoanStatusMessageScenario11() { LoanStatusMessage(11, 14); }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message (from scenarion 4). Waiting for code update.")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message (from scenario 4). Waiting for code update.")]
         public void LoanStatusMessageScenario12() { LoanStatusMessage(12, 44); }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message (from scenarion 4). Waiting for code update.")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message (from scenario 4). Waiting for code update.")]
         public void LoanStatusMessageScenario13() { LoanStatusMessage(13, 64); }
 
         [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Hangs.")]
@@ -366,9 +366,9 @@ namespace Wonga.QA.Tests.Ui
         public void LoanStatusMessageScenario19()
         {
             
-        } 
+        }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1735"), Pending("Fails due to bug UK-1735")]
         public void LoanStatusMessageScenario21()
         {
             const int loanAmount = 100;

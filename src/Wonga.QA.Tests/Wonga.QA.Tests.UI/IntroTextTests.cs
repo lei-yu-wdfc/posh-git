@@ -45,7 +45,7 @@ namespace Wonga.QA.Tests.Ui
         {21, "Hi {first name}."}
 	    };
 
-        [Test, AUT(AUT.Uk), JIRA("UK-788", "UK-1614")]
+        [Test, AUT(AUT.Uk), JIRA("UK-788", "UK-1614"), Pending("The variant of scenario 1 is being implemented.")]
         public void IntroTextScenario1A()
         {
             const int loanAmount = 100;
@@ -69,7 +69,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(expectedlntroText, actuallntroText);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-788")]
+        [Test, AUT(AUT.Uk), JIRA("UK-788"), Pending("Times out after deployment. Passes for RC.")]
         public void IntroTextScenario1B()
         // Ln journey
         {
