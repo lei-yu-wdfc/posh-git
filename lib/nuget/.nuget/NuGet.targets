@@ -2,10 +2,12 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">$(MSBuildProjectDirectory)\..\</SolutionDir>
-        <NuGetToolsPath>$([System.IO.Path]::Combine($(SolutionDir), ".nuget"))</NuGetToolsPath>
+		<Root>$(SolutionDir)\..\..\..</Root>
+        <NuGetToolsPath>$(SolutionDir)\..\..\lib\nuget\.nuget</NuGetToolsPath>
         <NuGetExePath>$(NuGetToolsPath)\nuget.exe</NuGetExePath>
+		<NuGet>$(NuGetToolsPath)\..</NuGet>
         <PackagesConfig>$([System.IO.Path]::Combine($(ProjectDir), "packages.config"))</PackagesConfig>
-        <PackagesDir>$([System.IO.Path]::Combine($(SolutionDir), "packages"))</PackagesDir>
+        <PackagesDir>$([System.IO.Path]::Combine($(NuGet), "packages"))</PackagesDir>
         <PackageOutputDir Condition="$(PackageOutputDir) == ''">$(TargetDir.Trim('\\'))</PackageOutputDir>
 
         <!-- Package sources used to restore packages. By default will used the registered sources under %APPDATA%\NuGet\NuGet.Config -->
