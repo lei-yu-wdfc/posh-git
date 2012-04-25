@@ -785,14 +785,24 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Wb), JIRA("QA-258")]
+        [Test, AUT(AUT.Wb), JIRA("QA-258"), Pending("There is a bug on privacy popup")]
         public void TheWongaBusinessPolicyHaveNoReferenceToZaCaUk()
         {
+            string ca = "wonga.ca";
+            string za = "wonga.co.za";
+            string uk = "wonga.com";
             var journey = JourneyFactory.GetL0JourneyWB(Client.Home());
-            var accountDetailsPage = journey.ApplyForLoan(5500, 30)
+            var personaltDetailsPage = journey.ApplyForLoan(5500, 30)
                                          .AnswerEligibilityQuestions().CurrentPage as PersonalDetailsPage;
-            accountDetailsPage.PrivacyPolicyClick();
-            //to do
+            personaltDetailsPage.PrivacyPolicyClick();
+            List<string> hrefs = personaltDetailsPage.GetHrefsOfLinksOnPrivacyPopup();
+            foreach (var href in hrefs)
+            {
+                Console.WriteLine(href);
+                Assert.IsFalse(href.Contains(ca));
+                Assert.IsFalse(href.Contains(za));
+                Assert.IsFalse(href.Contains(uk));
+            }
         }
 
         [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-184")]
