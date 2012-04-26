@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
@@ -73,8 +74,7 @@ namespace Wonga.QA.Tests.Cs
 
 			CancelRepaymentArrangement(repaymentArrangement);
 
-			var planIsAllowed = PlanIsAllowed(application);
-			Assert.IsTrue(planIsAllowed);
+			Do.Until(() => PlanIsAllowed(application) == true);
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-1864")]
@@ -139,7 +139,11 @@ namespace Wonga.QA.Tests.Cs
 			CreatePlan(application, customer);
 			RepayAllInstallments(customer, application);
 
+			Trace.WriteLine(DateTime.UtcNow);
+
 			Do.Until(() => GetRepaymentArrangement(application).ClosedOn != null);
+
+			Trace.WriteLine(DateTime.UtcNow);
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-1864")]
@@ -272,6 +276,7 @@ namespace Wonga.QA.Tests.Cs
 		private static void MakeNextRepayment(Customer customer, Application application)
 		{
 			var repaymentArrangement = GetRepaymentArrangement(application);
+
 			var repaymentArrangementSagaId = (Guid)Do.Until(() => Drive.Data.OpsSagas.Db.RepaymentArrangementSagaEntity.FindByRepaymentArrangementId(repaymentArrangement.RepaymentArrangementId).Id);
 
 			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = repaymentArrangementSagaId });
@@ -294,6 +299,8 @@ namespace Wonga.QA.Tests.Cs
 				CreatedOn = DateTime.UtcNow,
 				ValueDate = DateTime.UtcNow,
 			});
+
+			Do.Until(() => Drive.Data.OpsSagas.Db.ScheduledRepaymentSagaEntity.FindByScheduledPaymentSagaEntity_id(scheduledRepaymentSagaId) == null);
 		}
 
 		private static void FailToMakeRepayment(Customer customer, Application application)
