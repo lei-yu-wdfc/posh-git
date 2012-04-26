@@ -838,10 +838,9 @@ namespace Wonga.QA.Tests.Ui
                     journeyWb.CurrentPage = personalDetailsPageWb.Submit() as AddressDetailsPage;
                     var accountDetailsPageWb = journeyWb.FillAddressDetails("2 to 3 years").CurrentPage as AccountDetailsPage;
                     accountDetailsPageWb.AccountDetailsSection.Password = email;
-                    Thread.Sleep(1000);
-                    Assert.IsTrue(accountDetailsPageWb.AccountDetailsSection.IsPasswordEqualsEmailWarningOccured());
+                    Do.Until(accountDetailsPageWb.AccountDetailsSection.IsPasswordEqualsEmailWarningOccured);
                     accountDetailsPageWb.AccountDetailsSection.Password = "Passw0rd";
-                    Assert.IsFalse(accountDetailsPageWb.AccountDetailsSection.IsPasswordEqualsEmailWarningOccured());
+                    Do.While(accountDetailsPageWb.AccountDetailsSection.IsPasswordEqualsEmailWarningOccured);
                     break;
                 #endregion
                 #region Ca
@@ -877,10 +876,9 @@ namespace Wonga.QA.Tests.Ui
                     journeyCa.CurrentPage = personalDetailsPageCa.Submit() as AddressDetailsPage;
                     var accountDetailsPageCa = journeyCa.FillAddressDetails().CurrentPage as AddressDetailsPage;
                     accountDetailsPageCa.AccountDetailsSection.Password = email;
-                    Thread.Sleep(1000);
-                    Assert.IsTrue(accountDetailsPageCa.AccountDetailsSection.IsPasswordEqualsEmailWarningOccured());
+                    Do.Until(accountDetailsPageCa.AccountDetailsSection.IsPasswordEqualsEmailWarningOccured);
                     accountDetailsPageCa.AccountDetailsSection.Password = "Passw0rd";
-                    Assert.IsFalse(accountDetailsPageCa.AccountDetailsSection.IsPasswordEqualsEmailWarningOccured());
+                    Do.While(accountDetailsPageCa.AccountDetailsSection.IsPasswordEqualsEmailWarningOccured);
                     break;
                 #endregion
                 #region Za
@@ -906,7 +904,7 @@ namespace Wonga.QA.Tests.Ui
                     personalDetailsPageZa.EmploymentDetails.TimeWithEmployerMonths = "5";
                     personalDetailsPageZa.EmploymentDetails.WorkPhone = "0123456789";
                     personalDetailsPageZa.EmploymentDetails.SalaryPaidToBank = true;
-                    personalDetailsPageZa.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("dd MMM yyyy");
+                    personalDetailsPageZa.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("dd/MMM/yyyy");
                     personalDetailsPageZa.EmploymentDetails.IncomeFrequency = "Monthly";
                     personalDetailsPageZa.ContactingYou.CellPhoneNumber = "0751234567";
                     personalDetailsPageZa.ContactingYou.EmailAddress = email;
@@ -918,10 +916,9 @@ namespace Wonga.QA.Tests.Ui
                     journeyZa.CurrentPage = personalDetailsPageZa.Submit() as AddressDetailsPage;
                     var accountDetailsPageZa = journeyZa.FillAddressDetails().CurrentPage as AccountDetailsPage;
                     accountDetailsPageZa.AccountDetailsSection.Password = email;
-                    Thread.Sleep(1000);
-                    Assert.IsTrue(accountDetailsPageZa.AccountDetailsSection.IsPasswordEqualsEmailWarningOccured());
+                    Do.Until(accountDetailsPageZa.AccountDetailsSection.IsPasswordEqualsEmailWarningOccured);
                     accountDetailsPageZa.AccountDetailsSection.Password = "Passw0rd";
-                    Assert.IsFalse(accountDetailsPageZa.AccountDetailsSection.IsPasswordEqualsEmailWarningOccured());
+                    Do.While(accountDetailsPageZa.AccountDetailsSection.IsPasswordEqualsEmailWarningOccured);
                     break;
                 #endregion
             }
@@ -951,6 +948,51 @@ namespace Wonga.QA.Tests.Ui
             addAdditionalDirectorPage = additionalDirectorsPage.AddAditionalDirector();
             string directors = additionalDirectorsPage.GetDirectors();
             Assert.IsTrue(directors.Contains(firstName + " " + lastName));
+        }
+
+        [Test, AUT(AUT.Wb), JIRA("QA-256")]
+        public void EnsureAllGurantorsReceiveTheUnsignedGuarantorEmail()
+        {
+            var email = String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
+            var email2 = String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
+            var journey = JourneyFactory.GetL0JourneyWB(Client.Home());
+            var personalDetailsPage = journey.ApplyForLoan(5500, 30)
+             .AnswerEligibilityQuestions().CurrentPage as PersonalDetailsPage;
+            personalDetailsPage.YourName.FirstName = Get.RandomString(3, 10);
+            personalDetailsPage.YourName.MiddleName = Get.RandomString(3, 10);
+            personalDetailsPage.YourName.LastName = Get.RandomString(3, 10);
+            personalDetailsPage.YourName.Title = "Mr";
+            personalDetailsPage.YourDetails.Gender = "Female";
+            personalDetailsPage.YourDetails.DateOfBirth = "1/Jan/1990";
+            personalDetailsPage.YourDetails.HomeStatus = "Tenant Furnished";
+            personalDetailsPage.YourDetails.MaritalStatus = "Single";
+            personalDetailsPage.YourDetails.NumberOfDependants = "0";
+            personalDetailsPage.ContactingYou.HomePhoneNumber = "02071111234";
+            personalDetailsPage.ContactingYou.CellPhoneNumber = "07701234567";
+            personalDetailsPage.ContactingYou.EmailAddress = email;
+            personalDetailsPage.ContactingYou.ConfirmEmailAddress = email;
+            personalDetailsPage.CanContact = "No";
+            personalDetailsPage.PrivacyPolicy = true;
+            journey.CurrentPage = personalDetailsPage.Submit() as AddressDetailsPage;
+            var additionalDirectorsPage = journey.FillAddressDetails("More than 4 years")
+             .FillAccountDetails()
+             .FillBankDetails()
+             .FillCardDetails()
+             .EnterBusinessDetails().CurrentPage as AdditionalDirectorsPage;
+            var addAdditionalDirectorPage = additionalDirectorsPage.AddAditionalDirector();
+            var additionalDirectorEmail = email2;
+            addAdditionalDirectorPage.Title = "Mr";
+            addAdditionalDirectorPage.FirstName = Get.RandomString(3, 15);
+            addAdditionalDirectorPage.LastName = Get.RandomString(3, 15);
+            addAdditionalDirectorPage.EmailAddress = additionalDirectorEmail;
+            addAdditionalDirectorPage.ConfirmEmailAddress = additionalDirectorEmail;
+            addAdditionalDirectorPage.Done();
+            var emails = Do.Until(() => Drive.Data.QaData.Db.Emails.FindAllByEmailAddress(email));
+            var emails2 = Do.Until(() => Drive.Data.QaData.Db.Emails.FindAllByEmailAddress(email2));
+            foreach (var mail in emails2)
+            {
+                Console.WriteLine(mail.TemplateName);
+            }
         }
     }
 }
