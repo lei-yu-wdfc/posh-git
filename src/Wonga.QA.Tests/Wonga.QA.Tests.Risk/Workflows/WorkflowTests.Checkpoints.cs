@@ -13,10 +13,12 @@ namespace Wonga.QA.Tests.Risk.Workflows
 {
 	public partial class WorkflowTests
 	{
-		#region Checkpoints
+		
 
 		private readonly List<string> ExpectedCheckpointNamesL0 = GetExpectedCheckpointNamesL0();
 		private readonly List<string> ExpectedCheckpointNamesLn = GetExpectedCheckpointNamesLn();
+
+		#region Za
 
 		private static readonly List<string> ExpectedCheckpointNamesL0Za = new List<string>()
 		                                                         	{
@@ -51,9 +53,48 @@ namespace Wonga.QA.Tests.Risk.Workflows
 		                                                                    		"Bank account is valid"
 		                                                                    	};
 
+
 		#endregion
 
-		[Test, AUT(AUT.Za)]
+		#region Ca
+
+		private static readonly List<string> ExpectedCheckpointNamesL0Ca = new List<string>()
+		                                                                   	{
+		                                                                   		"Mobile phone is unique",
+		                                                                   		"Home phone is acceptable",
+		                                                                   		"User assisted fraud check",
+		                                                                   		"Repayment prediction check",
+		                                                                   		"Date of birth is correct",
+		                                                                   		"Customer is employed",
+		                                                                   		"Monthly income limit check",
+		                                                                   		"Application data blacklist check",
+		                                                                   		"Hardware blacklist check",
+		                                                                   		"Credit bureau data is available",
+		                                                                   		"Applicant is not minor",
+		                                                                   		"Ability to verify personal data",
+		                                                                   		"Applicant is alive",
+		                                                                   		"Customer is solvent"
+		                                                                   	};
+
+		private static readonly List<string> ExpectedCheckpointNamesLnCa = new List<string>()
+		                                                                   	{
+		                                                                   		"User assisted fraud check",
+		                                                                   		"Credit Bureau Score is acceptable",
+		                                                                   		"Date of birth is correct",
+		                                                                   		"Customer is employed",
+		                                                                   		"Monthly income limit check",
+		                                                                   		"Application data blacklist check",
+		                                                                   		"Hardware blacklist check",
+		                                                                   		"Credit bureau data is available",
+		                                                                   		"Applicant is not minor",
+		                                                                   		"Ability to verify personal data",
+		                                                                   		"Applicant is alive",
+		                                                                   		"Customer is solvent"
+		                                                                   	};
+
+		#endregion
+
+		[Test, AUT(AUT.Ca, AUT.Za) ]
 		public void WorkflowCorrectCheckpointsUsedL0()
 		{
 			var customer = CustomerBuilder.New().WithEmployer("Wonga").Build();
@@ -66,7 +107,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 			Assert.AreElementsEqualIgnoringOrder(ExpectedCheckpointNamesL0, actualCheckpointNames);
 		}
 
-		[Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Ca, AUT.Za)]
 		public void WorkflowCorrectCheckpointsUsedLn()
 		{
 			var customer = CustomerBuilder.New().Build();
@@ -93,11 +134,19 @@ namespace Wonga.QA.Tests.Risk.Workflows
 					{
 						return ExpectedCheckpointNamesL0Za;
 					}
+
+				case AUT.Ca:
+					{
+						return ExpectedCheckpointNamesL0Ca;
+					}
+
 				default:
 					{
 						throw new NotImplementedException(Config.AUT.ToString());
 					}
 			}
+
+			return new List<string>();
 		}
 
 		private static List<string> GetExpectedCheckpointNamesLn()
@@ -107,6 +156,10 @@ namespace Wonga.QA.Tests.Risk.Workflows
 				case AUT.Za:
 					{
 						return ExpectedCheckpointNamesLnZa;
+					}
+				case AUT.Ca:
+					{
+						return ExpectedCheckpointNamesLnCa;
 					}
 				default:
 					{

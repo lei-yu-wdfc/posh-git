@@ -99,11 +99,11 @@ namespace Wonga.QA.Tests.Risk.Workflows
 					{
 						return ExpectedVerificationNamesL0Za;
 					}
-					break;
 
 				default:
 					{
-						throw new NotImplementedException(Config.AUT.ToString());
+						return new List<string>();
+						//throw new NotImplementedException(Config.AUT.ToString());
 					}
 			}
 		}
@@ -120,7 +120,8 @@ namespace Wonga.QA.Tests.Risk.Workflows
 
 				default:
 					{
-						throw new NotImplementedException(Config.AUT.ToString());
+						return new List<string>();
+						//throw new NotImplementedException(Config.AUT.ToString());
 					}
 			}
 		}
