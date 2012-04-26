@@ -19,17 +19,17 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>$(SolutionDir)\..\..\bin\$(SolutionName)</OutputPath>
+    <OutputPath>$(SolutionDir)\..\..\bin</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>1591</NoWarn>
-    <DocumentationFile>D:\v3QA_new\v3QA\src\Wonga.QA.Framework\\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Ivr.xml</DocumentationFile>
+    <DocumentationFile>$(SolutionDir)\..\..\bin\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>$(SolutionDir)\..\..\bin\$(SolutionName)</OutputPath>
+    <OutputPath>$(SolutionDir)\..\..\bin</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
