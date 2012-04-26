@@ -27,7 +27,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         {
             set
             {
-                Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.ApplicationSection.EditPin)).SendValue(value);
+                var pin =
+                    Do.Until(() => Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.ApplicationSection.EditPin)));
+                Do.Until(()=>pin.Displayed);
+                pin.SendValue(value);
             }
         }
         public ApplicationSection(BasePage page)
