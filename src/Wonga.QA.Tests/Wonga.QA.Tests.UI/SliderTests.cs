@@ -7,6 +7,7 @@ using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Helpers;
+using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
 using System.Linq;
 using System;
@@ -116,6 +117,46 @@ namespace Wonga.QA.Tests.Ui
             //maximum charge is 21$ for each 100$ borrowed for 30 days.
         }
 
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-150")]
+        public void CustomerTypesValidValuesIntoAmountAndDurationFields()
+        {
+            var termCustomerEnter = Get.RandomInt(_termMin, _termMax).ToString();
+            var amountCustomerEnter = "R"+Get.RandomInt(_amountMin, _amountMax).ToString();
+
+            var homePage = Client.Home();
+
+            homePage.Sliders.HowLong = termCustomerEnter;
+            homePage.Sliders.HowMuch = amountCustomerEnter;
+
+            string _totalAmount = homePage.Sliders.GetTotalAmount;
+
+            Assert.AreEqual(amountCustomerEnter, _totalAmount);
+            Console.WriteLine(amountCustomerEnter + " " + _totalAmount);
+
+
+            string[] dateArray = homePage.Sliders.GetRepaymentDate.Split(' ');
+            string day = Char.IsDigit(dateArray[1].ElementAt(1)) ? dateArray[1].Remove(2, 2) : dateArray[1].Remove(1, 2);
+            _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
+            //var expectedDate = GetExpectedDefaultPromiseDateL0();
+            //Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate), _repaymentDate);
+
+            var personalDetailsPage = homePage.Sliders.Apply() as PersonalDetailsPage;
+            string personalDetailPageAmount = personalDetailsPage.GetTotalAmount;
+
+            Assert.AreEqual(amountCustomerEnter, personalDetailPageAmount);
+            Console.WriteLine(amountCustomerEnter + " " + personalDetailPageAmount);
+
+            dateArray = personalDetailsPage.GetRepaymentDate.Split(' ');
+            day = Char.IsDigit(dateArray[1].ElementAt(1)) ? dateArray[1].Remove(2, 2) : dateArray[1].Remove(1, 2);
+            _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
+
+
+
+            //Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate), _repaymentDate);
+
+            Thread.Sleep(9000);
+        }
+
         [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-156", "QA-238")]
         public void DefaultAmountSliderValueShouldBeCorrectL0()
         {
@@ -162,13 +203,13 @@ namespace Wonga.QA.Tests.Ui
         public void DefaultDurationSliderValueShouldBeCorrectL0()
         {
             var page = Client.Home();
-
-			string[] dateArray = page.Sliders.GetRepaymentDate.Split(' ');
+string[] dateArray = page.Sliders.GetRepaymentDate.Split(' ');
 			string day = Char.IsDigit(dateArray[1].ElementAt(1)) ? dateArray[1].Remove(2, 2) : dateArray[1].Remove(1, 2);
 			_repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
 
 			var expectedDate = GetExpectedDefaultPromiseDateL0();
             Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate), _repaymentDate);
+			
         }
 
         [Test, AUT(AUT.Ca), JIRA("QA-241", "QA-159")]
@@ -373,7 +414,7 @@ namespace Wonga.QA.Tests.Ui
             {
                 case AUT.Za:
                     {
-                        var iMonth = DateTime.UtcNow.Month - 1;
+                       var iMonth = DateTime.UtcNow.Month - 1;
 
                         var payDayPerMonths = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.PayDayPerMonth").Value.Split(',');
                         var sliderTermAddDays = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.SliderTermAddDays").Value;
