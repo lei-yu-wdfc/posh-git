@@ -35,7 +35,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		private const string ScorecardNameL0Za = "ZARiskScorecard_v_1_2_L0";
 		private const string ScorecardNameLnZa = "ZARiskScorecard_v_1_2_LN";
 		private const int ScoreCutoffNewUsersZa = 600;
-		private const int ScoreCutoffExistingUsersZa = 580;
+		private const int ScoreCutoffExistingUsersZa = 600;
 		//private static readonly string[] ExpectedFactorNamesL0Za = new string[];
 		private static readonly string[] FactorNamesLnZa = new string[]
 		                                                   	{
@@ -46,7 +46,6 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		                                                   		"LoanAmount",
 		                                                   		"LoanTerm",
 		                                                   		"LoanNumber",
-		                                                   		"LnSkey",
 		                                                   		"AvgDel",
 		                                                   		"ArrearsPresent",
 		                                                   		"DaysSinceLastLoan",
