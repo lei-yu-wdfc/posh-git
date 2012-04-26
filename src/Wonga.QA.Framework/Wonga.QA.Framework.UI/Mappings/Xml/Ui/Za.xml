@@ -24,6 +24,9 @@
   
   <EmploymentDetailsSection>
     <WorkPhone>#edit-work-phone-za</WorkPhone>
+    <NextPaydayDateDay>#edit-next-payday-day</NextPaydayDateDay>
+    <NextPaydayDateMonth>#edit-next-payday-month</NextPaydayDateMonth>
+    <NextPaydayDateYear>#edit-next-payday-year</NextPaydayDateYear>
   </EmploymentDetailsSection>
 
   <PersonalDetailsPage>

@@ -90,6 +90,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
                 switch (Config.AUT)
                 {
                     case AUT.Uk:
+                    case AUT.Za:
                         var date = value.Split('/');
                         _nextPaydayDateDay.SelectOption(date[0]);
                         _nextPaydayDateMonth.SelectOption(date[1]);
@@ -118,7 +119,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             {
                 case (AUT.Za):
                     _workPhone = Section.FindElement(By.CssSelector(Ui.Get.EmploymentDetailsSection.WorkPhone));
-                    _nextPaydayDate = Section.FindElement(By.CssSelector(Ui.Get.EmploymentDetailsSection.NextPaydayDate));
+                    _nextPaydayDateDay = Section.FindElement(By.CssSelector(Ui.Get.EmploymentDetailsSection.NextPaydayDateDay));
+                    _nextPaydayDateMonth = Section.FindElement(By.CssSelector(Ui.Get.EmploymentDetailsSection.NextPaydayDateMonth));
+                    _nextPaydayDateYear = Section.FindElement(By.CssSelector(Ui.Get.EmploymentDetailsSection.NextPaydayDateYear));
                     break;
                 case (AUT.Ca):
                     _nextPaydayDate = Section.FindElement(By.CssSelector(Ui.Get.EmploymentDetailsSection.NextPaydayDate));
