@@ -10,6 +10,7 @@ namespace Wonga.QA.Framework.Msmq
     {
         public Guid AccountId { get; set; }
         public Guid ApplicationId { get; set; }
+        public Decimal Balance { get; set; }
         public DateTime CreatedOn { get; set; }
     }
 }

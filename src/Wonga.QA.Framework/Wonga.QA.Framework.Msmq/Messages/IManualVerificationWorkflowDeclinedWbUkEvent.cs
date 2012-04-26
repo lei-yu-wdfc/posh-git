@@ -4,8 +4,8 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq
 {
-    /// <summary> Wonga.Risk.InternalMessages.Wb.Uk.IManualVerificationWorkflowDeclined </summary>
-    [XmlRoot("IManualVerificationWorkflowDeclined", Namespace = "Wonga.Risk.InternalMessages.Wb.Uk", DataType = "Wonga.Risk.WorkflowDecisions.IWorkflowDeclined,Wonga.Risk.WorkflowDecisions.IWorkflowDecision")]
+    /// <summary> Wonga.Risk.InternalMessages.Wb.Uk.decisions.IManualVerificationWorkflowDeclined </summary>
+    [XmlRoot("IManualVerificationWorkflowDeclined", Namespace = "Wonga.Risk.InternalMessages.Wb.Uk.decisions", DataType = "Wonga.Risk.WorkflowDecisions.IWorkflowDeclined,Wonga.Risk.WorkflowDecisions.IWorkflowDecision")]
     public partial class IManualVerificationWorkflowDeclinedWbUkEvent : MsmqMessage<IManualVerificationWorkflowDeclinedWbUkEvent>
     {
         public String FailedCheckpointName { get; set; }

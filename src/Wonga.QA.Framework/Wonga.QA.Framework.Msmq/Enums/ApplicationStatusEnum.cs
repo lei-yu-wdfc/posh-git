@@ -31,5 +31,6 @@ namespace Wonga.QA.Framework.Msmq
         PaidInFull = 26,
         SettledInFull = 27,
         WrittenOff = 28,
+        Declined = 29,
     }
 }
