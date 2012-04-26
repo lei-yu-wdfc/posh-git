@@ -33,7 +33,8 @@ namespace Wonga.QA.Generators.Db
                 {
                     "/database:{0}",
                     "/dbml:{1}",
-                    "/pluralize"
+                    "/pluralize",
+                    //"/server:RC8"
                 }, database, file.Dbml.FullName.Quote());
 
                 XElement root = XDocument.Load(file.Dbml.FullName).Root;
@@ -58,6 +59,7 @@ namespace Wonga.QA.Generators.Db
                         String value = type.Value.Substring(schema.Length) + "Entity";
                         attributes.Where(a => a.Value == type.Value).ForEach(a => a.SetValue(value));
                     }
+                    ResolveCollision(table, ns);
                 }
 
                 root.Document.Save(file.Dbml.FullName);
@@ -81,6 +83,17 @@ namespace Wonga.QA.Generators.Db
             }
 
             Repo.Inject(bin.Code, Config.Db.Folder, Config.Db.Project);
+        }
+
+        private static void ResolveCollision(XElement table, XNamespace ns)
+        {
+            var type = table.Element(ns.GetName("Type"));
+            switch(table.Attribute("Name").Value)
+            {
+                case("ssis.ArrearsExport"):
+                    table.Attribute("Member").Value = type.Attribute("Name").Value = "ArrearsExportSsis";
+                    break;
+            }
         }
 
         private static String Trim(String value, String schema)
