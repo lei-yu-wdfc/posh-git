@@ -69,6 +69,7 @@
     <SecurityCode>#edit-security-code</SecurityCode>
     <MinCash>#edit-min-cash</MinCash>
     <ChangeMobileButton>.mod</ChangeMobileButton>
+    <EditPin>#edit-mobile-pin</EditPin>
   </ApplicationSection>
 
   <MyAccountNavigationSection>

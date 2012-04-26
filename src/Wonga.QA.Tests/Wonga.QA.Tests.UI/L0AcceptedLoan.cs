@@ -189,16 +189,8 @@ namespace Wonga.QA.Tests.Ui
             string actualDealDoneText = dealDonePage.GetDealDonePageText;
 
             // Check text on the Deal Done page is displayed correctly
-
             expectedDealDoneText = expectedDealDoneText.Replace("{repay date}", GetOrdinalDate(paymentDate)).Replace("{repay amount}", paymentAmount);
             Assert.AreEqual(expectedDealDoneText, actualDealDoneText);
-            //Assert.Contains(actualDealDoneText, "The cash will be winging its way into your bank account in the next 15 minutes!");
-            //Assert.Contains(actualDealDoneText, paymentAmount);
-            //Assert.Contains(actualDealDoneText, GetOrdinalDate(paymentDate));
-            //Assert.Contains(actualDealDoneText, paymentDate.ToString("d"));
-            //Assert.Contains(actualDealDoneText, paymentDate.ToString("MMM"));
-            //Assert.Contains(actualDealDoneText, paymentDate.ToString("yyyy"));
-            //Assert.Contains(actualDealDoneText, paymentDate.ToString("dddd"));
         }
 
         public string GetOrdinalDate(DateTime date)
