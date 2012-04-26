@@ -23,7 +23,7 @@ namespace Wonga.QA.Framework
 		public decimal LoanAmount { get; set; }
 		public int LoanTerm { get; set; }
 		public string FailedCheckpoint { get; private set; }
-        public Int64? BankAccountNumber { get; set; }
+        public Int64 BankAccountNumber { get; set; }
 
 	    public Application()
 		{
@@ -194,7 +194,7 @@ namespace Wonga.QA.Framework
             if (Config.AUT == AUT.Ca && Boolean.Parse(caScotiaMocksEnabled.Value))
             {
                 ScotiaResponseBuilder.New().
-                                ForBankAccountNumber(BankAccountNumber.Value).
+                                ForBankAccountNumber(BankAccountNumber).
                                 Reject();
             }
 
