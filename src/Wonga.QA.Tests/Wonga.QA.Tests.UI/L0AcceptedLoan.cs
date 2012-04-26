@@ -169,7 +169,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk), JIRA("UK-731")]
         public void LoanCompletionConfirmed()
         {
-            string expectedDealDoneText = "Your application has been accepted\r\nThe cash will be winging its way into your bank account in the next 15 minutes! Please just be aware that different banks take different lengths of time to show new deposits.\n\nPlease don't forget that you have promised to repay on {repay date} when you'll need to have £{repay amount} ready in the bank account linked to your debit card. You can login to your Wonga account at any time to keep track of your loan, apply for more cash (depending on your trust rating) and even extend or repay early.\n\nWe hope you find the money useful and, if you love our service, please now check out the options below!";
+            string expectedDealDoneText = "Your application has been accepted\r\nThe cash will be winging its way into your bank account in the next 15 minutes! Please just be aware that different banks take different lengths of time to show new deposits.\r\nPlease don\'t forget that you have promised to repay on Sunday 6th May 2012 when you\'ll need to have £115.91 ready in the bank account linked to your debit card. You can login to your Wonga account at any time to keep track of your loan, apply for more cash (depending on your trust rating) and even extend or repay early.\r\nWe hope you find the money useful and, if you love our service, please now check out the options below!";
             const int loanAmount = 100;
             const int days = 10;
             string paymentAmount = 115.91M.ToString("#.00");

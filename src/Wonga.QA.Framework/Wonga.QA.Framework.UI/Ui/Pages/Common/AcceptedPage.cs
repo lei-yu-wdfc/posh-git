@@ -49,7 +49,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     _acceptGuarantorLoanLink = _form.FindElement(By.CssSelector(Ui.Get.AcceptedPage.AcceptGuarantorLoan));
                     break;
                 case(AUT.Za):
-                    _form = Content.FindEitherElement(By.CssSelector(Ui.Get.AcceptedPage.FormId), By.CssSelector("#wonga-loan-approve-form"));
+                    _form = Content.FindElement(By.CssSelector(Ui.Get.AcceptedPage.FormId));
                      _totalToRepay = Content.FindElement(By.CssSelector(Ui.Get.AcceptedPage.TotalToRepay));
                     _repaymentDate = Content.FindElement(By.CssSelector(Ui.Get.AcceptedPage.RepaymentDate));
                    
