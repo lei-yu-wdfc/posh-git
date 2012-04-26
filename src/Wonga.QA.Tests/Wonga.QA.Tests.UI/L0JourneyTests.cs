@@ -904,7 +904,7 @@ namespace Wonga.QA.Tests.Ui
                     personalDetailsPageZa.EmploymentDetails.TimeWithEmployerMonths = "5";
                     personalDetailsPageZa.EmploymentDetails.WorkPhone = "0123456789";
                     personalDetailsPageZa.EmploymentDetails.SalaryPaidToBank = true;
-                    personalDetailsPageZa.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("dd/MMM/yyyy");
+                    personalDetailsPageZa.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d/MMM/yyyy");
                     personalDetailsPageZa.EmploymentDetails.IncomeFrequency = "Monthly";
                     personalDetailsPageZa.ContactingYou.CellPhoneNumber = "0751234567";
                     personalDetailsPageZa.ContactingYou.EmailAddress = email;
