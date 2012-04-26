@@ -54,7 +54,7 @@ namespace Wonga.QA.Tests.Cs
 		public void RepyamentPlanNotAllowedWhenInDisputeTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
-			Application application = ApplicationBuilder.New(customer).Build().PutApplicationIntoArrears(20);
+			Application application = ApplicationBuilder.New(customer).Build().PutApplicationIntoArrears(35);
 
 			Drive.Msmq.Payments.Send(new IDisputeStatusChangedEvent { AccountId = customer.Id, HasDispute = true });
 			Do.Until(() => (bool)Drive.Data.Payments.Db.AccountPreferences.FindByAccountId(customer.Id).IsDispute == true);
@@ -269,13 +269,14 @@ namespace Wonga.QA.Tests.Cs
 			
 			for( int i = 0; i < count; i++)
 			{
-				MakeNextRepayment(customer, application);
+				MakeNextRepayment(application);
 			}
 		}
 
-		private static void MakeNextRepayment(Customer customer, Application application)
+		private static void MakeNextRepayment(Application application)
 		{
 			var repaymentArrangement = GetRepaymentArrangement(application);
+			var repaymentArrangementDetailId = repaymentArrangement.RepaymentArrangementDetails.First(a => a.AmountPaid <= 0).RepaymentArrangementDetailId;
 
 			var repaymentArrangementSagaId = (Guid)Do.Until(() => Drive.Data.OpsSagas.Db.RepaymentArrangementSagaEntity.FindByRepaymentArrangementId(repaymentArrangement.RepaymentArrangementId).Id);
 
@@ -301,6 +302,11 @@ namespace Wonga.QA.Tests.Cs
 			});
 
 			Do.Until(() => Drive.Data.OpsSagas.Db.ScheduledRepaymentSagaEntity.FindByScheduledPaymentSagaEntity_id(scheduledRepaymentSagaId) == null);
+
+			Do.Until(() => GetRepaymentArrangement(application)
+			               	.RepaymentArrangementDetails
+			               	.Single(a => a.RepaymentArrangementDetailId == repaymentArrangementDetailId)
+			               	.AmountPaid > 0);
 		}
 
 		private static void FailToMakeRepayment(Customer customer, Application application)
