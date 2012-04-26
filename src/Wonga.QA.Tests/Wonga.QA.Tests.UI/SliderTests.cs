@@ -63,46 +63,6 @@ namespace Wonga.QA.Tests.Ui
             _termMin = Int32.Parse(_response.Values["TermMin"].Single(), CultureInfo.InvariantCulture);
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-149")]
-        public void MovingSlidersRepaymentDateShouldBeCorrect()
-        {
-            var page = Client.Home();
-            int randomDuration = _termMin + (new Random()).Next(_termMax - _termMin);
-            page.Sliders.HowLong = randomDuration.ToString(CultureInfo.InvariantCulture);
-
-            string[] dateArray = page.Sliders.GetRepaymentDate.Split(' ');
-            string day = Char.IsDigit(dateArray[1].ElementAt(1)) ? dateArray[1].Remove(2, 2) : dateArray[1].Remove(1, 2);
-            _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
-
-            _actualDate = DateTime.Now.AddDays(randomDuration);
-            Assert.AreEqual(_repaymentDate, String.Format(CultureInfo.InvariantCulture, "{0:d MMM yyyy}", _actualDate));
-        }
-
-        [Test, AUT(AUT.Za), JIRA("QA-149"), Pending("Rounding error")]
-        public void MovingSlidersLoanSummaryShouldBeCorrect()
-        {
-            var page = Client.Home();
-            int randomAmount = _amountMin + (new Random()).Next(_amountMax - _amountMin);
-            int randomDuration = _termMin + (new Random()).Next(_termMax - _termMin);
-
-            page.Sliders.HowMuch = randomAmount.ToString(CultureInfo.InvariantCulture);
-            page.Sliders.HowLong = randomDuration.ToString(CultureInfo.InvariantCulture);
-
-            _response = Drive.Api.Queries.Post(new GetFixedTermLoanCalculationZaQuery { LoanAmount = randomAmount, Term = randomDuration });
-
-            string totalRepayable = _response.Values["TotalRepayable"].Single();
-            Assert.AreEqual(page.Sliders.GetTotalToRepay.Remove(0, 1), totalRepayable);
-        }
-
-        [Test, AUT(AUT.Za), JIRA("QA-149")]
-        public void MovingSlidersBeyondMaxIsNotAllowedByFrontEnd()
-        {
-            var page = Client.Home();
-            int amountBiggerThanMax = _amountMax + 1000;
-            page.Sliders.HowMuch = amountBiggerThanMax.ToString(CultureInfo.InvariantCulture);
-            Assert.AreEqual(_amountMax.ToString(CultureInfo.InvariantCulture), page.Sliders.GetTotalAmount.Remove(0, 1));
-        }
-
         [Test, AUT(AUT.Ca)]
         public void VariableInterestisCalculatedCorrectly()
         {
@@ -211,7 +171,7 @@ namespace Wonga.QA.Tests.Ui
         public void DefaultDurationSliderValueShouldBeCorrectL0()
         {
             var page = Client.Home();
-string[] dateArray = page.Sliders.GetRepaymentDate.Split(' ');
+            string[] dateArray = page.Sliders.GetRepaymentDate.Split(' ');
 			string day = Char.IsDigit(dateArray[1].ElementAt(1)) ? dateArray[1].Remove(2, 2) : dateArray[1].Remove(1, 2);
 			_repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
 
