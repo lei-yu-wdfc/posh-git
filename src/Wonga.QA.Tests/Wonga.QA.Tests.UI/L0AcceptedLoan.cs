@@ -169,6 +169,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk), JIRA("UK-731")]
         public void LoanCompletionConfirmed()
         {
+            string expectedDealDoneText = "Your application has been accepted\r\nThe cash will be winging its way into your bank account in the next 15 minutes! Please just be aware that different banks take different lengths of time to show new deposits.\n\nPlease don't forget that you have promised to repay on {repay date} when you'll need to have £{repay amount} ready in the bank account linked to your debit card. You can login to your Wonga account at any time to keep track of your loan, apply for more cash (depending on your trust rating) and even extend or repay early.\n\nWe hope you find the money useful and, if you love our service, please now check out the options below!";
             const int loanAmount = 100;
             const int days = 10;
             string paymentAmount = 115.91M.ToString("#.00");
@@ -188,12 +189,41 @@ namespace Wonga.QA.Tests.Ui
             string actualDealDoneText = dealDonePage.GetDealDonePageText;
 
             // Check text on the Deal Done page is displayed correctly
-            Assert.Contains(actualDealDoneText, "The cash will be winging its way into your bank account in the next 15 minutes!");
-            Assert.Contains(actualDealDoneText, paymentAmount);
-            Assert.Contains(actualDealDoneText, paymentDate.ToString("dd"));
-            Assert.Contains(actualDealDoneText, paymentDate.ToString("MMM"));
-            Assert.Contains(actualDealDoneText, paymentDate.ToString("yyyy"));
-            Assert.Contains(actualDealDoneText, paymentDate.ToString("dddd"));
+
+            expectedDealDoneText = expectedDealDoneText.Replace("{repay date}", GetOrdinalDate(paymentDate)).Replace("{repay amount}", paymentAmount);
+            Assert.AreEqual(expectedDealDoneText, actualDealDoneText);
+            //Assert.Contains(actualDealDoneText, "The cash will be winging its way into your bank account in the next 15 minutes!");
+            //Assert.Contains(actualDealDoneText, paymentAmount);
+            //Assert.Contains(actualDealDoneText, GetOrdinalDate(paymentDate));
+            //Assert.Contains(actualDealDoneText, paymentDate.ToString("d"));
+            //Assert.Contains(actualDealDoneText, paymentDate.ToString("MMM"));
+            //Assert.Contains(actualDealDoneText, paymentDate.ToString("yyyy"));
+            //Assert.Contains(actualDealDoneText, paymentDate.ToString("dddd"));
+        }
+
+        public string GetOrdinalDate(DateTime date)
+        {
+            //Returns date as string in the format "Wed 18th Apr 2012"
+            var cDate = date.Day.ToString("d")[date.Day.ToString("d").Length - 1];
+            string suffix;
+            switch (cDate)
+            {
+                case '1':
+                    suffix = "st";
+                    break;
+                case '2':
+                    suffix = "nd";
+                    break;
+                case '3':
+                    suffix = "rd";
+                    break;
+                default:
+                    suffix = "th";
+                    break;
+            }
+            var sDate = " " + date.Day.ToString("d") + " ";
+            var sDateOrdinial = " " + date.Day.ToString("d") + suffix + " ";
+            return date.ToString("dddd d MMM yyyy").Replace(sDate, sDateOrdinial);
         }
     }
 }
