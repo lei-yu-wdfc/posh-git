@@ -46,7 +46,6 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		                                                   		"LoanAmount",
 		                                                   		"LoanTerm",
 		                                                   		"LoanNumber",
-		                                                   		"LnSkey",
 		                                                   		"AvgDel",
 		                                                   		"ArrearsPresent",
 		                                                   		"DaysSinceLastLoan",
