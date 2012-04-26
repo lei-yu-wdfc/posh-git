@@ -38,19 +38,16 @@ namespace Wonga.QA.Tests.BankGateway
 
 		[Test, AUT(AUT.Ca), JIRA("CA-1931"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
 		public void SendPaymentMessageWithRealAccountShouldBeRoutedToBmoAndRejected()
-		{
-			var bankAccountNumber = Random.Next(1000000, 9999999);
-			
+		{	
 			var customer = CustomerBuilder.New().
 								WithInstitutionNumber("001").
 								WithBranchNumber("00022").
-								WithBankAccountNumber(bankAccountNumber).
 								WithSurname("Wonga").WithForename("Canada Inc").
 								Build();
 
-			var setup = BmoResponseBuilder.New().
-								ForBankAccountNumber(bankAccountNumber).
-								RejectTransaction();
+		    BmoResponseBuilder.New().
+		        ForBankAccountNumber(customer.BankAccountNumber).
+		        RejectTransaction();
 
 			var application = ApplicationBuilder.New(customer).Build();
 
@@ -63,18 +60,15 @@ namespace Wonga.QA.Tests.BankGateway
         [Test, AUT(AUT.Ca), JIRA("CA-1931"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
 		public void SendPaymentMessageWithRealAccountShouldBeRoutedToBmoAndRejectedFile()
 		{
-			var bankAccountNumber = Random.Next(1000000, 9999999);
-
 			var customer = CustomerBuilder.New().
 								WithInstitutionNumber("001").
 								WithBranchNumber("00022").
-								WithBankAccountNumber(bankAccountNumber).
 								WithSurname("Wonga").WithForename("Canada Inc").
 								Build();
 
-			var setup = BmoResponseBuilder.New().
-								ForBankAccountNumber(bankAccountNumber).
-								RejectFile();
+            BmoResponseBuilder.New().
+                ForBankAccountNumber(customer.BankAccountNumber).
+                RejectFile();
 
 			var application = ApplicationBuilder.New(customer).Build();
 
@@ -131,17 +125,14 @@ namespace Wonga.QA.Tests.BankGateway
         [Test, AUT(AUT.Ca), JIRA("CA-1931"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
 		public void SendPaymentMessageShouldBeRoutedToScotiaAndRejected()
 		{
-			var bankAccountNumber = Random.Next(1000000, 9999999);
-
 			var customer = CustomerBuilder.New().
-								WithBankAccountNumber(bankAccountNumber).
 								WithInstitutionNumber("002").
 								WithBranchNumber("00018").
 								Build();
 
-			var setup = ScotiaResponseBuilder.New().
-								ForBankAccountNumber(bankAccountNumber).
-								Reject();
+            ScotiaResponseBuilder.New().
+                ForBankAccountNumber(customer.BankAccountNumber).
+                Reject();
 
 			var application = ApplicationBuilder.New(customer).Build();
 
@@ -185,16 +176,14 @@ namespace Wonga.QA.Tests.BankGateway
 			using (new BankGatewayBmoSendBatch())
 			{
 				// Rejected
-				var bankAccountNumber = Random.Next(1000000, 9999999);
 				var customer = CustomerBuilder.New().
 									WithInstitutionNumber("001").
 									WithBranchNumber("00022").
-									WithBankAccountNumber(bankAccountNumber).
 									WithSurname("Wonga").WithForename("Canada Inc").
 									Build();
-				var setup = BmoResponseBuilder.New().
-									ForBankAccountNumber(bankAccountNumber).
-									RejectFile();
+			    BmoResponseBuilder.New().
+			        ForBankAccountNumber(customer.BankAccountNumber).
+			        RejectFile();
 
 				applicationIdRejected = ApplicationBuilder.New(customer).Build().Id;
 
@@ -336,16 +325,14 @@ namespace Wonga.QA.Tests.BankGateway
 			using (new BankGatewayBmoSendBatch())
 			{
 				// Rejected
-				var bankAccountNumber = Random.Next(1000000, 9999999);
 				var customer = CustomerBuilder.New().
 									WithInstitutionNumber("001").
 									WithBranchNumber("00022").
-									WithBankAccountNumber(bankAccountNumber).
 									WithSurname("Wonga").WithForename("Canada Inc").
 									Build();
-				var setup = BmoResponseBuilder.New().
-									ForBankAccountNumber(bankAccountNumber).
-									RejectTransaction();
+			    BmoResponseBuilder.New().
+			        ForBankAccountNumber(customer.BankAccountNumber).
+			        RejectTransaction();
 
 				applicationIdRejected = ApplicationBuilder.New(customer).Build().Id;
 
@@ -436,17 +423,14 @@ namespace Wonga.QA.Tests.BankGateway
         [Test, AUT(AUT.Ca), JIRA("CA-1931")]
         public void SendPaymentMessageShouldBeRejected()
         {
-            var bankAccountNumber = Random.Next(1000000, 9999999);
-
             var customer = CustomerBuilder.New().
-                                WithBankAccountNumber(bankAccountNumber).
                                 WithInstitutionNumber("002").
                                 WithBranchNumber("00018").
                                 Build();
 
-            var setup = ScotiaResponseBuilder.New().
-                                ForBankAccountNumber(bankAccountNumber).
-                                Reject();
+            ScotiaResponseBuilder.New().
+                ForBankAccountNumber(customer.BankAccountNumber).
+                Reject();
 
             var application = ApplicationBuilder.New(customer).Build();
 
