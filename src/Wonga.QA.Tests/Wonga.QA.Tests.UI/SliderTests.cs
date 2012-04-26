@@ -120,43 +120,51 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-150")]
         public void CustomerTypesValidValuesIntoAmountAndDurationFields()
         {
-            var termCustomerEnter = Get.RandomInt(_termMin, _termMax).ToString();
-            var amountCustomerEnter = "R"+Get.RandomInt(_amountMin, _amountMax).ToString();
+            var termCustomerEnter = Get.RandomInt(_termMin, _termMax);
+            var amountCustomerEnter = Get.RandomInt(_amountMin, _amountMax);
 
             var homePage = Client.Home();
 
-            homePage.Sliders.HowLong = termCustomerEnter;
-            homePage.Sliders.HowMuch = amountCustomerEnter;
+            homePage.Sliders.HowLong = termCustomerEnter.ToString();
+            homePage.Sliders.HowMuch = amountCustomerEnter.ToString();
 
             string _totalAmount = homePage.Sliders.GetTotalAmount;
 
-            Assert.AreEqual(amountCustomerEnter, _totalAmount);
-            Console.WriteLine(amountCustomerEnter + " " + _totalAmount);
+            Assert.AreEqual(amountCustomerEnter.ToString(), _totalAmount.Remove(0, 1));
 
 
             string[] dateArray = homePage.Sliders.GetRepaymentDate.Split(' ');
             string day = Char.IsDigit(dateArray[1].ElementAt(1)) ? dateArray[1].Remove(2, 2) : dateArray[1].Remove(1, 2);
             _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
-            //var expectedDate = GetExpectedDefaultPromiseDateL0();
-            //Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate), _repaymentDate);
+            DateTime expectedDate;
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    expectedDate = DateTime.UtcNow.AddDays(termCustomerEnter);
+                    break;
+                case AUT.Ca:
+                    expectedDate =
+                        DateTime.UtcNow.AddDays(termCustomerEnter + DateHelper.GetNumberOfDaysUntilStartOfLoanForCa());
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+            Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate), _repaymentDate);
 
             var personalDetailsPage = homePage.Sliders.Apply() as PersonalDetailsPage;
             string personalDetailPageAmount = personalDetailsPage.GetTotalAmount;
 
-            Assert.AreEqual(amountCustomerEnter, personalDetailPageAmount);
-            Console.WriteLine(amountCustomerEnter + " " + personalDetailPageAmount);
+            Assert.AreEqual(amountCustomerEnter.ToString(), personalDetailPageAmount.Remove(0, 1));
 
             dateArray = personalDetailsPage.GetRepaymentDate.Split(' ');
             day = Char.IsDigit(dateArray[1].ElementAt(1)) ? dateArray[1].Remove(2, 2) : dateArray[1].Remove(1, 2);
             _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
 
+            Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate), _repaymentDate);
 
 
-            //Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate), _repaymentDate);
-
-            Thread.Sleep(9000);
         }
-
+          
         [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-156", "QA-238")]
         public void DefaultAmountSliderValueShouldBeCorrectL0()
         {
