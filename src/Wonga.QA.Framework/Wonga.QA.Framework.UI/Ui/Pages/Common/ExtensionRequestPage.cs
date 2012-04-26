@@ -94,6 +94,32 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             
             //Assert.AreEqual(Decimal.Parse(Sliders.GetGrandTotal.Remove(0, 1)),Decimal.Parse(totalRepayable));
             //Assert.AreEqual(Decimal.Parse(Sliders.GetNewFees.Remove(0, 1)),Decimal.Parse(newFees));
+        }    
+
+        public String InformativeBox {
+            get { return Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageExtensionDuration)).GetValue(); }
         }
+
+        public String RepaymentDate {
+            get { return Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageRepaymentDate)).Text; }
+        }
+        
+        public String InterestFees {
+            get { return Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageInterestFees)).Text; }
+        }
+
+        public String OweToday {
+            get { return Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageOweToday)).Text; }
+        }
+
+        public String TotalRepayToday {
+            get { return Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageTotalRepayToday)).Text; }
+        }
+
+        public String NewCreditAmount
+        {
+            get { return Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageNewCreditAmount)).Text; }
+        }
+
     }
 }

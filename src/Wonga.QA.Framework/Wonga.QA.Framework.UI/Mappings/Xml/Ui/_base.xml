@@ -359,7 +359,7 @@
   <ExtensionRequestPage>
     <ExtensionRequestPageSubmitButton>#edit-submit</ExtensionRequestPageSubmitButton>
     <ExtensionRequestPageInformativeBox>div.inner-box-informative</ExtensionRequestPageInformativeBox>
-    <ExtensionRequestPageExtensionDuration>input.edit-extend-amount</ExtensionRequestPageExtensionDuration>
+    <ExtensionRequestPageExtensionDuration>#edit-extend-amount</ExtensionRequestPageExtensionDuration>
     <ExtensionRequestPageInterestFees>span.extend-interest-and-fees</ExtensionRequestPageInterestFees>
     <ExtensionRequestPageNewGrandTotal>span.extend-request-total</ExtensionRequestPageNewGrandTotal>
     <ExtensionRequestPageRepaymentDate>span.loan-period-clarification span.slider-extend-date</ExtensionRequestPageRepaymentDate>
@@ -367,6 +367,9 @@
     <ExtensionRequestPageSliderSmall>#wonga-account-extension-form</ExtensionRequestPageSliderSmall>
     <ExtensionRequestPageCard>#edit-card</ExtensionRequestPageCard>
     <ExtensionRequestPageSecurityCode>#edit-security-code</ExtensionRequestPageSecurityCode>
+    <ExtensionRequestPageOweToday>.odd td span</ExtensionRequestPageOweToday>
+    <ExtensionRequestPageTotalRepayToday>.extend-repay-today</ExtensionRequestPageTotalRepayToday>
+    <ExtensionRequestPageNewCreditAmount>.extend-new-credit</ExtensionRequestPageNewCreditAmount>    
   </ExtensionRequestPage>
 
 </Ui>

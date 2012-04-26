@@ -123,21 +123,38 @@ namespace Wonga.QA.Tests.Ui
             var errorPage = processPage.WaitFor<ExtensionErrorPage>() as ExtensionErrorPage;
 
         }
-        /*
-        /// <summary>
-        /// As a customer I want to be able extend my loan so that I can defer my repayment date to when I can afford to repay my loan
-        /// </summary>
+
+
         [Test, AUT(AUT.Uk), JIRA("UK-427")]
-        public void ExtensionRequestPage1()
+        public void ExtensionRequestPageTest1()
+        {
+            CheckExtensionRequestPage(100, 5, 1);
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-427")]
+        public void ExtensionRequestPageTest2()
+        {
+            CheckExtensionRequestPage(400, 2, 30);
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-427")]
+        public void ExtensionRequestPageTest3()
+        {
+            CheckExtensionRequestPage(1, 7, 29);
+        }
+
+        /// <summary>
+        /// General function used by tests
+        /// </summary>
+        
+        private void CheckExtensionRequestPage(int loanAmount, int loanTerm, int extensionDays)
         {
             string email = Get.RandomEmail();
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(3).Build();
-
-            var loginPage = Client.Login();
-            var myAccountPage = loginPage.LoginAs(email);
-
+            var application = ApplicationBuilder.New(customer).WithLoanAmount(loanAmount).WithLoanTerm(loanTerm).Build();
+            var myAccountPage = Client.Login().LoginAs(email);
+            
             var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
 
             mySummaryPage.ChangePromiseDateButtonClick();
@@ -148,29 +165,31 @@ namespace Wonga.QA.Tests.Ui
             _response = api.Queries.Post(new GetFixedTermLoanExtensionQuoteUkQuery { ApplicationId = application.Id });
             var sliderMinDays = _response.Values["SliderMinDays"].Single();
             var sliderMaxDays = _response.Values["SliderMaxDays"].Single();
-            var oweToday = _response.Values["TotalAmountDueToday"].Single();
-            var totalRepayToday = _response.Values["ExtensionPartPaymentAmount"].Single();
-            var newCreditAmount = _response.Values["CurrentPrincipleAmount"].Single();
-            var futureInterestAndFees = _response.Values["LoanExtensionFee"].Single();
-            // Total to repay
+            var oweToday = decimal.Parse(_response.Values["TotalAmountDueToday"].Single());
+            var sOweToday = String.Format("£{0}", oweToday.ToString("#.00"));
+            var totalRepayToday = decimal.Parse(_response.Values["ExtensionPartPaymentAmount"].Single());
+            var sTotalRepayToday = String.Format("£{0}", totalRepayToday.ToString("#.00"));
+            var newCreditAmount = decimal.Parse(_response.Values["CurrentPrincipleAmount"].Single());
+            var sNewCreditAmount = String.Format("£{0}", newCreditAmount.ToString("#.00"));
+            var futureInterestAndFees = decimal.Parse(_response.Values["LoanExtensionFee"].Single());
+            var sFutureInterestAndFees = String.Format("£{0}", futureInterestAndFees.ToString("#.00"));
+            var expectedRepaymentDate = GetOrdinalDate(DateTime.Now.AddDays(loanTerm).AddDays(1));
 
-            // TBD - check the values on the page
-            // Max Days
-            // repayment date 2 instances
-            // owe today
-            // repay today
-            // new credit amoutn
-            // future interest and fees
-            // total to repay
-            // read me message
-
+            // Check
+            //Assert.AreEqual(expectedRepaymentDate, requestPage.RepaymentDate); fails
+            Assert.AreEqual("1", requestPage.InformativeBox);
+            Assert.AreEqual(sOweToday, requestPage.OweToday);
+            Assert.AreEqual(sTotalRepayToday, requestPage.TotalRepayToday);
+            Assert.AreEqual(sNewCreditAmount, requestPage.NewCreditAmount);
+            Assert.AreEqual(sFutureInterestAndFees, requestPage.InterestFees);
         }
-
+        
+        /*
         /// <summary>
         /// As a customer I want to be able extend my loan so that I can defer my repayment date to when I can afford to repay my loan
         /// </summary>
         [Test, AUT(AUT.Uk), JIRA("UK-427")]
-        public void ExtensionRequestPage2()
+        public void ExtensionRequestPageRewindeDates()
         {
             string email = Get.RandomEmail();
 
@@ -213,6 +232,30 @@ namespace Wonga.QA.Tests.Ui
             // read me message
 
         }	*/
-
+        
+        public string GetOrdinalDate(DateTime date)
+        {
+            //Returns date as string in the format "Wed 18th Apr 2012"
+            var cDate = date.Day.ToString("d")[date.Day.ToString("d").Length - 1];
+            string suffix;
+            switch (cDate)
+            {
+                case '1':
+                    suffix = "st";
+                    break;
+                case '2':
+                    suffix = "nd";
+                    break;
+                case '3':
+                    suffix = "rd";
+                    break;
+                default:
+                    suffix = "th";
+                    break;
+            }
+            var sDate = date.Day.ToString("d") + " ";
+            var sDateOrdinial = date.Day.ToString("d") + suffix + " ";
+            return date.ToString("d MMM yyyy").Replace(sDate, sDateOrdinial);
+        }
     }
 }
