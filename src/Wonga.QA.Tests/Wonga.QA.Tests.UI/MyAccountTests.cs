@@ -326,7 +326,7 @@ namespace Wonga.QA.Tests.Ui
 
             Do.Until(() => myPersonalDetailsPage.ChangePhone("0210000000", "0211234567", "1111"));
             myPersonalDetailsPage.Submit();
-            Assert.IsTrue(myPersonalDetailsPage.GetPopupErrorMessage.Equals("The Pin was incorrect."));
+            Assert.IsTrue(myPersonalDetailsPage.GetPopupErrorMessage.Equals("The SMS PIN you entered was incorrect."));
 
 
 

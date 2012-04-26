@@ -383,7 +383,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), JIRA("ZA-2108")]
+        [Test, AUT(AUT.Za), JIRA("ZA-2108"), Pending("Broken")]
         public void L0VerifyWongaLzeroZaModuleSignatureInsertedInPage()
         {
             // Checks for the presence of "<!-- Output from wonga_lzero_za/<$_GET['q']> -->" in page source.

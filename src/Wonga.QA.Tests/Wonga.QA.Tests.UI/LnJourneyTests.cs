@@ -85,7 +85,7 @@ namespace Wonga.QA.Tests.Ui
             }
             catch(AssertionFailureException exception)
             {
-                Assert.IsTrue(exception.Message.Contains("The Pin was incorrect."));
+                Assert.IsTrue(exception.Message.Contains("The SMS PIN you entered was incorrect"));
             }
         }
 
