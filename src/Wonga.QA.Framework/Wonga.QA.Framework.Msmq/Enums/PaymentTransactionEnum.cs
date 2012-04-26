@@ -40,5 +40,7 @@ namespace Wonga.QA.Framework.Msmq
         ServiceFeeReversal = 36,
         InitiationFeeWriteOff = 37,
         InitiationFeeReversal = 38,
+        CashAdvanceReversal = 39,
+        FeeReversal = 40,
     }
 }
