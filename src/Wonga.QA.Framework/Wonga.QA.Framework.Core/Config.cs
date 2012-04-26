@@ -24,6 +24,7 @@ namespace Wonga.QA.Framework.Core
         public static SalesforceConfig SalesforceUi { get; set; }
 		public static SalesforceConfig SalesforceApi { get; set; }
         public static EmailConfig Email { get; set; }
+        public static CommonApiConfig CommonApi { get; set; }
 
         static Config()
         {
@@ -45,6 +46,7 @@ namespace Wonga.QA.Framework.Core
             {
                 case SUT.Dev:
                     Api = new ApiConfig("localhost");
+                    CommonApi = new CommonApiConfig("localhost/IVRWebApi");
                     Cs = new CsConfig("localhost/CSAPI");
                     Svc = new SvcConfig(".");
                     Msmq = new MsmqConfig(".");
@@ -544,7 +546,8 @@ namespace Wonga.QA.Framework.Core
 
             public EmailAddressConfig QA { get; set; }
         }
-    }
+
+        public class CommonApiConfig        {            public Uri Commands { get; set; }            public CommonApiConfig(String host)            {                Uri uri = new UriBuilder { Host = host }.Uri;                Commands = new Uri(uri, "commands");            }        }    }
 
     public static class Connections
     {

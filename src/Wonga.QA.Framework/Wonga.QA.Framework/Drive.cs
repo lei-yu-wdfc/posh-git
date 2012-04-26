@@ -1,5 +1,6 @@
 ﻿using System;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.CommonApi;
 using Wonga.QA.Framework.Cs;
 using Wonga.QA.Framework.Data;
 using Wonga.QA.Framework.Db;
@@ -22,5 +23,6 @@ namespace Wonga.QA.Framework
         public static MockDriver Mocks { get { return new MockDriver(); } }
         public static DataDriver Data { get { return new DataDriver(); } }
         public static EmailDriver Email {get {return new EmailDriver(); }}
+        public static CommonApiDriver CommonApi { get { return new CommonApiDriver(); } }
     }
 }
