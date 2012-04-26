@@ -5,6 +5,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Framework.Msmq;
@@ -30,7 +31,7 @@ namespace Wonga.QA.Tests.Ui
         private DateTime _actualDate;
 
 
-        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1627")]
+        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1627"), Pending("Affected by bug UK-1746")]
         public void ExtensionJourneyPass()
         {
             string email = Get.RandomEmail();
@@ -64,7 +65,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1321", "UK-1522")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1321", "UK-1522"), Pending("Affected by bug UK-1746")]
         public void ExtensionJourneyDecline()
         {
             string email = Get.RandomEmail();
@@ -95,7 +96,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1323", "UK-1523")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1323", "UK-1523"), Pending("Affected by bug UK-1746")]
         public void ExtensionJourneyError()
         {
             string email = Get.RandomEmail();
@@ -122,5 +123,96 @@ namespace Wonga.QA.Tests.Ui
             var errorPage = processPage.WaitFor<ExtensionErrorPage>() as ExtensionErrorPage;
 
         }
+        /*
+        /// <summary>
+        /// As a customer I want to be able extend my loan so that I can defer my repayment date to when I can afford to repay my loan
+        /// </summary>
+        [Test, AUT(AUT.Uk), JIRA("UK-427")]
+        public void ExtensionRequestPage1()
+        {
+            string email = Get.RandomEmail();
+
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(3).Build();
+
+            var loginPage = Client.Login();
+            var myAccountPage = loginPage.LoginAs(email);
+
+            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+
+            mySummaryPage.ChangePromiseDateButtonClick();
+            var requestPage = new ExtensionRequestPage(this.Client);
+
+            // Expected
+            var api = new ApiDriver();
+            _response = api.Queries.Post(new GetFixedTermLoanExtensionQuoteUkQuery { ApplicationId = application.Id });
+            var sliderMinDays = _response.Values["SliderMinDays"].Single();
+            var sliderMaxDays = _response.Values["SliderMaxDays"].Single();
+            var oweToday = _response.Values["TotalAmountDueToday"].Single();
+            var totalRepayToday = _response.Values["ExtensionPartPaymentAmount"].Single();
+            var newCreditAmount = _response.Values["CurrentPrincipleAmount"].Single();
+            var futureInterestAndFees = _response.Values["LoanExtensionFee"].Single();
+            // Total to repay
+
+            // TBD - check the values on the page
+            // Max Days
+            // repayment date 2 instances
+            // owe today
+            // repay today
+            // new credit amoutn
+            // future interest and fees
+            // total to repay
+            // read me message
+
+        }
+
+        /// <summary>
+        /// As a customer I want to be able extend my loan so that I can defer my repayment date to when I can afford to repay my loan
+        /// </summary>
+        [Test, AUT(AUT.Uk), JIRA("UK-427")]
+        public void ExtensionRequestPage2()
+        {
+            string email = Get.RandomEmail();
+
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanAmount(100).WithLoanTerm(5).Build();
+
+            // Rewind application dates
+            ApplicationEntity applicationEntity = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
+            RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == application.Id);
+            TimeSpan daysShiftSpan = TimeSpan.FromDays(1);
+            Drive.Db.RewindApplicationDates(applicationEntity, riskApplication, daysShiftSpan);
+
+            var loginPage = Client.Login();
+            var myAccountPage = loginPage.LoginAs(email);
+
+            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+
+            mySummaryPage.ChangePromiseDateButtonClick();
+            var requestPage = new ExtensionRequestPage(this.Client);
+
+            // Expected
+            var api = new ApiDriver();
+            _response = api.Queries.Post(new GetFixedTermLoanExtensionQuoteUkQuery { ApplicationId = application.Id });
+            var sliderMinDays = _response.Values["SliderMinDays"].Single();
+            var sliderMaxDays = _response.Values["SliderMaxDays"].Single();
+            var oweToday = _response.Values["TotalAmountDueToday"].Single();
+            var totalRepayToday = _response.Values["ExtensionPartPaymentAmount"].Single();
+            var newCreditAmount = _response.Values["CurrentPrincipleAmount"].Single();
+            var futureInterestAndFees = _response.Values["LoanExtensionFee"].Single();
+            // Total to repay
+
+            // TBD - check the values on the page
+            // Max Days
+            // repayment date 2 instances
+            // owe today
+            // repay today
+            // new credit amoutn
+            // future interest and fees
+            // total to repay
+            // read me message
+
+        }	*/
+
     }
 }
