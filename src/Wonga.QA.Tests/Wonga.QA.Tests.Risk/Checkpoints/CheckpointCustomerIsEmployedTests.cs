@@ -54,21 +54,5 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
             Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.CustomerIsEmployed));
         }
-
-        [Test]
-        [Ignore("need to investigate what table i have to update in order to emulate the SaveEmploymentDetailsUkCommand as that is treated in customer builder")]
-        [JIRA("UK-1566")]
-        public void Ln_CustomerIsUnemployed_LoanIsDeclined()
-        {
-            var customer = CustomerBuilder.New().WithEmployer(RiskMask.TESTEmployedMask).Build();
-            var l0Application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
-            l0Application.RepayOnDueDate();
-
-            var lnApplication = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
-
-            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(l0Application.Id, RiskWorkflowTypes.MainApplicant);
-            Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.CustomerIsEmployed));
-        }
 	}
 }
