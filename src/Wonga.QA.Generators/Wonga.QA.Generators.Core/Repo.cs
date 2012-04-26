@@ -25,17 +25,17 @@ namespace Wonga.QA.Generators.Core
             Lib = Root.GetDirectories("lib").Single();
         }
 
-        public static FileInfo File(String name, DirectoryInfo directory)
+        public static FileInfo File(String name, DirectoryInfo directory, bool ignoreExistence = false)
         {
             FileInfo file = new FileInfo(Path.Combine(directory.FullName, name));
-            if (file.Exists)
+            if (file.Exists && !ignoreExistence)
                 throw new IOException(file.FullName);
             return file;
         }
 
-        public static DirectoryInfo Directory(String name)
+        public static DirectoryInfo Directory(String name, bool delete = true)
         {
-            return Directory(String.Format("{0}.{1}", Name, name), Bin, true);
+            return Directory(String.Format("{0}.{1}", Name, name), Bin, delete);
         }
 
         public static DirectoryInfo Directory(String name, DirectoryInfo directory, Boolean delete = false)
@@ -51,12 +51,12 @@ namespace Wonga.QA.Generators.Core
             return directory;
         }
 
-        public static void Inject(DirectoryInfo items, String folder, String project)
+        public static void Inject(DirectoryInfo items, String folder, String project, bool delete = true, bool overwrite = false)
         {
             FileInfo file = Src.GetFiles(String.Format("{0}.csproj", project), SearchOption.AllDirectories).Single();
-            DirectoryInfo directory = Directory(folder, file.Directory, true);
+            DirectoryInfo directory = Directory(folder, file.Directory, delete);
 
-            Copy(items, directory);
+            Copy(items, directory, overwrite);
 
             XElement root = XDocument.Load(file.FullName).Root;
             XName name = root.GetDefaultNamespace().GetName("Compile");
@@ -75,10 +75,10 @@ namespace Wonga.QA.Generators.Core
             root.Document.Save(file.FullName);
         }
 
-        public static void Copy(DirectoryInfo from, DirectoryInfo to)
+        public static void Copy(DirectoryInfo from, DirectoryInfo to, bool overwrite = false)
         {
-            from.GetFiles().ForEach(f => f.CopyTo(Path.Combine(to.FullName, f.Name)));
-            from.GetDirectories().ForEach(d => Copy(d, to.CreateSubdirectory(d.Name)));
+            from.GetFiles().ForEach(f => f.CopyTo(Path.Combine(to.FullName, f.Name), overwrite));
+            from.GetDirectories().ForEach(d => Copy(d, to.CreateSubdirectory(d.Name), overwrite));
         }
     }
 }
