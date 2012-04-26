@@ -1,14 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading;
 using MbUnit.Framework;
 using NHamcrest.Core;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
 
-namespace Wonga.QA.Framework.UI.UiElements.Pages
+namespace Wonga.QA.Framework.UI.UiElements.Pages.Admin
 {
     public abstract class AdminBasePage
     {

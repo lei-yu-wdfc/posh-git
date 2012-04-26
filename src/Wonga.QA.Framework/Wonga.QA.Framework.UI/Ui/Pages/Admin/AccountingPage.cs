@@ -1,7 +1,7 @@
 using OpenQA.Selenium;
-using Wonga.QA.Framework.UI.Mappings;
 
-namespace Wonga.QA.Framework.UI.UiElements.Pages
+namespace Wonga.QA.Framework.UI.UiElements.Pages.Admin
+
 {
     public class AccountingPage : AdminBasePage
     {
@@ -10,8 +10,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
 
         public AccountingPage(UiClient client) : base(client)
         {
-            _addFile = Client.Driver.FindElement(By.CssSelector(Ui.Get.AccountingPage.AddFileLink));
-            _cashOut = Client.Driver.FindElement(By.CssSelector(Ui.Get.AccountingPage.CashOutLink));
+            _addFile = Client.Driver.FindElement(By.CssSelector(Mappings.Ui.Get.AccountingPage.AddFileLink));
+            _cashOut = Client.Driver.FindElement(By.CssSelector(Mappings.Ui.Get.AccountingPage.CashOutLink));
         }
 
         public AddFilePage AddFile()

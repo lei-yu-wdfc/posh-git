@@ -9,7 +9,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Admin
 {
-    [TestFixture, AUT(AUT.Uk)]
+    [TestFixture]
     public class MatchingTests : AdminTest
     {
         private Customer customer;
@@ -26,7 +26,7 @@ namespace Wonga.QA.Tests.Admin
         /// <summary>
         /// Verifies that payment transasction are handled by the accounting service
         /// </summary>
-        [Test, AUT(AUT.Uk)]
+        [Test, AUT(AUT.Uk), JIRA("UK-1758")]
         public void SystemTransactionHandler()
         {
             Customer cust = CustomerBuilder.New().Build();
@@ -52,6 +52,7 @@ namespace Wonga.QA.Tests.Admin
         /// <summary>
         /// Verifies repayed application balance
         /// </summary>
+        [Ignore]
         [Test, AUT(AUT.Uk)]
         public void ClosedApplicationBalance()
         {
@@ -74,7 +75,7 @@ namespace Wonga.QA.Tests.Admin
         /// <summary>
         /// Verifies canceled application 
         /// </summary>
-        [Test, AUT(AUT.Uk)]
+        [Test, AUT(AUT.Uk), JIRA("UK-1754")]
         public void CancelV3Transaction()
         {
             Customer cust = CustomerBuilder.New().Build();
@@ -116,7 +117,7 @@ namespace Wonga.QA.Tests.Admin
         /// <summary>
         /// Verifies resend payment functionality
         /// </summary>
-        [Test, AUT(AUT.Uk)]
+        [Test, AUT(AUT.Uk),JIRA("UK-1756")]
         public void SendPaymentV3Transactions()
         {
             Customer cust = CustomerBuilder.New().Build();

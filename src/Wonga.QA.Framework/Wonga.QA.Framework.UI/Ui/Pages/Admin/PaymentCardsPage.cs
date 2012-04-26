@@ -1,7 +1,6 @@
 using OpenQA.Selenium;
-using Wonga.QA.Framework.UI.Mappings;
 
-namespace Wonga.QA.Framework.UI.UiElements.Pages
+namespace Wonga.QA.Framework.UI.UiElements.Pages.Admin
 {
     public class PaymentCardsPage : AdminBasePage
     {
@@ -9,7 +8,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
 
         public PaymentCardsPage(UiClient client) : base(client)
         {
-            _addCard = Client.Driver.FindElement(By.CssSelector(Ui.Get.PaymentCardsPage.AddCardLink));
+            _addCard = Client.Driver.FindElement(By.CssSelector(Mappings.Ui.Get.PaymentCardsPage.AddCardLink));
         }
 
         public AddCardPage AddCard()

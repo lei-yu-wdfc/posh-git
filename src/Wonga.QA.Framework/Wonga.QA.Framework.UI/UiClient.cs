@@ -15,6 +15,7 @@ using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Remote;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.UiElements.Pages;
+using Wonga.QA.Framework.UI.UiElements.Pages.Admin;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Framework.UI.UiElements.Pages.SalesForce;
 

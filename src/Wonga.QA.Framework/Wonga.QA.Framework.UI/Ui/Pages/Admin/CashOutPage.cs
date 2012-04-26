@@ -1,9 +1,8 @@
 using System;
 using System.Collections.ObjectModel;
 using OpenQA.Selenium;
-using Wonga.QA.Framework.UI.Mappings;
 
-namespace Wonga.QA.Framework.UI.UiElements.Pages
+namespace Wonga.QA.Framework.UI.UiElements.Pages.Admin
 {
     public class CashOutPage : AdminBasePage
     {
@@ -23,10 +22,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
         public CashOutPage(UiClient client)
             : base(client)
         {
-            _transactionTypeOptions = Client.Driver.FindElement(By.CssSelector(Ui.Get.CashOutPage.TransactionTypeOptions));
-            _filterOptions = Client.Driver.FindElement(By.CssSelector(Ui.Get.CashOutPage.FilterOptions));
-            _filterValue = Client.Driver.FindElement(By.CssSelector(Ui.Get.CashOutPage.FilterValue));
-            _searchButton = Client.Driver.FindElement(By.CssSelector(Ui.Get.CashOutPage.SearchButton));
+            _transactionTypeOptions = Client.Driver.FindElement(By.CssSelector(Mappings.Ui.Get.CashOutPage.TransactionTypeOptions));
+            _filterOptions = Client.Driver.FindElement(By.CssSelector(Mappings.Ui.Get.CashOutPage.FilterOptions));
+            _filterValue = Client.Driver.FindElement(By.CssSelector(Mappings.Ui.Get.CashOutPage.FilterValue));
+            _searchButton = Client.Driver.FindElement(By.CssSelector(Mappings.Ui.Get.CashOutPage.SearchButton));
         }
 
         public void Search()
@@ -36,9 +35,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
 
         public void GetSearchResults()
         {
-            _sendPaymentCheckboxes = Client.Driver.FindElements(By.Name(Ui.Get.CashOutPage.SendPaymentCheckBox));
-            _cancelCheckboxes = Client.Driver.FindElements(By.Name(Ui.Get.CashOutPage.CancelCheckBox));
-            _updateButton = Client.Driver.FindElement(By.XPath(Ui.Get.CashOutPage.UpdateButton));
+            _sendPaymentCheckboxes = Client.Driver.FindElements(By.CssSelector(Mappings.Ui.Get.CashOutPage.SendPaymentCheckBox));
+            _cancelCheckboxes = Client.Driver.FindElements(By.CssSelector(Mappings.Ui.Get.CashOutPage.CancelCheckBox));
+            _updateButton = Client.Driver.FindElement(By.CssSelector(Mappings.Ui.Get.CashOutPage.UpdateButton));
         }
 
         public void MarkSendPayment(int i)

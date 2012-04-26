@@ -122,9 +122,9 @@
     <FilterOptions>select#SearchBy</FilterOptions>
     <FilterValue>input#SearchByValue</FilterValue>
     <SearchButton>input#btnSearch</SearchButton>
-    <SendPaymentCheckBox>PaymentSelected</SendPaymentCheckBox>
-    <CancelCheckBox>CancelSelected</CancelCheckBox>
-    <UpdateButton>//input[@value='Update']</UpdateButton>
+    <SendPaymentCheckBox>input[name='PaymentSelected']</SendPaymentCheckBox>
+    <CancelCheckBox>input[name='CancelSelected']</CancelCheckBox>
+    <UpdateButton>#GridContainer > input[name='Command']</UpdateButton>
   </CashOutPage>
 
 </Ui>

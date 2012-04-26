@@ -1,6 +1,6 @@
 
 
-namespace Wonga.QA.Framework.UI.UiElements.Pages
+namespace Wonga.QA.Framework.UI.UiElements.Pages.Admin
 {
     public class AddCardPage : AdminBasePage
     {

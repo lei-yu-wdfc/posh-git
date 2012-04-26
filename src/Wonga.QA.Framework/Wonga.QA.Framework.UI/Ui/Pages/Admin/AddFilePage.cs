@@ -1,5 +1,5 @@
 
-namespace Wonga.QA.Framework.UI.UiElements.Pages
+namespace Wonga.QA.Framework.UI.UiElements.Pages.Admin
 {
     public class AddFilePage : AdminBasePage
     {
