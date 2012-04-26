@@ -19,6 +19,8 @@ namespace Wonga.QA.Tests.Payments.Queries
         [Test, AUT(AUT.Uk)]
         public void TenDayLoanQuoteOnDayFiveToExtendForTenDays()
         {
+            var promiseDate = new Date(DateTime.UtcNow.AddDays(5));
+            var day1ExtendDate = promiseDate.DateTime.AddDays(1).Date;
             var accountId = Guid.NewGuid();
             var bankAccountId = Guid.NewGuid();
             var paymentCardId = Guid.NewGuid();
@@ -37,14 +39,17 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual("110.70", response.Values["TotalAmountDueToday"].Single(), "TotalAmountDueToday incorrect");
             Assert.AreEqual("10.70", response.Values["ExtensionPartPaymentAmount"].Single(), "ExtensionPartPaymentAmount incorrect");
             Assert.AreEqual("10.00", response.Values["LoanExtensionFee"].Single(), "LoanExtensionFee incorrect");
+
+            Assert.AreEqual(day1ExtendDate, DateTime.Parse(response.Values["ExtensionDate"].ToArray()[0]).Date, "First Day Extend Date Incorrec" );
         }
 
         [Test]
         [AUT(AUT.Uk), JIRA("UK-1351")]
         public void Query_ShouldReturnAllDataRequiredForLoanExtension_WhenCustomerHasApplicationAcceptedMoreThanOneDayAgo()
         {
+            var promiseDate = new Date(DateTime.UtcNow.AddDays(4));
             Customer customer = CustomerBuilder.New().Build();
-            var application = ApplicationBuilder.New(customer).WithPromiseDate(new Date(DateTime.UtcNow.AddDays(4))).Build();
+            var application = ApplicationBuilder.New(customer).WithPromiseDate(promiseDate).Build();
             Drive.Data.Payments.Db.Applications.UpdateByExternalId(ExternalId: application.Id, AcceptedOn: DateTime.UtcNow.AddDays((-10)));
 
             var query = new CsGetFixedTermLoanExtensionQuoteQuery { ApplicationId = application.Id};            
@@ -67,6 +72,8 @@ namespace Wonga.QA.Tests.Payments.Queries
                 Assert.IsTrue(isDate(response.Values["ExtensionDate"].ToArray()[pos]));
                 Assert.IsTrue(isDate(response.Values["ExtensionDate"].ToArray()[pos]));
             }
+
+           
         }
 
         [Test]
