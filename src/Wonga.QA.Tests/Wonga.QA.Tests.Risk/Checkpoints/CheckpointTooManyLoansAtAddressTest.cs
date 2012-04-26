@@ -33,7 +33,6 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-848")]
-        [Pending("Let me fix Risk first and then this will work :)")]
         public void DeclinedIfTooManyOpenLoans()
         {
             /* The test scenario is that there cant be more then 3 loans at the same address
