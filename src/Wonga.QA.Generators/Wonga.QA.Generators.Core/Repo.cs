@@ -19,7 +19,7 @@ namespace Wonga.QA.Generators.Core
         {
             Assembly assembly = Assembly.GetEntryAssembly();
             Name = assembly.EntryPoint.DeclaringType.Namespace;
-            Root = new FileInfo(assembly.Location).Directory.Parent.Parent;
+            Root = new FileInfo(assembly.Location).Directory.Parent;
             Src = Root.GetDirectories("src").Single();
             Bin = Root.GetDirectories("bin").Single();
             Lib = Root.GetDirectories("lib").Single();
