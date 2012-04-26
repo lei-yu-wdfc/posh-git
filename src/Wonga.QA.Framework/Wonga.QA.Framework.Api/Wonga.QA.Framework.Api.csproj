@@ -78,6 +78,7 @@
     <Compile Include="Exceptions\NoDefaultException.cs" />
     <Compile Include="Exceptions\SchemaException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requests\GetCustomerPrePaidEligibilityQuery.cs" />
     <Compile Include="Temp\ApplicationDecisionStatusEnum.cs" />
     <Compile Include="Temp\RiskMask.cs" />
     <Compile Include="Requests\AddBankAccountCaCommand.cs" />
