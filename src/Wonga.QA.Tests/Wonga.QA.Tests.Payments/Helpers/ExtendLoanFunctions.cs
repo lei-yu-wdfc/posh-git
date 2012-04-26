@@ -20,7 +20,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
 
             // Create Application
-            CreateFixedTermLoanApplication(appId, accountId, bankAccountId,paymentCardId, 10);
+            CreateFixedTermLoanApplication(appId, accountId, bankAccountId,paymentCardId);
 
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
@@ -35,8 +35,9 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 .Message(() => String.Format("there are currently {0} trans", Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count()))
                 .Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 2);
 
-            // Rewind Application & Transactions 5 days
+            // Rewind Application.AcceptedOn & Transactions 5 days 
             var app = new Application(appId);
+            app.UpdateAcceptedOnDate(extendOnDay * -1);
             app.MoveTransactionDates(extendOnDay * -1);
         }
 
