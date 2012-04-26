@@ -35,8 +35,9 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 .Message(() => String.Format("there are currently {0} trans", Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count()))
                 .Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 2);
 
-            // Rewind Application & Transactions 5 days
+            // Rewind Application & Transactions 5 days ToDo: Rewind NextDueDate
             var app = new Application(appId);
+            app.UpdateNextDueDate(extendOnDay*-1);
             app.MoveTransactionDates(extendOnDay * -1);
         }
 
