@@ -14,7 +14,7 @@ namespace Wonga.QA.Framework.UI.Elements
         { 
             set
             {
-                Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.ChangeMyAddressElement.Flat)).SendValue(value);
+                Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.ChangeMyAddressElement.Flat)).SendValue(value);
             }
         }
 
@@ -22,7 +22,7 @@ namespace Wonga.QA.Framework.UI.Elements
         {
             set
             {
-                Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.ChangeMyAddressElement.HouseNumber)).SendValue(value);
+                Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.ChangeMyAddressElement.HouseNumber)).SendValue(value);
             }
         }
 
@@ -30,7 +30,7 @@ namespace Wonga.QA.Framework.UI.Elements
         {
             set
             {
-                Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.ChangeMyAddressElement.Street)).SendValue(value);
+                Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.ChangeMyAddressElement.Street)).SendValue(value);
             }
         }
 
@@ -38,7 +38,7 @@ namespace Wonga.QA.Framework.UI.Elements
         {
             set
             {
-                Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.ChangeMyAddressElement.District)).SendValue(value);
+                Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.ChangeMyAddressElement.District)).SendValue(value);
             }
         }
 
@@ -46,7 +46,7 @@ namespace Wonga.QA.Framework.UI.Elements
         {
             set
             {
-                Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.ChangeMyAddressElement.Town)).SendValue(value);
+                Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.ChangeMyAddressElement.Town)).SendValue(value);
             }
         }
 
@@ -54,7 +54,7 @@ namespace Wonga.QA.Framework.UI.Elements
         {
             set
             {
-                Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.ChangeMyAddressElement.Postcode)).SendValue(value);
+                Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.ChangeMyAddressElement.Postcode)).SendValue(value);
             }
         }
 
@@ -62,7 +62,7 @@ namespace Wonga.QA.Framework.UI.Elements
         {
             set
             {
-                Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.ChangeMyAddressElement.County)).SendValue(value);
+                Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.ChangeMyAddressElement.County)).SendValue(value);
             }
         }
 
@@ -70,7 +70,7 @@ namespace Wonga.QA.Framework.UI.Elements
         {
             set
             {
-                Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.ChangeMyAddressElement.AddressPeriod)).SelectOption(value);
+                Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.ChangeMyAddressElement.AddressPeriod)).SelectOption(value);
             }
         }
         
@@ -81,7 +81,7 @@ namespace Wonga.QA.Framework.UI.Elements
 
         public bool IsChangeMyAddressTitleDisplayed()
         {
-            var title = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.ChangeMyAddressElement.Title));
+            var title = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.ChangeMyAddressElement.Title));
             return title.Displayed;
         }
         public bool IsPostcodeWarningOccurred()
@@ -89,7 +89,7 @@ namespace Wonga.QA.Framework.UI.Elements
             try
             {
                 var postCodeErrorForm =
-                           Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.ChangeMyAddressElement.PostcodeErrorForm));
+                           Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.ChangeMyAddressElement.PostcodeErrorForm));
                 string postCodeErrorFormClass = postCodeErrorForm.GetAttribute("class");
 
                 if (postCodeErrorFormClass.Equals("invalid"))

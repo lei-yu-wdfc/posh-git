@@ -16,8 +16,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public PersonalBankAccountPage(UiClient client) : base(client)
         {
-            _form = Content.FindElement(By.CssSelector(Ui.Get.PersonalBankAccountPage.FormId));
-            _next = _form.FindElement(By.CssSelector(Ui.Get.PersonalBankAccountPage.NextButton));
+            _form = Content.FindElement(By.CssSelector(UiMap.Get.PersonalBankAccountPage.FormId));
+            _next = _form.FindElement(By.CssSelector(UiMap.Get.PersonalBankAccountPage.NextButton));
             BankAccountSection = new BankAccountSection(this);
             switch(Config.AUT)
             {

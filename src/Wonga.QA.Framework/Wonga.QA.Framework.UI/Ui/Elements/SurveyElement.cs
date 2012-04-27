@@ -20,7 +20,7 @@ namespace Wonga.QA.Framework.UI.Elements
 
         public bool IsVisible
         {
-            get { return  Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.SurveyElement.SurveyBox)).Displayed; }
+            get { return  Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.SurveyElement.SurveyBox)).Displayed; }
         }
     }
 

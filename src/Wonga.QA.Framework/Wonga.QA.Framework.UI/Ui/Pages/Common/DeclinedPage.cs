@@ -10,7 +10,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
     {
         public DeclinedPage(UiClient client) : base(client)
         {
-            Assert.That(Headers, Has.Item(Ui.Get.DeclinedPage.HeaderText));
+            Assert.That(Headers, Has.Item(UiMap.Get.DeclinedPage.HeaderText));
         }
     }
 }

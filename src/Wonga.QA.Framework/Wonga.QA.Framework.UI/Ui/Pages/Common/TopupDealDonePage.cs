@@ -18,7 +18,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public TopupDealDonePage(UiClient client) : base(client)
         {
             Assert.That(Headers, Has.Item("Success! Your request for some extra credit has been approved."));
-            _accountLink = Content.FindElement(By.CssSelector(Ui.Get.TopupDealDonePage.AccountLink));
+            _accountLink = Content.FindElement(By.CssSelector(UiMap.Get.TopupDealDonePage.AccountLink));
 
         }
 

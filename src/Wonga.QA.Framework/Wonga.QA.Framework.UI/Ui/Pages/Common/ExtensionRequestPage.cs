@@ -24,23 +24,23 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private SmallExtensionSlidersElement Sliders { get; set; }
         public ExtensionRequestPage(UiClient client) : base(client)
         {
-            _submitButton = Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageSubmitButton));
-            _informativeBox = Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageInformativeBox));
-            _card = Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageCard));
-            _securityCode = Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageSecurityCode));
-            _interestAndFees = Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageInterestFees));
-            _grandTotal = Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageNewGrandTotal));   
+            _submitButton = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionRequestPage.ExtensionRequestPageSubmitButton));
+            _informativeBox = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionRequestPage.ExtensionRequestPageInformativeBox));
+            _card = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionRequestPage.ExtensionRequestPageCard));
+            _securityCode = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionRequestPage.ExtensionRequestPageSecurityCode));
+            _interestAndFees = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionRequestPage.ExtensionRequestPageInterestFees));
+            _grandTotal = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionRequestPage.ExtensionRequestPageNewGrandTotal));   
         }
 
         public bool IsExtensionRequestPageInformativeBoxDisplayed()
         {
-            _informativeBox = Client.Driver.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageInformativeBox));
+            _informativeBox = Client.Driver.FindElement(By.CssSelector(UiMap.Get.ExtensionRequestPage.ExtensionRequestPageInformativeBox));
             return _informativeBox.Displayed;
         }
 
         public bool IsExtensionRequestPageCardPresent()
         {
-            _card = Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageCard));
+            _card = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionRequestPage.ExtensionRequestPageCard));
             IList<IWebElement> options = _card.FindElements(By.TagName("option"));
             if (options.Count > 0)
             {
@@ -66,7 +66,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             Sliders = new SmallExtensionSlidersElement(this);
             Sliders.HowLong = extensionRequestDuration;
 
-            _extensionRequestDate = Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageRepaymentDate));
+            _extensionRequestDate = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionRequestPage.ExtensionRequestPageRepaymentDate));
             var extensionRequestDate = _extensionRequestDate.Text.Replace("st", "").Replace("nd", "").Replace("rd", "").Replace("th", "");
                         
             //Extract Requested Date from Page
@@ -97,7 +97,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         }    
 
         public String InformativeBox {
-            get { return Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageExtensionDuration)).GetValue(); }
+            get { return Content.FindElement(By.CssSelector(UiMap.Get.ExtensionRequestPage.ExtensionRequestPageExtensionDuration)).GetValue(); }
         }
 
         public void SetInformativeBox(int value)
@@ -106,24 +106,24 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         }
 
         public String RepaymentDate {
-            get { return Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageRepaymentDate)).Text; }
+            get { return Content.FindElement(By.CssSelector(UiMap.Get.ExtensionRequestPage.ExtensionRequestPageRepaymentDate)).Text; }
         }
         
         public String InterestFees {
-            get { return Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageInterestFees)).Text; }
+            get { return Content.FindElement(By.CssSelector(UiMap.Get.ExtensionRequestPage.ExtensionRequestPageInterestFees)).Text; }
         }
 
         public String OweToday {
-            get { return Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageOweToday)).Text; }
+            get { return Content.FindElement(By.CssSelector(UiMap.Get.ExtensionRequestPage.ExtensionRequestPageOweToday)).Text; }
         }
 
         public String TotalRepayToday {
-            get { return Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageTotalRepayToday)).Text; }
+            get { return Content.FindElement(By.CssSelector(UiMap.Get.ExtensionRequestPage.ExtensionRequestPageTotalRepayToday)).Text; }
         }
 
         public String NewCreditAmount
         {
-            get { return Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageNewCreditAmount)).Text; }
+            get { return Content.FindElement(By.CssSelector(UiMap.Get.ExtensionRequestPage.ExtensionRequestPageNewCreditAmount)).Text; }
         }
 
     }

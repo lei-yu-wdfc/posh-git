@@ -28,15 +28,15 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public string GetTextFromPage
         {
-            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.HowItWorksPage.HowItWorksText)).Text; }
+            get { return Client.Driver.FindElement(By.CssSelector(UiMap.Get.HowItWorksPage.HowItWorksText)).Text; }
         }
 
         public string GetTransparencyHeader
         {
             get
             {
-                Client.Driver.FindElement(By.CssSelector(Ui.Get.HowItWorksPage.Transparency)).Click();
-                return Client.Driver.FindElement(By.CssSelector(Ui.Get.HowItWorksPage.TransparencyHeader)).Text;
+                Client.Driver.FindElement(By.CssSelector(UiMap.Get.HowItWorksPage.Transparency)).Click();
+                return Client.Driver.FindElement(By.CssSelector(UiMap.Get.HowItWorksPage.TransparencyHeader)).Text;
             }
         }
 
@@ -44,8 +44,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             get
             {
-                Client.Driver.FindElement(By.CssSelector(Ui.Get.HowItWorksPage.Transparency)).Click();
-                return Client.Driver.FindElement(By.CssSelector(Ui.Get.HowItWorksPage.TransparencyText)).Text;
+                Client.Driver.FindElement(By.CssSelector(UiMap.Get.HowItWorksPage.Transparency)).Click();
+                return Client.Driver.FindElement(By.CssSelector(UiMap.Get.HowItWorksPage.TransparencyText)).Text;
             }
         }
 
@@ -53,8 +53,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             get
             {
-                Client.Driver.FindElement(By.CssSelector(Ui.Get.HowItWorksPage.PersonalGuarantee)).Click();
-                return Client.Driver.FindElement(By.CssSelector(Ui.Get.HowItWorksPage.PersonalGuaranteeHeader)).Text;
+                Client.Driver.FindElement(By.CssSelector(UiMap.Get.HowItWorksPage.PersonalGuarantee)).Click();
+                return Client.Driver.FindElement(By.CssSelector(UiMap.Get.HowItWorksPage.PersonalGuaranteeHeader)).Text;
             }
         }
 
@@ -62,8 +62,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             get
             {
-                Client.Driver.FindElement(By.CssSelector(Ui.Get.HowItWorksPage.PersonalGuarantee)).Click();
-                return Client.Driver.FindElement(By.CssSelector(Ui.Get.HowItWorksPage.PersonalGuaranteeText)).Text;
+                Client.Driver.FindElement(By.CssSelector(UiMap.Get.HowItWorksPage.PersonalGuarantee)).Click();
+                return Client.Driver.FindElement(By.CssSelector(UiMap.Get.HowItWorksPage.PersonalGuaranteeText)).Text;
             }
         }
 
@@ -71,8 +71,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             get
             {
-                Client.Driver.FindElement(By.CssSelector(Ui.Get.HowItWorksPage.FailureToStick)).Click();
-                return Client.Driver.FindElement(By.CssSelector(Ui.Get.HowItWorksPage.FailureToStickHeader)).Text;
+                Client.Driver.FindElement(By.CssSelector(UiMap.Get.HowItWorksPage.FailureToStick)).Click();
+                return Client.Driver.FindElement(By.CssSelector(UiMap.Get.HowItWorksPage.FailureToStickHeader)).Text;
             }
         }
 
@@ -80,8 +80,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             get
             {
-                Client.Driver.FindElement(By.CssSelector(Ui.Get.HowItWorksPage.FailureToStick)).Click();
-                return Client.Driver.FindElement(By.CssSelector(Ui.Get.HowItWorksPage.FailureToStickText)).Text;
+                Client.Driver.FindElement(By.CssSelector(UiMap.Get.HowItWorksPage.FailureToStick)).Click();
+                return Client.Driver.FindElement(By.CssSelector(UiMap.Get.HowItWorksPage.FailureToStickText)).Text;
             }
         }
     }

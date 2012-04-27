@@ -42,16 +42,16 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             }
         }
 
-        public DebitCardSection(BasePage page) : base(Ui.Get.DebitCardSection.Fieldset, page)
+        public DebitCardSection(BasePage page) : base(UiMap.Get.DebitCardSection.Fieldset, page)
         {
-            _cardType = Section.FindElement(By.CssSelector(Ui.Get.DebitCardSection.CardType));
-            _cardNumber = Section.FindElement(By.CssSelector(Ui.Get.DebitCardSection.CardNumber));
-            _cardName = Section.FindElement(By.CssSelector(Ui.Get.DebitCardSection.CardName));
-            _cardExpiryDateMonth = Section.FindElement(By.CssSelector(Ui.Get.DebitCardSection.CardExpiryDateMonth));
-            _cardExpiryDateYear = Section.FindElement(By.CssSelector(Ui.Get.DebitCardSection.CardExpiryDateYear));
-            _cardStartDateMonth = Section.FindElement(By.CssSelector(Ui.Get.DebitCardSection.CardStartDateMonth));
-            _cardStartDateYear = Section.FindElement(By.CssSelector(Ui.Get.DebitCardSection.CardStartDateYear));
-            _cardSecurity = Section.FindElement(By.CssSelector(Ui.Get.DebitCardSection.CardSecurityNumber));
+            _cardType = Section.FindElement(By.CssSelector(UiMap.Get.DebitCardSection.CardType));
+            _cardNumber = Section.FindElement(By.CssSelector(UiMap.Get.DebitCardSection.CardNumber));
+            _cardName = Section.FindElement(By.CssSelector(UiMap.Get.DebitCardSection.CardName));
+            _cardExpiryDateMonth = Section.FindElement(By.CssSelector(UiMap.Get.DebitCardSection.CardExpiryDateMonth));
+            _cardExpiryDateYear = Section.FindElement(By.CssSelector(UiMap.Get.DebitCardSection.CardExpiryDateYear));
+            _cardStartDateMonth = Section.FindElement(By.CssSelector(UiMap.Get.DebitCardSection.CardStartDateMonth));
+            _cardStartDateYear = Section.FindElement(By.CssSelector(UiMap.Get.DebitCardSection.CardStartDateYear));
+            _cardSecurity = Section.FindElement(By.CssSelector(UiMap.Get.DebitCardSection.CardSecurityNumber));
         }
     }
 }

@@ -21,26 +21,26 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         public String SecretQuestion { set { _secretQuestion.SendValue(value); } }
         public String SecretAnswer { set { _secretAnswer.SendValue(value); } }
 
-        public AccountDetailsSection(BasePage page) : base(Ui.Get.AccountDetailsSection.Fieldset, page)
+        public AccountDetailsSection(BasePage page) : base(UiMap.Get.AccountDetailsSection.Fieldset, page)
         {
-            _password = Section.FindElement(By.CssSelector(Ui.Get.AccountDetailsSection.Password));
-            _passwordConfirm = Section.FindElement(By.CssSelector(Ui.Get.AccountDetailsSection.PasswordConfirm));
-            _secretQuestion = Section.FindElement(By.CssSelector(Ui.Get.AccountDetailsSection.SecretQuestion));
-            _secretAnswer = Section.FindElement(By.CssSelector(Ui.Get.AccountDetailsSection.SecretAnswer));
+            _password = Section.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.Password));
+            _passwordConfirm = Section.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.PasswordConfirm));
+            _secretQuestion = Section.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.SecretQuestion));
+            _secretAnswer = Section.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.SecretAnswer));
         }
         public bool IsPasswordMismatchWarningOccured()
         {
-            var passwordWarning = Section.FindElement(By.CssSelector(Ui.Get.AccountDetailsSection.PasswordConfirmErrorForm));
+            var passwordWarning = Section.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.PasswordConfirmErrorForm));
             return passwordWarning.Text.Equals("Passwords must match");
         }
         public bool IsPasswordInvalidFormatWarningOccured()
         {
-            var passwordWarning = Section.FindElement(By.CssSelector(Ui.Get.AccountDetailsSection.PasswordErrorForm));
+            var passwordWarning = Section.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.PasswordErrorForm));
             return passwordWarning.Text.Equals("Your password must be 8 or more characters and must include a capital letter and a number.");
         }
         public bool IsPasswordEqualsEmailWarningOccured()
         {
-            var passwordWarning = Section.FindElement(By.CssSelector(Ui.Get.AccountDetailsSection.PasswordErrorForm));
+            var passwordWarning = Section.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.PasswordErrorForm));
             return passwordWarning.Text.Equals("Password must not contain user name.");
        }
     }

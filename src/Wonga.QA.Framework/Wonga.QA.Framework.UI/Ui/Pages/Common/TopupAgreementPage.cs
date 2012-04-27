@@ -12,8 +12,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public TopupAgreementPage(UiClient client) : base(client)
         {
             
-            _nextButton = Content.FindElement(By.CssSelector(Ui.Get.TopupAgreementPage.TopupAgreementAcceptButton));
-            _agreementLegals = Content.FindElement(By.CssSelector(Ui.Get.TopupAgreementPage.TopupAgreementscroll));
+            _nextButton = Content.FindElement(By.CssSelector(UiMap.Get.TopupAgreementPage.TopupAgreementAcceptButton));
+            _agreementLegals = Content.FindElement(By.CssSelector(UiMap.Get.TopupAgreementPage.TopupAgreementscroll));
         }
 
         public bool IsTopupAgreementPageTopupAmountNotPresent()

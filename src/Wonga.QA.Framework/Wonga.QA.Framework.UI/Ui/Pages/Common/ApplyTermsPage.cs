@@ -16,8 +16,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         
         public ApplyTermsPage(UiClient client) : base(client)
         {
-            _next = Content.FindElement(By.CssSelector(Ui.Get.ApplyTermsPage.NextButton));
-            _editLoanDurationField = Content.FindElement(By.CssSelector(Ui.Get.ApplyTermsPage.EditLoanDurationField));
+            _next = Content.FindElement(By.CssSelector(UiMap.Get.ApplyTermsPage.NextButton));
+            _editLoanDurationField = Content.FindElement(By.CssSelector(UiMap.Get.ApplyTermsPage.EditLoanDurationField));
         }
 
         public void EditDurationOfLoan(String value)

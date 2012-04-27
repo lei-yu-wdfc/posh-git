@@ -22,8 +22,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
         public BusinessDebitCardPage(UiClient client)
             : base(client)
         {
-            _form = Content.FindElement(By.CssSelector(Ui.Get.BusinessDebitCardPage.FormId));
-            _next = _form.FindElement(By.CssSelector(Ui.Get.BusinessDebitCardPage.NextButton));
+            _form = Content.FindElement(By.CssSelector(UiMap.Get.BusinessDebitCardPage.FormId));
+            _next = _form.FindElement(By.CssSelector(UiMap.Get.BusinessDebitCardPage.NextButton));
 
             DebitCardSection = new DebitCardSection(this);
             AddressDetailsSection = new AddressDetailsSection(this);

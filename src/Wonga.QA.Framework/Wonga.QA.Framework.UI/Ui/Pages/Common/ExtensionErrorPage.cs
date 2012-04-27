@@ -19,8 +19,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public ExtensionErrorPage(UiClient client) : base(client)
         {
             Content.Driver().PageSource.Contains("Ouch! We're very sorry");
-            _header = Content.FindElement(By.CssSelector(Ui.Get.ExtensionErrorPage.Header));
-            _bodyContent = Content.FindElement(By.CssSelector(Ui.Get.ExtensionErrorPage.BodyText));
+            _header = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionErrorPage.Header));
+            _bodyContent = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionErrorPage.BodyText));
         }
 
         public bool IsErrorPageSorryNotPresent()

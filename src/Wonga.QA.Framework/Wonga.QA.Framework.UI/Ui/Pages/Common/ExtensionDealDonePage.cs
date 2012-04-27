@@ -18,8 +18,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public ExtensionDealDonePage(UiClient client) : base(client)
         {
-            _header = Content.FindElement(By.CssSelector(Ui.Get.ExtensionDealDonePage.Header));
-            _bodyContent = Content.FindElement(By.CssSelector(Ui.Get.ExtensionDealDonePage.ContentArea));
+            _header = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionDealDonePage.Header));
+            _bodyContent = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionDealDonePage.ContentArea));
         }
 
         public bool IsDealDonePageExtensionAmountNotPresent()

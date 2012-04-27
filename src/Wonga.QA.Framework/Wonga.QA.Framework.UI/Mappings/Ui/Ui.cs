@@ -11,12 +11,12 @@ using PayLaterLoginPage = Wonga.QA.Framework.UI.Mappings.Pages.PayLaterLoginPage
 
 namespace Wonga.QA.Framework.UI.Mappings
 {
-    public class Ui
+    public class UiMap
     {
-        private static Ui MyElements;
+        private static UiMap MyElements;
         private static object _lock = new object();
 
-        public static Ui Get
+        public static UiMap Get
         {
             get
             {
@@ -24,14 +24,14 @@ namespace Wonga.QA.Framework.UI.Mappings
                 {
                     if (MyElements == null)
                     {
-                        MyElements = new Ui();
+                        MyElements = new UiMap();
                     }
                 }
                 return MyElements;
             }
         }
 
-        protected Ui()
+        protected UiMap()
         {
             XmlMapper = new XmlMapper("Wonga.QA.Framework.UI.Mappings.Xml.Ui._base.xml", string.Format("Wonga.QA.Framework.UI.Mappings.Xml.Ui.{0}.xml", Config.AUT));
             XmlMapper.GetValues(this, null);
