@@ -18,6 +18,7 @@ namespace Wonga.QA.Framework.Msmq
         public String IssueNo { get; set; }
         public Object BillingAddress { get; set; }
         public RepaymentRequestEnum RepaymentRequestType { get; set; }
+        public Guid? PaymentExternalId { get; set; }
         public Decimal Amount { get; set; }
         public CurrencyCodeIso4217Enum Currency { get; set; }
         public Guid SagaId { get; set; }

@@ -13,7 +13,7 @@ namespace Wonga.QA.Framework.Msmq
         public String CustomerBankCode { get; set; }
         public String CustomerAccountNumber { get; set; }
         public String CustomerName { get; set; }
-        public Int32 TransactionId { get; set; }
+        public Int32? TransactionId { get; set; }
         public String FailureReason { get; set; }
         public String FileName { get; set; }
         public Byte[] FileContents { get; set; }

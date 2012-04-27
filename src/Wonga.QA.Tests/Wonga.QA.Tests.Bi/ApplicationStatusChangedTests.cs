@@ -49,15 +49,16 @@ namespace Wonga.QA.Tests.Bi
                                                         .WithLoanAmount(loanAmount)
                                                         .Build();
 
+            //force the application to move to live by sending the IFundsTransferredEvent.
+            Drive.Msmq.Payments.Send(new IFundsTransferredEvent { AccountId = application.AccountId, 
+                                                                  ApplicationId = application.Id, 
+                                                                  TransactionId = Guid.NewGuid() });
+
             //wait for the payment to customer to be sent out
             Do.Until(() => applicationRepo.FindAll(applicationRepo.ExternalId == application.Id &&
                                                    applicationRepo.Transaction.ApplicationId == applicationRepo.Id &&
                                                    applicationRepo.Amount == loanAmount && applicationRepo.Type == "CashAdvance"));
-            
-            sales.SalesforceUsername = sfUsername.Value;
-            sales.SalesforcePassword = sfPassword.Value;
-            
-            sales.SalesforceUrl = sfUrl.Value;
+
             Do.Until(() =>{ var app = sales.GetApplicationById(application.Id);
                             return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live; });
         }
@@ -75,6 +76,11 @@ namespace Wonga.QA.Tests.Bi
             Do.Until(() => applicationRepo.FindAll(applicationRepo.ExternalId == application.Id &&
                                                    applicationRepo.Transaction.ApplicationId == applicationRepo.Id &&
                                                    applicationRepo.Amount == loanAmount && applicationRepo.Type == "CashAdvance"));
+
+            //force the application to move to live by sending the IFundsTransferredEvent.
+            Drive.Msmq.Payments.Send(new IFundsTransferredEvent { AccountId = application.AccountId, 
+                                                                  ApplicationId = application.Id,
+                                                                  TransactionId = Guid.NewGuid() });
 
             bool present = ConfirmStatusValues(application.Id, new string[] { "Accepted", "Terms Agreed", "Live (Not Due)" });
             Assert.IsTrue(present);

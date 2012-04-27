@@ -42,5 +42,7 @@ namespace Wonga.QA.Framework.Msmq
         InitiationFeeReversal = 38,
         CashAdvanceReversal = 39,
         FeeReversal = 40,
+        BatchedDcaReceipt = 41,
+        BatchedDmcReceipt = 42,
     }
 }

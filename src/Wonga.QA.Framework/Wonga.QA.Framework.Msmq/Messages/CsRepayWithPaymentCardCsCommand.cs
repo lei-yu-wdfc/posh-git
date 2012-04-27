@@ -14,6 +14,7 @@ namespace Wonga.QA.Framework.Msmq
         public CurrencyCodeIso4217Enum Currency { get; set; }
         public String CV2 { get; set; }
         public String SalesforceUser { get; set; }
+        public Guid PaymentId { get; set; }
         public DateTime CreatedOn { get; set; }
         public Guid? ClientId { get; set; }
     }
