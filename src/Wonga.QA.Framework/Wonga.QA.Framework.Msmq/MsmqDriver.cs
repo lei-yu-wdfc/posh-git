@@ -31,6 +31,7 @@ namespace Wonga.QA.Framework.Msmq
         private MsmqQueue _salesforce;
         private MsmqQueue _scotia;
         private MsmqQueue _sms;
+        private MsmqQueue _smsDistributor;
         private MsmqQueue _timeZone;
         private MsmqQueue _transUnion;
         private MsmqQueue _uru;
@@ -196,6 +197,12 @@ namespace Wonga.QA.Framework.Msmq
         {
             get { return _sms ?? (_sms = new MsmqQueue(Config.Msmq.Sms)); }
             set { _sms = value; }
+        }
+
+        public MsmqQueue SmsDistrubutor
+        {
+            get { return _smsDistributor ?? (_smsDistributor = new MsmqQueue(Config.Msmq.SmsDistributor)); }
+            set { _smsDistributor = value; }
         }
 
         public MsmqQueue TimeZone
