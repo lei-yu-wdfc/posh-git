@@ -113,4 +113,23 @@
 	<ResendPin>#edit-resend-pin</ResendPin>
 	<ResendPinMessage>.pin_resend</ResendPinMessage>
   </MobilePinVerificationSection>
+  <PaymentCardsPage>
+    <AddCardLink>a.bottom-link</AddCardLink>
+  </PaymentCardsPage>
+
+  <AccountingPage>
+    <AddFileLink>li#liAddFile.ui-state-default a</AddFileLink>
+    <CashOutLink>li#liTransactionsSearch.ui-state-default a</CashOutLink>
+  </AccountingPage>
+
+  <CashOutPage>
+    <TransactionTypeOptions>select#TransactionType</TransactionTypeOptions>
+    <FilterOptions>select#SearchBy</FilterOptions>
+    <FilterValue>input#SearchByValue</FilterValue>
+    <SearchButton>input#btnSearch</SearchButton>
+    <SendPaymentCheckBox>input[name='PaymentSelected']</SendPaymentCheckBox>
+    <CancelCheckBox>input[name='CancelSelected']</CancelCheckBox>
+    <UpdateButton>#GridContainer > input[name='Command']</UpdateButton>
+  </CashOutPage>
+
 </Ui>

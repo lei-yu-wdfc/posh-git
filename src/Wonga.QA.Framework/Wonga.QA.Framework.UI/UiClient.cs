@@ -15,6 +15,7 @@ using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Remote;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.UiElements.Pages;
+using Wonga.QA.Framework.UI.UiElements.Pages.Admin;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Framework.UI.UiElements.Pages.SalesForce;
 
@@ -136,6 +137,18 @@ namespace Wonga.QA.Framework.UI
         {
             Driver.Navigate().GoToUrl(Config.Ui.Home + "/how-it-works");
             return new HowItWorksPage(this);
+        }
+
+        public PaymentCardsPage PaymentCards()
+        {
+            Driver.Navigate().GoToUrl(Config.Admin.Home + "/PaymentCards/GetList/00000000-0000-0000-0000-000000000000");
+            return new PaymentCardsPage(this);
+        }
+
+        public AccountingPage Accounting()
+        {
+            Driver.Navigate().GoToUrl(Config.Admin.Home + "/Accounting");
+            return new AccountingPage(this);
         }
 
         public Image Screen()
