@@ -26,5 +26,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String AmountPlusButton { get; set; }
         public String DurationMinusButton { get; set; }
         public String DurationPlusButton { get; set; }
+        public String GenderWarning { get; set; }
+        public String DateOfBirthWarning { get; set; }
     }
 }
