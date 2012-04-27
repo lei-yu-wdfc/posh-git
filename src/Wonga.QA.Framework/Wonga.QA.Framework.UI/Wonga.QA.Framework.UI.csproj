@@ -104,6 +104,9 @@
     <Compile Include="Mappings\Ui\Pages\Common\TopupProcessingPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\TopupRequestPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\WhyUseUsPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\PayLater\PayLaterLoginPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\PayLater\PayLaterThanksForm.cs" />
+    <Compile Include="Mappings\Ui\Pages\PayLater\SubmitionPage.cs" />
     <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceCustomerDetailPage.cs" />
     <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceHomePage.cs" />
     <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceLoginPage.cs" />
@@ -195,6 +198,8 @@
     <Compile Include="Ui\Pages\Common\WhyUseUsPage.cs" />
     <Compile Include="Ui\Pages\Interfaces\IExtensionPaymentPage.cs" />
     <Compile Include="Ui\Pages\Interfaces\ITopupDecisionPage.cs" />
+    <Compile Include="Ui\Pages\PayLater\PayLaterLoginPage.cs" />
+    <Compile Include="Ui\Pages\PayLater\SubmitionPage.cs" />
     <Compile Include="Ui\Pages\SalesForce\BaseSfPage.cs" />
     <Compile Include="Ui\Pages\SalesForce\SalesForceCustomerDetailPage.cs" />
     <Compile Include="Ui\Pages\SalesForce\SalesForceHomePage.cs" />
