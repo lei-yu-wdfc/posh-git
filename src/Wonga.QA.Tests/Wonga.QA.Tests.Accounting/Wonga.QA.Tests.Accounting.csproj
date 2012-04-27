@@ -61,27 +61,17 @@
     <Reference Include="Wonga.QA.Framework.Api">
       <HintPath>..\..\..\bin\Wonga.QA.Framework.Api.dll</HintPath>
     </Reference>
-    <Reference Include="Wonga.QA.Framework.Core">
+    <Reference Include="Wonga.QA.Framework.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\bin\Wonga.QA.Framework.Core.dll</HintPath>
     </Reference>
     <Reference Include="Wonga.QA.Framework.Data">
       <HintPath>..\..\..\bin\Wonga.QA.Framework.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Wonga.QA.Framework.UI">
-      <HintPath>..\..\..\bin\Wonga.QA.Framework.UI.dll</HintPath>
+    <Reference Include="Wonga.QA.Tests.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\Wonga.QA.Tests.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Wonga.QA.Tests.Core">
-      <HintPath>..\..\..\bin\Wonga.QA.Tests\Wonga.QA.Tests.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Wonga.QA.Tests.Ui">
-      <HintPath>..\..\..\bin\Wonga.QA.Tests.Ui.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Wonga.QA.Tests.Ui.Admin\Wonga.QA.Tests.Ui.Admin.csproj">
-      <Project>{B9FDE3ED-0FEE-400A-87EB-3A3C7AC8F01D}</Project>
-      <Name>Wonga.QA.Tests.Ui.Admin</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
