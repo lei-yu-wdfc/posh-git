@@ -167,6 +167,11 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             return new AddressDetailsPage(Client);
         }
 
+        public void ClickSubmit()
+        {
+            _next.Click();
+        }
+
         public void PrivacyPolicyClick()
         {
             Client.Driver.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.PrivacyPolicyLink)).Click();
