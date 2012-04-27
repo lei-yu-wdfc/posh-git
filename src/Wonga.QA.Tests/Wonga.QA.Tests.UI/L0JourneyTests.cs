@@ -1103,5 +1103,46 @@ namespace Wonga.QA.Tests.Ui
             }
 
         }
+
+        [Test, AUT(AUT.Za), JIRA("QA-179")]
+        public void L0JourneyCustomerIdNumberShouldBeAlignedWithDOBAndGender()
+        {
+            var emael = Get.RandomEmail();
+            var journeyZa = JourneyFactory.GetL0Journey(Client.Home());
+            var personalDetailsPageZa = journeyZa.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
+            personalDetailsPageZa.YourName.FirstName = Get.RandomString(3, 10);
+            personalDetailsPageZa.YourName.LastName = Get.RandomString(3, 10);
+            personalDetailsPageZa.YourName.Title = "Mr";
+            personalDetailsPageZa.YourDetails.HomeStatus = "Owner Occupier";
+            personalDetailsPageZa.YourDetails.HomeLanguage = "English";
+            personalDetailsPageZa.YourDetails.NumberOfDependants = "0";
+            personalDetailsPageZa.YourDetails.MaritalStatus = "Single";
+            personalDetailsPageZa.EmploymentDetails.EmploymentStatus = "Employed Full Time";
+            personalDetailsPageZa.EmploymentDetails.MonthlyIncome = "3000";
+            personalDetailsPageZa.EmploymentDetails.EmployerName = Get.EnumToString(RiskMask.TESTEmployedMask);
+            personalDetailsPageZa.EmploymentDetails.EmployerIndustry = "Accountancy";
+            personalDetailsPageZa.EmploymentDetails.EmploymentPosition = "Administration";
+            personalDetailsPageZa.EmploymentDetails.TimeWithEmployerYears = "9";
+            personalDetailsPageZa.EmploymentDetails.TimeWithEmployerMonths = "5";
+            personalDetailsPageZa.EmploymentDetails.WorkPhone = "0123456789";
+            personalDetailsPageZa.EmploymentDetails.SalaryPaidToBank = true;
+            personalDetailsPageZa.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d/MMM/yyyy");
+            personalDetailsPageZa.EmploymentDetails.IncomeFrequency = "Monthly";
+            personalDetailsPageZa.ContactingYou.CellPhoneNumber = "0751234567";
+            personalDetailsPageZa.ContactingYou.EmailAddress = emael;
+            personalDetailsPageZa.ContactingYou.ConfirmEmailAddress = emael;
+            personalDetailsPageZa.PrivacyPolicy = true;
+            personalDetailsPageZa.CanContact = "Yes";
+            personalDetailsPageZa.MarriedInCommunityProperty =
+                "I am not married in community of property (I am single, married with antenuptial contract, divorced etc.)";
+            personalDetailsPageZa.YourDetails.Number = Get.GetNIN(new DateTime(1957, 3, 10), true);
+            personalDetailsPageZa.YourDetails.Gender = "Male";
+            personalDetailsPageZa.YourDetails.DateOfBirth = "9/Mar/1957";
+            Assert.IsTrue(personalDetailsPageZa.IsGenderDoesntMutchIdNumber());
+            Assert.IsTrue(personalDetailsPageZa.IsDOBDoesntMutchIdNumber());
+            personalDetailsPageZa.YourDetails.Gender = "Female";
+            personalDetailsPageZa.YourDetails.DateOfBirth = "10/Mar/1957";
+            journeyZa.CurrentPage = personalDetailsPageZa.Submit() as AddressDetailsPage;
+        }
     }
 }
