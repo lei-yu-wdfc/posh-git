@@ -48,8 +48,16 @@
     <Reference Include="Wonga.QA.Framework">
       <HintPath>..\..\..\bin\Wonga.QA.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="Wonga.QA.Framework.Api, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\Wonga.QA.Framework.Api.dll</HintPath>
+    </Reference>
     <Reference Include="Wonga.QA.Framework.Core">
       <HintPath>..\..\..\bin\Wonga.QA.Framework.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Wonga.QA.Framework.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\Wonga.QA.Framework.Data.dll</HintPath>
     </Reference>
     <Reference Include="Wonga.QA.Framework.UI">
       <HintPath>..\..\..\bin\Wonga.QA.Framework.UI.dll</HintPath>
@@ -59,8 +67,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountingTests.cs" />
     <Compile Include="AdminTest.cs" />
-    <Compile Include="PaymentCardsTest.cs" />
+    <Compile Include="PaymentCardsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

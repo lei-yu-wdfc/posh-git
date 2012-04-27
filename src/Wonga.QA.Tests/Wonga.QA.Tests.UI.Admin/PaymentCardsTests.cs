@@ -7,6 +7,7 @@ namespace Wonga.QA.Tests.Ui.Admin
 {
     class PaymentCardsTest : AdminTest
     {
+        [Ignore]
         [Test, AUT(AUT.Uk)]
         public void CustomerOnAboutUsPageShouldBeAbleChooseEveryLink()
         {
