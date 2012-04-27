@@ -82,6 +82,7 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("WIP6", Proxy)) :
                         AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn("WIP8", Proxy)) : Throw<DbConfig>();
                     Ui.SetUri(String.Format("wip.{0}.wonga.com", AUT));
+                    Admin = new AdminConfig(String.Format("wip.admin.{0}.wonga.com", AUT));
                     SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.wip", "Allw0nga");
                     SalesforceApi =
                         AUT == AUT.Ca ? new SalesforceApiConfig("v3integration@wonga.com.int") :
@@ -144,6 +145,7 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("RC6", Proxy)) :
                         AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn("RC8", Proxy)) : Throw<DbConfig>();
                     Ui.SetUri(String.Format("rc.{0}.wonga.com", AUT));
+                    Admin = new AdminConfig(String.Format("rc.admin.{0}.wonga.com", AUT));
                     SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.rc", "Allw0nga");
                     SalesforceApi = new SalesforceApiConfig("v3integration@wonga.com.rc");
                     break;
