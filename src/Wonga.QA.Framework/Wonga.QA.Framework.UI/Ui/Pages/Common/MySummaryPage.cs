@@ -79,7 +79,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
             try
             {
-                var mySummaryTitle = Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.Title));
+                var mySummaryTitle = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.Title));
             }
             catch (NoSuchElementException)
             {
@@ -89,46 +89,46 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         }
         public String GetTotalToRepay
         {
-            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.TotalToRepay)).Text;  }
+            get { return Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.TotalToRepay)).Text;  }
         }
         public String GetRepaymentDate
         {
-            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.RepaymentDate)).Text; }
+            get { return Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.RepaymentDate)).Text; }
         }
 
         public String GetPromisedRepayAmount
         {
-            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.PromisedRepayAmount)).Text; }
+            get { return Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.PromisedRepayAmount)).Text; }
         }
         public String GetPromisedRepayDate
         {
-            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.PromisedRepayDate)).Text; }
+            get { return Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.PromisedRepayDate)).Text; }
         }
 
         public void RepayButtonClick()
         {
-            Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.RepayButton)).Click();
+            Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.RepayButton)).Click();
         }
 
         public void ChangePromiseDateButtonClick()
         {
-            Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.ChangePromiseDateButton)).Click();
+            Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.ChangePromiseDateButton)).Click();
         }
 
         public String GetTotalToRepayAmountPopup
         {
-            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.TotalToRepayAmountPopup)).Text; }
+            get { return Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.TotalToRepayAmountPopup)).Text; }
         }
         public String GetPromisedRepayDatePopup
         {
-            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.PromisedRepayDatePopup)).Text; }
+            get { return Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.PromisedRepayDatePopup)).Text; }
         }
 
         public bool IsTagCloudAvailable()
         {
             try
             {
-                var TagCloudText = Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.TagCloud)).Text;
+                var TagCloudText = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.TagCloud)).Text;
             }
 
             catch (NoSuchElementException)
@@ -140,31 +140,31 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public String GetTagCloud
         {
-            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.TagCloud)).Text; }
+            get { return Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.TagCloud)).Text; }
         }
 
         public void ClickViewLoanDetailsButton()
         {
-            Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.ViewLoanDetailsButton)).Click();
+            Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.ViewLoanDetailsButton)).Click();
         }
 
         public void WaitForMySummaryPopup()
         {
-            var popup = Do.With.Interval(10).Until(() => Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.PopupForm)));
-            Do.Until(() => popup.FindElement(By.CssSelector(Ui.Get.MySummaryPage.PopupMySummaryTitle)).Displayed);
+            var popup = Do.With.Interval(10).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.PopupForm)));
+            Do.Until(() => popup.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.PopupMySummaryTitle)).Displayed);
         }
 
         public bool IsPopupContainsSummaryDetailsTable()
         {
-            var popup = Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.PopupForm));
-            return popup.FindElement(By.CssSelector(Ui.Get.MySummaryPage.PopupSummaryDetailsTable)).Displayed;
+            var popup = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.PopupForm));
+            return popup.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.PopupSummaryDetailsTable)).Displayed;
         }
 
         public bool IsLoanStatusMessageAvailable()
         {
             try
             {
-                var loanStatusMessageText = Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.LoanStatusMessage)).Text;
+                var loanStatusMessageText = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.LoanStatusMessage)).Text;
             }
 
             catch (NoSuchElementException)
@@ -176,28 +176,28 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public String GetLoanStatusMessage
         {
-            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.LoanStatusMessage)).Text; }
+            get { return Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.LoanStatusMessage)).Text; }
 
         }
 
         public void CheckScenarioElementsExist()
         {
-            Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.Promise));
-            Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.YouCan));
-            Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.IntroText));
-            Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.StatusMessage));
-            Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.OptionsCloud));
+            Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.Promise));
+            Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.YouCan));
+            Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.IntroText));
+            Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.StatusMessage));
+            Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.OptionsCloud));
 
         }
 
         public String GetIntroText
         {
-            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.IntroText)).Text; }
+            get { return Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.IntroText)).Text; }
         }
 
         public String GetMaxAvailableCredit
         {
-            get { return Client.Driver.FindElement(By.CssSelector(Ui.Get.MySummaryPage.MaxAvailableCredit)).Text; }
+            get { return Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.MaxAvailableCredit)).Text; }
         }
 
     }

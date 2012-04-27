@@ -8,7 +8,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Admin
 
         public PaymentCardsPage(UiClient client) : base(client)
         {
-            _addCard = Client.Driver.FindElement(By.CssSelector(Mappings.Ui.Get.PaymentCardsPage.AddCardLink));
+            _addCard = Client.Driver.FindElement(By.CssSelector(Mappings.UiMap.Get.PaymentCardsPage.AddCardLink));
         }
 
         public AddCardPage AddCard()

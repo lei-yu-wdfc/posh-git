@@ -15,9 +15,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public ForgotPasswordPage(UiClient client)
             : base(client)
         {
-            _username = Content.FindElement(By.CssSelector(Ui.Get.ForgotPasswordPage.Username));
-            _captcha = Content.FindElement(By.CssSelector(Ui.Get.ForgotPasswordPage.Captcha));
-            _next = Content.FindElement(By.CssSelector(Ui.Get.ForgotPasswordPage.Next));
+            _username = Content.FindElement(By.CssSelector(UiMap.Get.ForgotPasswordPage.Username));
+            _captcha = Content.FindElement(By.CssSelector(UiMap.Get.ForgotPasswordPage.Captcha));
+            _next = Content.FindElement(By.CssSelector(UiMap.Get.ForgotPasswordPage.Next));
         }
 
         public HomePage EnterEmailAndCaptcha(string email, string captcha)

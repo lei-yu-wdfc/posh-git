@@ -7,6 +7,7 @@ using MbUnit.Framework;
 using OpenQA.Selenium;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.UI.Mappings;
 using Wonga.QA.Tests.Core;
 using System.Threading;
 
@@ -24,12 +25,12 @@ namespace Wonga.QA.Tests.Ui
 
             var homePage = Client.Home();
             homePage.Login.Logout();
-            var title = page.Client.Driver.FindElement(By.CssSelector(Framework.UI.Mappings.Ui.Get.HomePage.Title));
+            var title = page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.Title));
             switch (Config.AUT)
             {
                 case AUT.Za:
                 case AUT.Ca:
-                    Assert.AreEqual(Framework.UI.Mappings.Ui.Get.HomePage.TitleText, title.Text);
+                    Assert.AreEqual(UiMap.Get.HomePage.TitleText, title.Text);
                     break;
             }
 

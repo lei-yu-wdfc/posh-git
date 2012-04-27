@@ -14,7 +14,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages.PayLater
         public PayLaterThanksForm(UiClient client)
             : base(client)
         {
-            _thanksText = Client.Driver.FindElement(By.CssSelector(Ui.Get.SubmitionPage.ThanksText));
+            _thanksText = Client.Driver.FindElement(By.CssSelector(UiMap.Get.SubmitionPage.ThanksText));
         }
 
         public Dictionary<string, string> InspectElementsThanks()

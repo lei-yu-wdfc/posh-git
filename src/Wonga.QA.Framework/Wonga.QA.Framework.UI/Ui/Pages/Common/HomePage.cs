@@ -57,24 +57,24 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             set
             {
                 Do.With.Interval(1).While(LookForProvicePopup);
-                Client.Driver.FindElement(By.CssSelector(Ui.Get.HomePage.YourProvince)).SelectOption(value);
+                Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.YourProvince)).SelectOption(value);
             }
         }
 
         public IApplyPage PopupClickThisIsMyProvince()
         {
-            Client.Driver.FindElement(By.CssSelector(Ui.Get.HomePage.ThisIsMyProvince)).Click();
+            Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.ThisIsMyProvince)).Click();
             return new ApplyPage(Client);
         }
         private bool LookForProvicePopup()
         {
-            var popupTitle = Client.Driver.FindElement(By.CssSelector(Ui.Get.HomePage.ProvincePopupTitle));
+            var popupTitle = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.ProvincePopupTitle));
             return !popupTitle.Displayed;
         }
 
         public void AssertThatIsWbHomePage()
         {
-            Assert.That(Headers, Has.Item(Ui.Get.HomePage.BusinessTitleText));
+            Assert.That(Headers, Has.Item(UiMap.Get.HomePage.BusinessTitleText));
 
         }
 

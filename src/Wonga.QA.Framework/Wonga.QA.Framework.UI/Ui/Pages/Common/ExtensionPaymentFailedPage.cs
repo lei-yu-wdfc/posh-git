@@ -10,7 +10,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
     {
         public ExtensionPaymentFailedPage(UiClient client) : base(client)
         {
-            Assert.That(Headers, Has.Item(Ui.Get.ExtensionPaymentFailedPage.HeaderText));
+            Assert.That(Headers, Has.Item(UiMap.Get.ExtensionPaymentFailedPage.HeaderText));
         }
 
         public bool IsPaymentFailedAmountNotPresent()

@@ -10,8 +10,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Admin
 
         public AccountingPage(UiClient client) : base(client)
         {
-            _addFile = Client.Driver.FindElement(By.CssSelector(Mappings.Ui.Get.AccountingPage.AddFileLink));
-            _cashOut = Client.Driver.FindElement(By.CssSelector(Mappings.Ui.Get.AccountingPage.CashOutLink));
+            _addFile = Client.Driver.FindElement(By.CssSelector(Mappings.UiMap.Get.AccountingPage.AddFileLink));
+            _cashOut = Client.Driver.FindElement(By.CssSelector(Mappings.UiMap.Get.AccountingPage.CashOutLink));
         }
 
         public AddFilePage AddFile()

@@ -104,33 +104,33 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             }
         }
 
-        public EmploymentDetailsSection(BasePage page) : base(Ui.Get.EmploymentDetailsSection.Fieldset, page)
+        public EmploymentDetailsSection(BasePage page) : base(UiMap.Get.EmploymentDetailsSection.Fieldset, page)
         {
-            _employmentStatus = Section.FindElement(By.CssSelector(Ui.Get.EmploymentDetailsSection.EmploymentStatus));
-            _employerIndustry = Section.FindElement(By.CssSelector(Ui.Get.EmploymentDetailsSection.EmployerIndustry));
-            _employerName = Section.FindElement(By.CssSelector(Ui.Get.EmploymentDetailsSection.EmployerName));
-            _employmentPosition = Section.FindElement(By.CssSelector(Ui.Get.EmploymentDetailsSection.EmploymentPosition));
-            _timeWithEmployerYears = Section.FindElement(By.CssSelector(Ui.Get.EmploymentDetailsSection.TimeWithEmployerYears));
-            _timeWithEmployerMonths = Section.FindElement(By.CssSelector(Ui.Get.EmploymentDetailsSection.TimeWithEmployerMonths));
-            _monthlyIncome = Section.FindElement(By.CssSelector(Ui.Get.EmploymentDetailsSection.MonthlyIncome));
-            _salaryPaidToBank = Section.FindElements(By.CssSelector(Ui.Get.EmploymentDetailsSection.SalaryPaidToBank));
-            _incomeFrequency = Section.FindElement(By.CssSelector(Ui.Get.EmploymentDetailsSection.IncomeFrequency));
+            _employmentStatus = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.EmploymentStatus));
+            _employerIndustry = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.EmployerIndustry));
+            _employerName = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.EmployerName));
+            _employmentPosition = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.EmploymentPosition));
+            _timeWithEmployerYears = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.TimeWithEmployerYears));
+            _timeWithEmployerMonths = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.TimeWithEmployerMonths));
+            _monthlyIncome = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.MonthlyIncome));
+            _salaryPaidToBank = Section.FindElements(By.CssSelector(UiMap.Get.EmploymentDetailsSection.SalaryPaidToBank));
+            _incomeFrequency = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.IncomeFrequency));
             switch (Config.AUT)
             {
                 case (AUT.Za):
-                    _workPhone = Section.FindElement(By.CssSelector(Ui.Get.EmploymentDetailsSection.WorkPhone));
-                    _nextPaydayDateDay = Section.FindElement(By.CssSelector(Ui.Get.EmploymentDetailsSection.NextPaydayDateDay));
-                    _nextPaydayDateMonth = Section.FindElement(By.CssSelector(Ui.Get.EmploymentDetailsSection.NextPaydayDateMonth));
-                    _nextPaydayDateYear = Section.FindElement(By.CssSelector(Ui.Get.EmploymentDetailsSection.NextPaydayDateYear));
+                    _workPhone = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.WorkPhone));
+                    _nextPaydayDateDay = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.NextPaydayDateDay));
+                    _nextPaydayDateMonth = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.NextPaydayDateMonth));
+                    _nextPaydayDateYear = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.NextPaydayDateYear));
                     break;
                 case (AUT.Ca):
-                    _nextPaydayDate = Section.FindElement(By.CssSelector(Ui.Get.EmploymentDetailsSection.NextPaydayDate));
+                    _nextPaydayDate = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.NextPaydayDate));
                     break;
                 case (AUT.Uk):
-                    _nextPaydayDateDay = Section.FindElement(By.CssSelector(Ui.Get.EmploymentDetailsSection.NextPaydayDateDay));
-                    _nextPaydayDateMonth = Section.FindElement(By.CssSelector(Ui.Get.EmploymentDetailsSection.NextPaydayDateMonth));
-                    _nextPaydayDateYear = Section.FindElement(By.CssSelector(Ui.Get.EmploymentDetailsSection.NextPaydayDateYear));
-                    _workPhone = Section.FindElement(By.CssSelector(Ui.Get.EmploymentDetailsSection.WorkPhone));
+                    _nextPaydayDateDay = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.NextPaydayDateDay));
+                    _nextPaydayDateMonth = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.NextPaydayDateMonth));
+                    _nextPaydayDateYear = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.NextPaydayDateYear));
+                    _workPhone = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.WorkPhone));
                     break;
 
             }

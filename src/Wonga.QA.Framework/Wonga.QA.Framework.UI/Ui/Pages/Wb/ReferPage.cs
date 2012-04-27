@@ -17,8 +17,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
         public ReferPage(UiClient client)
             : base(client)
         {
-            Assert.That(Headers, Has.Item(Ui.Get.ReferPage.HeaderText));
-            _returnToHomepage = Content.FindElement(By.CssSelector(Ui.Get.ReferPage.ReturnToHomepage));
+            Assert.That(Headers, Has.Item(UiMap.Get.ReferPage.HeaderText));
+            _returnToHomepage = Content.FindElement(By.CssSelector(UiMap.Get.ReferPage.ReturnToHomepage));
         }
 
         public HomePage GoHome()

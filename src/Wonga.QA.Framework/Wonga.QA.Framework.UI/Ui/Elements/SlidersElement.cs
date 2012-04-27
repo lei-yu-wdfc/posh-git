@@ -29,23 +29,23 @@ namespace Wonga.QA.Framework.UI.Elements
         public SlidersElement(BasePage page)
             : base(page)
         {
-            _form = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.SlidersElement.FormId));
-            _amountSlider = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.AmountSlider));
-            _durationSlider = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.DurationSlider));
-            _loanAmount = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.LoanAmount));
-            _loanDuration = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.LoanDuration));
-            _amountMinusButton = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.AmountMinusButton));
-            _amountPlusButton = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.AmountPlusButton));
-            _durationMinusButton = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.DurationMinusButton));
-            _durationPlusButton = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.DurationPlusButton));
+            _form = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.SlidersElement.FormId));
+            _amountSlider = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.AmountSlider));
+            _durationSlider = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.DurationSlider));
+            _loanAmount = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.LoanAmount));
+            _loanDuration = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.LoanDuration));
+            _amountMinusButton = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.AmountMinusButton));
+            _amountPlusButton = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.AmountPlusButton));
+            _durationMinusButton = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.DurationMinusButton));
+            _durationPlusButton = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.DurationPlusButton));
             switch (Config.AUT)
             {
                 case (AUT.Ca):
                 case (AUT.Za):
-                    _totalAmount = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.TotalAmount));
-                    _totalFees = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.TotalFees));
-                    _totalToRepay = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.TotalToRepay));
-                    _repaymentDate = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.RepaymentDate));
+                    _totalAmount = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.TotalAmount));
+                    _totalFees = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.TotalFees));
+                    _totalToRepay = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.TotalToRepay));
+                    _repaymentDate = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.RepaymentDate));
                     break;
             }
         }
@@ -104,7 +104,7 @@ namespace Wonga.QA.Framework.UI.Elements
 
         public IApplyPage Apply()
         {
-            _submit = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.SubmitButton));
+            _submit = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.SubmitButton));
             _submit.Click();
             if (Config.AUT == AUT.Wb)
                 return new EligibilityQuestionsPage(Page.Client);
@@ -115,7 +115,7 @@ namespace Wonga.QA.Framework.UI.Elements
 
         public IApplyPage ApplyLn()
         {
-            _submit = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.SubmitButton));
+            _submit = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.SubmitButton));
             _submit.Click();
             switch (Config.AUT)
             {
@@ -134,7 +134,7 @@ namespace Wonga.QA.Framework.UI.Elements
         {
             try
             {
-                _submit = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.SubmitButton));
+                _submit = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.SubmitButton));
                 return true;
             }
             catch (NoSuchElementException)

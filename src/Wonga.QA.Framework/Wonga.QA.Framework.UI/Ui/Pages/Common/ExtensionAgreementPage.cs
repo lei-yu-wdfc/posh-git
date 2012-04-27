@@ -13,8 +13,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             : base(client)
         {
 
-            _nextButton = Content.FindElement(By.CssSelector(Ui.Get.ExtensionAgreementPage.ExtensionAgreementAcceptButton));
-            _agreementLegals = Content.FindElement(By.CssSelector(Ui.Get.ExtensionAgreementPage.ExtensionAgreementscroll));
+            _nextButton = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.ExtensionAgreementAcceptButton));
+            _agreementLegals = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.ExtensionAgreementscroll));
             
         }
 

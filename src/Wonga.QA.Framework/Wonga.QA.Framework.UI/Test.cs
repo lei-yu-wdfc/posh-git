@@ -13,7 +13,7 @@ namespace Wonga.QA.Framework.UI
         [Test]
         public void Testz()
         {
-            var res = Ui.Get.AcceptedPage;
+            var res = UiMap.Get.AcceptedPage;
         }
     }
 }

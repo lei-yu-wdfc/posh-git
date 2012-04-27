@@ -25,16 +25,16 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
         public PayLaterLoginPage(UiClient client)
             : base(client)
         {
-            _inputEmailId = Content.FindElement(By.CssSelector(Ui.Get.PayLaterLoginPage.InputEmailId));
-            _inputPassId = Content.FindElement(By.CssSelector(Ui.Get.PayLaterLoginPage.InputPassId));
-            _submitButton = Content.FindElement(By.CssSelector(Ui.Get.PayLaterLoginPage.SubmitButton));
+            _inputEmailId = Content.FindElement(By.CssSelector(UiMap.Get.PayLaterLoginPage.InputEmailId));
+            _inputPassId = Content.FindElement(By.CssSelector(UiMap.Get.PayLaterLoginPage.InputPassId));
+            _submitButton = Content.FindElement(By.CssSelector(UiMap.Get.PayLaterLoginPage.SubmitButton));
 
-            _apr = Content.FindElement(By.CssSelector(Ui.Get.PayLaterLoginPage.Apr));
-            _forgottenPassword = Content.FindElement(By.CssSelector(Ui.Get.PayLaterLoginPage.ForgottenPassword));
-            _singUp = Content.FindElement(By.CssSelector(Ui.Get.PayLaterLoginPage.SingUp));
+            _apr = Content.FindElement(By.CssSelector(UiMap.Get.PayLaterLoginPage.Apr));
+            _forgottenPassword = Content.FindElement(By.CssSelector(UiMap.Get.PayLaterLoginPage.ForgottenPassword));
+            _singUp = Content.FindElement(By.CssSelector(UiMap.Get.PayLaterLoginPage.SingUp));
 
-            _fee = Content.FindElement(By.CssSelector(Ui.Get.PayLaterLoginPage.Fee));
-            _paymentAmount = Content.FindElement(By.CssSelector(Ui.Get.PayLaterLoginPage.PaymentAmount));
+            _fee = Content.FindElement(By.CssSelector(UiMap.Get.PayLaterLoginPage.Fee));
+            _paymentAmount = Content.FindElement(By.CssSelector(UiMap.Get.PayLaterLoginPage.PaymentAmount));
         }
 
         public SubmitionPage LoginAs(string username, string password)
