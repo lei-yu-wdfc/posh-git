@@ -15,6 +15,11 @@ namespace Wonga.QA.Framework.Msmq
         public String CustomerReference { get; set; }
         public String CustomerEmailAddress { get; set; }
         public String CustomerForename { get; set; }
+        public String CustomerLastname { get; set; }
+        public String Street { get; set; }
+        public String Town { get; set; }
+        public String PostCode { get; set; }
         public Guid OriginatingSagaId { get; set; }
+        public DateTime NextDueDate { get; set; }
     }
 }

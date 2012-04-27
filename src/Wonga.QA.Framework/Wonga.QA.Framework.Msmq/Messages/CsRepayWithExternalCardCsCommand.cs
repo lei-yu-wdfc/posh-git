@@ -25,6 +25,7 @@ namespace Wonga.QA.Framework.Msmq
         public String PostCode { get; set; }
         public String Country { get; set; }
         public String SalesforceUser { get; set; }
+        public Guid PaymentId { get; set; }
         public DateTime CreatedOn { get; set; }
         public Guid? ClientId { get; set; }
     }

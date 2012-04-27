@@ -205,6 +205,8 @@
     <Compile Include="Messages\CreateFixedTermLoanExtensionCommand.cs" />
     <Compile Include="Messages\CreateFixedTermLoanTopupCommand.cs" />
     <Compile Include="Messages\CreateLoanAgreementCancellationNoticeCaCommand.cs" />
+    <Compile Include="Messages\CreateManualPaymentNotificationEmailCommand.cs" />
+    <Compile Include="Messages\CreateManualPaymentNotificationEmailResponseCommand.cs" />
     <Compile Include="Messages\CreatePaymentPlanCommand.cs" />
     <Compile Include="Messages\CreatePreAgreementDocumentCommand.cs" />
     <Compile Include="Messages\CreatePreApproveDirectDebitCaCommand.cs" />
@@ -360,8 +362,10 @@
     <Compile Include="Messages\IBusinessApplicationAcceptedEvent.cs" />
     <Compile Include="Messages\IBusinessApplicationAcceptedTranslatedWbUkEvent.cs" />
     <Compile Include="Messages\IBusinessApplicationAddedEvent.cs" />
+    <Compile Include="Messages\IBusinessApplicationClosedEvent.cs" />
     <Compile Include="Messages\IBusinessApplicationDeclinedEvent.cs" />
     <Compile Include="Messages\IBusinessApplicationDeclinedTranslatedWbUkEvent.cs" />
+    <Compile Include="Messages\IBusinessApplicationPaidInFullEvent.cs" />
     <Compile Include="Messages\IBusinessApplicationTermsAgreedEvent.cs" />
     <Compile Include="Messages\IBusinessBankAccountAddedEvent.cs" />
     <Compile Include="Messages\IBusinessBankAccountAddedToApplicationEvent.cs" />
@@ -413,6 +417,7 @@
     <Compile Include="Messages\IExtensionPartPaymentTakenEvent.cs" />
     <Compile Include="Messages\IExtensionSignedEvent.cs" />
     <Compile Include="Messages\IFixedTermApplicationAddedEvent.cs" />
+    <Compile Include="Messages\IFixedTermApplicationAddedInternalEvent.cs" />
     <Compile Include="Messages\IFoundACompanyEvent.cs" />
     <Compile Include="Messages\IFoundNoCompanyEvent.cs" />
     <Compile Include="Messages\IFraudNotificationReceivedEvent.cs" />
@@ -704,6 +709,7 @@
     <Compile Include="Messages\SaveCustomerDetailsToSalesforceCommand.cs" />
     <Compile Include="Messages\SaveCustomerDetailsToSalesforceZaCommand.cs" />
     <Compile Include="Messages\SaveCustomerDetailsZaCommand.cs" />
+    <Compile Include="Messages\SaveCustomerInformationCsCommand.cs" />
     <Compile Include="Messages\SaveCustomerLeadCaCommand.cs" />
     <Compile Include="Messages\SaveCustomerLeadZaCommand.cs" />
     <Compile Include="Messages\SaveEmailToSalesforceCommand.cs" />

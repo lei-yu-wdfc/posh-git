@@ -8,5 +8,6 @@ namespace Wonga.QA.Framework.Msmq
         A5 = 5,
         A6 = 6,
         A7 = 7,
+        A8 = 8,
     }
 }
