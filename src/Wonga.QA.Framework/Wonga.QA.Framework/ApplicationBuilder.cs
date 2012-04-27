@@ -273,7 +273,7 @@ namespace Wonga.QA.Framework
 
             Do.With.Timeout(TimeSpan.FromSeconds(10)).Watch(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).Transactions.Count);
 
-            return new Application { Id = Id, BankAccountId = Customer.BankAccountId, LoanAmount = LoanAmount, LoanTerm = LoanTerm };
+            return new Application { Id = Id, BankAccountId = Customer.BankAccountId, LoanAmount = LoanAmount, LoanTerm = LoanTerm, BankAccountNumber = Customer.BankAccountNumber};
         }
 
         #region Public Helper "With" Methods

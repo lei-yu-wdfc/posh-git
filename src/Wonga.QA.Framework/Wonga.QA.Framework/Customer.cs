@@ -17,6 +17,7 @@ namespace Wonga.QA.Framework
         public Guid BankAccountId { get; set; }
         public String MiddleName { get; set; }
         public Int64 CardNumber { get; set; }
+        public Int64 BankAccountNumber { get; set; }
 
         public Customer(Guid id)
         {
@@ -27,6 +28,7 @@ namespace Wonga.QA.Framework
         {
             return Drive.Db.Ops.Accounts.Single(c => c.ExternalId == Id).Login;
         }
+
         public Customer(Guid id, string email, Guid bankAccountId)
         {
             Id = id;
@@ -34,16 +36,13 @@ namespace Wonga.QA.Framework
             BankAccountId = bankAccountId;
         }
 
-        //[Obsolete("This is obsolete")]
-        //public Customer(Guid id,String email,String forename, String surname, Date dateOfBirth, String mobilePhoneNumber)
-        //{
-        //    Id = id;
-        //    Email = email;
-        //    Forename = forename;
-        //    Surname = surname;
-        //    DateOfBirth = dateOfBirth;
-        //    MobilePhoneNumber = mobilePhoneNumber;
-        //}
+        public Customer(Guid id, string email, Guid bankAccountId, Int64 bankAccountNumber)
+        {
+            Id = id;
+            Email = email;
+            BankAccountId = bankAccountId;
+            BankAccountNumber = bankAccountNumber;
+        }
 
         #region Public Methods
 

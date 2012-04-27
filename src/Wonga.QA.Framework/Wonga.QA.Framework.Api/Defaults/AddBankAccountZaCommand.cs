@@ -9,7 +9,7 @@ namespace Wonga.QA.Framework.Api
         {
             AccountId = Get.GetId();
             BankAccountId = Get.GetId();
-            AccountNumber = 12345678901;
+            AccountNumber = Get.GetBankAccountNumber(); ;
             AccountOpenDate = DateTime.Now.AddYears(-4);
             AccountType = "Savings";
             BankName = "ABSA";

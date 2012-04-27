@@ -149,26 +149,32 @@ namespace Wonga.QA.Framework.Core
             return new Date(DateTime.UtcNow.AddDays(10), DateFormat.Date);
         }
 
-		public static Int64 GetBankAccountNumber()
-		{
+        public static Int64 GetBankAccountNumber()
+        {
             switch (Config.AUT)
             {
+                case AUT.Ca:
+                    {
+                        return RandomLong(1000000, 9999999);
+                    }
+                case AUT.Za:
+                    {
+                        return 12345678901;
+                    }
                 case AUT.Uk:
+                    {
+                        return 42368003;
+                    }
                 case AUT.Wb:
                     {
                         return RandomLong(10000000, 99999999);
                     }
-                case AUT.Za:
-                //case AUT.Ca:
-                    {
-                        return RandomLong(10000000000, 99999999999);
-                    }
-                    default:
+                default:
                     {
                         throw new NotImplementedException(Config.AUT.ToString());
                     }
             }
-		}
+        }
 
         public static Guid GetCsAuthorization()
         {
