@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
+using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
 
