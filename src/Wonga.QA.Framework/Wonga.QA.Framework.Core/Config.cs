@@ -23,9 +23,12 @@ namespace Wonga.QA.Framework.Core
         public static UiConfig Ui { get; set; }
         public static AdminConfig Admin { get; set; }
         public static SalesforceConfig SalesforceUi { get; set; }
-		public static SalesforceConfig SalesforceApi { get; set; }
+        public static SalesforceConfig SalesforceApi { get; set; }
         public static EmailConfig Email { get; set; }
+        public static PayLaterConfig PayLaterUi { get; set; }
+        public static PayLaterConfig PayLaterApi { get; set; }
         public static CommonApiConfig CommonApi { get; set; }
+
 
         static Config()
         {
@@ -33,7 +36,8 @@ namespace Wonga.QA.Framework.Core
             AUT = GetValue<AUT>();
 
             Ui = new UiConfig();
-            SalesforceUi = new SalesforceConfig("test.salesforce.com");            
+            SalesforceUi = new SalesforceConfig("test.salesforce.com");
+            PayLaterUi = new PayLaterConfig("dev.paylater.com");
 
             Proxy = GetValue<Boolean>(false, "QAFProxyMode");
 
@@ -43,7 +47,7 @@ namespace Wonga.QA.Framework.Core
             Ui.ExternalAccess = GetValue<Boolean>(false, "QAFExternalAccessMode");
 
             Email = new EmailConfig() { QA = new EmailConfig.EmailAddressConfig() { Host = "imap.gmail.com", Username = "qa.wonga.com@gmail.com", Password = "Allw0nga", Port = 993, IsSsl = true } };
-        	switch (SUT)
+            switch (SUT)
             {
                 case SUT.Dev:
                     Api = new ApiConfig("localhost");
@@ -55,9 +59,9 @@ namespace Wonga.QA.Framework.Core
                     Ui.SetUri("localhost");
                     Admin = new AdminConfig("localhost/admin");					
                     SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.wip", "Allw0nga");
-            		SalesforceApi =
-						AUT == AUT.Ca ? new SalesforceApiConfig("v3integration@wonga.com.int") :
-						new SalesforceApiConfig("v3integration@wonga.com.wip");
+                    SalesforceApi =
+                        AUT == AUT.Ca ? new SalesforceApiConfig("v3integration@wonga.com.int") :
+                        new SalesforceApiConfig("v3integration@wonga.com.wip");
                     break;
                 case SUT.WIP:
                     Api = new ApiConfig(String.Format("wip.api.{0}.wonga.com", AUT));
@@ -79,9 +83,9 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn("WIP8", Proxy)) : Throw<DbConfig>();
                     Ui.SetUri(String.Format("wip.{0}.wonga.com", AUT));
                     SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.wip", "Allw0nga");
-            		SalesforceApi =
-            			AUT == AUT.Ca ? new SalesforceApiConfig("v3integration@wonga.com.int") :
-						new SalesforceApiConfig("v3integration@wonga.com.wip");
+                    SalesforceApi =
+                        AUT == AUT.Ca ? new SalesforceApiConfig("v3integration@wonga.com.int") :
+                        new SalesforceApiConfig("v3integration@wonga.com.wip");
                     break;
                 case SUT.WIPRelease:
                     Api = new ApiConfig(String.Format("wip.release.api.{0}.wonga.com", AUT));
@@ -97,9 +101,9 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("za-rel-wip-app", Proxy)) : Throw<DbConfig>();
                     Ui.SetUri(String.Format("wip.release.{0}.wonga.com", AUT));
                     SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.wip", "Allw0nga");
-            		SalesforceApi =
-            			AUT == AUT.Ca ? new SalesforceApiConfig("v3integration@wonga.com.int") :
-						new SalesforceApiConfig("v3integration@wonga.com.wip");
+                    SalesforceApi =
+                        AUT == AUT.Ca ? new SalesforceApiConfig("v3integration@wonga.com.int") :
+                        new SalesforceApiConfig("v3integration@wonga.com.wip");
                     break;
                 case SUT.UAT:
                     Api = new ApiConfig(String.Format("uat.api.{0}.wonga.com", AUT));
@@ -141,7 +145,7 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn("RC8", Proxy)) : Throw<DbConfig>();
                     Ui.SetUri(String.Format("rc.{0}.wonga.com", AUT));
                     SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.rc", "Allw0nga");
-            		SalesforceApi = new SalesforceApiConfig("v3integration@wonga.com.rc");
+                    SalesforceApi = new SalesforceApiConfig("v3integration@wonga.com.rc");
                     break;
                 case SUT.RCRelease:
                     Api = new ApiConfig(String.Format("rc.release.api.{0}.wonga.com", AUT));
@@ -157,7 +161,7 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("za-rel-rc-app", Proxy)) : Throw<DbConfig>();
                     Ui.SetUri(String.Format("rc.release.{0}.wonga.com", AUT));
                     SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.rc", "Allw0nga");
-            		SalesforceApi = new SalesforceApiConfig("v3integration@wonga.com.rc");
+                    SalesforceApi = new SalesforceApiConfig("v3integration@wonga.com.rc");
                     break;
                 default:
                     throw new NotImplementedException();
@@ -177,7 +181,7 @@ namespace Wonga.QA.Framework.Core
 
         private static T GetValue<T>(object defaultValue = null, string variable = null)
         {
-            Object value = Registry.CurrentUser.OpenSubKey("Environment").GetValue(variable ?? typeof(T).Name) ?? 
+            Object value = Registry.CurrentUser.OpenSubKey("Environment").GetValue(variable ?? typeof(T).Name) ??
                 defaultValue ??
                 default(T);
 
@@ -293,9 +297,9 @@ namespace Wonga.QA.Framework.Core
             public String Bi { get; set; }
 
             public String BankGateway { get; set; }
-			public String BankGatewayBmo { get; set; }
-			public String BankGatewayScotia { get; set; }
-			public String BottomLine { get; set; }
+            public String BankGatewayBmo { get; set; }
+            public String BankGatewayScotia { get; set; }
+            public String BottomLine { get; set; }
             public String Hsbc { get; set; }
             public String Hyphen { get; set; }
             public String Scotia { get; set; }
@@ -333,9 +337,9 @@ namespace Wonga.QA.Framework.Core
                 Bi = String.Format(format, service, "biservice");
 
                 BankGateway = String.Format(format, component, "bankgatewaytc");
-				BankGatewayBmo = String.Format(format, component, "bankgatewaybmotc");
-				BankGatewayScotia = String.Format(format, component, "bankgatewayscotiatc");
-				Blacklist = String.Format(format, component, "blacklistcomponent");
+                BankGatewayBmo = String.Format(format, component, "bankgatewaybmotc");
+                BankGatewayScotia = String.Format(format, component, "bankgatewayscotiatc");
+                Blacklist = String.Format(format, component, "blacklistcomponent");
                 BottomLine = String.Format(format, component, "bankgatewaybottomlinetc");
                 CallReport = String.Format(format, component, "callreportcomponent");
                 CallValidate = String.Format(format, component, "callvalidatecomponent");
@@ -389,7 +393,7 @@ namespace Wonga.QA.Framework.Core
             public String TransUnion { get; set; }
             public String Uru { get; set; }
             public String WongaPay { get; set; }
-			public String Marketing { get; set; }
+            public String Marketing { get; set; }
 
             public String OpsLogs { get; set; }
             public String OpsSagas { get; set; }
@@ -427,7 +431,7 @@ namespace Wonga.QA.Framework.Core
                 TransUnion = builder("TransUnion");
                 Uru = builder("Uru");
                 WongaPay = builder("WongaPay");
-				Marketing = builder("Marketing");
+                Marketing = builder("Marketing");
             }
         }
 
@@ -477,8 +481,8 @@ namespace Wonga.QA.Framework.Core
             internal UiConfig()
             {
                 ExternalAccessMap = new Dictionary<string, string>();
-                ExternalAccessMap.Add("rc.Uk.wonga.com","");
-                ExternalAccessMap.Add("rc.Wb.wonga.com","");
+                ExternalAccessMap.Add("rc.Uk.wonga.com", "");
+                ExternalAccessMap.Add("rc.Wb.wonga.com", "");
                 ExternalAccessMap.Add("rc.Za.wonga.com", "");
                 ExternalAccessMap.Add("rc.Ca.wonga.com", "");
                 ExternalAccessMap.Add("rc.release.Uk.wonga.com", "");
@@ -498,7 +502,7 @@ namespace Wonga.QA.Framework.Core
             internal void SetUri(string host)
             {
                 host = ExternalAccess ? ExternalAccessMap[host] : host;
-                Home = new UriBuilder { Host = host}.Uri;
+                Home = new UriBuilder { Host = host }.Uri;
             }
 
             public bool RemoteMode { get; set; }
@@ -520,18 +524,18 @@ namespace Wonga.QA.Framework.Core
             public Uri Home { get; set; }
             public String Username { get; private set; }
             public String Password { get; private set; }
-            
+
             public SalesforceConfig(String host)
             {
                 Home = new UriBuilder { Host = host }.Uri;
             }
 
-			public SalesforceConfig(Uri uri, string usernname, string password)
-			{
-				Home = uri;
-				Username = usernname;
-				Password = password;
-			}
+            public SalesforceConfig(Uri uri, string usernname, string password)
+            {
+                Home = uri;
+                Username = usernname;
+                Password = password;
+            }
 
             public void SetLoginDetails(string username, string password)
             {
@@ -540,14 +544,14 @@ namespace Wonga.QA.Framework.Core
             }
         }
 
-    	public class SalesforceApiConfig : SalesforceConfig
-    	{
-			public SalesforceApiConfig(string username)
-				: base(new Uri("https://test.salesforce.com/services/Soap/c/23.0/0DFD0000000Drwo"), username, "7h2oieg0482h5gqh6R8sbJFQiLuFJUwe61yhB2yTq")
-    		{
-    		
-    		}
-    	}
+        public class SalesforceApiConfig : SalesforceConfig
+        {
+            public SalesforceApiConfig(string username)
+                : base(new Uri("https://test.salesforce.com/services/Soap/c/23.0/0DFD0000000Drwo"), username, "7h2oieg0482h5gqh6R8sbJFQiLuFJUwe61yhB2yTq")
+            {
+
+            }
+        }
 
         public class EmailConfig
         {
@@ -561,6 +565,40 @@ namespace Wonga.QA.Framework.Core
             }
 
             public EmailAddressConfig QA { get; set; }
+        }
+
+        public class PayLaterConfig
+        {
+            public Uri Home { get; set; }
+            public String Username { get; private set; }
+            public String Password { get; private set; }
+
+            public PayLaterConfig(String host)
+            {
+                Home = new UriBuilder { Host = host }.Uri;
+            }
+
+            public PayLaterConfig(Uri uri, string usernname, string password)
+            {
+                Home = uri;
+                Username = usernname;
+                Password = password;
+            }
+
+            public void SetLoginDetails(string username, string password)
+            {
+                Username = username;
+                Password = password;
+            }
+        }
+
+        public class PayLaterApiConfig : PayLaterConfig
+        {
+            public PayLaterApiConfig(string username)
+                : base(new Uri("http://dev.paylater.com/"), username, "Passw0rd")
+            {
+
+            }
         }
 
         public class CommonApiConfig        {            public Uri Commands { get; set; }            public CommonApiConfig(String host)            {                Uri uri = new UriBuilder { Host = host }.Uri;                Commands = new Uri(uri, "commands");            }        }    }

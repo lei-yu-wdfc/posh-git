@@ -1,9 +1,12 @@
 ﻿using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Mappings.Elements;
 using Wonga.QA.Framework.UI.Mappings.Pages;
+using Wonga.QA.Framework.UI.Mappings.Pages.PayLater;
 using Wonga.QA.Framework.UI.Mappings.Pages.Wb;
 using Wonga.QA.Framework.UI.Mappings.Sections;
 using Wonga.QA.Framework.UI.Mappings.Pages.SalesForce;
+using HomePage = Wonga.QA.Framework.UI.Mappings.Pages.HomePage;
+using PayLaterLoginPage = Wonga.QA.Framework.UI.Mappings.Pages.PayLaterLoginPage;
 
 
 namespace Wonga.QA.Framework.UI.Mappings
@@ -116,6 +119,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual ExtensionDealDonePage ExtensionDealDonePage { get; set; }
         public virtual ExtensionErrorPage ExtensionErrorPage { get; set; }
         public virtual ExtensionRequestPage ExtensionRequestPage { get; set; }
+
         #endregion
 
         #region SalesForcePages
@@ -125,6 +129,13 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual SalesForceSearchResultPage SalesForceSearchResultPage { get; set; }
         public virtual SalesForceCustomerDetailPage SalesForceCustomerDetailPage { get; set; }
         
+        #endregion
+
+        #region PayLater
+
+        public virtual PayLaterLoginPage PayLaterLoginPage { get; set; }
+        public virtual SubmitionPage SubmitionPage { get; set; }
+
         #endregion
 
         #region AdminPages

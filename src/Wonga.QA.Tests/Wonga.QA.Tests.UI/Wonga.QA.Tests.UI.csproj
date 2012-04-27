@@ -51,6 +51,7 @@
     <Compile Include="MyAccountTests.cs" />
     <Compile Include="MySummary.cs" />
     <Compile Include="MySummaryScenarioTest.cs" />
+    <Compile Include="PayLater\PayLaterLoginTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RedirectedToSelectedSiteTest.cs" />
     <Compile Include="SalesForceTest.cs" />
