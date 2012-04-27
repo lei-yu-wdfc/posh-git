@@ -90,7 +90,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Wonga.QA.Tests.Admin\Wonga.QA.Tests.Ui.Admin.csproj">
+    <ProjectReference Include="..\Wonga.QA.Tests.Ui.Admin\Wonga.QA.Tests.Ui.Admin.csproj">
       <Project>{B9FDE3ED-0FEE-400A-87EB-3A3C7AC8F01D}</Project>
       <Name>Wonga.QA.Tests.Ui.Admin</Name>
     </ProjectReference>
