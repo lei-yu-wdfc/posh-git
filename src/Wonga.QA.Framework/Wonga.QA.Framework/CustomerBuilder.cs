@@ -38,7 +38,7 @@ namespace Wonga.QA.Framework
         private Guid _bankAccountId;
         private String _phoneNumber;
 		private String _mobileNumber;
-    	private Int64? _bankAccountNumber;
+    	private Int64 _bankAccountNumber;
         private Int64 _paymentCardNumber;
         private string _paymentCardSecurityCode;
         private string _paymentCardType;
@@ -69,6 +69,24 @@ namespace Wonga.QA.Framework
             _houseNumber = Get.RandomInt(1, 100).ToString(CultureInfo.InvariantCulture);
             _houseName = Get.RandomString(8);
             _phoneNumber = Get.GetPhone();
+            _street = Get.RandomString(15);
+            _flat = Get.RandomString(4);
+            _district = Get.RandomString(15);
+            _town = Get.RandomString(15);
+            _county = Get.RandomString(15);			
+        	_nextPayDate = Get.GetNextPayDate();
+			_email = Get.RandomEmail();
+            _bankAccountId = Get.GetId();
+        	
+            _province = ProvinceEnum.ON;
+            _paymentCardNumber = 4444333322221111;
+            _paymentCardSecurityCode = "777";
+            _paymentCardType = "Visa";
+            _mobileNumber = Get.GetMobilePhone();
+            _institutionNumber = "001";
+            _branchNumber = "00011";
+            _bankAccountNumber = Get.GetBankAccountNumber();
+
             if (Config.AUT == AUT.Wb || Config.AUT == AUT.Uk)
             {
                 _postcode = "SW6 6PN";
@@ -82,23 +100,6 @@ namespace Wonga.QA.Framework
                 _postcode = "K0A0A0";
                 _province = ProvinceEnum.ON;
             }
-            _street = Get.RandomString(15);
-            _flat = Get.RandomString(4);
-            _district = Get.RandomString(15);
-            _town = Get.RandomString(15);
-            _county = Get.RandomString(15);			
-        	_nextPayDate = Get.GetNextPayDate();
-			_email = Get.RandomEmail();
-            _bankAccountId = Get.GetId();
-        	
-            _province = ProvinceEnum.ON;
-        	_bankAccountNumber = null;
-            _paymentCardNumber = 4444333322221111;
-            _paymentCardSecurityCode = "777";
-            _paymentCardType = "Visa";
-            _mobileNumber = Get.GetMobilePhone();
-            _institutionNumber = "001";
-            _branchNumber = "00011";
         }
 
         public static CustomerBuilder New()
@@ -263,7 +264,7 @@ namespace Wonga.QA.Framework
 
 		public CustomerBuilder WithBankAccountNumber(Int64 bankAccountNumber)
 		{
-			_bankAccountNumber = bankAccountNumber;
+		    _bankAccountNumber = bankAccountNumber;
 			return this;
 		}
 
@@ -329,6 +330,7 @@ namespace Wonga.QA.Framework
 
             switch (Config.AUT)
             {
+
                 case AUT.Za:
                     requests.AddRange(new ApiRequest[]
                     {
@@ -360,10 +362,7 @@ namespace Wonga.QA.Framework
                                                     	{
                                                     		r.AccountId = _id;
                                                     		r.BankAccountId = _bankAccountId;
-                                                    		if (_bankAccountNumber.HasValue)
-                                                    		{
-                                                    			r.AccountNumber = _bankAccountNumber;
-                                                    		}
+                                                            r.AccountNumber = _bankAccountNumber;
                                                     	}),
                         SaveEmploymentDetailsZaCommand.New(r =>
                         {
@@ -407,7 +406,6 @@ namespace Wonga.QA.Framework
                                                                  r.Town = _town;
                                                                  r.County = _county;
 																 r.Province = _province;
-                                                                 r.Province = _province;
                         } ),
                         AddBankAccountCaCommand.New(r =>
                                                     	{
@@ -415,10 +413,7 @@ namespace Wonga.QA.Framework
                                                     		r.BankAccountId = _bankAccountId;
                                                     	    r.InstitutionNumber = _institutionNumber;
                                                     	    r.BranchNumber = _branchNumber;
-                                                    		if (_bankAccountNumber.HasValue)
-                                                    		{
-                                                    			r.AccountNumber = _bankAccountNumber;
-                                                    		}
+                                                            r.AccountNumber = _bankAccountNumber;
                                                     	}),
                         SaveEmploymentDetailsCaCommand.New(r =>
                         {
@@ -462,10 +457,7 @@ namespace Wonga.QA.Framework
                                                     	{
                                                     		r.AccountId = _id;
                                                     	    r.BankAccountId = _bankAccountId;
-                                                    		if (_bankAccountNumber.HasValue)
-                                                    		{
-                                                    			r.AccountNumber = _bankAccountNumber;
-                                                    		}
+                                                            r.AccountNumber = _bankAccountNumber;
                                                     	}),
                         AddPaymentCardCommand.New(r =>
 						                              {
@@ -511,10 +503,7 @@ namespace Wonga.QA.Framework
 						                            	{
 						                            		r.AccountId = _id;
 						                            	    r.BankAccountId = _bankAccountId;
-						                            		if (_bankAccountNumber.HasValue)
-						                            		{
-						                            			r.AccountNumber = _bankAccountNumber;
-						                            		}
+                                                            r.AccountNumber = _bankAccountNumber;
 						                            	}),
 						AddPaymentCardCommand.New(r =>
 						                              {
@@ -580,7 +569,7 @@ namespace Wonga.QA.Framework
             		break;
             }
             
-            return new Customer(_id, _email, _bankAccountId);
+            return new Customer(_id, _email, _bankAccountId, _bankAccountNumber);
         }
 
         public void ScrubForename(String forename)
