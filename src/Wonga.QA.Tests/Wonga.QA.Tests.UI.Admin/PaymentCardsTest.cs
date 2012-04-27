@@ -3,7 +3,7 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI;
 using Wonga.QA.Tests.Core;
 
-namespace Wonga.QA.Tests.Admin
+namespace Wonga.QA.Tests.Ui.Admin
 {
     class PaymentCardsTest : AdminTest
     {

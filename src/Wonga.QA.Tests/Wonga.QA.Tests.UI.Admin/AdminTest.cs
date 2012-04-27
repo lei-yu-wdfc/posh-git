@@ -1,7 +1,8 @@
 ﻿using MbUnit.Framework;
+using Wonga.QA.Framework;
 using Wonga.QA.Framework.UI;
 
-namespace Wonga.QA.Tests.Admin
+namespace Wonga.QA.Tests.Ui.Admin
 {
     public abstract class AdminTest
     {
