@@ -159,11 +159,11 @@ namespace Wonga.QA.Framework.Core
                         return RandomLong(10000000, 99999999);
                     }
                 case AUT.Za:
-                //case AUT.Ca:
+                    //case AUT.Ca:
                     {
                         return RandomLong(10000000000, 99999999999);
                     }
-                    default:
+                default:
                     {
                         throw new NotImplementedException(Config.AUT.ToString());
                     }

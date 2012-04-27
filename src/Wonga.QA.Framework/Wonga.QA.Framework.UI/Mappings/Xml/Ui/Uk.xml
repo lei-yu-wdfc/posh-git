@@ -109,8 +109,31 @@
     <PopupCloseButton>#edit-submit[value='Close']</PopupCloseButton>
   </ApplyPage>
 
+  <PayLaterLoginPage>
+    <InputEmailId>#edit-name</InputEmailId>
+    <InputPassId>#edit-pass</InputPassId>
+    <SubmitButton>#edit-login</SubmitButton>
+    <Apr>#apr-footer</Apr>
+    <ForgottenPassword>#recovery-pass</ForgottenPassword>
+    <SingUp>#sign-up</SingUp>
+    <Fee>#fee</Fee>
+    <PaymentAmount>#month-payment</PaymentAmount>
+  </PayLaterLoginPage>
+
+  <SubmitionPage>
+    <FooterInfo>.legal-info</FooterInfo>
+    <AvailabelCreditCookie>#credit-w-cookie</AvailabelCreditCookie>
+    <AvailabelCredit>#credit-wo-cookie</AvailabelCredit>
+    <InfoCirculButton>#pay-q a</InfoCirculButton>
+    <TextApproved>#title-approved</TextApproved>
+    <RepaymentDetails>#repayment-details</RepaymentDetails>
+    <SubmitButton>#edit-agree</SubmitButton>
+    <ThanksText>#title-thanks</ThanksText>
+  </SubmitionPage>
+
   <MobilePinVerificationSection>
-	<ResendPin>#edit-resend-pin</ResendPin>
-	<ResendPinMessage>.pin_resend</ResendPinMessage>
+    <ResendPin>#edit-resend-pin</ResendPin>
+    <ResendPinMessage>.pin_resend</ResendPinMessage>
   </MobilePinVerificationSection>
+  
 </Ui>

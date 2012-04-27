@@ -14,9 +14,11 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Remote;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.UI.Mappings.Pages.PayLater;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Framework.UI.UiElements.Pages.SalesForce;
+using SubmitionPage = Wonga.QA.Framework.UI.UiElements.Pages.SubmitionPage;
 
 namespace Wonga.QA.Framework.UI
 {
@@ -162,5 +164,27 @@ namespace Wonga.QA.Framework.UI
             Driver.Navigate().GoToUrl(Config.SalesforceUi.Home);
             return new SalesForceLoginPage(this);
         }
+
+        #region
+
+        public PayLaterLoginPage PayLaterStart()
+        {
+            Driver.Navigate().GoToUrl(Config.PayLaterUi.Home);
+            return new PayLaterLoginPage(this);
+        }
+
+        public SubmitionPage PayLaterSubmition()
+        {
+            Driver.Navigate().GoToUrl(Config.PayLaterUi.Home);
+            return new SubmitionPage(this);
+        }
+
+        public PayLaterThanksForm PayLaterThanks()
+        {
+            Driver.Navigate().GoToUrl(Config.PayLaterUi.Home);
+            return new PayLaterThanksForm(this);
+        }
+
+        #endregion
     }
 }
