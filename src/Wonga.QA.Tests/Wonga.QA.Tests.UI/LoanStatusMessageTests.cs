@@ -11,6 +11,8 @@ using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Framework.UI;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
+using Wonga.QA.Framework.Msmq;
+using CreateScheduledPaymentRequestCommand = Wonga.QA.Framework.Msmq.CreateScheduledPaymentRequestCommand;
 using EmploymentStatusEnum = Wonga.QA.Framework.Msmq.EmploymentStatusEnum;
 
 namespace Wonga.QA.Tests.Ui
@@ -153,14 +155,14 @@ namespace Wonga.QA.Tests.Ui
             Console.WriteLine("email:{0}", email);
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            var application = ApplicationBuilder.New(customer).WithLoanTerm(10).Build();
+            //var application = ApplicationBuilder.New(customer).WithLoanTerm(10).Build();
 
             var accountId = customer.Id;
             var bankAccountId = customer.BankAccountId;
             var paymentCardId = Guid.NewGuid();
             var requestId1 = Guid.NewGuid();
             var requestId2 = Guid.NewGuid();
-            var appId = application.Id;
+            var appId = Guid.NewGuid();
             const decimal trustRating = 400.00M;
 
             var setupData = new AccountSummarySetupFunctions();
@@ -218,9 +220,9 @@ namespace Wonga.QA.Tests.Ui
         public void LoanStatusMessageScenario12() { LoanStatusMessage(12, 44); }
 
         [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message (from scenario 4). Waiting for code update.")]
-        public void LoanStatusMessageScenario13() { LoanStatusMessage(13, 64); }
+        public void LoanStatusMessageScenario13() { LoanStatusMessage(13, 74); }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Hangs.")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Awating Repayment Arrangment Functionality.")]
         public void LoanStatusMessageScenario14()
         {
             string email = Get.RandomEmail();
@@ -250,7 +252,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsFalse(mySummaryPage.IsLoanStatusMessageAvailable());
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Hangs.")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Awating Repayment Arrangment Functionality.")]
         public void LoanStatusMessageScenario15()
         {
             string email = Get.RandomEmail();
@@ -282,7 +284,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Hangs.")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Awating Repayment Arrangment Functionality.")]
         public void LoanStatusMessageScenario16()
         {
             string email = Get.RandomEmail();
@@ -314,7 +316,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
         } 
 
- [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1624"), Pending("Fails due to bug UK-1624")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1624"), Pending("Fails due to bug UK-1624   ")]
         public void LoanStatusMessageScenario17A()
         {
             const int loanAmount = 100;
@@ -362,13 +364,13 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("not ready")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Waiting for implementation of agreement cancellation process.")]
         public void LoanStatusMessageScenario19()
         {
             
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1735"), Pending("Fails due to bug UK-1735")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1735"), Pending("Fails due to bug UK-1735, Waiting for implementation of calculation.")]
         public void LoanStatusMessageScenario21()
         {
             const int loanAmount = 100;
@@ -426,6 +428,15 @@ namespace Wonga.QA.Tests.Ui
             
             if (scenarioId == 8) application = application.RepayOnDueDate(); // Repay a loan
 
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            if (scenarioId == 11 || scenarioId == 12 || scenarioId == 13)
+            {
+                // Send command to create scheduled payment request
+                Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = application.Id, RepaymentRequestId = requestId1, });
+                Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = application.Id, RepaymentRequestId = requestId2, });
+
+            }
             // Create repayment plan
             /*if ((scenarioId >= 14) && (scenarioId <= 16))
             {
