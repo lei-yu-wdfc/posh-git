@@ -29,10 +29,10 @@ namespace Wonga.QA.Framework.UI.Elements
             _grandTotalAmount = _form.FindElement(By.CssSelector(UiMap.Get.SmallTopupSlidersElement.TotalToRepay));
             _totalFees = _form.FindElement(By.CssSelector(UiMap.Get.SmallTopupSlidersElement.TopupFees));
             _subTotalAmount = _form.FindElement(By.CssSelector(UiMap.Get.SmallTopupSlidersElement.TopupToRepay));
-            //_loanAmount = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.LoanAmount));
-            //_totalAmount = _form.FindElement(By.CssSelector(Ui.Get.TopupRequestPage.TopupRequestPageNewCreditRequest));
-            //_totalFees = _form.FindElement(By.CssSelector(Ui.Get.TopupRequestPage.TopupRequestPageNewInterestAndFees));
-            //_totalToRepay = _form.FindElement(By.CssSelector(Ui.Get.TopupRequestPage.TopupRequestPageNewGrandTotal));
+            //_loanAmount = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.LoanAmount));
+            //_totalAmount = _form.FindElement(By.CssSelector(UiMap.Get.TopupRequestPage.TopupRequestPageNewCreditRequest));
+            //_totalFees = _form.FindElement(By.CssSelector(UiMap.Get.TopupRequestPage.TopupRequestPageNewInterestAndFees));
+            //_totalToRepay = _form.FindElement(By.CssSelector(UiMap.Get.TopupRequestPage.TopupRequestPageNewGrandTotal));
             
         }
 

@@ -102,7 +102,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public void SetInformativeBox(int value)
         {
-            Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageExtensionDuration)).SendValue(value.ToString("#")); 
+            Content.FindElement(By.CssSelector(UiMap.Get.ExtensionRequestPage.ExtensionRequestPageExtensionDuration)).SendValue(value.ToString("#")); 
         }
 
         public String RepaymentDate {

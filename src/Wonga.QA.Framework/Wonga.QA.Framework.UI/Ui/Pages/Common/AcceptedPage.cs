@@ -75,7 +75,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                 case (AUT.Uk):
                     _form = Content.FindEitherElement(By.CssSelector(UiMap.Get.AcceptedPage.FormId), By.CssSelector("#wonga-loan-approve-form"));
 
-                    //_nodeWrapper = Content.FindElement(By.CssSelector(Ui.Get.AcceptedPage.NodeWrap));
+                    //_nodeWrapper = Content.FindElement(By.CssSelector(UiMap.Get.AcceptedPage.NodeWrap));
                     break;
             }
         }

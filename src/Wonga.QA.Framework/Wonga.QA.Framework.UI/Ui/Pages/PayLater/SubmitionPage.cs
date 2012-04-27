@@ -21,13 +21,13 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
         public SubmitionPage(UiClient client)
             : base(client)
         {
-            _footerInfo = Client.Driver.FindElement(By.CssSelector(Ui.Get.SubmitionPage.FooterInfo));
-            _availabelCreditCookie = Client.Driver.FindElement(By.CssSelector(Ui.Get.SubmitionPage.AvailabelCreditCookie));
-            //_availabelCredit = Client.Driver.FindElement(By.CssSelector(Ui.Get.SubmitionPage.AvailabelCredit));
-            _infoCirculButton = Client.Driver.FindElement(By.CssSelector(Ui.Get.SubmitionPage.InfoCirculButton));
-            _textApproved = Client.Driver.FindElement(By.CssSelector(Ui.Get.SubmitionPage.TextApproved));
-            _repaymentDetails = Client.Driver.FindElement(By.CssSelector(Ui.Get.SubmitionPage.RepaymentDetails));
-            _submitButton = Client.Driver.FindElement(By.CssSelector(Ui.Get.SubmitionPage.SubmitButton));
+            _footerInfo = Client.Driver.FindElement(By.CssSelector(UiMap.Get.SubmitionPage.FooterInfo));
+            _availabelCreditCookie = Client.Driver.FindElement(By.CssSelector(UiMap.Get.SubmitionPage.AvailabelCreditCookie));
+            //_availabelCredit = Client.Driver.FindElement(By.CssSelector(UiMap.Get.SubmitionPage.AvailabelCredit));
+            _infoCirculButton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.SubmitionPage.InfoCirculButton));
+            _textApproved = Client.Driver.FindElement(By.CssSelector(UiMap.Get.SubmitionPage.TextApproved));
+            _repaymentDetails = Client.Driver.FindElement(By.CssSelector(UiMap.Get.SubmitionPage.RepaymentDetails));
+            _submitButton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.SubmitionPage.SubmitButton));
         }
 
 

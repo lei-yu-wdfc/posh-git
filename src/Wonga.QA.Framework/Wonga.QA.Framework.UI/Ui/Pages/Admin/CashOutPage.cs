@@ -22,10 +22,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Admin
         public CashOutPage(UiClient client)
             : base(client)
         {
-            _transactionTypeOptions = Client.Driver.FindElement(By.CssSelector(Mappings.Ui.Get.CashOutPage.TransactionTypeOptions));
-            _filterOptions = Client.Driver.FindElement(By.CssSelector(Mappings.Ui.Get.CashOutPage.FilterOptions));
-            _filterValue = Client.Driver.FindElement(By.CssSelector(Mappings.Ui.Get.CashOutPage.FilterValue));
-            _searchButton = Client.Driver.FindElement(By.CssSelector(Mappings.Ui.Get.CashOutPage.SearchButton));
+            _transactionTypeOptions = Client.Driver.FindElement(By.CssSelector(Mappings.UiMap.Get.CashOutPage.TransactionTypeOptions));
+            _filterOptions = Client.Driver.FindElement(By.CssSelector(Mappings.UiMap.Get.CashOutPage.FilterOptions));
+            _filterValue = Client.Driver.FindElement(By.CssSelector(Mappings.UiMap.Get.CashOutPage.FilterValue));
+            _searchButton = Client.Driver.FindElement(By.CssSelector(Mappings.UiMap.Get.CashOutPage.SearchButton));
         }
 
         public void Search()
@@ -35,9 +35,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Admin
 
         public void GetSearchResults()
         {
-            _sendPaymentCheckboxes = Client.Driver.FindElements(By.CssSelector(Mappings.Ui.Get.CashOutPage.SendPaymentCheckBox));
-            _cancelCheckboxes = Client.Driver.FindElements(By.CssSelector(Mappings.Ui.Get.CashOutPage.CancelCheckBox));
-            _updateButton = Client.Driver.FindElement(By.CssSelector(Mappings.Ui.Get.CashOutPage.UpdateButton));
+            _sendPaymentCheckboxes = Client.Driver.FindElements(By.CssSelector(Mappings.UiMap.Get.CashOutPage.SendPaymentCheckBox));
+            _cancelCheckboxes = Client.Driver.FindElements(By.CssSelector(Mappings.UiMap.Get.CashOutPage.CancelCheckBox));
+            _updateButton = Client.Driver.FindElement(By.CssSelector(Mappings.UiMap.Get.CashOutPage.UpdateButton));
         }
 
         public void MarkSendPayment(int i)
