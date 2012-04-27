@@ -100,6 +100,11 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             get { return Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageExtensionDuration)).GetValue(); }
         }
 
+        public void SetInformativeBox(int value)
+        {
+            Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageExtensionDuration)).SendValue(value.ToString("#")); 
+        }
+
         public String RepaymentDate {
             get { return Content.FindElement(By.CssSelector(Ui.Get.ExtensionRequestPage.ExtensionRequestPageRepaymentDate)).Text; }
         }
