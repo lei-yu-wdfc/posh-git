@@ -350,7 +350,7 @@ namespace Wonga.QA.Tests.Payments
 
             application.MoveToDebtCollectionAgency();
 
-            Do.Until(() =>
+            Do.With.Timeout(2).Until(() =>
             {
                 var salesForceLoan = Drive.ThirdParties.Salesforce.GetApplicationById(application.Id);
                 return (int)Wonga.QA.Framework.ThirdParties.Salesforce.ApplicationStatus.DCA == (int)salesForceLoan.Status_ID__c.Value;
