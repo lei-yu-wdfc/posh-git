@@ -33,6 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Databases\AccountingDatabase.cs" />
     <Compile Include="Databases\ContactManagement.cs" />
     <Compile Include="Databases\CommsDatabase.cs" />
     <Compile Include="Databases\BiDatabase.cs" />

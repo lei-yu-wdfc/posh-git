@@ -10,6 +10,7 @@ namespace Wonga.QA.Framework.Data
 {
     public class DataDriver
     {
+        private Lazy<AccountingDatabase> _accounting = new Lazy<AccountingDatabase>(() => new AccountingDatabase(Config.Db.Accounting));
         private Lazy<OpsDatabase> _ops = new Lazy<OpsDatabase>(() => new OpsDatabase(Config.Db.Ops));
         private Lazy<OpsSagasDatabase> _opsSagas = new Lazy<OpsSagasDatabase>(() => new OpsSagasDatabase(Config.Db.OpsSagas));
         private Lazy<OpsLogsDatabase> _opsLogs = new Lazy<OpsLogsDatabase>(() => new OpsLogsDatabase(Config.Db.OpsLogs));
@@ -39,6 +40,7 @@ namespace Wonga.QA.Framework.Data
         private Lazy<WongaPayDatabase> _wongaPay = new Lazy<WongaPayDatabase>(() => new WongaPayDatabase(Config.Db.WongaPay));
         private Lazy<MarketingDatabase> _marketing = new Lazy<MarketingDatabase>(() => new MarketingDatabase(Config.Db.Marketing));
 
+        public AccountingDatabase Accounting{get { return _accounting.Value; }}
         public OpsSagasDatabase OpsSagas { get { return _opsSagas.Value;} }
         public OpsDatabase Ops { get { return _ops.Value; } }
         public OpsLogsDatabase OpsLogs { get { return _opsLogs.Value; } }

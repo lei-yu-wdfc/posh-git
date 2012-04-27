@@ -11,6 +11,7 @@ namespace Wonga.QA.Framework.Svc
         private SvcService _risk;
         private SvcService _bi;
 
+        private SvcService _accounting;
         private SvcService _bankGateway;
         private SvcService _blacklist;
         private SvcService _bottomLine;
@@ -76,6 +77,11 @@ namespace Wonga.QA.Framework.Svc
             set { _bi = value; }
         }
 
+        public SvcService Accounting
+        {
+            get { return _accounting ?? (_accounting = new SvcService(Config.Svc.Accounting.Key, Config.Svc.Accounting.Value)); }
+            set { _accounting = value; }
+        }
         public SvcService BankGateway
         {
             get { return _bankGateway ?? (_bankGateway = new SvcService(Config.Svc.BankGateway.Key, Config.Svc.BankGateway.Value)); }

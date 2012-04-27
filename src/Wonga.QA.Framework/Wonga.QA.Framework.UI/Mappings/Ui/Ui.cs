@@ -126,5 +126,14 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual SalesForceCustomerDetailPage SalesForceCustomerDetailPage { get; set; }
         
         #endregion
+
+        #region AdminPages
+
+        public virtual PaymentCardsPage PaymentCardsPage { get; set; }
+        public virtual AddCardPage AddCardPage { get; set; }
+        public virtual AccountingPage AccountingPage { get; set; }
+        public virtual CashOutPage CashOutPage { get; set; }
+
+        #endregion
     }
 }

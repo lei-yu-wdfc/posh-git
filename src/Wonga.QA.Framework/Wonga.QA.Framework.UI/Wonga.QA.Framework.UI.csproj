@@ -76,6 +76,11 @@
     <Compile Include="Mappings\Ui\Elements\SurveyElement.cs" />
     <Compile Include="Mappings\Ui\Elements\TabsElement.cs" />
     <Compile Include="Mappings\Ui\Elements\TopupSlidersElement.cs" />
+    <Compile Include="Mappings\Ui\Pages\Admin\AccountingPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Admin\AddCardPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Admin\AddFilePage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Admin\CashOutPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Admin\PaymentCardsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\AboutUsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ApplyPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ApplyTermsPage.cs" />
@@ -154,6 +159,12 @@
     <Compile Include="Ui\Elements\SurveyElement.cs" />
     <Compile Include="Ui\Elements\TabsElement.cs" />
     <Compile Include="Ui\Elements\TopupSlidersElement.cs" />
+    <Compile Include="Ui\Pages\Admin\AccountingPage.cs" />
+    <Compile Include="Ui\Pages\Admin\AddCardPage.cs" />
+    <Compile Include="Ui\Pages\Admin\AddFilePage.cs" />
+    <Compile Include="Ui\Pages\Admin\AdminBasePage.cs" />
+    <Compile Include="Ui\Pages\Admin\CashOutPage.cs" />
+    <Compile Include="Ui\Pages\Admin\PaymentCardsPage.cs" />
     <Compile Include="Ui\Pages\Common\AboutUsPage.cs" />
     <Compile Include="Ui\Pages\Common\ApplyPage.cs" />
     <Compile Include="Ui\Pages\Common\ApplyTermsPage.cs" />
