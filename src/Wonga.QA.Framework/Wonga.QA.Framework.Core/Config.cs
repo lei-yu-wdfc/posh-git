@@ -318,6 +318,7 @@ namespace Wonga.QA.Framework.Core
             public String Iovation { get; set; }
             public String Salesforce { get; set; }
             public String Sms { get; set; }
+            public String SmsDistributor { get; set; }
             public String Timezone { get; set; }
             public String TransUnion { get; set; }
             public String Uru { get; set; }
@@ -358,6 +359,7 @@ namespace Wonga.QA.Framework.Core
                 Salesforce = String.Format(format, component, "salesforcecomponent");
                 Scotia = String.Format(format, component, "bankgatewayscotiatc");
                 Sms = String.Format(format, component, "smscomponent");
+                SmsDistributor = String.Format(format, component, "smsdistributorcomponent");
                 Timezone = String.Format(format, component, "timezonecomponent");
                 TransUnion = String.Format(format, component, "transunioncomponent");
                 Uru = String.Format(format, component, "urucomponent");
