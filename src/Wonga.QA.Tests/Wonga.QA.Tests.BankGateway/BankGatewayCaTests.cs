@@ -15,7 +15,7 @@ namespace Wonga.QA.Tests.BankGateway
 	public class BankGatewayCaTests
 	{
 		private const int TransactionStatusInProgress = 3;
-		private const int TransactionStatusSuccess = 5;
+		private const int TransactionStatusSuccess = 4;
 		private const int TransactionStatusFailed = 5;
 		private const int BankIntegrationIdScotia = 1;
 		private const int BankIntegrationIdBmo = 2;
