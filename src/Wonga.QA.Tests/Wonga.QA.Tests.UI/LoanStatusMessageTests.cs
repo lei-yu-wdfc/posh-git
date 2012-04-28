@@ -391,7 +391,7 @@ namespace Wonga.QA.Tests.Ui
             var mySummaryPage = loginPage.LoginAs(email);
 
             //{£xx.xx total repayable on due date} from your debit card on {repayment date in format 15th March 2011.}
-            var expectedLoanMessageText = loanStatusMessages[21].Replace("{£loan amount}", "£100").Replace("{£xx.xx total repayable on due date}", "£115.91").Replace("{repayment date in format 15th March 2011.}", GetOrdinalDate(DateTime.Today.AddDays(days)));
+            var expectedLoanMessageText = loanStatusMessages[21].Replace("{£loan amount}", "£100").Replace("{£xx.xx total repayable on due date}", "£115.91").Replace("{repayment date in format 15th March 2011.}", GetOrdinalDate(DateTime.Today.AddDays(days), "ddd d MMM yyyy"));
             string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage;
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
         }
@@ -470,7 +470,7 @@ namespace Wonga.QA.Tests.Ui
                 if (application.LoanTerm > 7)
                 {
                     var extensionStartDate = applicationEntity.FixedTermLoanApplicationEntity.NextDueDate.Value.AddDays(-7);
-                    expectedLoanMessageText = expectedLoanMessageText.Replace("{date extensions available}", GetOrdinalDate(extensionStartDate));
+                    expectedLoanMessageText = expectedLoanMessageText.Replace("{date extensions available}", GetOrdinalDate(extensionStartDate, "ddd d MMM yyyy"));
                 }
                 else // if loan period is less than 7 days
                 {
@@ -478,35 +478,37 @@ namespace Wonga.QA.Tests.Ui
                 }
             }
 
-            if (scenarioId == 4) expectedLoanMessageText = expectedLoanMessageText.Replace("{total to repay 300.00}", application.GetDueDateBalance().ToString("#.##")).Replace("{promise date}", GetOrdinalDate(applicationEntity.FixedTermLoanApplicationEntity.NextDueDate.Value));
+            if (scenarioId == 4) expectedLoanMessageText = expectedLoanMessageText.Replace("{total to repay 300.00}", application.GetDueDateBalance().ToString("#.##")).Replace("{promise date}", GetOrdinalDate(applicationEntity.FixedTermLoanApplicationEntity.NextDueDate.Value, "ddd d MMM yyyy"));
 
             string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage;
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
         }
 
-        public string GetOrdinalDate(DateTime date)
+        public string GetOrdinalDate(DateTime date, string format)
         {
-            //Returns date as string in the format "Wed 18th Apr 2012"
             var cDate = date.Day.ToString("d")[date.Day.ToString("d").Length - 1];
             string suffix;
-            switch (cDate)
-            {
-                case '1':
-                    suffix = "st";
-                    break;
-                case '2':
-                    suffix = "nd";
-                    break;
-                case '3':
-                    suffix = "rd";
-                    break;
-                default:
-                    suffix = "th";
-                    break;
-            }
-            var sDate = " " + date.Day.ToString("d") + " ";
-            var sDateOrdinial = " " + date.Day.ToString("d") + suffix + " ";
-            return date.ToString("ddd d MMM yyyy").Replace(sDate, sDateOrdinial);
+            if ((date.Day.ToString("d").Length == 2) && (date.Day.ToString("d")[0] == '1'))
+                suffix = "th";
+            else
+                switch (cDate)
+                {
+                    case '1':
+                        suffix = "st";
+                        break;
+                    case '2':
+                        suffix = "nd";
+                        break;
+                    case '3':
+                        suffix = "rd";
+                        break;
+                    default:
+                        suffix = "th";
+                        break;
+                }
+            var sDate = date.Day.ToString("d") + " ";
+            var sDateOrdinial = date.Day.ToString("d") + suffix + " ";
+            return date.ToString(format).Replace(sDate, sDateOrdinial);
         }
     }
 }

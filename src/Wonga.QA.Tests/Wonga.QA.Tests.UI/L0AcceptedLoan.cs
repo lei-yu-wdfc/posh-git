@@ -189,33 +189,35 @@ namespace Wonga.QA.Tests.Ui
             string actualDealDoneText = dealDonePage.GetDealDonePageText;
 
             // Check text on the Deal Done page is displayed correctly
-            expectedDealDoneText = expectedDealDoneText.Replace("{repay date}", GetOrdinalDate(paymentDate)).Replace("{repay amount}", paymentAmount);
+            expectedDealDoneText = expectedDealDoneText.Replace("{repay date}", GetOrdinalDate(paymentDate), "dddd d MMM yyyy").Replace("{repay amount}", paymentAmount);
             Assert.AreEqual(expectedDealDoneText, actualDealDoneText);
         }
 
-        public string GetOrdinalDate(DateTime date)
+        public string GetOrdinalDate(DateTime date, string format)
         {
-            //Returns date as string in the format "Wed 18th Apr 2012"
             var cDate = date.Day.ToString("d")[date.Day.ToString("d").Length - 1];
             string suffix;
-            switch (cDate)
-            {
-                case '1':
-                    suffix = "st";
-                    break;
-                case '2':
-                    suffix = "nd";
-                    break;
-                case '3':
-                    suffix = "rd";
-                    break;
-                default:
-                    suffix = "th";
-                    break;
-            }
-            var sDate = " " + date.Day.ToString("d") + " ";
-            var sDateOrdinial = " " + date.Day.ToString("d") + suffix + " ";
-            return date.ToString("dddd d MMM yyyy").Replace(sDate, sDateOrdinial);
+            if ((date.Day.ToString("d").Length == 2) && (date.Day.ToString("d")[0] == '1'))
+                suffix = "th";
+            else
+                switch (cDate)
+                {
+                    case '1':
+                        suffix = "st";
+                        break;
+                    case '2':
+                        suffix = "nd";
+                        break;
+                    case '3':
+                        suffix = "rd";
+                        break;
+                    default:
+                        suffix = "th";
+                        break;
+                }
+            var sDate = date.Day.ToString("d") + " ";
+            var sDateOrdinial = date.Day.ToString("d") + suffix + " ";
+            return date.ToString(format).Replace(sDate, sDateOrdinial);
         }
     }
 }
