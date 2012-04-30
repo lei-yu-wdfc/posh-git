@@ -71,6 +71,8 @@ namespace Wonga.QA.Tests.Payments.Helpers
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
 
+            Drive.Msmq.Payments.Send(new ICreditLimitChangedEvent() {AccountId = accountId, CreatedOn = DateTime.UtcNow, CreditLimit = 400.00M});
+
             Guid id = appId;
             // Check App Exists in DB
             Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == id));
@@ -98,6 +100,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
+            Drive.Msmq.Payments.Send(new ICreditLimitChangedEvent() { AccountId = accountId, CreatedOn = DateTime.UtcNow, CreditLimit = 400.00M });
 
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
@@ -127,6 +130,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
+            Drive.Msmq.Payments.Send(new ICreditLimitChangedEvent() { AccountId = accountId, CreatedOn = DateTime.UtcNow, CreditLimit = 400.00M });
 
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
@@ -155,9 +159,10 @@ namespace Wonga.QA.Tests.Payments.Helpers
             
             // Create Account so that time zone can be looked up
             Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
-
+            
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
+            Drive.Msmq.Payments.Send(new ICreditLimitChangedEvent() { AccountId = accountId, CreatedOn = DateTime.UtcNow, CreditLimit = 400.00M });
 
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
@@ -191,6 +196,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
+            Drive.Msmq.Payments.Send(new ICreditLimitChangedEvent() { AccountId = accountId, CreatedOn = DateTime.UtcNow, CreditLimit = 400.00M });
 
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
@@ -219,6 +225,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
+            Drive.Msmq.Payments.Send(new ICreditLimitChangedEvent() { AccountId = accountId, CreatedOn = DateTime.UtcNow, CreditLimit = 400.00M });
 
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
