@@ -193,7 +193,7 @@ namespace Wonga.QA.Tests.Ui
             var sNewCreditAmount = String.Format("£{0}", newCreditAmount.ToString("#.00"));
             var futureInterestAndFees = decimal.Parse(_response.Values["LoanExtensionFee"].Single());
             var sFutureInterestAndFees = String.Format("£{0}", futureInterestAndFees.ToString("#.00"));
-            var expectedRepaymentDate = GetOrdinalDate(DateTime.Now.AddDays(loanTerm).AddDays(1), "d MMM yyyy");
+            var expectedRepaymentDate = Date.GetOrdinalDate(DateTime.Now.AddDays(loanTerm).AddDays(1), "d MMM yyyy");
 
             // Check
             //Assert.AreEqual(expectedRepaymentDate, requestPage.RepaymentDate); fails UK-1746
@@ -237,7 +237,7 @@ namespace Wonga.QA.Tests.Ui
             var sNewCreditAmount = String.Format("£{0}", newCreditAmount.ToString("#.00"));
             var futureInterestAndFees = decimal.Parse(_response.Values["LoanExtensionFee"].Single());
             var sFutureInterestAndFees = String.Format("£{0}", futureInterestAndFees.ToString("#.00"));
-            var expectedRepaymentDate = GetOrdinalDate(DateTime.Now.AddDays(loanTerm).AddDays(1), "d MMM yyyy");
+            var expectedRepaymentDate = Date.GetOrdinalDate(DateTime.Now.AddDays(loanTerm).AddDays(1), "d MMM yyyy");
 
             // Check
             //Assert.AreEqual(expectedRepaymentDate, requestPage.RepaymentDate); fails UK-1746
@@ -275,38 +275,11 @@ namespace Wonga.QA.Tests.Ui
             {
                 requestPage.SetInformativeBox(extensionDays);
                 Thread.Sleep(2000);
-                expExtensionDate = GetOrdinalDate(DateTime.Parse(_response.Values["ExtensionDate"].ToArray()[extensionDays - 1]).Date, "d MMMM yyyy");
+                expExtensionDate = Date.GetOrdinalDate(DateTime.Parse(_response.Values["ExtensionDate"].ToArray()[extensionDays - 1]).Date, "d MMMM yyyy");
                 actExtensionDate = requestPage.RepaymentDate;
                 Assert.AreEqual(expExtensionDate, actExtensionDate, "Extend Date Incorrect {0}", extensionDays);
                 //Assert.AreEqual(_response.Values["TotalAmountDueOnExtensionDate"].ToArray()[0], actTotalAmountAndFees, "First Day Extend Date Incorrect");
             }               
-        }
-
-        public string GetOrdinalDate(DateTime date, string format)
-        {
-            var cDate = date.Day.ToString("d")[date.Day.ToString("d").Length - 1];
-            string suffix;
-            if ((date.Day.ToString("d").Length == 2) && (date.Day.ToString("d")[0] == '1'))
-                suffix = "th";
-            else
-                switch (cDate)
-                {
-                    case '1':
-                        suffix = "st";
-                        break;
-                    case '2':
-                        suffix = "nd";
-                        break;
-                    case '3':
-                        suffix = "rd";
-                        break;
-                    default:
-                        suffix = "th";
-                        break;
-                }
-            var sDate = date.Day.ToString("d") + " ";
-            var sDateOrdinial = date.Day.ToString("d") + suffix + " ";
-            return date.ToString(format).Replace(sDate, sDateOrdinial);
         }
     }
 }

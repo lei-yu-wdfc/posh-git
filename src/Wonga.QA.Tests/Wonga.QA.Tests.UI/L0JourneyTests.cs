@@ -419,8 +419,8 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(personalBankAccountPage.Client.Source().Contains("<!-- Output from wonga_lzero_za/apply-bank -->"));
         }
 
-        [Test, AUT(AUT.Uk), Pending("Example of full Uk L0 journey")]
-        public void UKL0JourneyTest()
+        [Test, AUT(AUT.Uk)]
+        public void L0Journey()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
             var mySummary = journey.ApplyForLoan(200, 10)
