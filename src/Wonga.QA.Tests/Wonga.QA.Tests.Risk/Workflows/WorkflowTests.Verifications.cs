@@ -160,22 +160,19 @@ namespace Wonga.QA.Tests.Risk.Workflows
 		{
 			switch (Config.AUT)
 			{
-					case AUT.Ca:
-					{
-						return ExpectedVerificationNamesLnCa;
-					}
-					break;
+				case AUT.Ca:
+				{
+					return ExpectedVerificationNamesLnCa;
+				}
 				case AUT.Za:
-					{
-						return ExpectedVerificationNamesLnZa;
-					}
-					break;
-
+				{
+					return ExpectedVerificationNamesLnZa;
+				}
 				default:
-					{
-						return new List<string>();
-						//throw new NotImplementedException(Config.AUT.ToString());
-					}
+				{
+					return new List<string>();
+					//throw new NotImplementedException(Config.AUT.ToString());
+				}
 			}
 		}
 		#endregion

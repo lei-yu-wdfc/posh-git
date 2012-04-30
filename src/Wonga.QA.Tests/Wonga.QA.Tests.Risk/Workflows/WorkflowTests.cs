@@ -85,25 +85,23 @@ namespace Wonga.QA.Tests.Risk.Workflows
 			switch (Config.AUT)
 			{
 				case(AUT.Za):
-					{
-						return
-							CustomerBuilder.New()
-							.WithEmployer("Wonga")
-							.WithForename("ANITHA")
-							.WithSurname("ESSACK")
-							.WithDateOfBirth(new Date(new DateTime(1957, 12, 19)))
-							.WithNationalNumber("5712190106083")
-							.WithMobileNumber(Get.GetMobilePhone())
-							.WithBankAccountNumber(Get.GetBankAccountNumber())
-							.WithPostcodeInAddress(Get.GetPostcode())
-							.Build();
-					}
-					break;
-
+				{
+					return
+						CustomerBuilder.New()
+						.WithEmployer("Wonga")
+						.WithForename("ANITHA")
+						.WithSurname("ESSACK")
+						.WithDateOfBirth(new Date(new DateTime(1957, 12, 19)))
+						.WithNationalNumber("5712190106083")
+						.WithMobileNumber(Get.GetMobilePhone())
+						.WithBankAccountNumber(Get.GetBankAccountNumber())
+						.WithPostcodeInAddress(Get.GetPostcode())
+						.Build();
+				}
 				default:
-					{
-						throw new NotImplementedException(Config.AUT.ToString());
-					}
+				{
+					throw new NotImplementedException(Config.AUT.ToString());
+				}
 			}
 			
 		}
