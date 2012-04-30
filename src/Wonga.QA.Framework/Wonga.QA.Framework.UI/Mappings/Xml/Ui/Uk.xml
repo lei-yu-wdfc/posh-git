@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Ui>
+<UiMap>
   <PersonalDetailsPage>
     <FormId>#lzero-personal-form</FormId>
   </PersonalDetailsPage>
@@ -154,4 +154,4 @@
     <UpdateButton>#GridContainer > input[name='Command']</UpdateButton>
   </CashOutPage>
 
-</Ui>
+</UiMap>

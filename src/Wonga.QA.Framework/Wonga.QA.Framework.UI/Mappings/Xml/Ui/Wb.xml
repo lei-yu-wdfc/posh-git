@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Ui>
+<UiMap>
   <!--PAGES SECTION-->
 
     <HomePage>
@@ -209,4 +209,4 @@
   <AccountDetailsSection>
 		<PasswordErrorForm>div#edit-password-wrapper div.invalid</PasswordErrorForm>		
   </AccountDetailsSection>
-</Ui>
+</UiMap>

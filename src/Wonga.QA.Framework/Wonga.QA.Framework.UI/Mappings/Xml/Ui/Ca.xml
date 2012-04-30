@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Ui>
+<UiMap>
   <YourNameSection>
     <Fieldset>fieldset#personal-details</Fieldset>
   </YourNameSection>
@@ -148,4 +148,4 @@
   </MyPersonalDetailsPage>
   
   
-</Ui>
+</UiMap>
