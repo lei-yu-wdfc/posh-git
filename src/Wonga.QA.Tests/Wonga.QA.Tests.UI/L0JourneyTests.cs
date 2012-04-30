@@ -430,10 +430,7 @@ namespace Wonga.QA.Tests.Ui
                 .FillBankDetails()
                 .FillCardDetails()
                 .WaitForAcceptedPage()
-                .FillAcceptedPage()
-                .GoToMySummaryPage()
-                .CurrentPage as MySummaryPage;
-
+                .FillAcceptedPage().CurrentPage as DealDonePage;
         }
 
         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-170")]
