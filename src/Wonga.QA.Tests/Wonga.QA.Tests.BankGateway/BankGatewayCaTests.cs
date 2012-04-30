@@ -6,6 +6,7 @@ using System.Xml.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db.BankGateway;
 using Wonga.QA.Framework.Mocks;
 using Wonga.QA.Tests.Core;
 
@@ -14,8 +15,9 @@ namespace Wonga.QA.Tests.BankGateway
     [TestFixture, AUT(AUT.Ca)]
     public class BankGatewayCaTests
     {
+        private const int TransactionStatusPending = 1;
         private const int TransactionStatusInProgress = 3;
-	private const int TransactionStatusSuccess = 4;
+	    private const int TransactionStatusSuccess = 4;
         private const int TransactionStatusFailed = 5;
         private const int BankIntegrationIdScotia = 1;
         private const int BankIntegrationIdBmo = 2;
@@ -450,5 +452,58 @@ namespace Wonga.QA.Tests.BankGateway
             Do.With.Timeout(TimeSpan.FromSeconds(5)).While(() => Drive.Db.BankGateway.Transactions.Single(
                 t => t.ApplicationId == applicationId && t.BankIntegrationId == BankIntegrationIdBmo && t.TransactionStatus == TransactionStatusSuccess));
 		}
+
+        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
+        public void ShouldSendBatchAndProcessToTransactions()
+        {
+            var applicationIds = new List<Guid>();
+
+            using (new BankGatewayBmoSendBatch())
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    var bankAccountNumber = Random.Next(1000000, 9999999);
+
+                    var customer = CustomerBuilder.New().
+                        WithInstitutionNumber("001").
+                        WithBranchNumber("00022").
+                        WithBankAccountNumber(bankAccountNumber).
+                        WithSurname("Surname").WithForename("Forename").
+                        Build();
+
+                    applicationIds.Add(ApplicationBuilder.New(customer).Build().Id);
+                }
+
+                List<TransactionEntity> transactions = new List<TransactionEntity>();
+
+                foreach (var applicationId in applicationIds)
+                {
+                    TransactionEntity transaction = null;
+                    Do.Until(() => transaction = Drive.Db.BankGateway.Transactions.Single(
+                                t => t.ApplicationId == applicationId &&
+                                     t.BankIntegrationId == BankIntegrationIdBmo &&
+                                     t.TransactionStatus == TransactionStatusPending));
+
+                    if (transaction != null)
+                    {
+                        transactions.Add(transaction);
+                    }
+                }
+
+                Assert.AreEqual(applicationIds.Count, transactions.Count);
+            }
+
+            var ackType = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == BankIntegrationIdBmo && a.Name == "DEFT220");
+
+            foreach (var applicationId in applicationIds)
+            {
+                TransactionEntity transaction = null;
+
+                Do.Until(() => transaction = Drive.Db.BankGateway.Transactions.Single(
+                            t => t.ApplicationId == applicationId &&
+                                 t.BankIntegrationId == BankIntegrationIdBmo &&
+                                 t.TransactionStatus == TransactionStatusSuccess));
+            }
+        }
     }
 }
