@@ -30,7 +30,6 @@ namespace Wonga.QA.Tests.BankGateway
             var customer = CustomerBuilder.New().
                                 WithInstitutionNumber("001").
                                 WithBranchNumber("00022").
-                                WithBankAccountNumber(1641421).
                                 WithSurname("Wonga").WithForename("Canada Inc").
                                 Build();
             var application = ApplicationBuilder.New(customer).Build();
@@ -44,17 +43,14 @@ namespace Wonga.QA.Tests.BankGateway
         [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
         public void SendPaymentMessageWithRealAccountShouldBeRoutedToBmoAndRejected()
         {
-            var bankAccountNumber = Random.Next(1000000, 9999999);
-
             var customer = CustomerBuilder.New().
                                 WithInstitutionNumber("001").
                                 WithBranchNumber("00022").
-                                WithBankAccountNumber(bankAccountNumber).
                                 WithSurname("Wonga").WithForename("Canada Inc").
                                 Build();
 
             var setup = BmoResponseBuilder.New().
-                                ForBankAccountNumber(bankAccountNumber).
+                                ForBankAccountNumber(customer.BankAccountNumber).
                                 RejectTransaction();
 
             var application = ApplicationBuilder.New(customer).Build();
@@ -68,17 +64,14 @@ namespace Wonga.QA.Tests.BankGateway
         [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
         public void SendPaymentMessageWithRealAccountShouldBeRoutedToBmoAndRejectedFile()
         {
-            var bankAccountNumber = Random.Next(1000000, 9999999);
-
             var customer = CustomerBuilder.New().
                                 WithInstitutionNumber("001").
                                 WithBranchNumber("00022").
-                                WithBankAccountNumber(bankAccountNumber).
                                 WithSurname("Wonga").WithForename("Canada Inc").
                                 Build();
 
             var setup = BmoResponseBuilder.New().
-                                ForBankAccountNumber(bankAccountNumber).
+                                ForBankAccountNumber(customer.BankAccountNumber).
                                 RejectFile();
 
             var application = ApplicationBuilder.New(customer).Build();
@@ -95,7 +88,6 @@ namespace Wonga.QA.Tests.BankGateway
             var customer = CustomerBuilder.New().
                                 WithInstitutionNumber("001").
                                 WithBranchNumber("00022").
-                                WithBankAccountNumber(9999999).
                                 WithSurname("Surname").WithForename("Forename").
                                 Build();
             var application = ApplicationBuilder.New(customer).Build();
@@ -126,16 +118,13 @@ namespace Wonga.QA.Tests.BankGateway
         [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
         public void SendPaymentMessageShouldBeRoutedToScotiaAndRejected()
         {
-            var bankAccountNumber = Random.Next(1000000, 9999999);
-
             var customer = CustomerBuilder.New().
-                                WithBankAccountNumber(bankAccountNumber).
                                 WithInstitutionNumber("002").
                                 WithBranchNumber("00018").
                                 Build();
 
             var setup = ScotiaResponseBuilder.New().
-                                ForBankAccountNumber(bankAccountNumber).
+                                ForBankAccountNumber(customer.BankAccountNumber).
                                 Reject();
 
             var application = ApplicationBuilder.New(customer).Build();
@@ -180,15 +169,13 @@ namespace Wonga.QA.Tests.BankGateway
             using (new BankGatewayBmoSendBatch())
             {
                 // Rejected
-                var bankAccountNumber = Random.Next(1000000, 9999999);
                 var customer = CustomerBuilder.New().
                                     WithInstitutionNumber("001").
                                     WithBranchNumber("00022").
-                                    WithBankAccountNumber(bankAccountNumber).
                                     WithSurname("Wonga").WithForename("Canada Inc").
                                     Build();
                 var setup = BmoResponseBuilder.New().
-                                    ForBankAccountNumber(bankAccountNumber).
+                                    ForBankAccountNumber(customer.BankAccountNumber).
                                     RejectFile();
 
                 applicationIdRejected = ApplicationBuilder.New(customer).Build().Id;
@@ -197,7 +184,6 @@ namespace Wonga.QA.Tests.BankGateway
                 customer = CustomerBuilder.New().
                     WithInstitutionNumber("001").
                     WithBranchNumber("00022").
-                    WithBankAccountNumber(9999999).
                     WithSurname("Surname").WithForename("Forename").
                     Build();
 
@@ -223,11 +209,9 @@ namespace Wonga.QA.Tests.BankGateway
         [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
         public void SettlementInvalidCrossreferenceNumberShouldPersistAck()
         {
-            var bankAccountNumber = Random.Next(1000000, 9999999);
             var customer = CustomerBuilder.New().
                                 WithInstitutionNumber("001").
                                 WithBranchNumber("00022").
-                                WithBankAccountNumber(bankAccountNumber).
                                 WithSurname("Wonga").WithForename("Canada Inc").
                                 Build();
 
@@ -235,7 +219,7 @@ namespace Wonga.QA.Tests.BankGateway
                 new XElement("Segments", new XAttribute("SenderReference", "INVALID DATA")));
 
             var setup = BmoResponseBuilder.New().
-                                ForBankAccountNumber(bankAccountNumber).
+                                ForBankAccountNumber(customer.BankAccountNumber).
                                 CustomOverride(customResponseOverride);
 
             var applicationId = ApplicationBuilder.New(customer).Build().Id;
@@ -258,24 +242,21 @@ namespace Wonga.QA.Tests.BankGateway
 
             using (new BankGatewayBmoSendBatch())
             {
-                var bankAccountNumber = Random.Next(1000000, 9999999);
                 var customer = CustomerBuilder.New().
                     WithInstitutionNumber("001").
                     WithBranchNumber("00022").
-                    WithBankAccountNumber(bankAccountNumber).
                     WithSurname("Wonga").WithForename("Canada Inc").
                     Build();
                 var customResponseOverride = new XElement("SettlementReportDetail",
                                                           new XElement("Segments", new XAttribute("SenderReference", "INVALID DATA")));
                 var setup = BmoResponseBuilder.New().
-                    ForBankAccountNumber(bankAccountNumber).
+                    ForBankAccountNumber(customer.BankAccountNumber).
                     CustomOverride(customResponseOverride);
                 applicationWithInvalidResponseFromBank = ApplicationBuilder.New(customer).Build().Id;
 
                 customer = CustomerBuilder.New().
                     WithInstitutionNumber("001").
                     WithBranchNumber("00022").
-                    WithBankAccountNumber(9999999).
                     WithSurname("Surname").WithForename("Forename").
                     Build();
                 applicationWithValidResponseFromBank = ApplicationBuilder.New(customer).Build().Id;
@@ -301,7 +282,6 @@ namespace Wonga.QA.Tests.BankGateway
                     var customer = CustomerBuilder.New().
                         WithInstitutionNumber("001").
                         WithBranchNumber("00022").
-                        WithBankAccountNumber(9999999).
                         WithSurname("Surname").WithForename("Forename").
                         Build();
 
@@ -330,15 +310,13 @@ namespace Wonga.QA.Tests.BankGateway
             using (new BankGatewayBmoSendBatch())
             {
                 // Rejected
-                var bankAccountNumber = Random.Next(1000000, 9999999);
                 var customer = CustomerBuilder.New().
                                     WithInstitutionNumber("001").
                                     WithBranchNumber("00022").
-                                    WithBankAccountNumber(bankAccountNumber).
                                     WithSurname("Wonga").WithForename("Canada Inc").
                                     Build();
                 var setup = BmoResponseBuilder.New().
-                                    ForBankAccountNumber(bankAccountNumber).
+                                    ForBankAccountNumber(customer.BankAccountNumber).
                                     RejectTransaction();
 
                 applicationIdRejected = ApplicationBuilder.New(customer).Build().Id;
@@ -347,7 +325,6 @@ namespace Wonga.QA.Tests.BankGateway
                 customer = CustomerBuilder.New().
                     WithInstitutionNumber("001").
                     WithBranchNumber("00022").
-                    WithBankAccountNumber(9999999).
                     WithSurname("Surname").WithForename("Forename").
                     Build();
 
@@ -380,11 +357,9 @@ namespace Wonga.QA.Tests.BankGateway
             using (new BankGatewayBmoSendBatch())
             {
                 // Rejected transaction with invalid crossreference number
-                var bankAccountNumber = Random.Next(1000000, 9999999);
                 var customer = CustomerBuilder.New().
                     WithInstitutionNumber("001").
                     WithBranchNumber("00022").
-                    WithBankAccountNumber(bankAccountNumber).
                     WithSurname("Wonga").WithForename("Canada Inc").
                     Build();
                 var customResponseOverride = new[]
@@ -394,20 +369,18 @@ namespace Wonga.QA.Tests.BankGateway
 							new XElement("SettlementReportDetail", new XAttribute("LogicalRecordNumber", -1))
 						};
                 var setup = BmoResponseBuilder.New().
-                    ForBankAccountNumber(bankAccountNumber).
+                    ForBankAccountNumber(customer.BankAccountNumber).
                     CustomOverride(customResponseOverride);
                 applicationWithInvalidResponseFromBank = ApplicationBuilder.New(customer).Build().Id;
 
                 // Rejected transaction with valid crossreference number
-                bankAccountNumber = Random.Next(1000000, 9999999);
                 customer = CustomerBuilder.New().
                     WithInstitutionNumber("001").
                     WithBranchNumber("00022").
-                    WithBankAccountNumber(bankAccountNumber).
                     WithSurname("Surname").WithForename("Forename").
                     Build();
                 setup = BmoResponseBuilder.New().
-                    ForBankAccountNumber(bankAccountNumber).
+                    ForBankAccountNumber(customer.BankAccountNumber).
                     RejectTransaction();
                 applicationWithValidResponseFromBank = ApplicationBuilder.New(customer).Build().Id;
             }
@@ -422,11 +395,9 @@ namespace Wonga.QA.Tests.BankGateway
         [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
         public void RejectedInvalidCrossreferenceNumberShouldPersistAck()
         {
-            var bankAccountNumber = Random.Next(1000000, 9999999);
             var customer = CustomerBuilder.New().
                                 WithInstitutionNumber("001").
                                 WithBranchNumber("00022").
-                                WithBankAccountNumber(bankAccountNumber).
                                 WithSurname("Wonga").WithForename("Canada Inc").
                                 Build();
 
@@ -438,7 +409,7 @@ namespace Wonga.QA.Tests.BankGateway
 					};
 
             var setup = BmoResponseBuilder.New().
-                ForBankAccountNumber(bankAccountNumber).
+                ForBankAccountNumber(customer.BankAccountNumber).
                 CustomOverride(customResponseOverride);
 
             var applicationId = ApplicationBuilder.New(customer).Build().Id;
