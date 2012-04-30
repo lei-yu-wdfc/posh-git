@@ -17,7 +17,5 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String ExtensionRequestPageOweToday { get; set; }
         public String ExtensionRequestPageTotalRepayToday { get; set; }
         public String ExtensionRequestPageNewCreditAmount { get; set; }
-        
-        
     }
 }
