@@ -34,6 +34,7 @@
 		<ItemGroup>
 			<Exclude Include="$(Bin)\$(Tests).Core.dll" />
 			<Exclude Include="$(Bin)\$(Tests).Meta.dll" />
+			<Exclude Include="$(Bin)\$(Tests).Smoke.dll" />
 			<Exclude Include="$(Bin)\$(Tests).Ui.dll" />
 			<Command Include='"$(MSBuildProgramFiles32)\Microsoft\ILMerge\ILMerge.exe"' />
 			<Command Include="/targetplatform:v4,$(MSBuildToolsPath)" />
