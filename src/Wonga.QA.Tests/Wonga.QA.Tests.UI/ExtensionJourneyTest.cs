@@ -163,10 +163,11 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1739"), Pending("Uncomment Assert for OweToday when UK-1739 is fixed.")]
         public void ExtensionRequestPageOweTodayTest() { }
 
-        /// <summary>
-        /// General function used by tests
-        /// </summary>
+        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1859"), Pending("Uncomment Assert that compares TotalToRepay and InterestFees when UK-1859 is fixed.")]
+        public void ExtensionRequestPageTotalToRepayNotEqualFutureInterestsAndFeesTest() { }
+
         
+
         private void CheckExtensionRequestPage(int loanAmount, int loanTerm)
         {
             string email = Get.RandomEmail();
@@ -202,6 +203,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(sTotalRepayToday, requestPage.TotalRepayToday, "TotalRepayToday");
             Assert.AreEqual(sNewCreditAmount, requestPage.NewCreditAmount, "NewCreditAmount");
             Assert.AreEqual(sFutureInterestAndFees, requestPage.InterestFees, "InterestFees");
+            //Assert.AreNotEqual(requestPage.TotalToRepay, requestPage.InterestFees, "Interest Fees and Total To Repay should not be equal."); fails UK-1859
         }
 
 
@@ -246,6 +248,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(sTotalRepayToday, requestPage.TotalRepayToday, "TotalRepayToday");
             Assert.AreEqual(sNewCreditAmount, requestPage.NewCreditAmount, "NewCreditAmount");
             Assert.AreEqual(sFutureInterestAndFees, requestPage.InterestFees, "InterestFees");
+            //Assert.AreNotEqual(requestPage.TotalToRepay, requestPage.InterestFees, "Interest Fees and Total To Repay should not be equal."); fails UK-1859
         }
 
 
@@ -277,8 +280,9 @@ namespace Wonga.QA.Tests.Ui
                 Thread.Sleep(2000);
                 expExtensionDate = Date.GetOrdinalDate(DateTime.Parse(_response.Values["ExtensionDate"].ToArray()[extensionDays - 1]).Date, "d MMMM yyyy");
                 actExtensionDate = requestPage.RepaymentDate;
-                Assert.AreEqual(expExtensionDate, actExtensionDate, "Extend Date Incorrect {0}", extensionDays);
-                //Assert.AreEqual(_response.Values["TotalAmountDueOnExtensionDate"].ToArray()[0], actTotalAmountAndFees, "First Day Extend Date Incorrect");
+                Assert.AreEqual(expExtensionDate, actExtensionDate, "Extend Date is incorrect {0}", extensionDays);
+                //Assert.AreNotEqual(requestPage.TotalToRepay, requestPage.InterestFees, "Interest Fees and Total To Repay should not be equal."); fails UK-1859
+                Assert.AreEqual("£" + _response.Values["TotalAmountDueOnExtensionDate"].ToArray()[extensionDays - 1], requestPage.TotalToRepay, "Total To Repay is not correct.");
             }               
         }
     }

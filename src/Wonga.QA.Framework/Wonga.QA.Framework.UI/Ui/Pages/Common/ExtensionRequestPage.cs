@@ -126,5 +126,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             get { return Content.FindElement(By.CssSelector(UiMap.Get.ExtensionRequestPage.ExtensionRequestPageNewCreditAmount)).Text; }
         }
 
+        public String TotalToRepay
+        {
+            get { return Content.FindElement(By.CssSelector(UiMap.Get.ExtensionRequestPage.ExtensionRequestPageNewGrandTotal)).Text; }
+        }
     }
 }
