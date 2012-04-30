@@ -8,13 +8,14 @@ namespace Wonga.QA.Tests.BankGateway
 {
 	public class BankGatewayBmoSendBatch : IDisposable
 	{
+        private readonly string _configKey = "BankGateway.Bmo.FileTransferTimes";
 		private readonly string _originalSchedule;
 
 		public BankGatewayBmoSendBatch()
 		{
 			// Pause Cash-out schedule
 			var driver = Drive.Db.Ops;
-			var config = driver.ServiceConfigurations.First(sc => sc.Key == "BankGateway.Bmo.FileTransferTimes");
+            var config = driver.ServiceConfigurations.First(sc => sc.Key == _configKey);
 			_originalSchedule = config.Value;
 			config.Value = DateTime.UtcNow.AddHours(2).TimeOfDay.ToString();
 			driver.SubmitChanges();
@@ -24,7 +25,7 @@ namespace Wonga.QA.Tests.BankGateway
 		{
 			// Restore cash-out schedule
 			var driver = Drive.Db.Ops;
-			var config = driver.ServiceConfigurations.First(sc => sc.Key == "BankGateway.Bmo.FileTransferTimes");
+            var config = driver.ServiceConfigurations.First(sc => sc.Key == _configKey);
 			config.Value = _originalSchedule;
 			driver.SubmitChanges();
 
