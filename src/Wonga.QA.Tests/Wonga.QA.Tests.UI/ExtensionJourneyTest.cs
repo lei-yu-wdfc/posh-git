@@ -55,17 +55,16 @@ namespace Wonga.QA.Tests.Ui
             requestPage.setSecurityCode("123");
             requestPage.SubmitButtonClick();
 
-            var processPage = new ExtensionProcessingPage(this.Client);
+            var extensionProcessingPage = new ExtensionProcessingPage(this.Client);
 
-            var agreementPage =  processPage.WaitFor<ExtensionAgreementPage>() as ExtensionAgreementPage;
+            var agreementPage =  extensionProcessingPage.WaitFor<ExtensionAgreementPage>() as ExtensionAgreementPage;
             agreementPage.Accept();
 
             var dealDonePage = new ExtensionDealDonePage(this.Client);
             Assert.IsFalse(dealDonePage.IsDealDonePageExtensionAmountNotPresent());
             Assert.IsFalse(dealDonePage.IsDealDonePageDateTokenPresent());
         }
-
-
+        
         [Test, AUT(AUT.Uk), JIRA("UK-1321", "UK-1522"), Pending("Affected by bug UK-1746")]
         public void ExtensionJourneyDecline()
         {
@@ -88,9 +87,9 @@ namespace Wonga.QA.Tests.Ui
             requestPage.setSecurityCode("888");
             requestPage.SubmitButtonClick();
 
-            var processPage = new ExtensionProcessingPage(this.Client);
+            var extensionProcessingPage = new ExtensionProcessingPage(this.Client);
 
-            var declinedPage = processPage.WaitFor<ExtensionPaymentFailedPage>() as ExtensionPaymentFailedPage;
+            var declinedPage = extensionProcessingPage.WaitFor<ExtensionPaymentFailedPage>() as ExtensionPaymentFailedPage;
 
             Assert.IsFalse(declinedPage.IsPaymentFailedAmountNotPresent());
             Assert.IsFalse(declinedPage.IsPaymentFailedDateNotPresent());
@@ -119,9 +118,9 @@ namespace Wonga.QA.Tests.Ui
             requestPage.setSecurityCode("999");
             requestPage.SubmitButtonClick();
 
-            var processPage = new ExtensionProcessingPage(this.Client);
+            var extensionProcessingPage = new ExtensionProcessingPage(this.Client);
 
-            var errorPage = processPage.WaitFor<ExtensionErrorPage>() as ExtensionErrorPage;
+            var errorPage = extensionProcessingPage.WaitFor<ExtensionErrorPage>() as ExtensionErrorPage;
 
         }
 
@@ -129,31 +128,31 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk), JIRA("UK-427")]
         public void ExtensionRequestPageTest1()
         {
-            CheckExtensionRequestPage(100, 5);
+            ExtensionRequestPage(100, 5, 1);
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-427")]
         public void ExtensionRequestPageTest2()
         {
-            CheckExtensionRequestPage(400, 2);
+            ExtensionRequestPage(400, 2, 1);
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-427")]
         public void ExtensionRequestPageTest3()
         {
-            CheckExtensionRequestPage(1, 7);
+            ExtensionRequestPage(1, 7, 1);
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-427")]
         public void ExtensionRequestPageTest4()
         {
-            CheckExtensionRequestPageNextDay(1, 7);
+            ExtensionRequestPageNextDay(1, 7);
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-427")]
         public void ExtensionRequestPageChangeDaysTest5()
         {
-            CheckExtensionRequestPageChangeDays(1, 7);
+            ExtensionRequestPageChangeDays(1, 7);
         }
 
 
@@ -166,9 +165,9 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1859"), Pending("Uncomment Assert that compares TotalToRepay and InterestFees when UK-1859 is fixed.")]
         public void ExtensionRequestPageTotalToRepayNotEqualFutureInterestsAndFeesTest() { }
 
-        
 
-        private void CheckExtensionRequestPage(int loanAmount, int loanTerm)
+
+        private void ExtensionRequestPage(int loanAmount, int loanTerm, int extensionDays)
         {
             string email = Get.RandomEmail();
 
@@ -179,11 +178,17 @@ namespace Wonga.QA.Tests.Ui
             var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
 
             mySummaryPage.ChangePromiseDateButtonClick();
-            var requestPage = new ExtensionRequestPage(this.Client);
+            var extensionRequestPage = new ExtensionRequestPage(this.Client);
 
-            // Expected
+
             var api = new ApiDriver();
             _response = api.Queries.Post(new GetFixedTermLoanExtensionQuoteUkQuery { ApplicationId = application.Id });
+
+            // Set Dates to extend
+            extensionRequestPage.SetInformativeBox(extensionDays);
+            Thread.Sleep(2000);
+
+            // Set expected values
             var sliderMinDays = _response.Values["SliderMinDays"].Single();
             var sliderMaxDays = _response.Values["SliderMaxDays"].Single();
             var oweToday = decimal.Parse(_response.Values["TotalAmountDueToday"].Single());
@@ -192,22 +197,29 @@ namespace Wonga.QA.Tests.Ui
             var sTotalRepayToday = String.Format("£{0}", totalRepayToday.ToString("#.00"));
             var newCreditAmount = decimal.Parse(_response.Values["CurrentPrincipleAmount"].Single());
             var sNewCreditAmount = String.Format("£{0}", newCreditAmount.ToString("#.00"));
-            var futureInterestAndFees = decimal.Parse(_response.Values["LoanExtensionFee"].Single());
-            var sFutureInterestAndFees = String.Format("£{0}", futureInterestAndFees.ToString("#.00"));
+            //var futureInterestAndFees = decimal.Parse(_response.Values["LoanExtensionFee"].Single()); wrong
+            //var sFutureInterestAndFees = String.Format("£{0}", futureInterestAndFees.ToString("#.00")); wrong
+
             var expectedRepaymentDate = Date.GetOrdinalDate(DateTime.Now.AddDays(loanTerm).AddDays(1), "d MMM yyyy");
 
-            // Check
-            //Assert.AreEqual(expectedRepaymentDate, requestPage.RepaymentDate); fails UK-1746
-            Assert.AreEqual("1", requestPage.InformativeBox, "InformativeBox");
-            //Assert.AreEqual(sOweToday, requestPage.OweToday, "OweToday"); fails UK-1739
-            Assert.AreEqual(sTotalRepayToday, requestPage.TotalRepayToday, "TotalRepayToday");
-            Assert.AreEqual(sNewCreditAmount, requestPage.NewCreditAmount, "NewCreditAmount");
-            Assert.AreEqual(sFutureInterestAndFees, requestPage.InterestFees, "InterestFees");
+            // Main checks
+            //Assert.AreEqual(expectedRepaymentDate, requestPage.RepaymentDate); fails UK-1746 // Repayment Date
+            Assert.AreEqual(extensionDays.ToString("#"), extensionRequestPage.InformativeBox, "InformativeBox"); // Days (for extention)
+            //Assert.AreEqual(sOweToday, requestPage.OweToday, "OweToday"); fails UK-1739 // Owe today
+            Assert.AreEqual(sTotalRepayToday, extensionRequestPage.TotalRepayToday, "TotalRepayToday"); // Total to Repay Today
+            Assert.AreEqual(sNewCreditAmount, extensionRequestPage.NewCreditAmount, "NewCreditAmount"); // New Credit Amount
+            Assert.AreEqual("£" + _response.Values["FutureInterestAndFees"].ToArray()[extensionDays - 1], extensionRequestPage.InterestFees, "Future Interest And Fees is not correct for Extension Days={0}", extensionDays); // Future Interests and Fees
+            Assert.AreEqual("£" + _response.Values["TotalAmountDueOnExtensionDate"].ToArray()[extensionDays - 1], extensionRequestPage.TotalToRepay, "Total To Repay on Extension Date is not correct for Extension Days={0}", extensionDays); // Total to Repay on Extrension Date
+            Assert.AreEqual(Date.GetOrdinalDate(DateTime.Parse(_response.Values["ExtensionDate"].ToArray()[extensionDays - 1]).Date, "d MMMM yyyy"), extensionRequestPage.RepaymentDate, "Extensions Date is not correct for Extension Days={0}", extensionDays); // Extrension Date
+
+            // Extra checks
             //Assert.AreNotEqual(requestPage.TotalToRepay, requestPage.InterestFees, "Interest Fees and Total To Repay should not be equal."); fails UK-1859
+            
+            //Assert.AreEqual(sFutureInterestAndFees, extensionRequestPage.InterestFees, "InterestFees"); wrong
+            
         }
-
-
-        private void CheckExtensionRequestPageNextDay(int loanAmount, int loanTerm)
+        
+        private void ExtensionRequestPageNextDay(int loanAmount, int loanTerm)
         {
             string email = Get.RandomEmail();
 
@@ -250,9 +262,8 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(sFutureInterestAndFees, requestPage.InterestFees, "InterestFees");
             //Assert.AreNotEqual(requestPage.TotalToRepay, requestPage.InterestFees, "Interest Fees and Total To Repay should not be equal."); fails UK-1859
         }
-
-
-        private void CheckExtensionRequestPageChangeDays(int loanAmount, int loanTerm)
+        
+        private void ExtensionRequestPageChangeDays(int loanAmount, int loanTerm)
         {
             string email = Get.RandomEmail();
             int[] extensionDaysArray = { 2, 10, 15, 29, 30, 1 };
@@ -267,23 +278,107 @@ namespace Wonga.QA.Tests.Ui
             var requestPage = new ExtensionRequestPage(this.Client);
             
             var api = new ApiDriver();
-            // Expected
             _response = api.Queries.Post(new GetFixedTermLoanExtensionQuoteUkQuery { ApplicationId = application.Id });
 
-            // Scroll sliders - TBD
             // Change value in the Days field 
             string expExtensionDate;
             string actExtensionDate;
             foreach (int extensionDays in extensionDaysArray)
             {
+                // Set Dates to extend
                 requestPage.SetInformativeBox(extensionDays);
                 Thread.Sleep(2000);
-                expExtensionDate = Date.GetOrdinalDate(DateTime.Parse(_response.Values["ExtensionDate"].ToArray()[extensionDays - 1]).Date, "d MMMM yyyy");
-                actExtensionDate = requestPage.RepaymentDate;
-                Assert.AreEqual(expExtensionDate, actExtensionDate, "Extend Date is incorrect {0}", extensionDays);
-                //Assert.AreNotEqual(requestPage.TotalToRepay, requestPage.InterestFees, "Interest Fees and Total To Repay should not be equal."); fails UK-1859
-                Assert.AreEqual("£" + _response.Values["TotalAmountDueOnExtensionDate"].ToArray()[extensionDays - 1], requestPage.TotalToRepay, "Total To Repay is not correct.");
+
+                // Main checks
+                Assert.AreEqual("£" + _response.Values["FutureInterestAndFees"].ToArray()[extensionDays - 1], requestPage.InterestFees, "Future Interest And Fees is not correct for Extension Days={0}", extensionDays); // Future Interests and Fees
+                Assert.AreEqual("£" + _response.Values["TotalAmountDueOnExtensionDate"].ToArray()[extensionDays - 1], requestPage.TotalToRepay, "Total To Repay on Extension Date is not correct for Extension Days={0}", extensionDays); // Total to Repay on Extrension Date
+                Assert.AreEqual(Date.GetOrdinalDate(DateTime.Parse(_response.Values["ExtensionDate"].ToArray()[extensionDays - 1]).Date, "d MMMM yyyy"), requestPage.RepaymentDate, "Extensions Date is not correct for Extension Days={0}", extensionDays); // Extrension Date
+                // Extra checks    
+                //Assert.AreNotEqual(requestPage.TotalToRepay, requestPage.InterestFees, "Interest Fees and Total To Repay should not be equal."); fails UK-1859 
             }               
+        }
+        
+        [Test, AUT(AUT.Uk), JIRA("UK-427"), Pending("In development")]
+        public void ExtensionRequestPage1TopupAnd1ExtendTest()
+        {
+            string email = Get.RandomEmail();
+            int loanTerm = 7;
+            int extensionDays = 10;
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanAmount(100).WithLoanTerm(loanTerm).Build();
+            var myAccountPage = Client.Login().LoginAs(email);
+            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+
+            Topup(email, mySummaryPage, application, customer);
+            Extend(email, mySummaryPage, loanTerm, application, extensionDays);
+        }
+        
+        private void Topup(string email, MySummaryPage mySummaryPage, Application application, Customer customer)
+        {
+            var responseLimit = Drive.Api.Queries.Post(new GetFixedTermLoanTopupOfferQuery { AccountId = customer.Id });
+            _amountMin = 1;
+            _amountMax = (int)Decimal.Parse(responseLimit.Values["AmountMax"].Single(), CultureInfo.InvariantCulture);
+            int topupAmount = _amountMin + (new Random()).Next(_amountMax - _amountMin);
+
+            mySummaryPage.TopupSliders.HowMuch = topupAmount.ToString("#");
+
+            _response = Drive.Api.Queries.Post(new GetFixedTermLoanTopupCalculationQuery { ApplicationId = application.Id, TopupAmount = topupAmount });
+            var totalRepayable = _response.Values["TotalRepayable"].Single();
+            var interestAndFees = _response.Values["InterestAndFeesAmount"].Single();
+            var requestPage = mySummaryPage.TopupSliders.Apply();
+            requestPage.SubmitButtonClick();
+            var processPage = new TopupProcessingPage(this.Client);
+            var agreementPage = processPage.WaitForAgreementPage(Client);
+            var dealDonePage = agreementPage.Accept();
+            mySummaryPage = dealDonePage.ContinueToMyAccount() as MySummaryPage;
+        }
+
+        private void Extend(string email, MySummaryPage mySummaryPage, int loanTerm, Application application, int extensionDays)
+        {
+            // Open Extension Request page
+            mySummaryPage.ChangePromiseDateButtonClick();
+            var extensionRequestPage = new ExtensionRequestPage(this.Client); 
+            
+            // Get Extension application page contents
+            var api = new ApiDriver();
+            _response = api.Queries.Post(new GetFixedTermLoanExtensionQuoteUkQuery { ApplicationId = application.Id });
+
+            // Set Dates to extend
+            extensionRequestPage.SetInformativeBox(extensionDays);
+            Thread.Sleep(2000);
+
+            // Main checks
+            Assert.AreEqual("£" + _response.Values["FutureInterestAndFees"].ToArray()[extensionDays - 1], extensionRequestPage.InterestFees, "Future Interest And Fees is not correct for Extension Days={0}", extensionDays); // Future Interests and Fees
+            Assert.AreEqual("£" + _response.Values["TotalAmountDueOnExtensionDate"].ToArray()[extensionDays - 1], extensionRequestPage.TotalToRepay, "Total To Repay on Extension Date is not correct for Extension Days={0}", extensionDays); // Total to Repay on Extrension Date
+            Assert.AreEqual(Date.GetOrdinalDate(DateTime.Parse(_response.Values["ExtensionDate"].ToArray()[extensionDays - 1]).Date, "d MMMM yyyy"), extensionRequestPage.RepaymentDate, "Extensions Date is not correct for Extension Days={0}", extensionDays); // Extrension Date
+ 
+
+            /*
+            // Expected
+            var api = new ApiDriver();
+            _response = api.Queries.Post(new GetFixedTermLoanExtensionQuoteUkQuery { ApplicationId = application.Id });
+
+            var expExtensionDate = Date.GetOrdinalDate(DateTime.Parse(_response.Values["ExtensionDate"].ToArray()[extensionDays - 1]).Date, "d MMMM yyyy");
+            var actExtensionDate = requestPage.RepaymentDate;
+            Assert.AreEqual(expExtensionDate, actExtensionDate, "Extend Date is incorrect {0}", extensionDays);
+            Assert.AreEqual("£" + _response.Values["TotalAmountDueOnExtensionDate"].ToArray()[extensionDays - 1], requestPage.TotalToRepay, "Total To Repay is not correct.");
+            Assert.AreEqual("£" + _response.Values["NewCreditAmount"].ToArray()[extensionDays - 1], requestPage.NewCreditAmount, "New Credit Amount is incorrect.");
+            Assert.AreEqual("£" + _response.Values["FutureInterestAndFees"].ToArray()[extensionDays - 1], requestPage.InterestFees, "Interest and Fees is incorrect.");
+            Assert.AreEqual("£" + _response.Values["CurrentPrincipleAmount"].ToArray()[extensionDays - 1], requestPage.OweToday, "Interest and Fees is incorrect.");
+            
+            //Assert.AreNotEqual(requestPage.TotalToRepay, requestPage.InterestFees, "Interest Fees and Total To Repay should not be equal."); fails UK-1859
+            */
+
+            extensionRequestPage.setSecurityCode("123"); // fill in card security code
+            
+            extensionRequestPage.SubmitButtonClick(); // click Submit & open Processing page
+            var extensionProcessingPage = new ExtensionProcessingPage(this.Client); 
+
+            var agreementPage = extensionProcessingPage.WaitFor<ExtensionAgreementPage>() as ExtensionAgreementPage; // wait for Agreement page
+            
+            agreementPage.Accept(); // accept aggreement & open Deal Done page
+            var dealDonePage = new ExtensionDealDonePage(this.Client);
+            
         }
     }
 }
