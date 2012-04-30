@@ -20,8 +20,6 @@ namespace Wonga.QA.Tests.Marketing
         private Customer _nonEligibleCustomer = null;
         private Customer _nonEligibleCustomerInArrears = null;
 
-        private static readonly dynamic _eligibleCustomersEntity = Drive.Data.Marketing.Db.MarketingEligibleCustomers;
-
         private static readonly String ELIGIBLE_RESPONSE_KEY = "IsEligible";
         private static readonly String ELIGIBLE_CUSTOMER_RESPONSE = "true";
         private static readonly String NON_ELIGIBLE_CUSTOMER_RESPONSE = "false";
@@ -33,10 +31,8 @@ namespace Wonga.QA.Tests.Marketing
             _nonEligibleCustomer = CustomerBuilder.New().Build();
             _nonEligibleCustomerInArrears = CustomerBuilder.New().Build();
 
-            Do.Until(()=> _eligibleCustomersEntity.Insert(EligibleCustomerId: _eligibleCustomer.Id, ShowAd: 1, CustomerInArrears: 0,
-                                            CreateOn: Get.RandomDate(), HasStandardCard: 1, HasPremiumCard: 0));
-            Do.Until(()=> _eligibleCustomersEntity.Insert(EligibleCustomerId: _nonEligibleCustomerInArrears.Id, ShowAd: 0, CustomerInArrears: 1,
-                                            CreateOn: Get.RandomDate(), HasStandardCard: 1, HasPremiumCard: 0));
+            CustomerOperations.CreateMarketingEligibility(_eligibleCustomer.Id,true);
+            CustomerOperations.CreateMarketingEligibility(_nonEligibleCustomerInArrears.Id,false);
 
         }
 
@@ -67,8 +63,8 @@ namespace Wonga.QA.Tests.Marketing
         [TearDown]
         public void Rollback()
         {
-            Do.Until(()=> _eligibleCustomersEntity.Delete(EligibleCustomerId: _eligibleCustomer.Id));
-            Do.Until(()=> _eligibleCustomersEntity.Delete(EligibleCustomerId: _nonEligibleCustomerInArrears.Id));
+            CustomerOperations.DeleteMArketingEligibility(_eligibleCustomer.Id);
+            CustomerOperations.DeleteMArketingEligibility(_nonEligibleCustomerInArrears.Id);
         }
 
 
