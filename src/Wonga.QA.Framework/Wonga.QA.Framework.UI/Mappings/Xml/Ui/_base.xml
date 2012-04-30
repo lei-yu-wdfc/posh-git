@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Ui>
+<UiMap>
   <LoginPage>
     <Username>#edit-name</Username>
     <Password>#edit-pass</Password>
@@ -372,4 +372,4 @@
     <ExtensionRequestPageNewCreditAmount>.extend-new-credit</ExtensionRequestPageNewCreditAmount>    
   </ExtensionRequestPage>
 
-</Ui>
+</UiMap>

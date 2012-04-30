@@ -114,7 +114,7 @@
     <Compile Include="Mappings\Ui\Pages\Wb\ReferPage.cs" />
     <Compile Include="Mappings\Ui\Sections\AddressDetailsSection.cs" />
     <Compile Include="Mappings\Ui\Sections\ApplicationSection.cs" />
-    <Compile Include="Mappings\Ui\Ui.cs" />
+    <Compile Include="Mappings\Ui\UiMap.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\DealDonePage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\DeclinedPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\LoginPage.cs" />
