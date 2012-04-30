@@ -25,12 +25,11 @@ namespace Wonga.QA.Tests.Ui
     /// 
     class ExtensionJourneyTest : UiTest
     {
-        private int _amountMax;
-        private int _amountMin;
-        private string _repaymentDate;
+        //private int _amountMax;
+        //private int _amountMin;
+        //private string _repaymentDate;
+        //private DateTime _actualDate;
         private ApiResponse _response;
-        private DateTime _actualDate;
-
 
         [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1627"), Pending("Affected by bug UK-1746")]
         public void ExtensionJourneyPass()

@@ -11,7 +11,7 @@ namespace Wonga.QA.Framework.UI.Elements
 {
     public class SurveyElement : BaseElement
     {
-        private IWebElement _surveyBox;
+        //private IWebElement _surveyBox;
 
         public SurveyElement(BasePage page) : base(page)
         {

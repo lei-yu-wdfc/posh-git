@@ -205,7 +205,6 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     {
                         return false;
                     }
-                    break;
                 default:
                     throw new NotImplementedException();
             }
@@ -226,7 +225,6 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     {
                         return false;
                     }
-                    break;
                 default:
                     throw new NotImplementedException();
             }

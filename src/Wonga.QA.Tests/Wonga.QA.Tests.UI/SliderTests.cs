@@ -27,7 +27,7 @@ namespace Wonga.QA.Tests.Ui
         private int _termMin;
         private string _repaymentDate;
         private ApiResponse _response;
-        private DateTime _actualDate;
+        //private DateTime _actualDate;
 
         private const int DefaultLoanTerm = 11;
     	private const int MinimumMaxLoanTerm = 30;

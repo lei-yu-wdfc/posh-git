@@ -127,13 +127,10 @@ namespace Wonga.QA.Framework.Db.Extensions
 
                         return (int)(firstDayOfLoan.Subtract(loanCreatedOn.Value)).TotalDays;
 					}
-					break;
-
 				default:
 					{
 						return 0;
 					}
-					break;
 			}
 		}
 	}

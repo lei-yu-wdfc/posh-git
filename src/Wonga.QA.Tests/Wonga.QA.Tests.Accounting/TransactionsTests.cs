@@ -11,9 +11,9 @@ namespace Wonga.QA.Tests.Ui.Admin
     [TestFixture]
     public class MatchingTests
     {
-        private Customer customer;
-        private Organisation organisation;
-        private Application application;
+        //private Customer customer;
+        //private Organisation organisation;
+        //private Application application;
 
         [FixtureSetUp]
         public void InitFixture()

@@ -9,14 +9,13 @@ using Wonga.QA.Framework.Cs;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
 //using CreateTransactionCommand = Wonga.QA.Framework.Cs.CreateTransactionCommand;
-using Wonga.QA.Framework.Msmq;
 
 namespace Wonga.QA.Tests.Payments.Queries
 {
     [TestFixture]
     public class GetLoanAgreementsCsapiQueryTests
     {
-		private dynamic _transactions = Drive.Data.Payments.Db.Transactions;
+        //private dynamic _transactions = Drive.Data.Payments.Db.Transactions;
 		private dynamic _applications = Drive.Data.Payments.Db.Applications;
 
         [Test]

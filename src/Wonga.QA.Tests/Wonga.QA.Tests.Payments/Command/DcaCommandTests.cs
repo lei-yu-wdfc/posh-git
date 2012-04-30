@@ -22,7 +22,7 @@ namespace Wonga.QA.Tests.Payments.Command
 		private const string BankGatewayIsTestModeKey = "BankGateway.IsTestMode";
 		private const string FeatureSwitchMoveLoanToDca = "FeatureSwitch.MoveLoanToDca";
 		private string _bankGatewayIsTestMode;
-		private string _featureSwitchMoveLoanToDcaMode;
+        //private string _featureSwitchMoveLoanToDcaMode;
 	    private dynamic _debtCollections = Drive.Data.Payments.Db.DebtCollection;
 	    private dynamic _fixedTermLoanSagas = Drive.Data.OpsSagas.Db.FixedTermLoanSagaEntity;
 	    private dynamic _externalDebtCollectionSagas = Drive.Data.OpsSagas.Db.ExternalDebtCollectionSagaEntity;

@@ -12,7 +12,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
     {
         private readonly IWebElement _footerInfo;
         private readonly IWebElement _availabelCreditCookie;
-        private readonly IWebElement _availabelCredit;
+        //private readonly IWebElement _availabelCredit;
         private readonly IWebElement _infoCirculButton;
         private readonly IWebElement _textApproved;
         private readonly IWebElement _repaymentDetails;

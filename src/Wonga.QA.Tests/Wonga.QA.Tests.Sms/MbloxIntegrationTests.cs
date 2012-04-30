@@ -13,7 +13,7 @@ namespace Wonga.QA.Tests.Sms
 {
     class MbloxIntegrationTests
     {
-        private ServiceConfigurationEntity _configurationEntity = null;
+        //private ServiceConfigurationEntity _configurationEntity = null;
 
         private const string TEST_PHONE_NUMBER = "447786777486";
         private const string MBLOX_MESSAGE_TEXT_TEST = "Sending test message from acceptance tests with using Mblox provider with GUID : ";

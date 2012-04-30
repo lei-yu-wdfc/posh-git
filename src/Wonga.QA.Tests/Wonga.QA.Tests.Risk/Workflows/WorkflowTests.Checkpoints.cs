@@ -145,8 +145,6 @@ namespace Wonga.QA.Tests.Risk.Workflows
 						throw new NotImplementedException(Config.AUT.ToString());
 					}
 			}
-
-			return new List<string>();
 		}
 
 		private static List<string> GetExpectedCheckpointNamesLn()

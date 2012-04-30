@@ -10,7 +10,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
     public class AcceptedPage : BasePage, IDecisionPage
     {
         private readonly IWebElement _form;
-        private readonly IWebElement _nodeWrapper;
+        //private readonly IWebElement _nodeWrapper;
         private readonly IWebElement _totalToRepay;
         private readonly IWebElement _repaymentDate;
         private readonly IWebElement _acceptBusinessLoanLink;

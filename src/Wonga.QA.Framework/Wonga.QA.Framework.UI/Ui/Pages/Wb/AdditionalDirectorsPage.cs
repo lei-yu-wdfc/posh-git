@@ -7,7 +7,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
     {
         private readonly IWebElement _form;
         private readonly IWebElement _done;
-        private IWebElement _addAnother;
+        //private IWebElement _addAnother;
 
         public AdditionalDirectorsPage(UiClient client) : base(client)
         {
