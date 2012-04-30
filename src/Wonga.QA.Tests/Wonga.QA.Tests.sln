@@ -71,8 +71,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Api", "Wonga
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Meta", "Wonga.QA.Tests.Meta\Wonga.QA.Tests.Meta.csproj", "{185518CE-AEEE-416A-AA17-C8F04F3E4BCD}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A1CEA883-16FA-4F5D-9EE8-87BF4FE7C055}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Ui.Admin", "Wonga.QA.Tests.Ui.Admin\Wonga.QA.Tests.Ui.Admin.csproj", "{B9FDE3ED-0FEE-400A-87EB-3A3C7AC8F01D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Ivr", "Wonga.QA.Tests.Ivr\Wonga.QA.Tests.Ivr.csproj", "{AFF890BC-240F-4D73-B9B2-2D65801F149A}"
