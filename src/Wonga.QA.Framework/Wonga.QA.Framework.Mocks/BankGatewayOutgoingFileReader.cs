@@ -12,7 +12,7 @@ namespace Wonga.QA.Framework.Mocks
 
         }
 
-        public bool VerifyPinSentForBankAccountNumber(string bankAccountNumber, string pinNumber)
+        public bool VerifyPinContainedInBankGatewayFileSent(string bankAccountNumber, string pinNumber)
         {
             byte[] fileData = _dataDriver.QaData.Db.OutgoingBankGatewayFile.FindByBankAccountNumber(bankAccountNumber).FileData;
 
