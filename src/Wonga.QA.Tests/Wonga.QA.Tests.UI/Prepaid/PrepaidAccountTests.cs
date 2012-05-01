@@ -11,15 +11,27 @@ namespace Wonga.QA.Tests.Ui.Prepaid
 {
     class PrepaidAccountTests : UiTest
     {
+        private Customer _eligibleCustomer = null;
+
+        [SetUp]
+        public void Init()
+        {
+            _eligibleCustomer = CustomerBuilder.New().Build();
+            CustomerOperations.CreateMarketingEligibility(_eligibleCustomer.Id, true);
+        }
+
         [Test, AUT(AUT.Uk), JIRA("PP-1")]
         public void DisplayPrepaidCardSubnavForEligibleCustomer()
         {
-            Customer eligibleCustomer = CustomerBuilder.New().Build();
-            CustomerOperations.CreateMarketingEligibility(eligibleCustomer.Id, true);
-
             var loginPage = Client.Login();
-            var summaryPage = loginPage.LoginAs(eligibleCustomer.GetEmail());
+            var summaryPage = loginPage.LoginAs(_eligibleCustomer.GetEmail());
             summaryPage.IsPrepaidCardButtonExist();
+        }
+
+        [TearDown]
+        public void Rollback()
+        {
+            CustomerOperations.DeleteMarketingEligibility(_eligibleCustomer.Id);
         }
     }
 }
