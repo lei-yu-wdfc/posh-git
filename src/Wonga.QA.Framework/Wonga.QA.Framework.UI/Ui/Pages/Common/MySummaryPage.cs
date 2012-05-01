@@ -202,7 +202,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public void IsPrepaidCardButtonExist()
         {
-            Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyAccountNavigationSection.MyPrepaidCardPageDetails));                             
+            Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyAccountNavigationSection.MyPrepaidCardPageDetails));                 
         }
 
     }

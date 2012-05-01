@@ -5,8 +5,8 @@ using System.Text;
 
 namespace Wonga.QA.Framework.UI.Mappings.Pages
 {
-    public sealed class PrepaidCardPage
+    public sealed class PrepaidRegisterDetailsPage
     {
-        public String ApplyCardButton { get; set; }
+        public String RegisterDetailsBox { get; set; }
     }
 }

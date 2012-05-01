@@ -141,8 +141,12 @@
   </PaymentCardsPage>
 
   <PrepaidCardPage>
-    <GetCardButton>.button</GetCardButton>
+    <ApplyCardButton>.button</ApplyCardButton>
   </PrepaidCardPage>
+
+  <PrepaidRegisterDetailsPage>
+    <RegisterDetailsBox>.wonga_prepaid_box</RegisterDetailsBox>
+  </PrepaidRegisterDetailsPage>
 
   <AccountingPage>
     <AddFileLink>li#liAddFile.ui-state-default a</AddFileLink>

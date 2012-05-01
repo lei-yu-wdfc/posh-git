@@ -63,8 +63,8 @@ namespace Wonga.QA.Tests.Marketing
         [TearDown]
         public void Rollback()
         {
-            CustomerOperations.DeleteMArketingEligibility(_eligibleCustomer.Id);
-            CustomerOperations.DeleteMArketingEligibility(_nonEligibleCustomerInArrears.Id);
+            CustomerOperations.DeleteMarketingEligibility(_eligibleCustomer.Id);
+            CustomerOperations.DeleteMarketingEligibility(_nonEligibleCustomerInArrears.Id);
         }
 
 

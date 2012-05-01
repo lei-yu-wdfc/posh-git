@@ -119,7 +119,6 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual ExtensionDealDonePage ExtensionDealDonePage { get; set; }
         public virtual ExtensionErrorPage ExtensionErrorPage { get; set; }
         public virtual ExtensionRequestPage ExtensionRequestPage { get; set; }
-		public virtual PrepaidCardPage PrepaidCardPage {get; set; }
 
         #endregion
 
@@ -136,6 +135,14 @@ namespace Wonga.QA.Framework.UI.Mappings
 
         public virtual PayLaterLoginPage PayLaterLoginPage { get; set; }
         public virtual SubmitionPage SubmitionPage { get; set; }
+
+        #endregion
+
+
+        #region PrePaid
+
+        public virtual PrepaidCardPage PrepaidCardPage { get; set; }
+        public virtual PrepaidRegisterDetailsPage PrepaidRegisterDetailsPage { get; set; }
 
         #endregion
 

@@ -16,6 +16,7 @@ namespace Wonga.QA.Framework.UI.Elements
         private readonly IWebElement _myPaymentDetailsButton;
         private readonly IWebElement _mySummaryButton;
         private readonly IWebElement _myPersonalDetailsButton;
+        private IWebElement _myPrepaidCardPage;
 
         public MyAccountNavigationElement(BasePage page)
             : base(page)
@@ -57,6 +58,15 @@ namespace Wonga.QA.Framework.UI.Elements
         {
             _mySummaryButton.Click();
             return new MySummaryPage(Page.Client);
+        }
+
+        public PrepaidCardPage MyPrepaidCardButtonClick()
+        {
+            _myPrepaidCardPage =
+                Page.Client.Driver.FindElement(
+                    By.CssSelector(UiMap.Get.MyAccountNavigationSection.MyPrepaidCardPageDetails));
+            _myPrepaidCardPage.Click();
+            return new PrepaidCardPage(Page.Client);
         }
     }
 }
