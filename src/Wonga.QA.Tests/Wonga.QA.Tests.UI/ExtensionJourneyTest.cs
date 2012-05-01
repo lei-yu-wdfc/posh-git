@@ -25,8 +25,8 @@ namespace Wonga.QA.Tests.Ui
     /// 
     class ExtensionJourneyTest : UiTest
     {
-        //private int _amountMax;
-        //private int _amountMin;
+        private int _amountMax;
+        private int _amountMin;
         //private string _repaymentDate;
         //private DateTime _actualDate;
         private ApiResponse _response;
@@ -280,8 +280,8 @@ namespace Wonga.QA.Tests.Ui
             _response = api.Queries.Post(new GetFixedTermLoanExtensionQuoteUkQuery { ApplicationId = application.Id });
 
             // Change value in the Days field 
-            string expExtensionDate;
-            string actExtensionDate;
+            //string expExtensionDate;
+            //string actExtensionDate;
             foreach (int extensionDays in extensionDaysArray)
             {
                 // Set Dates to extend
