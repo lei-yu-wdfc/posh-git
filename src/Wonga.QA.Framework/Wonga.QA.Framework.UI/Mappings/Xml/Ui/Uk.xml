@@ -141,7 +141,7 @@
   </PaymentCardsPage>
 
   <PrepaidCardPage>
-    <GetCardButton>.button</GetCardButton>
+    <ApplyCardButton>.button</ApplyCardButton>
   </PrepaidCardPage>
 
   <AccountingPage>

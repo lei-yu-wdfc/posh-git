@@ -7,6 +7,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
 {
     public sealed class PrepaidCardPage
     {
-        public String GetCardButton { get; set; }
+        public String ApplyCardButton { get; set; }
     }
 }

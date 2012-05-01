@@ -9,10 +9,11 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
     public class PrepaidCardPage : BasePage
     {
-        private readonly IWebElement _getCardButton;
+        private readonly IWebElement _applyCardButton;
+
         public PrepaidCardPage(UiClient client) : base(client)
         {
-            _getCardButton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.PrepaidCardPage.GetCardButton));
+            _applyCardButton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.PrepaidCardPage.ApplyCardButton));
 
         }
     }

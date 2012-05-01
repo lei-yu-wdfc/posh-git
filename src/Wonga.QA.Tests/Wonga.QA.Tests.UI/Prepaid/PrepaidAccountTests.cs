@@ -28,6 +28,14 @@ namespace Wonga.QA.Tests.Ui.Prepaid
             summaryPage.IsPrepaidCardButtonExist();
         }
 
+        [Test,AUT(AUT.Uk),JIRA("PP-3")]
+        public void DisplayLastRegisteredDetailsForEligibleCustomer()
+        {
+            var loginPage = Client.Login();
+            var summaryPage = loginPage.LoginAs(_eligibleCustomer.GetEmail());
+            summaryPage.Navigation.MyPrepaidCardButtonClick();
+        }
+
         [TearDown]
         public void Rollback()
         {
