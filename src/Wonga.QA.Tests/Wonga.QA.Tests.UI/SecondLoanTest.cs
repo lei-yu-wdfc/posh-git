@@ -9,6 +9,7 @@ using OpenQA.Selenium;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.Mappings;
 using Wonga.QA.Framework.UI.UiElements;
@@ -91,7 +92,7 @@ namespace Wonga.QA.Tests.Ui
                            .WaitForAcceptedPage()
                            .FillAcceptedPage().CurrentPage as DealDonePage;
                     Assert.AreEqual("$234.00", pageCa.GetRapaymentAmount());
-                    date = DateTime.Now.AddDays(21);
+                    date = DateTime.Now.AddDays(DateHelper.GetNumberOfDaysUntilStartOfLoanForCa()+20);
                     actualRepaymentDate = String.Format("{0:d MMMM yyyy}", date);
                     Assert.AreEqual(actualRepaymentDate, pageCa.GetRepaymentDate());
                     var summaryCa = pageCa.ContinueToMyAccount() as MySummaryPage;
