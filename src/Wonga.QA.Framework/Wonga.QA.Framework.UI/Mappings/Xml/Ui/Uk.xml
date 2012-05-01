@@ -144,6 +144,10 @@
     <ApplyCardButton>.button</ApplyCardButton>
   </PrepaidCardPage>
 
+  <PrepaidRegisterDetailsPage>
+    <RegisterDetailsBox>.wonga_prepaid_box</RegisterDetailsBox>
+  </PrepaidRegisterDetailsPage>
+
   <AccountingPage>
     <AddFileLink>li#liAddFile.ui-state-default a</AddFileLink>
     <CashOutLink>li#liTransactionsSearch.ui-state-default a</CashOutLink>

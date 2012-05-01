@@ -35,9 +35,9 @@ namespace Wonga.QA.Framework
             Do.Until(() => _eligibleCustomersEntity.Delete(EligibleCustomerId: customerId));
         }
 
-        public static IDictionary<String, String> GetFullCustomerInfo(Guid customerId)
+        public static Dictionary<String, String> GetFullCustomerInfo(Guid customerId)
         {
-            IDictionary<String, String> result = new Dictionary<string, string>();
+            Dictionary<String, String> result = new Dictionary<string, string>();
             result.Add(CUSTOMER_FULL_NAME, GetFullCustomerName(customerId));
             result.Add(CUSTOMER_FULL_ADDRESS, GetFullCustomerAddress(customerId));
             return result;
@@ -69,9 +69,10 @@ namespace Wonga.QA.Framework
 
             var response = Drive.Api.Queries.Post(request);
             builder.Append(response.Values["HouseName"].First());
+            builder.Append(response.Values["HouseNumber"].First());
             builder.Append(" ");
             builder.Append(response.Values["Street"].First());
-            builder.Append("");
+            builder.Append("<br />");
             builder.Append(response.Values["Town"].First());
             builder.Append(" ");
             builder.Append(response.Values["Postcode"].First());

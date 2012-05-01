@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using Wonga.QA.Framework.UI.Mappings;
 
-namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
+
+namespace Wonga.QA.Framework.UI.UiElements.Pages
 {
     public class PrepaidCardPage : BasePage
     {
@@ -15,6 +12,11 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             _applyCardButton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.PrepaidCardPage.ApplyCardButton));
 
+        }
+
+        public void ApplyCardButtonClick()
+        {
+            _applyCardButton.Click();
         }
     }
 }

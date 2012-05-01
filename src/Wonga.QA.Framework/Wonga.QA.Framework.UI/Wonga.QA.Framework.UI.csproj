@@ -108,6 +108,7 @@
     <Compile Include="Mappings\Ui\Pages\PayLater\PayLaterThanksForm.cs" />
     <Compile Include="Mappings\Ui\Pages\PayLater\SubmitionPage.cs" />
 	<Compile Include="Mappings\Ui\Pages\Prepaid\PrepaidCardPage.cs" />
+	<Compile Include="Mappings\Ui\Pages\Prepaid\PrepaidRegisterDetailsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceCustomerDetailPage.cs" />
     <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceHomePage.cs" />
     <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceLoginPage.cs" />
@@ -200,6 +201,7 @@
     <Compile Include="Ui\Pages\Interfaces\IExtensionPaymentPage.cs" />
     <Compile Include="Ui\Pages\Interfaces\ITopupDecisionPage.cs" />
 	<Compile Include="Ui\Pages\Prepaid\PrepaidCardPage.cs" />
+	<Compile Include="Ui\Pages\Prepaid\PrepaidRegisterDetailsPage.cs" />
     <Compile Include="Ui\Pages\PayLater\PayLaterLoginPage.cs" />
     <Compile Include="Ui\Pages\PayLater\SubmitionPage.cs" />
     <Compile Include="Ui\Pages\SalesForce\BaseSfPage.cs" />

@@ -142,6 +142,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         #region PrePaid
 
         public virtual PrepaidCardPage PrepaidCardPage { get; set; }
+        public virtual PrepaidRegisterDetailsPage PrepaidRegisterDetailsPage { get; set; }
 
         #endregion
 

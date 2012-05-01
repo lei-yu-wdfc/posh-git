@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MbUnit.Framework;
+﻿using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
@@ -33,7 +29,14 @@ namespace Wonga.QA.Tests.Ui.Prepaid
         {
             var loginPage = Client.Login();
             var summaryPage = loginPage.LoginAs(_eligibleCustomer.GetEmail());
-            summaryPage.Navigation.MyPrepaidCardButtonClick();
+            var prepaidPage = summaryPage.Navigation.MyPrepaidCardButtonClick();
+            prepaidPage.ApplyCardButtonClick();
+
+            var dictionary = CustomerOperations.GetFullCustomerInfo(_eligibleCustomer.Id);
+            var pageSoruce = prepaidPage.Client.Source();
+               
+            Assert.IsTrue(pageSoruce.Contains(dictionary[CustomerOperations.CUSTOMER_FULL_NAME]));
+            Assert.IsTrue(pageSoruce.Contains(dictionary[CustomerOperations.CUSTOMER_FULL_ADDRESS]));
         }
 
         [TearDown]
