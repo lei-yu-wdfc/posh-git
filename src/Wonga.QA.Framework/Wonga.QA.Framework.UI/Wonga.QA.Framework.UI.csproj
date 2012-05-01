@@ -98,6 +98,7 @@
     <Compile Include="Mappings\Ui\Pages\Common\JargonBusterPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\MySummaryPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\OurCustomersPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\PrepaidCardPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ResponsibleLendingPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\TopupAgreementPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\TopupDealDonePage.cs" />
@@ -178,6 +179,7 @@
     <Compile Include="Ui\Pages\Common\ExtensionErrorPage.cs" />
     <Compile Include="Ui\Pages\Common\ExtensionPaymentFailedPage.cs" />
     <Compile Include="Ui\Pages\Common\ExtensionProcessingPage.cs" />
+    <Compile Include="Ui\Pages\Common\PrepaidCardPage.cs" />
     <Compile Include="Ui\Pages\Common\TopupDealDonePage.cs" />
     <Compile Include="Ui\Pages\Common\DealDonePage.cs" />
     <Compile Include="Ui\Pages\Common\DeclinedPage.cs" />

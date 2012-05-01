@@ -753,5 +753,17 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(accountNumber.Remove(0,3), applyPage.GetCurrentBankAccount);
 
         }
+
+        [Test,AUT(AUT.Uk),JIRA("PP-1")]
+        public void DisplayPrepaidCardSubnavForEligibleCustomer()
+        {
+            Customer eligibleCustomer = CustomerBuilder.New().Build();
+            CustomerOperations.CreateMarketingEligibility(eligibleCustomer.Id,true);
+
+            var loginPage = Client.Login();
+            var summaryPage = loginPage.LoginAs(eligibleCustomer.GetEmail());
+            summaryPage.IsPrepaidCardButtonExist();
+        }
+
     }
 }
