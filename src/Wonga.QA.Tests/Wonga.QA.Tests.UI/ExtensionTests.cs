@@ -32,7 +32,7 @@ namespace Wonga.QA.Tests.Ui
         //private DateTime _actualDate;
 
 
-        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1627"), Pending("Affected by bug UK-1746")]
+        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1627", "UK-1746")]
         public void ExtensionJourneyPass()
         {
             string email = Get.RandomEmail();
@@ -65,7 +65,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsFalse(dealDonePage.IsDealDonePageDateTokenPresent());
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1321", "UK-1522"), Pending("Affected by bug UK-1746")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1321", "UK-1522", "UK-1746")]
         public void ExtensionJourneyDecline()
         {
             string email = Get.RandomEmail();
@@ -96,7 +96,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1323", "UK-1523"), Pending("Affected by bug UK-1746")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1323", "UK-1523", "UK-1746")]
         public void ExtensionJourneyError()
         {
             string email = Get.RandomEmail();
@@ -125,7 +125,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Uk), JIRA("UK-427")]
+        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1739")]
         [Row(100, 5, 1)]
         [Row(400, 2, 1)]
         [Row(1, 7, 1)]
@@ -188,9 +188,9 @@ namespace Wonga.QA.Tests.Ui
             // Main checks
             Assert.AreEqual("1", sliderMinDays);
             Assert.AreEqual("30", sliderMaxDays);
-            //Assert.AreEqual(expectedRepaymentDate, requestPage.RepaymentDate); fails UK-1746 // Repayment Date
+            Assert.AreEqual(expectedRepaymentDate, extensionRequestPage.RepaymentDate); // Repayment Date
             Assert.AreEqual(extensionDays.ToString("#"), extensionRequestPage.InformativeBox, "InformativeBox"); // Days (for extention)
-            //Assert.AreEqual(sOweToday, requestPage.OweToday, "OweToday"); fails UK-1739 // Owe today
+            Assert.AreEqual(sOweToday, extensionRequestPage.OweToday, "OweToday"); // Owe today
             Assert.AreEqual(sTotalRepayToday, extensionRequestPage.TotalRepayToday, "TotalRepayToday"); // Total to Repay Today
             Assert.AreEqual(sNewCreditAmount, extensionRequestPage.NewCreditAmount, "NewCreditAmount"); // New Credit Amount
             Assert.AreEqual("£" + _response.Values["FutureInterestAndFees"].ToArray()[extensionDays - 1], extensionRequestPage.InterestFees, "Future Interest And Fees is not correct for Extension Days={0}", extensionDays); // Future Interests and Fees
@@ -239,9 +239,9 @@ namespace Wonga.QA.Tests.Ui
             var expectedRepaymentDate = Date.GetOrdinalDate(DateTime.Now.AddDays(loanTerm).AddDays(1), "d MMM yyyy");
 
             // Check
-            //Assert.AreEqual(expectedRepaymentDate, requestPage.RepaymentDate); fails UK-1746
+            Assert.AreEqual(expectedRepaymentDate, requestPage.RepaymentDate);
             Assert.AreEqual("1", requestPage.InformativeBox, "InformativeBox");
-            //Assert.AreEqual(sOweToday, requestPage.OweToday, "OweToday"); fails UK-1739
+            Assert.AreEqual(sOweToday, requestPage.OweToday, "OweToday");
             Assert.AreEqual(sTotalRepayToday, requestPage.TotalRepayToday, "TotalRepayToday");
             Assert.AreEqual(sNewCreditAmount, requestPage.NewCreditAmount, "NewCreditAmount");
             Assert.AreEqual(sFutureInterestAndFees, requestPage.InterestFees, "InterestFees");
@@ -345,7 +345,7 @@ namespace Wonga.QA.Tests.Ui
             var dealDonePage = new ExtensionDealDonePage(this.Client);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1862"), Pending("Blocked by bug UK-1862")]
+        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1862", "UK-1859"), Pending("Blocked by bug UK-1862")]
         public void TotalPayableFutureInterestAndFeesTest()
         {
             const int extensionDays = 1;
@@ -388,13 +388,7 @@ namespace Wonga.QA.Tests.Ui
                 expectedTotalPayable.ToString("#.##"), actualTotalPayable, expectedFutureInterestAndFees, actualFutureInterestAndFees);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1746"), Pending("Uncomment Assert for RepaymentDate when UK-1746 is fixed.")]
-        public void ExtensionRequestPageRepaymentDateTest() { }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1739"), Pending("Uncomment Assert for OweToday when UK-1739 is fixed.")]
-        public void ExtensionRequestPageOweTodayTest() { }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1859"), Pending("Uncomment Assert that compares TotalToRepay and InterestFees when UK-1859 is fixed.")]
+        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1859"), Pending("Uncomment Assert that compares TotalToRepay and InterestFees when UK-1859 and UK-1862 are fixed.")]
         public void ExtensionRequestPageTotalToRepayNotEqualFutureInterestsAndFeesTest() { }
 
     }
