@@ -11,7 +11,7 @@ namespace Wonga.QA.Tests.Ui.PayLater
 {
     public class PayLaterLoginTest : UiTest
     {
-        [Test, AUT(AUT.Uk), JIRA("QA-77, 79, 80, 81")]
+        [Test, AUT(AUT.Uk), JIRA("QA-77, 79, 80, 81"), Pending("Fails trying to open http://dev.paylater.com/")]
         public void InspectElementsHomePage()
         {
             var payLaterStartPage = Client.PayLaterStart();
@@ -25,7 +25,7 @@ namespace Wonga.QA.Tests.Ui.PayLater
         }
 
 
-        [Test, AUT(AUT.Uk), JIRA("QA-78")]
+        [Test, AUT(AUT.Uk), JIRA("QA-78"), Pending("Fails trying to open http://dev.paylater.com/")]
         public void LoginPagePayments()
         {
             const string user = "qa.wongatest+2012425163553@gmail.com";
@@ -46,7 +46,7 @@ namespace Wonga.QA.Tests.Ui.PayLater
             Thread.Sleep(2000);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("QA-82, 75, 84, 86, 89")]
+        [Test, AUT(AUT.Uk), JIRA("QA-82, 75, 84, 86, 89"), Pending("Fails trying to open http://dev.paylater.com/")]
         public void InspectElementsSubmitionPage()
         {
             const string footerIn = @"Paylater is a trading name of Wonga.com Ltd Copyright © 2008 - 2012 Wonga.com. Registered in England and Wales. 
@@ -73,7 +73,7 @@ namespace Wonga.QA.Tests.Ui.PayLater
             Assert.AreEqual("You'll pay £11.68 today and £57.43 on 27th May and £57.43 on 27th June and £57.43 on 27th July ?", elementsSubmition["RepaymentDetails"]);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("QA-92")]
+        [Test, AUT(AUT.Uk), JIRA("QA-92"), Pending("Fails trying to open http://dev.paylater.com/")]
         public void InspectElementsThanksPage()
         {
             const string user = "qa.wongatest+2012425163553@gmail.com";
