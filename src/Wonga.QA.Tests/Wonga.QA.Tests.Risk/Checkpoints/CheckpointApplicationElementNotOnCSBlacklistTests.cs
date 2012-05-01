@@ -3,18 +3,19 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[Parallelizable(TestScope.All), AUT(AUT.Za)]
+	[Parallelizable(TestScope.All), AUT(AUT.Za, AUT.Ca)]
 	class CheckpointApplicationElementNotOnCSBlacklistTests
 	{
         private const RiskMask TestMask = RiskMask.TESTApplicationElementNotOnCSBlacklist;
 
-		[Test, AUT(AUT.Za)]
-		public void CheckpointApplicationElementNotOnCSBlacklistAccept()
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("CA-1974")]
+		public void L0_CheckpointApplicationElementNotOnCSBlacklist_Accept()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
 		
@@ -24,8 +25,8 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			ApplicationBuilder.New(customer).Build();
 		}
 
-		[Test, AUT(AUT.Za)]
-		public void CheckpointApplicationElementNotOnCSBlacklistDecline()
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("CA-1974")]
+		public void L0_CheckpointApplicationElementNotOnCSBlacklist_Decline()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
 
@@ -33,6 +34,34 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Do.Until(() => Drive.Db.Risk.RiskAccounts.Single(a => a.AccountId == customer.Id).DoNotRelend);
 
             ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+		}
+
+		[Test, AUT(AUT.Ca), JIRA("CA-1974")]
+		public void LN_CheckpointApplicationElementNotOnCSBlacklist_Accept()
+		{
+			var customer = CustomerBuilder.New().WithEmployer(RiskMask.TESTNoCheck).Build();
+
+			var l0Application = ApplicationBuilder.New(customer).Build();
+			l0Application.RepayOnDueDate();
+
+			Drive.Db.UpdateEmployerName(customer.Id, TestMask.ToString());
+
+			ApplicationBuilder.New(customer).Build();
+		}
+
+		[Test, AUT(AUT.Ca), JIRA("CA-1974")]
+		public void LN_CheckpointApplicationElementNotOnCSBlacklist_Decline()
+		{
+			var customer = CustomerBuilder.New().WithEmployer(RiskMask.TESTNoCheck).Build();
+			var l0Application = ApplicationBuilder.New(customer).Build();
+			l0Application.RepayOnDueDate();
+
+			Drive.Db.UpdateEmployerName(customer.Id, TestMask.ToString());
+
+			Drive.Msmq.Risk.Send(new RegisterDoNotRelendCommand { AccountId = customer.Id, DoNotRelend = true });
+			Do.Until(() => Drive.Db.Risk.RiskAccounts.Single(a => a.AccountId == customer.Id).DoNotRelend);
+
+			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
 	}
 }
