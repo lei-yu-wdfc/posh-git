@@ -76,6 +76,7 @@
     <MySummary>.menu-mlid-2869</MySummary>
     <MyPaymentsDetails>.menu-mlid-2870</MyPaymentsDetails>
     <MyPersonalDetails>.menu-mlid-2871</MyPersonalDetails>
+    <MyPrepaidCardPageDetails>.menu-mlid-9403</MyPrepaidCardPageDetails>
   </MyAccountNavigationSection>
   
   <TopupSlidersElement>
@@ -139,6 +140,10 @@
     <AddCardLink>a.bottom-link</AddCardLink>
   </PaymentCardsPage>
 
+  <PrepaidCardPage>
+    <GetCardButton>.button</GetCardButton>
+  </PrepaidCardPage>
+
   <AccountingPage>
     <AddFileLink>li#liAddFile.ui-state-default a</AddFileLink>
     <CashOutLink>li#liTransactionsSearch.ui-state-default a</CashOutLink>
@@ -153,5 +158,7 @@
     <CancelCheckBox>input[name='CancelSelected']</CancelCheckBox>
     <UpdateButton>#GridContainer > input[name='Command']</UpdateButton>
   </CashOutPage>
+  
+  
 
 </UiMap>

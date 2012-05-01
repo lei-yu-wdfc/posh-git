@@ -58,6 +58,5 @@ namespace Wonga.QA.Framework.UI.Elements
             _mySummaryButton.Click();
             return new MySummaryPage(Page.Client);
         }
-
     }
 }
