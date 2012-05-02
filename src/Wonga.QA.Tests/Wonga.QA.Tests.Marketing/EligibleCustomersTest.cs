@@ -37,7 +37,7 @@ namespace Wonga.QA.Tests.Marketing
         }
 
 
-        [Test,AUT(AUT.Uk),JIRA("PP-32")]
+        [Test, AUT(AUT.Uk), JIRA("PP-32"), Pending("Times out with the exception: No matching table found, or insufficient permissions.")]
         public void ExecuteGetEligibleCustomersQuery()
         {
 
