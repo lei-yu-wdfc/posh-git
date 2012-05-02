@@ -349,7 +349,7 @@ namespace Wonga.QA.Tests.Ui
         public void TotalPayableFutureInterestAndFeesTest()
         {
             const int extensionDays = 1;
-            const int extensionFee = 1;
+            const int extensionFee = 10;
             const int loanAmount = 100;
             const int loanTerm = 5;
             string email = Get.RandomEmail();

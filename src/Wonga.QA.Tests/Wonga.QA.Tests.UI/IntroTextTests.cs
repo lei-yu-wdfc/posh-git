@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
@@ -15,6 +16,7 @@ using Wonga.QA.Tests.Payments.Helpers;
 using EmploymentStatusEnum = Wonga.QA.Framework.Msmq.EmploymentStatusEnum;
 using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Framework.Db.Extensions;
+using CreateScheduledPaymentRequestCommand = Wonga.QA.Framework.Msmq.CreateScheduledPaymentRequestCommand;
 
 
 namespace Wonga.QA.Tests.Ui
@@ -69,7 +71,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(expectedlntroText, actuallntroText);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-788"), Pending("Times out after deployment. Passes for RC.")]
+        [Test, AUT(AUT.Uk), JIRA("UK-788")]
         public void IntroTextScenario1B()
         // Ln journey
         {
@@ -95,6 +97,37 @@ namespace Wonga.QA.Tests.Ui
             string expectedlntroText = introTexts[1];
             expectedlntroText = expectedlntroText.Replace("{first name}", customer.GetCustomerFullName().Split(' ')[0]).Replace("{500}", "400.00");
             Assert.AreEqual(expectedlntroText, actuallntroText);
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-788")]
+        [Row(2,0)]
+        [Row(2,1)]
+        [Row(2,2)]
+        public void IntroTextScenario2(int scenarioId, int dayShift) { IntroText(scenarioId, dayShift); }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-788")]
+        //[Row(3, 3, 10)]
+        //[Row(3, 7, 10)]
+        //[Row(3, 9, 10)]
+        [Row(3, 0, 1), Pending("Fails due to bug UK-1903")] //0 days passed in 1-day loan
+        //[Row(3, 0, 7)] //0 days passed in 7-day loan
+        //[Row(3, 6, 7)] //6 days passed in 7-day loan
+        public void IntroTextScenario3(int scenarioId, int dasyShift, int loanTerm)
+        {
+            IntroText(scenarioId, dasyShift, loanTerm);
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-788")]
+        [Row(4, 10, 10), Pending("Fails due to bug UK-1904")]    // payment missed and Next Due Date is today
+        //[Row(4, 1, 1)]      //1 day passed in 1-day loan, payment missed and Next Due Date is today
+        //[Row(4, 7, 7)]      //7 days passed in 7-day loan, payment missed and Next Due Date is today
+        // [Row(4, 1, 7)]      //1 day passed in 7-day loan, payment missed and Next Due Date is today. TBD: create test for the variant when 3 (=maximum) extensions have been made and it is 1st day after a 7 day loan is taken")
+        // [Row(4, 10, 10)]    //10 days passed in 10-day loan, payment missed and Next Due Date is today. TBD: create test for the variant when 3 (=maximum) extensions have been made and it is 1st day after a 7 day loan is taken")
+        // [Row(3, 6, 10)]     //6 days passed in 10-day loan, payment missed and Next Due Date is today. TBD: create test for the variant when 2 (< maximum) extensions have been made and it is 6th day after a 10 day loan is taken. The message shold like from scenario 3")
+        // [Row(2, 1, 10)]     //1 days passed in 10-day loan, payment missed and Next Due Date is today. TBD: create test for the variant when 1 (< maximum) extensions have been made and it is 1st day after a 10 day loan is taken. The message shold like from scenario 2")
+        public void IntroTextScenario4(int scenarioId, int dasyShift, int loanTerm)
+        {
+            IntroText(scenarioId, dasyShift, loanTerm);
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-788")]
@@ -147,5 +180,65 @@ namespace Wonga.QA.Tests.Ui
             expectedlntroText = expectedlntroText.Replace("{first name}", journey.FirstName);
             Assert.AreEqual(expectedlntroText, actuallntroText);
         }
+
+        private void IntroText(int scenarioId, params int[] days)
+        {
+            int daysShift = days[0];
+            int loanTerm = 10;
+            if (days.Length == 2) loanTerm = days[1];
+
+            // Create a customer
+            string email = Get.RandomEmail();
+            Customer customer;
+            if (scenarioId == 20) customer = CustomerBuilder.New().WithEmailAddress(email).WithEmployerStatus(EmploymentStatusEnum.Unemployed.ToString()).WithMiddleName(RiskMask.TESTEmployedMask).Build();
+            else customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+
+            // Create a loan
+            Application application;
+            if (scenarioId < 5) application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
+            else if ((scenarioId >= 5) && (scenarioId <= 7)) application = ApplicationBuilder.New(customer).WithLoanAmount(400).WithLoanTerm(loanTerm).Build();
+            else if (scenarioId == 20) application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).WithLoanTerm(loanTerm).Build();
+            else application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
+
+            // Rewind application dates
+            if (daysShift != 0)
+            {
+                ApplicationEntity applicationEntity = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
+                RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == application.Id);
+                TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
+                Drive.Db.RewindApplicationDates(applicationEntity, riskApplication, daysShiftSpan);               
+            }
+
+            if (scenarioId == 8) application = application.RepayOnDueDate(); // Repay a loan
+
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            if (scenarioId == 11 || scenarioId == 12 || scenarioId == 13)
+            {
+                // Send command to create scheduled payment request
+                Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = application.Id, RepaymentRequestId = requestId1, });
+                Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = application.Id, RepaymentRequestId = requestId2, });
+            }
+
+            // Login and open my summary page
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email); // My Summary page opens
+
+            
+            // Check the scenario returned by Back-End is correct
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId));
+
+            // Check the actual text
+            string expectedlntroText = introTexts[scenarioId].Replace("{first name}", customer.GetCustomerFullName().Split(' ')[0]);
+
+            var response = Drive.Api.Queries.Post(new GetFixedTermLoanApplicationQuery { ApplicationId = application.Id });
+            var expectedAvailableCredit = Convert.ToDecimal(response.Values["AvailableCredit"].Single());
+            expectedlntroText = expectedlntroText.Replace("You currently have up to £{245.00}", "You currently have up to £" + expectedAvailableCredit.ToString("#.00"));
+            
+            string actuallntroText = mySummaryPage.GetIntroText;
+             
+            Assert.AreEqual(expectedlntroText, actuallntroText);
+        }
+
     }
 }
