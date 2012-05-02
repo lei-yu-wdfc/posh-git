@@ -42,7 +42,7 @@ namespace Wonga.QA.Tests.Payments.Queries
                 base.Setup();
                 
                 //Request an extension.
-                Drive.Cs.Commands.Post(new CsExtendFixedTermLoanCommand { AgentId = 1234, 
+                Drive.Cs.Commands.Post(new CsExtendFixedTermLoanCommand { SalesForceUser = "bob@a.com", 
                                                                           ApplicationId = _application.Id, 
                                                                           LoanExtensionId = _extensionId,
                                                                           CV2 = "121", 
