@@ -216,23 +216,24 @@ namespace Wonga.QA.Tests.Ui
             string surname = Get.RandomString(3, 10);
             string phone = Get.RandomLong(1000000, 9999999).ToString();
             Customer customer = CustomerBuilder
-                .New()
-                .WithForename(name)
-                .WithSurname(surname)
-                .WithEmailAddress(email)
-                .Build();
+                 .New()
+                 .WithForename(name)
+                 .WithSurname(surname)
+                 .WithEmailAddress(email)
+                 .WithMobileNumber("075" + Get.RandomLong(1000000, 9999999).ToString())
+                 .Build();
             Application application = ApplicationBuilder
                 .New(customer)
                 .Build();
             application.RepayOnDueDate();
-            var loginPage = Client.Login();
+           var loginPage = Client.Login();
             loginPage.LoginAs(email);
             switch (Config.AUT)
             {
                 case AUT.Za:
                     var journeyZa = JourneyFactory.GetLnJourney(Client.Home());
                     var pageZA = journeyZa.ApplyForLoan(200, 20).CurrentPage as ApplyPage;
-                    pageZA.SetNewMobilePhone = "075" + phone;               
+                    pageZA.SetNewMobilePhone = "075" + phone;
                     pageZA.ResendPinClick();
                     var smsZa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber("2775" + phone));
                     foreach (var sms in smsZa)
