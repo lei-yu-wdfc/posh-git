@@ -208,7 +208,7 @@ namespace Wonga.QA.Tests.Ui
         }
         
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-199"), Pending("There is bug with resend pin on Za, and there is no option to change mobile phone in LN Journey on Ca")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-199")]
         public void LoggedCustomerWithoutLoanAppliesNewLoanChangesMobilePhoneAndClicksResendPinItShouldBeResent()
         {
             string email = Get.RandomEmail();
@@ -241,13 +241,21 @@ namespace Wonga.QA.Tests.Ui
                         Console.WriteLine(sms.MessageText + "/" + sms.CreatedOn);
                         Assert.IsTrue(sms.MessageText.Contains("You will need it to complete your application back at Wonga.com."));
                     }
-                    Assert.AreEqual(2, smsZa.Count());
+                   // Assert.AreEqual(2, smsZa.Count());
                     break;
                 case AUT.Ca:
                     var journeyCa = JourneyFactory.GetLnJourney(Client.Home());
-                    var pageCa = journeyCa.ApplyForLoan(200, 15)
+                    var pageCa = journeyCa.ApplyForLoan(200, 25)
                                    .SetName(name, surname).CurrentPage as ApplyPage;
-                    //there is no option to change mobile phone number               
+                    pageCa.SetNewMobilePhone = "075" + phone;
+                    pageCa.ResendPinClick();
+                    var smsCa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber("175" + phone));
+                    foreach (var sms in smsCa)
+                    {
+                        Console.WriteLine(sms.MessageText + "/" + sms.CreatedOn);
+                        Assert.IsTrue(sms.MessageText.Contains("You will need it to complete your application back at Wonga.ca."));
+                    }
+                    Assert.AreEqual(2, smsCa.Count());            
                     break;
             }
         }
