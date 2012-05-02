@@ -52,6 +52,8 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual MyAccountNavigationSection MyAccountNavigationSection { get; set; }
         public virtual ApplicationSection ApplicationSection { get; set; }
         public virtual AddressDetailsSection AddressDetailsSection { get; set; }
+        public virtual ExtensionSecciDocumentSection ExtensionSecciDocumentSection { get; set; }
+    }
         #endregion
 
         #region Elements
