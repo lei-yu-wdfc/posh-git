@@ -29,7 +29,8 @@ namespace Wonga.QA.Generators.Core
         {
             FileInfo file = new FileInfo(Path.Combine(directory.FullName, name));
             if (file.Exists && !ignoreExistence)
-                throw new IOException(file.FullName);
+                throw new IOException(string.Format("It seems that file \"{0}\" has a duplicate. \nIt shouldn't; a possible reason may be API Commands/Queries, MSMQ messages that don't have unique names within one application.\n" +
+                                                    "It's also possible that in a given database there is an entity with the same name but in different schema", file.FullName));
             return file;
         }
 
