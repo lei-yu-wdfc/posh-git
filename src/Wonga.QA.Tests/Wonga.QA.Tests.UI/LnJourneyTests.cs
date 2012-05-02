@@ -169,37 +169,86 @@ namespace Wonga.QA.Tests.Ui
                            .CurrentPage as MySummaryPage;
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1533")]
-        public void L0LnJourneyTest()
+        [Test, AUT(AUT.Uk), JIRA("UK-1533"), Pending("In Development")]
+        public void UkFullLnJourneyTest2()
         {
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder
+                .New()
+                .WithEmailAddress(email)
+                .Build();
 
             // L0 journey
             var journeyL0 = JourneyFactory.GetL0Journey(Client.Home());
             var mySummary = journeyL0.ApplyForLoan(200, 10)
-                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                 .FillAddressDetails()
                 .FillAccountDetails()
                 .FillBankDetails()
                 .FillCardDetails()
                 .WaitForAcceptedPage()
                 .FillAcceptedPage();
+                //.GoToMySummaryPage().CurrentPage as MySummaryPage;
 
-            var customer = new Customer(Guid.Parse(Drive.Api.Queries.Post(new GetAccountQuery { Login = email, Password = Get.GetPassword() }).Values["AccountId"].Single()));
-            var application = customer.GetApplication();
-
-            // Repay
+            // pay
+            Application application = customer.GetApplications()[0];
             application.RepayOnDueDate();
 
             // Ln journey
-            var journey = JourneyFactory.GetLnJourney(Client.Home());
-            var page = journey.ApplyForLoan(200, 10)
+            //loginPage.LoginAs(email);
+
+            var journeyLn = JourneyFactory.GetLnJourney(Client.Home());
+            var page = journeyLn.ApplyForLoan(200, 10)
                            .FillApplicationDetails()
                            .WaitForAcceptedPage()
                            .FillAcceptedPage()
                            .GoToMySummaryPage()
                            .CurrentPage as MySummaryPage;
+        }
+        
+
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-199"), Pending("There is bug with resend pin on Za, and there is no option to change mobile phone in LN Journey on Ca")]
+        public void LoggedCustomerWithoutLoanAppliesNewLoanChangesMobilePhoneAndClicksResendPinItShouldBeResent()
+        {
+            string email = Get.RandomEmail();
+            string name = Get.RandomString(3, 10);
+            string surname = Get.RandomString(3, 10);
+            string phone = Get.RandomLong(1000000, 9999999).ToString();
+            Customer customer = CustomerBuilder
+                .New()
+                .WithForename(name)
+                .WithSurname(surname)
+                .WithEmailAddress(email)
+                .Build();
+            Application application = ApplicationBuilder
+                .New(customer)
+                .Build();
+            application.RepayOnDueDate();
+            var loginPage = Client.Login();
+            loginPage.LoginAs(email);
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    var journeyZa = JourneyFactory.GetLnJourney(Client.Home());
+                    var pageZA = journeyZa.ApplyForLoan(200, 20).CurrentPage as ApplyPage;
+                    pageZA.SetNewMobilePhone = "075" + phone;               
+                    pageZA.ResendPinClick();
+                    var smsZa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber("2775" + phone));
+                    foreach (var sms in smsZa)
+                    {
+                        Console.WriteLine(sms.MessageText + "/" + sms.CreatedOn);
+                        Assert.IsTrue(sms.MessageText.Contains("You will need it to complete your application back at Wonga.com."));
+                    }
+                    Assert.AreEqual(2, smsZa.Count());
+                    break;
+                case AUT.Ca:
+                    var journeyCa = JourneyFactory.GetLnJourney(Client.Home());
+                    var pageCa = journeyCa.ApplyForLoan(200, 20)
+                                   .SetName(name, surname).CurrentPage as ApplyPage;
+                    //there is no option to change mobile phone number               
+                    break;
+            }
         }
     }
 }

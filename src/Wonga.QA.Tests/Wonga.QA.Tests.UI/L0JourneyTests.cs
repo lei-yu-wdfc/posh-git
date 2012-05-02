@@ -780,9 +780,8 @@ namespace Wonga.QA.Tests.Ui
                     break;
                 #endregion
             }
-
         }
-
+        
         [Test, AUT(AUT.Wb), JIRA("QA-258")]
         public void TheWongaBusinessPolicyHaveNoReferenceToZaCaUk()
         {
