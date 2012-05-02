@@ -5,6 +5,7 @@ using System.Text;
 using Gallio.Framework.Assertions;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
+using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.UiElements.Pages;
@@ -144,7 +145,7 @@ namespace Wonga.QA.Tests.Ui
                            .CurrentPage as MySummaryPage;
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1533")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1533", "UK-1902"), Pending("Fails due to bug UK-1902")]
         public void UkFullLnJourneyTest()
         {
             var loginPage = Client.Login();
@@ -167,6 +168,45 @@ namespace Wonga.QA.Tests.Ui
                            .GoToMySummaryPage()
                            .CurrentPage as MySummaryPage;            
         }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-1533"), Pending("In Development")]
+        public void UkFullLnJourneyTest2()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder
+                .New()
+                .WithEmailAddress(email)
+                .Build();
+
+            // L0 journey
+            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home());
+            var mySummary = journeyL0.ApplyForLoan(200, 10)
+                .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                .FillAddressDetails()
+                .FillAccountDetails()
+                .FillBankDetails()
+                .FillCardDetails()
+                .WaitForAcceptedPage()
+                .FillAcceptedPage();
+                //.GoToMySummaryPage().CurrentPage as MySummaryPage;
+
+            // pay
+            Application application = customer.GetApplications()[0];
+            application.RepayOnDueDate();
+            
+            // Ln journey
+            //loginPage.LoginAs(email);
+
+            var journeyLn = JourneyFactory.GetLnJourney(Client.Home());
+            var page = journeyLn.ApplyForLoan(200, 10)
+                           .FillApplicationDetails()
+                           .WaitForAcceptedPage()
+                           .FillAcceptedPage()
+                           .GoToMySummaryPage()
+                           .CurrentPage as MySummaryPage;
+        }
+        
 
     }
 }
