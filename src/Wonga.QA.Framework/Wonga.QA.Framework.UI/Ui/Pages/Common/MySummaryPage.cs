@@ -195,6 +195,20 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             get { return Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.IntroText)).Text; }
         }
 
+        public bool IsBackEndScenarioCorrect(int scenarioId)
+        {
+            try
+            {
+                var scenario = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.IntroText)).GetAttribute("summary-intro-text scenario-" + scenarioId.ToString("#")); 
+            }
+               
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public String GetMaxAvailableCredit
         {
             get { return Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.MaxAvailableCredit)).Text; }
