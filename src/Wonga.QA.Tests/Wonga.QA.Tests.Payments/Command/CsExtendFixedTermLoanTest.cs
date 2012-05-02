@@ -33,7 +33,7 @@ namespace Wonga.QA.Tests.Payments.Command
                PaymentCardId = _cardId,
                PartPaymentAmount = 1000,
                CV2 = "123",
-               AgentId = 5,
+               SalesForceUser = "bob@a.com",
                ExtensionDate = DateTime.Today.AddDays(30),
                LoanExtensionId = _extensionId
            };
@@ -66,7 +66,7 @@ namespace Wonga.QA.Tests.Payments.Command
                PaymentCardId = _cardId,
                PartPaymentAmount = 1000,
                CV2 = "123",
-               AgentId = 5,
+               SalesForceUser = "bob@a.com",
                ExtensionDate = DateTime.Today.AddDays(30),
                LoanExtensionId = _extensionId
            };

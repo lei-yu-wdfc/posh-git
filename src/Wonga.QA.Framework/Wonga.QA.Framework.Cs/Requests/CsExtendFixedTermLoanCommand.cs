@@ -12,7 +12,7 @@ namespace Wonga.QA.Framework.Cs
         public Object LoanExtensionId { get; set; }
         public Object CV2 { get; set; }
         public Object PartPaymentAmount { get; set; }
-        public Object AgentId { get; set; }
+        public Object SalesForceUser { get; set; }
         public Object ExtensionDate { get; set; }
     }
 }
