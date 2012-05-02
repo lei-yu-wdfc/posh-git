@@ -176,6 +176,7 @@
     <PopupSaveButton>#edit-submit[value='Save']</PopupSaveButton>
     <PopupCloseButton>#edit-submit[value='Close']</PopupCloseButton>
     <BankAccount>#edit-bank-account-masked</BankAccount>
+	<ResendPin>#pin-hold a</ResendPin>
   </ApplyPage>
 
   

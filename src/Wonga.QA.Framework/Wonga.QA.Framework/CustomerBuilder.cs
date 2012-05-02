@@ -425,6 +425,7 @@ namespace Wonga.QA.Framework
                         {
                             r.AccountId = _id;
                             r.VerificationId = _verification;
+                            r.MobilePhone = _mobileNumber;
                         })
                     });
                     break;

@@ -38,7 +38,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public string SetNewMobilePhone
         {
             set
-            { 
+            {
                 ApplicationSection.ClickChangeMobileButton();
                 Do.Until(IsEditMobileNumberDisplayed);
                 _editMobileNumber.SendValue(value);
@@ -50,7 +50,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         }
         public string GetCurrentBankAccount
         {
-            get 
+            get
             {
                 var currentBankAccount = Client.Driver.FindElement(By.CssSelector(UiMap.Get.ApplyPage.BankAccount));
                 return currentBankAccount.GetValue().Remove(0, 3);
@@ -65,6 +65,11 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             _popupCloseButton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.ApplyPage.PopupCloseButton));
             return _popupCloseButton.Displayed;
+        }
+
+        public void ResendPinClick()
+        {
+            Client.Driver.FindElement(By.CssSelector(UiMap.Get.ApplyPage.ResendPin)).Click();
         }
     }
 }
