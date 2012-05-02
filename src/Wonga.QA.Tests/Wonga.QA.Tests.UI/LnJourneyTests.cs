@@ -245,7 +245,7 @@ namespace Wonga.QA.Tests.Ui
                     break;
                 case AUT.Ca:
                     var journeyCa = JourneyFactory.GetLnJourney(Client.Home());
-                    var pageCa = journeyCa.ApplyForLoan(200, 20)
+                    var pageCa = journeyCa.ApplyForLoan(200, 15)
                                    .SetName(name, surname).CurrentPage as ApplyPage;
                     //there is no option to change mobile phone number               
                     break;
