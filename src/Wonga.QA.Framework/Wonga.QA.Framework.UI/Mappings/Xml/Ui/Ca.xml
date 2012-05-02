@@ -33,6 +33,7 @@
   </DealDonePage>
   
   <AddressDetailsPage>
+    <FormId>#lzero-address-form</FormId>
     <Postcode>#edit-postcode-ca</Postcode>
     <PostcodeErrorForm>div#edit-postcode-ca-wrapper div.invalid</PostcodeErrorForm>
     <HouseNumber>#edit-street-number-ca</HouseNumber>
@@ -54,12 +55,12 @@
   </AccountDetailsSection>
 
   <PersonalBankAccountDetailsPage>
-    <FormId>#wonga-apply-lzero-form</FormId>
+    <FormId>#lzero-bank-form</FormId>
   </PersonalBankAccountDetailsPage>
 
 
   <BankAccountSection>
-    <Fieldset>fieldset#bank</Fieldset>
+    <Fieldset>fieldset#bank-1</Fieldset>
     <InstitutionNumber>#edit-institution-number</InstitutionNumber>
     <AccountNumber>#edit-account-number-ca</AccountNumber>
     <BankName>#edit-bank-name-ca</BankName>

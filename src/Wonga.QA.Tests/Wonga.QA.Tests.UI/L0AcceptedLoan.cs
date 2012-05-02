@@ -43,7 +43,7 @@ namespace Wonga.QA.Tests.Ui
                                  .CurrentPage as ProcessingPage;
 
             var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
-            acceptedPage.SignConfirmCaL0(DateTime.Now.ToString("d MMM yyyy"), _firstName, _lastName);
+            acceptedPage.SignConfirmCaL0(DateTime.Now.ToString("d MMM yyyy"), journey.FirstName, journey.LastName);
             var dealDone = acceptedPage.Submit();
         }
 
