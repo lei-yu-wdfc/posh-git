@@ -141,7 +141,15 @@
 
   <ApplicationSection>
     <FormId>#wonga-apply-ln-form</FormId>
+	<ChangeMobileButton>#loan-application .form-markup-wrapper a</ChangeMobileButton>
   </ApplicationSection>
+
+	<ApplyPage>
+		<EditMobileNumber>#edit-new-mobile-number-ca</EditMobileNumber>
+		<PopupSaveButton>#edit-submit[value='Save']</PopupSaveButton>
+		<PopupCloseButton>#edit-submit[value='Close']</PopupCloseButton>
+		<ResendPin>#repin div:nth-child(2) a</ResendPin>
+	</ApplyPage>
 
   <MyPersonalDetailsPage>
     <Postcode>table#profile tr#address tbody tr:nth-child(3) td</Postcode>
