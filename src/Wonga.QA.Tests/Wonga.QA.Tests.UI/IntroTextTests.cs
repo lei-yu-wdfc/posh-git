@@ -26,9 +26,9 @@ namespace Wonga.QA.Tests.Ui
         Dictionary<int, string> introTexts = new Dictionary<int, string> 
 	    {
 	    {1, "Hi {first name}. Your current trust rating means you can apply for up to £{500} below."},
-        {2, "Hi {first name}. You currently have up to £{245.00} of available credit which you can request at anytime."},
-        {3, "Hi {first name}. You currently have up to £{245.00} of available credit which you can request at anytime."},
-        {4, "Hi {first name}. You currently have up to £{245.00} of available credit which you can request at anytime."},
+        {2, "Hi {first name}. You currently have up to £{245.00} of available credit which you can request at any time."},
+        {3, "Hi {first name}. You currently have up to £{245.00} of available credit which you can request at any time."},
+        {4, "Hi {first name}. You currently have up to £{245.00} of available credit which you can request at any time."},
         {5, "Hi {first name}. You don't currently have any available credit and you promised to repay £{425.00} on {Friday 13 Feb 2011}."},
         {6, "Hi {first name}. You don't currently have any available credit and you promised to repay £{425.00} on {Friday 13 Feb 2011}."},
         {7, "Hi {first name}. You don't currently have any available credit and you promised to repay £{425.00} on {Friday 13 Feb 2011}."},
@@ -128,6 +128,20 @@ namespace Wonga.QA.Tests.Ui
         public void IntroTextScenario4(int scenarioId, int dasyShift, int loanTerm)
         {
             IntroText(scenarioId, dasyShift, loanTerm);
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-788")]
+        [Row(5, 2), Pending("Fails due to bug UK-1909")]    
+        public void IntroTextScenario5(int scenarioId, int dasyShift)
+        {
+            IntroText(scenarioId, dasyShift);
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-788")]
+        [Row(6, 3), Pending("Fails due to bug UK-1909")]
+        public void IntroTextScenario6(int scenarioId, int dasyShift)
+        {
+            IntroText(scenarioId, dasyShift);
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-788")]
@@ -235,6 +249,12 @@ namespace Wonga.QA.Tests.Ui
             var expectedAvailableCredit = Convert.ToDecimal(response.Values["AvailableCredit"].Single());
             expectedlntroText = expectedlntroText.Replace("You currently have up to £{245.00}", "You currently have up to £" + expectedAvailableCredit.ToString("#.00"));
             
+            //you promised to repay £{425.00} on {Friday 13 Feb 2011}           
+            var expectedNextDueDateRepay = Convert.ToDecimal(response.Values["BalanceNextDueDate"].Single());
+            var expectedNextDueDate = Date.GetOrdinalDate(Convert.ToDateTime(response.Values["NextDueDate"].Single()), "ddd d MMM yyyy");
+            expectedlntroText = expectedlntroText.Replace("you promised to repay £{425.00}", "you promised to repay £" + expectedNextDueDateRepay.ToString("#.##"));
+            expectedlntroText = expectedlntroText.Replace("on {Friday 13 Feb 2011}", "on " + expectedNextDueDate);
+
             string actuallntroText = mySummaryPage.GetIntroText;
              
             Assert.AreEqual(expectedlntroText, actuallntroText);
