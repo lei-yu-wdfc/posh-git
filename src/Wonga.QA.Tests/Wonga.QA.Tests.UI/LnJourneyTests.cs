@@ -169,37 +169,32 @@ namespace Wonga.QA.Tests.Ui
                            .CurrentPage as MySummaryPage;
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1533"), Pending("In Development")]
-        public void UkFullLnJourneyTest2()
+        [Test, AUT(AUT.Uk), JIRA("UK-1533")]
+        public void L0LnJourneyTest()
         {
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
-            Customer customer = CustomerBuilder
-                .New()
-                .WithEmailAddress(email)
-                .Build();
 
             // L0 journey
             var journeyL0 = JourneyFactory.GetL0Journey(Client.Home());
             var mySummary = journeyL0.ApplyForLoan(200, 10)
-                .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
                 .FillAddressDetails()
                 .FillAccountDetails()
                 .FillBankDetails()
                 .FillCardDetails()
                 .WaitForAcceptedPage()
                 .FillAcceptedPage();
-                //.GoToMySummaryPage().CurrentPage as MySummaryPage;
 
-            // pay
-            Application application = customer.GetApplications()[0];
+            var customer = new Customer(Guid.Parse(Drive.Api.Queries.Post(new GetAccountQuery { Login = email, Password = Get.GetPassword() }).Values["AccountId"].Single()));
+            var application = customer.GetApplication();
+
+            // Repay
             application.RepayOnDueDate();
 
             // Ln journey
-            //loginPage.LoginAs(email);
-
-            var journeyLn = JourneyFactory.GetLnJourney(Client.Home());
-            var page = journeyLn.ApplyForLoan(200, 10)
+            var journey = JourneyFactory.GetLnJourney(Client.Home());
+            var page = journey.ApplyForLoan(200, 10)
                            .FillApplicationDetails()
                            .WaitForAcceptedPage()
                            .FillAcceptedPage()
