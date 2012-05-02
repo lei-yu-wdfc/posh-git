@@ -5,10 +5,12 @@ using System.Linq;
 using System.Threading;
 using Gallio.Framework.Assertions;
 using MbUnit.Framework;
+using OpenQA.Selenium;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Helpers;
+using Wonga.QA.Framework.UI.Mappings;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Framework.UI.UiElements.Pages.Wb;
@@ -784,7 +786,7 @@ namespace Wonga.QA.Tests.Ui
                 #endregion
             }
         }
-        
+
         [Test, AUT(AUT.Wb), JIRA("QA-258")]
         public void TheWongaBusinessPolicyHaveNoReferenceToZaCaUk()
         {
@@ -1142,6 +1144,76 @@ namespace Wonga.QA.Tests.Ui
             personalDetailsPageZa.YourDetails.Gender = "Female";
             personalDetailsPageZa.YourDetails.DateOfBirth = "10/Mar/1957";
             journeyZa.CurrentPage = personalDetailsPageZa.Submit() as AddressDetailsPage;
+        }
+
+        [Test, AUT(AUT.Za), Category(TestCategories.Smoke), JIRA("QA-275")]
+        public void PasswordThatEqualToTheEmailWithUpperLastSimbolAddressWarningMessageShouldDisplayed()
+        {
+            var email = Get.RandomEmail();
+            var journeyZa = JourneyFactory.GetL0Journey(Client.Home());
+            var personalDetailsPageZa = journeyZa.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
+            personalDetailsPageZa.YourName.FirstName = Get.RandomString(3, 10);
+            personalDetailsPageZa.YourName.LastName = Get.RandomString(3, 10);
+            personalDetailsPageZa.YourName.Title = "Mr";
+            personalDetailsPageZa.YourDetails.Number = Get.GetNIN(new DateTime(1957, 3, 10), true);
+            personalDetailsPageZa.YourDetails.DateOfBirth = "10/Mar/1957";
+            personalDetailsPageZa.YourDetails.Gender = "Female";
+            personalDetailsPageZa.YourDetails.HomeStatus = "Owner Occupier";
+            personalDetailsPageZa.YourDetails.HomeLanguage = "English";
+            personalDetailsPageZa.YourDetails.NumberOfDependants = "0";
+            personalDetailsPageZa.YourDetails.MaritalStatus = "Single";
+            personalDetailsPageZa.EmploymentDetails.EmploymentStatus = "Employed Full Time";
+            personalDetailsPageZa.EmploymentDetails.MonthlyIncome = "3000";
+            personalDetailsPageZa.EmploymentDetails.EmployerName = Get.EnumToString(RiskMask.TESTEmployedMask);
+            personalDetailsPageZa.EmploymentDetails.EmployerIndustry = "Accountancy";
+            personalDetailsPageZa.EmploymentDetails.EmploymentPosition = "Administration";
+            personalDetailsPageZa.EmploymentDetails.TimeWithEmployerYears = "9";
+            personalDetailsPageZa.EmploymentDetails.TimeWithEmployerMonths = "5";
+            personalDetailsPageZa.EmploymentDetails.WorkPhone = "0123456789";
+            personalDetailsPageZa.EmploymentDetails.SalaryPaidToBank = true;
+            personalDetailsPageZa.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d/MMM/yyyy");
+            personalDetailsPageZa.EmploymentDetails.IncomeFrequency = "Monthly";
+            personalDetailsPageZa.ContactingYou.CellPhoneNumber = "0751234567";
+            personalDetailsPageZa.ContactingYou.EmailAddress = email;
+            personalDetailsPageZa.ContactingYou.ConfirmEmailAddress = email;
+            personalDetailsPageZa.PrivacyPolicy = true;
+            personalDetailsPageZa.CanContact = "Yes";
+            personalDetailsPageZa.MarriedInCommunityProperty =
+                "I am not married in community of property (I am single, married with antenuptial contract, divorced etc.)";
+            journeyZa.CurrentPage = personalDetailsPageZa.Submit() as AddressDetailsPage;
+            var accountDetailsPageZa = journeyZa.FillAddressDetails().CurrentPage as AccountDetailsPage;
+            Console.WriteLine(email.Remove(email.Length - 1, 1) + "M");
+            accountDetailsPageZa.AccountDetailsSection.Password = email.Remove(email.Length - 1, 1) + "M";
+            accountDetailsPageZa.AccountDetailsSection.PasswordConfirm = email.Remove(email.Length - 1, 1) + "M";
+            accountDetailsPageZa.AccountDetailsSection.SecretQuestion = "Secret question'-.";
+            accountDetailsPageZa.AccountDetailsSection.SecretAnswer = "Secret answer";
+            try
+            {
+                accountDetailsPageZa = accountDetailsPageZa.NextClick();
+            }
+            catch (Exception e)
+            {
+                Assert.IsTrue(e.Message.Contains("Sorry, your password cannot match your username"));
+                IWebElement section = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.Fieldset));
+                IWebElement password = section.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.Password));
+                IWebElement passwordConfirm = section.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.PasswordConfirm));
+                IWebElement secretQuestion = section.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.SecretQuestion));
+                IWebElement secretAnswer = section.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.SecretAnswer));
+                IWebElement next = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.NextButton));
+                password.SendValue("Passw0rd");
+                passwordConfirm.SendValue("Passw0rd");
+                secretQuestion.SendValue("Secret question'-.");
+                secretAnswer.SendValue("Secret answer");
+                next.Click();
+                try
+                {
+                    var page = new HomePage(Client);
+                }
+                catch (Exception ex)
+                {
+                    Assert.IsTrue(ex.Message.Contains("We are sorry, but there has been an error in your application. Please try again. (101 - amount)"));
+                }
+            }
         }
     }
 }

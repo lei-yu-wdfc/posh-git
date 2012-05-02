@@ -24,5 +24,11 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _next.Click();
             return new PersonalBankAccountPage(Client);
         }
+
+        public AccountDetailsPage NextClick()
+        {
+            _next.Click();
+            return new AccountDetailsPage(Client);
+        }
     }
 }
