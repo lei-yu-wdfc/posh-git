@@ -7,9 +7,9 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Extensions;
-using Wonga.QA.Framework.Db.Ops;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
+using Wonga.QA.Framework.Data.Extensions;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
@@ -24,7 +24,8 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Row(true)]
 		public void GivenNewCustomer_WhenItIsNotFlagged_ThenTheApplicationIsAccepted(bool useDoNotRelendFlag)
 		{
-			bool currentValue = Drive.Db.Ops.ServiceConfigurations.SetServiceConfiguration(UseDoNotRelendFlagKey, useDoNotRelendFlag);
+			bool currentValue = Drive.Data.Ops.SetServiceConfiguration(UseDoNotRelendFlagKey, useDoNotRelendFlag);
+
 			try
 			{
 				var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
@@ -36,7 +37,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			}
 			finally 
 			{
-				Drive.Db.Ops.ServiceConfigurations.SetServiceConfiguration(UseDoNotRelendFlagKey, currentValue);
+				Drive.Data.Ops.SetServiceConfiguration(UseDoNotRelendFlagKey, currentValue);
 				
 			}
 		}
@@ -46,7 +47,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Row(true, ApplicationDecisionStatus.Declined)]
 		public void GivenNewCustomer_WhenItIsFlagged_ThenTheApplicationDependsOnConfigurationForUseDoNotRelendFlag(bool useDoNotRelendFlag, ApplicationDecisionStatus expectedStatus)
 		{
-			bool currentValue = Drive.Db.Ops.ServiceConfigurations.SetServiceConfiguration(UseDoNotRelendFlagKey, useDoNotRelendFlag);
+			bool currentValue = Drive.Data.Ops.SetServiceConfiguration(UseDoNotRelendFlagKey, useDoNotRelendFlag);
 
 			try
 			{
@@ -59,7 +60,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			}
 			finally
 			{
-				Drive.Db.Ops.ServiceConfigurations.SetServiceConfiguration(UseDoNotRelendFlagKey, currentValue);
+				Drive.Data.Ops.SetServiceConfiguration(UseDoNotRelendFlagKey, currentValue);
 			}
 		}
 
@@ -68,7 +69,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Row(true)]
 		public void GivenExistingCustomer_WhenItIsNotFlagged_ThenTheApplicationIsAccepted(bool useDoNotRelendFlag)
 		{
-			bool currentValue = Drive.Db.Ops.ServiceConfigurations.SetServiceConfiguration(UseDoNotRelendFlagKey, useDoNotRelendFlag);
+			bool currentValue = Drive.Data.Ops.SetServiceConfiguration(UseDoNotRelendFlagKey, useDoNotRelendFlag);
 			try
 			{
 				var customer = CustomerBuilder.New().WithEmployer(RiskMask.TESTNoCheck).Build();
@@ -82,7 +83,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			}
 			finally
 			{
-				Drive.Db.Ops.ServiceConfigurations.SetServiceConfiguration(UseDoNotRelendFlagKey, currentValue);
+				Drive.Data.Ops.SetServiceConfiguration(UseDoNotRelendFlagKey, currentValue);
 			}
 		}
 
@@ -91,7 +92,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Row(true, ApplicationDecisionStatus.Declined)]
 		public void GivenExistingCustomer_WhenItIsFlagged_ThenTheApplicationDependsOnConfigurationForUseDoNotRelendFlag(bool useDoNotRelendFlag, ApplicationDecisionStatus expectedStatus)
 		{
-			bool currentValue = Drive.Db.Ops.ServiceConfigurations.SetServiceConfiguration(UseDoNotRelendFlagKey, useDoNotRelendFlag);
+			bool currentValue = Drive.Data.Ops.SetServiceConfiguration(UseDoNotRelendFlagKey, useDoNotRelendFlag);
 
 			try
 			{
@@ -108,9 +109,9 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			}
 			finally
 			{
-				Drive.Db.Ops.ServiceConfigurations.SetServiceConfiguration(UseDoNotRelendFlagKey, currentValue);
+				Drive.Data.Ops.SetServiceConfiguration(UseDoNotRelendFlagKey, currentValue);
 			}
 		}
-
+		
 	}
 }
