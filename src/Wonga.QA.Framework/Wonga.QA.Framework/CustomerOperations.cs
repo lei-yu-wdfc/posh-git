@@ -43,6 +43,20 @@ namespace Wonga.QA.Framework
             return result;
         }
 
+        public static void ChangeMarketingEligibility(Guid customerId,bool isEligible)
+        {
+            if (isEligible.Equals(true))
+            {
+                Do.Until(() => _eligibleCustomersEntity.UpdateByEligibleCustomerId(EligibleCustomerId:customerId,
+                                                                                   CustomerInArrears:1));
+            }
+            else
+            {
+                Do.Until(() => _eligibleCustomersEntity.UpdateByEligibleCustomerId(EligibleCustomerId:customerId,
+                                                                                    CustomerInArrears:0));
+            }
+        }
+
         private static String GetFullCustomerName(Guid customerId)
         {
             StringBuilder builder = new StringBuilder();
