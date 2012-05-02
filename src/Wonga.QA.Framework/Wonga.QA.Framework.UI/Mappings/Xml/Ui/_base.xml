@@ -258,6 +258,7 @@
     <StatusMessage>div.wonga-box-1 div.wonga-box-top-right</StatusMessage>
     <MaxAvailableCredit>.description</MaxAvailableCredit>
     <ChangePromiseDateButton>#cloud ul a.ChangePromiseDate</ChangePromiseDateButton>
+    <RepayButton>#cloud ul a.Repay</RepayButton>
   </MySummaryPage>
 
   <MyPaymentsPage>
