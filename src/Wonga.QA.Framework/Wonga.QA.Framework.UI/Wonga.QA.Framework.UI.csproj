@@ -70,6 +70,7 @@
     <Compile Include="Mappings\Content\Agreements\LoanAgreement.cs" />
     <Compile Include="Mappings\Ui\Elements\ChangeMyAddressElement.cs" />
     <Compile Include="Mappings\Ui\Elements\ContactElement.cs" />
+    <Compile Include="Mappings\Ui\Elements\SmallRepaySlidersElement.cs" />
     <Compile Include="Mappings\Ui\Elements\SmallExtensionSlidersElement.cs" />
     <Compile Include="Mappings\Ui\Elements\SmallTopupSlidersElement.cs" />
     <Compile Include="Mappings\Ui\Elements\MyAccountNavigationElement.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Mappings\Ui\Pages\Common\ApplyPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ApplyTermsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\BlogPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\RepayRequestPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ExtensionRequestPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ExtensionAgreementPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ExtensionDealDonePage.cs" />
@@ -107,8 +109,8 @@
     <Compile Include="Mappings\Ui\Pages\PayLater\PayLaterLoginPage.cs" />
     <Compile Include="Mappings\Ui\Pages\PayLater\PayLaterThanksForm.cs" />
     <Compile Include="Mappings\Ui\Pages\PayLater\SubmitionPage.cs" />
-	<Compile Include="Mappings\Ui\Pages\Prepaid\PrepaidCardPage.cs" />
-	<Compile Include="Mappings\Ui\Pages\Prepaid\PrepaidRegisterDetailsPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Prepaid\PrepaidCardPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Prepaid\PrepaidRegisterDetailsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceCustomerDetailPage.cs" />
     <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceHomePage.cs" />
     <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceLoginPage.cs" />
@@ -154,6 +156,7 @@
     <Compile Include="Ui\Elements\BaseElement.cs" />
     <Compile Include="Ui\Elements\ChangeMyAddressElement.cs" />
     <Compile Include="Ui\Elements\ContactElement.cs" />
+    <Compile Include="Ui\Elements\SmallRepaySlidersElement.cs" />
     <Compile Include="Ui\Elements\SmallExtensionSlidersElement.cs" />
     <Compile Include="Ui\Elements\SmallTopupSlidersElement.cs" />
     <Compile Include="Ui\Elements\FAQElement.cs" />
@@ -174,6 +177,7 @@
     <Compile Include="Ui\Pages\Common\ApplyPage.cs" />
     <Compile Include="Ui\Pages\Common\ApplyTermsPage.cs" />
     <Compile Include="Ui\Pages\Common\BlogPage.cs" />
+    <Compile Include="Ui\Pages\Common\RepayRequestPage.cs" />
     <Compile Include="Ui\Pages\Common\ExtensionRequestPage.cs" />
     <Compile Include="Ui\Pages\Common\ExtensionAgreementPage.cs" />
     <Compile Include="Ui\Pages\Common\ExtensionDealDonePage.cs" />
@@ -200,8 +204,8 @@
     <Compile Include="Ui\Pages\Common\WhyUseUsPage.cs" />
     <Compile Include="Ui\Pages\Interfaces\IExtensionPaymentPage.cs" />
     <Compile Include="Ui\Pages\Interfaces\ITopupDecisionPage.cs" />
-	<Compile Include="Ui\Pages\Prepaid\PrepaidCardPage.cs" />
-	<Compile Include="Ui\Pages\Prepaid\PrepaidRegisterDetailsPage.cs" />
+    <Compile Include="Ui\Pages\Prepaid\PrepaidCardPage.cs" />
+    <Compile Include="Ui\Pages\Prepaid\PrepaidRegisterDetailsPage.cs" />
     <Compile Include="Ui\Pages\PayLater\PayLaterLoginPage.cs" />
     <Compile Include="Ui\Pages\PayLater\SubmitionPage.cs" />
     <Compile Include="Ui\Pages\SalesForce\BaseSfPage.cs" />
