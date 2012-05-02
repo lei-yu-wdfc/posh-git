@@ -694,6 +694,7 @@ namespace Wonga.QA.Tests.Ui
                         Console.WriteLine(sms.MessageText + "/" + sms.CreatedOn);
                         Assert.IsTrue(sms.MessageText.Contains("You will need it to complete your application back at Wonga.ca."));
                     }
+                    Assert.AreEqual(2, smsCa.Count());
                     break;
                 #endregion
                 #region Za
@@ -738,6 +739,7 @@ namespace Wonga.QA.Tests.Ui
                         Console.WriteLine(sms.MessageText + "/" + sms.CreatedOn);
                         Assert.IsTrue(sms.MessageText.Contains("You will need it to complete your application back at Wonga.com."));
                     }
+                    Assert.AreEqual(2, smsZa.Count());
                     break;
                 #endregion
                 #region Wb
@@ -777,6 +779,7 @@ namespace Wonga.QA.Tests.Ui
                         Console.WriteLine(sms.MessageText + "/" + sms.CreatedOn);
                         Assert.IsTrue(sms.MessageText.Contains("You will need it to complete your application back at WongaBusiness.com."));
                     }
+                    Assert.AreEqual(2, smsWb.Count());
                     break;
                 #endregion
             }
