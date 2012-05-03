@@ -1261,5 +1261,22 @@ namespace Wonga.QA.Tests.Ui
                 }
             }
         }
+
+        [Test, AUT(AUT.Za), Category(TestCategories.Smoke), JIRA("QA-276")]
+        public void customerUsesExistingIdNumberShouldBeAbleToProceed()
+        {
+            var customer = Do.Until(() => Drive.Data.Comms.Db.CustomerDetails.FindAllByGender(2).FirstOrDefault());
+            Console.WriteLine(customer.NationalNumber.ToString() + "  /  " + customer.DateOfBirth.ToString().Replace(" 00:00:00", ""));
+
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            journey.DateOfBirth = customer.DateOfBirth;
+            journey.NationalId = customer.NationalNumber.ToString();
+            var processingPage = journey.ApplyForLoan(200, 10)
+                                 .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                 .FillAddressDetails()
+                                 .FillAccountDetails()
+                                 .FillBankDetails()
+                                 .CurrentPage as ProcessingPage;
+        }
     }
 }
