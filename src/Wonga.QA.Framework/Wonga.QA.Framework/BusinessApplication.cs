@@ -73,8 +73,7 @@ namespace Wonga.QA.Framework
             }
 
             var paymentSchedulingSaga =
-                Do.Until(() => Drive.Db.OpsSagas.PaymentSchedulingSagaEntities.Single(
-                    s => s.ApplicationExternalId == Id));
+                Do.Until(() => Drive.Data.OpsSagas.Db.PaymentSchedulingSagaEntity.FindByApplicationExternalId(Id));
 
             Drive.Msmq.Payments.Send(new TimeoutMessage {SagaId = paymentSchedulingSaga.Id});
         }
@@ -94,8 +93,7 @@ namespace Wonga.QA.Framework
                 SetCardExpirationDate(true);
             }
             var businessLoansScheduledPaymentsSaga =
-                Do.Until(() => Drive.Db.OpsSagas.BusinessLoanScheduledPaymentSagaEntities.Single(
-                    s => s.ApplicationGuid == Id));
+                Do.With.Timeout(2).Until(() => Drive.Data.OpsSagas.Db.BusinessLoanScheduledPaymentSagaEntity.FindByApplicationGuid(Id));
 
             // Trigger repeated collection
             Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = businessLoansScheduledPaymentsSaga.Id });
