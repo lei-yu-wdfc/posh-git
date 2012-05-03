@@ -48,7 +48,7 @@ namespace Wonga.QA.Framework.Core
         public static String GetEmail(int mailLength)
         {
             String guid = Guid.NewGuid().ToString();
-            return String.Format("qa.wonga.com{0}@gmail.com", guid.Substring(0, mailLength - GetEmail().Length-1));
+            return String.Format("qa.wonga.com{0}@gmail.com", guid.Substring(0, mailLength - GetEmail().Length - 1));
         }
 
         public static String RandomEmail()
@@ -108,7 +108,7 @@ namespace Wonga.QA.Framework.Core
                     {
                         return "021" + RandomLong(1000000, 9999999);
                     }
-                
+
                 default:
                     {
                         return "07500000000";
