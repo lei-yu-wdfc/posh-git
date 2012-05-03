@@ -24,6 +24,7 @@ namespace Wonga.QA.Tests.BankGateway
                 case AUT.Ca:
                     Assert.IsTrue(Drive.Svc.Scotia.IsRunning());
                     Assert.IsTrue(Drive.Svc.Bmo.IsRunning());
+                    Assert.IsTrue(Drive.Svc.Rbc.IsRunning());
                     break;
                 case AUT.Wb:
                     break;

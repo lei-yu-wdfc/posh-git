@@ -32,6 +32,7 @@ namespace Wonga.QA.Framework.Svc
         private SvcService _hsbc;
         private SvcService _hyphen;
         private SvcService _iovation;
+        private SvcService _rbc;
         private SvcService _salesforce;
         private SvcService _scheduler;
         private SvcService _scotia;
@@ -97,7 +98,7 @@ namespace Wonga.QA.Framework.Svc
 
         public SvcService Bmo
         {
-            get { return _scotia ?? (_scotia = new SvcService(Config.Svc.Bmo.Key, Config.Svc.Bmo.Value)); }
+            get { return _bmo ?? (_bmo = new SvcService(Config.Svc.Bmo.Key, Config.Svc.Bmo.Value)); }
             set { _bmo = value; }
         }
 
@@ -201,6 +202,12 @@ namespace Wonga.QA.Framework.Svc
         {
             get { return _iovation ?? (_iovation = new SvcService(Config.Svc.Iovation.Key, Config.Svc.Iovation.Value)); }
             set { _iovation = value; }
+        }
+
+        public SvcService Rbc
+        {
+            get { return _rbc ?? (_salesforce = new SvcService(Config.Svc.Rbc.Key, Config.Svc.Rbc.Value)); }
+            set { _rbc = value; }
         }
 
         public SvcService Salesforce

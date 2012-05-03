@@ -39,6 +39,7 @@
     <Compile Include="BankGatewayCa.cs" />
     <Compile Include="BankGatewayCaRbc.cs" />
     <Compile Include="BankGatewayServices.cs" />
+    <Compile Include="Helpers\ScotiaBatchSending.cs" />
     <Compile Include="Helpers\BmoBatchSending.cs" />
     <Compile Include="Helpers\FeatureSwitchConstants.cs" />
     <Compile Include="Enums\BankGatewayTransactionStatus.cs" />

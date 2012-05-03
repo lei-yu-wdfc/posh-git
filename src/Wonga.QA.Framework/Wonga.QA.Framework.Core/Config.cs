@@ -241,6 +241,7 @@ namespace Wonga.QA.Framework.Core
             public KeyValuePair<String, String> Hsbc { get; set; }
             public KeyValuePair<String, String> Hyphen { get; set; }
             public KeyValuePair<String, String> Iovation { get; set; }
+            public KeyValuePair<String, String> Rbc { get; set; }
             public KeyValuePair<String, String> Salesforce { get; set; }
             public KeyValuePair<String, String> Scheduler { get; set; }
             public KeyValuePair<String, String> Scotia { get; set; }
@@ -282,6 +283,7 @@ namespace Wonga.QA.Framework.Core
                 Hsbc = new KeyValuePair<String, String>("Wonga.BankGateway.HSBC.Handlers", component);
                 Hyphen = new KeyValuePair<String, String>("Wonga.BankGateway.Hyphen.Handlers", component);
                 Iovation = new KeyValuePair<String, String>("Wonga.Iovation.Handlers", component);
+                Rbc = new KeyValuePair<String, String>("Wonga.BankGateway.Rbc.Handlers", component);
                 Salesforce = new KeyValuePair<String, String>("Wonga.Salesforce.Handlers", component);
                 Scheduler = new KeyValuePair<String, String>("Wonga.Scheduler.Handlers", component);
                 Scotia = new KeyValuePair<String, String>("Wonga.BankGateway.Scotia.Handlers", component);
