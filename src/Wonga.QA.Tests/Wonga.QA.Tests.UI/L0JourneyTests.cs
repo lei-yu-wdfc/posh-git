@@ -1193,7 +1193,7 @@ namespace Wonga.QA.Tests.Ui
             }
             catch (Exception e)
             {
-                Assert.IsTrue(e.Message.Contains("Sorry, your password cannot match your username"));
+                Assert.IsTrue(e.Message.Contains(UiMap.Get.AccountDetailsSection.PasswordWarningMessage));
                 IWebElement section = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.Fieldset));
                 IWebElement password = section.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.Password));
                 IWebElement passwordConfirm = section.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.PasswordConfirm));
@@ -1211,7 +1211,7 @@ namespace Wonga.QA.Tests.Ui
                 }
                 catch (Exception ex)
                 {
-                    Assert.IsTrue(ex.Message.Contains("We are sorry, but there has been an error in your application. Please try again. (101 - amount)"));
+                    Assert.IsTrue(ex.Message.Contains(UiMap.Get.HomePage.ApplicationErrorMessage));
                 }
             }
         }
@@ -1235,7 +1235,7 @@ namespace Wonga.QA.Tests.Ui
             }
             catch (Exception e)
             {
-                Assert.IsTrue(e.Message.Contains("There was a problem processing your details. Please try again."));
+                Assert.IsTrue(e.Message.Contains(UiMap.Get.AddressDetailsPage.ProblemProcessingDetailsMessage));
                 IWebElement form = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.FormId));
                 IWebElement postCode = form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.Postcode));
                 IWebElement houseNumber = form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.HouseNumber));
@@ -1257,7 +1257,7 @@ namespace Wonga.QA.Tests.Ui
                 }
                 catch (Exception ex)
                 {
-                    Assert.IsTrue(ex.Message.Contains("We are sorry, but there has been an error in your application. Please try again. (101 - amount)"));
+                    Assert.IsTrue(ex.Message.Contains(UiMap.Get.HomePage.ApplicationErrorMessage));
                 }
             }
         }

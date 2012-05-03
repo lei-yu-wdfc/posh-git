@@ -27,5 +27,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String NextButton { get; set; }
         public String AddressOptionsWrapper { get; set; }
         public String PostcodeValid { get; set; }
+        public String ProblemProcessingDetailsMessage { get; set; }
     }
 }
