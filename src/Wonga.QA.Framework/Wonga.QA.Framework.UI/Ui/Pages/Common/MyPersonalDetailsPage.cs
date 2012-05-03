@@ -26,7 +26,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         }
         public String GetPopupErrorMessage
         {
-            get { return Do.Until(()=>Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.PopupErrorMessage)).Text);  }
+            get { return Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.PopupErrorMessage)).Text); }
         }
         public string GetHouseNumberAndStreet
         {
@@ -55,7 +55,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         private readonly IWebElement _address;
         private readonly IWebElement _password;
-        private readonly IWebElement _phone;
+        private IWebElement _phone;
         private readonly IWebElement _communication;
         private ReadOnlyCollection<IWebElement> _communicationPrefs;
         private IWebElement _editPhoneHome;
@@ -81,7 +81,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     _phone = Content.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.Phone));
                     _communication = Content.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.Communication));
                     ChangeMyAddressElement = new ChangeMyAddressElement(this);
-                    break; 
+                    break;
                 case AUT.Ca:
                     Tabs = new TabsElement(this);
                     break;
@@ -111,7 +111,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public bool ChangePhone(string homePhone, string mobilePhone, string pin)
         {
-            _editPhoneHome = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.EditPhoneHome));
+            _editPhoneHome = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.EditPhoneHome)));
             _editPhoneMobile = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.EditPhoneMobile));
             _submitButton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.SubmitButton));
 
@@ -125,6 +125,28 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _editPhonePin.SendKeys(pin);
             return true;
         }
+
+        public bool ChangeMobilePhone(string mobilePhone, string pin)
+        {
+            _editPhoneMobile = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.EditPhoneMobile)));
+            _submitButton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.SubmitButton));
+
+            _editPhoneMobile.Clear();
+            _editPhoneMobile.SendKeys(mobilePhone);
+
+            _submitButton.Click();
+            Do.Until(LookForEditPinField);
+            _editPhonePin.SendKeys(pin);
+            Thread.Sleep(2000);
+            _submitButton = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.SubmitButton)));
+            _submitButton.Click();
+            Thread.Sleep(2000);
+            _submitButton = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.SubmitButton)));
+            _submitButton.Click();
+
+            return true;
+        }
+
         public bool DontChangePhone()
         {
             Thread.Sleep(5000);
@@ -139,7 +161,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             {
                 return false;
             }
-            
+
         }
         private bool LookForEditPinField()
         {
@@ -175,6 +197,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public void PhoneClick()
         {
+            _phone = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.Phone)));
             _phone.Click();
         }
 
