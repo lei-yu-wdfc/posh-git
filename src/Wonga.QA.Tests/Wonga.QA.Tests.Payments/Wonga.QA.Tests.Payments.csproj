@@ -55,6 +55,7 @@
     <Compile Include="GetRepaymentDetailsTest.cs" />
     <Compile Include="Helpers\AccountSummarySetupFunctions.cs" />
     <Compile Include="Helpers\ExtendLoanFunctions.cs" />
+    <Compile Include="Helpers\RepayLoanFunctions.cs" />
     <Compile Include="Helpers\VerifyPaymentFunctions.cs" />
     <Compile Include="InArrearsNoticeTests.cs" />
     <Compile Include="InDuplumViolationTest.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Queries\GetLoanAgreementsCsapiQueryTests.cs" />
     <Compile Include="Queries\GetLoanExtensionPaymentStatusQueryTest.cs" />
     <Compile Include="Queries\GetPersonalPaymentCardsCsapiQueryTests.cs" />
+    <Compile Include="Queries\GetRepayLoanQuoteQueryTests.cs" />
     <Compile Include="Queries\GetTransactionsCsapiQuery.cs" />
     <Compile Include="Queries\GetValidTransactionTypesQueryTest.cs" />
     <Compile Include="RepayViaOnlineBillPaymentTests.cs" />
