@@ -20,10 +20,13 @@ namespace Wonga.QA.Tests.Prepaid
         [SetUp]
         public void Init()
         {
-            _eligibleCustomer = CustomerBuilder.New().WithEmailAddress(Get.GetEmailLessFiftyChars()).Build();
-            _nonEligibleCustomer = CustomerBuilder.New().WithEmailAddress(Get.GetEmailLessFiftyChars()).Build();
-            _nonEligibleCustomerInArrears = CustomerBuilder.New().WithEmailAddress(Get.GetEmailLessFiftyChars()).Build();
+            _eligibleCustomer = CustomerBuilder.New().WithEmailAddress(Get.GetEmail(50)).Build();
+            _nonEligibleCustomer = CustomerBuilder.New().WithEmailAddress(Get.GetEmail(50)).Build();
+            _nonEligibleCustomerInArrears = CustomerBuilder.New().WithEmailAddress(Get.GetEmail(50)).Build();
             _customerWithWromgEmail = CustomerBuilder.New().Build();
+
+            Console.WriteLine(_eligibleCustomer.GetEmail().Length);
+            Console.WriteLine(_eligibleCustomer.GetEmail());
 
             CustomerOperations.CreateMarketingEligibility(_eligibleCustomer.Id, true);
             CustomerOperations.CreateMarketingEligibility(_nonEligibleCustomerInArrears.Id, false);

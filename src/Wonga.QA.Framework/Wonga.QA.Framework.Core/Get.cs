@@ -45,18 +45,17 @@ namespace Wonga.QA.Framework.Core
             return "qa.wonga.com@gmail.com";
         }
 
+        public static String GetEmail(int mailLength)
+        {
+            String guid = Guid.NewGuid().ToString();
+            return String.Format("qa.wonga.com{0}@gmail.com", guid.Substring(0, mailLength - GetEmail().Length-1));
+        }
+
         public static String RandomEmail()
         {
             return String.Format(
                 "qa.wonga.com+{0}-{1}@gmail.com",
                 EmailSafeMachineName,
-                Guid.NewGuid());
-        }
-
-        public static String GetEmailLessFiftyChars()
-        {
-            return String.Format(
-                "qa.uk{0}@uk.com",
                 Guid.NewGuid());
         }
 
