@@ -78,11 +78,6 @@
     <Compile Include="Exceptions\NoDefaultException.cs" />
     <Compile Include="Exceptions\SchemaException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Requests\GetApplicationAprQuery.cs" />
-    <Compile Include="Requests\GetAvailabelCreditTestQuery.cs" />
-    <Compile Include="Requests\GetCustomerPrePaidEligibilityQuery.cs" />
-    <Compile Include="Requests\GetInstallmentQuoteQuery.cs" />
-    <Compile Include="Requests\GetRepaymentDetailsQuery.cs" />
     <Compile Include="Temp\ApplicationDecisionStatusEnum.cs" />
     <Compile Include="Temp\RiskMask.cs" />
     <Compile Include="Requests\AddBankAccountCaCommand.cs" />
@@ -157,6 +152,7 @@
     <Compile Include="Requests\GetLoanTopUpAgreementQuery.cs" />
     <Compile Include="Requests\GetMatchedOrganizationsWbQuery.cs" />
     <Compile Include="Requests\GetMatchingAccountsQuery.cs" />
+    <Compile Include="Requests\GetMigratedStatusQuery.cs" />
     <Compile Include="Requests\GetPasswordRecoveryDetailsQuery.cs" />
     <Compile Include="Requests\GetPasswordResetKeyQuery.cs" />
     <Compile Include="Requests\GetPaymentCardIsValidQuery.cs" />
@@ -167,6 +163,7 @@
     <Compile Include="Requests\GetPromoCodeParametersQuery.cs" />
     <Compile Include="Requests\GetRepayLoanCalculationQuery.cs" />
     <Compile Include="Requests\GetRepayLoanParametersQuery.cs" />
+    <Compile Include="Requests\GetRepayLoanQuoteUkQuery.cs" />
     <Compile Include="Requests\GetRepayLoanStatusQuery.cs" />
     <Compile Include="Requests\GetRepaymentArrangementAllowedQuery.cs" />
     <Compile Include="Requests\GetRepaymentArrangementCalculationQuery.cs" />

@@ -37,26 +37,25 @@ namespace Wonga.QA.Tests.Marketing
         }
 
 
-        [Test, AUT(AUT.Uk), JIRA("PP-32"), Pending("Times out with the exception: No matching table found, or insufficient permissions.")]
+        [Test, AUT(AUT.Uk), JIRA("PP-32"), Pending("Commented out until query is added to the API")]
         public void ExecuteGetEligibleCustomersQuery()
         {
+            //GetCustomerPrePaidEligibilityQuery eligibleCustomerMessage = new GetCustomerPrePaidEligibilityQuery
+            //                                                                 {
+            //                                                                     AccountId = _eligibleCustomer.Id
+            //                                                                 };
+            //GetCustomerPrePaidEligibilityQuery nonEligibleCustomerMessage = new GetCustomerPrePaidEligibilityQuery
+            //                                                                 {
+            //                                                                     AccountId = _nonEligibleCustomer.Id
+            //                                                                 };
+            //GetCustomerPrePaidEligibilityQuery nonEligibleCustomerInArrearsMessage = new GetCustomerPrePaidEligibilityQuery
+            //                                                                 {
+            //                                                                    AccountId = _nonEligibleCustomerInArrears.Id
+            //                                                                 };
 
-            GetCustomerPrePaidEligibilityQuery eligibleCustomerMessage = new GetCustomerPrePaidEligibilityQuery
-                                                                             {
-                                                                                 AccountId = _eligibleCustomer.Id
-                                                                             };
-            GetCustomerPrePaidEligibilityQuery nonEligibleCustomerMessage = new GetCustomerPrePaidEligibilityQuery
-                                                                             {
-                                                                                 AccountId = _nonEligibleCustomer.Id
-                                                                             };
-            GetCustomerPrePaidEligibilityQuery nonEligibleCustomerInArrearsMessage = new GetCustomerPrePaidEligibilityQuery
-                                                                             {
-                                                                                AccountId = _nonEligibleCustomerInArrears.Id
-                                                                             };
-
-            Assert.IsTrue(Drive.Api.Queries.Post(eligibleCustomerMessage).Values[ELIGIBLE_RESPONSE_KEY].First().Equals(ELIGIBLE_CUSTOMER_RESPONSE));
-            Assert.IsTrue(Drive.Api.Queries.Post(nonEligibleCustomerInArrearsMessage).Values[ELIGIBLE_RESPONSE_KEY].First().Equals(NON_ELIGIBLE_CUSTOMER_RESPONSE));
-            Assert.Throws<ValidatorException>(() => Drive.Api.Queries.Post(nonEligibleCustomerMessage));
+            //Assert.IsTrue(Drive.Api.Queries.Post(eligibleCustomerMessage).Values[ELIGIBLE_RESPONSE_KEY].First().Equals(ELIGIBLE_CUSTOMER_RESPONSE));
+            //Assert.IsTrue(Drive.Api.Queries.Post(nonEligibleCustomerInArrearsMessage).Values[ELIGIBLE_RESPONSE_KEY].First().Equals(NON_ELIGIBLE_CUSTOMER_RESPONSE));
+            //Assert.Throws<ValidatorException>(() => Drive.Api.Queries.Post(nonEligibleCustomerMessage));
             
         }
 
