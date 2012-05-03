@@ -49,7 +49,6 @@
     <Fieldset>#account-setup</Fieldset>
 	<PasswordErrorForm>#edit-password-wrapper .form-error .invalid</PasswordErrorForm>
     <PasswordConfirmErrorForm>#edit-password-confirm-wrapper .form-error .invalid</PasswordConfirmErrorForm>
-	<PasswordWarningMessage>Sorry, your password cannot match your username</PasswordWarningMessage>
   </AccountDetailsSection>
 
   <DealDonePage>
@@ -71,7 +70,6 @@
     <StreetErrorForm>#edit-street-za-wrapper div.invalid</StreetErrorForm>
     <HouseNumberErrorForm>#edit-house-number-za-wrapper div.invalid</HouseNumberErrorForm>
     <AddressPeriodErrorForm>#edit-address-period-za-wrapper div.invalid</AddressPeriodErrorForm>
-	<ProblemProcessingDetailsMessage>There was a problem processing your details. Please try again.</ProblemProcessingDetailsMessage>
   </AddressDetailsPage>
 
   <AcceptedPage>
@@ -160,7 +158,6 @@
   <HomePage>
     <Title>div#block-wonga-1 h2:nth-child(1)</Title>
     <TitleText>Flexible, short-term loans that give you lots of control</TitleText>
-	<ApplicationErrorMessage>We are sorry, but there has been an error in your application. Please try again. (101 - amount)</ApplicationErrorMessage>
   </HomePage>
 
   <TabsElement>

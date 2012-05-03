@@ -45,6 +45,9 @@ namespace Wonga.QA.Framework.UI
 
 #region Content
         public string YourDetails { get; set; }
+        public String ProblemProcessingDetailsMessage { get; set; }
+        public String PasswordWarningMessage { get; set; }
+        public String ApplicationErrorMessage { get; set; }
         public LoanAgreement LoanAgreement { get; set; }
 #endregion
     }

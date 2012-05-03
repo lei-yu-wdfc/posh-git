@@ -14,6 +14,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Sections
         public String SecretAnswer { get; set; }
         public String PasswordErrorForm { get; set; }
         public String PasswordConfirmErrorForm { get; set; }
-        public String PasswordWarningMessage { get; set; }
+       
     }
 }
