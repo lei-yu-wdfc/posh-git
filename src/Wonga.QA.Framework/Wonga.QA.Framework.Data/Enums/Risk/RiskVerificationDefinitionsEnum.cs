@@ -25,5 +25,7 @@ namespace Wonga.QA.Framework.Data.Enums.Risk
         [Description("NumberOfDirectorsMatchesBusinessBureauDataVerification")] NumberOfDirectorsMatchesBusinessBureauDataVerification,
         [Description("GuarantorNamesMatchBusinessBureauDataVerification")] GuarantorNamesMatchBusinessBureauDataVerification,
         [Description("MobilePhoneIsUniqueVerification")] MobilePhoneIsUniqueVerification,
+		[Description("DoNotRelendVerification")] DoNotRelendVerification,
+		[Description("FraudBlacklistVerification")] FraudBlacklistVerification
     }
 }
