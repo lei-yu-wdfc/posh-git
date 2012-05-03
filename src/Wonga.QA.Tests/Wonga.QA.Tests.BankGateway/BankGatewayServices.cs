@@ -6,7 +6,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.BankGateway
 {
     [Parallelizable(TestScope.All)]
-    public class BankGatewayServiceTests
+    public class BankGatewayServices
     {
         [Test]
         public void BankGatewayServiceIsRunning()
@@ -23,6 +23,7 @@ namespace Wonga.QA.Tests.BankGateway
                     break;
                 case AUT.Ca:
                     Assert.IsTrue(Drive.Svc.Scotia.IsRunning());
+                    Assert.IsTrue(Drive.Svc.Bmo.IsRunning());
                     break;
                 case AUT.Wb:
                     break;

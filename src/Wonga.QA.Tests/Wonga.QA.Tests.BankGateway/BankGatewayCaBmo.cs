@@ -1,152 +1,110 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
+using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.BankGateway;
 using Wonga.QA.Framework.Mocks;
+using Wonga.QA.Tests.BankGateway.Enums;
+using Wonga.QA.Tests.BankGateway.Helpers;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.BankGateway
 {
-    [TestFixture, AUT(AUT.Ca)]
-    public class BankGatewayCaTests
+    [TestFixture, FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
+    public class BankGatewayCaBmo
     {
-        private const int TransactionStatusPending = 1;
-        private const int TransactionStatusInProgress = 3;
-	    private const int TransactionStatusSuccess = 4;
-        private const int TransactionStatusFailed = 5;
-        private const int BankIntegrationIdScotia = 1;
-        private const int BankIntegrationIdBmo = 2;
+        private readonly dynamic _bgTrans = Drive.Data.BankGateway.Db.Transactions;
+        private readonly dynamic _bgAckTypes = Drive.Data.BankGateway.Db.AcknowledgeTypes;
+        private readonly dynamic _bgAck = Drive.Data.BankGateway.Db.Acknowledges;
 
-        private static readonly Random Random = new Random(Environment.TickCount);
-
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
         public void SendPaymentMessageWithRealAccountShouldBeRoutedToBmo()
         {
             var customer = CustomerBuilder.New().
                                 WithInstitutionNumber("001").
                                 WithBranchNumber("00022").
-                                WithSurname("Wonga").WithForename("Canada Inc").
                                 Build();
             var application = ApplicationBuilder.New(customer).Build();
 
-            Do.Until(() => Drive.Db.BankGateway.Transactions.Single(
-                t => t.ApplicationId == application.Id &&
-                    t.BankIntegrationId == BankIntegrationIdBmo &&
-                    t.TransactionStatus == TransactionStatusSuccess));
+            Do.Until(() => _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
+                                    _bgTrans.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo &&
+                                    _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Paid).Single());
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
         public void SendPaymentMessageWithRealAccountShouldBeRoutedToBmoAndRejected()
         {
             var customer = CustomerBuilder.New().
                                 WithInstitutionNumber("001").
                                 WithBranchNumber("00022").
-                                WithSurname("Wonga").WithForename("Canada Inc").
                                 Build();
 
-            var setup = BmoResponseBuilder.New().
-                                ForBankAccountNumber(customer.BankAccountNumber).
-                                RejectTransaction();
+            BmoResponseBuilder.New().
+                ForBankAccountNumber(customer.BankAccountNumber).
+                RejectTransaction();
 
             var application = ApplicationBuilder.New(customer).Build();
 
-            Do.Until(() => Drive.Db.BankGateway.Transactions.Single(
-                t => t.ApplicationId == application.Id &&
-                    t.BankIntegrationId == BankIntegrationIdBmo &&
-                    t.TransactionStatus == TransactionStatusFailed));
+            Do.Until(() => _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
+                                    _bgTrans.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo &&
+                                    _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Failed).Single());
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
         public void SendPaymentMessageWithRealAccountShouldBeRoutedToBmoAndRejectedFile()
         {
+            //TODO: This will fail until the correct file formats are added... 
+
             var customer = CustomerBuilder.New().
                                 WithInstitutionNumber("001").
                                 WithBranchNumber("00022").
-                                WithSurname("Wonga").WithForename("Canada Inc").
                                 Build();
 
-            var setup = BmoResponseBuilder.New().
-                                ForBankAccountNumber(customer.BankAccountNumber).
-                                RejectFile();
+            BmoResponseBuilder.New().
+                ForBankAccountNumber(customer.BankAccountNumber).
+                RejectFile();
 
             var application = ApplicationBuilder.New(customer).Build();
 
-            Do.Until(() => Drive.Db.BankGateway.Transactions.Single(
-                t => t.ApplicationId == application.Id &&
-                    t.BankIntegrationId == BankIntegrationIdBmo &&
-                    t.TransactionStatus == TransactionStatusFailed));
+            Do.Until(() => _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
+                                    _bgTrans.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo &&
+                                    _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Failed).Single());
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
         public void SendPaymentMessageWithFakeAccountShouldBeRoutedToBmo()
         {
             var customer = CustomerBuilder.New().
                                 WithInstitutionNumber("001").
                                 WithBranchNumber("00022").
-                                WithSurname("Surname").WithForename("Forename").
                                 Build();
             var application = ApplicationBuilder.New(customer).Build();
 
             Framework.Db.BankGateway.TransactionEntity transaction = null;
 
-            var ackType = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == BankIntegrationIdBmo && a.Name == "DEFT220");
+            var ackType = _bgAckTypes.FindAll(_bgAckTypes.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo && _bgAckTypes.Name == "DEFT220").Single();
 
-            Do.Until(() => transaction = Drive.Db.BankGateway.Transactions.Single(t => t.ApplicationId == application.Id &&
-                t.TransactionStatus == TransactionStatusSuccess && t.BankIntegrationId == BankIntegrationIdBmo));
-            Do.Until(() => Drive.Db.BankGateway.Acknowledges.Single(t => t.TransactionID == transaction.TransactionId && t.AcknowledgeTypeID == ackType.AcknowledgeTypeId));
+            Do.Until(() => transaction = _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
+                         _bgTrans.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo &&
+                         _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Paid).Single());
+
+            Do.Until(() => _bgAck.FindAll(_bgAck.TransactionID == transaction.TransactionId && _bgAck.AcknowledgeTypeID == ackType.AcknowledgeTypeId).Single());
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
-        public void SendPaymentMessageShouldBeRoutedToScotia()
-        {
-            var customer = CustomerBuilder.New().
-                                WithInstitutionNumber("002").
-                                WithBranchNumber("00018").
-                                Build();
-            var application = ApplicationBuilder.New(customer).Build();
-
-            Do.Until(() => Drive.Db.BankGateway.Transactions.Single(
-                t => t.ApplicationId == application.Id &&
-                    t.BankIntegrationId == BankIntegrationIdScotia));
-        }
-
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
-        public void SendPaymentMessageShouldBeRoutedToScotiaAndRejected()
-        {
-            var customer = CustomerBuilder.New().
-                                WithInstitutionNumber("002").
-                                WithBranchNumber("00018").
-                                Build();
-
-            var setup = ScotiaResponseBuilder.New().
-                                ForBankAccountNumber(customer.BankAccountNumber).
-                                Reject();
-
-            var application = ApplicationBuilder.New(customer).Build();
-
-            Do.Until(() => Drive.Db.BankGateway.Transactions.Single(
-                t => t.ApplicationId == application.Id &&
-                    t.BankIntegrationId == BankIntegrationIdScotia &&
-                    t.TransactionStatus == TransactionStatusFailed));
-        }
-
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
         public void PositiveFileAcknowledgementShouldBePersisted()
         {
-            var ackType = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == 2 && a.Name == "DEFT200");
+            var ackType = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo && a.Name == "DEFT200");
 
             var previousAck = Drive.Db.BankGateway.Acknowledges.
                 Where(a => a.AcknowledgeTypeID == ackType.AcknowledgeTypeId).
                 OrderByDescending(a => a.AcknowledgeId).Take(1).SingleOrDefault();
 
             var previousAckId = previousAck != null ? previousAck.AcknowledgeId : -1;
-
-            SendPaymentMessageWithFakeAccountShouldBeRoutedToBmo();
 
             Do.Until(() =>
             {
@@ -160,19 +118,18 @@ namespace Wonga.QA.Tests.BankGateway
             });
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
         public void NegativeFileAcknowledgementShouldBePersistedAndAllTransactionsRejected()
         {
-            Guid applicationIdAccepted = Guid.Empty;
-            Guid applicationIdRejected = Guid.Empty;
+            Guid applicationIdAccepted;
+            Guid applicationIdRejected;
 
-            using (new BankGatewayBmoSendBatch())
+            using (new BmoBatchSending())
             {
                 // Rejected
                 var customer = CustomerBuilder.New().
                                     WithInstitutionNumber("001").
                                     WithBranchNumber("00022").
-                                    WithSurname("Wonga").WithForename("Canada Inc").
                                     Build();
                 var setup = BmoResponseBuilder.New().
                                     ForBankAccountNumber(customer.BankAccountNumber).
@@ -184,19 +141,18 @@ namespace Wonga.QA.Tests.BankGateway
                 customer = CustomerBuilder.New().
                     WithInstitutionNumber("001").
                     WithBranchNumber("00022").
-                    WithSurname("Surname").WithForename("Forename").
                     Build();
 
                 applicationIdAccepted = ApplicationBuilder.New(customer).Build().Id;
             }
 
-            var ackTypeSettled = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == BankIntegrationIdBmo && a.Name == "DEFT220");
-            var ackTypeRejected = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == BankIntegrationIdBmo && a.Name == "DEFT210-211-260");
+            var ackTypeSettled = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo && a.Name == "DEFT220");
+            var ackTypeRejected = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo && a.Name == "DEFT210-211-260");
 
             Framework.Db.BankGateway.TransactionEntity transaction = null;
 
             // Accepted: expect fail transaction, NO settlement ack, NO reject ack
-            Do.Until(() => transaction = Drive.Db.BankGateway.Transactions.Single(t => t.ApplicationId == applicationIdAccepted && t.BankIntegrationId == BankIntegrationIdBmo && t.TransactionStatus == TransactionStatusFailed));
+            Do.Until(() => transaction = Drive.Db.BankGateway.Transactions.Single(t => t.ApplicationId == applicationIdAccepted && t.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo && t.TransactionStatus == (int)BankGatewayTransactionStatus.Failed));
             Do.With.Timeout(TimeSpan.FromSeconds(2)).While(() => Drive.Db.BankGateway.Acknowledges.Single(t => t.TransactionID == transaction.TransactionId && t.AcknowledgeTypeID == ackTypeSettled.AcknowledgeTypeId));
             Do.With.Timeout(TimeSpan.FromSeconds(2)).While(() => Drive.Db.BankGateway.Acknowledges.Single(t => t.TransactionID == transaction.TransactionId && t.AcknowledgeTypeID == ackTypeRejected.AcknowledgeTypeId));
 
@@ -206,13 +162,12 @@ namespace Wonga.QA.Tests.BankGateway
             Do.With.Timeout(TimeSpan.FromSeconds(2)).While(() => Drive.Db.BankGateway.Acknowledges.Single(t => t.TransactionID == transaction.TransactionId && t.AcknowledgeTypeID == ackTypeRejected.AcknowledgeTypeId));
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
         public void SettlementInvalidCrossreferenceNumberShouldPersistAck()
         {
             var customer = CustomerBuilder.New().
                                 WithInstitutionNumber("001").
                                 WithBranchNumber("00022").
-                                WithSurname("Wonga").WithForename("Canada Inc").
                                 Build();
 
             var customResponseOverride = new XElement("SettlementReportDetail",
@@ -227,25 +182,24 @@ namespace Wonga.QA.Tests.BankGateway
             var ackType = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == 2 && a.Name == "DEFT220");
 
             var pendingTransaction = Do.Until(() => Drive.Db.BankGateway.Transactions.Single(
-                t => t.ApplicationId == applicationId && t.BankIntegrationId == BankIntegrationIdBmo && t.TransactionStatus == TransactionStatusInProgress));
+                t => t.ApplicationId == applicationId && t.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo && t.TransactionStatus == (int)BankGatewayTransactionStatus.InProgress));
 
             // Transaction should NOT go into success status - we corrupted the response with invalid data
             Do.With.Timeout(TimeSpan.FromSeconds(5)).While(() => Drive.Db.BankGateway.Transactions.Single(
-                t => t.ApplicationId == applicationId && t.BankIntegrationId == BankIntegrationIdBmo && t.TransactionStatus == TransactionStatusSuccess));
+                t => t.ApplicationId == applicationId && t.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo && t.TransactionStatus == (int)BankGatewayTransactionStatus.Paid));
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
         public void SettlementValidAndInvalidCrossreferenceNumberShouldProcessValid()
         {
             Guid applicationWithInvalidResponseFromBank;
             Guid applicationWithValidResponseFromBank;
 
-            using (new BankGatewayBmoSendBatch())
+            using (new BmoBatchSending())
             {
                 var customer = CustomerBuilder.New().
                     WithInstitutionNumber("001").
                     WithBranchNumber("00022").
-                    WithSurname("Wonga").WithForename("Canada Inc").
                     Build();
                 var customResponseOverride = new XElement("SettlementReportDetail",
                                                           new XElement("Segments", new XAttribute("SenderReference", "INVALID DATA")));
@@ -257,63 +211,60 @@ namespace Wonga.QA.Tests.BankGateway
                 customer = CustomerBuilder.New().
                     WithInstitutionNumber("001").
                     WithBranchNumber("00022").
-                    WithSurname("Surname").WithForename("Forename").
                     Build();
                 applicationWithValidResponseFromBank = ApplicationBuilder.New(customer).Build().Id;
             }
 
-            var ackType = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == BankIntegrationIdBmo && a.Name == "DEFT220");
+            var ackType = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo && a.Name == "DEFT220");
             Framework.Db.BankGateway.TransactionEntity transaction = null;
 
             Do.Until(() => transaction = Drive.Db.BankGateway.Transactions.Single(t => t.ApplicationId == applicationWithValidResponseFromBank &&
-                t.BankIntegrationId == BankIntegrationIdBmo && t.TransactionStatus == TransactionStatusSuccess));
+                t.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo && t.TransactionStatus == (int)BankGatewayTransactionStatus.Paid));
             Do.Until(() => Drive.Db.BankGateway.Acknowledges.Single(t => t.TransactionID == transaction.TransactionId && t.AcknowledgeTypeID == ackType.AcknowledgeTypeId));
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
         public void SettlementSendPaymentsInOneBatchShouldUpdateTransactionStatusAndPersistAck()
         {
             var applicationIds = new List<Guid>();
 
-            using (new BankGatewayBmoSendBatch())
+            using (new BmoBatchSending())
             {
                 for (int i = 0; i < 3; i++)
                 {
                     var customer = CustomerBuilder.New().
                         WithInstitutionNumber("001").
                         WithBranchNumber("00022").
-                        WithSurname("Surname").WithForename("Forename").
                         Build();
 
                     applicationIds.Add(ApplicationBuilder.New(customer).Build().Id);
                 }
             }
 
-            var ackType = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == BankIntegrationIdBmo && a.Name == "DEFT220");
+            var ackType = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo && a.Name == "DEFT220");
 
             foreach (var applicationId in applicationIds)
             {
                 Framework.Db.BankGateway.TransactionEntity transaction = null;
 
                 Do.Until(() => transaction = Drive.Db.BankGateway.Transactions.Single(t => t.ApplicationId == applicationId &&
-                    t.BankIntegrationId == BankIntegrationIdBmo && t.TransactionStatus == TransactionStatusSuccess));
+                    t.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo && t.TransactionStatus == (int)BankGatewayTransactionStatus.Paid));
                 Do.Until(() => Drive.Db.BankGateway.Acknowledges.Single(t => t.TransactionID == transaction.TransactionId && t.AcknowledgeTypeID == ackType.AcknowledgeTypeId));
             }
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
         public void SettlementSendPaymentsAcceptedAndRejectedInOneBatchShouldUpdateTransactionStatusAndPersistAck()
         {
-            Guid applicationIdAccepted = Guid.Empty;
-            Guid applicationIdRejected = Guid.Empty;
+            Guid applicationIdAccepted;
+            Guid applicationIdRejected;
 
-            using (new BankGatewayBmoSendBatch())
+            using (new BmoBatchSending())
             {
                 // Rejected
                 var customer = CustomerBuilder.New().
                                     WithInstitutionNumber("001").
                                     WithBranchNumber("00022").
-                                    WithSurname("Wonga").WithForename("Canada Inc").
                                     Build();
                 var setup = BmoResponseBuilder.New().
                                     ForBankAccountNumber(customer.BankAccountNumber).
@@ -325,7 +276,6 @@ namespace Wonga.QA.Tests.BankGateway
                 customer = CustomerBuilder.New().
                     WithInstitutionNumber("001").
                     WithBranchNumber("00022").
-                    WithSurname("Surname").WithForename("Forename").
                     Build();
 
                 applicationIdAccepted = ApplicationBuilder.New(customer).Build().Id;
@@ -338,23 +288,23 @@ namespace Wonga.QA.Tests.BankGateway
 
             // Accepted: expect successful transaction, settlement ack, NO reject ack
             Do.Until(() => transaction = Drive.Db.BankGateway.Transactions.Single(t => t.ApplicationId == applicationIdAccepted &&
-                t.BankIntegrationId == BankIntegrationIdBmo && t.TransactionStatus == TransactionStatusSuccess));
+                t.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo && t.TransactionStatus == (int)BankGatewayTransactionStatus.Paid));
             Do.Until(() => Drive.Db.BankGateway.Acknowledges.Single(t => t.TransactionID == transaction.TransactionId && t.AcknowledgeTypeID == ackTypeSettled.AcknowledgeTypeId));
             Do.With.Timeout(TimeSpan.FromSeconds(2)).While(() => Drive.Db.BankGateway.Acknowledges.Single(t => t.TransactionID == transaction.TransactionId && t.AcknowledgeTypeID == ackTypeRejected.AcknowledgeTypeId));
 
             // Rejected: expect failed transaction, NO settlement ack, reject ack
-            Do.Until(() => transaction = Drive.Db.BankGateway.Transactions.Single(t => t.ApplicationId == applicationIdRejected && t.BankIntegrationId == BankIntegrationIdBmo && t.TransactionStatus == TransactionStatusFailed));
+            Do.Until(() => transaction = Drive.Db.BankGateway.Transactions.Single(t => t.ApplicationId == applicationIdRejected && t.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo && t.TransactionStatus == (int)BankGatewayTransactionStatus.Failed));
             Do.Until(() => Drive.Db.BankGateway.Acknowledges.Single(t => t.TransactionID == transaction.TransactionId && t.AcknowledgeTypeID == ackTypeRejected.AcknowledgeTypeId));
             Do.With.Timeout(TimeSpan.FromSeconds(2)).While(() => Drive.Db.BankGateway.Acknowledges.Single(t => t.TransactionID == transaction.TransactionId && t.AcknowledgeTypeID == ackTypeSettled.AcknowledgeTypeId));
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
         public void RejectedValidAndInvalidCrossreferenceNumberShouldProcessValid()
-		{
+        {
             Guid applicationWithInvalidResponseFromBank;
             Guid applicationWithValidResponseFromBank;
 
-            using (new BankGatewayBmoSendBatch())
+            using (new BmoBatchSending())
             {
                 // Rejected transaction with invalid crossreference number
                 var customer = CustomerBuilder.New().
@@ -385,14 +335,14 @@ namespace Wonga.QA.Tests.BankGateway
                 applicationWithValidResponseFromBank = ApplicationBuilder.New(customer).Build().Id;
             }
 
-            var ackType = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == BankIntegrationIdBmo && a.Name == "DEFT210-211-260");
+            var ackType = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo && a.Name == "DEFT210-211-260");
             Framework.Db.BankGateway.TransactionEntity transaction = null;
 
-            Do.Until(() => transaction = Drive.Db.BankGateway.Transactions.Single(t => t.ApplicationId == applicationWithValidResponseFromBank && t.BankIntegrationId == BankIntegrationIdBmo && t.TransactionStatus == TransactionStatusFailed));
+            Do.Until(() => transaction = Drive.Db.BankGateway.Transactions.Single(t => t.ApplicationId == applicationWithValidResponseFromBank && t.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo && t.TransactionStatus == (int)BankGatewayTransactionStatus.Failed));
             Do.Until(() => Drive.Db.BankGateway.Acknowledges.Single(t => t.TransactionID == transaction.TransactionId && t.AcknowledgeTypeID == ackType.AcknowledgeTypeId));
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
         public void RejectedInvalidCrossreferenceNumberShouldPersistAck()
         {
             var customer = CustomerBuilder.New().
@@ -417,43 +367,39 @@ namespace Wonga.QA.Tests.BankGateway
             var ackType = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == 2 && a.Name == "DEFT210-211-260");
 
             var pendingTransaction = Do.Until(() => Drive.Db.BankGateway.Transactions.Single(
-                t => t.ApplicationId == applicationId && t.BankIntegrationId == BankIntegrationIdBmo && t.TransactionStatus == TransactionStatusInProgress));
+                t => t.ApplicationId == applicationId && t.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo && t.TransactionStatus == (int)BankGatewayTransactionStatus.InProgress));
 
             // Transaction should NOT go into success status - we corrupted the response with invalid data
             Do.With.Timeout(TimeSpan.FromSeconds(5)).While(() => Drive.Db.BankGateway.Transactions.Single(
-                t => t.ApplicationId == applicationId && t.BankIntegrationId == BankIntegrationIdBmo && t.TransactionStatus == TransactionStatusSuccess));
-		}
+                t => t.ApplicationId == applicationId && t.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo && t.TransactionStatus == (int)BankGatewayTransactionStatus.Paid));
+        }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(Constants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
         public void ShouldSendBatchAndProcessToTransactions()
         {
             var applicationIds = new List<Guid>();
 
-            using (new BankGatewayBmoSendBatch())
+            using (new BmoBatchSending())
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    var bankAccountNumber = Random.Next(1000000, 9999999);
-
                     var customer = CustomerBuilder.New().
                         WithInstitutionNumber("001").
                         WithBranchNumber("00022").
-                        WithBankAccountNumber(bankAccountNumber).
-                        WithSurname("Surname").WithForename("Forename").
                         Build();
 
                     applicationIds.Add(ApplicationBuilder.New(customer).Build().Id);
                 }
 
-                List<TransactionEntity> transactions = new List<TransactionEntity>();
+                var transactions = new List<TransactionEntity>();
 
                 foreach (var applicationId in applicationIds)
                 {
                     TransactionEntity transaction = null;
                     Do.Until(() => transaction = Drive.Db.BankGateway.Transactions.Single(
                                 t => t.ApplicationId == applicationId &&
-                                     t.BankIntegrationId == BankIntegrationIdBmo &&
-                                     t.TransactionStatus == TransactionStatusPending));
+                                     t.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo &&
+                                     t.TransactionStatus == (int)BankGatewayTransactionStatus.New));
 
                     if (transaction != null)
                     {
@@ -464,7 +410,7 @@ namespace Wonga.QA.Tests.BankGateway
                 Assert.AreEqual(applicationIds.Count, transactions.Count);
             }
 
-            var ackType = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == BankIntegrationIdBmo && a.Name == "DEFT220");
+            var ackType = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo && a.Name == "DEFT220");
 
             foreach (var applicationId in applicationIds)
             {
@@ -472,9 +418,50 @@ namespace Wonga.QA.Tests.BankGateway
 
                 Do.Until(() => transaction = Drive.Db.BankGateway.Transactions.Single(
                             t => t.ApplicationId == applicationId &&
-                                 t.BankIntegrationId == BankIntegrationIdBmo &&
-                                 t.TransactionStatus == TransactionStatusSuccess));
+                                 t.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo &&
+                                 t.TransactionStatus == (int)BankGatewayTransactionStatus.Paid));
             }
+        }
+
+        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
+        public void WhenLoanGoesToBmoThenItShouldRecieveSettlementReport200ToIndicateASuccessfulCashOut()
+        {
+            const int loanTerm = 15;
+            const decimal loanAmount = 100;
+
+            var customer = CustomerBuilder.New().
+                                WithInstitutionNumber("001").
+                                WithBranchNumber("00022").
+                                ForProvince(ProvinceEnum.ON).
+                                Build();
+
+            var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
+
+            TransactionEntity transaction = WaitBankGatewayFunctions.WaitForStatusOfTransaction(application.Id);
+
+            WaitBankGatewayFunctions.WaitForAckForTransaction(transaction);
+        }
+
+        [Test, AUT(AUT.Ca), JIRA("CA-1965"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
+        public void RejectedSendPaymentShouldUpdateTransactionStatusAndPersistAck()
+        {
+            var customer = CustomerBuilder.New().
+                    WithInstitutionNumber("001").
+                    WithBranchNumber("00022").
+                    Build();
+
+            var setup = BmoResponseBuilder.New().
+                    ForBankAccountNumber(customer.BankAccountNumber).
+                    RejectTransaction();
+
+            var application = ApplicationBuilder.New(customer).Build();
+
+            Framework.Db.BankGateway.TransactionEntity transaction = null;
+
+            var ackType = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo && a.Name == "DEFT210-211-260");
+
+            Do.Until(() => transaction = Drive.Db.BankGateway.Transactions.Single(t => t.ApplicationId == application.Id && t.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo && t.TransactionStatus == (int)BankGatewayTransactionStatus.Failed));
+            Do.Until(() => Drive.Db.BankGateway.Acknowledges.Single(t => t.TransactionID == transaction.TransactionId && t.AcknowledgeTypeID == ackType.AcknowledgeTypeId));
         }
     }
 }

@@ -83,8 +83,8 @@ namespace Wonga.QA.Framework
             _paymentCardSecurityCode = "777";
             _paymentCardType = "Visa";
             _mobileNumber = Get.GetMobilePhone();
-            _institutionNumber = "001";
-            _branchNumber = "00011";
+            _institutionNumber = "002";
+            _branchNumber = "00018";
             _bankAccountNumber = Get.GetBankAccountNumber();
 
             if (Config.AUT == AUT.Wb || Config.AUT == AUT.Uk)

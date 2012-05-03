@@ -6,12 +6,12 @@ using Wonga.QA.Framework.Msmq;
 
 namespace Wonga.QA.Tests.BankGateway
 {
-	public class BankGatewayBmoSendBatch : IDisposable
+	public class BmoBatchSending : IDisposable
 	{
         private readonly string _configKey = "BankGateway.Bmo.FileTransferTimes";
 		private readonly string _originalSchedule;
 
-		public BankGatewayBmoSendBatch()
+		public BmoBatchSending()
 		{
 			// Pause Cash-out schedule
 			var driver = Drive.Db.Ops;
