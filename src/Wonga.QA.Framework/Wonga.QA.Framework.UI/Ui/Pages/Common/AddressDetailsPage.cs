@@ -127,6 +127,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             }
         }
 
+        public AddressDetailsPage NextClick()
+        {
+            _next.Click();
+            return new AddressDetailsPage(Client);
+        }
+
         public BasePage NextAddressLessThan2()
         {
             _next.Click();

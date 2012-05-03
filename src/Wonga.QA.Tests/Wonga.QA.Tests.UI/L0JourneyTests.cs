@@ -1193,7 +1193,7 @@ namespace Wonga.QA.Tests.Ui
             }
             catch (Exception e)
             {
-                Assert.IsTrue(e.Message.Contains("Sorry, your password cannot match your username"));
+                Assert.IsTrue(e.Message.Contains(Content.Get.PasswordWarningMessage));
                 IWebElement section = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.Fieldset));
                 IWebElement password = section.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.Password));
                 IWebElement passwordConfirm = section.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.PasswordConfirm));
@@ -1211,7 +1211,53 @@ namespace Wonga.QA.Tests.Ui
                 }
                 catch (Exception ex)
                 {
-                    Assert.IsTrue(ex.Message.Contains("We are sorry, but there has been an error in your application. Please try again. (101 - amount)"));
+                    Assert.IsTrue(ex.Message.Contains(Content.Get.ApplicationErrorMessage));
+                }
+            }
+        }
+
+        [Test, AUT(AUT.Za), Category(TestCategories.Smoke), JIRA("QA-277")]
+        public void L0JourneyInvalidPostcodeShouldCauseWarningMessageValidPostcodeShouldDimissWarning()
+        {
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var addressPage = journey.ApplyForLoan(200, 10)
+                                      .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                      .CurrentPage as AddressDetailsPage;
+            addressPage.PostCode = "12.5";
+            addressPage.HouseNumber = "25";
+            addressPage.Street = "high road";
+            addressPage.Town = "Kuku";
+            addressPage.County = "Province";
+            addressPage.AddressPeriod = "2 to 3 years";
+            try
+            {
+                addressPage = addressPage.NextClick();
+            }
+            catch (Exception e)
+            {
+                Assert.IsTrue(e.Message.Contains(Content.Get.ProblemProcessingDetailsMessage));
+                IWebElement form = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.FormId));
+                IWebElement postCode = form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.Postcode));
+                IWebElement houseNumber = form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.HouseNumber));
+                IWebElement addressPeriod = form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.AddressPeriod));
+                IWebElement next = form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.NextButton));
+                IWebElement county = form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.County));
+                IWebElement street = form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.Street));
+                IWebElement town = form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.Town));
+                postCode.SendValue("1234");
+                houseNumber.SendValue("25");
+                street.SendValue("high road");
+                town.SendValue("Kuku");
+                county.SendValue("Province");
+                addressPeriod.SelectOption("2 to 3 years");
+                next.Click();
+                try
+                {
+                    var page = new HomePage(Client);
+                }
+                catch (Exception ex)
+                {
+                    Assert.IsTrue(ex.Message.Contains(Content.Get.ApplicationErrorMessage));
                 }
             }
         }
