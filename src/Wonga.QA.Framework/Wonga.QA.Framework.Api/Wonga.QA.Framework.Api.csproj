@@ -209,6 +209,8 @@
     <Compile Include="Requests\SignBusinessApplicationWbUkCommand.cs" />
     <Compile Include="Requests\SignFixedTermLoanExtensionCommand.cs" />
     <Compile Include="Requests\SignFixedTermLoanTopupCommand.cs" />
+	<Compile Include="Requests\SignupCustomerForStandardCardCommand.cs" />
+	<Compile Include="Requests\SignupCustomerForPremiumCardCommand.cs" />
     <Compile Include="Requests\SubmitApplicationBehaviourCommand.cs" />
     <Compile Include="Requests\SubmitClientWatermarkCommand.cs" />
     <Compile Include="Requests\SubmitCounterOfferCommand.cs" />

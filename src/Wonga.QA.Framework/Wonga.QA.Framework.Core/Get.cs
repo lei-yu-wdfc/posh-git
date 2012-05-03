@@ -53,6 +53,13 @@ namespace Wonga.QA.Framework.Core
                 Guid.NewGuid());
         }
 
+        public static String GetEmailLessFiftyChars()
+        {
+            return String.Format(
+                "qa.uk{0}@uk.com",
+                Guid.NewGuid());
+        }
+
         public static String GetEmailWithoutPlusChar()
         {
             return String.Format("qa.wonga.com{0}{1}@gmail.com", EmailSafeMachineName, Guid.NewGuid());
