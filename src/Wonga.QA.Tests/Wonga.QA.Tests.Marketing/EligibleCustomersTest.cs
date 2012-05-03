@@ -20,9 +20,9 @@ namespace Wonga.QA.Tests.Marketing
         private Customer _nonEligibleCustomer = null;
         private Customer _nonEligibleCustomerInArrears = null;
 
-        private static readonly String ELIGIBLE_RESPONSE_KEY = "IsEligible";
-        private static readonly String ELIGIBLE_CUSTOMER_RESPONSE = "true";
-        private static readonly String NON_ELIGIBLE_CUSTOMER_RESPONSE = "false";
+        //private static readonly String ELIGIBLE_RESPONSE_KEY = "IsEligible";
+        //private static readonly String ELIGIBLE_CUSTOMER_RESPONSE = "true";
+        //private static readonly String NON_ELIGIBLE_CUSTOMER_RESPONSE = "false";
 
         [SetUp]
         public void Init()
