@@ -6,7 +6,7 @@ using Microsoft.Win32;
 
 namespace Wonga.QA.Framework.Core
 {
-    public enum AUT { Uk, Za, Ca, Wb }
+    public enum AUT { Uk, Za, Ca, Wb, Pl }
     public enum SUT { Dev, WIP, UAT, RC, WIPRelease, RCRelease }
 
     public static class Config
