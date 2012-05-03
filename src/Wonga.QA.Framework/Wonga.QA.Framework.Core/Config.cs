@@ -306,7 +306,8 @@ namespace Wonga.QA.Framework.Core
             public String BankGateway { get; set; }
             public String BankGatewayBmo { get; set; }
             public String BankGatewayScotia { get; set; }
-            public String BottomLine { get; set; }
+			public String BankGatewayRbc { get; set; }
+			public String BottomLine { get; set; }
             public String Hsbc { get; set; }
             public String Hyphen { get; set; }
             public String Scotia { get; set; }
@@ -346,7 +347,8 @@ namespace Wonga.QA.Framework.Core
 
                 BankGateway = String.Format(format, component, "bankgatewaytc");
                 BankGatewayBmo = String.Format(format, component, "bankgatewaybmotc");
-                BankGatewayScotia = String.Format(format, component, "bankgatewayscotiatc");
+				BankGatewayRbc = String.Format(format, component, "bankgatewayrbctc");
+				BankGatewayScotia = String.Format(format, component, "bankgatewayscotiatc");
                 Blacklist = String.Format(format, component, "blacklistcomponent");
                 BottomLine = String.Format(format, component, "bankgatewaybottomlinetc");
                 CallReport = String.Format(format, component, "callreportcomponent");
