@@ -1263,7 +1263,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
         [Test, AUT(AUT.Za), Category(TestCategories.Smoke), JIRA("QA-276")]
-        public void customerUsesExistingIdNumberShouldBeAbleToProceed()
+        public void CustomerUsesExistingIdNumberShouldBeAbleToProceed()
         {
             var customer = Do.Until(() => Drive.Data.Comms.Db.CustomerDetails.FindAllByGender(2).FirstOrDefault());
             Console.WriteLine(customer.NationalNumber.ToString() + "  /  " + customer.DateOfBirth.ToString().Replace(" 00:00:00", ""));
