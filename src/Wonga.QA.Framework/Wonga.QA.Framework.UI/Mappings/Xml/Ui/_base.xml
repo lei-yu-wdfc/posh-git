@@ -393,5 +393,9 @@
     <AmountMinusButton>#wonga-single-slider-wrapper button.slider-minus</AmountMinusButton>
     <AmountPlusButton>#wonga-single-slider-wrapper button.slider-plus</AmountPlusButton>
   </SmallRepaySlidersElement>
+
+  <TabsElementMobile>
+    <TabsForm>#navigation #scroller .links</TabsForm>
+  </TabsElementMobile>
   
 </UiMap>

@@ -452,7 +452,8 @@ namespace Wonga.QA.Framework.Core
                 Firefox,
                 Safari,
                 Chrome,
-                Opera
+                Opera,
+                FirefoxMobile
             }
 
             public string Url { get { return Home.AbsoluteUri; } }
