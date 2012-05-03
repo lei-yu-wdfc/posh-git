@@ -223,6 +223,7 @@ namespace Wonga.QA.Framework.Core
             public KeyValuePair<String, String> Accounting { get; set; }
             public KeyValuePair<String, String> BankGateway { get; set; }
             public KeyValuePair<String, String> Blacklist { get; set; }
+            public KeyValuePair<String, String> Bmo { get; set; }
             public KeyValuePair<String, String> BottomLine { get; set; }
             public KeyValuePair<String, String> CallReport { get; set; }
             public KeyValuePair<String, String> CallValidate { get; set; }
@@ -263,6 +264,7 @@ namespace Wonga.QA.Framework.Core
 
                 BankGateway = new KeyValuePair<String, String>("Wonga.BankGateway.Handlers", component);
                 Blacklist = new KeyValuePair<String, String>("Wonga.BlackList.Handlers", component);
+                Bmo = new KeyValuePair<String, String>("Wonga.BankGateway.Bmo.Handlers", component);
                 BottomLine = new KeyValuePair<String, String>("Wonga.BankGateway.Bottomline.Handlers", component);
                 CallReport = new KeyValuePair<String, String>("Wonga.CallReport.Handlers", component);
                 CallValidate = new KeyValuePair<String, String>("Wonga.CallValidate.Handlers", component);
