@@ -57,6 +57,7 @@
     <Compile Include="Requests\CsRepayWithPaymentCardCommand.cs" />
     <Compile Include="Requests\DeletePersonalPaymentCardCommand.cs" />
     <Compile Include="Requests\FlagApplicationToDcaCommand.cs" />
+    <Compile Include="Requests\GenerateRepaymentNumberCommand.cs" />
     <Compile Include="Requests\GetBusinessApplicationSummaryWbUkQuery.cs" />
     <Compile Include="Requests\GetCustomerInformationQuery.cs" />
     <Compile Include="Requests\GetDirectDebitFormZaQuery.cs" />
