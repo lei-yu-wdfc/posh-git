@@ -260,12 +260,12 @@ namespace Wonga.QA.Tests.Payments
 						var month = selfReportedPayDay > now.Day ? now.Month : now.Month + 1;
 						var validPayDay = Drive.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, month,  selfReportedPayDay))).DateTime.Day;
 
-						paymentRequestDate = Drive.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, month, validPayDay)));
+						paymentRequestDate = Drive.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, month, validPayDay - 1)));
 					}
 					break;
 				default:
 					{
-						paymentRequestDate = Drive.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, now.Month, GetDefaultPayDaysOfMonth()[now.Month - 1])));
+						paymentRequestDate = new Date(new DateTime(now.Year, now.Month, GetDefaultPayDaysOfMonth()[now.Month - 1]));
 					}
 					break;
 			}
@@ -283,7 +283,7 @@ namespace Wonga.QA.Tests.Payments
 			int trackingDays = 0;
 
 			if (dateTrackingBegins.Day > TrackingDayThreshold)
-				trackingDays = (DateTime.DaysInMonth(dateTrackingBegins.Year, dateTrackingBegins.Month)) - dateTrackingBegins.Day + 1;
+				trackingDays = (DateTime.DaysInMonth(dateTrackingBegins.Year, dateTrackingBegins.Month)) - dateTrackingBegins.Day + 3; //3 = actionDate + til 2nd of month 
 
 			else
 				trackingDays = 3;

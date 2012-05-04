@@ -18,6 +18,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		private const RiskMask TestMask = RiskMask.TESTRepaymentPredictionPositive;
 
 		private Customer customerLn;
+		private Application applicationL0;
 		private Application applicationLn;
 
 		private string _forename;
@@ -29,7 +30,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 		private string _expectedScorecardNameL0;
 		private string _expectedScorecardNameLn;
-		private const string ScorecardNameL0Za = "ZARiskScorecard_v_1_2_L0";
+		private const string ScorecardNameL0Za = "ZARiskScorecard_v_1_4_L0";
 		private const string ScorecardNameLnZa = "ZARiskScorecard_v_1_2_LN";
 
 		#endregion
@@ -104,6 +105,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Assert.GreaterThan(repaymentPredictionScore, ScoreCutoffNewUsers);
 
 			customerLn = customer;
+			applicationL0 = application;
 		}
 
 		[Test, AUT(AUT.Za)]
@@ -114,6 +116,13 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 			var repaymentPredictionScore = GetRepaymentPredictionScore(application);
 			Assert.LessThan(repaymentPredictionScore, ScoreCutoffNewUsers);
+		}
+
+		[Test, AUT(AUT.Za), DependsOn("CheckpointRepaymentPredictionPositiveL0Accept")]
+		public void CheckpointRepaymentPredicitionPositiveFactorsUsedAreCorrectL0()
+		{
+			var factorNames = GetFactors(applicationL0);
+			Assert.AreElementsEqualIgnoringOrder(_expectedFactorNamesL0, factorNames);
 		}
 
 		[Test, AUT(AUT.Za), DependsOn("CheckpointRepaymentPredictionPositiveL0Accept")]
