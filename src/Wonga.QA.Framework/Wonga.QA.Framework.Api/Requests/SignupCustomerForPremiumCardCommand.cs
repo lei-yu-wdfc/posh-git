@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace Wonga.QA.Framework.Api.Requests
+namespace Wonga.QA.Framework.Api
 {
     [XmlRoot("SignupCustomerForPremiumCardCommand")]
     public partial class SignupCustomerForPremiumCardCommand : ApiRequest<SignupCustomerForPremiumCardCommand>

@@ -15,6 +15,12 @@ namespace Wonga.QA.Tests.Prepaid
         private Customer _nonEligibleCustomerInArrears = null;
         private Customer _customerWithWromgEmail = null;
 
+        private SignupCustomerForStandardCardCommand _validRequest = null;
+        private SignupCustomerForStandardCardCommand _requestWithInvalidCustomerId = null;
+        private SignupCustomerForStandardCardCommand _requestWithCustomerInArrears = null;
+        private SignupCustomerForStandardCardCommand _requestWithInvalidCustomerEmail = null;
+
+
         private static readonly dynamic _prepaidCardDb = Drive.Data.PrepaidCard.Db;
 
         [SetUp]
@@ -25,50 +31,55 @@ namespace Wonga.QA.Tests.Prepaid
             _nonEligibleCustomerInArrears = CustomerBuilder.New().WithEmailAddress(Get.GetEmail(50)).Build();
             _customerWithWromgEmail = CustomerBuilder.New().Build();
 
-            Console.WriteLine(_eligibleCustomer.GetEmail().Length);
-            Console.WriteLine(_eligibleCustomer.GetEmail());
-
             CustomerOperations.CreateMarketingEligibility(_eligibleCustomer.Id, true);
             CustomerOperations.CreateMarketingEligibility(_nonEligibleCustomerInArrears.Id, false);
             CustomerOperations.CreateMarketingEligibility(_customerWithWromgEmail.Id, true);
+
+            _validRequest = new SignupCustomerForStandardCardCommand();
+            _validRequest.CustomerExternalId = _eligibleCustomer.Id;
+
+            _requestWithInvalidCustomerId = new SignupCustomerForStandardCardCommand();
+            _requestWithInvalidCustomerId.CustomerExternalId = _nonEligibleCustomer.Id;
+            
+            _requestWithCustomerInArrears = new SignupCustomerForStandardCardCommand();
+            _requestWithCustomerInArrears.CustomerExternalId = _nonEligibleCustomerInArrears.Id;
+
+            _requestWithInvalidCustomerEmail = new SignupCustomerForStandardCardCommand();
+            _requestWithInvalidCustomerEmail.CustomerExternalId = _customerWithWromgEmail.Id;
         }
 
         [Test, AUT(AUT.Uk), JIRA("PP-8")]
-        public void CustomerShouldapplyForPrepaidCard()
+        public void CustomerShouldApplyForPrepaidCard()
         {
 
-            Drive.Api.Commands.Post(new SignupCustomerForStandardCardCommand
-            {
-                CustomerExternalId = _eligibleCustomer.Id
-            });
+            ExecuteAPICommand(_validRequest,false);
+            ExecuteAPICommand(_requestWithInvalidCustomerId,true);
+            ExecuteAPICommand(_requestWithCustomerInArrears,true);
+            ExecuteAPICommand(_requestWithInvalidCustomerEmail,false);
 
-            CheckOnAddingRecords(_eligibleCustomer.Id);
-
-
-            Assert.Throws<ValidatorException>(() => Drive.Api.Commands.Post(new SignupCustomerForStandardCardCommand
-            {
-                CustomerExternalId = _nonEligibleCustomer.Id,
-            }));
-
-            Assert.Throws<ValidatorException>(() => Drive.Api.Commands.Post(new SignupCustomerForStandardCardCommand
-            {
-                CustomerExternalId = _nonEligibleCustomerInArrears.Id
-            }));
-
-            Drive.Api.Commands.Post(new SignupCustomerForStandardCardCommand
-            {
-                CustomerExternalId = _customerWithWromgEmail.Id
-            });
-
-            Assert.Throws<Exception>(() => CheckOnAddingRecords(_customerWithWromgEmail.Id));
+            CheckOnAddingRecordsToPrepaidCard(_eligibleCustomer.Id);
+            Assert.Throws<Exception>(() => CheckOnAddingRecordsToPrepaidCard(_customerWithWromgEmail.Id));
+   
         }
 
-
-
-        private void CheckOnAddingRecords(Guid customerId)
+        private void CheckOnAddingRecordsToPrepaidCard(Guid customerId)
         {
             var cardHolderId = Do.Until(() => _prepaidCardDb.CardHolderDetails.FindByCustomerExternalId(CustomerExternalId: customerId));
-            Do.Until(() => _prepaidCardDb.CardDetails.FindByCardHolderExternalId(CardHolderExternalId: cardHolderId.ExternalId));
+            var cardDetails = Do.Until(() => _prepaidCardDb.CardDetails.FindByCardHolderExternalId(CardHolderExternalId: cardHolderId.ExternalId));
         }
+
+        private void ExecuteAPICommand(ApiRequest request,bool isThrowException)
+        {
+            if(isThrowException.Equals(true))
+            {
+                Assert.Throws<Exception>(() => Drive.Api.Commands.Post(request));   
+            }
+            else
+            {
+                Drive.Api.Commands.Post(request);
+            }
+        }
+
+
     }
 }
