@@ -30,7 +30,7 @@ namespace Wonga.QA.Tests.Comms
                  .WithStreetInAddress("MyStreet")
                  .WithTownInAddress("MyTown").Build();
 
-            var addressEntity = Drive.Db.Comms.Addresses.Single(a => a.AccountId == customer.Id);
+            var addressEntity = Do.With.Timeout(2).Until(() => Drive.Db.Comms.Addresses.Single(a => a.AccountId == customer.Id));
             Assert.AreEqual(addressEntity.Street, "MyStreet","These values should be equal");
             Assert.AreEqual(addressEntity.County, "MyCounty", "These values should be equal");
             Assert.AreEqual(addressEntity.District, "MyDistrict", "These values should be equal");
@@ -102,7 +102,7 @@ namespace Wonga.QA.Tests.Comms
                  .WithStreetInAddress("MyStreet")
                  .WithTownInAddress("MyTown").Build();
 
-            var addressEntity = Drive.Db.Comms.Addresses.Single(a => a.AccountId == customer.Id);
+            var addressEntity = Do.With.Timeout(2).Until(() =>( Drive.Db.Comms.Addresses.Single(a => a.AccountId == customer.Id)));
             var query = new GetCurrentAddressQuery { AccountId = addressEntity.AccountId };
             var response = Drive.Api.Queries.Post(query);
             var specificFlatName = response.Values["Flat"].Single();

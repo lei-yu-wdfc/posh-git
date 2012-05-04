@@ -181,7 +181,7 @@ namespace Wonga.QA.Tests.Payments
         }
 
         [Test, JIRA("SME-808")]
-        public void BalanceShouldBeZeroAfterAllCollectionAttemptsAreSuccessfullWithOneFailedIntermediateCollection()
+        public void BalanceShouldBeZeroAfterAllCollectionAttemptsAreSuccessfulWithOneFailedIntermediateCollection()
         {
             var paymentPlan = _applicationInfo.GetPaymentPlan();
             var accountId = Do.Until(() => Drive.Db.Payments.AccountsApplications.Single(a => a.ApplicationEntity.ExternalId == _applicationInfo.Id).AccountId);

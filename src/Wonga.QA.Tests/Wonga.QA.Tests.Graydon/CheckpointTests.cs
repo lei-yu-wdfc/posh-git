@@ -41,6 +41,10 @@ namespace Wonga.QA.Tests.Graydon
                                                                      RiskVerificationDefinitions.MainApplicantMatchesBusinessBureauDataVerification);
         }
 
+       
+
+
+
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-935"), Description("Graydon -> This test creates a loan and checks the main director for the negative case - DOB is incorrect")]
         public void TestGraydonDirectorDoesNotMatchApplicantDob_LoanIsDeclined()
@@ -522,6 +526,29 @@ namespace Wonga.QA.Tests.Graydon
         #region Guarantors names match business bureau data 
 
         [Test, AUT(AUT.Wb)]
+        [JIRA("SME-1414"), Description("Graydon -> This test creates a loan and checks the main director")]
+        public void TestGraydonGuarantorNamesMatchesBusinessBureauData_WithNoGuarantors_LoanIsAccepted()
+        {
+            /*This consts need to be externalized. I know how to do it but dont have the time.
+             * All your base are belong to us*/
+            const String goodCompanyRegNumber = "00000086";
+            const String forename = "JOHN";
+            const String surname = "WILKINS";
+            var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
+
+            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTGuarantorNamesMatchBusinessBureauData);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
+
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
+            var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
+
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(businessRiskWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.GuarantorNamesMatchBusinessBureauData,
+                                                                     RiskCheckpointStatus.Verified,
+                                                                     RiskVerificationDefinitions.GuarantorNamesMatchBusinessBureauDataVerification);
+        }
+
+        [Test, AUT(AUT.Wb)]
         [JIRA("SME-936"), Description("Graydon -> This test creates a loan and checks the personal details of the guarantors ")]
         public void TestGraydonGuarantorsNamesMatchDirectorsName_LoanIsAccepted()
         {
@@ -656,6 +683,12 @@ namespace Wonga.QA.Tests.Graydon
             if (guarantors!=null)
             {
                 applicationBuilder.WithGuarantors(guarantors);
+
+                foreach (var customerBuilder in guarantors)
+                {
+                    customerBuilder.ScrubForename(customerBuilder.Forename);
+                    customerBuilder.ScrubSurname(customerBuilder.Surname);
+                }
             }
 
             //STEP5 - Build the application + send the list of guarantors
