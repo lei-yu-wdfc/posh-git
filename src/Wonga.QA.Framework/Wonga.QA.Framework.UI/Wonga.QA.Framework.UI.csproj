@@ -223,6 +223,7 @@
     <Compile Include="Ui\Sections\ContactingYouSection.cs" />
     <Compile Include="Ui\Sections\DebitCardSection.cs" />
     <Compile Include="Ui\Sections\EmploymentDetailsSection.cs" />
+    <Compile Include="Ui\Sections\ExtensionSecciDocumentSection.cs" />
     <Compile Include="Ui\Sections\MobilePinVerificationSection.cs" />
     <Compile Include="Mappings\Ui\Sections\MyAccountNavigationSection.cs" />
     <Compile Include="Ui\Sections\ProvinceSection.cs" />

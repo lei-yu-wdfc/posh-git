@@ -335,8 +335,8 @@
   <ExtensionAgreementPage>
     <ExtensionAgreementAcceptButton>#edit-accept</ExtensionAgreementAcceptButton>
     <ExtensionAgreementscroll>#agreementscroll</ExtensionAgreementscroll>
-    <ExtensionSecciButton>a#extension_secci_link</ExtensionSecciButton>
-    <ExtensionExplanationButton>a#extension_ae_link</ExtensionExplanationButton>
+    <ExtensionSecciButton>#extension_secci_link</ExtensionSecciButton>
+    <ExtensionExplanationButton>#extension_ae_link</ExtensionExplanationButton>
   </ExtensionAgreementPage>
 
   <ExtensionErrorPage>
@@ -397,7 +397,7 @@
   </SmallRepaySlidersElement>
 
   <ExtensionSecciDocumentSection>
-    <Fieldset>.page-extend-accept</Fieldset>
+    <Fieldset>#fancybox-content</Fieldset>
     <SecciHeader>.secci-intro</SecciHeader>
     <SecciPrint>#secci-print-link a</SecciPrint>
     <SecciContent>.secci</SecciContent>

@@ -18,7 +18,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
 
         //helper methods?
 
-        public ExtensionSecciDocumentSection doPrint()
+        public void doPrint()
         {
             _secciPrint.Click();
             //print event check?

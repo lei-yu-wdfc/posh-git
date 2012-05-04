@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
 using Wonga.QA.Framework.UI.Mappings;
+using Wonga.QA.Framework.UI.UiElements.Sections;
 
 namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
@@ -14,7 +15,6 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public ExtensionAgreementPage(UiClient client)
             : base(client)
         {
-
             _nextButton = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.ExtensionAgreementAcceptButton));
             _agreementLegals = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.ExtensionAgreementscroll));
             _secciButton = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.ExtensionSecciButton));
@@ -32,6 +32,17 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             _nextButton.Click();
             return new ExtensionDealDonePage(Client);
+        }
+
+        public ExtensionSecciDocumentSection ClickExtensionSecciLink()
+        {
+            _secciButton.Click();
+            return new ExtensionSecciDocumentSection(this);
+        }
+
+        public void clickExplanationLink()
+        {
+            _aeDocumentButton.Click();
         }
     }
 }
