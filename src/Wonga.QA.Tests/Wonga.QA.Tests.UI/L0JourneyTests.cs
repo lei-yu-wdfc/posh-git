@@ -1278,5 +1278,20 @@ namespace Wonga.QA.Tests.Ui
                                  .FillBankDetails()
                                  .CurrentPage as ProcessingPage;
         }
+
+        [Test, AUT(AUT.Ca), Category(TestCategories.Smoke), JIRA("QA-280")]
+        public void L0CustomerEntersInappropriatePostcodeToPreviousAddressSectionShouldNotGoFurther()
+        {
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var processingPage = journey.ApplyForLoan(200, 10)
+                                 .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                 .FillAddressDetails()
+                                 .FillAccountDetails()
+                                 .FillBankDetails()
+                                 .CurrentPage as ProcessingPage;
+            var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
+            acceptedPage.SignConfirmCaL0(DateTime.Now.ToString("d MMM yyyy"), journey.FirstName, journey.LastName);
+            var dealDone = acceptedPage.Submit();
+        }
     }
 }

@@ -60,7 +60,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public PersonalDetailsPage(UiClient client)
             : base(client)
         {
-            _form = Content.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.FormId));
+            _form = Content.FindEitherElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.FormId), By.CssSelector("#wonga-apply-lzero-form"));
             if (!Config.AUT.Equals(AUT.Wb))
             {
                 //On WB you cannot edit your loan details on the Personal Details page

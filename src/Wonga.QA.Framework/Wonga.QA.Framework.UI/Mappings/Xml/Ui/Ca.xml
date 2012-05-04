@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <UiMap>
   <YourNameSection>
-    <Fieldset>fieldset#name</Fieldset>
+    <Fieldset>fieldset#personal-details</Fieldset>
   </YourNameSection>
 
   <YourDetailsSection>
-    <Fieldset>fieldset#name</Fieldset>
+    <Fieldset>fieldset#personal-details</Fieldset>
     <IdNumber>#edit-id-number-ca</IdNumber>
   </YourDetailsSection>
 
@@ -33,7 +33,7 @@
   </DealDonePage>
   
   <AddressDetailsPage>
-    <FormId>#lzero-address-form</FormId>
+    <FormId>#wonga-apply-lzero-form</FormId>
     <Postcode>#edit-postcode-ca</Postcode>
     <PostcodeErrorForm>div#edit-postcode-ca-wrapper div.invalid</PostcodeErrorForm>
     <HouseNumber>#edit-street-number-ca</HouseNumber>
@@ -45,7 +45,7 @@
     <TownErrorForm>#edit-town-ca-wrapper div.invalid</TownErrorForm>
     <StreetErrorForm>#edit-street-ca-wrapper div.invalid</StreetErrorForm>
     <HouseNumberErrorForm>#edit-street-number-ca-wrapper div.invalid</HouseNumberErrorForm>
-	<AddressPeriodErrorForm>#edit-address-period-ca-wrapper div.invalid</AddressPeriodErrorForm>
+	<AddressPeriodErrorForm>#edit-address-period-ca-wrapper div.invalid</AddressPeriodErrorForm>	
   </AddressDetailsPage>
 
   <AccountDetailsSection>
@@ -55,12 +55,12 @@
   </AccountDetailsSection>
 
   <PersonalBankAccountDetailsPage>
-    <FormId>#lzero-bank-form</FormId>
+    <FormId>#wonga-apply-lzero-form</FormId>
   </PersonalBankAccountDetailsPage>
 
 
   <BankAccountSection>
-    <Fieldset>fieldset#bank-1</Fieldset>
+    <Fieldset>fieldset#bank</Fieldset>
     <InstitutionNumber>#edit-institution-number</InstitutionNumber>
     <AccountNumber>#edit-account-number-ca</AccountNumber>
     <BankName>#edit-bank-name-ca</BankName>
