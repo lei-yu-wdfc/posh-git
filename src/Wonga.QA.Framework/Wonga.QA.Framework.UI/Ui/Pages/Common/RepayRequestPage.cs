@@ -36,7 +36,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             //return new TopupProcessingPage(Client);
         }
        
-        public void IsTopupRequestPageSliderReturningCorrrectValuesOnChange(string applicationId)
+        public void IsRepayRequestPageSliderReturningCorrectValuesOnChange(string applicationId)
         {
             const string repayRequestAmount = "50";
             DateTime todayDate = DateTime.Now;

@@ -376,7 +376,7 @@
   <RepayRequestPage>
     <RepayRequestPageSubmitButton>#edit-submit</RepayRequestPageSubmitButton>
     <RepayRequestPageInformativeBox>div.inner-box-informative</RepayRequestPageInformativeBox>
-    <RepayRequestPageRepayAmount>#edit-repayment-amount</RepayRequestPageRepayAmount>
+    <RepayRequestPageRepayAmount>input#edit-repayment-amount</RepayRequestPageRepayAmount>
     <RepayRequestPageRemainderAmount>span.repay-remainder-total</RepayRequestPageRemainderAmount>
     <RepayRequestPageSliders>#wonga-single-slider</RepayRequestPageSliders>
     <RepayRequestPageSliderSmall>#wonga-account-repay-form</RepayRequestPageSliderSmall>
@@ -388,7 +388,7 @@
     <FormId>#wonga-account-repay-form</FormId>
     <AmountSlider>#wonga-single-slider a</AmountSlider>
     <SubmitButton>#edit-submit</SubmitButton>
-    <RepayAmount>input.edit-repayment-amount</RepayAmount>
+    <RepayAmount>input#edit-repayment-amount</RepayAmount>
     <RemainderAmount>span.repay-remainder-total</RemainderAmount>
     <AmountMinusButton>#wonga-single-slider-wrapper button.slider-minus</AmountMinusButton>
     <AmountPlusButton>#wonga-single-slider-wrapper button.slider-plus</AmountPlusButton>
