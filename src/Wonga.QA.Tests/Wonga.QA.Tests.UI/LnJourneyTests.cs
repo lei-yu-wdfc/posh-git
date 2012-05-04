@@ -5,6 +5,7 @@ using System.Text;
 using Gallio.Framework.Assertions;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
+using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.UiElements.Pages;
@@ -36,7 +37,7 @@ namespace Wonga.QA.Tests.Ui
             var myPersonalDetails = mySummaryPage.Navigation.MyPersonalDetailsButtonClick();
             var oldMobilePhone = myPersonalDetails.GetMobilePhone;
             var homePage = Client.Home();
-            
+
             var journey = JourneyFactory.GetLnJourney(homePage);
             var applyPage = journey.ApplyForLoan(200, 10)
                 .SetName(name, surname).CurrentPage as ApplyPage;
@@ -83,9 +84,9 @@ namespace Wonga.QA.Tests.Ui
             {
                 applyPage.Submit();
             }
-            catch(AssertionFailureException exception)
+            catch (AssertionFailureException exception)
             {
-                Assert.IsTrue(exception.Message.Contains("The Pin was incorrect."));
+                Assert.IsTrue(exception.Message.Contains("The SMS PIN you entered was incorrect"));
             }
         }
 
@@ -144,8 +145,8 @@ namespace Wonga.QA.Tests.Ui
                            .CurrentPage as MySummaryPage;
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1533")]
-        public void UkFullLnJourneyTest()
+        [Test, AUT(AUT.Uk), JIRA("UK-1533", "UK-1902"), Pending("Fails due to bug UK-1902")]
+        public void FullLnJourneyTest()
         {
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
@@ -159,14 +160,99 @@ namespace Wonga.QA.Tests.Ui
             application.RepayOnDueDate();
             loginPage.LoginAs(email);
 
+            var journeyLn = JourneyFactory.GetLnJourney(Client.Home());
+            var page = ((UkLnJourney)journeyLn.ApplyForLoan(200, 10))
+                           .FillApplicationDetailsWithNewMobilePhone()
+                           .WaitForAcceptedPage()
+                           .FillAcceptedPage()
+                           .GoToMySummaryPage()
+                           .CurrentPage as MySummaryPage;
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-1533")]
+        public void L0LnJourneyTest()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+
+            // L0 journey
+            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home());
+            var mySummary = journeyL0.ApplyForLoan(200, 10)
+                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                .FillAddressDetails()
+                .FillAccountDetails()
+                .FillBankDetails()
+                .FillCardDetails()
+                .WaitForAcceptedPage()
+                .FillAcceptedPage();
+
+            var customer = new Customer(Guid.Parse(Drive.Api.Queries.Post(new GetAccountQuery { Login = email, Password = Get.GetPassword() }).Values["AccountId"].Single()));
+            var application = customer.GetApplication();
+
+            // Repay
+            application.RepayOnDueDate();
+
+            // Ln journey
             var journey = JourneyFactory.GetLnJourney(Client.Home());
             var page = journey.ApplyForLoan(200, 10)
                            .FillApplicationDetails()
                            .WaitForAcceptedPage()
                            .FillAcceptedPage()
                            .GoToMySummaryPage()
-                           .CurrentPage as MySummaryPage;            
+                           .CurrentPage as MySummaryPage;
         }
+        
 
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-199")]
+        public void LoggedCustomerWithoutLoanAppliesNewLoanChangesMobilePhoneAndClicksResendPinItShouldBeResent()
+        {
+            string email = Get.RandomEmail();
+            string name = Get.RandomString(3, 10);
+            string surname = Get.RandomString(3, 10);
+            string phone = Get.RandomLong(1000000, 9999999).ToString();
+            Customer customer = CustomerBuilder
+                 .New()
+                 .WithForename(name)
+                 .WithSurname(surname)
+                 .WithEmailAddress(email)
+                 .WithMobileNumber("075" + Get.RandomLong(1000000, 9999999).ToString())
+                 .Build();
+            Application application = ApplicationBuilder
+                .New(customer)
+                .Build();
+            application.RepayOnDueDate();
+           var loginPage = Client.Login();
+            loginPage.LoginAs(email);
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    var journeyZa = JourneyFactory.GetLnJourney(Client.Home());
+                    var pageZA = journeyZa.ApplyForLoan(200, 20).CurrentPage as ApplyPage;
+                    pageZA.SetNewMobilePhone = "075" + phone;
+                    pageZA.ResendPinClick();
+                    var smsZa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber("2775" + phone));
+                    foreach (var sms in smsZa)
+                    {
+                        Console.WriteLine(sms.MessageText + "/" + sms.CreatedOn);
+                        Assert.IsTrue(sms.MessageText.Contains("You will need it to complete your application back at Wonga.com."));
+                    }
+                   // Assert.AreEqual(2, smsZa.Count());
+                    break;
+                case AUT.Ca:
+                    var journeyCa = JourneyFactory.GetLnJourney(Client.Home());
+                    var pageCa = journeyCa.ApplyForLoan(200, 25)
+                                   .SetName(name, surname).CurrentPage as ApplyPage;
+                    pageCa.SetNewMobilePhone = "075" + phone;
+                    pageCa.ResendPinClick();
+                    var smsCa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber("175" + phone));
+                    foreach (var sms in smsCa)
+                    {
+                        Console.WriteLine(sms.MessageText + "/" + sms.CreatedOn);
+                        Assert.IsTrue(sms.MessageText.Contains("You will need it to complete your application back at Wonga.ca."));
+                    }
+                    Assert.AreEqual(2, smsCa.Count());            
+                    break;
+            }
+        }
     }
 }

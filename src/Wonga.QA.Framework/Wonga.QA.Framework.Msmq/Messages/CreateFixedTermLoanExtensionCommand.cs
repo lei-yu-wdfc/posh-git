@@ -13,6 +13,7 @@ namespace Wonga.QA.Framework.Msmq
         public DateTime ExtendDate { get; set; }
         public Guid PaymentCardId { get; set; }
         public String PaymentCardCv2 { get; set; }
+        public Decimal PartPaymentAmount { get; set; }
         public DateTime CreatedOn { get; set; }
         public Guid? ClientId { get; set; }
     }

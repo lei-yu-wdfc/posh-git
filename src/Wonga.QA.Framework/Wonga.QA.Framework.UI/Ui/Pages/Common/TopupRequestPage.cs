@@ -19,16 +19,16 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private SmallTopupSlidersElement Sliders { get; set; }
         public TopupRequestPage(UiClient client) : base(client)
         {
-            _submitButton = Content.FindElement(By.CssSelector(Ui.Get.TopupRequestPage.TopupRequestPageSubmitButton));
-            _informativeBox = Content.FindElement(By.CssSelector(Ui.Get.TopupRequestPage.TopupRequestPageInformativeBox));
-            _interestAndFees = Content.FindElement(By.CssSelector(Ui.Get.TopupRequestPage.TopupRequestPageNewInterestAndFees));
-            _grandTotal = Content.FindElement(By.CssSelector(Ui.Get.TopupRequestPage.TopupRequestPageNewGrandTotal));
-            _topupAmount = Content.FindElement(By.CssSelector(Ui.Get.TopupRequestPage.TopupRequestPageNewCreditRequest));   
+            _submitButton = Content.FindElement(By.CssSelector(UiMap.Get.TopupRequestPage.TopupRequestPageSubmitButton));
+            _informativeBox = Content.FindElement(By.CssSelector(UiMap.Get.TopupRequestPage.TopupRequestPageInformativeBox));
+            _interestAndFees = Content.FindElement(By.CssSelector(UiMap.Get.TopupRequestPage.TopupRequestPageNewInterestAndFees));
+            _grandTotal = Content.FindElement(By.CssSelector(UiMap.Get.TopupRequestPage.TopupRequestPageNewGrandTotal));
+            _topupAmount = Content.FindElement(By.CssSelector(UiMap.Get.TopupRequestPage.TopupRequestPageNewCreditRequest));   
         }
 
         public bool IsTopupRequestPageInformativeBoxDisplayed()
         {
-            _informativeBox = Client.Driver.FindElement(By.CssSelector(Ui.Get.TopupRequestPage.TopupRequestPageInformativeBox));
+            _informativeBox = Client.Driver.FindElement(By.CssSelector(UiMap.Get.TopupRequestPage.TopupRequestPageInformativeBox));
             return _informativeBox.Displayed;
         }
         

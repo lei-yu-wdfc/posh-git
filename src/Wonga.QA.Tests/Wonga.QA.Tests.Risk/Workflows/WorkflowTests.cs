@@ -12,7 +12,6 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Workflows
 {
-	[AUT(AUT.Za)]
 	public partial class WorkflowTests
 	{
 		private Dictionary<string, string> _originalServiceConfiguration = new Dictionary<string, string>();
@@ -45,7 +44,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 			Drive.Db.SetServiceConfigurations(_originalServiceConfiguration);
 		}
 
-		[Test, AUT(AUT.Za), Pending]
+		[Test, AUT(AUT.Za, AUT.Ca), Pending]
 		public void WorkflowL0SingleWorkflowUsed()
 		{
 			var customer = CustomerBuilder.New().WithEmployer("Wonga").Build();
@@ -86,25 +85,23 @@ namespace Wonga.QA.Tests.Risk.Workflows
 			switch (Config.AUT)
 			{
 				case(AUT.Za):
-					{
-						return
-							CustomerBuilder.New()
-							.WithEmployer("Wonga")
-							.WithForename("ANITHA")
-							.WithSurname("ESSACK")
-							.WithDateOfBirth(new Date(new DateTime(1957, 12, 19)))
-							.WithNationalNumber("5712190106083")
-							.WithMobileNumber(Get.GetMobilePhone())
-							.WithBankAccountNumber(Get.GetBankAccountNumber())
-							.WithPostcodeInAddress(Get.GetPostcode())
-							.Build();
-					}
-					break;
-
+				{
+					return
+						CustomerBuilder.New()
+						.WithEmployer("Wonga")
+						.WithForename("ANITHA")
+						.WithSurname("ESSACK")
+						.WithDateOfBirth(new Date(new DateTime(1957, 12, 19)))
+						.WithNationalNumber("5712190106083")
+						.WithMobileNumber(Get.GetMobilePhone())
+						.WithBankAccountNumber(Get.GetBankAccountNumber())
+						.WithPostcodeInAddress(Get.GetPostcode())
+						.Build();
+				}
 				default:
-					{
-						throw new NotImplementedException(Config.AUT.ToString());
-					}
+				{
+					throw new NotImplementedException(Config.AUT.ToString());
+				}
 			}
 			
 		}

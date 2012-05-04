@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Ui>
+<UiMap>
   <YourNameSection>
     <Fieldset>fieldset#personal-details</Fieldset>
   </YourNameSection>
@@ -19,13 +19,13 @@
   </ContactingYouSection>
 
   <EmploymentDetailsSection>
-    <EmployerName>#edit-employer-name-ca</EmployerName>
-    <MonthlyIncome>#edit-income-per-period</MonthlyIncome>
     <NextPaydayDate>#edit-next-payday-ca-datepicker-popup-0</NextPaydayDate>
   </EmploymentDetailsSection>
 
+
   <PersonalDetailsPage>
-    <CheckCanContact>#edit-contact-options</CheckCanContact>
+      <FormId>#lzero-personal-form</FormId>
+      <CheckCanContact>#edit-contact-options</CheckCanContact>
   </PersonalDetailsPage>
   
   <DealDonePage>
@@ -33,6 +33,7 @@
   </DealDonePage>
   
   <AddressDetailsPage>
+    <FormId>#wonga-apply-lzero-form</FormId>
     <Postcode>#edit-postcode-ca</Postcode>
     <PostcodeErrorForm>div#edit-postcode-ca-wrapper div.invalid</PostcodeErrorForm>
     <HouseNumber>#edit-street-number-ca</HouseNumber>
@@ -44,7 +45,7 @@
     <TownErrorForm>#edit-town-ca-wrapper div.invalid</TownErrorForm>
     <StreetErrorForm>#edit-street-ca-wrapper div.invalid</StreetErrorForm>
     <HouseNumberErrorForm>#edit-street-number-ca-wrapper div.invalid</HouseNumberErrorForm>
-    <AddressPeriodErrorForm>#edit-address-period-ca-wrapper div.invalid</AddressPeriodErrorForm>
+	<AddressPeriodErrorForm>#edit-address-period-ca-wrapper div.invalid</AddressPeriodErrorForm>	
   </AddressDetailsPage>
 
   <AccountDetailsSection>
@@ -141,11 +142,19 @@
 
   <ApplicationSection>
     <FormId>#wonga-apply-ln-form</FormId>
+	<ChangeMobileButton>#loan-application .form-markup-wrapper a</ChangeMobileButton>
   </ApplicationSection>
+
+	<ApplyPage>
+		<EditMobileNumber>#edit-new-mobile-number-ca</EditMobileNumber>
+		<PopupSaveButton>#edit-submit[value='Save']</PopupSaveButton>
+		<PopupCloseButton>#edit-submit[value='Close']</PopupCloseButton>
+		<ResendPin>#repin div:nth-child(2) a</ResendPin>
+	</ApplyPage>
 
   <MyPersonalDetailsPage>
     <Postcode>table#profile tr#address tbody tr:nth-child(3) td</Postcode>
   </MyPersonalDetailsPage>
   
   
-</Ui>
+</UiMap>

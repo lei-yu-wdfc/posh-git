@@ -12,6 +12,7 @@ namespace Wonga.QA.Framework.Msmq
         private MsmqQueue _bi;
         private MsmqQueue _bankGateway;
 		private MsmqQueue _bankGatewayBmo;
+		private MsmqQueue _bankGatewayRbc;
 		private MsmqQueue _bankGatewayScotia;
 		private MsmqQueue _blacklist;
         private MsmqQueue _callReport;
@@ -31,6 +32,7 @@ namespace Wonga.QA.Framework.Msmq
         private MsmqQueue _salesforce;
         private MsmqQueue _scotia;
         private MsmqQueue _sms;
+        private MsmqQueue _smsDistributor;
         private MsmqQueue _timeZone;
         private MsmqQueue _transUnion;
         private MsmqQueue _uru;
@@ -82,6 +84,12 @@ namespace Wonga.QA.Framework.Msmq
 		{
 			get { return _bankGatewayBmo ?? (_bankGatewayBmo = new MsmqQueue(Config.Msmq.BankGatewayBmo)); }
 			set { _bankGatewayBmo = value; }
+		}
+
+		public MsmqQueue BankGatewayRbc
+		{
+			get { return _bankGatewayRbc ?? (_bankGatewayRbc = new MsmqQueue(Config.Msmq.BankGatewayRbc)); }
+			set { _bankGatewayRbc = value; }
 		}
 
 		public MsmqQueue BankGatewayScotia
@@ -196,6 +204,12 @@ namespace Wonga.QA.Framework.Msmq
         {
             get { return _sms ?? (_sms = new MsmqQueue(Config.Msmq.Sms)); }
             set { _sms = value; }
+        }
+
+        public MsmqQueue SmsDistrubutor
+        {
+            get { return _smsDistributor ?? (_smsDistributor = new MsmqQueue(Config.Msmq.SmsDistributor)); }
+            set { _smsDistributor = value; }
         }
 
         public MsmqQueue TimeZone

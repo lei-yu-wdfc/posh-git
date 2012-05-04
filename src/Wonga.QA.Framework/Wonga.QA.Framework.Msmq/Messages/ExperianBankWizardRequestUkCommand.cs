@@ -9,7 +9,7 @@ namespace Wonga.QA.Framework.Msmq
     public partial class ExperianBankWizardRequestUkCommand : MsmqMessage<ExperianBankWizardRequestUkCommand>
     {
         public Guid AccountId { get; set; }
-        public Guid ApplicationId { get; set; }
+        public Guid BankAccountId { get; set; }
         public Guid SagaId { get; set; }
         public DateTime CreatedOn { get; set; }
     }

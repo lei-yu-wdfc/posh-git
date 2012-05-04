@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Ui>
+<UiMap>
   <!--PAGES SECTION-->
 
     <HomePage>
@@ -24,6 +24,8 @@
     <CheckPrivacyPolicy>#edit-privacy</CheckPrivacyPolicy>
     <CheckCanContact>input[type="radio"][name="update_option"]</CheckCanContact>
     <NextButton>#edit-submit</NextButton>
+	<PrivacyPolicyLink>#edit-privacy-wrapper div:nth-child(1) label a</PrivacyPolicyLink>
+	<PrivacyPolicyPopup>#fancybox-content</PrivacyPolicyPopup>
   </PersonalDetailsPage>
 
   <AddressDetailsPage>
@@ -32,12 +34,19 @@
     <PostcodeValid>#edit-postcode-lookup-uk-wrapper .form-error</PostcodeValid>
     <AddressOptionsWrapper>#edit-address-options-wrapper</AddressOptionsWrapper>
     <Postcode>#edit-postcode-lookup-uk</Postcode>
+	<PostcodeInForm>#edit-postcode-uk</PostcodeInForm>
     <District>#edit-district</District>
     <FlatNumber>#edit-flat</FlatNumber>
-    <County>#edit-county</County>
+	<HouseNumber>#edit-house-number</HouseNumber>  
+	<County>#edit-county</County>
     <AddressPeriod>#edit-address-period</AddressPeriod>
     <NextButton>#edit-submit</NextButton>
     <AddressOptions>#edit-address-options</AddressOptions>
+	<HouseNumberErrorForm>#edit-house-number-wrapper .form-error .invalid</HouseNumberErrorForm>
+	<PostcodeErrorForm>#edit-postcode-uk-wrapper div.form-error div.invalid</PostcodeErrorForm>
+	<TownErrorForm>#edit-town-wrapper div.invalid</TownErrorForm>
+	<StreetErrorForm>#edit-street-wrapper .form-error .invalid</StreetErrorForm>
+	<AddressPeriodErrorForm>#edit-address-period-wrapper div.invalid</AddressPeriodErrorForm>
   </AddressDetailsPage>
 
   <BusinessDetailsPage>
@@ -51,6 +60,7 @@
     <FormId>#lzero-directors-form</FormId>
     <DoneButton>#edit-submit</DoneButton>
     <AddAnotherDirector>#edit-add</AddAnotherDirector>
+	<Directors>.wonga-tip</Directors>
   </AdditionalDirectorsPage>
 
   <AddAditionalDirectorsPage>
@@ -184,6 +194,7 @@
     <AddressOptionsWrapper>#edit-address-options-wrapper</AddressOptionsWrapper>
     <District>#edit-district</District>
     <FlatNumber>#edit-flat</FlatNumber>
+	<HouseNumber>#edit-house-number</HouseNumber>	
     <City>#edit-town</City>
     <Street>#edit-street</Street>
     <County>#edit-county</County>
@@ -194,4 +205,8 @@
 		<ResendPin>#edit-resend-pin</ResendPin>
 		<ResendPinMessage>.pin_resend</ResendPinMessage>
   </MobilePinVerificationSection>
-</Ui>
+
+  <AccountDetailsSection>
+		<PasswordErrorForm>div#edit-password-wrapper div.invalid</PasswordErrorForm>		
+  </AccountDetailsSection>
+</UiMap>

@@ -8,6 +8,7 @@ namespace Wonga.QA.Framework.Msmq
     [XmlRoot("StartRiskBusinessVerificationMessage", Namespace = "Wonga.Risk.Workflow.Messages", DataType = "")]
     public partial class StartRiskBusinessVerificationCommand : MsmqMessage<StartRiskBusinessVerificationCommand>
     {
+        public Guid OrganisationId { get; set; }
         public Int32 RiskAccountId { get; set; }
         public Guid WorkflowId { get; set; }
         public Int32 RiskApplicationId { get; set; }

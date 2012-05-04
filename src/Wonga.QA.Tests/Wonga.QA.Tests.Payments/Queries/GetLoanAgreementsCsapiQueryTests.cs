@@ -1,15 +1,23 @@
+using System;
 using System.Linq;
+using System.Threading;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
+using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Cs;
+using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
+//using CreateTransactionCommand = Wonga.QA.Framework.Cs.CreateTransactionCommand;
 
 namespace Wonga.QA.Tests.Payments.Queries
 {
     [TestFixture]
     public class GetLoanAgreementsCsapiQueryTests
     {
+        //private dynamic _transactions = Drive.Data.Payments.Db.Transactions;
+		private dynamic _applications = Drive.Data.Payments.Db.Applications;
+
         [Test]
         [AUT(AUT.Uk), JIRA("UK-1197")]
         public void Query_ShouldReturnNoLoans_WhenCustomersHasNoApplications()

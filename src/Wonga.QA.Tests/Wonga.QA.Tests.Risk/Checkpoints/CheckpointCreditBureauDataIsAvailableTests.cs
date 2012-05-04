@@ -9,7 +9,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
 	[Parallelizable(TestScope.All)]
-	class CheckpointCreditBureauDataIsAvailable : BaseCheckpointTest
+	class CheckpointCreditBureauDataIsAvailable
 	{
         private const RiskMask TestMask = RiskMask.TESTCreditBureauDataIsAvailable;
 

@@ -217,23 +217,6 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		}
 
         [Test, AUT(AUT.Uk)]
-        public void GivenL0Applicant_WhenCustomerIsUnEmployed_ThenIsDeclined()
-        {
-            _builderConfig = new ApplicationBuilderConfig(ApplicationDecisionStatus.Declined);
-            CustomerBuilder builder = CustomerBuilder.New()
-                .WithEmployerStatus("Unemployed").WithEmployer(RiskMask.TESTEmployedMask);
-            L0ApplicationWithSingleCheckPointAndSingleVerification(builder, RiskCheckpointDefinitionEnum.CustomerIsEmployed, "CustomerIsEmployedVerification");
-        }
-
-
-        [Test, AUT(AUT.Uk)]
-        public void GivenL0Applicant_WhenCustomerIsEmployed_ThenIsAccepted()
-        {
-            _builderConfig = new ApplicationBuilderConfig();
-            L0ApplicationWithSingleCheckPointAndSingleVerification(RiskCheckpointDefinitionEnum.CustomerIsEmployed, "CustomerIsEmployedVerification");
-        }
-
-        [Test, AUT(AUT.Uk)]
         public void GivenL0Applicant_WhenIsUnderAged_ThenIsDeclined()
         {
             _builderConfig = new ApplicationBuilderConfig(ApplicationDecisionStatus.Declined);

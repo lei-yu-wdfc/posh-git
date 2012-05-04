@@ -21,7 +21,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.SalesForce
         {
             try
             {
-                _customer = Client.Driver.FindElement(By.CssSelector(Ui.Get.SalesForceSearchResultPage.Customer));
+                _customer = Client.Driver.FindElement(By.CssSelector(UiMap.Get.SalesForceSearchResultPage.Customer));
                 return true;
             }
             catch (Exception)
@@ -32,7 +32,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.SalesForce
 
         public SalesForceCustomerDetailPage GoToCustomerDetailsPage()
         {
-            _customer = Client.Driver.FindElement(By.CssSelector(Ui.Get.SalesForceSearchResultPage.Customer));
+            _customer = Client.Driver.FindElement(By.CssSelector(UiMap.Get.SalesForceSearchResultPage.Customer));
             _customer.Click();
             return new SalesForceCustomerDetailPage(Client);
         }

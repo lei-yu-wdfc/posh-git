@@ -64,20 +64,20 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         public String EmailAddress { set { _email.SendValue(value); } }
         public String ConfirmEmailAddress { set { _emailConfirm.SendValue(value); } }
 
-        public ContactingYouSection(BasePage page) : base(Ui.Get.ContactingYouSection.Fieldset, page)
+        public ContactingYouSection(BasePage page) : base(UiMap.Get.ContactingYouSection.Fieldset, page)
         {
-            _email = Section.FindElement(By.CssSelector(Ui.Get.ContactingYouSection.Email));
-            _emailConfirm = Section.FindElement(By.CssSelector(Ui.Get.ContactingYouSection.EmailConfirm));
-            _homePhone = Section.FindElement(By.CssSelector(Ui.Get.ContactingYouSection.HomePhone));
-            _mobilePhone = Section.FindElement(By.CssSelector(Ui.Get.ContactingYouSection.MobilePhone));
+            _email = Section.FindElement(By.CssSelector(UiMap.Get.ContactingYouSection.Email));
+            _emailConfirm = Section.FindElement(By.CssSelector(UiMap.Get.ContactingYouSection.EmailConfirm));
+            _homePhone = Section.FindElement(By.CssSelector(UiMap.Get.ContactingYouSection.HomePhone));
+            _mobilePhone = Section.FindElement(By.CssSelector(UiMap.Get.ContactingYouSection.MobilePhone));
 
             switch (Config.AUT)
             {
                 case (AUT.Ca):
-                    _homePhoneP2 = Section.FindElement(By.CssSelector(Ui.Get.ContactingYouSection.HomePhoneP2));
-                    _homePhoneP3 = Section.FindElement(By.CssSelector(Ui.Get.ContactingYouSection.HomePhoneP3));
-                    _mobilePhoneP2 = Section.FindElement(By.CssSelector(Ui.Get.ContactingYouSection.MobilePhoneP2));
-                    _mobilePhoneP3 = Section.FindElement(By.CssSelector(Ui.Get.ContactingYouSection.MobilePhoneP3));
+                    _homePhoneP2 = Section.FindElement(By.CssSelector(UiMap.Get.ContactingYouSection.HomePhoneP2));
+                    _homePhoneP3 = Section.FindElement(By.CssSelector(UiMap.Get.ContactingYouSection.HomePhoneP3));
+                    _mobilePhoneP2 = Section.FindElement(By.CssSelector(UiMap.Get.ContactingYouSection.MobilePhoneP2));
+                    _mobilePhoneP3 = Section.FindElement(By.CssSelector(UiMap.Get.ContactingYouSection.MobilePhoneP3));
                     break;
             }
         }

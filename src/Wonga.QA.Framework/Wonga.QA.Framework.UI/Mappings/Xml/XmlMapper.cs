@@ -64,7 +64,8 @@ namespace Wonga.QA.Framework.UI.Mappings
             {
                 if (property.PropertyType == typeof(string))
                 {
-                    property.SetValue(obj, GetFieldValue(parents, property.Name), null);
+                    string fieldValue = GetFieldValue(parents, property.Name);
+                    property.SetValue(obj, fieldValue, null);
                     continue;
                 }
 

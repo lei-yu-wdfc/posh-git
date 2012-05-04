@@ -17,7 +17,6 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private readonly IWebElement _form;
         private readonly IWebElement _lookup;
         private readonly IWebElement _next;
-        private readonly IWebElement _houseNumber;
         private readonly IWebElement _district;
         private readonly IWebElement _county;
         private readonly IWebElement _town;
@@ -25,6 +24,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private readonly IWebElement _addressPeriod;
         private readonly IWebElement _postOfficeBox;
 
+        private IWebElement _houseNumber;
         private IWebElement _addressOptions;
         private IWebElement _postCodeErrorForm;
         private IWebElement _houseNumberErrorForm;
@@ -39,7 +39,13 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public String PostCode { set { _postCode.SendValue(value); } }
         public String PostcodeInForm { set { _postCodeInForm.SendValue(value); } }
         public String SelectedAddress { set { _addressOptions.SelectOption(value); } }
-        public String HouseNumber { set { _houseNumber.SendValue(value); } }
+        public String HouseNumber
+        {
+            set
+            {
+                Client.Driver.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.HouseNumber)).SendValue(value);
+            }
+        }
         public String District { set { _district.SendValue(value); } }
         public String County { set { _county.SendValue(value); } }
         public String Town { set { _town.SendValue(value); } }
@@ -51,44 +57,47 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             : base(client)
         {
 
-            _form = Content.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.FormId));
-            _postCode = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.Postcode));
-            _houseNumber = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.HouseNumber));
-            _addressPeriod = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.AddressPeriod));
-            _next = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.NextButton));
+            _form = Content.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.FormId));
+            _postCode = _form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.Postcode));
+            _houseNumber = _form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.HouseNumber));
+            _addressPeriod = _form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.AddressPeriod));
+            _next = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.NextButton));
 
             switch (Config.AUT)
             {
                 case (AUT.Wb):
-                    _county = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.County));
-                    _district = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.District));
-                    _lookup = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.LookupButton));
+                    _county = _form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.County));
+                    _district = _form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.District));
+                    _lookup = _form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.LookupButton));
+                    _street = _form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.Street));
+                    _town = _form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.Town));
+                    _postCodeInForm = _form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.PostcodeInForm));
                     break;
                 case (AUT.Za):
-                    _county = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.County));
-                    _district = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.District));
-                    _street = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.Street));
-                    _town = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.Town));
+                    _county = _form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.County));
+                    _district = _form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.District));
+                    _street = _form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.Street));
+                    _town = _form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.Town));
                     break;
                 case (AUT.Ca):
-                    _street = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.Street));
-                    _town = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.Town));
-                    _postOfficeBox = _form.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.PostOfficeBox));
+                    _street = _form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.Street));
+                    _town = _form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.Town));
+                    _postOfficeBox = _form.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.PostOfficeBox));
                     AccountDetailsSection = new AccountDetailsSection(this);
                     break;
                 case (AUT.Uk):
-                    _postCodeInForm = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.PostcodeInForm));
-                    _street = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.Street));
-                    _town = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.Town));
-                    _postCodeLookup = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.PostcodeLookup));
-                    _lookup = _form.FirstOrDefaultElement(By.CssSelector(Ui.Get.AddressDetailsPage.LookupButton));
+                    _postCodeInForm = _form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.PostcodeInForm));
+                    _street = _form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.Street));
+                    _town = _form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.Town));
+                    _postCodeLookup = _form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.PostcodeLookup));
+                    _lookup = _form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.LookupButton));
                     break;
             }
         }
 
         public void LookupByPostCode()
         {
-            _addressOptionsWrapper = _form.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.AddressOptionsWrapper));
+            _addressOptionsWrapper = _form.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.AddressOptionsWrapper));
             Do.With.Interval(1).Until(ClickLookupAddress);
             Do.Until(() => _addressOptionsWrapper.Displayed);
         }
@@ -96,13 +105,13 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private IWebElement ClickLookupAddress()
         {
             _lookup.Click();
-            _postcodeValid = _form.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.PostcodeValid));
+            _postcodeValid = _form.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.PostcodeValid));
             return _postcodeValid.FindElement(By.CssSelector(".success"));
         }
 
         public void GetAddressesDropDown()
         {
-            _addressOptions = _form.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.AddressOptions));
+            _addressOptions = _form.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.AddressOptions));
         }
 
         public BasePage Next()
@@ -118,6 +127,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             }
         }
 
+        public AddressDetailsPage NextClick()
+        {
+            _next.Click();
+            return new AddressDetailsPage(Client);
+        }
+
         public BasePage NextAddressLessThan2()
         {
             _next.Click();
@@ -130,7 +145,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             try
             {
                 _postCodeErrorForm =
-                           _form.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.PostcodeErrorForm));
+                           _form.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.PostcodeErrorForm));
                 string postCodeErrorFormClass = _postCodeErrorForm.GetAttribute("class");
 
                 if (postCodeErrorFormClass.Equals("invalid"))
@@ -140,6 +155,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             }
             catch (NoSuchElementException)
             {
+                Console.WriteLine("Can't find error form");
                 return false;
             }
             return false;
@@ -149,7 +165,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _next.Click();
             try
             {
-                _houseNumberErrorForm =Client.Driver.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.HouseNumberErrorForm));
+                _houseNumberErrorForm = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.HouseNumberErrorForm));
                 string houseNumberErrorFormClass = _houseNumberErrorForm.GetAttribute("class");
 
                 if (houseNumberErrorFormClass.Equals("invalid"))
@@ -159,6 +175,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             }
             catch (NoSuchElementException)
             {
+                Console.WriteLine("Can't find error form");
                 return false;
             }
             return false;
@@ -169,7 +186,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             try
             {
                 _streetErrorForm =
-                           _form.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.StreetErrorForm));
+                           _form.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.StreetErrorForm));
                 string streetErrorFormClass = _streetErrorForm.GetAttribute("class");
 
                 if (streetErrorFormClass.Equals("invalid"))
@@ -179,6 +196,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             }
             catch (NoSuchElementException)
             {
+                Console.WriteLine("Can't find error form");
                 return false;
             }
             return false;
@@ -189,7 +207,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             try
             {
                 _townErrorForm =
-                           _form.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.TownErrorForm));
+                           _form.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.TownErrorForm));
                 string townErrorFormClass = _townErrorForm.GetAttribute("class");
 
                 if (townErrorFormClass.Equals("invalid"))
@@ -209,7 +227,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             try
             {
                 _countyErrorForm =
-                           _form.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.CountyErrorForm));
+                           _form.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.CountyErrorForm));
                 string countyErrorFormClass = _countyErrorForm.GetAttribute("class");
 
                 if (countyErrorFormClass.Equals("invalid"))
@@ -229,7 +247,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             try
             {
                 _addressPeriodErrorForm =
-                           _form.FindElement(By.CssSelector(Ui.Get.AddressDetailsPage.AddressPeriodErrorForm));
+                           _form.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.AddressPeriodErrorForm));
                 string addressPeriodErrorFormClass = _addressPeriodErrorForm.GetAttribute("class");
 
                 if (addressPeriodErrorFormClass.Equals("invalid"))

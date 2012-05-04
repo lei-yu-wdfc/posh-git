@@ -26,16 +26,16 @@ namespace Wonga.QA.Framework.UI.Elements
             : base(page)
         {
             _internationalTrigger =
-                Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.InternationalElement.InternationalTrigger));
+                Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.InternationalElement.InternationalTrigger));
             switch (Config.AUT)
             {
                 case (AUT.Ca):
-                    _internationalPanelZa = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.InternationalElement.InternationalPanelZa));
-                    _internationalPanelUk = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.InternationalElement.InternationalPanelUk));
+                    _internationalPanelZa = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.InternationalElement.InternationalPanelZa));
+                    _internationalPanelUk = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.InternationalElement.InternationalPanelUk));
                     break;
                 case (AUT.Za):
-                    _internationalPanelCa = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.InternationalElement.InternationalPanelCa));
-                    _internationalPanelUk = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.InternationalElement.InternationalPanelUk));
+                    _internationalPanelCa = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.InternationalElement.InternationalPanelCa));
+                    _internationalPanelUk = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.InternationalElement.InternationalPanelUk));
                     break;
             }
         }

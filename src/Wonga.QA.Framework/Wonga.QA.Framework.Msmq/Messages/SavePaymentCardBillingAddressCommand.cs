@@ -9,8 +9,11 @@ namespace Wonga.QA.Framework.Msmq
     public partial class SavePaymentCardBillingAddressCommand : MsmqMessage<SavePaymentCardBillingAddressCommand>
     {
         public Guid PaymentCardId { get; set; }
-        public String AddressLine1 { get; set; }
-        public String AddressLine2 { get; set; }
+        public String Flat { get; set; }
+        public String HouseName { get; set; }
+        public String HouseNumber { get; set; }
+        public String Street { get; set; }
+        public String District { get; set; }
         public String Town { get; set; }
         public String County { get; set; }
         public String CountryCode { get; set; }

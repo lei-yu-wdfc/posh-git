@@ -13,5 +13,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String YourProvince { get; set; }
         public String ThisIsMyProvince { get; set; }
         public String BusinessTitleText { get; set; }
+        
     }
 }

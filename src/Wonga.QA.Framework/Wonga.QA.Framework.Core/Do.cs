@@ -11,7 +11,33 @@ namespace Wonga.QA.Framework.Core
         public static TimeSpan Timeout { get { return TimeSpan.FromMinutes(1); } }
         public static TimeSpan Interval { get { return TimeSpan.FromSeconds(2); } }
         public static DoBuilder With { get { return new DoBuilder(Timeout, Interval); } }
+        public static DoBuilder WhenAutIn(AUT[] aut)
+        {
+            var doBuilder = new DoBuilder(Timeout, Interval);
+            doBuilder.WhenAutIsIn(aut);
+            return doBuilder;
+        }
 
+        public static DoBuilder WhenAutNotIn(AUT[] aut)
+        {
+            var doBuilder = new DoBuilder(Timeout, Interval);
+            doBuilder.WhenAutIsNotIn(aut);
+            return doBuilder;
+        }
+
+        public static DoBuilder WhenAutIs(AUT aut)
+        {
+            var doBuilder = new DoBuilder(Timeout, Interval);
+            doBuilder.WhenAutIsIn(new[] { aut });
+            return doBuilder;
+        }
+
+        public static DoBuilder WhenAutIsNot(AUT aut)
+        {
+            var doBuilder = new DoBuilder(Timeout, Interval);
+            doBuilder.WhenAutIsNotIn(new[] { aut });
+            return doBuilder;
+        }
         /// <summary>
         /// Until will take your function and execute it until the result is not equal to it's default value.
         /// eg bool return should return true, objects should return something other than null etc. If this does not
@@ -59,6 +85,7 @@ namespace Wonga.QA.Framework.Core
         private TimeSpan _timeout;
         private TimeSpan _interval;
         private Func<String> _message;
+        private Func<bool> _appSettingsFunction;
 
         internal DoBuilder(TimeSpan timeout, TimeSpan interval)
         {
@@ -112,6 +139,8 @@ namespace Wonga.QA.Framework.Core
         /// <returns></returns>
         public T Until<T>(Func<T> predicate)
         {
+            if (!DoRunInThisAut())
+                return default(T);
             var exception = new DoException(_message);
             var stopwatch = Stopwatch.StartNew();
             while (stopwatch.Elapsed < _timeout)
@@ -142,6 +171,8 @@ namespace Wonga.QA.Framework.Core
         /// <param name="predicate"></param>
         public void While<T>(Func<T> predicate)
         {
+            if (!DoRunInThisAut())
+                return;
             var stopwatch = Stopwatch.StartNew();
             while (stopwatch.Elapsed < _timeout)
                 try
@@ -169,6 +200,8 @@ namespace Wonga.QA.Framework.Core
         /// <returns>T</returns>
         public T Watch<T>(Func<T> predicate) where T : struct
         {
+            if (!DoRunInThisAut())
+                return default(T);
             var t = predicate();
             var stopwatch = Stopwatch.StartNew();
             while (stopwatch.Elapsed < _timeout)
@@ -180,6 +213,50 @@ namespace Wonga.QA.Framework.Core
                 t = p;
             }
             return t;
+        }
+
+        /// <summary>
+        /// Executes your function immediately with no retries.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public T Execute<T>(Func<T> predicate)
+        {
+            if (!DoRunInThisAut())
+                return default(T);
+            return predicate();
+        }
+
+        private bool DoRunInThisAut()
+        {
+            if (_appSettingsFunction == null)
+                return true;
+            return _appSettingsFunction.Invoke();
+        }
+
+        public DoBuilder WhenAutIsIn(AUT[] auts)
+        {
+            _appSettingsFunction = delegate { return auts.Any(x => x == Config.AUT); };
+            return this;
+        }
+
+        public DoBuilder WhenAutIsNotIn(AUT[] auts)
+        {
+            _appSettingsFunction = delegate { return !auts.Any(x => x == Config.AUT); };
+            return this;
+        }
+
+        public DoBuilder WhenAutIs(AUT aut)
+        {
+            _appSettingsFunction = delegate { return aut == Config.AUT; };
+            return this;
+        }
+
+        public DoBuilder WhenAutIsNot(AUT aut)
+        {
+            _appSettingsFunction = delegate { return aut != Config.AUT; };
+            return this;
         }
     }
 

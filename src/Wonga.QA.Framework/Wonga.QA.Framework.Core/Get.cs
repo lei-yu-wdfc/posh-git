@@ -18,12 +18,12 @@ namespace Wonga.QA.Framework.Core
     {
         private static String _alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         private static Random _random = new Random(Guid.NewGuid().GetHashCode());
-    	private static readonly string EmailSafeMachineName;
+        private static readonly string EmailSafeMachineName;
 
-		static Get()
-		{
-			EmailSafeMachineName = Regex.Replace(Environment.MachineName, @"[^a-zA-Z0-9-._]", @"-");
-		}
+        static Get()
+        {
+            EmailSafeMachineName = Regex.Replace(Environment.MachineName, @"[^a-zA-Z0-9-._]", @"-");
+        }
 
         public static Guid GetId()
         {
@@ -45,15 +45,15 @@ namespace Wonga.QA.Framework.Core
             return "qa.wonga.com@gmail.com";
         }
 
-		public static String RandomEmail()
-		{
-			return String.Format(
-				"qa.wonga.com+{0}-{1}@gmail.com",
-				EmailSafeMachineName,
-				Guid.NewGuid());
-		}
+        public static String RandomEmail()
+        {
+            return String.Format(
+                "qa.wonga.com+{0}-{1}@gmail.com",
+                EmailSafeMachineName,
+                Guid.NewGuid());
+        }
 
-    	public static String GetEmailWithoutPlusChar()
+        public static String GetEmailWithoutPlusChar()
         {
             return String.Format("qa.wonga.com{0}{1}@gmail.com", EmailSafeMachineName, Guid.NewGuid());
         }
@@ -95,18 +95,19 @@ namespace Wonga.QA.Framework.Core
 
         public static string GetMobilePhone()
         {
-        	switch (Config.AUT)
-        	{
-        		case AUT.Za:
-        			{
-        				return "021" + RandomLong(1000000, 9999999);
-        			}
-						
-				default:
-        		{
-        			return "07500000000";
-        		}
-        	}
+            switch (Config.AUT)
+            {
+                case AUT.Ca:
+                case AUT.Za:
+                    {
+                        return "021" + RandomLong(1000000, 9999999);
+                    }
+                
+                default:
+                    {
+                        return "07500000000";
+                    }
+            }
         }
 
         public static String GetNationalNumber()
@@ -167,7 +168,7 @@ namespace Wonga.QA.Framework.Core
                     }
                 case AUT.Wb:
                     {
-                        return 42368003;
+                        return RandomLong(10000000, 99999999);
                     }
                 default:
                     {
@@ -198,10 +199,10 @@ namespace Wonga.QA.Framework.Core
             }
         }
 
-		public static String GetPostcode()
-		{
-			return RandomInt(0000, 9999).ToString().PadLeft(4,'0');
-		}
+        public static String GetPostcode()
+        {
+            return RandomInt(0000, 9999).ToString().PadLeft(4, '0');
+        }
 
         public static Uri GetSchema(Uri uri)
         {
@@ -264,6 +265,21 @@ namespace Wonga.QA.Framework.Core
         {
             return RandomElement(((T[])Enum.GetValues(typeof(T))).Where(t => exclude == null || !exclude.Contains(t)).ToArray());
         }
+
+		public static T RandomEnumOf<T>(params T[] allowed)
+		{
+			if(allowed == null)
+			{
+				throw new ArgumentNullException("allowed");
+			}
+
+			if (allowed.Length == 0)
+			{
+				throw new ArgumentOutOfRangeException("allowed", "collection of enum values can not be empty");
+			}
+
+			return RandomElement(((T[])Enum.GetValues(typeof(T))).Where(allowed.Contains).ToArray());
+		}
 
 
         public static string EnumToString(Enum en)

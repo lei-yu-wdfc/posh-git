@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Ui>
+<UiMap>
 	<MyPaymentsPage>
 		<PopupBankName>#edit-bank-name</PopupBankName>
 		<PopupBankAccountType>#edit-bank-account-type</PopupBankAccountType>
@@ -9,6 +9,7 @@
 		<PopupExeption>#wonga-my-account-edit-bank-form div:nth-child(1) ul li</PopupExeption>
 		<AccountNumber>.info.bank-account.bank-account-primary tbody tr:nth-child(4) td b span</AccountNumber>
 		<PopupBankAccountException>#edit-account-number-za-wrapper div.form-error div.invalid </PopupBankAccountException>
+    <PopupSuccessTitle>h1#success</PopupSuccessTitle>
 	</MyPaymentsPage>
 	
   <ContactingYouSection>
@@ -24,9 +25,14 @@
   
   <EmploymentDetailsSection>
     <WorkPhone>#edit-work-phone-za</WorkPhone>
+    <NextPaydayDateDay>#edit-next-payday-day</NextPaydayDateDay>
+    <NextPaydayDateMonth>#edit-next-payday-month</NextPaydayDateMonth>
+    <NextPaydayDateYear>#edit-next-payday-year</NextPaydayDateYear>
   </EmploymentDetailsSection>
 
   <PersonalDetailsPage>
+	<GenderWarning>.//*[@id='details']/div[2]/div/div[3]/div</GenderWarning>
+	<DateOfBirthWarning>.//*[@id='edit-date-of-birth-wrapper']/div[3]/div</DateOfBirthWarning>
     <MarriedInCommunityProperty>input[type="radio"][name="married"]</MarriedInCommunityProperty>
   </PersonalDetailsPage>
   
@@ -169,7 +175,9 @@
     <EditMobileNumber>#edit-new-mobile-number-za</EditMobileNumber>
     <PopupSaveButton>#edit-submit[value='Save']</PopupSaveButton>
     <PopupCloseButton>#edit-submit[value='Close']</PopupCloseButton>
+    <BankAccount>#edit-bank-account-masked</BankAccount>
+	<ResendPin>#pin-hold a</ResendPin>
   </ApplyPage>
 
   
-</Ui>
+</UiMap>

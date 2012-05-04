@@ -10,5 +10,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages.Wb
         public String FormId { get; set;}
         public String DoneButton { get; set; }
         public String AddAnotherDirector { get; set; }
+        public String Directors { get; set; }
     }
 }

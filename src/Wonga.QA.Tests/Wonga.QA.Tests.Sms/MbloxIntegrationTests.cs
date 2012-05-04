@@ -13,72 +13,81 @@ namespace Wonga.QA.Tests.Sms
 {
     class MbloxIntegrationTests
     {
-        private ServiceConfigurationEntity _configurationEntity = null;
+        //private ServiceConfigurationEntity _configurationEntity = null;
 
-        private const string TEST_PHONE_NUMBER = "4407786777486";
+        private const string TEST_PHONE_NUMBER = "447786777486";
         private const string MBLOX_MESSAGE_TEXT_TEST = "Sending test message from acceptance tests with using Mblox provider with GUID : ";
-        private const string ZONG_MESSAGE_TEXT_TEST = "Sending test message from acceptance tests with using Zong provider with GUID :" ;
-        private const string PROVIDER_CHOOSE_KEY = "SMS.PROVIDER_NAME";
-        private const string ZONG_PROVIDER_NAME = "ZONG";
-        private const string MBLOX_PROVIDER_NAME = "MBLOX";
+        private const string ZONG_MESSAGE_TEXT_TEST = "Sending test message from acceptance tests with using Zong provider with GUID :";
+        private const string PROVIDER_CHOOSE_KEY = "Sms.Provider_name";
+        private const string ZONG_PROVIDER_NAME = "Zong";
+        private const string MBLOX_PROVIDER_NAME = "Mblox";
 
-        [SetUp]
-        public void Init()
-        {
-            _configurationEntity = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key.Equals(MbloxIntegrationTests.PROVIDER_CHOOSE_KEY));
-        }
+        private static readonly dynamic _serviceConfigurationsEntity = Drive.Data.Ops.Db.ServiceConfigurations;
+        private static readonly dynamic _smsEntity = Drive.Data.Sms.Db.SmsMessages;
 
         [Test, AUT(AUT.Uk), JIRA("UK-510")]
         public void SendRequestToMbloxProvider()
         {
-            var request = new SendSimpleSmsCommand()
-            {
-                MessageText = MbloxIntegrationTests.MBLOX_MESSAGE_TEXT_TEST + Guid.NewGuid(),
-                ToNumber = MbloxIntegrationTests.TEST_PHONE_NUMBER
-            };
-            Drive.Msmq.Sms.Send(request);
-            var message = Do.Until(() => Drive.Db.Sms.SmsMessages.Where(x => x.MessageText.Equals(request.MessageText)).Single());
 
-            Assert.IsTrue(message.MobilePhoneNumber.Equals(request.ToNumber));
+            var request = new SendSmsCommsSmsCommand
+            {
+                MessageText = MBLOX_MESSAGE_TEXT_TEST + "" + Guid.NewGuid(),
+                OriginatingSagaId = Guid.NewGuid(),
+                ToNumberFormatted = TEST_PHONE_NUMBER
+            };
+
+            Drive.Msmq.SmsDistrubutor.Send(request);
+            var message = Do.Until(() => _smsEntity.FindBy(MessageText: request.MessageText));
+
+
+            Assert.IsTrue(message.MobilePhoneNumber.Equals(request.ToNumberFormatted));
             Assert.IsTrue(message.MessageText.Equals(request.MessageText));
-            Assert.IsTrue(_configurationEntity.Value.Equals(MbloxIntegrationTests.MBLOX_PROVIDER_NAME));
             Assert.IsNull(message.ErrorMessage);
-            Assert.IsNotNull(message);
+            Do.Until(() => _serviceConfigurationsEntity.FindBy(Key:PROVIDER_CHOOSE_KEY, Value:MBLOX_PROVIDER_NAME));
+
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-510"),]
         public void SwitchToAnotherProviderAndSendSmsRequest()
         {
+           changeProvider();
 
-            if (!_configurationEntity.Value.Equals(MbloxIntegrationTests.ZONG_PROVIDER_NAME))
+            var request = new SendSmsCommsSmsCommand
             {
-                _configurationEntity.Value = MbloxIntegrationTests.ZONG_PROVIDER_NAME;
-                _configurationEntity.Submit();
-            }
-
-            var request = new SendSimpleSmsCommand()
-            {
-                MessageText = MbloxIntegrationTests.ZONG_MESSAGE_TEXT_TEST + Guid.NewGuid(),
-                ToNumber = MbloxIntegrationTests.TEST_PHONE_NUMBER
+                MessageText = ZONG_MESSAGE_TEXT_TEST + "" + Guid.NewGuid(),
+                OriginatingSagaId = Guid.NewGuid(),
+                ToNumberFormatted = TEST_PHONE_NUMBER
             };
-            Drive.Msmq.Sms.Send(request);
-            var message = Do.Until(() => Drive.Db.Sms.SmsMessages.Where(x => x.MessageText.Equals(request.MessageText)).Single());
 
-            Assert.IsTrue(_configurationEntity.Value.Equals(MbloxIntegrationTests.ZONG_PROVIDER_NAME));
-            Assert.IsTrue(message.MobilePhoneNumber.Equals(request.ToNumber));
+            Drive.Msmq.SmsDistrubutor.Send(request);
+            var message = Do.Until(() => _smsEntity.FindBy(MessageText: request.MessageText));
+
+            Assert.IsTrue(message.MobilePhoneNumber.Equals(request.ToNumberFormatted));
             Assert.IsTrue(message.MessageText.Equals(request.MessageText));
             Assert.IsNull(message.ErrorMessage);
-            Assert.IsNotNull(message);
+            Do.Until(() => _serviceConfigurationsEntity.FindBy(Key:PROVIDER_CHOOSE_KEY, Value:ZONG_PROVIDER_NAME));
+
+            changeProvider();
         }
-        [TearDown,AUT(AUT.Uk)]
-        public void RollbackOptions()
+
+
+        private void changeProvider()
         {
-            if (_configurationEntity.Value.Equals(MbloxIntegrationTests.ZONG_PROVIDER_NAME))
+            var provider_name = Do.Until(() => _serviceConfigurationsEntity.FindBy(Key:PROVIDER_CHOOSE_KEY));
+            var providerName = provider_name.Value;
+            if (providerName.Equals(ZONG_PROVIDER_NAME))
             {
-                _configurationEntity.Value = MbloxIntegrationTests.MBLOX_PROVIDER_NAME;
-                _configurationEntity.Submit();
+                Do.Until(() => _serviceConfigurationsEntity.UpdateByServiceConfigurationId(
+                     ServiceConfigurationId:provider_name.ServiceConfigurationId,
+                     Key:PROVIDER_CHOOSE_KEY, Value:MBLOX_PROVIDER_NAME));
             }
-                
+
+            if (providerName.Equals(MBLOX_PROVIDER_NAME))
+            {
+                Do.Until(() => _serviceConfigurationsEntity.UpdateByServiceConfigurationId(
+                     ServiceConfigurationId:provider_name.ServiceConfigurationId,
+                     Key:PROVIDER_CHOOSE_KEY, Value:ZONG_PROVIDER_NAME));
+            }
         }
     }
 }

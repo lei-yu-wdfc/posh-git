@@ -23,17 +23,17 @@ namespace Wonga.QA.Framework.UI.Elements
         public TabsElement(BasePage page)
             : base(page)
         {
-            _form = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.TabsElement.TabsForm));
-            _home = _form.FindElement(By.CssSelector(Ui.Get.TabsElement.Home));
-            _howItWorks = _form.FindElement(By.CssSelector(Ui.Get.TabsElement.HowItWorks));
-            _aboutUs = _form.FindElement(By.CssSelector(Ui.Get.TabsElement.AboutUs));
+            _form = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.TabsElement.TabsForm));
+            _home = _form.FindElement(By.CssSelector(UiMap.Get.TabsElement.Home));
+            _howItWorks = _form.FindElement(By.CssSelector(UiMap.Get.TabsElement.HowItWorks));
+            _aboutUs = _form.FindElement(By.CssSelector(UiMap.Get.TabsElement.AboutUs));
             
             switch (Config.AUT)
             {
                 case AUT.Za:
                 case AUT.Ca:
-                    _advice = _form.FindElement(By.CssSelector(Ui.Get.TabsElement.Advice));
-                    _myAccount = _form.FindElement(By.CssSelector(Ui.Get.TabsElement.MyAccount));
+                    _advice = _form.FindElement(By.CssSelector(UiMap.Get.TabsElement.Advice));
+                    _myAccount = _form.FindElement(By.CssSelector(UiMap.Get.TabsElement.MyAccount));
                     break;
             }
 

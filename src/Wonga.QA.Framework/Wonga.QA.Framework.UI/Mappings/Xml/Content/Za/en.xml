@@ -1,4 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Content>
   <YourDetails>Your Details</YourDetails>
+	<ProblemProcessingDetailsMessage>There was a problem processing your details. Please try again.</ProblemProcessingDetailsMessage>
+	<PasswordWarningMessage>Sorry, your password cannot match your username</PasswordWarningMessage>
+	<ApplicationErrorMessage>We are sorry, but there has been an error in your application. Please try again. (101 - amount)</ApplicationErrorMessage>
+  <TabsElementMobile>
+    <Login>login</Login>
+    <ApplyNow>apply now</ApplyNow>
+    <HowItWorks>how it works</HowItWorks>
+    <AboutUs>about us</AboutUs>
+    <Advice>advice</Advice>
+    <MyAccount>my account</MyAccount>
+    <News>news</News>
+    <Help>help</Help>
+    <ContactUs>contact us</ContactUs>
+  </TabsElementMobile>
+  
 </Content>

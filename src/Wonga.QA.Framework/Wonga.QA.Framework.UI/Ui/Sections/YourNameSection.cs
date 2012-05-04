@@ -17,12 +17,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         public String MiddleName { set { _middleName.SendValue(value); } }
         public String LastName { set { _lastName.SendValue(value); } }
 
-        public YourNameSection(BasePage page) : base(Ui.Get.YourNameSection.Fieldset, page)
+        public YourNameSection(BasePage page) : base(UiMap.Get.YourNameSection.Fieldset, page)
         {
-            _title = Section.FindElement(By.CssSelector(Ui.Get.YourNameSection.Title));
-            _firstName = Section.FindElement(By.CssSelector(Ui.Get.YourNameSection.FirstName));
-            _middleName = Section.FindElement(By.CssSelector(Ui.Get.YourNameSection.MiddleName));
-            _lastName = Section.FindElement(By.CssSelector(Ui.Get.YourNameSection.LastName));
+            _title = Section.FindElement(By.CssSelector(UiMap.Get.YourNameSection.Title));
+            _firstName = Section.FindElement(By.CssSelector(UiMap.Get.YourNameSection.FirstName));
+            _middleName = Section.FindElement(By.CssSelector(UiMap.Get.YourNameSection.MiddleName));
+            _lastName = Section.FindElement(By.CssSelector(UiMap.Get.YourNameSection.LastName));
         }
 
 
