@@ -35,8 +35,7 @@ namespace Wonga.QA.Tests.Comms.Email
         
         private bool CheckPaymentConfirmationEmailSent()
         {
-            return Drive.Db.QaData.Emails.First(e => e.EmailAddress == _emailAddress && 
-                                                    e.TemplateName == "34009") != null;
+            return Drive.Data.QaData.Db.Emails.FindBy(EmailAddress: _emailAddress, TemplateName: "34009");
         }
 
         public abstract class GivenACustomerWithAnApprovedLoan : PaymentConfirmationEmailUkTests
