@@ -195,7 +195,7 @@
     <Fieldset>fieldset[id="employment"]</Fieldset>
     <EmploymentStatus>#edit-employment-status</EmploymentStatus>
     <EmployerIndustry>#edit-employer-industry</EmployerIndustry>
-    <EmployerName>#edit-employer-name</EmployerName>
+    <EmployerName>#edit-employer-name-ca</EmployerName>
     <EmploymentPosition>#edit-employment-position</EmploymentPosition>
     <TimeWithEmployerYears>#edit-employment-time-years</TimeWithEmployerYears>
     <TimeWithEmployerMonths>#edit-employment-time-months</TimeWithEmployerMonths>

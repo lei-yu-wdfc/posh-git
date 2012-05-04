@@ -112,7 +112,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             _employmentPosition = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.EmploymentPosition));
             _timeWithEmployerYears = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.TimeWithEmployerYears));
             _timeWithEmployerMonths = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.TimeWithEmployerMonths));
-            _monthlyIncome = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.MonthlyIncome));
+            _monthlyIncome = Section.FindEitherElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.MonthlyIncome), By.CssSelector("#edit-income-per-period"));
             _salaryPaidToBank = Section.FindElements(By.CssSelector(UiMap.Get.EmploymentDetailsSection.SalaryPaidToBank));
             _incomeFrequency = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.IncomeFrequency));
             switch (Config.AUT)
