@@ -21,7 +21,7 @@ namespace Wonga.QA.Tests.Ui
 {
     class BehaviourAndAdvertTracking : UiTest
     {
-        [Test, AUT(AUT.Za), JIRA("ZA-2115")]
+        [Test, AUT(AUT.Za), JIRA("ZA-2115"), Pending("Broken")]
         public void L0VerifyDoubleclickTagInsertedInPage()
         {
             ////////////////////////////////////////////////////////////////

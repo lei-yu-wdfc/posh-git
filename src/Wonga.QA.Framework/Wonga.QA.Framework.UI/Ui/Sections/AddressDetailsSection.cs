@@ -32,37 +32,44 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         public String Town { set { _city.SendValue(value); } }
         public String Street { set { _street.SendValue(value); } }
 
+
+
         public AddressDetailsSection(BasePage page)
-            : base(Ui.Get.AddressDetailsSection.Fieldset, page)
+            : base(UiMap.Get.AddressDetailsSection.Fieldset, page)
         {
-            _postCode = Section.FindElement(By.CssSelector(Ui.Get.AddressDetailsSection.Postcode));
-            _lookup = Section.FindElement(By.CssSelector(Ui.Get.AddressDetailsSection.LookupButton));
+            _postCode = Section.FindElement(By.CssSelector(UiMap.Get.AddressDetailsSection.Postcode));
+            _lookup = Section.FindElement(By.CssSelector(UiMap.Get.AddressDetailsSection.LookupButton));
         }
 
 
         public void LookupByPostCode()
         {
-            _addressOptionsWrapper = Section.FindElement(By.CssSelector(Ui.Get.AddressDetailsSection.AddressOptionsWrapper));
+            _addressOptionsWrapper = Section.FindElement(By.CssSelector(UiMap.Get.AddressDetailsSection.AddressOptionsWrapper));
             Do.With.Interval(1).Until(ClickLookupAddress);
             Do.Until(() => _addressOptionsWrapper.Displayed);
-            _flatNumber = Section.FindElement(By.CssSelector(Ui.Get.AddressDetailsSection.FlatNumber));
-            _flatNumber = Section.FindElement(By.CssSelector(Ui.Get.AddressDetailsSection.FlatNumber));
-            _district = Section.FindElement(By.CssSelector(Ui.Get.AddressDetailsSection.District));
-            _county = Section.FindElement(By.CssSelector(Ui.Get.AddressDetailsSection.County));
-            _city = Section.FindElement(By.CssSelector(Ui.Get.AddressDetailsSection.City));
-            _street = Section.FindElement(By.CssSelector(Ui.Get.AddressDetailsSection.Street));
+            _district = Section.FindElement(By.CssSelector(UiMap.Get.AddressDetailsSection.District));
+            _county = Section.FindElement(By.CssSelector(UiMap.Get.AddressDetailsSection.County));
+            _city = Section.FindElement(By.CssSelector(UiMap.Get.AddressDetailsSection.City));
+            _street = Section.FindElement(By.CssSelector(UiMap.Get.AddressDetailsSection.Street));
+
+            switch(Config.AUT)
+            {
+                case AUT.Wb:
+                    _flatNumber = Section.FindElement(By.CssSelector(UiMap.Get.AddressDetailsSection.FlatNumber));
+                    break;
+            }
         }
 
         private IWebElement ClickLookupAddress()
         {
             _lookup.Click();
-            _postcodeValid = Section.FindElement(By.CssSelector(Ui.Get.AddressDetailsSection.PostcodeValid));
+            _postcodeValid = Section.FindElement(By.CssSelector(UiMap.Get.AddressDetailsSection.PostcodeValid));
             return _postcodeValid.FindElement(By.CssSelector(".success"));
         }
 
         public void GetAddressesDropDown()
         {
-            _addressOptions = Section.FindElement(By.CssSelector(Ui.Get.AddressDetailsSection.AddressOptions));
+            _addressOptions = Section.FindElement(By.CssSelector(UiMap.Get.AddressDetailsSection.AddressOptions));
         }
 
         public bool IsPostcodeWarningOccurred()
@@ -70,7 +77,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             try
             {
                 _postCodeErrorForm =
-                           Section.FindElement(By.CssSelector(Ui.Get.AddressDetailsSection.PostcodeErrorForm));
+                           Section.FindElement(By.CssSelector(UiMap.Get.AddressDetailsSection.PostcodeErrorForm));
                 string postCodeErrorFormClass = _postCodeErrorForm.GetAttribute("class");
 
                 if (postCodeErrorFormClass.Equals("invalid"))

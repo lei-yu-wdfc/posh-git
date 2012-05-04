@@ -16,15 +16,15 @@ namespace Wonga.QA.Framework
         private Guid _verification;
         private object _employerName;
         private String _employerStatus;
-		private Decimal _netMonthlyIncome;
-    	private GenderEnum _gender;
-    	private String _nationalNumber;
+        private Decimal _netMonthlyIncome;
+        private GenderEnum _gender;
+        private String _nationalNumber;
         private String _foreName;
-	    private Date _nextPayDate;
-    	private Date _dateOfBirth;
+        private Date _nextPayDate;
+        private Date _dateOfBirth;
         private object _middleName;
         private String _surname;
-    	private String _maidenName;
+        private String _maidenName;
         private String _houseNumber;
         private ProvinceEnum _province;
         private String _email;
@@ -37,8 +37,8 @@ namespace Wonga.QA.Framework
         private String _county;
         private Guid _bankAccountId;
         private String _phoneNumber;
-		private String _mobileNumber;
-    	private Int64 _bankAccountNumber;
+        private String _mobileNumber;
+        private Int64 _bankAccountNumber;
         private Int64 _paymentCardNumber;
         private string _paymentCardSecurityCode;
         private string _paymentCardType;
@@ -56,14 +56,14 @@ namespace Wonga.QA.Framework
             _verification = Get.GetId();
             _employerName = Get.GetEmployerName();
             _employerStatus = Get.GetEmploymentStatus();
-        	_netMonthlyIncome = Get.RandomInt(1000, 2000);
-			_dateOfBirth = Get.GetDoB();
-			_gender = GenderEnum.Female;
-			if(Config.AUT == AUT.Za) //TODO implement nationalNumber generators for other regions
-        		_nationalNumber = Get.GetNIN(_dateOfBirth.DateTime, _gender == GenderEnum.Female);
+            _netMonthlyIncome = Get.RandomInt(1000, 2000);
+            _dateOfBirth = Get.GetDoB();
+            _gender = GenderEnum.Female;
+            if (Config.AUT == AUT.Za) //TODO implement nationalNumber generators for other regions
+                _nationalNumber = Get.GetNIN(_dateOfBirth.DateTime, _gender == GenderEnum.Female);
             _surname = Get.GetName();
             _middleName = Get.GetMiddleName();
-        	_maidenName = Get.GetName();
+            _maidenName = Get.GetName();
             _foreName = Get.GetName();
             _province = ProvinceEnum.ON;
             _houseNumber = Get.RandomInt(1, 100).ToString(CultureInfo.InvariantCulture);
@@ -73,18 +73,18 @@ namespace Wonga.QA.Framework
             _flat = Get.RandomString(4);
             _district = Get.RandomString(15);
             _town = Get.RandomString(15);
-            _county = Get.RandomString(15);			
-        	_nextPayDate = Get.GetNextPayDate();
-			_email = Get.RandomEmail();
+            _county = Get.RandomString(15);
+            _nextPayDate = Get.GetNextPayDate();
+            _email = Get.RandomEmail();
             _bankAccountId = Get.GetId();
-        	
+
             _province = ProvinceEnum.ON;
             _paymentCardNumber = 4444333322221111;
             _paymentCardSecurityCode = "777";
             _paymentCardType = "Visa";
             _mobileNumber = Get.GetMobilePhone();
-            _institutionNumber = "001";
-            _branchNumber = "00011";
+            _institutionNumber = "002";
+            _branchNumber = "00018";
             _bankAccountNumber = Get.GetBankAccountNumber();
 
             if (Config.AUT == AUT.Wb || Config.AUT == AUT.Uk)
@@ -130,40 +130,40 @@ namespace Wonga.QA.Framework
             return this;
         }
 
-		public CustomerBuilder WithNetMonthlyIncome(decimal netMonthlyIncome)
-		{
-			_netMonthlyIncome = netMonthlyIncome;
-			return this;
-		}
-        
-		public CustomerBuilder WithGender(GenderEnum gender)
-		{
-			_gender = gender;
-			return this;
-		}
+        public CustomerBuilder WithNetMonthlyIncome(decimal netMonthlyIncome)
+        {
+            _netMonthlyIncome = netMonthlyIncome;
+            return this;
+        }
 
-		public CustomerBuilder WithNationalNumber(string nationalNumber)
-		{
-			_nationalNumber = nationalNumber;
-			return this;
-		}
+        public CustomerBuilder WithGender(GenderEnum gender)
+        {
+            _gender = gender;
+            return this;
+        }
 
-		public CustomerBuilder WithNextPayDate(Date date)
-		{
-			_nextPayDate = date;
-			return this;
-		}
+        public CustomerBuilder WithNationalNumber(string nationalNumber)
+        {
+            _nationalNumber = nationalNumber;
+            return this;
+        }
+
+        public CustomerBuilder WithNextPayDate(Date date)
+        {
+            _nextPayDate = date;
+            return this;
+        }
 
         public CustomerBuilder WithEmailAddress(String email)
         {
             _email = email;
             return this;
         }
-        
+
         public CustomerBuilder WithDateOfBirth(Date date)
-	    {
-	       _dateOfBirth = date;
-	       return this;
+        {
+            _dateOfBirth = date;
+            return this;
         }
 
         public CustomerBuilder WithForename(String foreName)
@@ -190,12 +190,12 @@ namespace Wonga.QA.Framework
             return this;
         }
 
-		public CustomerBuilder WithMaidenName(String maidenName)
-		{
-			_maidenName = maidenName;
-			return this;
-		}
-        
+        public CustomerBuilder WithMaidenName(String maidenName)
+        {
+            _maidenName = maidenName;
+            return this;
+        }
+
         public CustomerBuilder ForProvince(ProvinceEnum province)
         {
             _province = province;
@@ -257,16 +257,16 @@ namespace Wonga.QA.Framework
         }
 
         public CustomerBuilder WithProvinceInAddress(ProvinceEnum province)
-	    {
-		    _province = province;
-		    return this;
-	    }
+        {
+            _province = province;
+            return this;
+        }
 
-		public CustomerBuilder WithBankAccountNumber(Int64 bankAccountNumber)
-		{
-		    _bankAccountNumber = bankAccountNumber;
-			return this;
-		}
+        public CustomerBuilder WithBankAccountNumber(Int64 bankAccountNumber)
+        {
+            _bankAccountNumber = bankAccountNumber;
+            return this;
+        }
 
         public CustomerBuilder WithPaymentCardNumber(Int64 cardNumber)
         {
@@ -315,8 +315,8 @@ namespace Wonga.QA.Framework
 
         public Customer Build()
         {
-			_nextPayDate.DateFormat = DateFormat.Date;
-			_dateOfBirth.DateFormat = DateFormat.Date;
+            _nextPayDate.DateFormat = DateFormat.Date;
+            _dateOfBirth.DateFormat = DateFormat.Date;
 
             var requests = new List<ApiRequest>
             {
@@ -425,8 +425,10 @@ namespace Wonga.QA.Framework
                         {
                             r.AccountId = _id;
                             r.VerificationId = _verification;
-                        })
-                    });
+                            r.MobilePhone = _mobileNumber;
+                        }),
+                        CompleteMobilePhoneVerificationCommand.New(r=> r.VerificationId = _verification)
+                        });
                     break;
 
                 case AUT.Wb:
@@ -520,6 +522,7 @@ namespace Wonga.QA.Framework
 							r.AccountId = _id;
 							r.EmployerName = _employerName;
 						    r.Status = _employerStatus;
+						    r.NetMonthlyIncome = _netMonthlyIncome;
 						}),
 						VerifyMobilePhoneUkCommand.New(r =>
 						{
@@ -536,10 +539,10 @@ namespace Wonga.QA.Framework
 
             Drive.Api.Commands.Post(requests);
 
-        	Do.With.Timeout(2).Until(() => Drive.Db.Ops.Accounts.Single(a => a.ExternalId == _id));
+            Do.With.Timeout(2).Until(() => Drive.Db.Ops.Accounts.Single(a => a.ExternalId == _id));
             Do.With.Timeout(2).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == _id));
             Do.With.Timeout(2).Until(() => Drive.Db.Risk.RiskAccounts.Single(a => a.AccountId == _id));
-            
+
             switch (Config.AUT)
             {
                 case AUT.Wb:
@@ -548,26 +551,26 @@ namespace Wonga.QA.Framework
                         Drive.Db.Payments.AccountPreferences.Single(ap => ap.AccountId == _id).PaymentCardsBaseEntity);
                     break;
 
-				case AUT.Ca:
-					Do.Until(
-						() =>
-						Drive.Db.Payments.BankAccountsBases.Single(bab => bab.ExternalId == _bankAccountId));
-					break;
+                case AUT.Ca:
+                    Do.Until(
+                        () =>
+                        Drive.Db.Payments.BankAccountsBases.Single(bab => bab.ExternalId == _bankAccountId));
+                    break;
 
-				case AUT.Za:
-            		{
-						var mobilePhoneVerification = Do.Until(() => Drive.Db.Comms.MobilePhoneVerifications.Single(a => a.AccountId == _id));
+                case AUT.Za:
+                    {
+                        var mobilePhoneVerification = Do.Until(() => Drive.Db.Comms.MobilePhoneVerifications.Single(a => a.AccountId == _id));
 
-            			Drive.Api.Commands.Post(new CompleteMobilePhoneVerificationCommand
-            			                         	{
-            			                         		Pin = mobilePhoneVerification.Pin,
-            			                         		VerificationId = mobilePhoneVerification.VerificationId
-            			                         	});
-            			Do.With.Timeout(2).Until(() => Drive.Db.Comms.CustomerDetails.Single(a => a.AccountId == _id).MobilePhone);
-            		}
-            		break;
+                        Drive.Api.Commands.Post(new CompleteMobilePhoneVerificationCommand
+                                                    {
+                                                        Pin = mobilePhoneVerification.Pin,
+                                                        VerificationId = mobilePhoneVerification.VerificationId
+                                                    });
+                        Do.With.Timeout(2).Until(() => Drive.Db.Comms.CustomerDetails.Single(a => a.AccountId == _id).MobilePhone);
+                    }
+                    break;
             }
-            
+
             return new Customer(_id, _email, _bankAccountId, _bankAccountNumber);
         }
 

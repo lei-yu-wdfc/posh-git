@@ -14,9 +14,12 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Remote;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.UI.Mappings.Pages.PayLater;
 using Wonga.QA.Framework.UI.UiElements.Pages;
+using Wonga.QA.Framework.UI.UiElements.Pages.Admin;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Framework.UI.UiElements.Pages.SalesForce;
+using SubmitionPage = Wonga.QA.Framework.UI.UiElements.Pages.SubmitionPage;
 
 namespace Wonga.QA.Framework.UI
 {
@@ -49,6 +52,10 @@ namespace Wonga.QA.Framework.UI
                     return new ChromeDriver();
                 case(Config.UiConfig.BrowserType.Firefox):
                     return new FirefoxDriver();
+                case (Config.UiConfig.BrowserType.FirefoxMobile):
+                    var firefoxProfile = new FirefoxProfile();
+                    firefoxProfile.SetPreference("network.http.accept.default", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8,text/vnd.wap.wml;q=0.6");
+                    return new FirefoxDriver(firefoxProfile);
                 case(Config.UiConfig.BrowserType.InternetExplorer):
                     var ieOps = new InternetExplorerOptions();
                     ieOps.IntroduceInstabilityByIgnoringProtectedModeSettings = true;
@@ -71,6 +78,9 @@ namespace Wonga.QA.Framework.UI
                     capabilities = DesiredCapabilities.Chrome();
                     break;
                 case(Config.UiConfig.BrowserType.Firefox):
+                    capabilities = DesiredCapabilities.Firefox();
+                    break;
+                case (Config.UiConfig.BrowserType.FirefoxMobile):
                     capabilities = DesiredCapabilities.Firefox();
                     break;
                 case(Config.UiConfig.BrowserType.InternetExplorer):
@@ -102,6 +112,12 @@ namespace Wonga.QA.Framework.UI
         {
             Driver.Navigate().GoToUrl(Config.Ui.Home);
             return new HomePage(this);
+        }
+
+        public HomePageMobile MobileHome()
+        {
+            Driver.Navigate().GoToUrl(Config.Ui.Home);
+            return new HomePageMobile(this);
         }
 
         public LoginPage Login()
@@ -138,6 +154,18 @@ namespace Wonga.QA.Framework.UI
             return new HowItWorksPage(this);
         }
 
+        public PaymentCardsPage PaymentCards()
+        {
+            Driver.Navigate().GoToUrl(Config.Admin.Home + "/PaymentCards/GetList/00000000-0000-0000-0000-000000000000");
+            return new PaymentCardsPage(this);
+        }
+
+        public AccountingPage Accounting()
+        {
+            Driver.Navigate().GoToUrl(Config.Admin.Home + "/Accounting");
+            return new AccountingPage(this);
+        }
+
         public Image Screen()
         {
             if (!(Driver is ITakesScreenshot))
@@ -162,5 +190,27 @@ namespace Wonga.QA.Framework.UI
             Driver.Navigate().GoToUrl(Config.SalesforceUi.Home);
             return new SalesForceLoginPage(this);
         }
+
+        #region
+
+        public PayLaterLoginPage PayLaterStart()
+        {
+            Driver.Navigate().GoToUrl(Config.PayLaterUi.Home);
+            return new PayLaterLoginPage(this);
+        }
+
+        public SubmitionPage PayLaterSubmition()
+        {
+            Driver.Navigate().GoToUrl(Config.PayLaterUi.Home);
+            return new SubmitionPage(this);
+        }
+
+        public PayLaterThanksForm PayLaterThanks()
+        {
+            Driver.Navigate().GoToUrl(Config.PayLaterUi.Home);
+            return new PayLaterThanksForm(this);
+        }
+
+        #endregion
     }
 }

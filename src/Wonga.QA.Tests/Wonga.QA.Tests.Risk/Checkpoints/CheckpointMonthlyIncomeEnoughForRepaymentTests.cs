@@ -4,6 +4,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Data.Enums.Risk;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Tests.Core;
 
@@ -14,17 +15,21 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	{
         private const RiskMask TestMask = RiskMask.TESTMonthlyIncomeEnoughForRepayment;
 
-		[Test, AUT(AUT.Za, AUT.Uk), JIRA("SME-866")]
+		[Test, AUT(AUT.Za, AUT.Uk), JIRA("SME-866","UK-866")]
 		public void CheckpointMonthlyIncomeEnoughForRepaymentAccept()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
 
-			ApplicationBuilder.New(customer)
+			var application = ApplicationBuilder.New(customer)
 				.WithLoanAmount(GetLoanThresholdForCustomer(customer) - 1)
 				.Build();
+
+            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
+            Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
+            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.MonthlyIncomeLimitCheck));
 		}
 
-		[Test, AUT(AUT.Za, AUT.Uk), JIRA("SME-866")]
+		[Test, AUT(AUT.Za, AUT.Uk), JIRA("SME-866","UK-866")]
 		public void CheckpointMonthlyIncomeEnoughForRepaymentDecline()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();

@@ -19,14 +19,15 @@ namespace Wonga.QA.Tests.Comms.Email
 		private const string TemplateName = "34156";
 
 		[Test, AUT(AUT.Za), JIRA("ZA-2099", "ZA-2188"), Parallelizable]
-		public void WhenEarlyPartialRepaymentIsSetUpCorrectEmailIsSent()
+		public void WhenEarlyPartialRepaymentIsSetUpPartialEmailIsSent()
 		{
 			const decimal loanAmount = 1000m;
 			const int loanTerm = 30;
+			const decimal repayAmount = 900m;
+			DateTime actionDate = DateTime.Now.AddDays(20.0).GetNextWorkingDay();
+
 			var customer = CustomerBuilder.New().Build();
 			var application = BuildApplication(loanAmount, loanTerm, customer);
-			DateTime actionDate = DateTime.Now.AddDays(loanTerm/2);
-			const decimal repayAmount = loanAmount/2;
 
 			MakeEarlyRepayment(application, repayAmount, actionDate);
 
@@ -34,18 +35,35 @@ namespace Wonga.QA.Tests.Comms.Email
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-2099", "ZA-2188"), Parallelizable]
-		public void WhenEarlyFullRepaymentIsSetUpCorrectEmailIsSent()
+		public void WhenEarlyFullRepaymentIsSetUpFullEmailIsSent()
 		{
-			const decimal loanAmount = 100m;
+			const decimal loanAmount = 1000m;
 			const int loanTerm = 30;
+			const decimal repayAmount = 1280m;
+			DateTime actionDate = DateTime.Now.AddDays(20.0).GetNextWorkingDay();
+
 			var customer = CustomerBuilder.New().Build();
 			var application = BuildApplication(loanAmount, loanTerm, customer);
-			DateTime actionDate = DateTime.Now.AddDays(loanTerm - 2);
-			const decimal repayAmount = loanAmount * 2;
 
 			MakeEarlyRepayment(application, repayAmount, actionDate);
 
 			VerifyCorrectEmailIsSent(customer, actionDate, repayAmount, false);
+		}
+
+		[Test, AUT(AUT.Za), JIRA("ZA-2358"), Parallelizable]
+		public void WhenEarlyPartialRepaymentGreaterOrEqualToPrincipalIsSetUpPartialEmailIsSent()
+		{
+			const decimal loanAmount = 1000m;
+			const int loanTerm = 30;
+			const decimal repayAmount = 1100m;
+			DateTime actionDate = DateTime.Now.AddDays(20.0).GetNextWorkingDay();
+
+			var customer = CustomerBuilder.New().Build();
+			var application = BuildApplication(loanAmount, loanTerm, customer);
+
+			MakeEarlyRepayment(application, repayAmount, actionDate);
+
+			VerifyCorrectEmailIsSent(customer, actionDate, repayAmount, true);
 		}
 
 		private static Application BuildApplication(decimal loanAmount, int loanTerm, Customer customer)

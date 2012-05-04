@@ -9,6 +9,7 @@ namespace Wonga.QA.Framework.Msmq
     public partial class TakeExternalPaymentCommand : MsmqMessage<TakeExternalPaymentCommand>
     {
         public Guid AccountId { get; set; }
+        public Guid PaymentCardId { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime ExpiryDate { get; set; }
         public String IssueNo { get; set; }

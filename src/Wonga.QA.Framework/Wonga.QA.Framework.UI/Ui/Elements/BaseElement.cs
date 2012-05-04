@@ -12,7 +12,10 @@ namespace Wonga.QA.Framework.UI.Elements
         protected BaseElement(BasePage page)
         {
             Page = page;
-            MenuContent = Do.Until(() => Page.Client.Driver.FindElement(By.ClassName("menu")));
+            if (!Config.Ui.Browser.Equals(Config.UiConfig.BrowserType.FirefoxMobile))
+            {
+                MenuContent = Do.Until(() => Page.Client.Driver.FindElement(By.ClassName("menu")));
+            }
         }
     }
 }

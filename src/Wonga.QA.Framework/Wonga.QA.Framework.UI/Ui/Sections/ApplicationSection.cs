@@ -27,17 +27,20 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         {
             set
             {
-                Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.ApplicationSection.EditPin)).SendValue(value);
+                var pin =
+                    Do.Until(() => Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.ApplicationSection.EditPin)));
+                Do.Until(()=>pin.Displayed);
+                pin.SendValue(value);
             }
         }
         public ApplicationSection(BasePage page)
-            : base(Ui.Get.ApplicationSection.FormId, page)
+            : base(UiMap.Get.ApplicationSection.FormId, page)
         {
             switch (Config.AUT)
             {
                 case AUT.Uk:
-                    _securityCode = Section.FindElement(By.CssSelector(Ui.Get.ApplicationSection.SecurityCode));
-                    _minCash = Section.FindElement(By.CssSelector(Ui.Get.ApplicationSection.MinCash));
+                    _securityCode = Section.FindElement(By.CssSelector(UiMap.Get.ApplicationSection.SecurityCode));
+                    _minCash = Section.FindElement(By.CssSelector(UiMap.Get.ApplicationSection.MinCash));
                     break;
 
             }
@@ -45,7 +48,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
 
         public void ClickChangeMobileButton()
         {
-            Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.ApplicationSection.ChangeMobileButton)).Click();
+            Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.ApplicationSection.ChangeMobileButton)).Click();
         }
     }
 }

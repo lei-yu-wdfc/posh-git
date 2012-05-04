@@ -21,8 +21,8 @@ namespace Wonga.QA.Tests.Payments.Command
 	{
 		private const string BankGatewayIsTestModeKey = "BankGateway.IsTestMode";
 		private const string FeatureSwitchMoveLoanToDca = "FeatureSwitch.MoveLoanToDca";
-		private string _bankGatewayIsTestMode;
-		private string _featureSwitchMoveLoanToDcaMode;
+		private bool _bankGatewayIsTestMode;
+        //private string _featureSwitchMoveLoanToDcaMode;
 	    private dynamic _debtCollections = Drive.Data.Payments.Db.DebtCollection;
 	    private dynamic _fixedTermLoanSagas = Drive.Data.OpsSagas.Db.FixedTermLoanSagaEntity;
 	    private dynamic _externalDebtCollectionSagas = Drive.Data.OpsSagas.Db.ExternalDebtCollectionSagaEntity;
@@ -32,20 +32,13 @@ namespace Wonga.QA.Tests.Payments.Command
 		[FixtureSetUp]
 		public void FixtureSetUp()
 		{
-			_bankGatewayIsTestMode = (string)Drive.Data.Ops.Db.ServiceConfigurations.FindByKey(BankGatewayIsTestModeKey).Value;
-
-			var bankGatewayTestMode = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == BankGatewayIsTestModeKey);
-			_bankGatewayIsTestMode = bankGatewayTestMode.Value;
-			bankGatewayTestMode.Value = "false";
-			bankGatewayTestMode.Submit(true);
+			_bankGatewayIsTestMode = Drive.Data.Ops.SetServiceConfiguration(BankGatewayIsTestModeKey, false);
 		}
 
 		[FixtureTearDown]
 		public void FixtureTearDown()
 		{
-			var bankGatewayTestMode = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == BankGatewayIsTestModeKey);
-			bankGatewayTestMode.Value = _bankGatewayIsTestMode;
-			bankGatewayTestMode.Submit(true);
+			Drive.Data.Ops.SetServiceConfiguration(BankGatewayIsTestModeKey, _bankGatewayIsTestMode);
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-2147")]

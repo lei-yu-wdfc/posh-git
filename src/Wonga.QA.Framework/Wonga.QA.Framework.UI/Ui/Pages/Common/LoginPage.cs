@@ -19,10 +19,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             : base(client)
         {
 
-            _username = Content.FindElement(By.CssSelector(Ui.Get.LoginPage.Username));
-            _password = Content.FindElement(By.CssSelector(Ui.Get.LoginPage.Password));
-            _buttonLogin = Content.FindElement(By.CssSelector(Ui.Get.LoginPage.LoginButton));
-            _forgotPassword = Content.FindElement(By.CssSelector(Ui.Get.LoginPage.ForgotPassword));
+            _username = Content.FindElement(By.CssSelector(UiMap.Get.LoginPage.Username));
+            _password = Content.FindElement(By.CssSelector(UiMap.Get.LoginPage.Password));
+            _buttonLogin = Content.FindElement(By.CssSelector(UiMap.Get.LoginPage.LoginButton));
+            _forgotPassword = Content.FindElement(By.CssSelector(UiMap.Get.LoginPage.ForgotPassword));
         }
 
         public MySummaryPage LoginAs(string email)

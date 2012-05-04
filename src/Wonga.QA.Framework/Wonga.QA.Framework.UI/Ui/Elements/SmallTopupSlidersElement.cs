@@ -18,21 +18,21 @@ namespace Wonga.QA.Framework.UI.Elements
         private readonly IWebElement _grandTotalAmount;
         private readonly IWebElement _totalFees;
         private readonly IWebElement _subTotalAmount;
-        private readonly IWebElement _amountMinusButton;
-        private readonly IWebElement _amountPlusButton;
+        //private readonly IWebElement _amountMinusButton;
+        //private readonly IWebElement _amountPlusButton;
 
         public SmallTopupSlidersElement(BasePage page)
             : base(page)
         {
-            _form = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.SmallTopupSlidersElement.FormId));
-            _loanAmount = _form.FindElement(By.CssSelector(Ui.Get.SmallTopupSlidersElement.TopupLoanAmount));
-            _grandTotalAmount = _form.FindElement(By.CssSelector(Ui.Get.SmallTopupSlidersElement.TotalToRepay));
-            _totalFees = _form.FindElement(By.CssSelector(Ui.Get.SmallTopupSlidersElement.TopupFees));
-            _subTotalAmount = _form.FindElement(By.CssSelector(Ui.Get.SmallTopupSlidersElement.TopupToRepay));
-            //_loanAmount = _form.FindElement(By.CssSelector(Ui.Get.SlidersElement.LoanAmount));
-            //_totalAmount = _form.FindElement(By.CssSelector(Ui.Get.TopupRequestPage.TopupRequestPageNewCreditRequest));
-            //_totalFees = _form.FindElement(By.CssSelector(Ui.Get.TopupRequestPage.TopupRequestPageNewInterestAndFees));
-            //_totalToRepay = _form.FindElement(By.CssSelector(Ui.Get.TopupRequestPage.TopupRequestPageNewGrandTotal));
+            _form = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.SmallTopupSlidersElement.FormId));
+            _loanAmount = _form.FindElement(By.CssSelector(UiMap.Get.SmallTopupSlidersElement.TopupLoanAmount));
+            _grandTotalAmount = _form.FindElement(By.CssSelector(UiMap.Get.SmallTopupSlidersElement.TotalToRepay));
+            _totalFees = _form.FindElement(By.CssSelector(UiMap.Get.SmallTopupSlidersElement.TopupFees));
+            _subTotalAmount = _form.FindElement(By.CssSelector(UiMap.Get.SmallTopupSlidersElement.TopupToRepay));
+            //_loanAmount = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.LoanAmount));
+            //_totalAmount = _form.FindElement(By.CssSelector(UiMap.Get.TopupRequestPage.TopupRequestPageNewCreditRequest));
+            //_totalFees = _form.FindElement(By.CssSelector(UiMap.Get.TopupRequestPage.TopupRequestPageNewInterestAndFees));
+            //_totalToRepay = _form.FindElement(By.CssSelector(UiMap.Get.TopupRequestPage.TopupRequestPageNewGrandTotal));
             
         }
 

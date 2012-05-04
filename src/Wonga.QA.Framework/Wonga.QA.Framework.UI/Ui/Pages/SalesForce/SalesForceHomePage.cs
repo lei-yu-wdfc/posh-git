@@ -16,8 +16,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.SalesForce
         public SalesForceHomePage(UiClient client)
             : base(client)
         {
-            _searchbox = Client.Driver.FindElement(By.CssSelector(Ui.Get.SalesForceHomePage.SearchBox));
-            _searchbutton = Client.Driver.FindElement(By.CssSelector(Ui.Get.SalesForceHomePage.SearchButton));
+            _searchbox = Client.Driver.FindElement(By.CssSelector(UiMap.Get.SalesForceHomePage.SearchBox));
+            _searchbutton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.SalesForceHomePage.SearchButton));
         }
 
         public SalesForceSearchResultPage FindCustomerByMail(string mail)

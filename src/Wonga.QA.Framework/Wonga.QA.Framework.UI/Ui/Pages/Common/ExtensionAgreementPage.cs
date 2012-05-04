@@ -9,11 +9,13 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private IWebElement _nextButton;
         private IWebElement _agreementLegals;
 
-        public ExtensionAgreementPage(UiClient client) : base(client)
+        public ExtensionAgreementPage(UiClient client)
+            : base(client)
         {
+
+            _nextButton = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.ExtensionAgreementAcceptButton));
+            _agreementLegals = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.ExtensionAgreementscroll));
             
-            _nextButton = Content.FindElement(By.CssSelector(Ui.Get.ExtensionAgreementPage.ExtensionAgreementAcceptButton));
-            _agreementLegals = Content.FindElement(By.CssSelector(Ui.Get.ExtensionAgreementPage.ExtensionAgreementscroll));
         }
 
         public bool IsExtensionAgreementPageLegalInfoDisplayed()
@@ -28,8 +30,5 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _nextButton.Click();
             return new ExtensionDealDonePage(Client);
         }
-        
-
     }
-
 }

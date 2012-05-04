@@ -23,7 +23,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 			Customer cust = customerBuilder.Build();
 
 			Application app = ApplicationBuilder.New(cust)
-				.WithIovationBlackBox(_builderConfig.IovationBlackBox.ToString())
+				.WithIovationBlackBox(_builderConfig.IovationBlackBox)
 				.WithExpectedDecision(_builderConfig.ExpectedDecisionStatus).Build();
 
 			AssertCheckpointAndVerifications(expectedStatus, expectedVerificationNames, checkpointDefinition, app);

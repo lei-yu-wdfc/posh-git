@@ -42,7 +42,7 @@ namespace Wonga.QA.Framework.UI
             personalDetailsPage.YourName.LastName = LastName;
             personalDetailsPage.YourName.Title = "Mr";
         	personalDetailsPage.YourDetails.Number = NationalId.ToString();//"5710300020087";
-        	personalDetailsPage.YourDetails.DateOfBirth = DateOfBirth.ToString("dd/MMM/yyyy");
+        	personalDetailsPage.YourDetails.DateOfBirth = DateOfBirth.ToString("d/MMM/yyyy");
             personalDetailsPage.YourDetails.Gender = "Female";
             personalDetailsPage.YourDetails.HomeStatus = "Owner Occupier";
             personalDetailsPage.YourDetails.HomeLanguage = "English";
@@ -57,7 +57,7 @@ namespace Wonga.QA.Framework.UI
             personalDetailsPage.EmploymentDetails.TimeWithEmployerMonths = "5";
             personalDetailsPage.EmploymentDetails.WorkPhone = "0123456789";
             personalDetailsPage.EmploymentDetails.SalaryPaidToBank = true;
-            personalDetailsPage.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("dd MMM yyyy");
+            personalDetailsPage.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d/MMM/yyyy");
             personalDetailsPage.EmploymentDetails.IncomeFrequency = "Monthly";
         	personalDetailsPage.ContactingYou.CellPhoneNumber = Get.GetMobilePhone();
             personalDetailsPage.ContactingYou.EmailAddress = email;

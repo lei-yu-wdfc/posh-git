@@ -17,9 +17,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.SalesForce
         public SalesForceLoginPage(UiClient client)
             : base(client)
         {
-            _username = Client.Driver.FindElement(By.CssSelector(Ui.Get.SalesForceLoginPage.Username));
-            _password = Client.Driver.FindElement(By.CssSelector(Ui.Get.SalesForceLoginPage.Password));
-            _buttonLogin = Client.Driver.FindElement(By.CssSelector(Ui.Get.SalesForceLoginPage.LoginButton));
+            _username = Client.Driver.FindElement(By.CssSelector(UiMap.Get.SalesForceLoginPage.Username));
+            _password = Client.Driver.FindElement(By.CssSelector(UiMap.Get.SalesForceLoginPage.Password));
+            _buttonLogin = Client.Driver.FindElement(By.CssSelector(UiMap.Get.SalesForceLoginPage.LoginButton));
         }
 
         public SalesForceHomePage LoginAs(string username, string password)

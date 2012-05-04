@@ -11,7 +11,7 @@ namespace Wonga.QA.Framework.UI.Elements
 {
     public class SurveyElement : BaseElement
     {
-        private IWebElement _surveyBox;
+        //private IWebElement _surveyBox;
 
         public SurveyElement(BasePage page) : base(page)
         {
@@ -20,7 +20,7 @@ namespace Wonga.QA.Framework.UI.Elements
 
         public bool IsVisible
         {
-            get { return  Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.SurveyElement.SurveyBox)).Displayed; }
+            get { return  Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.SurveyElement.SurveyBox)).Displayed; }
         }
     }
 

@@ -65,8 +65,7 @@ GOTO MENU
 
 :6
 	SET /P Origin=Path to v3 [..\v3]: 
-	CHOICE /C ACMD /M "Api, Cs, Msmq or Db"	
-	IF ERRORLEVEL 4 CALL :GENERATE Db
+	CHOICE /C ACM /M "Api, Cs or Msmq"	
 	IF ERRORLEVEL 3 CALL :GENERATE Msmq
 	IF ERRORLEVEL 2 CALL :GENERATE Cs
 	IF ERRORLEVEL 1 CALL :GENERATE Api
@@ -84,7 +83,7 @@ GOTO EOF
 
 :GENERATE
 	%MsBuild% %Src%\Wonga.QA.Generators\Wonga.QA.Generators.sln /v:m || PAUSE
-	%Bin%\Wonga.QA.Generators\Wonga.QA.Generators.%1.exe %Origin%
+	%Bin%\Wonga.QA.Generators.%1.exe %Origin%
 GOTO EOF
 
 :EOF

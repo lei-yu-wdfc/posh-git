@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Mappings;
 using Wonga.QA.Framework.UI.Mappings.Content.Agreements;
+using Wonga.QA.Framework.UI.Mappings.Content.Elements;
 
 namespace Wonga.QA.Framework.UI
 {
@@ -13,16 +15,21 @@ namespace Wonga.QA.Framework.UI
     {
         private static Dictionary<CultureInfo, Content> Contents = new Dictionary<CultureInfo, Content>();
         private static object _lock = new object();
+        private static CultureInfo _cultureInfo;
 
-        public static Content Get(CultureInfo cultureInfo)
+        public static Content Get
         {
-            lock(_lock)
+            get
             {
-                if (!Contents.ContainsKey(cultureInfo))
-                    Contents.Add(cultureInfo, new Content(cultureInfo));
-            }
+                lock (_lock)
+                {
+                    _cultureInfo = CultureInfo.GetCultureInfo("en-US");//Thread.CurrentThread.CurrentUICulture);
+                    if (!Contents.ContainsKey(_cultureInfo))
+                        Contents.Add(_cultureInfo, new Content(_cultureInfo));
+                }
 
-            return Contents[cultureInfo];
+                return Contents[_cultureInfo];
+            }
         }
 
         private string _xmlFileName;
@@ -33,13 +40,17 @@ namespace Wonga.QA.Framework.UI
             _xmlFileName =
                 string.Format(string.Format("Wonga.QA.Framework.UI.Mappings.Xml.Content.{0}.{1}.xml", Config.AUT,
                                             cultureInfo.TwoLetterISOLanguageName));
-            _xmlMapper = new XmlMapper(null, _xmlFileName);
+            _xmlMapper = new XmlMapper(_xmlFileName, _xmlFileName);
             _xmlMapper.GetValues(this, null);
         }
 
 #region Content
         public string YourDetails { get; set; }
+        public String ProblemProcessingDetailsMessage { get; set; }
+        public String PasswordWarningMessage { get; set; }
+        public String ApplicationErrorMessage { get; set; }
         public LoanAgreement LoanAgreement { get; set; }
+        public TabsElementMobile TabsElementMobile { get; set; }
 #endregion
     }
 }

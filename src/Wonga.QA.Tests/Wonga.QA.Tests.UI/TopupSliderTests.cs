@@ -25,9 +25,9 @@ namespace Wonga.QA.Tests.Ui
     {
         private int _amountMax;
         private int _amountMin;
-        private string _repaymentDate;
+        //private string _repaymentDate;
         private ApiResponse _response;
-        private DateTime _actualDate;
+        //private DateTime _actualDate;
        
         
         [Test, AUT(AUT.Uk), JIRA("UK-826", "UK-789")]

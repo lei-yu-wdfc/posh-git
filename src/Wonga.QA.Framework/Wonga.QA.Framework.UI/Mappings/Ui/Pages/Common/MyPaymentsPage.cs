@@ -13,5 +13,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String PopupExeption { get; set; }
         public String AccountNumber { get; set; }
         public String PopupBankAccountException { get; set; }
+        public String PopupSuccessTitle { get; set; }
     }
 }

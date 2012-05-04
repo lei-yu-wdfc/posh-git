@@ -71,16 +71,18 @@ namespace Wonga.QA.Tests.Payments.Helpers
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
 
+            Drive.Msmq.Payments.Send(new ICreditLimitChangedEvent() {AccountId = accountId, CreatedOn = DateTime.UtcNow, CreditLimit = 400.00M});
+
             Guid id = appId;
             // Check App Exists in DB
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == id));
-
+            Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == id));
+            
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
             Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             
             // Check App Exists in DB
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == id && a.SignedOn != null && a.AcceptedOn != null));
+            Do.With.Message("Signed and accepted application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == id && a.SignedOn != null && a.AcceptedOn != null));
             
             // Go to DB and set Application to closed
             ApplicationEntity app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == id);
@@ -98,6 +100,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
+            Drive.Msmq.Payments.Send(new ICreditLimitChangedEvent() { AccountId = accountId, CreatedOn = DateTime.UtcNow, CreditLimit = 400.00M });
 
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
@@ -106,7 +109,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
             // Check App Exists in DB
             var db = Drive.Data.Payments.Db.Applications;
-            Do.With.Interval(1).Until(() => db.Applications.Find(db.ExternalId == appId && db.SignedOn != null && db.AcceptedOn != null));
+            Do.With.Message("Signed and accepted application {0} was not found in DB.", appId).Interval(1).Until(() => db.Applications.Find(db.ExternalId == appId && db.SignedOn != null && db.AcceptedOn != null));
 
             // Alter NextDueDate & AcceptedOn
             var app = new Application(appId);
@@ -114,7 +117,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
             // Check transactions have been created
             var application = Drive.Data.Payments.Db.Applications.FindByExternalId(appId);
-            Do.With.Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 2);
+            Do.With.Message("Transactions for application {0} were not created.", appId).Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 2);
         }
 
         public void Scenario03Setup(Guid appId, Guid paymentCardId, Guid bankAccountId, Guid accountId, decimal trustRating)
@@ -127,13 +130,14 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
+            Drive.Msmq.Payments.Send(new ICreditLimitChangedEvent() { AccountId = accountId, CreatedOn = DateTime.UtcNow, CreditLimit = 400.00M });
 
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
             Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
-            Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
+            Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
 
             // Alter NextDueDate & AcceptedOn
             var app = new Application(appId);
@@ -142,7 +146,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             // Check transactions have been created
             var application = Drive.Data.Payments.Db.Applications.FindByExternalId(appId);
             Do.With
-                .Message(() => String.Format("there are currently {0} trans", Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count()))
+                .Message(() => String.Format("There are currently {0} transactions for application {1}", Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count(), appId))
                 .Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 2);
         }
 
@@ -155,16 +159,17 @@ namespace Wonga.QA.Tests.Payments.Helpers
             
             // Create Account so that time zone can be looked up
             Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
-
+            
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
+            Drive.Msmq.Payments.Send(new ICreditLimitChangedEvent() { AccountId = accountId, CreatedOn = DateTime.UtcNow, CreditLimit = 400.00M });
 
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
             Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
-            Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
+            Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
 
             CreateExtensionFeeTransaction(appId);
             CreateExtensionFeeTransaction(appId);
@@ -176,7 +181,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
             // Check transactions have been created
             var application = Drive.Data.Payments.Db.Applications.FindByExternalId(appId);
-            Do.With.Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 5);
+            Do.With.Message("Transactions for application {0} were not created.", appId).Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 5);
         }
 
         /// <summary>
@@ -191,20 +196,21 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
+            Drive.Msmq.Payments.Send(new ICreditLimitChangedEvent() { AccountId = accountId, CreatedOn = DateTime.UtcNow, CreditLimit = 400.00M });
 
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
             Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
-            Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
+            Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
 
             // Alter NextDueDate & AcceptedOn
             MakeAppDueToday(appId);
 
             // Check transactions have been created
             var application = Drive.Data.Payments.Db.Applications.FindByExternalId(appId);
-            Do.With.Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 2);
+            Do.With.Message("Transactions for application {0} were not created.", appId).Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 2);
         }
 
         /// <summary>
@@ -219,20 +225,21 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
+            Drive.Msmq.Payments.Send(new ICreditLimitChangedEvent() { AccountId = accountId, CreatedOn = DateTime.UtcNow, CreditLimit = 400.00M });
 
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
             Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
-            Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
-
+            Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
+            
             // Alter NextDueDate & AcceptedOn
             MakeAppDueYesterday(appId);
 
             // Check transactions have been created
             var application = Drive.Data.Payments.Db.Applications.FindByExternalId(appId);
-            Do.With.Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 2);
+            Do.With.Message("Transactions for application {0} were not created.", appId).Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 2);
         }
 
         public void Scenario05Setup(Guid paymentCardId, Guid appId, Guid bankAccountId, Guid accountId, decimal trustRating)
@@ -250,7 +257,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
-            Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
+            Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
 
             // Alter NextDueDate & AcceptedOn
             var app = new Application(appId);
@@ -259,7 +266,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
             // Check transactions have been created
             var application = Drive.Data.Payments.Db.Applications.FindByExternalId(appId);
-            Do.With.Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 2);
+            Do.With.Message("Transactions for application {0} were not created.", appId).Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 2);
         }
 
         public void Scenario06Setup(Guid appId, Guid paymentCardId, Guid bankAccountId, Guid accountId, decimal trustRating)
@@ -277,7 +284,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
-            Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
+            Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
 
             // Alter NextDueDate & AcceptedOn
             var app = new Application(appId);
@@ -306,7 +313,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
-            Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
+            Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
 
             // Alter NextDueDate & AcceptedOn
             var app = new Application(appId);
@@ -335,7 +342,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
-            Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
+            Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
 
             // Check transactions have been created
             var application = Drive.Data.Payments.Db.Applications.FindByExternalId(appId);
@@ -363,18 +370,18 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
             Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
+            Do.With.Message("Signed and accepted application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
 
             // Check transactions have been created
             var application = Drive.Data.Payments.Db.Applications.FindByExternalId(appId);
-            Do.With.Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 2);
+            Do.With.Message("Transactions for application {0} were not created.", appId).Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 2);
 
             // Send command to create scheduled payment request
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
 
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
+            Do.With.Message("Repayment requests for request 1 {0} were not found.", requestId1).Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
+            Do.With.Message("Repayment requests for request 2 {0} were not found.", requestId2).Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
 
             // Go to DB and set Application NextDueDate to today.
             var app = new Application(appId);
@@ -413,9 +420,9 @@ namespace Wonga.QA.Tests.Payments.Helpers
             // Send command to create scheduled payment request
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
-            
-            Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.RepaymentRequests.FindByExternalId(requestId1));
-            Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.RepaymentRequests.FindByExternalId(requestId2));
+
+            Do.With.Message("Repayment requests for request 1 {0} were not found.", requestId1).Interval(1).Until(() => Drive.Data.Payments.Db.RepaymentRequests.FindByExternalId(requestId1));
+            Do.With.Message("Repayment requests for request 2 {0} were not found.", requestId2).Interval(1).Until(() => Drive.Data.Payments.Db.RepaymentRequests.FindByExternalId(requestId2));
 
             // Go to DB and set Application NextDueDate to yesterday.
             MakeAppDueYesterday(appId);
@@ -435,21 +442,21 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
+            Do.With.Message("Signed and accepted application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
 
             // Create transactions & Check transactions have been created
             CreateMissedPaymentChargeTransaction(appId);
 
             // Check transactions have been created
             var application = Drive.Data.Payments.Db.Applications.FindByExternalId(appId);
-            Do.With.Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 3);
+            Do.With.Message("Transactions for application {0} were not created.", appId).Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 3);
 
             // Send command to create scheduled payment request
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
 
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
+            Do.With.Message("Repayment requests for request 1 {0} were not found.", requestId1).Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
+            Do.With.Message("Repayment requests for request 2 {0} were not found.", requestId2).Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
 
             // Go to DB and set Application NextDueDate to 3 days ago.
             UpdateNextDueDate(appId, -3);
@@ -463,27 +470,28 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
             // Create Application & Check it Exists in DB
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
-            Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
+            Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
 
             // Set SignedOn + AcceptedOn & check statuses have been updated
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
             Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
+            Do.With.Message("Signed and accepted application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
 
             // Create transactions & Check transactions have been created
             CreateMissedPaymentChargeTransaction(appId);
 
             // Check transactions have been created
             var application = Drive.Data.Payments.Db.Applications.FindByExternalId(appId);
-            Do.With.Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 3);
+            Do.With.Message(() => String.Format("There are currently {0} transactions for application {1}", Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count(), appId))
+                .Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 3);
 
             // Send command to create scheduled payment request
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
 
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
+            Do.With.Message("Repayment requests for request 1 {0} were not found.", requestId1).Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
+            Do.With.Message("Repayment requests for request 2 {0} were not found.", requestId2).Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
 
             // Go to DB and set Application NextDueDate to 31 days ago.
             UpdateNextDueDate(appId, -31);
@@ -497,27 +505,28 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
             // Create Application & Check it Exists in DB
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
-            Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
+            Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
 
             // Set SignedOn + AcceptedOn & check statuses have been updated
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
             Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
+            Do.With.Message("Signed and accepted application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
 
             // Create transactions & Check transactions have been created
             CreateMissedPaymentChargeTransaction(appId);
 
             // Check transactions have been created
             var application = Drive.Data.Payments.Db.Applications.FindByExternalId(appId);
-            Do.With.Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 3);
+            Do.With.Message(() => String.Format("There are currently {0} transactions for application {1}", Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count(), appId))
+                .Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 3);
 
             // Send command to create scheduled payment request
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
 
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
+            Do.With.Message("Repayment requests for request 1 {0} were not found.", requestId1).Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
+            Do.With.Message("Repayment requests for request 2 {0} were not found.", requestId2).Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
 
             // Go to DB and set Application NextDueDate to yesterday.
             ApplicationEntity app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId);
@@ -534,28 +543,29 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
             // Create Application & Check it Exists in DB
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
-            Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
+            Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
 
             // Set SignedOn + AcceptedOn & check statuses have been updated
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
             Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-            
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
+
+            Do.With.Message("Signed and accepted application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
 
             // Create transactions & Check transactions have been created
             CreateMissedPaymentChargeTransaction(appId);
 
             // Check transactions have been created
             var application = Drive.Data.Payments.Db.Applications.FindByExternalId(appId);
-            Do.With.Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 3);
+            Do.With.Message(() => String.Format("There are currently {0} transactions for application {1}", Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count(), appId))
+                .Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 3);
 
             // Send command to create scheduled payment request
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
 
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
+            Do.With.Message("Repayment requests for request 1 {0} were not found.", requestId1).Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
+            Do.With.Message("Repayment requests for request 2 {0} were not found.", requestId2).Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
 
             // Go to DB and set Application NextDueDate to yesterday.
             ApplicationEntity app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId);
@@ -571,7 +581,13 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 PaymentTransactionType = PaymentTransactionEnum.CardPayment,
                 ReferenceId = Guid.NewGuid()
             });
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.Arrears.Single(a => a.ApplicationId == applicationId));
+            Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Db.Payments.Arrears.Single(a => a.ApplicationId == applicationId));
+
+            // Make arrears old enough for Repayment Arrangement
+            var cfg = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Payments.InArrearsMinDays");
+            int days = (int.Parse(cfg.Value) + 1)*-1;
+            DateTime arrearsDate = DateTime.UtcNow.AddDays(days);
+            Drive.Data.Payments.Db.Arrears.UpdateByApplicationId(ApplicationId: applicationId, CreatedOn: arrearsDate);
 
             // Create Repayment Arrangement
             var dateTimes = new DateTime[]
@@ -586,38 +602,39 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 RepaymentDates = dateTimes,
                 CreatedOn = DateTime.UtcNow
             });
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentArrangements.Single(a => a.ApplicationId == applicationId));
+            Do.With.Message("Repayment arrangements for application {0} were not found.", applicationId).Interval(1).Until(() => Drive.Db.Payments.RepaymentArrangements.Single(a => a.ApplicationId == applicationId));
         }
 
         public void Scenario15Setup(Guid requestId1, Guid requestId2, int applicationId, Guid accountId, Guid appId,Guid paymentCardId, Guid bankAccountId)
         {
             // Create Account so that time zone can be looked up
             Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
+            Do.With.Message("Account {0} was not found in DB.", accountId).Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
 
             // Create Application & Check it Exists in DB
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
-            Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
+            Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
 
             // Set SignedOn + AcceptedOn & check statuses have been updated
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
             Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
+            Do.With.Message("Signed and accepted application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
 
             // Create transactions & Check transactions have been created
             CreateMissedPaymentChargeTransaction(appId);
 
             // Check transactions have been created
             var application = Drive.Data.Payments.Db.Applications.FindByExternalId(appId);
-            Do.With.Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 3);
+            Do.With.Message(() => String.Format("There are currently {0} transactions for application {1}", Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count(), appId))
+                .Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 3);
 
             // Send command to create scheduled payment request
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
 
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
+            Do.With.Message("Repayment requests for request 1 {0} were not found.", requestId1).Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
+            Do.With.Message("Repayment requests for request 2 {0} were not found.", requestId2).Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
 
             // Go to DB and set Application NextDueDate to yesterday.
             ApplicationEntity app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId);
@@ -634,7 +651,14 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 PaymentTransactionType = PaymentTransactionEnum.CardPayment,
                 ReferenceId = Guid.NewGuid()
             });
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.Arrears.Single(a => a.ApplicationId == applicationId));
+            Do.With.Message("Payment in arrears for application {0} was not found.", applicationId).Interval(1).Until(() => Drive.Db.Payments.Arrears.Single(a => a.ApplicationId == applicationId));
+
+            // Make arrears old enough for Repayment Arrangement
+            var cfg = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Payments.InArrearsMinDays");
+            int days = (int.Parse(cfg.Value) + 1) * -1;
+            DateTime arrearsDate = DateTime.UtcNow.AddDays(days);
+            Drive.Data.Payments.Db.Arrears.UpdateByApplicationId(ApplicationId: applicationId, CreatedOn: arrearsDate);
+
 
             // Create Repayment Arrangement
             DateTime dueDate = DateTime.UtcNow.AddDays(10).Date;
@@ -651,7 +675,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 CreatedOn = DateTime.UtcNow
             });
 
-            RepaymentArrangementEntity ra = Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentArrangements.Single(a => a.ApplicationId == applicationId));
+            RepaymentArrangementEntity ra = Do.With.Message("Repayment arrangements for application {0} were not found.", applicationId).Interval(1).Until(() => Drive.Db.Payments.RepaymentArrangements.Single(a => a.ApplicationId == applicationId));
 
             // Put Repayment Arrangement into a state of missed payment
             RepaymentArrangementDetailEntity ras = Drive.Db.Payments.RepaymentArrangementDetails.Single(itm => itm.RepaymentArrangementId == ra.RepaymentArrangementId && itm.DueDate == dueDate);
@@ -664,31 +688,32 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
             // Create Account so that time zone can be looked up
             Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
+            Do.With.Message("Account {0} was not found in DB.", accountId).Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
 
             // Create Application & Check it Exists in DB
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
-            Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
+            Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
 
             // Set SignedOn + AcceptedOn & check statuses have been updated
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
             Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
+            Do.With.Message("Signed and accepted application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
 
             // Create transactions & Check transactions have been created
             CreateMissedPaymentChargeTransaction(appId);
 
             // Check transactions have been created
             var application = Drive.Data.Payments.Db.Applications.FindByExternalId(appId);
-            Do.With.Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 3);
+            Do.With.Message(() => String.Format("There are currently {0} transactions for application {1}", Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count(), appId))
+                .Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 3);
 
             // Send command to create scheduled payment request
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
 
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
+            Do.With.Message("Repayment requests for request 1 {0} were not found.", requestId1).Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
+            Do.With.Message("Repayment requests for request 2 {0} were not found.", requestId2).Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
 
             // Go to DB and set Application NextDueDate to yesterday.
             ApplicationEntity app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId);
@@ -705,7 +730,14 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 PaymentTransactionType = PaymentTransactionEnum.CardPayment,
                 ReferenceId = Guid.NewGuid()
             });
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.Arrears.Single(a => a.ApplicationId == applicationId));
+            Do.With.Message("Payment in arrears for application {0} was not found.", applicationId).Interval(1).Until(() => Drive.Db.Payments.Arrears.Single(a => a.ApplicationId == applicationId));
+
+            // Make arrears old enough for Repayment Arrangement
+            var cfg = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Payments.InArrearsMinDays");
+            int days = (int.Parse(cfg.Value) + 1) * -1;
+            DateTime arrearsDate = DateTime.UtcNow.AddDays(days);
+            Drive.Data.Payments.Db.Arrears.UpdateByApplicationId(ApplicationId: applicationId, CreatedOn: arrearsDate);
+
 
             // Create Repayment Arrangement
             DateTime dueDate = DateTime.UtcNow.AddDays(10).Date;
@@ -723,7 +755,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             });
 
             // Set Repayment Arrangement to Broken
-            RepaymentArrangementEntity ra = Do.With.Interval(1).Until(() => Drive.Db.Payments.RepaymentArrangements.Single(a => a.ApplicationId == applicationId));
+            RepaymentArrangementEntity ra = Do.With.Message("Repayment arrangements for application {0} were not found.", applicationId).Interval(1).Until(() => Drive.Db.Payments.RepaymentArrangements.Single(a => a.ApplicationId == applicationId));
             ra.IsBroken = true;
             ra.Submit();
 
@@ -733,11 +765,11 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
             // Create Account so that time zone can be looked up
             Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
+            Do.With.Message("Account {0} was not found in DB.", accountId).Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
 
             // Create Application & Check it Exists in DB
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
-            Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
+            Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
 
         }
 
@@ -745,15 +777,15 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
             // Create Account so that time zone can be looked up
             Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
+            Do.With.Message("Account {0} was not found in DB.", accountId).Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
 
             // Create Application & Check it Exists in DB
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
-            Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
+            Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
 
             // Set DeclinedOn & check status has been updated
             Drive.Msmq.Payments.Send(new IApplicationDeclinedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.UtcNow, FailedCheckpointName = "Test"});
-            Do.With.Interval(1).Until(() =>Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.DeclinedOn != null));
+            Do.With.Message("Declined application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.DeclinedOn != null));
 
         }
 
@@ -761,15 +793,15 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
             // Create Account so that time zone can be looked up
             Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
+            Do.With.Message("Account {0} was not found in DB.", accountId).Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
 
             // Create Application & Check it Exists in DB
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
-            Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
+            Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
 
             // Set AcceptedOn & check status has been updated
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.UtcNow});
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.AcceptedOn != null));
+            Do.With.Message("Accepted application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.AcceptedOn != null));
 
         }
 
@@ -795,7 +827,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 AccountNumber = "10032650",
                 AccountOpenDate = DateTime.UtcNow.AddYears(-3),
                 BankAccountId = bankAccountId,
-                BankCode = "101627",
+                BankCode = "161027",
                 BankName = "Royal Bank of Scotland",
                 HolderName = "Mr Test Test",
                 CountryCode = "UK",

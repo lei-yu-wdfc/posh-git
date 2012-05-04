@@ -60,6 +60,21 @@ namespace Wonga.QA.Tests.Ui
                                  .CurrentPage as ProcessingPage;
             var declinedPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
         }
+
+        [Test, AUT(AUT.Za), JIRA("QA-278"), Category(TestCategories.Smoke)]
+        public void ZaDeclinedPageContainsHeaderLinks()
+        {
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var processingPage = journey.ApplyForLoan(200, 10)
+                                 .FillPersonalDetails()
+                                 .FillAddressDetails()
+                                 .FillAccountDetails()
+                                 .FillBankDetails()
+                                 .CurrentPage as ProcessingPage;
+
+            var declinedPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
+            declinedPage.LookForHeaderLinks();
+        }
     }
 
 }

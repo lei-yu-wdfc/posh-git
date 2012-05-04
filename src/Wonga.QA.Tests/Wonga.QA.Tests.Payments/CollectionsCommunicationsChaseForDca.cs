@@ -44,7 +44,7 @@ namespace Wonga.QA.Tests.Payments
             var emailTokens = GetEmailTokens(customer, SendCollectionsReminderA2Email);
 
             Assert.IsFalse(emailTokens.Count == 0, "Could not find email for template {0}", SendCollectionsReminderA2Email);
-            Assert.IsTrue(emailTokens.Count == 3);
+            
             Assert.IsTrue(emailTokens[0].Value == customerForename);
             Assert.IsTrue(emailTokens[1].Value == amount, "{0} is not equal to {1}", emailTokens[1].Value, amount);
             Assert.IsTrue(emailTokens[2].Value == customer.Email);
@@ -67,7 +67,7 @@ namespace Wonga.QA.Tests.Payments
             var emailTokens = GetEmailTokens(customer, SendCollectionsReminderA3Email);
 
             Assert.IsFalse(emailTokens.Count == 0, "Could not find email for template {0}", SendCollectionsReminderA3Email);
-            Assert.IsTrue(emailTokens.Count == 3);
+            
             Assert.IsTrue(emailTokens[0].Value == customerForename);
             Assert.IsTrue(emailTokens[1].Value == amount, "{0} is not equal to {1}", emailTokens[1].Value, amount);
             Assert.IsTrue(emailTokens[2].Value == customer.Email);
@@ -90,7 +90,7 @@ namespace Wonga.QA.Tests.Payments
             var emailTokens = GetEmailTokens(customer, SendCollectionsReminderA4Email);
 
             Assert.IsFalse(emailTokens.Count == 0, "Could not find email for template {0}", SendCollectionsReminderA4Email);
-            Assert.IsTrue(emailTokens.Count == 3);
+            
             Assert.IsTrue(emailTokens[0].Value == customerForename);
             Assert.IsTrue(emailTokens[1].Value == amount, "{0} is not equal to {1}", emailTokens[1].Value, amount);
             Assert.IsTrue(emailTokens[2].Value == customer.Email);
@@ -113,7 +113,7 @@ namespace Wonga.QA.Tests.Payments
             var emailTokens = GetEmailTokens(customer, SendCollectionsReminderA5Email);
 
             Assert.IsFalse(emailTokens.Count == 0, "Could not find email for template {0}", SendCollectionsReminderA5Email);
-            Assert.IsTrue(emailTokens.Count == 3);
+            
             Assert.IsTrue(emailTokens[0].Value == customerForename);
             Assert.IsTrue(emailTokens[1].Value == amount, "{0} is not equal to {1}", emailTokens[1].Value, amount);
             Assert.IsTrue(emailTokens[2].Value == customer.Email);
@@ -136,7 +136,7 @@ namespace Wonga.QA.Tests.Payments
             var emailTokens = GetEmailTokens(customer, SendCollectionsReminderA6Email);
 
             Assert.IsFalse(emailTokens.Count == 0, "Could not find email for template {0}", SendCollectionsReminderA6Email);
-            Assert.IsTrue(emailTokens.Count == 3);
+            
             Assert.IsTrue(emailTokens[0].Value == customerForename);
             Assert.IsTrue(emailTokens[1].Value == amount, "{0} is not equal to {1}", emailTokens[1].Value, amount);
             Assert.IsTrue(emailTokens[2].Value == customer.Email);
@@ -171,7 +171,7 @@ namespace Wonga.QA.Tests.Payments
             var emailTokens = GetEmailTokens(customer, SendCollectionsReminderA2Email);
 
             Assert.IsFalse(emailTokens.Count == 0, "Could not find email for template {0}", SendCollectionsReminderA2Email);
-            Assert.IsTrue(emailTokens.Count == 3);
+            
             Assert.IsTrue(emailTokens[0].Value == customerForename);
             Assert.IsTrue(emailTokens[1].Value == amount, "{0} is not equal to {1}", emailTokens[1].Value, amount);
             Assert.IsTrue(emailTokens[2].Value == customer.Email);

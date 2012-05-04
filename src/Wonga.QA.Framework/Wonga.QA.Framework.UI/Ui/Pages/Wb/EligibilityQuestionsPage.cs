@@ -26,23 +26,27 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
         public Boolean CheckTurnover { set { _turnover.Toggle(value); } }
         public Boolean CheckVat { set { _vat.Toggle(value); } }
         public Boolean CheckOnlineAccess { set { _onlineAccess.Toggle(value); } }
-        public Boolean CheckGuarantee { set { _guarantee.Toggle(value); } }
+        public Boolean CheckGuarantee
+        {
+            get { return _guarantee.Selected; }
+            set { _guarantee.Toggle(value); }
+        }
         public Boolean CheckDebitCard { set { _debitCard.Toggle(value); } }
 
         public EligibilityQuestionsPage(UiClient client)
             : base(client)
         {
-            _form = Content.FindElement(By.CssSelector(Ui.Get.EligibilityQuestionsPage.FormId));
+            _form = Content.FindElement(By.CssSelector(UiMap.Get.EligibilityQuestionsPage.FormId));
 
-            _director = _form.FindElement(By.CssSelector(Ui.Get.EligibilityQuestionsPage.CheckDirector));
-            _resident = _form.FindElement(By.CssSelector(Ui.Get.EligibilityQuestionsPage.CheckResident));
-            _activeCompany = _form.FindElement(By.CssSelector(Ui.Get.EligibilityQuestionsPage.CheckActiveCompany));
-            _turnover = _form.FindElement(By.CssSelector(Ui.Get.EligibilityQuestionsPage.CheckTurnover));
-            _vat = _form.FindElement(By.CssSelector(Ui.Get.EligibilityQuestionsPage.CheckVat));
-            _onlineAccess = _form.FindElement(By.CssSelector(Ui.Get.EligibilityQuestionsPage.CheckOnlineAccess));
-            _guarantee = _form.FindElement(By.CssSelector(Ui.Get.EligibilityQuestionsPage.CheckGuarantee));
-            _debitCard = _form.FindElement(By.CssSelector(Ui.Get.EligibilityQuestionsPage.CheckDebitCard));
-            _next = _form.FindElement(By.CssSelector(Ui.Get.EligibilityQuestionsPage.NextButton));
+            _director = _form.FindElement(By.CssSelector(UiMap.Get.EligibilityQuestionsPage.CheckDirector));
+            _resident = _form.FindElement(By.CssSelector(UiMap.Get.EligibilityQuestionsPage.CheckResident));
+            _activeCompany = _form.FindElement(By.CssSelector(UiMap.Get.EligibilityQuestionsPage.CheckActiveCompany));
+            _turnover = _form.FindElement(By.CssSelector(UiMap.Get.EligibilityQuestionsPage.CheckTurnover));
+            _vat = _form.FindElement(By.CssSelector(UiMap.Get.EligibilityQuestionsPage.CheckVat));
+            _onlineAccess = _form.FindElement(By.CssSelector(UiMap.Get.EligibilityQuestionsPage.CheckOnlineAccess));
+            _guarantee = _form.FindElement(By.CssSelector(UiMap.Get.EligibilityQuestionsPage.CheckGuarantee));
+            _debitCard = _form.FindElement(By.CssSelector(UiMap.Get.EligibilityQuestionsPage.CheckDebitCard));
+            _next = _form.FindElement(By.CssSelector(UiMap.Get.EligibilityQuestionsPage.NextButton));
         }
 
         public PersonalDetailsPage Submit()

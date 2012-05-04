@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using OpenQA.Selenium;
@@ -59,19 +60,19 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public PersonalDetailsPage(UiClient client)
             : base(client)
         {
-            _form = Content.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.FormId));
+            _form = Content.FindEitherElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.FormId), By.CssSelector("#wonga-apply-lzero-form"));
             if (!Config.AUT.Equals(AUT.Wb))
             {
                 //On WB you cannot edit your loan details on the Personal Details page
-                _slidersForm = Content.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.SlidersFormId));
-                _totalToRepay = _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.TotalToRepay));
-                _repaymentDate = _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.RepaymentDate));
-                _totalAmount = _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.TotalAmount));
-                _totalFees = _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.TotalFees));
+                _slidersForm = Content.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.SlidersFormId));
+                _totalToRepay = _slidersForm.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.TotalToRepay));
+                _repaymentDate = _slidersForm.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.RepaymentDate));
+                _totalAmount = _slidersForm.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.TotalAmount));
+                _totalFees = _slidersForm.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.TotalFees));
             }
-            _privacy = _form.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.CheckPrivacyPolicy));
-            _contact = _form.FindElements(By.CssSelector(Ui.Get.PersonalDetailsPage.CheckCanContact));
-            _next = _form.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.NextButton));
+            _privacy = _form.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.CheckPrivacyPolicy));
+            _contact = _form.FindElements(By.CssSelector(UiMap.Get.PersonalDetailsPage.CheckCanContact));
+            _next = _form.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.NextButton));
 
             YourName = new YourNameSection(this);
             YourDetails = new YourDetailsSection(this);
@@ -89,24 +90,24 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                 case (AUT.Za):
                     EmploymentDetails = new EmploymentDetailsSection(this);
                     _marriedInCommunityProperty =
-                        _form.FindElements(By.CssSelector(Ui.Get.PersonalDetailsPage.MarriedInCommunityProperty));
+                        _form.FindElements(By.CssSelector(UiMap.Get.PersonalDetailsPage.MarriedInCommunityProperty));
                     break;
             }
         }
 
         public void ClickSliderToggler()
         {
-            var sliderToggler = Client.Driver.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.SliderToggler));
+            var sliderToggler = Client.Driver.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.SliderToggler));
             sliderToggler.Click();
-            _amountSlider = _slidersForm.FindElement(By.CssSelector(Ui.Get.SlidersElement.AmountSlider));
-            _durationSlider = _slidersForm.FindElement(By.CssSelector(Ui.Get.SlidersElement.DurationSlider));
-            _loanAmount = _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.LoanAmount));
-            _loanDuration = _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.LoanDuration));
-            _amountMinusButton = _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.AmountMinusButton));
-            _amountPlusButton = _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.AmountPlusButton));
+            _amountSlider = _slidersForm.FindElement(By.CssSelector(UiMap.Get.SlidersElement.AmountSlider));
+            _durationSlider = _slidersForm.FindElement(By.CssSelector(UiMap.Get.SlidersElement.DurationSlider));
+            _loanAmount = _slidersForm.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.LoanAmount));
+            _loanDuration = _slidersForm.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.LoanDuration));
+            _amountMinusButton = _slidersForm.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.AmountMinusButton));
+            _amountPlusButton = _slidersForm.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.AmountPlusButton));
             _durationMinusButton =
-                _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.DurationMinusButton));
-            _durationPlusButton = _slidersForm.FindElement(By.CssSelector(Ui.Get.PersonalDetailsPage.DurationPlusButton));
+                _slidersForm.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.DurationMinusButton));
+            _durationPlusButton = _slidersForm.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.DurationPlusButton));
 
         }
         public int MoveAmountSlider
@@ -164,6 +165,69 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             _next.Click();
             return new AddressDetailsPage(Client);
+        }
+
+        public void ClickSubmit()
+        {
+            _next.Click();
+        }
+
+        public void PrivacyPolicyClick()
+        {
+            Client.Driver.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.PrivacyPolicyLink)).Click();
+        }
+
+        public List<string> GetHrefsOfLinksOnPrivacyPopup()
+        {
+            List<string> hrefs = new List<string>();
+            ReadOnlyCollection<IWebElement> links = Client.Driver.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.PrivacyPolicyPopup)).FindElements(By.TagName("a"));
+            foreach (var link in links)
+            {
+                string href = link.GetAttribute("href");
+                hrefs.Add(href);
+            }
+            return hrefs;
+        }
+
+        public bool IsGenderDoesntMutchIdNumber()
+        {
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    var message = Do.Until(() => Client.Driver.FindElement(By.XPath(UiMap.Get.PersonalDetailsPage.GenderWarning)));
+                    Console.WriteLine(message.Text);
+                    
+                    if (message.Text == "Oops! This doesn't match your ID number.")
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        public bool IsDOBDoesntMutchIdNumber()
+        {
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    var message = Do.Until(() => Client.Driver.FindElement(By.XPath(UiMap.Get.PersonalDetailsPage.DateOfBirthWarning)));
+                    Console.WriteLine(message.Text);
+                    if (message.Text == "Oops! This doesn't match your ID number.")
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                default:
+                    throw new NotImplementedException();
+            }
         }
     }
 }

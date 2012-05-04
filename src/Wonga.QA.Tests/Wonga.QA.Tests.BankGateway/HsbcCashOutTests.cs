@@ -291,6 +291,35 @@ namespace Wonga.QA.Tests.BankGateway
                 && e.HasError)); //3rd ack error for faster payment
         }
 
+        [Pending("UK-1880")]
+        [Test, JIRA("UK-1291"), Explicit]
+        public void CashOutEndTimeSuspension()
+        {
+            var integration = Drive.Data.BankGateway.Db.BankIntegrations;
+            var starttime = integration.FindByDescription("HSBC").MondayToFridayStartTime;
+            var endtime = integration.FindByDescription("HSBC").MondayToFridayEndTime;
+
+            integration.UpdateByDescription(Description: "HSBC", MondayToFridayEndTime: starttime.AddMinutes(1));
+            try
+            {
+                Drive.Svc.Hsbc.Restart();
+                //Drive.Msmq.Hsbc.Send(new HsbcCashOutStopUkCommand());
+                //Drive.Msmq.Hsbc.Send(new HsbcCashOutStartUkCommand());
+
+                var customer = CustomerBuilder.New().Build();
+                var application = ApplicationBuilder.New(customer).WithLoanAmount(123).Build();
+
+                var exception = Assert.Throws<DoException>(() => Do.With.Timeout(5).Until<Boolean>(() => Drive.Data.BankGateway.Db.Transactions.FindByApplicationId(application.Id).TransactionStatus > 1));
+                Assert.IsInstanceOfType<TimeoutException>(exception.Exceptions.Last());
+                Assert.IsNull(Drive.Data.BankGateway.Db.Transactions.FindByApplicationId(application.Id).FileId);
+            }
+            finally
+            {
+                //integration.UpdateByDescription(Description: "HSBC", MondayToFridayEndTime: DateTime.Parse("1900-01-01 23:50:00.000"));
+                integration.UpdateByDescription(Description: "HSBC", MondayToFridayEndTime: endtime);
+                Drive.Svc.Hsbc.Restart();
+            }
+        }
 
         private static SaveCustomerDetailsCommand CreateCustomerDetails()
         {

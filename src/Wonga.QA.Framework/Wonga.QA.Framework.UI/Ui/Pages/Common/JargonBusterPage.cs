@@ -19,7 +19,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public JargonBusterPage(UiClient client)
             : base(client)
         {
-            _alphabet = Client.Driver.FindElement(By.CssSelector(Ui.Get.JargonBusterPage.Alphabet));
+            _alphabet = Client.Driver.FindElement(By.CssSelector(UiMap.Get.JargonBusterPage.Alphabet));
         }
 
         public List<IWebElement> GetAlphabetLinks()
