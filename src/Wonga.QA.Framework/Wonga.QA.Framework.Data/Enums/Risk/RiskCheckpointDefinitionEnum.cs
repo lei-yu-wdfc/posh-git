@@ -23,7 +23,6 @@ namespace Wonga.QA.Framework.Data.Enums.Risk
         [Description("Monthly income limit check")] MonthlyIncomeLimitCheck,
         [Description("Suspicious activity check")] SuspiciousActivityCheck,
         [Description("Payment Card is valid")] PaymentCardIsValid,
-        [Description("Repayment prediction check")] RepaymentPredictionCheck,
         [Description("User assisted fraud check")] UserAssistedFraudCheck,
         [Description("Applicant is not minor")] ApplicantIsNotMinor,
         [Description("Bank account accept debits")] BankAccountAcceptDebits,
@@ -40,6 +39,7 @@ namespace Wonga.QA.Framework.Data.Enums.Risk
         [Description("There are to many active loans at same address")] TooManyLoansAtAddress,
         [Description("Mobile phone is unique")] MobilePhoneIsUnique,
 		[Description("Repayment prediction check")] RepaymentPredictionPositive,
+		[Description("Reputation prediction check")] ReputationPredictionPositive,
 		[Description("Application has been accepted by customer service")] GeneralManualVerificationAccepted
     }
 }

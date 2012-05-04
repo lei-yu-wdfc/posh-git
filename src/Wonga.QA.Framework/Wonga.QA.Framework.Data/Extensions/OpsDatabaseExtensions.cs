@@ -19,7 +19,10 @@ namespace Wonga.QA.Framework.Data.Extensions
 		public static T SetServiceConfiguration<T>(this OpsDatabase opsDatabase, string keyName, T value)
 		{
 			var row = opsDatabase.Db.ServiceConfigurations.FindByKey(keyName);
-			var oldValue = ConvertToType<T>(row.Value);
+
+			var oldValue = row != null
+			               	? ConvertToType<T>(row.Value)
+			               	: default(T);
 			opsDatabase.Db.ServiceConfigurations.UpdateByKey(Key: keyName, Value: value.ToString());
 			return oldValue;
 		}
