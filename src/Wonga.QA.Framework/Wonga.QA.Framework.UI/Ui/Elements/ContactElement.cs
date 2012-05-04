@@ -19,7 +19,7 @@ namespace Wonga.QA.Framework.UI.Elements
         {
             try
             {
-                _contactTitle = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.ContactElement.ContactTitle));
+                _contactTitle = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.ContactElement.ContactTitle));
                 return true;
             }
             catch (Exception)

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Ui>
+<UiMap>
   <PersonalDetailsPage>
     <FormId>#lzero-personal-form</FormId>
   </PersonalDetailsPage>
@@ -69,12 +69,14 @@
     <SecurityCode>#edit-security-code</SecurityCode>
     <MinCash>#edit-min-cash</MinCash>
     <ChangeMobileButton>.mod</ChangeMobileButton>
+    <EditPin>#edit-mobile-pin</EditPin>
   </ApplicationSection>
 
   <MyAccountNavigationSection>
     <MySummary>.menu-mlid-2869</MySummary>
     <MyPaymentsDetails>.menu-mlid-2870</MyPaymentsDetails>
     <MyPersonalDetails>.menu-mlid-2871</MyPersonalDetails>
+    <MyPrepaidCardPageDetails>.menu-mlid-9403</MyPrepaidCardPageDetails>
   </MyAccountNavigationSection>
   
   <TopupSlidersElement>
@@ -108,8 +110,59 @@
     <PopupCloseButton>#edit-submit[value='Close']</PopupCloseButton>
   </ApplyPage>
 
+  <PayLaterLoginPage>
+    <InputEmailId>#edit-name</InputEmailId>
+    <InputPassId>#edit-pass</InputPassId>
+    <SubmitButton>#edit-login</SubmitButton>
+    <Apr>#apr-footer</Apr>
+    <ForgottenPassword>#recovery-pass</ForgottenPassword>
+    <SingUp>#sign-up</SingUp>
+    <Fee>#fee</Fee>
+    <PaymentAmount>#month-payment</PaymentAmount>
+  </PayLaterLoginPage>
+
+  <SubmitionPage>
+    <FooterInfo>.legal-info</FooterInfo>
+    <AvailabelCreditCookie>#credit-w-cookie</AvailabelCreditCookie>
+    <AvailabelCredit>#credit-wo-cookie</AvailabelCredit>
+    <InfoCirculButton>#pay-q a</InfoCirculButton>
+    <TextApproved>#title-approved</TextApproved>
+    <RepaymentDetails>#repayment-details</RepaymentDetails>
+    <SubmitButton>#edit-agree</SubmitButton>
+    <ThanksText>#title-thanks</ThanksText>
+  </SubmitionPage>
+
   <MobilePinVerificationSection>
-	<ResendPin>#edit-resend-pin</ResendPin>
-	<ResendPinMessage>.pin_resend</ResendPinMessage>
+    <ResendPin>#edit-resend-pin</ResendPin>
+    <ResendPinMessage>.pin_resend</ResendPinMessage>
   </MobilePinVerificationSection>
-</Ui>
+  <PaymentCardsPage>
+    <AddCardLink>a.bottom-link</AddCardLink>
+  </PaymentCardsPage>
+
+  <PrepaidCardPage>
+    <ApplyCardButton>.button</ApplyCardButton>
+  </PrepaidCardPage>
+
+  <PrepaidRegisterDetailsPage>
+    <RegisterDetailsBox>.wonga_prepaid_box</RegisterDetailsBox>
+  </PrepaidRegisterDetailsPage>
+
+  <AccountingPage>
+    <AddFileLink>li#liAddFile.ui-state-default a</AddFileLink>
+    <CashOutLink>li#liTransactionsSearch.ui-state-default a</CashOutLink>
+  </AccountingPage>
+
+  <CashOutPage>
+    <TransactionTypeOptions>select#TransactionType</TransactionTypeOptions>
+    <FilterOptions>select#SearchBy</FilterOptions>
+    <FilterValue>input#SearchByValue</FilterValue>
+    <SearchButton>input#btnSearch</SearchButton>
+    <SendPaymentCheckBox>input[name='PaymentSelected']</SendPaymentCheckBox>
+    <CancelCheckBox>input[name='CancelSelected']</CancelCheckBox>
+    <UpdateButton>#GridContainer > input[name='Command']</UpdateButton>
+  </CashOutPage>
+  
+  
+
+</UiMap>

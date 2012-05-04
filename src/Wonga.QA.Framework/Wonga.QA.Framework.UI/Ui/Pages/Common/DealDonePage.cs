@@ -19,20 +19,20 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public DealDonePage(UiClient client) : base(client)
         {
-            Assert.That(Headers, Has.Item(Ui.Get.DealDonePage.HeaderText));
-            _continueButton = Content.FirstOrDefaultElement(By.CssSelector(Ui.Get.DealDonePage.ContinueButtonLink)) ??
-                              Content.FirstOrDefaultElement(By.CssSelector(Ui.Get.DealDonePage.ContinueButton));
+            Assert.That(Headers, Has.Item(UiMap.Get.DealDonePage.HeaderText));
+            _continueButton = Content.FirstOrDefaultElement(By.CssSelector(UiMap.Get.DealDonePage.ContinueButtonLink)) ??
+                              Content.FirstOrDefaultElement(By.CssSelector(UiMap.Get.DealDonePage.ContinueButton));
         }
 
         public String GetRepaymentDate()
         {
-            _repayDate = Content.FindElement(By.CssSelector(Ui.Get.DealDonePage.RepayDate));
+            _repayDate = Content.FindElement(By.CssSelector(UiMap.Get.DealDonePage.RepayDate));
            return _repayDate.Text;
         }
 
         public String GetRapaymentAmount()
         {
-            _repayAmount = Content.FindElement(By.CssSelector(Ui.Get.DealDonePage.RepayAmount));
+            _repayAmount = Content.FindElement(By.CssSelector(UiMap.Get.DealDonePage.RepayAmount));
              return _repayAmount.Text; 
         }
 

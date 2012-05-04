@@ -48,6 +48,7 @@ namespace Wonga.QA.Tests.Payments.Queries
 
             Application application = ApplicationBuilder.New(customer).WithLoanAmount(_loanAmount).Build();
 
+            Guid paymentId = Guid.NewGuid();
 
             var repayCommand = new CsRepayWithPaymentCardCommand()
                                    {
@@ -57,6 +58,7 @@ namespace Wonga.QA.Tests.Payments.Queries
                                        Currency = CurrencyCodeIso4217Enum.GBP,
                                        CV2 = cardCode,
                                        PaymentCardId = _cardId,
+                                       PaymentId = paymentId
                                    };
 
             Drive.Cs.Commands.Post(repayCommand);
@@ -66,7 +68,8 @@ namespace Wonga.QA.Tests.Payments.Queries
                              var repaymentRequests = Drive.Data.Payments.Db.PaymentCardRepaymentRequests;
                              var result = repaymentRequests.FindAll(repaymentRequests.ApplicationId == application.Id
                                                                     && repaymentRequests.Amount == _loanAmount
-                                                                    && repaymentRequests.PaymentCardId == paymentCardId);
+                                                                    && repaymentRequests.PaymentCardId == paymentCardId
+                                                                    && repaymentRequests.ExternalId == paymentId);
                              return result;
                          });
         }

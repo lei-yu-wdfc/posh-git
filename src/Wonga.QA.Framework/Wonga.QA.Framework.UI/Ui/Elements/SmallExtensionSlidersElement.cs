@@ -21,11 +21,11 @@ namespace Wonga.QA.Framework.UI.Elements
 
         public SmallExtensionSlidersElement(BasePage page) : base(page)
         {
-            _form = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.SmallExtensionSlidersElement.FormId));
-            _extendDuration = _form.FindElement(By.CssSelector(Ui.Get.SmallExtensionSlidersElement.ExtensionLoanDuration));
-            _extendDate = _form.FindElement(By.CssSelector(Ui.Get.SmallExtensionSlidersElement.RepaymentDate));
-            _grandTotalAmount = _form.FindElement(By.CssSelector(Ui.Get.SmallExtensionSlidersElement.TotalToRepay));
-            _newFees = _form.FindElement(By.CssSelector(Ui.Get.SmallExtensionSlidersElement.ExtensionInterestFees));
+            _form = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.SmallExtensionSlidersElement.FormId));
+            _extendDuration = _form.FindElement(By.CssSelector(UiMap.Get.SmallExtensionSlidersElement.ExtensionLoanDuration));
+            _extendDate = _form.FindElement(By.CssSelector(UiMap.Get.SmallExtensionSlidersElement.RepaymentDate));
+            _grandTotalAmount = _form.FindElement(By.CssSelector(UiMap.Get.SmallExtensionSlidersElement.TotalToRepay));
+            _newFees = _form.FindElement(By.CssSelector(UiMap.Get.SmallExtensionSlidersElement.ExtensionInterestFees));
         }
 
         public String HowLong

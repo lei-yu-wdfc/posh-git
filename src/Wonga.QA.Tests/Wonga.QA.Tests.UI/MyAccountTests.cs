@@ -5,11 +5,13 @@ using System.Linq;
 using System.Threading;
 using Gallio.Framework.Assertions;
 using MbUnit.Framework;
+using OpenQA.Selenium;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Helpers;
+using Wonga.QA.Framework.UI.Mappings;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
@@ -81,14 +83,10 @@ namespace Wonga.QA.Tests.Ui
             {
                 payment1.AddBankAccountButtonClick();
 
-                Thread.Sleep(2000); // Wait some time to load popup
 
-                var paymentPage = payment1.AddBankAccount("Capitec", "Current", "7434567", "2 to 3 years");
-                while (paymentPage.IfHasAnExeption() == false)
-                {
-                    Thread.Sleep(1000);
-                }
-                Assert.IsTrue(paymentPage.IfHasAnExeption());
+                payment1.AddBankAccount("Capitec", "Current", "7434567", "2 to 3 years");
+                Do.With.Timeout(2).Until(payment1.IfHasAnExeption);
+                Assert.IsTrue(payment1.IfHasAnExeption());
             }
             else
             {
@@ -103,12 +101,9 @@ namespace Wonga.QA.Tests.Ui
 
                 Thread.Sleep(2000); // Wait some time to load popup
 
-                var paymentPage = payment1.AddBankAccount("Capitec", "Current", "7534567", "2 to 3 years");
-                while (paymentPage.IfHasAnExeption() == false)
-                {
-                    Thread.Sleep(1000);
-                }
-                Assert.IsTrue(paymentPage.IfHasAnExeption());
+                payment1.AddBankAccount("Capitec", "Current", "7534567", "2 to 3 years");
+                Do.With.Timeout(2).Until(payment2.IfHasAnExeption);
+                Assert.IsTrue(payment2.IfHasAnExeption());
             }
             else
             {
@@ -133,12 +128,9 @@ namespace Wonga.QA.Tests.Ui
             if (payment.IsAddBankAccountButtonExists())
             {
                 payment.AddBankAccountButtonClick();
+                payment.AddBankAccount("Capitec", "Current", accountNumber, "2 to 3 years");
+                payment.ClickCloseButton();
 
-                Thread.Sleep(2000); // Wait some time to load popup
-
-                var paymentPage = payment.AddBankAccount("Capitec", "Current", accountNumber, "2 to 3 years");
-                Thread.Sleep(3000);
-                paymentPage.CloseButtonClick();
                 payment = Client.Payments();
                 int whileCount = 0;
                 while (accountNumber.Remove(0, 3) != payment.DefaultAccountNumber)
@@ -626,9 +618,9 @@ namespace Wonga.QA.Tests.Ui
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             Organisation organisation = OrganisationBuilder.New(customer).Build();
             Application application = ApplicationBuilder
-                .New(customer,organisation)
+                .New(customer, organisation)
                 .Build();
-            
+
             var mySummaryPage = loginPage.LoginAs(email);
         }
 
@@ -651,7 +643,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
         [Test, AUT(AUT.Za), JIRA("QA-213")]
-        public void  CustomerUpdatesPhoneNumbersAndDoesntMakeChangesShouldSeeMessageOnTopWindow()
+        public void CustomerUpdatesPhoneNumbersAndDoesntMakeChangesShouldSeeMessageOnTopWindow()
         {
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
@@ -722,5 +714,67 @@ namespace Wonga.QA.Tests.Ui
 
 
         }
+
+        [Test, AUT(AUT.Za), JIRA("QA-219")]
+        public void CustomerShouldBeAbleToAddBankAccount()
+        {
+            var accountPreferences = Drive.Data.Payments.Db.AccountPreferences;
+            var bankAccountsBase = Drive.Data.Payments.Db.BankAccountsBase;
+            string accountNumber = "1234567";
+
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            application.RepayOnDueDate();
+
+            loginPage.LoginAs(email);
+            var firstMyPaymentsPage = Client.Payments();
+
+            Do.Until(firstMyPaymentsPage.IsAddBankAccountButtonExists);
+            firstMyPaymentsPage.AddBankAccountButtonClick();
+            firstMyPaymentsPage.AddBankAccount("Capitec", "Current", accountNumber, "2 to 3 years");
+            firstMyPaymentsPage.ClickCloseButton();
+            var newMyPaymentsPage = Client.Payments();
+
+            Assert.AreEqual(accountNumber.Remove(0, 3), newMyPaymentsPage.DefaultAccountNumber);
+
+            var primaryBankAccountId = accountPreferences.FindByAccountId(customer.Id).PrimaryBankAccountId;
+            var bankAccount = bankAccountsBase.FindByBankAccountId(primaryBankAccountId);
+
+            Assert.AreEqual("Capitec", bankAccount.BankName);
+            Assert.AreEqual("Current", bankAccount.AccountType);
+            Assert.AreEqual(accountNumber, bankAccount.AccountNumber);
+
+            var journey = JourneyFactory.GetLnJourney(Client.Home());
+
+            var applyPage = journey.ApplyForLoan(200, 10)
+                                .CurrentPage as ApplyPage;
+
+            Assert.AreEqual(accountNumber.Remove(0, 3), applyPage.GetCurrentBankAccount);
+
+        }
+
+        [Test, AUT(AUT.Za), Category(TestCategories.Smoke), JIRA("QA-279")]
+        public void LNCustomerChangesMobilePhoneNumberToTheSameOneButUsingSeparators()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            string phone = "0751234567";
+            List<string> invalidPhones = new List<string> { "075-1234567", "075.1234567", "075,1234567", "075/1234567" };
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).WithMobileNumber(phone).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            application.RepayOnDueDate();
+            var mySummary = loginPage.LoginAs(email);
+            var myPersonals = mySummary.Navigation.MyPersonalDetailsButtonClick();
+            foreach (var invaliPhone in invalidPhones)
+            {
+                myPersonals.PhoneClick();
+                myPersonals.ChangeMobilePhone(invaliPhone, "0000");
+            }
+        }
+
     }
 }

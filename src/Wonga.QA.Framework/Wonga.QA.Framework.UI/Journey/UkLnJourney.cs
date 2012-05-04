@@ -8,7 +8,7 @@ using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 
 namespace Wonga.QA.Framework.UI
 {
-    class UkLnJourney : ILnConsumerJourney
+    public class UkLnJourney : ILnConsumerJourney
     {
          public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -40,7 +40,17 @@ namespace Wonga.QA.Framework.UI
         public ILnConsumerJourney FillApplicationDetails()
         {
             var applyPage = CurrentPage as ApplyPage;
+            applyPage.ApplicationSection.SetSecurityCode = "000";
+            applyPage.ApplicationSection.SetMinCash = "100";
+            CurrentPage = applyPage.Submit() as ProcessingPage;
+            return this;
+        }
+
+        public ILnConsumerJourney FillApplicationDetailsWithNewMobilePhone()
+        {
+            var applyPage = CurrentPage as ApplyPage;
             applyPage.SetNewMobilePhone = Get.GetMobilePhone();
+            applyPage.ApplicationSection.SetPin = "0000";
             applyPage.ApplicationSection.SetSecurityCode = "000";
             applyPage.ApplicationSection.SetMinCash = "100";
             CurrentPage = applyPage.Submit() as ProcessingPage;

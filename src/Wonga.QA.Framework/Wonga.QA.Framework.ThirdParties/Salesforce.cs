@@ -6,6 +6,7 @@ using System.ServiceModel.Security;
 using System.Text;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.ThirdParties.SalesforceApi;
+using System.Collections.Generic;
 
 
 namespace Wonga.QA.Framework.ThirdParties
@@ -163,7 +164,6 @@ namespace Wonga.QA.Framework.ThirdParties
             return result.records.FirstOrDefault() as Loan_Application__c;
         }
 
-
 		public Loan_Application__c GetApplicationWithOrganisationById(Guid applicationId, Guid organisationId)
 		{
 			string sessionId;
@@ -256,6 +256,54 @@ namespace Wonga.QA.Framework.ThirdParties
             if (result == null || result.records == null) throw new Exception(string.Format("Unable to retrieve payment card by id={0}", paymentCardId));
 
             return result.records.FirstOrDefault() as Billing_Card__c;
+        }
+        
+        public IEnumerable<Loan_Application__History> GetApplicationHistoryById(Guid applicationId, string fieldFilter = null)
+        {
+            if (!String.IsNullOrEmpty(fieldFilter))
+            {
+                return GetApplicationHistoryById(applicationId, new string[] { fieldFilter });
+            }
+
+            return GetApplicationHistoryById(applicationId, (IEnumerable<string>)null);
+        }
+
+        public IEnumerable<Loan_Application__History> GetApplicationHistoryById(Guid applicationId, IEnumerable<string> fieldFilter)
+        {
+            string sessionId;
+            SoapClient client = Login(out sessionId);
+            SessionHeader sessionHeader = new SessionHeader { sessionId = sessionId };
+
+            string sfIdQuery = String.Format("Select l.Id From Loan_Application__c l Where l.V3_Application_Id__c = '{0}'", applicationId);
+
+            QueryResult sfIdQueryRes = client.query(sessionHeader, null, null, null, sfIdQuery);
+
+            if (sfIdQueryRes == null || sfIdQueryRes.records == null)
+            {
+                throw new Exception(string.Format("Unable to retrieve Salesforce Id for loan application by V3 id={0}", applicationId));
+            }
+
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendFormat("Select l.CreatedById, l.CreatedDate, l.Field, l.IsDeleted, l.NewValue, l.OldValue, l.ParentId From Loan_Application__History l Where ParentId = '{0}' ",
+                                sfIdQueryRes.records.First().Id);
+
+            if (fieldFilter != null)
+            {
+                foreach (string filter in fieldFilter)
+                {
+                    sb.AppendFormat(" AND l.Field = '{0}'", filter);
+                }
+            }
+
+            QueryResult appHistory = client.query(sessionHeader, null, null, null, sb.ToString());
+
+            if (appHistory == null || appHistory.records == null)
+            {
+                throw new Exception(String.Format("Unable to retrieve the history for the application with V3 Id={0}", applicationId));
+            }
+
+            return (from r in appHistory.records select r as Loan_Application__History).AsEnumerable();
         }
     }
 }

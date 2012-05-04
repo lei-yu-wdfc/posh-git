@@ -23,11 +23,11 @@ namespace Wonga.QA.Framework.UI.Elements
 
         public MySummaryPage LoginAs(string email, string password)
         {
-            _loginTrigger = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.LoginElement.LoginTrigger));
-            _form = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.LoginElement.FormId));
-            _email = _form.FindElement(By.CssSelector(Ui.Get.LoginElement.Email));
-            _password = _form.FindElement(By.CssSelector(Ui.Get.LoginElement.Password));
-            _loginButton = _form.FindElement(By.CssSelector(Ui.Get.LoginElement.LoginButton));
+            _loginTrigger = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.LoginElement.LoginTrigger));
+            _form = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.LoginElement.FormId));
+            _email = _form.FindElement(By.CssSelector(UiMap.Get.LoginElement.Email));
+            _password = _form.FindElement(By.CssSelector(UiMap.Get.LoginElement.Password));
+            _loginButton = _form.FindElement(By.CssSelector(UiMap.Get.LoginElement.LoginButton));
             _loginTrigger.Click();
             _email.SendKeys(email);
             _password.SendKeys(password);
@@ -37,7 +37,7 @@ namespace Wonga.QA.Framework.UI.Elements
 
         public HomePage Logout()
         {
-            Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.LoginElement.LogoutTrigger)).Click();
+            Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.LoginElement.LogoutTrigger)).Click();
             return new HomePage(Page.Client);
         }
 

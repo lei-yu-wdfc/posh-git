@@ -16,8 +16,8 @@ namespace Wonga.QA.Framework.UI.Elements
         public FAQElement(FAQPage page)
             : base(page)
         {
-            _selectQuestion = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.FAQElement.SelectQuestion));
-            _answerQuestion = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.FAQElement.AnswerQuestion));
+            _selectQuestion = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.FAQElement.SelectQuestion));
+            _answerQuestion = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.FAQElement.AnswerQuestion));
         }
 
         public string GetSelectedQuestionText()

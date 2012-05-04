@@ -6,11 +6,14 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Data.Enums.Risk;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Db.Risk;
+using System;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
+    [Obsolete]
 	public abstract class BaseCheckpointTest
 	{
+        
         protected RiskApplicationEntity CreateRiskApplicationUsingApi(RiskMask testMask, ICustomerData customerData)
 		{
 			var customer =

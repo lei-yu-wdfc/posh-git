@@ -7,6 +7,7 @@ using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Helpers;
+using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
 using System.Linq;
 using System;
@@ -26,7 +27,7 @@ namespace Wonga.QA.Tests.Ui
         private int _termMin;
         private string _repaymentDate;
         private ApiResponse _response;
-        private DateTime _actualDate;
+        //private DateTime _actualDate;
 
         private const int DefaultLoanTerm = 11;
     	private const int MinimumMaxLoanTerm = 30;
@@ -62,46 +63,6 @@ namespace Wonga.QA.Tests.Ui
             _termMin = Int32.Parse(_response.Values["TermMin"].Single(), CultureInfo.InvariantCulture);
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-149")]
-        public void MovingSlidersRepaymentDateShouldBeCorrect()
-        {
-            var page = Client.Home();
-            int randomDuration = _termMin + (new Random()).Next(_termMax - _termMin);
-            page.Sliders.HowLong = randomDuration.ToString(CultureInfo.InvariantCulture);
-
-            string[] dateArray = page.Sliders.GetRepaymentDate.Split(' ');
-            string day = Char.IsDigit(dateArray[1].ElementAt(1)) ? dateArray[1].Remove(2, 2) : dateArray[1].Remove(1, 2);
-            _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
-
-            _actualDate = DateTime.Now.AddDays(randomDuration);
-            Assert.AreEqual(_repaymentDate, String.Format(CultureInfo.InvariantCulture, "{0:d MMM yyyy}", _actualDate));
-        }
-
-        [Test, AUT(AUT.Za), JIRA("QA-149"), Pending("Rounding error")]
-        public void MovingSlidersLoanSummaryShouldBeCorrect()
-        {
-            var page = Client.Home();
-            int randomAmount = _amountMin + (new Random()).Next(_amountMax - _amountMin);
-            int randomDuration = _termMin + (new Random()).Next(_termMax - _termMin);
-
-            page.Sliders.HowMuch = randomAmount.ToString(CultureInfo.InvariantCulture);
-            page.Sliders.HowLong = randomDuration.ToString(CultureInfo.InvariantCulture);
-
-            _response = Drive.Api.Queries.Post(new GetFixedTermLoanCalculationZaQuery { LoanAmount = randomAmount, Term = randomDuration });
-
-            string totalRepayable = _response.Values["TotalRepayable"].Single();
-            Assert.AreEqual(page.Sliders.GetTotalToRepay.Remove(0, 1), totalRepayable);
-        }
-
-        [Test, AUT(AUT.Za), JIRA("QA-149")]
-        public void MovingSlidersBeyondMaxIsNotAllowedByFrontEnd()
-        {
-            var page = Client.Home();
-            int amountBiggerThanMax = _amountMax + 1000;
-            page.Sliders.HowMuch = amountBiggerThanMax.ToString(CultureInfo.InvariantCulture);
-            Assert.AreEqual(_amountMax.ToString(CultureInfo.InvariantCulture), page.Sliders.GetTotalAmount.Remove(0, 1));
-        }
-
         [Test, AUT(AUT.Ca)]
         public void VariableInterestisCalculatedCorrectly()
         {
@@ -116,6 +77,54 @@ namespace Wonga.QA.Tests.Ui
             //maximum charge is 21$ for each 100$ borrowed for 30 days.
         }
 
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-150")]
+        public void CustomerTypesValidValuesIntoAmountAndDurationFields()
+        {
+            var termCustomerEnter = Get.RandomInt(_termMin, _termMax);
+            var amountCustomerEnter = Get.RandomInt(_amountMin, _amountMax);
+
+            var homePage = Client.Home();
+
+            homePage.Sliders.HowLong = termCustomerEnter.ToString();
+            homePage.Sliders.HowMuch = amountCustomerEnter.ToString();
+
+            string _totalAmount = homePage.Sliders.GetTotalAmount;
+
+            Assert.AreEqual(amountCustomerEnter.ToString(), _totalAmount.Remove(0, 1));
+
+
+            string[] dateArray = homePage.Sliders.GetRepaymentDate.Split(' ');
+            string day = Char.IsDigit(dateArray[1].ElementAt(1)) ? dateArray[1].Remove(2, 2) : dateArray[1].Remove(1, 2);
+            _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
+            DateTime expectedDate;
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    expectedDate = DateTime.UtcNow.AddDays(termCustomerEnter);
+                    break;
+                case AUT.Ca:
+                    expectedDate =
+                        DateTime.UtcNow.AddDays(termCustomerEnter + DateHelper.GetNumberOfDaysUntilStartOfLoanForCa());
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+            Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate), _repaymentDate);
+
+            var personalDetailsPage = homePage.Sliders.Apply() as PersonalDetailsPage;
+            string personalDetailPageAmount = personalDetailsPage.GetTotalAmount;
+
+            Assert.AreEqual(amountCustomerEnter.ToString(), personalDetailPageAmount.Remove(0, 1));
+
+            dateArray = personalDetailsPage.GetRepaymentDate.Split(' ');
+            day = Char.IsDigit(dateArray[1].ElementAt(1)) ? dateArray[1].Remove(2, 2) : dateArray[1].Remove(1, 2);
+            _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
+
+            Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate), _repaymentDate);
+
+
+        }
+          
         [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-156", "QA-238")]
         public void DefaultAmountSliderValueShouldBeCorrectL0()
         {
@@ -162,13 +171,13 @@ namespace Wonga.QA.Tests.Ui
         public void DefaultDurationSliderValueShouldBeCorrectL0()
         {
             var page = Client.Home();
-
-			string[] dateArray = page.Sliders.GetRepaymentDate.Split(' ');
+            string[] dateArray = page.Sliders.GetRepaymentDate.Split(' ');
 			string day = Char.IsDigit(dateArray[1].ElementAt(1)) ? dateArray[1].Remove(2, 2) : dateArray[1].Remove(1, 2);
 			_repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
 
 			var expectedDate = GetExpectedDefaultPromiseDateL0();
             Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate), _repaymentDate);
+			
         }
 
         [Test, AUT(AUT.Ca), JIRA("QA-241", "QA-159")]
@@ -373,7 +382,7 @@ namespace Wonga.QA.Tests.Ui
             {
                 case AUT.Za:
                     {
-                        var iMonth = DateTime.UtcNow.Month - 1;
+                       var iMonth = DateTime.UtcNow.Month - 1;
 
                         var payDayPerMonths = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.PayDayPerMonth").Value.Split(',');
                         var sliderTermAddDays = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.SliderTermAddDays").Value;

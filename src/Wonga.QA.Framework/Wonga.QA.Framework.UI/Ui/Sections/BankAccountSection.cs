@@ -39,25 +39,25 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             }
         }
 
-        public BankAccountSection(BasePage page) : base(Ui.Get.BankAccountSection.Fieldset, page)
+        public BankAccountSection(BasePage page) : base(UiMap.Get.BankAccountSection.Fieldset, page)
         {
-            _bankName = Section.FindElement(By.CssSelector(Ui.Get.BankAccountSection.BankName));
-            _accountNumber = Section.FindElement(By.CssSelector(Ui.Get.BankAccountSection.AccountNumber));
-            _bankPeriod = Section.FindElement(By.CssSelector(Ui.Get.BankAccountSection.BankPeriod));
+            _bankName = Section.FindElement(By.CssSelector(UiMap.Get.BankAccountSection.BankName));
+            _accountNumber = Section.FindElement(By.CssSelector(UiMap.Get.BankAccountSection.AccountNumber));
+            _bankPeriod = Section.FindElement(By.CssSelector(UiMap.Get.BankAccountSection.BankPeriod));
             switch(Config.AUT)
             {
                 case(AUT.Wb):
                 case(AUT.Uk):
-                    _sortCodePart1 = Section.FindElement(By.CssSelector(Ui.Get.BankAccountSection.SortCodePart1));
-                    _sortCodePart2 = Section.FindElement(By.CssSelector(Ui.Get.BankAccountSection.SortCodePart2));
-                    _sortCodePart3 = Section.FindElement(By.CssSelector(Ui.Get.BankAccountSection.SortCodePart3));
+                    _sortCodePart1 = Section.FindElement(By.CssSelector(UiMap.Get.BankAccountSection.SortCodePart1));
+                    _sortCodePart2 = Section.FindElement(By.CssSelector(UiMap.Get.BankAccountSection.SortCodePart2));
+                    _sortCodePart3 = Section.FindElement(By.CssSelector(UiMap.Get.BankAccountSection.SortCodePart3));
                     break;
                 case(AUT.Za):
-                    _bankAccountType = Section.FindElement(By.CssSelector(Ui.Get.BankAccountSection.BankAccountType));
+                    _bankAccountType = Section.FindElement(By.CssSelector(UiMap.Get.BankAccountSection.BankAccountType));
                     break;
                 case (AUT.Ca):
-                    _institutionNumber = Section.FindElement(By.CssSelector(Ui.Get.BankAccountSection.InstitutionNumber));
-                    _branchNumber = Section.FindElement(By.CssSelector(Ui.Get.BankAccountSection.BranchNumber));
+                    _institutionNumber = Section.FindElement(By.CssSelector(UiMap.Get.BankAccountSection.InstitutionNumber));
+                    _branchNumber = Section.FindElement(By.CssSelector(UiMap.Get.BankAccountSection.BranchNumber));
                     break;
 
             }

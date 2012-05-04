@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Ui>
+<UiMap>
   <LoginPage>
     <Username>#edit-name</Username>
     <Password>#edit-pass</Password>
@@ -195,7 +195,7 @@
     <Fieldset>fieldset[id="employment"]</Fieldset>
     <EmploymentStatus>#edit-employment-status</EmploymentStatus>
     <EmployerIndustry>#edit-employer-industry</EmployerIndustry>
-    <EmployerName>#edit-employer-name</EmployerName>
+    <EmployerName>#edit-employer-name-ca</EmployerName>
     <EmploymentPosition>#edit-employment-position</EmploymentPosition>
     <TimeWithEmployerYears>#edit-employment-time-years</TimeWithEmployerYears>
     <TimeWithEmployerMonths>#edit-employment-time-months</TimeWithEmployerMonths>
@@ -257,6 +257,8 @@
     <IntroText>p.summary-intro-text</IntroText>
     <StatusMessage>div.wonga-box-1 div.wonga-box-top-right</StatusMessage>
     <MaxAvailableCredit>.description</MaxAvailableCredit>
+    <ChangePromiseDateButton>#cloud ul a.ChangePromiseDate</ChangePromiseDateButton>
+    <RepayButton>#cloud ul a.Repay</RepayButton>
   </MySummaryPage>
 
   <MyPaymentsPage>
@@ -315,7 +317,8 @@
   </SmallTopupSlidersElement>
 
   <ExtensionDealDonePage>
-    <AccountLink>#content-area h2 a</AccountLink>
+    <Header>#content-area .wonga-box-top-right h2</Header>
+    <ContentArea>#content-area .wonga-box-top-right</ContentArea>
   </ExtensionDealDonePage>
 
   <ExtensionProcessingPage>
@@ -335,8 +338,8 @@
   </ExtensionAgreementPage>
 
   <ExtensionErrorPage>
-    <Header>#node-1003 h2</Header>
-    <BodyText>#node-1003 p</BodyText>
+    <Header>#content-area .wonga-box-top-right h2</Header>
+    <BodyText>#content-area .wonga-box-top-right</BodyText>
   </ExtensionErrorPage>
 
   <SmallExtensionSlidersElement>
@@ -349,7 +352,7 @@
     <ExtensionNewCredit>span.extend-new-credit</ExtensionNewCredit>
     <ExtensionInterestFees>span.extend-interest-and-fees</ExtensionInterestFees>
     <TotalToRepay>span.extend-request-total</TotalToRepay>
-    <RepaymentDate>span.load-period-clarification span.slider-extend-date</RepaymentDate>
+    <RepaymentDate>span.loan-period-clarification span.slider-extend-date</RepaymentDate>
     <AmountMinusButton>#wonga-single-slider-wrapper button.slider-minus</AmountMinusButton>
     <AmountPlusButton>#wonga-single-slider-wrapper button.slider-plus</AmountPlusButton>
   </SmallExtensionSlidersElement>
@@ -357,14 +360,42 @@
   <ExtensionRequestPage>
     <ExtensionRequestPageSubmitButton>#edit-submit</ExtensionRequestPageSubmitButton>
     <ExtensionRequestPageInformativeBox>div.inner-box-informative</ExtensionRequestPageInformativeBox>
-    <ExtensionRequestPageExtensionDuration>input.edit-extend-amount</ExtensionRequestPageExtensionDuration>
+    <ExtensionRequestPageExtensionDuration>#edit-extend-amount</ExtensionRequestPageExtensionDuration>
     <ExtensionRequestPageInterestFees>span.extend-interest-and-fees</ExtensionRequestPageInterestFees>
     <ExtensionRequestPageNewGrandTotal>span.extend-request-total</ExtensionRequestPageNewGrandTotal>
-    <ExtensionRequestPageRepaymentDate>span.load-period-clarification span.slider-extend-date</ExtensionRequestPageRepaymentDate>
+    <ExtensionRequestPageRepaymentDate>span.loan-period-clarification span.slider-extend-date</ExtensionRequestPageRepaymentDate>
     <ExtensionRequestPageSliders>#wonga-single-slider</ExtensionRequestPageSliders>
     <ExtensionRequestPageSliderSmall>#wonga-account-extension-form</ExtensionRequestPageSliderSmall>
     <ExtensionRequestPageCard>#edit-card</ExtensionRequestPageCard>
-    <ExtensionRequestPageSecurityCode>#edit-security-card</ExtensionRequestPageSecurityCode>
+    <ExtensionRequestPageSecurityCode>#edit-security-code</ExtensionRequestPageSecurityCode>
+    <ExtensionRequestPageOweToday>.odd td span</ExtensionRequestPageOweToday>
+    <ExtensionRequestPageTotalRepayToday>.extend-repay-today</ExtensionRequestPageTotalRepayToday>
+    <ExtensionRequestPageNewCreditAmount>.extend-new-credit</ExtensionRequestPageNewCreditAmount>    
   </ExtensionRequestPage>
 
-</Ui>
+  <RepayRequestPage>
+    <RepayRequestPageSubmitButton>#edit-submit</RepayRequestPageSubmitButton>
+    <RepayRequestPageInformativeBox>div.inner-box-informative</RepayRequestPageInformativeBox>
+    <RepayRequestPageRepayAmount>input#edit-repayment-amount</RepayRequestPageRepayAmount>
+    <RepayRequestPageRemainderAmount>span.repay-remainder-total</RepayRequestPageRemainderAmount>
+    <RepayRequestPageSliders>#wonga-single-slider</RepayRequestPageSliders>
+    <RepayRequestPageSliderSmall>#wonga-account-repay-form</RepayRequestPageSliderSmall>
+    <RepayRequestPageCard>#edit-card</RepayRequestPageCard>
+    <RepayRequestPageSecurityCode>#edit-security-code</RepayRequestPageSecurityCode>
+  </RepayRequestPage>
+
+  <SmallRepaySlidersElement>
+    <FormId>#wonga-account-repay-form</FormId>
+    <AmountSlider>#wonga-single-slider a</AmountSlider>
+    <SubmitButton>#edit-submit</SubmitButton>
+    <RepayAmount>input#edit-repayment-amount</RepayAmount>
+    <RemainderAmount>span.repay-remainder-total</RemainderAmount>
+    <AmountMinusButton>#wonga-single-slider-wrapper button.slider-minus</AmountMinusButton>
+    <AmountPlusButton>#wonga-single-slider-wrapper button.slider-plus</AmountPlusButton>
+  </SmallRepaySlidersElement>
+
+  <TabsElementMobile>
+    <TabsForm>#navigation #scroller .links</TabsForm>
+  </TabsElementMobile>
+  
+</UiMap>

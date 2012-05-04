@@ -7,6 +7,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
 {
     public class ExtensionDealDonePage
     {
-        public string AccountLink { get; set; }
+        public string Header { get; set; }
+        public string ContentArea { get; set; }
     }
 }

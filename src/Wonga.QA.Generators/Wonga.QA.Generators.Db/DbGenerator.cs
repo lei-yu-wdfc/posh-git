@@ -12,11 +12,15 @@ namespace Wonga.QA.Generators.Db
     {
         public static void Main(String[] args)
         {
+            var server = args.Length >= 1 ? args[0] : "localhost";
+            Config.Databases = args.Length >= 2 ? new[] {args[1]} : Config.Databases;
+
             var bin = new
             {
-                Dbml = Repo.Directory("Dbml"),
-                Code = Repo.Directory("Code")
+                Dbml = Repo.Directory("Dbml", false),
+                Code = Repo.Directory("Code", false)
             };
+            
 
             foreach (String database in Config.Databases)
             {
@@ -24,8 +28,8 @@ namespace Wonga.QA.Generators.Db
 
                 var file = new
                 {
-                    Dbml = Repo.File(String.Format("{0}Database.dbml", database), bin.Dbml),
-                    Code = Repo.File(String.Format("{0}Database.cs", database), bin.Code)
+                    Dbml = Repo.File(String.Format("{0}Database.dbml", database), bin.Dbml, true),
+                    Code = Repo.File(String.Format("{0}Database.cs", database), bin.Code, true)
                 };
 
                 Console.WriteLine("\t{0}", file.Dbml.Name);
@@ -33,7 +37,8 @@ namespace Wonga.QA.Generators.Db
                 {
                     "/database:{0}",
                     "/dbml:{1}",
-                    "/pluralize"
+                    "/pluralize",
+                    "/server:"+server
                 }, database, file.Dbml.FullName.Quote());
 
                 XElement root = XDocument.Load(file.Dbml.FullName).Root;
@@ -58,6 +63,7 @@ namespace Wonga.QA.Generators.Db
                         String value = type.Value.Substring(schema.Length) + "Entity";
                         attributes.Where(a => a.Value == type.Value).ForEach(a => a.SetValue(value));
                     }
+                    ResolveCollision(table, ns);
                 }
 
                 root.Document.Save(file.Dbml.FullName);
@@ -80,7 +86,18 @@ namespace Wonga.QA.Generators.Db
                 File.WriteAllText(file.Code.FullName, source);
             }
 
-            Repo.Inject(bin.Code, Config.Db.Folder, Config.Db.Project);
+            Repo.Inject(bin.Code, Config.Db.Folder, Config.Db.Project, false, true);
+        }
+
+        private static void ResolveCollision(XElement table, XNamespace ns)
+        {
+            var type = table.Element(ns.GetName("Type"));
+            switch(table.Attribute("Name").Value)
+            {
+                case("ssis.ArrearsExport"):
+                    table.Attribute("Member").Value = type.Attribute("Name").Value = "ArrearsExportSsis";
+                    break;
+            }
         }
 
         private static String Trim(String value, String schema)

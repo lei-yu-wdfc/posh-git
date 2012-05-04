@@ -151,6 +151,18 @@ namespace Wonga.QA.Generators.Msmq
                 case "Wonga.ExperianBulk.InternalMessages.UpdateScheduleMessage":
                     return "ExperianBulk";
 
+                case "Wonga.BankGateway.InternalMessages.Scotiabank.Ca.BasePaymentMessage":
+                    return "BankGatewayScotiabank";
+                case "Wonga.BankGateway.InternalMessages.Bmo.Ca.BasePaymentMessage":
+                    return "BankGatewayBmo";
+
+                case "Wonga.Sms.InternalMessages.SendSmsMessage":
+                    return "Sms";
+                case "Wonga.Comms.InternalMessages.Za.SendSmsMessage":
+                    return "Comms";
+                case "Wonga.Comms.InternalMessages.Sms.SendSmsMessage":
+                    return "CommsSms";
+
                 default:
                     return null;
             }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Xml;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Data.Enums.Risk;
 using Wonga.QA.Framework.Helpers;
 
 namespace Wonga.QA.Framework
@@ -16,7 +17,7 @@ namespace Wonga.QA.Framework
         protected Date PromiseDate;
         protected ApplicationDecisionStatus Decision = ApplicationDecisionStatus.Accepted;
         protected int LoanTerm;
-        protected string IovationBlackBox;
+        protected IovationMockResponse IovationBlackBox;
         protected Dictionary<int, List<bool>> EidSessionInteraction = new Dictionary<int, List<bool>>();
 
         //WB specific members
@@ -113,7 +114,7 @@ namespace Wonga.QA.Framework
         {
             Id = Guid.NewGuid();
             LoanAmount = Get.GetLoanAmount();
-            IovationBlackBox = "Unknown";
+            IovationBlackBox = IovationMockResponse.Unknown;
 
             _setPromiseDateAndLoanTerm = () =>
                                   {
@@ -147,7 +148,7 @@ namespace Wonga.QA.Framework
             var requests = new List<ApiRequest>
             {
                 SubmitApplicationBehaviourCommand.New(r => r.ApplicationId = Id),
-                SubmitClientWatermarkCommand.New(r => { r.ApplicationId=Id; r.AccountId = Customer.Id; r.BlackboxData = IovationBlackBox;
+                SubmitClientWatermarkCommand.New(r => { r.ApplicationId=Id; r.AccountId = Customer.Id; r.BlackboxData = IovationBlackBox.ToString();
                 })
             };
 
@@ -272,7 +273,7 @@ namespace Wonga.QA.Framework
 
             Do.With.Timeout(TimeSpan.FromSeconds(10)).Watch(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).Transactions.Count);
 
-            return new Application { Id = Id, BankAccountId = Customer.BankAccountId, LoanAmount = LoanAmount, LoanTerm = LoanTerm };
+            return new Application { Id = Id, BankAccountId = Customer.BankAccountId, LoanAmount = LoanAmount, LoanTerm = LoanTerm, BankAccountNumber = Customer.BankAccountNumber};
         }
 
         #region Public Helper "With" Methods
@@ -317,7 +318,7 @@ namespace Wonga.QA.Framework
             return this;
         }
 
-        public ApplicationBuilder WithIovationBlackBox(string iovationBlackBox)
+        public ApplicationBuilder WithIovationBlackBox(IovationMockResponse iovationBlackBox)
         {
             IovationBlackBox = iovationBlackBox;
             return this;

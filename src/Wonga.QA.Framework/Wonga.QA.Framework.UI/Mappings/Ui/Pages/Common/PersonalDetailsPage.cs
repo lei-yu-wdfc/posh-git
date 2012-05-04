@@ -10,6 +10,8 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String FormId { get; set; }
         public String SlidersFormId { get; set; }
         public String CheckPrivacyPolicy { get; set; }
+        public String PrivacyPolicyLink { get; set; }
+        public String PrivacyPolicyPopup { get; set; }
         public String CheckCanContact { get; set; }
         public String NextButton { get; set; }
         public String MarriedInCommunityProperty { get; set; }
@@ -24,5 +26,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String AmountPlusButton { get; set; }
         public String DurationMinusButton { get; set; }
         public String DurationPlusButton { get; set; }
+        public String GenderWarning { get; set; }
+        public String DateOfBirthWarning { get; set; }
     }
 }

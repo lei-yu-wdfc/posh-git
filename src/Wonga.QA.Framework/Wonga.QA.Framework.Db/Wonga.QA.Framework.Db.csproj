@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>$(SolutionDir)\..\..\bin\$(SolutionName)</OutputPath>
+    <OutputPath>$(SolutionDir)\..\..\bin</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -28,7 +28,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>$(SolutionDir)\..\..\bin\$(SolutionName)</OutputPath>
+    <OutputPath>$(SolutionDir)\..\..\bin</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -65,7 +65,7 @@
     <Compile Include="Databases\OpsDatabase.cs" />
     <Compile Include="Databases\OpsLogsDatabase.cs" />
     <Compile Include="Databases\PaymentsDatabase.cs" />
-    <Compile Include="Databases\QaDataDatabase.cs" />
+    <Compile Include="Databases\QADataDatabase.cs" />
     <Compile Include="Databases\RiskDatabase.cs" />
     <Compile Include="Databases\SalesforceDatabase.cs" />
     <Compile Include="Databases\SchedulerDatabase.cs" />
@@ -98,7 +98,7 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <Import Project="$(SolutionDir)\..\..\lib\nuget\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

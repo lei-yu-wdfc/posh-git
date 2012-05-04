@@ -24,13 +24,13 @@ namespace Wonga.QA.Framework.UI.Elements
         public TopupSlidersElement(BasePage page)
             : base(page)
         {
-            _form = Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.TopupSlidersElement.FormId));
-            _loanAmount = _form.FindElement(By.CssSelector(Ui.Get.TopupSlidersElement.LoanAmount));
-            _amountMinusButton = _form.FindElement(By.CssSelector(Ui.Get.TopupSlidersElement.AmountMinusButton));
-            _amountPlusButton = _form.FindElement(By.CssSelector(Ui.Get.TopupSlidersElement.AmountPlusButton));
-            _totalAmount = _form.FindElement(By.CssSelector(Ui.Get.TopupSlidersElement.TotalAmount));
-            _totalFees = _form.FindElement(By.CssSelector(Ui.Get.TopupSlidersElement.TotalFees));
-            _totalToRepay = _form.FindElement(By.CssSelector(Ui.Get.TopupSlidersElement.TotalToRepay));
+            _form = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.TopupSlidersElement.FormId));
+            _loanAmount = _form.FindElement(By.CssSelector(UiMap.Get.TopupSlidersElement.LoanAmount));
+            _amountMinusButton = _form.FindElement(By.CssSelector(UiMap.Get.TopupSlidersElement.AmountMinusButton));
+            _amountPlusButton = _form.FindElement(By.CssSelector(UiMap.Get.TopupSlidersElement.AmountPlusButton));
+            _totalAmount = _form.FindElement(By.CssSelector(UiMap.Get.TopupSlidersElement.TotalAmount));
+            _totalFees = _form.FindElement(By.CssSelector(UiMap.Get.TopupSlidersElement.TotalFees));
+            _totalToRepay = _form.FindElement(By.CssSelector(UiMap.Get.TopupSlidersElement.TotalToRepay));
         }
 
         public String HowMuch
@@ -64,7 +64,7 @@ namespace Wonga.QA.Framework.UI.Elements
 
         public TopupRequestPage Apply()
         {
-            _submit = _form.FindElement(By.CssSelector(Ui.Get.TopupSlidersElement.SubmitButton));
+            _submit = _form.FindElement(By.CssSelector(UiMap.Get.TopupSlidersElement.SubmitButton));
             _submit.Click();
 
             //return null;
@@ -74,7 +74,7 @@ namespace Wonga.QA.Framework.UI.Elements
         {
             try
             {
-                _submit = _form.FindElement(By.CssSelector(Ui.Get.TopupSlidersElement.SubmitButton));
+                _submit = _form.FindElement(By.CssSelector(UiMap.Get.TopupSlidersElement.SubmitButton));
                 return true;
             }
             catch (NoSuchElementException)

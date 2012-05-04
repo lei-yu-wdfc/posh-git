@@ -14,5 +14,8 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String ExtensionRequestPageSlidersSmall { get; set; }
         public String ExtensionRequestPageCard { get; set; }
         public String ExtensionRequestPageSecurityCode { get; set; }
+        public String ExtensionRequestPageOweToday { get; set; }
+        public String ExtensionRequestPageTotalRepayToday { get; set; }
+        public String ExtensionRequestPageNewCreditAmount { get; set; }
     }
 }

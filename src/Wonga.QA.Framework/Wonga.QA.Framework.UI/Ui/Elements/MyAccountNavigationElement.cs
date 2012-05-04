@@ -16,28 +16,29 @@ namespace Wonga.QA.Framework.UI.Elements
         private readonly IWebElement _myPaymentDetailsButton;
         private readonly IWebElement _mySummaryButton;
         private readonly IWebElement _myPersonalDetailsButton;
+        private IWebElement _myPrepaidCardPage;
 
         public MyAccountNavigationElement(BasePage page)
             : base(page)
         {
             _mySummaryButton =
-                        Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.MyAccountNavigationSection.MySummary));
+                        Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyAccountNavigationSection.MySummary));
             switch (Config.AUT)
             {
                 case AUT.Za:
                 case AUT.Ca:
                     _myPaymentDetailsButton =
                         Page.Client.Driver.FindElement(
-                            By.CssSelector(Ui.Get.MyAccountNavigationSection.MyPaymentsDetails));
+                            By.CssSelector(UiMap.Get.MyAccountNavigationSection.MyPaymentsDetails));
                     _myPersonalDetailsButton =
                         Page.Client.Driver.FindElement(
-                            By.CssSelector(Ui.Get.MyAccountNavigationSection.MyPersonalDetails));
+                            By.CssSelector(UiMap.Get.MyAccountNavigationSection.MyPersonalDetails));
                     break;
                 case AUT.Wb:
                     _myPersonalDetailsButton =
-                        Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.MyAccountNavigationSection.YourDetails));
+                        Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyAccountNavigationSection.YourDetails));
                     _myPaymentDetailsButton =
-                        Page.Client.Driver.FindElement(By.CssSelector(Ui.Get.MyAccountNavigationSection.AccountDetails));
+                        Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyAccountNavigationSection.AccountDetails));
                     break;
 
 
@@ -59,5 +60,13 @@ namespace Wonga.QA.Framework.UI.Elements
             return new MySummaryPage(Page.Client);
         }
 
+        public PrepaidCardPage MyPrepaidCardButtonClick()
+        {
+            _myPrepaidCardPage =
+                Page.Client.Driver.FindElement(
+                    By.CssSelector(UiMap.Get.MyAccountNavigationSection.MyPrepaidCardPageDetails));
+            _myPrepaidCardPage.Click();
+            return new PrepaidCardPage(Page.Client);
+        }
     }
 }

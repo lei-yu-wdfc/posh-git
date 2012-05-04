@@ -12,7 +12,7 @@ namespace Wonga.QA.Framework.Api
             BankName = "ABBEY";
             BankCode = 938600;
             HolderName = "FirstName LastName";
-			AccountNumber = 42368003;
+            AccountNumber = Get.GetBankAccountNumber();
             AccountOpenDate = DateTime.Now.AddYears(-4);
             CountryCode = CountryCodeEnum.UK;
             IsPrimary = true;

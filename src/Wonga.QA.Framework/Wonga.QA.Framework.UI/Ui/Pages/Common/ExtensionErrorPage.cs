@@ -11,11 +11,16 @@ using Wonga.QA.Framework.UI.Mappings;
 
 namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
-    class ExtensionErrorPage : BasePage, IExtensionPaymentPage
+    public class ExtensionErrorPage : BasePage, IExtensionPaymentPage
     {
+        private IWebElement _header;
+        private IWebElement _bodyContent;
+
         public ExtensionErrorPage(UiClient client) : base(client)
         {
-            Assert.That(Headers, Has.Item("Ouch! We're sorry"));
+            Content.Driver().PageSource.Contains("Ouch! We're very sorry");
+            _header = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionErrorPage.Header));
+            _bodyContent = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionErrorPage.BodyText));
         }
 
         public bool IsErrorPageSorryNotPresent()
