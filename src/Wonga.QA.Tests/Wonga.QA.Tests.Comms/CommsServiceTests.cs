@@ -58,6 +58,14 @@ namespace Wonga.QA.Tests.Comms
 
         }
 
+        [Test, AUT(AUT.Wb), JIRA("SME-1423")]
+        public void CommsEmailRegexValidationShouldAcceptEmailWithHyphenInDomain()
+        {
+            String email = Get.GetId().ToString() + "@won-ga.com";
 
+            CustomerBuilder.New()
+                .WithEmailAddress(email)
+                .Build();
+        }
     }
 }
