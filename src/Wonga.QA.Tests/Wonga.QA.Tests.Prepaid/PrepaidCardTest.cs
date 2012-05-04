@@ -20,6 +20,9 @@ namespace Wonga.QA.Tests.Prepaid
         private SignupCustomerForStandardCardCommand _requestWithCustomerInArrears = null;
         private SignupCustomerForStandardCardCommand _requestWithInvalidCustomerEmail = null;
 
+        private static readonly int VALID_ACCOUNT_NUMBER_LENGTH = 14;
+        private static readonly int VALID_SERIAL_NUMBER_LENGTH = 10;
+
 
         private static readonly dynamic _prepaidCardDb = Drive.Data.PrepaidCard.Db;
 
@@ -48,7 +51,7 @@ namespace Wonga.QA.Tests.Prepaid
             _requestWithInvalidCustomerEmail.CustomerExternalId = _customerWithWromgEmail.Id;
         }
 
-        [Test, AUT(AUT.Uk), JIRA("PP-8")]
+        [Test, AUT(AUT.Uk), JIRA("PP-8","PP-150")]
         public void CustomerShouldApplyForPrepaidCard()
         {
 
@@ -66,6 +69,16 @@ namespace Wonga.QA.Tests.Prepaid
         {
             var cardHolderId = Do.Until(() => _prepaidCardDb.CardHolderDetails.FindByCustomerExternalId(CustomerExternalId: customerId));
             var cardDetails = Do.Until(() => _prepaidCardDb.CardDetails.FindByCardHolderExternalId(CardHolderExternalId: cardHolderId.ExternalId));
+
+            String cardAccountNumber = cardDetails.AccountNumber;
+            String cardSerialnumber = cardDetails.SerialNumber;
+
+            Assert.IsNotNull(cardDetails.AccountNumber);
+            Assert.IsNotNull(cardDetails.SerialNumber);
+            Assert.IsTrue(cardAccountNumber.Length <= VALID_ACCOUNT_NUMBER_LENGTH);
+            Assert.IsTrue(cardSerialnumber.Length <= VALID_SERIAL_NUMBER_LENGTH);
+            Assert.IsNotNull(cardDetails.CardPan);
+
         }
 
         private void ExecuteAPICommand(ApiRequest request,bool isThrowException)
