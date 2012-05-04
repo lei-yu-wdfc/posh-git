@@ -266,6 +266,21 @@ namespace Wonga.QA.Framework.Core
             return RandomElement(((T[])Enum.GetValues(typeof(T))).Where(t => exclude == null || !exclude.Contains(t)).ToArray());
         }
 
+		public static T RandomEnumOf<T>(params T[] allowed)
+		{
+			if(allowed == null)
+			{
+				throw new ArgumentNullException("allowed");
+			}
+
+			if (allowed.Length == 0)
+			{
+				throw new ArgumentOutOfRangeException("allowed", "collection of enum values can not be empty");
+			}
+
+			return RandomElement(((T[])Enum.GetValues(typeof(T))).Where(allowed.Contains).ToArray());
+		}
+
 
         public static string EnumToString(Enum en)
         {
