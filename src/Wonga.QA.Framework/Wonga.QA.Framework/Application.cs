@@ -23,7 +23,7 @@ namespace Wonga.QA.Framework
 		public decimal LoanAmount { get; set; }
 		public int LoanTerm { get; set; }
 		public string FailedCheckpoint { get; private set; }
-        public Int64 BankAccountNumber { get; set; }
+        public string BankAccountNumber { get; set; }
 
 	    public Application()
 		{
