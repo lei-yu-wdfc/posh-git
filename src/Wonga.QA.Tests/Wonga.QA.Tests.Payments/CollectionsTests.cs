@@ -68,7 +68,6 @@ namespace Wonga.QA.Tests.Payments
 				.WithLoanAmount(loanAmount)
 				.WithPromiseDate(promiseDate)
 				.Build();
-				//.PutApplicationIntoArrears(91);
 
 			var paymentsDb = new DbDriver().Payments;
 			paymentsDb.Arrears.InsertOnSubmit(new ArrearEntity()
@@ -265,7 +264,7 @@ namespace Wonga.QA.Tests.Payments
 					break;
 				default:
 					{
-						paymentRequestDate = new Date(new DateTime(now.Year, now.Month, GetDefaultPayDaysOfMonth()[now.Month - 1]));
+						paymentRequestDate = new Date(new DateTime(now.Year, now.Month, GetDefaultPayDaysOfMonth()[now.Month - 1]).AddDays(-1));
 					}
 					break;
 			}
@@ -277,7 +276,7 @@ namespace Wonga.QA.Tests.Payments
 		{
 			var dateTrackingBegins = attempt == 0
 			                         	? paymentRequestDate
-			                         	: Drive.Db.GetPreviousWorkingDay(new Date(paymentRequestDate.AddDays(-1))).DateTime;
+			                         	: new Date(paymentRequestDate).DateTime;
 
 
 			int trackingDays = 0;
