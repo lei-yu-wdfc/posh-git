@@ -8,7 +8,8 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Comms.Helpers;
 using Wonga.QA.Tests.Core;
-using Wonga.QA.Framework.Msmq;
+using Api = Wonga.QA.Framework.Api;
+using Msmq = Wonga.QA.Framework.Msmq;
 
 namespace Wonga.QA.Tests.Comms
 {
@@ -16,17 +17,16 @@ namespace Wonga.QA.Tests.Comms
     public class ArrearsSMSTests
     {
         #region private members
-        private readonly string[] _smsTexts = new string[] { "We still haven\\u0027t received full payment for your recent Wonga loan and it is now overdue. Go to ‘My Account’ to make a payment",
+        private readonly string[] _smsTexts = new string[] { "We still haven't received full payment for your recent Wonga loan and it is now overdue. Go to ‘My Account’ to make a payment",
                                                              "Your Wonga repayment is still due and interest is being added. Please go to ‘My Account’ now to pay in full or set up a repayment plan.",
-                                                             "We haven\\u0027t received full payment for your Wonga loan and it’s now overdue. Please pay using \\u0027My Account\\u0027 at Wonga.com  or call us to discuss on  0207 138 8333",
-                                                             "We are concerned that you still haven\\u0027t repaid your Wonga loan. We urge you to get in touch so we can resolve this situation. Call us on 0207 138 8333",
+                                                             "We haven't received full payment for your Wonga loan and it’s now overdue. Please pay using 'My Account' at Wonga.com  or call us to discuss on  0207 138 8333",
+                                                             "We are concerned that you still haven't repaid your Wonga loan. We urge you to get in touch so we can resolve this situation. Call us on 0207 138 8333",
                                                              "Please contact Wonga urgently as your account is overdue and interest is accruing. Call us on 0207 138 8333",
                                                              "Despite our messages and offers to help, your Wonga loan remains unpaid. Act now to avoid a possible impact on your credit rating. Call us on 0207 138 8333",
                                                              "Your Wonga loan is overdue in spite of our numerous offers to help you. Call us on 0207 138 8333 to avoid an impact on your credit rating."};
 
         private readonly Dictionary<uint, int> _dayToSMSMap = new Dictionary<uint, int>();
         private bool _originalBankGatewayMode;
-        private static readonly dynamic AccountPreferences = Drive.Data.Payments.Db.AccountPreferences;
         private static readonly dynamic SmsMessages = Drive.Data.Sms.Db.SmsMessages;
         private static readonly dynamic InArrearsNoticeSagaEntities = Drive.Data.OpsSagas.Db.InArrearsNoticeSagaEntity;
         #endregion
@@ -115,20 +115,33 @@ namespace Wonga.QA.Tests.Comms
         protected void VerifySMSSentOnDay(int smsType, uint days)
         {
             DateTime startTime = DateTime.Now;
-            string phoneNumber = "07123-123456";
+            string phonePart = GetPhoneNumber();
+            string phoneNumber = "07" + phonePart;
 
             Customer customer = CustomerBuilder.New()
                                                .WithMobileNumber(phoneNumber)
                                                .Build();
 
-            Do.Until(customer.GetBankAccount);
+            var mobileVerificationEntity = Do.Until(() => Drive.Data.Comms.Db.MobilePhoneVerifications.FindByMobilePhone(MobilePhone :  phoneNumber));
 
-            Application loan = ApplicationBuilder.New(customer).Build()
-                                                               .PutApplicationIntoArrears(days);
+            Assert.IsNotNull(mobileVerificationEntity);
+            Assert.IsNotNull(mobileVerificationEntity.Pin);
+
+            //Force the mobile phone number to be verified successfully..
+            Assert.DoesNotThrow(() => Drive.Api.Commands.Post(new Api.CompleteMobilePhoneVerificationCommand { Pin = mobileVerificationEntity.Pin, 
+                                                                                                               VerificationId = mobileVerificationEntity.VerificationId }));
+
+            Application loan = ApplicationBuilder.New(customer).Build();
+
+            //Make sure the payment attempt fails by changing the expiry date of the card.
+            Drive.Data.Payments.Db.PaymentCardsBase.UpdateByExternalId(ExternalId : customer.GetPaymentCard(), ExpiryDate : new DateTime(DateTime.Now.Year -1, 1, 31));
+            
+            //Put the application nto arrears.
+            loan.PutApplicationIntoArrears(days);
 
             TimeoutNotificationSagaForDays(loan, days);
 
-            AssertSmsIsSent(FormatPhoneNumber(phoneNumber), _smsTexts[_dayToSMSMap[days]], startTime);
+            AssertSmsIsSent(FormatPhoneNumber(phonePart), _smsTexts[_dayToSMSMap[days]], startTime);
 
         }
 
@@ -139,27 +152,26 @@ namespace Wonga.QA.Tests.Comms
 
         protected string FormatPhoneNumber(string unformatted)
         {
-            return unformatted.Replace("-", String.Empty);
+            return "447" + unformatted;
         }
 
         private void TimeoutNotificationSagaForDays(Application application, uint days)
         {
-            var saga = Do.Until(() => InArrearsNoticeSagaEntities.FindByAccountId(application.AccountId));
+            var saga = Do.With.Timeout(2).Interval(10).Until(() => InArrearsNoticeSagaEntities.FindByAccountId(application.AccountId));
 
             Assert.IsNotNull(saga);
 
-            for (int i = 0; i < days - saga.DaysInArrears; i++)
+            for (int i = 0; i < days; i++)
             {
-                Drive.Msmq.Payments.Send(new TimeoutMessage { Expires = DateTime.UtcNow, SagaId = saga.Id });
+                Drive.Msmq.Payments.Send(new Msmq.TimeoutMessage { Expires = DateTime.UtcNow, SagaId = saga.Id });
             }
 
-            Assert.IsNotNull(Do.Until(() => InArrearsNoticeSagaEntities.FindBy(AccountId: application.AccountId, DaysInArrears: days)));
+            Assert.IsNotNull(Do.With.Timeout(5).Interval(10).Until(() => InArrearsNoticeSagaEntities.FindBy(AccountId: application.AccountId, DaysInArrears: days)));
         }
 
         private void AssertSmsIsSent(string formattedPhoneNumber, string text, DateTime createdAfter)
         {
-            Assert.IsNotNull(Do.Until(() => SmsMessages.Find(SmsMessages.CreatedOn >= createdAfter &&
-                                                             SmsMessages.MobilePhoneNumber == formattedPhoneNumber &&
+            Assert.IsNotNull(Do.Until(() => SmsMessages.Find(SmsMessages.MobilePhoneNumber == formattedPhoneNumber &&
                                                              SmsMessages.MessageText == text)));
         }
     }
