@@ -41,7 +41,6 @@ namespace Wonga.QA.Framework.Data.Enums.Risk
         [Description("GuarantorNamesMatchBusinessBureauDataVerification")] GuarantorNamesMatchBusinessBureauDataVerification,
         [Description("BusinessGeneralManualVerification")] BusinessGeneralManualVerification,
 		[Description("DoNotRelendVerification")] DoNotRelendVerification,
-		[Description("FraudBlacklistVerification")] FraudBlacklistVerification,
 		[Description("ReputationPredictionPositiveVerification")] ReputationPredictionPositiveVerification,
 		[Description("RepaymentPredictionPositiveVerification")] RepaymentPredictionPositiveVerification,
         [Description("ApplicantIsNotMinorVerification")] ApplicantIsNotMinorVerification,
