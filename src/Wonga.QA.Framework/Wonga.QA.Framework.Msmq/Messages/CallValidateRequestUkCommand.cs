@@ -10,7 +10,6 @@ namespace Wonga.QA.Framework.Msmq
     {
         public Guid AccountId { get; set; }
         public Guid ApplicationId { get; set; }
-        public Decimal LoanAmount { get; set; }
         public Guid PaymentCardId { get; set; }
         public Guid BankAccountId { get; set; }
         public Guid SagaId { get; set; }
