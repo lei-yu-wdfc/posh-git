@@ -17,26 +17,55 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	{
 		private const RiskMask TestMask = RiskMask.TESTRepaymentPredictionPositive;
 
+		private Customer customerLn;
+		private Application applicationL0;
+		private Application applicationLn;
+
 		private string _forename;
 		private string _surname;
 		private Date _dateOfBirth;
 		private string _nationalNumber;
+		
+		#region ScorecardNames
+
+		private string _expectedScorecardNameL0;
+		private string _expectedScorecardNameLn;
+		private const string ScorecardNameL0Za = "ZARiskScorecard_v_1_4_L0";
+		private const string ScorecardNameLnZa = "ZARiskScorecard_v_1_2_LN";
+
+		#endregion
+
+		#region Cutoffs
 
 		private readonly int ScoreCutoffNewUsers = Int32.Parse(Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Risk.RepaymentScoreNewUsersCutOff").Value);
 		private readonly int ScoreCutoffExistingUsers = Int32.Parse(Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Risk.RepaymentScoreExistingUsersCutOff").Value);
-		
-		private string _expectedScorecardNameL0;
-		private string _expectedScorecardNameLn;
+
 		private int _expectedScoreCutoffNewUsers;
 		private int _expectedScoreCutoffExistingUsers;
-        //private string[] _expectedFactorNamesL0;
-		private string[] _expectedFactorNamesLn;
-
-		private const string ScorecardNameL0Za = "ZARiskScorecard_v_1_2_L0";
-		private const string ScorecardNameLnZa = "ZARiskScorecard_v_1_2_LN";
 		private const int ScoreCutoffNewUsersZa = 600;
 		private const int ScoreCutoffExistingUsersZa = 600;
-		//private static readonly string[] ExpectedFactorNamesL0Za = new string[];
+
+		#endregion
+
+		#region Factors
+
+		private string[] _expectedFactorNamesL0;
+		private string[] _expectedFactorNamesLn;
+
+		private static readonly string[] FactorNamesL0Za = new string[]
+		{
+		                                                           		"MaritalStatus",
+		                                                           		"LoanAmount",
+		                                                           		"LoanTerm",
+		                                                           		"LoanNumber",
+		                                                           		"AppNetMonthlyIncome",
+		                                                           		"NumAccounts",
+		                                                           		"EmpiricaScore",
+		                                                           		"BureauAge",
+		                                                           		"MonthsAtRecentAddress"
+		                                                           	};
+
+
 		private static readonly string[] FactorNamesLnZa = new string[]
 		                                                   	{
 		                                                   		"NumAccounts",
@@ -49,9 +78,10 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		                                                   		"AvgDel",
 		                                                   		"ArrearsPresent",
 		                                                   		"DaysSinceLastLoan",
-		                                                   		"AppNetMonthlyIncome"
+		                                                   		"AppNetMonthlyIncome",
+																"LnSkey"
 		                                                   	};
-
+		#endregion
 
 		[FixtureSetUp]
 		public void FixtureSetUp()
@@ -64,6 +94,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 						_expectedScorecardNameLn = ScorecardNameLnZa;
 						_expectedScoreCutoffNewUsers = ScoreCutoffNewUsersZa;
 						_expectedScoreCutoffExistingUsers = ScoreCutoffExistingUsersZa;
+						_expectedFactorNamesL0 = FactorNamesL0Za;
 						_expectedFactorNamesLn = FactorNamesLnZa;
 
 						_forename = "ANITHA";
@@ -77,6 +108,52 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 						throw new NotImplementedException(Config.AUT.ToString());
 					}
 			}
+		}
+
+		[Test, AUT(AUT.Za)]
+		public void CheckpointRepaymentPredictionPositiveL0Accept()
+		{
+			var customer = BuildCustomerForScorecardAccept();
+			applicationL0 = ApplicationBuilder.New(customer).WithLoanTerm(5).WithLoanAmount(100).Build();
+
+			var repaymentPredictionScore = GetRepaymentPredictionScore(applicationL0);
+			Assert.GreaterThan(repaymentPredictionScore, ScoreCutoffNewUsers);
+
+			customerLn = customer;
+		}
+
+		[Test, AUT(AUT.Za)]
+		public void CheckpointRepaymentPredictionPositiveL0Decline()
+		{
+			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanTerm(30).WithLoanAmount(2000).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+
+			var repaymentPredictionScore = GetRepaymentPredictionScore(application);
+			Assert.LessThan(repaymentPredictionScore, ScoreCutoffNewUsers);
+		}
+
+		[Test, AUT(AUT.Za), DependsOn("CheckpointRepaymentPredictionPositiveL0Accept")]
+		public void CheckpointRepaymentPredicitionPositiveFactorsUsedAreCorrectL0()
+		{
+			var factorNames = GetFactors(applicationL0);
+			Assert.AreElementsEqualIgnoringOrder(_expectedFactorNamesL0, factorNames);
+		}
+
+		[Test, AUT(AUT.Za), DependsOn("CheckpointRepaymentPredictionPositiveL0Accept")]
+		public void CheckpointRepaymentPredictionPositiveLnAccept()
+		{
+			applicationL0.RepayOnDueDate();
+			applicationLn = ApplicationBuilder.New(customerLn).WithLoanTerm(5).WithLoanAmount(100).Build();
+
+			var repaymentPredictionScore = GetRepaymentPredictionScore(applicationLn);
+			Assert.GreaterThan(repaymentPredictionScore, ScoreCutoffExistingUsers);
+		}
+
+		[Test, AUT(AUT.Za), DependsOn("CheckpointRepaymentPredictionPositiveLnAccept")]
+		public void CheckpointRepaymentPredicitionPositiveFactorsUsedAreCorrectLn()
+		{
+			var factorNames = GetFactors(applicationLn);
+			Assert.AreElementsEqualIgnoringOrder(_expectedFactorNamesLn, factorNames);
 		}
 
 		[Test, AUT(AUT.Za)]
@@ -105,54 +182,6 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Assert.AreEqual(_expectedScoreCutoffExistingUsers, ScoreCutoffExistingUsers);
 		}
 
-		[Test, AUT(AUT.Za)]
-		public void CheckpointRepaymentPredictionPositiveL0Accept()
-		{
-			var customer = BuildCustomerForScorecardAccept();
-			var application = ApplicationBuilder.New(customer).WithLoanTerm(5).WithLoanAmount(100).Build();
-
-			var repaymentPredictionScore = GetRepaymentPredictionScore(application);
-			Assert.GreaterThan(repaymentPredictionScore, ScoreCutoffNewUsers);
-		}
-
-		[Test, AUT(AUT.Za)]
-		public void CheckpointRepaymentPredictionPositiveL0Decline()
-		{
-			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
-            var application = ApplicationBuilder.New(customer).WithLoanTerm(30).WithLoanAmount(2000).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
-
-			var repaymentPredictionScore = GetRepaymentPredictionScore(application);
-			Assert.LessThan(repaymentPredictionScore, ScoreCutoffNewUsers);
-		}
-
-		[Test, AUT(AUT.Za)]
-		public void CheckpointRepaymentPredictionPositiveLnAccept()
-		{
-			var customer = BuildCustomerForScorecardAccept();
-			ApplicationBuilder.New(customer).Build().RepayOnDueDate();
-
-			Drive.Db.UpdateEmployerName(customer.Id, Get.EnumToString(TestMask));
-
-			var application = ApplicationBuilder.New(customer).WithLoanTerm(5).WithLoanAmount(100).Build();
-
-			var repaymentPredictionScore = GetRepaymentPredictionScore(application);
-			Assert.GreaterThan(repaymentPredictionScore, ScoreCutoffExistingUsers);
-		}
-
-		[Test, AUT(AUT.Za)]
-		public void CheckpointRepaymentPredicitionPositiveFactorsUsedAreCorrectLn()
-		{
-			var customer = BuildCustomerForScorecardAccept();
-			ApplicationBuilder.New(customer).Build().RepayOnDueDate();
-
-			Drive.Db.UpdateEmployerName(customer.Id, Get.EnumToString(TestMask));
-
-			var application = ApplicationBuilder.New(customer).WithLoanTerm(5).WithLoanAmount(100).Build();
-
-			var factorNames = GetFactors(application);
-			Assert.AreElementsEqualIgnoringOrder(_expectedFactorNamesLn, factorNames);
-		}
-
 		#region Helpers
 
 		private Customer BuildCustomerForScorecardAccept()
@@ -174,7 +203,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			return score;
 		}
 
-		private List<string> GetFactors(Application application)
+		private IEnumerable<string> GetFactors(Application application)
 		{
 			int workflowId = (int)Drive.Data.Risk.Db.RiskWorkflows.FindByApplicationId(application.Id).RiskWorkflowId;
 
