@@ -52,7 +52,20 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		private string[] _expectedFactorNamesL0;
 		private string[] _expectedFactorNamesLn;
 
-		//private static readonly string[] ExpectedFactorNamesL0Za = new string[];
+		private static readonly string[] FactorNamesL0Za = new string[]
+		{
+		                                                           		"MaritalStatus",
+		                                                           		"LoanAmount",
+		                                                           		"LoanTerm",
+		                                                           		"LoanNumber",
+		                                                           		"AppNetMonthlyIncome",
+		                                                           		"NumAccounts",
+		                                                           		"EmpiricaScore",
+		                                                           		"BureauAge",
+		                                                           		"MonthsAtRecentAddress"
+		                                                           	};
+
+
 		private static readonly string[] FactorNamesLnZa = new string[]
 		                                                   	{
 		                                                   		"NumAccounts",
@@ -65,7 +78,8 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		                                                   		"AvgDel",
 		                                                   		"ArrearsPresent",
 		                                                   		"DaysSinceLastLoan",
-		                                                   		"AppNetMonthlyIncome"
+		                                                   		"AppNetMonthlyIncome",
+																"LnSkey"
 		                                                   	};
 		#endregion
 
@@ -80,6 +94,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 						_expectedScorecardNameLn = ScorecardNameLnZa;
 						_expectedScoreCutoffNewUsers = ScoreCutoffNewUsersZa;
 						_expectedScoreCutoffExistingUsers = ScoreCutoffExistingUsersZa;
+						_expectedFactorNamesL0 = FactorNamesL0Za;
 						_expectedFactorNamesLn = FactorNamesLnZa;
 
 						_forename = "ANITHA";
@@ -99,13 +114,12 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		public void CheckpointRepaymentPredictionPositiveL0Accept()
 		{
 			var customer = BuildCustomerForScorecardAccept();
-			var application = ApplicationBuilder.New(customer).WithLoanTerm(5).WithLoanAmount(100).Build();
+			applicationL0 = ApplicationBuilder.New(customer).WithLoanTerm(5).WithLoanAmount(100).Build();
 
-			var repaymentPredictionScore = GetRepaymentPredictionScore(application);
+			var repaymentPredictionScore = GetRepaymentPredictionScore(applicationL0);
 			Assert.GreaterThan(repaymentPredictionScore, ScoreCutoffNewUsers);
 
 			customerLn = customer;
-			applicationL0 = application;
 		}
 
 		[Test, AUT(AUT.Za)]
@@ -128,12 +142,11 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test, AUT(AUT.Za), DependsOn("CheckpointRepaymentPredictionPositiveL0Accept")]
 		public void CheckpointRepaymentPredictionPositiveLnAccept()
 		{
-			var application = ApplicationBuilder.New(customerLn).WithLoanTerm(5).WithLoanAmount(100).Build();
+			applicationL0.RepayOnDueDate();
+			applicationLn = ApplicationBuilder.New(customerLn).WithLoanTerm(5).WithLoanAmount(100).Build();
 
-			var repaymentPredictionScore = GetRepaymentPredictionScore(application);
+			var repaymentPredictionScore = GetRepaymentPredictionScore(applicationLn);
 			Assert.GreaterThan(repaymentPredictionScore, ScoreCutoffExistingUsers);
-
-			applicationLn = application;
 		}
 
 		[Test, AUT(AUT.Za), DependsOn("CheckpointRepaymentPredictionPositiveLnAccept")]
