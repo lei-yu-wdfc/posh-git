@@ -29,7 +29,14 @@ namespace Wonga.QA.Framework.Data
 			var oldValue = row != null
 							? ConvertToType<T>(row.Value)
 							: default(T);
-			Db.ServiceConfigurations.UpdateByKey(Key: keyName, Value: value.ToString());
+			if(row == null)
+			{
+				Db.ServiceConfigurations.Insert(Key: keyName, Value: value.ToString());
+			}
+			else
+			{
+				Db.ServiceConfigurations.UpdateByKey(Key: keyName, Value: value.ToString());	
+			}			
 			return oldValue;
 		}
 
