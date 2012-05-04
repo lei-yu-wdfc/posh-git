@@ -10,7 +10,6 @@ using Wonga.QA.Framework.Data.Enums.Risk;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
-using Wonga.QA.Framework.Data.Extensions;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
