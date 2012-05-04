@@ -23,14 +23,14 @@ namespace Wonga.QA.Tests.Ui
     /// 
     class RepaySliderTests : UiTest
     {
-        private int _amountMax;
-        private int _amountMin;
+        //private int _amountMax;
+        //private int _amountMin;
         //private string _repaymentDate;
-        private ApiResponse _response;
+        //private ApiResponse _response;
         //private DateTime _actualDate;
        
         
-        [Test, AUT(AUT.Uk), JIRA("UK-1827")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1827"), Pending ("In development")]
         public void MovingRepaySliderRemainingAmountShouldBeCorrect()
         {
             //build L0 loan
