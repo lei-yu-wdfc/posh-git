@@ -19,6 +19,7 @@
   </ContactingYouSection>
 
   <EmploymentDetailsSection>
+    <EmployerName>#edit-employer-name-ca</EmployerName>
     <NextPaydayDate>#edit-next-payday-ca-datepicker-popup-0</NextPaydayDate>
   </EmploymentDetailsSection>
 
