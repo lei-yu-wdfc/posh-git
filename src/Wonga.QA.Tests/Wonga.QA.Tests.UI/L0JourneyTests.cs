@@ -1293,35 +1293,5 @@ namespace Wonga.QA.Tests.Ui
             acceptedPage.SignConfirmCaL0(DateTime.Now.ToString("d MMM yyyy"), journey.FirstName, journey.LastName);
             var dealDone = acceptedPage.Submit();
         }
-
-        [Test, AUT(AUT.Za)]
-        public void FullZaL0Journey()
-        {
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var mySummaryPage = journey.ApplyForLoan(1000, 10)
-                                    .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
-                                    .FillAddressDetails()
-                                    .FillAccountDetails()
-                                    .FillBankDetails()
-                                    .WaitForAcceptedPage()
-                                    .FillAcceptedPage()
-                                    .GoToMySummaryPage().CurrentPage as MySummaryPage;
-
-        }
-
-        [Test, AUT(AUT.Ca)]
-        public void FullCaL0Journey()
-        {
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var mySummaryPage = journey.ApplyForLoan(1000, 10)
-                                    .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
-                                    .FillAddressDetails()
-                                    .FillAccountDetails()
-                                    .FillBankDetails()
-                                    .WaitForAcceptedPage()
-                                    .FillAcceptedPage()
-                                    .GoToMySummaryPage().CurrentPage as MySummaryPage;
-
-        }
     }
 }

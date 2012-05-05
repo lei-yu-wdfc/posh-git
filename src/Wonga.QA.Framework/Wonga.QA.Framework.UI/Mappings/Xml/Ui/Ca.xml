@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <UiMap>
   <YourNameSection>
-    <Fieldset>fieldset#personal-details</Fieldset>
+    <Fieldset>fieldset#name</Fieldset>
   </YourNameSection>
 
   <YourDetailsSection>
-    <Fieldset>fieldset#personal-details</Fieldset>
+    <Fieldset>fieldset#name</Fieldset>
     <IdNumber>#edit-id-number-ca</IdNumber>
   </YourDetailsSection>
 
@@ -19,7 +19,7 @@
   </ContactingYouSection>
 
   <EmploymentDetailsSection>
-    <EmployerName>#edit-employer-name-ca</EmployerName>
+    <EmployerName>#edit-employer-name</EmployerName>
     <NextPaydayDate>#edit-next-payday-ca-datepicker-popup-0</NextPaydayDate>
   </EmploymentDetailsSection>
 
@@ -34,7 +34,7 @@
   </DealDonePage>
   
   <AddressDetailsPage>
-    <FormId>#wonga-apply-lzero-form</FormId>
+    <FormId>#lzero-address-form</FormId>
     <Postcode>#edit-postcode-ca</Postcode>
     <PostcodeErrorForm>div#edit-postcode-ca-wrapper div.invalid</PostcodeErrorForm>
     <HouseNumber>#edit-street-number-ca</HouseNumber>
@@ -56,12 +56,12 @@
   </AccountDetailsSection>
 
   <PersonalBankAccountDetailsPage>
-    <FormId>#wonga-apply-lzero-form</FormId>
+    <FormId>#lzero-bank-form</FormId>
   </PersonalBankAccountDetailsPage>
 
 
   <BankAccountSection>
-    <Fieldset>fieldset#bank</Fieldset>
+    <Fieldset>fieldset#bank-1</Fieldset>
     <InstitutionNumber>#edit-institution-number</InstitutionNumber>
     <AccountNumber>#edit-account-number-ca</AccountNumber>
     <BankName>#edit-bank-name-ca</BankName>
