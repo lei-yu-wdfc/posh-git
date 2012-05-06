@@ -205,7 +205,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			switch (Config.AUT)
 			{
 				case AUT.Ca:
-					return "Risk.UseReputationModel";
+					return "FeatureSwitch.CA.ReputationPredictionCheckpoint";
 
 				case AUT.Za:
 					return "FeatureSwitch.ZA.ReputationPredictionCheckpoint";
