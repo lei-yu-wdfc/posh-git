@@ -136,8 +136,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
             _submitButton.Click();
 
-            Thread.Sleep(2000);
-            _submitButton = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.SubmitButton)));
+            this.WaitForSuccessPopup();
             _submitButton.Click();
 
             return true;
@@ -154,11 +153,13 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _submitButton.Click();
             Do.Until(LookForEditPinField);
             _editPhonePin.SendKeys(pin);
-            Thread.Sleep(2000);
-            _submitButton = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.SubmitButton)));
+            
+            this.WaitForSuccessPopup();
+
             _submitButton.Click();
-            Thread.Sleep(2000);
-            _submitButton = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.SubmitButton)));
+            
+            this.WaitForSuccessPopup();
+
             _submitButton.Click();
 
             return true;
