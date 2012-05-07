@@ -136,7 +136,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
             _submitButton.Click();
 
-            this.WaitForSuccessPopup();
+            WaitForSuccessPopup();
             _submitButton.Click();
 
             return true;
@@ -154,11 +154,11 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             Do.Until(LookForEditPinField);
             _editPhonePin.SendKeys(pin);
             
-            this.WaitForSuccessPopup();
+            WaitForSuccessPopup();
 
             _submitButton.Click();
             
-            this.WaitForSuccessPopup();
+            WaitForSuccessPopup();
 
             _submitButton.Click();
 
