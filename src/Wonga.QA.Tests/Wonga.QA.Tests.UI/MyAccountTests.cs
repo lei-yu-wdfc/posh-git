@@ -792,9 +792,14 @@ namespace Wonga.QA.Tests.Ui
             myPersonalDetailsPage.PhoneClick();
             myPersonalDetailsPage.ChangeHomePhone("");
 
+            myPersonalDetailsPage.Submit();
+            myPersonalDetailsPage.WaitForSuccessPopup();
+            myPersonalDetailsPage.Submit();
+
             var homePhoneUI = myPersonalDetailsPage.GetHomePhone;
             Console.WriteLine(customer.Id.ToString());
             var homePhoneDB = Do.Until(() => Drive.Data.Comms.Db.CustomerDetails.FindByAccountId(customer.Id).HomePhone);
+
             Assert.AreEqual("", homePhoneUI);
             Assert.AreEqual("", homePhoneDB);
         }
