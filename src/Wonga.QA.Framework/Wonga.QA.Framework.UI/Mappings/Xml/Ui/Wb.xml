@@ -209,4 +209,8 @@
   <AccountDetailsSection>
 		<PasswordErrorForm>div#edit-password-wrapper div.invalid</PasswordErrorForm>		
   </AccountDetailsSection>
+
+	<AccountDetailsPage>
+		<FormId>#account-setup-1</FormId>
+	</AccountDetailsPage>
 </UiMap>

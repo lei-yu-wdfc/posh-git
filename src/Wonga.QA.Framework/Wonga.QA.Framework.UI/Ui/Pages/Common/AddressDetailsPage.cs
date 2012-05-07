@@ -56,9 +56,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             set
             {
                 _addressPeriod.SelectOption(value);
-                if (value == "Less than 4 month")
+                if (value.Equals("Less than 4 month"))
                 {
-                    PreviousAddresDetails = Do.Until(() => new PreviousAddresDetailsSection(this));
+                    PreviousAddresDetails = new PreviousAddresDetailsSection(this);
                 }
             }
         }
