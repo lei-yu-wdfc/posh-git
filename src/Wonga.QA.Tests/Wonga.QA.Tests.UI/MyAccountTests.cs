@@ -776,5 +776,28 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
+        [Test, AUT(AUT.Za), JIRA("QA-210")]
+        public void CustomerChangeTelephonFieldsCheckHomePhone()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            application.RepayOnDueDate();
+
+            var mySummary = loginPage.LoginAs(email);
+            var myPersonalDetailsPage = mySummary.Navigation.MyPersonalDetailsButtonClick();
+
+            myPersonalDetailsPage.PhoneClick();
+            myPersonalDetailsPage.ChangeHomePhone("");
+
+            var homePhoneUI = myPersonalDetailsPage.GetHomePhone;
+            Console.WriteLine(customer.Id.ToString());
+            var homePhoneDB = Do.Until(() => Drive.Data.Comms.Db.CustomerDetails.FindByAccountId(customer.Id).HomePhone);
+            Assert.AreEqual("", homePhoneUI);
+            Assert.AreEqual("", homePhoneDB);
+        }
+
     }
 }
