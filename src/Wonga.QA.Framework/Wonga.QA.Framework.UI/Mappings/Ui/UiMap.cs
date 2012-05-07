@@ -124,6 +124,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual ExtensionErrorPage ExtensionErrorPage { get; set; }
         public virtual ExtensionRequestPage ExtensionRequestPage { get; set; }
         public virtual RepayRequestPage RepayRequestPage { get; set; }
+        public virtual FAQPage FAQPage { get; set; }
 
         #endregion
 
