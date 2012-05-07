@@ -951,17 +951,17 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(directors.Contains(firstName + " " + lastName));
         }
 
-        [Test, AUT(AUT.Wb), JIRA("QA-256"), Pending("can't take loan")]
+        [Test, AUT(AUT.Wb), JIRA("QA-256")]
         public void EnsureAllGurantorsReceiveTheUnsignedGuarantorEmail()
         {
             var email = String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
-            var email2 = String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
+            var additionalDirectorEmail = String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
             var journey = JourneyFactory.GetL0JourneyWB(Client.Home());
             var personalDetailsPage = journey.ApplyForLoan(5500, 30)
              .AnswerEligibilityQuestions().CurrentPage as PersonalDetailsPage;
-            personalDetailsPage.YourName.FirstName = Get.RandomString(3, 10);
-            personalDetailsPage.YourName.MiddleName = Get.RandomString(3, 10);
-            personalDetailsPage.YourName.LastName = Get.RandomString(3, 10);
+            personalDetailsPage.YourName.FirstName = Get.GetName();
+            personalDetailsPage.YourName.MiddleName = "TESTNoCheck";
+            personalDetailsPage.YourName.LastName = Get.RandomString(10);
             personalDetailsPage.YourName.Title = "Mr";
             personalDetailsPage.YourDetails.Gender = "Female";
             personalDetailsPage.YourDetails.DateOfBirth = "1/Jan/1990";
@@ -981,7 +981,6 @@ namespace Wonga.QA.Tests.Ui
              .FillCardDetails()
              .EnterBusinessDetails().CurrentPage as AdditionalDirectorsPage;
             var addAdditionalDirectorPage = additionalDirectorsPage.AddAditionalDirector();
-            var additionalDirectorEmail = email2;
             addAdditionalDirectorPage.Title = "Mr";
             addAdditionalDirectorPage.FirstName = Get.RandomString(3, 15);
             addAdditionalDirectorPage.LastName = Get.RandomString(3, 15);
@@ -994,12 +993,16 @@ namespace Wonga.QA.Tests.Ui
                .ApplyTerms()
                .FillAcceptedPage()
                .GoHomePage();
-            var emails = Do.Until(() => Drive.Data.QaData.Db.Emails.FindAllByEmailAddress(email));
-            var emails2 = Do.Until(() => Drive.Data.QaData.Db.Emails.FindAllByEmailAddress(email2));
-            foreach (var mail in emails)
-            {
-                Console.WriteLine(mail.TemplateName);
-            }
+
+            var mail = Do.Until(() => Drive.Data.QaData.Db.Emails.FindByEmailAddress(email));
+            var mailTemplate = Do.Until(() => Drive.Data.QaData.Db.EmailToken.FindBy(EmailId: mail.EmailId, Key: "Html_body"));
+            Assert.IsNotNull(mailTemplate);
+            Assert.IsTrue(mailTemplate.value.Contains("Good news"));
+
+            var mail2 = Do.Until(() => Drive.Data.QaData.Db.Emails.FindByEmailAddress(additionalDirectorEmail));
+            var mailTemplate2 = Do.Until(() => Drive.Data.QaData.Db.EmailToken.FindBy(EmailId: mail2.EmailId, Key: "Html_body"));
+            Assert.IsNotNull(mailTemplate2);
+            Assert.IsTrue(mailTemplate2.value.Contains("Good news"));
         }
 
         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-174")]
