@@ -364,7 +364,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test ,AUT(AUT.Ca, AUT.Za), JIRA("QA-285")]
+        [Test ,AUT(AUT.Ca, AUT.Za), JIRA("QA-155", "QA-285")]
         public void MaxAmountSliderValueShouldBeCorrectLn()
         {
             var riskAccounts = Drive.Data.Risk.Db.RiskAccounts;
