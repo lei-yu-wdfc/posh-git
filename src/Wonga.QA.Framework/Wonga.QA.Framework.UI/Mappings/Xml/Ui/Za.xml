@@ -180,5 +180,9 @@
 	<ResendPin>#pin-hold a</ResendPin>
   </ApplyPage>
 
+  <FAQPage>
+    <CouncilForDebtCollectorsLink>a[title='Council for Debt Collectors']</CouncilForDebtCollectorsLink>
+  </FAQPage>
+
   
 </UiMap>
