@@ -32,6 +32,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         {
             set
             {
+                _flatNumber =
+                   Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.PreviousAddresDetailsSection.FlatNumber));
                 _flatNumber.SendValue(value);
             }
         }
@@ -66,8 +68,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         public PreviousAddresDetailsSection(BasePage page)
             : base(UiMap.Get.PreviousAddresDetailsSection.Fieldset, page)
         {
-            _flatNumber =
-                   Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.PreviousAddresDetailsSection.FlatNumber));
+            
                
         }
 

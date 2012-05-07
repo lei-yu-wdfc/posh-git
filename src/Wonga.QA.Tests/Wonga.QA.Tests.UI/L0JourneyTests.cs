@@ -951,7 +951,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(directors.Contains(firstName + " " + lastName));
         }
 
-        [Test, AUT(AUT.Wb), JIRA("QA-256")]
+        [Test, AUT(AUT.Wb), JIRA("QA-256"), Pending("can't take loan")]
         public void EnsureAllGurantorsReceiveTheUnsignedGuarantorEmail()
         {
             var email = String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
@@ -987,10 +987,16 @@ namespace Wonga.QA.Tests.Ui
             addAdditionalDirectorPage.LastName = Get.RandomString(3, 15);
             addAdditionalDirectorPage.EmailAddress = additionalDirectorEmail;
             addAdditionalDirectorPage.ConfirmEmailAddress = additionalDirectorEmail;
-            addAdditionalDirectorPage.Done();
+            journey.CurrentPage = addAdditionalDirectorPage.Done() as BusinessBankAccountPage;
+            var homePage = journey.EnterBusinessBankAccountDetails()
+               .EnterBusinessDebitCardDetails()
+               .WaitForApplyTermsPage()
+               .ApplyTerms()
+               .FillAcceptedPage()
+               .GoHomePage();
             var emails = Do.Until(() => Drive.Data.QaData.Db.Emails.FindAllByEmailAddress(email));
             var emails2 = Do.Until(() => Drive.Data.QaData.Db.Emails.FindAllByEmailAddress(email2));
-            foreach (var mail in emails2)
+            foreach (var mail in emails)
             {
                 Console.WriteLine(mail.TemplateName);
             }
@@ -1291,7 +1297,7 @@ namespace Wonga.QA.Tests.Ui
             addressPage.PostCode = "V4F3A9";
             addressPage.PostOfficeBox = "C12345";
             addressPage.AddressPeriod = "Less than 4 months";
-            
+
             addressPage.PreviousAddresDetails.FlatNumber = "4";
             addressPage.PreviousAddresDetails.Street = "Edward";
             addressPage.PreviousAddresDetails.Town = "Hearst";
