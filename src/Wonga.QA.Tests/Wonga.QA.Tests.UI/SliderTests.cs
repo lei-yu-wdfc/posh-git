@@ -348,7 +348,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(maxLoanDuration.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-154")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-154", "QA-284")]
         public void MaxAmountSliderValueShouldBeCorrectL0()
         {
             var serviceConfigurations = Drive.Data.Ops.Db.ServiceConfigurations;
@@ -361,6 +361,28 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(defaultCreditLimit, page.Sliders.GetTotalAmount.Remove(0,1));
 
         }
+
+        [Test ,AUT(AUT.Ca, AUT.Za), JIRA("QA-285")]
+        public void MaxAmountSliderValueShouldBeCorrectLn()
+        {
+            var riskAccounts = Drive.Data.Risk.Db.RiskAccounts;
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            application.RepayOnDueDate();
+            loginPage.LoginAs(email);
+
+            var page = Client.Home();
+
+            var creditLimit = riskAccounts.FindByAccountId(customer.Id).CreditLimit;
+            var setAmount = creditLimit + 100;
+            page.Sliders.HowMuch = setAmount.ToString(CultureInfo.InvariantCulture);
+            page.Sliders.HowLong = "10";
+            Assert.AreEqual(creditLimit.ToString(), page.Sliders.GetTotalAmount.Remove(0, 1) + ".00");
+        }
+    
 
         [Test, AUT(AUT.Ca), JIRA("QA-239", "QA-158")]
         public void MaxDurationSliderValueShouldBeCorrectLn()
