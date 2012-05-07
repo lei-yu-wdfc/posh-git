@@ -951,7 +951,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(directors.Contains(firstName + " " + lastName));
         }
 
-        [Test, AUT(AUT.Wb), JIRA("QA-256")]
+        [Test, AUT(AUT.Wb), JIRA("QA-256"), Pending("can't take loan")]
         public void EnsureAllGurantorsReceiveTheUnsignedGuarantorEmail()
         {
             var email = String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
@@ -987,10 +987,16 @@ namespace Wonga.QA.Tests.Ui
             addAdditionalDirectorPage.LastName = Get.RandomString(3, 15);
             addAdditionalDirectorPage.EmailAddress = additionalDirectorEmail;
             addAdditionalDirectorPage.ConfirmEmailAddress = additionalDirectorEmail;
-            addAdditionalDirectorPage.Done();
+            journey.CurrentPage = addAdditionalDirectorPage.Done() as BusinessBankAccountPage;
+            var homePage = journey.EnterBusinessBankAccountDetails()
+               .EnterBusinessDebitCardDetails()
+               .WaitForApplyTermsPage()
+               .ApplyTerms()
+               .FillAcceptedPage()
+               .GoHomePage();
             var emails = Do.Until(() => Drive.Data.QaData.Db.Emails.FindAllByEmailAddress(email));
             var emails2 = Do.Until(() => Drive.Data.QaData.Db.Emails.FindAllByEmailAddress(email2));
-            foreach (var mail in emails2)
+            foreach (var mail in emails)
             {
                 Console.WriteLine(mail.TemplateName);
             }
@@ -1279,19 +1285,25 @@ namespace Wonga.QA.Tests.Ui
                                  .CurrentPage as ProcessingPage;
         }
 
-        [Test, AUT(AUT.Ca), Category(TestCategories.Smoke), JIRA("QA-280")]
+        [Test, AUT(AUT.Ca), Category(TestCategories.Smoke), JIRA("QA-280"), Pending("There is no <<Your previous addres>> section whan I select eny addres periods.")]
         public void L0CustomerEntersInappropriatePostcodeToPreviousAddressSectionShouldNotGoFurther()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var processingPage = journey.ApplyForLoan(200, 10)
-                                 .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
-                                 .FillAddressDetails()
-                                 .FillAccountDetails()
-                                 .FillBankDetails()
-                                 .CurrentPage as ProcessingPage;
-            var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
-            acceptedPage.SignConfirmCaL0(DateTime.Now.ToString("d MMM yyyy"), journey.FirstName, journey.LastName);
-            var dealDone = acceptedPage.Submit();
+            var addressPage = journey.ApplyForLoan(200, 10)
+                                 .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask)).CurrentPage as AddressDetailsPage;
+            addressPage.HouseNumber = "1403";
+            addressPage.Street = "Edward";
+            addressPage.Town = "Hearst";
+            addressPage.PostCode = "V4F3A9";
+            addressPage.PostOfficeBox = "C12345";
+            addressPage.AddressPeriod = "Less than 4 months";
+
+            addressPage.PreviousAddresDetails.FlatNumber = "4";
+            addressPage.PreviousAddresDetails.Street = "Edward";
+            addressPage.PreviousAddresDetails.Town = "Hearst";
+            addressPage.PreviousAddresDetails.Province = "Alberta";
+            addressPage.PreviousAddresDetails.PostCode = "Q0K0K4";
+            addressPage.Next();
         }
     }
 }

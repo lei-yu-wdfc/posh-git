@@ -49,6 +49,15 @@
 	<AddressPeriodErrorForm>#edit-address-period-ca-wrapper div.invalid</AddressPeriodErrorForm>	
   </AddressDetailsPage>
 
+	<PreviousAddresDetailsSection>
+		<Fieldset>#previous-address</Fieldset>
+		<PostCode>#edit-postcode-previous-ca</PostCode>
+		<FlatNumber>#edit-street-number-previous-ca</FlatNumber>
+		<Province>#edit-province-previous</Province>
+		<Town>#edit-town-previous-ca</Town>
+		<Street>#edit-street-previous-ca</Street>
+	</PreviousAddresDetailsSection>
+
   <AccountDetailsSection>
     <Fieldset>fieldset#account-setup</Fieldset>
 	<PasswordErrorForm>#edit-password-wrapper .form-error .invalid</PasswordErrorForm>

@@ -10,6 +10,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
     public class AddressDetailsPage : BasePage, IApplyPage
     {
+        public PreviousAddresDetailsSection PreviousAddresDetails { get; set; }
         public AccountDetailsSection AccountDetailsSection { get; set; }
         private readonly IWebElement _postCode;
         private readonly IWebElement _postCodeInForm;
@@ -50,7 +51,17 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public String County { set { _county.SendValue(value); } }
         public String Town { set { _town.SendValue(value); } }
         public String Street { set { _street.SendValue(value); } }
-        public String AddressPeriod { set { _addressPeriod.SelectOption(value); } }
+        public String AddressPeriod
+        {
+            set
+            {
+                _addressPeriod.SelectOption(value);
+                if (value.Equals("Less than 4 month"))
+                {
+                    PreviousAddresDetails = new PreviousAddresDetailsSection(this);
+                }
+            }
+        }
         public String PostOfficeBox { set { _postOfficeBox.SendValue(value); } }
 
         public AddressDetailsPage(UiClient client)
@@ -84,6 +95,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     _town = _form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.Town));
                     _postOfficeBox = _form.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.PostOfficeBox));
                     AccountDetailsSection = new AccountDetailsSection(this);
+
                     break;
                 case (AUT.Uk):
                     _postCodeInForm = _form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.PostcodeInForm));

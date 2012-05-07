@@ -192,7 +192,7 @@
   </ContactingYouSection>
 
   <EmploymentDetailsSection>
-    <Fieldset>fieldset[id="employment"]</Fieldset>
+    <Fieldset>fieldset#employment</Fieldset>
     <EmploymentStatus>#edit-employment-status</EmploymentStatus>
     <EmployerIndustry>#edit-employer-industry</EmployerIndustry>
     <EmployerName>#edit-employer-name</EmployerName>
