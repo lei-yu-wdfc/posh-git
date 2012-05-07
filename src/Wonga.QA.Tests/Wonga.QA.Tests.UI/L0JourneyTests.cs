@@ -1285,7 +1285,7 @@ namespace Wonga.QA.Tests.Ui
                                  .CurrentPage as ProcessingPage;
         }
 
-        [Test, AUT(AUT.Ca), Category(TestCategories.Smoke), JIRA("QA-280"), Pending]
+        [Test, AUT(AUT.Ca), Category(TestCategories.Smoke), JIRA("QA-280"), Pending("There is no <<Your previous addres>> section whan I select eny addres periods.")]
         public void L0CustomerEntersInappropriatePostcodeToPreviousAddressSectionShouldNotGoFurther()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
