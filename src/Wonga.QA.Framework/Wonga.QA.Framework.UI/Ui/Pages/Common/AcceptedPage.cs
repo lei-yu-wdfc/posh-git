@@ -71,6 +71,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     _totalAmountDueUnderTheAgreement =
                         _detailsTable.FindElement(By.CssSelector(UiMap.Get.AcceptedPage.TotalAmountDueUnderTheAgreement));
                     _paymentDueDate = _detailsTable.FindElement(By.CssSelector(UiMap.Get.AcceptedPage.PaymentDueDate));
+                    _loanAmount = _detailsTable.FindElement(By.CssSelector(UiMap.Get.AcceptedPage.LoanAmount));
                     break;
                 case (AUT.Uk):
                     _form = Content.FindEitherElement(By.CssSelector(UiMap.Get.AcceptedPage.FormId), By.CssSelector("#wonga-loan-approve-form"));
