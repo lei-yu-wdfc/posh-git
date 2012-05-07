@@ -77,6 +77,119 @@ namespace Wonga.QA.Tests.Ui
             //maximum charge is 21$ for each 100$ borrowed for 30 days.
         }
 
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-149")]
+        public void ChooseLoanAmountAndDurationViaSlidersMotion()
+        {
+            var homePage = Client.Home();
+
+            homePage.Sliders.MoveAmountSlider = Get.RandomInt(-100,100);
+            homePage.Sliders.MoveDurationSlider = Get.RandomInt(-100, 100);
+
+            var termCustomerEnter = Int32.Parse(homePage.Sliders.HowLong);
+            var amountCustomerEnter = Int32.Parse(homePage.Sliders.HowMuch);
+
+            string _totalAmount = homePage.Sliders.GetTotalAmount;
+
+            Assert.AreEqual(amountCustomerEnter.ToString(), _totalAmount.Remove(0, 1));
+
+
+            string[] dateArray = homePage.Sliders.GetRepaymentDate.Split(' ');
+            string day = Char.IsDigit(dateArray[1].ElementAt(1)) ? dateArray[1].Remove(2, 2) : dateArray[1].Remove(1, 2);
+            _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
+            DateTime expectedDate;
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    expectedDate = DateTime.UtcNow.AddDays(termCustomerEnter);
+                    break;
+                case AUT.Ca:
+                    expectedDate =
+                        DateTime.UtcNow.AddDays(termCustomerEnter + DateHelper.GetNumberOfDaysUntilStartOfLoanForCa());
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+            Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate), _repaymentDate);
+
+            var personalDetailsPage = homePage.Sliders.Apply() as PersonalDetailsPage;
+            string personalDetailPageAmount = personalDetailsPage.GetTotalAmount;
+
+            Assert.AreEqual(amountCustomerEnter.ToString(), personalDetailPageAmount.Remove(0, 1));
+
+            dateArray = personalDetailsPage.GetRepaymentDate.Split(' ');
+            day = Char.IsDigit(dateArray[1].ElementAt(1)) ? dateArray[1].Remove(2, 2) : dateArray[1].Remove(1, 2);
+            _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
+
+            Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate), _repaymentDate);
+
+
+        }
+
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-282")]
+        public void ChooseLoanAmountAndDurationViaPlusMinusButtons()
+        {
+            var homePage = Client.Home();
+
+            #region clicks
+            for (int i = 0; i < Get.RandomInt(20);i++)
+            {
+                homePage.Sliders.ClickAmountPlusButton();
+            }
+            for (int i = 0; i < Get.RandomInt(20); i++)
+            {
+                homePage.Sliders.ClickAmountMinusButton();
+            }
+            for (int i = 0; i < Get.RandomInt(10); i++)
+            {
+                homePage.Sliders.ClickDurationPlusButton();
+            }
+            for (int i = 0; i < Get.RandomInt(10); i++)
+            {
+                homePage.Sliders.ClickDurationMinusButton();
+            }
+            #endregion
+
+            var termCustomerEnter = Int32.Parse(homePage.Sliders.HowLong);
+            var amountCustomerEnter = Int32.Parse(homePage.Sliders.HowMuch);
+
+            string _totalAmount = homePage.Sliders.GetTotalAmount;
+
+            Assert.AreEqual(amountCustomerEnter.ToString(), _totalAmount.Remove(0, 1));
+
+
+            string[] dateArray = homePage.Sliders.GetRepaymentDate.Split(' ');
+            string day = Char.IsDigit(dateArray[1].ElementAt(1)) ? dateArray[1].Remove(2, 2) : dateArray[1].Remove(1, 2);
+            _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
+            DateTime expectedDate;
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    expectedDate = DateTime.UtcNow.AddDays(termCustomerEnter);
+                    break;
+                case AUT.Ca:
+                    expectedDate =
+                        DateTime.UtcNow.AddDays(termCustomerEnter + DateHelper.GetNumberOfDaysUntilStartOfLoanForCa());
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+            Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate), _repaymentDate);
+
+            var personalDetailsPage = homePage.Sliders.Apply() as PersonalDetailsPage;
+            string personalDetailPageAmount = personalDetailsPage.GetTotalAmount;
+
+            Assert.AreEqual(amountCustomerEnter.ToString(), personalDetailPageAmount.Remove(0, 1));
+
+            dateArray = personalDetailsPage.GetRepaymentDate.Split(' ');
+            day = Char.IsDigit(dateArray[1].ElementAt(1)) ? dateArray[1].Remove(2, 2) : dateArray[1].Remove(1, 2);
+            _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
+
+            Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate), _repaymentDate);
+
+
+        }
+          
+
         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-150")]
         public void CustomerTypesValidValuesIntoAmountAndDurationFields()
         {

@@ -62,11 +62,11 @@ namespace Wonga.QA.Framework.UI.Elements
         }
         public int MoveAmountSlider //Moving by pixels NOT by cash value
         {
-            set { _amountSlider.DragAndDropToOffset(value,0); }
+            set { Do.Until(()=>_amountSlider.DragAndDropToOffset(value,0)); }
         }
         public int MoveDurationSlider //Moving by pixels NOT by cash value
         {
-            set { _durationSlider.DragAndDropToOffset(value,0); }
+            set { Do.Until(()=>_durationSlider.DragAndDropToOffset(value,0)); }
         }
         public String GetTotalAmount
         {
