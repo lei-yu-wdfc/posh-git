@@ -8,6 +8,7 @@ using OpenQA.Selenium;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.Mappings;
 using Wonga.QA.Framework.UI.UiElements;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
@@ -93,6 +94,13 @@ namespace Wonga.QA.Tests.Ui
             Thread.Sleep(5000); //wait for ajax load the popup
             Assert.IsTrue(page.Contact.IsContactPopupPresent());
 
+        }
+
+        [Test, AUT(AUT.Za)] //ZA-1600 bug check
+        public void CouncilForDebtCollectorsLinkCheck()
+        {
+            var faq = Client.Faq();
+            Assert.IsTrue(faq.IsLinkCorrect(UiMap.Get.FAQPage.CouncilForDebtCollectorsLink, Content.Get.FAQPageLinks.CouncilForDebtCollectorsLink));
         }
     }
 }

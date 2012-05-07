@@ -70,6 +70,7 @@
     <Compile Include="Mappings\Content\Content.cs" />
     <Compile Include="Mappings\Content\Agreements\LoanAgreement.cs" />
     <Compile Include="Mappings\Content\Elements\TabsElementMobile.cs" />
+    <Compile Include="Mappings\Content\Links\FAQPageLinks.cs" />
     <Compile Include="Mappings\Ui\Elements\ChangeMyAddressElement.cs" />
     <Compile Include="Mappings\Ui\Elements\TabsElementMobile.cs" />
     <Compile Include="Mappings\Ui\Elements\ContactElement.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Mappings\Ui\Pages\Common\ApplyPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ApplyTermsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\BlogPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\FAQPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayRequestPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ExtensionRequestPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ExtensionAgreementPage.cs" />
@@ -314,6 +316,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\..\..\lib\nuget\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
