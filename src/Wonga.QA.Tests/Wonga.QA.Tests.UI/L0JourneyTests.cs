@@ -1315,7 +1315,7 @@ namespace Wonga.QA.Tests.Ui
 
             ApiResponse _response;
 
-            string totalToRepay, repaymentDate, promisesAmount, promisesDay, loanAmount;
+            string totalToRepay, repaymentDate, promisesTotalToRepay, promisesDay, loanAmount, promisesLoanAmount;
             int amountOfLoan, termsOfLoan;
 
             ApiRequest request;
@@ -1355,33 +1355,45 @@ namespace Wonga.QA.Tests.Ui
                 case AUT.Wb:
                     const String middleNameMask = "TESTNoCheck";
                     var journeyWb = JourneyFactory.GetL0JourneyWB(Client.Home());
-                    acceptedPage = journeyWb.ApplyForLoan(amountOfLoan, termsOfLoan)
-                                       .AnswerEligibilityQuestions()
-                                       .FillPersonalDetails(middleNameMask)
-                                       .FillAddressDetails("More than 4 years")
-                                       .FillAccountDetails()
-                                       .FillBankDetails()
-                                       .FillCardDetails()
-                                       .EnterBusinessDetails()
-                                       .DeclineAddAdditionalDirector()
-                                       .EnterBusinessBankAccountDetails()
-                                       .EnterBusinessDebitCardDetails()
-                                       .WaitForApplyTermsPage()
-                                       .ApplyTerms()
-                                       .CurrentPage as AcceptedPage;
+                    var applyTermsPage = journeyWb.ApplyForLoan(amountOfLoan, termsOfLoan)
+                                             .AnswerEligibilityQuestions()
+                                             .FillPersonalDetails(middleNameMask)
+                                             .FillAddressDetails("More than 4 years")
+                                             .FillAccountDetails()
+                                             .FillBankDetails()
+                                             .FillCardDetails()
+                                             .EnterBusinessDetails()
+                                             .DeclineAddAdditionalDirector()
+                                             .EnterBusinessBankAccountDetails()
+                                             .EnterBusinessDebitCardDetails()
+                                             .WaitForApplyTermsPage()
+                                             .CurrentPage as ApplyTermsPage;
+
+                    loanAmount = applyTermsPage.GetLoanAmount().Replace(",","")+".00.";
+                    var terms = applyTermsPage.GetTermsOfLoan();
+
+                    acceptedPage = journeyWb.ApplyTerms()
+                                .CurrentPage as AcceptedPage;
 
                     Assert.IsNotNull(acceptedPage);
 
+                    var promisesTermsOfLoan = acceptedPage.GetTermsOfLoan.Replace("This Agreement will be of ", "").Replace(" weeks duration.", "");
+                    promisesLoanAmount = acceptedPage.GetLoanAmount.Replace("TheLoanAmountwillbe", "");
+                   
                     var lastPage = journeyWb.FillAcceptedPage()
                                        .GoHomePage()
                                        .CurrentPage as HomePage;
-                    break;
+                    Assert.IsNotNull(lastPage);
+
+                    Assert.AreEqual(terms, promisesTermsOfLoan);
+                    Assert.AreEqual(loanAmount, promisesLoanAmount);
+                break;
 
                 case AUT.Ca:
                     var journeyCa = JourneyFactory.GetL0Journey(Client.Home());
                     personalDetailsPage = journeyCa.ApplyForLoan(amountOfLoan, termsOfLoan).CurrentPage as PersonalDetailsPage;
 
-                    loanAmount = personalDetailsPage.GetTotalAmount;
+                    loanAmount = personalDetailsPage.GetTotalAmount.Remove(0, 1) + ".00";
                     totalToRepay = personalDetailsPage.GetTotalToRepay;
                     repaymentDate = personalDetailsPage.GetRepaymentDate;
 
@@ -1390,44 +1402,54 @@ namespace Wonga.QA.Tests.Ui
                                       .FillAccountDetails()
                                       .FillBankDetails()
                                       .WaitForAcceptedPage()
-                                      //.FillAcceptedPage()
-                                      //.GoToMySummaryPage()
                                       .CurrentPage as AcceptedPage;
                     Assert.IsNotNull(acceptedPage);
 
-                    promisesDay = acceptedPage.GetTotalToRepay;
-                    promisesAmount = acceptedPage.GetRepaymentDate;
-                    var promisesLoanAmount = acceptedPage.GetLoanAmount;
-                    //summaryPage.ClickViewLoanDetailsButton();
-                    //var msg = summaryPage.GetTotalToRepayAmountPopup.ToString();
-                    Console.WriteLine(promisesDay + " " + promisesAmount + " " + promisesLoanAmount);
-                    //Assert.AreNotEqual(loanAmount, promisesLoanAmount);
-                    //Assert.AreNotEqual(repaymentDate, promisesDay);
-                    //Assert.AreNotEqual(totalToRepay, promisesAmount);
-                    break;
+                    promisesDay = acceptedPage.GetRepaymentDate;
+                    promisesTotalToRepay = acceptedPage.GetTotalToRepay;
+                    promisesLoanAmount = acceptedPage.GetLoanAmount.Remove(0, 1);
+
+                    Assert.AreEqual(loanAmount, promisesLoanAmount);
+                    Assert.AreEqual(repaymentDate, promisesDay);
+                    Assert.AreEqual(totalToRepay, promisesTotalToRepay);
+
+                    summaryPage = journeyCa.FillAcceptedPage()
+                                    .GoToMySummaryPage()
+                                    .CurrentPage as MySummaryPage;
+
+                    Assert.IsNotNull(summaryPage);
+                break;
 
                 case AUT.Za:
                     var journeyZa = JourneyFactory.GetL0Journey(Client.Home());
                     personalDetailsPage = journeyZa.ApplyForLoan(amountOfLoan, termsOfLoan).CurrentPage as PersonalDetailsPage;
 
+                    loanAmount = personalDetailsPage.GetTotalAmount.Remove(0, 1) + ".00";
                     totalToRepay = personalDetailsPage.GetTotalToRepay;
                     repaymentDate = personalDetailsPage.GetRepaymentDate;
 
-                    Console.WriteLine(totalToRepay + " " + repaymentDate);
+                    acceptedPage = journeyZa.FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                      .FillAddressDetails()
+                                      .FillAccountDetails()
+                                      .FillBankDetails()
+                                      .WaitForAcceptedPage()
+                                      .CurrentPage as AcceptedPage;
+                    Assert.IsNotNull(acceptedPage);
 
-                    summaryPage = journeyZa.FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
-                                                .FillAddressDetails()
-                                                .FillAccountDetails()
-                                                .FillBankDetails()
-                                                .WaitForAcceptedPage()
-                                                .FillAcceptedPage()
-                                                .GoToMySummaryPage()
-                                                .CurrentPage as MySummaryPage;
+                    promisesDay = acceptedPage.GetRepaymentDate;
+                    promisesTotalToRepay = acceptedPage.GetTotalToRepay;
+                    promisesLoanAmount = acceptedPage.GetLoanAmount.Remove(0, 1);
+
+                    Assert.AreEqual(loanAmount, promisesLoanAmount);
+                    Assert.AreEqual(repaymentDate, promisesDay);
+                    Assert.AreEqual(totalToRepay, promisesTotalToRepay);
+
+                    summaryPage = journeyZa.FillAcceptedPage()
+                                    .GoToMySummaryPage()
+                                    .CurrentPage as MySummaryPage;
+
                     Assert.IsNotNull(summaryPage);
-
-                    promisesDay = summaryPage.GetPromisedRepayDate;
-                    promisesAmount = summaryPage.GetPromisedRepayAmount;
-                    break;
+                break;
             }
         }
     }
