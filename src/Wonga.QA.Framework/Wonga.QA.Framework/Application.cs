@@ -65,33 +65,15 @@ namespace Wonga.QA.Framework
 			ApplicationEntity application = Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id);
 
 			MakeDueToday(application);
+			
+		    if (!BankGatwayTakePaymentResponseIsMocked())
+		    {
+                var utcNow = DateTime.UtcNow;
 
-			ServiceConfigurationEntity testmode = Drive.Db.Ops.ServiceConfigurations.SingleOrDefault(e => e.Key == "BankGateway.IsTestMode");
-            ServiceConfigurationEntity caScotiaMocksEnabled = Drive.Db.Ops.ServiceConfigurations.SingleOrDefault(e => e.Key == "Mocks.ScotiaEnabled");
-
-            switch (Config.AUT)
-            {
-                case AUT.Uk:
-                break;
-
-                case AUT.Ca:
-                if (!Boolean.Parse(caScotiaMocksEnabled.Value))
-                    {
-                        goto default;
-                    }
-                break;
-
-                default:
-                if ((testmode == null || !Boolean.Parse(testmode.Value)))
-                    {
-                        var utcNow = DateTime.UtcNow;
-
-                        ScheduledPaymentSagaEntity sp = Do.Until(() => Drive.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationGuid == Id));
-                        Drive.Msmq.Payments.Send(new PaymentTakenCommand { SagaId = sp.Id, ValueDate = utcNow, CreatedOn = utcNow, ApplicationId = Id, TransactionAmount = GetBalance() });
-                        Do.While(sp.Refresh);
-                    }
-                break;
-            }
+                ScheduledPaymentSagaEntity sp = Do.Until(() => Drive.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationGuid == Id));
+                Drive.Msmq.Payments.Send(new PaymentTakenCommand { SagaId = sp.Id, ValueDate = utcNow, CreatedOn = utcNow, ApplicationId = Id, TransactionAmount = GetBalance() });
+                Do.While(sp.Refresh);
+		    }
 
 			var transaction = WaitForDirectBankPaymentCreditTransaction();
 
@@ -101,6 +83,25 @@ namespace Wonga.QA.Framework
 
 			return this;
 		}
+
+        private static bool BankGatwayTakePaymentResponseIsMocked()
+        {
+            return BankGatwayInTestMode() || IsCaTestWithScotiaMocked();
+        }
+
+        private static bool BankGatwayInTestMode()
+        {
+            ServiceConfigurationEntity testmode = Drive.Db.Ops.ServiceConfigurations.SingleOrDefault(e => e.Key == "BankGateway.IsTestMode");
+
+            return testmode != null && Boolean.Parse(testmode.Value);
+        }
+
+        private static bool IsCaTestWithScotiaMocked()
+        {
+            ServiceConfigurationEntity caScotiaMocksEnabled = Drive.Db.Ops.ServiceConfigurations.SingleOrDefault(e => e.Key == "Mocks.ScotiaEnabled");
+
+            return caScotiaMocksEnabled != null && (Config.AUT == AUT.Ca && Boolean.Parse(caScotiaMocksEnabled.Value));
+        }
 
 	    private static void TimeoutCloseApplicationSaga(TransactionEntity transaction)
 	    {
@@ -260,9 +261,7 @@ namespace Wonga.QA.Framework
 				RepaymentRequestId = repaymentRequestId
 			});
 
-			ServiceConfigurationEntity testmode = Drive.Db.Ops.ServiceConfigurations.SingleOrDefault(e => e.Key == "BankGateway.IsTestMode");
-
-			if (testmode == null || !Boolean.Parse(testmode.Value))
+            if (!BankGatwayTakePaymentResponseIsMocked())
 			{
 				var utcNow = DateTime.UtcNow;
 
@@ -282,7 +281,7 @@ namespace Wonga.QA.Framework
 			return this;
 		}
 
-        public Application MoveToDebtCollectionAgency()
+	    public Application MoveToDebtCollectionAgency()
         {
             ServiceConfigurationEntity serviceConfiguration =  Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == "Payments.MoveToDcaDelayInMinutes");
 
