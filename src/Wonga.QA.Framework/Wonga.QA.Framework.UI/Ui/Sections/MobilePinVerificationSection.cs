@@ -38,7 +38,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             }
             catch (Exception)
             {
-                Console.WriteLine("Can't find button");
+                Console.WriteLine("Can't find pupop");
                 return false;
             }
 
