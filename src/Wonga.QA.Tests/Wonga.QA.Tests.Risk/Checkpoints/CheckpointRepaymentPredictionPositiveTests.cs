@@ -74,7 +74,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		                                                   		"EmpiricaScore",
 		                                                   		"LoanAmount",
 		                                                   		"LoanTerm",
-		                                                   		"LoanNumber",
+		                                                   		"TotalCurrentBalance",
 		                                                   		"AvgDel",
 		                                                   		"ArrearsPresent",
 		                                                   		"DaysSinceLastLoan",
