@@ -382,6 +382,9 @@
     <RepayRequestPageSliderSmall>#wonga-account-repay-form</RepayRequestPageSliderSmall>
     <RepayRequestPageCard>#edit-card</RepayRequestPageCard>
     <RepayRequestPageSecurityCode>#edit-security-code</RepayRequestPageSecurityCode>
+    <RepayRequestPageCancelButton>#edit-cancel</RepayRequestPageCancelButton>
+    <RepayRequestPageOweCurrently>.number-column span</RepayRequestPageOweCurrently>
+    <RepayRequestPageReadMeMessageRepayTotal>.repay-total</RepayRequestPageReadMeMessageRepayTotal>
   </RepayRequestPage>
 
   <SmallRepaySlidersElement>
