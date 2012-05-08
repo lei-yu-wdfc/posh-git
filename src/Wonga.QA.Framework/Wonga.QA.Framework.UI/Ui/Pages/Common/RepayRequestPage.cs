@@ -19,6 +19,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private IWebElement _cancelButton;
         private IWebElement _oweToday;
         private string _repayTotal;
+        private IWebElement _loanPeriodClarification;
+
 
         public RepayRequestPage(UiClient client) : base(client)
         {
@@ -28,7 +30,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _remainderAmount = Content.FindElement(By.CssSelector(UiMap.Get.RepayRequestPage.RepayRequestPageRemainderAmount));
             _cancelButton = Content.FindElement(By.CssSelector(UiMap.Get.RepayRequestPage.RepayRequestPageCancelButton));
             _oweToday = Content.FindElement(By.CssSelector(UiMap.Get.RepayRequestPage.RepayRequestPageOweCurrently));
-            _repayTotal = Content.FindElement(By.CssSelector(UiMap.Get.RepayRequestPage.RepayRequestPageReadMeMessageRepayTotal)).Text;   
+            _repayTotal = Content.FindElement(By.CssSelector(UiMap.Get.RepayRequestPage.RepayRequestPageReadMeMessageRepayTotal)).Text;
+            _loanPeriodClarification = Content.FindElement(By.CssSelector(UiMap.Get.RepayRequestPage.RepayRequestPageLoanPeriodClarification));   
         }
 
         public bool IsTopupRequestPageInformativeBoxDisplayed()
@@ -86,7 +89,16 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             get { return _repayTotal; }
         }
- 
-        
+
+        public String LoanPeriodClarification
+        {
+            get { return _loanPeriodClarification.Text; }
+        }
+
+        public bool IsLoanPeriodClarificationDisplayed
+        {
+            get { return _loanPeriodClarification.Displayed; }
+        }
+
     }
 }

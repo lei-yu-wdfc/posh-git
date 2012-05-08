@@ -385,6 +385,7 @@
     <RepayRequestPageCancelButton>#edit-cancel</RepayRequestPageCancelButton>
     <RepayRequestPageOweCurrently>.number-column span</RepayRequestPageOweCurrently>
     <RepayRequestPageReadMeMessageRepayTotal>.repay-total</RepayRequestPageReadMeMessageRepayTotal>
+    <RepayRequestPageLoanPeriodClarification>.loan-period-clarification</RepayRequestPageLoanPeriodClarification>    
   </RepayRequestPage>
 
   <SmallRepaySlidersElement>

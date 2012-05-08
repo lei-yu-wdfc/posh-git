@@ -85,60 +85,35 @@ namespace Wonga.QA.Tests.Ui
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-795")]
-        public void LoanStatusMessageScenario2A() { LoanStatusMessage(2, 0); }
+        [Row(2, 0)]
+        [Row(2, 1)]
+        [Row(2, 2)]
+        public void LoanStatusMessageScenario2(int scenarioId, int dayShift) { LoanStatusMessage(scenarioId, dayShift); }
 
         [Test, AUT(AUT.Uk), JIRA("UK-795")]
-        public void LoanStatusMessageScenario2B() { LoanStatusMessage(2, 1); }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-795")]
-        public void LoanStatusMessageScenario2C() { LoanStatusMessage(2, 2); }
-
-
-        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message. Waiting for code update.")]
-        public void LoanStatusMessageScenario3A() { LoanStatusMessage(3, 3); }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message. Waiting for code update.")]
-        public void LoanStatusMessageScenario3B() { LoanStatusMessage(3, 7); }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message. Waiting for code update.")]
-        public void LoanStatusMessageScenario3C() { LoanStatusMessage(3, 9); }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message. Waiting for code update.")]
-        public void LoanStatusMessageScenario3D() { LoanStatusMessage(3, 0, 1); } //0 days passed in 1-day loan
-
-        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message. Waiting for code update.")]
-        public void LoanStatusMessageScenario3E() { LoanStatusMessage(3, 0, 7); } //0 days passed in 7-day loan
-
-        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message. Waiting for code update.")]
-        public void LoanStatusMessageScenario3F() { LoanStatusMessage(3, 6, 7); } //6 days passed in 7-day loan
-
+        [Row(3, 3, 10)]
+        [Row(3, 7, 10)]
+        [Row(3, 9, 10)]
+        [Row(3, 0, 1)] //0 days passed in 1-day loan
+        [Row(3, 0, 7)] //0 days passed in 7-day loan
+        [Row(3, 6, 7)] //6 days passed in 7-day loan
+        public void LoanStatusMessageScenario3(int scenarioId, int dasyShift, int loanTerm) { LoanStatusMessage(scenarioId, dasyShift, loanTerm); }
 
         [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1359")]
-        public void LoanStatusMessageScenario4A() { LoanStatusMessage(4, 10); } // payment missed and Next Due Date is today
-
-        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1359")]
-        public void LoanStatusMessageScenario4B() { LoanStatusMessage(4, 1, 1); } //1 day passed in 1-day loan, // payment missed and Next Due Date is today
-
-        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1359")]
-        public void LoanStatusMessageScenario4C() { LoanStatusMessage(4, 7, 7); } //7 days passed in 7-day loan, // payment missed and Next Due Date is today
-
-        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("TBD: create test for the variant when 3 (=maximum) extensions have been made and it is 1st day after a 7 day loan is taken")]
-        public void LoanStatusMessageScenario4D() { LoanStatusMessage(4, 1, 7); }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("TBD: create test for the variant when 3 (=maximum) extensions have been made and it is 10th day after a 10 day loan is taken")]
-        public void LoanStatusMessageScenario4E() { LoanStatusMessage(4, 10, 10); }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("TBD: create test for the variant when 2 (< maximum) extensions have been made and it is 6th day after a 10 day loan is taken. The message shold like from scenario 3")]
-        public void LoanStatusMessageScenario4F() { LoanStatusMessage(3, 6); }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("TBD: create test for the variant when 1 (< maximum) extensions have been made and it is 1st day after a 10 day loan is taken. The message shold like from scenario 2")]
-        public void LoanStatusMessageScenarioG() { LoanStatusMessage(2, 1); } 
-
+        [Row(4, 10, 10)]    // payment missed and Next Due Date is today
+        [Row(4, 1, 1)]      //1 day passed in 1-day loan, payment missed and Next Due Date is today
+        [Row(4, 7, 7)]      //7 days passed in 7-day loan, payment missed and Next Due Date is today
+        //[Row(4, 1, 7)]      //1 day passed in 7-day loan, payment missed and Next Due Date is today. TBD: create test for the variant when 3 (=maximum) extensions have been made and it is 1st day after a 7 day loan is taken")
+        //[Row(4, 10, 10)]    //10 days passed in 10-day loan, payment missed and Next Due Date is today. TBD: create test for the variant when 3 (=maximum) extensions have been made and it is 1st day after a 7 day loan is taken")
+        //[Row(3, 6, 10)]     //6 days passed in 10-day loan, payment missed and Next Due Date is today. TBD: create test for the variant when 2 (< maximum) extensions have been made and it is 6th day after a 10 day loan is taken. The message shold like from scenario 3")
+        //[Row(2, 1, 10)]     //1 days passed in 10-day loan, payment missed and Next Due Date is today. TBD: create test for the variant when 1 (< maximum) extensions have been made and it is 1st day after a 10 day loan is taken. The message shold like from scenario 2")
+        public void LoanStatusMessageScenario4(int scenarioId, int dasyShift, int loanTerm) { LoanStatusMessage(scenarioId, dasyShift, loanTerm); }    
+        
 
         [Test, AUT(AUT.Uk), JIRA("UK-795")]
         public void LoanStatusMessageScenario5() { LoanStatusMessage(5, 2); }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message. Waiting for code update.")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795")]
         public void LoanStatusMessageScenario6() { LoanStatusMessage(6, 3); }
 
         [Test, AUT(AUT.Uk), JIRA("UK-795, UK-1433"), Pending("Fails due to bug UK-1433")]
@@ -180,7 +155,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Hangs")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795")]
         public void LoanStatusMessageScenario10()
         {
             string email = Get.RandomEmail();
@@ -212,13 +187,13 @@ namespace Wonga.QA.Tests.Ui
         } 
 
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message (from scenario 4). Waiting for code update.")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795")]
         public void LoanStatusMessageScenario11() { LoanStatusMessage(11, 14); }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message (from scenario 4). Waiting for code update.")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795")]
         public void LoanStatusMessageScenario12() { LoanStatusMessage(12, 44); }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Wrong actual text message (from scenario 4). Waiting for code update.")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795")]
         public void LoanStatusMessageScenario13() { LoanStatusMessage(13, 74); }
 
         [Test, AUT(AUT.Uk), JIRA("UK-795"), Pending("Awating Repayment Arrangment Functionality.")]
@@ -313,9 +288,9 @@ namespace Wonga.QA.Tests.Ui
             var expectedLoanMessageText = loanStatusMessages[16];
             string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage;
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
-        } 
+        }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1624"), Pending("Fails due to bug UK-1624")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1624"), Pending("Awaiting API implementation of the hours to decision, bug UK-1624.")]
         public void LoanStatusMessageScenario17A()
         {
             const int loanAmount = 100;
@@ -338,7 +313,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1624"), Pending("Fails due to bug UK-1624")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1624"), Pending("Awaiting API implementation of the hours to decision, bug UK-1624.")]
         public void LoanStatusMessageScenario17B()
         {
             const int loanAmount = 100;
@@ -369,7 +344,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk), JIRA("UK-795")]
         public void LoanStatusMessageScenario20() { LoanStatusMessage(20, 10); }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1735"), Pending("Fails due to bug UK-1735, Waiting for implementation of calculation.")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1735"), Pending("Waiting for implementation of calculation, bug UK-1735.")]
         public void LoanStatusMessageScenario21()
         {
             const int loanAmount = 100;

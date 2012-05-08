@@ -162,7 +162,9 @@
     <CancelCheckBox>input[name='CancelSelected']</CancelCheckBox>
     <UpdateButton>#GridContainer > input[name='Command']</UpdateButton>
   </CashOutPage>
-  
-  
 
+  <AccountDetailsPage>
+    <FormId>.wonga-apply-lzero-form</FormId>  
+  </AccountDetailsPage>
+  
 </UiMap>
