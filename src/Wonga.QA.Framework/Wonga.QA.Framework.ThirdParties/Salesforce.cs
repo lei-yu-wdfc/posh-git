@@ -305,6 +305,31 @@ namespace Wonga.QA.Framework.ThirdParties
 
             return (from r in appHistory.records select r as Loan_Application__History).AsEnumerable();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="salesforceContactId"></param>
+        /// <param name="parentType">Can be WhatId (for accounts) or WhoId(for Contacts/Leads)</param>
+        /// <param name="taskType"></param>
+        /// <param name="subject"></param>
+        /// <returns></returns>
+        public IEnumerable<Task> GetTask(string salesforceContactId,string parentType, string taskType, string subject)
+        {
+            SessionHeader sessionHeader;
+            SoapClient client = Login(out sessionHeader);
+
+            var query =
+                String.Format(@"Select t.ActivityDate, t.WhatId, t.Type, t.Subject
+                              From Task t 
+                              Where t.{3} = '{0}' AND t.Type = '{1}' AND t.Subject = '{2}'",
+                              salesforceContactId, taskType, subject,parentType);
+
+            QueryResult result = client.query(sessionHeader, null, null, null, query);
+
+
+            return (from r in result.records select r as Task).AsEnumerable();
+        }
         
         public Contact GetContactByAccountId(string accountId)
         {
