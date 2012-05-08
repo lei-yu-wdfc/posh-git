@@ -12,5 +12,8 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String RepayRequestPageSlidersSmall { get; set; }
         public String RepayRequestPageCard { get; set; }
         public String RepayRequestPageSecurityCode { get; set; }
+        public String RepayRequestPageCancelButton { get; set; }
+        public String RepayRequestPageOweCurrently { get; set; }
+        public String RepayRequestPageReadMeMessageRepayTotal { get; set; }
     }
 }
