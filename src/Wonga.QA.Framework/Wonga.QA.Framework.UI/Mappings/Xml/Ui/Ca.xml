@@ -94,7 +94,7 @@
     <DateOfAgreement>#edit-date-of-agreement-ca-datepicker-popup-0</DateOfAgreement>
     <ContinueTermsButton>#edit-continue-terms</ContinueTermsButton>
     <ContinueDirectDebitButton>#edit-continue-debit</ContinueDirectDebitButton>
-
+    <LoanAmount>tr:nth-child(2)>td:nth-child(2)</LoanAmount>
     <DetailsTable>div.loan-agreement-details-table tbody</DetailsTable>
     <PrincipalAmountBorrowed>tr:nth-child(2)>td:nth-child(2)</PrincipalAmountBorrowed>
     <PrincipalAmountToBeTransfered>tr:nth-child(3)>td:nth-child(2)</PrincipalAmountToBeTransfered>
