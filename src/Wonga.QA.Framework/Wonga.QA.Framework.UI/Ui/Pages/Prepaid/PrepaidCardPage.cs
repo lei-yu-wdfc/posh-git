@@ -32,8 +32,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
         public PrepaidCardPage PremiumCardButtonClick()
         {
             _premiumCardButton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.ChooseCardTypeMenuElement.PremiumCard));
-            Client.Driver.Navigate().GoToUrl("http://dev.wonga.com/my-account/prepaid/premium");
-            Client.Driver.Url = "http://dev.wonga.com/my-account/prepaid/premium";
+            _premiumCardButton.Click();    
+            //Client.Driver.Navigate().GoToUrl("http://dev.wonga.com/my-account/prepaid/premium");
+            //Client.Driver.Url = "http://dev.wonga.com/my-account/prepaid/premium";
             return new PrepaidCardPage(Client);
 
         }

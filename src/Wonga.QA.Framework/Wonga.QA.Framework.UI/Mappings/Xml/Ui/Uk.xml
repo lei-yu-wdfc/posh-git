@@ -178,8 +178,8 @@
   </PrepaidCardMenuElement>
   
   <ChooseCardTypeMenuElement>
-    <StandardCard>.menu-mlid-9419</StandardCard>
-    <PremiumCard>.menu-mlid-9420</PremiumCard>
+    <StandardCard>.menu-mlid-9419 a</StandardCard>
+    <PremiumCard>.menu-mlid-9420 a</PremiumCard>
   </ChooseCardTypeMenuElement>
   
   
