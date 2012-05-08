@@ -119,6 +119,59 @@ namespace Wonga.QA.Tests.Ui.Prepaid
             var prepaidPage = summaryPage.Navigation.MyPrepaidCardButtonClick();
         }
 
+        [Test, AUT(AUT.Uk), JIRA("PP-148")]
+        public void LinksPresentOnStandardCardLandingPageForCustomerWithoutCards()
+        {
+            Customer cutomerWithNocards = CustomerBuilder.New().Build();
+            CustomerOperations.CreateMarketingEligibility(cutomerWithNocards.Id, true);
+            CustomerOperations.MakeZeroCardsForCustomer(cutomerWithNocards.Id);
+
+            var loginPage = Client.Login();
+            var summaryPage = loginPage.LoginAs(cutomerWithNocards.GetEmail());
+            var prepaidPage = summaryPage.Navigation.MyPrepaidCardButtonClick();
+            
+            prepaidPage.FindFAQAndTSLinks();
+            prepaidPage.FindTSInFeesLink();
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("PP-148")]
+        public void LinksPresentOnStandardCardLandingPageForCustomerWithStandartCard()
+        {
+            var loginPage = Client.Login();
+            var summaryPage = loginPage.LoginAs(_eligibleCustomer.GetEmail());
+            var prepaidPage = summaryPage.Navigation.MyPrepaidCardButtonClick();
+
+            prepaidPage.FindFAQAndTSLinks();
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("PP-148")]
+        public void LinksPresentOnStandardCardLandingPageForCustomerWithPremiumCard()
+        {
+            CustomerOperations.UpdateCustomerPrepaidCard(_eligibleCustomer.Id, true);
+
+            var loginPage = Client.Login();
+            var summaryPage = loginPage.LoginAs(_eligibleCustomer.GetEmail());
+            var prepaidPage = summaryPage.Navigation.MyPrepaidCardButtonClick();
+
+            prepaidPage.FindFAQAndTSLinks();
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("PP-148")]
+        public void LinksPresentOnPremiumCardLandingPageForCustomerWithoutCards()
+        {
+            Customer cutomerWithNocards = CustomerBuilder.New().Build();
+            CustomerOperations.CreateMarketingEligibility(cutomerWithNocards.Id, true);
+            CustomerOperations.MakeZeroCardsForCustomer(cutomerWithNocards.Id);
+
+            var loginPage = Client.Login();
+            var summaryPage = loginPage.LoginAs(cutomerWithNocards.GetEmail());
+            var prepaidPage = summaryPage.Navigation.MyPrepaidCardButtonClick();
+            prepaidPage = prepaidPage.PremiumCardButtonClick();
+
+            prepaidPage.FindFAQAndTSLinks();
+            prepaidPage.FindPremiumRewardsLink();
+        }
+
 
         [TearDown]
         public void Rollback()
@@ -171,5 +224,7 @@ namespace Wonga.QA.Tests.Ui.Prepaid
             result.Add(CUSTOMER_FULL_ADDRESS, GetFullCustomerAddress(customerId));
             return result;
         }
+
+
     }
 }
