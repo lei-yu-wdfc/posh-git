@@ -34,6 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ClickatellIntegrationTests.cs" />
     <Compile Include="MbloxIntegrationTests.cs" />
     <Compile Include="SmsServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
