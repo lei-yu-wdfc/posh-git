@@ -172,6 +172,13 @@ namespace Wonga.QA.Framework.UI
             return new FAQPage(this);
         }
 
+        public PrepaidCardPage PrepaidCardPage()
+        {
+            Driver.Navigate().GoToUrl(Config.Ui.Home + "my-account/prepaid/");
+            Driver.Url = Config.Ui.Home + "my-account/prepaid/";
+            return new PrepaidCardPage(this);
+        }
+
         public Image Screen()
         {
             if (!(Driver is ITakesScreenshot))

@@ -214,7 +214,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             get { return Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.MaxAvailableCredit)).Text; }
         }
 
-        public void IsPrepaidCardButtonExist()
+        public void ShowPrepaidCardButton()
         {
             Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyAccountNavigationSection.MyPrepaidCardPageDetails));                 
         }

@@ -29,6 +29,11 @@ namespace Wonga.QA.Framework
             }
         }
 
+        public static void MakeZeroCardsForCustomer(Guid customerId)
+        {
+            Do.Until(() => _eligibleCustomersEntity.UpdateByEligibleCustomerId(EligibleCustomerId: customerId, HasStandardCard: 0, HasPremiumCard: 0));                                                                       
+        }
+
 
         public static void DeleteMarketingEligibility(Guid customerId)
         {

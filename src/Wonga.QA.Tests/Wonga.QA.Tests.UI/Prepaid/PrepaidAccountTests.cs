@@ -23,30 +23,34 @@ namespace Wonga.QA.Tests.Ui.Prepaid
             CustomerOperations.CreateMarketingEligibility(_eligibleCustomer.Id, true);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("PP-1"), Pending("Times out with the exception: No matching table found, or insufficient permissions.")]
+        [Test, AUT(AUT.Uk), JIRA("PP-1")]
         public void DisplayPrepaidCardSubnavForEligibleCustomer()
         {
             var loginPage = Client.Login();
             var summaryPage = loginPage.LoginAs(_eligibleCustomer.GetEmail());
-            summaryPage.IsPrepaidCardButtonExist();
+            summaryPage.ShowPrepaidCardButton();
         }
 
-        [Test, AUT(AUT.Uk), JIRA("PP-3"), Pending("Times out with the exception: No matching table found, or insufficient permissions.")]
+        [Test, AUT(AUT.Uk), JIRA("PP-3")]
         public void DisplayLastRegisteredDetailsForEligibleCustomer()
         {
+            Customer cutomerWithNocards = CustomerBuilder.New().Build();
+            CustomerOperations.CreateMarketingEligibility(cutomerWithNocards.Id,true);
+            CustomerOperations.MakeZeroCardsForCustomer(cutomerWithNocards.Id);
+
             var loginPage = Client.Login();
-            var summaryPage = loginPage.LoginAs(_eligibleCustomer.GetEmail());
+            var summaryPage = loginPage.LoginAs(cutomerWithNocards.GetEmail());
             var prepaidPage = summaryPage.Navigation.MyPrepaidCardButtonClick();
             prepaidPage.ApplyCardButtonClick();
 
-            var dictionary = CustomerOperations.GetFullCustomerInfo(_eligibleCustomer.Id);
+            var dictionary = CustomerOperations.GetFullCustomerInfo(cutomerWithNocards.Id);
             var pageSoruce = prepaidPage.Client.Source();
                
             Assert.IsTrue(pageSoruce.Contains(dictionary[CustomerOperations.CUSTOMER_FULL_NAME]));
             Assert.IsTrue(pageSoruce.Contains(dictionary[CustomerOperations.CUSTOMER_FULL_ADDRESS]));
         }
 
-        [Test,AUT(AUT.Uk),JIRA("PP-2"), Pending("Times out with the exception: No matching table found, or insufficient permissions.")]
+        [Test,AUT(AUT.Uk),JIRA("PP-2")]
         public void DisplayPrepaidCardBannerForEligibleCustomer()
         {
             var loginPage = Client.Login();
@@ -67,7 +71,7 @@ namespace Wonga.QA.Tests.Ui.Prepaid
 
         }
 
-        [Test, AUT(AUT.Uk), JIRA("PP-2"), Pending("Times out with the exception: No matching table found, or insufficient permissions.")]
+        [Test, AUT(AUT.Uk), JIRA("PP-2")]
         public void NoBannerShouldBeDisplayForNonEligibleCustomer()
         {
             var loginPage = Client.Login();
