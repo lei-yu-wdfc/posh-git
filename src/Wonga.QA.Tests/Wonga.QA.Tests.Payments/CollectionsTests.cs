@@ -280,12 +280,11 @@ namespace Wonga.QA.Tests.Payments
 
 			int trackingDays = 0;
 
-			if (dateTrackingBegins.Day > TrackingDayThreshold)
-				trackingDays = (DateTime.DaysInMonth(dateTrackingBegins.Year, dateTrackingBegins.Month)) - dateTrackingBegins.Day + 3; //3 = actionDate + til 2nd of month 
-
-			else
+			if (dateTrackingBegins.Day - 1 <= TrackingDayThreshold)
 				trackingDays = 3;
-
+			else
+				trackingDays = (DateTime.DaysInMonth(dateTrackingBegins.Year, dateTrackingBegins.Month)) - dateTrackingBegins.Day + 3; //3 = actionDate + til 2nd of month 
+			
 			trackingDays = NaedoTrackingDays.Where(a => trackingDays >= a).Max();
 
 			return trackingDays;
