@@ -41,13 +41,13 @@ namespace Wonga.QA.Tests.Ui.Prepaid
             var loginPage = Client.Login();
             var summaryPage = loginPage.LoginAs(cutomerWithNocards.GetEmail());
             var prepaidPage = summaryPage.Navigation.MyPrepaidCardButtonClick();
-            prepaidPage.ApplyCardButtonClick();
+            prepaidPage.ApplyPrepaidCardButtonClick();
 
             var dictionary = CustomerOperations.GetFullCustomerInfo(cutomerWithNocards.Id);
-            var pageSoruce = prepaidPage.Client.Source();
+            var pageSource = prepaidPage.Client.Source();
                
-            Assert.IsTrue(pageSoruce.Contains(dictionary[CustomerOperations.CUSTOMER_FULL_NAME]));
-            Assert.IsTrue(pageSoruce.Contains(dictionary[CustomerOperations.CUSTOMER_FULL_ADDRESS]));
+            Assert.IsTrue(pageSource.Contains(dictionary[CustomerOperations.CUSTOMER_FULL_NAME]));
+            Assert.IsTrue(pageSource.Contains(dictionary[CustomerOperations.CUSTOMER_FULL_ADDRESS]));
         }
 
         [Test,AUT(AUT.Uk),JIRA("PP-2")]
@@ -90,8 +90,27 @@ namespace Wonga.QA.Tests.Ui.Prepaid
 
             Assert.IsFalse(Client.Driver.PageSource.Contains(PROMOTION_CARD_TEXT));
             Assert.IsFalse(Client.Driver.PageSource.Contains(FOOTER_CARD_TEXT));
+        }
 
+        [Test,AUT(AUT.Uk),JIRA("PP-16")]
+        public void CustomerWithPremiumCardShouldSeeMenuNav()
+        {
+            CustomerOperations.UpdateCustomerPrepaidCard(_eligibleCustomer.Id,true);
+            
+            var loginPage = Client.Login();
+            var summaryPage = loginPage.LoginAs(_eligibleCustomer.GetEmail());
+            var prepaidPage = summaryPage.Navigation.MyPrepaidCardButtonClick();
 
+        }
+
+        [Test,AUT(AUT.Uk),JIRA("PP-16")]
+        public void CustomerWithStandardCardShouldSeeMenuNav()
+        {
+            CustomerOperations.UpdateCustomerPrepaidCard(_eligibleCustomer.Id,false);
+            
+            var loginPage = Client.Login();
+            var summaryPage = loginPage.LoginAs(_eligibleCustomer.GetEmail());
+            var prepaidPage = summaryPage.Navigation.MyPrepaidCardButtonClick();
         }
 
 
