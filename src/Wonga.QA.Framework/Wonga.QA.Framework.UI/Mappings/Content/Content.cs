@@ -49,6 +49,7 @@ namespace Wonga.QA.Framework.UI
         public String ProblemProcessingDetailsMessage { get; set; }
         public String PasswordWarningMessage { get; set; }
         public String ApplicationErrorMessage { get; set; }
+        public String NotValidPostcode { get; set; }
         public LoanAgreement LoanAgreement { get; set; }
         public TabsElementMobile TabsElementMobile { get; set; }
 #endregion

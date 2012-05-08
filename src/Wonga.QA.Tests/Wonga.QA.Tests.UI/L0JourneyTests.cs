@@ -1233,7 +1233,7 @@ namespace Wonga.QA.Tests.Ui
             }
             catch (Exception e)
             {
-                Assert.IsTrue(e.Message.Contains(Content.Get.ProblemProcessingDetailsMessage));
+                Assert.IsTrue(e.Message.Contains(Content.Get.NotValidPostcode));
                 IWebElement form = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.FormId));
                 IWebElement postCode = form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.Postcode));
                 IWebElement houseNumber = form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.HouseNumber));
@@ -1249,14 +1249,6 @@ namespace Wonga.QA.Tests.Ui
                 county.SendValue("Province");
                 addressPeriod.SelectOption("2 to 3 years");
                 next.Click();
-                try
-                {
-                    var page = new HomePage(Client);
-                }
-                catch (Exception ex)
-                {
-                    Assert.IsTrue(ex.Message.Contains(Content.Get.ApplicationErrorMessage));
-                }
             }
         }
 
