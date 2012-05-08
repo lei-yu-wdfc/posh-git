@@ -48,6 +48,7 @@
     <Compile Include="HsbcCashOutTests.cs" />
     <Compile Include="HsbcSortCodesTests.cs" />
     <Compile Include="AccountHolderVerificationTests.cs" />
+    <Compile Include="FasterPaymentsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
