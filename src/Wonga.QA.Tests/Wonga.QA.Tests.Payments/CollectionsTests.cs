@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Gallio.Framework;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
@@ -69,13 +70,7 @@ namespace Wonga.QA.Tests.Payments
 				.WithPromiseDate(promiseDate)
 				.Build();
 
-			var paymentsDb = new DbDriver().Payments;
-			paymentsDb.Arrears.InsertOnSubmit(new ArrearEntity()
-			{
-				ApplicationId = paymentsDb.Applications.Single(a => a.ExternalId == application.Id).ApplicationId,
-				CreatedOn = DateTime.Today
-			});
-			paymentsDb.SubmitChanges();
+			application.PutApplicationIntoArrears();
 
 			AttemptNaedoCollection(application, 0);
 			FailNaedoCollection(application, 0);
@@ -153,6 +148,8 @@ namespace Wonga.QA.Tests.Payments
 
 		private void AttemptNaedoCollection(Application application, uint attempt)
 		{
+			TestLog.WriteLine("Attempting Collection " + attempt);
+
 			var fixedTermLoanApplication = GetFixedTermLoanApplicationEntity(application);
 			DateTime now;
 
@@ -193,6 +190,8 @@ namespace Wonga.QA.Tests.Payments
 
 		private void FailNaedoCollection(Application application, uint attempt)
 		{
+			TestLog.WriteLine("Failing Collection " + attempt);
+
 			var db = new DbDriver();
 
 			var scheduledPaymentSaga = db.OpsSagas.ScheduledPaymentSagaEntities.Single(a => a.ApplicationGuid == application.Id);
@@ -257,9 +256,9 @@ namespace Wonga.QA.Tests.Payments
 						//Payday of month - 1
 						var selfReportedPayDay = GetSelfReportedPayDayForApplication(application);
 						var month = selfReportedPayDay > now.Day ? now.Month : now.Month + 1;
-						var validPayDay = Drive.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, month,  selfReportedPayDay))).DateTime.Day;
+						//var validPayDay = Drive.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, month,  selfReportedPayDay))).DateTime.Day;
 
-						paymentRequestDate = Drive.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, month, validPayDay - 1)));
+						paymentRequestDate = new Date(new DateTime(now.Year, month, selfReportedPayDay - 1));
 					}
 					break;
 				default:
