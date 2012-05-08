@@ -64,6 +64,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 
 		private static readonly List<string> ExpectedVerificationNamesL0Za = new List<string>()
 		                                                             	{
+																			"AccountNumberApplicationsAcceptableVerification",
 		                                                             		"CustomerIsEmployedVerification",
 		                                                             		"MonthlyIncomeVerification",
 		                                                             		"ApplicationTermNotLessThan4DaysVerification",
@@ -85,6 +86,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 
 		private static readonly List<string> ExpectedVerificationNamesLnZa = new List<string>()
 		                                                             	{
+																			"AccountNumberApplicationsAcceptableVerification",
 		                                                             		"CustomerIsEmployedVerification",
 		                                                             		"MonthlyIncomeVerification",
 		                                                             		"ApplicationTermNotLessThan4DaysVerification",

@@ -34,7 +34,8 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             {
                  case AUT.Uk: case AUT.Za:
                     {
-                        var customer = CustomerBuilder.New().WithEmployer(_testMask).WithBankAccountNumber(Get.GetBankAccountNumber().ToString()).Build();
+                        var customer = CustomerBuilder.New().WithEmployer(_testMask)
+							.WithBankAccountNumber(Get.GetBankAccountNumber()).Build();
                         var application = ApplicationBuilder.New(customer).Build();
                         Assert.IsNotNull(application);
 
