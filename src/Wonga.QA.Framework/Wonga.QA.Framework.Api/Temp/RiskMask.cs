@@ -15,6 +15,7 @@ namespace Wonga.QA.Framework.Api
 		TESTDateOfBirth,
 		TESTIsSolvent,
 		TESTMonthlyIncome,
+		TESTAccountNumberApplicationsAcceptable,
 		TESTCustomerHistoryIsAcceptable,
 		TESTApplicationElementNotOnBlacklist,
 		TESTBankAccountMatchedToApplicant,
