@@ -48,10 +48,9 @@
 			<Split Include="$(Files.Split(';'))" />
 			<Files Include="$(Bin)\$(Tests).dll" Condition="'$(Files)'==''" />
 			<Files Include="$(Bin)\$(Tests).%(Split.Identity).dll" Condition="'$(Files)'!=''" />
-			<Filter Include="Category: SmokeTest" Condition="'$(SmokeTest)' == 'true'" />
 		</ItemGroup>
 		<Gallio
-			Filter="@(Filter)"
+			Filter="$(TestFilter)"
 			Files="@(Files)"
 			ReportTypes="xml"
 			ReportDirectory="$(Bin)\$(Tests).Report"
