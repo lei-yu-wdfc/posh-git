@@ -43,58 +43,5 @@ namespace Wonga.QA.Tests.Payments.Queries
                 Assert.IsTrue(response.Values["ApplicationId"].SingleOrDefault(i=>i == app.Id.ToString()) != null);
             }
         }
-
-		[Test, AUT(AUT.Za), JIRA("ZA-2360")]
-		public void Close_InDuplumViolation_Application_BalanceShouldBeZero()
-		{
-			var customer = CustomerBuilder.New().Build();
-			var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).WithLoanAmount(100).
-				Build();
-
-			var loanApp = Do.Until(() => _applications.FindAllByExternalId(app.Id).Single());
-
-			//fire refund transaction which cause InDuplum violation
-			Drive.Msmq.Payments.Send(new Wonga.QA.Framework.Msmq.CreateTransactionCommand
-			{
-				Amount = 150,
-				ApplicationId = app.Id,
-				Currency = CurrencyCodeIso4217Enum.ZAR,
-				ExternalId = Guid.NewGuid(),
-				ComponentTransactionId = Guid.Empty,
-				PostedOn = DateTime.UtcNow,
-				Scope = PaymentTransactionScopeEnum.Debit,
-				Source = PaymentTransactionSourceEnum.System,
-				Type = PaymentTransactionEnum.Refund
-			});
-
-			//fire Direct Bank payment transaction to close off application so that compensating transaction 
-			//will be created.
-			Drive.Msmq.Payments.Send(new Wonga.QA.Framework.Msmq. CreateTransactionCommand
-			{
-				Amount = -200,
-				ApplicationId = app.Id,
-				Currency = CurrencyCodeIso4217Enum.ZAR,
-				ExternalId = Guid.NewGuid(),
-				ComponentTransactionId = Guid.Empty,
-				PostedOn = DateTime.UtcNow,
-				Scope = PaymentTransactionScopeEnum.Credit,
-				Source = PaymentTransactionSourceEnum.System,
-				Type = PaymentTransactionEnum.DirectBankPayment
-			});
-
-			//ClosedApplicationSaga timesout after 30sec before closing off application
-			//Therefore delay is necessay
-			Thread.Sleep(45000);
-
-
-			var query = new GetLoanAgreementsQuery() { AccountId = customer.Id, IsActive = null };
-			CsResponse response = Drive.Cs.Queries.Post(query);
-			Application[] applications = customer.GetApplications();
-
-			//Assert.IsNotNull(response.Values["ClosedOn"].SingleOrDefault());
-			Assert.AreEqual<decimal>(0, decimal.Parse(response.Values["TodaysBalance"].SingleOrDefault()));
-			Assert.AreEqual<decimal>(0, decimal.Parse(response.Values["FinalBalance"].SingleOrDefault()));
-			
-		}
     }
 }

@@ -29,6 +29,23 @@ namespace Wonga.QA.Framework
             }
         }
 
+        public static void MakeZeroCardsForCustomer(Guid customerId)
+        {
+            Do.Until(() => _eligibleCustomersEntity.UpdateByEligibleCustomerId(EligibleCustomerId: customerId, HasStandardCard: 0, HasPremiumCard: 0));                                                                       
+        }
+
+        public static void UpdateCustomerPrepaidCard(Guid customerId,bool isPremiumCard)
+        {
+            if (isPremiumCard.Equals(true))
+            {
+                Do.Until(() => _eligibleCustomersEntity.UpdateByEligibleCustomerId(EligibleCustomerId: customerId, HasStandardCard: 0, HasPremiumCard: 1));                                                        
+            }
+            else
+            {
+                Do.Until(() => _eligibleCustomersEntity.UpdateByEligibleCustomerId(EligibleCustomerId: customerId, HasStandardCard: 1, HasPremiumCard: 0));                                                       
+            }  
+        }
+
 
         public static void DeleteMarketingEligibility(Guid customerId)
         {

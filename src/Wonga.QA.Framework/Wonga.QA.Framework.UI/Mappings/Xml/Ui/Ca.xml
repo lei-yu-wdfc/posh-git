@@ -19,6 +19,7 @@
   </ContactingYouSection>
 
   <EmploymentDetailsSection>
+    <EmployerName>#edit-employer-name</EmployerName>
     <NextPaydayDate>#edit-next-payday-ca-datepicker-popup-0</NextPaydayDate>
   </EmploymentDetailsSection>
 
@@ -45,8 +46,17 @@
     <TownErrorForm>#edit-town-ca-wrapper div.invalid</TownErrorForm>
     <StreetErrorForm>#edit-street-ca-wrapper div.invalid</StreetErrorForm>
     <HouseNumberErrorForm>#edit-street-number-ca-wrapper div.invalid</HouseNumberErrorForm>
-	<AddressPeriodErrorForm>#edit-address-period-ca-wrapper div.invalid</AddressPeriodErrorForm>
+	<AddressPeriodErrorForm>#edit-address-period-ca-wrapper div.invalid</AddressPeriodErrorForm>	
   </AddressDetailsPage>
+
+	<PreviousAddresDetailsSection>
+		<Fieldset>#previous-address</Fieldset>
+		<PostCode>#edit-postcode-previous-ca</PostCode>
+		<FlatNumber>#edit-street-number-previous-ca</FlatNumber>
+		<Province>#edit-province-previous</Province>
+		<Town>#edit-town-previous-ca</Town>
+		<Street>#edit-street-previous-ca</Street>
+	</PreviousAddresDetailsSection>
 
   <AccountDetailsSection>
     <Fieldset>fieldset#account-setup</Fieldset>

@@ -53,6 +53,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual MyAccountNavigationSection MyAccountNavigationSection { get; set; }
         public virtual ApplicationSection ApplicationSection { get; set; }
         public virtual AddressDetailsSection AddressDetailsSection { get; set; }
+        public virtual PreviousAddresDetailsSection PreviousAddresDetailsSection { get; set; }
         #endregion
 
         #region Elements
@@ -123,6 +124,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual ExtensionErrorPage ExtensionErrorPage { get; set; }
         public virtual ExtensionRequestPage ExtensionRequestPage { get; set; }
         public virtual RepayRequestPage RepayRequestPage { get; set; }
+        public virtual FAQPage FAQPage { get; set; }
 
         #endregion
 
@@ -143,10 +145,16 @@ namespace Wonga.QA.Framework.UI.Mappings
         #endregion
 
 
-        #region PrePaid
+        #region PrepaidPages
 
         public virtual PrepaidCardPage PrepaidCardPage { get; set; }
         public virtual PrepaidRegisterDetailsPage PrepaidRegisterDetailsPage { get; set; }
+
+        #endregion
+
+        #region PrepaidElements
+
+        public virtual PrepaidCardMenuElement PrepaidCardMenuElement { get; set; }
 
         #endregion
 

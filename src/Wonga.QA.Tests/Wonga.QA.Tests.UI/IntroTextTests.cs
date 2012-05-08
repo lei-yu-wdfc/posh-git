@@ -36,9 +36,9 @@ namespace Wonga.QA.Tests.Ui
         {9, "Hi {first name}. Your promised repayment of £{456.34}, due first thing today, was declined by your bank."},
         {10, "Hi {first name}. Your repayment of £{456.34}, promised on {date}, was declined by your bank and is now overdue."},
         {11, "Hi {first name}. Your account is now {26} days in arrears."},
-        {12, "Hi {first name}. We are dissapointed that your account remains overdue and you are now {46} days in arrears."},
-        {13, "Hi {first name}. We are dissapointed that your account remains overdue and you are now {61} days in arrears."},
-        {14, "Hi {first name}. We are dissapointed that your account remains overdue and you are now {61} days in arrears."},
+        {12, "Hi {first name}. We are disappointed that your account remains overdue and you are now {46} days in arrears."},
+        {13, "Hi {first name}. We are disappointed that your account remains overdue and you are now {61} days in arrears."},
+        {14, "Hi {first name}. You have commited to a repayment plan with us, which will bring your account back into line. Maintaining your promised payments is essential, details of which are below. If you know you will be unable to honour a future payment, please email collections@wonga.com at least two days before your next instalment is due."},
         {15, "Hi {first name}. We were unable to collect a scheduled repayment towards your current repayment plan."},
         {16, "Hi {first name}. You have missed a scheduled payment against your agreed repayment plan, which has now been cancelled."},
         {17, "Hi {first name}."},
@@ -66,9 +66,9 @@ namespace Wonga.QA.Tests.Ui
                 
             // Check the actual text
             string actuallntroText = mySummaryPage.GetIntroText;
-            string expectedlntroText = introTexts[1];
-            expectedlntroText = expectedlntroText.Replace("{first name}", journey.FirstName).Replace("{500}", "400.00"); 
-            Assert.AreEqual(expectedlntroText, actuallntroText);
+            string expectedIntroText = introTexts[1];
+            expectedIntroText = expectedIntroText.Replace("{first name}", journey.FirstName).Replace("{500}", "400.00"); 
+            Assert.AreEqual(expectedIntroText, actuallntroText);
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-788")]
@@ -94,9 +94,9 @@ namespace Wonga.QA.Tests.Ui
 
             // Check the actual text
             string actuallntroText = mySummaryPage.GetIntroText;
-            string expectedlntroText = introTexts[1];
-            expectedlntroText = expectedlntroText.Replace("{first name}", customer.GetCustomerFullName().Split(' ')[0]).Replace("{500}", "400.00");
-            Assert.AreEqual(expectedlntroText, actuallntroText);
+            string expectedIntroText = introTexts[1];
+            expectedIntroText = expectedIntroText.Replace("{first name}", customer.GetCustomerFullName().Split(' ')[0]).Replace("{500}", "400.00");
+            Assert.AreEqual(expectedIntroText, actuallntroText);
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-788")]
@@ -138,10 +138,226 @@ namespace Wonga.QA.Tests.Ui
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-788")]
-        [Row(6, 3), Pending("Fails due to bug UK-1909")]
+        [Row(6, 3)]
         public void IntroTextScenario6(int scenarioId, int dasyShift)
         {
             IntroText(scenarioId, dasyShift);
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-788")]
+        [Row(7, 10)]
+        public void IntroTextScenario7(int scenarioId, int dasyShift)
+        {
+            IntroText(scenarioId, dasyShift);
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-788")]
+        [Row(8, 10), Pending("Fails due to bug UK-1913")]
+        public void IntroTextScenario8(int scenarioId, int dasyShift)
+        {
+            IntroText(scenarioId, dasyShift);
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-788")]
+        public void IntroTextScenario9()
+        {
+            const int scenarioId = 9;
+            string email = Get.RandomEmail();
+            Console.WriteLine("email:{0}", email);
+
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+
+            var accountId = customer.Id;
+            var bankAccountId = customer.BankAccountId;
+            var paymentCardId = Guid.NewGuid();
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            var appId = Guid.NewGuid();
+            const decimal trustRating = 400.00M;
+
+            var setupData = new AccountSummarySetupFunctions();
+            setupData.Scenario09Setup(requestId2, requestId1, accountId, paymentCardId, appId, bankAccountId);
+
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(9, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
+
+            // Login and open my summary page
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+
+            response = Drive.Api.Queries.Post(new GetFixedTermLoanApplicationQuery { ApplicationId = appId });
+            var expectedNextDueDateRepay = Convert.ToDecimal(response.Values["BalanceNextDueDate"].Single());
+
+            var expectedIntroText = introTexts[scenarioId].Replace("{first name}", customer.GetCustomerFullName().Split(' ')[0]);
+            expectedIntroText = expectedIntroText.Replace("Your promised repayment of £{456.34}", "Your promised repayment of £" + expectedNextDueDateRepay.ToString("#.00"));
+            string actualIntroText = mySummaryPage.GetIntroText;
+            Assert.AreEqual(expectedIntroText, actualIntroText);
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-788")]
+        public void IntroTextScenario10()
+        {
+            const int scenarioId = 10;
+            string email = Get.RandomEmail();
+            Console.WriteLine("email:{0}", email);
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+
+            var accountId = customer.Id;
+            var bankAccountId = Guid.NewGuid();
+            var paymentCardId = Guid.NewGuid();
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            var appId = Guid.NewGuid();
+            const decimal trustRating = 400.00M;
+
+            var setupData = new AccountSummarySetupFunctions();
+            setupData.Scenario10Setup(requestId1, requestId2, appId, bankAccountId, accountId, paymentCardId);
+
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(scenarioId, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
+
+            // Login and open my summary page
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+
+            response = Drive.Api.Queries.Post(new GetFixedTermLoanApplicationQuery { ApplicationId = appId });
+            var expectedBalanceToday = String.Format("{0:0.00}", Convert.ToDecimal(response.Values["BalanceToday"].Single()));
+            var expectedNextDueDate = Date.GetOrdinalDate(Convert.ToDateTime(response.Values["NextDueDate"].Single()), "ddd d MMM yyyy");
+
+            //Your repayment of £{456.34}, promised on {date}
+            var expectedIntroText = introTexts[scenarioId].Replace("{first name}", customer.GetCustomerFullName().Split(' ')[0]);
+            expectedIntroText = expectedIntroText.Replace("Your repayment of £{456.34}", "Your repayment of £" + expectedBalanceToday);
+            expectedIntroText = expectedIntroText.Replace("promised on {date}", "promised on " + expectedNextDueDate);
+            string actualIntroText = mySummaryPage.GetIntroText;
+            Assert.AreEqual(expectedIntroText, actualIntroText);
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-788")]
+        [Row(11, 13)]
+        [Row(11, 14)]
+        [Row(11, 40)]
+        public void IntroTextScenario11(int scenarioId, int dasyShift)
+        {
+            IntroText(scenarioId, dasyShift);
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-788"), Pending("Waiting when incorrect formatting is fixed - '...now31 days ...'")]
+        [Row(12, 41)]
+        [Row(12, 42)]
+        [Row(12, 70)]
+        public void IntroTextScenario12(int scenarioId, int dasyShift)
+        {
+            IntroText(scenarioId, dasyShift);
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-788")]
+        [Row(13, 71)]
+        //[Row(13, 72)]
+        [Row(13, 100)]
+        //[Row(13, 1000)]
+        public void IntroTextScenario13(int scenarioId, int dasyShift)
+        {
+            IntroText(scenarioId, dasyShift);
+        }
+
+
+        [Test, AUT(AUT.Uk), JIRA("UK-788"), Pending("Awating Repayment Arrangment Functionality.")]
+        public void IntroTextScenario14()
+        {
+            const int scenarioId = 14;
+            string email = Get.RandomEmail();
+            Console.WriteLine("email:{0}", email);
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+
+            var accountId = customer.Id;
+            var bankAccountId = Guid.NewGuid();
+            var paymentCardId = Guid.NewGuid();
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            var appId = Guid.NewGuid();
+            const int applicationId = 0;
+            const decimal trustRating = 400.00M;
+
+            var setupData = new AccountSummarySetupFunctions();
+            setupData.Scenario14Setup(requestId1, requestId2, applicationId, accountId, appId, paymentCardId, bankAccountId);
+
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(scenarioId, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
+
+            // Login and open my summary page
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            
+            string expectedIntroText = introTexts[scenarioId].Replace("{first name}", customer.GetCustomerFullName().Split(' ')[0]);
+            string actualIntroText = mySummaryPage.GetIntroText;
+            Assert.AreEqual(expectedIntroText, actualIntroText);
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-788"), Pending("Awating Repayment Arrangment Functionality.")]
+        public void IntroTextScenario15()
+        {
+            const int scenarioId = 15;
+            string email = Get.RandomEmail();
+            Console.WriteLine("email:{0}", email);
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+
+            var accountId = customer.Id;
+            var bankAccountId = Guid.NewGuid();
+            var paymentCardId = Guid.NewGuid();
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            var appId = Guid.NewGuid();
+            const int applicationId = 0;
+            const decimal trustRating = 400.00M;
+
+            var setupData = new AccountSummarySetupFunctions();
+            setupData.Scenario15Setup(requestId1, requestId2, applicationId, accountId, appId, paymentCardId, bankAccountId);
+
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(15, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
+
+            // Login and open my summary page
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            string expectedIntroText = introTexts[scenarioId].Replace("{first name}", customer.GetCustomerFullName().Split(' ')[0]);
+            string actualIntroText = mySummaryPage.GetIntroText;
+            Assert.AreEqual(expectedIntroText, actualIntroText);
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-788"), Pending("Awating Repayment Arrangment Functionality.")]
+        public void IntroTextScenario16()
+        {
+            const int scenarioId = 16;
+            string email = Get.RandomEmail();
+            Console.WriteLine("email:{0}", email);
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+
+            var accountId = customer.Id;
+            var bankAccountId = Guid.NewGuid();
+            var paymentCardId = Guid.NewGuid();
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            var appId = Guid.NewGuid();
+            const int applicationId = 0;
+            const decimal trustRating = 400.00M;
+
+            var setupData = new AccountSummarySetupFunctions();
+            setupData.Scenario16Setup(requestId1, requestId2, applicationId, accountId, appId, paymentCardId, bankAccountId);
+
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(16, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
+
+            // Login and open my summary page
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            string expectedIntroText = introTexts[scenarioId].Replace("{first name}", customer.GetCustomerFullName().Split(' ')[0]);
+            string actualIntroText = mySummaryPage.GetIntroText;
+            Assert.AreEqual(expectedIntroText, actualIntroText);
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-788")]
@@ -164,10 +380,16 @@ namespace Wonga.QA.Tests.Ui
 
             // Check the actual text
             string actuallntroText = mySummaryPage.GetIntroText;
-            string expectedlntroText = introTexts[17];
-            expectedlntroText = expectedlntroText.Replace("{first name}", journey.FirstName);
-            Assert.AreEqual(expectedlntroText, actuallntroText);
+            string expectedIntroText = introTexts[17];
+            expectedIntroText = expectedIntroText.Replace("{first name}", journey.FirstName);
+            Assert.AreEqual(expectedIntroText, actuallntroText);
         }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-788"), Pending("Waiting for implementation of agreement cancellation process.")]
+        public void IntroTextScenario19() { }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-788")]
+        public void IntroTextScenario20() { IntroText(20, 10); }
 
         [Test, AUT(AUT.Uk), JIRA("UK-788")]
         public void IntroTextScenario21()
@@ -190,9 +412,9 @@ namespace Wonga.QA.Tests.Ui
 
             // Check the actual text
             string actuallntroText = mySummaryPage.GetIntroText;
-            string expectedlntroText = introTexts[21];
-            expectedlntroText = expectedlntroText.Replace("{first name}", journey.FirstName);
-            Assert.AreEqual(expectedlntroText, actuallntroText);
+            string expectedIntroText = introTexts[21];
+            expectedIntroText = expectedIntroText.Replace("{first name}", journey.FirstName);
+            Assert.AreEqual(expectedIntroText, actuallntroText);
         }
 
         private void IntroText(int scenarioId, params int[] days)
@@ -223,7 +445,23 @@ namespace Wonga.QA.Tests.Ui
                 Drive.Db.RewindApplicationDates(applicationEntity, riskApplication, daysShiftSpan);               
             }
 
-            if (scenarioId == 8) application = application.RepayOnDueDate(); // Repay a loan
+            var expectedDueDateBalance = 0.00M;
+            var expectedAmountMax = "0";
+            if (scenarioId == 8)
+            {
+                expectedDueDateBalance = application.GetDueDateBalance();
+                //TBD: get expectedAmountMax 
+                //GetFixedTermLoanOfferResponse
+                var PromoCodeId = Drive.Api.Queries.Post(new GetFixedTermLoanApplicationQuery { ApplicationId = application.Id }).Values["PromoCodeId"].Single();
+                expectedAmountMax = Drive.Api.Queries.Post(new GetFixedTermLoanOfferUkQuery { AccountId = customer.Id, PromoCodeId = PromoCodeId }).Values["AmountMax"].Single();
+                application = application.RepayOnDueDate(); // Repay a loan
+            }
+
+            if (scenarioId == 20)
+            {
+                expectedAmountMax = Drive.Api.Queries.Post(new GetAccountSummaryQuery{AccountId = customer.Id}).Values["AvailableCredit"].Single();
+                expectedAmountMax = String.Format("{0:0.00}", Convert.ToDecimal(expectedAmountMax));
+            }
 
             var requestId1 = Guid.NewGuid();
             var requestId2 = Guid.NewGuid();
@@ -243,21 +481,31 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId));
 
             // Check the actual text
-            string expectedlntroText = introTexts[scenarioId].Replace("{first name}", customer.GetCustomerFullName().Split(' ')[0]);
+            string expectedIntroText = introTexts[scenarioId].Replace("{first name}", customer.GetCustomerFullName().Split(' ')[0]);
 
             var response = Drive.Api.Queries.Post(new GetFixedTermLoanApplicationQuery { ApplicationId = application.Id });
             var expectedAvailableCredit = Convert.ToDecimal(response.Values["AvailableCredit"].Single());
-            expectedlntroText = expectedlntroText.Replace("You currently have up to £{245.00}", "You currently have up to £" + expectedAvailableCredit.ToString("#.00"));
+            expectedIntroText = expectedIntroText.Replace("You currently have up to £{245.00}", "You currently have up to £" + expectedAvailableCredit.ToString("#.00"));
             
-            //you promised to repay £{425.00} on {Friday 13 Feb 2011}           
-            var expectedNextDueDateRepay = Convert.ToDecimal(response.Values["BalanceNextDueDate"].Single());
-            var expectedNextDueDate = Date.GetOrdinalDate(Convert.ToDateTime(response.Values["NextDueDate"].Single()), "ddd d MMM yyyy");
-            expectedlntroText = expectedlntroText.Replace("you promised to repay £{425.00}", "you promised to repay £" + expectedNextDueDateRepay.ToString("#.##"));
-            expectedlntroText = expectedlntroText.Replace("on {Friday 13 Feb 2011}", "on " + expectedNextDueDate);
 
+            var expectedNextDueDateRepay = Convert.ToDecimal(response.Values["BalanceNextDueDate"].Single());
+            var dExpectedNextDueDate = Convert.ToDateTime(response.Values["NextDueDate"].Single());
+            var expectedNextDueDate = Date.GetOrdinalDate(dExpectedNextDueDate, "ddd d MMM yyyy");
+            TimeSpan daysInArrears = DateTime.Today - dExpectedNextDueDate;
+
+
+            expectedIntroText = expectedIntroText.Replace("you promised to repay £{425.00}", "you promised to repay £" + expectedNextDueDateRepay.ToString("#.##"));
+            expectedIntroText = expectedIntroText.Replace("on {Friday 13 Feb 2011}", "on " + expectedNextDueDate);
+            expectedIntroText = expectedIntroText.Replace("We collected your full payment of £{300} today", "We collected your full payment of £" + expectedDueDateBalance + " today");
+            expectedIntroText = expectedIntroText.Replace("your current Wonga trust rating of £{500}", "your current Wonga trust rating of £" + expectedAmountMax);
+            expectedIntroText = expectedIntroText.Replace("Your account is now {26}", "Your account is now " + daysInArrears.Days.ToString("#"));
+            expectedIntroText = expectedIntroText.Replace("you are now {46}", "you are now " + daysInArrears.Days.ToString("#"));
+            expectedIntroText = expectedIntroText.Replace("you are now {61}", "you are now " + daysInArrears.Days.ToString("#"));
+            expectedIntroText = expectedIntroText.Replace("you can apply for up to £{400}", "you can apply for up to £" + expectedAmountMax);
+             
             string actuallntroText = mySummaryPage.GetIntroText;
              
-            Assert.AreEqual(expectedlntroText, actuallntroText);
+            Assert.AreEqual(expectedIntroText, actuallntroText);
         }
 
     }

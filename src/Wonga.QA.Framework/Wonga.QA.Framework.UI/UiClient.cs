@@ -166,6 +166,19 @@ namespace Wonga.QA.Framework.UI
             return new AccountingPage(this);
         }
 
+        public FAQPage Faq()
+        {
+            Driver.Navigate().GoToUrl(Config.Ui.Home + "/frequently-asked-questions");
+            return new FAQPage(this);
+        }
+
+        public PrepaidCardPage PrepaidCardPage()
+        {
+            Driver.Navigate().GoToUrl(Config.Ui.Home + "my-account/prepaid/");
+            Driver.Url = Config.Ui.Home + "my-account/prepaid/";
+            return new PrepaidCardPage(this);
+        }
+
         public Image Screen()
         {
             if (!(Driver is ITakesScreenshot))
@@ -191,7 +204,7 @@ namespace Wonga.QA.Framework.UI
             return new SalesForceLoginPage(this);
         }
 
-        #region
+        #region PayLater
 
         public PayLaterLoginPage PayLaterStart()
         {

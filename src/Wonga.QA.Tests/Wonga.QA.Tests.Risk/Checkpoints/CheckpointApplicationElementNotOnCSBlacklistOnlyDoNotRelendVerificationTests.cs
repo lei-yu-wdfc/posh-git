@@ -10,7 +10,6 @@ using Wonga.QA.Framework.Data.Enums.Risk;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
-using Wonga.QA.Framework.Data.Extensions;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
@@ -20,10 +19,14 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		private const RiskMask TestMask = RiskMask.TESTDoNotRelend;
 		private const string UseDoNotRelendFlagKey = "Risk.UseDoNotRelendFlag";
 
+		#region feature switch
+
 		[Test, AUT(AUT.Ca), JIRA("CA-1974")]
-		public void GivenNewCustomer_WhenDoNotRelendFlagIsNotUsed_ThenTheApplicationWorkflowDoesNotContainCheckpoint()
+		[Row(true)]
+		[Row(false)]
+		public void GivenNewCustomer_WhenDoNotRelendFlagIsConfigured_ThenCheckApplicationWorkflowContainsCheckpoint(bool useDoNotRelend)
 		{
-			bool currentValue = Drive.Data.Ops.SetServiceConfiguration(UseDoNotRelendFlagKey, false);
+			bool currentValue = Drive.Data.Ops.SetServiceConfiguration(UseDoNotRelendFlagKey, useDoNotRelend);
 
 			try
 			{
@@ -32,11 +35,34 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 				var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Pending).Build();
 
-				AssertCheckpointIsNotPartOfApplication(application.Id, RiskCheckpointDefinitionEnum.FraudListCheck);
-				AssertVerificationIsNotPartOfApplication(application.Id, RiskVerificationDefinitions.DoNotRelendVerification);
-				//for CA this is never run
-				AssertVerificationIsNotPartOfApplication(application.Id, RiskVerificationDefinitions.FraudBlacklistVerification);
-				
+				AssertCheckpointAndVerificationExecution(useDoNotRelend, application);
+			}
+			finally
+			{
+				Drive.Data.Ops.SetServiceConfiguration(UseDoNotRelendFlagKey, currentValue);
+			}
+		}
+		
+		[Test, AUT(AUT.Ca), JIRA("CA-1974")]
+		[Row(true)]
+		[Row(false)]
+		public void GivenExistingCustomer_WhenDoNotRelendFlagIsConfigured_ThenCheckApplicationWorkflowContainsCheckpoint(bool useDoNotRelend)
+		{
+			bool currentValue = Drive.Data.Ops.SetServiceConfiguration(UseDoNotRelendFlagKey, useDoNotRelend);
+
+			try
+			{
+				var customer = CustomerBuilder.New().WithEmployer(RiskMask.TESTNoCheck).Build();
+
+				var l0Application = ApplicationBuilder.New(customer).Build();
+				l0Application.RepayOnDueDate();
+
+				//don't use mask so that the workflow builder is run!
+				Drive.Db.UpdateEmployerName(customer.Id, "Wonga");
+
+				var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Pending).Build();
+
+				AssertCheckpointAndVerificationExecution(useDoNotRelend, application);
 			}
 			finally
 			{
@@ -44,29 +70,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			}
 		}
 
-
-		[Test, AUT(AUT.Ca), JIRA("CA-1974")]
-		public void GivenNewCustomer_WhenDoNotRelendFlagIsUsed_ThenTheApplicationWorkflowContainsCheckpoint()
-		{
-			bool currentValue = Drive.Data.Ops.SetServiceConfiguration(UseDoNotRelendFlagKey, true);
-
-			try
-			{
-				//don't use mask so that the workflow builder is run!
-				var customer = CustomerBuilder.New().WithEmployer("Wonga").Build();
-
-				var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Pending).Build();
-
-				AssertCheckpointIsPartOfApplication(application.Id, RiskCheckpointDefinitionEnum.FraudListCheck);
-				AssertVerificationIsPartOfApplication(application.Id, RiskVerificationDefinitions.DoNotRelendVerification);
-				//for CA this is never run
-				AssertVerificationIsNotPartOfApplication(application.Id, RiskVerificationDefinitions.FraudBlacklistVerification);
-			}
-			finally
-			{
-				Drive.Data.Ops.SetServiceConfiguration(UseDoNotRelendFlagKey, currentValue);
-			}
-		}		
+		#endregion
 
 		[Test, AUT(AUT.Ca), JIRA("CA-1974")]
 		public void GivenNewCustomer_WhenItIsNotMarkedWithDoNotRelend_ThenTheApplicationIsAccepted()
@@ -118,28 +122,24 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
 
-		private void AssertCheckpointIsNotPartOfApplication(Guid applicationId, RiskCheckpointDefinitionEnum checkpoint)
+		private void AssertCheckpointAndVerificationExecution(bool useDoNotRelend, Application application)
+		{
+			AssertCheckpointExecution(application.Id, RiskCheckpointDefinitionEnum.FraudListCheck, useDoNotRelend);
+			AssertVerificationExecution(application.Id, RiskVerificationDefinitions.DoNotRelendVerification, useDoNotRelend);
+			//for CA this is never run
+			AssertVerificationExecution(application.Id, RiskVerificationDefinitions.FraudBlacklistVerification, false);
+		}
+
+		private void AssertCheckpointExecution(Guid applicationId, RiskCheckpointDefinitionEnum checkpoint, bool executed)
 		{
 			var checkpoints = Drive.Db.GetCheckpointDefinitionsForApplication(applicationId);
-			Assert.IsFalse(checkpoints.Any(c => c.Name == Get.EnumToString(checkpoint)));
+			Assert.AreEqual(executed, checkpoints.Any(c => c.Name == Get.EnumToString(checkpoint)));
 		}
 
-		private void AssertCheckpointIsPartOfApplication(Guid applicationId, RiskCheckpointDefinitionEnum checkpoint)
-		{
-			var checkpoints = Drive.Db.GetCheckpointDefinitionsForApplication(applicationId);
-			Assert.IsTrue(checkpoints.Any(c => c.Name == Get.EnumToString(checkpoint)));
-		}
-
-		private void AssertVerificationIsNotPartOfApplication(Guid applicationId, RiskVerificationDefinitions verification)
+		private void AssertVerificationExecution(Guid applicationId, RiskVerificationDefinitions verification, bool executed)
 		{
 			var verifications = Drive.Db.GetVerificationDefinitionsForApplication(applicationId);
-			Assert.IsFalse(verifications.Any(v => v.Name == Get.EnumToString(verification)));
-		}
-
-		private void AssertVerificationIsPartOfApplication(Guid applicationId, RiskVerificationDefinitions verification)
-		{
-			var verifications = Drive.Db.GetVerificationDefinitionsForApplication(applicationId);
-			Assert.IsTrue(verifications.Any(v => v.Name == Get.EnumToString(verification)));
+			Assert.AreEqual(executed, verifications.Any(v => v.Name == Get.EnumToString(verification)));
 		}
 		
 	}

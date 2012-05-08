@@ -41,5 +41,25 @@ namespace Wonga.QA.Framework.Svc
             Do.With.Timeout(1).Until(IsRunning);
             return this;
         }
+
+        public SvcService Stop()
+        {
+            if (Status != ServiceControllerStatus.Stopped)
+            {
+                _controller.Stop();
+                _controller.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromMinutes(1));
+            }
+            return this;
+        }
+
+        public SvcService Start()
+        {
+            if(Status != ServiceControllerStatus.Running)
+            {
+                _controller.Start();
+                Do.With.Timeout(1).Until(IsRunning);
+            }
+            return this;
+        }
     }
 }

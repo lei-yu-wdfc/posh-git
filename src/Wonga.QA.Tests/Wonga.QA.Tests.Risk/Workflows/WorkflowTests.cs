@@ -94,7 +94,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 						.WithDateOfBirth(new Date(new DateTime(1957, 12, 19)))
 						.WithNationalNumber("5712190106083")
 						.WithMobileNumber(Get.GetMobilePhone())
-						.WithBankAccountNumber(Get.GetBankAccountNumber())
+							.WithBankAccountNumber(Get.GetBankAccountNumber().ToString())
 						.WithPostcodeInAddress(Get.GetPostcode())
 						.Build();
 				}

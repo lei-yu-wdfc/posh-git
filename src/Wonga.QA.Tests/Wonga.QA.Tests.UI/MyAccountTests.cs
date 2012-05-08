@@ -5,11 +5,13 @@ using System.Linq;
 using System.Threading;
 using Gallio.Framework.Assertions;
 using MbUnit.Framework;
+using OpenQA.Selenium;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Helpers;
+using Wonga.QA.Framework.UI.Mappings;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
@@ -81,7 +83,7 @@ namespace Wonga.QA.Tests.Ui
             {
                 payment1.AddBankAccountButtonClick();
 
-               
+
                 payment1.AddBankAccount("Capitec", "Current", "7434567", "2 to 3 years");
                 Do.With.Timeout(2).Until(payment1.IfHasAnExeption);
                 Assert.IsTrue(payment1.IfHasAnExeption());
@@ -128,7 +130,7 @@ namespace Wonga.QA.Tests.Ui
                 payment.AddBankAccountButtonClick();
                 payment.AddBankAccount("Capitec", "Current", accountNumber, "2 to 3 years");
                 payment.ClickCloseButton();
-              
+
                 payment = Client.Payments();
                 int whileCount = 0;
                 while (accountNumber.Remove(0, 3) != payment.DefaultAccountNumber)
@@ -616,9 +618,9 @@ namespace Wonga.QA.Tests.Ui
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             Organisation organisation = OrganisationBuilder.New(customer).Build();
             Application application = ApplicationBuilder
-                .New(customer,organisation)
+                .New(customer, organisation)
                 .Build();
-            
+
             var mySummaryPage = loginPage.LoginAs(email);
         }
 
@@ -641,7 +643,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
         [Test, AUT(AUT.Za), JIRA("QA-213")]
-        public void  CustomerUpdatesPhoneNumbersAndDoesntMakeChangesShouldSeeMessageOnTopWindow()
+        public void CustomerUpdatesPhoneNumbersAndDoesntMakeChangesShouldSeeMessageOnTopWindow()
         {
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
@@ -750,8 +752,57 @@ namespace Wonga.QA.Tests.Ui
             var applyPage = journey.ApplyForLoan(200, 10)
                                 .CurrentPage as ApplyPage;
 
-            Assert.AreEqual(accountNumber.Remove(0,3), applyPage.GetCurrentBankAccount);
+            Assert.AreEqual(accountNumber.Remove(0, 3), applyPage.GetCurrentBankAccount);
 
         }
+
+        [Test, AUT(AUT.Za), Category(TestCategories.Smoke), JIRA("QA-279")]
+        public void LNCustomerChangesMobilePhoneNumberToTheSameOneButUsingSeparators()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            string phone = "0751234567";
+            List<string> invalidPhones = new List<string> { "075-1234567", "075.1234567", "075,1234567", "075/1234567" };
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).WithMobileNumber(phone).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            application.RepayOnDueDate();
+            var mySummary = loginPage.LoginAs(email);
+            var myPersonals = mySummary.Navigation.MyPersonalDetailsButtonClick();
+            foreach (var invaliPhone in invalidPhones)
+            {
+                myPersonals.PhoneClick();
+                myPersonals.ChangeMobilePhone(invaliPhone, "0000");
+            }
+        }
+
+        [Test, AUT(AUT.Za), JIRA("QA-210")]
+        public void CustomerChangeTelephonFieldsCheckHomePhone()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            application.RepayOnDueDate();
+
+            var mySummary = loginPage.LoginAs(email);
+            var myPersonalDetailsPage = mySummary.Navigation.MyPersonalDetailsButtonClick();
+
+            myPersonalDetailsPage.PhoneClick();
+            myPersonalDetailsPage.ChangeHomePhone("");
+
+            myPersonalDetailsPage.Submit();
+            myPersonalDetailsPage.WaitForSuccessPopup();
+            myPersonalDetailsPage.Submit();
+
+            var homePhoneUI = myPersonalDetailsPage.GetHomePhone;
+            Console.WriteLine(customer.Id.ToString());
+            var homePhoneDB = Do.Until(() => Drive.Data.Comms.Db.CustomerDetails.FindByAccountId(customer.Id).HomePhone);
+
+            Assert.AreEqual("", homePhoneUI);
+            Assert.AreEqual("", homePhoneDB);
+        }
+
     }
 }

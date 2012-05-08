@@ -23,7 +23,7 @@ namespace Wonga.QA.Framework
 		public decimal LoanAmount { get; set; }
 		public int LoanTerm { get; set; }
 		public string FailedCheckpoint { get; private set; }
-        public Int64 BankAccountNumber { get; set; }
+        public string BankAccountNumber { get; set; }
 
 	    public Application()
 		{
@@ -186,8 +186,11 @@ namespace Wonga.QA.Framework
 
 			Drive.Db.RewindApplicationDates(application, riskApplication, span);
 
-			ScheduledPostAccruedInterestSagaEntity entity = Drive.Db.OpsSagas.ScheduledPostAccruedInterestSagaEntities.Single(a => a.ApplicationGuid == Id);
-			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = entity.Id });
+            if (Config.AUT == AUT.Ca || Config.AUT == AUT.Za)
+            {
+                ScheduledPostAccruedInterestSagaEntity entity = Drive.Db.OpsSagas.ScheduledPostAccruedInterestSagaEntities.Single(a => a.ApplicationGuid == Id);
+                Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = entity.Id });
+            }
 
             ServiceConfigurationEntity caScotiaMocksEnabled = Drive.Db.Ops.ServiceConfigurations.SingleOrDefault(e => e.Key == "Mocks.ScotiaEnabled");
 
@@ -205,7 +208,9 @@ namespace Wonga.QA.Framework
             if (Config.AUT != AUT.Ca || (Config.AUT == AUT.Ca && !Boolean.Parse(caScotiaMocksEnabled.Value)))
             {
                 ScheduledPaymentSagaEntity sp = Do.Until(() => Drive.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationGuid == Id));
-                Drive.Msmq.Payments.Send(new TakePaymentFailedCommand { SagaId = sp.Id, CreatedOn = DateTime.UtcNow, ValueDate = DateTime.UtcNow });
+                Drive.Msmq.Payments.Send(Config.AUT == AUT.Uk ? new TakePaymentFailedCommand { SagaId = sp.Id, CreatedOn = DateTime.UtcNow, ValueDate = DateTime.UtcNow, PaymentCardId = this.GetCustomer().GetPaymentCard() } :
+                                                                new TakePaymentFailedCommand { SagaId = sp.Id, CreatedOn = DateTime.UtcNow, ValueDate = DateTime.UtcNow });
+
                 Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = sp.Id }); 
             }
 

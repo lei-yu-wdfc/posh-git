@@ -8,6 +8,7 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Mappings;
 using Wonga.QA.Framework.UI.Mappings.Content.Agreements;
 using Wonga.QA.Framework.UI.Mappings.Content.Elements;
+using Wonga.QA.Framework.UI.Mappings.Content.Links;
 
 namespace Wonga.QA.Framework.UI
 {
@@ -51,6 +52,7 @@ namespace Wonga.QA.Framework.UI
         public String ApplicationErrorMessage { get; set; }
         public LoanAgreement LoanAgreement { get; set; }
         public TabsElementMobile TabsElementMobile { get; set; }
+        public FAQPageLinks FAQPageLinks { get; set; }
 #endregion
     }
 }

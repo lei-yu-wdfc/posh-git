@@ -12,6 +12,7 @@ namespace Wonga.QA.Framework.Msmq
         private MsmqQueue _bi;
         private MsmqQueue _bankGateway;
 		private MsmqQueue _bankGatewayBmo;
+		private MsmqQueue _bankGatewayRbc;
 		private MsmqQueue _bankGatewayScotia;
 		private MsmqQueue _blacklist;
         private MsmqQueue _callReport;
@@ -83,6 +84,12 @@ namespace Wonga.QA.Framework.Msmq
 		{
 			get { return _bankGatewayBmo ?? (_bankGatewayBmo = new MsmqQueue(Config.Msmq.BankGatewayBmo)); }
 			set { _bankGatewayBmo = value; }
+		}
+
+		public MsmqQueue BankGatewayRbc
+		{
+			get { return _bankGatewayRbc ?? (_bankGatewayRbc = new MsmqQueue(Config.Msmq.BankGatewayRbc)); }
+			set { _bankGatewayRbc = value; }
 		}
 
 		public MsmqQueue BankGatewayScotia

@@ -162,6 +162,16 @@
     <CancelCheckBox>input[name='CancelSelected']</CancelCheckBox>
     <UpdateButton>#GridContainer > input[name='Command']</UpdateButton>
   </CashOutPage>
+
+  <PrepaidCardMenuElement>
+    <Summary>.menu-mlid-4340</Summary>
+    <Transaction>.menu-mlid-9440</Transaction>
+    <TopUp>.menu-mlid-9439</TopUp>
+    <Budjet>.menu-mlid-9434</Budjet>
+    <Cashback>.menu-mlid-9435</Cashback>
+    <Rewards>.menu-mlid-9437</Rewards>
+    <ForgottenPin>.menu-mlid-9436</ForgottenPin>
+  </PrepaidCardMenuElement>
   
   
 

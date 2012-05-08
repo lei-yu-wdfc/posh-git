@@ -14,7 +14,7 @@ namespace Wonga.QA.Tests.Payments
 		[Test, AUT(AUT.Wb), JIRA("SME-889")]
 		public void GetBusinessFixedInstallmentLoanCalculation()
 		{
-			var customer = CustomerBuilder.New().Build();
+            var customer = CustomerBuilder.New().WithGender(GenderEnum.Female).WithSpecificAge(40).WithNumberOfDependants(0).Build();
 			var organisation = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organisation).Build();
 
@@ -28,9 +28,9 @@ namespace Wonga.QA.Tests.Payments
 			Assert.AreEqual("16", response.Values["Term"].SingleOrDefault(), "Expected Term value is incorrect.");
 			Assert.AreEqual(applicationEntity.BusinessFixedInstallmentLoanApplicationEntity.ApplicationFee.ToString(), response.Values["ApplicationFeeRate"].SingleOrDefault(), "Expected ApplicationFeeRate value is incorrect.");
 			Assert.AreEqual(applicationEntity.BusinessFixedInstallmentLoanApplicationEntity.InterestRate.ToString(), response.Values["WeeklyInterestRate"].SingleOrDefault(), "Expected WeeklyInterestRate value is incorrect.");
-			Assert.AreEqual("2800.00", response.Values["InterestAmount"].SingleOrDefault(), "Expected InterestAmount value is incorrect.");
-			Assert.AreEqual("13300.00", response.Values["TotalRepayable"].SingleOrDefault(), "Expected TotalRepayable value is incorrect.");
-			Assert.AreEqual("831.25", response.Values["WeeklyRepayable"].SingleOrDefault(), "Expected WeeklyRepayable value is incorrect.");
+			Assert.AreEqual("3200.00", response.Values["InterestAmount"].SingleOrDefault(), "Expected InterestAmount value is incorrect.");
+			Assert.AreEqual("13700.00", response.Values["TotalRepayable"].SingleOrDefault(), "Expected TotalRepayable value is incorrect.");
+			Assert.AreEqual("856.25", response.Values["WeeklyRepayable"].SingleOrDefault(), "Expected WeeklyRepayable value is incorrect.");
 		}
 
 

@@ -11,6 +11,7 @@ using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Framework.UI;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
+using CreateScheduledPaymentRequestCommand = Wonga.QA.Framework.Msmq.CreateScheduledPaymentRequestCommand;
 using EmploymentStatusEnum = Wonga.QA.Framework.Api.EmploymentStatusEnum;
 
 namespace Wonga.QA.Tests.Ui
@@ -85,7 +86,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Uk), JIRA("UK-785", "UK-1737"), Pending("Fails due to bug UK-1737")]
+        [Test, AUT(AUT.Uk), JIRA("UK-785", "UK-1737")]
         public void TagCloudScenario02() { TagCloud(2, 2); }
 
         [Test, AUT(AUT.Uk), JIRA("UK-785")]
@@ -106,11 +107,69 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk), JIRA("UK-785")]
         public void TagCloudScenario08() { TagCloud(8, 10); }
 
-        //[Test, AUT(AUT.Uk), JIRA("UK-785")]
-        //public void TagCloudScenario09() { TagCloud(9, 3); } // not ready
+        [Test, AUT(AUT.Uk), JIRA("UK-785")]
+        public void TagCloudScenario09() 
+        {
+            const int scenarioId = 9;
+            string email = Get.RandomEmail();
+            Console.WriteLine("email:{0}", email);
 
-        //[Test, AUT(AUT.Uk), JIRA("UK-785")]
-        //public void TagCloudScenario10() { TagCloud(10); } // not ready
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+
+            var accountId = customer.Id;
+            var bankAccountId = customer.BankAccountId;
+            var paymentCardId = Guid.NewGuid();
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            var appId = Guid.NewGuid();
+            const decimal trustRating = 400.00M;
+
+            var setupData = new AccountSummarySetupFunctions();
+            setupData.Scenario09Setup(requestId2, requestId1, accountId, paymentCardId, appId, bankAccountId);
+
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(scenarioId, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
+
+            // Login and open my summary page
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            string expectedTagCloudText = tagCloudTexts[scenarioId];
+            string actualTagCloudText = mySummaryPage.GetTagCloud;
+            Assert.AreEqual(expectedTagCloudText, actualTagCloudText);
+        } 
+
+        [Test, AUT(AUT.Uk), JIRA("UK-785")]
+        public void TagCloudScenario10() 
+        {
+            const int scenarioId = 10;
+            string email = Get.RandomEmail();
+            Console.WriteLine("email:{0}", email);
+
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+
+            var accountId = customer.Id;
+            var bankAccountId = Guid.NewGuid();
+            var paymentCardId = Guid.NewGuid();
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            var appId = Guid.NewGuid();
+            const decimal trustRating = 400.00M;
+
+            var setupData = new AccountSummarySetupFunctions();
+            setupData.Scenario10Setup(requestId1, requestId2, appId, bankAccountId, accountId, paymentCardId);
+
+            var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+            Assert.AreEqual(scenarioId, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
+
+            // Login and open my summary page
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            string expectedTagCloudText = tagCloudTexts[scenarioId];
+            string actualTagCloudText = mySummaryPage.GetTagCloud;
+            Assert.AreEqual(expectedTagCloudText, actualTagCloudText);
+        } 
 
         [Test, AUT(AUT.Uk), JIRA("UK-785"), Pending("Wrong actual text message (from scenario 4). Waiting for code update.")]
         public void TagCloudScenario11() { TagCloud(11, 14); }
@@ -213,34 +272,28 @@ namespace Wonga.QA.Tests.Ui
             Application application;
             if (scenarioId < 5) application = ApplicationBuilder.New(customer).Build();
             else if ((scenarioId >= 5) && (scenarioId <= 7)) application = ApplicationBuilder.New(customer).WithLoanAmount(400).Build();
-            //else if (scenarioId == 17) application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Pending).Build(); 
             else if (scenarioId == 20) application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
             else application = ApplicationBuilder.New(customer).Build();
 
             // Rewind application dates
-            ApplicationEntity applicationEntity = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
-            RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == application.Id);
-            TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
-            Drive.Db.RewindApplicationDates(applicationEntity, riskApplication, daysShiftSpan);
+            if (daysShift != 0)
+            {
+                ApplicationEntity applicationEntity = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
+                RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == application.Id);
+                TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
+                Drive.Db.RewindApplicationDates(applicationEntity, riskApplication, daysShiftSpan);
+            }
 
             if (scenarioId == 8) application = application.RepayOnDueDate(); // Repay a loan
 
-            /* // Create repayment plan
-             * if ((scenarioId >= 14) && (scenarioId <= 16)) 
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            if (scenarioId == 11 || scenarioId == 12 || scenarioId == 13)
             {
-                Drive.Msmq.Payments.Send(new CreateExtendedRepaymentArrangementCommand {
-                                                AccountId = customer.Id,
-                                                ApplicationId = application.Id,
-                                                EffectiveBalance = application.GetBalance(),
-                                                RepaymentAmount = application.GetBalance(),
-                                                RepaymentDetails = new[]
-                                                                    {
-                                                                        new ArrangementDetail{Amount = application.GetBalance(), Currency = CurrencyCodeIso4217Enum.GBP, DueDate = DateTime.Today.AddDays(7)}
-                                                                    }
-                                            });
-                
-                } */
-
+                // Send command to create scheduled payment request
+                Drive.Msmq.Payments.Send(new Framework.Msmq.CreateScheduledPaymentRequestCommand() { ApplicationId = application.Id, RepaymentRequestId = requestId1, });
+                Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = application.Id, RepaymentRequestId = requestId2, });
+            }
             // Login and open my summary page
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
@@ -251,6 +304,7 @@ namespace Wonga.QA.Tests.Ui
                 Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
                 return;
             }
+
             string expectedTagCloudText = tagCloudTexts[scenarioId];
             string actualTagCloudText = mySummaryPage.GetTagCloud;
             Assert.AreEqual(expectedTagCloudText, actualTagCloudText);

@@ -22,7 +22,20 @@ namespace Wonga.QA.Tests.BankGateway
         private readonly dynamic _bgAck = Drive.Data.BankGateway.Db.Acknowledges;
 
         [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
-        public void SendPaymentMessageWithRealAccountShouldBeRoutedToBmo()
+        public void WhenCustomerEntersInstitutionNumber001ThenBankGatewayShouldRouteTransactionToBmo()
+        {
+            var customer = CustomerBuilder.New().
+                                WithInstitutionNumber("001").
+                                WithBranchNumber("00022").
+                                Build();
+            var application = ApplicationBuilder.New(customer).Build();
+
+            Do.Until(() => _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
+                                    _bgTrans.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo).Single());
+        }
+
+        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
+        public void WhenCustomerEntersValidBmoBankAccountNumberThenBankGatewayShouldUpdateTransactionAsPaid()
         {
             var customer = CustomerBuilder.New().
                                 WithInstitutionNumber("001").
@@ -36,7 +49,7 @@ namespace Wonga.QA.Tests.BankGateway
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
-        public void SendPaymentMessageWithRealAccountShouldBeRoutedToBmoAndRejected()
+        public void WhenCustomerEntersInValidBmoBankAccountNumberThenBankGatewayShouldUpdateTransactionAsFailed()
         {
             var customer = CustomerBuilder.New().
                                 WithInstitutionNumber("001").
@@ -54,8 +67,8 @@ namespace Wonga.QA.Tests.BankGateway
                                     _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Failed).Single());
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
-        public void SendPaymentMessageWithRealAccountShouldBeRoutedToBmoAndRejectedFile()
+        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey), Ignore("This will fail until the correct file formats are added")]
+        public void WhenBmoReturnsAnInvalidFileThenBankGatewayShouldUpdateTransactionAsFailed()
         {
             //TODO: This will fail until the correct file formats are added... 
 
@@ -76,7 +89,7 @@ namespace Wonga.QA.Tests.BankGateway
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
-        public void SendPaymentMessageWithFakeAccountShouldBeRoutedToBmo()
+        public void WhenBmoReturnsAnAckFileDeft220ThenBankGatewayShouldRecordTheFileAndTransactionNumberInTheAcksTable()
         {
             var customer = CustomerBuilder.New().
                                 WithInstitutionNumber("001").
@@ -84,13 +97,11 @@ namespace Wonga.QA.Tests.BankGateway
                                 Build();
             var application = ApplicationBuilder.New(customer).Build();
 
-            Framework.Db.BankGateway.TransactionEntity transaction = null;
-
             var ackType = _bgAckTypes.FindAll(_bgAckTypes.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo && _bgAckTypes.Name == "DEFT220").Single();
 
-            Do.Until(() => transaction = _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
-                         _bgTrans.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo &&
-                         _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Paid).Single());
+            var transaction = Do.Until(() => _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
+                                 _bgTrans.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo &&
+                                 _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Paid).Single());
 
             Do.Until(() => _bgAck.FindAll(_bgAck.TransactionID == transaction.TransactionId && _bgAck.AcknowledgeTypeID == ackType.AcknowledgeTypeId).Single());
         }
@@ -375,7 +386,7 @@ namespace Wonga.QA.Tests.BankGateway
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
-        public void ShouldSendBatchAndProcessToTransactions()
+        public void WhenMultipleBmoTransactionsAreHandledTogetherThenBankGatewayShouldHandleThemAsABatch()
         {
             var applicationIds = new List<Guid>();
 

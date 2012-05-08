@@ -31,22 +31,23 @@
   </EmploymentDetailsSection>
 
   <PersonalDetailsPage>
+    <FormId>#lzero-personal-form</FormId>
 	<GenderWarning>.//*[@id='details']/div[2]/div/div[3]/div</GenderWarning>
 	<DateOfBirthWarning>.//*[@id='edit-date-of-birth-wrapper']/div[3]/div</DateOfBirthWarning>
     <MarriedInCommunityProperty>input[type="radio"][name="married"]</MarriedInCommunityProperty>
   </PersonalDetailsPage>
   
   <PersonalBankAccountDetailsPage>
-    <FormId>#wonga-apply-lzero-form</FormId>
+    <FormId>#lzero-bank-form</FormId>
   </PersonalBankAccountDetailsPage>
   
   <AccountDetailsPage>
-    <FormId>#wonga-apply-lzero-form</FormId>
+    <FormId>#lzero-account-setup-form</FormId>
     <NextButton>#edit-submit</NextButton>
   </AccountDetailsPage>
 
   <AccountDetailsSection>
-    <Fieldset>#account-setup</Fieldset>
+    <Fieldset>#account-setup-1</Fieldset>
 	<PasswordErrorForm>#edit-password-wrapper .form-error .invalid</PasswordErrorForm>
     <PasswordConfirmErrorForm>#edit-password-confirm-wrapper .form-error .invalid</PasswordConfirmErrorForm>
   </AccountDetailsSection>
@@ -56,7 +57,7 @@
   </DealDonePage>
   
   <AddressDetailsPage>
-    <FormId>#wonga-apply-lzero-form</FormId>
+    <FormId>#lzero-address-form</FormId>
     <District>#edit-district-za</District>
     <HouseNumber>#edit-house-number-za</HouseNumber>
     <Town>#edit-town-za</Town>
@@ -80,7 +81,7 @@
   </AcceptedPage>
   
   <BankAccountSection>
-    <Fieldset>#bank</Fieldset>
+    <Fieldset>#bank-1</Fieldset>
     <AccountNumber>#edit-account-number-za</AccountNumber>
   </BankAccountSection>
 
@@ -178,6 +179,10 @@
     <BankAccount>#edit-bank-account-masked</BankAccount>
 	<ResendPin>#pin-hold a</ResendPin>
   </ApplyPage>
+
+  <FAQPage>
+    <CouncilForDebtCollectorsLink>a[title='Council for Debt Collectors']</CouncilForDebtCollectorsLink>
+  </FAQPage>
 
   
 </UiMap>
