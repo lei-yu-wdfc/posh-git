@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
@@ -172,6 +173,17 @@ namespace Wonga.QA.Tests.Ui.Prepaid
             prepaidPage.FindPremiumRewardsLink();
         }
 
+        [Test, AUT(AUT.Uk), JIRA("PP-78")]
+        public void LostOrStolenOrForgottenPinTest()
+        {
+            var loginPage = Client.Login();
+            var summaryPage = loginPage.LoginAs(_eligibleCustomer.GetEmail());
+            var prepaidPage = summaryPage.Navigation.MyPrepaidCardButtonClick();
+            prepaidPage = prepaidPage.LostOrStolenOrForgottenButtonClick();
+            prepaidPage = prepaidPage.GetResetCodeButtonClick();
+
+            var resetCodeTextField = prepaidPage.GetResetCodeTextField();
+        }
 
         [TearDown]
         public void Rollback()
