@@ -34,7 +34,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			ApplicationBuilder.New(customer).Build();
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2228"), Timeout(0)]
+		[Test, AUT(AUT.Za), JIRA("ZA-2228"), Pending, Timeout(0)]
 		public void Ln_NumberOfApplicationDailyOverThresholdDeclined()
 		{
 			var customer2 = CustomerBuilder.New().WithEmployer(TestMask).Build();
