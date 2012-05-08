@@ -10,6 +10,7 @@ using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Framework.UI;
+using Wonga.QA.Framework.UI.Elements;
 using Wonga.QA.Tests.Core;
 using System.Linq;
 using System;
@@ -106,16 +107,11 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(sExpectedWantToRepay, sActualRepayTotal, "Repay Total in the Read Me message is wrong.");
         }
 
-        /*[Test, AUT(AUT.Uk), JIRA("UK-1827"), Pending("In development")]
-        [Row()]
-        public void ChangeWantToRepayBoxTest(int anountToRepay)
-        {
-            ChangeWantToRepayBox(anountToRepay);
-        }*/
-
-        [Test, AUT(AUT.Uk), JIRA("UK-1827"), Pending("In development")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1827")]
         public void ChangeWantToRepayBox()
         {
+
+            var AmountToRepayMinimum = 5;
             // Build L0 loan
             string email = Get.RandomEmail();
             DateTime todayDate = DateTime.Now;
@@ -123,11 +119,6 @@ namespace Wonga.QA.Tests.Ui
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
             
-            // TBD
-            // add conditional extra steps to:
-            // set Today = Next Due Date
-            // set Next Due Date is in arears
-
             var loginPage = Client.Login();
             var myAccountPage = loginPage.LoginAs(email);
             var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
@@ -136,21 +127,31 @@ namespace Wonga.QA.Tests.Ui
             mySummaryPage.RepayButtonClick();
             var requestPage = new RepayRequestPage(this.Client);
 
-            
+            ApiResponse response = Drive.Api.Queries.Post(new GetFixedTermLoanApplicationQuery { ApplicationId = application.Id });
+            TimeSpan daysToNextDueDay = Convert.ToDateTime(response.Values["NextDueDate"].Single()) - DateTime.Today;
 
             // You currently owe
-            var expectedOweToday = application.GetBalance();
+            var expectedOweToday = Convert.ToDecimal(response.Values["BalanceToday"].Single());
             string sExpectedOweToday = String.Format("{0:0.00}", expectedOweToday);
 
             // TBD - change values in the Want to Repay box
-            var amountToRepayList = new List<decimal> { 1, Convert.ToInt16(expectedOweToday - 1), expectedOweToday };
+            var amountToRepayList = new List<decimal> { AmountToRepayMinimum, Convert.ToInt16(expectedOweToday - 1), expectedOweToday };
             var random = new Random();
-            amountToRepayList.Add(random.Next(1, Convert.ToInt16(expectedOweToday - 2)));
+            amountToRepayList.Add(random.Next(AmountToRepayMinimum, Convert.ToInt16(expectedOweToday - 2)));
             
             string sActualOweToday;
            // decimal expectedWantToRepay;
             string sExpectedWantToRepay;
             //string sActualWantToRepay;
+
+            
+            // Check minumum and maximum values in the "Want to Repay" box
+            var sliders = new SmallRepaySlidersElement(requestPage) {HowMuch = "1"};
+            Assert.AreEqual(AmountToRepayMinimum.ToString("#"), sliders.HowMuch);
+
+            sliders = new SmallRepaySlidersElement(requestPage) { HowMuch = "1000" };
+            Assert.AreEqual(sExpectedOweToday, sliders.HowMuch);
+
 
             foreach (decimal amountToRepay in amountToRepayList)
             {
@@ -161,16 +162,30 @@ namespace Wonga.QA.Tests.Ui
                 sActualOweToday = requestPage.OweToday.TrimStart('£');
                 Assert.AreEqual(sExpectedOweToday, sActualOweToday, "Currently Owe is wrong.");
 
-                // Remainder to repay = Amount Owed - Repay Amout
+                // Remainder to repay = Amount Owed - Repay Amount
                 var expectedReminderToRepay = expectedOweToday - amountToRepay;
                 string sExpectedReminderToRepay = String.Format("{0:0.00}", expectedReminderToRepay);
                 string sActualReminderToRepay = requestPage.RemainderAmount.TrimStart('£');
-                Assert.AreEqual(sExpectedReminderToRepay, sActualReminderToRepay, "Reminder Amount is wrong.");
+                //Assert.AreEqual(sExpectedReminderToRepay, sActualReminderToRepay, "Reminder Amount is wrong.");
 
                 // Repay Total in the Read Me message
                 sExpectedWantToRepay = String.Format("{0:0.00}", amountToRepay);
                 string sActualRepayTotal = requestPage.RepayTotal.TrimStart('£');
-                Assert.AreEqual(sExpectedWantToRepay, sActualRepayTotal, "Repay Total in the Read Me message is wrong.");    
+                //Assert.AreEqual(sExpectedWantToRepay, sActualRepayTotal, "Repay Total in the Read Me message is wrong.");
+                
+
+                // Loan Period Clairification (in N days)
+                var sExpectedLoanPeriodClarification = "(in " + daysToNextDueDay.TotalDays.ToString("#") + " days)";
+                var sActualLoanPeriodClarification = requestPage.LoanPeriodClarification;
+                if ((sExpectedWantToRepay != String.Format("{0:0.00}", expectedOweToday)) && (daysToNextDueDay.Days > 0))
+                {
+                    Assert.AreEqual(sExpectedLoanPeriodClarification, sActualLoanPeriodClarification, "Wrong oan Period Clarification, <in N days>");
+                    Assert.IsTrue(requestPage.IsLoanPeriodClarificationDisplayed);
+                }
+                else
+                {
+                    Assert.IsFalse(requestPage.IsLoanPeriodClarificationDisplayed);
+                }
             }
         }
 
@@ -196,6 +211,17 @@ namespace Wonga.QA.Tests.Ui
             requestPage.CancelButtonClick();
         }
 
+        // TBD
+        // Check for scenarion 3, 4, 6, 7
+        [Test, AUT(AUT.Uk), JIRA("UK-1827"), Pending("In development")]
+        [Row(3)]
+        [Row(4)]
+        [Row(6)]
+        [Row(7)]
+        public void CheckRepaymentVsScenarios(int scenarioId)
+        {
+            //RepaymentVsScenarios(scenarioId);
+        }
 
     }
 }

@@ -15,5 +15,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String RepayRequestPageCancelButton { get; set; }
         public String RepayRequestPageOweCurrently { get; set; }
         public String RepayRequestPageReadMeMessageRepayTotal { get; set; }
+        public String RepayRequestPageLoanPeriodClarification { get; set; }
     }
 }
