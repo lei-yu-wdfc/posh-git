@@ -31,24 +31,24 @@
   </EmploymentDetailsSection>
 
   <PersonalDetailsPage>
-    <FormId>#lzero-personal-form</FormId>
-	<GenderWarning>.//*[@id='details']/div[2]/div/div[3]/div</GenderWarning>
-	<DateOfBirthWarning>.//*[@id='edit-date-of-birth-wrapper']/div[3]/div</DateOfBirthWarning>
+    <FormId>#lzero-personal-form .form-inner</FormId>
+    <GenderWarning>.//*[@id='details']/div[2]/div/div[3]/div</GenderWarning>
+	  <DateOfBirthWarning>.//*[@id='edit-date-of-birth-wrapper']/div[3]/div</DateOfBirthWarning>
     <MarriedInCommunityProperty>input[type="radio"][name="married"]</MarriedInCommunityProperty>
   </PersonalDetailsPage>
   
   <PersonalBankAccountDetailsPage>
-    <FormId>#lzero-bank-form</FormId>
+    <FormId>.wonga-apply-lzero-form</FormId>
   </PersonalBankAccountDetailsPage>
   
   <AccountDetailsPage>
-    <FormId>#lzero-account-setup-form</FormId>
+    <FormId>.wonga-apply-lzero-form</FormId>
     <NextButton>#edit-submit</NextButton>
   </AccountDetailsPage>
 
   <AccountDetailsSection>
-    <Fieldset>#account-setup-1</Fieldset>
-	<PasswordErrorForm>#edit-password-wrapper .form-error .invalid</PasswordErrorForm>
+    <Fieldset>#lzero-account-setup-form</Fieldset>
+	  <PasswordErrorForm>#edit-password-wrapper .form-error .invalid</PasswordErrorForm>
     <PasswordConfirmErrorForm>#edit-password-confirm-wrapper .form-error .invalid</PasswordConfirmErrorForm>
   </AccountDetailsSection>
 
@@ -57,7 +57,7 @@
   </DealDonePage>
   
   <AddressDetailsPage>
-    <FormId>#lzero-address-form</FormId>
+    <FormId>#lzero-address-form .form-inner</FormId>
     <District>#edit-district-za</District>
     <HouseNumber>#edit-house-number-za</HouseNumber>
     <Town>#edit-town-za</Town>
