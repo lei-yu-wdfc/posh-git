@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
+using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
@@ -14,6 +18,8 @@ namespace Wonga.QA.Tests.Ui.Prepaid
 
         private static readonly String PROMOTION_CARD_TEXT = "Promotional text";
         private static readonly String FOOTER_CARD_TEXT = "Footext text";
+        public static readonly String CUSTOMER_FULL_NAME = "FULL_NAME";
+        public static readonly String CUSTOMER_FULL_ADDRESS = "FULL_ADDRESS"; 
 
  
         [SetUp]
@@ -43,11 +49,11 @@ namespace Wonga.QA.Tests.Ui.Prepaid
             var prepaidPage = summaryPage.Navigation.MyPrepaidCardButtonClick();
             prepaidPage.ApplyPrepaidCardButtonClick();
 
-            var dictionary = CustomerOperations.GetFullCustomerInfo(cutomerWithNocards.Id);
+            var dictionary = GetFullCustomerInfo(cutomerWithNocards.Id);
             var pageSource = prepaidPage.Client.Source();
                
-            Assert.IsTrue(pageSource.Contains(dictionary[CustomerOperations.CUSTOMER_FULL_NAME]));
-            Assert.IsTrue(pageSource.Contains(dictionary[CustomerOperations.CUSTOMER_FULL_ADDRESS]));
+            Assert.IsTrue(pageSource.Contains(dictionary[CUSTOMER_FULL_NAME]));
+            Assert.IsTrue(pageSource.Contains(dictionary[CUSTOMER_FULL_ADDRESS]));
         }
 
         [Test,AUT(AUT.Uk),JIRA("PP-2")]
@@ -118,6 +124,52 @@ namespace Wonga.QA.Tests.Ui.Prepaid
         public void Rollback()
         {
             CustomerOperations.DeleteMarketingEligibility(_eligibleCustomer.Id);
+        }
+
+        
+        private static  String GetFullCustomerName(Guid customerId)
+        {
+            StringBuilder builder = new StringBuilder();
+
+            var request = new GetCustomerDetailsQuery();
+            request.AccountId = customerId;
+
+            var response = Drive.Api.Queries.Post(request);
+            builder.Append(response.Values["Forename"].First());
+            builder.Append(" ");
+            builder.Append(response.Values["MiddleName"].First());
+            builder.Append(" ");
+            builder.Append(response.Values["Surname"].First());
+
+            return builder.ToString();
+        }
+
+        private static String GetFullCustomerAddress(Guid customerId)
+        {
+            StringBuilder builder = new StringBuilder();
+
+            var request = new GetCurrentAddressQuery();
+            request.AccountId = customerId;
+
+            var response = Drive.Api.Queries.Post(request);
+            builder.Append(response.Values["HouseName"].First());
+            builder.Append(response.Values["HouseNumber"].First());
+            builder.Append(" ");
+            builder.Append(response.Values["Street"].First());
+            builder.Append("<br />");
+            builder.Append(response.Values["Town"].First());
+            builder.Append(" ");
+            builder.Append(response.Values["Postcode"].First());
+
+            return builder.ToString();
+        }
+
+        public static Dictionary<String, String> GetFullCustomerInfo(Guid customerId)
+        {
+            Dictionary<String, String> result = new Dictionary<string, string>();
+            result.Add(CUSTOMER_FULL_NAME, GetFullCustomerName(customerId));
+            result.Add(CUSTOMER_FULL_ADDRESS, GetFullCustomerAddress(customerId));
+            return result;
         }
     }
 }
