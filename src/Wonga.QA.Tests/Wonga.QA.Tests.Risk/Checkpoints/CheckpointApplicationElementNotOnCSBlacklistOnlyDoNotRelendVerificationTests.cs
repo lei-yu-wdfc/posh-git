@@ -80,7 +80,9 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			var riskAccount = Do.With.Timeout(1).Until(() => Drive.Data.Risk.Db.RiskAccounts.FindByAccountId(customer.Id));
 			Assert.IsFalse(riskAccount.DoNotRelend);
 
-			ApplicationBuilder.New(customer).Build();
+			var application = ApplicationBuilder.New(customer).Build();
+
+			AssertCheckpointAndVerificationExecution(true, application);
 		}
 
 		[Test, AUT(AUT.Ca), JIRA("CA-1974")]
@@ -91,7 +93,9 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Drive.Msmq.Risk.Send(new RegisterDoNotRelendCommand {AccountId = customer.Id, DoNotRelend = true});
 			Do.Until(() => Drive.Data.Risk.Db.RiskAccounts.FindByAccountId(customer.Id).DoNotRelend);
 
-			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+			var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+
+			AssertApplicationDeclinedWithCorrectCheckPointAndVerification(application);
 		}
 
 		[Test, AUT(AUT.Ca), JIRA("CA-1974")]
@@ -104,7 +108,9 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 			Drive.Db.UpdateEmployerName(customer.Id, TestMask.ToString());
 
-			ApplicationBuilder.New(customer).Build();
+			var lnApplication = ApplicationBuilder.New(customer).Build();
+
+			AssertCheckpointAndVerificationExecution(true, lnApplication);
 		}
 
 		[Test, AUT(AUT.Ca), JIRA("CA-1974")]
@@ -119,9 +125,17 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Drive.Msmq.Risk.Send(new RegisterDoNotRelendCommand { AccountId = customer.Id, DoNotRelend = true });
 			Do.Until(() => Drive.Data.Risk.Db.RiskAccounts.FindByAccountId(customer.Id).DoNotRelend);
 
-			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+			var lnApplication = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+
+			AssertApplicationDeclinedWithCorrectCheckPointAndVerification(lnApplication);
 		}
 
+		private void AssertApplicationDeclinedWithCorrectCheckPointAndVerification(Application application)
+		{
+			Assert.AreEqual(Get.EnumToString(RiskCheckpointDefinitionEnum.FraudListCheck), application.FailedCheckpoint);
+			AssertCheckpointAndVerificationExecution(true, application);
+		}
+		
 		private void AssertCheckpointAndVerificationExecution(bool useDoNotRelend, Application application)
 		{
 			AssertCheckpointExecution(application.Id, RiskCheckpointDefinitionEnum.FraudListCheck, useDoNotRelend);
