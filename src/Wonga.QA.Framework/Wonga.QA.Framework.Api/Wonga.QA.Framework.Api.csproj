@@ -161,6 +161,7 @@
     <Compile Include="Requests\GetPersonalPromoCodeQuery.cs" />
     <Compile Include="Requests\GetPreApprovedDirectDebitFormCaQuery.cs" />
     <Compile Include="Requests\GetPromoCodeParametersQuery.cs" />
+	<Compile Include="Requests\GetPrePaidPinResetCodeQuery.cs" />
     <Compile Include="Requests\GetRepayLoanCalculationQuery.cs" />
     <Compile Include="Requests\GetRepayLoanParametersQuery.cs" />
     <Compile Include="Requests\GetRepayLoanQuoteUkQuery.cs" />

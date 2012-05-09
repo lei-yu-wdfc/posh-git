@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
@@ -22,9 +23,11 @@ namespace Wonga.QA.Tests.Prepaid
 
         private static readonly int VALID_ACCOUNT_NUMBER_LENGTH = 14;
         private static readonly int VALID_SERIAL_NUMBER_LENGTH = 10;
+        private static readonly String VALID_TEMPLATE_NAME = "99999";
 
 
         private static readonly dynamic _prepaidCardDb = Drive.Data.PrepaidCard.Db;
+        private static readonly dynamic _qaDataDb = Drive.Data.QaData.Db;
 
         [SetUp]
         public void Init()
@@ -54,17 +57,32 @@ namespace Wonga.QA.Tests.Prepaid
         [Test, AUT(AUT.Uk), JIRA("PP-8","PP-150")]
         public void CustomerShouldApplyForPrepaidCard()
         {
-
-            ExecuteAPICommand(_validRequest,false);
-            ExecuteAPICommand(_requestWithInvalidCustomerId,true);
-            ExecuteAPICommand(_requestWithCustomerInArrears,true);
-            ExecuteAPICommand(_requestWithInvalidCustomerEmail,false);
-
+            ExecuteCommonPPSCommands();
             CheckOnAddingRecordsToPrepaidCard(_eligibleCustomer.Id);
             Assert.Throws<Exception>(() => CheckOnAddingRecordsToPrepaidCard(_customerWithWromgEmail.Id));
-   
         }
 
+        [Test,AUT(AUT.Uk),JIRA("PP-79")]
+        public void CustomerShouldsendRequestForResetPINCode()
+        {
+            ExecuteCommonPPSCommands();
+
+            var validRequest = new GetPrepaidResetCodeQuery();
+            var invalidRequest = new GetPrepaidResetCodeQuery();
+            var invalidRequestForCustomerInArrears = new GetPrepaidResetCodeQuery();
+            var invalidRequestCustomerWithWrongEmail = new GetPrepaidResetCodeQuery();
+
+            validRequest.CustomerExternalId = _eligibleCustomer.Id;
+            invalidRequest.CustomerExternalId = _nonEligibleCustomer.Id;
+            invalidRequestForCustomerInArrears.CustomerExternalId = _nonEligibleCustomerInArrears.Id;
+            invalidRequestCustomerWithWrongEmail.CustomerExternalId = _nonEligibleCustomerInArrears.Id;
+
+            var successResponse = Drive.Api.Queries.Post(validRequest);
+            Assert.Throws<ValidatorException>(() => Drive.Api.Queries.Post(invalidRequest));
+            Assert.Throws<ValidatorException>(() => Drive.Api.Queries.Post(invalidRequestForCustomerInArrears));
+            Assert.Throws<ValidatorException>(() => Drive.Api.Queries.Post(invalidRequestCustomerWithWrongEmail));
+            Assert.IsNotNull(successResponse.Values["ResetCode"]);
+        }
         private void CheckOnAddingRecordsToPrepaidCard(Guid customerId)
         {
             var cardHolderId = Do.Until(() => _prepaidCardDb.CardHolderDetails.FindByCustomerExternalId(CustomerExternalId: customerId));
@@ -78,7 +96,6 @@ namespace Wonga.QA.Tests.Prepaid
             Assert.IsTrue(cardAccountNumber.Length <= VALID_ACCOUNT_NUMBER_LENGTH);
             Assert.IsTrue(cardSerialnumber.Length <= VALID_SERIAL_NUMBER_LENGTH);
             Assert.IsNotNull(cardDetails.CardPan);
-
         }
 
         private void ExecuteAPICommand(ApiRequest request,bool isThrowException)
@@ -91,6 +108,14 @@ namespace Wonga.QA.Tests.Prepaid
             {
                 Drive.Api.Commands.Post(request);
             }
+        }
+
+        private void ExecuteCommonPPSCommands()
+        {
+            ExecuteAPICommand(_validRequest, false);
+            ExecuteAPICommand(_requestWithInvalidCustomerId, true);
+            ExecuteAPICommand(_requestWithCustomerInArrears, true);
+            ExecuteAPICommand(_requestWithInvalidCustomerEmail, false);
         }
 
 
