@@ -27,6 +27,7 @@ namespace Wonga.QA.Framework.Core
         public static EmailConfig Email { get; set; }
         public static PayLaterConfig PayLaterUi { get; set; }
         public static PayLaterConfig PayLaterApi { get; set; }
+        public static PrepaidAdminConfig PrepaidAdminUI { get; set; }
         public static CommonApiConfig CommonApi { get; set; }
 
 
@@ -57,7 +58,8 @@ namespace Wonga.QA.Framework.Core
                     Msmq = new MsmqConfig(".");
                     Db = new DbConfig(".");
                     Ui.SetUri("localhost");
-                    Admin = new AdminConfig("localhost/admin");					
+                    Admin = new AdminConfig("localhost/admin");
+                    PrepaidAdminUI = new PrepaidAdminConfig();
                     SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.wip", "Allw0nga");
                     SalesforceApi =
                         AUT == AUT.Ca ? new SalesforceApiConfig("v3integration@wonga.com.int") :
@@ -532,6 +534,20 @@ namespace Wonga.QA.Framework.Core
             public AdminConfig(String host)
             {
                 Home = new UriBuilder {Host = host}.Uri;
+            }
+        }
+
+        public class PrepaidAdminConfig
+        {
+            public Uri Home { get; set; }
+            public String User { get; private set; }
+            public String Pwd { get; private set; }
+
+            public PrepaidAdminConfig()
+            {
+                Home = new Uri(Ui.Url + "admin/settings/wonga_prepaid");
+                this.User = "root";
+                this.Pwd = "root";
             }
         }
 

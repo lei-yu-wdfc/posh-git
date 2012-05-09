@@ -27,11 +27,20 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public MySummaryPage LoginAs(string email)
         {
-
             _username.SendKeys(email);
             _password.SendKeys(Get.GetPassword());
             _buttonLogin.Click();
             return new MySummaryPage(Client);
+        }
+
+        public PrepaidAdminPage LoginAs()
+        {
+            _username.SendKeys(Config.PrepaidAdminUI.User);
+            _password.SendKeys(Config.PrepaidAdminUI.Pwd);
+            _buttonLogin.Click();
+
+            Client.Driver.Navigate().GoToUrl(Config.PrepaidAdminUI.Home);
+            return new PrepaidAdminPage(Client);
         }
 
         public ForgotPasswordPage ForgotPasswordClick()

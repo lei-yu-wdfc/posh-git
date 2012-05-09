@@ -185,6 +185,11 @@
     <StandardCard>.menu-mlid-9419 a</StandardCard>
     <PremiumCard>.menu-mlid-9420 a</PremiumCard>
   </ChooseCardTypeMenuElement>
+
+  <PrepiadAdminPage>
+    <DisablePremiumCard>#edit-wonga-prepaid-premium-disable</DisablePremiumCard>
+    <SaveConfiguration>#edit-submit-1</SaveConfiguration>
+  </PrepiadAdminPage>
   
   
 
