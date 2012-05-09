@@ -114,34 +114,6 @@ namespace Wonga.QA.Tests.Payments
 			Do.Until(() => Drive.Db.OpsSagas.PendingScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id) == false);
 		}
 
-		[Test, AUT(AUT.Za)]
-		public void CollectionsNaedoPartialPaymentAfterTrackingEndsContinuesTrackingTest()
-		{
-			const int term = 25;
-			var promiseDate = new Date(DateTime.UtcNow.AddDays(term));
-			const int loanAmount = 500;
-
-			var nextPayDate = new Date(DateTime.UtcNow.AddDays(term / 2));
-			nextPayDate.DateTime = Drive.Db.GetNextWorkingDay(nextPayDate);
-
-			var customer = CustomerBuilder.New()
-				.WithNextPayDate(nextPayDate)
-				.Build();
-
-			var application = ApplicationBuilder.New(customer)
-				.WithLoanAmount(loanAmount)
-				.WithPromiseDate(promiseDate)
-				.Build();
-
-			AttemptNaedoCollection(application, 0);
-			FailNaedoCollection(application, 0);
-
-			SendPaymentTaken(application, application.GetBalance() / 2);
-
-			Assert.IsNull(Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id).ClosedOn);
-			Assert.IsTrue(new DbDriver().OpsSagas.PendingScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id));
-			Assert.IsTrue(new DbDriver().OpsSagas.ScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id));
-		}
 
 
 		#region Helpers
