@@ -117,6 +117,11 @@ namespace Wonga.QA.Tests.BankGateway
 
             var previousAckId = previousAck != null ? previousAck.AcknowledgeId : -1;
 
+			var customer = CustomerBuilder.New().
+					WithInstitutionNumber("001").
+					WithBranchNumber("00022").
+					Build();
+			var application = ApplicationBuilder.New(customer).Build();
             Do.Until(() =>
             {
                 var latestAck = Drive.Db.BankGateway.Acknowledges.Where(
