@@ -29,7 +29,7 @@ namespace Wonga.QA.Tests.BankGateway.Helpers
 			config.Value = _originalSchedule;
 			driver.SubmitChanges();
 
-			var batchSaga = Do.Until(() => Drive.Data.OpsSagas.Db.SendRbcPaymentSagaEntity.First());
+			var batchSaga = Do.Until(() => Drive.Data.OpsSagas.Db.SendRbcPaymentSagaEntity.All().First());
 			Drive.Msmq.BankGatewayRbc.Send(new TimeoutMessage { SagaId = batchSaga.Id });
 		}
 	}
