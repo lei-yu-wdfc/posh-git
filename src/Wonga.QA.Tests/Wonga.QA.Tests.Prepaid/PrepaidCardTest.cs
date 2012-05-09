@@ -93,6 +93,16 @@ namespace Wonga.QA.Tests.Prepaid
             Do.Until(() => _qaDataDb.Email.FindBy(EmailAddress:_eligibleCustomer.GetEmail(),TemplateName:VALID_TEMPLATE_NAME));
         }
 
+        
+
+        [Rollback]
+        public void Rollback()
+        {
+            CustomerOperations.DeleteMarketingEligibility(_eligibleCustomer.Id);
+            CustomerOperations.DeleteMarketingEligibility(_nonEligibleCustomerInArrears.Id);
+            CustomerOperations.DeleteMarketingEligibility(_customerWithWromgEmail.Id);
+        }
+
         private void CheckOnAddingRecordsToPrepaidCard(Guid customerId)
         {
             var cardHolderId = Do.Until(() => _prepaidCardDb.CardHolderDetails.FindByCustomerExternalId(CustomerExternalId: customerId));
