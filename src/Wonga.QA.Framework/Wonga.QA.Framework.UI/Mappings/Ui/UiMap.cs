@@ -157,7 +157,6 @@ namespace Wonga.QA.Framework.UI.Mappings
         #region PrepaidElements
 
         public virtual PrepaidCardMenuElement PrepaidCardMenuElement { get; set; }
-
         public virtual ChooseCardTypeMenuElement ChooseCardTypeMenuElement { get; set; }
 
         #endregion

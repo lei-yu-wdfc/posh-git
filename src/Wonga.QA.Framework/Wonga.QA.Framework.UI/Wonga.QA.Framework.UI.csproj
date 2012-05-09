@@ -69,6 +69,7 @@
     <Compile Include="Journey\ZaLnJourney.cs" />
     <Compile Include="Mappings\Content\Content.cs" />
     <Compile Include="Mappings\Content\Agreements\LoanAgreement.cs" />
+    <Compile Include="Mappings\Content\Elements\Prepaid\PrepaidBalanceBlock.cs" />
     <Compile Include="Mappings\Content\Elements\TabsElementMobile.cs" />
     <Compile Include="Mappings\Content\Links\FAQPageLinks.cs" />
     <Compile Include="Mappings\Ui\Elements\ChangeMyAddressElement.cs" />
@@ -164,6 +165,7 @@
     <Compile Include="Ui\Elements\BaseElement.cs" />
     <Compile Include="Ui\Elements\ChangeMyAddressElement.cs" />
     <Compile Include="Ui\Elements\Prepaid\ChooseCardTypeMenuElement.cs" />
+    <Compile Include="Ui\Elements\Prepaid\PrepaidBalanceBlock.cs" />
     <Compile Include="Ui\Elements\Prepaid\PrepaidCardMenuElement.cs" />
     <Compile Include="Ui\Elements\TabsElementMobile.cs" />
     <Compile Include="Ui\Elements\ContactElement.cs" />
