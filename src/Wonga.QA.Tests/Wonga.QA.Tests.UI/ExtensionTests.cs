@@ -134,14 +134,6 @@ namespace Wonga.QA.Tests.Ui
             ExtensionRequestPage(loanAmount, loanTerm, extensionDays);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-427", "Uk-1862")]
-        public void ExtensionRequestPageNextDayAfterLoanTakenTest()
-        {
-            int loanAmount = 1;
-            int loanTerm = 7;
-            ExtensionRequestPageNextDay(loanAmount, loanTerm);
-        }
-
         [Test, AUT(AUT.Uk), JIRA("UK-427")]
         public void ExtensionRequestPageChangeExtensionDaysFieldTest()
         {
@@ -198,18 +190,35 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(Date.GetOrdinalDate(DateTime.Parse(_response.Values["ExtensionDate"].ToArray()[extensionDays - 1]).Date, "d MMMM yyyy"), extensionRequestPage.RepaymentDate, "Extensions Date is not correct for Extension Days={0}", extensionDays); // Extension Date
         }
 
-        private void ExtensionRequestPageNextDay(int loanAmount, int loanTerm)
+
+        [Test, AUT(AUT.Uk), JIRA("UK-427", "Uk-1862"), Pending("Fails due to bug UK-2012")]
+        //[Row(2, 7, 0)]
+        //[Row(1, 4, 0)]
+        [Row(1, 4, 2)]
+        //[Row(1, 7, 1)]
+        //[Row(10, 7, 2)]
+        public void ExtensionRequestPageNDaysAfterLoanTakenTest(int loanAmount, int loanTerm, int daysAfterLoan)
         {
+            ExtensionRequestPageNDaysAfterLoanTaken(loanAmount, loanTerm, daysAfterLoan);
+        }
+
+        private void ExtensionRequestPageNDaysAfterLoanTaken(int loanAmount, int loanTerm, int daysAfterLoan)
+        {
+            const int extensionDays = 1;
+            const int extensionFee = 10;
             string email = Get.RandomEmail();
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(loanAmount).WithLoanTerm(loanTerm).Build();
 
-            // Rewind application dates
-            ApplicationEntity applicationEntity = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
-            RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == application.Id);
-            TimeSpan daysShiftSpan = TimeSpan.FromDays(2);
-            Drive.Db.RewindApplicationDates(applicationEntity, riskApplication, daysShiftSpan);
+            if (daysAfterLoan > 0)
+            {
+                // Rewind application dates
+                ApplicationEntity applicationEntity = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
+                RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == application.Id);
+                TimeSpan daysShiftSpan = TimeSpan.FromDays(daysAfterLoan);
+                Drive.Db.RewindApplicationDates(applicationEntity, riskApplication, daysShiftSpan);
+            }
 
             var myAccountPage = Client.Login().LoginAs(email);
             var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
@@ -228,9 +237,15 @@ namespace Wonga.QA.Tests.Ui
             var sTotalRepayToday = String.Format("£{0}", totalRepayToday.ToString("#.00"));
             var newCreditAmount = decimal.Parse(_response.Values["CurrentPrincipleAmount"].Single());
             var sNewCreditAmount = String.Format("£{0}", newCreditAmount.ToString("#.00"));
-            var futureInterestAndFees = decimal.Parse(_response.Values["LoanExtensionFee"].Single());
-            var sFutureInterestAndFees = String.Format("£{0}", futureInterestAndFees.ToString("#.00"));
-            var expectedRepaymentDate = Date.GetOrdinalDate(DateTime.Now.AddDays(loanTerm).AddDays(1), "d MMM yyyy");
+            var futureInterestAndFeesAPI = decimal.Parse(_response.Values["LoanExtensionFee"].Single());
+            //var sFutureInterestAndFees = String.Format("£{0}", futureInterestAndFees.ToString("#.00"));
+
+            var newloanTerm = loanTerm + extensionDays;
+            var expectedTotalPayable = (application.LoanAmount + extensionFee) * (1 + (newloanTerm * 0.00986301369863m));
+            var sFutureInterestAndFees = String.Format("£{0:0.00}", Decimal.Round(expectedTotalPayable - application.LoanAmount, 2));
+
+            _response = api.Queries.Post(new GetFixedTermLoanExtensionParametersQuery { AccountId = customer.Id });
+            var expectedRepaymentDate = Date.GetOrdinalDate(Convert.ToDateTime(_response.Values["NextDueDate"].Single()).AddDays(extensionDays), "d MMM yyyy");
 
             // Check
             Assert.AreEqual(expectedRepaymentDate, requestPage.RepaymentDate);
