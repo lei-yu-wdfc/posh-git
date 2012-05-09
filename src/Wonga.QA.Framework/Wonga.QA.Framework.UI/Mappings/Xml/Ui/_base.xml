@@ -50,6 +50,8 @@
 
   <TopupDealDonePage>
     <AccountLink>#content-area h2 a</AccountLink>
+    <SuccessMessage1>.title+p</SuccessMessage1>
+    <SuccessMessage2>.title+p+p</SuccessMessage2>
   </TopupDealDonePage>
 
   <AcceptedPage>
