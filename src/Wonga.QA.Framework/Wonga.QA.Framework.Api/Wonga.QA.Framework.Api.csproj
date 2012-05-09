@@ -78,6 +78,7 @@
     <Compile Include="Exceptions\NoDefaultException.cs" />
     <Compile Include="Exceptions\SchemaException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requests\SetFundsTransferMethodCommand.cs" />
     <Compile Include="Temp\ApplicationDecisionStatusEnum.cs" />
     <Compile Include="Temp\RiskMask.cs" />
     <Compile Include="Requests\AddBankAccountCaCommand.cs" />
@@ -161,7 +162,7 @@
     <Compile Include="Requests\GetPersonalPromoCodeQuery.cs" />
     <Compile Include="Requests\GetPreApprovedDirectDebitFormCaQuery.cs" />
     <Compile Include="Requests\GetPromoCodeParametersQuery.cs" />
-	<Compile Include="Requests\GetPrePaidPinResetCodeQuery.cs" />
+    <Compile Include="Requests\GetPrePaidPinResetCodeQuery.cs" />
     <Compile Include="Requests\GetRepayLoanCalculationQuery.cs" />
     <Compile Include="Requests\GetRepayLoanParametersQuery.cs" />
     <Compile Include="Requests\GetRepayLoanQuoteUkQuery.cs" />
@@ -210,8 +211,8 @@
     <Compile Include="Requests\SignBusinessApplicationWbUkCommand.cs" />
     <Compile Include="Requests\SignFixedTermLoanExtensionCommand.cs" />
     <Compile Include="Requests\SignFixedTermLoanTopupCommand.cs" />
-	<Compile Include="Requests\SignupCustomerForStandardCardCommand.cs" />
-	<Compile Include="Requests\SignupCustomerForPremiumCardCommand.cs" />
+    <Compile Include="Requests\SignupCustomerForStandardCardCommand.cs" />
+    <Compile Include="Requests\SignupCustomerForPremiumCardCommand.cs" />
     <Compile Include="Requests\SubmitApplicationBehaviourCommand.cs" />
     <Compile Include="Requests\SubmitClientWatermarkCommand.cs" />
     <Compile Include="Requests\SubmitCounterOfferCommand.cs" />

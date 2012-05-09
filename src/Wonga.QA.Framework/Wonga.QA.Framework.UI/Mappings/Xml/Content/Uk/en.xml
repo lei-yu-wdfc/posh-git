@@ -2,10 +2,11 @@
 <Content>
   <YourDetails>Your Details</YourDetails>
   
-  <PrepaidBalanceblock>
+  <PrepaidBalanceBlock>
     <CurrentBalance>Current balance</CurrentBalance>
     <CashbackEarned>Cashback earned</CashbackEarned>
     <MoneyIn>Money in</MoneyIn>
     <MoneyOut>Money out </MoneyOut>
-    </PrepaidBalanceblock>
+    </PrepaidBalanceBlock>
+  
 </Content>

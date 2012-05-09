@@ -57,7 +57,7 @@ namespace Wonga.QA.Framework.Core
                     Svc = new SvcConfig(".");
                     Msmq = new MsmqConfig(".");
                     Db = new DbConfig(".");
-                    Ui.SetUri("localhost");
+                    Ui.SetUri("dev.wonga.com");
                     Admin = new AdminConfig("localhost/admin");
                     PrepaidAdminUI = new PrepaidAdminConfig();
                     SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.wip", "Allw0nga");

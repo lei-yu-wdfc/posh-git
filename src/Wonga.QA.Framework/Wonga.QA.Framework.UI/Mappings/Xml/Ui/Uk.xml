@@ -149,7 +149,7 @@
     <ForgottenPinButton>.menu-mlid-9438 a</ForgottenPinButton>
     <GetResetCodeButton>#send_request</GetResetCodeButton>
     <ResetCodeTextField>#request</ResetCodeTextField>
-    <BalanceBlock>#block-wonga_prepaid-1 div.content div</BalanceBlock>
+    <BalanceBlock>#block-wonga_prepaid-1 div.content div </BalanceBlock>
   </PrepaidCardPage>
 
   <PrepaidRegisterDetailsPage>

@@ -66,6 +66,7 @@ namespace Wonga.QA.Tests.Prepaid
         public void CustomerShouldsendRequestForResetPINCode()
         {
             ExecuteCommonPPSCommands();
+            CheckOnAddingRecordsToPrepaidCard(_eligibleCustomer.Id);
 
             var validRequest = new GetPrepaidResetCodeQuery();
             var invalidRequest = new GetPrepaidResetCodeQuery();
@@ -83,6 +84,23 @@ namespace Wonga.QA.Tests.Prepaid
             Assert.Throws<ValidatorException>(() => Drive.Api.Queries.Post(invalidRequestCustomerWithWrongEmail));
             Assert.IsNotNull(successResponse.Values["ResetCode"]);
         }
+
+        [Test,AUT(AUT.Uk),JIRA("PP-11")]
+        public void CustomerShouldReceiveEmailWhenApplyPrepaidCard()
+        {
+            ExecuteCommonPPSCommands();
+            CheckOnAddingRecordsToPrepaidCard(_eligibleCustomer.Id);
+            Do.Until(() => _qaDataDb.Email.FindBy(EmailAddress:_eligibleCustomer.GetEmail(),TemplateName:VALID_TEMPLATE_NAME));
+        }
+
+        [TearDown]
+        public void Rollback()
+        {
+            CustomerOperations.DeleteMarketingEligibility(_eligibleCustomer.Id);
+            CustomerOperations.DeleteMarketingEligibility(_nonEligibleCustomerInArrears.Id);
+            CustomerOperations.DeleteMarketingEligibility(_customerWithWromgEmail.Id);
+        }
+
         private void CheckOnAddingRecordsToPrepaidCard(Guid customerId)
         {
             var cardHolderId = Do.Until(() => _prepaidCardDb.CardHolderDetails.FindByCustomerExternalId(CustomerExternalId: customerId));
