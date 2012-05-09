@@ -12,5 +12,8 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String TSLink { get; set; }
         public String TSInFeesLink { get; set; }
         public String PremiumRewardsLink { get; set; }
+        public String ForgottenPinButton { get; set; }
+        public String GetResetCodeButton { get; set; }
+        public String ResetCodeTextField { get; set; }
     }
 }

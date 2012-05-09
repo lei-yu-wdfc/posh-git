@@ -146,6 +146,9 @@
     <TSLink>#block-wonga_prepaid-2 div.content div a:nth-of-type(2)</TSLink>
     <PremiumRewardsLink>#block-wonga_prepaid-2 div.content div a:nth-of-type(3)</PremiumRewardsLink>
     <TSInFeesLink>.wonga_prepaid_box a</TSInFeesLink>
+    <ForgottenPinButton>.menu-mlid-9438 a</ForgottenPinButton>
+    <GetResetCodeButton>#send_request</GetResetCodeButton>
+    <ResetCodeTextField>#request</ResetCodeTextField>
   </PrepaidCardPage>
 
   <PrepaidRegisterDetailsPage>
