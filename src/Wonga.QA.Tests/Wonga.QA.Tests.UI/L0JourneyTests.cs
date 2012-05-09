@@ -1307,5 +1307,155 @@ namespace Wonga.QA.Tests.Ui
             addressPage.PreviousAddresDetails.PostCode = "Q0K0K4";
             addressPage.Next();
         }
+
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-172")]
+        public void L0JourneyCustomerMakeALoanCheckOneLastStepPageValidDataDisplayed()
+        {
+            int _amountMax;
+            int _termMax;
+
+            ApiResponse _response;
+
+            string totalToRepay, repaymentDate, promisesTotalToRepay, promisesDay, loanAmount, promisesLoanAmount;
+            int amountOfLoan, termsOfLoan;
+
+            ApiRequest request;
+            switch (Config.AUT)
+            {
+                case AUT.Uk:
+                    request = new GetFixedTermLoanOfferUkQuery();
+                    break;
+                case AUT.Za:
+                    request = new GetFixedTermLoanOfferZaQuery();
+                    break;
+                case AUT.Ca:
+                    request = new GetFixedTermLoanOfferCaQuery();
+                    break;
+                case AUT.Wb:
+                    request = new GetBusinessFixedInstallmentLoanOfferWbUkQuery();
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+
+            _response = Drive.Api.Queries.Post(request);
+            _amountMax = (int) Decimal.Parse(_response.Values["AmountMax"].Single(), CultureInfo.InvariantCulture);
+            _termMax = Int32.Parse(_response.Values["TermMax"].Single(), CultureInfo.InvariantCulture);
+
+            amountOfLoan = _amountMax;
+            termsOfLoan = _termMax;
+
+            PersonalDetailsPage personalDetailsPage = null;
+            var email = Get.RandomEmail();
+
+            AcceptedPage acceptedPage;
+            MySummaryPage summaryPage;
+
+            switch (Config.AUT)
+            {
+                case AUT.Wb:
+                    const String middleNameMask = "TESTNoCheck";
+                    var journeyWb = JourneyFactory.GetL0JourneyWB(Client.Home());
+                    var applyTermsPage = journeyWb.ApplyForLoan(amountOfLoan, termsOfLoan)
+                                             .AnswerEligibilityQuestions()
+                                             .FillPersonalDetails(middleNameMask)
+                                             .FillAddressDetails("More than 4 years")
+                                             .FillAccountDetails()
+                                             .FillBankDetails()
+                                             .FillCardDetails()
+                                             .EnterBusinessDetails()
+                                             .DeclineAddAdditionalDirector()
+                                             .EnterBusinessBankAccountDetails()
+                                             .EnterBusinessDebitCardDetails()
+                                             .WaitForApplyTermsPage()
+                                             .CurrentPage as ApplyTermsPage;
+
+                    loanAmount = applyTermsPage.GetLoanAmount().Replace(",", "") + ".00.";
+                    var terms = applyTermsPage.GetTermsOfLoan();
+
+                    acceptedPage = journeyWb.ApplyTerms()
+                                       .CurrentPage as AcceptedPage;
+
+                    Assert.IsNotNull(acceptedPage);
+
+                    var promisesTermsOfLoan =
+                        acceptedPage.GetTermsOfLoan.Replace("This Agreement will be of ", "").Replace(
+                            " weeks duration.", "");
+                    promisesLoanAmount = acceptedPage.GetLoanAmount.Replace("TheLoanAmountwillbe", "");
+
+                    var lastPage = journeyWb.FillAcceptedPage()
+                                       .GoHomePage()
+                                       .CurrentPage as HomePage;
+                    Assert.IsNotNull(lastPage);
+
+                    Assert.AreEqual(terms, promisesTermsOfLoan);
+                    Assert.AreEqual(loanAmount, promisesLoanAmount);
+                    break;
+
+                case AUT.Ca:
+                    var journeyCa = JourneyFactory.GetL0Journey(Client.Home());
+                    personalDetailsPage =
+                        journeyCa.ApplyForLoan(amountOfLoan, termsOfLoan).CurrentPage as PersonalDetailsPage;
+
+                    loanAmount = personalDetailsPage.GetTotalAmount.Remove(0, 1) + ".00";
+                    totalToRepay = personalDetailsPage.GetTotalToRepay;
+                    repaymentDate = personalDetailsPage.GetRepaymentDate;
+
+                    acceptedPage = journeyCa.FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                       .FillAddressDetails()
+                                       .FillAccountDetails()
+                                       .FillBankDetails()
+                                       .WaitForAcceptedPage()
+                                       .CurrentPage as AcceptedPage;
+                    Assert.IsNotNull(acceptedPage);
+
+                    promisesDay = acceptedPage.GetRepaymentDate;
+                    promisesTotalToRepay = acceptedPage.GetTotalToRepay;
+                    promisesLoanAmount = acceptedPage.GetLoanAmount.Remove(0, 1);
+
+                    Assert.AreEqual(loanAmount, promisesLoanAmount);
+                    Assert.AreEqual(repaymentDate, promisesDay);
+                    Assert.AreEqual(totalToRepay, promisesTotalToRepay);
+
+                    summaryPage = journeyCa.FillAcceptedPage()
+                                      .GoToMySummaryPage()
+                                      .CurrentPage as MySummaryPage;
+
+                    Assert.IsNotNull(summaryPage);
+                    break;
+
+                case AUT.Za:
+                    var journeyZa = JourneyFactory.GetL0Journey(Client.Home());
+                    personalDetailsPage =
+                        journeyZa.ApplyForLoan(amountOfLoan, termsOfLoan).CurrentPage as PersonalDetailsPage;
+
+                    loanAmount = personalDetailsPage.GetTotalAmount.Remove(0, 1) + ".00";
+                    totalToRepay = personalDetailsPage.GetTotalToRepay;
+                    repaymentDate = personalDetailsPage.GetRepaymentDate;
+
+                    acceptedPage = journeyZa.FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                       .FillAddressDetails()
+                                       .FillAccountDetails()
+                                       .FillBankDetails()
+                                       .WaitForAcceptedPage()
+                                       .CurrentPage as AcceptedPage;
+                    Assert.IsNotNull(acceptedPage);
+
+                    promisesDay = acceptedPage.GetRepaymentDate;
+                    promisesTotalToRepay = acceptedPage.GetTotalToRepay;
+                    promisesLoanAmount = acceptedPage.GetLoanAmount.Remove(0, 1);
+
+                    Assert.AreEqual(loanAmount, promisesLoanAmount);
+                    Assert.AreEqual(repaymentDate, promisesDay);
+                    Assert.AreEqual(totalToRepay, promisesTotalToRepay);
+
+                    summaryPage = journeyZa.FillAcceptedPage()
+                                      .GoToMySummaryPage()
+                                      .CurrentPage as MySummaryPage;
+
+                    Assert.IsNotNull(summaryPage);
+                    break;
+            }
+        }
     }
 }
