@@ -838,6 +838,7 @@ namespace Wonga.QA.Tests.Ui
                     personalDetailsPageWb.PrivacyPolicy = true;
                     journeyWb.CurrentPage = personalDetailsPageWb.Submit() as AddressDetailsPage;
                     var accountDetailsPageWb = journeyWb.FillAddressDetails("2 to 3 years").CurrentPage as AccountDetailsPage;
+                    accountDetailsPageWb.AccountDetailsSection.Password = "bla";
                     accountDetailsPageWb.AccountDetailsSection.Password = email;
                     Do.Until(accountDetailsPageWb.AccountDetailsSection.IsPasswordEqualsEmailWarningOccured);
                     accountDetailsPageWb.AccountDetailsSection.Password = "Passw0rd";
@@ -1338,7 +1339,7 @@ namespace Wonga.QA.Tests.Ui
             }
 
             _response = Drive.Api.Queries.Post(request);
-            _amountMax = (int)Decimal.Parse(_response.Values["AmountMax"].Single(), CultureInfo.InvariantCulture);
+            _amountMax = (int) Decimal.Parse(_response.Values["AmountMax"].Single(), CultureInfo.InvariantCulture);
             _termMax = Int32.Parse(_response.Values["TermMax"].Single(), CultureInfo.InvariantCulture);
 
             amountOfLoan = _amountMax;
@@ -1369,17 +1370,19 @@ namespace Wonga.QA.Tests.Ui
                                              .WaitForApplyTermsPage()
                                              .CurrentPage as ApplyTermsPage;
 
-                    loanAmount = applyTermsPage.GetLoanAmount().Replace(",","")+".00.";
+                    loanAmount = applyTermsPage.GetLoanAmount().Replace(",", "") + ".00.";
                     var terms = applyTermsPage.GetTermsOfLoan();
 
                     acceptedPage = journeyWb.ApplyTerms()
-                                .CurrentPage as AcceptedPage;
+                                       .CurrentPage as AcceptedPage;
 
                     Assert.IsNotNull(acceptedPage);
 
-                    var promisesTermsOfLoan = acceptedPage.GetTermsOfLoan.Replace("This Agreement will be of ", "").Replace(" weeks duration.", "");
+                    var promisesTermsOfLoan =
+                        acceptedPage.GetTermsOfLoan.Replace("This Agreement will be of ", "").Replace(
+                            " weeks duration.", "");
                     promisesLoanAmount = acceptedPage.GetLoanAmount.Replace("TheLoanAmountwillbe", "");
-                   
+
                     var lastPage = journeyWb.FillAcceptedPage()
                                        .GoHomePage()
                                        .CurrentPage as HomePage;
@@ -1387,22 +1390,23 @@ namespace Wonga.QA.Tests.Ui
 
                     Assert.AreEqual(terms, promisesTermsOfLoan);
                     Assert.AreEqual(loanAmount, promisesLoanAmount);
-                break;
+                    break;
 
                 case AUT.Ca:
                     var journeyCa = JourneyFactory.GetL0Journey(Client.Home());
-                    personalDetailsPage = journeyCa.ApplyForLoan(amountOfLoan, termsOfLoan).CurrentPage as PersonalDetailsPage;
+                    personalDetailsPage =
+                        journeyCa.ApplyForLoan(amountOfLoan, termsOfLoan).CurrentPage as PersonalDetailsPage;
 
                     loanAmount = personalDetailsPage.GetTotalAmount.Remove(0, 1) + ".00";
                     totalToRepay = personalDetailsPage.GetTotalToRepay;
                     repaymentDate = personalDetailsPage.GetRepaymentDate;
 
                     acceptedPage = journeyCa.FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
-                                      .FillAddressDetails()
-                                      .FillAccountDetails()
-                                      .FillBankDetails()
-                                      .WaitForAcceptedPage()
-                                      .CurrentPage as AcceptedPage;
+                                       .FillAddressDetails()
+                                       .FillAccountDetails()
+                                       .FillBankDetails()
+                                       .WaitForAcceptedPage()
+                                       .CurrentPage as AcceptedPage;
                     Assert.IsNotNull(acceptedPage);
 
                     promisesDay = acceptedPage.GetRepaymentDate;
@@ -1414,26 +1418,27 @@ namespace Wonga.QA.Tests.Ui
                     Assert.AreEqual(totalToRepay, promisesTotalToRepay);
 
                     summaryPage = journeyCa.FillAcceptedPage()
-                                    .GoToMySummaryPage()
-                                    .CurrentPage as MySummaryPage;
+                                      .GoToMySummaryPage()
+                                      .CurrentPage as MySummaryPage;
 
                     Assert.IsNotNull(summaryPage);
-                break;
+                    break;
 
                 case AUT.Za:
                     var journeyZa = JourneyFactory.GetL0Journey(Client.Home());
-                    personalDetailsPage = journeyZa.ApplyForLoan(amountOfLoan, termsOfLoan).CurrentPage as PersonalDetailsPage;
+                    personalDetailsPage =
+                        journeyZa.ApplyForLoan(amountOfLoan, termsOfLoan).CurrentPage as PersonalDetailsPage;
 
                     loanAmount = personalDetailsPage.GetTotalAmount.Remove(0, 1) + ".00";
                     totalToRepay = personalDetailsPage.GetTotalToRepay;
                     repaymentDate = personalDetailsPage.GetRepaymentDate;
 
                     acceptedPage = journeyZa.FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
-                                      .FillAddressDetails()
-                                      .FillAccountDetails()
-                                      .FillBankDetails()
-                                      .WaitForAcceptedPage()
-                                      .CurrentPage as AcceptedPage;
+                                       .FillAddressDetails()
+                                       .FillAccountDetails()
+                                       .FillBankDetails()
+                                       .WaitForAcceptedPage()
+                                       .CurrentPage as AcceptedPage;
                     Assert.IsNotNull(acceptedPage);
 
                     promisesDay = acceptedPage.GetRepaymentDate;
@@ -1445,11 +1450,11 @@ namespace Wonga.QA.Tests.Ui
                     Assert.AreEqual(totalToRepay, promisesTotalToRepay);
 
                     summaryPage = journeyZa.FillAcceptedPage()
-                                    .GoToMySummaryPage()
-                                    .CurrentPage as MySummaryPage;
+                                      .GoToMySummaryPage()
+                                      .CurrentPage as MySummaryPage;
 
                     Assert.IsNotNull(summaryPage);
-                break;
+                    break;
             }
         }
     }

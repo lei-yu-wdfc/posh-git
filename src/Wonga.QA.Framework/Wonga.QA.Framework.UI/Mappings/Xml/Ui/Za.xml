@@ -74,6 +74,8 @@
   </AddressDetailsPage>
 
   <AcceptedPage>
+    <TotalToRepay>span.blue-text</TotalToRepay>
+    <RepaymentDate>em</RepaymentDate>
     <DetailsTable>div#agreementscroll div:nth-child(3) table tbody</DetailsTable>
     <LoanAmount>tr:nth-child(1)>td:nth-child(2)</LoanAmount>
     <PaymentDueDate>tr:nth-child(6)>td:nth-child(2)</PaymentDueDate>
