@@ -182,7 +182,7 @@ namespace Wonga.QA.Framework.Core
                     }
                 case AUT.Za:
                     {
-                        return "12345678901";
+						return RandomLong(10000000000, 99999999999).ToString();
                     }
                 case AUT.Uk:
                     {
