@@ -156,9 +156,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 			application.PutApplicationIntoArrears();
 
-			var currentInArrears = Drive.Db.Risk.RiskIovationPostcodes.Single(a => a.ApplicationId == application.Id).InArrears;
-			Assert.IsNotNull(currentInArrears);
-			Assert.IsTrue((bool) currentInArrears);
+			Do.Until(() => Drive.Db.Risk.RiskIovationPostcodes.Single(a => a.ApplicationId == application.Id).InArrears);
 		}
 
 		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889")]
