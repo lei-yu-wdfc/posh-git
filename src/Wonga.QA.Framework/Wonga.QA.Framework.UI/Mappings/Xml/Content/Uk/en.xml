@@ -1,4 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Content>
   <YourDetails>Your Details</YourDetails>
+  
+  <PrepaidBalanceblock>
+    <CurrentBalance>Current balance</CurrentBalance>
+    <CashbackEarned>Cashback earned</CashbackEarned>
+    <MoneyIn>Money in</MoneyIn>
+    <MoneyOut>Money out </MoneyOut>
+    </PrepaidBalanceblock>
 </Content>

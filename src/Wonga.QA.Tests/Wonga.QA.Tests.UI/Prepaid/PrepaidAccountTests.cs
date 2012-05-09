@@ -107,7 +107,7 @@ namespace Wonga.QA.Tests.Ui.Prepaid
             var loginPage = Client.Login();
             var summaryPage = loginPage.LoginAs(_eligibleCustomer.GetEmail());
             var prepaidPage = summaryPage.Navigation.MyPrepaidCardButtonClick();
-
+            prepaidPage.ShowMenuElementsForPremiumCard();
         }
 
         [Test,AUT(AUT.Uk),JIRA("PP-16")]
@@ -118,6 +118,7 @@ namespace Wonga.QA.Tests.Ui.Prepaid
             var loginPage = Client.Login();
             var summaryPage = loginPage.LoginAs(_eligibleCustomer.GetEmail());
             var prepaidPage = summaryPage.Navigation.MyPrepaidCardButtonClick();
+            prepaidPage.ShowMenuElementsForStandardCard();
         }
 
         [Test, AUT(AUT.Uk), JIRA("PP-148")]
@@ -188,7 +189,7 @@ namespace Wonga.QA.Tests.Ui.Prepaid
         [TearDown]
         public void Rollback()
         {
-            CustomerOperations.DeleteMarketingEligibility(_eligibleCustomer.Id);
+            //CustomerOperations.DeleteMarketingEligibility(_eligibleCustomer.Id);
         }
 
         

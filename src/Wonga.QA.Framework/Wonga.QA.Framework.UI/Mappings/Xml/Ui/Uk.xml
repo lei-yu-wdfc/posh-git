@@ -149,6 +149,7 @@
     <ForgottenPinButton>.menu-mlid-9438 a</ForgottenPinButton>
     <GetResetCodeButton>#send_request</GetResetCodeButton>
     <ResetCodeTextField>#request</ResetCodeTextField>
+    <BalanceBlock>#block-wonga_prepaid-1 div.content div</BalanceBlock>
   </PrepaidCardPage>
 
   <PrepaidRegisterDetailsPage>
@@ -171,13 +172,13 @@
   </CashOutPage>
 
   <PrepaidCardMenuElement>
-    <Summary>.menu-mlid-4340</Summary>
-    <Transaction>.menu-mlid-9440</Transaction>
-    <TopUp>.menu-mlid-9439</TopUp>
-    <Budjet>.menu-mlid-9434</Budjet>
-    <Cashback>.menu-mlid-9435</Cashback>
-    <Rewards>.menu-mlid-9437</Rewards>
-    <ForgottenPin>.menu-mlid-9436</ForgottenPin>
+    <Summary>.menu-mlid-9440</Summary>
+    <Transaction>.menu-mlid-9442</Transaction>
+    <TopUp>.menu-mlid-9441</TopUp>
+    <Budjet>.menu-mlid-9436</Budjet>
+    <Cashback>.menu-mlid-9437</Cashback>
+    <Rewards>.menu-mlid-9439</Rewards>
+    <ForgottenPin>.menu-mlid-9438</ForgottenPin>
   </PrepaidCardMenuElement>
   
   <ChooseCardTypeMenuElement>

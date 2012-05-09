@@ -53,6 +53,7 @@ namespace Wonga.QA.Framework.UI
         public LoanAgreement LoanAgreement { get; set; }
         public TabsElementMobile TabsElementMobile { get; set; }
         public FAQPageLinks FAQPageLinks { get; set; }
+        public PrepaidBalanceBlock PrepaidbalanceBlock { get; set; }
 #endregion
     }
 }

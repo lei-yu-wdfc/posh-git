@@ -1,5 +1,4 @@
-﻿using System;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using Wonga.QA.Framework.UI.Elements;
 using Wonga.QA.Framework.UI.Mappings;
 using Wonga.QA.Framework.UI.Ui.Elements.Prepaid;
@@ -12,6 +11,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
         private  IWebElement _applyCardButton;
         private IWebElement _premiumCardButton;
         private PrepaidCardMenuElement _menu;
+        private PrepaidBalanceBlock _balanceBlock;
         private ChooseCardTypeMenuElement _cardMenu;
         private IWebElement _faqLink;
         private IWebElement _tsLink;
@@ -42,12 +42,15 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
         public void ShowMenuElementsForStandardCard()
         {
             _menu = new PrepaidCardMenuElement(this);
+            _balanceBlock = new PrepaidBalanceBlock(this);
         }
 
         public void ShowMenuElementsForPremiumCard()
         {
             _menu = new PrepaidCardMenuElement(this);
             _menu.DisplayPremiumMenu();
+            _balanceBlock = new PrepaidBalanceBlock(this);
+            _balanceBlock.DisplayForPremiumCard();
         }
 
         public void ShowCardTypeMenu()
