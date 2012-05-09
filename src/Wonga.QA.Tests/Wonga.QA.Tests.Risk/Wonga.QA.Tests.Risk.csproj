@@ -33,6 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Checkpoints\ApplicationBuilderExtensions.cs" />
     <Compile Include="Checkpoints\BaseCheckpointTest.cs" />
     <Compile Include="Checkpoints\CheckpointApplicationElementNotOnCSBlacklistOnlyDoNotRelendVerificationTests.cs" />
     <Compile Include="Checkpoints\CheckpointGeneralManualVerificationAccepted.cs" />
