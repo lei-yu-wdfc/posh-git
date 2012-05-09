@@ -38,13 +38,13 @@ namespace Wonga.QA.Framework.Core
             Ui = new UiConfig();
             SalesforceUi = new SalesforceConfig("test.salesforce.com");
             PayLaterUi = new PayLaterConfig("dev.paylater.com");
-
+            
             Proxy = GetValue<Boolean>(false, "QAFProxyMode");
 
             Ui.Browser = GetValue<UiConfig.BrowserType>("FireFox", "QAFBrowser");
             Ui.BrowserVersion = GetValue<string>("", "QAFBrowserVersion");
             Ui.RemoteMode = GetValue<Boolean>(false, "QAFUiRemoteMode");
-            Ui.ExternalAccess = GetValue<Boolean>(false, "QAFExternalAccessMode");
+            string uiDomain = Ui.RemoteMode ? "wongatest.com" : "wonga.com";
 
             Email = new EmailConfig() { QA = new EmailConfig.EmailAddressConfig() { Host = "imap.gmail.com", Username = "qa.wonga.com@gmail.com", Password = "Allw0nga", Port = 993, IsSsl = true } };
             switch (SUT)
@@ -81,8 +81,8 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("WIP4", Proxy)) :
                         AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("WIP6", Proxy)) :
                         AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn("WIP8", Proxy)) : Throw<DbConfig>();
-                    Ui.SetUri(String.Format("wip.{0}.wonga.com", AUT));
-                    Admin = new AdminConfig(String.Format("wip.admin.{0}.wonga.com", AUT));
+                    Ui.SetUri(String.Format("wip.{0}.{1}", AUT, uiDomain));
+                    Admin = new AdminConfig(String.Format("wip.admin.{0}.{1}", AUT, uiDomain));
                     SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.wip", "Allw0nga");
                     SalesforceApi =
                         AUT == AUT.Ca ? new SalesforceApiConfig("v3integration@wonga.com.int") :
@@ -100,8 +100,8 @@ namespace Wonga.QA.Framework.Core
                     Db =
                         AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("ca-rel-wip-app", Proxy)) :
                         AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("za-rel-wip-app", Proxy)) : Throw<DbConfig>();
-                    Ui.SetUri(String.Format("wip.release.{0}.wonga.com", AUT));
-                    Admin = new AdminConfig(String.Format("wip.release.admin.{0}.wonga.com", AUT));
+                    Ui.SetUri(String.Format("wip.release.{0}.{1}", AUT, uiDomain));
+                    Admin = new AdminConfig(String.Format("wip.release.admin.{0}.{1}", AUT, uiDomain));
                     SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.wip", "Allw0nga");
                     SalesforceApi =
                         AUT == AUT.Ca ? new SalesforceApiConfig("v3integration@wonga.com.int") :
@@ -125,8 +125,8 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("UAT4", Proxy)) :
                         AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("UAT6", Proxy)) :
                         AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn("UAT8", Proxy)) : Throw<DbConfig>();
-                    Ui.SetUri(String.Format("uat.{0}.wonga.com", AUT));
-                    Admin = new AdminConfig(String.Format("uat.admin.{0}.wonga.com", AUT));
+                    Ui.SetUri(String.Format("uat.{0}.{1}", AUT, uiDomain));
+                    Admin = new AdminConfig(String.Format("uat.admin.{0}.{1}", AUT, uiDomain));
                     break;
                 case SUT.RC:
                     Api = new ApiConfig(String.Format("rc.api.{0}.wonga.com", AUT));
@@ -146,8 +146,8 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("RC4", Proxy)) :
                         AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("RC6", Proxy)) :
                         AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn("RC8", Proxy)) : Throw<DbConfig>();
-                    Ui.SetUri(String.Format("rc.{0}.wonga.com", AUT));
-                    Admin = new AdminConfig(String.Format("rc.admin.{0}.wonga.com", AUT));
+                    Ui.SetUri(String.Format("rc.{0}.{1}", AUT, uiDomain));
+                    Admin = new AdminConfig(String.Format("rc.admin.{0}.{1}", AUT, uiDomain));
                     SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.rc", "Allw0nga");
                     SalesforceApi = new SalesforceApiConfig("v3integration@wonga.com.rc");
                     break;
@@ -163,8 +163,8 @@ namespace Wonga.QA.Framework.Core
                     Db =
                         AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("ca-rel-rc-app", Proxy)) :
                         AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("za-rel-rc-app", Proxy)) : Throw<DbConfig>();
-                    Ui.SetUri(String.Format("rc.release.{0}.wonga.com", AUT));
-                    Admin = new AdminConfig(String.Format("rc.release.admin.{0}.wonga.com", AUT));
+                    Ui.SetUri(String.Format("rc.release.{0}.{1}", AUT, uiDomain));
+                    Admin = new AdminConfig(String.Format("rc.release.admin.{0}.{1}", AUT, uiDomain));
                     SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.rc", "Allw0nga");
                     SalesforceApi = new SalesforceApiConfig("v3integration@wonga.com.rc");
                     break;
@@ -480,42 +480,15 @@ namespace Wonga.QA.Framework.Core
             /// </summary>
             public Uri RemoteUri { get { return new Uri("http://ondemand.saucelabs.com:80/wd/hub"); } }
 
-            /// <summary>
-            /// Whether or not we are accessing QA webpages via an external partner ie SauceLabs.
-            /// </summary>
-            public bool ExternalAccess { get; set; }
-            /// <summary>
-            /// Local to External address for our UI QA environment
-            /// </summary>
-            public Dictionary<string, string> ExternalAccessMap { get; private set; }
-
             public BrowserType Browser { get; set; }
             public string BrowserVersion { get; set; }
 
             internal UiConfig()
             {
-                ExternalAccessMap = new Dictionary<string, string>();
-                ExternalAccessMap.Add("rc.Uk.wonga.com", "");
-                ExternalAccessMap.Add("rc.Wb.wonga.com", "");
-                ExternalAccessMap.Add("rc.Za.wonga.com", "");
-                ExternalAccessMap.Add("rc.Ca.wonga.com", "");
-                ExternalAccessMap.Add("rc.release.Uk.wonga.com", "");
-                ExternalAccessMap.Add("rc.release.Wb.wonga.com", "");
-                ExternalAccessMap.Add("rc.release.Za.wonga.com", "");
-                ExternalAccessMap.Add("rc.release.Ca.wonga.com", "");
-                ExternalAccessMap.Add("wip.Uk.wonga.com", "");
-                ExternalAccessMap.Add("wip.Wb.wonga.com", "");
-                ExternalAccessMap.Add("wip.Za.wonga.com", "");
-                ExternalAccessMap.Add("wip.Ca.wonga.com", "");
-                ExternalAccessMap.Add("wip.release.Uk.wonga.com", "");
-                ExternalAccessMap.Add("wip.release.Wb.wonga.com", "");
-                ExternalAccessMap.Add("wip.release.Za.wonga.com", "");
-                ExternalAccessMap.Add("wip.release.Ca.wong.com", "");
             }
 
             internal void SetUri(string host)
             {
-                host = ExternalAccess ? ExternalAccessMap[host] : host;
                 Home = new UriBuilder { Host = host }.Uri;
             }
 
