@@ -126,6 +126,12 @@ namespace Wonga.QA.Framework.UI
             return new LoginPage(this);
         }
 
+        public LoginPage LoginPrepaidAdmin()
+        {
+            Driver.Navigate().GoToUrl(Config.Ui.Home + "/login");
+            return new LoginPage(this);
+        }
+
         public MyPaymentsPage Payments()
         {
             Driver.Navigate().GoToUrl(Config.Ui.Home + "/my-account/details");

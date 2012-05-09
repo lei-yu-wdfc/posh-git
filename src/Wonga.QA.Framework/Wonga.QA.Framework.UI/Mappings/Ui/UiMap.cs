@@ -6,6 +6,7 @@ using Wonga.QA.Framework.UI.Mappings.Pages.Wb;
 using Wonga.QA.Framework.UI.Mappings.Sections;
 using Wonga.QA.Framework.UI.Mappings.Pages.SalesForce;
 using Wonga.QA.Framework.UI.Mappings.Ui.Elements;
+using Wonga.QA.Framework.UI.Mappings.Ui.Pages.Prepaid;
 using Wonga.QA.Framework.UI.Ui.Elements.Prepaid;
 using ChooseCardTypeMenuElement = Wonga.QA.Framework.UI.Mappings.Elements.ChooseCardTypeMenuElement;
 using HomePage = Wonga.QA.Framework.UI.Mappings.Pages.HomePage;
@@ -158,6 +159,7 @@ namespace Wonga.QA.Framework.UI.Mappings
 
         public virtual PrepaidCardMenuElement PrepaidCardMenuElement { get; set; }
         public virtual ChooseCardTypeMenuElement ChooseCardTypeMenuElement { get; set; }
+        public virtual PrepaidAdminPage PrepaidAdminPage { get; set; } 
 
         #endregion
 
