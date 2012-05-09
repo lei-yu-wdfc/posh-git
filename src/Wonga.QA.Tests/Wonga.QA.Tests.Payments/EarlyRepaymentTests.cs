@@ -8,6 +8,7 @@ using Wonga.QA.Tests.Payments.Helpers;
 
 namespace Wonga.QA.Tests.Payments
 {
+    [TestFixture]
     public abstract class EarlyRepaymentTests
     {
         private ProvinceEnum _province;

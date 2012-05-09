@@ -37,7 +37,9 @@ namespace Wonga.QA.Tests.Risk.Workflows
 		                                                                     		"DateOfBirthIsCorrectVerification",
 		                                                                     		"RepaymentPredictionPositiveVerification",
 		                                                                     		"CreditBureauEcbsScoreIsAcceptableVerification",
-		                                                                     		"DirectFraudCheckVerification"
+		                                                                     		"DirectFraudCheckVerification",
+																					"DoNotRelendVerification", 
+																					"ReputationPredictionPositiveVerification",
 		                                                                     	};
 
 		private static readonly List<string> ExpectedVerificationNamesLnCa = new List<string>
@@ -55,7 +57,8 @@ namespace Wonga.QA.Tests.Risk.Workflows
 		                                                                     		"DateOfBirthIsCorrectVerification",
 		                                                                     		"CreditBureauScoreIsAcceptableVerification",
 		                                                                     		"CreditBureauEcbsScoreIsAcceptableVerification",
-		                                                                     		"DirectFraudCheckVerification"
+		                                                                     		"DirectFraudCheckVerification",
+																					"DoNotRelendVerification", 
 		                                                                     	};
 
 		#endregion
@@ -114,7 +117,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 				.Build();
 
 			var actualVerificationNames = Drive.Db.GetVerificationDefinitionsForApplication(application.Id).Select(a => a.Name);
-			Assert.AreElementsEqual(ExpectedVerificationNamesL0, actualVerificationNames);
+			Assert.AreElementsEqualIgnoringOrder(ExpectedVerificationNamesL0, actualVerificationNames);
 		}
 
 		[Test, AUT(AUT.Ca, AUT.Za)]
@@ -131,7 +134,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 				.Build();
 
 			var actualVerificationNames = Drive.Db.GetVerificationDefinitionsForApplication(application.Id).Select(a => a.Name);
-			Assert.AreElementsEqual(ExpectedVerificationNamesLn, actualVerificationNames);
+			Assert.AreElementsEqualIgnoringOrder(ExpectedVerificationNamesLn, actualVerificationNames);
 		}
 
 		#region Helpers
