@@ -22,7 +22,7 @@ namespace Wonga.QA.Framework.UI
             FirstName = Get.GetName();
             LastName = Get.RandomString(10);
         	DateOfBirth = new DateTime(1957, 10, 30);
-        	NationalId = Get.GetNIN(DateOfBirth, true);
+        	NationalId = Get.GetNationalNumber(DateOfBirth, true);
         }
         public IL0ConsumerJourney ApplyForLoan(int amount, int duration)
         {

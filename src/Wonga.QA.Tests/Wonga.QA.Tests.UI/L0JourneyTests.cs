@@ -707,7 +707,7 @@ namespace Wonga.QA.Tests.Ui
                     personalDetailsPageZa.YourName.FirstName = Get.RandomString(3, 10);
                     personalDetailsPageZa.YourName.LastName = Get.RandomString(3, 10);
                     personalDetailsPageZa.YourName.Title = "Mr";
-                    personalDetailsPageZa.YourDetails.Number = Get.GetNIN(new DateTime(1957, 3, 10), true);
+                    personalDetailsPageZa.YourDetails.Number = Get.GetNationalNumber(new DateTime(1957, 3, 10), true);
                     personalDetailsPageZa.YourDetails.DateOfBirth = "10/Mar/1957";
                     personalDetailsPageZa.YourDetails.Gender = "Female";
                     personalDetailsPageZa.YourDetails.HomeStatus = "Owner Occupier";
@@ -889,7 +889,7 @@ namespace Wonga.QA.Tests.Ui
                     personalDetailsPageZa.YourName.FirstName = Get.RandomString(3, 10);
                     personalDetailsPageZa.YourName.LastName = Get.RandomString(3, 10);
                     personalDetailsPageZa.YourName.Title = "Mr";
-                    personalDetailsPageZa.YourDetails.Number = Get.GetNIN(new DateTime(1957, 3, 10), true);
+                    personalDetailsPageZa.YourDetails.Number = Get.GetNationalNumber(new DateTime(1957, 3, 10), true);
                     personalDetailsPageZa.YourDetails.DateOfBirth = "10/Mar/1957";
                     personalDetailsPageZa.YourDetails.Gender = "Female";
                     personalDetailsPageZa.YourDetails.HomeStatus = "Owner Occupier";
@@ -1054,7 +1054,7 @@ namespace Wonga.QA.Tests.Ui
                     personalDetailsPageZa.YourName.FirstName = customer.Forename;
                     personalDetailsPageZa.YourName.LastName = customer.Surname;
                     personalDetailsPageZa.YourName.Title = "Mr";
-                    personalDetailsPageZa.YourDetails.Number = Get.GetNIN(new DateTime(1957, 3, 10), true);
+                    personalDetailsPageZa.YourDetails.Number = Get.GetNationalNumber(new DateTime(1957, 3, 10), true);
                     personalDetailsPageZa.YourDetails.DateOfBirth = "10/Mar/1957";
                     personalDetailsPageZa.YourDetails.Gender = "Female";
                     personalDetailsPageZa.YourDetails.HomeStatus = "Owner Occupier";
@@ -1143,7 +1143,7 @@ namespace Wonga.QA.Tests.Ui
             personalDetailsPageZa.CanContact = "Yes";
             personalDetailsPageZa.MarriedInCommunityProperty =
                 "I am not married in community of property (I am single, married with antenuptial contract, divorced etc.)";
-            personalDetailsPageZa.YourDetails.Number = Get.GetNIN(new DateTime(1957, 3, 10), true);
+            personalDetailsPageZa.YourDetails.Number = Get.GetNationalNumber(new DateTime(1957, 3, 10), true);
             personalDetailsPageZa.YourDetails.Gender = "Male";
             personalDetailsPageZa.YourDetails.DateOfBirth = "9/Mar/1957";
             Assert.IsTrue(personalDetailsPageZa.IsGenderDoesntMutchIdNumber());
@@ -1162,7 +1162,7 @@ namespace Wonga.QA.Tests.Ui
             personalDetailsPageZa.YourName.FirstName = Get.RandomString(3, 10);
             personalDetailsPageZa.YourName.LastName = Get.RandomString(3, 10);
             personalDetailsPageZa.YourName.Title = "Mr";
-            personalDetailsPageZa.YourDetails.Number = Get.GetNIN(new DateTime(1957, 3, 10), true);
+            personalDetailsPageZa.YourDetails.Number = Get.GetNationalNumber(new DateTime(1957, 3, 10), true);
             personalDetailsPageZa.YourDetails.DateOfBirth = "10/Mar/1957";
             personalDetailsPageZa.YourDetails.Gender = "Female";
             personalDetailsPageZa.YourDetails.HomeStatus = "Owner Occupier";

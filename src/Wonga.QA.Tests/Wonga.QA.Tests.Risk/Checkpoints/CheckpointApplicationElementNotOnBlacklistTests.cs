@@ -33,7 +33,9 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             switch (Config.AUT)
             {
                  case AUT.Uk: case AUT.Za:
-                    {
+            		{
+            			var dateOfBirth = Get.GetDoB();
+
                         var customer = CustomerBuilder.New().WithEmployer(_testMask)
 							.WithBankAccountNumber(Get.GetBankAccountNumber()).Build();
                         var application = ApplicationBuilder.New(customer).Build();

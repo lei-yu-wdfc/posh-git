@@ -120,6 +120,23 @@ namespace Wonga.QA.Framework.Core
             return "000000000";
         }
 
+		public static String GetNationalNumber(DateTime dob, Boolean female)
+		{
+			switch (Config.AUT)
+			{
+				case AUT.Za:
+					{
+						Int32[] nin = String.Format("{0:yyMMdd}{1:D4}{2}{3}", dob, female ? _random.Next(5000) : _random.Next(5000, 10000), _random.Next(2), _random.Next(10)).Select(c => Int32.Parse(c.ToString())).ToArray();
+						Int32 z = 10 - (((nin.Where((n, i) => i % 2 == 0).Sum()) + ((2 * (Int32.Parse(String.Join(null, nin.Where((n, i) => i % 2 == 1))))).ToString().Select(c => Int32.Parse(c.ToString())).Sum())) % 10);
+						return String.Format("{0}{1}", String.Join(null, nin), z == 10 ? 0 : z);
+					}
+				default:
+					{
+						throw new NotImplementedException(Config.AUT.ToString());
+					}
+			}
+		}
+
         public static decimal GetLoanAmount()
         {
             switch (Config.AUT)
@@ -185,23 +202,6 @@ namespace Wonga.QA.Framework.Core
         public static Guid GetCsAuthorization()
         {
             return Guid.Parse("93370527-1BEE-461B-B825-07A6BE7AB8FE");
-        }
-
-        public static String GetNIN(DateTime dob, Boolean female)
-        {
-            switch (Config.AUT)
-            {
-                case AUT.Za:
-                    {
-                        Int32[] nin = String.Format("{0:yyMMdd}{1:D4}{2}{3}", dob, female ? _random.Next(5000) : _random.Next(5000, 10000), _random.Next(2), _random.Next(10)).Select(c => Int32.Parse(c.ToString())).ToArray();
-                        Int32 z = 10 - (((nin.Where((n, i) => i % 2 == 0).Sum()) + ((2 * (Int32.Parse(String.Join(null, nin.Where((n, i) => i % 2 == 1))))).ToString().Select(c => Int32.Parse(c.ToString())).Sum())) % 10);
-                        return String.Format("{0}{1}", String.Join(null, nin), z == 10 ? 0 : z);
-                    }
-                default:
-                    {
-                        throw new NotImplementedException(Config.AUT.ToString());
-                    }
-            }
         }
 
         public static String GetPostcode()
