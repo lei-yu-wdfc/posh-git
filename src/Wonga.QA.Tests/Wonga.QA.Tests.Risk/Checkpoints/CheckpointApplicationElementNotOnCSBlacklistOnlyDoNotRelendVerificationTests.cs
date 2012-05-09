@@ -33,7 +33,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				//don't use mask so that the workflow builder is run!
 				var customer = CustomerBuilder.New().WithEmployer("Wonga").Build();
 
-				var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Pending).Build();
+				var application = ApplicationBuilder.New(customer).WithUnmaskedExpectedDecision().Build();
 
 				AssertCheckpointAndVerificationExecution(useDoNotRelend, application);
 			}
@@ -60,7 +60,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				//don't use mask so that the workflow builder is run!
 				Drive.Db.UpdateEmployerName(customer.Id, "Wonga");
 
-				var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Pending).Build();
+				var application = ApplicationBuilder.New(customer).WithUnmaskedExpectedDecision().Build();
 
 				AssertCheckpointAndVerificationExecution(useDoNotRelend, application);
 			}
@@ -141,6 +141,5 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			var verifications = Drive.Db.GetVerificationDefinitionsForApplication(applicationId);
 			Assert.AreEqual(executed, verifications.Any(v => v.Name == Get.EnumToString(verification)));
 		}
-		
 	}
 }
