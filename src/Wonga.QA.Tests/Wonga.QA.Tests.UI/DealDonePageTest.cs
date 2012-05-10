@@ -49,7 +49,7 @@ namespace Wonga.QA.Tests.Ui
             _termMin = Int32.Parse(_response.Values["TermMin"].Single(), CultureInfo.InvariantCulture);
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-192"), Pending("GetFixedTermLoanCalculationQuery don't work for Ca Wonga.QA.Framework.Api.Exceptions.ValidatorException: Could not process query")]
+        [Test, AUT(AUT.Za), JIRA("QA-192")]
         public void CorrectDataShouldBeDisplayedOnApplicationSuccessPage()
         {
             int randomAmount = _amountMin + (new Random()).Next(_amountMax - _amountMin);
@@ -66,6 +66,10 @@ namespace Wonga.QA.Tests.Ui
             {
                 #region case Za
                 case AUT.Za:
+                    string fullName = journey.FirstName + " " + journey.LastName;
+                    Assert.AreEqual(fullName, acceptedPage.GetNameInLoanAgreement);
+                    Assert.AreEqual(fullName, acceptedPage.GetNameInDirectDebit);
+
                     acceptedPage.SignAgreementConfirm();
                     acceptedPage.SignDirectDebitConfirm();
                     var dealDoneZa = acceptedPage.Submit() as DealDonePage;
@@ -79,7 +83,7 @@ namespace Wonga.QA.Tests.Ui
                     Assert.AreEqual(dealDoneZa.GetRapaymentAmount().Remove(0, 1), totalRepayableZa);
                     break;
                 #endregion
-                #region case Ca
+                #region case Ca(Not reachable)
                 case AUT.Ca:
                     acceptedPage.SignConfirmCaL0(DateTime.Now.ToString("d MMM yyyy"), journey.FirstName, journey.LastName);
                     var dealDoneCa = acceptedPage.Submit() as DealDonePage;
