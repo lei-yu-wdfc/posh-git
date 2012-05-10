@@ -55,6 +55,7 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb,AUT.Uk)]
         [JIRA("SME-638"), Description("Experian -> This test creates a loan for the insolvent customer, then checks the risk checkpoint")]
+		[Pending("Experian still not working")]
         public void TestExperianMainApplicantIsInsolvent_LoanIsDeclined()
         {
             const String forename = "laura";
@@ -175,10 +176,11 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb, AUT.Uk)]
         [JIRA("SME-575","UK-853"), Description("Experian -> This test creates a loan for the customer that is dead, then checks the risk checkpoint")]
+		[Pending("Experian still not working")]
         public void TestExperianMainApplicantIsDeceased_LoanIsDeclined()
         {
             const String forename = "Johnny";
-            const String surname = "DeadGuy";
+			const String surname = "DeadGuy";
 
             var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTExperianApplicantIsNotDeceased);
             ScrubNames(mainApplicantBuilder);
@@ -268,6 +270,7 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb,AUT.Uk)]
         [JIRA("SME-584"), Description("Experian -> This test creates a loan for a customer that IS CIFAS flagged, then checks the risk checkpoint")]
+		[Pending("Experian still not working")]
         public void TestExperianMainApplicantIsCifasFlagged_LoanIsDeclined()
         {
             const String forename = "laura";
@@ -362,6 +365,7 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb,AUT.Uk), JIRA("UK-851")]
         [Description("Experian -> This test creates a loan and checks if the main applicant has data available")]
+		[Pending("Experian not working")]
         public void TestExperianMainApplicantIsNotAvailable_LoanIsDeclined()
         {
             const String forename = "John";
@@ -470,6 +474,7 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-644"), Description("Experian -> This test creates a loan for a customer with the incorrect date of birth, then checks the risk checkpoint")]
+		[Pending("Experian still not working")]
         public void TestExperianMainApplicantDateOfBirthIsIncorrect_LoanIsDeclined()
         {
             const String forename = "kathleen";
@@ -565,6 +570,48 @@ namespace Wonga.QA.Tests.Experian
                                                                      RiskVerificationDefinitions.ExperianPaymentCardIsValidVerification);
         }
 
+		/* Main Applicant Bank Account Match */
+
+		[Test, AUT(AUT.Wb)]
+		[JIRA("SME-137", "SME-1359")]
+		public void TestExperianMainApplicantBankAccountMatches_LoanIsApproved()
+		{
+			const String forename = "Ashely";
+			const String surname = "Marma";
+
+			var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithBankAccountNumber("34012583", "070116").WithMiddleName(RiskMask.TESTExperianBankAccountMatchedToApplicant);
+			ScrubNames(mainApplicantBuilder);
+			var mainApplicant = mainApplicantBuilder.Build();
+			var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted);
+			
+			var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
+
+			VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
+																	 RiskCheckpointDefinitionEnum.BankAccountMatchesTheApplicant,
+																	 RiskCheckpointStatus.Verified,
+																	 RiskVerificationDefinitions.CallValidateAndExperianBankAccountVerification);
+		}
+
+		[Test, AUT(AUT.Wb)]
+		[JIRA("SME-137", "SME-1359")]
+		public void TestExperianMainApplicantBankAccountDoesNotMatch_LoanIsDeclined()
+		{
+			const String forename = "Ashely";
+			const String surname = "Marma";
+
+			var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithBankAccountNumber("12345112", "074456").WithMiddleName(RiskMask.TESTExperianBankAccountMatchedToApplicant);
+			ScrubNames(mainApplicantBuilder);
+			var mainApplicant = mainApplicantBuilder.Build();
+			var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Declined);
+			
+			var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
+
+			VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
+																	 RiskCheckpointDefinitionEnum.BankAccountMatchesTheApplicant,
+																	 RiskCheckpointStatus.Failed,
+																	 RiskVerificationDefinitions.CallValidateAndExperianBankAccountVerification);
+		}
+
         #endregion
 
         #region Guarantor (SME Specific)
@@ -621,6 +668,7 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-1147"), Description("Experian -> This test creates a loan for the unknown guarantor that is alive, then checks the risk checkpoint")]
+		[Pending("Experian still not working")]
         public void TestExperianGuarantorIsDeceased_LoanIsDeclined()
         {
             const String forename = "Johnny";
@@ -673,6 +721,7 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-1144"), Description("Experian -> This test creates a loan for a guarantor that is  CIFAS flagged, then checks the risk checkpoint")]
+		[Pending("Experian still not working")]
         public void TestExperianGuarantorIsCifasFlagged_LoanIsDeclined()
         {
             const String forename = "laura";
@@ -725,6 +774,7 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb), JIRA("SME-1141")]
         [Description("Experian -> This test creates a loan and checks if the guarantors has data available")]
+		[Pending("Experian still not working")]
         public void TestExperianGuarantorDataIsNotAvailable_LoanIsDeclined()
         {
             const String forename = "Unknown";
@@ -775,6 +825,7 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb), JIRA("SME-1150")]
         [Description("Experian -> This test creates a loan and checks if the guarantor is solvent")]
+		[Pending("Experian still not working")]
         public void TestExperianGuarantorIsInsolvent_LoanIsDeclined()
         {
             const String forename = "laura";
@@ -852,6 +903,138 @@ namespace Wonga.QA.Tests.Experian
                                                                      RiskCheckpointStatus.Failed,
                                                                      RiskVerificationDefinitions.ExperianPaymentCardIsValidVerification);
         }
+
+		/* Bank account is valid */
+
+		[Test, AUT(AUT.Wb)]
+		[JIRA("SME-1155")]
+		public void TestExperianGuarantorBankAccountMatch_LoanIsApproved()
+		{
+			const String forename = "Ashely";
+			const String surname = "Marma";
+			
+			var mainApplicant = CustomerBuilder.New().Build();
+			var listOfGuarantors = new List<CustomerBuilder>
+                                       {
+                                           CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithBankAccountNumber("34012583", "070116").WithMiddleName(RiskMask.TESTExperianBankAccountMatchedToApplicant),
+                                       };
+
+
+			var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted, listOfGuarantors);
+			Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
+			
+			var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
+			var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
+
+			VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorRiskWorkflows[0],
+																	 RiskCheckpointDefinitionEnum.BankAccountMatchesTheApplicant,
+																	 RiskCheckpointStatus.Verified,
+																	 RiskVerificationDefinitions.CallValidateAndExperianBankAccountVerification);
+		}
+
+		[Test, AUT(AUT.Wb)]
+		[JIRA("SME-1155")]
+		public void TestExperianGuarantorBankAccountDoesNotMatch_LoanIsDeclined()
+		{
+			const String forename = "Ashely";
+			const String surname = "Marma";
+
+			var mainApplicant = CustomerBuilder.New().Build();
+			var listOfGuarantors = new List<CustomerBuilder>
+                                       {
+                                           CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithBankAccountNumber("12345112", "074456").WithMiddleName(RiskMask.TESTExperianBankAccountMatchedToApplicant),
+                                       };
+
+
+			var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.PreAccepted, listOfGuarantors);
+			Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
+			
+			var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
+			var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Failed, 1);
+
+			VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorRiskWorkflows[0],
+																	 RiskCheckpointDefinitionEnum.BankAccountMatchesTheApplicant,
+																	 RiskCheckpointStatus.Failed,
+																	 RiskVerificationDefinitions.CallValidateAndExperianBankAccountVerification);
+		}
+
+		/* DOB is corect */
+
+		[Test, AUT(AUT.Wb)]
+		[JIRA("SME-1138"), Description("Experian -> This test creates a loan for a guarantor with the correct date of birth, then checks the risk checkpoint")]
+		public void TestExperianGuarantorDateOfBirthIsCorrect_LoanIsApproved()
+		{
+			const String forename = "kathleen";
+			const String surname = "bridson";
+			var correctDateOfBirth = new Date(new DateTime(1988, 10, 22), DateFormat.Date);
+
+			var mainApplicant = CustomerBuilder.New().Build();
+			var guarantorList = new List<CustomerBuilder>
+                                    {
+                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianCustomerDateOfBirthIsCorrectSME).WithDateOfBirth(correctDateOfBirth),
+                                    };
+
+			var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted, guarantorList);
+			Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
+			
+			var guarantorWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
+
+			VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorWorkflows[0],
+																	 RiskCheckpointDefinitionEnum.DateOfBirthIsCorrect,
+																	 RiskCheckpointStatus.Verified,
+																	 RiskVerificationDefinitions.DateOfBirthIsCorrectVerification);
+		}
+
+		[Test, AUT(AUT.Wb)]
+		[JIRA("SME-1138"), Description("Experian -> This test creates a loan for a guarantor with the correct date of birth, then checks the risk checkpoint")]
+		public void TestExperianGuarantorDateOfBirthNotProvided_LoanIsApproved()
+		{
+			const String forename = "unknown";
+			const String surname = "customer";
+			var correctDateOfBirth = new Date(new DateTime(1973, 5, 11), DateFormat.Date);
+
+			var mainApplicant = CustomerBuilder.New().Build();
+			var guarantorList = new List<CustomerBuilder>
+                                    {
+                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianCustomerDateOfBirthIsCorrectSME).WithDateOfBirth(correctDateOfBirth),
+                                    };
+
+			var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted, guarantorList);
+			Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
+			
+			var guarantorWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
+
+			VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorWorkflows[0],
+																	 RiskCheckpointDefinitionEnum.DateOfBirthIsCorrect,
+																	 RiskCheckpointStatus.Verified,
+																	 RiskVerificationDefinitions.DateOfBirthIsCorrectVerification);
+		}
+
+		[Test, AUT(AUT.Wb)]
+		[JIRA("SME-1138"), Description("Experian -> This test creates a loan for a guarantor with the correct date of birth, then checks the risk checkpoint")]
+		[Pending("Experian not working yet!")]
+		public void TestExperianGuarantorDateOfBirthIsIncorrect_LoanIsDeclined()
+		{
+			const String forename = "kathleen";
+			const String surname = "bridson";
+			var correctDateOfBirth = new Date(new DateTime(1990, 3, 21), DateFormat.Date);
+
+			var mainApplicant = CustomerBuilder.New().Build();
+			var guarantorList = new List<CustomerBuilder>
+                                    {
+                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianCustomerDateOfBirthIsCorrectSME).WithDateOfBirth(correctDateOfBirth),
+                                    };
+
+			var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.PreAccepted, guarantorList);
+			Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
+			
+			var guarantorWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Failed, 1);
+
+			VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorWorkflows[0],
+																	 RiskCheckpointDefinitionEnum.DateOfBirthIsCorrect,
+																	 RiskCheckpointStatus.Failed,
+																	 RiskVerificationDefinitions.DateOfBirthIsCorrectVerification);
+		}
 
         #endregion
 

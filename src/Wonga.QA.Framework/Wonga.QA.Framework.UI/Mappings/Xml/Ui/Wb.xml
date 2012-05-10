@@ -75,8 +75,11 @@
   </AddAditionalDirectorsPage>
 
   <ApplyTermsPage>
+    <FormId>#apply-terms-sliders</FormId>
     <NextButton>#edit-submit</NextButton>
     <EditLoanDurationField>#edit-loan-duration</EditLoanDurationField>
+    <TermsOfLoan>#wonga-slider-loan-summary-header span.weekly-term</TermsOfLoan>
+    <LoanAmount>#wonga-slider-loan-summary span.loan-amount</LoanAmount>
   </ApplyTermsPage>
 
   <BankAccountPage>
@@ -94,6 +97,8 @@
     <AcceptBusinessLoan>#terms-accept .button</AcceptBusinessLoan>
     <AcceptGuarantorLoan>#guarantor-accept .button</AcceptGuarantorLoan>
     <SubmitButton>#edit-accept</SubmitButton>
+    <LoanAmount>#agreementscroll>p:nth-child(18)</LoanAmount>
+    <TermsOfLoan>#agreementscroll p:nth-child(15)</TermsOfLoan>
   </AcceptedPage>
 
   <DealDonePage>
@@ -209,4 +214,8 @@
   <AccountDetailsSection>
 		<PasswordErrorForm>div#edit-password-wrapper div.invalid</PasswordErrorForm>		
   </AccountDetailsSection>
+
+	<AccountDetailsPage>
+		<FormId>#account-setup-1</FormId>
+	</AccountDetailsPage>
 </UiMap>

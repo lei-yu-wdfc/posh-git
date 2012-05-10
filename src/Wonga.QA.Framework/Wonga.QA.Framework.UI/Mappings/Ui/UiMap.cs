@@ -5,6 +5,7 @@ using Wonga.QA.Framework.UI.Mappings.Pages.PayLater;
 using Wonga.QA.Framework.UI.Mappings.Pages.Wb;
 using Wonga.QA.Framework.UI.Mappings.Sections;
 using Wonga.QA.Framework.UI.Mappings.Pages.SalesForce;
+using Wonga.QA.Framework.UI.Mappings.Ui.Elements;
 using HomePage = Wonga.QA.Framework.UI.Mappings.Pages.HomePage;
 using PayLaterLoginPage = Wonga.QA.Framework.UI.Mappings.Pages.PayLaterLoginPage;
 
@@ -53,7 +54,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual ApplicationSection ApplicationSection { get; set; }
         public virtual AddressDetailsSection AddressDetailsSection { get; set; }
         public virtual ExtensionSecciDocumentSection ExtensionSecciDocumentSection { get; set; }
-   
+        public virtual PreviousAddresDetailsSection PreviousAddresDetailsSection { get; set; }
         #endregion
 
         #region Elements
@@ -70,6 +71,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual SmallExtensionSlidersElement SmallExtensionSlidersElement { get; set; }
         public virtual ChangeMyAddressElement ChangeMyAddressElement { get; set; }
         public virtual SmallRepaySlidersElement SmallRepaySlidersElement { get; set; }
+        public virtual TabsElementMobile TabsElementMobile { get; set; }
 
         #endregion
 
@@ -123,6 +125,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual ExtensionErrorPage ExtensionErrorPage { get; set; }
         public virtual ExtensionRequestPage ExtensionRequestPage { get; set; }
         public virtual RepayRequestPage RepayRequestPage { get; set; }
+        public virtual FAQPage FAQPage { get; set; }
 
         #endregion
 

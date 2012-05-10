@@ -6,7 +6,7 @@ using Microsoft.Win32;
 
 namespace Wonga.QA.Framework.Core
 {
-    public enum AUT { Uk, Za, Ca, Wb }
+    public enum AUT { Uk, Za, Ca, Wb, Pl }
     public enum SUT { Dev, WIP, UAT, RC, WIPRelease, RCRelease }
 
     public static class Config
@@ -38,13 +38,13 @@ namespace Wonga.QA.Framework.Core
             Ui = new UiConfig();
             SalesforceUi = new SalesforceConfig("test.salesforce.com");
             PayLaterUi = new PayLaterConfig("dev.paylater.com");
-
+            
             Proxy = GetValue<Boolean>(false, "QAFProxyMode");
 
             Ui.Browser = GetValue<UiConfig.BrowserType>("FireFox", "QAFBrowser");
             Ui.BrowserVersion = GetValue<string>("", "QAFBrowserVersion");
             Ui.RemoteMode = GetValue<Boolean>(false, "QAFUiRemoteMode");
-            Ui.ExternalAccess = GetValue<Boolean>(false, "QAFExternalAccessMode");
+            string uiDomain = Ui.RemoteMode ? "wongatest.com" : "wonga.com";
 
             Email = new EmailConfig() { QA = new EmailConfig.EmailAddressConfig() { Host = "imap.gmail.com", Username = "qa.wonga.com@gmail.com", Password = "Allw0nga", Port = 993, IsSsl = true } };
             switch (SUT)
@@ -81,8 +81,8 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("WIP4", Proxy)) :
                         AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("WIP6", Proxy)) :
                         AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn("WIP8", Proxy)) : Throw<DbConfig>();
-                    Ui.SetUri(String.Format("wip.{0}.wonga.com", AUT));
-                    Admin = new AdminConfig(String.Format("wip.admin.{0}.wonga.com", AUT));
+                    Ui.SetUri(String.Format("wip.{0}.{1}", AUT, uiDomain));
+                    Admin = new AdminConfig(String.Format("wip.admin.{0}.{1}", AUT, uiDomain));
                     SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.wip", "Allw0nga");
                     SalesforceApi =
                         AUT == AUT.Ca ? new SalesforceApiConfig("v3integration@wonga.com.int") :
@@ -100,8 +100,8 @@ namespace Wonga.QA.Framework.Core
                     Db =
                         AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("ca-rel-wip-app", Proxy)) :
                         AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("za-rel-wip-app", Proxy)) : Throw<DbConfig>();
-                    Ui.SetUri(String.Format("wip.release.{0}.wonga.com", AUT));
-                    Admin = new AdminConfig(String.Format("wip.release.admin.{0}.wonga.com", AUT));
+                    Ui.SetUri(String.Format("wip.release.{0}.{1}", AUT, uiDomain));
+                    Admin = new AdminConfig(String.Format("wip.release.admin.{0}.{1}", AUT, uiDomain));
                     SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.wip", "Allw0nga");
                     SalesforceApi =
                         AUT == AUT.Ca ? new SalesforceApiConfig("v3integration@wonga.com.int") :
@@ -125,8 +125,8 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("UAT4", Proxy)) :
                         AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("UAT6", Proxy)) :
                         AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn("UAT8", Proxy)) : Throw<DbConfig>();
-                    Ui.SetUri(String.Format("uat.{0}.wonga.com", AUT));
-                    Admin = new AdminConfig(String.Format("uat.admin.{0}.wonga.com", AUT));
+                    Ui.SetUri(String.Format("uat.{0}.{1}", AUT, uiDomain));
+                    Admin = new AdminConfig(String.Format("uat.admin.{0}.{1}", AUT, uiDomain));
                     break;
                 case SUT.RC:
                     Api = new ApiConfig(String.Format("rc.api.{0}.wonga.com", AUT));
@@ -146,8 +146,8 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("RC4", Proxy)) :
                         AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("RC6", Proxy)) :
                         AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn("RC8", Proxy)) : Throw<DbConfig>();
-                    Ui.SetUri(String.Format("rc.{0}.wonga.com", AUT));
-                    Admin = new AdminConfig(String.Format("rc.admin.{0}.wonga.com", AUT));
+                    Ui.SetUri(String.Format("rc.{0}.{1}", AUT, uiDomain));
+                    Admin = new AdminConfig(String.Format("rc.admin.{0}.{1}", AUT, uiDomain));
                     SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.rc", "Allw0nga");
                     SalesforceApi = new SalesforceApiConfig("v3integration@wonga.com.rc");
                     break;
@@ -163,8 +163,8 @@ namespace Wonga.QA.Framework.Core
                     Db =
                         AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("ca-rel-rc-app", Proxy)) :
                         AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("za-rel-rc-app", Proxy)) : Throw<DbConfig>();
-                    Ui.SetUri(String.Format("rc.release.{0}.wonga.com", AUT));
-                    Admin = new AdminConfig(String.Format("rc.release.admin.{0}.wonga.com", AUT));
+                    Ui.SetUri(String.Format("rc.release.{0}.{1}", AUT, uiDomain));
+                    Admin = new AdminConfig(String.Format("rc.release.admin.{0}.{1}", AUT, uiDomain));
                     SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.rc", "Allw0nga");
                     SalesforceApi = new SalesforceApiConfig("v3integration@wonga.com.rc");
                     break;
@@ -223,6 +223,7 @@ namespace Wonga.QA.Framework.Core
             public KeyValuePair<String, String> Accounting { get; set; }
             public KeyValuePair<String, String> BankGateway { get; set; }
             public KeyValuePair<String, String> Blacklist { get; set; }
+            public KeyValuePair<String, String> Bmo { get; set; }
             public KeyValuePair<String, String> BottomLine { get; set; }
             public KeyValuePair<String, String> CallReport { get; set; }
             public KeyValuePair<String, String> CallValidate { get; set; }
@@ -240,6 +241,7 @@ namespace Wonga.QA.Framework.Core
             public KeyValuePair<String, String> Hsbc { get; set; }
             public KeyValuePair<String, String> Hyphen { get; set; }
             public KeyValuePair<String, String> Iovation { get; set; }
+            public KeyValuePair<String, String> Rbc { get; set; }
             public KeyValuePair<String, String> Salesforce { get; set; }
             public KeyValuePair<String, String> Scheduler { get; set; }
             public KeyValuePair<String, String> Scotia { get; set; }
@@ -263,6 +265,7 @@ namespace Wonga.QA.Framework.Core
 
                 BankGateway = new KeyValuePair<String, String>("Wonga.BankGateway.Handlers", component);
                 Blacklist = new KeyValuePair<String, String>("Wonga.BlackList.Handlers", component);
+                Bmo = new KeyValuePair<String, String>("Wonga.BankGateway.Bmo.Handlers", component);
                 BottomLine = new KeyValuePair<String, String>("Wonga.BankGateway.Bottomline.Handlers", component);
                 CallReport = new KeyValuePair<String, String>("Wonga.CallReport.Handlers", component);
                 CallValidate = new KeyValuePair<String, String>("Wonga.CallValidate.Handlers", component);
@@ -280,6 +283,7 @@ namespace Wonga.QA.Framework.Core
                 Hsbc = new KeyValuePair<String, String>("Wonga.BankGateway.HSBC.Handlers", component);
                 Hyphen = new KeyValuePair<String, String>("Wonga.BankGateway.Hyphen.Handlers", component);
                 Iovation = new KeyValuePair<String, String>("Wonga.Iovation.Handlers", component);
+                Rbc = new KeyValuePair<String, String>("Wonga.BankGateway.Rbc.Handlers", component);
                 Salesforce = new KeyValuePair<String, String>("Wonga.Salesforce.Handlers", component);
                 Scheduler = new KeyValuePair<String, String>("Wonga.Scheduler.Handlers", component);
                 Scotia = new KeyValuePair<String, String>("Wonga.BankGateway.Scotia.Handlers", component);
@@ -304,7 +308,8 @@ namespace Wonga.QA.Framework.Core
             public String BankGateway { get; set; }
             public String BankGatewayBmo { get; set; }
             public String BankGatewayScotia { get; set; }
-            public String BottomLine { get; set; }
+			public String BankGatewayRbc { get; set; }
+			public String BottomLine { get; set; }
             public String Hsbc { get; set; }
             public String Hyphen { get; set; }
             public String Scotia { get; set; }
@@ -344,7 +349,8 @@ namespace Wonga.QA.Framework.Core
 
                 BankGateway = String.Format(format, component, "bankgatewaytc");
                 BankGatewayBmo = String.Format(format, component, "bankgatewaybmotc");
-                BankGatewayScotia = String.Format(format, component, "bankgatewayscotiatc");
+				BankGatewayRbc = String.Format(format, component, "bankgatewayrbctc");
+				BankGatewayScotia = String.Format(format, component, "bankgatewayscotiatc");
                 Blacklist = String.Format(format, component, "blacklistcomponent");
                 BottomLine = String.Format(format, component, "bankgatewaybottomlinetc");
                 CallReport = String.Format(format, component, "callreportcomponent");
@@ -450,7 +456,8 @@ namespace Wonga.QA.Framework.Core
                 Firefox,
                 Safari,
                 Chrome,
-                Opera
+                Opera,
+                FirefoxMobile
             }
 
             public string Url { get { return Home.AbsoluteUri; } }
@@ -473,42 +480,15 @@ namespace Wonga.QA.Framework.Core
             /// </summary>
             public Uri RemoteUri { get { return new Uri("http://ondemand.saucelabs.com:80/wd/hub"); } }
 
-            /// <summary>
-            /// Whether or not we are accessing QA webpages via an external partner ie SauceLabs.
-            /// </summary>
-            public bool ExternalAccess { get; set; }
-            /// <summary>
-            /// Local to External address for our UI QA environment
-            /// </summary>
-            public Dictionary<string, string> ExternalAccessMap { get; private set; }
-
             public BrowserType Browser { get; set; }
             public string BrowserVersion { get; set; }
 
             internal UiConfig()
             {
-                ExternalAccessMap = new Dictionary<string, string>();
-                ExternalAccessMap.Add("rc.Uk.wonga.com", "");
-                ExternalAccessMap.Add("rc.Wb.wonga.com", "");
-                ExternalAccessMap.Add("rc.Za.wonga.com", "");
-                ExternalAccessMap.Add("rc.Ca.wonga.com", "");
-                ExternalAccessMap.Add("rc.release.Uk.wonga.com", "");
-                ExternalAccessMap.Add("rc.release.Wb.wonga.com", "");
-                ExternalAccessMap.Add("rc.release.Za.wonga.com", "");
-                ExternalAccessMap.Add("rc.release.Ca.wonga.com", "");
-                ExternalAccessMap.Add("wip.Uk.wonga.com", "");
-                ExternalAccessMap.Add("wip.Wb.wonga.com", "");
-                ExternalAccessMap.Add("wip.Za.wonga.com", "");
-                ExternalAccessMap.Add("wip.Ca.wonga.com", "");
-                ExternalAccessMap.Add("wip.release.Uk.wonga.com", "");
-                ExternalAccessMap.Add("wip.release.Wb.wonga.com", "");
-                ExternalAccessMap.Add("wip.release.Za.wonga.com", "");
-                ExternalAccessMap.Add("wip.release.Ca.wong.com", "");
             }
 
             internal void SetUri(string host)
             {
-                host = ExternalAccess ? ExternalAccessMap[host] : host;
                 Home = new UriBuilder { Host = host }.Uri;
             }
 

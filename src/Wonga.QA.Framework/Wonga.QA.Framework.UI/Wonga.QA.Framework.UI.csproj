@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="CustomRemoteWebDriver.cs" />
     <Compile Include="Journey\CaL0Journey.cs" />
+    <Compile Include="Journey\ZaMobileL0Journey.cs" />
     <Compile Include="Journey\IL0ConsumerJourney.cs" />
     <Compile Include="Journey\ILnConsumerJourney.cs" />
     <Compile Include="Journey\JourneyFactory.cs" />
@@ -68,7 +69,11 @@
     <Compile Include="Journey\ZaLnJourney.cs" />
     <Compile Include="Mappings\Content\Content.cs" />
     <Compile Include="Mappings\Content\Agreements\LoanAgreement.cs" />
+    <Compile Include="Mappings\Content\Elements\TabsElementMobile.cs" />
+    <Compile Include="Mappings\Content\ErrorsMessages\MobilePinVerificationSection.cs" />
+    <Compile Include="Mappings\Content\Links\FAQPageLinks.cs" />
     <Compile Include="Mappings\Ui\Elements\ChangeMyAddressElement.cs" />
+    <Compile Include="Mappings\Ui\Elements\TabsElementMobile.cs" />
     <Compile Include="Mappings\Ui\Elements\ContactElement.cs" />
     <Compile Include="Mappings\Ui\Elements\SmallRepaySlidersElement.cs" />
     <Compile Include="Mappings\Ui\Elements\SmallExtensionSlidersElement.cs" />
@@ -86,6 +91,7 @@
     <Compile Include="Mappings\Ui\Pages\Common\ApplyPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ApplyTermsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\BlogPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\FAQPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayRequestPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ExtensionRequestPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ExtensionAgreementPage.cs" />
@@ -119,6 +125,7 @@
     <Compile Include="Mappings\Ui\Sections\AddressDetailsSection.cs" />
     <Compile Include="Mappings\Ui\Sections\ApplicationSection.cs" />
     <Compile Include="Mappings\Ui\Sections\ExtensionSecciDocumentSection.cs" />
+    <Compile Include="Mappings\Ui\Sections\PreviousAddresDetailsSection.cs" />
     <Compile Include="Mappings\Ui\UiMap.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\DealDonePage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\DeclinedPage.cs" />
@@ -156,6 +163,7 @@
     <Compile Include="Test.cs" />
     <Compile Include="Ui\Elements\BaseElement.cs" />
     <Compile Include="Ui\Elements\ChangeMyAddressElement.cs" />
+    <Compile Include="Ui\Elements\TabsElementMobile.cs" />
     <Compile Include="Ui\Elements\ContactElement.cs" />
     <Compile Include="Ui\Elements\SmallRepaySlidersElement.cs" />
     <Compile Include="Ui\Elements\SmallExtensionSlidersElement.cs" />
@@ -178,6 +186,7 @@
     <Compile Include="Ui\Pages\Common\ApplyPage.cs" />
     <Compile Include="Ui\Pages\Common\ApplyTermsPage.cs" />
     <Compile Include="Ui\Pages\Common\BlogPage.cs" />
+    <Compile Include="Ui\Pages\Common\HomePageMobile.cs" />
     <Compile Include="Ui\Pages\Common\RepayRequestPage.cs" />
     <Compile Include="Ui\Pages\Common\ExtensionRequestPage.cs" />
     <Compile Include="Ui\Pages\Common\ExtensionAgreementPage.cs" />
@@ -226,6 +235,7 @@
     <Compile Include="Ui\Sections\ExtensionSecciDocumentSection.cs" />
     <Compile Include="Ui\Sections\MobilePinVerificationSection.cs" />
     <Compile Include="Mappings\Ui\Sections\MyAccountNavigationSection.cs" />
+    <Compile Include="Ui\Sections\PreviousAddresDetailsSection.cs" />
     <Compile Include="Ui\Sections\ProvinceSection.cs" />
     <Compile Include="Ui\Sections\YourDetailsSection.cs" />
     <Compile Include="Ui\Sections\YourNameSection.cs" />
@@ -309,6 +319,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\..\..\lib\nuget\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -9,7 +9,7 @@ namespace Wonga.QA.Framework.Mocks
 	public class BmoResponseBuilder
 	{
 		private readonly DbDriver _dbDriver;
-		private long _bankAccountNumber;
+		private string _bankAccountNumber;
 		private decimal? _amount;
 
 		public BmoResponseBuilder()
@@ -22,7 +22,7 @@ namespace Wonga.QA.Framework.Mocks
 			return new BmoResponseBuilder();
 		}
 
-		public BmoResponseBuilder ForBankAccountNumber(long bankAccountNumber)
+		public BmoResponseBuilder ForBankAccountNumber(string bankAccountNumber)
 		{
 			_bankAccountNumber = bankAccountNumber;
 			return this;

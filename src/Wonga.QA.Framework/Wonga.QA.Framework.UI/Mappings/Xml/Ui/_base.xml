@@ -50,6 +50,8 @@
 
   <TopupDealDonePage>
     <AccountLink>#content-area h2 a</AccountLink>
+    <SuccessMessage1>.title+p</SuccessMessage1>
+    <SuccessMessage2>.title+p+p</SuccessMessage2>
   </TopupDealDonePage>
 
   <AcceptedPage>
@@ -192,7 +194,7 @@
   </ContactingYouSection>
 
   <EmploymentDetailsSection>
-    <Fieldset>fieldset[id="employment"]</Fieldset>
+    <Fieldset>fieldset#employment</Fieldset>
     <EmploymentStatus>#edit-employment-status</EmploymentStatus>
     <EmployerIndustry>#edit-employer-industry</EmployerIndustry>
     <EmployerName>#edit-employer-name</EmployerName>
@@ -207,7 +209,7 @@
   </EmploymentDetailsSection>
 
   <AccountDetailsPage>
-    <FormId>#lzero-account-setup-form</FormId>
+    <FormId>#wonga-apply-lzero-form</FormId>
     <NextButton>#edit-submit</NextButton>
   </AccountDetailsPage>
 
@@ -378,19 +380,23 @@
   <RepayRequestPage>
     <RepayRequestPageSubmitButton>#edit-submit</RepayRequestPageSubmitButton>
     <RepayRequestPageInformativeBox>div.inner-box-informative</RepayRequestPageInformativeBox>
-    <RepayRequestPageRepayAmount>#edit-repayment-amount</RepayRequestPageRepayAmount>
+    <RepayRequestPageRepayAmount>input#edit-loan-repayment-amount</RepayRequestPageRepayAmount>
     <RepayRequestPageRemainderAmount>span.repay-remainder-total</RepayRequestPageRemainderAmount>
     <RepayRequestPageSliders>#wonga-single-slider</RepayRequestPageSliders>
     <RepayRequestPageSliderSmall>#wonga-account-repay-form</RepayRequestPageSliderSmall>
     <RepayRequestPageCard>#edit-card</RepayRequestPageCard>
     <RepayRequestPageSecurityCode>#edit-security-code</RepayRequestPageSecurityCode>
+    <RepayRequestPageCancelButton>#edit-cancel</RepayRequestPageCancelButton>
+    <RepayRequestPageOweCurrently>.number-column span</RepayRequestPageOweCurrently>
+    <RepayRequestPageReadMeMessageRepayTotal>.repay-total</RepayRequestPageReadMeMessageRepayTotal>
+    <RepayRequestPageLoanPeriodClarification>.loan-period-clarification</RepayRequestPageLoanPeriodClarification>    
   </RepayRequestPage>
 
   <SmallRepaySlidersElement>
     <FormId>#wonga-account-repay-form</FormId>
     <AmountSlider>#wonga-single-slider a</AmountSlider>
     <SubmitButton>#edit-submit</SubmitButton>
-    <RepayAmount>input.edit-repayment-amount</RepayAmount>
+    <RepayAmount>input#edit-loan-repayment-amount</RepayAmount>
     <RemainderAmount>span.repay-remainder-total</RemainderAmount>
     <AmountMinusButton>#wonga-single-slider-wrapper button.slider-minus</AmountMinusButton>
     <AmountPlusButton>#wonga-single-slider-wrapper button.slider-plus</AmountPlusButton>
@@ -402,4 +408,9 @@
     <SecciPrint>#secci-print-link a</SecciPrint>
     <SecciContent>.secci</SecciContent>
   </ExtensionSecciDocumentSection>
+
+  <TabsElementMobile>
+    <TabsForm>#navigation #scroller .links</TabsForm>
+  </TabsElementMobile>
+
 </UiMap>

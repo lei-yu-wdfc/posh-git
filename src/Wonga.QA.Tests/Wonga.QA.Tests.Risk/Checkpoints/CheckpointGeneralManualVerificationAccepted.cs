@@ -9,7 +9,6 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[Parallelizable(TestScope.All)]
 	public class CheckpointGeneralManualVerificationAccepted
 	{
 		 [Test, JIRA("SME-188"), AUT(AUT.Wb)]
@@ -20,7 +19,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		
 			var application = ApplicationBuilder.New(customer,organisation).WithExpectedDecision(ApplicationDecisionStatus.PreAccepted).Build();
 
-			Do.Until(() => Drive.Db.Risk.RiskWorkflows.Single(w => w.ApplicationId == application.Id && (RiskWorkflowTypes)w.WorkflowType == RiskWorkflowTypes.ManualVerification));
+			Do.With.Timeout(2).Until(() => Drive.Db.Risk.RiskWorkflows.Single(w => w.ApplicationId == application.Id && (RiskWorkflowTypes)w.WorkflowType == RiskWorkflowTypes.ManualVerification));
 
 			var verifyManualVerificationCommand = new ConfirmManualVerificationAcceptedCommand
 													{
@@ -29,7 +28,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 			Drive.Cs.Commands.Post(verifyManualVerificationCommand);
 
-		 	Do.Until(
+            Do.With.Timeout(2).Until(
 		 		() =>
 		 		Drive.Db.Risk.RiskApplications.Single(
 		 			a => a.ApplicationId == application.Id && a.Decision == 1));
@@ -38,12 +37,12 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		 [Test, JIRA("SME-188"), AUT(AUT.Wb)]
 		 public void ApplicantFailsManualVerification_LoanIsDeclined()
 		 {
-			 var customer = CustomerBuilder.New().WithMiddleName(RiskMask.TESTGeneralManualVerification).Build();
+             var customer = CustomerBuilder.New().WithMiddleName(RiskMask.TESTGeneralManualVerification).Build();
 			 var organisation = OrganisationBuilder.New(customer).Build();
 
 			 var application = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.PreAccepted).Build();
 
-			 Do.Until(() => Drive.Db.Risk.RiskWorkflows.Single(w => w.ApplicationId == application.Id && (RiskWorkflowTypes)w.WorkflowType == RiskWorkflowTypes.ManualVerification));
+			 Do.With.Timeout(2).Until(() => Drive.Db.Risk.RiskWorkflows.Single(w => w.ApplicationId == application.Id && (RiskWorkflowTypes)w.WorkflowType == RiskWorkflowTypes.ManualVerification));
 
 			 var verifyManualVerificationCommand = new ConfirmManualVerificationDeclinedCommand()
 			 {
@@ -52,7 +51,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 			 Drive.Cs.Commands.Post(verifyManualVerificationCommand);
 
-			 Do.Until(
+             Do.With.Timeout(2).Until(
 				 () =>
 				 Drive.Db.Risk.RiskApplications.Single(
 					 a => a.ApplicationId == application.Id && a.Decision == 2));

@@ -17,6 +17,7 @@ namespace Wonga.QA.Framework.Core
     public static class Get
     {
         private static String _alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        private static String _alphaNumeric = _alpha + "0123456789";
         private static Random _random = new Random(Guid.NewGuid().GetHashCode());
         private static readonly string EmailSafeMachineName;
 
@@ -102,7 +103,11 @@ namespace Wonga.QA.Framework.Core
                     {
                         return "021" + RandomLong(1000000, 9999999);
                     }
-                
+                case AUT.Wb:
+                    {
+                        return "075" + RandomLong(10000000, 99999999);
+                    }
+
                 default:
                     {
                         return "07500000000";
@@ -150,25 +155,25 @@ namespace Wonga.QA.Framework.Core
             return new Date(DateTime.UtcNow.AddDays(10), DateFormat.Date);
         }
 
-        public static Int64 GetBankAccountNumber()
+        public static string GetBankAccountNumber()
         {
             switch (Config.AUT)
             {
                 case AUT.Ca:
                     {
-                        return RandomLong(1000000, 9999999);
+                        return RandomLong(1000000, 9999999).ToString();
                     }
                 case AUT.Za:
                     {
-                        return 12345678901;
+                        return "12345678901";
                     }
                 case AUT.Uk:
                     {
-                        return 42368003;
+                        return "42368003";
                     }
                 case AUT.Wb:
                     {
-                        return RandomLong(10000000, 99999999);
+                        return RandomLong(10000000, 99999999).ToString();
                     }
                 default:
                     {
@@ -266,6 +271,21 @@ namespace Wonga.QA.Framework.Core
             return RandomElement(((T[])Enum.GetValues(typeof(T))).Where(t => exclude == null || !exclude.Contains(t)).ToArray());
         }
 
+		public static T RandomEnumOf<T>(params T[] allowed)
+		{
+			if(allowed == null)
+			{
+				throw new ArgumentNullException("allowed");
+			}
+
+			if (allowed.Length == 0)
+			{
+				throw new ArgumentOutOfRangeException("allowed", "collection of enum values can not be empty");
+			}
+
+			return RandomElement(((T[])Enum.GetValues(typeof(T))).Where(allowed.Contains).ToArray());
+		}
+
 
         public static string EnumToString(Enum en)
         {
@@ -301,6 +321,14 @@ namespace Wonga.QA.Framework.Core
             StringBuilder builder = new StringBuilder();
             for (Int32 i = 0; i < _random.Next(min, max); i++)
                 builder.Append(_alpha[_random.Next(0, _alpha.Length)]);
+            return builder.ToString();
+        }
+
+        public static String RandomAlphaNumeric(Int32 min, Int32 max)
+        {
+            StringBuilder builder = new StringBuilder();
+            for (Int32 i = 0; i < _random.Next(min, max); i++)
+                builder.Append(_alphaNumeric[_random.Next(0, _alphaNumeric.Length)]);
             return builder.ToString();
         }
 

@@ -14,18 +14,18 @@ namespace Wonga.QA.Tests.Payments
    
     public class GetAvailabelCreditTest
     {
-        [Test, AUT(AUT.Uk), JIRA("UK-92")]
+        [Test, AUT(AUT.Uk), JIRA("UK-92"), Pending("Commented out until query is added to the API")]
         public void AvailabelCreditHandler()
         {
-            const decimal available = 1000.0m;
+            //const decimal available = 1000.0m;
 
-            ApiResponse parm = Drive.Api.Queries.Post(new GetAvailabelCreditQuery
-                                                          {
-                                                              AccountId = "5C09C656-721A-4CDD-8EF8-410CC5343DE3",
-                                                         });
+            //ApiResponse parm = Drive.Api.Queries.Post(new GetAvailabelCreditQuery
+            //                                              {
+            //                                                  AccountId = "5C09C656-721A-4CDD-8EF8-410CC5343DE3",
+            //                                             });
             
-            Assert.IsNotNull(parm);
-            Assert.AreEqual(available, decimal.Parse(parm.Values["AvailableCredit"].Single()));
+            //Assert.IsNotNull(parm);
+            //Assert.AreEqual(available, decimal.Parse(parm.Values["AvailableCredit"].Single()));
         }
     }
 }

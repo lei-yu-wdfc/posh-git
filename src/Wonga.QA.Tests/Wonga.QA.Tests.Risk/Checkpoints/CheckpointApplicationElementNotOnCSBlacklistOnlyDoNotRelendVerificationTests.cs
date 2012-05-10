@@ -6,10 +6,10 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Data.Enums.Risk;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
-using Wonga.QA.Framework.Data.Extensions;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
@@ -19,93 +19,23 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		private const RiskMask TestMask = RiskMask.TESTDoNotRelend;
 		private const string UseDoNotRelendFlagKey = "Risk.UseDoNotRelendFlag";
 
+		#region feature switch
+
 		[Test, AUT(AUT.Ca), JIRA("CA-1974")]
-		[Row(false)]
 		[Row(true)]
-		public void GivenNewCustomer_WhenItIsNotFlagged_ThenTheApplicationIsAccepted(bool useDoNotRelendFlag)
-		{
-			bool currentValue = Drive.Data.Ops.SetServiceConfiguration(UseDoNotRelendFlagKey, useDoNotRelendFlag);
-
-			try
-			{
-				var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
-
-				var riskAccount = Do.With.Timeout(1).Until(() => Drive.Db.Risk.RiskAccounts.Single(a => a.AccountId == customer.Id));
-				Assert.IsFalse(riskAccount.DoNotRelend);
-
-				ApplicationBuilder.New(customer).Build();
-			}
-			finally 
-			{
-				Drive.Data.Ops.SetServiceConfiguration(UseDoNotRelendFlagKey, currentValue);
-				
-			}
-		}
-
-		[Test, AUT(AUT.Ca), JIRA("CA-1974")]
-		[Row(false, ApplicationDecisionStatus.Accepted)]
-		[Row(true, ApplicationDecisionStatus.Declined)]
-		public void GivenNewCustomer_WhenItIsFlagged_ThenTheApplicationDependsOnConfigurationForUseDoNotRelendFlag(bool useDoNotRelendFlag, ApplicationDecisionStatus expectedStatus)
-		{
-			bool currentValue = Drive.Data.Ops.SetServiceConfiguration(UseDoNotRelendFlagKey, useDoNotRelendFlag);
-
-			try
-			{
-				var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
-
-				Drive.Msmq.Risk.Send(new RegisterDoNotRelendCommand {AccountId = customer.Id, DoNotRelend = true});
-				Do.Until(() => Drive.Db.Risk.RiskAccounts.Single(a => a.AccountId == customer.Id).DoNotRelend);
-
-				ApplicationBuilder.New(customer).WithExpectedDecision(expectedStatus).Build();
-			}
-			finally
-			{
-				Drive.Data.Ops.SetServiceConfiguration(UseDoNotRelendFlagKey, currentValue);
-			}
-		}
-
-		[Test, AUT(AUT.Ca), JIRA("CA-1974")]
 		[Row(false)]
-		[Row(true)]
-		public void GivenExistingCustomer_WhenItIsNotFlagged_ThenTheApplicationIsAccepted(bool useDoNotRelendFlag)
+		public void GivenNewCustomer_WhenDoNotRelendFlagIsConfigured_ThenCheckApplicationWorkflowContainsCheckpoint(bool useDoNotRelend)
 		{
-			bool currentValue = Drive.Data.Ops.SetServiceConfiguration(UseDoNotRelendFlagKey, useDoNotRelendFlag);
-			try
-			{
-				var customer = CustomerBuilder.New().WithEmployer(RiskMask.TESTNoCheck).Build();
-
-				var l0Application = ApplicationBuilder.New(customer).Build();
-				l0Application.RepayOnDueDate();
-
-				Drive.Db.UpdateEmployerName(customer.Id, TestMask.ToString());
-
-				ApplicationBuilder.New(customer).Build();
-			}
-			finally
-			{
-				Drive.Data.Ops.SetServiceConfiguration(UseDoNotRelendFlagKey, currentValue);
-			}
-		}
-
-		[Test, AUT(AUT.Ca), JIRA("CA-1974")]
-		[Row(false, ApplicationDecisionStatus.Accepted)]
-		[Row(true, ApplicationDecisionStatus.Declined)]
-		public void GivenExistingCustomer_WhenItIsFlagged_ThenTheApplicationDependsOnConfigurationForUseDoNotRelendFlag(bool useDoNotRelendFlag, ApplicationDecisionStatus expectedStatus)
-		{
-			bool currentValue = Drive.Data.Ops.SetServiceConfiguration(UseDoNotRelendFlagKey, useDoNotRelendFlag);
+			bool currentValue = Drive.Data.Ops.SetServiceConfiguration(UseDoNotRelendFlagKey, useDoNotRelend);
 
 			try
 			{
-				var customer = CustomerBuilder.New().WithEmployer(RiskMask.TESTNoCheck).Build();
-				var l0Application = ApplicationBuilder.New(customer).Build();
-				l0Application.RepayOnDueDate();
+				//don't use mask so that the workflow builder is run!
+				var customer = CustomerBuilder.New().WithEmployer("Wonga").Build();
 
-				Drive.Db.UpdateEmployerName(customer.Id, TestMask.ToString());
+				var application = ApplicationBuilder.New(customer).WithUnmaskedExpectedDecision().Build();
 
-				Drive.Msmq.Risk.Send(new RegisterDoNotRelendCommand { AccountId = customer.Id, DoNotRelend = true });
-				Do.Until(() => Drive.Db.Risk.RiskAccounts.Single(a => a.AccountId == customer.Id).DoNotRelend);
-
-				ApplicationBuilder.New(customer).WithExpectedDecision(expectedStatus).Build();
+				AssertCheckpointAndVerificationExecution(useDoNotRelend, application);
 			}
 			finally
 			{
@@ -113,5 +43,117 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			}
 		}
 		
+		[Test, AUT(AUT.Ca), JIRA("CA-1974")]
+		[Row(true)]
+		[Row(false)]
+		public void GivenExistingCustomer_WhenDoNotRelendFlagIsConfigured_ThenCheckApplicationWorkflowContainsCheckpoint(bool useDoNotRelend)
+		{
+			bool currentValue = Drive.Data.Ops.SetServiceConfiguration(UseDoNotRelendFlagKey, useDoNotRelend);
+
+			try
+			{
+				var customer = CustomerBuilder.New().WithEmployer(RiskMask.TESTNoCheck).Build();
+
+				var l0Application = ApplicationBuilder.New(customer).Build();
+				l0Application.RepayOnDueDate();
+
+				//don't use mask so that the workflow builder is run!
+				Drive.Db.UpdateEmployerName(customer.Id, "Wonga");
+
+				var application = ApplicationBuilder.New(customer).WithUnmaskedExpectedDecision().Build();
+
+				AssertCheckpointAndVerificationExecution(useDoNotRelend, application);
+			}
+			finally
+			{
+				Drive.Data.Ops.SetServiceConfiguration(UseDoNotRelendFlagKey, currentValue);
+			}
+		}
+
+		#endregion
+
+		[Test, AUT(AUT.Ca), JIRA("CA-1974")]
+		public void GivenNewCustomer_WhenItIsNotMarkedWithDoNotRelend_ThenTheApplicationIsAccepted()
+		{
+			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
+
+			var riskAccount = Do.With.Timeout(1).Until(() => Drive.Data.Risk.Db.RiskAccounts.FindByAccountId(customer.Id));
+			Assert.IsFalse(riskAccount.DoNotRelend);
+
+			var application = ApplicationBuilder.New(customer).Build();
+
+			AssertCheckpointAndVerificationExecution(true, application);
+		}
+
+		[Test, AUT(AUT.Ca), JIRA("CA-1974")]
+		public void GivenNewCustomer_WhenItIsMarkedWithDoNotRelend_ThenTheApplicationIsDeclined()
+		{
+			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
+
+			Drive.Msmq.Risk.Send(new RegisterDoNotRelendCommand {AccountId = customer.Id, DoNotRelend = true});
+			Do.Until(() => Drive.Data.Risk.Db.RiskAccounts.FindByAccountId(customer.Id).DoNotRelend);
+
+			var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+
+			AssertApplicationDeclinedWithCorrectCheckPointAndVerification(application);
+		}
+
+		[Test, AUT(AUT.Ca), JIRA("CA-1974")]
+		public void GivenExistingCustomer_WhenItIsNotMarkedWithDoNotRelend_ThenTheApplicationIsAccepted()
+		{
+			var customer = CustomerBuilder.New().WithEmployer(RiskMask.TESTNoCheck).Build();
+
+			var l0Application = ApplicationBuilder.New(customer).Build();
+			l0Application.RepayOnDueDate();
+
+			Drive.Db.UpdateEmployerName(customer.Id, TestMask.ToString());
+
+			var lnApplication = ApplicationBuilder.New(customer).Build();
+
+			AssertCheckpointAndVerificationExecution(true, lnApplication);
+		}
+
+		[Test, AUT(AUT.Ca), JIRA("CA-1974")]
+		public void GivenExistingCustomer_WhenItIsMarkedWithDoNotRelend_ThenTheApplicationIsDeclined()
+		{
+			var customer = CustomerBuilder.New().WithEmployer(RiskMask.TESTNoCheck).Build();
+			var l0Application = ApplicationBuilder.New(customer).Build();
+			l0Application.RepayOnDueDate();
+
+			Drive.Db.UpdateEmployerName(customer.Id, TestMask.ToString());
+
+			Drive.Msmq.Risk.Send(new RegisterDoNotRelendCommand { AccountId = customer.Id, DoNotRelend = true });
+			Do.Until(() => Drive.Data.Risk.Db.RiskAccounts.FindByAccountId(customer.Id).DoNotRelend);
+
+			var lnApplication = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+
+			AssertApplicationDeclinedWithCorrectCheckPointAndVerification(lnApplication);
+		}
+
+		private void AssertApplicationDeclinedWithCorrectCheckPointAndVerification(Application application)
+		{
+			Assert.AreEqual(Get.EnumToString(RiskCheckpointDefinitionEnum.FraudListCheck), application.FailedCheckpoint);
+			AssertCheckpointAndVerificationExecution(true, application);
+		}
+		
+		private void AssertCheckpointAndVerificationExecution(bool useDoNotRelend, Application application)
+		{
+			AssertCheckpointExecution(application.Id, RiskCheckpointDefinitionEnum.FraudListCheck, useDoNotRelend);
+			AssertVerificationExecution(application.Id, RiskVerificationDefinitions.DoNotRelendVerification, useDoNotRelend);
+			//for CA this is never run
+			AssertVerificationExecution(application.Id, RiskVerificationDefinitions.FraudBlacklistVerification, false);
+		}
+
+		private void AssertCheckpointExecution(Guid applicationId, RiskCheckpointDefinitionEnum checkpoint, bool executed)
+		{
+			var checkpoints = Drive.Db.GetCheckpointDefinitionsForApplication(applicationId);
+			Assert.AreEqual(executed, checkpoints.Any(c => c.Name == Get.EnumToString(checkpoint)));
+		}
+
+		private void AssertVerificationExecution(Guid applicationId, RiskVerificationDefinitions verification, bool executed)
+		{
+			var verifications = Drive.Db.GetVerificationDefinitionsForApplication(applicationId);
+			Assert.AreEqual(executed, verifications.Any(v => v.Name == Get.EnumToString(verification)));
+		}
 	}
 }

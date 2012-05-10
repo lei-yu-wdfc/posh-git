@@ -31,23 +31,24 @@
   </EmploymentDetailsSection>
 
   <PersonalDetailsPage>
-	<GenderWarning>.//*[@id='details']/div[2]/div/div[3]/div</GenderWarning>
-	<DateOfBirthWarning>.//*[@id='edit-date-of-birth-wrapper']/div[3]/div</DateOfBirthWarning>
+    <FormId>#lzero-personal-form .form-inner</FormId>
+    <GenderWarning>.//*[@id='details']/div[2]/div/div[3]/div</GenderWarning>
+	  <DateOfBirthWarning>.//*[@id='edit-date-of-birth-wrapper']/div[3]/div</DateOfBirthWarning>
     <MarriedInCommunityProperty>input[type="radio"][name="married"]</MarriedInCommunityProperty>
   </PersonalDetailsPage>
   
   <PersonalBankAccountDetailsPage>
-    <FormId>#wonga-apply-lzero-form</FormId>
+    <FormId>.wonga-apply-lzero-form</FormId>
   </PersonalBankAccountDetailsPage>
   
   <AccountDetailsPage>
-    <FormId>#wonga-apply-lzero-form</FormId>
+    <FormId>.wonga-apply-lzero-form</FormId>
     <NextButton>#edit-submit</NextButton>
   </AccountDetailsPage>
 
   <AccountDetailsSection>
-    <Fieldset>#account-setup</Fieldset>
-	<PasswordErrorForm>#edit-password-wrapper .form-error .invalid</PasswordErrorForm>
+    <Fieldset>#lzero-account-setup-form</Fieldset>
+	  <PasswordErrorForm>#edit-password-wrapper .form-error .invalid</PasswordErrorForm>
     <PasswordConfirmErrorForm>#edit-password-confirm-wrapper .form-error .invalid</PasswordConfirmErrorForm>
   </AccountDetailsSection>
 
@@ -56,7 +57,7 @@
   </DealDonePage>
   
   <AddressDetailsPage>
-    <FormId>#wonga-apply-lzero-form</FormId>
+    <FormId>#lzero-address-form .form-inner</FormId>
     <District>#edit-district-za</District>
     <HouseNumber>#edit-house-number-za</HouseNumber>
     <Town>#edit-town-za</Town>
@@ -73,6 +74,8 @@
   </AddressDetailsPage>
 
   <AcceptedPage>
+    <TotalToRepay>span.blue-text</TotalToRepay>
+    <RepaymentDate>em</RepaymentDate>
     <DetailsTable>div#agreementscroll div:nth-child(3) table tbody</DetailsTable>
     <LoanAmount>tr:nth-child(1)>td:nth-child(2)</LoanAmount>
     <PaymentDueDate>tr:nth-child(6)>td:nth-child(2)</PaymentDueDate>
@@ -80,7 +83,7 @@
   </AcceptedPage>
   
   <BankAccountSection>
-    <Fieldset>#bank</Fieldset>
+    <Fieldset>#bank-1</Fieldset>
     <AccountNumber>#edit-account-number-za</AccountNumber>
   </BankAccountSection>
 
@@ -178,6 +181,10 @@
     <BankAccount>#edit-bank-account-masked</BankAccount>
 	<ResendPin>#pin-hold a</ResendPin>
   </ApplyPage>
+
+  <FAQPage>
+    <CouncilForDebtCollectorsLink>a[title='Council for Debt Collectors']</CouncilForDebtCollectorsLink>
+  </FAQPage>
 
   
 </UiMap>

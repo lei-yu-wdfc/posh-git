@@ -111,7 +111,6 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.HardwareBlacklistCheck));
         }
 
-
         [Test, AUT(AUT.Uk), JIRA("UK-1567")]
         public void Ln_CheckpointApplicationFailsIovation_LoanIsDeclined()
         {

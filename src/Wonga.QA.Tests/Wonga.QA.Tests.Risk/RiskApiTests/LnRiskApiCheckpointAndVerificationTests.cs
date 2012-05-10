@@ -36,7 +36,9 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		{
 			_builderConfig = new ApplicationBuilderConfig();
 
-            LNApplicationWithSingleCheckPointAndSingleVerification(RiskCheckpointDefinitionEnum.FraudListCheck, "FraudBlacklistVerification");
+			var verifications = new List<string> { "FraudBlacklistVerification", "DoNotRelendVerification" };
+
+            LNApplicationWithSingleCheckPointAndVerifications(RiskCheckpointDefinitionEnum.FraudListCheck, verifications);
 		}
 
 		[Test, AUT(AUT.Ca)]

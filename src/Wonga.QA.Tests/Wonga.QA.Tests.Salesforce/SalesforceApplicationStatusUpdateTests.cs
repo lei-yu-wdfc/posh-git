@@ -14,13 +14,13 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Salesforce
 {
     [JIRA("UK-924")]
-    [AUT(AUT.Uk)]
+    [AUT(AUT.Uk, AUT.Wb)]
     public class SalesforceApplicationStatusUpdateTests : SalesforceTestBase
     {
         private static Application CreateApplication(out Customer customer)
         {
-            decimal loanAmount = 350m;
-            int loanTerm = 12;
+            const decimal loanAmount = 350m;
+            const int loanTerm = 12;
             customer = CustomerBuilder.New().Build();
             Do.Until(customer.GetBankAccount);
             Application application = ApplicationBuilder.New(customer)
@@ -143,6 +143,29 @@ namespace Wonga.QA.Tests.Salesforce
                 return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.DueToday;
             });
 
+        }
+
+        [Test, AUT(AUT.Wb), JIRA("SME-1394")]
+        [Ignore("SF tests are failing because message congestion in SF TC queue, explicit until fixed")]
+        public void SalesforceTC_ShouldUpdateApplicationStatus_WhenLoanIsPaidInFull()
+        {
+            var customer = CustomerBuilder.New().Build();
+            var organisation = OrganisationBuilder.New(customer).Build();
+            var applicationInfo = ApplicationBuilder.New(customer, organisation).Build() as BusinessApplication;
+
+            var today = DateTime.UtcNow.Date;
+
+            applicationInfo.MoveBackInTime(7, false);
+
+            var totalOutstandingAmount = applicationInfo.GetTotalOutstandingAmount();
+
+            applicationInfo.CreateExtraPayment((decimal)totalOutstandingAmount);
+
+            Do.Until(() =>
+            {
+                var app = Salesforce.GetApplicationById(applicationInfo.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.BusinessLoanApplicationStatus.PaidInFull;
+            });
         }
 
         private void MakeDueStatusToday(Application application)

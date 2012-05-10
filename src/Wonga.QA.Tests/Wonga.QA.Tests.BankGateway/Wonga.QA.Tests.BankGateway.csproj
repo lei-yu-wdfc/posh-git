@@ -34,16 +34,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="BankGatewayBmo.cs" />
-    <Compile Include="BankGatewayBmoSendBatch.cs" />
-    <Compile Include="BankGatewayCaTests.cs" />
-    <Compile Include="BankGatewayServiceTests.cs" />
-    <Compile Include="Constants.cs" />
+    <Compile Include="BankGatewayCaBmo.cs" />
+    <Compile Include="Helpers\RbcBatchSending.cs" />
+    <Compile Include="BankGatewayCa.cs" />
+    <Compile Include="BankGatewayCaRbc.cs" />
+    <Compile Include="BankGatewayServices.cs" />
+    <Compile Include="Helpers\ScotiaBatchSending.cs" />
+    <Compile Include="Helpers\BmoBatchSending.cs" />
+    <Compile Include="Helpers\FeatureSwitchConstants.cs" />
     <Compile Include="Enums\BankGatewayTransactionStatus.cs" />
+    <Compile Include="Enums\BankGatewayIntegrationId.cs" />
     <Compile Include="Helpers\WaitBankGatewayFunctions.cs" />
     <Compile Include="HsbcCashOutTests.cs" />
     <Compile Include="HsbcSortCodesTests.cs" />
     <Compile Include="AccountHolderVerificationTests.cs" />
+    <Compile Include="FasterPaymentsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

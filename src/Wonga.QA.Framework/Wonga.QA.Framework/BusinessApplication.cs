@@ -10,11 +10,15 @@ namespace Wonga.QA.Framework
 {
     public class BusinessApplication : Application
     {
+        public Guid MainApplicantId { get; set; }
+        public Guid OrganisationId { get; set; }
+
         private DateTime? _originalExpiryDate;
 
-        public BusinessApplication(Guid id):base(id)
+        public BusinessApplication(Guid id, Guid mainApplicantId, Guid organisationId):base(id)
         {
-            
+            this.MainApplicantId = mainApplicantId;
+            this.OrganisationId = organisationId;
         }
 
         public override Application PutApplicationIntoArrears()
@@ -73,8 +77,7 @@ namespace Wonga.QA.Framework
             }
 
             var paymentSchedulingSaga =
-                Do.Until(() => Drive.Db.OpsSagas.PaymentSchedulingSagaEntities.Single(
-                    s => s.ApplicationExternalId == Id));
+                Do.Until(() => Drive.Data.OpsSagas.Db.PaymentSchedulingSagaEntity.FindByApplicationExternalId(Id));
 
             Drive.Msmq.Payments.Send(new TimeoutMessage {SagaId = paymentSchedulingSaga.Id});
         }
@@ -94,8 +97,7 @@ namespace Wonga.QA.Framework
                 SetCardExpirationDate(true);
             }
             var businessLoansScheduledPaymentsSaga =
-                Do.Until(() => Drive.Db.OpsSagas.BusinessLoanScheduledPaymentSagaEntities.Single(
-                    s => s.ApplicationGuid == Id));
+                Do.With.Timeout(2).Until(() => Drive.Data.OpsSagas.Db.BusinessLoanScheduledPaymentSagaEntity.FindByApplicationGuid(Id));
 
             // Trigger repeated collection
             Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = businessLoansScheduledPaymentsSaga.Id });
@@ -189,6 +191,84 @@ namespace Wonga.QA.Framework
         public PaymentPlanEntity GetPaymentPlan()
         {
             return Do.Until(() => Drive.Db.Payments.PaymentPlans.Single(pp => pp.ApplicationEntity.ExternalId == Id && pp.CanceledOn == null));
+        }
+
+        /// <summary>
+        /// Changes existing transaction dates as if they have appeared <paramref name="days"/> earlier. If <paramref name="movePaymentPlans"/> is true, moves the payment plan dates as well
+        /// </summary>
+        /// <param name="days">Number of days to move back</param>
+        /// <param name="movePaymentPlans">True, if we need to move payment plans</param>
+        public void MoveBackInTime(int days, bool movePaymentPlans)
+        {
+            if (days > 0)
+            {
+                days = -days;
+            }
+            if (movePaymentPlans)
+            {
+                Do.Until(() =>
+                {
+                    var paymentPlans =
+                        Drive.Db.Payments.PaymentPlans.Where(
+                            pp => pp.ApplicationEntity.ExternalId == Id);
+                    foreach (var paymentPlan in paymentPlans)
+                    {
+                        paymentPlan.StartDate = paymentPlan.StartDate.AddDays(days);
+                        paymentPlan.EndDate = paymentPlan.EndDate.AddDays(days);
+                        paymentPlan.CreatedOn = paymentPlan.CreatedOn.AddDays(days);
+                        if (paymentPlan.CanceledOn != null)
+                        {
+                            paymentPlan.CanceledOn = paymentPlan.CanceledOn.Value.AddDays(days);
+                        }
+                        paymentPlan.Submit();
+                    }
+                    return true;
+                });
+            }
+
+            var transactionEntities =
+                Drive.Db.Payments.Transactions.Where(t => t.ApplicationEntity.ExternalId == Id);
+            foreach (var transaction in transactionEntities)
+            {
+                transaction.CreatedOn = transaction.CreatedOn.AddDays(days);
+                transaction.PostedOn = transaction.PostedOn.AddDays(days);
+                transaction.Submit();
+            }
+        }
+
+        /// <summary>
+        /// Creates a new transaction for the application with Scope=Credit and Type=Cheque
+        /// </summary>
+        /// <param name="extraPaymentAmount">Transaction amount</param>
+        public void CreateExtraPayment(decimal extraPaymentAmount)
+        {
+            var command = new CreateTransactionCommand
+            {
+                Amount = extraPaymentAmount,
+                ApplicationId = Id,
+                Currency = CurrencyCodeIso4217Enum.GBP,
+                ExternalId = Guid.NewGuid(),
+                ComponentTransactionId = Guid.Empty,
+                PostedOn = DateTime.Now,
+                Scope = PaymentTransactionScopeEnum.Credit,
+                Source = PaymentTransactionSourceEnum.System,
+                Type = PaymentTransactionEnum.Cheque
+            };
+
+            Drive.Msmq.Payments.Send(command);
+            Do.With.Timeout(2).Message("Transaction was not created").Until(
+                () => Drive.Data.Payments.Db.Transations.FindExternalId(command.ExternalId));
+            // Wait for the TX to be processed
+            Thread.Sleep(15000);
+        }
+
+        public double GetTotalOutstandingAmount()
+        {
+            var response = Drive.Api.Queries.Post(new GetBusinessAccountSummaryWbUkQuery
+            {
+                AccountId = MainApplicantId
+            });
+            return double.Parse(response.Values["TotalOutstandingAmount"].Single());
         }
     }
 }

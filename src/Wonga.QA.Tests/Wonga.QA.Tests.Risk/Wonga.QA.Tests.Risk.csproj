@@ -33,17 +33,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Checkpoints\BaseCheckpointTest.cs" />
+    <Compile Include="Checkpoints\ApplicationBuilderExtensions.cs" />
     <Compile Include="Checkpoints\CheckpointApplicationElementNotOnCSBlacklistOnlyDoNotRelendVerificationTests.cs" />
     <Compile Include="Checkpoints\CheckpointGeneralManualVerificationAccepted.cs" />
     <Compile Include="Checkpoints\CheckpointGuarantorNameMatchMainApplicant.cs" />
     <Compile Include="Checkpoints\CheckpointSuspiciousActivity.cs" />
     <Compile Include="Checkpoints\CheckpointTooManyLoansAtAddressTest.cs" />
     <Compile Include="Checkpoints\CheckpointRepaymentPredictionPositiveTestsCa.cs" />
-    <Compile Include="CustomerJanetUk.cs" />
     <Compile Include="CustomerData.cs" />
-    <Compile Include="CustomerKathleenUk.cs" />
-    <Compile Include="CustomerLauraUk.cs" />
     <Compile Include="Checkpoints\CheckpointReputationPredictionPositiveTests.cs" />
     <Compile Include="EidTests.cs" />
     <Compile Include="Checkpoints\CheckpointApplicationElementNotOnBlacklistTests.cs" />
@@ -73,7 +70,6 @@
     <Compile Include="Workflows\WorkflowTests.Checkpoints.cs" />
     <Compile Include="Workflows\WorkflowTests.cs" />
     <Compile Include="Workflows\WorkflowTests.Verifications.cs" />
-    <Compile Include="ZScoreTest\ZscoreTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />

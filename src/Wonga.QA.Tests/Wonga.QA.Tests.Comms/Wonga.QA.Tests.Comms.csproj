@@ -33,10 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ArrearsSMSTests.cs" />
     <Compile Include="CollectionsChaseEmailTest.cs" />
     <Compile Include="CollectionsChaseSmsTests.cs" />
     <Compile Include="CommsServiceTests.cs" />
     <Compile Include="DocumentsEmailsTests.cs" />
+    <Compile Include="Email\ExtensionLoanEmailTests.cs" />
     <Compile Include="Email\LoanTopUpEmailTests.cs" />
     <Compile Include="Email\PaymentConfirmationEmailUkTests.cs" />
     <Compile Include="Email\PaymentFailureEmails.cs" />
@@ -85,6 +87,10 @@
     <ProjectReference Include="..\Wonga.QA.Tests.Core\Wonga.QA.Tests.Core.csproj">
       <Project>{7243F3C0-71B0-4679-960A-687052AFFDAD}</Project>
       <Name>Wonga.QA.Tests.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wonga.QA.Tests.Payments\Wonga.QA.Tests.Payments.csproj">
+      <Project>{FD73C73F-E2AE-4610-9A64-C024144F0A51}</Project>
+      <Name>Wonga.QA.Tests.Payments</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

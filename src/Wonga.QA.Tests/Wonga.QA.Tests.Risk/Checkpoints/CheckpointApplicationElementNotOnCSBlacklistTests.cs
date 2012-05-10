@@ -18,8 +18,8 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		public void L0_CheckpointApplicationElementNotOnCSBlacklist_Accept()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
-		
-			var riskAccount =Do.With.Timeout(1).Until(() => Drive.Db.Risk.RiskAccounts.Single(a => a.AccountId == customer.Id));
+
+			var riskAccount = Do.With.Timeout(1).Until(() => Drive.Data.Risk.Db.RiskAccounts.FindByAccountId(customer.Id));
 			Assert.IsFalse(riskAccount.DoNotRelend);
 
 			ApplicationBuilder.New(customer).Build();
@@ -31,7 +31,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
 
 			Drive.Msmq.Risk.Send(new RegisterDoNotRelendCommand{AccountId =  customer.Id, DoNotRelend =  true});
-			Do.Until(() => Drive.Db.Risk.RiskAccounts.Single(a => a.AccountId == customer.Id).DoNotRelend);
+			Do.Until(() => Drive.Data.Risk.Db.RiskAccounts.FindByAccountId(customer.Id).DoNotRelend);
 
             ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
@@ -59,7 +59,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Drive.Db.UpdateEmployerName(customer.Id, TestMask.ToString());
 
 			Drive.Msmq.Risk.Send(new RegisterDoNotRelendCommand { AccountId = customer.Id, DoNotRelend = true });
-			Do.Until(() => Drive.Db.Risk.RiskAccounts.Single(a => a.AccountId == customer.Id).DoNotRelend);
+			Do.Until(() => Drive.Data.Risk.Db.RiskAccounts.FindByAccountId(customer.Id).DoNotRelend);
 
 			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}

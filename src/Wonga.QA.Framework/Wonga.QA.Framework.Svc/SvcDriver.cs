@@ -14,6 +14,7 @@ namespace Wonga.QA.Framework.Svc
         private SvcService _accounting;
         private SvcService _bankGateway;
         private SvcService _blacklist;
+        private SvcService _bmo;
         private SvcService _bottomLine;
         private SvcService _callReport;
         private SvcService _callValidate;
@@ -31,6 +32,7 @@ namespace Wonga.QA.Framework.Svc
         private SvcService _hsbc;
         private SvcService _hyphen;
         private SvcService _iovation;
+        private SvcService _rbc;
         private SvcService _salesforce;
         private SvcService _scheduler;
         private SvcService _scotia;
@@ -92,6 +94,12 @@ namespace Wonga.QA.Framework.Svc
         {
             get { return _blacklist ?? (_blacklist = new SvcService(Config.Svc.Blacklist.Key, Config.Svc.Blacklist.Value)); }
             set { _blacklist = value; }
+        }
+
+        public SvcService Bmo
+        {
+            get { return _bmo ?? (_bmo = new SvcService(Config.Svc.Bmo.Key, Config.Svc.Bmo.Value)); }
+            set { _bmo = value; }
         }
 
         public SvcService BottomLine
@@ -194,6 +202,12 @@ namespace Wonga.QA.Framework.Svc
         {
             get { return _iovation ?? (_iovation = new SvcService(Config.Svc.Iovation.Key, Config.Svc.Iovation.Value)); }
             set { _iovation = value; }
+        }
+
+        public SvcService Rbc
+        {
+            get { return _rbc ?? (_salesforce = new SvcService(Config.Svc.Rbc.Key, Config.Svc.Rbc.Value)); }
+            set { _rbc = value; }
         }
 
         public SvcService Salesforce
