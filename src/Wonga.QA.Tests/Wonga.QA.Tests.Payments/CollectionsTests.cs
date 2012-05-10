@@ -284,7 +284,7 @@ namespace Wonga.QA.Tests.Payments
 
 			int trackingDays = 0;
 
-			if (dateTrackingBegins.Day - 1 <= TrackingDayThreshold)
+			if (Drive.Db.GetPreviousWorkingDay(new Date(dateTrackingBegins.AddDays(-1))).DateTime.Day <= TrackingDayThreshold)
 				trackingDays = 3;
 			else
 				trackingDays = (DateTime.DaysInMonth(dateTrackingBegins.Year, dateTrackingBegins.Month)) - dateTrackingBegins.Day + 3; //3 = actionDate + til 2nd of month 
