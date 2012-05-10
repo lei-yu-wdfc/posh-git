@@ -94,20 +94,20 @@
     <DateOfAgreement>#edit-date-of-agreement-ca-datepicker-popup-0</DateOfAgreement>
     <ContinueTermsButton>#edit-continue-terms</ContinueTermsButton>
     <ContinueDirectDebitButton>#edit-continue-debit</ContinueDirectDebitButton>
-    <LoanAmount>tr:nth-child(2)>td:nth-child(2)</LoanAmount>
+    <LoanAmount>tr:first-child + tr>td:first-child + td</LoanAmount>
     <DetailsTable>div.loan-agreement-details-table tbody</DetailsTable>
-    <PrincipalAmountBorrowed>tr:nth-child(2)>td:nth-child(2)</PrincipalAmountBorrowed>
-    <PrincipalAmountToBeTransfered>tr:nth-child(3)>td:nth-child(2)</PrincipalAmountToBeTransfered>
-    <TotalCostOfCredit>tr:nth-child(5)>td:nth-child(2)</TotalCostOfCredit>
-    <TotalAmountDueUnderTheAgreement>tr:nth-child(8)>td:nth-child(2)</TotalAmountDueUnderTheAgreement>
-    <PaymentDueDate>tr:nth-child(9)>td:nth-child(2)</PaymentDueDate>
+    <PrincipalAmountBorrowed>tr:first-child + tr>td:first-child + td</PrincipalAmountBorrowed>
+    <PrincipalAmountToBeTransfered>tr:first-child + tr + tr>td:first-child + td</PrincipalAmountToBeTransfered>
+    <TotalCostOfCredit>tr:first-child+tr+tr+tr+tr>td:first-child + td</TotalCostOfCredit>
+    <TotalAmountDueUnderTheAgreement>tr:first-child+tr+tr+tr+tr+tr+tr+tr>td:first-child + td</TotalAmountDueUnderTheAgreement>
+    <PaymentDueDate>tr:first-child+tr+tr+tr+tr+tr+tr+tr+tr>td:first-child + td</PaymentDueDate>
   </AcceptedPage>
 
   <MyAccountNavigationSection>
     <!-- Should be extended-->
-    <MySummary>div#block-wonga-6 ul.menu>li:nth-child(1)>a</MySummary>
-    <MyPersonalDetails>div#block-wonga-6 ul.menu>li:nth-child(2)>a</MyPersonalDetails>
-    <MyPaymentsDetails>div#block-wonga-6 ul.menu>li:nth-child(3)>a</MyPaymentsDetails>
+    <MySummary>div#block-wonga-6 ul.menu>li:first-child>a</MySummary>
+    <MyPersonalDetails>div#block-wonga-6 ul.menu>li:first-child+li>a</MyPersonalDetails>
+    <MyPaymentsDetails>div#block-wonga-6 ul.menu>li:first-child+li+li>a</MyPaymentsDetails>
   </MyAccountNavigationSection>
 
   <SurveyElement>
@@ -115,30 +115,30 @@
   </SurveyElement>
 
   <AboutUsPage>
-    <OurCustomers>#block-wonga-6 div div ul li:nth-child(3) a</OurCustomers>
-    <ResponsibleLending>#block-wonga-6 div div ul li:nth-child(2) a</ResponsibleLending>
-    <News>#block-wonga-6 div div ul li:nth-child(1) a</News>
-    <WhyUseUs>#block-wonga-6 div div ul li:nth-child(4) a</WhyUseUs>
-    <WereDifferent>div.wongaTabs li:nth-child(1) a</WereDifferent>
-    <WereDifferentTitle>div.panes div:nth-child(1) h2</WereDifferentTitle>
-    <WereFast>div.wongaTabs li:nth-child(2) a</WereFast>
-    <WereFastTitle>div.panes div:nth-child(2) h2</WereFastTitle>
-    <WereResponsible>div.wongaTabs li:nth-child(3) a</WereResponsible>
-    <WereResponsibleTitle>div.panes div:nth-child(3) h2</WereResponsibleTitle>
-    <WongaMoments>div.wongaTabs li:nth-child(4) a</WongaMoments>
-    <WongaMomentsTitle>div.panes div:nth-child(4) h2</WongaMomentsTitle>
+    <OurCustomers>#block-wonga-6 div div ul li:first-child+li+li a</OurCustomers>
+    <ResponsibleLending>#block-wonga-6 div div ul li:first-child+li a</ResponsibleLending>
+    <News>#block-wonga-6 div div ul li:first-child a</News>
+    <WhyUseUs>#block-wonga-6 div div ul li:first-child+li+li+li a</WhyUseUs>
+    <WereDifferent>div.wongaTabs li:first-child a</WereDifferent>
+    <WereDifferentTitle>div.panes div:first-child h2</WereDifferentTitle>
+    <WereFast>div.wongaTabs li:first-child+li a</WereFast>
+    <WereFastTitle>div.panes div:first-child+div h2</WereFastTitle>
+    <WereResponsible>div.wongaTabs li:first-child+li+li a</WereResponsible>
+    <WereResponsibleTitle>div.panes div:first-child+div+div h2</WereResponsibleTitle>
+    <WongaMoments>div.wongaTabs li:first-child+li+li+li a</WongaMoments>
+    <WongaMomentsTitle>div.panes div:first-child+div+div+div h2</WongaMomentsTitle>
   </AboutUsPage>
 
 	<MySummaryPage>
 		<PromisedRepayAmount>#content-area p span</PromisedRepayAmount>
 		<PromisedRepayDate>#content-area p b em</PromisedRepayDate>
 		<RepayButton>#cloud ul li a</RepayButton>
-		<TotalToRepayAmountPopup>#fancybox-content div div b:first-of-type</TotalToRepayAmountPopup>
-		<PromisedRepayDatePopup>#fancybox-content div div b:last-of-type</PromisedRepayDatePopup>
+		<TotalToRepayAmountPopup>#fancybox-content div div b:first-child</TotalToRepayAmountPopup>
+		<PromisedRepayDatePopup>#fancybox-content div div b:last-child</PromisedRepayDatePopup>
 	</MySummaryPage>
 
   <HomePage>
-    <Title>div#block-wonga-1 h2:nth-child(1)</Title>
+    <Title>div#block-wonga-1 h2:first-child</Title>
     <TitleText>Flexible, short term loans that give you lots of control</TitleText>
     <ProvincePopupTitle>h1#select-province-title</ProvincePopupTitle>
     <YourProvince>select#selectprovince</YourProvince>
@@ -146,8 +146,8 @@
   </HomePage>
 
   <TabsElement>
-    <Advice>li:nth-child(4)>a</Advice>
-    <MyAccount>li:nth-child(5)>a</MyAccount>
+    <Advice>li:first-child+li+li+li>a</Advice>
+    <MyAccount>li:first-child+li+li+li+li>a</MyAccount>
   </TabsElement>
 
   <ApplicationSection>
@@ -159,11 +159,11 @@
 		<EditMobileNumber>#edit-new-mobile-number-ca</EditMobileNumber>
 		<PopupSaveButton>#edit-submit[value='Save']</PopupSaveButton>
 		<PopupCloseButton>#edit-submit[value='Close']</PopupCloseButton>
-		<ResendPin>#repin div:nth-child(2) a</ResendPin>
+		<ResendPin>#repin div:first-child+div a</ResendPin>
 	</ApplyPage>
 
   <MyPersonalDetailsPage>
-    <Postcode>table#profile tr#address tbody tr:nth-child(3) td</Postcode>
+    <Postcode>table#profile tr#address tbody tr:first-child+tr+tr td</Postcode>
   </MyPersonalDetailsPage>
   
   
