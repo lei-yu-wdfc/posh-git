@@ -46,6 +46,40 @@ namespace Wonga.QA.Framework.ThirdParties
             WrittenOff = 28,
         }
 
+        public enum BusinessLoanApplicationStatus
+        {
+            New = 100,
+            AcceptedInPrinciple = 101,
+            PricingAcceptedAndTermsSigned = 102,
+            GuarantorNotificationIssued = 103,
+            GuarantorAgreementSigned = 104,
+            GuarantorAccepted = 105,
+            GuarantorDeclined = 106,
+            Referral = 107,
+            FraudBusinessBankCheck = 108,
+            FraudManualV2Checks = 109,
+            LoanDeclined = 110,
+            LoanApproved = 111,
+            Live = 112,
+            InArrears = 113,
+            InArrearsFirstPaymentMissed = 114,
+            InArrearsSecondPaymentMissed = 115,
+            InArrearsThirdPaymentMissed = 116,
+            InArrearsFourthPaymentMissed = 117,
+            DCAInternal = 118,
+            DCAExternal = 119,
+            RepaymentArrangement = 120,
+            RepaymentArrangementBroken = 121,
+            ManagementReview = 122,
+            Bankrupt = 123,
+            Complaint = 124,
+            Refund = 125,
+            DebtSold = 126,
+            PaidInFull = 127,
+            SettledInFull = 128,
+            WrittenOff = 129
+        }
+
         public string SalesforceUsername { get; set; }
         public string SalesforcePassword { get; set; }
         public string SalesforceUrl { get; set; }
