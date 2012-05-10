@@ -9,7 +9,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.BankGateway
 {
-    [TestFixture, AUT(AUT.Ca)]
+    [TestFixture, AUT(AUT.Ca), Parallelizable(TestScope.All)]
     public class FasterPaymentsTests
     {
         private readonly DataDriver _dataDriver;

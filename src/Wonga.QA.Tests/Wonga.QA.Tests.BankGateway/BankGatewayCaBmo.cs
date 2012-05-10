@@ -14,14 +14,14 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.BankGateway
 {
-    [TestFixture, FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
+    [TestFixture, AUT(AUT.Ca), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
     public class BankGatewayCaBmo
     {
         private readonly dynamic _bgTrans = Drive.Data.BankGateway.Db.Transactions;
         private readonly dynamic _bgAckTypes = Drive.Data.BankGateway.Db.AcknowledgeTypes;
         private readonly dynamic _bgAck = Drive.Data.BankGateway.Db.Acknowledges;
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1914")]
         public void WhenCustomerEntersInstitutionNumber001ThenBankGatewayShouldRouteTransactionToBmo()
         {
             var customer = CustomerBuilder.New().
@@ -34,7 +34,7 @@ namespace Wonga.QA.Tests.BankGateway
                                     _bgTrans.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo).Single());
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1914")]
         public void WhenCustomerEntersValidBmoBankAccountNumberThenBankGatewayShouldUpdateTransactionAsPaid()
         {
             var customer = CustomerBuilder.New().
@@ -48,7 +48,7 @@ namespace Wonga.QA.Tests.BankGateway
                                     _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Paid).Single());
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1914")]
         public void WhenCustomerEntersInValidBmoBankAccountNumberThenBankGatewayShouldUpdateTransactionAsFailed()
         {
             var customer = CustomerBuilder.New().
@@ -67,7 +67,7 @@ namespace Wonga.QA.Tests.BankGateway
                                     _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Failed).Single());
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey), Ignore("This will fail until the correct file formats are added")]
+        [Test, AUT(AUT.Ca), JIRA("CA-1914"), Ignore("This will fail until the correct file formats are added")]
         public void WhenBmoReturnsAnInvalidFileThenBankGatewayShouldUpdateTransactionAsFailed()
         {
             //TODO: This will fail until the correct file formats are added... 
@@ -88,7 +88,7 @@ namespace Wonga.QA.Tests.BankGateway
                                     _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Failed).Single());
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1914")]
         public void WhenBmoReturnsAnAckFileDeft220ThenBankGatewayShouldRecordTheFileAndTransactionNumberInTheAcksTable()
         {
             var customer = CustomerBuilder.New().
@@ -106,7 +106,7 @@ namespace Wonga.QA.Tests.BankGateway
             Do.Until(() => _bgAck.FindAll(_bgAck.TransactionID == transaction.TransactionId && _bgAck.AcknowledgeTypeID == ackType.AcknowledgeTypeId).Single());
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1914")]
         public void PositiveFileAcknowledgementShouldBePersisted()
         {
             var ackType = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo && a.Name == "DEFT200");
@@ -134,7 +134,7 @@ namespace Wonga.QA.Tests.BankGateway
             });
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1914")]
         public void NegativeFileAcknowledgementShouldBePersistedAndAllTransactionsRejected()
         {
             Guid applicationIdAccepted;
@@ -178,7 +178,7 @@ namespace Wonga.QA.Tests.BankGateway
             Do.With.Timeout(TimeSpan.FromSeconds(2)).While(() => Drive.Db.BankGateway.Acknowledges.Single(t => t.TransactionID == transaction.TransactionId && t.AcknowledgeTypeID == ackTypeRejected.AcknowledgeTypeId));
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1914")]
         public void SettlementInvalidCrossreferenceNumberShouldPersistAck()
         {
             var customer = CustomerBuilder.New().
@@ -205,7 +205,7 @@ namespace Wonga.QA.Tests.BankGateway
                 t => t.ApplicationId == applicationId && t.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo && t.TransactionStatus == (int)BankGatewayTransactionStatus.Paid));
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1914")]
         public void SettlementValidAndInvalidCrossreferenceNumberShouldProcessValid()
         {
             Guid applicationWithInvalidResponseFromBank;
@@ -239,7 +239,7 @@ namespace Wonga.QA.Tests.BankGateway
             Do.Until(() => Drive.Db.BankGateway.Acknowledges.Single(t => t.TransactionID == transaction.TransactionId && t.AcknowledgeTypeID == ackType.AcknowledgeTypeId));
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1914")]
         public void SettlementSendPaymentsInOneBatchShouldUpdateTransactionStatusAndPersistAck()
         {
             var applicationIds = new List<Guid>();
@@ -269,7 +269,7 @@ namespace Wonga.QA.Tests.BankGateway
             }
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1914")]
         public void SettlementSendPaymentsAcceptedAndRejectedInOneBatchShouldUpdateTransactionStatusAndPersistAck()
         {
             Guid applicationIdAccepted;
@@ -314,7 +314,7 @@ namespace Wonga.QA.Tests.BankGateway
             Do.With.Timeout(TimeSpan.FromSeconds(2)).While(() => Drive.Db.BankGateway.Acknowledges.Single(t => t.TransactionID == transaction.TransactionId && t.AcknowledgeTypeID == ackTypeSettled.AcknowledgeTypeId));
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1914")]
         public void RejectedValidAndInvalidCrossreferenceNumberShouldProcessValid()
         {
             Guid applicationWithInvalidResponseFromBank;
@@ -358,7 +358,7 @@ namespace Wonga.QA.Tests.BankGateway
             Do.Until(() => Drive.Db.BankGateway.Acknowledges.Single(t => t.TransactionID == transaction.TransactionId && t.AcknowledgeTypeID == ackType.AcknowledgeTypeId));
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1914")]
         public void RejectedInvalidCrossreferenceNumberShouldPersistAck()
         {
             var customer = CustomerBuilder.New().
@@ -390,7 +390,7 @@ namespace Wonga.QA.Tests.BankGateway
                 t => t.ApplicationId == applicationId && t.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo && t.TransactionStatus == (int)BankGatewayTransactionStatus.Paid));
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1914")]
         public void WhenMultipleBmoTransactionsAreHandledTogetherThenBankGatewayShouldHandleThemAsABatch()
         {
             var applicationIds = new List<Guid>();
@@ -439,7 +439,7 @@ namespace Wonga.QA.Tests.BankGateway
             }
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1914"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1914")]
         public void WhenLoanGoesToBmoThenItShouldRecieveSettlementReport200ToIndicateASuccessfulCashOut()
         {
             const int loanTerm = 15;

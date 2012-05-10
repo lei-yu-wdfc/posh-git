@@ -73,7 +73,9 @@ namespace Wonga.QA.Tests.Risk.Workflows
 		                                                                   		"Applicant is not minor",
 		                                                                   		"Ability to verify personal data",
 		                                                                   		"Applicant is alive",
-		                                                                   		"Customer is solvent"
+		                                                                   		"Customer is solvent",
+																				"Reputation prediction check", 
+																				"Fraud list check"
 		                                                                   	};
 
 		private static readonly List<string> ExpectedCheckpointNamesLnCa = new List<string>()
@@ -89,7 +91,8 @@ namespace Wonga.QA.Tests.Risk.Workflows
 		                                                                   		"Applicant is not minor",
 		                                                                   		"Ability to verify personal data",
 		                                                                   		"Applicant is alive",
-		                                                                   		"Customer is solvent"
+		                                                                   		"Customer is solvent",
+																				"Fraud list check"
 		                                                                   	};
 
 		#endregion

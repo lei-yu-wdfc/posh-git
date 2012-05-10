@@ -171,8 +171,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 			application.RepayOnDueDate();
 
-			var currentAccountRank = Drive.Db.Risk.RiskIovationPostcodes.Single(a => a.ApplicationId == application.Id).AccountRank;
-			Assert.AreEqual(1, currentAccountRank);
+			Do.Until(() => 1 == Drive.Db.Risk.RiskIovationPostcodes.Single(a => a.ApplicationId == application.Id).AccountRank);
 		}
 
 		[Test, AUT(AUT.Ca), JIRA("CA-1889")]
@@ -187,7 +186,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				//don't use mask so that the workflow builder is run!
 				var customer = CustomerBuilder.New().WithEmployer("Wonga").Build();
 
-				var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Pending).Build();
+				var application = ApplicationBuilder.New(customer).WithUnmaskedExpectedDecision().Build();
 
 				AssertCheckpointExecution(application.Id, RiskCheckpointDefinitionEnum.ReputationPredictionPositive, useScoreCard);
 				AssertVerificationExecution(application.Id, RiskVerificationDefinitions.ReputationPredictionPositiveVerification, useScoreCard);

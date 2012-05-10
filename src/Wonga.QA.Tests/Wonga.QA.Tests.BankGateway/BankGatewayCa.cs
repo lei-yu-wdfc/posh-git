@@ -15,7 +15,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.BankGateway
 {
-    [TestFixture, AUT(AUT.Ca)]
+    [TestFixture, AUT(AUT.Ca), Parallelizable(TestScope.All)]
     public class BankGatewayCa
     {
         private readonly dynamic _bgTrans = Drive.Data.BankGateway.Db.Transactions;
