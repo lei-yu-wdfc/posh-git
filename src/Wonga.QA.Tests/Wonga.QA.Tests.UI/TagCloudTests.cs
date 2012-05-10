@@ -96,7 +96,8 @@ namespace Wonga.QA.Tests.Ui
         public void TagCloudScenario03() { TagCloud(3, 3); }
 
         [Test, AUT(AUT.Uk), JIRA("UK-785")]
-        public void TagCloudScenario04() { TagCloud(4, 10); }
+        [Row(4, 9)]
+        public void TagCloudScenario04(int scenarioId, int dasyShift) { TagCloud(scenarioId, dasyShift); }
 
         [Test, AUT(AUT.Uk), JIRA("UK-785")]
         public void TagCloudScenario05() { TagCloud(5, 2); }
