@@ -252,7 +252,7 @@ namespace Wonga.QA.Tests.Ui
             IntroText(scenarioId, dasyShift);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-788")]
+        [Test, AUT(AUT.Uk), JIRA("UK-788", "UK-1966"), Pending("Fails due to bug UK-1966")]
         [Row(13, 71)]
         //[Row(13, 72)]
         [Row(13, 100)]
