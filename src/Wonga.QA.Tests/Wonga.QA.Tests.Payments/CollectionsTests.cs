@@ -205,14 +205,7 @@ namespace Wonga.QA.Tests.Payments
 
 			new MsmqDriver().Payments.Send(new TimeoutMessage { SagaId = scheduledPaymentSaga.Id });
 
-			if (attempt < MaximumRetries - 1)
-			{
-				Do.Until(() => db.OpsSagas.PendingScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id));
-			}
-			else
-			{
-				Do.Until(() => !db.OpsSagas.PendingScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id));
-			}
+			Do.Until(() => !db.OpsSagas.PendingScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id));
 		}
 
 		private void SendPaymentTaken(Application application, decimal amount)

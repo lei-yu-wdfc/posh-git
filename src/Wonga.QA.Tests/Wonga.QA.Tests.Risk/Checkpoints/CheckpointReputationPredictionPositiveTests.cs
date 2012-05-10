@@ -106,25 +106,6 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		}
 
 		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889")]
-		public void CheckpointReputationPredictionPositiveIdentialCustomersHaveEqualScores()
-		{
-			string postcode1 = GetPostcode();
-
-			var customer1 = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(postcode1).Build();
-			var application1 = ApplicationBuilder.New(customer1).Build();
-
-			var score1 = GetReputationPredictionScore(application1);
-
-			string postcode2 = GetPostcode();
-			var customer2 = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(postcode2).Build();
-			var application2 = ApplicationBuilder.New(customer2).Build();
-
-			var score2 = GetReputationPredictionScore(application2);
-
-			Assert.AreEqual(score2, score1);
-		}
-
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889")]
 		public void CheckpointReputationPredictionPositivePostCodeWithHighArrearsRateLowersScore()
 		{
 			string postcode = GetPostcode();
