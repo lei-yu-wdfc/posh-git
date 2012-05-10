@@ -6,5 +6,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
     {
         public String ExtensionAgreementAcceptButton { get; set; }
         public String ExtensionAgreementscroll { get; set; }
+        public String ExtensionExplanationButton { get; set; }
+        public String ExtensionSecciButton { get; set; }
     }
 }

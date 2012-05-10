@@ -337,6 +337,8 @@
   <ExtensionAgreementPage>
     <ExtensionAgreementAcceptButton>#edit-accept</ExtensionAgreementAcceptButton>
     <ExtensionAgreementscroll>#agreementscroll</ExtensionAgreementscroll>
+    <ExtensionSecciButton>#extension_secci_link</ExtensionSecciButton>
+    <ExtensionExplanationButton>#extension_ae_link</ExtensionExplanationButton>
   </ExtensionAgreementPage>
 
   <ExtensionErrorPage>
@@ -400,8 +402,15 @@
     <AmountPlusButton>#wonga-single-slider-wrapper button.slider-plus</AmountPlusButton>
   </SmallRepaySlidersElement>
 
+  <ExtensionSecciDocumentSection>
+    <Fieldset>#fancybox-content</Fieldset>
+    <SecciHeader>.secci-intro</SecciHeader>
+    <SecciPrint>#secci-print-link a</SecciPrint>
+    <SecciContent>.secci</SecciContent>
+  </ExtensionSecciDocumentSection>
+
   <TabsElementMobile>
     <TabsForm>#navigation #scroller .links</TabsForm>
   </TabsElementMobile>
-  
+
 </UiMap>
