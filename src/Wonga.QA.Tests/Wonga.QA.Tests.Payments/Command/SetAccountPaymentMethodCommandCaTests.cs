@@ -14,7 +14,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments.Command
 {
-	[TestFixture]
+	[TestFixture, Ignore("Commands are not used")]
 	public class SetAccountPaymentMethodCommandCaTests
 	{
 		private readonly dynamic _dbAccountPreferences = Drive.Data.Payments.Db.AccountPreferences;
