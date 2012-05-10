@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Mappings;
+using Wonga.QA.Framework.UI.Mappings.Content;
 using Wonga.QA.Framework.UI.Mappings.Content.Agreements;
 using Wonga.QA.Framework.UI.Mappings.Content.Elements;
 using Wonga.QA.Framework.UI.Mappings.Content.Links;
@@ -53,8 +54,8 @@ namespace Wonga.QA.Framework.UI
         public LoanAgreement LoanAgreement { get; set; }
         public TabsElementMobile TabsElementMobile { get; set; }
         public FAQPageLinks FAQPageLinks { get; set; }
-        public String ResendPinMessage1 { get; set; }
-        public String ResendPinMessage2 { get; set; }
+        public MobilePinVerificationSection MobilePinVerificationSection { get; set; }
+
 #endregion
     }
 }
