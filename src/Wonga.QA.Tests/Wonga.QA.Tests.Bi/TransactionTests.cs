@@ -11,7 +11,7 @@ namespace Wonga.QA.Tests.Bi
 	[Parallelizable(TestScope.All)]
 	class TransactionTests
 	{
-		[Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za), Pending("Until BI works")]
 		public void TransactionStoredInTableCashAdvance()
 		{
 			var typeName = "CashAdvance";
@@ -22,7 +22,7 @@ namespace Wonga.QA.Tests.Bi
 			WaitForTransactionExistsInBi(transaction);
 		}
 
-		[Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za), Pending("Until BI works")]
 		public void TransactionStoredInTableInitiationFee()
 		{
 			var typeName = "InitiationFee";
@@ -33,7 +33,7 @@ namespace Wonga.QA.Tests.Bi
 			WaitForTransactionExistsInBi(transaction);
 		}
 
-		[Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za), Pending("Until BI works")]
 		public void TransactionStoredInTable_ServiceFee()
 		{
 			var typeName = "ServiceFee";
@@ -44,7 +44,7 @@ namespace Wonga.QA.Tests.Bi
 			WaitForTransactionExistsInBi(transaction);
 		}
 
-		[Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za), Pending("Until BI works")]
 		public void TransactionStoredInTableSuspendInterestAccrual()
 		{
 			var typeName = "SuspendInterestAccrual";
@@ -55,7 +55,7 @@ namespace Wonga.QA.Tests.Bi
 			WaitForTransactionExistsInBi(transaction);
 		}
 
-		[Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za), Pending("Until BI works")]
 		public void TransactionStoredInTableResumeInterestAccrual()
 		{
 			var typeName = "ResumeInterestAccrual";
@@ -66,7 +66,7 @@ namespace Wonga.QA.Tests.Bi
 			WaitForTransactionExistsInBi(transaction);
 		}
 
-		[Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za), Pending("Until BI works")]
 		public void TransactionStoredInTableDirectBankPayment()
 		{
 			var typeName = "DirectBankPayment";
