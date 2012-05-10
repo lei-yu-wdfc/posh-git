@@ -106,7 +106,7 @@ namespace Wonga.QA.Framework
             if (Decision == ApplicationDecisionStatus.Declined)
             {
                 WaitForRiskDecisionToBeMade();
-                return new BusinessApplication(Id);
+                return new BusinessApplication(Id, Customer.Id, Company.Id);
             }
 
             /* STEP 5
@@ -161,7 +161,7 @@ namespace Wonga.QA.Framework
             {
                 Do.With.Message("The initial transactions have not been created").Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).Transactions.Count == 3);
             }
-            return new BusinessApplication(Id);
+            return new BusinessApplication(Id, Customer.Id, Company.Id);
         }
 
         private void WaitForRiskDecisionToBeMade()
