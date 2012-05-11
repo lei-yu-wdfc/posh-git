@@ -11,9 +11,10 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.RiskApiTests
 {
+    [Parallelizable(TestScope.Self)]
 	public class L0RiskApiCheckpointAndVerificationTests : BaseL0RiskApiCheckpointAndVerificationTests
 	{
-		[Test, AUT(AUT.Ca)]
+        [Test, AUT(AUT.Ca), Parallelizable]
 		public void GivenL0Applicant_WhenIsNotMinor_ThenIsAccepted()
 		{
 			_builderConfig = new ApplicationBuilderConfig();
@@ -21,7 +22,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
             L0ApplicationWithSingleCheckPointAndSingleVerification(RiskCheckpointDefinitionEnum.ApplicantIsNotMinor, "ApplicantIsNotMinorVerification");
 		}
 
-		[Test, AUT(AUT.Ca)]
+        [Test, AUT(AUT.Ca), Parallelizable]
 		public void GivenL0Applicant_WhenIsNotMinorOnBritishColumbia_ThenIsDeclined()
 		{
             _builderConfig = new ApplicationBuilderConfig(ApplicationDecisionStatus.Declined);
@@ -39,8 +40,8 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 
 		}
 
-        
-		[Test, AUT(AUT.Ca)]
+
+        [Test, AUT(AUT.Ca), Parallelizable]
 		public void GivenL0Applicant_WhenIsEmployed_ThenIsAccepted()
 		{
 			_builderConfig = new ApplicationBuilderConfig();
@@ -48,7 +49,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
             L0ApplicationWithSingleCheckPointAndSingleVerification(RiskCheckpointDefinitionEnum.CustomerIsEmployed, "CustomerIsEmployedVerification");
 		}
 
-		[Test, AUT(AUT.Ca)]
+        [Test, AUT(AUT.Ca), Parallelizable]
 		public void GivenL0Applicant_WhenElementNotOnCsBlacklist_ThenIsAccepted()
 		{
 			_builderConfig = new ApplicationBuilderConfig();
@@ -59,7 +60,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		}
 
 
-		[Test, AUT(AUT.Ca)]
+        [Test, AUT(AUT.Ca), Parallelizable]
 		public void GivenL0Applicant_WhenApplicationDeviceNotOnBlacklist_ThenIsAccepted()
 		{
 			_builderConfig = new ApplicationBuilderConfig();
@@ -69,7 +70,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
             L0ApplicationWithSingleCheckPointAndVerifications(RiskCheckpointDefinitionEnum.HardwareBlacklistCheck, expectedVerifications);
 		}
 
-		[Test, AUT(AUT.Ca)]
+        [Test, AUT(AUT.Ca), Parallelizable]
 		public void GivenL0Applicant_WhenApplicationDeviceIsOnBlacklist_ThenDeclined()
 		{
             _builderConfig = new ApplicationBuilderConfig(IovationMockResponse.Deny, ApplicationDecisionStatus.Declined);
@@ -113,7 +114,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 			}
 		}
 
-		[Test, AUT(AUT.Ca)]
+        [Test, AUT(AUT.Ca), Parallelizable]
 		public void GivenL0Applicant_WhenMonthlyIncomeEnoughForRepayment_ThenIsAccepted()
 		{
 			_builderConfig = new ApplicationBuilderConfig();
@@ -124,7 +125,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 
 		}
 
-		[Test, AUT(AUT.Ca)]
+        [Test, AUT(AUT.Ca), Parallelizable]
 		public void GivenL0Applicant_WhenMonthlyIncomeNotEnoughForRepayment_ThenIsDeclined()
 		{
             _builderConfig = new ApplicationBuilderConfig(ApplicationDecisionStatus.Declined);
@@ -140,7 +141,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 
 		}
 
-		[Test, AUT(AUT.Ca)]
+        [Test, AUT(AUT.Ca), Parallelizable]
 		public void GivenL0Applicant_WhenNoSuspiciousApplicationActivity_ThenIsAccepted()
 		{
 			_builderConfig = new ApplicationBuilderConfig();
@@ -149,7 +150,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
                 RiskCheckpointDefinitionEnum.SuspiciousActivityCheck, "SuspiciousActivityVerification");
 		}
 
-		[Test, AUT(AUT.Ca)]
+        [Test, AUT(AUT.Ca), Parallelizable]
 		public void GivenL0Applicant_WhenDirectFraudCheck_ThenIsDeclined()
 		{
             _builderConfig = new ApplicationBuilderConfig(ApplicationDecisionStatus.Declined);
@@ -159,7 +160,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 				"DirectFraudCheckVerification");
 		}
 
-		[Test, AUT(AUT.Ca)]
+        [Test, AUT(AUT.Ca), Parallelizable]
 		public void GivenL0Applicant_WhenBankAccountDoesNotMatchApplicant_ThenIsDeclined()
 		{
             _builderConfig = new ApplicationBuilderConfig(ApplicationDecisionStatus.Declined);
@@ -172,7 +173,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 				expectedVerificationNames);
 		}
 
-		[Test, AUT(AUT.Ca)]
+        [Test, AUT(AUT.Ca), Parallelizable]
 		public void GivenL0Applicant_WhenIsNotDeceased_ThenIsAccepted()
 		{
 			_builderConfig = new ApplicationBuilderConfig();
@@ -183,7 +184,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 
 		}
 
-		[Test, AUT(AUT.Ca)]
+        [Test, AUT(AUT.Ca), Parallelizable]
 		public void GivenL0Applicant_WhenIsSolvent_ThenIsAccepted()
 		{
 			_builderConfig = new ApplicationBuilderConfig();
@@ -195,7 +196,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		}
 
 
-		[Test, AUT(AUT.Ca)]
+        [Test, AUT(AUT.Ca), Parallelizable]
 		public void GivenL0Applicant_WhenCustomerDateOfBirthIsCorrect_ThenIsAccepted()
 		{
 			_builderConfig = new ApplicationBuilderConfig();
@@ -207,7 +208,7 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		}
 
 
-		[Test, AUT(AUT.Ca)]
+        [Test, AUT(AUT.Ca), Parallelizable]
 		public void GivenL0Applicant_WhenCreditBureauDataIsNotAvailable_ThenIsDeclined()
 		{
             _builderConfig = new ApplicationBuilderConfig(ApplicationDecisionStatus.Declined);

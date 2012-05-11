@@ -13,9 +13,10 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.RiskApiTests
 {
+    [Parallelizable(TestScope.All)]
 	public class LnRiskApiCheckpointAndVerificationTests : BaseLnRiskApiCheckpointAndVerificationTests
 	{
-		[Test, AUT(AUT.Ca)]
+        [Test, AUT(AUT.Ca), Parallelizable]
 		public void GivenLNApplicant_WhenIsNotMinor_ThenIsAccepted()
 		{
 			_builderConfig = new ApplicationBuilderConfig();
