@@ -29,7 +29,7 @@ namespace Wonga.QA.Tests.Payments
         }
 
         [Test, AUT(AUT.Ca), Ignore("Partial test to assist QA. Not to run on buildsite")]
-        public void LnCustomer()
+        public void LnCustomers()
         {
             for (int i = 0; i < 50; i++)
             {
@@ -40,6 +40,26 @@ namespace Wonga.QA.Tests.Payments
                 application.RepayOnDueDate();
                 Console.WriteLine(customer.Email);
             }
+        }
+
+        [Test, AUT(AUT.Ca), Ignore("Partial test to assist QA. Not to run on buildsite")]
+        public void LnCustomer()
+        {
+            var customerBuilder = CustomerBuilder.New().WithProvinceInAddress(ProvinceEnum.ON);
+            var customer = customerBuilder.Build();
+            var application = ApplicationBuilder.New(customer).WithLoanTerm(10).Build();
+
+            application.RepayOnDueDate();
+            Console.WriteLine(customer.Email);
+        }
+
+        [Test, AUT(AUT.Ca), Ignore("Partial test to assist QA. Not to run on buildsite")]
+        public void L0Customer()
+        {
+            var customerBuilder = CustomerBuilder.New().WithProvinceInAddress(ProvinceEnum.ON);
+            var customer = customerBuilder.Build();
+            ApplicationBuilder.New(customer).WithLoanTerm(10).Build();
+            Console.WriteLine(customer.Email);
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Msmq;
 
 namespace Wonga.QA.Tests.BankGateway.Helpers
@@ -11,26 +12,20 @@ namespace Wonga.QA.Tests.BankGateway.Helpers
         private readonly string _configKey = "BankGateway.Rbc.FileTransferTimes";
 		private readonly string _originalSchedule;
 
+        private readonly dynamic _opsSagasCa = Drive.Data.OpsSagas.Db.SendRbcPaymentSagaEntity;
+
 		public RbcBatchSending()
 		{
-			// Pause Cash-out schedule
-			var driver = Drive.Db.Ops;
-            var config = driver.ServiceConfigurations.First(sc => sc.Key == _configKey);
-			_originalSchedule = config.Value;
-			config.Value = DateTime.UtcNow.AddHours(2).TimeOfDay.ToString();
-			driver.SubmitChanges();
+            _originalSchedule = Drive.Db.GetServiceConfiguration(_configKey).Value;
+            Drive.Db.SetServiceConfiguration(_configKey, DateTime.UtcNow.AddHours(2).TimeOfDay.ToString("%h") + ":00");
 		}
 
 		public void Dispose()
 		{
-			// Restore cash-out schedule
-			var driver = Drive.Db.Ops;
-            var config = driver.ServiceConfigurations.First(sc => sc.Key == _configKey);
-			config.Value = _originalSchedule;
-			driver.SubmitChanges();
+            Drive.Db.SetServiceConfiguration(_configKey, _originalSchedule);
 
-			var batchSaga = Do.Until(() => Drive.Data.OpsSagas.Db.SendRbcPaymentSagaEntity.All().First());
-			Drive.Msmq.BankGatewayRbc.Send(new TimeoutMessage { SagaId = batchSaga.Id });
+            var batchSaga = Do.Until(() => _opsSagasCa.All().First());
+            Drive.Msmq.BankGatewayRbc.Send(new TimeoutMessage { SagaId = batchSaga.Id });
 		}
 	}
 }
