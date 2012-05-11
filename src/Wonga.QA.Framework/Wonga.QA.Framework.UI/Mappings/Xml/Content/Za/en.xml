@@ -19,5 +19,9 @@
   <FAQPageLinks>
     <CouncilForDebtCollectorsLink>http://www.debtcol-council.co.za</CouncilForDebtCollectorsLink>
   </FAQPageLinks>
-  
-</Content>
+
+	<MobilePinVerificationSection>
+		<ResendPinMessage1>Your pin has now been resent to your phone. You should receive it within a few minutes.</ResendPinMessage1>
+		<ResendPinMessage2>We have resent your PIN.</ResendPinMessage2>
+	</MobilePinVerificationSection>
+	</Content>
