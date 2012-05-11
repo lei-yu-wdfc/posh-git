@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using Microsoft.Win32;
@@ -7,7 +8,7 @@ using Microsoft.Win32;
 namespace Wonga.QA.Framework.Core
 {
     public enum AUT { Uk, Za, Ca, Wb, Pl }
-    public enum SUT { Dev, WIP, UAT, RC, WIPRelease, RCRelease }
+    public enum SUT { Dev, WIP, UAT, RC, WIPRelease, RCRelease, Live }
 
     public static class Config
     {
@@ -28,7 +29,7 @@ namespace Wonga.QA.Framework.Core
         public static PayLaterConfig PayLaterUi { get; set; }
         public static PayLaterConfig PayLaterApi { get; set; }
         public static CommonApiConfig CommonApi { get; set; }
-
+        
 
         static Config()
         {
@@ -168,6 +169,11 @@ namespace Wonga.QA.Framework.Core
                     SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.rc", "Allw0nga");
                     SalesforceApi = new SalesforceApiConfig("v3integration@wonga.com.rc");
                     break;
+                case SUT.Live:
+                    Ui.SetUri(AUT == AUT.Ca ? "www.wonga.ca" : 
+                        AUT == AUT.Za ? "www.wonga.co.za" :
+                        AUT == AUT.Wb ? "www.wongabusiness.com" : ThrowInvalidConfiguration<string>(string.Format("Current AUT '{0}' is not supported in Live", AUT)));                
+                    break;
                 default:
                     throw new NotImplementedException();
             }
@@ -182,6 +188,11 @@ namespace Wonga.QA.Framework.Core
         public static T Throw<T>()
         {
             throw new NotImplementedException(typeof(T).FullName);
+        }
+
+        public static T ThrowInvalidConfiguration<T>(string reason)
+        {
+            throw new ConfigurationErrorsException(reason);
         }
 
         private static T GetValue<T>(object defaultValue = null, string variable = null)
