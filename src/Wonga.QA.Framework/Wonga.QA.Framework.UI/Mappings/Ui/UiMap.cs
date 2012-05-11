@@ -72,6 +72,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual ChangeMyAddressElement ChangeMyAddressElement { get; set; }
         public virtual SmallRepaySlidersElement SmallRepaySlidersElement { get; set; }
         public virtual TabsElementMobile TabsElementMobile { get; set; }
+        public virtual HomePageWelcomePopup HomePageWelcomePopup { get; set; }
 
         #endregion
 
