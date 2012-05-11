@@ -50,7 +50,6 @@ namespace Wonga.QA.Framework.Mocks
 
 		private XElement GetExpectedResponse(string type)
 		{
-			//string xmlResponse = IovationDataOutput.Find(IovationDataOutput.Type == type).Response.ToString();
 			string xmlResponse = IovationDataOutput.FindByType(type).Response.ToString();
 
 			return XElement.Parse(xmlResponse);
