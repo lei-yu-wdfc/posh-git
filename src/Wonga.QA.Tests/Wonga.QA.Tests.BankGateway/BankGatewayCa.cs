@@ -12,6 +12,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.BankGateway
 {
     [TestFixture, AUT(AUT.Ca)]
+    [Parallelizable(TestScope.Self)]
     public class BankGatewayCa
     {
         private readonly dynamic _bgTrans = Drive.Data.BankGateway.Db.Transactions;
@@ -68,7 +69,7 @@ namespace Wonga.QA.Tests.BankGateway
                                Single());
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1913"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey, true)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1913"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey, true), Parallelizable]
         public void WhenCustomerEntersAnApplicationWithInstitionCode001ThenBankGatewayShouldRouteTransactionToScotia()
         {
             var customer = CustomerBuilder.New().
@@ -83,7 +84,7 @@ namespace Wonga.QA.Tests.BankGateway
 
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1913"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey, true)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1913"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey, true), Parallelizable]
         public void WhenCustomerEntersAnApplicationWithInstitionCode003ThenBankGatewayShouldRouteTransactionToScotia()
         {
             var customer = CustomerBuilder.New().
@@ -98,7 +99,7 @@ namespace Wonga.QA.Tests.BankGateway
 
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1913"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1913"), FeatureSwitch(FeatureSwitchConstants.BmoFeatureSwitchKey), Parallelizable]
         public void WhenCustomerEntersInstitionNumber002ThenBankGatewayShouldRouteTransactionToScotia()
         {
             var customer = CustomerBuilder.New().

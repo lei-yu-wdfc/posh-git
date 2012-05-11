@@ -10,11 +10,12 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.BankGateway
 {
     [TestFixture]
+    [Parallelizable(TestScope.Self)]
     public class BankGatewayCaRbc
     {
         private readonly dynamic _bgTrans = Drive.Data.BankGateway.Db.Transactions;
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1995"), FeatureSwitch(FeatureSwitchConstants.RbcFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1995"), FeatureSwitch(FeatureSwitchConstants.RbcFeatureSwitchKey), Parallelizable]
         public void WhenCustomerEntersInstitutionNumber003ThenBankGatewayShouldRouteTransactionToRbc()
         {
             var customer = CustomerBuilder.New().
@@ -27,7 +28,7 @@ namespace Wonga.QA.Tests.BankGateway
                                     _bgTrans.BankIntegrationId == (int)BankGatewayIntegrationId.Rbc).Single());
         }
 
-		[Test, AUT(AUT.Ca), JIRA("CA-1995"), FeatureSwitch(FeatureSwitchConstants.RbcFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1995"), FeatureSwitch(FeatureSwitchConstants.RbcFeatureSwitchKey), Parallelizable]
 		public void WhenMultipleTransactionsAreBatchedHapyPath()
 		{
 			var applicationIds = new List<Guid>();
