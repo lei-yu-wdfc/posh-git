@@ -12,6 +12,7 @@ using ProvinceEnum = Wonga.QA.Framework.Api.ProvinceEnum;
 
 namespace Wonga.QA.Tests.Payments
 {
+    [Parallelizable(TestScope.All)]
     public class CollectionsCommunicationsChaseForDca
     {
         private const string SendCollectionsReminderA2Email = "Email.SendCollectionsReminderA2Email";

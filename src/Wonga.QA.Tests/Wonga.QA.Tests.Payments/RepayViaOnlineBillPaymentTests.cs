@@ -9,7 +9,7 @@ using Wonga.QA.Tests.Payments.Helpers;
 
 namespace Wonga.QA.Tests.Payments
 {
-	[TestFixture]
+    [TestFixture, AUT(AUT.Ca), Parallelizable(TestScope.All)]
 	public class RepayViaOnlineBillPaymentTests
 	{
 		[Test, AUT(AUT.Ca), JIRA("CA-1441")]
