@@ -57,7 +57,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             set
             {
                 Do.With.Interval(1).While(LookForProvicePopup);
-                Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.YourProvince))  .SelectOption(value);
+                Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.YourProvince)).SelectOption(value);
             }
         }
 
