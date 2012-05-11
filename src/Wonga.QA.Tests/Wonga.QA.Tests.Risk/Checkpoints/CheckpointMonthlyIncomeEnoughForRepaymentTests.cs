@@ -15,13 +15,13 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	{
         private const RiskMask TestMask = RiskMask.TESTMonthlyIncomeEnoughForRepayment;
 
-		[Test, AUT(AUT.Za, AUT.Uk), JIRA("SME-866","UK-866")]
+		[Test, AUT(AUT.Za, AUT.Uk), JIRA("SME-866","UK-866"), Description("Scenario 1: Accepted")]
 		public void CheckpointMonthlyIncomeEnoughForRepaymentAccept()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
 
 			var application = ApplicationBuilder.New(customer)
-				.WithLoanAmount(GetLoanThresholdForCustomer(customer) - 1)
+                .WithLoanAmount(GetDefaultCreditLimit() - 1)
 				.Build();
 
             var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
@@ -29,13 +29,16 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.MonthlyIncomeLimitCheck));
 		}
 
-		[Test, AUT(AUT.Za, AUT.Uk), JIRA("SME-866","UK-866")]
+        [Test, AUT(AUT.Za, AUT.Uk), JIRA("SME-866", "UK-866"), Description("Scenario 1: Declined")]
 		public void CheckpointMonthlyIncomeEnoughForRepaymentDecline()
 		{
-			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
+			var customer = CustomerBuilder.New()
+                .WithEmployer(TestMask)
+                .WithNetMonthlyIncome(GetInsufficentApplicantIncome(GetDefaultCreditLimit()))
+                .Build();
 
 			ApplicationBuilder.New(customer)
-				.WithLoanAmount(GetLoanThresholdForCustomer(customer) + 1)
+                .WithLoanAmount(GetDefaultCreditLimit())
                 .WithExpectedDecision(ApplicationDecisionStatus.Declined)
 				.Build();
 		}
@@ -53,6 +56,19 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		{
 			return Decimal.Parse(Drive.Db.GetServiceConfiguration("Risk.AllowedIncomeLimitPercent").Value);
 		}
+
+        private decimal GetDefaultCreditLimit()
+        {
+            return Decimal.Parse(Drive.Db.GetServiceConfiguration("Risk.DefaultCreditLimit").Value);
+        }
+
+        private decimal GetInsufficentApplicantIncome(decimal loanAmount)
+        {
+            var allowedIncomePercentageLimit = GetAllowedIncomeLimitPercent();
+            var netMonthlyIncome = loanAmount - 1;
+
+            return ((allowedIncomePercentageLimit / 100.0m) * netMonthlyIncome);
+        }
 
 		#endregion
 	}
