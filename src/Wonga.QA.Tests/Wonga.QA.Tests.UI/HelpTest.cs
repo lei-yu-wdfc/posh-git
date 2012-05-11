@@ -96,7 +96,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za)] //ZA-1600 bug check
+        [Test, AUT(AUT.Za), Pending("ZA-1600")] //ZA-1600 bug check
         public void CouncilForDebtCollectorsLinkCheck()
         {
             var faq = Client.Faq();
