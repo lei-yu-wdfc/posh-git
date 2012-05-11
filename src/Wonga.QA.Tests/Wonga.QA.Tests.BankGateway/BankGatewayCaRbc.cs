@@ -29,27 +29,89 @@ namespace Wonga.QA.Tests.BankGateway
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1995"), FeatureSwitch(FeatureSwitchConstants.RbcFeatureSwitchKey), Parallelizable]
-		public void WhenMultipleTransactionsAreBatchedHapyPath()
-		{
-			var applicationIds = new List<Guid>();
+        public void WhenMultipleTransactionsAreBatchedHappyPath()
+        {
+            var applicationIds = new List<Guid>();
 
-			using (new RbcBatchSending())
-			{
-				for (int i = 0; i < 3; i++)
-				{
-					var customer = CustomerBuilder.New().
-						WithInstitutionNumber("003").
-						WithBranchNumber("00022").
-						Build();
-					var application = ApplicationBuilder.New(customer).Build();
-					applicationIds.Add(application.Id);
+            using (new RbcBatchSending())
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    var customer = CustomerBuilder.New().
+                        WithInstitutionNumber("003").
+                        WithBranchNumber("00022").
+                        Build();
+                    var application = ApplicationBuilder.New(customer).Build();
+                    applicationIds.Add(application.Id);
 
-					Do.Until(() => _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
-					                                _bgTrans.BankIntegrationId == (int) BankGatewayIntegrationId.Rbc).Single());
-				}
-			}
+                    Do.Until(() => _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
+                                                    _bgTrans.BankIntegrationId == (int)BankGatewayIntegrationId.Rbc).Single());
+                }
+            }
 
-			// TODO: Add more solid assertions in here
-		}
-	}
+            // TODO: Add more solid assertions in here
+        }
+
+        //TODO: Remove the Ignore() attribut when the TransactionStatus will set as paid.
+        [Test, AUT(AUT.Ca), JIRA("CA-2207"), Ignore(), Parallelizable]
+        public void WhenCustomerLoanIsFundedBankGatewayShouldUpdateCashOutTransactionToStatusOfPaid()
+        {
+            var customer = CustomerBuilder.New().
+                        WithInstitutionNumber("003").
+                        WithBranchNumber("00022").
+                        Build();
+            var application = ApplicationBuilder.New(customer).Build();
+
+            Do.Until(() => _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
+                                            _bgTrans.BankIntegrationId == (int)BankGatewayIntegrationId.Rbc &&
+                                            _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Paid).
+                                Single());
+
+        }
+
+        //TODO: Remove the Ignore() attribut when the TransactionStatus will set as paid.
+        [Test, AUT(AUT.Ca), JIRA("CA-2207"), Ignore(), Parallelizable]
+        public void WhenCustomerLoanIsRepaidBankGatewayShouldUpdateCashInTransactionToStatusOfPaid()
+        {
+            var customer = CustomerBuilder.New().
+                        WithInstitutionNumber("003").
+                        WithBranchNumber("00022").
+                        Build();
+            var application = ApplicationBuilder.New(customer).Build();
+
+            Do.Until(() => _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
+                                            _bgTrans.BankIntegrationId == (int)BankGatewayIntegrationId.Rbc &&
+                                            _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Paid).
+                               Single());
+
+            application.RepayOnDueDate();
+
+            Assert.IsTrue(_bgTrans.GetCount(_bgTrans.ApplicationId == application.Id) == 2);
+
+            Do.Until(() => _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
+                                            _bgTrans.BankIntegrationId == (int)BankGatewayIntegrationId.Rbc &&  
+                                            _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Paid).
+                               OrderByDescending(_bgTrans.TransactionId).First());
+        }
+
+        //TODO: Remove the Ignore() attribut when the TransactionStatus will set as paid
+        //TODO: Uncomment below when the RbcResponseBuilder will be ready
+        [Test, AUT(AUT.Ca), JIRA("CA-2207"), Ignore(), Parallelizable]
+        public void WhenCustomerEntersAnApplicationWithAnInvalidBankAccountThenBankGatewayShouldUpdateTransactionAsFailed()
+        {
+            //var customer = CustomerBuilder.New().
+            //    Build();
+
+            //RbcResponseBuilder.New().
+            //    ForBankAccountNumber(customer.BankAccountNumber).
+            //    Reject();
+
+            //var application = ApplicationBuilder.New(customer).Build();
+
+            //Do.Until(() => _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
+            //                                _bgTrans.BankIntegrationId == (int)BankGatewayIntegrationId.Rbc &&
+            //                                _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Failed).
+            //                   Single());
+        }
+    }
 }
