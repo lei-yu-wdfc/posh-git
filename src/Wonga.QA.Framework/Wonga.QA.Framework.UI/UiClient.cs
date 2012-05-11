@@ -30,10 +30,7 @@ namespace Wonga.QA.Framework.UI
 
         public UiClient()
         {
-            //Config.Ui.RemoteMode = true;
-            //Config.Ui.Browser = Config.UiConfig.BrowserType.InternetExplorer;
-            //Config.Ui.BrowserVersion = "8";
-            //InitializeBrowserCapabilities();
+            InitializeBrowserCapabilities();
             var capabillities = GetDesiredCapabilities();
             Driver = GetWebDriver(capabillities);
             if (Driver is CustomRemoteWebDriver)
