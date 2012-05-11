@@ -4,7 +4,7 @@
     <Username>#edit-name</Username>
     <Password>#edit-pass</Password>
     <LoginButton>#edit-login</LoginButton>
-    <ForgotPassword>#wonga-login-form div div:nth-child(5) a</ForgotPassword>
+    <ForgotPassword>#wonga-login-form.form-element-type-form div.form-inner div.form-markup-wrapper a</ForgotPassword>
   </LoginPage>
 
   <ForgotPasswordPage>
@@ -118,15 +118,15 @@
   </LoginElement>
 
   <ContactElement>
-    <ContactTitle>#contact</ContactTitle>
+    <ContactTitle>#contact</ContactTitle>select#listQuestions
   </ContactElement>
 
   <HelpElement>
     <HelpTrigger>help-trigger</HelpTrigger>
     <HelplistQuestions>#listQuestions</HelplistQuestions>
-    <TroubleshootingQuestions>div#help-panel div.control-bar-panel div.panel:nth-child(2)>#listQuestions</TroubleshootingQuestions>
-    <JargonBuster>#help-panel div div:nth-child(3) p:nth-child(1) a</JargonBuster>
-    <ContactUs>#help-panel div div:nth-child(3) p:nth-child(2) a</ContactUs>
+    <TroubleshootingQuestions>div#help-panel div.control-bar-panel div.panel:first-child + div.panel >#listQuestions</TroubleshootingQuestions>
+    <JargonBuster>#help-panel div div:first-child + div + div p:first-child a</JargonBuster>
+    <ContactUs>#help-panel div div:first-child + div + div p:first-child + p + p a</ContactUs>
   </HelpElement>
 
   <JargonBusterPage>
@@ -264,7 +264,7 @@
   </MySummaryPage>
 
   <MyPaymentsPage>
-    <AddBankAccountButton>#accounts tbody tr td table tbody tr:nth-child(3) td a</AddBankAccountButton>
+    <AddBankAccountButton>#accounts tbody tr td table tbody tr:first-child + tr + tr td a</AddBankAccountButton>
   </MyPaymentsPage>
 
   <SalesForceLoginPage>
@@ -279,14 +279,14 @@
   </SalesForceHomePage>
 
   <SalesForceSearchResultPage>
-    <Customer>#Account_body table tbody tr:nth-child(2) th a</Customer>
+    <Customer>#Account_body table tbody tr:first-child + tr th a</Customer>
   </SalesForceSearchResultPage>
 
   <TabsElement>
     <TabsForm>ul.menu</TabsForm>
-    <Home>li:nth-child(1)>a</Home>
-    <HowItWorks>li:nth-child(2)>a</HowItWorks>
-    <AboutUs>li:nth-child(3)>a</AboutUs>
+    <Home>li:first-child>a</Home>
+    <HowItWorks>li:first-child + li>a</HowItWorks>
+    <AboutUs>li:first-child + li + li>a</AboutUs>
   </TabsElement>
 
   <TopupRequestPage>
