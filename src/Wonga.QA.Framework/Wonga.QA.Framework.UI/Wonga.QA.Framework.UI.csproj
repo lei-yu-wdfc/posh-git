@@ -73,6 +73,7 @@
     <Compile Include="Mappings\Content\ErrorsMessages\MobilePinVerificationSection.cs" />
     <Compile Include="Mappings\Content\Links\FAQPageLinks.cs" />
     <Compile Include="Mappings\Ui\Elements\ChangeMyAddressElement.cs" />
+    <Compile Include="Mappings\Ui\Elements\HomePageWelcomePopup.cs" />
     <Compile Include="Mappings\Ui\Elements\TabsElementMobile.cs" />
     <Compile Include="Mappings\Ui\Elements\ContactElement.cs" />
     <Compile Include="Mappings\Ui\Elements\SmallRepaySlidersElement.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="Test.cs" />
     <Compile Include="Ui\Elements\BaseElement.cs" />
     <Compile Include="Ui\Elements\ChangeMyAddressElement.cs" />
+    <Compile Include="Ui\Elements\HomePageWelcomePopup.cs" />
     <Compile Include="Ui\Elements\TabsElementMobile.cs" />
     <Compile Include="Ui\Elements\ContactElement.cs" />
     <Compile Include="Ui\Elements\SmallRepaySlidersElement.cs" />

@@ -218,4 +218,9 @@
 	<AccountDetailsPage>
 		<FormId>#account-setup-1</FormId>
 	</AccountDetailsPage>
+
+  <HomePageWelcomePopup>
+    <Frame>#wonga_welcome_popup_floating_blob</Frame>
+    <Close>.close-btn</Close>
+  </HomePageWelcomePopup>
 </UiMap>
