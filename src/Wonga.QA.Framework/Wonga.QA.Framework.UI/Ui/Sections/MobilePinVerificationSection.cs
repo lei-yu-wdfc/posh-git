@@ -26,13 +26,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             try
             {
                 _resendPinMessege = Do.Until(() => Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.MobilePinVerificationSection.ResendPinMessage)));
-                if (_resendPinMessege.Text.Equals("Your pin has now been resent to your phone. Your should receive it within minutes.") || _resendPinMessege.Text.Equals("We have resent your PIN."))
+                if (_resendPinMessege.Text.Equals(Content.Get.MobilePinVerificationSection.ResendPinMessage1) || _resendPinMessege.Text.Equals(Content.Get.MobilePinVerificationSection.ResendPinMessage2))
                 {
                     return true;
                 }
                 else
                 {
                     Console.WriteLine("Text wrong");
+                    Console.WriteLine("Current text: "+_resendPinMessege.Text);
                     return false;
                 }
             }
