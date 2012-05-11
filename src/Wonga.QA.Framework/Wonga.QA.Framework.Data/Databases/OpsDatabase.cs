@@ -40,6 +40,15 @@ namespace Wonga.QA.Framework.Data
 			return oldValue;
 		}
 
+        public T GetServiceConfiguration<T>(string keyName)
+        {
+            var row = Db.ServiceConfigurations.FindByKey(keyName);
+
+            return row != null
+                            ? ConvertToType<T>(row.Value)
+                            : default(T);
+        }
+
 		private static T ConvertToType<T>(string value)
 		{
 			Type targetType = typeof(T);
