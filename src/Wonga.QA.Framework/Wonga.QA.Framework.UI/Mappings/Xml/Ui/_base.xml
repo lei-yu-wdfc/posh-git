@@ -118,7 +118,7 @@
   </LoginElement>
 
   <ContactElement>
-    <ContactTitle>#contact</ContactTitle>select#listQuestions
+    <ContactTitle>#contact</ContactTitle>
   </ContactElement>
 
   <HelpElement>
