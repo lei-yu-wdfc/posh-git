@@ -16,13 +16,13 @@ namespace Wonga.QA.Tests.BankGateway.Helpers
 
 		public BmoBatchSending()
 		{
-            _originalSchedule = Drive.Db.GetServiceConfiguration(_configKey).Value;
-            Drive.Db.SetServiceConfiguration(_configKey, DateTime.UtcNow.AddHours(2).TimeOfDay.ToString("%h") + ":00");
+            _originalSchedule = Drive.Data.Ops.GetServiceConfiguration<string>(_configKey);
+            Drive.Data.Ops.SetServiceConfiguration(_configKey, DateTime.UtcNow.AddHours(2).TimeOfDay.ToString("%h") + ":00");
 		}
 
 		public void Dispose()
 		{
-            Drive.Db.SetServiceConfiguration(_configKey, _originalSchedule);
+            Drive.Data.Ops.SetServiceConfiguration(_configKey, _originalSchedule);
 
             var batchSaga = Do.Until(() => _opsSagasCa.All().First());
             Drive.Msmq.BankGatewayBmo.Send(new TimeoutMessage { SagaId = batchSaga.Id });
