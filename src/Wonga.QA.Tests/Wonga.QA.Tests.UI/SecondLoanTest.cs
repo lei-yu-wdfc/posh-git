@@ -23,7 +23,7 @@ namespace Wonga.QA.Tests.Ui
 {
     class SecondLoanTest : UiTest
     {
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-195")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-195"), Pending("Refreshing the page shows the correct value")]
         public void InformationAboutSecondLoanShouldBeDisplayed()
         {
             string actualRepaymentDate;
