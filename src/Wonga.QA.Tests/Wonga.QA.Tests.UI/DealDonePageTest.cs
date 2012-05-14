@@ -33,7 +33,7 @@ namespace Wonga.QA.Tests.Ui
             _termMin = (int)Drive.Data.Payments.Db.Products.All().FirstOrDefault().TermMin;
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-192"), Pending("GetFixedTermLoanCalculationQuery don't work for Ca Wonga.QA.Framework.Api.Exceptions.ValidatorException: Could not process query")]
+        [Test, AUT(AUT.Za), JIRA("QA-192")]
         public void CorrectDataShouldBeDisplayedOnApplicationSuccessPage()
         {
             int randomAmount = _amountMin + (new Random()).Next(_amountMax - _amountMin);
@@ -63,7 +63,7 @@ namespace Wonga.QA.Tests.Ui
                     Assert.AreEqual(dealDoneZa.GetRapaymentAmount().Remove(0, 1), totalRepayableZa);
                     break;
                 #endregion
-                #region case Ca
+                #region case Ca GetFixedTermLoanCalculationQuery don't work for Ca Wonga.QA.Framework.Api.Exceptions.ValidatorException: Could not process query
                 case AUT.Ca:
                     acceptedPage.SignConfirmCaL0(DateTime.Now.ToString("d MMM yyyy"), journey.FirstName, journey.LastName);
                     var dealDoneCa = acceptedPage.Submit() as DealDonePage;
