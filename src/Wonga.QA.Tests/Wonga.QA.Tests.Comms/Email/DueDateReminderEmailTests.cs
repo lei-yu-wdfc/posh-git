@@ -16,6 +16,7 @@ namespace Wonga.QA.Tests.Comms.Email
 {
     [AUT(AUT.Uk)]
     [TestFixture]
+    [Parallelizable(TestScope.All)]
     public class DueDateReminderEmailTests
     {
         private Customer _customer;
@@ -64,7 +65,6 @@ namespace Wonga.QA.Tests.Comms.Email
 
         [AUT(AUT.Uk)]
         [Test]
-        [Parallelizable]
         public void LiveFixedTermLoan_ComingDue_SendsA1TemplateEmailToCustomer()
         {
             _promiseDate = DateTime.UtcNow.AddDays(12);
@@ -98,14 +98,12 @@ namespace Wonga.QA.Tests.Comms.Email
 
         [AUT(AUT.Uk)]
         [Test]
-        [Parallelizable]
         public void LiveFixedTermLoan_WithThreeDayTerm_DoesNotSendA1TemplateEmailToCustomer()
         {
             PerformTestWithTerm(3);
             Assert.IsNull(_emailTable.FindBy(EmailAddress: _customer.Email, TemplateName: "34250"));
         }
 
-        [Parallelizable]
         [AUT(AUT.Uk)]
         [Test]
         public void LiveFixedTermLoan_WithTwoDayTerm_DoesNotSendA1TemplateEmailToCustomer()
@@ -116,7 +114,6 @@ namespace Wonga.QA.Tests.Comms.Email
 
         [AUT(AUT.Uk)]
         [Test]
-        [Parallelizable]
         public void LiveFixedTermLoan_WithOneDayTerm_DoesNotSendA1TemplateEmailToCustomer()
         {
             PerformTestWithTerm(1);

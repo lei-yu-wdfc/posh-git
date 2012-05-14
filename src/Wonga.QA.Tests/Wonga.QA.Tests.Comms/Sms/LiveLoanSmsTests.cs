@@ -13,7 +13,7 @@ namespace Wonga.QA.Tests.Comms.Sms
 {
     [TestFixture]
     [AUT(AUT.Uk)]
-    [Parallelizable]
+    [Parallelizable(TestScope.All)]
     public class LiveLoanSmsTests
     {
         private Customer _customer;
