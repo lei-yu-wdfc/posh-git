@@ -85,7 +85,8 @@ namespace Wonga.QA.Tests.Ui
             // TBD - Check default values
             
             // You currently owe
-            var expectedOweToday = application.GetBalance();
+            //var expectedOweToday = application.GetBalance();
+            var expectedOweToday = application.GetBalanceToday();
             string sExpectedOweToday = String.Format("{0:0.00}", expectedOweToday);
             string sActualOweToday = requestPage.OweToday.TrimStart('£');
             Assert.AreEqual(sExpectedOweToday, sActualOweToday, "Currently Owe is wrong.");

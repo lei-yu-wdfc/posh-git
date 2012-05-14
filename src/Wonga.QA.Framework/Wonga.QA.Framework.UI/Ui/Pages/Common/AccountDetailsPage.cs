@@ -27,7 +27,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public AccountDetailsPage NextClick()
         {
-            _next.Click();
+            _next.Submit();
             return new AccountDetailsPage(Client);
         }
     }

@@ -191,12 +191,11 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Uk), JIRA("UK-427", "Uk-1862"), Pending("Fails due to bug UK-2012")]
-        //[Row(2, 7, 0)]
-        //[Row(1, 4, 0)]
-        [Row(1, 4, 2)]
+        [Test, AUT(AUT.Uk), JIRA("UK-427", "Uk-1862"), Pending("Fails due to bug UK-2046")]
+        //[Row(1, 2, 1)]
         //[Row(1, 7, 1)]
-        //[Row(10, 7, 2)]
+        //[Row(10, 7, 6)]
+        [Row(1, 2, 1)]
         public void ExtensionRequestPageNDaysAfterLoanTakenTest(int loanAmount, int loanTerm, int daysAfterLoan)
         {
             ExtensionRequestPageNDaysAfterLoanTaken(loanAmount, loanTerm, daysAfterLoan);
@@ -206,6 +205,7 @@ namespace Wonga.QA.Tests.Ui
         {
             const int extensionDays = 1;
             const int extensionFee = 10;
+            const Decimal transmissionFee = 5.50M;
             string email = Get.RandomEmail();
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
@@ -229,20 +229,17 @@ namespace Wonga.QA.Tests.Ui
             // Expected
             var api = new ApiDriver();
             _response = api.Queries.Post(new GetFixedTermLoanExtensionQuoteUkQuery { ApplicationId = application.Id });
-            var sliderMinDays = _response.Values["SliderMinDays"].Single();
-            var sliderMaxDays = _response.Values["SliderMaxDays"].Single();
             var oweToday = decimal.Parse(_response.Values["TotalAmountDueToday"].Single());
             var sOweToday = String.Format("£{0}", oweToday.ToString("#.00"));
             var totalRepayToday = decimal.Parse(_response.Values["ExtensionPartPaymentAmount"].Single());
             var sTotalRepayToday = String.Format("£{0}", totalRepayToday.ToString("#.00"));
             var newCreditAmount = decimal.Parse(_response.Values["CurrentPrincipleAmount"].Single());
             var sNewCreditAmount = String.Format("£{0}", newCreditAmount.ToString("#.00"));
-            var futureInterestAndFeesAPI = decimal.Parse(_response.Values["LoanExtensionFee"].Single());
-            //var sFutureInterestAndFees = String.Format("£{0}", futureInterestAndFees.ToString("#.00"));
 
-            var newloanTerm = loanTerm + extensionDays;
-            var expectedTotalPayable = (application.LoanAmount + extensionFee) * (1 + (newloanTerm * 0.00986301369863m));
-            var sFutureInterestAndFees = String.Format("£{0:0.00}", Decimal.Round(expectedTotalPayable - application.LoanAmount, 2));
+            var newLoanTerm = loanTerm - daysAfterLoan + extensionDays;
+            var postedInterest = (application.LoanAmount + transmissionFee) * daysAfterLoan * 0.00986301369863m;
+            var expectedTotalPayable = (application.LoanAmount + extensionFee + postedInterest) * (1 + Decimal.Round(newLoanTerm * 0.00986301369863m, 2));
+            var sFutureInterestAndFees = String.Format("£{0:0.00}", Decimal.Round((expectedTotalPayable - application.LoanAmount), 2));
 
             _response = api.Queries.Post(new GetFixedTermLoanExtensionParametersQuery { AccountId = customer.Id });
             var expectedRepaymentDate = Date.GetOrdinalDate(Convert.ToDateTime(_response.Values["NextDueDate"].Single()).AddDays(extensionDays), "d MMM yyyy");
