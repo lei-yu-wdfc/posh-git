@@ -32,6 +32,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             {
                 case AUT.Za:
                 case AUT.Ca:  //TODO find out what xpath for button on Ca
+                case AUT.Wb:
                     Navigation = new MyAccountNavigationElement(this);
                     break;
             }
