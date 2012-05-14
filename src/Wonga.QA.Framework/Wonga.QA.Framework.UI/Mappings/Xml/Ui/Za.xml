@@ -81,6 +81,8 @@
     <LoanAmount>tr:first-child>td:first-child + td</LoanAmount>
     <PaymentDueDate>tr:first-child + tr + tr + tr + tr + tr>td:first-child + td </PaymentDueDate>
     <TotalToPayOnPaymentDate>tr:first-child + tr + tr + tr + tr + tr + tr + tr + tr + tr + tr>td:first-child + td</TotalToPayOnPaymentDate>
+    <NameInLoanAgreement>#agreementscroll div:first-child+div table tr td:first-child+td+td+td</NameInLoanAgreement>
+    <NameInDirectDebit>#directdebitcroll div:first-child p</NameInDirectDebit>
   </AcceptedPage>
   
   <BankAccountSection>

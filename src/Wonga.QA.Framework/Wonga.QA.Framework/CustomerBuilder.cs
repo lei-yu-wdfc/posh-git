@@ -67,7 +67,7 @@ namespace Wonga.QA.Framework
             _dateOfBirth = Get.GetDoB();
             _gender = GenderEnum.Female;
             if (Config.AUT == AUT.Za) //TODO implement nationalNumber generators for other regions
-                _nationalNumber = Get.GetNIN(_dateOfBirth.DateTime, _gender == GenderEnum.Female);
+                _nationalNumber = Get.GetNationalNumber(_dateOfBirth.DateTime, _gender == GenderEnum.Female);
             _surname = Get.GetName();
             _middleName = Get.GetMiddleName();
             _maidenName = Get.GetName();

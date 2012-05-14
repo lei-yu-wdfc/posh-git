@@ -9,7 +9,7 @@ namespace Wonga.QA.Framework
 	{
 		public static bool IsHoliday(this DateTime date)
 		{
-			return Drive.Data.Payments.Db.CalendarDates.FindBy(IsBankHoliday: true, Date: date.Date);
+			return Drive.Data.Payments.Db.CalendarDates.FindBy(IsBankHoliday: true, Date: date.Date) != null;
 		}
 
 		public static bool IsWorkingDay(this DateTime date)

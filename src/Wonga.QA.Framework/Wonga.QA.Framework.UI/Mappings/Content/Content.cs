@@ -51,6 +51,7 @@ namespace Wonga.QA.Framework.UI
         public String ProblemProcessingDetailsMessage { get; set; }
         public String PasswordWarningMessage { get; set; }
         public String ApplicationErrorMessage { get; set; }
+        public String NotValidPostcode { get; set; }
         public LoanAgreement LoanAgreement { get; set; }
         public TabsElementMobile TabsElementMobile { get; set; }
         public FAQPageLinks FAQPageLinks { get; set; }
@@ -58,6 +59,6 @@ namespace Wonga.QA.Framework.UI
         public MySummaryPage MySummaryPage { get; set; }
         public AddressDetailsPage AddressDeatailsPage { get; set; }
         public MyPaymentsPage MyPaymentsPage { get; set; }
-        #endregion
+#endregion
     }
 }
