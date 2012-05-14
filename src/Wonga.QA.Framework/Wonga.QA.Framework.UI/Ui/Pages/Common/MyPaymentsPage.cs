@@ -79,6 +79,19 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             
         }
 
+        public bool IsInvalidBankAccountCauseWarning()
+        {
+            if (Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.InvalidBankAccountWarning)).Text.Equals(UI.Content.Get.MyPaymentsPage.InvalidBankAccountWarning))
+            {
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("Current message: " + Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.InvalidBankAccountWarning)).Text);
+                return false;
+            }
+        }
+
         public void ClickCloseButton()
         {
             WaitForSuccessPopup();

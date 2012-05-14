@@ -73,6 +73,7 @@
     <Compile Include="Mappings\Content\ErrorsMessages\AddressDetailsPage.cs" />
     <Compile Include="Mappings\Content\ErrorsMessages\MobilePinVerificationSection.cs" />
     <Compile Include="Mappings\Content\Links\FAQPageLinks.cs" />
+    <Compile Include="Mappings\Content\Pages\MyPaymentsPage.cs" />
     <Compile Include="Mappings\Content\Pages\MySummaryPage.cs" />
     <Compile Include="Mappings\Ui\Elements\ChangeMyAddressElement.cs" />
     <Compile Include="Mappings\Ui\Elements\HomePageWelcomePopup.cs" />

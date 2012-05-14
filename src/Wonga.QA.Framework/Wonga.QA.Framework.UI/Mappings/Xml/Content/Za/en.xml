@@ -27,4 +27,8 @@
   <AddressDetailsPage>
     <PostcodeError>Sorry, that is not a valid postcode.</PostcodeError>
   </AddressDetailsPage>
+
+	<MyPaymentsPage>
+		<InvalidBankAccountWarning>Please enter a valid bank account number</InvalidBankAccountWarning>
+	</MyPaymentsPage>
 	</Content>

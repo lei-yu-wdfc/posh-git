@@ -57,6 +57,7 @@ namespace Wonga.QA.Framework.UI
         public MobilePinVerificationSection MobilePinVerificationSection { get; set; }
         public MySummaryPage MySummaryPage { get; set; }
         public AddressDetailsPage AddressDeatailsPage { get; set; }
+        public MyPaymentsPage MyPaymentsPage { get; set; }
         #endregion
     }
 }
