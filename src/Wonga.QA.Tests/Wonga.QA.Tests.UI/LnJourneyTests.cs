@@ -146,7 +146,7 @@ namespace Wonga.QA.Tests.Ui
                            .CurrentPage as MySummaryPage;
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1533", "UK-1902"), Pending("Fails due to bug UK-1902")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1533", "UK-1902")]
         public void FullLnJourneyTest()
         {
             var loginPage = Client.Login();
