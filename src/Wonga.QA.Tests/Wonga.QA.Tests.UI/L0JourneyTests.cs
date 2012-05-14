@@ -1154,7 +1154,7 @@ namespace Wonga.QA.Tests.Ui
             journeyZa.CurrentPage = personalDetailsPageZa.Submit() as AddressDetailsPage;
         }
 
-        [Test, AUT(AUT.Za), Category(TestCategories.Smoke), JIRA("QA-275")]
+        [Test, AUT(AUT.Za), Category(TestCategories.Smoke), JIRA("QA-275"), Pending("ZA-1952")]
         public void PasswordThatEqualToTheEmailWithUpperLastSimbolAddressWarningMessageShouldDisplayed()
         {
             var email = Get.RandomEmail();
