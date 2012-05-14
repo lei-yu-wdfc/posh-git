@@ -68,9 +68,11 @@
     <Reference Include="Wonga.QA.Framework.Data">
       <HintPath>..\..\..\bin\Wonga.QA.Framework.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Wonga.QA.Framework.Msmq, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PrepaidCardTest.cs" />
+    <Compile Include="PrepaidCardInternalMessagesTests.cs" />
+    <Compile Include="PrepaidCardPPSTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

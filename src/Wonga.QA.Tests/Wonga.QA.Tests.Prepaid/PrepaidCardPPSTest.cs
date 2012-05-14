@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
@@ -9,7 +8,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Prepaid
 {
-    class PrepaidCardTest
+    class PrepaidCardPPSTest
     {
         private Customer _eligibleCustomer = null;
         private Customer _nonEligibleCustomer = null;
@@ -23,8 +22,8 @@ namespace Wonga.QA.Tests.Prepaid
 
         private static readonly int VALID_ACCOUNT_NUMBER_LENGTH = 14;
         private static readonly int VALID_SERIAL_NUMBER_LENGTH = 10;
-        private static readonly String VALID_TEMPLATE_NAME = "99999";
 
+        private static readonly String STANDARD_CARD_TEMPLATE_NAME = "34327";
 
         private static readonly dynamic _prepaidCardDb = Drive.Data.PrepaidCard.Db;
         private static readonly dynamic _qaDataDb = Drive.Data.QaData.Db;
@@ -46,7 +45,7 @@ namespace Wonga.QA.Tests.Prepaid
 
             _requestWithInvalidCustomerId = new SignupCustomerForStandardCardCommand();
             _requestWithInvalidCustomerId.CustomerExternalId = _nonEligibleCustomer.Id;
-            
+
             _requestWithCustomerInArrears = new SignupCustomerForStandardCardCommand();
             _requestWithCustomerInArrears.CustomerExternalId = _nonEligibleCustomerInArrears.Id;
 
@@ -54,7 +53,7 @@ namespace Wonga.QA.Tests.Prepaid
             _requestWithInvalidCustomerEmail.CustomerExternalId = _customerWithWromgEmail.Id;
         }
 
-        [Test, AUT(AUT.Uk), JIRA("PP-8","PP-150")]
+        [Test, AUT(AUT.Uk), JIRA("PP-8", "PP-150")]
         public void CustomerShouldApplyForPrepaidCard()
         {
             ExecuteCommonPPSCommands();
@@ -62,7 +61,7 @@ namespace Wonga.QA.Tests.Prepaid
             Assert.Throws<Exception>(() => CheckOnAddingRecordsToPrepaidCard(_customerWithWromgEmail.Id));
         }
 
-        [Test,AUT(AUT.Uk),JIRA("PP-79")]
+        [Test, AUT(AUT.Uk), JIRA("PP-79")]
         public void CustomerShouldsendRequestForResetPINCode()
         {
             ExecuteCommonPPSCommands();
@@ -85,12 +84,12 @@ namespace Wonga.QA.Tests.Prepaid
             Assert.IsNotNull(successResponse.Values["ResetCode"]);
         }
 
-        [Test,AUT(AUT.Uk),JIRA("PP-11")]
+        [Test, AUT(AUT.Uk), JIRA("PP-11")]
         public void CustomerShouldReceiveEmailWhenApplyPrepaidCard()
         {
             ExecuteCommonPPSCommands();
             CheckOnAddingRecordsToPrepaidCard(_eligibleCustomer.Id);
-            Do.Until(() => _qaDataDb.Email.FindBy(EmailAddress:_eligibleCustomer.GetEmail(),TemplateName:VALID_TEMPLATE_NAME));
+            Do.Until(() => _qaDataDb.Email.FindBy(EmailAddress: _eligibleCustomer.GetEmail(), TemplateName: STANDARD_CARD_TEMPLATE_NAME));
         }
 
         [TearDown]
@@ -116,11 +115,11 @@ namespace Wonga.QA.Tests.Prepaid
             Assert.IsNotNull(cardDetails.CardPan);
         }
 
-        private void ExecuteAPICommand(ApiRequest request,bool isThrowException)
+        private void ExecuteAPICommand(ApiRequest request, bool isThrowException)
         {
-            if(isThrowException.Equals(true))
+            if (isThrowException.Equals(true))
             {
-                Assert.Throws<Exception>(() => Drive.Api.Commands.Post(request));   
+                Assert.Throws<Exception>(() => Drive.Api.Commands.Post(request));
             }
             else
             {
