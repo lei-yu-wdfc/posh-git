@@ -17,7 +17,7 @@ namespace Wonga.QA.Framework.Api
             HomePhone = "0210000000";
             WorkPhone = "0210000000";
             MarriedInCommunityProperty = 0;
-            NationalNumber = Get.GetNIN((Date)DateOfBirth, (GenderEnum)Gender == GenderEnum.Female);
+            NationalNumber = Get.GetNationalNumber((Date)DateOfBirth, (GenderEnum)Gender == GenderEnum.Female);
 
             if ((GenderEnum)Gender != GenderEnum.Female)
                 MaidenName = null;

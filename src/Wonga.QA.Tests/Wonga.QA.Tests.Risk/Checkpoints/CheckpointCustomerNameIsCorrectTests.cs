@@ -103,7 +103,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.WithMiddleName(_middleName)
 				.WithSurname(_surname)
 				.WithDateOfBirth(_dateOfBirth)
-				.WithNationalNumber(Get.GetNIN(_dateOfBirth, true))
+				.WithNationalNumber(Get.GetNationalNumber(_dateOfBirth, true))
 				.Build();
 
             ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();

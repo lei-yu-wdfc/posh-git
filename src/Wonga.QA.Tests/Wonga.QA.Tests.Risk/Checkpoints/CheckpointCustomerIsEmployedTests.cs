@@ -16,15 +16,16 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	public class CheckpointCustomerIsEmployedTests
 	{
         private const RiskMask TestMask = RiskMask.TESTCustomerIsEmployed;
+		private Application l0Application;
 
 		[Test]
         [JIRA("UK-1566")]
 		public void L0_CustomerIsEmployed_LoanIsAccepted()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithEmployerStatus(EmploymentStatusEnum.EmployedFullTime.ToString()).Build();
-			var application =  ApplicationBuilder.New(customer).Build();
+			l0Application =  ApplicationBuilder.New(customer).Build();
 
-            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
+            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(l0Application.Id, RiskWorkflowTypes.MainApplicant);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
             Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.CustomerIsEmployed));
 		}
@@ -41,15 +42,12 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.CustomerIsEmployed));
 		}
 
-        [Test]
-        [JIRA("UK-1566")]
+		[Test, DependsOn("L0_CustomerIsEmployed_LoanIsAccepted"), JIRA("UK-1566")]
         public void Ln_CustomerIsEmployed_LoanIsAccepted()
-        {
-            var customer = CustomerBuilder.New().WithEmployer(TestMask).WithEmployerStatus(EmploymentStatusEnum.EmployedFullTime.ToString()).Build();
-            var l0Application = ApplicationBuilder.New(customer).Build();
-            l0Application.RepayOnDueDate();
+		{
+			l0Application.RepayOnDueDate();
 
-            var lnApplication = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+            var lnApplication = ApplicationBuilder.New(l0Application.GetCustomer()).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
             var riskWorkflows = Drive.Db.GetWorkflowsForApplication(lnApplication.Id, RiskWorkflowTypes.MainApplicant);
             Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
             Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.CustomerIsEmployed));

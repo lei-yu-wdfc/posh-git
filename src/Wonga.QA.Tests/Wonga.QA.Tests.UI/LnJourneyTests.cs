@@ -14,6 +14,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Ui
 {
+	[TestFixture, Parallelizable(TestScope.All)]
     class LnJourneyTests : UiTest
     {
         [Test, AUT(AUT.Za), JIRA("QA-196")]
@@ -57,7 +58,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual("0111111111", mobileFromDb);
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-198")]
+        [Test, AUT(AUT.Za), JIRA("QA-198"), Pending()]
         public void LnCustomerChangesMobilePhoneAndEntersInvalidPinShouldNotBeAbleToTakeLoan()
         {
             var loginPage = Client.Login();

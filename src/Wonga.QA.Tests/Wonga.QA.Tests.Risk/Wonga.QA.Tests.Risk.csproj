@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Checkpoints\ApplicationBuilderExtensions.cs" />
+    <Compile Include="Checkpoints\CheckpointAccountNumberApplicationsAcceptableTests.cs" />
     <Compile Include="Checkpoints\CheckpointApplicationElementNotOnCSBlacklistOnlyDoNotRelendVerificationTests.cs" />
     <Compile Include="Checkpoints\CheckpointGeneralManualVerificationAccepted.cs" />
     <Compile Include="Checkpoints\CheckpointGuarantorNameMatchMainApplicant.cs" />

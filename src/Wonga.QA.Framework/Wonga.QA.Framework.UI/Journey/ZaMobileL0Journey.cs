@@ -23,7 +23,7 @@ namespace Wonga.QA.Framework.UI.Journey
             FirstName = Get.GetName();
             LastName = Get.RandomString(10);
             DateOfBirth = new DateTime(1957, 10, 30);
-            NationalId = Get.GetNIN(DateOfBirth, true);
+            NationalId = Get.GetNationalNumber(DateOfBirth, true);
             Email = Get.RandomEmail();
         }
 

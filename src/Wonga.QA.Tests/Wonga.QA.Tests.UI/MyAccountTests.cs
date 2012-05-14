@@ -452,8 +452,8 @@ namespace Wonga.QA.Tests.Ui
             // need to add check data in SF whan it well be ready for this
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-187")]
-        public void CustomerEntersInvalidBankAccountWarningMessageShouldBeDisplyaed()
+        [Test, AUT(AUT.Za), JIRA("QA-187"), Pending("Broken")]
+        public void CustomerEntersInvalidBankAccountWarningMessageShouldBeDisplayed()
         {
             var accounts = new List<string> { "dfgsfgfgsdf", "123 342", "123f445", "+135-6887" };
             var loginPage = Client.Login();

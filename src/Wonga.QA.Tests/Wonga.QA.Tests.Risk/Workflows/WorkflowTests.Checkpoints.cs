@@ -22,6 +22,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 
 		private static readonly List<string> ExpectedCheckpointNamesL0Za = new List<string>()
 		                                                         	{
+																		"Check for excesive number of applications",
 		                                                         		"Customer has provided correct forename & surname",
 		                                                         		"Mobile phone is unique",
 		                                                         		"Reputation prediction check",
@@ -31,7 +32,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 		                                                         		"Hardware blacklist check",
 		                                                         		"Application data blacklist check",
 		                                                         		"Credit bureau data is available",
-		                                                         		"Customer is solvent",
+		                                                         		"Applicant is solvent",
 		                                                         		"Applicant is alive",
 		                                                         		"Repayment prediction check",
 		                                                         		"Bank account is valid",
@@ -40,6 +41,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 
 		private static readonly List<string> ExpectedCheckpointNamesLnZa = new List<string>()
 		                                                                    	{
+																					"Check for excesive number of applications",
 		                                                                    		"Customer is employed",
 		                                                                    		"Monthly income limit check",
 		                                                                    		"Application terms are acceptable for business",
@@ -47,7 +49,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 		                                                                    		"Application data blacklist check",
 		                                                                    		"Fraud list check",
 		                                                                    		"Credit bureau data is available",
-		                                                                    		"Customer is solvent",
+		                                                                    		"Applicant is solvent",
 		                                                                    		"Applicant is alive",
 		                                                                    		"Repayment prediction check",
 		                                                                    		"Bank account is valid"

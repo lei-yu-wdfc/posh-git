@@ -4,6 +4,7 @@ using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
 using Wonga.QA.Framework.UI.Mappings;
+using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.UiElements.Pages.Wb;
 
 namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
@@ -61,6 +62,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     _paymentDueDate = _detailsTable.FindElement(By.CssSelector(UiMap.Get.AcceptedPage.PaymentDueDate));
                     _loanAmount = _detailsTable.FindElement(By.CssSelector(UiMap.Get.AcceptedPage.LoanAmount));
                     _totalToPayOnPaymentDate = _detailsTable.FindElement(By.CssSelector(UiMap.Get.AcceptedPage.TotalToPayOnPaymentDate));
+
                     break;
                 case (AUT.Ca):
                     _form = Content.FindElement(By.CssSelector(UiMap.Get.AcceptedPage.FormId));
@@ -124,6 +126,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public String GetTotalToPayOnPaymentDate
         {
             get { return _totalToPayOnPaymentDate.Text.Replace(" ", "").Replace("*", ""); }
+        }
+        public String GetNameInLoanAgreement
+        {
+            get { return Content.FindElement(By.CssSelector(UiMap.Get.AcceptedPage.NameInLoanAgreement)).Text; }
+        }
+        public String GetNameInDirectDebit
+        {
+            get { return Content.FindElement(By.CssSelector(UiMap.Get.AcceptedPage.NameInDirectDebit)).Text.Replace("Full name(s) Payee/Account Holder: ", ""); }  
         }
         public void SignAgreementConfirm()
         {

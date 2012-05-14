@@ -50,6 +50,10 @@ namespace Wonga.QA.Tests.Ui
             {
                 #region case Za
                 case AUT.Za:
+                    string fullName = journey.FirstName + " " + journey.LastName;
+                    Assert.AreEqual(fullName, acceptedPage.GetNameInLoanAgreement);
+                    Assert.AreEqual(fullName, acceptedPage.GetNameInDirectDebit);
+
                     acceptedPage.SignAgreementConfirm();
                     acceptedPage.SignDirectDebitConfirm();
                     var dealDoneZa = acceptedPage.Submit() as DealDonePage;

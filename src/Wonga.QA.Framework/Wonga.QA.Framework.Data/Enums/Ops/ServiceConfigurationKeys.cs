@@ -253,6 +253,7 @@ namespace Wonga.QA.Framework.Data
         [Description("Iovation.TransactionUrl")] IovationTransactionUrl,
         [Description("Mocks.CallReportEnabled")] MocksCallReportEnabled,
         [Description("Mocks.ScotiaEnabled")] MocksScotiaEnabled,
+        [Description("Mocks.SmsEnabled")] MocksSmsEnabled,
         [Description("Ops.CacheDurationMinutes")] OpsCacheDurationMinutes,
         [Description("Ops.DbSagas")] OpsDbSagas,
         [Description("Ops.Region")] OpsRegion,
