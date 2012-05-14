@@ -1248,7 +1248,7 @@ namespace Wonga.QA.Tests.Ui
             }
             catch (Exception e)
             {
-                Assert.IsTrue(e.Message.Contains(Content.Get.PasswordWarningMessage));
+                Assert.IsTrue(e.Message.Contains(Content.Get.ProblemProcessingDetailsMessage));
                 IWebElement section = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.Fieldset));
                 IWebElement password = section.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.Password));
                 IWebElement passwordConfirm = section.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.PasswordConfirm));
@@ -1266,7 +1266,7 @@ namespace Wonga.QA.Tests.Ui
                 }
                 catch (Exception ex)
                 {
-                    Assert.IsTrue(ex.Message.Contains(Content.Get.ApplicationErrorMessage));
+                    Assert.IsTrue(ex.Message.Contains(Content.Get.ProblemProcessingDetailsMessage));
                 }
             }
         }
@@ -1290,7 +1290,7 @@ namespace Wonga.QA.Tests.Ui
             }
             catch (Exception e)
             {
-                Assert.IsTrue(e.Message.Contains(Content.Get.ProblemProcessingDetailsMessage));
+                Assert.IsTrue(e.Message.Contains(Content.Get.AddressDeatailsPage.PostcodeError));
                 IWebElement form = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.FormId));
                 IWebElement postCode = form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.Postcode));
                 IWebElement houseNumber = form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.HouseNumber));
@@ -1308,11 +1308,11 @@ namespace Wonga.QA.Tests.Ui
                 next.Click();
                 try
                 {
-                    var page = new HomePage(Client);
+                    var page = new AccountDetailsPage(Client);
                 }
                 catch (Exception ex)
                 {
-                    Assert.IsTrue(ex.Message.Contains(Content.Get.ApplicationErrorMessage));
+                    Assert.IsTrue(ex.Message.Contains(Content.Get.AddressDeatailsPage.PostcodeError));
                 }
             }
         }
