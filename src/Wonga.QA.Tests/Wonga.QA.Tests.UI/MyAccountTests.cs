@@ -488,16 +488,8 @@ namespace Wonga.QA.Tests.Ui
                             payment.AddBankAccountButtonClick();
 
                             Thread.Sleep(2000); // Wait some time to load popup
-                            try
-                            {
-                                payment.AddBankAccount("Capitec", "Current", account, "2 to 3 years");
-                                throw new Exception("Invalid bank account was pass: " + account);
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e.Message);
-                                Assert.IsTrue(e.Message.Contains("Please enter a valid bank account number"));
-                            }
+                            payment.AddBankAccount("Capitec", "Current", account, "2 to 3 years");
+                            Assert.IsTrue(payment.IsInvalidBankAccountCauseWarning());
                         }
                         else
                         {

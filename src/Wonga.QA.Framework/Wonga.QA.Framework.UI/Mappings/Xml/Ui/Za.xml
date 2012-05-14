@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <UiMap>
 	<MyPaymentsPage>
+		<InvalidBankAccountWarning>#edit-account-number-za-wrapper .form-error .invalid</InvalidBankAccountWarning>
 		<PopupBankName>#edit-bank-name</PopupBankName>
 		<PopupBankAccountType>#edit-bank-account-type</PopupBankAccountType>
 		<PopupAccountNumber>#edit-account-number-za</PopupAccountNumber>
