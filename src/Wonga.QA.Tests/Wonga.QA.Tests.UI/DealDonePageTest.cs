@@ -27,26 +27,10 @@ namespace Wonga.QA.Tests.Ui
         [SetUp, JIRA("QA-192")]
         public void GetInitialValues()
         {
-            ApiRequest request;
-            switch (Config.AUT)
-            {
-                case AUT.Uk:
-                    request = new GetFixedTermLoanOfferUkQuery();
-                    break;
-                case AUT.Za:
-                    request = new GetFixedTermLoanOfferZaQuery();
-                    break;
-                case AUT.Ca:
-                    request = new GetFixedTermLoanOfferCaQuery();
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
-            _response = Drive.Api.Queries.Post(request);
-            _amountMax = (int)Decimal.Parse(_response.Values["AmountMax"].Single(), CultureInfo.InvariantCulture);
-            _amountMin = (int)Double.Parse(_response.Values["AmountMin"].Single(), CultureInfo.InvariantCulture);
-            _termMax = Int32.Parse(_response.Values["TermMax"].Single(), CultureInfo.InvariantCulture);
-            _termMin = Int32.Parse(_response.Values["TermMin"].Single(), CultureInfo.InvariantCulture);
+            _amountMin = (int)Drive.Data.Payments.Db.Products.All().FirstOrDefault().AmountMin;
+            _amountMax = int.Parse(Drive.Data.Ops.Db.ServiceConfigurations.FindBy(Key: "Payments.DefaultCreditLimit").Value);
+            _termMax = (int)Drive.Data.Payments.Db.Products.All().FirstOrDefault().TermMax;
+            _termMin = (int)Drive.Data.Payments.Db.Products.All().FirstOrDefault().TermMin;
         }
 
         [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-192"), Pending("GetFixedTermLoanCalculationQuery don't work for Ca Wonga.QA.Framework.Api.Exceptions.ValidatorException: Could not process query")]
