@@ -19,7 +19,6 @@ using SignFixedTermLoanExtensionCommand = Wonga.QA.Framework.Msmq.SignFixedTermL
 
 namespace Wonga.QA.Tests.Ui
 {
-    [Parallelizable(TestScope.All)]
     public class LoanStatusMessageTests : UiTest
     {
         Dictionary<int, string> loanStatusMessages = new Dictionary<int, string> 
