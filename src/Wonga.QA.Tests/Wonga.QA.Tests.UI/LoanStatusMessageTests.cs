@@ -12,11 +12,14 @@ using Wonga.QA.Framework.UI;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
 using Wonga.QA.Framework.Msmq;
+using CreateFixedTermLoanExtensionCommand = Wonga.QA.Framework.Msmq.CreateFixedTermLoanExtensionCommand;
 using CreateScheduledPaymentRequestCommand = Wonga.QA.Framework.Msmq.CreateScheduledPaymentRequestCommand;
 using EmploymentStatusEnum = Wonga.QA.Framework.Msmq.EmploymentStatusEnum;
+using SignFixedTermLoanExtensionCommand = Wonga.QA.Framework.Msmq.SignFixedTermLoanExtensionCommand;
 
 namespace Wonga.QA.Tests.Ui
 {
+    [Parallelizable]
     public class LoanStatusMessageTests : UiTest
     {
         Dictionary<int, string> loanStatusMessages = new Dictionary<int, string> 
@@ -100,16 +103,13 @@ namespace Wonga.QA.Tests.Ui
         public void LoanStatusMessageScenario3(int scenarioId, int dasyShift, int loanTerm) { LoanStatusMessage(scenarioId, dasyShift, loanTerm); }
 
         [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1359")]
-        [Row(4, 10, 10)]    // payment missed and Next Due Date is today
-        [Row(4, 1, 1)]      //1 day passed in 1-day loan, payment missed and Next Due Date is today
-        [Row(4, 7, 7)]      //7 days passed in 7-day loan, payment missed and Next Due Date is today
-        //[Row(4, 1, 7)]      //1 day passed in 7-day loan, payment missed and Next Due Date is today. TBD: create test for the variant when 3 (=maximum) extensions have been made and it is 1st day after a 7 day loan is taken")
-        //[Row(4, 10, 10)]    //10 days passed in 10-day loan, payment missed and Next Due Date is today. TBD: create test for the variant when 3 (=maximum) extensions have been made and it is 1st day after a 7 day loan is taken")
-        //[Row(3, 6, 10)]     //6 days passed in 10-day loan, payment missed and Next Due Date is today. TBD: create test for the variant when 2 (< maximum) extensions have been made and it is 6th day after a 10 day loan is taken. The message shold like from scenario 3")
-        //[Row(2, 1, 10)]     //1 days passed in 10-day loan, payment missed and Next Due Date is today. TBD: create test for the variant when 1 (< maximum) extensions have been made and it is 1st day after a 10 day loan is taken. The message shold like from scenario 2")
+        [Row(4, 9, 10)]     //9 days passed in 10-day loan
+        //[Row(4, 1, 2)]      //1 day passed in 2-day loan
+        //[Row(4, 6, 7)]      //6 days passed in 7-day loan
+        //[Row(4, 9, 10)]    //TBD: check that after 3 extensions
+        // [Row(4, 2, 7)]     //done manually - passed. TBD: check that after 3 extensions, you can't extent any more, even though it is not too late
         public void LoanStatusMessageScenario4(int scenarioId, int dasyShift, int loanTerm) { LoanStatusMessage(scenarioId, dasyShift, loanTerm); }    
         
-
         [Test, AUT(AUT.Uk), JIRA("UK-795")]
         public void LoanStatusMessageScenario5() { LoanStatusMessage(5, 2); }
 
@@ -389,10 +389,8 @@ namespace Wonga.QA.Tests.Ui
             Application application;
             if (scenarioId < 5) application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
             else if ((scenarioId >= 5) && (scenarioId <= 7)) application = ApplicationBuilder.New(customer).WithLoanAmount(400).WithLoanTerm(loanTerm).Build();
-            // else if (scenarioId == 17) application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Pending).WithLoanTerm(loanTerm).Build();
             else if (scenarioId == 20) application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).WithLoanTerm(loanTerm).Build();
             else application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
-
 
             // Rewind application dates
             ApplicationEntity applicationEntity = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
@@ -400,6 +398,8 @@ namespace Wonga.QA.Tests.Ui
             TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
             Drive.Db.RewindApplicationDates(applicationEntity, riskApplication, daysShiftSpan);
             
+            if ((scenarioId == 4) && ((loanTerm - daysShift) > 3)) CreateNExtensions(3, customer, application);
+
             if (scenarioId == 8) application = application.RepayOnDueDate(); // Repay a loan
 
             var requestId1 = Guid.NewGuid();
@@ -440,6 +440,30 @@ namespace Wonga.QA.Tests.Ui
 
             string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage;
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
+        }
+
+        private void CreateNExtensions(int numberOfExtensions, Customer customer, Application app)
+        {
+            const int daysToExtend = 1;
+            Guid custId = customer.Id;
+            Guid paymentCardId = customer.GetPaymentCard();
+            const string paymentCardCV = "123";
+            Guid appId = app.Id;
+            var partPaymentAmount = Convert.ToDecimal(Drive.Api.Queries.Post(new GetFixedTermLoanExtensionQuoteUkQuery { ApplicationId = appId }).Values["ExtensionPartPaymentAmount"].Single());
+            //var extensionId = Guid.NewGuid();
+            DateTime extendDate = Convert.ToDateTime(Drive.Api.Queries.Post(new GetFixedTermLoanApplicationQuery { ApplicationId = appId }).Values["NextDueDate"].Single()).AddDays(daysToExtend);
+                
+            for (int i=1; i<=numberOfExtensions; i++)
+            {
+                extendDate = Convert.ToDateTime(Drive.Api.Queries.Post(new GetFixedTermLoanApplicationQuery { ApplicationId = appId }).Values["NextDueDate"].Single()).AddDays(daysToExtend);
+                var extensionId = Guid.NewGuid();
+                partPaymentAmount = Convert.ToDecimal(Drive.Api.Queries.Post(new GetFixedTermLoanExtensionQuoteUkQuery { ApplicationId = appId }).Values["ExtensionPartPaymentAmount"].Single());
+                Console.WriteLine("NextDueDate={0}", extendDate);
+
+                Drive.Msmq.Payments.Send(new CreateFixedTermLoanExtensionCommand() { ApplicationId = appId, ExtensionId = extensionId, ExtendDate = extendDate, PaymentCardId = paymentCardId, PaymentCardCv2 = paymentCardCV, PartPaymentAmount = partPaymentAmount, CreatedOn = DateTime.Today });
+                Drive.Msmq.Payments.Send(new SignFixedTermLoanExtensionCommand() { ApplicationId = appId, ExtensionId = extensionId, CreatedOn = DateTime.Today});
+                Do.Until(() => Drive.Db.Payments.LoanExtensions.Single(x => x.ExternalId == extensionId).SignedOn != null);
+            }
         }
     }
 }

@@ -252,6 +252,14 @@ namespace Wonga.QA.Framework
             return Convert.ToDecimal(Drive.Api.Queries.Post(query).Values["BalanceNextDueDate"].Single());
         }
 
+        public Decimal GetBalanceToday()
+        {
+            var query = Config.AUT == AUT.Za ? (ApiRequest)
+                new GetFixedTermLoanApplicationZaQuery { ApplicationId = Id } :
+                new GetFixedTermLoanApplicationQuery { ApplicationId = Id };
+            return Convert.ToDecimal(Drive.Api.Queries.Post(query).Values["BalanceToday"].Single());
+        }
+
 		public Application RepayEarly(decimal amount, int dayOfLoanToMakeRepayment)
 		{
             Drive.Db.RewindToDayOfLoanTerm(Id, dayOfLoanToMakeRepayment);

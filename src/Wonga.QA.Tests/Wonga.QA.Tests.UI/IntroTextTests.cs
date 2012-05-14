@@ -255,7 +255,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk), JIRA("UK-788", "UK-1966"), Pending("Fails due to bug UK-1966")]
         [Row(13, 71)]
         //[Row(13, 72)]
-        [Row(13, 100)]
+        //[Row(13, 100)]
         //[Row(13, 1000)]
         public void IntroTextScenario13(int scenarioId, int dasyShift)
         {
