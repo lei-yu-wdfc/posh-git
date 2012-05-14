@@ -102,9 +102,12 @@ namespace Wonga.QA.Tests.Ui
         public void LoanStatusMessageScenario3(int scenarioId, int dasyShift, int loanTerm) { LoanStatusMessage(scenarioId, dasyShift, loanTerm); }
 
         [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1359")]
-        [Row(4, 9, 10)]     //9 days passed in 10-day loan
+        //[Row(4, 9, 10)]     //9 days passed in 10-day loan
         //[Row(4, 1, 2)]      //1 day passed in 2-day loan
         //[Row(4, 6, 7)]      //6 days passed in 7-day loan
+        [Row(4, 10, 10)]
+        [Row(4, 2, 2)]
+        [Row(4, 7, 7)]
         //[Row(4, 9, 10)]    //TBD: check that after 3 extensions
         // [Row(4, 2, 7)]     //done manually - passed. TBD: check that after 3 extensions, you can't extent any more, even though it is not too late
         public void LoanStatusMessageScenario4(int scenarioId, int dasyShift, int loanTerm) { LoanStatusMessage(scenarioId, dasyShift, loanTerm); }    
@@ -115,7 +118,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk), JIRA("UK-795")]
         public void LoanStatusMessageScenario6() { LoanStatusMessage(6, 3); }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795, UK-1433"), Pending("Fails due to bug UK-1433")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795, UK-1433")]
         public void LoanStatusMessageScenario7() { LoanStatusMessage(7, 10); }
 
         [Test, AUT(AUT.Uk), JIRA("UK-795")]
