@@ -28,7 +28,7 @@ namespace Wonga.QA.Tests.BankGateway
                                     _bgTrans.BankIntegrationId == (int)BankGatewayIntegrationId.Rbc).Single());
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1995"), FeatureSwitch(FeatureSwitchConstants.RbcFeatureSwitchKey), Parallelizable]
+        [Test, AUT(AUT.Ca), JIRA("CA-1995"), FeatureSwitch(FeatureSwitchConstants.RbcFeatureSwitchKey)]
         public void WhenMultipleTransactionsAreBatchedHappyPath()
         {
             var applicationIds = new List<Guid>();
