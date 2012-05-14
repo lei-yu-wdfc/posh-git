@@ -41,6 +41,7 @@ namespace Wonga.QA.Tests.Bi
         [Test]
         [AUT(AUT.Uk), JIRA("UK-819")]
         [Description("Verifies that after funds have been transferred to the customer application status 'Live' will be set in salesforce")]
+        [Parallelizable(TestScope.All)]
         public void FundsTransferred_SubmitsApplicactionStatusLive_ToSalesforce()
         {
             Customer customer = CustomerBuilder.New().Build();
@@ -72,6 +73,7 @@ namespace Wonga.QA.Tests.Bi
         [Test]
         [AUT(AUT.Uk), JIRA("UK-925")]
         [Description("Verifies that when a live application is moved to complaint status salesforce is informed and a suppression record is created")]
+        [Parallelizable(TestScope.All)]
         public void ApplicationWithComplaint_SubmitsComplaintStatus_ToSalesforce()
         {
             Customer customer = CustomerBuilder.New().Build();
@@ -127,6 +129,7 @@ namespace Wonga.QA.Tests.Bi
         [Test]
         [AUT(AUT.Uk), JIRA("UK-1816")]
         [Description("Verifies that when a live application is moved to management review status salesforce is informed and a suppression record is created")]
+        [Parallelizable(TestScope.All)]
         public void ApplicationWithManagementReview_SubmitsManagementReviewStatus_ToSalesforce()
         {
             Customer customer = CustomerBuilder.New().Build();
