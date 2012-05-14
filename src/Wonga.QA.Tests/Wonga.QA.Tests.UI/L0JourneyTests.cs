@@ -1248,7 +1248,7 @@ namespace Wonga.QA.Tests.Ui
             }
             catch (Exception e)
             {
-                Assert.IsTrue(e.Message.Contains(Content.Get.PasswordWarningMessage));
+                Assert.IsTrue(e.Message.Contains(Content.Get.ProblemProcessingDetailsMessage));
                 IWebElement section = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.Fieldset));
                 IWebElement password = section.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.Password));
                 IWebElement passwordConfirm = section.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.PasswordConfirm));
@@ -1266,7 +1266,7 @@ namespace Wonga.QA.Tests.Ui
                 }
                 catch (Exception ex)
                 {
-                    Assert.IsTrue(ex.Message.Contains(Content.Get.ApplicationErrorMessage));
+                    Assert.IsTrue(ex.Message.Contains(Content.Get.ProblemProcessingDetailsMessage));
                 }
             }
         }
