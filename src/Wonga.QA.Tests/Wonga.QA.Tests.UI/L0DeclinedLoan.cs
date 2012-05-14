@@ -61,7 +61,7 @@ namespace Wonga.QA.Tests.Ui
             var declinedPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-278"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-278"), Category(TestCategories.Smoke), Pending("ZA-2302")]
         public void ZaDeclinedPageContainsHeaderLinks()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
