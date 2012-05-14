@@ -7,6 +7,6 @@ namespace Wonga.QA.Framework.Api
     [XmlRoot("GetLoanExtensionAgreement")]
     public partial class GetLoanExtensionAgreementQuery : ApiRequest<GetLoanExtensionAgreementQuery>
     {
-        public Object ApplicationId { get; set; }
+        public Object ExtensionId { get; set; }
     }
 }
