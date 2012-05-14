@@ -48,6 +48,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             Assert.IsTrue(IsMySummaryTitleExists());
             
         }
+
+        public string GetMyAccountStatus()
+        {
+            return Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.AccountStatusText)).Text;
+        }
+
         public bool LookForSliders()
         {
             try

@@ -55,7 +55,7 @@ namespace Wonga.QA.Framework.UI
         public TabsElementMobile TabsElementMobile { get; set; }
         public FAQPageLinks FAQPageLinks { get; set; }
         public MobilePinVerificationSection MobilePinVerificationSection { get; set; }
-
+        public MySummaryPage MySummaryPage { get; set; }
 #endregion
     }
 }

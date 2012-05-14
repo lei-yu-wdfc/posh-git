@@ -116,6 +116,7 @@
   </ReferPage>
 
   <MySummaryPage>
+	<AccountStatusText>#content-area p</AccountStatusText>
     <Title>#business-summary</Title>
   </MySummaryPage>
 
@@ -162,7 +163,7 @@
 
 
   <MyAccountNavigationSection>
-    <MySummary>div#block-wonga-6 ul.menu>li:nth-child(1)>a</MySummary>
+    <MySummary>.leaf.first.menu-mlid-2872 a</MySummary>
     <AccountDetails>div#block-wonga-6 ul.menu>li:nth-child(2)>a</AccountDetails>
     <YourDetails>div#block-wonga-6 ul.menu>li:nth-child(3)>a</YourDetails>
   

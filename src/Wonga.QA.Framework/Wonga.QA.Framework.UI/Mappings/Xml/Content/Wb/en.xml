@@ -5,4 +5,8 @@
     <Header>Test Header</Header>
     <Text>Test Text</Text>
   </LoanAgreement>
+
+	<MySummaryPage>
+		<AccountStatusMessage>Your business loan application is still being processed.</AccountStatusMessage>
+	</MySummaryPage>
 </Content>
