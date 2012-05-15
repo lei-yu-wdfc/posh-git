@@ -26,7 +26,7 @@ namespace Wonga.QA.Tests.Cs
             var response = Drive.Cs.Queries.Post(new CsGetAccountSummaryQuery { AccountId = customer.Id });
 
             Assert.AreEqual(payDate.Date, DateTime.Parse(response.Values["NextPayDay"].Single()));
-            Assert.IsNotNull(response.Values["IncomeFrequencyType"].Single());
+            Assert.IsNotNull(response.Values["PayFrequencyType"].Single());
         }
     }
 }
