@@ -8,6 +8,7 @@ using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Tests.Core;
+using Wonga.QA.Tests.Risk.Checkpoints;
 
 namespace Wonga.QA.Tests.Risk.Workflows
 {
@@ -73,7 +74,6 @@ namespace Wonga.QA.Tests.Risk.Workflows
 		                                                                   		"Hardware blacklist check",
 		                                                                   		"Credit bureau data is available",
 		                                                                   		"Applicant is not minor",
-		                                                                   		"Ability to verify personal data",
 		                                                                   		"Applicant is alive",
 		                                                                   		"Customer is solvent",
 																				"Reputation prediction check", 
@@ -91,7 +91,6 @@ namespace Wonga.QA.Tests.Risk.Workflows
 		                                                                   		"Hardware blacklist check",
 		                                                                   		"Credit bureau data is available",
 		                                                                   		"Applicant is not minor",
-		                                                                   		"Ability to verify personal data",
 		                                                                   		"Applicant is alive",
 		                                                                   		"Customer is solvent",
 																				"Fraud list check"
@@ -105,7 +104,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 			var customer = CustomerBuilder.New().WithEmployer("Wonga").Build();
 			var application =
 				ApplicationBuilder.New(customer)
-				.WithExpectedDecision(ApplicationDecisionStatus.Declined)
+				.WithUnmaskedExpectedDecision()
 				.Build();
 
 			var actualCheckpointNames = Drive.Db.GetCheckpointDefinitionsForApplication(application.Id).Select(a => a.Name);
@@ -122,7 +121,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 
 			var application =
 				ApplicationBuilder.New(customer)
-				.WithExpectedDecision(ApplicationDecisionStatus.Declined)
+				.WithUnmaskedExpectedDecision()
 				.Build();
 
 			var actualCheckpointNames = Drive.Db.GetCheckpointDefinitionsForApplication(application.Id).Select(a => a.Name);
