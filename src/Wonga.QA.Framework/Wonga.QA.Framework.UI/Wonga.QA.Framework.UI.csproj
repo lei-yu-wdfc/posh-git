@@ -95,6 +95,15 @@
     <Compile Include="Mappings\Ui\Pages\Common\ApplyPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ApplyTermsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\BlogPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\RepayDueFullpaySuccessPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\RepayEarlyFullpaySuccessPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\RepayOverdueFullpaySuccessPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\RepayOverduePartpaySuccessPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\RepayDuePartpaySuccessPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\RepayEarlyPartpaySuccessPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\RepayOverduePaymentFailedPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\RepayDuePaymentFailedPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\RepayEarlyPaymentFailedPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\FAQPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayRequestPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ExtensionRequestPage.cs" />
@@ -190,6 +199,16 @@
     <Compile Include="Ui\Pages\Common\ApplyPage.cs" />
     <Compile Include="Ui\Pages\Common\ApplyTermsPage.cs" />
     <Compile Include="Ui\Pages\Common\BlogPage.cs" />
+    <Compile Include="Ui\Pages\Common\RepayOverdueFullpaySuccessPage.cs" />
+    <Compile Include="Ui\Pages\Common\RepayDueFullpaySuccessPage.cs" />
+    <Compile Include="Ui\Pages\Common\RepayEarlyFullpaySuccessPage.cs" />
+    <Compile Include="Ui\Pages\Common\RepayOverduePartpaySuccessPage.cs" />
+    <Compile Include="Ui\Pages\Common\RepayDuePartpaySuccessPage.cs" />
+    <Compile Include="Ui\Pages\Common\RepayEarlyPartpaySuccessPage.cs" />
+    <Compile Include="Ui\Pages\Common\RepayOverduePaymentFailedPage.cs" />
+    <Compile Include="Ui\Pages\Common\RepayDuePaymentFailedPage.cs" />
+    <Compile Include="Ui\Pages\Common\RepayEarlyPaymentFailedPage.cs" />
+    <Compile Include="Ui\Pages\Common\RepayProcessingPage.cs" />
     <Compile Include="Ui\Pages\Common\HomePageMobile.cs" />
     <Compile Include="Ui\Pages\Common\RepayRequestPage.cs" />
     <Compile Include="Ui\Pages\Common\ExtensionRequestPage.cs" />
@@ -216,6 +235,7 @@
     <Compile Include="Ui\Pages\Common\TopupProcessingPage.cs" />
     <Compile Include="Ui\Pages\Common\TopupRequestPage.cs" />
     <Compile Include="Ui\Pages\Common\WhyUseUsPage.cs" />
+    <Compile Include="Ui\Pages\Interfaces\IRepayPaymentPage.cs" />
     <Compile Include="Ui\Pages\Interfaces\IExtensionPaymentPage.cs" />
     <Compile Include="Ui\Pages\Interfaces\ITopupDecisionPage.cs" />
     <Compile Include="Ui\Pages\Prepaid\PrepaidCardPage.cs" />
@@ -332,4 +352,6 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+
 </Project>
+

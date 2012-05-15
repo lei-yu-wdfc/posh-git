@@ -126,6 +126,15 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual ExtensionRequestPage ExtensionRequestPage { get; set; }
         public virtual RepayRequestPage RepayRequestPage { get; set; }
         public virtual FAQPage FAQPage { get; set; }
+        public virtual RepayEarlyPaymentFailedPage RepayEarlyPaymentFailedPage { get; set; }
+        public virtual RepayDuePaymentFailedPage RepayDuePaymentFailedPage { get; set; }
+        public virtual RepayOverduePaymentFailedPage RepayOverduePaymentFailedPage { get; set; }
+        public virtual RepayEarlyPartpaySuccessPage RepayEarlyPartpaySuccessPage { get; set; }
+        public virtual RepayDuePartpaySuccessPage RepayDuePartpaySuccessPage { get; set; }
+        public virtual RepayOverduePartpaySuccessPage RepayOverduePartpaySuccessPage { get; set; }
+        public virtual RepayEarlyFullpaySuccessPage RepayEarlyFullpaySuccessPage { get; set; }
+        public virtual RepayDueFullpaySuccessPage RepayDueFullpaySuccessPage { get; set; }
+        public virtual RepayOverdueFullpaySuccessPage RepayOverdueFullpaySuccessPage { get; set; }
 
         #endregion
 
