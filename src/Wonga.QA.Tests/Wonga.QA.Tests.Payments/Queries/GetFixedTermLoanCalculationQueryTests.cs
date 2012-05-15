@@ -11,6 +11,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Payments.Queries
 {
 	[TestFixture]
+	[Parallelizable(TestScope.All)]
 	public class GetFixedTermLoanCalculationQueryTests
 	{
 		public const int FixedTermLoanProductId = 1;
