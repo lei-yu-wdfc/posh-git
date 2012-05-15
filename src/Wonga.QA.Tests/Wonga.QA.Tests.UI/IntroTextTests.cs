@@ -118,7 +118,9 @@ namespace Wonga.QA.Tests.Ui
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-788")]
-        [Row(4, 10, 10), Pending("Fails due to bug UK-1904")]    // payment missed and Next Due Date is today
+        // It seems scenario 4 now - only when 3 extensions are made. 
+        //[Row(4, 10, 10), Pending("Fails due to bug UK-1904")]    // payment missed and Next Due Date is today
+        [Row(4, 9, 10), Pending("Fails due to bug UK-1904")]    // payment missed and Next Due Date is today
         //[Row(4, 1, 1)]      //1 day passed in 1-day loan, payment missed and Next Due Date is today
         //[Row(4, 7, 7)]      //7 days passed in 7-day loan, payment missed and Next Due Date is today
         // [Row(4, 1, 7)]      //1 day passed in 7-day loan, payment missed and Next Due Date is today. TBD: create test for the variant when 3 (=maximum) extensions have been made and it is 1st day after a 7 day loan is taken")
@@ -243,7 +245,7 @@ namespace Wonga.QA.Tests.Ui
             IntroText(scenarioId, dasyShift);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-788"), Pending("Waiting when incorrect formatting is fixed - '...now31 days ...'")]
+        [Test, AUT(AUT.Uk), JIRA("UK-788", "UK-1954")]
         [Row(12, 41)]
         [Row(12, 42)]
         [Row(12, 70)]
@@ -252,11 +254,11 @@ namespace Wonga.QA.Tests.Ui
             IntroText(scenarioId, dasyShift);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-788", "UK-1966"), Pending("Fails due to bug UK-1966")]
+        [Test, AUT(AUT.Uk), JIRA("UK-788", "UK-1966")]
         [Row(13, 71)]
-        //[Row(13, 72)]
-        //[Row(13, 100)]
-        //[Row(13, 1000)]
+        [Row(13, 72)]
+        [Row(13, 100)]
+        [Row(13, 1000)]
         public void IntroTextScenario13(int scenarioId, int dasyShift)
         {
             IntroText(scenarioId, dasyShift);
