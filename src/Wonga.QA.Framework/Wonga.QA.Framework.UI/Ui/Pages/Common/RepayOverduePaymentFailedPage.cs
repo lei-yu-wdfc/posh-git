@@ -14,8 +14,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public RepayOverduePaymentFailedPage(UiClient client) : base(client)
         {
             Assert.That(Headers, Has.Item(Wonga.QA.Framework.UI.Content.Get.RepayOverduePaymentFailedPage.HeaderText));
-            _header = Content.FindElement(By.CssSelector(UiMap.Get.RepayDuePartpaySuccessPage.Header));
-            _bodyContent = Content.FindElement(By.CssSelector(UiMap.Get.RepayDuePartpaySuccessPage.ContentArea));
+            _header = Content.FindElement(By.CssSelector(UiMap.Get.RepayOverduePaymentFailedPage.Header));
+            _bodyContent = Content.FindElement(By.CssSelector(UiMap.Get.RepayOverduePaymentFailedPage.ContentArea));
         }
 
         public bool IsPaymentFailedAmountNotPresent()
