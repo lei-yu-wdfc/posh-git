@@ -75,6 +75,12 @@
     <Compile Include="Mappings\Content\Links\FAQPageLinks.cs" />
     <Compile Include="Mappings\Content\Pages\MyPaymentsPage.cs" />
     <Compile Include="Mappings\Content\Pages\MySummaryPage.cs" />
+    <Compile Include="Mappings\Content\Pages\RepayDueFullpaySuccessPage.cs" />
+    <Compile Include="Mappings\Content\Pages\RepayDuePartpaySuccessPage.cs" />
+    <Compile Include="Mappings\Content\Pages\RepayEarlyFullpaySuccessPage.cs" />
+    <Compile Include="Mappings\Content\Pages\RepayEarlyPartpaySuccessPage.cs" />
+    <Compile Include="Mappings\Content\Pages\RepayOverdueFullpaySuccessPage.cs" />
+    <Compile Include="Mappings\Content\Pages\RepayOverduePartpaySuccessPage.cs" />
     <Compile Include="Mappings\Ui\Elements\ChangeMyAddressElement.cs" />
     <Compile Include="Mappings\Ui\Elements\HomePageWelcomePopup.cs" />
     <Compile Include="Mappings\Ui\Elements\TabsElementMobile.cs" />
@@ -95,7 +101,19 @@
     <Compile Include="Mappings\Ui\Pages\Common\ApplyPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ApplyTermsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\BlogPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\RepayDueFullpaySuccessPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\RepayDuePaymentFailedPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\RepayEarlyFullpaySuccessPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\RepayEarlyPaymentFailedPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\RepayOverdueFullpaySuccessPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\RepayOverduePartpaySuccessPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\RepayDuePartpaySuccessPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\RepayEarlyPartpaySuccessPage.cs" />
+    <Compile Include="Mappings\Content\Pages\RepayOverduePaymentFailedPage.cs" />
+    <Compile Include="Mappings\Content\Pages\RepayDuePaymentFailedPage.cs" />
+    <Compile Include="Mappings\Content\Pages\RepayEarlyPaymentFailedPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\FAQPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\RepayOverduePaymentFailedPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayRequestPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ExtensionRequestPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ExtensionAgreementPage.cs" />
@@ -190,6 +208,16 @@
     <Compile Include="Ui\Pages\Common\ApplyPage.cs" />
     <Compile Include="Ui\Pages\Common\ApplyTermsPage.cs" />
     <Compile Include="Ui\Pages\Common\BlogPage.cs" />
+    <Compile Include="Ui\Pages\Common\RepayOverdueFullpaySuccessPage.cs" />
+    <Compile Include="Ui\Pages\Common\RepayDueFullpaySuccessPage.cs" />
+    <Compile Include="Ui\Pages\Common\RepayEarlyFullpaySuccessPage.cs" />
+    <Compile Include="Ui\Pages\Common\RepayOverduePartpaySuccessPage.cs" />
+    <Compile Include="Ui\Pages\Common\RepayDuePartpaySuccessPage.cs" />
+    <Compile Include="Ui\Pages\Common\RepayEarlyPartpaySuccessPage.cs" />
+    <Compile Include="Ui\Pages\Common\RepayOverduePaymentFailedPage.cs" />
+    <Compile Include="Ui\Pages\Common\RepayDuePaymentFailedPage.cs" />
+    <Compile Include="Ui\Pages\Common\RepayEarlyPaymentFailedPage.cs" />
+    <Compile Include="Ui\Pages\Common\RepayProcessingPage.cs" />
     <Compile Include="Ui\Pages\Common\HomePageMobile.cs" />
     <Compile Include="Ui\Pages\Common\RepayRequestPage.cs" />
     <Compile Include="Ui\Pages\Common\ExtensionRequestPage.cs" />
@@ -216,6 +244,7 @@
     <Compile Include="Ui\Pages\Common\TopupProcessingPage.cs" />
     <Compile Include="Ui\Pages\Common\TopupRequestPage.cs" />
     <Compile Include="Ui\Pages\Common\WhyUseUsPage.cs" />
+    <Compile Include="Ui\Pages\Interfaces\IRepayPaymentPage.cs" />
     <Compile Include="Ui\Pages\Interfaces\IExtensionPaymentPage.cs" />
     <Compile Include="Ui\Pages\Interfaces\ITopupDecisionPage.cs" />
     <Compile Include="Ui\Pages\Prepaid\PrepaidCardPage.cs" />
@@ -332,4 +361,6 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+
 </Project>
+

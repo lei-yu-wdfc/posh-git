@@ -405,8 +405,60 @@
     <AmountPlusButton>#wonga-single-slider-wrapper button.slider-plus</AmountPlusButton>
   </SmallRepaySlidersElement>
 
+  <ExtensionSecciDocumentSection>
+    <Fieldset>#fancybox-content</Fieldset>
+    <SecciHeader>.secci-intro</SecciHeader>
+    <SecciPrint>#secci-print-link a</SecciPrint>
+    <SecciContent>.secci</SecciContent>
+  </ExtensionSecciDocumentSection>
+
   <TabsElementMobile>
     <TabsForm>#navigation #scroller .links</TabsForm>
   </TabsElementMobile>
 
+  <RepayEarlyPaymentFailedPage>
+    <Header>#content-area .wonga-box-top-right h2</Header>
+    <ContentArea>#content-area .wonga-box-top-right</ContentArea>
+  </RepayEarlyPaymentFailedPage>
+  
+  <RepayDuePaymentFailedPage>
+    <Header>#content-area .wonga-box-top-right h2</Header>
+    <ContentArea>#content-area .wonga-box-top-right</ContentArea>
+  </RepayDuePaymentFailedPage>
+
+  <RepayOverduePaymentFailedPage>
+    <Header>#content-area .wonga-box-top-right h2</Header>
+    <ContentArea>#content-area .wonga-box-top-right</ContentArea>
+  </RepayOverduePaymentFailedPage>
+
+  <RepayEarlyPartpaySuccessPage>
+    <Header>#content-area .wonga-box-top-right h2</Header>
+    <ContentArea>#content-area .wonga-box-top-right</ContentArea>
+  </RepayEarlyPartpaySuccessPage>
+
+  <RepayDuePartpaySuccessPage>
+    <Header>#content-area .wonga-box-top-right h2</Header>
+    <ContentArea>#content-area .wonga-box-top-right</ContentArea>
+  </RepayDuePartpaySuccessPage>
+
+  <RepayOverduePartpaySuccessPage>
+    <Header>#content-area .wonga-box-top-right h2</Header>
+    <ContentArea>#content-area .wonga-box-top-right</ContentArea>
+  </RepayOverduePartpaySuccessPage>
+
+  <RepayEarlyFullpaySuccessPage>
+    <Header>#content-area .wonga-box-top-right h2</Header>
+    <ContentArea>#content-area .wonga-box-top-right</ContentArea>
+  </RepayEarlyFullpaySuccessPage>
+
+  <RepayDueFullpaySuccessPage>
+    <Header>#content-area .wonga-box-top-right h2</Header>
+    <ContentArea>#content-area .wonga-box-top-right</ContentArea>
+  </RepayDueFullpaySuccessPage>
+
+  <RepayOverdueFullpaySuccessPage>
+    <Header>#content-area .wonga-box-top-right h2</Header>
+    <ContentArea>#content-area .wonga-box-top-right</ContentArea>
+  </RepayOverdueFullpaySuccessPage>
+  
 </UiMap>
