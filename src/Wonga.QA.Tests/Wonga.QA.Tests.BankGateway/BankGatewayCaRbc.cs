@@ -89,7 +89,6 @@ namespace Wonga.QA.Tests.BankGateway
             Assert.IsTrue(_bgTrans.GetCount(_bgTrans.ApplicationId == application.Id) == 2);
 
             Do.Until(() => _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
-                                            _bgTrans.BankIntegrationId == (int)BankGatewayIntegrationId.Scotia &&  
                                             _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Paid).
                                OrderByDescending(_bgTrans.TransactionId).First());
         }
