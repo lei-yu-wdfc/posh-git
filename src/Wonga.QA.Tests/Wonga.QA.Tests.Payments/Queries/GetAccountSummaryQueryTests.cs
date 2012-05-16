@@ -38,6 +38,32 @@ namespace Wonga.QA.Tests.Payments
 			Assert.IsNull(response.Values["CashoutPaymentMethod"].Single());
 		}
 
+        [Test, AUT(AUT.Za), JIRA("ZA-1972")]
+        public void GetAccountSummary_return_EasyPayNumber()
+        {
+            Customer customer = CustomerBuilder.New().WithMiddleName(RiskMask.TESTNoCheck).Build();
+            ApplicationBuilder.New(customer).Build();
+
+            var generateRepaymentNumberCommand = new Framework.Cs.GenerateRepaymentNumberCommand
+            {
+                AccountId = customer.Id
+            };
+
+            //Act
+            Drive.Cs.Commands.Post(generateRepaymentNumberCommand);
+
+            //Assert
+            dynamic repaymentAccount = Drive.Data.Payments.Db.RepaymentAccount;
+            var ra = Do.Until(() => repaymentAccount.FindAll(repaymentAccount.AccountId == customer.Id)
+                                                    .FirstOrDefault());
+            Assert.IsNotNull(ra);
+            Assert.IsNotNull(ra.RepaymentNumber);
+
+            var response = Drive.Api.Queries.Post(new GetAccountSummaryZaQuery() { AccountId = customer.Id });
+
+            Assert.IsNotNull(response.Values["EasyPayNumber"].Single());
+        }
+
 		[Test, AUT(AUT.Ca), JIRA("CA-1951")]
 		[Row(PaymentMethodEnum.BankAccount)]
 		[Row(PaymentMethodEnum.ETransfer)]
