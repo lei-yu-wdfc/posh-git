@@ -20,28 +20,30 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		private Customer customer;
 		private Application application;
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2228")]
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879")]
 		public void L0_NumberOfApplicationsBelowThresholdAccepted()
 		{
 			customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
 			application = ApplicationBuilder.New(customer).Build();
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2228"), DependsOn("L0_NumberOfApplicationsBelowThresholdAccepted")]
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879"), DependsOn("L0_NumberOfApplicationsBelowThresholdAccepted")]
 		public void Ln_NumberOfApplicationsBelowThresholdAccepted()
 		{
 			application.RepayOnDueDate();
 			ApplicationBuilder.New(customer).Build();
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2228"), Timeout(0)]
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879"), Timeout(0)]
 		public void Ln_NumberOfApplicationDailyOverThresholdDeclined()
 		{
 			var customer2 = CustomerBuilder.New().WithEmployer(RiskMask.TESTEmployedMask).WithEmployerStatus("Unemployed").Build();
+			//var customer2 = CustomerBuilder.New().WithEmployer(RiskMask.TESTNoCheck).Build();
 
 			for( int i = 0; i < DailyThreshold; i++)
 			{
 				ApplicationBuilder.New(customer2).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+				//ApplicationBuilder.New(customer2).Build();
 			}
 
 			customer2.UpdateEmployer(TestMask.ToString());
