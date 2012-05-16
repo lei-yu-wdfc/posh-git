@@ -67,7 +67,7 @@
     <Compile Include="Journey\ZaL0Journey.cs" />
     <Compile Include="Journey\CaLnJourney.cs" />
     <Compile Include="Journey\ZaLnJourney.cs" />
-    <Compile Include="Mappings\Content\Content.cs" />
+    <Compile Include="Mappings\Content\ContentMap.cs" />
     <Compile Include="Mappings\Content\Agreements\LoanAgreement.cs" />
     <Compile Include="Mappings\Content\Elements\TabsElementMobile.cs" />
     <Compile Include="Mappings\Content\ErrorsMessages\AddressDetailsPage.cs" />

@@ -1050,7 +1050,7 @@ namespace Wonga.QA.Tests.Ui
                .GoHomePage();
             var myPayments = Client.Payments();
             var mySummary = myPayments.Navigation.MySummaryButtonClick();
-            Assert.IsTrue(mySummary.GetMyAccountStatus().Contains(Content.Get.MySummaryPage.AccountStatusMessage));
+            Assert.IsTrue(mySummary.GetMyAccountStatus().Contains(ContentMap.Get.MySummaryPage.AccountStatusMessage));
         }
 
         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-174")]
@@ -1248,7 +1248,7 @@ namespace Wonga.QA.Tests.Ui
             }
             catch (Exception e)
             {
-                Assert.IsTrue(e.Message.Contains(Content.Get.ProblemProcessingDetailsMessage));
+                Assert.IsTrue(e.Message.Contains(ContentMap.Get.ProblemProcessingDetailsMessage));
                 IWebElement section = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.Fieldset));
                 IWebElement password = section.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.Password));
                 IWebElement passwordConfirm = section.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.PasswordConfirm));
@@ -1266,7 +1266,7 @@ namespace Wonga.QA.Tests.Ui
                 }
                 catch (Exception ex)
                 {
-                    Assert.IsTrue(ex.Message.Contains(Content.Get.ProblemProcessingDetailsMessage));
+                    Assert.IsTrue(ex.Message.Contains(ContentMap.Get.ProblemProcessingDetailsMessage));
                 }
             }
         }
@@ -1290,7 +1290,7 @@ namespace Wonga.QA.Tests.Ui
             }
             catch (Exception e)
             {
-                Assert.IsTrue(e.Message.Contains(Content.Get.AddressDeatailsPage.PostcodeError));
+                Assert.IsTrue(e.Message.Contains(ContentMap.Get.AddressDeatailsPage.PostcodeError));
                 IWebElement form = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.FormId));
                 IWebElement postCode = form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.Postcode));
                 IWebElement houseNumber = form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.HouseNumber));
@@ -1312,7 +1312,7 @@ namespace Wonga.QA.Tests.Ui
                 }
                 catch (Exception ex)
                 {
-                    Assert.IsTrue(ex.Message.Contains(Content.Get.AddressDeatailsPage.PostcodeError));
+                    Assert.IsTrue(ex.Message.Contains(ContentMap.Get.AddressDeatailsPage.PostcodeError));
                 }
             }
         }
