@@ -128,7 +128,7 @@ namespace Wonga.QA.Framework
         {
             var db = new DbDriver();
             AccountPreferenceEntity accountPreferenceEntity = db.Payments.AccountPreferences.Single(ap => ap.AccountId == Id);
-            accountPreferenceEntity.Ccin = "ScrubbedCcin_" + Get.RandomInt(10000, 99999);
+            accountPreferenceEntity.Ccin = "ScrubbedCcin_" + Get.RandomInt(1000000, 9999999);
             db.Payments.SubmitChanges();
         }
 
