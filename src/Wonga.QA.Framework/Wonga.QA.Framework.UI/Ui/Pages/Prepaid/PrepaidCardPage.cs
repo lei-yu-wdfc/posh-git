@@ -74,6 +74,11 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             _premiumRewardsLink = Client.Driver.FindElement(By.CssSelector(UiMap.Get.PrepaidCardPage.PremiumRewardsLink));
         }
 
+        public void FindHighlightedOffersBlock()
+        {
+            IWebElement highlightedOffersBlock = Client.Driver.FindElement(By.CssSelector(UiMap.Get.PrepaidCardPage.HighlightedOffersBlock));
+        }
+
         public PrepaidCardPage LostOrStolenOrForgottenButtonClick()
         {
             IWebElement forgottenPinButton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.PrepaidCardPage.ForgottenPinButton));
@@ -85,6 +90,20 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
         {
             IWebElement getResetCodeButton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.PrepaidCardPage.GetResetCodeButton));
             getResetCodeButton.Click();
+            return new PrepaidCardPage(Client);
+        }
+
+        public PrepaidCardPage SummaryMenuChoose()
+        {
+            IWebElement summaryMenu = Client.Driver.FindElement(By.CssSelector(UiMap.Get.PrepaidCardMenuElement.Summary));
+            summaryMenu.Click();
+            return new PrepaidCardPage(Client);
+        }
+
+        public PrepaidCardPage RewardsAndOffersMenuChoose()
+        {
+            IWebElement rewardsAndOffersMenu = Client.Driver.FindElement(By.CssSelector(UiMap.Get.PrepaidCardMenuElement.Rewards));
+            rewardsAndOffersMenu.Click();
             return new PrepaidCardPage(Client);
         }
 

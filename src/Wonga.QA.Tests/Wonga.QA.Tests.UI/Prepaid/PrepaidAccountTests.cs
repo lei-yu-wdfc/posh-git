@@ -186,6 +186,16 @@ namespace Wonga.QA.Tests.Ui.Prepaid
             var resetCodeTextField = prepaidPage.GetResetCodeTextField();
         }
 
+        [Test, AUT(AUT.Uk), JIRA("PP-18")]
+        public void HighlightedOffersBlockPresentOnSummaryPage()
+        {
+            var loginPage = Client.Login();
+            var summaryPage = loginPage.LoginAs(_eligibleCustomer.GetEmail());
+            var prepaidPage = summaryPage.Navigation.MyPrepaidCardButtonClick();
+            prepaidPage = prepaidPage.SummaryMenuChoose();
+            prepaidPage.FindHighlightedOffersBlock();
+        }
+
         [TearDown]
         public void Rollback()
         {
