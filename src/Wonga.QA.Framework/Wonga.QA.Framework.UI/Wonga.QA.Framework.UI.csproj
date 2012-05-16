@@ -106,9 +106,6 @@
     <Compile Include="Mappings\Ui\Pages\Common\ApplyTermsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\BlogPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayDueFullpaySuccessPage.cs" />
-    <Compile Include="Mappings\Ui\Pages\Common\RepayDuePaymentFailedPage.cs" />
-    <Compile Include="Mappings\Ui\Pages\Common\RepayEarlyFullpaySuccessPage.cs" />
-    <Compile Include="Mappings\Ui\Pages\Common\RepayEarlyPaymentFailedPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayEarlyFullpaySuccessPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayEarlyPaymentFailedPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayOverdueFullpaySuccessPage.cs" />
@@ -120,9 +117,7 @@
     <Compile Include="Mappings\Content\Pages\RepayEarlyPaymentFailedPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayOverduePaymentFailedPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayDuePaymentFailedPage.cs" />
-    <Compile Include="Mappings\Ui\Pages\Common\RepayEarlyPaymentFailedPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\FAQPage.cs" />
-    <Compile Include="Mappings\Ui\Pages\Common\RepayOverduePaymentFailedPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayRequestPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ExtensionRequestPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ExtensionAgreementPage.cs" />
@@ -370,6 +365,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-
 </Project>
-
