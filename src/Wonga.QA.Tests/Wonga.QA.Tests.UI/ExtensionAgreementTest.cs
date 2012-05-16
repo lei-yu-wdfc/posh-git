@@ -40,6 +40,14 @@ namespace Wonga.QA.Tests.Ui
             mySummaryPage.ChangePromiseDateButtonClick();
             var requestPage = new ExtensionRequestPage(this.Client);
             requestPage.SetExtendDays(sExtensionDays);
+
+            // Set expected values
+            var expectedRepaymentDate = Convert.ToDateTime(requestPage.RepaymentDate.Replace("st", "").Replace("nd", "").Replace("rd","").Replace("th", "")).ToString("dd/MM/yyyy");
+            var expectedExtendedLoanTerm = application.LoanTerm + extensionDays;
+            var expectedTotalToRepay = requestPage.TotalToRepay;
+            var expectedLoanAmount = application.LoanAmount;
+            var expectedRepresentativeAPR = "3784%";
+            
             requestPage.setSecurityCode("123");
             requestPage.SubmitButtonClick();
 
@@ -48,22 +56,20 @@ namespace Wonga.QA.Tests.Ui
 
             agreementPage.ClickExtensionSecciLink();
         
-            var api = new ApiDriver();
-            var response = api.Queries.Post(new GetFixedTermLoanExtensionQuoteUkQuery { ApplicationId = application.Id });
-
-            // Set expected values
-            var oweToday = decimal.Parse(response.Values["TotalAmountDueToday"].Single());
-            var sOweToday = String.Format("£{0}", oweToday.ToString("#.00"));
-            var totalRepayToday = decimal.Parse(response.Values["ExtensionPartPaymentAmount"].Single());
-            var sTotalRepayToday = String.Format("Total £{0}", totalRepayToday.ToString("#.00"));
-            var newCreditAmount = decimal.Parse(response.Values["CurrentPrincipleAmount"].Single());
-            var sNewCreditAmount = String.Format("£{0}", newCreditAmount.ToString("#.00"));
-            var expectedRepaymentDate = DateTime.Parse(response.Values["ExtensionDate"].ToArray()[extensionDays - 1]).Date.ToString("dd/MM/yyyy");
-            var totalRepaymentStr = System.String.Format("You will pay to us {0} in one payment before 5pm on the {1} (\"the promise date\").", sOweToday, expectedRepaymentDate);
-
             Assert.IsTrue(agreementPage.secci.Text.Contains("PRE-CONTRACT CREDIT INFORMATION"));
             Assert.IsTrue(agreementPage.secciPrint.Text.Contains("Print this page"));
             Assert.IsTrue(agreementPage.secciHeader.Text.Contains("Please read this document carefully and print it off for your records"));
+          
+            //Assert.Contains(agreementPage.secci.Text, expectedExtendedLoanTerm + " day");
+            //Assert.Contains(agreementPage.secci.Text, "before 5pm on the " + expectedRepaymentDate);
+            Assert.Contains(agreementPage.secci.Text, "Total £" + expectedLoanAmount);
+            Assert.Contains(agreementPage.secci.Text, "You will pay to us " + expectedTotalToRepay);
+            Assert.Contains(agreementPage.secci.Text, "APR: " + expectedRepresentativeAPR);
+
+
+
+
+
         }
     }
 }
