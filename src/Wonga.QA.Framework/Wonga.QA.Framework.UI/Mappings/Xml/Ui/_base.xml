@@ -339,6 +339,9 @@
     <ExtensionAgreementscroll>#agreementscroll</ExtensionAgreementscroll>
     <ExtensionSecciButton>#extension_secci_link</ExtensionSecciButton>
     <ExtensionExplanationButton>#extension_ae_link</ExtensionExplanationButton>
+    <SecciHeader>.secci-intro</SecciHeader>
+    <SecciPrint>#secci-print-link a</SecciPrint>
+    <SecciContent>.secci</SecciContent>
   </ExtensionAgreementPage>
 
   <ExtensionErrorPage>
@@ -401,13 +404,6 @@
     <AmountMinusButton>#wonga-single-slider-wrapper button.slider-minus</AmountMinusButton>
     <AmountPlusButton>#wonga-single-slider-wrapper button.slider-plus</AmountPlusButton>
   </SmallRepaySlidersElement>
-
-  <ExtensionSecciDocumentSection>
-    <Fieldset>#fancybox-content</Fieldset>
-    <SecciHeader>.secci-intro</SecciHeader>
-    <SecciPrint>#secci-print-link a</SecciPrint>
-    <SecciContent>.secci</SecciContent>
-  </ExtensionSecciDocumentSection>
 
   <TabsElementMobile>
     <TabsForm>#navigation #scroller .links</TabsForm>

@@ -38,7 +38,7 @@ namespace Wonga.QA.Tests.Ui
             string email = Get.RandomEmail();
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(2).Build();
 
             var loginPage = Client.Login();
             var myAccountPage = loginPage.LoginAs(email);

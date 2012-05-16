@@ -4,13 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using MbUnit.Framework;
+using OpenQA.Selenium;
+using Wonga.QA.Framework;
+using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI;
+using Wonga.QA.Framework.UI.Mappings;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Framework.UI.UiElements.Pages.Wb;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Ui;
+using EmploymentStatusEnum = Wonga.QA.Framework.Msmq.EmploymentStatusEnum;
 
 namespace Wonga.QA.Tests.Ui
 {
@@ -39,11 +44,11 @@ namespace Wonga.QA.Tests.Ui
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
             var processingPage = journey.ApplyForLoan(200, 10)
-                                 .FillPersonalDetails()
-                                 .FillAddressDetails()
-                                 .FillAccountDetails()
-                                 .FillBankDetails()
-                                 .CurrentPage as ProcessingPage;
+                                     .FillPersonalDetails()
+                                     .FillAddressDetails()
+                                     .FillAccountDetails()
+                                     .FillBankDetails()
+                                     .CurrentPage as ProcessingPage;
 
             var declinedPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
         }
@@ -53,11 +58,11 @@ namespace Wonga.QA.Tests.Ui
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
             var processingPage = journey.ApplyForLoan(200, 10)
-                                 .FillPersonalDetails()
-                                 .FillAddressDetails()
-                                 .FillAccountDetails()
-                                 .FillBankDetails()
-                                 .CurrentPage as ProcessingPage;
+                                     .FillPersonalDetails()
+                                     .FillAddressDetails()
+                                     .FillAccountDetails()
+                                     .FillBankDetails()
+                                     .CurrentPage as ProcessingPage;
             var declinedPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
         }
 
@@ -66,15 +71,14 @@ namespace Wonga.QA.Tests.Ui
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
             var processingPage = journey.ApplyForLoan(200, 10)
-                                 .FillPersonalDetails()
-                                 .FillAddressDetails()
-                                 .FillAccountDetails()
-                                 .FillBankDetails()
-                                 .CurrentPage as ProcessingPage;
+                                     .FillPersonalDetails()
+                                     .FillAddressDetails()
+                                     .FillAccountDetails()
+                                     .FillBankDetails()
+                                     .CurrentPage as ProcessingPage;
 
             var declinedPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
             declinedPage.LookForHeaderLinks();
         }
     }
-
 }
