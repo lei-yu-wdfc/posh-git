@@ -144,7 +144,7 @@
     <WereDifferent>div.wongaTabs li:first-child a</WereDifferent>
     <WereDifferentTitle>div.panes div:first-child h2</WereDifferentTitle>
     <WereFast>div.wongaTabs li:first-child + li a</WereFast>
-    <WereFastTitle>div.panes div:first-child + li h2</WereFastTitle>
+    <WereFastTitle>div.panes div:first-child + div h2</WereFastTitle>
     <WereResponsible>div.wongaTabs li:first-child + li + li a</WereResponsible>
     <WereResponsibleTitle>div.panes div:first-child + div + div h2</WereResponsibleTitle>
     <WongaMoments>div.wongaTabs li:first-child + li + li + li a</WongaMoments>
