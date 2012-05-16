@@ -66,53 +66,25 @@ namespace Wonga.QA.Tests.Comms
             ConfigurationFunctions.SetBankGatewayTestMode(_originalBankGatewayMode);
         }
         #endregion
-
-        [Test, AUT(AUT.Uk), JIRA("UK-1555")]
-        public void VerifySMS0SentOnDay1() {  VerifySMSSentOnDay(0, 1); }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-1555")]
-        public void VerifySMS0SentOnDay5() { VerifySMSSentOnDay(0, 5); }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-1555")]
-        public void VerifySMS0SentOnDay29() { VerifySMSSentOnDay(0, 29); }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-1555")]
-        public void VerifySMS1SentOnDay3() { VerifySMSSentOnDay(1, 3); }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-1555")]
-        public void VerifySMS1SentOnDay27() { VerifySMSSentOnDay(1, 27); }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-1555")]
-        public void VerifySMS1SentOnDay31() { VerifySMSSentOnDay(1, 31); }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-1555")]
-        public void VerifySMS2SentOnDay10() { VerifySMSSentOnDay(2, 10); }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-1555")]
-        public void VerifySMS2SentOnDay24() { VerifySMSSentOnDay(2, 24); }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-1555")]
-        public void VerifySMS3SentOnDay17() { VerifySMSSentOnDay(3, 17); }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-1555")]
-        public void VerifySMS3SentOnDay38() { VerifySMSSentOnDay(3, 38); }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-1555")] 
-        public void VerifySMS3SentOnDay56() { VerifySMSSentOnDay(3, 56); }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-1555")]
-        public void VerifySMS4SentOnDay45() { VerifySMSSentOnDay(4, 45); }
-        
-        [Test, AUT(AUT.Uk), JIRA("UK-1555")]
-        public void VerifySMS5SentOnDay52() { VerifySMSSentOnDay(5, 52); }
-        
-        [Test, AUT(AUT.Uk), JIRA("UK-1555")]
-        public void VerifySMS5SentOnDay58() { VerifySMSSentOnDay(5, 58); }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-1555")]
-        public void VerifySMS6SentOnDay60() { VerifySMSSentOnDay(6, 60); }
-
-        protected void VerifySMSSentOnDay(int smsType, uint days)
+        [Test]
+        [AUT(AUT.Uk), JIRA("UK-1555")]
+        //SMS Type, Day of transmision.
+        [Row (0, 1)]
+        [Row (0, 5)]
+        [Row (0, 29)]
+        [Row (1, 3)]
+        [Row (1, 27)]
+        [Row (1, 31)]
+        [Row (2, 10)]
+        [Row (2, 24)]
+        [Row (3, 17)]
+        [Row (3, 38)]
+        [Row (3, 56)]
+        [Row (4, 45)]
+        [Row (5, 52)]
+        [Row (5, 58)]
+        [Row (6, 60)]
+        public void VerifySMSSentOnDay(int smsType, uint days)
         {
             DateTime startTime = DateTime.Now;
             string phonePart = GetPhoneNumber();
@@ -147,7 +119,8 @@ namespace Wonga.QA.Tests.Comms
 
         protected string GetPhoneNumber()
         {
-            return Get.RandomLong(100000000, 1000000000).ToString(CultureInfo.InvariantCulture);
+            //return an unallocated number
+            return "700900112"; //Get.RandomLong(100000000, 1000000000).ToString(CultureInfo.InvariantCulture);
         }
 
         protected string FormatPhoneNumber(string unformatted)
