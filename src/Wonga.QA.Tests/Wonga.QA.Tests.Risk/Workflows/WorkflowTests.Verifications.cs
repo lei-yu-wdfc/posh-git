@@ -8,6 +8,7 @@ using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Tests.Core;
+using Wonga.QA.Tests.Risk.Checkpoints;
 
 namespace Wonga.QA.Tests.Risk.Workflows
 {
@@ -36,7 +37,6 @@ namespace Wonga.QA.Tests.Risk.Workflows
 		                                                                     		"CreditBureauCustomerIsAliveVerification",
 		                                                                     		"DateOfBirthIsCorrectVerification",
 		                                                                     		"RepaymentPredictionPositiveVerification",
-		                                                                     		"CreditBureauEcbsScoreIsAcceptableVerification",
 		                                                                     		"DirectFraudCheckVerification",
 																					"DoNotRelendVerification", 
 																					"ReputationPredictionPositiveVerification",
@@ -56,7 +56,6 @@ namespace Wonga.QA.Tests.Risk.Workflows
 		                                                                     		"CreditBureauCustomerIsAliveVerification",
 		                                                                     		"DateOfBirthIsCorrectVerification",
 		                                                                     		"CreditBureauScoreIsAcceptableVerification",
-		                                                                     		"CreditBureauEcbsScoreIsAcceptableVerification",
 		                                                                     		"DirectFraudCheckVerification",
 																					"DoNotRelendVerification", 
 		                                                                     	};
@@ -115,7 +114,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 			var customer = CustomerBuilder.New().WithEmployer("Wonga").Build();
 			var application =
 				ApplicationBuilder.New(customer)
-				.WithExpectedDecision(ApplicationDecisionStatus.Declined)
+				.WithUnmaskedExpectedDecision()
 				.Build();
 
 			var actualVerificationNames = Drive.Db.GetVerificationDefinitionsForApplication(application.Id).Select(a => a.Name);
@@ -132,7 +131,8 @@ namespace Wonga.QA.Tests.Risk.Workflows
 
 			var application =
 				ApplicationBuilder.New(customer)
-				.WithExpectedDecision(ApplicationDecisionStatus.Declined)
+				//.WithExpectedDecision(ApplicationDecisionStatus.Declined)
+				.WithUnmaskedExpectedDecision()
 				.Build();
 
 			var actualVerificationNames = Drive.Db.GetVerificationDefinitionsForApplication(application.Id).Select(a => a.Name);
