@@ -44,6 +44,8 @@
   <ItemGroup>
     <Compile Include="BankGatewayOutgoingFileReader.cs" />
     <Compile Include="BmoResponseBuilder.cs" />
+    <Compile Include="Entities\RbcResponse.cs" />
+    <Compile Include="RbcResponseBuilder.cs" />
     <Compile Include="Entities\BmoResponse.cs" />
     <Compile Include="Scotia.cs" />
     <Compile Include="Entities\OnlineBillPaymentTransaction.cs" />

@@ -61,5 +61,15 @@ namespace Wonga.QA.Tests.Payments
             ApplicationBuilder.New(customer).WithLoanTerm(10).Build();
             Console.WriteLine(customer.Email);
         }
+
+
+        [Test, AUT(AUT.Ca), Ignore("Partial test to assist QA. Not to run on buildsite")]
+        public void CustomerInArrears()
+        {
+            var customerBuilder = CustomerBuilder.New().WithProvinceInAddress(ProvinceEnum.ON);
+            var customer = customerBuilder.Build();
+            var application = ApplicationBuilder.New(customer).WithLoanTerm(10).Build();
+            application.PutApplicationIntoArrears(3);
+        }
     }
 }
