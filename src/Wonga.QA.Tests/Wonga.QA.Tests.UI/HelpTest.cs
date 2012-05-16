@@ -22,7 +22,7 @@ namespace Wonga.QA.Tests.Ui
     public class HelpTest : UiTest
     {
 
-        [Test, AUT(AUT.Za, AUT.Ca, AUT.Wb), JIRA("QA-164, QA-254"), Pending("FE bug, button in top of page are broken")]
+        [Test, AUT(AUT.Za, AUT.Ca, AUT.Wb), JIRA("QA-164, QA-254"), Pending("FE bug, button in top of page are broken, ZA-2490, CA-2234")]
         public void SelectingAHelpQuestionTakesMeToFAQPageWithCorrectQuestionSelected()
         {
             var page = Client.Home();
@@ -54,7 +54,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-165"), Pending("FE bug, button in top of page are broken")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-165"), Pending("FE bug, button in top of page are broken, ZA-2490, CA-2234")]
         public void SelectingATroubleshootingQuestionTakesMeToPageWithCorrectQuestionSelected()
         {
             var page = Client.Home();
@@ -71,7 +71,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-166"), Pending("FE bug, button in top of page are broken")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-166"), Pending("FE bug, button in top of page are broken, ZA-2490, CA-2234")]
         public void JargonBusterLinkShouldNavigateThroughPageByClickingDifferentLettersFromAlphabet()
         {
             var page = Client.Home();
@@ -85,7 +85,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-167"), Pending("FE bug, button in top of page are broken")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-167"), Pending("FE bug, button in top of page are broken, ZA-2490, CA-2234")]
         public void ClickOnContactUsCauseContactInformationDisplayedOnPage()
         {
             var page = Client.Home();
@@ -96,7 +96,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), Pending("ZA-1600")] //ZA-1600 bug check
+        [Test, AUT(AUT.Za), Pending("ZA-1600, ZA-2474")] //ZA-1600 bug check
         public void CouncilForDebtCollectorsLinkCheck()
         {
             var faq = Client.Faq();
