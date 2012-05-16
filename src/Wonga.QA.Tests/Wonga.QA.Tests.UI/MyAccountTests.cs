@@ -66,7 +66,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.Throws<AssertionFailureException>(() => { var processingPage = bankDetailsPage2.Next(); });
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-202"), Pending("Broke on TC")]
+        [Test, AUT(AUT.Za), JIRA("QA-202")]
         public void LNJourneyInvalidAccountNumberShouldCauseWarningMessageOnNextPage()
         {
             var loginPage = Client.Login();
@@ -245,8 +245,6 @@ namespace Wonga.QA.Tests.Ui
 
             var homePage = myPersonalDetailsPage.Login.Logout();
             var mySummary = homePage.Login.LoginAs(email, "QWEasd12");
-
-
         }
 
         [Test, AUT(AUT.Za), JIRA("QA-209")]
@@ -340,7 +338,7 @@ namespace Wonga.QA.Tests.Ui
             switch (Config.AUT)
             {
                 case (AUT.Za):
-                    date = DateTime.Now.AddDays(-arrearsdays - 1);
+                    date = DateTime.Now.AddDays(-arrearsdays);
                     email = Get.RandomEmail();
                     customer = CustomerBuilder.New().WithEmailAddress(email).Build();
                     application = ApplicationBuilder.New(customer)
@@ -417,7 +415,7 @@ namespace Wonga.QA.Tests.Ui
                     }
 
                     #endregion
-                    Assert.AreEqual("$130.00", mySummaryPage.GetTotalToRepay); //must be $130.45 it's bug, well change whan it's well be resolved 
+                    Assert.AreEqual("$130.45", mySummaryPage.GetTotalToRepay); //must be $130.45 it's bug, well change whan it's well be resolved 
                     Assert.AreEqual("$130.00", mySummaryPage.GetPromisedRepayAmount);
                     Assert.AreEqual(actualPromisedRepayDate, mySummaryPage.GetPromisedRepayDate);
                     mySummaryPage.RepayButtonClick();
@@ -452,7 +450,7 @@ namespace Wonga.QA.Tests.Ui
             // need to add check data in SF whan it well be ready for this
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-187"), Pending("Broken")]
+        [Test, AUT(AUT.Za), JIRA("QA-187")]
         public void CustomerEntersInvalidBankAccountWarningMessageShouldBeDisplayed()
         {
             var accounts = new List<string> { "dfgsfgfgsdf", "123 342", "123f445", "+135-6887" };
