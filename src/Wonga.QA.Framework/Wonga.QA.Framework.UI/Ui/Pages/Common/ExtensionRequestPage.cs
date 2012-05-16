@@ -21,7 +21,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private IWebElement _interestAndFees;
         private IWebElement _grandTotal;
         //private IWebElement _extensionDuration;
-        private SmallExtensionSlidersElement Sliders { get; set; }
+        private SmallExtensionSlidersElement _sliders;
         public ExtensionRequestPage(UiClient client) : base(client)
         {
             _submitButton = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionRequestPage.ExtensionRequestPageSubmitButton));
@@ -29,7 +29,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _card = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionRequestPage.ExtensionRequestPageCard));
             _securityCode = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionRequestPage.ExtensionRequestPageSecurityCode));
             _interestAndFees = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionRequestPage.ExtensionRequestPageInterestFees));
-            _grandTotal = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionRequestPage.ExtensionRequestPageNewGrandTotal));   
+            _grandTotal = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionRequestPage.ExtensionRequestPageNewGrandTotal));
+            _sliders = new SmallExtensionSlidersElement(this);
         }
 
         public bool IsExtensionRequestPageInformativeBoxDisplayed()
@@ -63,8 +64,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public void IsExtensionRequestPageSliderReturningCorrectValuesOnChange(string applicationId)
         {
             const string extensionRequestDuration = "2";
-            Sliders = new SmallExtensionSlidersElement(this);
-            Sliders.HowLong = extensionRequestDuration;
+            _sliders = new SmallExtensionSlidersElement(this);
+            _sliders.HowLong = extensionRequestDuration;
 
             _extensionRequestDate = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionRequestPage.ExtensionRequestPageRepaymentDate));
             var extensionRequestDate = _extensionRequestDate.Text.Replace("st", "").Replace("nd", "").Replace("rd", "").Replace("th", "");
@@ -129,6 +130,11 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public String TotalToRepay
         {
             get { return Content.FindElement(By.CssSelector(UiMap.Get.ExtensionRequestPage.ExtensionRequestPageNewGrandTotal)).Text; }
+        }
+
+        public void SetExtendDays(string extendDays)
+        {
+            _sliders.HowLong = extendDays;
         }
     }
 }
