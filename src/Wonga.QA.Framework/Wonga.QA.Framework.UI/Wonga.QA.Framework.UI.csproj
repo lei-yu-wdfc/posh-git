@@ -110,6 +110,7 @@
     <Compile Include="Mappings\Ui\Pages\Common\RepayEarlyFullpaySuccessPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayEarlyPaymentFailedPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayEarlyFullpaySuccessPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\RepayEarlyPaymentFailedPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayOverdueFullpaySuccessPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayOverduePartpaySuccessPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayDuePartpaySuccessPage.cs" />
