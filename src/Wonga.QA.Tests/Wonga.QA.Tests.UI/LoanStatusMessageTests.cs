@@ -93,12 +93,12 @@ namespace Wonga.QA.Tests.Ui
         public void LoanStatusMessageScenario2(int scenarioId, int dayShift) { LoanStatusMessage(scenarioId, dayShift); }
 
         [Test, AUT(AUT.Uk), JIRA("UK-795")]
-        [Row(3, 3, 10)]
-        [Row(3, 7, 10)]
+        //[Row(3, 3, 10)]
+        //[Row(3, 7, 10)]
         [Row(3, 9, 10)]
-        [Row(3, 0, 1)] //0 days passed in 1-day loan
-        [Row(3, 0, 7)] //0 days passed in 7-day loan
-        [Row(3, 6, 7)] //6 days passed in 7-day loan
+        //[Row(3, 0, 1)] //0 days passed in 1-day loan
+        //[Row(3, 0, 7)] //0 days passed in 7-day loan
+        //[Row(3, 6, 7)] //6 days passed in 7-day loan
         public void LoanStatusMessageScenario3(int scenarioId, int dasyShift, int loanTerm) { LoanStatusMessage(scenarioId, dasyShift, loanTerm); }
 
         [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1359"), Pending("Fails as returns scenario 6. To be investigated.")]
@@ -397,7 +397,7 @@ namespace Wonga.QA.Tests.Ui
             TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
             Drive.Db.RewindApplicationDates(applicationEntity, riskApplication, daysShiftSpan);
             
-            if ((scenarioId == 4) && ((loanTerm - daysShift) > 3)) CreateNExtensions(3, customer, application);
+            //if ((scenarioId == 4) && ((loanTerm - daysShift) > 3)) CreateNExtensions(3, customer, application);
 
             if (scenarioId == 8) application = application.RepayOnDueDate(); // Repay a loan
 

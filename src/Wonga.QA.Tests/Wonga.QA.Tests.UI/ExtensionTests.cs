@@ -125,11 +125,11 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1739")]
-        [Row(100, 5, 1)]
+        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1739", "UK-2121")]
+        //[Row(100, 5, 1)]
         //[Row(400, 2, 1)]
         //[Row(400, 7, 1)]
-        //[Row(1, 7, 1)]
+        [Row(1, 7, 1)]
         public void ExtensionRequestPageInitialValuesTest(int loanAmount, int loanTerm, int extensionDays)
         {
             ExtensionRequestPage(loanAmount, loanTerm, extensionDays);
@@ -192,11 +192,10 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Uk), JIRA("UK-427", "Uk-1862"), Pending("Fails due to bug UK-2046")]
-        //[Row(1, 2, 1)]
-        //[Row(1, 7, 1)]
-        //[Row(10, 7, 6)]
+        [Test, AUT(AUT.Uk), JIRA("UK-427", "Uk-1862"), Pending("Fails due to bug UK-2121")]
         [Row(1, 2, 1)]
+        [Row(1, 7, 1)]
+        [Row(10, 7, 6)]
         public void ExtensionRequestPageNDaysAfterLoanTakenTest(int loanAmount, int loanTerm, int daysAfterLoan)
         {
             ExtensionRequestPageNDaysAfterLoanTaken(loanAmount, loanTerm, daysAfterLoan);
@@ -208,6 +207,7 @@ namespace Wonga.QA.Tests.Ui
             const int extensionFee = 10;
             const Decimal transmissionFee = 5.50M;
             string email = Get.RandomEmail();
+            const decimal mir = 0.3M;
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(loanAmount).WithLoanTerm(loanTerm).Build();
@@ -221,12 +221,6 @@ namespace Wonga.QA.Tests.Ui
                 Drive.Db.RewindApplicationDates(applicationEntity, riskApplication, daysShiftSpan);
             }
 
-            var myAccountPage = Client.Login().LoginAs(email);
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
-
-            mySummaryPage.ChangePromiseDateButtonClick();
-            var requestPage = new ExtensionRequestPage(this.Client);
-
             // Expected
             var api = new ApiDriver();
             _response = api.Queries.Post(new GetFixedTermLoanExtensionQuoteUkQuery { ApplicationId = application.Id });
@@ -237,14 +231,23 @@ namespace Wonga.QA.Tests.Ui
             var newCreditAmount = decimal.Parse(_response.Values["CurrentPrincipleAmount"].Single());
             var sNewCreditAmount = String.Format("£{0}", newCreditAmount.ToString("#.00"));
 
+            const decimal interestPerDay = (mir*12)/365;
             var newLoanTerm = loanTerm - daysAfterLoan + extensionDays;
-            var postedInterest = (application.LoanAmount + transmissionFee) * daysAfterLoan * 0.00986301369863m;
-            var expectedTotalPayable = (application.LoanAmount + extensionFee + postedInterest) * (1 + Decimal.Round(newLoanTerm * 0.00986301369863m, 2));
+            var postedInterest = (application.LoanAmount + transmissionFee) * newLoanTerm * interestPerDay;
+            var expectedTotalPayable = (application.LoanAmount + extensionFee) * (1 + Decimal.Round(newLoanTerm * interestPerDay, 2));
             var sFutureInterestAndFees = String.Format("£{0:0.00}", Decimal.Round((expectedTotalPayable - application.LoanAmount), 2));
-
             _response = api.Queries.Post(new GetFixedTermLoanExtensionParametersQuery { AccountId = customer.Id });
             var expectedRepaymentDate = Date.GetOrdinalDate(Convert.ToDateTime(_response.Values["NextDueDate"].Single()).AddDays(extensionDays), "d MMM yyyy");
 
+            // Log in
+            var myAccountPage = Client.Login().LoginAs(email);
+            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+            
+            // Extend
+            mySummaryPage.ChangePromiseDateButtonClick();
+            var requestPage = new ExtensionRequestPage(this.Client);
+
+       
             // Check
             Assert.AreEqual(expectedRepaymentDate, requestPage.RepaymentDate);
             Assert.AreEqual("1", requestPage.InformativeBox, "InformativeBox");
