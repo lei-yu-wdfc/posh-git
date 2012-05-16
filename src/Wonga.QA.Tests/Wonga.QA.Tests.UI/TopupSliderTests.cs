@@ -99,7 +99,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk), JIRA("UK-789")]
         public void CheckAvailableCreditScenario03() { CheckAvailableCredit(4); }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-789")]
+        [Test, AUT(AUT.Uk), JIRA("UK-789"), Pending("Disabled until scenario 4 conditions are clarified")]
         public void CheckAvailableCreditScenario04() { CheckAvailableCredit(10); } 
 
         private void CheckAvailableCredit(int daysShift)
