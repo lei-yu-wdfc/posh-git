@@ -196,6 +196,16 @@ namespace Wonga.QA.Tests.Ui.Prepaid
             prepaidPage.FindHighlightedOffersBlock();
         }
 
+        [Test, AUT(AUT.Uk), JIRA("PP-101")]
+        public void HighlightedOffersBlockPresentOnRewardsPage()
+        {
+            var loginPage = Client.Login();
+            var summaryPage = loginPage.LoginAs(_eligibleCustomer.GetEmail());
+            var prepaidPage = summaryPage.Navigation.MyPrepaidCardButtonClick();
+            prepaidPage = prepaidPage.RewardsAndOffersMenuChoose();
+            prepaidPage.FindHighlightedOffersBlock();
+        }
+
         [TearDown]
         public void Rollback()
         {
