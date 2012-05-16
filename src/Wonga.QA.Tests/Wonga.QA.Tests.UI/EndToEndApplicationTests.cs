@@ -54,7 +54,7 @@ namespace Wonga.QA.Tests.Ui
 			Drive.Db.SetServiceConfigurations(_originalServiceConfiguration);
 		}
 
-		[Test, AUT(AUT.Za), Pending()]
+		[Test, AUT(AUT.Za)]
 		public void EndToEndApplicationZaL0()
 		{
 			var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -65,7 +65,7 @@ namespace Wonga.QA.Tests.Ui
 			journey.DateOfBirth = _dateOfBirth;
 			
 			var processingPage = journey.ApplyForLoan(200, 10)
-								 .FillPersonalDetails(employerNameMask: "Wonga")
+                                 .FillPersonalDetails("TESTNoCheck")
 								 .FillAddressDetails()
 								 .FillAccountDetails()
 								 .FillBankDetails()
