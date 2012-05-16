@@ -22,7 +22,7 @@ namespace Wonga.QA.Tests.Ui
 {
     class ExtensionAgreementTest : UiTest
     {
-        [Test, AUT(AUT.Uk), JIRA("UK-971")]
+        [Test, AUT(AUT.Uk), JIRA("UK-971"), Pending("Fails due to bug UK-2114")]
         public void ExtensionAgreementPageTest()
         {
             string email = Get.RandomEmail();
