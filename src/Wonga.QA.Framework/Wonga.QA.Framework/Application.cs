@@ -161,6 +161,9 @@ namespace Wonga.QA.Framework
 		public void MakeDueToday(ApplicationEntity application)
 		{
 			RewindAppDates(application);
+            LoanDueDateNotificationSagaEntity ldd = Drive.Db.OpsSagas.LoanDueDateNotificationSagaEntities.Single(s => s.ApplicationId == Id);
+            Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ldd.Id });
+            Do.With.While(ldd.Refresh);
 
 			FixedTermLoanSagaEntity ftl = Drive.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
 			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
