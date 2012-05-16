@@ -1,14 +1,11 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Db.Ops;
-using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
-using Wonga.QA.Framework.ThirdParties;
-using System;
-using System.Collections.Generic;
 
 
 namespace Wonga.QA.Tests.Bi
@@ -17,26 +14,12 @@ namespace Wonga.QA.Tests.Bi
     [AUT(AUT.Uk)]
     public class ApplicationStatusHistoryTests
     {
-        private dynamic applicationRepo = Drive.Data.Payments.Db.Applications;
         private dynamic appStatusHistoryRepo = Drive.Data.BiCustomerManagement.Db.ApplicationStatusHistory;
+        private Guid _applicationId;
+        private Guid _accountId;
 
         [SetUp]
         public void SetUp()
-        {
-            sfUsername = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Salesforce.UserName");
-            sfPassword = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Salesforce.Password");
-            sfUrl = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Salesforce.Url");
-            sales = Drive.ThirdParties.Salesforce;
-            sales.SalesforceUsername = sfUsername.Value;
-            sales.SalesforcePassword = sfPassword.Value;
-
-            sales.SalesforceUrl = sfUrl.Value;
-        }
-
-        [Test]
-        [AUT(AUT.Uk), JIRA("UK-819")]
-        [Description("Verifies that after funds have been transferred to the customer application status 'Live' will be set in salesforce")]
-        public void FundsTransferred_SubmitsApplicactionStatusLive_ToSalesforce()
         {
             Customer customer = CustomerBuilder.New().Build();
             Do.Until(customer.GetBankAccount);
@@ -44,56 +27,49 @@ namespace Wonga.QA.Tests.Bi
             const decimal loanAmount = 222.22m;
             Application application = ApplicationBuilder.New(customer)
                                                         .WithLoanAmount(loanAmount)
+                                                        .WithLoanTerm(7)
                                                         .Build();
 
-            //force the application to move to live by sending the IFundsTransferredEvent.
-            Drive.Msmq.Payments.Send(new IFundsTransferredEvent { AccountId = application.AccountId, 
-                                                                  ApplicationId = application.Id, 
-                                                                  TransactionId = Guid.NewGuid() });
-
-            //wait for the payment to customer to be sent out
-            Do.Until(() => applicationRepo.FindAll(applicationRepo.ExternalId == application.Id &&
-                                                   applicationRepo.Transaction.ApplicationId == applicationRepo.Id &&
-                                                   applicationRepo.Amount == loanAmount && applicationRepo.Type == "CashAdvance"));
-
-            Do.Until(() =>{ var app = sales.GetApplicationById(application.Id);
-                            return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live; });
+            _applicationId = application.Id;
+            _accountId = application.AccountId;
         }
-
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UK-984")]
-        [Description("Verifies that after funds have been transferred to the customer application status 'Live' will be set in salesforce")]
-        public void VerifyThatPreLiveStatusesAreReflectedInSalesForce()
+        [AUT(AUT.Uk), JIRA("UK-1477")]
+        [Description("Verifies that when an application status is 'Live' the status history will have entries for the pre-live events")]
+        public void Live_Application_Has_PreLive_Status_History()
         {
-            const decimal loanAmount = 222.22m;
-            Customer customer = CustomerBuilder.New().Build();
-            Application application = ApplicationBuilder.New(customer).WithLoanAmount(loanAmount).Build();
-
-            Do.Until(() => applicationRepo.FindAll(applicationRepo.ExternalId == application.Id &&
-                                                   applicationRepo.Transaction.ApplicationId == applicationRepo.Id &&
-                                                   applicationRepo.Amount == loanAmount && applicationRepo.Type == "CashAdvance"));
-
             //force the application to move to live by sending the IFundsTransferredEvent.
-            Drive.Msmq.Payments.Send(new IFundsTransferredEvent { AccountId = application.AccountId, 
-                                                                  ApplicationId = application.Id,
+            Drive.Msmq.Payments.Send(new IFundsTransferredEvent { AccountId = _accountId,
+                                                                  ApplicationId = _applicationId,
                                                                   TransactionId = Guid.NewGuid() });
 
-            bool present = ConfirmStatusValues(application.Id, new string[] { "Accepted", "Terms Agreed", "Live (Not Due)" });
-            Assert.IsTrue(present);
+            ConfirmStatusHistory(_applicationId, new string[] { "Accepted", "TermsAgreed", "Live" });
         }
 
-        private bool ConfirmStatusValues(Guid appId, IEnumerable<string> statuses)
+        [Test]
+        [AUT(AUT.Uk), JIRA("UK-1477")]
+        [Description("Verifies that when an application status is 'Live' the status history will have entries for the pre-live events")]
+        public void Due_Application_Has_Due_Status_History()
         {
-            var appHistory = sales.GetApplicationHistoryById(appId, "Status__c");
-            var matched = from s in statuses 
-                          from ah in appHistory 
-                          where ah.NewValue != null && ah.NewValue.ToString().ToUpperInvariant() == s.ToUpperInvariant() 
-                          select s;
+            Live_Application_Has_PreLive_Status_History();
 
-            return matched.Count() == statuses.Count();
+            Drive.Msmq.Payments.Send(new ILoanIsDueEvent { AccountId = _accountId, 
+                                                           ApplicationId = _applicationId, 
+                                                           LoanDueDate = DateTime.UtcNow + TimeSpan.FromDays(7) });
+
+            ConfirmStatusHistory(_applicationId, new string[] { "DueToday" });
         }
 
-        
+        //Checks to ensure that each of the supplied status values appears at least once for that application as the current status.
+        //There must also be at least one record that has a PreviousStatus with a value of New.
+        private void ConfirmStatusHistory(Guid appId, IEnumerable<string> statuses)
+        {
+            Do.With.Timeout(2).Interval(5).Until(() => appStatusHistoryRepo.FindAll(ApplicationId: appId, PreviousStatus: "New") != null);
+
+            Do.With.Timeout(2).Interval(5).Until(() => statuses.All(stat => { var records = appStatusHistoryRepo.FindAll(appStatusHistoryRepo.ApplicationId == appId &&
+                                                                                                                         appStatusHistoryRepo.CurrentStatus == stat);
+                                                                              return records.Count() >= 1; }));
+        }
     }
 }
