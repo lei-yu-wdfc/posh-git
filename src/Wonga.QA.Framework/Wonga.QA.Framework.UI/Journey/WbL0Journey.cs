@@ -139,6 +139,7 @@ namespace Wonga.QA.Framework.UI.Journey
             personalBankAccountPage.BankAccountSection.SortCode = "13-40-20";
             personalBankAccountPage.BankAccountSection.AccountNumber = "63849203";
             personalBankAccountPage.BankAccountSection.BankPeriod = "More than 4 years";
+            Thread.Sleep(3000);
             CurrentPage = personalBankAccountPage.Next() as PersonalDebitCardPage;
             return this;
         }
