@@ -59,6 +59,15 @@ namespace Wonga.QA.Framework.UI
         public MySummaryPage MySummaryPage { get; set; }
         public AddressDetailsPage AddressDeatailsPage { get; set; }
         public MyPaymentsPage MyPaymentsPage { get; set; }
+        public RepayEarlyPaymentFailedPage RepayEarlyPaymentFailedPage { get; set; }
+        public RepayDuePaymentFailedPage RepayDuePaymentFailedPage { get; set; }
+        public RepayOverduePaymentFailedPage RepayOverduePaymentFailedPage { get; set; }
+        public RepayEarlyPartpaySuccessPage RepayEarlyPartpaySuccessPage { get; set; }
+        public RepayDuePartpaySuccessPage RepayDuePartpaySuccessPage { get; set; }
+        public RepayOverduePartpaySuccessPage RepayOverduePartpaySuccessPage { get; set; }
+        public RepayEarlyFullpaySuccessPage RepayEarlyFullpaySuccessPage { get; set; }
+        public RepayDueFullpaySuccessPage RepayDueFullpaySuccessPage { get; set; }
+        public RepayOverdueFullpaySuccessPage RepayOverdueFullpaySuccessPage { get; set; }
 #endregion
     }
 }

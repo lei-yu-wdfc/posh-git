@@ -417,15 +417,18 @@
   </TabsElementMobile>
 
   <RepayEarlyPaymentFailedPage>
-    <HeaderText>Sorry we couldn't collect your payment</HeaderText>
+    <Header>#content-area .wonga-box-top-right h2</Header>
+    <ContentArea>#content-area .wonga-box-top-right</ContentArea>
   </RepayEarlyPaymentFailedPage>
   
   <RepayDuePaymentFailedPage>
-    <HeaderText>We tried unsuccessfully to collect your payment</HeaderText>
+    <Header>#content-area .wonga-box-top-right h2</Header>
+    <ContentArea>#content-area .wonga-box-top-right</ContentArea>
   </RepayDuePaymentFailedPage>
 
   <RepayOverduePaymentFailedPage>
-    <HeaderText>We tried unsuccessfully to collect your payment</HeaderText>
+    <Header>#content-area .wonga-box-top-right h2</Header>
+    <ContentArea>#content-area .wonga-box-top-right</ContentArea>
   </RepayOverduePaymentFailedPage>
 
   <RepayEarlyPartpaySuccessPage>

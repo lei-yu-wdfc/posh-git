@@ -18,6 +18,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public RepayOverdueFullpaySuccessPage(UiClient client) : base(client)
         {
+            Assert.That(Headers, Has.Item(Wonga.QA.Framework.UI.Content.Get.RepayOverdueFullpaySuccessPage.HeaderText));
             _header = Content.FindElement(By.CssSelector(UiMap.Get.RepayOverdueFullpaySuccessPage.Header));
             _bodyContent = Content.FindElement(By.CssSelector(UiMap.Get.RepayOverdueFullpaySuccessPage.ContentArea));
         }
