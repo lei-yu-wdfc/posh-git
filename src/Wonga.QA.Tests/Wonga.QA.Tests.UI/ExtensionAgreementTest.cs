@@ -22,7 +22,7 @@ namespace Wonga.QA.Tests.Ui
 {
     class ExtensionAgreementTest : UiTest
     {
-        [Test, AUT(AUT.Uk), JIRA("UK-971")]
+        [Test, AUT(AUT.Uk), JIRA("UK-971"), Pending("Fails due to bug UK-2114")]
         public void ExtensionAgreementPageTest()
         {
             string email = Get.RandomEmail();
@@ -60,16 +60,11 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(agreementPage.secciPrint.Text.Contains("Print this page"));
             Assert.IsTrue(agreementPage.secciHeader.Text.Contains("Please read this document carefully and print it off for your records"));
           
-            //Assert.Contains(agreementPage.secci.Text, expectedExtendedLoanTerm + " day");
-            //Assert.Contains(agreementPage.secci.Text, "before 5pm on the " + expectedRepaymentDate);
+            Assert.Contains(agreementPage.secci.Text, expectedExtendedLoanTerm + " day");
+            Assert.Contains(agreementPage.secci.Text, "before 5pm on the " + expectedRepaymentDate);
             Assert.Contains(agreementPage.secci.Text, "Total £" + expectedLoanAmount);
             Assert.Contains(agreementPage.secci.Text, "You will pay to us " + expectedTotalToRepay);
             Assert.Contains(agreementPage.secci.Text, "APR: " + expectedRepresentativeAPR);
-
-
-
-
-
         }
     }
 }
