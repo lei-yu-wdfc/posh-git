@@ -100,7 +100,7 @@ namespace Wonga.QA.Tests.Ui
         public void CouncilForDebtCollectorsLinkCheck()
         {
             var faq = Client.Faq();
-            Assert.IsTrue(faq.IsLinkCorrect(UiMap.Get.FAQPage.CouncilForDebtCollectorsLink, Content.Get.FAQPageLinks.CouncilForDebtCollectorsLink));
+            Assert.IsTrue(faq.IsLinkCorrect(UiMap.Get.FAQPage.CouncilForDebtCollectorsLink, ContentMap.Get.FAQPageLinks.CouncilForDebtCollectorsLink));
         }
     }
 }

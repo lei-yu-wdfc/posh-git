@@ -28,15 +28,15 @@ namespace Wonga.QA.Framework.UI.Elements
             : base(page)
         {
             _form = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.TabsElementMobile.TabsForm));
-            _login = _form.FindElement(By.LinkText(Content.Get.TabsElementMobile.Login));
-            _applyNow = _form.FindElement(By.LinkText(Content.Get.TabsElementMobile.ApplyNow));
-            _howItWorks = _form.FindElement(By.LinkText(Content.Get.TabsElementMobile.HowItWorks));
-            _aboutUs = _form.FindElement(By.LinkText(Content.Get.TabsElementMobile.AboutUs));
-            _advice = _form.FindElement(By.LinkText(Content.Get.TabsElementMobile.Advice));
-            _myAccount = _form.FindElement(By.LinkText(Content.Get.TabsElementMobile.MyAccount));
-            _news = _form.FindElement(By.LinkText(Content.Get.TabsElementMobile.News));
-            _help = _form.FindElement(By.LinkText(Content.Get.TabsElementMobile.Help));
-            _contactUs = _form.FindElement(By.LinkText(Content.Get.TabsElementMobile.ContactUs));
+            _login = _form.FindElement(By.LinkText(ContentMap.Get.TabsElementMobile.Login));
+            _applyNow = _form.FindElement(By.LinkText(ContentMap.Get.TabsElementMobile.ApplyNow));
+            _howItWorks = _form.FindElement(By.LinkText(ContentMap.Get.TabsElementMobile.HowItWorks));
+            _aboutUs = _form.FindElement(By.LinkText(ContentMap.Get.TabsElementMobile.AboutUs));
+            _advice = _form.FindElement(By.LinkText(ContentMap.Get.TabsElementMobile.Advice));
+            _myAccount = _form.FindElement(By.LinkText(ContentMap.Get.TabsElementMobile.MyAccount));
+            _news = _form.FindElement(By.LinkText(ContentMap.Get.TabsElementMobile.News));
+            _help = _form.FindElement(By.LinkText(ContentMap.Get.TabsElementMobile.Help));
+            _contactUs = _form.FindElement(By.LinkText(ContentMap.Get.TabsElementMobile.ContactUs));
         }
 
     }

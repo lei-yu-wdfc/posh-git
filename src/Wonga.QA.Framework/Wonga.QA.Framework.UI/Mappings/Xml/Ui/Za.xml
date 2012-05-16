@@ -167,8 +167,8 @@
   </HomePage>
 
   <TabsElement>
-    <Advice>li:first-child + li + li + li>a</Advice>
-    <MyAccount>li:first-child + li + li + li + li>a</MyAccount>
+    <Advice>.menu li:first-child + li + li + li>a</Advice>
+    <MyAccount>.menu li:first-child + li + li + li + li>a</MyAccount>
   </TabsElement>
 
   <ApplicationSection>

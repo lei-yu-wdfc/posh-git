@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Content>
+<ContentMap>
   <YourDetails>Your Details</YourDetails>
 	<ProblemProcessingDetailsMessage>There was a problem processing your details. Please try again.</ProblemProcessingDetailsMessage>
 	<PasswordWarningMessage>Sorry, your password cannot match your username</PasswordWarningMessage>
@@ -31,4 +31,4 @@
 	<MyPaymentsPage>
 		<InvalidBankAccountWarning>Please enter a valid bank account number</InvalidBankAccountWarning>
 	</MyPaymentsPage>
-	</Content>
+	</ContentMap>
