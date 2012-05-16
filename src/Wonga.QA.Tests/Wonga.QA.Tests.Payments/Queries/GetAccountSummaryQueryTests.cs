@@ -9,7 +9,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments
 {
-	[TestFixture]
+	[TestFixture, Parallelizable(TestScope.All)]
 	public class GetAccountSummaryQueryTests
 	{
 		[Test, AUT(AUT.Uk), JIRA("UK-795")]
