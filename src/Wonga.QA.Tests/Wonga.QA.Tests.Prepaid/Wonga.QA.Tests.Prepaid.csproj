@@ -49,7 +49,7 @@
       <HintPath>..\..\..\bin\Simple.Data.SqlServer.dll</HintPath>
     </Reference>
 	<Reference Include="Wonga.QA.Framework.Msmq">
-      <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Msmq.dll</HintPath>
+      <HintPath>..\..\..\bin\Wonga.QA.Framework.Msmq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
