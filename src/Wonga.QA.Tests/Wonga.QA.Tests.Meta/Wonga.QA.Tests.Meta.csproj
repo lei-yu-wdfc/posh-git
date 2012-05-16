@@ -35,6 +35,7 @@
   <ItemGroup>
     <Compile Include="BuilderTests.cs" />
     <Compile Include="ColdStartTests.cs" />
+    <Compile Include="LnJourneyTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -69,11 +70,16 @@
     <Reference Include="Wonga.QA.Framework.Svc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Svc.dll</HintPath>
     </Reference>
+    <Reference Include="Wonga.QA.Framework.Ui, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Wonga.QA.Tests.Core\Wonga.QA.Tests.Core.csproj">
       <Project>{36C48933-F3DA-468A-8529-212601FC0FA5}</Project>
       <Name>Wonga.QA.Tests.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wonga.QA.Tests.Ui\Wonga.QA.Tests.Ui.csproj">
+      <Project>{B29A97EF-5107-476B-A27A-688028CAAF54}</Project>
+      <Name>Wonga.QA.Tests.Ui</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
