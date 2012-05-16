@@ -122,7 +122,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), Pending("Example of ZA Ln journey")]
+        [Test, AUT(AUT.Za)]
         public void ZaFullLnJourneyTest()
         {
             var loginPage = Client.Login();
