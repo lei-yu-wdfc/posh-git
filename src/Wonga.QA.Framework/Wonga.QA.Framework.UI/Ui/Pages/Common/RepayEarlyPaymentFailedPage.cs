@@ -13,7 +13,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         
         public RepayEarlyPaymentFailedPage(UiClient client) : base(client)
         {
-            Assert.That(Headers, Has.Item(Wonga.QA.Framework.UI.Content.Get.RepayEarlyPaymentFailedPage.HeaderText));
+            Assert.That(Headers, Has.Item(Wonga.QA.Framework.UI.ContentMap.Get.RepayEarlyPaymentFailedPage.HeaderText));
             _header = Content.FindElement(By.CssSelector(UiMap.Get.RepayEarlyPaymentFailedPage.Header));
             _bodyContent = Content.FindElement(By.CssSelector(UiMap.Get.RepayEarlyPaymentFailedPage.ContentArea));
         }
