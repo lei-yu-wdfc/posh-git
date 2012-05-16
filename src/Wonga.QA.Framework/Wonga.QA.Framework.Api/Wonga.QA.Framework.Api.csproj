@@ -167,6 +167,7 @@
     <Compile Include="Requests\GetPromoCodeParametersQuery.cs" />
     <Compile Include="Requests\GetRepayLoanCalculationQuery.cs" />
     <Compile Include="Requests\GetRepayLoanParametersQuery.cs" />
+    <Compile Include="Requests\GetRepayLoanPaymentStatusUkQuery.cs" />
     <Compile Include="Requests\GetRepayLoanQuoteUkQuery.cs" />
     <Compile Include="Requests\GetRepayLoanStatusQuery.cs" />
     <Compile Include="Requests\GetRepaymentArrangementAllowedQuery.cs" />
