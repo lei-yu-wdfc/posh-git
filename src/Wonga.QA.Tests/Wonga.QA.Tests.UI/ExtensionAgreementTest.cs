@@ -64,11 +64,6 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(agreementPage.secci.Text.Contains("PRE-CONTRACT CREDIT INFORMATION"));
             Assert.IsTrue(agreementPage.secciPrint.Text.Contains("Print this page"));
             Assert.IsTrue(agreementPage.secciHeader.Text.Contains("Please read this document carefully and print it off for your records"));
- 
-            //Assert.IsTrue(agreementPage.secci.Text.Contains(sOweToday));
-            //Assert.IsTrue(agreementPage.secci.Text.Contains(sTotalRepayToday)); //Partial payment
-            //Assert.IsTrue(agreementPage.secci.Text.Contains(totalRepaymentStr)); //Repayment phrase
-
         }
     }
 }
