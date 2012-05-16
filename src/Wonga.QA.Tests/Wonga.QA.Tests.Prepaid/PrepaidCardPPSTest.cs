@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
@@ -10,6 +8,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Prepaid
 {
+    [TestFixture, Parallelizable(TestScope.All)]
     class PrepaidCardPPSTest
     {
         private Customer _eligibleCustomer = null;
