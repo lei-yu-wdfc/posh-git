@@ -508,7 +508,7 @@ namespace Wonga.QA.Tests.Ui
             #endregion
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-283")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-283"), Pending("CA code appearing in ZA - Michael Nowicki to fix")]
         public void CustomerTryToChooseLoanAountAndDurationBiggerThanMaxAndTakeLoan()
         {
             var serviceConfigurations = Drive.Data.Ops.Db.ServiceConfigurations;
