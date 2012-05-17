@@ -444,6 +444,7 @@ namespace Wonga.QA.Framework
                             r.AccountId = _id;
                             r.EmployerName = _employerName;
                         	r.NetMonthlyIncome = _netMonthlyIncome;
+                        	r.Status = _employerStatus;
                         }),
                         VerifyMobilePhoneCaCommand.New(r =>
                         {

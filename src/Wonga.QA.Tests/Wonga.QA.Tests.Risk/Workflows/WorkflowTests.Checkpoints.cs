@@ -63,6 +63,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 
 		private static readonly List<string> ExpectedCheckpointNamesL0Ca = new List<string>()
 		                                                                   	{
+																				"Check for excesive number of applications",
 		                                                                   		"Mobile phone is unique",
 		                                                                   		"Home phone is acceptable",
 		                                                                   		"User assisted fraud check",
@@ -82,6 +83,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 
 		private static readonly List<string> ExpectedCheckpointNamesLnCa = new List<string>()
 		                                                                   	{
+																				"Check for excesive number of applications",
 		                                                                   		"User assisted fraud check",
 		                                                                   		"Credit Bureau Score is acceptable",
 		                                                                   		"Date of birth is correct",

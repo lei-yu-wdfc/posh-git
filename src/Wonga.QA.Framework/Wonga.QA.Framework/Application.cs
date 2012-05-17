@@ -150,12 +150,31 @@ namespace Wonga.QA.Framework
             return this;
         }
         
+		public Application RewindApplicationDates(TimeSpan rewindSpan)
+		{
+			ApplicationEntity application = Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id);
+
+			RewindAppDates(application, rewindSpan);
+
+			return this;
+		}
+		
+		public Application RewindApplicationDatesForDays(int days)
+		{
+			return RewindApplicationDates(TimeSpan.FromDays(days));
+		}
+
+		private void RewindAppDates(ApplicationEntity application, TimeSpan rewindSpan)
+		{
+			RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == Id);
+
+			Drive.Db.RewindApplicationDates(application, riskApplication, rewindSpan);
+		}
+
         private void RewindAppDates(ApplicationEntity application)
         {
             TimeSpan span = application.FixedTermLoanApplicationEntity.NextDueDate.Value - DateTime.Today;
-            RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == Id);
-
-            Drive.Db.RewindApplicationDates(application, riskApplication, span);
+        	RewindAppDates(application, span);
         }
 
 		public void MakeDueToday(ApplicationEntity application)

@@ -47,5 +47,6 @@ namespace Wonga.QA.Framework.Data.Enums.Risk
         [Description("BusinessLoanApplicantIsNotOnBlackListVerification")] BusinessLoanApplicantIsNotOnBlackListVerification,
         [Description("CallValidateAndExperianBankAccountVerification")] CallValidateAndExperianBankAccountVerification,
         [Description("ApplicantHasPoorRelationshipWithWonga")] ApplicantHasPoorRelationshipWithWonga,
+		[Description("AccountNumberApplicationsAcceptableVerification")] AccountNumberApplicationsAcceptableVerification,
     }
 }
