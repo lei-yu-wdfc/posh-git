@@ -24,10 +24,13 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
               case AUT.Ca:
                   Assert.That(Headers, Has.Item(UiMap.Get.DeclinedPage.HeaderText));
                   break;
+              case AUT.Uk:
+                  Do.With.Until(() => Headers.GetLength(0) > 0);
+                  Assert.That(Headers, Has.Item(ContentMap.Get.L0DeclinedPage.HeaderText));
+                  break;
               default:
                     break;
             }
-            
         }
 
         public bool LookForHeaderLinks()
@@ -55,10 +58,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             return true;
         }
 
-        public bool IsDeclineAdviceExist()
+        public bool DeclineAdviceExists()
         {
-            //DeclineAdvice = Content.FindElement(By.CssSelector(UiMap.Get.DeclinedPage.DeclineAdvice));
-            //var tokenResult = true.Equals(Content.FindElement(By.CssSelector(UiMap.Get.DeclinedPage.DeclineAdvice)));
             var tokenResult = !string.IsNullOrWhiteSpace(Content.FindElement(By.CssSelector(UiMap.Get.DeclinedPage.DeclineAdvice)).Text);
             return tokenResult;
         }

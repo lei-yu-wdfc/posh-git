@@ -42,5 +42,9 @@
     <PrintThisPage>Print this page</PrintThisPage>
     <ReadThis>Please read this document carefully and print it off for your records</ReadThis>
   </ExtensionAgreementPage>
+
+  <L0DeclinedPage>
+    <HeaderText>Unfortunately we can’t approve your application</HeaderText>
+  </L0DeclinedPage>
   
   </ContentMap>
