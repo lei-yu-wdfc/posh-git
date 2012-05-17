@@ -23,7 +23,7 @@
 			<Projects Include="$(Src)\$(Framework)\$(Framework).sln" />
 			<Projects Include="$(Src)\$(Tests)\$(Tests).sln" />
 		</ItemGroup>
-		<MSBuild Projects="@(Projects)" />
+		<MSBuild Projects="@(Projects)" StopOnFirstFailure="true"/>
 	</Target>
 	
 	<Target Name="PreGenerateSerializers">
