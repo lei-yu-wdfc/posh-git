@@ -397,6 +397,7 @@ namespace Wonga.QA.Framework.Core
             public String Payments { get; set; }
             public String Risk { get; set; }
             public String Bi { get; set; }
+            public String BiCustomerManagement { get; set; }
 
             public String BankGateway { get; set; }
             public String Blacklist { get; set; }
@@ -435,6 +436,7 @@ namespace Wonga.QA.Framework.Core
                 Payments = builder("Payments");
                 Risk = builder("Risk");
                 Bi = builder("Bi");
+                BiCustomerManagement = builder("BiCustomerManagement");
                 BankGateway = builder("BankGateway");
                 Blacklist = builder("Blacklist");
                 CallReport = builder("CallReport");
