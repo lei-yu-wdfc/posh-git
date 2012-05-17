@@ -136,8 +136,6 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			{
 				case AUT.Ca:
 					return "FeatureSwitch.CA.AccountNumberApplicationsAcceptableCheckpoint";
-					break;
-				
 				default:
 					throw new NotImplementedException();
 			}
