@@ -16,18 +16,28 @@ namespace Wonga.QA.Tools.NonParallelHunter
         private static int totalTestFixtures = 0;
         private static int totalTests = 0;
         private static AUT? specificAut = null;
+        private static string binFolder = Path.Combine(Environment.CurrentDirectory);
+        private static IEnumerable<string> files;
+        private static bool includePendingOrIgnoredOrExplicit = false;
 
         private static void Main(string[] args)
         {
-            string binFolder = Path.Combine(Environment.CurrentDirectory);
-            var files = Directory.GetFiles(binFolder, "Wonga.QA.Tests.*.dll").Where(x => !x.Contains(".Ui"));
-            //specificAut = AUT.Ca;
+            files = Directory.GetFiles(binFolder, "Wonga.QA.Tests.*.dll").Where(x => !x.Contains(".Ui"));
 
+            foreach (var aut in Enum.GetValues(typeof(AUT)))
+                DocumentNonParallelation((AUT?)aut);
+            DocumentNonParallelation(null);
+            Console.ReadKey();
+        }
+
+        public static void DocumentNonParallelation(AUT? aut)
+        {
             //Generating Level 4 tests.
             sb = new StringBuilder();
             totalTestFixtures = 0;
             totalTests = 0;
-            
+            specificAut = aut;
+
             sb.AppendLine("-- Level 4 Report --");
             sb.AppendLine("-- Listing all Tests and TestFixtures that are not parallelized --");
             foreach (var file in files)
@@ -42,7 +52,7 @@ namespace Wonga.QA.Tools.NonParallelHunter
             sb.AppendLine("Grand Total TestFixtures: " + totalTestFixtures);
             sb.AppendLine("Grand Total Tests: " + totalTests);
             Console.Write(sb);
-            File.WriteAllText("_Level_4_Tests.txt", sb.ToString());
+            File.WriteAllText(string.Format("_Level_4_Tests_{0}.txt", aut.ToString()), sb.ToString());
 
             //Generating Level 3 tests.
             sb = new StringBuilder();
@@ -55,14 +65,15 @@ namespace Wonga.QA.Tools.NonParallelHunter
                 sb.AppendLine(Path.GetFileName(file));
                 var assembly = Assembly.LoadFile(file);
                 var testFixtures = assembly.GetTestFixtures()
-                    .GetNonParallelFixtures().Concat(assembly.GetTestFixtures().GetParallelFixtures(TestScope.Descendants));
+                    .GetNonParallelFixtures().Concat(
+                        assembly.GetTestFixtures().GetParallelFixtures(TestScope.Descendants));
                 ListTestFixtures(testFixtures, false);
             }
             sb.AppendLine();
             sb.AppendLine("Grand Total TestFixtures: " + totalTestFixtures);
             sb.AppendLine("Grand Total Tests: " + totalTests);
             Console.Write(sb);
-            File.WriteAllText("_Level_3_Tests.txt", sb.ToString());
+            File.WriteAllText(string.Format("_Level_3_Tests_{0}.txt", aut.ToString()), sb.ToString());
 
 
             //Generating Level 2 tests.
@@ -84,10 +95,7 @@ namespace Wonga.QA.Tools.NonParallelHunter
             sb.AppendLine("Grand Total Tests: " + totalTests);
 
             Console.Write(sb);
-            File.WriteAllText("_Level_2_Tests.txt", sb.ToString());
-
-
-            Console.ReadKey();
+            File.WriteAllText(string.Format("_Level_2_Tests_{0}.txt", aut.ToString()), sb.ToString());
         }
 
         private static void ListTestFixtures(IEnumerable<Type> testFixtures, bool listNotParallelMethods)
@@ -124,7 +132,8 @@ namespace Wonga.QA.Tools.NonParallelHunter
         {
             return type.GetMethods().Where(m => !m.IsDefined(typeof(ParallelizableAttribute), false)
                                              && m.IsDefined(typeof(TestAttribute), false)
-                                             && m.IsAppplicationSpecific());
+                                             && m.IsAppplicationSpecific()
+                                             && !m.IsPending());
         }
 
         public static bool IsTestFixture(this Type t)
@@ -138,7 +147,8 @@ namespace Wonga.QA.Tools.NonParallelHunter
             return assembly.GetTypes().Where(t => t.IsTestFixture()
                 && t.IsAppplicationSpecific()
                 && !t.IsAbstract
-                && t.IsClass);
+                && t.IsClass
+                && !t.IsPending());
         }
 
         public static bool IsAppplicationSpecific(this MemberInfo type)
@@ -147,6 +157,26 @@ namespace Wonga.QA.Tools.NonParallelHunter
             if (!specificAut.HasValue || autAttribute == null)
                 return true;
             return autAttribute.AUTs.Contains(specificAut.Value);
+        }
+
+        public static bool IsPending(this MemberInfo type)
+        {
+            if(includePendingOrIgnoredOrExplicit)
+                return false;
+
+            return type.IsDefined(typeof (PendingAttribute), false)
+                                                     || type.IsDefined(typeof (ExplicitAttribute), false)
+                                                     || type.IsDefined(typeof (IgnoreAttribute), false);
+        }
+
+        public static bool IsPending(this Type type)
+        {
+            if(includePendingOrIgnoredOrExplicit)
+                return false;
+
+            return type.IsDefined(typeof (PendingAttribute), false)
+                                                     || type.IsDefined(typeof (ExplicitAttribute), false)
+                                                     || type.IsDefined(typeof (IgnoreAttribute), false);
         }
 
         public static bool IsAppplicationSpecific(this Type type)
