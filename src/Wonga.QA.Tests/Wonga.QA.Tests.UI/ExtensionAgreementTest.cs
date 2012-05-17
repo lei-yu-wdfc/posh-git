@@ -114,15 +114,11 @@ namespace Wonga.QA.Tests.Ui
 
             agreementPage.ClickExtensionSecciLink();
 
-            Assert.IsTrue(agreementPage.secci.Text.Contains("PRE-CONTRACT CREDIT INFORMATION"));
-            Assert.IsTrue(agreementPage.secciPrint.Text.Contains("Print this page"));
-            Assert.IsTrue(agreementPage.secciHeader.Text.Contains("Please read this document carefully and print it off for your records"));
-
-            Assert.Contains(agreementPage.secci.Text, expectedExtendedLoanTerm + " day");
-            Assert.Contains(agreementPage.secci.Text, "before 5pm on the " + expectedRepaymentDate);
-            Assert.Contains(agreementPage.secci.Text, "Total £" + expectedLoanAmount);
-            Assert.Contains(agreementPage.secci.Text, "You will pay to us " + expectedTotalToRepay);
-            Assert.Contains(agreementPage.secci.Text, "APR: " + expectedRepresentativeAPR);
+            Assert.Contains(agreementPage.secci.Text, expectedExtendedLoanTerm.ToString("#"));
+            Assert.Contains(agreementPage.secci.Text, expectedRepaymentDate);
+            Assert.Contains(agreementPage.secci.Text, expectedLoanAmount.ToString("#"));
+            Assert.Contains(agreementPage.secci.Text, expectedTotalToRepay);
+            Assert.Contains(agreementPage.secci.Text, expectedRepresentativeAPR);
         }
     }
 }
