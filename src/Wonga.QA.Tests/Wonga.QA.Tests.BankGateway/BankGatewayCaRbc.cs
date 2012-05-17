@@ -204,17 +204,20 @@ namespace Wonga.QA.Tests.BankGateway
                 applicationIdTwo = ApplicationBuilder.New(customerTwo).Build().Id;
             }
 
-            var ackTypeAllInputRecords = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == (int)BankGatewayIntegrationId.Rbc && a.Name == "RPT0902P");
-            var ackTypeReturnedItems = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == (int)BankGatewayIntegrationId.Rbc && a.Name == "RPT0901P");
+            var ackTypeAllInputRecords = _bgAckTypes.FindAll(_bgAckTypes.BankIntegrationId == (int)BankGatewayIntegrationId.Rbc && _bgAckTypes.Name == "RPT0902P").Single();
+            var ackTypeReturnedItems = _bgAckTypes.FindAll(_bgAckTypes.BankIntegrationId == (int)BankGatewayIntegrationId.Rbc && _bgAckTypes.Name == "RPT0901P").Single();
 
-            TransactionEntity transaction = null;
-            Do.Until(() => transaction = Drive.Db.BankGateway.Transactions.Single(t => t.ApplicationId == applicationIdOne &&
-                t.BankIntegrationId == (int)BankGatewayIntegrationId.Rbc && t.TransactionStatus == (int)BankGatewayTransactionStatus.Paid));
-            Do.Until(() => Drive.Db.BankGateway.Acknowledges.Single(t => t.TransactionID == transaction.TransactionId && t.AcknowledgeTypeID == ackTypeAllInputRecords.AcknowledgeTypeId));
+            var paidTransaction = Do.Until(() => _bgTrans.FindAll(_bgTrans.ApplicationId == applicationIdOne &&
+                                 _bgTrans.BankIntegrationId == (int)BankGatewayIntegrationId.Rbc &&
+                                 _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Paid).Single());
 
-            Do.Until(() => transaction = Drive.Db.BankGateway.Transactions.Single(t => t.ApplicationId == applicationIdTwo &&
-                t.BankIntegrationId == (int)BankGatewayIntegrationId.Rbc && t.TransactionStatus == (int)BankGatewayTransactionStatus.Failed));
-            Do.Until(() => Drive.Db.BankGateway.Acknowledges.Single(t => t.TransactionID == transaction.TransactionId && t.AcknowledgeTypeID == ackTypeReturnedItems.AcknowledgeTypeId));
+            Do.Until(() => _bgAck.FindAll(_bgAck.TransactionID == paidTransaction.TransactionId && _bgAck.AcknowledgeTypeID == ackTypeAllInputRecords.AcknowledgeTypeId).Single());
+
+            var failedTransaction = Do.Until(() => _bgTrans.FindAll(_bgTrans.ApplicationId == applicationIdTwo &&
+                                 _bgTrans.BankIntegrationId == (int)BankGatewayIntegrationId.Rbc &&
+                                 _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Failed).Single());
+
+            Do.Until(() => _bgAck.FindAll(_bgAck.TransactionID == failedTransaction.TransactionId && _bgAck.AcknowledgeTypeID == ackTypeReturnedItems.AcknowledgeTypeId).Single());
         }
 
     }
