@@ -1507,32 +1507,30 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Wb),JIRA("QA-287")]
         public void WbL0JourneyShouldNotBeAbleToProceedWithoutAcceptingAllEligibilityQuestions()
         {
-            const String middleNameMask = "TESTNoCheck";
-
             int getRandomNumber = Get.RandomInt(0, 7);
             bool[] checkBox = new bool[8] { true, true, true, true, true, true, true, true };
             checkBox[getRandomNumber] = false;
 
-            try
-            {
-                var journeyWb = JourneyFactory.GetL0JourneyWB(Client.Home());
-                var eligibilityQuestionsPage = journeyWb.ApplyForLoan(100, 20)
+            var journeyWb = JourneyFactory.GetL0JourneyWB(Client.Home());
+            var eligibilityQuestionsPage = journeyWb.ApplyForLoan(100, 20)
                                                    .CurrentPage as EligibilityQuestionsPage;
 
-                eligibilityQuestionsPage.CheckActiveCompany = checkBox[0];
-                eligibilityQuestionsPage.CheckDirector = checkBox[1];
-                eligibilityQuestionsPage.CheckGuarantee = checkBox[2];
-                eligibilityQuestionsPage.CheckOnlineAccess = checkBox[3];
-                eligibilityQuestionsPage.CheckResident = checkBox[4];
-                eligibilityQuestionsPage.CheckTurnover = checkBox[5];
-                eligibilityQuestionsPage.CheckVat = checkBox[6];
-                eligibilityQuestionsPage.CheckDebitCard = checkBox[7];
-                var nextPage = eligibilityQuestionsPage.Submit();
-            }
-            catch(Exception e)
-            {
-                Assert.IsTrue(e.Message.Contains("was Box must be ticked to proceed"));
-            }
+            eligibilityQuestionsPage.CheckActiveCompany = checkBox[0];
+            eligibilityQuestionsPage.CheckDirector = checkBox[1];
+            eligibilityQuestionsPage.CheckGuarantee = checkBox[2];
+            eligibilityQuestionsPage.CheckOnlineAccess = checkBox[3];
+            eligibilityQuestionsPage.CheckResident = checkBox[4];
+            eligibilityQuestionsPage.CheckTurnover = checkBox[5];
+            eligibilityQuestionsPage.CheckVat = checkBox[6];
+            eligibilityQuestionsPage.CheckDebitCard = checkBox[7];
+
+            var URLbefore = Client.Driver.Url;
+            eligibilityQuestionsPage.ClickNextButton();
+            Thread.Sleep(2000);
+            var URLafter = Client.Driver.Url;
+
+            Assert.AreEqual(URLbefore, URLafter);
+            //Assert.IsTrue(e.Message.Contains("was Box must be ticked to proceed"));
         }
     }
 }
