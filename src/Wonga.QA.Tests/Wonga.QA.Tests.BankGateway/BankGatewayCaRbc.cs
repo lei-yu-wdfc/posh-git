@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
@@ -32,6 +33,9 @@ namespace Wonga.QA.Tests.BankGateway
         [Test, AUT(AUT.Ca), JIRA("CA-1995"), FeatureSwitch(FeatureSwitchConstants.RbcFeatureSwitchKey)]
         public void WhenMultipleTransactionsAreBatchedHappyPath()
         {
+            var previousFileId = Drive.Db.BankGateway.Files.OrderByDescending(f => f.FileId)
+                                        .Select(f => f.FileId).FirstOrDefault();
+
             var applicationIds = new List<Guid>();
 
             using (new RbcBatchSending())
@@ -46,12 +50,24 @@ namespace Wonga.QA.Tests.BankGateway
                     applicationIds.Add(application.Id);
 
                     Do.Until(() => _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
+                                                    _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.New &&
                                                     _bgTrans.BankIntegrationId == (int)BankGatewayIntegrationId.Rbc).Single());
                 }
             }
 
-            // TODO: Add more solid assertions in here
+            for (int i = 0; i < 3; i++)
+            {
+                Do.Until(() => _bgTrans.FindAll(_bgTrans.ApplicationId == applicationIds[i] &&
+                                _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Paid &&
+                                _bgTrans.BankIntegrationId == (int)BankGatewayIntegrationId.Rbc).Single());
+            }
+
+            var newFileIds = Drive.Db.BankGateway.Files.OrderByDescending(f => f.FileId)
+                                        .Where(f => f.FileId > previousFileId)
+                                        .Select(f => f.FileId).ToList();
+            Assert.AreEqual(newFileIds.Count, 1);
         }
+
 
         
         [Test, AUT(AUT.Ca), JIRA("CA-2207"),Parallelizable]
