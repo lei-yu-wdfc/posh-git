@@ -17,8 +17,8 @@ namespace Wonga.QA.Tests.Comms
     public class ArrearsSMSTests
     {
         #region private members
-        private readonly string[] _smsTexts = new string[] { "We still haven't received full payment for your recent Wonga loan and it is now overdue. Go to ‘My Account’ to make a payment",
-                                                             "Your Wonga repayment is still due and interest is being added. Please go to ‘My Account’ now to pay in full or set up a repayment plan.",
+        private readonly string[] _smsTexts = new string[] { "We still haven't received full payment for your recent Wonga loan and it is now overdue. Go to 'My Account' to make a payment",
+                                                             "Your Wonga repayment is still due and interest is being added. Please go to 'My Account' now to pay in full or set up a repayment plan.",
                                                              "We haven't received full payment for your Wonga loan and it’s now overdue. Please pay using 'My Account' at Wonga.com  or call us to discuss on  0207 138 8333",
                                                              "We are concerned that you still haven't repaid your Wonga loan. We urge you to get in touch so we can resolve this situation. Call us on 0207 138 8333",
                                                              "Please contact Wonga urgently as your account is overdue and interest is accruing. Call us on 0207 138 8333",
@@ -70,20 +70,20 @@ namespace Wonga.QA.Tests.Comms
         [AUT(AUT.Uk), JIRA("UK-1555")]
         //SMS Type, Day of transmision.
         [Row (0, 1)]
-        [Row (0, 5)]
-        [Row (0, 29)]
-        [Row (1, 3)]
-        [Row (1, 27)]
-        [Row (1, 31)]
-        [Row (2, 10)]
-        [Row (2, 24)]
-        [Row (3, 17)]
-        [Row (3, 38)]
-        [Row (3, 56)]
-        [Row (4, 45)]
-        [Row (5, 52)]
-        [Row (5, 58)]
-        [Row (6, 60)]
+        [Row(0, 5)]
+        [Row(0, 29)]
+        [Row(1, 3)]
+        [Row(1, 27)]
+        [Row(1, 31)]
+        [Row(2, 10)]
+        [Row(2, 24)]
+        [Row(3, 17)]
+        [Row(3, 38)]
+        [Row(3, 56)]
+        [Row(4, 45)]
+        [Row(5, 52)]
+        [Row(5, 58)]
+        [Row(6, 60)]
         public void VerifySMSSentOnDay(int smsType, uint days)
         {
             DateTime startTime = DateTime.Now;
@@ -94,7 +94,7 @@ namespace Wonga.QA.Tests.Comms
                                                .WithMobileNumber(phoneNumber)
                                                .Build();
 
-            var mobileVerificationEntity = Do.Until(() => Drive.Data.Comms.Db.MobilePhoneVerifications.FindByMobilePhone(MobilePhone :  phoneNumber));
+            var mobileVerificationEntity = Do.Until(() => Drive.Data.Comms.Db.MobilePhoneVerifications.FindBy(MobilePhone :  phoneNumber, AccountId: customer.Id));
 
             Assert.IsNotNull(mobileVerificationEntity);
             Assert.IsNotNull(mobileVerificationEntity.Pin);
@@ -121,6 +121,7 @@ namespace Wonga.QA.Tests.Comms
         {
             //return an unallocated number
             return "700900112"; //Get.RandomLong(100000000, 1000000000).ToString(CultureInfo.InvariantCulture);
+                    
         }
 
         protected string FormatPhoneNumber(string unformatted)
@@ -145,7 +146,8 @@ namespace Wonga.QA.Tests.Comms
         private void AssertSmsIsSent(string formattedPhoneNumber, string text, DateTime createdAfter)
         {
             Assert.IsNotNull(Do.Until(() => SmsMessages.Find(SmsMessages.MobilePhoneNumber == formattedPhoneNumber &&
-                                                             SmsMessages.MessageText == text)));
+                                                             SmsMessages.MessageText == text &&
+                                                             SmsMessages.CreatedOn > createdAfter)));
         }
     }
 }
