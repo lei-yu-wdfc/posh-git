@@ -16,6 +16,8 @@ namespace Wonga.QA.Tests.BankGateway
     public class BankGatewayCaRbc
     {
         private readonly dynamic _bgTrans = Drive.Data.BankGateway.Db.Transactions;
+        private readonly dynamic _bgFiles = Drive.Data.BankGateway.Db.Files;
+        private readonly dynamic _bgServiceTypes = Drive.Data.BankGateway.Db.ServiceTypes;
 
         [Test, AUT(AUT.Ca), JIRA("CA-1995"), FeatureSwitch(FeatureSwitchConstants.RbcFeatureSwitchKey), Parallelizable]
         public void WhenCustomerEntersInstitutionNumber003ThenBankGatewayShouldRouteTransactionToRbc()
@@ -31,10 +33,12 @@ namespace Wonga.QA.Tests.BankGateway
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1995"), FeatureSwitch(FeatureSwitchConstants.RbcFeatureSwitchKey)]
-        public void WhenMultipleTransactionsAreBatchedHappyPath()
+        public void WhenMultipleCustomersEnterTransactionsTheTransactionsShouldBeBatchTogetherAndSentToRbcInOneFile()
         {
-            var previousFileId = Drive.Db.BankGateway.Files.OrderByDescending(f => f.FileId)
-                                        .Select(f => f.FileId).FirstOrDefault();
+            var previousFileId =
+                _bgFiles.FindAll(_bgFiles.ServiceTypeId ==
+                                 (_bgServiceTypes.FindByBankIntegrationId((int) BankGatewayIntegrationId.Rbc).
+                                     ServiceTypeId)).OrderByDescending(_bgFiles.FileId).First().FileId;
 
             var applicationIds = new List<Guid>();
 
@@ -62,13 +66,13 @@ namespace Wonga.QA.Tests.BankGateway
                                 _bgTrans.BankIntegrationId == (int)BankGatewayIntegrationId.Rbc).Single());
             }
 
-            var newFileIds = Drive.Db.BankGateway.Files.OrderByDescending(f => f.FileId)
-                                        .Where(f => f.FileId > previousFileId)
-                                        .Select(f => f.FileId).ToList();
-            Assert.AreEqual(newFileIds.Count, 1);
+            var numberNewFile =
+                _bgFiles.FindAll(_bgFiles.ServiceTypeId ==
+                                 (_bgServiceTypes.FindByBankIntegrationId((int) BankGatewayIntegrationId.Rbc).
+                                     ServiceTypeId) && _bgFiles.FileId > previousFileId).Count();
+
+            Assert.AreEqual(numberNewFile, 1);
         }
-
-
         
         [Test, AUT(AUT.Ca), JIRA("CA-2207"),Parallelizable]
         public void WhenCustomerLoanIsFundedBankGatewayShouldUpdateCashOutTransactionToStatusOfPaid()
