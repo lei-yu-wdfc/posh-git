@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
@@ -15,6 +16,8 @@ namespace Wonga.QA.Tests.BankGateway
     public class BankGatewayCaRbc
     {
         private readonly dynamic _bgTrans = Drive.Data.BankGateway.Db.Transactions;
+        private readonly dynamic _bgFiles = Drive.Data.BankGateway.Db.Files;
+        private readonly dynamic _bgServiceTypes = Drive.Data.BankGateway.Db.ServiceTypes;
 
         [Test, AUT(AUT.Ca), JIRA("CA-1995"), FeatureSwitch(FeatureSwitchConstants.RbcFeatureSwitchKey), Parallelizable]
         public void WhenCustomerEntersInstitutionNumber003ThenBankGatewayShouldRouteTransactionToRbc()
@@ -30,8 +33,13 @@ namespace Wonga.QA.Tests.BankGateway
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1995"), FeatureSwitch(FeatureSwitchConstants.RbcFeatureSwitchKey)]
-        public void WhenMultipleTransactionsAreBatchedHappyPath()
+        public void WhenMultipleCustomersEnterTransactionsTheTransactionsShouldBeBatchTogetherAndSentToRbcInOneFile()
         {
+            var previousFileId =
+                _bgFiles.FindAll(_bgFiles.ServiceTypeId ==
+                                 (_bgServiceTypes.FindByBankIntegrationId((int) BankGatewayIntegrationId.Rbc).
+                                     ServiceTypeId)).OrderByDescending(_bgFiles.FileId).First().FileId;
+
             var applicationIds = new List<Guid>();
 
             using (new RbcBatchSending())
@@ -46,13 +54,25 @@ namespace Wonga.QA.Tests.BankGateway
                     applicationIds.Add(application.Id);
 
                     Do.Until(() => _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
+                                                    _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.New &&
                                                     _bgTrans.BankIntegrationId == (int)BankGatewayIntegrationId.Rbc).Single());
                 }
             }
 
-            // TODO: Add more solid assertions in here
-        }
+            for (int i = 0; i < 3; i++)
+            {
+                Do.Until(() => _bgTrans.FindAll(_bgTrans.ApplicationId == applicationIds[i] &&
+                                _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Paid &&
+                                _bgTrans.BankIntegrationId == (int)BankGatewayIntegrationId.Rbc).Single());
+            }
 
+            var numberNewFile =
+                _bgFiles.FindAll(_bgFiles.ServiceTypeId ==
+                                 (_bgServiceTypes.FindByBankIntegrationId((int) BankGatewayIntegrationId.Rbc).
+                                     ServiceTypeId) && _bgFiles.FileId > previousFileId).Count();
+
+            Assert.AreEqual(numberNewFile, 1);
+        }
         
         [Test, AUT(AUT.Ca), JIRA("CA-2207"),Parallelizable]
         public void WhenCustomerLoanIsFundedBankGatewayShouldUpdateCashOutTransactionToStatusOfPaid()
