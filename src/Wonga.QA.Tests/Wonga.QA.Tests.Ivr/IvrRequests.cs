@@ -95,7 +95,7 @@ namespace Wonga.QA.Tests.Ivr
         public void TakePaymentStoreCardTest()
         {
             const String login = "login";
-            const String password = "password";
+            //const String password = "password";
             const String environment = "TRIAL";
             const String requestedAction = "TakePayment";
             const String referenceDate = "22/04/2010";
@@ -103,7 +103,7 @@ namespace Wonga.QA.Tests.Ivr
             const String currency = "GBP";
             const String authorisationAmount = "60.45";
             const String cardType = "Visa Debit";
-            const String cardHolderName = "name";
+            //const String cardHolderName = "name";
             const String cardNumber = "1111111111111234";
             const String expiryDate = "0112";
 
