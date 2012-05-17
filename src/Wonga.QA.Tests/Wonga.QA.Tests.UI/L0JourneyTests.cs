@@ -1355,7 +1355,7 @@ namespace Wonga.QA.Tests.Ui
             addressPage.Next();
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-172")]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-172"), Pending("CA code appearing in ZA - Michael Nowicki to fix")]
         public void L0JourneyCustomerMakeALoanCheckOneLastStepPageValidDataDisplayed()
         {
             int _amountMax;
