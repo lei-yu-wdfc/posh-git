@@ -12,6 +12,7 @@ namespace Wonga.QA.Tests.Bi
 {
     [TestFixture]
     [AUT(AUT.Uk)]
+    [Parallelizable(TestScope.All)]
     public class ApplicationStatusHistoryTests
     {
         private dynamic appStatusHistoryRepo = Drive.Data.BiCustomerManagement.Db.ApplicationStatusHistory;
