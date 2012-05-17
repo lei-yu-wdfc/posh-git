@@ -23,7 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -33,7 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
@@ -75,6 +75,7 @@
     <Compile Include="Mappings\Content\ErrorsMessages\AddressDetailsPage.cs" />
     <Compile Include="Mappings\Content\ErrorsMessages\MobilePinVerificationSection.cs" />
     <Compile Include="Mappings\Content\Links\FAQPageLinks.cs" />
+    <Compile Include="Mappings\Content\Pages\ExtensionAgreementPage.cs" />
     <Compile Include="Mappings\Content\Pages\MyPaymentsPage.cs" />
     <Compile Include="Mappings\Content\Pages\MySummaryPage.cs" />
     <Compile Include="Mappings\Content\Pages\RepayDueFullpaySuccessPage.cs" />
@@ -363,6 +364,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-
 </Project>
-

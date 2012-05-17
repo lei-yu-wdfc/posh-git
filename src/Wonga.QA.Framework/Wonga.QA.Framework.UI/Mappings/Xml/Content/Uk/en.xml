@@ -36,4 +36,11 @@
   <RepayOverdueFullpaySuccessPage>
     <HeaderText>Success! Your balance has been settled in full</HeaderText>
   </RepayOverdueFullpaySuccessPage>
+
+  <ExtensionAgreementPage>
+    <CreditInformation>PRE-CONTRACT CREDIT INFORMATION</CreditInformation>
+    <PrintThisPage>Print this page</PrintThisPage>
+    <ReadThis>Please read this document carefully and print it off for your records</ReadThis>
+  </ExtensionAgreementPage>
+  
   </ContentMap>
