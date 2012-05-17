@@ -14,7 +14,7 @@ using Msmq = Wonga.QA.Framework.Msmq;
 namespace Wonga.QA.Tests.Comms
 {
     [TestFixture]
-    [Parallelizable(TestScope.Self)]
+    [Parallelizable(TestScope.Descendants)]
     public class ArrearsSMSTests
     {
         #region private members
