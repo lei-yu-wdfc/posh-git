@@ -16,5 +16,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String GetResetCodeButton { get; set; }
         public String ResetCodeTextField { get; set; }
         public String BalanceBlock { get; set; }
+        public String HighlightedOffersBlock { get; set; }
     }
 }
