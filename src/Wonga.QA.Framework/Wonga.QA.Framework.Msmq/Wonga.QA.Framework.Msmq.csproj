@@ -246,6 +246,7 @@
     <Compile Include="Messages\CsRepayWithExternalCardCsCommand.cs" />
     <Compile Include="Messages\CsRepayWithPaymentCardCsCommand.cs" />
     <Compile Include="Messages\CsReportComplaintCsCommand.cs" />
+    <Compile Include="Messages\CsReportHardshipCsCommand.cs" />
     <Compile Include="Messages\CsReportManagementReviewCsCommand.cs" />
     <Compile Include="Messages\CsReportRefundRequestCsCommand.cs" />
     <Compile Include="Messages\CsSaveCustomerAddressCsCommand.cs" />
@@ -377,6 +378,7 @@
     <Compile Include="Messages\IBusinessApplicationDeclinedTranslatedWbUkEvent.cs" />
     <Compile Include="Messages\IBusinessApplicationPaidInFullEvent.cs" />
     <Compile Include="Messages\IBusinessApplicationTermsAgreedEvent.cs" />
+    <Compile Include="Messages\IBusinessBankAccountActivatedEvent.cs" />
     <Compile Include="Messages\IBusinessBankAccountAddedEvent.cs" />
     <Compile Include="Messages\IBusinessBankAccountAddedToApplicationEvent.cs" />
     <Compile Include="Messages\IBusinessInArrearsAddedEvent.cs" />
@@ -418,6 +420,7 @@
     <Compile Include="Messages\IDisputeStatusChangedEvent.cs" />
     <Compile Include="Messages\IDoNotRelendStatusChangedEvent.cs" />
     <Compile Include="Messages\IEasyPayNumberGeneratedZaEvent.cs" />
+    <Compile Include="Messages\IEasypayPaymentTakenZaEvent.cs" />
     <Compile Include="Messages\IEmailCompiledZaEvent.cs" />
     <Compile Include="Messages\IEmailSentWbUkEvent.cs" />
     <Compile Include="Messages\IEmailSentZaEvent.cs" />
@@ -446,6 +449,8 @@
     <Compile Include="Messages\IFundTransferFailedEvent.cs" />
     <Compile Include="Messages\IFundTransferFailedInternalEvent.cs" />
     <Compile Include="Messages\IGenderUpdatedZaEvent.cs" />
+    <Compile Include="Messages\IGetExtensionTsAndCsResponseUkEvent.cs" />
+    <Compile Include="Messages\IGetExtensionTsAndCsUkEvent.cs" />
     <Compile Include="Messages\IGuarantorAcceptedEvent.cs" />
     <Compile Include="Messages\IGuarantorBusinessApplicationTermsAgreedEvent.cs" />
     <Compile Include="Messages\IGuarantorDocumentsInitialEmailCompiledWbUkEvent.cs" />
@@ -456,6 +461,7 @@
     <Compile Include="Messages\IGuarantorWorkflowAcceptedEvent.cs" />
     <Compile Include="Messages\IGuarantorWorkflowDeclinedEvent.cs" />
     <Compile Include="Messages\IHardshipActivatedEvent.cs" />
+    <Compile Include="Messages\IHardshipActivatedInternalEvent.cs" />
     <Compile Include="Messages\IHardshipDeactivatedEvent.cs" />
     <Compile Include="Messages\IHardshipReceivedEvent.cs" />
     <Compile Include="Messages\IHomePhoneUpdatedEvent.cs" />
@@ -697,6 +703,7 @@
     <Compile Include="Messages\PaidPaymentCommand.cs" />
     <Compile Include="Messages\PaymentCardAuthFailedCommand.cs" />
     <Compile Include="Messages\PaymentCardAuthorizedCommand.cs" />
+    <Compile Include="Messages\PaymentResponseDetailRecordZaCommand.cs" />
     <Compile Include="Messages\PaymentResponseFileRecordZaCommand.cs" />
     <Compile Include="Messages\PaymentSentCommand.cs" />
     <Compile Include="Messages\PaymentSentErrorCommand.cs" />
@@ -716,6 +723,7 @@
     <Compile Include="Messages\ProcessScheduledPaymentForTimezoneCommand.cs" />
     <Compile Include="Messages\ProcessScheduledRepaymentCommand.cs" />
     <Compile Include="Messages\PutCustomerIntoArrearsCommand.cs" />
+    <Compile Include="Messages\RbcReportCaCommand.cs" />
     <Compile Include="Messages\RecordActivityCommand.cs" />
     <Compile Include="Messages\RecordFinalFailureUkCommand.cs" />
     <Compile Include="Messages\RecordFinalSuccessUkCommand.cs" />
@@ -725,6 +733,7 @@
     <Compile Include="Messages\RegisterDoNotRelendCommand.cs" />
     <Compile Include="Messages\RegisterFraudCommand.cs" />
     <Compile Include="Messages\RegisterHardshipCommand.cs" />
+    <Compile Include="Messages\RejectedTransactionReportCaCommand.cs" />
     <Compile Include="Messages\RejectedTransactionsReportCaCommand.cs" />
     <Compile Include="Messages\RepayLoanInternalViaBankCommand.cs" />
     <Compile Include="Messages\RepayLoanInternalViaCardCommand.cs" />
@@ -747,6 +756,7 @@
     <Compile Include="Messages\RiskCreateBusinessFixedInstallmentLoanApplicationWbCommand.cs" />
     <Compile Include="Messages\RiskCreateFixedTermLoanApplicationCommand.cs" />
     <Compile Include="Messages\SampleCommand.cs" />
+    <Compile Include="Messages\SaveApplicationStatusChangeCommand.cs" />
     <Compile Include="Messages\SaveBusinessAddressCommand.cs" />
     <Compile Include="Messages\SaveContactPreferencesCommand.cs" />
     <Compile Include="Messages\SaveContactPreferencesToSalesforceCommand.cs" />
@@ -888,13 +898,11 @@
     <Compile Include="Messages\StartEmailVerificationCommand.cs" />
     <Compile Include="Messages\StartGuarantorVerificationCommand.cs" />
     <Compile Include="Messages\StartManualVerificationCommand.cs" />
-    <Compile Include="Messages\StartPingCommand.cs" />
     <Compile Include="Messages\StartPinSagaCommand.cs" />
     <Compile Include="Messages\StartRepaymentNoticeCommand.cs" />
     <Compile Include="Messages\StartRiskBusinessVerificationCommand.cs" />
     <Compile Include="Messages\StartRiskVerificationCommand.cs" />
     <Compile Include="Messages\StartScheduleCommand.cs" />
-    <Compile Include="Messages\StopPingCommand.cs" />
     <Compile Include="Messages\StoreHtmlEmailFileCommand.cs" />
     <Compile Include="Messages\StoreHtmlEmailFileResponseCommand.cs" />
     <Compile Include="Messages\StorePlainEmailFileCommand.cs" />
@@ -960,6 +968,7 @@
     <Compile Include="Messages\ValidateBusinessCardResponseWbUkCommand.cs" />
     <Compile Include="Messages\ValidateCardRequestUkCommand.cs" />
     <Compile Include="Messages\ValidateCardResponseUkCommand.cs" />
+    <Compile Include="Messages\ValidTransactionReportCaCommand.cs" />
     <Compile Include="Messages\VerifyBalanceAfterPaymentTakenCommand.cs" />
     <Compile Include="Messages\VerifyFixedTermLoanCommand.cs" />
     <Compile Include="Messages\VerifyHomePhoneCaCommand.cs" />
