@@ -81,12 +81,9 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			}
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889"), Pending("Need to make parallel")]
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889")]
 		public void CheckpointReputationPredictionPositiveDecline()
 		{
-			int newCutoff = 999;
-			SetReputationScoreCutoff(newCutoff);
-
 			try
 			{
 				var customer = CustomerBuilder.New()
@@ -96,12 +93,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				var application = ApplicationBuilder.New(customer).WithIovationBlackBox(IovationMockResponse.Deny).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 
 				var actualScore = GetReputationPredictionScore(application);
-				Assert.LessThan(actualScore, newCutoff);
-			}
-
-			finally
-			{
-				ResetReputationScoreCutoff();
+				Assert.LessThan(actualScore, ReputationScoreCutoff);
 			}
 		}
 
@@ -153,7 +145,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			}
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889"), Pending("Why doesn't customer go into arrears?")]
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889")]
 		public void CheckpointReputationPredictionPositiveTablesUpdateWhenInArrears()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(GetPostcode()).Build();
