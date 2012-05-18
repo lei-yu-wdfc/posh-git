@@ -17,7 +17,8 @@ namespace Wonga.QA.Framework
         protected Date PromiseDate;
         protected ApplicationDecisionStatus ? Decision = ApplicationDecisionStatus.Accepted;
         protected int LoanTerm;
-        protected IovationMockResponse IovationBlackBox;
+        //protected IovationMockResponse IovationBlackBox;
+    	protected string IovationBlackBox;
         protected Dictionary<int, List<bool>> EidSessionInteraction = new Dictionary<int, List<bool>>();
 
         //WB specific members
@@ -114,7 +115,7 @@ namespace Wonga.QA.Framework
         {
             Id = Guid.NewGuid();
             LoanAmount = Get.GetLoanAmount();
-            IovationBlackBox = IovationMockResponse.Unknown;
+            IovationBlackBox = IovationMockResponse.Unknown.ToString();
 
             _setPromiseDateAndLoanTerm = () =>
                                   {
@@ -327,9 +328,14 @@ namespace Wonga.QA.Framework
 
         public ApplicationBuilder WithIovationBlackBox(IovationMockResponse iovationBlackBox)
         {
-            IovationBlackBox = iovationBlackBox;
-            return this;
+        	return WithIovationBlackBox(iovationBlackBox.ToString());
         }
+
+		public ApplicationBuilder WithIovationBlackBox(string iovationBlackBox)
+		{
+			IovationBlackBox = iovationBlackBox;
+			return this;
+		}
         
         #endregion
 

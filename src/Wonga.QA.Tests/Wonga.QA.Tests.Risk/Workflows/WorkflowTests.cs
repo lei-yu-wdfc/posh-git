@@ -12,7 +12,8 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Workflows
 {
-	public class WorkflowTests
+	[TestFixture]
+	public partial class WorkflowTests
 	{
 		private Dictionary<string, string> _originalServiceConfiguration = new Dictionary<string, string>();
 		
@@ -44,7 +45,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 			Drive.Db.SetServiceConfigurations(_originalServiceConfiguration);
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), Pending]
+		[Test, AUT(AUT.Za, AUT.Ca), Pending("Pedro is working on a refactor")]
 		public void WorkflowL0SingleWorkflowUsed()
 		{
 			var customer = CustomerBuilder.New().WithEmployer("Wonga").Build();
