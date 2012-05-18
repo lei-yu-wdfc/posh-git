@@ -71,10 +71,7 @@ namespace Wonga.QA.Tests.Ui
             var homePage = Client.Home();
             homePage.Sliders.HowMuch = "100";
             homePage.Sliders.HowLong = "30";
-            Console.WriteLine("Sliders: {0} for {1}", homePage.Sliders.HowLong, homePage.Sliders.HowLong);
-            Thread.Sleep(500);
-            //0.5 sec pause
-
+                
             Assert.AreEqual(homePage.Sliders.GetTotalToRepay, "$121.00");
             //maximum charge is 21$ for each 100$ borrowed for 30 days.
         }
@@ -335,7 +332,7 @@ namespace Wonga.QA.Tests.Ui
             int setAmountValue = minAmountValue - 1;
             var page = Client.Home();
             page.Sliders.HowMuch = setAmountValue.ToString(CultureInfo.InvariantCulture);
-            page.Sliders.HowLong = "10"; //To lost focus
+            
             Assert.AreEqual(minAmountValue.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
         }
 
@@ -345,8 +342,7 @@ namespace Wonga.QA.Tests.Ui
             int maxLoanDuration = GetExpectedMaxTermL0();
             int setLoanDuration = maxLoanDuration + 1;
             var page = Client.Home();
-            page.Sliders.HowLong = setLoanDuration.ToString(CultureInfo.InvariantCulture);
-            page.Sliders.HowMuch = "10"; //To lost focus
+            page.Sliders.HowLong = setLoanDuration.ToString(CultureInfo.InvariantCulture);          
             Assert.AreEqual(maxLoanDuration.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
         }
 
@@ -359,7 +355,6 @@ namespace Wonga.QA.Tests.Ui
 
             var page = Client.Home();
             page.Sliders.HowMuch = setAmount.ToString(CultureInfo.InvariantCulture);
-            page.Sliders.HowLong = "10";
             Assert.AreEqual(defaultCreditLimit, page.Sliders.GetTotalAmount.Remove(0, 1));
 
         }
@@ -414,8 +409,6 @@ namespace Wonga.QA.Tests.Ui
             int setDurationValue = minDurationValue - 1;
             var page = Client.Home();
             page.Sliders.HowLong = setDurationValue.ToString(CultureInfo.InvariantCulture);
-            page.Sliders.HowMuch = "400"; // to lost focus
-            Thread.Sleep(2000); // wait some time to changes apply, with out this row it's fail
             Assert.AreEqual(minDurationValue.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
         }
 
