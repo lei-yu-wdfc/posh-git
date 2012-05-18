@@ -11,8 +11,8 @@ using Wonga.QA.Tests.Ui;
 
 namespace Wonga.QA.Tests.Meta
 {
-	[TestFixture, Parallelizable(TestScope.All)]
-    class LnJourneyTests : UiTest
+    [TestFixture, Parallelizable(TestScope.Self), DependsOn(typeof(ColdStartTests))]
+    public class LnJourneyTests : UiTest
     {
         [Test, AUT(AUT.Uk), JIRA("UK-1533")]
         public void L0LnJourneyTest()

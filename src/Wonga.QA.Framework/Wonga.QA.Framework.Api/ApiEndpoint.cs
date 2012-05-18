@@ -5,7 +5,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Xml.Schema;
-using Wonga.QA.Framework.Core;
+using CoreGet = Wonga.QA.Framework.Core.Get;
 
 namespace Wonga.QA.Framework.Api
 {
@@ -38,14 +38,19 @@ namespace Wonga.QA.Framework.Api
 
             using (StreamWriter writer = new StreamWriter(request.GetRequestStream()))
                 writer.Write(body);
-            Trace.WriteLine(Get.Indent(body), GetType().FullName);
+            Trace.WriteLine(CoreGet.Indent(body), GetType().FullName);
 
             return new ApiResponse(request);
         }
 
+        public String Get(Uri uri = null)
+        {
+            return new WebClient().DownloadString(uri ?? _endpoint);
+        }
+
         public XmlSchema GetShema()
         {
-            XmlSchema schema = XmlSchema.Read(new StringReader(new WebClient().DownloadString(Get.GetSchema(_endpoint))), (s, a) => { throw a.Exception; });
+            XmlSchema schema = XmlSchema.Read(new StringReader(Get(CoreGet.GetSchema(_endpoint))), (s, a) => { throw a.Exception; });
             XmlSchemaSet set = new XmlSchemaSet();
             set.Add(schema);
             set.Compile();
