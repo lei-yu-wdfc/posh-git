@@ -93,27 +93,29 @@ namespace Wonga.QA.Tests.Ui
         public void LoanStatusMessageScenario2(int scenarioId, int dayShift) { LoanStatusMessage(scenarioId, dayShift); }
 
         [Test, AUT(AUT.Uk), JIRA("UK-795")]
-        //[Row(3, 3, 10)]
-        //[Row(3, 7, 10)]
-        [Row(3, 9, 10)]
-        //[Row(3, 0, 1)] //0 days passed in 1-day loan
-        //[Row(3, 0, 7)] //0 days passed in 7-day loan
-        //[Row(3, 6, 7)] //6 days passed in 7-day loan
+        [Row(3, 3, 10)]
+        [Row(3, 7, 10)]
+        [Row(3, 8, 10)]
+        [Row(3, 0, 7)] //0 days passed in 7-day loan
         public void LoanStatusMessageScenario3(int scenarioId, int dasyShift, int loanTerm) { LoanStatusMessage(scenarioId, dasyShift, loanTerm); }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1359"), Pending("Fails as returns scenario 6. To be investigated.")]
-        [Row(4, 9, 10)]     //9 days passed in 10-day loan
-       // [Row(4, 1, 2)]      //1 day passed in 2-day loan
-       // [Row(4, 6, 7)]      //6 days passed in 7-day loan
-        //[Row(4, 9, 10)]    //TBD: check that after 3 extensions
-        // [Row(4, 2, 7)]     //done manually - passed. TBD: check that after 3 extensions, you can't extent any more, even though it is not too late
+        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1359"), Pending("Check that after 3 extensions we get scenario 4. Passed manually.")]
+        // [Row(4, 2, 7)]
         public void LoanStatusMessageScenario4(int scenarioId, int dasyShift, int loanTerm) { LoanStatusMessage(scenarioId, dasyShift, loanTerm); }    
         
         [Test, AUT(AUT.Uk), JIRA("UK-795")]
+        [Row(5, 0)] //0 days passed in 10-day loan
+        [Row(5, 2)] //0 days passed in 10-day loan
         public void LoanStatusMessageScenario5() { LoanStatusMessage(5, 2); }
 
         [Test, AUT(AUT.Uk), JIRA("UK-795")]
-        public void LoanStatusMessageScenario6() { LoanStatusMessage(6, 3); }
+        [Row(6, 0, 1)] //0 days passed in 1-day loan
+        [Row(6, 3, 10)] //3 days passed in 10-day loan
+        [Row(6, 6, 7)]  //6 days passed in 7-day loan
+        public void LoanStatusMessageScenario6(int scenarioId, int dasyShift, int loanTerm)
+        {
+            LoanStatusMessage(scenarioId, dasyShift, loanTerm);
+        }
 
         [Test, AUT(AUT.Uk), JIRA("UK-795, UK-1433")]
         public void LoanStatusMessageScenario7() { LoanStatusMessage(7, 10); }
@@ -289,7 +291,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1624"), Pending("Awaiting API implementation of the hours to decision, bug UK-1624.")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1624"), Pending("UK-1624 Waiting for implementation of Referrals and API implementation of the hours to decision")]
         public void LoanStatusMessageScenario17A()
         {
             const int loanAmount = 100;
@@ -312,7 +314,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1624"), Pending("Awaiting API implementation of the hours to decision, bug UK-1624.")]
+        [Test, AUT(AUT.Uk), JIRA("UK-795", "UK-1624"), Pending("UK-1624 Waiting for implementation of Referrals and API implementation of the hours to decision")]
         public void LoanStatusMessageScenario17B()
         {
             const int loanAmount = 100;

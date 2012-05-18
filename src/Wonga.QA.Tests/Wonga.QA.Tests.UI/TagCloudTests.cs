@@ -142,7 +142,7 @@ namespace Wonga.QA.Tests.Ui
             string actualTagCloudText = mySummaryPage.GetTagCloud;
             Assert.AreEqual(expectedTagCloudText, actualTagCloudText);
 
-            //ChangeWantToRepayBox(customer, customer.GetApplication()); bug UK-2121
+            ChangeWantToRepayBox(customer, customer.GetApplication());
         } 
 
         [Test, AUT(AUT.Uk), JIRA("UK-785")]
@@ -176,7 +176,7 @@ namespace Wonga.QA.Tests.Ui
             string actualTagCloudText = mySummaryPage.GetTagCloud;
             Assert.AreEqual(expectedTagCloudText, actualTagCloudText);
 
-            //ChangeWantToRepayBox(customer, customer.GetApplication()); bug UK-2121
+            ChangeWantToRepayBox(customer, customer.GetApplication());
         } 
 
         [Test, AUT(AUT.Uk), JIRA("UK-785")]
@@ -282,11 +282,12 @@ namespace Wonga.QA.Tests.Ui
             string expectedTagCloudText = tagCloudTexts[scenarioId];
             string actualTagCloudText = mySummaryPage.GetTagCloud;
             Assert.AreEqual(expectedTagCloudText, actualTagCloudText);
-        } 
+        }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-785", "UK-1624"), Pending("Fails due to bug UK-1624")]
+        [Test, AUT(AUT.Uk), JIRA("UK-785", "UK-1624"), Pending("UK-1624 Waiting for implementation of Referrals and API implementation of the hours to decision")]
         public void TagCloudScenario17A()
         {
+            var scenarioId = 17;
             const int loanAmount = 100;
             const int days = 10;
             string email = Get.RandomEmail();
@@ -301,13 +302,15 @@ namespace Wonga.QA.Tests.Ui
 
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
-
+            
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId));
             Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-785", "UK-1624"), Pending("Fails due to bug UK-1624")]
+        [Test, AUT(AUT.Uk), JIRA("UK-785", "UK-1624"), Pending("UK-1624 Waiting for implementation of Referrals and API implementation of the hours to decision")]
         public void TagCloudScenario17B()
         {
+            var scenarioId = 17;
             const int loanAmount = 100;
             const int days = 10;
             string email = Get.RandomEmail();
@@ -323,7 +326,8 @@ namespace Wonga.QA.Tests.Ui
 
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
-
+            
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId));
             Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
         }
 
@@ -336,6 +340,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk), JIRA("UK-785")]
         public void TagCloudScenario21()
         {
+            var scenarioId = 21;
             const int loanAmount = 100;
             const int days = 10;
             string email = Get.RandomEmail();
@@ -350,7 +355,8 @@ namespace Wonga.QA.Tests.Ui
 
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
-
+            
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId));
             Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
         }
 
@@ -403,17 +409,18 @@ namespace Wonga.QA.Tests.Ui
 
             string expectedTagCloudText = tagCloudTexts[scenarioId];
             string actualTagCloudText = mySummaryPage.GetTagCloud;
+
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId));
             Assert.AreEqual(expectedTagCloudText, actualTagCloudText);
             
-            /* bug UK-2121
-             * if (actualTagCloudText.IndexOf("Repay") > 0)
+            if (actualTagCloudText.IndexOf("Repay") > 0)
             {
                 ChangeWantToRepayBox(customer, application);
-            }*/
+            }
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1827")]
-        public void ChangeWantToRepayBox(Customer customer, Application application)
+        
+        private void ChangeWantToRepayBox(Customer customer, Application application)
         {
 
             var AmountToRepayMinimum = 5;
