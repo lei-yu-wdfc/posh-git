@@ -12,7 +12,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Workflows
 {
-	public partial class WorkflowTests
+	public class WorkflowTests
 	{
 		private Dictionary<string, string> _originalServiceConfiguration = new Dictionary<string, string>();
 		

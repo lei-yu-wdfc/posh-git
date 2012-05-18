@@ -12,9 +12,9 @@ using Wonga.QA.Tests.Risk.Checkpoints;
 
 namespace Wonga.QA.Tests.Risk.Workflows
 {
-	public partial class WorkflowTests
+	[Parallelizable(TestScope.All)]
+	public class WorkflowCheckpointsTests
 	{
-		
 
 		private readonly List<string> ExpectedCheckpointNamesL0 = GetExpectedCheckpointNamesL0();
 		private readonly List<string> ExpectedCheckpointNamesLn = GetExpectedCheckpointNamesLn();
@@ -106,7 +106,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 			var customer = CustomerBuilder.New().WithEmployer("Wonga").Build();
 			var application =
 				ApplicationBuilder.New(customer)
-				.WithUnmaskedExpectedDecision()
+				.WithoutExpectedDecision()
 				.Build();
 
 			var actualCheckpointNames = Drive.Db.GetCheckpointDefinitionsForApplication(application.Id).Select(a => a.Name);
@@ -123,7 +123,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 
 			var application =
 				ApplicationBuilder.New(customer)
-				.WithUnmaskedExpectedDecision()
+				.WithoutExpectedDecision()
 				.Build();
 
 			var actualCheckpointNames = Drive.Db.GetCheckpointDefinitionsForApplication(application.Id).Select(a => a.Name);
