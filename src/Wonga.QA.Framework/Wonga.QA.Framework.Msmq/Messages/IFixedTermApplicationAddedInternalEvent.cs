@@ -9,6 +9,7 @@ namespace Wonga.QA.Framework.Msmq
     public partial class IFixedTermApplicationAddedInternalEvent : MsmqMessage<IFixedTermApplicationAddedInternalEvent>
     {
         public DateTime ApplicationDate { get; set; }
+        public String ApplicationReference { get; set; }
         public Guid AccountId { get; set; }
         public Guid ApplicationId { get; set; }
         public DateTime CreatedOn { get; set; }

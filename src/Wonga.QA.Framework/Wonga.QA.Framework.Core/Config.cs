@@ -344,6 +344,7 @@ namespace Wonga.QA.Framework.Core
             public String TransUnion { get; set; }
             public String Uru { get; set; }
             public String WongaPay { get; set; }
+            public String EasyPay { get; set; }
 
             public MsmqConfig(String server) : this(server, server) { }
 
@@ -386,6 +387,7 @@ namespace Wonga.QA.Framework.Core
                 TransUnion = String.Format(format, component, "transunioncomponent");
                 Uru = String.Format(format, component, "urucomponent");
                 WongaPay = String.Format(format, component, "wongapaytc");
+                EasyPay = string.Format(format, component, "BankGatewayEasypayTC");
             }
         }
 

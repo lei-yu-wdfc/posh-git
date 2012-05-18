@@ -117,7 +117,7 @@ namespace Wonga.QA.Tests.BankGateway
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-2098"), Parallelizable, FeatureSwitch(FeatureSwitchConstants.RbcFeatureSwitchKey)]
-        public void WhenCustomerEntersAnApplicationWithAnInvalidBankAccountThenBankGatewayShouldUpdateTransactionAsFailed()
+        public void WhenCustomerEntersAnApplicationAndRbcRejectsTheTransactionThenBankGatewayShouldUpdateTransactionAsFailed()
         {
             var customer = CustomerBuilder.New().
                         WithInstitutionNumber("003").
@@ -133,6 +133,27 @@ namespace Wonga.QA.Tests.BankGateway
             Do.Until(() => _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
                                             _bgTrans.BankIntegrationId == (int)BankGatewayIntegrationId.Rbc &&
                                             _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Failed).
+                               Single());
+        }
+
+        [Test, AUT(AUT.Ca), JIRA("CA-2098"), Parallelizable, FeatureSwitch(FeatureSwitchConstants.RbcFeatureSwitchKey)]
+        public void WhenCustomerEntersAnApplicationAndRbcWarnsTheTransactionThenBankGatewayShouldUpdateTransactionAsSuccess()
+        {
+            var customer = CustomerBuilder.New().
+                        WithInstitutionNumber("003").
+                        WithBranchNumber("00022").
+                Build();
+
+            RbcResponseBuilder.New().
+                ForBankAccountNumber(customer.BankAccountNumber).
+                Warn();
+
+
+            var application = ApplicationBuilder.New(customer).Build();
+
+            Do.Until(() => _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
+                                            _bgTrans.BankIntegrationId == (int)BankGatewayIntegrationId.Rbc &&
+                                            _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Paid).
                                Single());
         }
 

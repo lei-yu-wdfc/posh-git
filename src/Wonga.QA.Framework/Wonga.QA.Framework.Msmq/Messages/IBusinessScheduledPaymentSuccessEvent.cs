@@ -10,6 +10,7 @@ namespace Wonga.QA.Framework.Msmq
     {
         public Guid OrganisationId { get; set; }
         public Guid ApplicationId { get; set; }
+        public Guid? TransactionId { get; set; }
         public DateTime CreatedOn { get; set; }
     }
 }

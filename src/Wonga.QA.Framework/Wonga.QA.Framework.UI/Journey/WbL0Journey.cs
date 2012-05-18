@@ -70,7 +70,7 @@ namespace Wonga.QA.Framework.UI.Journey
             personalDetailsPage.YourDetails.NumberOfDependants = "0";
 
             personalDetailsPage.ContactingYou.HomePhoneNumber = "02071111234";
-            personalDetailsPage.ContactingYou.CellPhoneNumber = "07712345678";
+            personalDetailsPage.ContactingYou.CellPhoneNumber = "07700900000";
             personalDetailsPage.ContactingYou.EmailAddress = emailAddress;
             personalDetailsPage.ContactingYou.ConfirmEmailAddress = emailAddress;
 

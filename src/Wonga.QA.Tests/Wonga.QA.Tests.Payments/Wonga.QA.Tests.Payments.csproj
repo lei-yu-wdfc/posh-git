@@ -51,6 +51,7 @@
     <Compile Include="Command\SetAccountPaymentMethodCommandCaTests.cs" />
     <Compile Include="CsapiCreateTransactionTest.cs" />
     <Compile Include="EarlyRepaymentTests.cs" />
+    <Compile Include="EasyPayPaymentTakenTests.cs" />
     <Compile Include="ExternalDebtCollectionTests.cs" />
     <Compile Include="GetApplicationAprTest.cs" />
     <Compile Include="GetAvailabelCreditTest.cs" />
