@@ -162,7 +162,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 			application.PutApplicationIntoArrears();
 
-			Do.Until(() => Drive.Db.Risk.RiskIovationPostcodes.Single(a => a.ApplicationId == application.Id).InArrears);
+			Do.Until(() => (bool)Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(l0Application.Id).InArrears;
 		}
 
 		[Test, AUT(AUT.Ca), JIRA("CA-1889")]
