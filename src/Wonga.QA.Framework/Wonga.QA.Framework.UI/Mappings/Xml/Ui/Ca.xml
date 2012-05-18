@@ -165,6 +165,23 @@
   <MyPersonalDetailsPage>
     <Postcode>table#profile tr#address tbody tr:first-child+tr+tr td</Postcode>
   </MyPersonalDetailsPage>
+
+  <SlidersElement>
+    <FormId>#wonga-sliders-form</FormId>
+    <AmountSlider>.wonga-amount-slider-wrapper .sliderbit</AmountSlider>
+    <DurationSlider>.wonga-duration-slider-wrapper .sliderbit</DurationSlider>
+    <LoanAmount>#edit-loan-amount</LoanAmount>
+    <LoanDuration>#edit-loan-duration</LoanDuration>
+    <SubmitButton>#edit-submit</SubmitButton>
+    <TotalAmount>span.loan-amount</TotalAmount>
+    <TotalFees>span.loan-fees</TotalFees>
+    <TotalToRepay>span.loan-total</TotalToRepay>
+    <RepaymentDate>span.repayment-date</RepaymentDate>
+    <AmountMinusButton>.wonga-amount-slider-wrapper .sliderminus</AmountMinusButton>
+    <AmountPlusButton>.wonga-amount-slider-wrapper .sliderplus</AmountPlusButton>
+    <DurationMinusButton>.wonga-duration-slider-wrapper .sliderminus</DurationMinusButton>
+    <DurationPlusButton>.wonga-duration-slider-wrapper .sliderplus</DurationPlusButton>
+  </SlidersElement>
   
   
 </UiMap>
