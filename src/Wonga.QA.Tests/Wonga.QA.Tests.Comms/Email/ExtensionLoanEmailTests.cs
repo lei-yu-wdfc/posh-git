@@ -13,7 +13,7 @@ using CreateFixedTermLoanExtensionCommand = Wonga.QA.Framework.Api.CreateFixedTe
 namespace Wonga.QA.Tests.Comms.Email
 {
 
-    [TestFixture]
+    [TestFixture, Parallelizable(TestScope.All)]
     public class ExtensionLoanEmailTests
     {
         private LoanExtensionEntity _extension;
@@ -29,7 +29,7 @@ namespace Wonga.QA.Tests.Comms.Email
             
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1281"), Parallelizable]
+        [Test, AUT(AUT.Uk), JIRA("UK-1281")]
         [Row(2, "Extension Secci")]
         [Row(3, "Extension Agreement")]
         [Row(20, "Extension AE Document")]
@@ -53,7 +53,7 @@ namespace Wonga.QA.Tests.Comms.Email
 
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1281"), Parallelizable]
+        [Test, AUT(AUT.Uk), JIRA("UK-1281")]
         public void EmailExtensionAgreementTest()
         {
 
@@ -83,6 +83,29 @@ namespace Wonga.QA.Tests.Comms.Email
             );
 
         }
+
+		[Test, AUT(AUT.Uk), JIRA("UK-1332")]
+		public void EmailExtensionCancelledTest()
+		{
+			var extensionId = _extension.ExternalId;
+
+			var app = Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(x => x.ApplicationId == _extension.ApplicationId));
+
+			Drive.Msmq.Comms.Send(new IExtensionCancelledEvent
+			                      	{
+			                      		ApplicationId = app.ExternalId,
+										ExtensionId = extensionId,
+										CreatedOn = DateTime.UtcNow
+			                      	});
+
+			Assert.DoesNotThrow(() =>
+			                    Do.Until(
+			                    	() =>
+			                    	(bool)
+									(Drive.Data.OpsSagas.Db.ExtensionCancelledEmailData.FindByExtensionId(extensionId) == null))
+			                    , "Email Extension Agreement Saga has not completed: {0}", extensionId
+				);
+		}
 
         private LoanExtensionEntity CreateLoanAndExtend()
         {
@@ -153,7 +176,7 @@ namespace Wonga.QA.Tests.Comms.Email
                 ClientId = clientId,
                 CreatedOn = DateTime.UtcNow,
                 DateOfBirth = new DateTime(1956, 10, 17),
-                Email = string.Format("mdwonga+{0}@gmail.com", DateTime.UtcNow.Ticks),
+                Email = Get.RandomEmail(),
                 Forename = string.Format("Joe_{0}", DateTime.UtcNow.Ticks),
                 Gender = GenderEnum.Male,
                 HomePhone = string.Format("02{0}", DateTime.UtcNow.Ticks.ToString().Substring(0, 8)),
