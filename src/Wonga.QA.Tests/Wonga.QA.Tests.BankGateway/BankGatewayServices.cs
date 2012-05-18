@@ -20,6 +20,7 @@ namespace Wonga.QA.Tests.BankGateway
                     break;
                 case AUT.Za:
                     Assert.IsTrue(Drive.Svc.Hyphen.IsRunning());
+					Assert.IsTrue(Drive.Svc.EasyPay.IsRunning());
                     break;
                 case AUT.Ca:
                     Assert.IsTrue(Drive.Svc.Scotia.IsRunning());
