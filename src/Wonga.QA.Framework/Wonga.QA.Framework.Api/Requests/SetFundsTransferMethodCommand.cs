@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
+using Wonga.QA.Framework.Api.Enums;
 
 namespace Wonga.QA.Framework.Api
 {
@@ -7,6 +8,6 @@ namespace Wonga.QA.Framework.Api
     public partial class SetFundsTransferMethodCommand : ApiRequest<SetFundsTransferMethodCommand>
     {
         public Guid ApplicationId { get; set; }
-        public int TransferMethod { get; set; }
+        public FundsTransferEnum TransferMethod { get; set; }
     }
 }

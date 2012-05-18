@@ -2,6 +2,7 @@
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Api.Enums;
 using Wonga.QA.Framework.Api.Exceptions;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
@@ -31,6 +32,8 @@ namespace Wonga.QA.Tests.Prepaid
         private static readonly String PREMIUM_CARD_TEMPLATE_NAME = "34328";
         private static readonly String STANDARD_CARD_TYPE = "0";
         private static readonly String PREMIUM_CARD_TYPE = "1";
+
+        private static readonly String CARD_STATUS_ACTIVE = "2";
 
         private static readonly dynamic _prepaidCardDb = Drive.Data.PrepaidCard.Db;
         private static readonly dynamic _qaDataDb = Drive.Data.QaData.Db;
@@ -107,6 +110,34 @@ namespace Wonga.QA.Tests.Prepaid
             Do.Until(() => _qaDataDb.Email.FindBy(EmailAddress: _eligibleCustomer.GetEmail(), TemplateName: PREMIUM_CARD_TEMPLATE_NAME));
         }
 
+        [Test,AUT(AUT.Uk),JIRA("PP-34"),Pending("Command not fully implemented ")]
+        public void CustomerShouldApplyPrepaidCardAndSetPrepaidFunds()
+        {
+            ExecuteCommonPPSCommands();
+            CheckOnAddingRecordsToPrepaidCard(_eligibleCustomer.Id);
+            Application application = ApplicationBuilder.New(_eligibleCustomer).Build();
+
+            var setFundsCommand = new SetFundsTransferMethodCommand();
+            setFundsCommand.ApplicationId = application.Id;
+            setFundsCommand.TransferMethod = FundsTransferEnum.SendToPrepaidCard;
+
+            Drive.Api.Commands.Post(setFundsCommand);
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("PP-34"), Pending("Command not fully implemented")]
+        public void CustomerShouldApplyPrepaidCardAndSetDefaultFunds()
+        {
+            ExecuteCommonPPSCommands();
+            CheckOnAddingRecordsToPrepaidCard(_eligibleCustomer.Id);
+            Application application = ApplicationBuilder.New(_eligibleCustomer).Build();
+
+            var setFundsCommand = new SetFundsTransferMethodCommand();
+            setFundsCommand.ApplicationId = application.Id;
+            setFundsCommand.TransferMethod = FundsTransferEnum.DefaultAutomaticallyChosen;
+
+            Drive.Api.Commands.Post(setFundsCommand);
+        }
+
         [TearDown]
         public void Rollback()
         {
@@ -122,9 +153,12 @@ namespace Wonga.QA.Tests.Prepaid
             var premiumCardDetails = Do.Until(() => _prepaidCardDb.CardDetails.FindBy(CardHolderExternalId: cardHolderId.OrderByIdDescending().First().ExternalId, CardType: PREMIUM_CARD_TYPE));
            
             String standardCardAccountNumber = standardCardDetails.AccountNumber;
-            String premiumCardAccountNumber = premiumCardDetails.AccountNumber;
             String standardCardSerialnumber = standardCardDetails.SerialNumber;
+            String standardCardStatus = standardCardDetails.CardStatus;
+
+            String premiumCardAccountNumber = premiumCardDetails.AccountNumber;
             String premiumCardSerialnumber = premiumCardDetails.SerialNumber;
+            String premiumCardStatus = premiumCardDetails.CardStatus;
 
             Assert.IsNotNull(standardCardDetails.AccountNumber);
             Assert.IsNotNull(premiumCardDetails.AccountNumber);
@@ -135,6 +169,9 @@ namespace Wonga.QA.Tests.Prepaid
             Assert.IsTrue(premiumCardAccountNumber.Length <= VALID_ACCOUNT_NUMBER_LENGTH);
             Assert.IsTrue(standardCardSerialnumber.Length <= VALID_SERIAL_NUMBER_LENGTH);
             Assert.IsTrue(premiumCardSerialnumber.Length <= VALID_SERIAL_NUMBER_LENGTH);
+
+            Assert.IsTrue(standardCardStatus.Equals(CARD_STATUS_ACTIVE));
+            Assert.IsTrue(premiumCardStatus.Equals(CARD_STATUS_ACTIVE));
 
             Assert.IsNotNull(standardCardDetails.CardPan);
             Assert.IsNotNull(premiumCardDetails.CardPan);

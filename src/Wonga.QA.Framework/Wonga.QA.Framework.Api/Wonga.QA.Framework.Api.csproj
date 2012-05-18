@@ -254,6 +254,7 @@
     <Compile Include="Enums\ProvinceEnum.cs" />
     <Compile Include="Enums\SliderPositionEnum.cs" />
     <Compile Include="Enums\TitleEnum.cs" />
+	<Compile Include="Enums\FundsTransferEnum.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
