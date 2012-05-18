@@ -45,6 +45,17 @@ namespace Wonga.QA.Framework.Mocks
             return new RbcResponse(entity.BankGatewayResponseSetupId);
 		}
 
+        public RbcResponse Warn()
+        {
+            var response = new XElement("Setup",
+                                        new XElement("ReportCreditRecord",
+                                                     new XAttribute("PaymentStatus", "W")));
+
+            var entity = InsertSetup(response);
+
+            return new RbcResponse(entity.BankGatewayResponseSetupId);
+        }
+
 		private BankGatewayResponseSetup InsertSetup(XElement response)
 		{
 			var setup = new BankGatewayResponseSetup
