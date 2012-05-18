@@ -117,15 +117,15 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Assert.AreElementsEqualIgnoringOrder(_factorNames, actualFactorNames);
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889"), DependsOn("CheckpointReputationPredictionPositiveAccept"), Pending("Why doesn't customer go into arrears?")]
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889"), DependsOn("CheckpointReputationPredictionPositiveAccept")]
 		public void CheckpointReputationPredictionPositiveTablesUpdateWhenAccountRankIncreases()
 		{
-			var prevAccountRank = Drive.Db.Risk.RiskIovationPostcodes.Single(a => a.ApplicationId == l0Application.Id).AccountRank;
+			var prevAccountRank = (int)Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(l0Application.Id).AccountRank;
 			Assert.AreEqual(0, prevAccountRank);
 
 			l0Application.RepayOnDueDate();
 
-			Do.Until(() => Drive.Db.Risk.RiskIovationPostcodes.Single(a => a.ApplicationId == l0Application.Id).AccountRank == 1);
+			Do.Until(() => Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(l0Application.Id).AccountRank == 1);
 		}
 
 		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889")]
@@ -156,7 +156,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(GetPostcode()).Build();
 			var application = ApplicationBuilder.New(customer).Build();
 
-			var prevInArrears = Drive.Db.Risk.RiskIovationPostcodes.Single(a => a.ApplicationId == application.Id).InArrears;
+			var prevInArrears = (bool)Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(l0Application.Id).InArrears;
 			Assert.IsNotNull(prevInArrears);
 			Assert.IsFalse((bool)prevInArrears);
 

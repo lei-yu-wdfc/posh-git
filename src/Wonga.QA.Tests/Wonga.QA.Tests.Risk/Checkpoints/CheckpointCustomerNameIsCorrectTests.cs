@@ -11,7 +11,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[Parallelizable(TestScope.All), AUT(AUT.Za)]
+	[TestFixture, Parallelizable(TestScope.All), AUT(AUT.Za)]
 	public class CheckpointCustomerNameIsCorrectTests
 	{
         private const RiskMask TestMask = RiskMask.TESTCustomerNameIsCorrect;
