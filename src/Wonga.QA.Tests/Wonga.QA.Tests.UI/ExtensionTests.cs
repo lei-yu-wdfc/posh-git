@@ -126,10 +126,11 @@ namespace Wonga.QA.Tests.Ui
 
 
         [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1739", "UK-2121")]
-        //[Row(100, 5, 1)]
-        //[Row(400, 2, 1)]
-        //[Row(400, 7, 1)]
+        [Row(100, 5, 1)]
+        [Row(400, 2, 1)]
+        [Row(400, 7, 1)]
         [Row(1, 7, 1)]
+        [Row(1, 2, 1)]
         public void ExtensionRequestPageInitialValuesTest(int loanAmount, int loanTerm, int extensionDays)
         {
             ExtensionRequestPage(loanAmount, loanTerm, extensionDays);
@@ -192,7 +193,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Uk), JIRA("UK-427", "Uk-1862"), Pending("Fails due to bug UK-2121")]
+        [Test, AUT(AUT.Uk), JIRA("UK-427", "Uk-1862", "UK-2121")]
         [Row(1, 2, 1)]
         [Row(1, 7, 1)]
         [Row(10, 7, 6)]
