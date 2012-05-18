@@ -91,7 +91,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				//don't use mask so that the workflow builder is run!
 				customer = CustomerBuilder.New().WithEmployer("Wonga").Build();
 
-				application = ApplicationBuilder.New(customer).WithUnmaskedExpectedDecision().Build();
+				application = ApplicationBuilder.New(customer).WithoutExpectedDecision().Build();
 
 				AssertCheckpointAndVerificationExecution(featureSwitchValue);
 			}
@@ -118,7 +118,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				//don't use mask so that the workflow builder is run!
 				Drive.Db.UpdateEmployerName(customer.Id, "Wonga");
 
-				var lnApplication = ApplicationBuilder.New(customer).WithUnmaskedExpectedDecision().Build();
+				var lnApplication = ApplicationBuilder.New(customer).WithoutExpectedDecision().Build();
 
 				AssertCheckpointAndVerificationExecution(lnApplication,featureSwitchValue);
 			}

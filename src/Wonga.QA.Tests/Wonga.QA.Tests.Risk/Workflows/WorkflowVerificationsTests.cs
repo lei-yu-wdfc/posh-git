@@ -12,9 +12,9 @@ using Wonga.QA.Tests.Risk.Checkpoints;
 
 namespace Wonga.QA.Tests.Risk.Workflows
 {
-	public partial class WorkflowTests
+	[Parallelizable(TestScope.All)]
+	public class WorkflowVerificationsTests
 	{
-		
 
 		private readonly List<string> ExpectedVerificationNamesL0 = GetExpectedVerificationNamesL0();
 		private readonly List<string> ExpectedVerificationNamesLn = GetExpectedVerificationNamesLn();
@@ -116,7 +116,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 			var customer = CustomerBuilder.New().WithEmployer("Wonga").Build();
 			var application =
 				ApplicationBuilder.New(customer)
-				.WithUnmaskedExpectedDecision()
+				.WithoutExpectedDecision()
 				.Build();
 
 			var actualVerificationNames = Drive.Db.GetVerificationDefinitionsForApplication(application.Id).Select(a => a.Name);
@@ -133,8 +133,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 
 			var application =
 				ApplicationBuilder.New(customer)
-				//.WithExpectedDecision(ApplicationDecisionStatus.Declined)
-				.WithUnmaskedExpectedDecision()
+				.WithoutExpectedDecision()
 				.Build();
 
 			var actualVerificationNames = Drive.Db.GetVerificationDefinitionsForApplication(application.Id).Select(a => a.Name);
