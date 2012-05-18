@@ -298,7 +298,7 @@ namespace Wonga.QA.Tests.Ui
                                        .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                                        .FillAddressDetails().CurrentPage as AccountDetailsPage;
                     accountDetailsPage.AccountDetailsSection.Password = "Passw0rd";
-                    accountDetailsPage.AccountDetailsSection.PasswordConfirm = "qweqweqwe";
+                    accountDetailsPage.AccountDetailsSection.PasswordConfirm = "Passw0rds";
                     accountDetailsPage.AccountDetailsSection.SecretQuestion = "123124";//to lost focus
                     Thread.Sleep(500);
                     Assert.IsTrue(accountDetailsPage.AccountDetailsSection.IsPasswordMismatchWarningOccured());
@@ -308,7 +308,7 @@ namespace Wonga.QA.Tests.Ui
                                       .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                                       .FillAddressDetails().CurrentPage as AddressDetailsPage;
                     addressDetailsPage.AccountDetailsSection.Password = "Passw0rd";
-                    addressDetailsPage.AccountDetailsSection.PasswordConfirm = "qweqweqwe";
+                    addressDetailsPage.AccountDetailsSection.PasswordConfirm = "Passw0rds";
                     addressDetailsPage.AccountDetailsSection.SecretQuestion = "12312"; //to lost focus
                     Thread.Sleep(500);
                     Assert.IsTrue(addressDetailsPage.AccountDetailsSection.IsPasswordMismatchWarningOccured());
