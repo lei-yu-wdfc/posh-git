@@ -44,6 +44,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 							.WithNationalNumber(nationalNumber)
 							.WithBankAccountNumber(bankAccountNumber)
 							.Build();
+
                         var application = ApplicationBuilder.New(customer).Build();
                         Assert.IsNotNull(application);
 
