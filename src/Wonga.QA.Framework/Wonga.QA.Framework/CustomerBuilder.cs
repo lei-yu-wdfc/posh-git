@@ -63,7 +63,7 @@ namespace Wonga.QA.Framework
             _verification = Get.GetId();
             _employerName = Get.GetEmployerName();
             _employerStatus = Get.GetEmploymentStatus();
-            _netMonthlyIncome = Get.RandomInt(1000, 2000);
+            _netMonthlyIncome = 1500;
             _dateOfBirth = Get.GetDoB();
             _gender = GenderEnum.Female;
             if (Config.AUT == AUT.Za) //TODO implement nationalNumber generators for other regions
