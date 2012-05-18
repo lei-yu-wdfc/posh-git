@@ -14,19 +14,19 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	class CheckpointMonthlyIncomeEnoughForRepaymentTests
 	{
         private const RiskMask TestMask = RiskMask.TESTMonthlyIncomeEnoughForRepayment;
+		private static readonly decimal NetMonthlyIncome = GetDefaultCreditLimit()*4;
 
 		[Test, AUT(AUT.Za, AUT.Uk), JIRA("SME-866","UK-866"), Description("Scenario 1: Accepted")]
 		public void CheckpointMonthlyIncomeEnoughForRepaymentAccept()
 		{
-			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
-
-			var application = ApplicationBuilder.New(customer)
-                .WithLoanAmount(GetDefaultCreditLimit() - 1)
+			var customer = CustomerBuilder.New()
+				.WithEmployer(TestMask)
+				.WithNetMonthlyIncome(NetMonthlyIncome)
 				.Build();
 
-            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
-            Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.MonthlyIncomeLimitCheck));
+			var application = ApplicationBuilder.New(customer)
+				.WithLoanAmount(GetLoanThresholdForCustomer(customer) - 1)
+				.Build();
 		}
 
         [Test, AUT(AUT.Za, AUT.Uk), JIRA("SME-866", "UK-866"), Description("Scenario 1: Declined")]
@@ -34,11 +34,11 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		{
 			var customer = CustomerBuilder.New()
                 .WithEmployer(TestMask)
-                .WithNetMonthlyIncome(GetInsufficentApplicantIncome(GetDefaultCreditLimit()))
+				.WithNetMonthlyIncome(NetMonthlyIncome)
                 .Build();
 
 			ApplicationBuilder.New(customer)
-                .WithLoanAmount(GetDefaultCreditLimit())
+				.WithLoanAmount(GetLoanThresholdForCustomer(customer) + 1)
                 .WithExpectedDecision(ApplicationDecisionStatus.Declined)
 				.Build();
 		}
@@ -52,22 +52,14 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			return ((allowedIncomeLimit / 100.0m) * netMonthlyIncome);
 		}
 
-		private decimal GetAllowedIncomeLimitPercent()
+		private static decimal GetAllowedIncomeLimitPercent()
 		{
 			return Decimal.Parse(Drive.Db.GetServiceConfiguration("Risk.AllowedIncomeLimitPercent").Value);
 		}
 
-        private decimal GetDefaultCreditLimit()
+        private static decimal GetDefaultCreditLimit()
         {
             return Decimal.Parse(Drive.Db.GetServiceConfiguration("Risk.DefaultCreditLimit").Value);
-        }
-
-        private decimal GetInsufficentApplicantIncome(decimal loanAmount)
-        {
-            var allowedIncomePercentageLimit = GetAllowedIncomeLimitPercent();
-            var netMonthlyIncome = loanAmount - 1;
-
-            return ((allowedIncomePercentageLimit / 100.0m) * netMonthlyIncome);
         }
 
 		#endregion
