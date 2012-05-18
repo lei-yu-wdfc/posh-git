@@ -105,12 +105,12 @@ namespace Wonga.QA.Framework.Core
                     }
                 case AUT.Wb:
                     {
-                        return "075" + RandomLong(10000000, 99999999);
+                        return "077009" + RandomLong(10000, 99999);
                     }
 
                 default:
                     {
-                        return "07500000000";
+                        return "07700900000";
                     }
             }
         }
