@@ -21,12 +21,8 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
 
 			var application = ApplicationBuilder.New(customer)
-                .WithLoanAmount(GetDefaultCreditLimit() - 1)
+				.WithLoanAmount(GetLoanThresholdForCustomer(customer) - 1)
 				.Build();
-
-            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
-            Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.MonthlyIncomeLimitCheck));
 		}
 
         [Test, AUT(AUT.Za, AUT.Uk), JIRA("SME-866", "UK-866"), Description("Scenario 1: Declined")]
@@ -34,11 +30,10 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		{
 			var customer = CustomerBuilder.New()
                 .WithEmployer(TestMask)
-                .WithNetMonthlyIncome(GetInsufficentApplicantIncome(GetDefaultCreditLimit()))
                 .Build();
 
 			ApplicationBuilder.New(customer)
-                .WithLoanAmount(GetDefaultCreditLimit())
+				.WithLoanAmount(GetLoanThresholdForCustomer(customer) + 1)
                 .WithExpectedDecision(ApplicationDecisionStatus.Declined)
 				.Build();
 		}
