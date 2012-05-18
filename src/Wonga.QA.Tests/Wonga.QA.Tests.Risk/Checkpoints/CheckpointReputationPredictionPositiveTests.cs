@@ -95,6 +95,9 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				var actualScore = GetReputationPredictionScore(application);
 				Assert.LessThan(actualScore, ReputationScoreCutoff);
 			}
+			catch
+			{
+			}
 		}
 
 		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889"), DependsOn("CheckpointReputationPredictionPositiveAccept")]
