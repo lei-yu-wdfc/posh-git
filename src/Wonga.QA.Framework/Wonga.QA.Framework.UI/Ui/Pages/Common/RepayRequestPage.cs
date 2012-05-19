@@ -16,12 +16,22 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private IWebElement _repayAmount;
         private IWebElement _remainderAmount;
         private SmallRepaySlidersElement Sliders { get; set; }
+        private IWebElement _cancelButton;
+        private IWebElement _oweToday;
+        private string _repayTotal;
+        private IWebElement _loanPeriodClarification;
+
+
         public RepayRequestPage(UiClient client) : base(client)
         {
             _submitButton = Content.FindElement(By.CssSelector(UiMap.Get.RepayRequestPage.RepayRequestPageSubmitButton));
             _informativeBox = Content.FindElement(By.CssSelector(UiMap.Get.RepayRequestPage.RepayRequestPageInformativeBox));
             _repayAmount = Content.FindElement(By.CssSelector(UiMap.Get.RepayRequestPage.RepayRequestPageRepayAmount));
-            _remainderAmount = Content.FindElement(By.CssSelector(UiMap.Get.RepayRequestPage.RepayRequestPageRemainderAmount));   
+            _remainderAmount = Content.FindElement(By.CssSelector(UiMap.Get.RepayRequestPage.RepayRequestPageRemainderAmount));
+            _cancelButton = Content.FindElement(By.CssSelector(UiMap.Get.RepayRequestPage.RepayRequestPageCancelButton));
+            _oweToday = Content.FindElement(By.CssSelector(UiMap.Get.RepayRequestPage.RepayRequestPageOweCurrently));
+            _repayTotal = Content.FindElement(By.CssSelector(UiMap.Get.RepayRequestPage.RepayRequestPageReadMeMessageRepayTotal)).Text;
+            _loanPeriodClarification = Content.FindElement(By.CssSelector(UiMap.Get.RepayRequestPage.RepayRequestPageLoanPeriodClarification));   
         }
 
         public bool IsTopupRequestPageInformativeBoxDisplayed()
@@ -52,7 +62,43 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             
             //check the output matches the returned values for 50 quid repayRequestAmount
             Assert.AreEqual(Decimal.Parse(Sliders.GetRemainderTotal.Remove(0, 1)), Decimal.Parse(remainderAmount));
-
         }
+
+        public void CancelButtonClick()
+        {
+            _cancelButton.Click();
+        }
+
+        public String OweToday
+        {
+            get { return _oweToday.Text; }
+        }
+
+        public String WantToRepayBox
+        {
+            get { return _repayAmount.GetValue();  }
+            set { _repayAmount.SendValue(value); }
+        }
+
+        public String RemainderAmount
+        {
+            get { return _remainderAmount.Text; }
+        }
+
+        public String RepayTotal
+        {
+            get { return _repayTotal; }
+        }
+
+        public String LoanPeriodClarification
+        {
+            get { return _loanPeriodClarification.Text; }
+        }
+
+        public bool IsLoanPeriodClarificationDisplayed
+        {
+            get { return _loanPeriodClarification.Displayed; }
+        }
+
     }
 }

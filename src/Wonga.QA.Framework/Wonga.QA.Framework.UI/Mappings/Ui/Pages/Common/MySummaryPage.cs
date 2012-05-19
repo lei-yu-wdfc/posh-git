@@ -19,7 +19,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String ViewLoanDetailsButton { get; set; }
         public String LoanStatusMessage { get; set; }
         public String ChangePromiseDateButton { get; set; }
-
+        public String AccountStatusText { get; set; }
         //--loan details popup--
         public String PopupForm { get; set; }
         public String PopupMySummaryTitle { get; set; }

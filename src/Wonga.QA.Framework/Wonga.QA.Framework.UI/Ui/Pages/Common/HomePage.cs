@@ -78,5 +78,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
 
         }
 
+        public void CloseWbWelcomePopup()
+        {
+            if (Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePageWelcomePopup.Frame)).Displayed)
+                Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePageWelcomePopup.Close)).Click();    
+               
+        }
+
     }
 }

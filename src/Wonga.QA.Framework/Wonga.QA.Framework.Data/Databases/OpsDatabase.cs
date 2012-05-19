@@ -24,21 +24,28 @@ namespace Wonga.QA.Framework.Data
 		/// <returns>the current value</returns>
 		public T SetServiceConfiguration<T>(string keyName, T value)
 		{
+			return SetServiceConfiguration(keyName, value, default(T));
+		}
+
+		public T SetServiceConfiguration<T>(string keyName, T value, T defaultValue)
+		{
 			var row = Db.ServiceConfigurations.FindByKey(keyName);
 
 			var oldValue = row != null
 							? ConvertToType<T>(row.Value)
-							: default(T);
-			if(row == null)
-			{
-				Db.ServiceConfigurations.Insert(Key: keyName, Value: value.ToString());
-			}
-			else
-			{
-				Db.ServiceConfigurations.UpdateByKey(Key: keyName, Value: value.ToString());	
-			}			
+							: defaultValue;
+			Db.ServiceConfigurations.UpsertByKey(Key: keyName, Value: value.ToString());
 			return oldValue;
 		}
+
+        public T GetServiceConfiguration<T>(string keyName)
+        {
+            var row = Db.ServiceConfigurations.FindByKey(keyName);
+
+            return row != null
+                            ? ConvertToType<T>(row.Value)
+                            : default(T);
+        }
 
 		private static T ConvertToType<T>(string value)
 		{

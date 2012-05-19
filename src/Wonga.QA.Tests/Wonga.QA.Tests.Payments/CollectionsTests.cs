@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Gallio.Framework;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
@@ -12,7 +13,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments
 {
-	[TestFixture, AUT(AUT.Za)]
+	[TestFixture, AUT(AUT.Za), Parallelizable(TestScope.All)]
 	class CollectionsTests
 	{
 		private const int TrackingDayThreshold = 19;
@@ -68,15 +69,8 @@ namespace Wonga.QA.Tests.Payments
 				.WithLoanAmount(loanAmount)
 				.WithPromiseDate(promiseDate)
 				.Build();
-				//.PutApplicationIntoArrears(91);
 
-			var paymentsDb = new DbDriver().Payments;
-			paymentsDb.Arrears.InsertOnSubmit(new ArrearEntity()
-			{
-				ApplicationId = paymentsDb.Applications.Single(a => a.ExternalId == application.Id).ApplicationId,
-				CreatedOn = DateTime.Today
-			});
-			paymentsDb.SubmitChanges();
+			application.PutApplicationIntoArrears();
 
 			AttemptNaedoCollection(application, 0);
 			FailNaedoCollection(application, 0);
@@ -119,7 +113,7 @@ namespace Wonga.QA.Tests.Payments
 			Do.Until(() => Drive.Db.OpsSagas.ScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id) == false);
 			Do.Until(() => Drive.Db.OpsSagas.PendingScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id) == false);
 		}
-
+		
 		[Test, AUT(AUT.Za)]
 		public void CollectionsNaedoPartialPaymentAfterTrackingEndsContinuesTrackingTest()
 		{
@@ -146,7 +140,11 @@ namespace Wonga.QA.Tests.Payments
 
 			Assert.IsNull(Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id).ClosedOn);
 			Assert.IsTrue(new DbDriver().OpsSagas.PendingScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id));
-			Assert.IsTrue(new DbDriver().OpsSagas.ScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id));
+
+			//Test a collection attempt is created for the remaining balance. But need to put a delay for the saga
+			//To be created here.
+			var followupCollectionExisted = Do.Until(() => new DbDriver().OpsSagas.ScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id));
+			Assert.IsTrue(followupCollectionExisted);
 		}
 
 
@@ -154,6 +152,8 @@ namespace Wonga.QA.Tests.Payments
 
 		private void AttemptNaedoCollection(Application application, uint attempt)
 		{
+			TestLog.WriteLine("Attempting Collection " + attempt);
+
 			var fixedTermLoanApplication = GetFixedTermLoanApplicationEntity(application);
 			DateTime now;
 
@@ -194,6 +194,8 @@ namespace Wonga.QA.Tests.Payments
 
 		private void FailNaedoCollection(Application application, uint attempt)
 		{
+			TestLog.WriteLine("Failing Collection " + attempt);
+
 			var db = new DbDriver();
 
 			var scheduledPaymentSaga = db.OpsSagas.ScheduledPaymentSagaEntities.Single(a => a.ApplicationGuid == application.Id);
@@ -205,7 +207,7 @@ namespace Wonga.QA.Tests.Payments
 
 			if (attempt < MaximumRetries - 1)
 			{
-				Do.Until(() => db.OpsSagas.PendingScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id));
+				Do.Until(() => db.OpsSagas.PendingScheduledPaymentSagaEntities.Single(a => a.ApplicationGuid == application.Id));
 			}
 			else
 			{
@@ -260,12 +262,12 @@ namespace Wonga.QA.Tests.Payments
 						var month = selfReportedPayDay > now.Day ? now.Month : now.Month + 1;
 						var validPayDay = Drive.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, month,  selfReportedPayDay))).DateTime.Day;
 
-						paymentRequestDate = Drive.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, month, validPayDay)));
+						paymentRequestDate = Drive.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, month, validPayDay - 1)));
 					}
 					break;
 				default:
 					{
-						paymentRequestDate = Drive.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, now.Month, GetDefaultPayDaysOfMonth()[now.Month - 1])));
+						paymentRequestDate = new Date(new DateTime(now.Year, now.Month, GetDefaultPayDaysOfMonth()[now.Month - 1]).AddDays(-1));
 					}
 					break;
 			}
@@ -277,17 +279,16 @@ namespace Wonga.QA.Tests.Payments
 		{
 			var dateTrackingBegins = attempt == 0
 			                         	? paymentRequestDate
-			                         	: Drive.Db.GetPreviousWorkingDay(new Date(paymentRequestDate.AddDays(-1))).DateTime;
+			                         	: new Date(paymentRequestDate).DateTime;
 
 
 			int trackingDays = 0;
 
-			if (dateTrackingBegins.Day > TrackingDayThreshold)
-				trackingDays = (DateTime.DaysInMonth(dateTrackingBegins.Year, dateTrackingBegins.Month)) - dateTrackingBegins.Day + 1;
-
-			else
+			if (Drive.Db.GetPreviousWorkingDay(new Date(dateTrackingBegins.AddDays(-1))).DateTime.Day <= TrackingDayThreshold)
 				trackingDays = 3;
-
+			else
+				trackingDays = (DateTime.DaysInMonth(dateTrackingBegins.Year, dateTrackingBegins.Month)) - dateTrackingBegins.Day + 3; //3 = actionDate + til 2nd of month 
+			
 			trackingDays = NaedoTrackingDays.Where(a => trackingDays >= a).Max();
 
 			return trackingDays;

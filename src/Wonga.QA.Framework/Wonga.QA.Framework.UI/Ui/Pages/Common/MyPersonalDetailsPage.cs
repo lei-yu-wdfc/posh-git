@@ -126,6 +126,17 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             return true;
         }
 
+        public bool ChangeHomePhone(string HomePhone)
+        {
+            _editPhoneHome = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.EditPhoneHome)));
+            _submitButton = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.SubmitButton)));
+
+            _editPhoneHome.Clear();
+            _editPhoneHome.SendKeys(HomePhone);
+
+            return true;
+        }
+
         public bool ChangeMobilePhone(string mobilePhone, string pin)
         {
             _editPhoneMobile = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.EditPhoneMobile)));

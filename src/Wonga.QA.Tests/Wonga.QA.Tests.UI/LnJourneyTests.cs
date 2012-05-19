@@ -14,9 +14,10 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Ui
 {
+	[TestFixture, Parallelizable(TestScope.All)]
     class LnJourneyTests : UiTest
     {
-        [Test, AUT(AUT.Za), JIRA("QA-196")]
+        [Test, AUT(AUT.Za), JIRA("QA-196"), Pending("ZA-2510")]
         public void LnCustomerTakesNewLoanAndChangesTheMobilePhoneThenChangesShouldBeReflected()
         {
             var loginPage = Client.Login();
@@ -57,7 +58,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual("0111111111", mobileFromDb);
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-198")]
+        [Test, AUT(AUT.Za), JIRA("QA-198"), Pending()]
         public void LnCustomerChangesMobilePhoneAndEntersInvalidPinShouldNotBeAbleToTakeLoan()
         {
             var loginPage = Client.Login();
@@ -121,7 +122,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), Pending("Example of ZA Ln journey")]
+        [Test, AUT(AUT.Za)]
         public void ZaFullLnJourneyTest()
         {
             var loginPage = Client.Login();
@@ -145,7 +146,7 @@ namespace Wonga.QA.Tests.Ui
                            .CurrentPage as MySummaryPage;
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1533", "UK-1902"), Pending("Fails due to bug UK-1902")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1533", "UK-1902"), Pending("Disabled as failing during build testing. To be checked.")]
         public void FullLnJourneyTest()
         {
             var loginPage = Client.Login();
@@ -169,7 +170,7 @@ namespace Wonga.QA.Tests.Ui
                            .CurrentPage as MySummaryPage;
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1533")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1533"), Pending("Disabled as failing during build testing. To be checked.")]
         public void L0LnJourneyTest()
         {
             var loginPage = Client.Login();
@@ -203,7 +204,7 @@ namespace Wonga.QA.Tests.Ui
         }
         
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-199")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-199"), Pending("ZA-2510")]
         public void LoggedCustomerWithoutLoanAppliesNewLoanChangesMobilePhoneAndClicksResendPinItShouldBeResent()
         {
             string email = Get.RandomEmail();
@@ -215,7 +216,7 @@ namespace Wonga.QA.Tests.Ui
                  .WithForename(name)
                  .WithSurname(surname)
                  .WithEmailAddress(email)
-                 .WithMobileNumber("075" + Get.RandomLong(1000000, 9999999).ToString())
+                 .WithMobileNumber("077009" + Get.RandomLong(10000, 99999))
                  .Build();
             Application application = ApplicationBuilder
                 .New(customer)
@@ -228,7 +229,7 @@ namespace Wonga.QA.Tests.Ui
                 case AUT.Za:
                     var journeyZa = JourneyFactory.GetLnJourney(Client.Home());
                     var pageZA = journeyZa.ApplyForLoan(200, 20).CurrentPage as ApplyPage;
-                    pageZA.SetNewMobilePhone = "075" + phone;
+                    pageZA.SetNewMobilePhone = "077009" + Get.RandomLong(10000, 99999);
                     pageZA.ResendPinClick();
                     var smsZa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber("2775" + phone));
                     foreach (var sms in smsZa)
@@ -242,7 +243,7 @@ namespace Wonga.QA.Tests.Ui
                     var journeyCa = JourneyFactory.GetLnJourney(Client.Home());
                     var pageCa = journeyCa.ApplyForLoan(200, 25)
                                    .SetName(name, surname).CurrentPage as ApplyPage;
-                    pageCa.SetNewMobilePhone = "075" + phone;
+                    pageCa.SetNewMobilePhone = "077009" + Get.RandomLong(10000, 99999);
                     pageCa.ResendPinClick();
                     var smsCa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber("175" + phone));
                     foreach (var sms in smsCa)

@@ -11,7 +11,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[Parallelizable(TestScope.All), AUT(AUT.Za)]
+	[TestFixture, Parallelizable(TestScope.All), AUT(AUT.Za)]
 	public class CheckpointCustomerNameIsCorrectTests
 	{
         private const RiskMask TestMask = RiskMask.TESTCustomerNameIsCorrect;
@@ -103,7 +103,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.WithMiddleName(_middleName)
 				.WithSurname(_surname)
 				.WithDateOfBirth(_dateOfBirth)
-				.WithNationalNumber(Get.GetNIN(_dateOfBirth, true))
+				.WithNationalNumber(Get.GetNationalNumber(_dateOfBirth, true))
 				.Build();
 
             ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();

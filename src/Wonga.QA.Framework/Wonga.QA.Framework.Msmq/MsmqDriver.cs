@@ -37,6 +37,13 @@ namespace Wonga.QA.Framework.Msmq
         private MsmqQueue _transUnion;
         private MsmqQueue _uru;
         private MsmqQueue _wongaPay;
+        private MsmqQueue _easyPay;
+
+        public MsmqQueue EasyPay
+        {
+            get { return _easyPay ?? (_easyPay = new MsmqQueue(Config.Msmq.EasyPay)); }
+            set { _easyPay = value; }
+        }
 
         public MsmqQueue Ops
         {

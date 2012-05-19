@@ -13,7 +13,7 @@ namespace Wonga.QA.Framework.Msmq
         public Guid LoanExtensionId { get; set; }
         public String CV2 { get; set; }
         public Decimal PartPaymentAmount { get; set; }
-        public Int32 AgentId { get; set; }
+        public String SalesForceUser { get; set; }
         public DateTime ExtensionDate { get; set; }
         public DateTime CreatedOn { get; set; }
         public Guid? ClientId { get; set; }

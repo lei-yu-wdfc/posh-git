@@ -53,6 +53,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual MyAccountNavigationSection MyAccountNavigationSection { get; set; }
         public virtual ApplicationSection ApplicationSection { get; set; }
         public virtual AddressDetailsSection AddressDetailsSection { get; set; }
+        public virtual PreviousAddresDetailsSection PreviousAddresDetailsSection { get; set; }
         #endregion
 
         #region Elements
@@ -70,6 +71,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual ChangeMyAddressElement ChangeMyAddressElement { get; set; }
         public virtual SmallRepaySlidersElement SmallRepaySlidersElement { get; set; }
         public virtual TabsElementMobile TabsElementMobile { get; set; }
+        public virtual HomePageWelcomePopup HomePageWelcomePopup { get; set; }
 
         #endregion
 
@@ -123,6 +125,16 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual ExtensionErrorPage ExtensionErrorPage { get; set; }
         public virtual ExtensionRequestPage ExtensionRequestPage { get; set; }
         public virtual RepayRequestPage RepayRequestPage { get; set; }
+        public virtual FAQPage FAQPage { get; set; }
+        public virtual RepayEarlyPaymentFailedPage RepayEarlyPaymentFailedPage { get; set; }
+        public virtual RepayDuePaymentFailedPage RepayDuePaymentFailedPage { get; set; }
+        public virtual RepayOverduePaymentFailedPage RepayOverduePaymentFailedPage { get; set; }
+        public virtual RepayEarlyPartpaySuccessPage RepayEarlyPartpaySuccessPage { get; set; }
+        public virtual RepayDuePartpaySuccessPage RepayDuePartpaySuccessPage { get; set; }
+        public virtual RepayOverduePartpaySuccessPage RepayOverduePartpaySuccessPage { get; set; }
+        public virtual RepayEarlyFullpaySuccessPage RepayEarlyFullpaySuccessPage { get; set; }
+        public virtual RepayDueFullpaySuccessPage RepayDueFullpaySuccessPage { get; set; }
+        public virtual RepayOverdueFullpaySuccessPage RepayOverdueFullpaySuccessPage { get; set; }
 
         #endregion
 

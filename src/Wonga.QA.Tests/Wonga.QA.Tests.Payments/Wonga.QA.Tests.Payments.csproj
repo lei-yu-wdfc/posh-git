@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AddBankAccountTests.cs" />
@@ -49,6 +51,7 @@
     <Compile Include="Command\SetAccountPaymentMethodCommandCaTests.cs" />
     <Compile Include="CsapiCreateTransactionTest.cs" />
     <Compile Include="EarlyRepaymentTests.cs" />
+    <Compile Include="EasyPayPaymentTakenTests.cs" />
     <Compile Include="ExternalDebtCollectionTests.cs" />
     <Compile Include="GetApplicationAprTest.cs" />
     <Compile Include="GetAvailabelCreditTest.cs" />
@@ -66,10 +69,12 @@
     <Compile Include="Queries\CsGetLoanExtensionPaymentStatusQueryTests.cs" />
     <Compile Include="Queries\GetBusinessApplicationSummaryCsapiQuery.cs" />
     <Compile Include="Queries\CsGetCardPaymentStatusQueryTests.cs" />
+    <Compile Include="Queries\GetFixedTermLoanCalculationQueryTests.cs" />
     <Compile Include="Queries\GetFixedTermLoanExtensionQuoteTests.cs" />
     <Compile Include="Queries\GetLoanAgreementsCsapiQueryTests.cs" />
     <Compile Include="Queries\GetLoanExtensionPaymentStatusQueryTest.cs" />
     <Compile Include="Queries\GetPersonalPaymentCardsCsapiQueryTests.cs" />
+    <Compile Include="Queries\GetRepayLoanPaymentStatusQueryTests.cs" />
     <Compile Include="Queries\GetRepayLoanQuoteQueryTests.cs" />
     <Compile Include="Queries\GetTransactionsCsapiQuery.cs" />
     <Compile Include="Queries\GetValidTransactionTypesQueryTest.cs" />

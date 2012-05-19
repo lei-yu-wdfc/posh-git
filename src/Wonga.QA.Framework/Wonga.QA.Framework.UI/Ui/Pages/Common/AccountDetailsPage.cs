@@ -15,7 +15,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             : base(client)
         {
             _form = Content.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.FormId));
-            _next = _form.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.NextButton));
+            _next = Content.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.NextButton));
             AccountDetailsSection = new Sections.AccountDetailsSection(this);
         }
 
@@ -27,7 +27,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public AccountDetailsPage NextClick()
         {
-            _next.Click();
+            _next.Submit();
             return new AccountDetailsPage(Client);
         }
     }

@@ -37,7 +37,9 @@ namespace Wonga.QA.Framework
              * If something is missing please let Alex P know */
             var requests = new List<ApiRequest>
             {
-                SubmitApplicationBehaviourCommand.New(r => r.ApplicationId = Id),
+                SubmitApplicationBehaviourCommand.New(r => { r.ApplicationId = Id;
+                                                               r.TermSliderPosition = SliderPositionEnum.Default;
+                }),
                 SubmitClientWatermarkCommand.New(r => { r.ApplicationId=Id; r.AccountId = Customer.Id;
                                                           r.BlackboxData = IovationBlackBox;
                 }),
@@ -104,7 +106,7 @@ namespace Wonga.QA.Framework
             if (Decision == ApplicationDecisionStatus.Declined)
             {
                 WaitForRiskDecisionToBeMade();
-                return new BusinessApplication(Id);
+                return new BusinessApplication(Id, Customer.Id, Company.Id);
             }
 
             /* STEP 5
@@ -125,6 +127,7 @@ namespace Wonga.QA.Framework
             /* STEP 7 
             * And I wait for the decision i want - PLEASE REMEBER THAT THE DEFAULT ONE IS ACCEPTED 
             * Set timeout to two minutes to compensate for long risk decision */
+
             WaitForRiskDecisionToBeMade();
 
             /* STEP 7.1
@@ -158,7 +161,7 @@ namespace Wonga.QA.Framework
             {
                 Do.With.Message("The initial transactions have not been created").Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).Transactions.Count == 3);
             }
-            return new BusinessApplication(Id);
+            return new BusinessApplication(Id, Customer.Id, Company.Id);
         }
 
         private void WaitForRiskDecisionToBeMade()

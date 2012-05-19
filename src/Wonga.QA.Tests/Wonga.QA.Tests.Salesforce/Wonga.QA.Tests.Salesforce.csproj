@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,12 +33,15 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="SalesforceActivityTests.cs" />
     <Compile Include="SalesforceApplicationStatusUpdateTests.cs" />
     <Compile Include="SalesforcePushBusinessBankAccountDetails.cs" />
     <Compile Include="SalesforcePushBusinessLoanApplicationDetails.cs" />
     <Compile Include="SalesforcePushBusinessPaymentCardDataTests.cs" />
+    <Compile Include="SalesforcePushDirectorData.cs" />
     <Compile Include="SalesforcePushFixedTermLoanApplicationDataTest.cs" />
     <Compile Include="SalesforceServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

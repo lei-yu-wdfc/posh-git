@@ -8,6 +8,7 @@ using OpenQA.Selenium;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.Mappings;
 using Wonga.QA.Framework.UI.UiElements;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
@@ -21,7 +22,7 @@ namespace Wonga.QA.Tests.Ui
     public class HelpTest : UiTest
     {
 
-        [Test, AUT(AUT.Za, AUT.Ca, AUT.Wb), JIRA("QA-164, QA-254"), Pending("FE bug")]
+        [Test, AUT(AUT.Za, AUT.Ca, AUT.Wb), JIRA("QA-164, QA-254"), Pending("FE bug, button in top of page are broken, ZA-2490, CA-2234")]
         public void SelectingAHelpQuestionTakesMeToFAQPageWithCorrectQuestionSelected()
         {
             var page = Client.Home();
@@ -53,7 +54,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-165"), Pending("FE bug, button in top of page are broken")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-165"), Pending("FE bug, button in top of page are broken, ZA-2490, CA-2234")]
         public void SelectingATroubleshootingQuestionTakesMeToPageWithCorrectQuestionSelected()
         {
             var page = Client.Home();
@@ -70,7 +71,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-166"), Pending("Bug on JargonBuster page. It has the same href for U and V.")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-166"), Pending("FE bug, button in top of page are broken, ZA-2490, CA-2234")]
         public void JargonBusterLinkShouldNavigateThroughPageByClickingDifferentLettersFromAlphabet()
         {
             var page = Client.Home();
@@ -84,7 +85,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-167"), Pending("FE bug, button in top of page are broken")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-167"), Pending("FE bug, button in top of page are broken, ZA-2490, CA-2234")]
         public void ClickOnContactUsCauseContactInformationDisplayedOnPage()
         {
             var page = Client.Home();
@@ -93,6 +94,13 @@ namespace Wonga.QA.Tests.Ui
             Thread.Sleep(5000); //wait for ajax load the popup
             Assert.IsTrue(page.Contact.IsContactPopupPresent());
 
+        }
+
+        [Test, AUT(AUT.Za), Pending("ZA-1600, ZA-2474")] //ZA-1600 bug check
+        public void CouncilForDebtCollectorsLinkCheck()
+        {
+            var faq = Client.Faq();
+            Assert.IsTrue(faq.IsLinkCorrect(UiMap.Get.FAQPage.CouncilForDebtCollectorsLink, ContentMap.Get.FAQPageLinks.CouncilForDebtCollectorsLink));
         }
     }
 }

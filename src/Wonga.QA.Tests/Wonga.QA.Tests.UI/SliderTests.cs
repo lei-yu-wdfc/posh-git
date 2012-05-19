@@ -7,6 +7,8 @@ using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Helpers;
+using Wonga.QA.Framework.UI;
+using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
 using System.Linq;
@@ -30,7 +32,7 @@ namespace Wonga.QA.Tests.Ui
         //private DateTime _actualDate;
 
         private const int DefaultLoanTerm = 11;
-    	private const int MinimumMaxLoanTerm = 30;
+        private const int MinimumMaxLoanTerm = 30;
 
 
         [SetUp, JIRA("QA-149")]
@@ -69,13 +71,123 @@ namespace Wonga.QA.Tests.Ui
             var homePage = Client.Home();
             homePage.Sliders.HowMuch = "100";
             homePage.Sliders.HowLong = "30";
-            Console.WriteLine("Sliders: {0} for {1}", homePage.Sliders.HowLong, homePage.Sliders.HowLong);
-            Thread.Sleep(500);
-            //0.5 sec pause
-
+                
             Assert.AreEqual(homePage.Sliders.GetTotalToRepay, "$121.00");
             //maximum charge is 21$ for each 100$ borrowed for 30 days.
         }
+
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-149"), Pending("Wierd selenium problem")]
+        public void ChooseLoanAmountAndDurationViaSlidersMotion()
+        {
+            var homePage = Client.Home();
+
+            homePage.Sliders.MoveAmountSlider = Get.RandomInt(-100,100);
+            homePage.Sliders.MoveDurationSlider = Get.RandomInt(-100, 100);
+
+            var termCustomerEnter = Int32.Parse(homePage.Sliders.HowLong);
+            var amountCustomerEnter = Int32.Parse(homePage.Sliders.HowMuch);
+
+            string _totalAmount = homePage.Sliders.GetTotalAmount;
+
+            Assert.AreEqual(amountCustomerEnter.ToString(), _totalAmount.Remove(0, 1));
+
+
+            string[] dateArray = homePage.Sliders.GetRepaymentDate.Split(' ');
+            string day = Char.IsDigit(dateArray[1].ElementAt(1)) ? dateArray[1].Remove(2, 2) : dateArray[1].Remove(1, 2);
+            _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
+            DateTime expectedDate;
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    expectedDate = DateTime.UtcNow.AddDays(termCustomerEnter);
+                    break;
+                case AUT.Ca:
+                    expectedDate =
+                        DateTime.UtcNow.AddDays(termCustomerEnter + DateHelper.GetNumberOfDaysUntilStartOfLoanForCa());
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+            Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate), _repaymentDate);
+
+            var personalDetailsPage = homePage.Sliders.Apply() as PersonalDetailsPage;
+            string personalDetailPageAmount = personalDetailsPage.GetTotalAmount;
+
+            Assert.AreEqual(amountCustomerEnter.ToString(), personalDetailPageAmount.Remove(0, 1));
+
+            dateArray = personalDetailsPage.GetRepaymentDate.Split(' ');
+            day = Char.IsDigit(dateArray[1].ElementAt(1)) ? dateArray[1].Remove(2, 2) : dateArray[1].Remove(1, 2);
+            _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
+
+            Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate), _repaymentDate);
+
+
+        }
+
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-282")]
+        public void ChooseLoanAmountAndDurationViaPlusMinusButtons()
+        {
+            var homePage = Client.Home();
+
+            #region clicks
+            for (int i = 0; i < Get.RandomInt(20);i++)
+            {
+                homePage.Sliders.ClickAmountPlusButton();
+            }
+            for (int i = 0; i < Get.RandomInt(20); i++)
+            {
+                homePage.Sliders.ClickAmountMinusButton();
+            }
+            for (int i = 0; i < Get.RandomInt(10); i++)
+            {
+                homePage.Sliders.ClickDurationPlusButton();
+            }
+            for (int i = 0; i < Get.RandomInt(10); i++)
+            {
+                homePage.Sliders.ClickDurationMinusButton();
+            }
+            #endregion
+
+            var termCustomerEnter = Int32.Parse(homePage.Sliders.HowLong);
+            var amountCustomerEnter = Int32.Parse(homePage.Sliders.HowMuch);
+
+            string _totalAmount = homePage.Sliders.GetTotalAmount;
+
+            Assert.AreEqual(amountCustomerEnter.ToString(), _totalAmount.Remove(0, 1));
+
+
+            string[] dateArray = homePage.Sliders.GetRepaymentDate.Split(' ');
+            string day = Char.IsDigit(dateArray[1].ElementAt(1)) ? dateArray[1].Remove(2, 2) : dateArray[1].Remove(1, 2);
+            _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
+            DateTime expectedDate;
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    expectedDate = DateTime.UtcNow.AddDays(termCustomerEnter);
+                    break;
+                case AUT.Ca:
+                    expectedDate =
+                        DateTime.UtcNow.AddDays(termCustomerEnter + DateHelper.GetNumberOfDaysUntilStartOfLoanForCa());
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+            Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate), _repaymentDate);
+
+            var personalDetailsPage = homePage.Sliders.Apply() as PersonalDetailsPage;
+            string personalDetailPageAmount = personalDetailsPage.GetTotalAmount;
+
+            Assert.AreEqual(amountCustomerEnter.ToString(), personalDetailPageAmount.Remove(0, 1));
+
+            dateArray = personalDetailsPage.GetRepaymentDate.Split(' ');
+            day = Char.IsDigit(dateArray[1].ElementAt(1)) ? dateArray[1].Remove(2, 2) : dateArray[1].Remove(1, 2);
+            _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
+
+            Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate), _repaymentDate);
+
+
+        }
+          
 
         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-150")]
         public void CustomerTypesValidValuesIntoAmountAndDurationFields()
@@ -124,7 +236,7 @@ namespace Wonga.QA.Tests.Ui
 
 
         }
-          
+
         [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-156", "QA-238")]
         public void DefaultAmountSliderValueShouldBeCorrectL0()
         {
@@ -172,12 +284,12 @@ namespace Wonga.QA.Tests.Ui
         {
             var page = Client.Home();
             string[] dateArray = page.Sliders.GetRepaymentDate.Split(' ');
-			string day = Char.IsDigit(dateArray[1].ElementAt(1)) ? dateArray[1].Remove(2, 2) : dateArray[1].Remove(1, 2);
-			_repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
+            string day = Char.IsDigit(dateArray[1].ElementAt(1)) ? dateArray[1].Remove(2, 2) : dateArray[1].Remove(1, 2);
+            _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
 
-			var expectedDate = GetExpectedDefaultPromiseDateL0();
+            var expectedDate = GetExpectedDefaultPromiseDateL0();
             Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate), _repaymentDate);
-			
+
         }
 
         [Test, AUT(AUT.Ca), JIRA("QA-241", "QA-159")]
@@ -186,7 +298,7 @@ namespace Wonga.QA.Tests.Ui
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-        	Application application = ApplicationBuilder.New(customer).Build().RepayOnDueDate();
+            Application application = ApplicationBuilder.New(customer).Build().RepayOnDueDate();
 
             loginPage.LoginAs(email);
 
@@ -220,22 +332,21 @@ namespace Wonga.QA.Tests.Ui
             int setAmountValue = minAmountValue - 1;
             var page = Client.Home();
             page.Sliders.HowMuch = setAmountValue.ToString(CultureInfo.InvariantCulture);
-            page.Sliders.HowLong = "10"; //To lost focus
+            
             Assert.AreEqual(minAmountValue.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
         }
 
         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-239", "QA-158")]
         public void MaxDurationSliderValueShouldBeCorrectL0()
         {
-        	int maxLoanDuration = GetExpectedMaxTermL0();
+            int maxLoanDuration = GetExpectedMaxTermL0();
             int setLoanDuration = maxLoanDuration + 1;
             var page = Client.Home();
-            page.Sliders.HowLong = setLoanDuration.ToString(CultureInfo.InvariantCulture);
-            page.Sliders.HowMuch = "10"; //To lost focus
+            page.Sliders.HowLong = setLoanDuration.ToString(CultureInfo.InvariantCulture);          
             Assert.AreEqual(maxLoanDuration.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-154")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-154", "QA-284")]
         public void MaxAmountSliderValueShouldBeCorrectL0()
         {
             var serviceConfigurations = Drive.Data.Ops.Db.ServiceConfigurations;
@@ -244,10 +355,31 @@ namespace Wonga.QA.Tests.Ui
 
             var page = Client.Home();
             page.Sliders.HowMuch = setAmount.ToString(CultureInfo.InvariantCulture);
-            page.Sliders.HowLong = "10";
-            Assert.AreEqual(defaultCreditLimit, page.Sliders.GetTotalAmount.Remove(0,1));
+            Assert.AreEqual(defaultCreditLimit, page.Sliders.GetTotalAmount.Remove(0, 1));
 
         }
+
+        [Test ,AUT(AUT.Ca, AUT.Za), JIRA("QA-155", "QA-285")]
+        public void MaxAmountSliderValueShouldBeCorrectLn()
+        {
+            var riskAccounts = Drive.Data.Risk.Db.RiskAccounts;
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            application.RepayOnDueDate();
+            loginPage.LoginAs(email);
+
+            var page = Client.Home();
+
+            var creditLimit = riskAccounts.FindByAccountId(customer.Id).CreditLimit;
+            var setAmount = creditLimit + 100;
+            page.Sliders.HowMuch = setAmount.ToString(CultureInfo.InvariantCulture);
+            page.Sliders.HowLong = "10";
+            Assert.AreEqual(creditLimit.ToString(), page.Sliders.GetTotalAmount.Remove(0, 1) + ".00");
+        }
+    
 
         [Test, AUT(AUT.Ca), JIRA("QA-239", "QA-158")]
         public void MaxDurationSliderValueShouldBeCorrectLn()
@@ -277,8 +409,6 @@ namespace Wonga.QA.Tests.Ui
             int setDurationValue = minDurationValue - 1;
             var page = Client.Home();
             page.Sliders.HowLong = setDurationValue.ToString(CultureInfo.InvariantCulture);
-            page.Sliders.HowMuch = "400"; // to lost focus
-            Thread.Sleep(2000); // wait some time to changes apply, with out this row it's fail
             Assert.AreEqual(minDurationValue.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
         }
 
@@ -303,86 +433,123 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(minDurationValue.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
         }
 
-         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-194")]
-         public void WhanCustomerWithLiveLoanTriesTakeLoanSlidersShouldBeBlocked()
-         {
-             var loginPage = Client.Login();
-             string email = Get.RandomEmail();
-             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-             Application application = ApplicationBuilder.New(customer)
-                 .Build();
-             loginPage.LoginAs(email);
-             var page = Client.Home();
-             Assert.IsFalse(page.Sliders.IsSubmitButtonPresent());
-         }
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-194")]
+        public void WhanCustomerWithLiveLoanTriesTakeLoanSlidersShouldBeBlocked()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            loginPage.LoginAs(email);
+            var page = Client.Home();
+            Assert.IsFalse(page.Sliders.IsSubmitButtonPresent());
+        }
 
 
-         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-152")]
-         public void CustomerTriesEnterSomeRubbishDataToFieldsThenAmountsShouldntBeChanged()
-         {
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-152")]
+        public void CustomerTriesEnterSomeRubbishDataToFieldsThenAmountsShouldntBeChanged()
+        {
             var page = Client.Home();
 
-             #region enter an empty string
-             page.Sliders.HowMuch = "";
-             page.Sliders.HowLong = "";
-             Assert.AreEqual(_amountMin.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
-             Thread.Sleep(1000);
-             page.Sliders.HowMuch = ""; // to lost focus
-             Thread.Sleep(1000);
-             Assert.AreEqual(_termMin.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
-             #endregion
+            #region enter an empty string
+            page.Sliders.HowMuch = "";
+            page.Sliders.HowLong = "";
+            Assert.AreEqual(_amountMin.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
+            Thread.Sleep(1000);
+            page.Sliders.HowMuch = ""; // to lost focus
+            Thread.Sleep(1000);
+            Assert.AreEqual(_termMin.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
+            #endregion
 
-             #region enter negative values
-             page.Sliders.HowMuch = "-200";
-             page.Sliders.HowLong = "-10";
-             Assert.AreEqual("200", page.Sliders.HowMuch);
-             Thread.Sleep(1000);
-             page.Sliders.HowMuch = ""; // to lost focus
-             Thread.Sleep(1000);
-             Assert.AreEqual("10", page.Sliders.HowLong);
-             #endregion
-             
-             #region enter letters
-             page.Sliders.HowMuch = "sdfgsghfg";
-             page.Sliders.HowLong = "sdfgsghfg";
-             Assert.AreEqual(_amountMin.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
-             Thread.Sleep(1000);
-             page.Sliders.HowMuch = ""; // to lost focus
-             Thread.Sleep(1000);
-             Assert.AreEqual(_termMin.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
-             #endregion
+            #region enter negative values
+            page.Sliders.HowMuch = "-200";
+            page.Sliders.HowLong = "-10";
+            Assert.AreEqual("200", page.Sliders.HowMuch);
+            Thread.Sleep(1000);
+            page.Sliders.HowMuch = ""; // to lost focus
+            Thread.Sleep(1000);
+            Assert.AreEqual("10", page.Sliders.HowLong);
+            #endregion
 
-             #region enter bigger than max possible values
-             page.Sliders.HowMuch = "5000";
-             page.Sliders.HowLong = "100";
-             Assert.AreEqual(_amountMax.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
-             Thread.Sleep(1000);
-             Assert.AreEqual(_termMax.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
-             #endregion
+            #region enter letters
+            page.Sliders.HowMuch = "sdfgsghfg";
+            page.Sliders.HowLong = "sdfgsghfg";
+            Assert.AreEqual(_amountMin.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
+            Thread.Sleep(1000);
+            page.Sliders.HowMuch = ""; // to lost focus
+            Thread.Sleep(1000);
+            Assert.AreEqual(_termMin.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
+            #endregion
 
-             #region enter mixed data
-             page.Sliders.HowMuch = "kjh2-dsf0sdf0";
-             page.Sliders.HowLong = "dfg1dfg-0df";
-             Assert.AreEqual("200", page.Sliders.HowMuch);
-             Thread.Sleep(1000);
-             page.Sliders.HowMuch = ""; // to lost focus
-             Thread.Sleep(1000);
-             Assert.AreEqual("10", page.Sliders.HowLong);
-             #endregion
-         }
+            #region enter bigger than max possible values
+            page.Sliders.HowMuch = "5000";
+            page.Sliders.HowLong = "100";
+            Assert.AreEqual(_amountMax.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
+            Thread.Sleep(1000);
+            Assert.AreEqual(_termMax.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
+            #endregion
 
-         #region Helpers
+            #region enter mixed data
+            page.Sliders.HowMuch = "kjh2-dsf0sdf0";
+            page.Sliders.HowLong = "dfg1dfg-0df";
+            Assert.AreEqual("200", page.Sliders.HowMuch);
+            Thread.Sleep(1000);
+            page.Sliders.HowMuch = ""; // to lost focus
+            Thread.Sleep(1000);
+            Assert.AreEqual("10", page.Sliders.HowLong);
+            #endregion
+        }
 
-         private DateTime GetExpectedDefaultPromiseDateL0()
-		{
-			DateTime defaultPromiseDate;
-			var now = DateTime.Today;
-           
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-283"), Pending("CA code appearing in ZA - Michael Nowicki to fix")]
+        public void CustomerTryToChooseLoanAountAndDurationBiggerThanMaxAndTakeLoan()
+        {
+            var serviceConfigurations = Drive.Data.Ops.Db.ServiceConfigurations;
+            var defaultCreditLimit = serviceConfigurations.Find(serviceConfigurations.Key.Like("Risk.DefaultCreditLimit")).Value;
+            int setAmount = Int32.Parse(defaultCreditLimit) + 100;
+            var defaultTermLimit = GetExpectedMaxTermL0();
+            int setTerm = defaultTermLimit + 10;
+
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var page = journey.CurrentPage as HomePage;
+            page.Sliders.HowMuch = setAmount.ToString();
+            page.Sliders.HowLong = setTerm.ToString();
+            Assert.AreEqual(defaultCreditLimit.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
+            Thread.Sleep(1000);
+            Assert.AreEqual(defaultTermLimit.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
+            journey.CurrentPage = page.Sliders.Apply() as PersonalDetailsPage;
+            var processingPage = journey.FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                         .FillAddressDetails()
+                                         .FillAccountDetails()
+                                         .FillBankDetails()
+                                         .CurrentPage as ProcessingPage;
+            var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
+            switch (Config.AUT)
+            {
+                case AUT.Ca:
+                    acceptedPage.SignConfirmCaL0(DateTime.Now.ToString("d MMM yyyy"), journey.FirstName, journey.LastName);
+                    break;
+
+                case AUT.Za:
+                    acceptedPage.SignAgreementConfirm();
+                    acceptedPage.SignDirectDebitConfirm();
+                    break;
+            }
+            var dealDone = acceptedPage.Submit();
+        }
+
+        #region Helpers
+
+        private DateTime GetExpectedDefaultPromiseDateL0()
+        {
+            DateTime defaultPromiseDate;
+            var now = DateTime.Today;
+
             switch (Config.AUT)
             {
                 case AUT.Za:
                     {
-                       var iMonth = DateTime.UtcNow.Month - 1;
+                        var iMonth = DateTime.UtcNow.Month - 1;
 
                         var payDayPerMonths = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.PayDayPerMonth").Value.Split(',');
                         var sliderTermAddDays = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.SliderTermAddDays").Value;
@@ -415,46 +582,46 @@ namespace Wonga.QA.Tests.Ui
 
                 default:
                     {
-                        defaultPromiseDate = now.AddDays(DefaultLoanTerm); 
+                        defaultPromiseDate = now.AddDays(DefaultLoanTerm);
                     }
                     break;
             }
-			return defaultPromiseDate;
-		}
+            return defaultPromiseDate;
+        }
 
-		private int GetExpectedMinTerm()
-		{
-			return Drive.Db.Payments.Products.FirstOrDefault().TermMin;
-		}
+        private int GetExpectedMinTerm()
+        {
+            return Drive.Db.Payments.Products.FirstOrDefault().TermMin;
+        }
 
-		private int GetExpectedMaxTermL0()
-		{
-			int maxTerm = 0;
+        private int GetExpectedMaxTermL0()
+        {
+            int maxTerm = 0;
 
-			switch (Config.AUT)
-			{
-				case AUT.Za:
-					{
-						var promiseDate = GetExpectedDefaultPromiseDateL0();
-						var iMonth = promiseDate.Month - 1;
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    {
+                        var promiseDate = GetExpectedDefaultPromiseDateL0();
+                        var iMonth = promiseDate.Month - 1;
 
-						var payDayPlusToMaxTerm = Int32.Parse(Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.PayDayPlusToMaxTerm").Value.Split(',')[iMonth]);
+                        var payDayPlusToMaxTerm = Int32.Parse(Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.PayDayPlusToMaxTerm").Value.Split(',')[iMonth]);
 
-						maxTerm = (promiseDate.AddDays(payDayPlusToMaxTerm) - DateTime.Today).Days;
+                        maxTerm = (promiseDate.AddDays(payDayPlusToMaxTerm) - DateTime.Today).Days;
 
-						if (maxTerm < MinimumMaxLoanTerm) maxTerm = MinimumMaxLoanTerm;
-					}
-					break;
+                        if (maxTerm < MinimumMaxLoanTerm) maxTerm = MinimumMaxLoanTerm;
+                    }
+                    break;
 
-				default:
-					{
-						return Drive.Db.Payments.Products.FirstOrDefault().TermMax;
-					}
-			}
+                default:
+                    {
+                        return Drive.Db.Payments.Products.FirstOrDefault().TermMax;
+                    }
+            }
 
-			return maxTerm;
-		}
+            return maxTerm;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

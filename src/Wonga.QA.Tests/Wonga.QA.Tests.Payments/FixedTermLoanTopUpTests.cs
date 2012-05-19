@@ -133,7 +133,7 @@ namespace Wonga.QA.Tests.Payments
             Assert.AreEqual(application.Id, Guid.Parse(offer.Values["ApplicationId"].Single()));
             Assert.IsTrue(Boolean.Parse(offer.Values["IsEnabled"].Single()));
             Assert.AreEqual(_limit - _loan, Decimal.Parse(offer.Values["AmountMax"].Single()));
-            Assert.AreEqual(_loan, Decimal.Parse(offer.Values["TotalToRepay"].Single()));
+            Assert.AreEqual(_loan + _fee, Decimal.Parse(offer.Values["TotalToRepay"].Single()));
             Assert.AreEqual(_fee, Decimal.Parse(offer.Values["TransmissionFee"].Single()));
 
             foreach (var key in new[] { "InterestRateMonthly", "InterestRateAnnual", "InterestRateAPR", "DaysTillRepaymentDate" })
@@ -179,14 +179,12 @@ namespace Wonga.QA.Tests.Payments
         public void GetFixedTermLoanTopupOfferNegativeTest()
         {
             var customer = CustomerBuilder.New().Build();
-            var offer = Drive.Api.Queries.Post(new GetFixedTermLoanTopupOfferQuery { AccountId = customer.Id });
+        	Assert.Throws<ValidatorException>(
+        		() => Drive.Api.Queries.Post(new GetFixedTermLoanTopupOfferQuery {AccountId = customer.Id}));
 
-            Assert.IsNull(offer.Values["ApplicationId"].Single());
-            Assert.IsFalse(Boolean.Parse(offer.Values["IsEnabled"].Single()));
-            Assert.AreEqual(0, Decimal.Parse(offer.Values["AmountMax"].Single()));
 
             var application = ApplicationBuilder.New(customer).WithLoanAmount(_limit).Build();
-            offer = Drive.Api.Queries.Post(new GetFixedTermLoanTopupOfferQuery { AccountId = customer.Id });
+            var offer = Drive.Api.Queries.Post(new GetFixedTermLoanTopupOfferQuery { AccountId = customer.Id });
 
             Assert.IsNotNull(offer.Values["ApplicationId"].Single());
             Assert.AreEqual(application.Id, Guid.Parse(offer.Values["ApplicationId"].Single()));
@@ -362,7 +360,7 @@ namespace Wonga.QA.Tests.Payments
                     FixedTermLoanTopupId = Guid.NewGuid(),
                     TopupAmount = topup
                 }), "Topup: {0}", topup);
-                Assert.Contains(exception.Errors, "Payments_TopUp_TopupAmount_Invalid");
+                Assert.Contains(new[] { "Payments_TopUp_TopupAmount_Invalid", "Payments_Topup_AmountGreaterThanAvailableCredit" }, exception.Errors.Single());
             }
         }
 
@@ -427,7 +425,7 @@ namespace Wonga.QA.Tests.Payments
         }
 
         [Test, Explicit, Description("Payments_Topup_NoOpenedApplication")]
-        public void CreateFixedTermLoanTopupNoApplicationTesta()
+        public void CreateFixedTermLoanTopupNoApplicationTests()
         {
             var customer = CustomerBuilder.New().WithMiddleName("TESTEmployedMask").WithEmployerStatus("Unemployed").Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(_loan).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
@@ -439,7 +437,7 @@ namespace Wonga.QA.Tests.Payments
                 FixedTermLoanTopupId = Guid.NewGuid(),
                 TopupAmount = _topup
             }));
-            Assert.Contains(exception.Errors, "Payments_Topup_NoOpenedApplication");
+            Assert.Contains(exception.Errors, "AccountId_NotFound");
 
             exception = Assert.Throws<ValidatorException>(() => Drive.Api.Commands.Post(new CreateFixedTermLoanTopupCommand
             {
@@ -545,7 +543,7 @@ namespace Wonga.QA.Tests.Payments
         }
 
         [Pending("UK-1878")]
-        [Test, Explicit]
+        [Test, Explicit, ExpectedException(typeof(ValidatorException))]
         public void MillionPoundTransaction()
         {
             var customer = CustomerBuilder.New().WithMiddleName("Foo").WithEmployer("Bar").Build();
@@ -574,6 +572,7 @@ namespace Wonga.QA.Tests.Payments
                 ApplicationId = application,
                 FixedTermLoanTopupId = topup,
                 TopupAmount = 1000000
+                //TopupAmount = 1
             });
             Do.Until(() => Drive.Data.Payments.Db.Topups.FindByExternalId(topup));
 
