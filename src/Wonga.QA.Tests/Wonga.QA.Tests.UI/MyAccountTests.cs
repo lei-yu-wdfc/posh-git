@@ -751,8 +751,8 @@ namespace Wonga.QA.Tests.Ui
         {
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
-            string phone = "0751234567";
-            List<string> invalidPhones = new List<string> { "075-1234567", "075.1234567", "075,1234567", "075/1234567" };
+            string phone = "0211000000";
+            List<string> invalidPhones = new List<string> { "021-1000000", "021.1000000", "021,1000000", "021/1000000" };
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).WithMobileNumber(phone).Build();
             Application application = ApplicationBuilder.New(customer)
                 .Build();
