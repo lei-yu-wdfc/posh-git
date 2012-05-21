@@ -14,7 +14,6 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
 	[AUT(AUT.Ca)]
-    [Parallelizable(TestScope.Self)]
 	public class CheckpointApplicationElementNotOnCSBlacklistOnlyDoNotRelendVerificationTests
 	{
 		private const RiskMask TestMask = RiskMask.TESTDoNotRelend;
