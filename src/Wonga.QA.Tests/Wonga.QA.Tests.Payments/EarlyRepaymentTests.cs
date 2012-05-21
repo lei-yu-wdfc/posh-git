@@ -51,6 +51,7 @@ namespace Wonga.QA.Tests.Payments
                 base.SetUp();
             }
 
+            [Parallelizable(TestScope.Self)]
             public class WhenTheLoanHasAnEarlyPartialRepaymentAndIsDue : GivenACustomerFromOntarioWithAnActiveLoan
             {
                 private decimal _earlyRepayment;
@@ -73,6 +74,7 @@ namespace Wonga.QA.Tests.Payments
                 }
             }
 
+            [Parallelizable(TestScope.Self)]
             public class WhenTheLoanHasAnEarlyFullRepayment : GivenACustomerFromOntarioWithAnActiveLoan
             {
                 private decimal _earlyRepayment;
