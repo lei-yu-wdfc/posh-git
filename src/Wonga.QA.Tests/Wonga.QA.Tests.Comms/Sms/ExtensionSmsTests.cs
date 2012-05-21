@@ -12,7 +12,7 @@ using CreateFixedTermLoanExtensionCommand = Wonga.QA.Framework.Api.CreateFixedTe
 
 namespace Wonga.QA.Tests.Comms.Sms
 {
-	[TestFixture]
+	[TestFixture, Parallelizable(TestScope.All)]
 	public class ExtensionSmsTests
 	{
 		private LoanExtensionEntity _extension;
@@ -21,7 +21,7 @@ namespace Wonga.QA.Tests.Comms.Sms
 
 		[Test, AUT(AUT.Uk), JIRA("UK-2113")]
 		public void ExtensionCancellationSms()
-		{
+		{	
 			var mobileNumber = Get.GetMobilePhone();
 			var formattedPhoneNumber = string.Format("{0}{1}", "447", mobileNumber.Substring(2, (mobileNumber.Length - 2)));
 			var startTime = DateTime.Now;
