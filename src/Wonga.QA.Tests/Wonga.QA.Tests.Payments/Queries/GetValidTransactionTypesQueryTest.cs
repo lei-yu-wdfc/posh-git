@@ -12,6 +12,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Payments.Queries
 {
     [TestFixture]
+    [Parallelizable(TestScope.Self)]
     public class GetValidTransactionTypesQueryTest
     {
         [Test, AUT(AUT.Wb), JIRA("SME-375")]

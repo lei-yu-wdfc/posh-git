@@ -14,6 +14,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
     public class CheckpointGuarantorNameMatchMainApplicant
     {
         [Test, JIRA("SME-1171"), AUT(AUT.Wb)]
+        [Parallelizable(TestScope.Self)]
         public void GuarantorNameMatchMainApplicant_LoanIsDeclined()
         {
             var mainApplicantForename = Get.RandomString(8);

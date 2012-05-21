@@ -13,6 +13,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.CardPayment
 {
+    [Parallelizable(TestScope.All)]
     public class CheckpointsTests
     {
         private const String GoodCompanyRegNumber = "00000086";
