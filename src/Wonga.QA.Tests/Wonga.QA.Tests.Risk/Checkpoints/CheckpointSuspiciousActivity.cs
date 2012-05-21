@@ -13,6 +13,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
+    [Parallelizable(TestScope.All)]
     public class CheckpointSuspiciousActivity
     {
         [Test, AUT(AUT.Uk), JIRA("UK-845"), Description("Scenario 1: Declined")]

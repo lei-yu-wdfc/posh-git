@@ -69,7 +69,8 @@ namespace Wonga.QA.Tests.Payments.Command
                                                             Town = "town", 
                                                             PaymentId = _paymentId };
             }
-     
+            
+            [Parallelizable(TestScope.Self)]
             public class GivenAPaymentHasBeenRequestedWithAValidCard : GivenACustomerWithAnApprovedLoan
             {
                 [SetUp]
@@ -92,6 +93,7 @@ namespace Wonga.QA.Tests.Payments.Command
                 }
             }
 
+            [Parallelizable(TestScope.Self)]
             public class GivenAPaymentHasBeenRequestedWithAnInvalidCard : GivenACustomerWithAnApprovedLoan
             {
                 [SetUp]

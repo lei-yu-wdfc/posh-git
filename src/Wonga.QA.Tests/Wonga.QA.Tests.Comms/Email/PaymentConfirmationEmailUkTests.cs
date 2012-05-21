@@ -48,7 +48,7 @@ namespace Wonga.QA.Tests.Comms.Email
 
                 base.SetUp();
             }
-
+            [Parallelizable(TestScope.Self)]
             public class WhenFundsTransferred : GivenACustomerWithAnApprovedLoan
             {
                 [SetUp]

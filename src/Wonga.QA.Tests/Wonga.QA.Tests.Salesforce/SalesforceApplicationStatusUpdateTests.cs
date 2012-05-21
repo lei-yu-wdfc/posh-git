@@ -15,6 +15,7 @@ namespace Wonga.QA.Tests.Salesforce
 {
     [JIRA("UK-924")]
     [AUT(AUT.Uk, AUT.Wb)]
+    [Parallelizable(TestScope.All)]
     public class SalesforceApplicationStatusUpdateTests : SalesforceTestBase
     {
         private static Application CreateApplication(out Customer customer)
