@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Content>
+<ContentMap>
   <YourDetails>Your Details</YourDetails>
 	<ProblemProcessingDetailsMessage>There was a problem processing your details. Please try again.</ProblemProcessingDetailsMessage>
 	<PasswordWarningMessage>Sorry, your password cannot match your username</PasswordWarningMessage>
 	<ApplicationErrorMessage>We are sorry, but there has been an error in your application. Please try again. (101 - amount)</ApplicationErrorMessage>
+  <NotValidPostcode>Sorry, that is not a valid postcode.</NotValidPostcode>
   <TabsElementMobile>
     <Login>login</Login>
     <ApplyNow>apply now</ApplyNow>
@@ -15,5 +16,19 @@
     <Help>help</Help>
     <ContactUs>contact us</ContactUs>
   </TabsElementMobile>
-  
-</Content>
+  <FAQPageLinks>
+    <CouncilForDebtCollectorsLink>http://www.debtcol-council.co.za</CouncilForDebtCollectorsLink>
+  </FAQPageLinks>
+
+	<MobilePinVerificationSection>
+		<ResendPinMessage1>Your pin has now been resent to your phone. You should receive it within a few minutes.</ResendPinMessage1>
+		<ResendPinMessage2>We have resent your PIN.</ResendPinMessage2>
+	</MobilePinVerificationSection>
+  <AddressDetailsPage>
+    <PostcodeError>Sorry, that is not a valid postcode.</PostcodeError>
+  </AddressDetailsPage>
+
+	<MyPaymentsPage>
+		<InvalidBankAccountWarning>Please enter a valid bank account number</InvalidBankAccountWarning>
+	</MyPaymentsPage>
+	</ContentMap>

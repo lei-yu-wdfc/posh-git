@@ -17,7 +17,7 @@ namespace Wonga.QA.Framework
         public Guid BankAccountId { get; set; }
         public String MiddleName { get; set; }
         public Int64 CardNumber { get; set; }
-        public Int64 BankAccountNumber { get; set; }
+        public string BankAccountNumber { get; set; }
 
         public Customer(Guid id)
         {
@@ -36,7 +36,7 @@ namespace Wonga.QA.Framework
             BankAccountId = bankAccountId;
         }
 
-        public Customer(Guid id, string email, Guid bankAccountId, Int64 bankAccountNumber)
+        public Customer(Guid id, string email, Guid bankAccountId, string bankAccountNumber)
         {
             Id = id;
             Email = email;
@@ -128,7 +128,7 @@ namespace Wonga.QA.Framework
         {
             var db = new DbDriver();
             AccountPreferenceEntity accountPreferenceEntity = db.Payments.AccountPreferences.Single(ap => ap.AccountId == Id);
-            accountPreferenceEntity.Ccin = "ScrubbedCcin_" + Get.RandomInt(10000, 99999);
+            accountPreferenceEntity.Ccin = "ScrubbedCcin_" + Get.RandomInt(1000000, 9999999);
             db.Payments.SubmitChanges();
         }
 

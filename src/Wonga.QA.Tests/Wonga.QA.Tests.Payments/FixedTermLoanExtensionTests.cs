@@ -12,18 +12,25 @@ using Wonga.QA.Tests.Payments.Helpers;
 
 namespace Wonga.QA.Tests.Payments
 {
-	[TestFixture]
+	[TestFixture, Parallelizable(TestScope.All)]
 	public class FixedTermLoanExtensionTests
 	{
-		[Test, AUT(AUT.Uk), JIRA("UK-598"),
-		 Ignore("API tests should be unignored when Extend Functionality will be implemented"),
-		 Description("Check that customer can extend, when 7 days (or more) left to repayment date"),
-		 Description("Check that customer can't extend when less than 7 days left to reapyment date"),
-		 Description("Check that customer can't extend to earlier date than his reapayment date")]
-		[Row(10, 5, true, 8, Order = 0)]
-		[Row(10, 10, true, 8, Order = 1)]
-		[Row(10, 50, false, 8, Order = 2)]
-		[Row(10, 10, false, 6, Order = 3)]
+        const string ValidCardNumber = "4444333322221111";
+        const string Cv2MaskFailedPayment = "888";
+        const string Cv2MaskPaymentSucceeds = "123";
+
+        const string VisaCardType = "Visa";
+        const string ValidIssueNumber = "000";
+
+        [Test, AUT(AUT.Uk), JIRA("UK-598"),
+         Ignore("API tests should be unignored when Extend Functionality will be implemented"),
+         Description("Check that customer can extend, when 7 days (or more) left to repayment date"),
+         Description("Check that customer can't extend when less than 7 days left to reapyment date"),
+         Description("Check that customer can't extend to earlier date than his reapayment date")]
+        [Row(10, 5, true, 8, Order = 0)]
+        [Row(10, 10, true, 8, Order = 1)]
+        [Row(10, 50, false, 8, Order = 2)]
+        [Row(10, 10, false, 6, Order = 3)]
 		public void LoanExtendsInValidTimeFrame(int loanTerm, int extendTerm, bool available, int daysToDueDate)
 		{
 			//create customer with live application.
@@ -137,6 +144,7 @@ namespace Wonga.QA.Tests.Payments
 		public void CreateFixedTermLoanExtensionTest()
 		{
 			const decimal trustRating = 400.00M;
+            
 			var accountId = Guid.NewGuid();
 			var bankAccountId = Guid.NewGuid();
 			var paymentCardId = Guid.NewGuid();
@@ -156,13 +164,13 @@ namespace Wonga.QA.Tests.Payments
 			                        	{
 			                        		AccountId = accountId,
 			                        		PaymentCardId = paymentCardId,
-			                        		CardType = "VISA",
-			                        		Number = "4444333322221111",
+			                        		CardType = VisaCardType,
+                                            Number = ValidCardNumber,
 			                        		HolderName = "Test Holder",
 			                        		StartDate = DateTime.Today.AddYears(-1).ToDate(DateFormat.YearMonth),
 			                        		ExpiryDate = DateTime.Today.AddMonths(6).ToDate(DateFormat.YearMonth),
-			                        		IssueNo = "000",
-			                        		SecurityCode = "666",
+			                        		IssueNo = ValidIssueNumber,
+                                            SecurityCode = Cv2MaskPaymentSucceeds,
 			                        		IsCreditCard = false,
 			                        		IsPrimary = true,
 			                        	});
@@ -176,14 +184,14 @@ namespace Wonga.QA.Tests.Payments
 			                        		ExtendDate = new Date(fixedTermApp.NextDueDate.Value.AddDays(2), DateFormat.Date),
 			                        		ExtensionId = extensionId,
 			                        		PartPaymentAmount = 20M,
-			                        		PaymentCardCv2 = "000",
+                                            PaymentCardCv2 = Cv2MaskPaymentSucceeds,
 			                        		PaymentCardId = paymentCardId
 			                        	});
 
 			var loanExtension =
 				Do.With.Interval(1).Until(
 					() =>
-					Drive.Db.Payments.LoanExtensions.Single(x => x.ExternalId == extensionId && x.ApplicationId == app.ApplicationId));
+					Drive.Db.Payments.LoanExtensions.Single(x => x.ExternalId == extensionId && x.ApplicationId == app.ApplicationId && (x.PartPaymentTakenOn != null || x.PartPaymentFailedOn != null)));
 
 
 			Assert.IsNotNull(loanExtension, "A loan extension should be created");
@@ -194,6 +202,7 @@ namespace Wonga.QA.Tests.Payments
 		public void CreateFixedTermLoanExtensionFailedPaymentTest()
 		{
 			const decimal trustRating = 400.00M;
+            
 			var accountId = Guid.NewGuid();
 			var bankAccountId = Guid.NewGuid();
 			var paymentCardId = Guid.NewGuid();
@@ -213,13 +222,13 @@ namespace Wonga.QA.Tests.Payments
 			                        	{
 			                        		AccountId = app.AccountId,
 			                        		PaymentCardId = app.PaymentCardGuid,
-			                        		CardType = "Other",
-			                        		Number = "1111111111111111",
+			                        		CardType = VisaCardType,
+                                            Number = ValidCardNumber,
 			                        		HolderName = "Test Holder",
 			                        		StartDate = DateTime.Today.AddYears(-1).ToDate(DateFormat.YearMonth),
-			                        		ExpiryDate = DateTime.Today.AddMonths(-1).ToDate(DateFormat.YearMonth),
-			                        		IssueNo = "000",
-			                        		SecurityCode = "666",
+			                        		ExpiryDate = DateTime.Today.AddMonths(+1).ToDate(DateFormat.YearMonth),
+			                        		IssueNo = ValidIssueNumber,
+			                        		SecurityCode = Cv2MaskFailedPayment,
 			                        		IsCreditCard = false,
 			                        		IsPrimary = true,
 			                        	});
@@ -232,14 +241,14 @@ namespace Wonga.QA.Tests.Payments
 			                        		ExtendDate = new Date(fixedTermApp.NextDueDate.Value.AddDays(2), DateFormat.Date),
 			                        		ExtensionId = extensionId,
 			                        		PartPaymentAmount = 20M,
-			                        		PaymentCardCv2 = "000",
+                                            PaymentCardCv2 = Cv2MaskFailedPayment,
 			                        		PaymentCardId = paymentCardId
 			                        	});
 
 			var loanExtension =
 				Do.With.Interval(1).Until(
 					() =>
-					Drive.Db.Payments.LoanExtensions.Single(x => x.ExternalId == extensionId && x.ApplicationId == app.ApplicationId));
+                    Drive.Db.Payments.LoanExtensions.Single(x => x.ExternalId == extensionId && x.ApplicationId == app.ApplicationId && (x.PartPaymentTakenOn != null || x.PartPaymentFailedOn != null)));
 
 
 			Assert.IsNotNull(loanExtension, "A loan extension should be created");
@@ -271,13 +280,13 @@ namespace Wonga.QA.Tests.Payments
 			                        	{
 			                        		AccountId = accountId,
 			                        		PaymentCardId = paymentCardId,
-			                        		CardType = "VISA",
-			                        		Number = "4444333322221111",
+			                        		CardType = VisaCardType,
+			                        		Number = ValidCardNumber,
 			                        		HolderName = "Test Holder",
 			                        		StartDate = DateTime.Today.AddYears(-1).ToDate(DateFormat.YearMonth),
 			                        		ExpiryDate = DateTime.Today.AddMonths(6).ToDate(DateFormat.YearMonth),
-			                        		IssueNo = "000",
-			                        		SecurityCode = "666",
+			                        		IssueNo = ValidIssueNumber,
+			                        		SecurityCode = Cv2MaskPaymentSucceeds,
 			                        		IsCreditCard = false,
 			                        		IsPrimary = true,
 			                        	});
@@ -291,12 +300,12 @@ namespace Wonga.QA.Tests.Payments
 			                        		ExtendDate = new Date(fixedTermApp.NextDueDate.Value.AddDays(2), DateFormat.Date),
 			                        		ExtensionId = extensionId,
 			                        		PartPaymentAmount = 20M,
-			                        		PaymentCardCv2 = "000",
+                                            PaymentCardCv2 = Cv2MaskPaymentSucceeds,
 			                        		PaymentCardId = paymentCardId
 			                        	});
 
 			var loanExtension =
-				Do.With.Interval(1).Until(() =>Drive.Db.Payments.LoanExtensions.Single(x => x.ExternalId == extensionId && x.ApplicationId == app.ApplicationId));
+                Do.With.Interval(1).Until(() => Drive.Db.Payments.LoanExtensions.Single(x => x.ExternalId == extensionId && x.ApplicationId == app.ApplicationId && (x.PartPaymentTakenOn != null || x.PartPaymentFailedOn != null)));
 
 			Drive.Api.Commands.Post(new SignFixedTermLoanExtensionCommand
 			                        	{
@@ -306,7 +315,9 @@ namespace Wonga.QA.Tests.Payments
 
 			loanExtension.Refresh();
 
-			Assert.IsNotNull(loanExtension.SignedOn, "Loan Extension should be signed");
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.LoanExtensions.Single(x => x.ExternalId == extensionId && x.ApplicationId == app.ApplicationId && x.SignedOn != null ));
+
+            Assert.IsNotNull(loanExtension.SignedOn, "Loan Extension should be signed");
 		}
 	}
 }

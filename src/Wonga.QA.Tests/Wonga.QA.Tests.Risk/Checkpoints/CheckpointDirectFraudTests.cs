@@ -10,6 +10,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
+    [Parallelizable(TestScope.All)]
     public class CheckpointDirectFraudTests
     {
         [Test, AUT(AUT.Ca), JIRA("CA-1743")]

@@ -5,6 +5,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Framework.Msmq;
@@ -28,9 +29,9 @@ namespace Wonga.QA.Tests.Ui
         //private string _repaymentDate;
         private ApiResponse _response;
         //private DateTime _actualDate;
-       
-        
-        [Test, AUT(AUT.Uk), JIRA("UK-826", "UK-789")]
+
+
+        [Test, AUT(AUT.Uk), JIRA("UK-826", "UK-789", "UK-2016"), Pending("Fails due to bug UK-2016")]
         public void MovingTopupSlidersLoanSummaryShouldBeCorrect()
         {
             string email = Get.RandomEmail();
@@ -83,6 +84,8 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsFalse(dealDonePage.IsDealDonePageDateNotPresent());
             Assert.IsFalse(dealDonePage.IsDealDonePageJiffyNotPresent());
             Assert.IsFalse(dealDonePage.IsDealDonePageTopupAmountNotPresent());
+            Assert.Contains(dealDonePage.SucessMessage, totalRepayable);
+            Assert.Contains(dealDonePage.SucessMessage, topupAmount);
 
             dealDonePage.ContinueToMyAccount();
             
@@ -96,7 +99,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk), JIRA("UK-789")]
         public void CheckAvailableCreditScenario03() { CheckAvailableCredit(4); }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-789")]
+        [Test, AUT(AUT.Uk), JIRA("UK-789"), Pending("Disabled until scenario 4 conditions are clarified")]
         public void CheckAvailableCreditScenario04() { CheckAvailableCredit(10); } 
 
         private void CheckAvailableCredit(int daysShift)
@@ -107,13 +110,12 @@ namespace Wonga.QA.Tests.Ui
             var application = ApplicationBuilder.New(customer).Build();
 
             // Rewind application dates
-            ApplicationEntity applicationEntity =
-                Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
-            RiskApplicationEntity riskApplication =
-                Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == application.Id);
+            // Rewind application dates
+            ApplicationEntity applicationEntity = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
+            RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == application.Id);
             TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
-            RewindApplicationDates(applicationEntity, riskApplication, daysShiftSpan);
-    
+            Drive.Db.RewindApplicationDates(applicationEntity, riskApplication, daysShiftSpan);
+
             // Log in and open MySummary page
             var loginPage = Client.Login();
             var myAccountPage = loginPage.LoginAs(email);
@@ -129,34 +131,5 @@ namespace Wonga.QA.Tests.Ui
             Assert.Contains(actualIntroText, expectedAvailableCredit);
             Assert.Contains(actualMaxAvailableCredit, expectedAvailableCredit);
         }
-
-       private static void RewindApplicationDates(ApplicationEntity application, RiskApplicationEntity riskApp, TimeSpan span)
-       {
-           application.ApplicationDate -= span;
-           application.SignedOn -= span;
-           application.CreatedOn -= span;
-           application.AcceptedOn -= span;
-           application.FixedTermLoanApplicationEntity.PromiseDate -= span;
-           application.FixedTermLoanApplicationEntity.NextDueDate -= span;
-           application.Transactions.ForEach(t => t.PostedOn -= span);
-           if (application.ClosedOn != null)
-               application.ClosedOn -= span;
-           application.Submit(true);
-
-           riskApp.ApplicationDate -= span;
-           riskApp.PromiseDate -= span;
-           if (riskApp.ClosedOn != null)
-               riskApp.ClosedOn -= span;
-           riskApp.Submit(true);
-
-       }
-
-       //Needed for serialization in CreateExtendedRepaymentArrangementCommand
-       private class ArrangementDetail
-       {
-           public decimal Amount { get; set; }
-           public CurrencyCodeIso4217Enum Currency { get; set; }
-           public DateTime DueDate { get; set; }
-       }
     }
 }

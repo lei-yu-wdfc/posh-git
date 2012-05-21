@@ -14,6 +14,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
 	[AUT(AUT.Ca)]
+    [Parallelizable(TestScope.Self)]
 	public class CheckpointApplicationElementNotOnCSBlacklistOnlyDoNotRelendVerificationTests
 	{
 		private const RiskMask TestMask = RiskMask.TESTDoNotRelend;
@@ -33,7 +34,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				//don't use mask so that the workflow builder is run!
 				var customer = CustomerBuilder.New().WithEmployer("Wonga").Build();
 
-				var application = ApplicationBuilder.New(customer).WithUnmaskedExpectedDecision().Build();
+				var application = ApplicationBuilder.New(customer).WithoutExpectedDecision().Build();
 
 				AssertCheckpointAndVerificationExecution(useDoNotRelend, application);
 			}
@@ -60,7 +61,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				//don't use mask so that the workflow builder is run!
 				Drive.Db.UpdateEmployerName(customer.Id, "Wonga");
 
-				var application = ApplicationBuilder.New(customer).WithUnmaskedExpectedDecision().Build();
+				var application = ApplicationBuilder.New(customer).WithoutExpectedDecision().Build();
 
 				AssertCheckpointAndVerificationExecution(useDoNotRelend, application);
 			}
@@ -72,7 +73,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 		#endregion
 
-		[Test, AUT(AUT.Ca), JIRA("CA-1974")]
+        [Test, AUT(AUT.Ca), JIRA("CA-1974"), Parallelizable]
 		public void GivenNewCustomer_WhenItIsNotMarkedWithDoNotRelend_ThenTheApplicationIsAccepted()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
@@ -85,7 +86,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			AssertCheckpointAndVerificationExecution(true, application);
 		}
 
-		[Test, AUT(AUT.Ca), JIRA("CA-1974")]
+        [Test, AUT(AUT.Ca), JIRA("CA-1974"), Parallelizable]
 		public void GivenNewCustomer_WhenItIsMarkedWithDoNotRelend_ThenTheApplicationIsDeclined()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
@@ -98,7 +99,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			AssertApplicationDeclinedWithCorrectCheckPointAndVerification(application);
 		}
 
-		[Test, AUT(AUT.Ca), JIRA("CA-1974")]
+        [Test, AUT(AUT.Ca), JIRA("CA-1974"), Parallelizable]
 		public void GivenExistingCustomer_WhenItIsNotMarkedWithDoNotRelend_ThenTheApplicationIsAccepted()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(RiskMask.TESTNoCheck).Build();
@@ -113,7 +114,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			AssertCheckpointAndVerificationExecution(true, lnApplication);
 		}
 
-		[Test, AUT(AUT.Ca), JIRA("CA-1974")]
+        [Test, AUT(AUT.Ca), JIRA("CA-1974"), Parallelizable]
 		public void GivenExistingCustomer_WhenItIsMarkedWithDoNotRelend_ThenTheApplicationIsDeclined()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(RiskMask.TESTNoCheck).Build();

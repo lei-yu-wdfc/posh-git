@@ -9,7 +9,7 @@ namespace Wonga.QA.Framework.Mocks
 	public class ScotiaResponseBuilder
 	{
 		private readonly DbDriver _dbDriver;
-		private long _bankAccountNumber;
+		private string _bankAccountNumber;
 		private decimal? _amount;
 
 		public ScotiaResponseBuilder()
@@ -22,7 +22,7 @@ namespace Wonga.QA.Framework.Mocks
 			return new ScotiaResponseBuilder();
 		}
 
-		public ScotiaResponseBuilder ForBankAccountNumber(long bankAccountNumber)
+		public ScotiaResponseBuilder ForBankAccountNumber(string bankAccountNumber)
 		{
 			_bankAccountNumber = bankAccountNumber;
 			return this;

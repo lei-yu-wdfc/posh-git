@@ -40,6 +40,8 @@ namespace Wonga.QA.Framework.Data.Enums.Risk
         [Description("Mobile phone is unique")] MobilePhoneIsUnique,
 		[Description("Repayment prediction check")] RepaymentPredictionPositive,
 		[Description("Reputation prediction check")] ReputationPredictionPositive,
-		[Description("Application has been accepted by customer service")] GeneralManualVerificationAccepted
+		[Description("Application has been accepted by customer service")] GeneralManualVerificationAccepted,
+        [Description("Applicant has a poor relationship with Wonga")] ApplicantHasPoorRelationshipWithWonga,
+		[Description("Check for excesive number of applications")] AccountNumberApplicationsAcceptable,
     }
 }

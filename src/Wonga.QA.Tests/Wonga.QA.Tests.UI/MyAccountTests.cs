@@ -66,7 +66,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.Throws<AssertionFailureException>(() => { var processingPage = bankDetailsPage2.Next(); });
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-202"), Pending("Broke on TC")]
+        [Test, AUT(AUT.Za), JIRA("QA-202")]
         public void LNJourneyInvalidAccountNumberShouldCauseWarningMessageOnNextPage()
         {
             var loginPage = Client.Login();
@@ -245,8 +245,6 @@ namespace Wonga.QA.Tests.Ui
 
             var homePage = myPersonalDetailsPage.Login.Logout();
             var mySummary = homePage.Login.LoginAs(email, "QWEasd12");
-
-
         }
 
         [Test, AUT(AUT.Za), JIRA("QA-209")]
@@ -340,7 +338,7 @@ namespace Wonga.QA.Tests.Ui
             switch (Config.AUT)
             {
                 case (AUT.Za):
-                    date = DateTime.Now.AddDays(-arrearsdays - 1);
+                    date = DateTime.Now.AddDays(-arrearsdays);
                     email = Get.RandomEmail();
                     customer = CustomerBuilder.New().WithEmailAddress(email).Build();
                     application = ApplicationBuilder.New(customer)
@@ -417,7 +415,7 @@ namespace Wonga.QA.Tests.Ui
                     }
 
                     #endregion
-                    Assert.AreEqual("$130.00", mySummaryPage.GetTotalToRepay); //must be $130.45 it's bug, well change whan it's well be resolved 
+                    Assert.AreEqual("$130.45", mySummaryPage.GetTotalToRepay); //must be $130.45 it's bug, well change whan it's well be resolved 
                     Assert.AreEqual("$130.00", mySummaryPage.GetPromisedRepayAmount);
                     Assert.AreEqual(actualPromisedRepayDate, mySummaryPage.GetPromisedRepayDate);
                     mySummaryPage.RepayButtonClick();
@@ -453,7 +451,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
         [Test, AUT(AUT.Za), JIRA("QA-187")]
-        public void CustomerEntersInvalidBankAccountWarningMessageShouldBeDisplyaed()
+        public void CustomerEntersInvalidBankAccountWarningMessageShouldBeDisplayed()
         {
             var accounts = new List<string> { "dfgsfgfgsdf", "123 342", "123f445", "+135-6887" };
             var loginPage = Client.Login();
@@ -488,16 +486,8 @@ namespace Wonga.QA.Tests.Ui
                             payment.AddBankAccountButtonClick();
 
                             Thread.Sleep(2000); // Wait some time to load popup
-                            try
-                            {
-                                payment.AddBankAccount("Capitec", "Current", account, "2 to 3 years");
-                                throw new Exception("Invalid bank account was pass: " + account);
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e.Message);
-                                Assert.IsTrue(e.Message.Contains("Please enter a valid bank account number"));
-                            }
+                            payment.AddBankAccount("Capitec", "Current", account, "2 to 3 years");
+                            Assert.IsTrue(payment.IsInvalidBankAccountCauseWarning());
                         }
                         else
                         {
@@ -774,6 +764,34 @@ namespace Wonga.QA.Tests.Ui
                 myPersonals.PhoneClick();
                 myPersonals.ChangeMobilePhone(invaliPhone, "0000");
             }
+        }
+
+        [Test, AUT(AUT.Za), JIRA("QA-210")]
+        public void CustomerChangeTelephonFieldsCheckHomePhone()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer)
+                .Build();
+            application.RepayOnDueDate();
+
+            var mySummary = loginPage.LoginAs(email);
+            var myPersonalDetailsPage = mySummary.Navigation.MyPersonalDetailsButtonClick();
+
+            myPersonalDetailsPage.PhoneClick();
+            myPersonalDetailsPage.ChangeHomePhone("");
+
+            myPersonalDetailsPage.Submit();
+            myPersonalDetailsPage.WaitForSuccessPopup();
+            myPersonalDetailsPage.Submit();
+
+            var homePhoneUI = myPersonalDetailsPage.GetHomePhone;
+            Console.WriteLine(customer.Id.ToString());
+            var homePhoneDB = Do.Until(() => Drive.Data.Comms.Db.CustomerDetails.FindByAccountId(customer.Id).HomePhone);
+
+            Assert.AreEqual("", homePhoneUI);
+            Assert.AreEqual("", homePhoneDB);
         }
 
     }

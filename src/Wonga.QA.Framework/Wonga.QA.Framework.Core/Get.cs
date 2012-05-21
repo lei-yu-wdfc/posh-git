@@ -17,6 +17,7 @@ namespace Wonga.QA.Framework.Core
     public static class Get
     {
         private static String _alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        private static String _alphaNumeric = _alpha + "0123456789";
         private static Random _random = new Random(Guid.NewGuid().GetHashCode());
         private static readonly string EmailSafeMachineName;
 
@@ -119,6 +120,23 @@ namespace Wonga.QA.Framework.Core
             return "000000000";
         }
 
+		public static String GetNationalNumber(DateTime dob, Boolean female)
+		{
+			switch (Config.AUT)
+			{
+				case AUT.Za:
+					{
+						Int32[] nin = String.Format("{0:yyMMdd}{1:D4}{2}{3}", dob, female ? _random.Next(5000) : _random.Next(5000, 10000), _random.Next(2), _random.Next(10)).Select(c => Int32.Parse(c.ToString())).ToArray();
+						Int32 z = 10 - (((nin.Where((n, i) => i % 2 == 0).Sum()) + ((2 * (Int32.Parse(String.Join(null, nin.Where((n, i) => i % 2 == 1))))).ToString().Select(c => Int32.Parse(c.ToString())).Sum())) % 10);
+						return String.Format("{0}{1}", String.Join(null, nin), z == 10 ? 0 : z);
+					}
+				default:
+					{
+						throw new NotImplementedException(Config.AUT.ToString());
+					}
+			}
+		}
+
         public static decimal GetLoanAmount()
         {
             switch (Config.AUT)
@@ -154,25 +172,25 @@ namespace Wonga.QA.Framework.Core
             return new Date(DateTime.UtcNow.AddDays(10), DateFormat.Date);
         }
 
-        public static Int64 GetBankAccountNumber()
+        public static string GetBankAccountNumber()
         {
             switch (Config.AUT)
             {
                 case AUT.Ca:
                     {
-                        return RandomLong(1000000, 9999999);
+                        return RandomLong(1000000, 9999999).ToString();
                     }
                 case AUT.Za:
                     {
-                        return 12345678901;
+						return RandomLong(10000000000, 99999999999).ToString();
                     }
                 case AUT.Uk:
                     {
-                        return 42368003;
+                        return RandomLong(10000000, 99999999).ToString();
                     }
                 case AUT.Wb:
                     {
-                        return RandomLong(10000000, 99999999);
+                        return RandomLong(10000000, 99999999).ToString();
                     }
                 default:
                     {
@@ -184,23 +202,6 @@ namespace Wonga.QA.Framework.Core
         public static Guid GetCsAuthorization()
         {
             return Guid.Parse("93370527-1BEE-461B-B825-07A6BE7AB8FE");
-        }
-
-        public static String GetNIN(DateTime dob, Boolean female)
-        {
-            switch (Config.AUT)
-            {
-                case AUT.Za:
-                    {
-                        Int32[] nin = String.Format("{0:yyMMdd}{1:D4}{2}{3}", dob, female ? _random.Next(5000) : _random.Next(5000, 10000), _random.Next(2), _random.Next(10)).Select(c => Int32.Parse(c.ToString())).ToArray();
-                        Int32 z = 10 - (((nin.Where((n, i) => i % 2 == 0).Sum()) + ((2 * (Int32.Parse(String.Join(null, nin.Where((n, i) => i % 2 == 1))))).ToString().Select(c => Int32.Parse(c.ToString())).Sum())) % 10);
-                        return String.Format("{0}{1}", String.Join(null, nin), z == 10 ? 0 : z);
-                    }
-                default:
-                    {
-                        throw new NotImplementedException(Config.AUT.ToString());
-                    }
-            }
         }
 
         public static String GetPostcode()
@@ -320,6 +321,14 @@ namespace Wonga.QA.Framework.Core
             StringBuilder builder = new StringBuilder();
             for (Int32 i = 0; i < _random.Next(min, max); i++)
                 builder.Append(_alpha[_random.Next(0, _alpha.Length)]);
+            return builder.ToString();
+        }
+
+        public static String RandomAlphaNumeric(Int32 min, Int32 max)
+        {
+            StringBuilder builder = new StringBuilder();
+            for (Int32 i = 0; i < _random.Next(min, max); i++)
+                builder.Append(_alphaNumeric[_random.Next(0, _alphaNumeric.Length)]);
             return builder.ToString();
         }
 

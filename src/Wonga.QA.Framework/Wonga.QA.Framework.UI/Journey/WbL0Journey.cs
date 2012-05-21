@@ -30,6 +30,7 @@ namespace Wonga.QA.Framework.UI.Journey
         {
 
             var homePage = CurrentPage as HomePage;
+            homePage.CloseWbWelcomePopup();
             homePage.Sliders.HowMuch = amount.ToString();
             homePage.Sliders.HowLong = duration.ToString();
             CurrentPage = homePage.Sliders.Apply() as EligibilityQuestionsPage;
@@ -69,7 +70,7 @@ namespace Wonga.QA.Framework.UI.Journey
             personalDetailsPage.YourDetails.NumberOfDependants = "0";
 
             personalDetailsPage.ContactingYou.HomePhoneNumber = "02071111234";
-            personalDetailsPage.ContactingYou.CellPhoneNumber = "07712345678";
+            personalDetailsPage.ContactingYou.CellPhoneNumber = "07700900000";
             personalDetailsPage.ContactingYou.EmailAddress = emailAddress;
             personalDetailsPage.ContactingYou.ConfirmEmailAddress = emailAddress;
 
@@ -137,7 +138,8 @@ namespace Wonga.QA.Framework.UI.Journey
             personalBankAccountPage.BankAccountSection.BankName = "AIB";
             personalBankAccountPage.BankAccountSection.SortCode = "13-40-20";
             personalBankAccountPage.BankAccountSection.AccountNumber = "63849203";
-            personalBankAccountPage.BankAccountSection.BankPeriod = "3 to 4 years";
+            personalBankAccountPage.BankAccountSection.BankPeriod = "More than 4 years";
+            Thread.Sleep(3000);
             CurrentPage = personalBankAccountPage.Next() as PersonalDebitCardPage;
             return this;
         }

@@ -9,6 +9,7 @@ using Wonga.QA.Tests.Payments.Helpers;
 namespace Wonga.QA.Tests.Payments
 {
     [TestFixture]
+    [Parallelizable(TestScope.All)]
     public abstract class EarlyRepaymentTests
     {
         private ProvinceEnum _province;
@@ -16,21 +17,16 @@ namespace Wonga.QA.Tests.Payments
         private Application _application;
         private decimal _loanAmount;
         private int _loanTerm;
-        private int _closeDelay;
 
         [SetUp]
         public virtual void SetUp()
         {
-            _closeDelay = ConfigurationFunctions.GetDelayBeforeApplicationClosed();
-            ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
-
             CreateApplication();
         }
 
         [TearDown]
         public void TearDown()
         {
-            ConfigurationFunctions.SetDelayBeforeApplicationClosed(_closeDelay);
         }
 
         private void CreateApplication()

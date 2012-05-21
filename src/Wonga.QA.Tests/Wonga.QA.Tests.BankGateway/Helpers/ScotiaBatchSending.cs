@@ -1,36 +1,29 @@
 using System;
-using System.Linq;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Msmq;
 
 namespace Wonga.QA.Tests.BankGateway.Helpers
 {
 	public class ScotiaBatchSending : IDisposable
 	{
-        private readonly string _configKey = "BankGateway.Scotiabank.FileTransferTimes";
-		private readonly string _originalSchedule;
+	    private const string _configKey = "BankGateway.Scotiabank.FileTransferTimes";
+	    private readonly string _originalSchedule;
 
-	    private readonly dynamic _serviceConfig = Drive.Data.Ops.Db.ServiceConfigurations;
-	    private readonly dynamic _opsSagasCa = Drive.Data.OpsSagas.Db.SendScotiaPaymentSagaEntity;
+        private readonly dynamic _opsSagasCa = Drive.Data.OpsSagas.Db.SendScotiaPaymentSagaEntity;
 
 		public ScotiaBatchSending()
 		{
-			// Pause Cash-out schedule
-            var config = _serviceConfig.FindBy(_configKey);
-			_originalSchedule = config.Value;
-			config.Value = DateTime.UtcNow.AddHours(2).TimeOfDay.ToString();
-            _serviceConfig.SubmitChanges();
+            _originalSchedule = Drive.Data.Ops.GetServiceConfiguration<string>(_configKey);
+            Drive.Data.Ops.SetServiceConfiguration(_configKey, DateTime.UtcNow.AddHours(2).TimeOfDay.ToString("%h") + ":00");
 		}
 
 		public void Dispose()
 		{
-			// Restore cash-out schedule
-            var config = _serviceConfig.FindBy(_configKey);
-			config.Value = _originalSchedule;
-            _serviceConfig.SubmitChanges();
+            Drive.Data.Ops.SetServiceConfiguration(_configKey, _originalSchedule);
 
-            var batchSaga = Do.Until(() => _opsSagasCa.FindAll.First());
+            var batchSaga = Do.Until(() => _opsSagasCa.All().First());
 			Drive.Msmq.BankGatewayScotia.Send(new TimeoutMessage { SagaId = batchSaga.Id });
 		}
 	}

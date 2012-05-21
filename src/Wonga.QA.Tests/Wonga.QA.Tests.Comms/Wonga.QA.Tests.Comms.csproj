@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,12 +32,16 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ArrearsSMSTests.cs" />
     <Compile Include="CollectionsChaseEmailTest.cs" />
     <Compile Include="CollectionsChaseSmsTests.cs" />
     <Compile Include="CommsServiceTests.cs" />
     <Compile Include="DocumentsEmailsTests.cs" />
+    <Compile Include="Email\DueDateReminderEmailTests.cs" />
+    <Compile Include="Email\ExtensionLoanEmailTests.cs" />
     <Compile Include="Email\LoanTopUpEmailTests.cs" />
     <Compile Include="Email\PaymentConfirmationEmailUkTests.cs" />
     <Compile Include="Email\PaymentFailureEmails.cs" />
@@ -47,6 +52,7 @@
     <Compile Include="OrganisationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CustomerTests.cs" />
+    <Compile Include="Sms\LiveLoanSmsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
@@ -85,6 +91,10 @@
     <ProjectReference Include="..\Wonga.QA.Tests.Core\Wonga.QA.Tests.Core.csproj">
       <Project>{7243F3C0-71B0-4679-960A-687052AFFDAD}</Project>
       <Name>Wonga.QA.Tests.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wonga.QA.Tests.Payments\Wonga.QA.Tests.Payments.csproj">
+      <Project>{FD73C73F-E2AE-4610-9A64-C024144F0A51}</Project>
+      <Name>Wonga.QA.Tests.Payments</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

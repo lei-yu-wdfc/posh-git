@@ -23,7 +23,7 @@ namespace Wonga.QA.Framework
 		public decimal LoanAmount { get; set; }
 		public int LoanTerm { get; set; }
 		public string FailedCheckpoint { get; private set; }
-        public Int64 BankAccountNumber { get; set; }
+        public string BankAccountNumber { get; set; }
 
 	    public Application()
 		{
@@ -150,17 +150,39 @@ namespace Wonga.QA.Framework
             return this;
         }
         
+		public Application RewindApplicationDates(TimeSpan rewindSpan)
+		{
+			ApplicationEntity application = Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id);
+
+			RewindAppDates(application, rewindSpan);
+
+			return this;
+		}
+		
+		public Application RewindApplicationDatesForDays(int days)
+		{
+			return RewindApplicationDates(TimeSpan.FromDays(days));
+		}
+
+		private void RewindAppDates(ApplicationEntity application, TimeSpan rewindSpan)
+		{
+			RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == Id);
+
+			Drive.Db.RewindApplicationDates(application, riskApplication, rewindSpan);
+		}
+
         private void RewindAppDates(ApplicationEntity application)
         {
             TimeSpan span = application.FixedTermLoanApplicationEntity.NextDueDate.Value - DateTime.Today;
-            RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == Id);
-
-            Drive.Db.RewindApplicationDates(application, riskApplication, span);
+        	RewindAppDates(application, span);
         }
 
 		public void MakeDueToday(ApplicationEntity application)
 		{
 			RewindAppDates(application);
+            LoanDueDateNotificationSagaEntity ldd = Drive.Db.OpsSagas.LoanDueDateNotificationSagaEntities.Single(s => s.ApplicationId == Id);
+            Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ldd.Id });
+            Do.With.While(ldd.Refresh);
 
 			FixedTermLoanSagaEntity ftl = Drive.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
 			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
@@ -187,8 +209,11 @@ namespace Wonga.QA.Framework
 
 			Drive.Db.RewindApplicationDates(application, riskApplication, span);
 
-			ScheduledPostAccruedInterestSagaEntity entity = Drive.Db.OpsSagas.ScheduledPostAccruedInterestSagaEntities.Single(a => a.ApplicationGuid == Id);
-			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = entity.Id });
+            if (Config.AUT == AUT.Ca || Config.AUT == AUT.Za)
+            {
+                ScheduledPostAccruedInterestSagaEntity entity = Drive.Db.OpsSagas.ScheduledPostAccruedInterestSagaEntities.Single(a => a.ApplicationGuid == Id);
+                Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = entity.Id });
+            }
 
             ServiceConfigurationEntity caScotiaMocksEnabled = Drive.Db.Ops.ServiceConfigurations.SingleOrDefault(e => e.Key == "Mocks.ScotiaEnabled");
 
@@ -206,7 +231,9 @@ namespace Wonga.QA.Framework
             if (Config.AUT != AUT.Ca || (Config.AUT == AUT.Ca && !Boolean.Parse(caScotiaMocksEnabled.Value)))
             {
                 ScheduledPaymentSagaEntity sp = Do.Until(() => Drive.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationGuid == Id));
-                Drive.Msmq.Payments.Send(new TakePaymentFailedCommand { SagaId = sp.Id, CreatedOn = DateTime.UtcNow, ValueDate = DateTime.UtcNow });
+                Drive.Msmq.Payments.Send(Config.AUT == AUT.Uk ? new TakePaymentFailedCommand { SagaId = sp.Id, CreatedOn = DateTime.UtcNow, ValueDate = DateTime.UtcNow, PaymentCardId = this.GetCustomer().GetPaymentCard() } :
+                                                                new TakePaymentFailedCommand { SagaId = sp.Id, CreatedOn = DateTime.UtcNow, ValueDate = DateTime.UtcNow });
+
                 Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = sp.Id }); 
             }
 
@@ -245,6 +272,14 @@ namespace Wonga.QA.Framework
                 new GetFixedTermLoanApplicationZaQuery { ApplicationId = Id } :
                 new GetFixedTermLoanApplicationQuery { ApplicationId = Id };
             return Convert.ToDecimal(Drive.Api.Queries.Post(query).Values["BalanceNextDueDate"].Single());
+        }
+
+        public Decimal GetBalanceToday()
+        {
+            var query = Config.AUT == AUT.Za ? (ApiRequest)
+                new GetFixedTermLoanApplicationZaQuery { ApplicationId = Id } :
+                new GetFixedTermLoanApplicationQuery { ApplicationId = Id };
+            return Convert.ToDecimal(Drive.Api.Queries.Post(query).Values["BalanceToday"].Single());
         }
 
 		public Application RepayEarly(decimal amount, int dayOfLoanToMakeRepayment)

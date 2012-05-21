@@ -15,6 +15,7 @@ namespace Wonga.QA.Framework.Api
 		TESTDateOfBirth,
 		TESTIsSolvent,
 		TESTMonthlyIncome,
+		TESTAccountNumberApplicationsAcceptable,
 		TESTCustomerHistoryIsAcceptable,
 		TESTApplicationElementNotOnBlacklist,
 		TESTBankAccountMatchedToApplicant,
@@ -73,6 +74,7 @@ namespace Wonga.QA.Framework.Api
 		TESTBlacklistSME,
 		TESTGeneralManualVerification,
 		TESTDoNotRelend,
-		TESTFraudBlacklist
+		TESTFraudBlacklist,
+        TESTApplicantHasPoorRelationshipWithWonga
 	}
 }

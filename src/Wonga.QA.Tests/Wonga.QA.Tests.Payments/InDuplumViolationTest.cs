@@ -74,7 +74,6 @@ namespace Wonga.QA.Tests.Payments
 			loanApp = Do.Until(() => _applications.FindAllByExternalId(app.Id).Single());
 
 			Assert.IsNotNull(compensatingTransaction);
-			Assert.IsNotNull(loanApp.ClosedOn);
 
 			//Calculations:
 			//GetBal = 174.1 (100 + 57 + 17.1)
@@ -138,10 +137,9 @@ namespace Wonga.QA.Tests.Payments
 			loanApp = Do.Until(() => _applications.FindAllByExternalId(app.Id).Single());
 
 			Assert.IsNull(compensatingTransaction);
-			Assert.IsNotNull(loanApp.ClosedOn);
-
 		}
 
+		[Parallelizable]
 		[Test, AUT(AUT.Za), JIRA("ZA-2360")]
 		public void Close_InDuplumViolation_Application_BalanceShouldBeZero()
 		{

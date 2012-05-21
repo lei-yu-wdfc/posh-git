@@ -10,7 +10,7 @@ namespace Wonga.QA.Tests.Ui.Mobile
     [TestFixture]
     public class L0LoanMobile : UiMobileTest
     {
-        [Test, AUT(AUT.Za)]
+        [Test, AUT(AUT.Za), Pending("Shouldn't run as part of Backend Tests")]
         public void ZaAcceptedLoanMobile()
         {
             var journey = JourneyFactory.GetL0Journey(Client.MobileHome());
@@ -26,7 +26,7 @@ namespace Wonga.QA.Tests.Ui.Mobile
             var dealDone = acceptedPage.Submit();
         }
 
-        [Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za), Pending("Shouldn't run as part of Backend Tests")]
         public void ZaDeclinedLoanMobile()
         {
             var journey = JourneyFactory.GetL0Journey(Client.MobileHome());

@@ -12,6 +12,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Workflows
 {
+	[TestFixture]
 	public partial class WorkflowTests
 	{
 		private Dictionary<string, string> _originalServiceConfiguration = new Dictionary<string, string>();
@@ -44,7 +45,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 			Drive.Db.SetServiceConfigurations(_originalServiceConfiguration);
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), Pending]
+		[Test, AUT(AUT.Za, AUT.Ca), Pending("Pedro is working on a refactor")]
 		public void WorkflowL0SingleWorkflowUsed()
 		{
 			var customer = CustomerBuilder.New().WithEmployer("Wonga").Build();
@@ -94,7 +95,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 						.WithDateOfBirth(new Date(new DateTime(1957, 12, 19)))
 						.WithNationalNumber("5712190106083")
 						.WithMobileNumber(Get.GetMobilePhone())
-						.WithBankAccountNumber(Get.GetBankAccountNumber())
+							.WithBankAccountNumber(Get.GetBankAccountNumber().ToString())
 						.WithPostcodeInAddress(Get.GetPostcode())
 						.Build();
 				}
