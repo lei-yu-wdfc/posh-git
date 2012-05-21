@@ -15,6 +15,7 @@ using Wonga.QA.Framework.Db;
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
     [AUT(AUT.Za, AUT.Wb, AUT.Uk)]
+    [Parallelizable(TestScope.All)]
     class CheckpointApplicationElementNotOnBlacklistTests
     {
         private RiskMask _testMask;
