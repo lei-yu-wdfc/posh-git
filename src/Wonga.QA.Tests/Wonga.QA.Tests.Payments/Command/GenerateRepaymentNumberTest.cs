@@ -16,6 +16,7 @@ using System.Threading;
 
 namespace Wonga.QA.Tests.Payments.Command
 {
+    [TestFixture, Parallelizable(TestScope.All)]
 	public class GenerateRepaymentNumberTest
 	{
 		private const int delay = 15000;
