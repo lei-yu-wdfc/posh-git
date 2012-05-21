@@ -141,9 +141,9 @@ namespace Wonga.QA.Tests.Prepaid
         [TearDown]
         public void Rollback()
         {
-            //CustomerOperations.DeleteMarketingEligibility(_eligibleCustomer.Id);
-            //CustomerOperations.DeleteMarketingEligibility(_nonEligibleCustomerInArrears.Id);
-            //CustomerOperations.DeleteMarketingEligibility(_customerWithWromgEmail.Id);
+            CustomerOperations.DeleteMarketingEligibility(_eligibleCustomer.Id);
+            CustomerOperations.DeleteMarketingEligibility(_nonEligibleCustomerInArrears.Id);
+            CustomerOperations.DeleteMarketingEligibility(_customerWithWromgEmail.Id);
         }
 
         [Test]
