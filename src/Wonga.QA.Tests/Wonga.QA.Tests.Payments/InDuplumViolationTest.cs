@@ -65,7 +65,7 @@ namespace Wonga.QA.Tests.Payments
 
 			//ClosedApplicationSaga timesout after 30sec before closing off application
 			//Therefore delay is necessay
-			Thread.Sleep(45000);
+			Do.Until(() => app.IsClosed == false);
 
 			var compensatingTransaction = Do.Until(() => _transactions.FindAll(	_transactions.ApplicationId == loanApp.ApplicationId &&
 																				_transactions.Type == PaymentTransactionEnum.WriteOff.ToString())
@@ -127,7 +127,7 @@ namespace Wonga.QA.Tests.Payments
 
 			//ClosedApplicationSaga timesout after 30sec before closing off application
 			//Therefore delay is necessay
-			Thread.Sleep(45000);
+			Do.Until(() => app.IsClosed == false);
 
 			//Assert
 			var compensatingTransaction = _transactions.FindAll(_transactions.ApplicationId == loanApp.ApplicationId && 
@@ -180,7 +180,7 @@ namespace Wonga.QA.Tests.Payments
 
 			//ClosedApplicationSaga timesout after 30sec before closing off application
 			//Therefore delay is necessay
-			Thread.Sleep(45000);
+			Do.Until(() => app.IsClosed == false);
 
 
 			var query = new GetLoanAgreementsQuery() { AccountId = customer.Id, IsActive = null };

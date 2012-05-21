@@ -28,8 +28,7 @@ namespace Wonga.QA.Framework
                                               CreateOn: Get.RandomDate(), HasStandardCard: 1, HasPremiumCard: 0));
             }
         }
-
-
+		
         public static void DeleteMarketingEligibility(Guid customerId)
         {
             Do.Until(() => _eligibleCustomersEntity.Delete(EligibleCustomerId: customerId));
