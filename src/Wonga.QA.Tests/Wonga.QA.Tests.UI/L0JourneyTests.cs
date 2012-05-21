@@ -1533,7 +1533,7 @@ namespace Wonga.QA.Tests.Ui
             //Assert.IsTrue(e.Message.Contains("was Box must be ticked to proceed"));
         }
 
-        [Test, AUT(AUT.Za)]
+        [Test, AUT(AUT.Za), Pending("Test is yet to be complete. Author: Ben Ifie")]
         public void L0DropOff()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -1545,7 +1545,6 @@ namespace Wonga.QA.Tests.Ui
                                  .WaitForAcceptedPage()
                                  .IgnoreAcceptingLoanAndReturnToHomePageAndLogin()
                                  .CurrentPage as MySummaryPage;
-            Thread.Sleep(120000);
 
         }
     }
