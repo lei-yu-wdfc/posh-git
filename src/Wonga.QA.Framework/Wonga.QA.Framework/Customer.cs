@@ -132,6 +132,12 @@ namespace Wonga.QA.Framework
             db.Payments.SubmitChanges();
         }
 
+        public string GetCustomerMobileNumber()
+        {
+            var customerDetailsRow = Drive.Db.Comms.CustomerDetails.Single(cd => cd.AccountId == Id);
+            return customerDetailsRow.MobilePhone;
+        }
+
         #endregion
         
     }
