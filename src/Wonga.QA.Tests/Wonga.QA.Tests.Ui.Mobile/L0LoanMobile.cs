@@ -1,4 +1,5 @@
-﻿using MbUnit.Framework;
+﻿using System.Threading;
+using MbUnit.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI;
@@ -24,6 +25,21 @@ namespace Wonga.QA.Tests.Ui.Mobile
             acceptedPage.SignAgreementConfirm();
             acceptedPage.SignDirectDebitConfirm();
             var dealDone = acceptedPage.Submit();
+        }
+
+        [Test, AUT(AUT.Za), Pending("Shouldn't run as part of Backend Tests")]
+        public void ZaAcceptedLoanMobileDropOff()
+        {
+            var journey = JourneyFactory.GetL0Journey(Client.MobileHome());
+            var acceptedPage = journey.ApplyForLoan(200, 10)
+                                 .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                 .FillAddressDetails()
+                                 .FillAccountDetails()
+                                 .FillBankDetails()
+                                 .WaitForAcceptedPage()
+                                 .CurrentPage as AcceptedPage;
+            //write drop off code
+
         }
 
 		[Test, AUT(AUT.Za), Pending("Shouldn't run as part of Backend Tests")]
