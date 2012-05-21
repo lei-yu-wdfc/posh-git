@@ -93,6 +93,7 @@ namespace Wonga.QA.Tests.Comms.Email
 
 			Drive.Msmq.Comms.Send(new IExtensionCancelledEvent
 			                      	{
+										AccountId = app.AccountId,
 			                      		ApplicationId = app.ExternalId,
 										ExtensionId = extensionId,
 										CreatedOn = DateTime.UtcNow
