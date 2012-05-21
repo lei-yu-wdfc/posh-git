@@ -84,20 +84,14 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889")]
 		public void CheckpointReputationPredictionPositiveDecline()
 		{
-			try
-			{
-				var customer = CustomerBuilder.New()
-				.WithEmployer(TestMask)
-				.Build();
+			var customer = CustomerBuilder.New()
+			.WithEmployer(TestMask)
+			.Build();
 
-				var application = ApplicationBuilder.New(customer).WithIovationBlackBox(IovationMockResponse.Deny).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+			var application = ApplicationBuilder.New(customer).WithIovationBlackBox(IovationMockResponse.Deny).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 
-				var actualScore = GetReputationPredictionScore(application);
-				Assert.LessThan(actualScore, ReputationScoreCutoff);
-			}
-			catch
-			{
-			}
+			var actualScore = GetReputationPredictionScore(application);
+			Assert.LessThan(actualScore, ReputationScoreCutoff);
 		}
 
 		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889"), DependsOn("CheckpointReputationPredictionPositiveAccept")]

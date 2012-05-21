@@ -10,6 +10,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Comms.Email
 {
+	[TestFixture, Parallelizable(TestScope.All)]
 	public class RepaymentRequestEmailTests
 	{
 		private static readonly CultureInfo Culture = CultureInfo.CreateSpecificCulture("en-Za");
@@ -18,7 +19,7 @@ namespace Wonga.QA.Tests.Comms.Email
 		private readonly dynamic _emailTokenTable = Drive.Data.QaData.Db.EmailToken;
 		private const string TemplateName = "34156";
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2099", "ZA-2188"), Parallelizable]
+		[Test, AUT(AUT.Za), JIRA("ZA-2099", "ZA-2188")]
 		public void WhenEarlyPartialRepaymentIsSetUpPartialEmailIsSent()
 		{
 			const decimal loanAmount = 1000m;
@@ -34,7 +35,7 @@ namespace Wonga.QA.Tests.Comms.Email
 			VerifyCorrectEmailIsSent(customer, actionDate, repayAmount, true);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2099", "ZA-2188"), Parallelizable]
+		[Test, AUT(AUT.Za), JIRA("ZA-2099", "ZA-2188")]
 		public void WhenEarlyFullRepaymentIsSetUpFullEmailIsSent()
 		{
 			const decimal loanAmount = 1000m;
@@ -50,7 +51,7 @@ namespace Wonga.QA.Tests.Comms.Email
 			VerifyCorrectEmailIsSent(customer, actionDate, repayAmount, false);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2358"), Parallelizable]
+		[Test, AUT(AUT.Za), JIRA("ZA-2358")]
 		public void WhenEarlyPartialRepaymentGreaterOrEqualToPrincipalIsSetUpPartialEmailIsSent()
 		{
 			const decimal loanAmount = 1000m;
