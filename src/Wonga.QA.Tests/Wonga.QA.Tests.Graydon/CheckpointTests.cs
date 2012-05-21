@@ -14,6 +14,7 @@ using Wonga.QA.Framework.Db.Risk;
 
 namespace Wonga.QA.Tests.Graydon
 {
+    [Parallelizable(TestScope.All)]
     public class CheckpointTests
     {
         #region Main Applicant Matches Business Bureau Data

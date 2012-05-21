@@ -13,7 +13,8 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Comms.PaymentFailureEmailTests
 {
-    [TestFixture, AUT(AUT.Wb)]    
+    [TestFixture, AUT(AUT.Wb)]
+    [Parallelizable(TestScope.Self)]
     class PaymentFailureEmails
     {
         private BusinessApplication _applicationInfo;

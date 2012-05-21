@@ -11,6 +11,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Payments
 {
     [TestFixture, AUT(AUT.Wb)]
+    [Parallelizable(TestScope.All)]
     public class RepaymentTests
     {
         private BusinessApplication _applicationInfo;
