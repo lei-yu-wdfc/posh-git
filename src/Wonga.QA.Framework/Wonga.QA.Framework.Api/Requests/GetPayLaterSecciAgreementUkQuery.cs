@@ -7,6 +7,6 @@ namespace Wonga.QA.Framework.Api
     [XmlRoot("GetPayLaterSecciAgreement")]
     public partial class GetPayLaterSecciAgreementUkQuery : ApiRequest<GetPayLaterSecciAgreementUkQuery>
     {
-        public Object AccountId { get; set; }
+        public Object ApplicationId { get; set; }
     }
 }
