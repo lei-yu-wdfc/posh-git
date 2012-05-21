@@ -5,6 +5,7 @@ using System.Xml;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Data.Enums.Risk;
+using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Helpers;
 
 namespace Wonga.QA.Framework
@@ -255,6 +256,10 @@ namespace Wonga.QA.Framework
         	switch (Decision)
         	{
 				case null:
+        			Do.With.Timeout(TimeSpan.FromSeconds(20)).Until(() => Drive.Db.GetCheckpointDefinitionsForApplication(Id).Count() > 0);
+					Do.With.Timeout(TimeSpan.FromSeconds(20)).Until(() => Drive.Db.GetVerificationDefinitionsForApplication(Id).Count() > 0);
+					return new Application(Id);
+
 				case ApplicationDecisionStatus.Pending:
 					return new Application(Id);
 
