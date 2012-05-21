@@ -1504,7 +1504,7 @@ namespace Wonga.QA.Tests.Ui
                     break;
             }
         }
-        [Test, AUT(AUT.Wb),JIRA("QA-287"), Category(TestCategories.Test)]
+        [Test, AUT(AUT.Wb),JIRA("QA-287"), Category(TestCategories.Smoke)]
         public void WbL0JourneyShouldNotBeAbleToProceedWithoutAcceptingAllEligibilityQuestions()
         {
             int getRandomNumber = Get.RandomInt(0, 7);
