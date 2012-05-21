@@ -23,12 +23,6 @@ namespace Wonga.QA.Tests.Payments
         }
 
         [Test, AUT(AUT.Ca), Ignore("Partial test to assist QA. Not to run on buildsite")]
-        public void VaryVariableInterestRates()
-        {
-            SetPaymentFunctions.IncrementVariableInterestRatesMonthlyInterestRate((decimal)1.8 * -1);
-        }
-
-        [Test, AUT(AUT.Ca), Ignore("Partial test to assist QA. Not to run on buildsite")]
         public void LnCustomers()
         {
             for (int i = 0; i < 50; i++)
