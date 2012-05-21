@@ -444,10 +444,18 @@ namespace Wonga.QA.Tests.Ui
             // Rewind application dates
             if (daysShift != 0)
             {
+                /* applicationEntity.FixedTermLoanApplicationEntity is null when done with driver.data.
+                 * var paymentsAppsTab = Drive.Data.Payments.Db.Applications;
+                ApplicationEntity applicationEntity1 =
+                    paymentsAppsTab.FindAll(paymentsAppsTab.ExternalId == application.Id).Single();*/
+
                 ApplicationEntity applicationEntity = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
+
                 RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == application.Id);
                 TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
-                Drive.Db.RewindApplicationDates(applicationEntity, riskApplication, daysShiftSpan);               
+
+                //Drive.Data.RewindApplicationDates(applicationEntity1, riskApplication, daysShiftSpan);
+                Drive.Db.RewindApplicationDates(applicationEntity, riskApplication, daysShiftSpan);                 
             }
 
             var expectedDueDateBalance = 0.00M;
