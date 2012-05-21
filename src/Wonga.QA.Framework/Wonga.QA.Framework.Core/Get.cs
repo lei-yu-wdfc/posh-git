@@ -98,18 +98,19 @@ namespace Wonga.QA.Framework.Core
         {
             switch (Config.AUT)
             {
+                case AUT.Ca:
                 case AUT.Za:
                     {
                         return "021" + RandomLong(1000000, 9999999);
                     }
                 case AUT.Wb:
                     {
-                        return "075" + RandomLong(10000000, 99999999);
+                        return "077009" + RandomLong(10000, 99999);
                     }
 
                 default:
                     {
-                        return "07500000000";
+                        return "077009" + RandomLong(10000, 99999);
                     }
             }
         }
