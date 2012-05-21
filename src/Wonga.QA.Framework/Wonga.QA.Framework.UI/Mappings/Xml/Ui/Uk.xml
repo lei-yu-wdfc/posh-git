@@ -108,6 +108,8 @@
     <EditMobileNumber>#edit-mobile-phone</EditMobileNumber>
     <PopupSaveButton>#edit-submit[value='Save']</PopupSaveButton>
     <PopupCloseButton>#edit-submit[value='Close']</PopupCloseButton>
+    <PopupCancelButton>#edit-back[value='Cancel']</PopupCancelButton>
+    <PopupErrorMessage>.messages</PopupErrorMessage>
   </ApplyPage>
 
   <PayLaterLoginPage>

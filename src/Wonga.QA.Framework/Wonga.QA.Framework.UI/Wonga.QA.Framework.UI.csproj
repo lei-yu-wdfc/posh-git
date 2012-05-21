@@ -76,6 +76,7 @@
     <Compile Include="Mappings\Content\ErrorsMessages\MobilePinVerificationSection.cs" />
     <Compile Include="Mappings\Content\Links\FAQPageLinks.cs" />
     <Compile Include="Mappings\Content\Pages\ExtensionAgreementPage.cs" />
+    <Compile Include="Mappings\Content\Pages\LnApplyPage.cs" />
     <Compile Include="Mappings\Content\Pages\L0DeclinedPage.cs" />
     <Compile Include="Mappings\Content\Pages\MyPaymentsPage.cs" />
     <Compile Include="Mappings\Content\Pages\MySummaryPage.cs" />

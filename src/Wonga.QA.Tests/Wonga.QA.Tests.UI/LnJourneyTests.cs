@@ -170,11 +170,13 @@ namespace Wonga.QA.Tests.Ui
                            .CurrentPage as MySummaryPage;
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1533"), Pending("Disabled as failing during build testing. To be checked.")]
-        public void L0LnJourneyTest()
+        [Test, AUT(AUT.Uk), JIRA("UK-886"), MultipleAsserts]
+        public void ExistingMobilePhoneNumberNotAccepted()
         {
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
+            
+            Console.WriteLine("email={0}", email);
 
             // L0 journey
             var journeyL0 = JourneyFactory.GetL0Journey(Client.Home());
@@ -187,6 +189,45 @@ namespace Wonga.QA.Tests.Ui
                 .WaitForAcceptedPage()
                 .FillAcceptedPage();
 
+            var customer = new Customer(Guid.Parse(Drive.Api.Queries.Post(new GetAccountQuery { Login = email, Password = Get.GetPassword() }).Values["AccountId"].Single()));
+            var application = customer.GetApplication();
+            
+            var mobileNumber = customer.GetCustomerMobileNumber();
+            
+
+            // Repay
+            application.RepayOnDueDate();
+
+           // Ln journey
+            var journey = JourneyFactory.GetLnJourney(Client.Home());
+            var page = journey.ApplyForLoan(200, 10);
+
+            var applyPage = page.CurrentPage as ApplyPage;
+            applyPage.SetIncorrectMobilePhone = mobileNumber;
+
+            Assert.IsTrue(applyPage.IsMobilePhonePopupCancelButtonEnabled(), "Cancel button is not enabled");
+            Assert.IsTrue(applyPage.IsMobilePhonePopupSaveButtonEnabled(), "Save button is not disabled");
+            Assert.IsTrue(applyPage.IsPhoneNumberNotChangedMessageVisible(), "Message that mobile phone number has not changed is not dispalyed");
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-1533"), Pending("Disabled as failing during build testing. To be checked.")]
+        public void L0LnJourneyTest()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Console.WriteLine("email={0}", email);
+
+            // L0 journey
+            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home());
+            var mySummary = journeyL0.ApplyForLoan(200, 10)
+                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                .FillAddressDetails()
+                .FillAccountDetails()
+                .FillBankDetails()
+                .FillCardDetails()
+                .WaitForAcceptedPage()
+                .FillAcceptedPage();
+            
             var customer = new Customer(Guid.Parse(Drive.Api.Queries.Post(new GetAccountQuery { Login = email, Password = Get.GetPassword() }).Values["AccountId"].Single()));
             var application = customer.GetApplication();
 
