@@ -17,6 +17,7 @@ namespace Wonga.QA.Tests.Comms.Sms
 	{
 		private LoanExtensionEntity _extension;
 		private Guid _accountId;
+		private Guid _applicationId;
 		private static readonly dynamic SmsMessages = Drive.Data.Sms.Db.SmsMessages;
 
 		[Test, AUT(AUT.Uk), JIRA("UK-2113")]
@@ -32,12 +33,12 @@ namespace Wonga.QA.Tests.Comms.Sms
 
 			var extensionId = _extension.ExternalId;
 
-			var app = Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(x => x.ApplicationId == _extension.ApplicationId));
+			Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(x => x.ApplicationId == _extension.ApplicationId));
 
 			Drive.Msmq.Comms.Send(new IExtensionCancelledEvent
 			                      	{
 										AccountId = _accountId,
-			                      		ApplicationId = app.ExternalId,
+										ApplicationId = _applicationId,
 			                      		ExtensionId = extensionId,
 			                      		CreatedOn = DateTime.UtcNow
 			                      	});
@@ -54,7 +55,7 @@ namespace Wonga.QA.Tests.Comms.Sms
 			 _accountId = Guid.NewGuid();
 			var bankAccountId = Guid.NewGuid();
 			var paymentCardId = Guid.NewGuid();
-			var appId = Guid.NewGuid();
+			_applicationId = Guid.NewGuid();
 			var extensionId = Guid.NewGuid();
 
 			var setupData = new AccountSummarySetupFunctions();
@@ -62,9 +63,9 @@ namespace Wonga.QA.Tests.Comms.Sms
 
 			CreateCommsData(clientId, _accountId, mobileNumber);
 
-			setupData.Scenario03Setup(appId, paymentCardId, bankAccountId, _accountId, trustRating);
+			setupData.Scenario03Setup(_applicationId, paymentCardId, bankAccountId, _accountId, trustRating);
 
-			var app = Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(x => x.ExternalId == appId));
+			var app = Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(x => x.ExternalId == _applicationId));
 			var fixedTermApp =
 				Do.With.Interval(1).Until(
 					() => Drive.Db.Payments.FixedTermLoanApplications.Single(x => x.ApplicationId == app.ApplicationId));
@@ -89,7 +90,7 @@ namespace Wonga.QA.Tests.Comms.Sms
 
 			Drive.Api.Commands.Post(new CreateFixedTermLoanExtensionCommand
 			{
-				ApplicationId = appId,
+				ApplicationId = _applicationId,
 				ExtendDate = new Date(fixedTermApp.NextDueDate.Value.AddDays(2), DateFormat.Date),
 				ExtensionId = extensionId,
 				PartPaymentAmount = 20M,
