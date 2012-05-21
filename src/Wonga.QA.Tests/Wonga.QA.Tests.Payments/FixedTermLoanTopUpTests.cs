@@ -47,12 +47,14 @@ namespace Wonga.QA.Tests.Payments
         public void GetAccountSummaryNegativeTest()
         {
             var customer = CustomerBuilder.New().Build();
+            Do.Until(() => ((Decimal?)Drive.Data.Payments.Db.AccountPreferences.FindByAccountId(customer.Id).CreditLimit).HasValue);
+
             var summary = Drive.Api.Queries.Post(new GetAccountSummaryQuery { AccountId = customer.Id });
 
             Assert.IsFalse(Boolean.Parse(summary.Values["CurrentLoanTopUpAvailable"].Single()));
             Assert.AreEqual(_limit, Decimal.Parse(summary.Values["AvailableCredit"].Single()));
 
-            var application = ApplicationBuilder.New(customer).WithLoanAmount(_limit).Build();
+            ApplicationBuilder.New(customer).WithLoanAmount(_limit).Build();
             summary = Drive.Api.Queries.Post(new GetAccountSummaryQuery { AccountId = customer.Id });
 
             Assert.IsFalse(Boolean.Parse(summary.Values["CurrentLoanTopUpAvailable"].Single()));
@@ -85,7 +87,6 @@ namespace Wonga.QA.Tests.Payments
             Assert.IsTrue(options["RequestCredit"]);
         }
 
-        [Pending("UK-1872")]
         [Test]
         public void GetAccountOptionsNegativeTest()
         {
@@ -100,7 +101,6 @@ namespace Wonga.QA.Tests.Payments
             Assert.DoesNotContainKey(options, "RequestCredit");
         }
 
-        [Pending("UK-1697")]
         [Test, Explicit, Factory("Boundaries")]
         public void GetAccountOptionsBoundaryTest(Int32 loan)
         {
@@ -122,7 +122,6 @@ namespace Wonga.QA.Tests.Payments
 
         #region GetFixedTermLoanTopupOffer
 
-        [Pending("UK-1873")]
         [Test]
         public void GetFixedTermLoanTopupOfferHappyPathTest()
         {
@@ -174,15 +173,12 @@ namespace Wonga.QA.Tests.Payments
             Do.Until(() => Drive.Data.Payments.Db.Topups.FindByExternalId(id));
         }
 
-        [Pending("UK-1874")]
         [Test, MultipleAsserts]
         public void GetFixedTermLoanTopupOfferNegativeTest()
         {
             var customer = CustomerBuilder.New().Build();
-        	Assert.Throws<ValidatorException>(
-        		() => Drive.Api.Queries.Post(new GetFixedTermLoanTopupOfferQuery {AccountId = customer.Id}));
-
-
+            Assert.Throws<ValidatorException>(() => Drive.Api.Queries.Post(new GetFixedTermLoanTopupOfferQuery { AccountId = customer.Id }));
+            
             var application = ApplicationBuilder.New(customer).WithLoanAmount(_limit).Build();
             var offer = Drive.Api.Queries.Post(new GetFixedTermLoanTopupOfferQuery { AccountId = customer.Id });
 
@@ -192,7 +188,6 @@ namespace Wonga.QA.Tests.Payments
             Assert.AreEqual(0, Decimal.Parse(offer.Values["AmountMax"].Single()));
         }
 
-        [Pending("UK-1875")]
         [Test, Explicit, MultipleAsserts]
         public void GetFixedTermLoanTopupOfferNegativeTests()
         {
@@ -228,7 +223,6 @@ namespace Wonga.QA.Tests.Payments
             Assert.AreEqual(fee + _topup, Decimal.Parse(calculation.Values["TotalRepayable"].Single()));
         }
 
-        [Pending("UK-1876")]
         [Test, MultipleAsserts]
         public void GetFixedTermLoanTopupCalculationNegativeTest()
         {
@@ -344,7 +338,6 @@ namespace Wonga.QA.Tests.Payments
             Assert.Contains(exception.Errors, "Payments_Topup_InProgress");
         }
 
-        [Pending("UK-1877")]
         [Test, Explicit, Description("Payments_TopUp_TopupAmount_Invalid")]
         public void CreateFixedTermLoanTopupAmountInvalidTests()
         {
@@ -542,7 +535,6 @@ namespace Wonga.QA.Tests.Payments
             return new[] { 1, _limit - 1 };
         }
 
-        [Pending("UK-1878")]
         [Test, Explicit, ExpectedException(typeof(ValidatorException))]
         public void MillionPoundTransaction()
         {
