@@ -21,7 +21,7 @@ namespace Wonga.QA.Tests.Ui
 {
     class L0JourneyTests : UiTest
     {
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-180")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-180"), Category(TestCategories.Smoke)]
         public void L0JourneyInvalidPostcodeShouldCauseWarningMessage()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -42,7 +42,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-189")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-189"), Category(TestCategories.Smoke)]
         public void L0JourneyInvalidPINShouldCauseWarningMessageOnNextPage()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -72,7 +72,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-177")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-177"), Category(TestCategories.Smoke)]
         public void ChangeLoanAmountAndDurationOnPersonalDetailsViaPlusMinusOptions()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -143,7 +143,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-176")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-176"), Category(TestCategories.Smoke)]
         public void ChangeLoanAmountAndDurationOnPersonalDetailsViaTypingToTheFields()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -214,7 +214,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-175"), Pending("Wierd selenium problem")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-175"), Pending("Wierd selenium problem"), Category(TestCategories.Smoke)]
         public void ChangeLoanAmountAndDurationOnPersonalDetailsViaSlidersMotion()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -287,7 +287,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-183")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-183"), Category(TestCategories.Smoke)]
         public void EnterDifferentPasswordsAtAccountDetailsPageShouldCauseWarningMessage()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -318,7 +318,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-190")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-190"), Category(TestCategories.Smoke)]
         public void L0JourneyDataOnAcceptedPageShouldBeCorrect()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -435,7 +435,7 @@ namespace Wonga.QA.Tests.Ui
                 .FillAcceptedPage().CurrentPage as DealDonePage;
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-170")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-170"), Category(TestCategories.Smoke)]
         public void CustomerOnHowItWorksPageShouldBeAbleUseSlidersProperly()
         {
             var howItWorks = Client.HowItWorks();
@@ -450,7 +450,7 @@ namespace Wonga.QA.Tests.Ui
             homePage.AssertThatIsWbHomePage();
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk), JIRA("QA-181"), Pending("ZA-2512")]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk), JIRA("QA-181"), Pending("ZA-2512"), Category(TestCategories.Smoke)]
         public void L0JourneyCustomerOnCurrentAddressPageDoesNotEnterSomeRequiredFieldsWarningMessageDisplayed()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -560,7 +560,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(addressDetailsPage.IsPostcodeWarningOccurred());
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-191")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-191"), Category(TestCategories.Smoke)]
         public void CustomerClicksAcceptButtonChosenLoanAmountShouldDepositedIntoAccountCheckDatabase()
         {
             DateTime date;
@@ -607,7 +607,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-186")]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-186"), Category(TestCategories.Smoke)]
         public void InvalidFormatPasswordShouldCauseWarningMessageAndValidPasswordShouldDissmissWarning()
         {
             switch (Config.AUT)
@@ -649,7 +649,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-188")]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-188"), Category(TestCategories.Smoke)]
         public void CustomerOnBankDetailsPageClicksOnResendPinLinkMessageShouldDisplayedAndPinShouldResent()
         {
             Random rand = new Random();
@@ -807,7 +807,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-184")]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-184"), Category(TestCategories.Smoke)]
         public void CustomerEntersPasswordThatEqualToTheEmailAddressWarningMessageShouldDisplayed()
         {
             var email = Get.RandomEmail();
@@ -1160,7 +1160,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-179")]
+        [Test, AUT(AUT.Za), JIRA("QA-179"), Category(TestCategories.Smoke)]
         public void L0JourneyCustomerIdNumberShouldBeAlignedWithDOBAndGender()
         {
             var emael = Get.RandomEmail();
@@ -1355,7 +1355,7 @@ namespace Wonga.QA.Tests.Ui
             addressPage.Next();
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-172"), Pending("CA code appearing in ZA - Michael Nowicki to fix")]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-172"), Pending("CA code appearing in ZA - Michael Nowicki to fix"), Category(TestCategories.Smoke)]
         public void L0JourneyCustomerMakeALoanCheckOneLastStepPageValidDataDisplayed()
         {
             int _amountMax;

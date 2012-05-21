@@ -19,7 +19,7 @@ namespace Wonga.QA.Tests.Ui
 {
     public class RedirectedToSelectedSiteTest : UiTest
     {
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-240, QA-168"), Pending("FE bug, button in top of page are broken, ZA-2490, CA-2234")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-240, QA-168"), Pending("FE bug, button in top of page are broken, ZA-2490, CA-2234"), Category(TestCategories.Smoke)]
         public void RedirectedToSelectedSite()
         {
             const string ukUrl = "www.wonga.com";

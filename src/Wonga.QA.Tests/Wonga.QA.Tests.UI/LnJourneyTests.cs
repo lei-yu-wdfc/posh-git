@@ -17,7 +17,7 @@ namespace Wonga.QA.Tests.Ui
 	[TestFixture, Parallelizable(TestScope.All)]
     class LnJourneyTests : UiTest
     {
-        [Test, AUT(AUT.Za), JIRA("QA-196"), Pending("ZA-2510")]
+        [Test, AUT(AUT.Za), JIRA("QA-196"), Pending("ZA-2510"), Category(TestCategories.Smoke)]
         public void LnCustomerTakesNewLoanAndChangesTheMobilePhoneThenChangesShouldBeReflected()
         {
             var loginPage = Client.Login();
@@ -202,9 +202,9 @@ namespace Wonga.QA.Tests.Ui
                            .GoToMySummaryPage()
                            .CurrentPage as MySummaryPage;
         }
-        
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-199"), Pending("ZA-2510")]
+
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-199"), Pending("ZA-2510"), Category(TestCategories.Smoke)]
         public void LoggedCustomerWithoutLoanAppliesNewLoanChangesMobilePhoneAndClicksResendPinItShouldBeResent()
         {
             string email = Get.RandomEmail();
