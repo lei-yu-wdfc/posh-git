@@ -46,5 +46,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             Content = Config.Ui.Browser.Equals(Config.UiConfig.BrowserType.FirefoxMobile) ? Do.Until(() => Client.Driver.FindElement(By.Id("content-content"))) : Do.Until(() => Client.Driver.FindElement(By.Id("content-area"))); 
             
         }
+
+        public BasePage WaitForPage<T>() where T : BasePage
+        {
+            if (typeof (T) == typeof (HomePage))
+                return Do.With.Timeout(2).Until(() => new HomePage(Client));
+            throw new NotImplementedException();
+        }
     }
 }

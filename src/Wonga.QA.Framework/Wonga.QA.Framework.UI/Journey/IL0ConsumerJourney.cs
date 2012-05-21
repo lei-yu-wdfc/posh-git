@@ -29,5 +29,6 @@ namespace Wonga.QA.Framework.UI
         IL0ConsumerJourney WaitForDeclinedPage();
         IL0ConsumerJourney FillAcceptedPage();
         IL0ConsumerJourney GoToMySummaryPage();
+        IL0ConsumerJourney IgnoreAcceptingLoanAndReturnToHomePageAndLogin();
     }
 }

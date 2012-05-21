@@ -180,5 +180,10 @@ namespace Wonga.QA.Framework.UI
             CurrentPage = dealDonePage.ContinueToMyAccount() as MySummaryPage;
             return this;
         }
+
+        public IL0ConsumerJourney IgnoreAcceptingLoanAndReturnToHomePageAndLogin()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

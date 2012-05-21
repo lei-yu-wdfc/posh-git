@@ -86,7 +86,7 @@ namespace Wonga.QA.Framework
 
         public Guid GetPaymentCard()
         {
-            return Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == Id).PaymentCardsBaseEntity.ExternalId;
+            return Drive.Data.Payments.Db.AccountPreferences.FindAllByAccountId(Id).Single().PaymentCardsBase.ExternalId;
         }
 
         public void UpdateForename(String forename)
