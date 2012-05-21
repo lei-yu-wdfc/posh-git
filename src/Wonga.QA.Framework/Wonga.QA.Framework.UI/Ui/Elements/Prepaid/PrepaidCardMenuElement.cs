@@ -31,5 +31,10 @@ namespace Wonga.QA.Framework.UI.Elements
             _budjet = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.PrepaidCardMenuElement.Budjet));
             _cashback = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.PrepaidCardMenuElement.Cashback));
         }
+
+        public void TopUpMenuClick()
+        {
+            _topUp.Click();
+        }
     }
 }

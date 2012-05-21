@@ -1,16 +1,31 @@
 ﻿using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Mappings.Elements;
 using Wonga.QA.Framework.UI.Mappings.Pages;
-using Wonga.QA.Framework.UI.Mappings.Pages.PayLater;
 using Wonga.QA.Framework.UI.Mappings.Pages.Wb;
 using Wonga.QA.Framework.UI.Mappings.Sections;
 using Wonga.QA.Framework.UI.Mappings.Pages.SalesForce;
-using Wonga.QA.Framework.UI.Mappings.Ui.Elements;
 using Wonga.QA.Framework.UI.Mappings.Ui.Pages.Prepaid;
-using Wonga.QA.Framework.UI.Ui.Elements.Prepaid;
+using ChangeMyAddressElement = Wonga.QA.Framework.UI.Mappings.Elements.ChangeMyAddressElement;
 using ChooseCardTypeMenuElement = Wonga.QA.Framework.UI.Mappings.Elements.ChooseCardTypeMenuElement;
+using ContactElement = Wonga.QA.Framework.UI.Mappings.Elements.ContactElement;
+using FAQElement = Wonga.QA.Framework.UI.Mappings.Elements.FAQElement;
+using HelpElement = Wonga.QA.Framework.UI.Mappings.Elements.HelpElement;
 using HomePage = Wonga.QA.Framework.UI.Mappings.Pages.HomePage;
+using InternationalElement = Wonga.QA.Framework.UI.Mappings.Elements.InternationalElement;
+using LoginElement = Wonga.QA.Framework.UI.Mappings.Elements.LoginElement;
 using PayLaterLoginPage = Wonga.QA.Framework.UI.Mappings.Pages.PayLaterLoginPage;
+using PrepaidCardMenuElement = Wonga.QA.Framework.UI.Mappings.Elements.PrepaidCardMenuElement;
+using PrepaidCardPage = Wonga.QA.Framework.UI.Mappings.Pages.PrepaidCardPage;
+using PrepaidRegisterDetailsPage = Wonga.QA.Framework.UI.Mappings.Pages.PrepaidRegisterDetailsPage;
+using SlidersElement = Wonga.QA.Framework.UI.Mappings.Elements.SlidersElement;
+using SmallExtensionSlidersElement = Wonga.QA.Framework.UI.Mappings.Elements.SmallExtensionSlidersElement;
+using SmallRepaySlidersElement = Wonga.QA.Framework.UI.Mappings.Elements.SmallRepaySlidersElement;
+using SmallTopupSlidersElement = Wonga.QA.Framework.UI.Mappings.Elements.SmallTopupSlidersElement;
+using SubmitionPage = Wonga.QA.Framework.UI.Mappings.Pages.PayLater.SubmitionPage;
+using SurveyElement = Wonga.QA.Framework.UI.Mappings.Elements.SurveyElement;
+using TabsElement = Wonga.QA.Framework.UI.Mappings.Elements.TabsElement;
+using TabsElementMobile = Wonga.QA.Framework.UI.Mappings.Ui.Elements.TabsElementMobile;
+using TopupSlidersElement = Wonga.QA.Framework.UI.Mappings.Elements.TopupSlidersElement;
 
 
 namespace Wonga.QA.Framework.UI.Mappings
@@ -152,6 +167,7 @@ namespace Wonga.QA.Framework.UI.Mappings
 
         public virtual PrepaidCardPage PrepaidCardPage { get; set; }
         public virtual PrepaidRegisterDetailsPage PrepaidRegisterDetailsPage { get; set; }
+        public virtual PrepaidAdminPage PrepaidAdminPage { get; set; } 
 
         #endregion
 
@@ -159,7 +175,7 @@ namespace Wonga.QA.Framework.UI.Mappings
 
         public virtual PrepaidCardMenuElement PrepaidCardMenuElement { get; set; }
         public virtual ChooseCardTypeMenuElement ChooseCardTypeMenuElement { get; set; }
-        public virtual PrepaidAdminPage PrepaidAdminPage { get; set; } 
+        public virtual PrepaidTopupChoiceElement PrepaidTopupChoiceElements { get; set; }
 
         #endregion
 
