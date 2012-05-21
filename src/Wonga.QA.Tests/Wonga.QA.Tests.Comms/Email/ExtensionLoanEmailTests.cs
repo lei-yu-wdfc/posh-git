@@ -17,7 +17,7 @@ namespace Wonga.QA.Tests.Comms.Email
     public class ExtensionLoanEmailTests
     {
         private LoanExtensionEntity _extension;
-
+		private readonly dynamic _applications = Drive.Data.Payments.Db.Applications;
     	private Guid _accountId;
     	private Guid _applicationId;
 		
@@ -62,7 +62,7 @@ namespace Wonga.QA.Tests.Comms.Email
 
             Guid extensionId = _extension.ExternalId;
 
-            var app = Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(x => x.ApplicationId == _extension.ApplicationId));
+			Do.With.Interval(1).Until(() => _applications.Single(_applications.ApplicationId == _extension.ApplicationId));
 
             Assert.DoesNotThrow(() => Do.Until(() => Drive.Data.Comms.Db.ExtensionDocuments.FindAllBy(ExtensionId: extensionId, DocumentType: 3))
                 , "ExtensionDocument not found for extension Id: {0} and docuemnt type: Loan extension agreement", extensionId);
@@ -75,7 +75,7 @@ namespace Wonga.QA.Tests.Comms.Email
 
             Drive.Msmq.Comms.Send(new IExtensionSignedEvent
                                       {
-                                          ApplicationId = app.ExternalId,
+                                          ApplicationId = _applicationId,
                                           ExtensionId = extensionId,
                                           CreatedOn = DateTime.UtcNow,
                                       });
@@ -91,8 +91,8 @@ namespace Wonga.QA.Tests.Comms.Email
 		public void EmailExtensionCancelledTest()
 		{
 			var extensionId = _extension.ExternalId;
-			var applications = Drive.Data.Payments.Db.Applications;
-			Do.With.Interval(1).Until(() => applications.Single(applications.ApplicationId == _extension.ApplicationId));
+
+			Do.With.Interval(1).Until(() => _applications.Single(_applications.ApplicationId == _extension.ApplicationId));
 
 			Drive.Msmq.Comms.Send(new IExtensionCancelledEvent
 			                      	{
