@@ -39,6 +39,7 @@
     <Compile Include="Checkpoints\CheckpointApplicationElementNotOnCSBlacklistOnlyDoNotRelendVerificationTests.cs" />
     <Compile Include="Checkpoints\CheckpointGeneralManualVerificationAccepted.cs" />
     <Compile Include="Checkpoints\CheckpointGuarantorNameMatchMainApplicant.cs" />
+    <Compile Include="Checkpoints\CheckpointMobilePhoneIsUniqueTests.cs" />
     <Compile Include="Checkpoints\CheckpointSuspiciousActivity.cs" />
     <Compile Include="Checkpoints\CheckpointTooManyLoansAtAddressTest.cs" />
     <Compile Include="Checkpoints\CheckpointRepaymentPredictionPositiveTestsCa.cs" />
