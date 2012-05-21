@@ -1,9 +1,11 @@
 ﻿using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Mappings.Elements;
 using Wonga.QA.Framework.UI.Mappings.Pages;
+using Wonga.QA.Framework.UI.Mappings.Pages.PayLater;
 using Wonga.QA.Framework.UI.Mappings.Pages.Wb;
 using Wonga.QA.Framework.UI.Mappings.Sections;
 using Wonga.QA.Framework.UI.Mappings.Pages.SalesForce;
+using Wonga.QA.Framework.UI.Mappings.Ui.Elements;
 using Wonga.QA.Framework.UI.Mappings.Ui.Pages.Prepaid;
 using ChangeMyAddressElement = Wonga.QA.Framework.UI.Mappings.Elements.ChangeMyAddressElement;
 using ChooseCardTypeMenuElement = Wonga.QA.Framework.UI.Mappings.Elements.ChooseCardTypeMenuElement;

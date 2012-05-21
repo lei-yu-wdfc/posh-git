@@ -41,32 +41,32 @@ namespace Wonga.QA.Tests.Prepaid
         [SetUp]
         public void Init()
         {
-            //_eligibleCustomer = CustomerBuilder.New().WithEmailAddress(Get.GetEmail(50)).Build();
-            //_nonEligibleCustomer = CustomerBuilder.New().WithEmailAddress(Get.GetEmail(50)).Build();
-            //_nonEligibleCustomerInArrears = CustomerBuilder.New().WithEmailAddress(Get.GetEmail(50)).Build();
-            //_customerWithWromgEmail = CustomerBuilder.New().Build();
+            _eligibleCustomer = CustomerBuilder.New().WithEmailAddress(Get.GetEmail(50)).Build();
+            _nonEligibleCustomer = CustomerBuilder.New().WithEmailAddress(Get.GetEmail(50)).Build();
+            _nonEligibleCustomerInArrears = CustomerBuilder.New().WithEmailAddress(Get.GetEmail(50)).Build();
+            _customerWithWromgEmail = CustomerBuilder.New().Build();
 
-            //CustomerOperations.CreateMarketingEligibility(_eligibleCustomer.Id, true);
-            //CustomerOperations.CreateMarketingEligibility(_nonEligibleCustomerInArrears.Id, false);
-            //CustomerOperations.CreateMarketingEligibility(_customerWithWromgEmail.Id, true);
+            CustomerOperations.CreateMarketingEligibility(_eligibleCustomer.Id, true);
+            CustomerOperations.CreateMarketingEligibility(_nonEligibleCustomerInArrears.Id, false);
+            CustomerOperations.CreateMarketingEligibility(_customerWithWromgEmail.Id, true);
 
-            //_validRequest = new SignupCustomerForStandardCardCommand();
-            //_validRequest.CustomerExternalId = _eligibleCustomer.Id;
+            _validRequest = new SignupCustomerForStandardCardCommand();
+            _validRequest.CustomerExternalId = _eligibleCustomer.Id;
 
-            //_requestWithInvalidCustomerId = new SignupCustomerForStandardCardCommand();
-            //_requestWithInvalidCustomerId.CustomerExternalId = _nonEligibleCustomer.Id;
+            _requestWithInvalidCustomerId = new SignupCustomerForStandardCardCommand();
+            _requestWithInvalidCustomerId.CustomerExternalId = _nonEligibleCustomer.Id;
 
-            //_requestWithCustomerInArrears = new SignupCustomerForStandardCardCommand();
-            //_requestWithCustomerInArrears.CustomerExternalId = _nonEligibleCustomerInArrears.Id;
+            _requestWithCustomerInArrears = new SignupCustomerForStandardCardCommand();
+            _requestWithCustomerInArrears.CustomerExternalId = _nonEligibleCustomerInArrears.Id;
 
-            //_requestWithInvalidCustomerEmail = new SignupCustomerForStandardCardCommand();
-            //_requestWithInvalidCustomerEmail.CustomerExternalId = _customerWithWromgEmail.Id;
+            _requestWithInvalidCustomerEmail = new SignupCustomerForStandardCardCommand();
+            _requestWithInvalidCustomerEmail.CustomerExternalId = _customerWithWromgEmail.Id;
 
-            //_validPremiumCardRequest = new SignupCustomerForPremiumCardCommand();
-            //_validPremiumCardRequest.CustomerExternalId = _eligibleCustomer.Id;
+            _validPremiumCardRequest = new SignupCustomerForPremiumCardCommand();
+            _validPremiumCardRequest.CustomerExternalId = _eligibleCustomer.Id;
 
-            //_invalidPremiumCardRequest = new SignupCustomerForPremiumCardCommand();
-            //_invalidPremiumCardRequest.CustomerExternalId = _nonEligibleCustomer.Id;
+            _invalidPremiumCardRequest = new SignupCustomerForPremiumCardCommand();
+            _invalidPremiumCardRequest.CustomerExternalId = _nonEligibleCustomer.Id;
         }
 
         [Test, AUT(AUT.Uk), JIRA("PP-8", "PP-150")]
