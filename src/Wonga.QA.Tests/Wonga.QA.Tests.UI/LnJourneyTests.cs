@@ -215,7 +215,7 @@ namespace Wonga.QA.Tests.Ui
                  .WithForename(name)
                  .WithSurname(surname)
                  .WithEmailAddress(email)
-                 .WithMobileNumber("075" + Get.RandomLong(1000000, 9999999).ToString())
+                 .WithMobileNumber("077009" + Get.RandomLong(10000, 99999))
                  .Build();
             Application application = ApplicationBuilder
                 .New(customer)
@@ -228,7 +228,7 @@ namespace Wonga.QA.Tests.Ui
                 case AUT.Za:
                     var journeyZa = JourneyFactory.GetLnJourney(Client.Home());
                     var pageZA = journeyZa.ApplyForLoan(200, 20).CurrentPage as ApplyPage;
-                    pageZA.SetNewMobilePhone = "075" + phone;
+                    pageZA.SetNewMobilePhone = "077009" + Get.RandomLong(10000, 99999);
                     pageZA.ResendPinClick();
                     var smsZa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber("2775" + phone));
                     foreach (var sms in smsZa)
@@ -242,7 +242,7 @@ namespace Wonga.QA.Tests.Ui
                     var journeyCa = JourneyFactory.GetLnJourney(Client.Home());
                     var pageCa = journeyCa.ApplyForLoan(200, 25)
                                    .SetName(name, surname).CurrentPage as ApplyPage;
-                    pageCa.SetNewMobilePhone = "075" + phone;
+                    pageCa.SetNewMobilePhone = "077009" + Get.RandomLong(10000, 99999);
                     pageCa.ResendPinClick();
                     var smsCa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber("175" + phone));
                     foreach (var sms in smsCa)
