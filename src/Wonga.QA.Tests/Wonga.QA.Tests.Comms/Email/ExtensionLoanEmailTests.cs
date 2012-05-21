@@ -95,6 +95,7 @@ namespace Wonga.QA.Tests.Comms.Email
 			Do.With.Interval(1).Until(() => applications.Single(applications.ApplicationId == _extension.ApplicationId));
 
 			Drive.Msmq.Comms.Send(new IExtensionCancelledEvent
+			                      	{
 										AccountId = _accountId,
 			                      		ApplicationId = _applicationId,
 										ExtensionId = extensionId,
