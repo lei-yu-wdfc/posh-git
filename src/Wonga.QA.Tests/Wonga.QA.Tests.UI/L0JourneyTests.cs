@@ -787,7 +787,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Wb), JIRA("QA-258")]
+        [Test, AUT(AUT.Wb), JIRA("QA-258"), Category(TestCategories.Smoke)]
         public void TheWongaBusinessPolicyHaveNoReferenceToZaCaUk()
         {
             string ca = "wonga.ca";
@@ -1504,7 +1504,7 @@ namespace Wonga.QA.Tests.Ui
                     break;
             }
         }
-        [Test, AUT(AUT.Wb),JIRA("QA-287")]
+        [Test, AUT(AUT.Wb),JIRA("QA-287"), Category(TestCategories.Test)]
         public void WbL0JourneyShouldNotBeAbleToProceedWithoutAcceptingAllEligibilityQuestions()
         {
             int getRandomNumber = Get.RandomInt(0, 7);
