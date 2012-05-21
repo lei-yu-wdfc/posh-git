@@ -14,6 +14,7 @@ using SignApplicationCommand = Wonga.QA.Framework.Api.SignApplicationCommand;
 
 namespace Wonga.QA.Tests.Payments
 {
+    [TestFixture, Parallelizable(TestScope.All)]
 	public class MoveApplicationToDcaTests
 	{
         //private const string BankGatewayIsTestModeKey = "BankGateway.IsTestMode";
