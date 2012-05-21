@@ -21,6 +21,7 @@ using SignApplicationCommand = Wonga.QA.Framework.Msmq.SignApplicationCommand;
 namespace Wonga.QA.Tests.Payments.Queries
 {
     [TestFixture]
+    [Parallelizable(TestScope.All)]
     public class GetAccountOptionsTests
     {
 

@@ -8,6 +8,7 @@ using Wonga.QA.Tests.Salesforce;
 namespace Wonga.QA.Tests.Payments
 {
     [JIRA("UK-924")]
+    [Parallelizable(TestScope.Self)]
     public class LoanDueNotificationSagaTests : SalesforceTestBase
     {
         [Test]

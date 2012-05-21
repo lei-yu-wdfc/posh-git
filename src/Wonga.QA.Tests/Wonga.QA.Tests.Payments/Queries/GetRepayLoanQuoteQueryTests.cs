@@ -10,6 +10,7 @@ using Wonga.QA.Tests.Payments.Helpers;
 namespace Wonga.QA.Tests.Payments.Queries
 {
     [TestFixture]
+    [Parallelizable(TestScope.Self)]
     public class GetRepayLoanQuoteQueryTests
     {
 
