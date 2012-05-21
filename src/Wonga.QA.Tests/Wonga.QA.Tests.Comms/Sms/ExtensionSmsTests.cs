@@ -19,7 +19,13 @@ namespace Wonga.QA.Tests.Comms.Sms
 		private Guid _accountId;
 		private Guid _applicationId;
 		private static readonly dynamic SmsMessages = Drive.Data.Sms.Db.SmsMessages;
-
+		private static readonly dynamic Applications = Drive.Data.Payments.Db.Applications;
+		private static readonly dynamic FixedTermLoanApplications = Drive.Data.Payments.Db.FixedTermLoanApplications;
+		private static readonly dynamic PaymentCardsBase = Drive.Data.Payments.Db.PaymentCardsBases;
+		private static readonly dynamic LoanExtensions = Drive.Data.Payments.Db.LoanExtensions;
+		private static readonly dynamic MobilePhoneVerifications = Drive.Data.Comms.Db.MobilePhoneVerifications;
+		private static readonly dynamic CustomerDetails = Drive.Data.Comms.Db.CustomerDetails;
+		
 		[Test, AUT(AUT.Uk), JIRA("UK-2113")]
 		public void ExtensionCancellationSms()
 		{	
@@ -33,7 +39,7 @@ namespace Wonga.QA.Tests.Comms.Sms
 
 			var extensionId = _extension.ExternalId;
 
-			Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(x => x.ApplicationId == _extension.ApplicationId));
+			Do.With.Interval(1).Until(() => Applications.Single(Applications.ApplicationId == _extension.ApplicationId));
 
 			Drive.Msmq.Comms.Send(new IExtensionCancelledEvent
 			                      	{
@@ -65,10 +71,10 @@ namespace Wonga.QA.Tests.Comms.Sms
 
 			setupData.Scenario03Setup(_applicationId, paymentCardId, bankAccountId, _accountId, trustRating);
 
-			var app = Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(x => x.ExternalId == _applicationId));
+			var app = Do.With.Interval(1).Until(() => Applications.FindByExternalId(_applicationId));
 			var fixedTermApp =
 				Do.With.Interval(1).Until(
-					() => Drive.Db.Payments.FixedTermLoanApplications.Single(x => x.ApplicationId == app.ApplicationId));
+					() => FixedTermLoanApplications.FindByApplicationId(app.ApplicationId));
 
 			Drive.Api.Commands.Post(new AddPaymentCardCommand
 			{
@@ -86,12 +92,12 @@ namespace Wonga.QA.Tests.Comms.Sms
 			});
 
 			Do.With.Interval(1).Until(
-				() => Drive.Db.Payments.PaymentCardsBases.Single(x => x.ExternalId == paymentCardId && x.AuthorizedOn != null));
+				() => PaymentCardsBase.FindByExternalId(paymentCardId).AuthorizedOn != null);
 
 			Drive.Api.Commands.Post(new CreateFixedTermLoanExtensionCommand
 			{
 				ApplicationId = _applicationId,
-				ExtendDate = new Date(fixedTermApp.NextDueDate.Value.AddDays(2), DateFormat.Date),
+				ExtendDate = new Date(fixedTermApp.NextDueDate.AddDays(2), DateFormat.Date),
 				ExtensionId = extensionId,
 				PartPaymentAmount = 20M,
 				PaymentCardCv2 = "000",
@@ -101,8 +107,8 @@ namespace Wonga.QA.Tests.Comms.Sms
 			var loanExtension =
 				Do.With.Interval(1).Until(
 					() =>
-					Drive.Db.Payments.LoanExtensions.Single(x => x.ExternalId == extensionId && x.ApplicationId == app.ApplicationId
-						&& x.PartPaymentTakenOn != null));
+					LoanExtensions.Find(LoanExtensions.ExternalId == extensionId && LoanExtensions.ApplicationId == app.ApplicationId
+						&& LoanExtensions.PartPaymentTakenOn != null));
 
 			Assert.IsNotNull(loanExtension, "A loan extension should be created");
 
@@ -162,7 +168,7 @@ namespace Wonga.QA.Tests.Comms.Sms
 			                      		VerificationId = verificationId
 			                      	});
 
-			var pin = Do.With.Interval(1).Until(() => Drive.Db.Comms.MobilePhoneVerifications.Single(x => x.VerificationId == verificationId));
+			var pin = Do.With.Interval(1).Until(() => MobilePhoneVerifications.FindByVerificationId(verificationId));//Single(MobilePhoneVerifications.VerificationId == verificationId));
 
 			Drive.Msmq.Comms.Send(new CompleteMobilePhoneVerificationCommand
 			                      	{
@@ -173,7 +179,7 @@ namespace Wonga.QA.Tests.Comms.Sms
 			                      	});
 
 			Do.With.Interval(1).Until(
-				() => Drive.Db.Comms.CustomerDetails.Single(x => x.AccountId == accountId).MobilePhone != null);
+				() => CustomerDetails.FindByAccountId(accountId).MobilePhone != null);
 		}
 	}
 }
