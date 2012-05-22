@@ -5,6 +5,7 @@ using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
 
@@ -28,51 +29,18 @@ namespace Wonga.QA.Tests.Payments
 			var customer = CustomerBuilder.New().Build();
 			var application = ApplicationBuilder.New(customer).Build();
 
-			var app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
+			//var app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
+			var paymentsAppId = (int)(Drive.Data.Payments.Db.Applications.FindByExternalId(application.Id)).ApplicationId;
+
 			CreateEasyPayNumberForCustomer(customer);
 			string easyPayNumber = GetEasyPayNumber(customer);
 
 			Act(easyPayNumber, null, DateTime.UtcNow.Date, 10M);
 
 			//This will cause payment to handle event and create transaction.
+			var transactionReference = (string)(Do.Until(() => Drive.Data.Payments.Db.Transactions.FindByAmountAndApplicationId(-10M, paymentsAppId))).Reference;
 
-			var transaction = Do.With.Until(() => Drive.Db.Payments.Transactions.Single
-			                                      	(r => r.Amount == -10M && r.ApplicationId == app.ApplicationId));
-
-			Assert.AreEqual("Payment from EasyPay", transaction.Reference);
-		}
-
-		[Test, AUT(AUT.Za), JIRA("ZA-2289", "ZA-2396")]
-		public void EmailIsSentWhenNoAccountCanBeFoundForEasyPayNumber()
-		{
-			DateTime actionDate = DateTime.UtcNow;
-			const decimal amount = 100.25m;
-			string easyPayNumber = Guid.NewGuid().ToString();
-			string amountString = amount.ToString("F2", CultureInfo.InvariantCulture);
-			string rawContent = GenerateRawContent(amountString, easyPayNumber, actionDate);
-
-			Act(easyPayNumber, rawContent, actionDate, amount);
-
-			AssertInvalidEasyPayNumberEmailIsSent(amountString, easyPayNumber);
-		}
-
-		[Test, AUT(AUT.Za), JIRA("ZA-2289", "ZA-2396")]
-		public void EmailIsSentWhenNoApplicationCanBeFoundForEasyPayNumber()
-		{
-			var customer = CustomerBuilder.New().Build();
-			CreateEasyPayNumberForCustomer(customer);
-
-			EmailIsSentForCustomerWithNoOpenApplication(customer);
-		}
-
-		[Test, AUT(AUT.Za), JIRA("ZA-2289", "ZA-2396")]
-		public void EmailIsSentWhenNoOpenApplicationCanBeFoundForEasyPayNumber()
-		{
-			var customer = CustomerBuilder.New().Build();
-			CreateEasyPayNumberForCustomer(customer);
-			ApplicationBuilder.New(customer).Build().RepayOnDueDate();
-
-			EmailIsSentForCustomerWithNoOpenApplication(customer);
+			Assert.AreEqual("Payment from EasyPay", transactionReference);
 		}
 
 		#region Helpers
