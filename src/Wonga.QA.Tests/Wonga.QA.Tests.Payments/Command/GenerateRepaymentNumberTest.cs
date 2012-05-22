@@ -84,6 +84,19 @@ namespace Wonga.QA.Tests.Payments.Command
 
         }
 
+        [Test, AUT(AUT.Za), JIRA("ZA-1972")]
+        public void IAccountCreated_ShouldSaveRepaymentNumberToAccountRepayment()
+        {
+            //Arrange
+            var customer = CustomerBuilder.New().Build();
+            var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+
+            //Assert
+            var repaymentAccount = Do.Until(() => _repaymentAccount.FindAll(_repaymentAccount.AccountId == app.AccountId)
+                                                    .FirstOrDefault());
+            Assert.IsNotNull(repaymentAccount);
+            Assert.IsNotNull(repaymentAccount.RepaymentNumber);
+        }
 
 
 		[Test, AUT(AUT.Za), JIRA("ZA-2290")]
