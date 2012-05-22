@@ -9,6 +9,8 @@ using Wonga.QA.Framework.Api.Exceptions;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
+using PaymentTransactionEnum = Wonga.QA.Framework.Msmq.PaymentTransactionEnum;
+using PaymentTransactionScopeEnum = Wonga.QA.Framework.Msmq.PaymentTransactionScopeEnum;
 
 namespace Wonga.QA.Tests.Payments
 {
