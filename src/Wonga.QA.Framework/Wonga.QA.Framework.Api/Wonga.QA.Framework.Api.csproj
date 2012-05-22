@@ -200,6 +200,9 @@
     <Compile Include="Requests\SavePaymentCardBillingAddressCommand.cs" />
     <Compile Include="Requests\SaveSocialDetailsCommand.cs" />
     <Compile Include="Requests\SaveTrackingDataCommand.cs" />
+	<Compile Include="Requests\SaveServerSideTrackingDeviceCommand.cs" />
+    <Compile Include="Requests\SaveServerSidePageTrackingDataCommand.cs" />
+    <Compile Include="Requests\SaveServerSideInitialTrackingDataCommand.cs" />
     <Compile Include="Requests\SendExtensionWindowOpenedReminderCommand.cs" />
     <Compile Include="Requests\SendPasswordResetEmailCommand.cs" />
     <Compile Include="Requests\SendVerificationEmailCommand.cs" />
