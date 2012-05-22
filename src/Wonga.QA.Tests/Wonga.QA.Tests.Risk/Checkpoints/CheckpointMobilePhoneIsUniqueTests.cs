@@ -1,4 +1,5 @@
-﻿using MbUnit.Framework;
+﻿using System.Diagnostics;
+using MbUnit.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
@@ -6,45 +7,58 @@ using Wonga.QA.Framework;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
+    [Parallelizable(TestScope.All)]
 	public class CheckpointMobilePhoneIsUniqueTests
 	{
 		private const RiskMask TestMask = RiskMask.TESTMobilePhoneIsUnique;
-		string _phoneNumber;
 
-		[SetUp]
-		public void Setup()
+		public string GetMobilePhone()
 		{
-			_phoneNumber = Get.GetMobilePhone();
-			Drive.Data.Risk.Db.RiskAccountMobilePhones.Delete(MobilePhone: _phoneNumber);
-		}
+            var phone = Get.GetMobilePhone();
+			Drive.Data.Risk.Db.RiskAccountMobilePhones.Delete(MobilePhone: phone);
+            return phone; 
+        }
 
-		[TearDown]
-		public void TearDown()
-		{
-
-			Drive.Data.Risk.Db.RiskAccountMobilePhones.Delete(MobilePhone: _phoneNumber);
-		}
+        public void CleanPhone(string phone)
+        {
+            Drive.Data.Risk.Db.RiskAccountMobilePhones.Delete(MobilePhone: phone);
+        }
 
 		[Test]
 		[JIRA("UK-1563")]
 		public void L0_MobilePhoneIsUnique_LoanIsAccepted()
 		{
-			Customer customer = CreateCustomerWithVerifiedMobileNumber(_phoneNumber);
-			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+            var phone = GetMobilePhone();
+		    try
+		    {
+                Customer customer = CreateCustomerWithVerifiedMobileNumber(phone);
+                ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+		    }
+		    finally
+		    {
+		        CleanPhone(phone);
+		    }
 		}
 
 		[Test]
 		[JIRA("UK-1563")]
 		public void L0_MobilePhoneIsNotUnique_LoanIsDeclined()
 		{
-			//Create previous customer record
-			Customer customer1 = CreateCustomerWithVerifiedMobileNumber(_phoneNumber);
-			ApplicationBuilder.New(customer1).Build();
+            var phone = GetMobilePhone();
+		    try
+		    {
+                //Create previous customer record
+                Customer customer1 = CreateCustomerWithVerifiedMobileNumber(phone);
+                ApplicationBuilder.New(customer1).Build();
 
-
-			//Create and check new customer
-			Customer customer = CreateCustomerWithVerifiedMobileNumber(_phoneNumber);
-			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+                //Create and check new customer
+                Customer customer = CreateCustomerWithVerifiedMobileNumber(phone);
+                ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+		    }
+		    finally
+		    {
+                CleanPhone(phone);
+		    }
 		}
 
 		private static Customer CreateCustomerWithVerifiedMobileNumber(string phoneNumber)
