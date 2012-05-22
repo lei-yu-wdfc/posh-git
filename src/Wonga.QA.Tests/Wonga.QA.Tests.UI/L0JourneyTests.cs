@@ -72,9 +72,12 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-177")]
+        [Test, AUT(AUT.Za/*,AUT.Ca*/), JIRA("QA-177")]
         public void ChangeLoanAmountAndDurationOnPersonalDetailsViaPlusMinusOptions()
         {
+            //CA is out due to new wonga sliders being implemented on homepage only 
+            //soon it will be on "my account" and in other regions
+
             var journey = JourneyFactory.GetL0Journey(Client.Home());
             var personalDetailsPage = journey.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
             personalDetailsPage.ClickSliderToggler();
@@ -143,9 +146,12 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-176")]
+        [Test, AUT(AUT.Za/*, AUT.Ca*/), JIRA("QA-176")]
         public void ChangeLoanAmountAndDurationOnPersonalDetailsViaTypingToTheFields()
         {
+            //CA is out due to new wonga sliders being implemented on homepage only 
+            //soon it will be on "my account" and in other regions
+            
             var journey = JourneyFactory.GetL0Journey(Client.Home());
             var personalDetailsPage = journey.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
             personalDetailsPage.ClickSliderToggler();
@@ -435,9 +441,12 @@ namespace Wonga.QA.Tests.Ui
                 .FillAcceptedPage().CurrentPage as DealDonePage;
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-170")]
+        [Test, AUT(/*AUT.Ca,*/AUT.Za), JIRA("QA-170")]
         public void CustomerOnHowItWorksPageShouldBeAbleUseSlidersProperly()
         {
+            //CA is out due to new wonga sliders being implemented on homepage only 
+            //soon it will be on "my account" and in other regions
+            
             var howItWorks = Client.HowItWorks();
             var personalDetailsPage = howItWorks.ApplyForLoan(200, 10);
             Assert.IsTrue(personalDetailsPage is PersonalDetailsPage);
