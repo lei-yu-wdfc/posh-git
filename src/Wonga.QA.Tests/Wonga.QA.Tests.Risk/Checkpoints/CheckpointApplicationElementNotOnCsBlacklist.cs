@@ -13,6 +13,7 @@ using Wonga.QA.Framework;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
+    [Parallelizable(TestScope.All)]
     public class CheckpointApplicationElementNotOnCsBlacklist
     {
         /* The Story is : We need to create a customer and then send SuspectFraud command and see the failure */
