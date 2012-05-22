@@ -146,7 +146,7 @@ namespace Wonga.QA.Tests.Ui
                            .CurrentPage as MySummaryPage;
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1533", "UK-1902"), Pending("Disabled as failing during build testing. To be checked.")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1533", "UK-1902")]
         public void FullLnJourneyTest()
         {
             var loginPage = Client.Login();
@@ -210,7 +210,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(applyPage.IsPhoneNumberNotChangedMessageVisible(), "Message that mobile phone number has not changed is not dispalyed");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1533"), Pending("Disabled as failing during build testing. To be checked.")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1533")]
         public void L0LnJourneyTest()
         {
             var loginPage = Client.Login();
