@@ -343,7 +343,7 @@ namespace Wonga.QA.Tests.Ui
                 case AUT.Ca:
                     string[] date = acceptedPage.GetPaymentDueDate.Replace(",", "").Split(' ');
                     string day = date[2][0] == '0' ? date[2].Remove(0, 1) : date[2];
-                    string paymentDate = date[0] + " " + day + " " + date[1] + " " + date[3]; // Note: Temp fix, need better solutions
+                    string paymentDate = date[0] + " " + day + " " + date[1].Remove(3) + " " + date[3]; // Note: Temp fix, need better solutions
 
                     Assert.AreEqual(totalAmountOnPersonalDetails, acceptedPage.GetPrincipalAmountBorrowed);
                     Assert.AreEqual(totalAmountOnPersonalDetails, acceptedPage.GetPrincipalAmountToBeTransfered);
