@@ -18,7 +18,7 @@ using Wonga.QA.Framework.Mocks;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[TestFixture, Parallelizable(TestScope.All)]
+	[TestFixture]
 	class CheckpointReputationPredictionPositiveTests
 	{
 		private const RiskMask TestMask = RiskMask.TESTReputationtPredictionPositive;
@@ -204,7 +204,6 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				Drive.Data.Ops.SetServiceConfiguration(GetUseReputationScoreModelKeyName(), currentValue);
 			}
 		}
-
 
 
 		[Test, AUT(AUT.Ca), JIRA("CA-2218")]
