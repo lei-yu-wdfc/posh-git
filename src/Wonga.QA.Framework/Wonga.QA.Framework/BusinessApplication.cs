@@ -24,8 +24,8 @@ namespace Wonga.QA.Framework
         public override Application PutApplicationIntoArrears()
         {
             // Try to collect the weekly amount twice and check that we've created a default charge transaction
-            FirstCollectionAttempt(null,false,false);
-            SecondCollectionAttempt(false);
+            MorningCollectionAttempt(null,false,false);
+            AfternoonCollectionAttempt(false);
             Do.Until(this.IsInArrears);
             return this;
         }
@@ -36,7 +36,8 @@ namespace Wonga.QA.Framework
         /// <param name="paymentPlan">payment plan</param>
         /// <param name="isFinalPayment">Specifies if we're collecting the final payment amount or a regular one</param>
         /// <param name="shouldSucceed">Specifies if we're expecting this collection attempt to succeed</param>
-        public void FirstCollectionAttempt(PaymentPlanEntity paymentPlan, bool isFinalPayment, bool shouldSucceed)
+        /// <param name="isSecondAttempt">if set to true, indicates that this is the collection attempt 48h after the initial one</param>
+        public void MorningCollectionAttempt(PaymentPlanEntity paymentPlan, bool isFinalPayment, bool shouldSucceed, bool isSecondAttempt = false)
         {
             if (!shouldSucceed)
             {
@@ -47,7 +48,7 @@ namespace Wonga.QA.Framework
                 SetCardExpirationDate(true);
             }
 
-            CollectPaymentToday();
+            CollectPaymentToday(isSecondAttempt);
 
             if (shouldSucceed)
             {
@@ -65,7 +66,7 @@ namespace Wonga.QA.Framework
             }
         }
 
-        private void CollectPaymentToday()
+        private void CollectPaymentToday(bool isSecondAttempt)
         {
             // Change the payment plan, o the collection starts today
             var paymentPlan = GetPaymentPlan();
@@ -79,14 +80,21 @@ namespace Wonga.QA.Framework
             var paymentSchedulingSaga =
                 Do.Until(() => Drive.Data.OpsSagas.Db.PaymentSchedulingSagaEntity.FindByApplicationExternalId(Id));
 
-            Drive.Msmq.Payments.Send(new TimeoutMessage {SagaId = paymentSchedulingSaga.Id});
+            var message = new TimeoutMessage {SagaId = paymentSchedulingSaga.Id};
+            if(isSecondAttempt)
+            {
+                message.State = 2;
+            }
+
+            Drive.Msmq.Payments.Send(message);
         }
 
         /// <summary>
         /// Triggers the second collection attempt, with an expected result, but does not wait for it to finish
         /// </summary>
         /// <param name="shouldSucceed"></param>
-        public void SecondCollectionAttempt(bool shouldSucceed)
+        /// <param name="isSecondAttempt">if set to true, indicates that this is the collection attempt 48h after the initial one</param>
+        public void AfternoonCollectionAttempt(bool shouldSucceed)
         {
             if (!shouldSucceed)
             {
@@ -100,7 +108,7 @@ namespace Wonga.QA.Framework
                 Do.With.Timeout(2).Until(() => Drive.Data.OpsSagas.Db.BusinessLoanScheduledPaymentSagaEntity.FindByApplicationGuid(Id));
 
             // Trigger repeated collection
-            Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = businessLoansScheduledPaymentsSaga.Id });
+            Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = businessLoansScheduledPaymentsSaga.Id});
         }
 
         public void RestorePaymentCardExpiryDate()

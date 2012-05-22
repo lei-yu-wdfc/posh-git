@@ -31,11 +31,11 @@ namespace Wonga.QA.Tests.Payments
         /// SME-808 test 4
         /// </summary>
         [Test, JIRA("SME-1018", "SME-808", "SME-809")]
-        public void PaymentsShouldCreateNewTransactionWhenFirstCollectionAttemptSucceeds()
+        public void PaymentsShouldCreateNewTransactionWhenMorningCollectionAttemptSucceeds()
         {
             var paymentPlan = _applicationInfo.GetPaymentPlan();
 
-            _applicationInfo.FirstCollectionAttempt(paymentPlan, false, true);
+            _applicationInfo.MorningCollectionAttempt(paymentPlan, false, true);
         }
 
         /// <summary>
@@ -43,13 +43,13 @@ namespace Wonga.QA.Tests.Payments
         /// SME-808 test 6
         /// </summary>
         [Test, JIRA("SME-1018", "SME-809")]
-        public void PaymentsShouldCreateNewTransactionWhenSecondCollectionAttemptSucceeds()
+        public void PaymentsShouldCreateNewTransactionWhenAfternoonCollectionAttemptSucceeds()
         {
             _applicationInfo.GetPaymentPlan();
 
-            _applicationInfo.FirstCollectionAttempt(null, false, false);
+            _applicationInfo.MorningCollectionAttempt(null, false, false);
 
-            _applicationInfo.SecondCollectionAttempt(true);
+            _applicationInfo.AfternoonCollectionAttempt(true);
 
             // Check that only one transaction has occured
             Do.Until(
@@ -60,12 +60,12 @@ namespace Wonga.QA.Tests.Payments
         }
 
         [Test, JIRA("SME-1018", "SME-812", "SME-809")]
-        public void PaymentsShouldNotCreateNewTransactionWhenSecondCollectionAttemptFails()
+        public void PaymentsShouldNotCreateNewTransactionWhenAfternoonCollectionAttemptFails()
         {
             _applicationInfo.GetPaymentPlan();
-            _applicationInfo.FirstCollectionAttempt(null, false, false);
+            _applicationInfo.MorningCollectionAttempt(null, false, false);
 
-            _applicationInfo.SecondCollectionAttempt(false);
+            _applicationInfo.AfternoonCollectionAttempt(false);
 
             // Check we have a default charge and that no transactions have been written to DB
             Do.Until(() => Drive.Db.Payments.Transactions.SingleOrDefault(
@@ -101,7 +101,7 @@ namespace Wonga.QA.Tests.Payments
 
             var initialBalance = _applicationInfo.GetTotalOutstandingAmount();
 
-            _applicationInfo.FirstCollectionAttempt(paymentPlan, false, true);
+            _applicationInfo.MorningCollectionAttempt(paymentPlan, false, true);
 
             var balanceAfterTx = _applicationInfo.GetTotalOutstandingAmount();
 
@@ -127,8 +127,8 @@ namespace Wonga.QA.Tests.Payments
             
             var initialBalance = _applicationInfo.GetTotalOutstandingAmount();
 
-            _applicationInfo.FirstCollectionAttempt(paymentPlan, false, false);
-            _applicationInfo.SecondCollectionAttempt(true);
+            _applicationInfo.MorningCollectionAttempt(paymentPlan, false, false);
+            _applicationInfo.AfternoonCollectionAttempt(true);
             // Wait for he second payment to succeed
             Do.Until(
                 () => Drive.Db.Payments.Transactions.Single(t => t.ApplicationEntity.ExternalId == _applicationInfo.Id
@@ -162,8 +162,8 @@ namespace Wonga.QA.Tests.Payments
         {
             var paymentPlan = _applicationInfo.GetPaymentPlan();
 
-            _applicationInfo.FirstCollectionAttempt(paymentPlan, false, false);
-            _applicationInfo.SecondCollectionAttempt(false);
+            _applicationInfo.MorningCollectionAttempt(paymentPlan, false, false);
+            _applicationInfo.AfternoonCollectionAttempt(false);
             // Wait for he second payment to succeed
             Do.Until(
                 () => Drive.Db.Payments.Transactions.Single(t => t.ApplicationEntity.ExternalId == _applicationInfo.Id
@@ -174,7 +174,7 @@ namespace Wonga.QA.Tests.Payments
 
             _applicationInfo.MoveBackInTime(7, true);
 
-            _applicationInfo.FirstCollectionAttempt(paymentPlan, false, true);
+            _applicationInfo.MorningCollectionAttempt(paymentPlan, false, true);
 
             Do.Until(
                 () => Drive.Db.Payments.Transactions.Count(t => t.ApplicationEntity.ExternalId == _applicationInfo.Id
@@ -205,13 +205,13 @@ namespace Wonga.QA.Tests.Payments
             {
                 if (i == paymentPlan.NumberOfPayments - 2)
                 {
-                    _applicationInfo.FirstCollectionAttempt(paymentPlan, false, false);
-                    _applicationInfo.SecondCollectionAttempt(false);
+                    _applicationInfo.MorningCollectionAttempt(paymentPlan, false, false);
+                    _applicationInfo.AfternoonCollectionAttempt(false);
                     Thread.Sleep(15000);
                 }
                 else
                 {
-                    _applicationInfo.FirstCollectionAttempt(paymentPlan, (i + 1) == paymentPlan.NumberOfPayments, true);
+                    _applicationInfo.MorningCollectionAttempt(paymentPlan, (i + 1) == paymentPlan.NumberOfPayments, true);
                 }
                 _applicationInfo.MoveBackInTime(7, true);
             }
@@ -234,7 +234,7 @@ namespace Wonga.QA.Tests.Payments
             _applicationInfo.MoveBackInTime(7, false);
             for (int i = 0; i < paymentPlan.NumberOfPayments; i++)
             {
-                _applicationInfo.FirstCollectionAttempt(paymentPlan, (i + 1) == paymentPlan.NumberOfPayments, true);
+                _applicationInfo.MorningCollectionAttempt(paymentPlan, (i + 1) == paymentPlan.NumberOfPayments, true);
                 _applicationInfo.MoveBackInTime(7, true);
             }
 
@@ -278,7 +278,7 @@ namespace Wonga.QA.Tests.Payments
         public void DefaultChargeShouldNotBeCollectedWhenAnOverpaymentHasBeenMadeAndBothCollectionAttemptsFail()
         {
             var paymentPlan = _applicationInfo.GetPaymentPlan();
-            _applicationInfo.FirstCollectionAttempt(paymentPlan, false, false);
+            _applicationInfo.MorningCollectionAttempt(paymentPlan, false, false);
             Drive.Msmq.Payments.Send(new CreateTransactionCommand
                                          {
                                              Amount = paymentPlan.RegularAmount,
@@ -294,7 +294,7 @@ namespace Wonga.QA.Tests.Payments
 
             // Wait for the TX to be processed
             Thread.Sleep(15000);
-            _applicationInfo.SecondCollectionAttempt(false);
+            _applicationInfo.AfternoonCollectionAttempt(false);
             // Wait for collection atempt to fail
             Thread.Sleep(15000);
 
@@ -302,6 +302,53 @@ namespace Wonga.QA.Tests.Payments
                 Drive.Db.Payments.Transactions.SingleOrDefault(
                     t => t.ApplicationEntity.ExternalId == _applicationInfo.Id
                          && t.Type == PaymentTransactionEnum.DefaultCharge.ToString()));
+        }
+
+        [Test, JIRA("SME-1039")]
+        public void PaymentsShouldCollectMissedPayment48hAfterFailedWeeklyAttempt()
+        {
+            var paymentPlan = _applicationInfo.GetPaymentPlan();
+            _applicationInfo.MorningCollectionAttempt(paymentPlan, false,false);
+            _applicationInfo.AfternoonCollectionAttempt(false);
+            Thread.Sleep(1500);
+            _applicationInfo.MoveBackInTime(2, true);
+            _applicationInfo.MorningCollectionAttempt(paymentPlan, false, true, true);
+
+            var appId = Drive.Data.Payments.Db.Applications.FindByExternalId(_applicationInfo.Id).ApplicationId;
+
+            Do.With.Message("Should collect only one time").Until<bool>(() => Drive.Data.Payments.Db.Transactions.FindAllBy(ApplicationId: appId, Type: PaymentTransactionEnum.CardPayment.ToString(), Amount: paymentPlan.RegularAmount).Count() == 1);
+            Do.With.Message("Should contain one default charge transaction").Until<bool>(() => Drive.Data.Payments.Db.Transactions.FindAllBy(ApplicationId: appId, Type: PaymentTransactionEnum.DefaultCharge.ToString(), Amount: 10).Count() == 1);
+            Do.With.Message("Should collect the missed payment fee").Until<bool>(() => Drive.Data.Payments.Db.Transactions.FindAllBy(ApplicationId: appId, Type: PaymentTransactionEnum.CardPayment.ToString(), Amount: 10).Count() == 1);
+        }
+
+        [Test, JIRA("SME-1039")]
+        public void PaymentsShouldCollectMissedPaymentAndTwoDefaultChargesNextWeekWhenThe48hPaymentIsMissed()
+        {
+            var paymentPlan = _applicationInfo.GetPaymentPlan();
+            //Moving to first collection date
+            _applicationInfo.MoveBackInTime(7, true);
+            // Failing both attempts
+            _applicationInfo.MorningCollectionAttempt(paymentPlan, false, false);
+            _applicationInfo.AfternoonCollectionAttempt(false);
+            // Waiting for transactions to be created etc
+            Thread.Sleep(1500);
+            // Moving to 48h after first attempt
+            _applicationInfo.MoveBackInTime(2, true);
+            // Failing both attempts after 48h
+            _applicationInfo.MorningCollectionAttempt(paymentPlan, false,false, true);
+            _applicationInfo.AfternoonCollectionAttempt(false);
+            // Waiting for transactions to be created
+            Thread.Sleep(1500);
+            // Moving to second payday
+            _applicationInfo.MoveBackInTime(5, true);
+            // Successfully collect everything
+            _applicationInfo.MorningCollectionAttempt(paymentPlan, false,true);
+
+            var appId = Drive.Data.Payments.Db.Applications.FindByExternalId(_applicationInfo.Id).ApplicationId;
+
+            Do.With.Message("Should contain two collection transactions").Until<bool>(() => Drive.Data.Payments.Db.Transactions.FindAllBy(ApplicationId: appId, Type: PaymentTransactionEnum.CardPayment.ToString(), Amount: paymentPlan.RegularAmount).Count() == 2);
+            Do.With.Message("Should contain two DefaultCharge transactions with amount equal to 10").Until<bool>(() => Drive.Data.Payments.Db.Transactions.FindAllBy(ApplicationId: appId, Type: PaymentTransactionEnum.DefaultCharge.ToString(), Amount: 10).Count() == 2);
+            Do.With.Message("Should collect all fees in one transaction").Until<bool>(() => Drive.Data.Payments.Db.Transactions.FindAllBy(ApplicationId: appId, Type: PaymentTransactionEnum.CardPayment.ToString(), Amount: 20).Count() == 1);
         }
     }
 }

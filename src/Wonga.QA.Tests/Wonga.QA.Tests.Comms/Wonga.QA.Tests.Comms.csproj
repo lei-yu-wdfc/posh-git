@@ -41,6 +41,7 @@
     <Compile Include="CommsServiceTests.cs" />
     <Compile Include="DocumentsEmailsTests.cs" />
     <Compile Include="Email\DueDateReminderEmailTests.cs" />
+    <Compile Include="Email\ApplicationClosedEmailTests.cs" />
     <Compile Include="Email\ExtensionLoanEmailTests.cs" />
     <Compile Include="Email\LoanTopUpEmailTests.cs" />
     <Compile Include="Email\PaymentConfirmationEmailUkTests.cs" />
