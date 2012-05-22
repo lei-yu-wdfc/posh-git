@@ -206,6 +206,16 @@ namespace Wonga.QA.Tests.Ui.Prepaid
             prepaidPage.FindHighlightedOffersBlock();
         }
 
+        [Test,AUT(AUT.Uk),JIRA("PP-33")]
+        public void CustomerShouldSeeLoadChoicesWithLoan()
+        {
+            var loginPage = Client.Login();
+            var summaryPage = loginPage.LoginAs(_eligibleCustomer.GetEmail());
+            var prepaidCardPage = summaryPage.Navigation.MyPrepaidCardButtonClick();
+            prepaidCardPage.ShowMenuElementsForStandardCard();
+            prepaidCardPage.TopUpClick();
+        }
+
         [TearDown]
         public void Rollback()
         {

@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using OpenQA.Selenium;
 using Wonga.QA.Framework.UI.Elements;
 using Wonga.QA.Framework.UI.Mappings;
 using Wonga.QA.Framework.UI.Ui.Elements.Prepaid;
@@ -8,15 +9,18 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
 {
     public class PrepaidCardPage : BasePage
     {
-        private  IWebElement _applyCardButton;
-        private IWebElement _premiumCardButton;
+
         private PrepaidCardMenuElement _menu;
         private PrepaidBalanceBlock _balanceBlock;
         private ChooseCardTypeMenuElement _cardMenu;
+        private PrepaidTopupChoiceElements _topupElements;
+
         private IWebElement _faqLink;
         private IWebElement _tsLink;
         private IWebElement _tsInFeesLink;
         private IWebElement _premiumRewardsLink;
+        private IWebElement _applyCardButton;
+        private IWebElement _premiumCardButton;
 
         public PrepaidCardPage(UiClient client) : base(client)
         {
@@ -112,6 +116,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             IWebElement resetCodeTextField =
                 Client.Driver.FindElement(By.CssSelector(UiMap.Get.PrepaidCardPage.ResetCodeTextField));
             return resetCodeTextField;
+        }
+
+        public void TopUpClick()
+        {
+            _menu.TopUpMenuClick();
+            _topupElements = new PrepaidTopupChoiceElements(this);
         }
     }
 }

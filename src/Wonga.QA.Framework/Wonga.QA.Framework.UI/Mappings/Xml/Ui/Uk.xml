@@ -175,7 +175,7 @@
   <PrepaidCardMenuElement>
     <Summary>.menu-mlid-9440 a</Summary>
     <Transaction>.menu-mlid-9442</Transaction>
-    <TopUp>.menu-mlid-9441</TopUp>
+    <TopUp>.menu-mlid-9441 a</TopUp>
     <Budjet>.menu-mlid-9436</Budjet>
     <Cashback>.menu-mlid-9437</Cashback>
     <Rewards>.menu-mlid-9439 a</Rewards>
@@ -192,6 +192,10 @@
     <SaveConfiguration>#edit-submit-1</SaveConfiguration>
   </PrepiadAdminPage>
   
+  <PrepaidTopupChoiceElement>
+    <Loan>#wonga_loan</Loan>
+    <Debit>#target_debit_card</Debit>
+    <Salary>#target_salary</Salary>
+  </PrepaidTopupChoiceElement>
   
-
 </UiMap>

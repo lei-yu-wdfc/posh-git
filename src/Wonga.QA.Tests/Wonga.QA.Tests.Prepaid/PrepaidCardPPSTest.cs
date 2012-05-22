@@ -146,6 +146,14 @@ namespace Wonga.QA.Tests.Prepaid
             CustomerOperations.DeleteMarketingEligibility(_customerWithWromgEmail.Id);
         }
 
+        [Test]
+        public void Hi()
+        {
+            Customer ct = CustomerBuilder.New().Build();
+            Application app = ApplicationBuilder.New(ct).Build();
+            app.RepayOnDueDate();
+        }
+
         private void CheckOnAddingRecordsToPrepaidCard(Guid customerId)
         {
             var cardHolderId = Do.Until(() => _prepaidCardDb.CardHolderDetails.FindAllByCustomerExternalId(customerId));
