@@ -202,12 +202,12 @@ namespace Wonga.QA.Tests.Ui
             var journey = JourneyFactory.GetLnJourney(Client.Home());
             var page = journey.ApplyForLoan(200, 10);
 
-            //var applyPage = page.CurrentPage as ApplyPage;
-            //applyPage.SetIncorrectMobilePhone = mobileNumber;
+            var applyPage = page.CurrentPage as ApplyPage;
+            applyPage.SetIncorrectMobilePhone = mobileNumber;
 
-            //Assert.IsTrue(applyPage.IsMobilePhonePopupCancelButtonEnabled(), "Cancel button is not enabled");
-            //Assert.IsTrue(applyPage.IsMobilePhonePopupSaveButtonEnabled(), "Save button is not disabled");
-            //Assert.IsTrue(applyPage.IsPhoneNumberNotChangedMessageVisible(), "Message that mobile phone number has not changed is not dispalyed");
+            Assert.IsTrue(applyPage.IsMobilePhonePopupCancelButtonEnabled(), "Cancel button is not enabled");
+            Assert.IsTrue(applyPage.IsMobilePhonePopupSaveButtonEnabled(), "Save button is not disabled");
+            Assert.IsTrue(applyPage.IsPhoneNumberNotChangedMessageVisible(), "Message that mobile phone number has not changed is not dispalyed");
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-1533"), Pending("Disabled as failing during build testing. To be checked.")]
