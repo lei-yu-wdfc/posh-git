@@ -11,6 +11,7 @@ using Wonga.QA.Tests.Payments.Helpers;
 namespace Wonga.QA.Tests.Payments.Queries
 {
 	[TestFixture]
+    [Parallelizable(TestScope.All)]
 	public class GetLoanExtensionPaymentStatusQueryTest
 	{
 		[Test, AUT(AUT.Uk), JIRA("UK-1323")]

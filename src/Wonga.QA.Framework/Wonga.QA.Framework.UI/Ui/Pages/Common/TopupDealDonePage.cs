@@ -46,5 +46,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _accountLink.Click();
             return new MySummaryPage(Client);
         }
+
+        public string SucessMessage
+        {
+            get
+            {
+                return Content.FindElement(By.CssSelector(UiMap.Get.TopupDealDonePage.SuccessMessage1)).Text +
+                       Content.FindElement(By.CssSelector(UiMap.Get.TopupDealDonePage.SuccessMessage2)).Text;
+            }
+        }
     }
 }

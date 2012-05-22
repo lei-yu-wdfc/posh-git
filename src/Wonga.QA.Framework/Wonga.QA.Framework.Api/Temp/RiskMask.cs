@@ -74,6 +74,7 @@ namespace Wonga.QA.Framework.Api
 		TESTBlacklistSME,
 		TESTGeneralManualVerification,
 		TESTDoNotRelend,
-		TESTFraudBlacklist
+		TESTFraudBlacklist,
+        TESTApplicantHasPoorRelationshipWithWonga
 	}
 }

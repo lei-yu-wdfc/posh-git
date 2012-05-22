@@ -17,6 +17,7 @@ namespace Wonga.QA.Framework.Msmq
         public String BankCode { get; set; }
         public DateTime BatchSendTime { get; set; }
         public Guid ApplicationId { get; set; }
+        public Guid? TransactionId { get; set; }
         public Guid SagaId { get; set; }
         public DateTime CreatedOn { get; set; }
     }

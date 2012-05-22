@@ -10,6 +10,7 @@ using Wonga.QA.Tests.Payments.Helpers;
 namespace Wonga.QA.Tests.Payments.Queries
 {
     [TestFixture]
+    [Parallelizable(TestScope.Self)]
     public class GetRepayLoanQuoteQueryTests
     {
 
@@ -29,12 +30,17 @@ namespace Wonga.QA.Tests.Payments.Queries
 
             //Call Api Query
             var response = Drive.Api.Queries.Post(new GetRepayLoanQuoteUkQuery() { ApplicationId = appId });
-            
+            var minRepayAmount = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.RepayLoanMinAmount").Value;
+
             Assert.AreEqual(appId.ToString(), response.Values["ApplicationId"].Single(), "ApplicationId incorrect");
-            Assert.AreEqual("5.00", response.Values["SliderMinAmount"].Single(), "SliderMinAmount incorrect");
+            Assert.AreEqual(minRepayAmount, response.Values["SliderMinAmount"].Single(), "SliderMinAmount incorrect");
             Assert.AreEqual("105.50", response.Values["SliderMaxAmount"].Single(), "SliderMaxAmount incorrect");
             Assert.AreEqual("10", response.Values["DaysToDueDate"].Single(), "DaysToDueDate incorrect");
+            
+            // Check array
+            Assert.AreEqual(110.41M,decimal.Parse(response.Values["Amount"].ToArray()[0]));
 
+            
 
         }
     }

@@ -4,7 +4,7 @@
     <Username>#edit-name</Username>
     <Password>#edit-pass</Password>
     <LoginButton>#edit-login</LoginButton>
-    <ForgotPassword>#wonga-login-form div div:nth-child(5) a</ForgotPassword>
+    <ForgotPassword>#wonga-login-form.form-element-type-form div.form-inner div.form-markup-wrapper a</ForgotPassword>
   </LoginPage>
 
   <ForgotPasswordPage>
@@ -50,6 +50,8 @@
 
   <TopupDealDonePage>
     <AccountLink>#content-area h2 a</AccountLink>
+    <SuccessMessage1>.title+p</SuccessMessage1>
+    <SuccessMessage2>.title+p+p</SuccessMessage2>
   </TopupDealDonePage>
 
   <AcceptedPage>
@@ -122,9 +124,9 @@
   <HelpElement>
     <HelpTrigger>help-trigger</HelpTrigger>
     <HelplistQuestions>#listQuestions</HelplistQuestions>
-    <TroubleshootingQuestions>div#help-panel div.control-bar-panel div.panel:nth-child(2)>#listQuestions</TroubleshootingQuestions>
-    <JargonBuster>#help-panel div div:nth-child(3) p:nth-child(1) a</JargonBuster>
-    <ContactUs>#help-panel div div:nth-child(3) p:nth-child(2) a</ContactUs>
+    <TroubleshootingQuestions>div#help-panel div.control-bar-panel div.panel:first-child + div.panel >#listQuestions</TroubleshootingQuestions>
+    <JargonBuster>#help-panel div div:first-child + div + div p:first-child a</JargonBuster>
+    <ContactUs>#help-panel div div:first-child + div + div p:first-child + p + p a</ContactUs>
   </HelpElement>
 
   <JargonBusterPage>
@@ -262,7 +264,7 @@
   </MySummaryPage>
 
   <MyPaymentsPage>
-    <AddBankAccountButton>#accounts tbody tr td table tbody tr:nth-child(3) td a</AddBankAccountButton>
+    <AddBankAccountButton>#accounts tbody tr td table tbody tr:first-child + tr + tr td a</AddBankAccountButton>
   </MyPaymentsPage>
 
   <SalesForceLoginPage>
@@ -277,14 +279,14 @@
   </SalesForceHomePage>
 
   <SalesForceSearchResultPage>
-    <Customer>#Account_body table tbody tr:nth-child(2) th a</Customer>
+    <Customer>#Account_body table tbody tr:first-child + tr th a</Customer>
   </SalesForceSearchResultPage>
 
   <TabsElement>
     <TabsForm>ul.menu</TabsForm>
-    <Home>li:nth-child(1)>a</Home>
-    <HowItWorks>li:nth-child(2)>a</HowItWorks>
-    <AboutUs>li:nth-child(3)>a</AboutUs>
+    <Home>li:first-child>a</Home>
+    <HowItWorks>li:first-child + li>a</HowItWorks>
+    <AboutUs>li:first-child + li + li>a</AboutUs>
   </TabsElement>
 
   <TopupRequestPage>
@@ -335,6 +337,11 @@
   <ExtensionAgreementPage>
     <ExtensionAgreementAcceptButton>#edit-accept</ExtensionAgreementAcceptButton>
     <ExtensionAgreementscroll>#agreementscroll</ExtensionAgreementscroll>
+    <ExtensionSecciButton>#extension_secci_link</ExtensionSecciButton>
+    <ExtensionExplanationButton>#extension_ae_link</ExtensionExplanationButton>
+    <SecciHeader>.secci-intro</SecciHeader>
+    <SecciPrint>#secci-print-link a</SecciPrint>
+    <SecciContent>.secci</SecciContent>
   </ExtensionAgreementPage>
 
   <ExtensionErrorPage>
@@ -376,26 +383,82 @@
   <RepayRequestPage>
     <RepayRequestPageSubmitButton>#edit-submit</RepayRequestPageSubmitButton>
     <RepayRequestPageInformativeBox>div.inner-box-informative</RepayRequestPageInformativeBox>
-    <RepayRequestPageRepayAmount>input#edit-repayment-amount</RepayRequestPageRepayAmount>
+    <RepayRequestPageRepayAmount>input#edit-loan-repayment-amount</RepayRequestPageRepayAmount>
     <RepayRequestPageRemainderAmount>span.repay-remainder-total</RepayRequestPageRemainderAmount>
     <RepayRequestPageSliders>#wonga-single-slider</RepayRequestPageSliders>
     <RepayRequestPageSliderSmall>#wonga-account-repay-form</RepayRequestPageSliderSmall>
     <RepayRequestPageCard>#edit-card</RepayRequestPageCard>
     <RepayRequestPageSecurityCode>#edit-security-code</RepayRequestPageSecurityCode>
+    <RepayRequestPageCancelButton>#edit-cancel</RepayRequestPageCancelButton>
+    <RepayRequestPageOweCurrently>.number-column span</RepayRequestPageOweCurrently>
+    <RepayRequestPageReadMeMessageRepayTotal>.repay-total</RepayRequestPageReadMeMessageRepayTotal>
+    <RepayRequestPageLoanPeriodClarification>.loan-period-clarification</RepayRequestPageLoanPeriodClarification>    
   </RepayRequestPage>
 
   <SmallRepaySlidersElement>
     <FormId>#wonga-account-repay-form</FormId>
     <AmountSlider>#wonga-single-slider a</AmountSlider>
     <SubmitButton>#edit-submit</SubmitButton>
-    <RepayAmount>input#edit-repayment-amount</RepayAmount>
+    <RepayAmount>input#edit-loan-repayment-amount</RepayAmount>
     <RemainderAmount>span.repay-remainder-total</RemainderAmount>
     <AmountMinusButton>#wonga-single-slider-wrapper button.slider-minus</AmountMinusButton>
     <AmountPlusButton>#wonga-single-slider-wrapper button.slider-plus</AmountPlusButton>
   </SmallRepaySlidersElement>
 
+  <ExtensionSecciDocumentSection>
+    <Fieldset>#fancybox-content</Fieldset>
+    <SecciHeader>.secci-intro</SecciHeader>
+    <SecciPrint>#secci-print-link a</SecciPrint>
+    <SecciContent>.secci</SecciContent>
+  </ExtensionSecciDocumentSection>
+
   <TabsElementMobile>
     <TabsForm>#navigation #scroller .links</TabsForm>
   </TabsElementMobile>
+
+  <RepayEarlyPaymentFailedPage>
+    <Header>#content-area .wonga-box-top-right h2</Header>
+    <ContentArea>#content-area .wonga-box-top-right</ContentArea>
+  </RepayEarlyPaymentFailedPage>
+  
+  <RepayDuePaymentFailedPage>
+    <Header>#content-area .wonga-box-top-right h2</Header>
+    <ContentArea>#content-area .wonga-box-top-right</ContentArea>
+  </RepayDuePaymentFailedPage>
+
+  <RepayOverduePaymentFailedPage>
+    <Header>#content-area .wonga-box-top-right h2</Header>
+    <ContentArea>#content-area .wonga-box-top-right</ContentArea>
+  </RepayOverduePaymentFailedPage>
+
+  <RepayEarlyPartpaySuccessPage>
+    <Header>#content-area .wonga-box-top-right h2</Header>
+    <ContentArea>#content-area .wonga-box-top-right</ContentArea>
+  </RepayEarlyPartpaySuccessPage>
+
+  <RepayDuePartpaySuccessPage>
+    <Header>#content-area .wonga-box-top-right h2</Header>
+    <ContentArea>#content-area .wonga-box-top-right</ContentArea>
+  </RepayDuePartpaySuccessPage>
+
+  <RepayOverduePartpaySuccessPage>
+    <Header>#content-area .wonga-box-top-right h2</Header>
+    <ContentArea>#content-area .wonga-box-top-right</ContentArea>
+  </RepayOverduePartpaySuccessPage>
+
+  <RepayEarlyFullpaySuccessPage>
+    <Header>#content-area .wonga-box-top-right h2</Header>
+    <ContentArea>#content-area .wonga-box-top-right</ContentArea>
+  </RepayEarlyFullpaySuccessPage>
+
+  <RepayDueFullpaySuccessPage>
+    <Header>#content-area .wonga-box-top-right h2</Header>
+    <ContentArea>#content-area .wonga-box-top-right</ContentArea>
+  </RepayDueFullpaySuccessPage>
+
+  <RepayOverdueFullpaySuccessPage>
+    <Header>#content-area .wonga-box-top-right h2</Header>
+    <ContentArea>#content-area .wonga-box-top-right</ContentArea>
+  </RepayOverdueFullpaySuccessPage>
   
 </UiMap>

@@ -8,5 +8,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
     public class DeclinedPage
     {
         public String HeaderText { get; set; }
+        public String DeclineAdvice { get; set; }
     }
 }

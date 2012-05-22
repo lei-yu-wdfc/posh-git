@@ -17,7 +17,7 @@ namespace Wonga.QA.Tests.Ui
 	[TestFixture, Parallelizable(TestScope.All)]
     class LnJourneyTests : UiTest
     {
-        [Test, AUT(AUT.Za), JIRA("QA-196"), Pending("Unexpectedly fails")]
+        [Test, AUT(AUT.Za), JIRA("QA-196"), Pending("ZA-2510"), Category(TestCategories.Smoke)]
         public void LnCustomerTakesNewLoanAndChangesTheMobilePhoneThenChangesShouldBeReflected()
         {
             var loginPage = Client.Login();
@@ -122,7 +122,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), Pending("Example of ZA Ln journey")]
+        [Test, AUT(AUT.Za)]
         public void ZaFullLnJourneyTest()
         {
             var loginPage = Client.Login();
@@ -146,7 +146,7 @@ namespace Wonga.QA.Tests.Ui
                            .CurrentPage as MySummaryPage;
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1533", "UK-1902"), Pending("Fails due to bug UK-1902")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1533", "UK-1902")]
         public void FullLnJourneyTest()
         {
             var loginPage = Client.Login();
@@ -170,11 +170,13 @@ namespace Wonga.QA.Tests.Ui
                            .CurrentPage as MySummaryPage;
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1533")]
-        public void L0LnJourneyTest()
+        [Test, AUT(AUT.Uk), JIRA("UK-886"), MultipleAsserts]
+        public void ExistingMobilePhoneNumberNotAccepted()
         {
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
+            
+            Console.WriteLine("email={0}", email);
 
             // L0 journey
             var journeyL0 = JourneyFactory.GetL0Journey(Client.Home());
@@ -187,6 +189,45 @@ namespace Wonga.QA.Tests.Ui
                 .WaitForAcceptedPage()
                 .FillAcceptedPage();
 
+            var customer = new Customer(Guid.Parse(Drive.Api.Queries.Post(new GetAccountQuery { Login = email, Password = Get.GetPassword() }).Values["AccountId"].Single()));
+            var application = customer.GetApplication();
+            
+            var mobileNumber = customer.GetCustomerMobileNumber();
+            
+
+            // Repay
+            application.RepayOnDueDate();
+
+           // Ln journey
+            var journey = JourneyFactory.GetLnJourney(Client.Home());
+            var page = journey.ApplyForLoan(200, 10);
+
+            var applyPage = page.CurrentPage as ApplyPage;
+            applyPage.SetIncorrectMobilePhone = mobileNumber;
+
+            Assert.IsTrue(applyPage.IsMobilePhonePopupCancelButtonEnabled(), "Cancel button is not enabled");
+            Assert.IsTrue(applyPage.IsMobilePhonePopupSaveButtonEnabled(), "Save button is not disabled");
+            Assert.IsTrue(applyPage.IsPhoneNumberNotChangedMessageVisible(), "Message that mobile phone number has not changed is not dispalyed");
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-1533")]
+        public void L0LnJourneyTest()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Console.WriteLine("email={0}", email);
+
+            // L0 journey
+            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home());
+            var mySummary = journeyL0.ApplyForLoan(200, 10)
+                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                .FillAddressDetails()
+                .FillAccountDetails()
+                .FillBankDetails()
+                .FillCardDetails()
+                .WaitForAcceptedPage()
+                .FillAcceptedPage();
+            
             var customer = new Customer(Guid.Parse(Drive.Api.Queries.Post(new GetAccountQuery { Login = email, Password = Get.GetPassword() }).Values["AccountId"].Single()));
             var application = customer.GetApplication();
 
@@ -204,7 +245,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-199"), Pending("Unexpectedly fails")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-199"), Pending("ZA-2510"), Category(TestCategories.Smoke)]
         public void LoggedCustomerWithoutLoanAppliesNewLoanChangesMobilePhoneAndClicksResendPinItShouldBeResent()
         {
             string email = Get.RandomEmail();

@@ -8,11 +8,11 @@ namespace Wonga.QA.Framework.Msmq
     [XmlRoot("SaveSocialDetailsMessage", Namespace = "Wonga.Risk", DataType = "")]
     public partial class SaveSocialDetailsCommand : MsmqMessage<SaveSocialDetailsCommand>
     {
+        public String VehicleRegistration { get; set; }
         public Guid AccountId { get; set; }
         public MaritalStatusEnum MaritalStatus { get; set; }
         public OccupancyStatusEnum OccupancyStatus { get; set; }
         public Int32 Dependants { get; set; }
-        public String VehicleRegistration { get; set; }
         public DateTime CreatedOn { get; set; }
         public Guid? ClientId { get; set; }
     }

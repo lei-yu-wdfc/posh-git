@@ -48,8 +48,9 @@ namespace Wonga.QA.Tests.Salesforce
             var dbBillingAddress = Drive.Data.Payments.Db.BillingAddress.FindByBillingAddressId(dbPaymentCard.BillingAddressId);
 
             Assert.AreEqual(dbBillingAddress.ExternalId.ToString(), paymentCard.V3_Billing_Address_Id__c, "BillingAddress ExternalId should match");
-            Assert.AreEqual(dbBillingAddress.AddressLine1, paymentCard.Address_Line_1__c, "BillingAddress AddressLine1 should match");
-            Assert.AreEqual(dbBillingAddress.AddressLine2, paymentCard.Address_Line_2__c, "BillingAddress AddressLine2 should match");
+            // AddressLines 1-2 are calculated now
+            //Assert.AreEqual(dbBillingAddress.AddressLine1, paymentCard.Address_Line_1__c, "BillingAddress AddressLine1 should match");
+            //Assert.AreEqual(dbBillingAddress.AddressLine2, paymentCard.Address_Line_2__c, "BillingAddress AddressLine2 should match");
             Assert.AreEqual(dbBillingAddress.Town, paymentCard.Town__c, "BillingAddress Town should match");
             Assert.AreEqual(dbBillingAddress.Country, paymentCard.Country__c, "BillingAddress Country should match");
             Assert.AreEqual(dbBillingAddress.County, paymentCard.County__c, "BillingAddress County should match");

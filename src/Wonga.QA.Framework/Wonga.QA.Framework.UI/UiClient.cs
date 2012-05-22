@@ -244,7 +244,7 @@ namespace Wonga.QA.Framework.UI
         public BrowserCapability GetBrowserCapability()
         {
             if (!Config.Ui.RemoteMode)
-                return new BrowserCapability{BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.XP, Version = null};
+                return new BrowserCapability { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.XP, Version = null };
             return
                 BrowserCapabilities.Where(
                     x =>

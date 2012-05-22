@@ -13,6 +13,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Payments.Queries
 {
     [TestFixture]
+    [Parallelizable(TestScope.All)]
     public class GetLoanAgreementsCsapiQueryTests
     {
         //private dynamic _transactions = Drive.Data.Payments.Db.Transactions;

@@ -21,6 +21,7 @@ using SignApplicationCommand = Wonga.QA.Framework.Msmq.SignApplicationCommand;
 namespace Wonga.QA.Tests.Payments.Queries
 {
     [TestFixture]
+    [Parallelizable(TestScope.All)]
     public class GetAccountOptionsTests
     {
 
@@ -87,38 +88,6 @@ namespace Wonga.QA.Tests.Payments.Queries
                 Assert.AreEqual(4, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
-       [Test, AUT(AUT.Uk), JIRA("UK-823")]
-       public void Scenario04CustomerWithLiveLoanWithAvailableCreditCantExtendOnDueDate()
-       {
-           var accountId = Guid.NewGuid();
-           var bankAccountId = Guid.NewGuid();
-           var paymentCardId = Guid.NewGuid();
-           var appId = Guid.NewGuid();
-           var setupData = new AccountSummarySetupFunctions();
-           const decimal trustRating = 400.00M;
-
-           setupData.Scenario04SetupCannotExtendOnDueDate(paymentCardId, appId, bankAccountId, accountId, trustRating);
-
-           var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
-           Assert.AreEqual(4, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
-       }
-
-       [Test, AUT(AUT.Uk), JIRA("UK-823")]
-       public void Scenario04CustomerWithLiveLoanWithAvailableCreditCantExtendOnDayBeforeDueDate()
-       {
-           var accountId = Guid.NewGuid();
-           var bankAccountId = Guid.NewGuid();
-           var paymentCardId = Guid.NewGuid();
-           var appId = Guid.NewGuid();
-           var setupData = new AccountSummarySetupFunctions();
-           const decimal trustRating = 400.00M;
-
-           setupData.Scenario04SetupCannotExtendOnDayBeforeDueDate(paymentCardId, appId, bankAccountId, accountId, trustRating);
-
-           var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
-           Assert.AreEqual(4, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
-       }  
-
         [Test, AUT(AUT.Uk), JIRA("UK-823")]
         public void Scenario05CustomerWithLiveLoanWithoutAvailableCreditCantExtendTooEarly()
         {
@@ -167,6 +136,22 @@ namespace Wonga.QA.Tests.Payments.Queries
             var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
             Assert.AreEqual(7, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
+
+		[Test, AUT(AUT.Uk), JIRA("UK-1904")]
+		public void Scenario07CustomerWithLiveLoanWithAvailableCreditCantExtendOnDueDate()
+		{
+			var accountId = Guid.NewGuid();
+			var bankAccountId = Guid.NewGuid();
+			var paymentCardId = Guid.NewGuid();
+			var appId = Guid.NewGuid();
+			var setupData = new AccountSummarySetupFunctions();
+			const decimal trustRating = 400.00M;
+
+			setupData.Scenario04SetupCannotExtendOnDueDate(paymentCardId, appId, bankAccountId, accountId, trustRating);
+
+			var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+			Assert.AreEqual(7, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
+		}
 
         [Test, AUT(AUT.Uk), JIRA("UK-823")]
         public void Scenario08CustomerRepaidLoanTodayViaScheduledPayment()

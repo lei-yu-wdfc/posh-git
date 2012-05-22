@@ -4,13 +4,12 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq
 {
-    /// <summary> Wonga.Payments.PublicMessages.IComplaintRemoved </summary>
-    [XmlRoot("IComplaintRemoved", Namespace = "Wonga.Payments.PublicMessages", DataType = "Wonga.Payments.PublicMessages.IPaymentsEvent")]
+    /// <summary> Wonga.Comms.PublicMessages.IComplaintRemoved </summary>
+    [XmlRoot("IComplaintRemoved", Namespace = "Wonga.Comms.PublicMessages", DataType = "")]
     public partial class IComplaintRemovedEvent : MsmqMessage<IComplaintRemovedEvent>
     {
         public Guid AccountId { get; set; }
         public Guid ApplicationId { get; set; }
         public Guid CaseId { get; set; }
-        public DateTime CreatedOn { get; set; }
     }
 }

@@ -1,4 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Content>
+<ContentMap>
   <YourDetails>Your Details</YourDetails>
-</Content>
+  <RepayEarlyPaymentFailedPage>
+    <HeaderText>Sorry we couldn't collect your payment</HeaderText>
+  </RepayEarlyPaymentFailedPage>
+
+  <RepayDuePaymentFailedPage>
+    <HeaderText>We tried unsuccessfully to collect your payment</HeaderText>
+  </RepayDuePaymentFailedPage>
+
+  <RepayOverduePaymentFailedPage>
+    <HeaderText>We tried unsuccessfully to collect your payment</HeaderText>
+  </RepayOverduePaymentFailedPage>
+
+  <RepayEarlyPartpaySuccessPage>
+    <HeaderText>Success! Your partial payment has gone though</HeaderText>
+  </RepayEarlyPartpaySuccessPage>
+
+  <RepayDuePartpaySuccessPage>
+    <HeaderText>Success! Your partial payment has gone though</HeaderText>
+  </RepayDuePartpaySuccessPage>
+
+  <RepayOverduePartpaySuccessPage>
+    <HeaderText>Success! Your partial payment has gone though but you still owe</HeaderText>
+  </RepayOverduePartpaySuccessPage>
+
+  <RepayEarlyFullpaySuccessPage>
+    <HeaderText>Success! Your balance has been settled in full</HeaderText>
+  </RepayEarlyFullpaySuccessPage>
+
+  <RepayDueFullpaySuccessPage>
+    <HeaderText>Success! Your balance has been settled in full</HeaderText>
+  </RepayDueFullpaySuccessPage>
+
+  <RepayOverdueFullpaySuccessPage>
+    <HeaderText>Success! Your balance has been settled in full</HeaderText>
+  </RepayOverdueFullpaySuccessPage>
+
+  <ExtensionAgreementPage>
+    <CreditInformation>PRE-CONTRACT CREDIT INFORMATION</CreditInformation>
+    <PrintThisPage>Print this page</PrintThisPage>
+    <ReadThis>Please read this document carefully and print it off for your records</ReadThis>
+  </ExtensionAgreementPage>
+
+  <L0DeclinedPage>
+    <HeaderText>Unfortunately we can’t approve your application</HeaderText>
+  </L0DeclinedPage>
+  
+  </ContentMap>

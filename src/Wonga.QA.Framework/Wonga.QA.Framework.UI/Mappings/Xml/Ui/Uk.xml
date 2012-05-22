@@ -108,6 +108,8 @@
     <EditMobileNumber>#edit-mobile-phone</EditMobileNumber>
     <PopupSaveButton>#edit-submit[value='Save']</PopupSaveButton>
     <PopupCloseButton>#edit-submit[value='Close']</PopupCloseButton>
+    <PopupCancelButton>#edit-back[value='Cancel']</PopupCancelButton>
+    <PopupErrorMessage>.messages</PopupErrorMessage>
   </ApplyPage>
 
   <PayLaterLoginPage>
@@ -162,7 +164,13 @@
     <CancelCheckBox>input[name='CancelSelected']</CancelCheckBox>
     <UpdateButton>#GridContainer > input[name='Command']</UpdateButton>
   </CashOutPage>
-  
-  
 
+  <AccountDetailsPage>
+    <FormId>.wonga-apply-lzero-form</FormId>  
+  </AccountDetailsPage>
+
+  <DeclinedPage>
+    <DeclineAdvice>.wonga-decision-box</DeclineAdvice>
+  </DeclinedPage>
+  
 </UiMap>

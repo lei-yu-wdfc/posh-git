@@ -17,29 +17,25 @@ using Wonga.QA.Framework.Data.Enums.Risk;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	
-    [TestFixture, Parallelizable(TestScope.Self)]
+	[TestFixture, Parallelizable(TestScope.All)]
 	class CheckpointReputationPredictionPositiveTests
 	{
 		private const RiskMask TestMask = RiskMask.TESTReputationtPredictionPositive;
 		private const double ReputationScoreCutoff = 200; //TODO Hardcoded in Risk for now
-    	private static string[] _factorNames;
+		private static string[] _factorNames;
 
-    	private const string OriginalDeviceAlias = "12321234123";
-    	private const string DeviceAliasMockString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <IovationDataOutput xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.datacontract.org/2004/07/Wonga.Iovation\">    <AccountId>8b415fed-ac43-4e2b-8b95-b7399de0f562</AccountId>    <Details xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">      <d2p1:KeyValueOfstringstring>        <d2p1:Key>device.alias</d2p1:Key>        <d2p1:Value>12321234123</d2p1:Value>      </d2p1:KeyValueOfstringstring>      <d2p1:KeyValueOfstringstring>        <d2p1:Key>device.firstseen</d2p1:Key>        <d2p1:Value>2010-06-01 14:43:21</d2p1:Value>      </d2p1:KeyValueOfstringstring>    </Details>    <Reason>It's ok</Reason>    <Result>Allow</Result>    <TrackingNumber>0123456798</TrackingNumber>  </IovationDataOutput>  ";
+		private const string DeviceAliasMockString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <IovationDataOutput xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.datacontract.org/2004/07/Wonga.Iovation\">    <AccountId>{0}</AccountId>    <Details xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">      <d2p1:KeyValueOfstringstring>        <d2p1:Key>device.alias</d2p1:Key>        <d2p1:Value>{1}</d2p1:Value>      </d2p1:KeyValueOfstringstring>      <d2p1:KeyValueOfstringstring>        <d2p1:Key>device.firstseen</d2p1:Key>        <d2p1:Value>2010-06-01 14:43:21</d2p1:Value>      </d2p1:KeyValueOfstringstring>    </Details>    <Reason>It's ok</Reason>    <Result>Allow</Result>    <TrackingNumber>0123456798</TrackingNumber>  </IovationDataOutput>  ";
 
-    	private Application l0Application;
+		private Application l0Application;
 
-    	[FixtureSetUp]
+		[FixtureSetUp]
 		public void FixtureSetUp()
 		{
-			Drive.Data.Ops.SetServiceConfiguration(GetUseReputationScoreModelKeyName(), true);
-
 			switch (Config.AUT)
 			{
 				case AUT.Za:
 					{
-						_factorNames = new[] { "PostcodeInArrears", "LoanNumber", "DeviceCountPostcode"};
+						_factorNames = new[] { "PostcodeInArrears", "LoanNumber", "DeviceCountPostcode" };
 
 						ResetReputationScoreCutoff();
 
@@ -61,18 +57,6 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			}
 		}
 
-		[FixtureTearDown]
-		public void FixtureTearDown()
-		{
-			ResetDeviceAliasMock();
-		}
-
-		[SetUp]
-		public void SetUp()
-		{
-			RandomiseDeviceAliasMock();
-		}
-
 		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889")]
 		public void CheckpointReputationPredictionPositiveAccept()
 		{
@@ -81,34 +65,33 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.WithPostcodeInAddress(GetPostcode())
 				.Build();
 
-            l0Application = ApplicationBuilder.New(customer).WithIovationBlackBox(IovationMockResponse.Allow).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+			var iovationBlackBox = CreateIovationMock(customer);
 
-			var actualScore = GetReputationPredictionScore(l0Application);
-			Assert.GreaterThan(actualScore, ReputationScoreCutoff);
+			try
+			{
+				l0Application = ApplicationBuilder.New(customer).WithIovationBlackBox(iovationBlackBox).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+
+				var actualScore = GetReputationPredictionScore(l0Application);
+				Assert.GreaterThan(actualScore, ReputationScoreCutoff);
+			}
+
+			finally
+			{
+				DeleteIovationMock(iovationBlackBox);
+			}
 		}
 
 		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889")]
 		public void CheckpointReputationPredictionPositiveDecline()
 		{
-			int newCutoff = 999;
-			SetReputationScoreCutoff(newCutoff);
+			var customer = CustomerBuilder.New()
+			.WithEmployer(TestMask)
+			.Build();
 
-			try
-			{
-				var customer = CustomerBuilder.New()
-				.WithEmployer(TestMask)
-				.Build();
+			var application = ApplicationBuilder.New(customer).WithIovationBlackBox(IovationMockResponse.Deny).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 
-				var application = ApplicationBuilder.New(customer).WithIovationBlackBox(IovationMockResponse.Deny).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
-
-				var actualScore = GetReputationPredictionScore(application);
-				Assert.LessThan(actualScore,newCutoff);
-			}
-
-			finally
-			{
-				ResetReputationScoreCutoff();
-			}
+			var actualScore = GetReputationPredictionScore(application);
+			Assert.LessThan(actualScore, ReputationScoreCutoff);
 		}
 
 		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889"), DependsOn("CheckpointReputationPredictionPositiveAccept")]
@@ -118,54 +101,72 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Assert.AreElementsEqualIgnoringOrder(_factorNames, actualFactorNames);
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889"), DependsOn("CheckpointReputationPredictionPositiveAccept"), Pending("Why doesn't customer go into arrears?")]
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889"), DependsOn("CheckpointReputationPredictionPositiveAccept")]
 		public void CheckpointReputationPredictionPositiveTablesUpdateWhenAccountRankIncreases()
 		{
-			var prevAccountRank = Drive.Db.Risk.RiskIovationPostcodes.Single(a => a.ApplicationId == l0Application.Id).AccountRank;
+			var prevAccountRank = (int)Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(l0Application.Id).AccountRank;
 			Assert.AreEqual(0, prevAccountRank);
 
 			l0Application.RepayOnDueDate();
 
-			Do.Until(() => Drive.Db.Risk.RiskIovationPostcodes.Single(a => a.ApplicationId == l0Application.Id).AccountRank == 1);
+			Do.Until(() => Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(l0Application.Id).AccountRank == 1);
 		}
 
 		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889")]
 		public void CheckpointReputationPredictionPositivePostCodeWithHighArrearsRateLowersScore()
 		{
 			string postcode = GetPostcode();
-
 			var customer1 = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(postcode).Build();
-			var application1 = ApplicationBuilder.New(customer1).WithIovationBlackBox(IovationMockResponse.Allow).Build();
-
-			var score1 = GetReputationPredictionScore(application1);
-
-			application1.PutApplicationIntoArrears();
-
-			RandomiseDeviceAliasMock();
-
 			var customer2 = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(postcode).Build();
-			var application2 = ApplicationBuilder.New(customer2).WithIovationBlackBox(IovationMockResponse.Allow).Build();
 
-			var score2 = GetReputationPredictionScore(application2);
+			var iovationBlackBox1 = CreateIovationMock(customer1);
+			var iovationBlackBox2 = CreateIovationMock(customer2);
 
-			Assert.LessThan(score2, score1);
+			try
+			{
+				var application1 = ApplicationBuilder.New(customer1).WithIovationBlackBox(iovationBlackBox1).Build();
+				var score1 = GetReputationPredictionScore(application1);
+
+				application1.PutApplicationIntoArrears();
+
+				var application2 = ApplicationBuilder.New(customer2).WithIovationBlackBox(iovationBlackBox2).Build();
+				var score2 = GetReputationPredictionScore(application2);
+
+				Assert.LessThan(score2, score1);
+			}
+
+			finally
+			{
+				DeleteIovationMock(iovationBlackBox1);
+				DeleteIovationMock(iovationBlackBox2);
+			}
 		}
 
 		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889")]
 		public void CheckpointReputationPredictionPositiveTablesUpdateWhenInArrears()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(GetPostcode()).Build();
-			var application = ApplicationBuilder.New(customer).Build();
+			var iovationBlackBox = CreateIovationMock(customer);
 
-			var prevInArrears = Drive.Db.Risk.RiskIovationPostcodes.Single(a => a.ApplicationId == application.Id).InArrears;
-			Assert.IsNotNull(prevInArrears);
-			Assert.IsFalse((bool) prevInArrears);
+			try
+			{
+				var application = ApplicationBuilder.New(customer).WithIovationBlackBox(iovationBlackBox).Build();
+				
+				var prevInArrears = (bool) Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(application.Id).InArrears;
+				Assert.IsNotNull(prevInArrears);
+				Assert.IsFalse((bool) prevInArrears);
 
-			application.PutApplicationIntoArrears();
+				application.PutApplicationIntoArrears();
 
-			Do.Until(() => Drive.Db.Risk.RiskIovationPostcodes.Single(a => a.ApplicationId == application.Id).InArrears);
+				Do.Until(() => (bool) Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(application.Id).InArrears);
+			}
+
+			finally
+			{
+				DeleteIovationMock(iovationBlackBox);
+			}
 		}
-		
+
 		[Test, AUT(AUT.Ca), JIRA("CA-1889")]
 		[Row(false)]
 		[Row(true)]
@@ -178,7 +179,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				//don't use mask so that the workflow builder is run!
 				var customer = CustomerBuilder.New().WithEmployer("Wonga").Build();
 
-				var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Pending).Build();
+				var application = ApplicationBuilder.New(customer).WithoutExpectedDecision().Build();
 
 				AssertCheckpointExecution(application.Id, RiskCheckpointDefinitionEnum.ReputationPredictionPositive, useScoreCard);
 				AssertVerificationExecution(application.Id, RiskVerificationDefinitions.ReputationPredictionPositiveVerification, useScoreCard);
@@ -249,41 +250,41 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			}
 		}
 
-    	private string GetCaPostCode()
-    	{
-    		ProvinceEnum province = Get.RandomEnumOf(ProvinceEnum.AB, ProvinceEnum.BC, ProvinceEnum.ON);
-    		var postCodeStart = GetCaPostCodeInitialChar(province);
+		private string GetCaPostCode()
+		{
+			ProvinceEnum province = Get.RandomEnumOf(ProvinceEnum.AB, ProvinceEnum.BC, ProvinceEnum.ON);
+			var postCodeStart = GetCaPostCodeInitialChar(province);
 
-    		return string.Format("{0}{1}{2}{3}{4}{5}",
+			return string.Format("{0}{1}{2}{3}{4}{5}",
 				postCodeStart,
 				Get.RandomInt(0, 10),
 				Get.RandomString(1).ToUpperInvariant(),
 				Get.RandomInt(0, 10),
 				Get.RandomString(1).ToUpperInvariant(),
 				Get.RandomInt(0, 10));
-    	}
+		}
 
-    	private static char GetCaPostCodeInitialChar(ProvinceEnum province)
-    	{
-    		char postCodeStart = '\0';
-    		switch (province)
-    		{
-    			case ProvinceEnum.AB:
-    				postCodeStart = 'T';
-    				break;
-    			case ProvinceEnum.BC:
-    				postCodeStart = 'V';
-    				break;
+		private static char GetCaPostCodeInitialChar(ProvinceEnum province)
+		{
+			char postCodeStart = '\0';
+			switch (province)
+			{
+				case ProvinceEnum.AB:
+					postCodeStart = 'T';
+					break;
+				case ProvinceEnum.BC:
+					postCodeStart = 'V';
+					break;
 
-    			case ProvinceEnum.ON:
-    				postCodeStart = 'K';
-    				break;
+				case ProvinceEnum.ON:
+					postCodeStart = 'K';
+					break;
 
 				default:
-    				throw new NotImplementedException();
-    		}
-    		return postCodeStart;
-    	}
+					throw new NotImplementedException();
+			}
+			return postCodeStart;
+		}
 
 		private void AssertCheckpointExecution(Guid applicationId, RiskCheckpointDefinitionEnum checkpoint, bool executed)
 		{
@@ -297,26 +298,21 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Assert.AreEqual(executed, verifications.Any(v => v.Name == Get.EnumToString(verification)));
 		}
 
-		private void RandomiseDeviceAliasMock()
+		private string CreateIovationMock(Customer customer)
 		{
-			var deviceAlias = Get.RandomLong(1000000000, 9999999999).ToString(CultureInfo.InvariantCulture);
-			SetDeviceAliasMock(deviceAlias);
+			var type = customer.Id.ToString();
+			var response = String.Format(DeviceAliasMockString, customer.Id, Get.RandomLong(1000000000, 9999999999).ToString());
+
+			Drive.Data.QaData.Db.IovationDataOutput.Insert(Type: type, Response: response, WaitTimeInSeconds: 0);
+
+			return type;
 		}
 
-		private void ResetDeviceAliasMock()
+		private void DeleteIovationMock(string type)
 		{
-			var mock = Drive.Data.QaData.Db.IovationDataOutput.FindByType("Allow");
-			mock.Response = DeviceAliasMockString;
-			Drive.Data.QaData.Db.IovationDataOutput.Update(mock);
+			Drive.Data.QaData.Db.IovationDataOutput.DeleteByType(type);
 		}
 
-		private void SetDeviceAliasMock(string deviceAlias)
-		{
-			var mock = Drive.Data.QaData.Db.IovationDataOutput.FindByType("Allow");
-			mock.Response = DeviceAliasMockString.Replace(OriginalDeviceAlias, deviceAlias);
-			Drive.Data.QaData.Db.IovationDataOutput.Update(mock);
-		}
-
-    	#endregion
+		#endregion
 	}
 }

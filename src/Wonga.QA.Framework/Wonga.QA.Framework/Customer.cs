@@ -86,7 +86,7 @@ namespace Wonga.QA.Framework
 
         public Guid GetPaymentCard()
         {
-            return Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == Id).PaymentCardsBaseEntity.ExternalId;
+            return Drive.Data.Payments.Db.AccountPreferences.FindAllByAccountId(Id).Single().PaymentCardsBase.ExternalId;
         }
 
         public void UpdateForename(String forename)
@@ -128,8 +128,14 @@ namespace Wonga.QA.Framework
         {
             var db = new DbDriver();
             AccountPreferenceEntity accountPreferenceEntity = db.Payments.AccountPreferences.Single(ap => ap.AccountId == Id);
-            accountPreferenceEntity.Ccin = "ScrubbedCcin_" + Get.RandomInt(10000, 99999);
+            accountPreferenceEntity.Ccin = "ScrubbedCcin_" + Get.RandomInt(1000000, 9999999);
             db.Payments.SubmitChanges();
+        }
+
+        public string GetCustomerMobileNumber()
+        {
+            var customerDetailsRow = Drive.Db.Comms.CustomerDetails.Single(cd => cd.AccountId == Id);
+            return customerDetailsRow.MobilePhone;
         }
 
         #endregion

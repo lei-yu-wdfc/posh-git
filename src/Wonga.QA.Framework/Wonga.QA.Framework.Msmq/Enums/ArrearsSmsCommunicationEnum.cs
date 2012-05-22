@@ -1,6 +1,5 @@
 namespace Wonga.QA.Framework.Msmq
 {
-                
     public enum ArrearsSmsCommunicationEnum
     {
         A1 = 0,

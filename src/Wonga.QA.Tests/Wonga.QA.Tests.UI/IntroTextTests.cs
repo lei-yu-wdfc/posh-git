@@ -67,7 +67,8 @@ namespace Wonga.QA.Tests.Ui
             // Check the actual text
             string actuallntroText = mySummaryPage.GetIntroText;
             string expectedIntroText = introTexts[1];
-            expectedIntroText = expectedIntroText.Replace("{first name}", journey.FirstName).Replace("{500}", "400.00"); 
+            expectedIntroText = expectedIntroText.Replace("{first name}", journey.FirstName).Replace("{500}", "400.00");
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(1));
             Assert.AreEqual(expectedIntroText, actuallntroText);
         }
 
@@ -96,6 +97,7 @@ namespace Wonga.QA.Tests.Ui
             string actuallntroText = mySummaryPage.GetIntroText;
             string expectedIntroText = introTexts[1];
             expectedIntroText = expectedIntroText.Replace("{first name}", customer.GetCustomerFullName().Split(' ')[0]).Replace("{500}", "400.00");
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(1));
             Assert.AreEqual(expectedIntroText, actuallntroText);
         }
 
@@ -106,42 +108,36 @@ namespace Wonga.QA.Tests.Ui
         public void IntroTextScenario2(int scenarioId, int dayShift) { IntroText(scenarioId, dayShift); }
 
         [Test, AUT(AUT.Uk), JIRA("UK-788")]
-        //[Row(3, 3, 10)]
-        //[Row(3, 7, 10)]
-        //[Row(3, 9, 10)]
-        [Row(3, 0, 1), Pending("Fails due to bug UK-1903")] //0 days passed in 1-day loan
-        //[Row(3, 0, 7)] //0 days passed in 7-day loan
-        //[Row(3, 6, 7)] //6 days passed in 7-day loan
+        [Row(3, 3, 10)]
+        [Row(3, 7, 10)]
+        [Row(3, 8, 10)]
+        [Row(3, 0, 7)] //0 days passed in 7-day loan
         public void IntroTextScenario3(int scenarioId, int dasyShift, int loanTerm)
         {
             IntroText(scenarioId, dasyShift, loanTerm);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-788")]
-        [Row(4, 10, 10), Pending("Fails due to bug UK-1904")]    // payment missed and Next Due Date is today
-        //[Row(4, 1, 1)]      //1 day passed in 1-day loan, payment missed and Next Due Date is today
-        //[Row(4, 7, 7)]      //7 days passed in 7-day loan, payment missed and Next Due Date is today
-        // [Row(4, 1, 7)]      //1 day passed in 7-day loan, payment missed and Next Due Date is today. TBD: create test for the variant when 3 (=maximum) extensions have been made and it is 1st day after a 7 day loan is taken")
-        // [Row(4, 10, 10)]    //10 days passed in 10-day loan, payment missed and Next Due Date is today. TBD: create test for the variant when 3 (=maximum) extensions have been made and it is 1st day after a 7 day loan is taken")
-        // [Row(3, 6, 10)]     //6 days passed in 10-day loan, payment missed and Next Due Date is today. TBD: create test for the variant when 2 (< maximum) extensions have been made and it is 6th day after a 10 day loan is taken. The message shold like from scenario 3")
-        // [Row(2, 1, 10)]     //1 days passed in 10-day loan, payment missed and Next Due Date is today. TBD: create test for the variant when 1 (< maximum) extensions have been made and it is 1st day after a 10 day loan is taken. The message shold like from scenario 2")
+        [Test, AUT(AUT.Uk), JIRA("UK-788"), Pending("Check that after 3 extensions we get scenario 4. Passed manually.")]
+        // [Row(4, 2, 7)]
         public void IntroTextScenario4(int scenarioId, int dasyShift, int loanTerm)
         {
             IntroText(scenarioId, dasyShift, loanTerm);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-788")]
-        [Row(5, 2), Pending("Fails due to bug UK-1909")]    
+        [Test, AUT(AUT.Uk), JIRA("UK-788","UK-1909")]
+        [Row(5, 2)]    
         public void IntroTextScenario5(int scenarioId, int dasyShift)
         {
             IntroText(scenarioId, dasyShift);
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-788")]
-        [Row(6, 3)]
-        public void IntroTextScenario6(int scenarioId, int dasyShift)
+        [Row(6, 0, 1)] //0 days passed in 1-day loan
+        [Row(6, 3, 10)] //3 days passed in 10-day loan
+        [Row(6, 6, 7)]  //6 days passed in 7-day loan
+        public void IntroTextScenario6(int scenarioId, int dasyShift, int loanTerm)
         {
-            IntroText(scenarioId, dasyShift);
+            IntroText(scenarioId, dasyShift, loanTerm);
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-788")]
@@ -152,7 +148,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-788")]
-        [Row(8, 10), Pending("Fails due to bug UK-1913")]
+        [Row(8, 10), Pending(" UK-1913 Waiting for implementation of GetRepayLoanStatus")]
         public void IntroTextScenario8(int scenarioId, int dasyShift)
         {
             IntroText(scenarioId, dasyShift);
@@ -192,6 +188,7 @@ namespace Wonga.QA.Tests.Ui
             var expectedIntroText = introTexts[scenarioId].Replace("{first name}", customer.GetCustomerFullName().Split(' ')[0]);
             expectedIntroText = expectedIntroText.Replace("Your promised repayment of £{456.34}", "Your promised repayment of £" + expectedNextDueDateRepay.ToString("#.00"));
             string actualIntroText = mySummaryPage.GetIntroText;
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId));
             Assert.AreEqual(expectedIntroText, actualIntroText);
         }
 
@@ -231,6 +228,7 @@ namespace Wonga.QA.Tests.Ui
             expectedIntroText = expectedIntroText.Replace("Your repayment of £{456.34}", "Your repayment of £" + expectedBalanceToday);
             expectedIntroText = expectedIntroText.Replace("promised on {date}", "promised on " + expectedNextDueDate);
             string actualIntroText = mySummaryPage.GetIntroText;
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId));
             Assert.AreEqual(expectedIntroText, actualIntroText);
         }
 
@@ -243,7 +241,7 @@ namespace Wonga.QA.Tests.Ui
             IntroText(scenarioId, dasyShift);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-788"), Pending("Waiting when incorrect formatting is fixed - '...now31 days ...'")]
+        [Test, AUT(AUT.Uk), JIRA("UK-788", "UK-1954")]
         [Row(12, 41)]
         [Row(12, 42)]
         [Row(12, 70)]
@@ -252,11 +250,11 @@ namespace Wonga.QA.Tests.Ui
             IntroText(scenarioId, dasyShift);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-788")]
+        [Test, AUT(AUT.Uk), JIRA("UK-788", "UK-1966")]
         [Row(13, 71)]
-        //[Row(13, 72)]
+        [Row(13, 72)]
         [Row(13, 100)]
-        //[Row(13, 1000)]
+        [Row(13, 1000)]
         public void IntroTextScenario13(int scenarioId, int dasyShift)
         {
             IntroText(scenarioId, dasyShift);
@@ -293,6 +291,7 @@ namespace Wonga.QA.Tests.Ui
             
             string expectedIntroText = introTexts[scenarioId].Replace("{first name}", customer.GetCustomerFullName().Split(' ')[0]);
             string actualIntroText = mySummaryPage.GetIntroText;
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId));
             Assert.AreEqual(expectedIntroText, actualIntroText);
         }
 
@@ -325,6 +324,7 @@ namespace Wonga.QA.Tests.Ui
 
             string expectedIntroText = introTexts[scenarioId].Replace("{first name}", customer.GetCustomerFullName().Split(' ')[0]);
             string actualIntroText = mySummaryPage.GetIntroText;
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId));
             Assert.AreEqual(expectedIntroText, actualIntroText);
         }
 
@@ -357,12 +357,14 @@ namespace Wonga.QA.Tests.Ui
 
             string expectedIntroText = introTexts[scenarioId].Replace("{first name}", customer.GetCustomerFullName().Split(' ')[0]);
             string actualIntroText = mySummaryPage.GetIntroText;
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId));
             Assert.AreEqual(expectedIntroText, actualIntroText);
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-788")]
         public void IntroTextScenario17()
         {
+            var scenarioId = 17;
             const int loanAmount = 100;
             const int days = 10;
             string email = Get.RandomEmail();
@@ -382,6 +384,7 @@ namespace Wonga.QA.Tests.Ui
             string actuallntroText = mySummaryPage.GetIntroText;
             string expectedIntroText = introTexts[17];
             expectedIntroText = expectedIntroText.Replace("{first name}", journey.FirstName);
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId));
             Assert.AreEqual(expectedIntroText, actuallntroText);
         }
 
@@ -394,6 +397,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk), JIRA("UK-788")]
         public void IntroTextScenario21()
         {
+            var scenarioId = 21;
             const int loanAmount = 100;
             const int days = 10;
             string email = Get.RandomEmail();
@@ -414,6 +418,7 @@ namespace Wonga.QA.Tests.Ui
             string actuallntroText = mySummaryPage.GetIntroText;
             string expectedIntroText = introTexts[21];
             expectedIntroText = expectedIntroText.Replace("{first name}", journey.FirstName);
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId));
             Assert.AreEqual(expectedIntroText, actuallntroText);
         }
 
@@ -485,7 +490,7 @@ namespace Wonga.QA.Tests.Ui
 
             var response = Drive.Api.Queries.Post(new GetFixedTermLoanApplicationQuery { ApplicationId = application.Id });
             var expectedAvailableCredit = Convert.ToDecimal(response.Values["AvailableCredit"].Single());
-            expectedIntroText = expectedIntroText.Replace("You currently have up to £{245.00}", "You currently have up to £" + expectedAvailableCredit.ToString("#.00"));
+            expectedIntroText = expectedIntroText.Replace("You currently have up to £{245.00}", "You currently have up to £" + String.Format("{0:0.00}", expectedAvailableCredit));
             
 
             var expectedNextDueDateRepay = Convert.ToDecimal(response.Values["BalanceNextDueDate"].Single());
@@ -494,7 +499,7 @@ namespace Wonga.QA.Tests.Ui
             TimeSpan daysInArrears = DateTime.Today - dExpectedNextDueDate;
 
 
-            expectedIntroText = expectedIntroText.Replace("you promised to repay £{425.00}", "you promised to repay £" + expectedNextDueDateRepay.ToString("#.##"));
+            expectedIntroText = expectedIntroText.Replace("you promised to repay £{425.00}", "you promised to repay £" + String.Format("{0:0.00}", expectedNextDueDateRepay));
             expectedIntroText = expectedIntroText.Replace("on {Friday 13 Feb 2011}", "on " + expectedNextDueDate);
             expectedIntroText = expectedIntroText.Replace("We collected your full payment of £{300} today", "We collected your full payment of £" + expectedDueDateBalance + " today");
             expectedIntroText = expectedIntroText.Replace("your current Wonga trust rating of £{500}", "your current Wonga trust rating of £" + expectedAmountMax);
@@ -504,7 +509,8 @@ namespace Wonga.QA.Tests.Ui
             expectedIntroText = expectedIntroText.Replace("you can apply for up to £{400}", "you can apply for up to £" + expectedAmountMax);
              
             string actuallntroText = mySummaryPage.GetIntroText;
-             
+
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId));
             Assert.AreEqual(expectedIntroText, actuallntroText);
         }
 

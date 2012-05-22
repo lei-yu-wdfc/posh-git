@@ -12,5 +12,6 @@ namespace Wonga.QA.Framework.Msmq
         public Guid AccountId { get; set; }
         public Guid FileId { get; set; }
         public Boolean Successful { get; set; }
+        public Guid OriginatingSagaId { get; set; }
     }
 }
