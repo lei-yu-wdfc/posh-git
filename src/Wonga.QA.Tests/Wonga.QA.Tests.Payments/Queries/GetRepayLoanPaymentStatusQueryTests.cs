@@ -34,8 +34,8 @@ namespace Wonga.QA.Tests.Payments.Queries
             var paymentCardId = Guid.NewGuid();
             setup.RepayEarlyOnLoanStartDate(appId, paymentCardId, Guid.NewGuid(), Guid.NewGuid(), 400.00M);
 
-            
-            var response = Drive.Api.Commands.Post(new RepayLoanViaCardCommand { ApplicationId = appId, RepaymentRequestId = requestId, ActionDate = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd"), Amount = 5.50M, CashEntityId = paymentCardId, PaymentCardCv2 = 123 });
+
+            Drive.Api.Commands.Post(new RepayLoanViaCardCommand {ApplicationId = appId, PaymentRequestId = requestId, Amount = 5.50M, PaymentCardId = paymentCardId, PaymentCardCv2 = 123});
             
             // Check Repayment Exists in DB
             Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.RepaymentRequestDetails.FindByExternalId(requestId));

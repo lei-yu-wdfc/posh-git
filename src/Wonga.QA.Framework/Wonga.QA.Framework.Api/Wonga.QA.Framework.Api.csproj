@@ -164,6 +164,7 @@
     <Compile Include="Requests\GetMatchingAccountsQuery.cs" />
     <Compile Include="Requests\GetMigratedStatusQuery.cs" />
     <Compile Include="Requests\GetNextRepaymentDateUkQuery.cs" />
+    <Compile Include="Requests\GetOrganisationDetailsQuery.cs" />
     <Compile Include="Requests\GetOrganisationGuarantorsQuery.cs" />
     <Compile Include="Requests\GetPasswordRecoveryDetailsQuery.cs" />
     <Compile Include="Requests\GetPasswordResetKeyQuery.cs" />
@@ -202,6 +203,12 @@
     <Compile Include="Requests\ResetPasswordCommand.cs" />
     <Compile Include="Requests\RiskCreateBusinessFixedInstallmentLoanApplicationWbCommand.cs" />
     <Compile Include="Requests\RiskCreateFixedTermLoanApplicationCommand.cs" />
+    <Compile Include="Requests\RiskSaveCustomerAddressCaCommand.cs" />
+    <Compile Include="Requests\RiskSaveCustomerAddressUkCommand.cs" />
+    <Compile Include="Requests\RiskSaveCustomerAddressZaCommand.cs" />
+    <Compile Include="Requests\RiskSaveCustomerDetailsCaCommand.cs" />
+    <Compile Include="Requests\RiskSaveCustomerDetailsUkCommand.cs" />
+    <Compile Include="Requests\RiskSaveCustomerDetailsZaCommand.cs" />
     <Compile Include="Requests\SampleCommand.cs" />
     <Compile Include="Requests\SampleQuery.cs" />
     <Compile Include="Requests\SaveContactPreferencesCommand.cs" />
@@ -259,6 +266,7 @@
     <Compile Include="Requests\VerifyMobilePhoneZaCommand.cs" />
     <Compile Include="Requests\VerifyPaylaterCheckoutUkQuery.cs" />
     <Compile Include="Enums\AdditionalPaymentCardDetailsEnum.cs" />
+    <Compile Include="Enums\CardPaymentStatusEnum.cs" />
     <Compile Include="Enums\CountryCodeEnum.cs" />
     <Compile Include="Enums\CurrencyCodeEnum.cs" />
     <Compile Include="Enums\DeclineAdviceKeyEnum.cs" />
@@ -271,13 +279,15 @@
     <Compile Include="Enums\GenderEnum.cs" />
     <Compile Include="Enums\IncomeFrequencyEnum.cs" />
     <Compile Include="Enums\LanguageZaEnum.cs" />
+    <Compile Include="Enums\LoanStatusEnum.cs" />
     <Compile Include="Enums\MaritalStatusEnum.cs" />
     <Compile Include="Enums\OccupancyStatusEnum.cs" />
     <Compile Include="Enums\PasswordResetKeyComplexityEnum.cs" />
     <Compile Include="Enums\PaymentFrequencyEnum.cs" />
     <Compile Include="Enums\PaymentMethodEnum.cs" />
+    <Compile Include="Enums\PaymentTransactionEnum.cs" />
+    <Compile Include="Enums\PaymentTransactionScopeEnum.cs" />
     <Compile Include="Enums\ProvinceEnum.cs" />
-    <Compile Include="Enums\RiskCurrencyCodeEnum.cs" />
     <Compile Include="Enums\SliderPositionEnum.cs" />
     <Compile Include="Enums\TitleEnum.cs" />
   </ItemGroup>

@@ -13,6 +13,8 @@ using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Framework.Mocks;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Framework.Db.Risk;
+using PaymentTransactionEnum = Wonga.QA.Framework.Msmq.PaymentTransactionEnum;
+using PaymentTransactionScopeEnum = Wonga.QA.Framework.Msmq.PaymentTransactionScopeEnum;
 
 namespace Wonga.QA.Framework
 {

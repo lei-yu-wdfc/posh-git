@@ -6,6 +6,7 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
+using PaymentTransactionEnum = Wonga.QA.Framework.Msmq.PaymentTransactionEnum;
 
 namespace Wonga.QA.Tests.Payments
 {

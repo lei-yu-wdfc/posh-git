@@ -16,6 +16,8 @@ using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
 using System.Threading;
 using CreateTransactionCommand = Wonga.QA.Framework.Msmq.CreateTransactionCommand;
+using PaymentTransactionEnum = Wonga.QA.Framework.Msmq.PaymentTransactionEnum;
+using PaymentTransactionScopeEnum = Wonga.QA.Framework.Msmq.PaymentTransactionScopeEnum;
 
 namespace Wonga.QA.Tests.Payments
 {
