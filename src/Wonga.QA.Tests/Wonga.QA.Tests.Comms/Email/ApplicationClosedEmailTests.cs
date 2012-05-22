@@ -10,6 +10,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Comms.Email
 {
     [TestFixture, AUT(AUT.Wb)]
+    [Parallelizable(TestScope.All)]
     public class ApplicationClosedEmailTests
     {
         private BusinessApplication applicationInfo;
