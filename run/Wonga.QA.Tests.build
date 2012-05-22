@@ -40,6 +40,7 @@
 			<Command Include='"$(MSBuildProgramFiles32)\Microsoft\ILMerge\ILMerge.exe"' />
 			<Command Include="/targetplatform:v4,$(MSBuildToolsPath)" />
 			<Command Include="/out:$(Bin)\$(Tests).dll" />
+			<Command Include="$(Bin)\$(Tests).Core.dll" />
 			<Command Include="$(Bin)\$(Tests).*.dll" Exclude="@(Exclude)" />
 		</ItemGroup>
 		<Exec Command="@(Command, ' ')" />
