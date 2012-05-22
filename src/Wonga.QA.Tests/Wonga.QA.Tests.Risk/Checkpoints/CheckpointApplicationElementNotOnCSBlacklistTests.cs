@@ -6,6 +6,7 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
+using System;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
