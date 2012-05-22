@@ -36,7 +36,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
                  case AUT.Uk:
             		{
             			var dateOfBirth = Get.GetDoB();
-            			var bankAccountNumber = Get.GetBankAccountNumber();
+                        var bankAccountNumber = Get.RandomLong(10000000, 99999999).ToString();
 
                         var customer = CustomerBuilder.New()
 							.WithEmployer(_testMask)
