@@ -182,15 +182,18 @@ namespace Wonga.QA.Tests.Payments
 			//Therefore delay is necessay
 			Do.Until(() => app.IsClosed == false);
 
-
-			var query = new GetLoanAgreementsQuery() { AccountId = customer.Id, IsActive = null };
-			CsResponse response = Drive.Cs.Queries.Post(query);
-			Application[] applications = customer.GetApplications();
-
-			//Assert.IsNotNull(response.Values["ClosedOn"].SingleOrDefault());
-			Assert.AreEqual<decimal>(0, decimal.Parse(response.Values["TodaysBalance"].SingleOrDefault()));
-			Assert.AreEqual<decimal>(0, decimal.Parse(response.Values["FinalBalance"].SingleOrDefault()));
-
+			Do.Until( () => decimal.Parse(GetLoanAgreements(customer).Values["TodaysBalance"].SingleOrDefault()) == 0);
+			Do.Until(() => decimal.Parse(GetLoanAgreements(customer).Values["FinalBalance"].SingleOrDefault()) == 0);
 		}
+
+		#region Helpers
+
+		private CsResponse GetLoanAgreements(Customer customer)
+		{
+			var query = new GetLoanAgreementsQuery() { AccountId = customer.Id, IsActive = null };
+			return Drive.Cs.Queries.Post(query);
+		}
+
+		#endregion
 	}
 }
