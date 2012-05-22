@@ -193,10 +193,10 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Uk), JIRA("UK-427", "Uk-1862", "UK-2121")]
+        [Test, AUT(AUT.Uk), JIRA("UK-427", "Uk-1862", "UK-2121"), MultipleAsserts, Pending("UK-2262")]
         [Row(1, 2, 1)]
-        [Row(1, 7, 1)]
-        [Row(10, 7, 6)]
+        [Row(1, 7, 1)] // UK-2262
+        [Row(10, 7, 6)] // UK-2262
         public void ExtensionRequestPageNDaysAfterLoanTakenTest(int loanAmount, int loanTerm, int daysAfterLoan)
         {
             ExtensionRequestPageNDaysAfterLoanTaken(loanAmount, loanTerm, daysAfterLoan);
