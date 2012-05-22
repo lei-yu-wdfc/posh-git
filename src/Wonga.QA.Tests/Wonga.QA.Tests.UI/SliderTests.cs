@@ -453,52 +453,56 @@ namespace Wonga.QA.Tests.Ui
             var page = Client.Home();
 
             #region enter an empty string
+
+            var currentHowMuch = page.Sliders.HowMuch;
+            var currentHowLong = page.Sliders.HowLong;
+       
             page.Sliders.HowMuch = "";
             page.Sliders.HowLong = "";
-            Assert.AreEqual(_amountMin.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
-            Thread.Sleep(1000);
-            page.Sliders.HowMuch = ""; // to lost focus
-            Thread.Sleep(1000);
-            Assert.AreEqual(_termMin.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
+
+            Assert.AreEqual(currentHowMuch, page.Sliders.HowMuch);
+            Assert.AreEqual(currentHowLong, page.Sliders.HowLong);
             #endregion
 
+            
+            
             #region enter negative values
             page.Sliders.HowMuch = "-200";
             page.Sliders.HowLong = "-10";
             Assert.AreEqual("200", page.Sliders.HowMuch);
-            Thread.Sleep(1000);
-            page.Sliders.HowMuch = ""; // to lost focus
-            Thread.Sleep(1000);
             Assert.AreEqual("10", page.Sliders.HowLong);
             #endregion
-
+            
+            
             #region enter letters
+
+            currentHowMuch = page.Sliders.HowMuch;
+            currentHowLong = page.Sliders.HowLong;
+
             page.Sliders.HowMuch = "sdfgsghfg";
             page.Sliders.HowLong = "sdfgsghfg";
-            Assert.AreEqual(_amountMin.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
-            Thread.Sleep(1000);
-            page.Sliders.HowMuch = ""; // to lost focus
-            Thread.Sleep(1000);
-            Assert.AreEqual(_termMin.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
-            #endregion
 
+            Assert.AreEqual(currentHowMuch, page.Sliders.HowMuch);
+            Assert.AreEqual(currentHowLong, page.Sliders.HowLong);
+            #endregion
+            
+            
             #region enter bigger than max possible values
             page.Sliders.HowMuch = "5000";
             page.Sliders.HowLong = "100";
             Assert.AreEqual(_amountMax.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
-            Thread.Sleep(1000);
             Assert.AreEqual(_termMax.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
             #endregion
 
+            
             #region enter mixed data
             page.Sliders.HowMuch = "kjh2-dsf0sdf0";
             page.Sliders.HowLong = "dfg1dfg-0df";
             Assert.AreEqual("200", page.Sliders.HowMuch);
-            Thread.Sleep(1000);
-            page.Sliders.HowMuch = ""; // to lost focus
-            Thread.Sleep(1000);
             Assert.AreEqual("10", page.Sliders.HowLong);
             #endregion
+            
+
         }
 
         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-283"), Pending("CA code appearing in ZA - Michael Nowicki to fix")]
