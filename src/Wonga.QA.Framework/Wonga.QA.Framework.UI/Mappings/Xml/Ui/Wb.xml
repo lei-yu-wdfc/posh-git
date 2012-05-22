@@ -75,8 +75,11 @@
   </AddAditionalDirectorsPage>
 
   <ApplyTermsPage>
+    <FormId>#apply-terms-sliders</FormId>
     <NextButton>#edit-submit</NextButton>
     <EditLoanDurationField>#edit-loan-duration</EditLoanDurationField>
+    <TermsOfLoan>#wonga-slider-loan-summary-header span.weekly-term</TermsOfLoan>
+    <LoanAmount>#wonga-slider-loan-summary span.loan-amount</LoanAmount>
   </ApplyTermsPage>
 
   <BankAccountPage>
@@ -94,6 +97,8 @@
     <AcceptBusinessLoan>#terms-accept .button</AcceptBusinessLoan>
     <AcceptGuarantorLoan>#guarantor-accept .button</AcceptGuarantorLoan>
     <SubmitButton>#edit-accept</SubmitButton>
+    <LoanAmount>#agreementscroll>p:nth-child(18)</LoanAmount>
+    <TermsOfLoan>#agreementscroll p:nth-child(15)</TermsOfLoan>
   </AcceptedPage>
 
   <DealDonePage>
@@ -111,6 +116,7 @@
   </ReferPage>
 
   <MySummaryPage>
+	<AccountStatusText>#content-area p</AccountStatusText>
     <Title>#business-summary</Title>
   </MySummaryPage>
 
@@ -157,7 +163,7 @@
 
 
   <MyAccountNavigationSection>
-    <MySummary>div#block-wonga-6 ul.menu>li:nth-child(1)>a</MySummary>
+    <MySummary>.leaf.first.menu-mlid-2872 a</MySummary>
     <AccountDetails>div#block-wonga-6 ul.menu>li:nth-child(2)>a</AccountDetails>
     <YourDetails>div#block-wonga-6 ul.menu>li:nth-child(3)>a</YourDetails>
   
@@ -213,4 +219,9 @@
 	<AccountDetailsPage>
 		<FormId>#account-setup-1</FormId>
 	</AccountDetailsPage>
+
+  <HomePageWelcomePopup>
+    <Frame>#wonga_welcome_popup_floating_blob</Frame>
+    <Close>.close-btn</Close>
+  </HomePageWelcomePopup>
 </UiMap>

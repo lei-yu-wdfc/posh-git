@@ -10,6 +10,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Payments
 {
 	[TestFixture]
+    [Parallelizable(TestScope.All)]
 	public class FixedTermLoanRepayTest
 	{
 		[Test, AUT(AUT.Uk), JIRA("UK-921"), Description("")]

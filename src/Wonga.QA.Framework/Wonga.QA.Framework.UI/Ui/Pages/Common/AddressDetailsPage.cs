@@ -72,7 +72,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _postCode = _form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.Postcode));
             _houseNumber = _form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.HouseNumber));
             _addressPeriod = _form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.AddressPeriod));
-            _next = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.NextButton));
+            _next = _form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.NextButton));
 
             switch (Config.AUT)
             {

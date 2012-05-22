@@ -18,6 +18,7 @@ namespace Wonga.QA.Framework.Data
         private Lazy<PaymentsDatabase> _payments = new Lazy<PaymentsDatabase>(() => new PaymentsDatabase(Config.Db.Payments));
         private Lazy<RiskDatabase> _risk = new Lazy<RiskDatabase>(() => new RiskDatabase(Config.Db.Risk));
         private Lazy<BiDatabase> _bi = new Lazy<BiDatabase>(() => new BiDatabase(Config.Db.Bi));
+        private Lazy<BiCustomerManagementDatabase>  _biCM = new Lazy<BiCustomerManagementDatabase>(() => new BiCustomerManagementDatabase(Config.Db.BiCustomerManagement));
         private Lazy<BankGatewayDatabase> _bankGateway = new Lazy<BankGatewayDatabase>(() => new BankGatewayDatabase(Config.Db.BankGateway));
         private Lazy<BlacklistDatabase> _blacklist = new Lazy<BlacklistDatabase>(() => new BlacklistDatabase(Config.Db.Blacklist));
         private Lazy<CallReportDatabase> _callReport = new Lazy<CallReportDatabase>(() => new CallReportDatabase(Config.Db.CallReport));
@@ -48,6 +49,7 @@ namespace Wonga.QA.Framework.Data
         public PaymentsDatabase Payments { get { return _payments.Value; } }
         public RiskDatabase Risk { get { return _risk.Value; } }
         public BiDatabase Bi { get { return _bi.Value; } }
+        public BiCustomerManagementDatabase BiCustomerManagement { get { return _biCM.Value; } }
         public BankGatewayDatabase BankGateway { get { return _bankGateway.Value; } }
         public BlacklistDatabase Blacklist { get { return _blacklist.Value; } }
         public CallReportDatabase CallReport { get { return _callReport.Value; } }

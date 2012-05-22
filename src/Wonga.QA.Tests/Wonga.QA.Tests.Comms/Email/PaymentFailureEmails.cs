@@ -13,7 +13,8 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Comms.PaymentFailureEmailTests
 {
-    [TestFixture, AUT(AUT.Wb)]    
+    [TestFixture, AUT(AUT.Wb)]
+    [Parallelizable(TestScope.Self)]
     class PaymentFailureEmails
     {
         private BusinessApplication _applicationInfo;
@@ -30,8 +31,8 @@ namespace Wonga.QA.Tests.Comms.PaymentFailureEmailTests
         public void EmailIsSentToCustomerOnCollectionFailure()
         {
             Assert.IsNotNull(_applicationInfo.GetPaymentPlan());
-            _applicationInfo.FirstCollectionAttempt(null, false, false);
-            _applicationInfo.SecondCollectionAttempt(false);
+            _applicationInfo.MorningCollectionAttempt(null, false, false);
+            _applicationInfo.AfternoonCollectionAttempt(false);
 
             Do.Until(() => Drive.Db.OpsSagasWb.FirstPaymentRequestFailedSagaEntities.Single(t => t.ApplicationId == _applicationInfo.Id
                                                                                                    && t.EmailSent == true));

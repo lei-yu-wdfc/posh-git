@@ -213,35 +213,6 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Do.With.Message("Transactions for application {0} were not created.", appId).Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 2);
         }
 
-        /// <summary>
-        /// Setup for Cannot Extend On Day Before Due Date
-        /// </summary>
-        public void Scenario04SetupCannotExtendOnDayBeforeDueDate(Guid paymentCardId, Guid appId, Guid bankAccountId, Guid accountId, decimal trustRating)
-        {
-            CheckExtensionIsEnabled();
-
-            // Create Account so that time zone can be looked up
-            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
-
-            // Create Application 
-            CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
-            Drive.Msmq.Payments.Send(new ICreditLimitChangedEvent() { AccountId = accountId, CreatedOn = DateTime.UtcNow, CreditLimit = 400.00M });
-
-            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-            Thread.Sleep(250);
-            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-
-            // Check App Exists in DB
-            Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
-            
-            // Alter NextDueDate & AcceptedOn
-            MakeAppDueYesterday(appId);
-
-            // Check transactions have been created
-            var application = Drive.Data.Payments.Db.Applications.FindByExternalId(appId);
-            Do.With.Message("Transactions for application {0} were not created.", appId).Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 2);
-        }
-
         public void Scenario05Setup(Guid paymentCardId, Guid appId, Guid bankAccountId, Guid accountId, decimal trustRating)
         {
             CheckExtensionIsEnabled();

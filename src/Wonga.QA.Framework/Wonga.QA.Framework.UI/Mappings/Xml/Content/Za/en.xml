@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Content>
+<ContentMap>
   <YourDetails>Your Details</YourDetails>
 	<ProblemProcessingDetailsMessage>There was a problem processing your details. Please try again.</ProblemProcessingDetailsMessage>
 	<PasswordWarningMessage>Sorry, your password cannot match your username</PasswordWarningMessage>
@@ -24,4 +24,11 @@
 		<ResendPinMessage1>Your pin has now been resent to your phone. You should receive it within a few minutes.</ResendPinMessage1>
 		<ResendPinMessage2>We have resent your PIN.</ResendPinMessage2>
 	</MobilePinVerificationSection>
-	</Content>
+  <AddressDetailsPage>
+    <PostcodeError>Sorry, that is not a valid postcode.</PostcodeError>
+  </AddressDetailsPage>
+
+	<MyPaymentsPage>
+		<InvalidBankAccountWarning>Please enter a valid bank account number</InvalidBankAccountWarning>
+	</MyPaymentsPage>
+	</ContentMap>

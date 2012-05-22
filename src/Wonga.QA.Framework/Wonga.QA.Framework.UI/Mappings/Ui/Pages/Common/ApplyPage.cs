@@ -13,5 +13,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String PopupCloseButton { get; set; }
         public String BankAccount { get; set; }
         public String ResendPin { get; set; }
+        public String PopupCancelButton { get; set; }
+        public String PopupErrorMessage { get; set; }
     }
 }

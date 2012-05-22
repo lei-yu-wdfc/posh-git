@@ -9,6 +9,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Ui.Admin
 {
     [TestFixture]
+    [Parallelizable(TestScope.All)]
     public class MatchingTests
     {
         //private Customer customer;

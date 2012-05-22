@@ -54,5 +54,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
             _next.Click();
             return new PersonalDetailsPage(Client);
         }
+        public void ClickNextButton()
+        {
+            _next.Click();
+        }
     }
 }

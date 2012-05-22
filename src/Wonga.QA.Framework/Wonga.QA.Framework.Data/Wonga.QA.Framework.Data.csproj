@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Databases\AccountingDatabase.cs" />
@@ -43,6 +45,7 @@
     <Compile Include="Databases\CallValidateDatabase.cs" />
     <Compile Include="Databases\CardPaymentDatabase.cs" />
     <Compile Include="Databases\ColdStorageDatabase.cs" />
+    <Compile Include="Databases\BiCustomerManagementDatabase.cs" />
     <Compile Include="Databases\SchedulerDatabase.cs" />
     <Compile Include="Databases\WongaPayDatabase.cs" />
     <Compile Include="Databases\UruDatabase.cs" />

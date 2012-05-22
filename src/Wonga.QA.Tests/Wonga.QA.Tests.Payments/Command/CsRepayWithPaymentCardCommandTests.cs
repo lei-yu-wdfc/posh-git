@@ -59,7 +59,8 @@ namespace Wonga.QA.Tests.Payments.Command
                                                                            PaymentCardId = _cardId,
                                                                            PaymentId = _paymentId});
             }
-            
+
+            [Parallelizable(TestScope.Self)]
             public class GivenAPaymentHasBeenRequestedWithAValidCard : GivenACustomerWithAnApprovedLoan
             {
                 [SetUp]
@@ -82,6 +83,7 @@ namespace Wonga.QA.Tests.Payments.Command
                 protected override void UpdateCardExpiryDate() { } //Do nothing.
             }
 
+            [Parallelizable(TestScope.Self)]
             public class GivenAPaymentHasBeenRequestedWithAnInvalidCard : GivenACustomerWithAnApprovedLoan
             {
                 [SetUp]

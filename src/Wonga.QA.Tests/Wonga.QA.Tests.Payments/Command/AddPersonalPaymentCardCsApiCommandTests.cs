@@ -10,6 +10,7 @@ using Wonga.QA.Framework.Cs;
 
 namespace Wonga.QA.Tests.Payments.Command
 {
+    [Parallelizable(TestScope.Self)]
     [TestFixture]
     public class AddPersonalPaymentCardCsApiCommandTests
     {

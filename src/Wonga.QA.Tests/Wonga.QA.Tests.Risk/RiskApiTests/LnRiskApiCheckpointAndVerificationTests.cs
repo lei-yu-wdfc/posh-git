@@ -13,9 +13,10 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.RiskApiTests
 {
+    [Parallelizable(TestScope.All)]
 	public class LnRiskApiCheckpointAndVerificationTests : BaseLnRiskApiCheckpointAndVerificationTests
 	{
-		[Test, AUT(AUT.Ca)]
+        [Test, AUT(AUT.Ca), Parallelizable]
 		public void GivenLNApplicant_WhenIsNotMinor_ThenIsAccepted()
 		{
 			_builderConfig = new ApplicationBuilderConfig();
@@ -36,7 +37,9 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 		{
 			_builderConfig = new ApplicationBuilderConfig();
 
-            LNApplicationWithSingleCheckPointAndSingleVerification(RiskCheckpointDefinitionEnum.FraudListCheck, "FraudBlacklistVerification");
+			var verifications = new List<string> { "FraudBlacklistVerification", "DoNotRelendVerification" };
+
+            LNApplicationWithSingleCheckPointAndVerifications(RiskCheckpointDefinitionEnum.FraudListCheck, verifications);
 		}
 
 		[Test, AUT(AUT.Ca)]

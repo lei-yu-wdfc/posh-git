@@ -1,13 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <UiMap>
 	<MyPaymentsPage>
+		<InvalidBankAccountWarning>#edit-account-number-za-wrapper .form-error .invalid</InvalidBankAccountWarning>
 		<PopupBankName>#edit-bank-name</PopupBankName>
 		<PopupBankAccountType>#edit-bank-account-type</PopupBankAccountType>
 		<PopupAccountNumber>#edit-account-number-za</PopupAccountNumber>
 		<PopupLengthOfTime>#edit-bank-period</PopupLengthOfTime>
 		<PopupAddBankAccountButton>#edit-submit</PopupAddBankAccountButton>
-		<PopupExeption>#wonga-my-account-edit-bank-form div:nth-child(1) ul li</PopupExeption>
-		<AccountNumber>.info.bank-account.bank-account-primary tbody tr:nth-child(4) td b span</AccountNumber>
+		<PopupExeption>#wonga-my-account-edit-bank-form div:first-child ul li</PopupExeption>
+		<AccountNumber>.info.bank-account.bank-account-primary tbody tr:first-child + tr + tr + tr td b span</AccountNumber>
 		<PopupBankAccountException>#edit-account-number-za-wrapper div.form-error div.invalid </PopupBankAccountException>
     <PopupSuccessTitle>h1#success</PopupSuccessTitle>
 	</MyPaymentsPage>
@@ -31,24 +32,24 @@
   </EmploymentDetailsSection>
 
   <PersonalDetailsPage>
-    <FormId>#lzero-personal-form</FormId>
-	<GenderWarning>.//*[@id='details']/div[2]/div/div[3]/div</GenderWarning>
-	<DateOfBirthWarning>.//*[@id='edit-date-of-birth-wrapper']/div[3]/div</DateOfBirthWarning>
+    <FormId>#lzero-personal-form .form-inner</FormId>
+    <GenderWarning>.//*[@id='details']/div[2]/div/div[3]/div</GenderWarning>
+	  <DateOfBirthWarning>.//*[@id='edit-date-of-birth-wrapper']/div[3]/div</DateOfBirthWarning>
     <MarriedInCommunityProperty>input[type="radio"][name="married"]</MarriedInCommunityProperty>
   </PersonalDetailsPage>
   
   <PersonalBankAccountDetailsPage>
-    <FormId>#lzero-bank-form</FormId>
+    <FormId>.wonga-apply-lzero-form</FormId>
   </PersonalBankAccountDetailsPage>
   
   <AccountDetailsPage>
-    <FormId>#lzero-account-setup-form</FormId>
+    <FormId>.wonga-apply-lzero-form</FormId>
     <NextButton>#edit-submit</NextButton>
   </AccountDetailsPage>
 
   <AccountDetailsSection>
-    <Fieldset>#account-setup-1</Fieldset>
-	<PasswordErrorForm>#edit-password-wrapper .form-error .invalid</PasswordErrorForm>
+    <Fieldset>#lzero-account-setup-form</Fieldset>
+	  <PasswordErrorForm>#edit-password-wrapper .form-error .invalid</PasswordErrorForm>
     <PasswordConfirmErrorForm>#edit-password-confirm-wrapper .form-error .invalid</PasswordConfirmErrorForm>
   </AccountDetailsSection>
 
@@ -57,7 +58,7 @@
   </DealDonePage>
   
   <AddressDetailsPage>
-    <FormId>#lzero-address-form</FormId>
+    <FormId>#lzero-address-form .form-inner</FormId>
     <District>#edit-district-za</District>
     <HouseNumber>#edit-house-number-za</HouseNumber>
     <Town>#edit-town-za</Town>
@@ -74,12 +75,14 @@
   </AddressDetailsPage>
 
   <AcceptedPage>
-    <DetailsTable>div#agreementscroll div:nth-child(3) table tbody</DetailsTable>
-    <LoanAmount>tr:nth-child(1)>td:nth-child(2)</LoanAmount>
-    <PaymentDueDate>tr:nth-child(6)>td:nth-child(2)</PaymentDueDate>
-    <TotalToPayOnPaymentDate>tr:nth-child(11)>td:nth-child(2)</TotalToPayOnPaymentDate>
-    <NameInLoanAgreement>#agreementscroll div:nth-child(2) table tr td:nth-child(4)</NameInLoanAgreement>
-    <NameInDirectDebit>#directdebitcroll div:nth-child(1) p</NameInDirectDebit>
+    <TotalToRepay>span.blue-text</TotalToRepay>
+    <RepaymentDate>em</RepaymentDate>
+    <DetailsTable>div#agreementscroll div:first-child + div + div table tbody</DetailsTable>
+    <LoanAmount>tr:first-child>td:first-child + td</LoanAmount>
+    <PaymentDueDate>tr:first-child + tr + tr + tr + tr + tr>td:first-child + td </PaymentDueDate>
+    <TotalToPayOnPaymentDate>tr:first-child + tr + tr + tr + tr + tr + tr + tr + tr + tr + tr>td:first-child + td</TotalToPayOnPaymentDate>
+    <NameInLoanAgreement>#agreementscroll div:first-child+div table tr td:first-child+td+td+td</NameInLoanAgreement>
+    <NameInDirectDebit>#directdebitcroll div:first-child p</NameInDirectDebit>
   </AcceptedPage>
   
   <BankAccountSection>
@@ -89,23 +92,23 @@
 
   <MyAccountNavigationSection>
     <!-- Should be extended-->
-    <MySummary>div#block-wonga-6 ul.menu>li:nth-child(1)>a</MySummary>
-    <MyPersonalDetails>div#block-wonga-6 ul.menu>li:nth-child(2)>a</MyPersonalDetails>
-    <MyPaymentsDetails>div#block-wonga-6 ul.menu>li:nth-child(3)>a</MyPaymentsDetails>
+    <MySummary>div#block-wonga-6 ul.menu>li:first-child>a</MySummary>
+    <MyPersonalDetails>div#block-wonga-6 ul.menu>li:first-child + li>a</MyPersonalDetails>
+    <MyPaymentsDetails>div#block-wonga-6 ul.menu>li:first-child + li + li>a</MyPaymentsDetails>
   </MyAccountNavigationSection>
 
   <MyPersonalDetailsPage>
     <Address>table#profile tr#address</Address>
-    <HouseNumberAndStreet>table#profile tr#address tbody tr:nth-child(1) td</HouseNumberAndStreet>
-    <Town>table#profile tr#address tbody tr:nth-child(2) td</Town>
-    <Postcode>table#profile tr#address tbody tr:nth-child(3) td</Postcode>
+    <HouseNumberAndStreet>table#profile tr#address tbody tr:first-child td</HouseNumberAndStreet>
+    <Town>table#profile tr#address tbody tr:first-child + tr td</Town>
+    <Postcode>table#profile tr#address tbody tr:first-child + tr + tr td</Postcode>
     <Password>table#profile tr#password</Password>
     <Phone>table#profile tr#phone</Phone>
     <Communication>table#profile tr#communication</Communication>
-    <CommunicationText>table#profile tr#communication tbody tr:nth-child(1) td:nth-child(1)</CommunicationText>
+    <CommunicationText>table#profile tr#communication tbody tr:first-child td:first-child</CommunicationText>
     <CommunicationPrefs>input[type="radio"][name="comms_preference"]</CommunicationPrefs>
-    <HomePhone>table#profile tr#phone tbody tr:nth-child(1)>td</HomePhone>
-    <MobilePhone>table#profile tr#phone tbody tr:nth-child(2)>td</MobilePhone>
+    <HomePhone>table#profile tr#phone tbody tr:first-child>td</HomePhone>
+    <MobilePhone>table#profile tr#phone tbody tr:first-child + tr>td</MobilePhone>
     <EditPhoneHome>input#edit-home-phone-za</EditPhoneHome>
     <EditPhoneMobile>input#edit-mobile-phone-za</EditPhoneMobile>
     <EditPhonePin>input#edit-mobile-pin</EditPhonePin>
@@ -117,7 +120,7 @@
     <EditPasswordPopupErrorMessage>form#wonga-my-account-profile-edit-password-form div.messages.error</EditPasswordPopupErrorMessage>
     <PopupSuccessTitle>h1#success</PopupSuccessTitle>
     <SubmitButton>input#edit-submit</SubmitButton>
-    <PopupErrorMessage>#fancybox-content div.messages.error ul li:nth-child(1)</PopupErrorMessage>
+    <PopupErrorMessage>#fancybox-content div.messages.error ul li:first-child</PopupErrorMessage>
   </MyPersonalDetailsPage>
 
   <ChangeMyAddressElement>
@@ -134,18 +137,18 @@
   </ChangeMyAddressElement>
   
   <AboutUsPage>
-    <OurCustomers>#block-wonga-6 div div ul li:nth-child(2) a</OurCustomers>
-    <ResponsibleLending>#block-wonga-6 div div ul li:nth-child(3) a</ResponsibleLending>
-    <News>#block-wonga-6 div div ul li:nth-child(1) a</News>
-    <WhyUseUs>#block-wonga-6 div div ul li:nth-child(4) a</WhyUseUs>
-    <WereDifferent>div.wongaTabs li:nth-child(1) a</WereDifferent>
-    <WereDifferentTitle>div.panes div:nth-child(1) h2</WereDifferentTitle>
-    <WereFast>div.wongaTabs li:nth-child(2) a</WereFast>
-    <WereFastTitle>div.panes div:nth-child(2) h2</WereFastTitle>
-    <WereResponsible>div.wongaTabs li:nth-child(3) a</WereResponsible>
-    <WereResponsibleTitle>div.panes div:nth-child(3) h2</WereResponsibleTitle>
-    <WongaMoments>div.wongaTabs li:nth-child(4) a</WongaMoments>
-    <WongaMomentsTitle>div.panes div:nth-child(4) h2</WongaMomentsTitle>
+    <OurCustomers>#block-wonga-6 div div ul li:first-child + li a</OurCustomers>
+    <ResponsibleLending>#block-wonga-6 div div ul li:first-child + li + li a</ResponsibleLending>
+    <News>#block-wonga-6 div div ul li:first-child a</News>
+    <WhyUseUs>#block-wonga-6 div div ul li:first-child + li + li + li a</WhyUseUs>
+    <WereDifferent>div.wongaTabs li:first-child a</WereDifferent>
+    <WereDifferentTitle>div.panes div:first-child h2</WereDifferentTitle>
+    <WereFast>div.wongaTabs li:first-child + li a</WereFast>
+    <WereFastTitle>div.panes div:first-child + div h2</WereFastTitle>
+    <WereResponsible>div.wongaTabs li:first-child + li + li a</WereResponsible>
+    <WereResponsibleTitle>div.panes div:first-child + div + div h2</WereResponsibleTitle>
+    <WongaMoments>div.wongaTabs li:first-child + li + li + li a</WongaMoments>
+    <WongaMomentsTitle>div.panes div:first-child + div + div + div h2</WongaMomentsTitle>
   </AboutUsPage>
 
   <MySummaryPage>
@@ -159,13 +162,13 @@
   </MySummaryPage>
 
   <HomePage>
-    <Title>div#block-wonga-1 h2:nth-child(1)</Title>
+    <Title>div#block-wonga-1 h2:first-child</Title>
     <TitleText>Flexible, short-term loans that give you lots of control</TitleText>
   </HomePage>
 
   <TabsElement>
-    <Advice>li:nth-child(4)>a</Advice>
-    <MyAccount>li:nth-child(5)>a</MyAccount>
+    <Advice>.menu li:first-child + li + li + li>a</Advice>
+    <MyAccount>.menu li:first-child + li + li + li + li>a</MyAccount>
   </TabsElement>
 
   <ApplicationSection>

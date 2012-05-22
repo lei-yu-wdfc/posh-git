@@ -61,7 +61,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             : base(client)
         {
             _form = Content.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.FormId));
-            if (!Config.AUT.Equals(AUT.Wb))
+            if (!Config.AUT.Equals(AUT.Wb) || Config.Ui.Browser.Equals(Config.UiConfig.BrowserType.FirefoxMobile))
             {
                 //On WB you cannot edit your loan details on the Personal Details page
                 _slidersForm = Content.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.SlidersFormId));

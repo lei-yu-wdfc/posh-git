@@ -8,6 +8,7 @@ namespace Wonga.QA.Framework.Msmq
     [XmlRoot("SaveEmploymentDetailsMessage", Namespace = "Wonga.Risk", DataType = "")]
     public partial class SaveEmploymentDetailsCommand : MsmqMessage<SaveEmploymentDetailsCommand>
     {
+        public Boolean? PaidDirectDeposit { get; set; }
         public Guid AccountId { get; set; }
         public EmploymentStatusEnum Status { get; set; }
         public String EmployerName { get; set; }
@@ -15,7 +16,6 @@ namespace Wonga.QA.Framework.Msmq
         public EmploymentPositionEnum? EmploymentPosition { get; set; }
         public DateTime? StartDate { get; set; }
         public IncomeFrequencyEnum? IncomeFrequency { get; set; }
-        public Boolean? PaidDirectDeposit { get; set; }
         public Decimal NetMonthlyIncome { get; set; }
         public DateTime? NextPayDate { get; set; }
         public DateTime CreatedOn { get; set; }

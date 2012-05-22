@@ -15,47 +15,26 @@ using Wonga.QA.Tests.Payments.Helpers.Ca;
 
 namespace Wonga.QA.Tests.Payments
 {
+    [Parallelizable(TestScope.Self)]
     public class PaymentsTestsViaBankGatewayScotia
     {
-        private const string BankGatewayIsTestModeKey = "BankGateway.IsTestMode";
-        private string _bankGatewayIsTestMode;
-        private const string MocksScotiaEnabledKey = "Mocks.ScotiaEnabled";
-        private string _mocksScotiaEnabled;
-
         [SetUp]
         public void SetUp()
         {
-            ServiceConfigurationEntity bankGatewayIsTestModeKeyEntity = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == BankGatewayIsTestModeKey);
-            _bankGatewayIsTestMode = bankGatewayIsTestModeKeyEntity.Value;
-            bankGatewayIsTestModeKeyEntity.Value = "false";
-            bankGatewayIsTestModeKeyEntity.Submit();
-
-            ServiceConfigurationEntity mocksScotiaEnabledKeyEntity = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == MocksScotiaEnabledKey);
-            _mocksScotiaEnabled = mocksScotiaEnabledKeyEntity.Value;
-            mocksScotiaEnabledKeyEntity.Value = "true";
-            mocksScotiaEnabledKeyEntity.Submit();
         }
 
         [TearDown]
         public void TearDown()
         {
-            ServiceConfigurationEntity bankGatewayIsTestModeKeyEntity = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == BankGatewayIsTestModeKey);
-            bankGatewayIsTestModeKeyEntity.Value = _bankGatewayIsTestMode;
-            bankGatewayIsTestModeKeyEntity.Submit();
-
-            ServiceConfigurationEntity mocksScotiaEnabledKeyEntity = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == MocksScotiaEnabledKey);
-            mocksScotiaEnabledKeyEntity.Value = _mocksScotiaEnabled;
-            mocksScotiaEnabledKeyEntity.Submit();
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1441")]
+        [Test, AUT(AUT.Ca), JIRA("CA-1441"), Parallelizable]
         public void VerifyOnlineBillPaymentCreditedToCustomerAccount()
         {
             const int loanTerm = 15;
             const decimal loanAmount = 100;
             const int dayOfLoanTermToRepay = 5;
             const int earlyRepaymentAmount = 104;
-            ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
 
             var customer = CustomerBuilder.New().ForProvince(ProvinceEnum.ON).Build();
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
@@ -84,14 +63,13 @@ namespace Wonga.QA.Tests.Payments
             Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestCharged(actualInterestAmountApplied, expectedInterestAmountApplied));
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1441")]
+        [Test, AUT(AUT.Ca), JIRA("CA-1441"), Parallelizable]
         public void VerifyLoanClosesAfterFullOnlineBillPaymentRecieved()
         {
             const int loanTerm = 15;
             const decimal loanAmount = 100;
             const int dayOfLoanTermToRepay = 5;
             const int earlyRepaymentAmount = 104;
-            ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
 
             var customer = CustomerBuilder.New().ForProvince(ProvinceEnum.ON).Build();
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
@@ -121,7 +99,6 @@ namespace Wonga.QA.Tests.Payments
             const decimal loanAmount = 100;
             const int dayOfLoanTermToRepay = 5;
             const int earlyRepaymentAmount = 50;
-            ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
 
             var customer = CustomerBuilder.New().ForProvince(ProvinceEnum.ON).Build();
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
@@ -155,7 +132,6 @@ namespace Wonga.QA.Tests.Payments
             const decimal loanAmount = 100;
             const int dayOfLoanTermToRepay = 5;
             const int earlyRepaymentAmount = 102;
-            ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
 
             var customer = CustomerBuilder.New().ForProvince(ProvinceEnum.ON).Build();
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
@@ -222,7 +198,6 @@ namespace Wonga.QA.Tests.Payments
             const int dayOfLoanTermToRepay = 5;
             const int earlyRepaymentAmount = 104;
             const int overpayAmount = 10;
-            ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
 
             var customer = CustomerBuilder.New().ForProvince(ProvinceEnum.ON).Build();
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
@@ -265,7 +240,6 @@ namespace Wonga.QA.Tests.Payments
             const decimal loanAmount = 100;
             //const int dayOfLoanTermToRepay = 5;
             const int earlyRepaymentAmount = 104;
-            ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
 
             var customer = CustomerBuilder.New().ForProvince(ProvinceEnum.ON).Build();
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
@@ -299,7 +273,6 @@ namespace Wonga.QA.Tests.Payments
             const decimal loanAmount = 100;
             const int daysInArrears = 5;
             const decimal repaymentAmount = 130.45m;
-            ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
 
             var customer = CustomerBuilder.New().ForProvince(ProvinceEnum.ON).Build();
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();

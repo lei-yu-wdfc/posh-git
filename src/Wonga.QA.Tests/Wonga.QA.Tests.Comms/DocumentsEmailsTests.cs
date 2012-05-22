@@ -11,6 +11,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Comms
 {
     [TestFixture]
+    [Parallelizable(TestScope.All)]
     public class DocumentsEmailsTests
     {
         protected const int NumberOfSecondaryDirectors=2;

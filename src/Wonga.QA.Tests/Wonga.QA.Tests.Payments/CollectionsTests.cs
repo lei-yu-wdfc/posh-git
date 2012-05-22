@@ -13,7 +13,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments
 {
-	[TestFixture, AUT(AUT.Za), Parallelizable(TestScope.All)]
+	[TestFixture, AUT(AUT.Za)]
 	class CollectionsTests
 	{
 		private const int TrackingDayThreshold = 19;
@@ -260,9 +260,9 @@ namespace Wonga.QA.Tests.Payments
 						//Payday of month - 1
 						var selfReportedPayDay = GetSelfReportedPayDayForApplication(application);
 						var month = selfReportedPayDay > now.Day ? now.Month : now.Month + 1;
-						//var validPayDay = Drive.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, month,  selfReportedPayDay))).DateTime.Day;
+						var validPayDay = Drive.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, month,  selfReportedPayDay))).DateTime.Day;
 
-						paymentRequestDate = new Date(new DateTime(now.Year, month, selfReportedPayDay - 1));
+						paymentRequestDate = Drive.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, month, validPayDay - 1)));
 					}
 					break;
 				default:

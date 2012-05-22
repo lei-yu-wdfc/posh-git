@@ -8,6 +8,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk
 {
+    [Parallelizable(TestScope.Self)]
     public class EidTests
     {
         CustomerBuilder _customerBuilder;

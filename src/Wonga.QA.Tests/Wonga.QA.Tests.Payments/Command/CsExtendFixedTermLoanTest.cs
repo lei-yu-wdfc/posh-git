@@ -10,6 +10,7 @@ using Wonga.QA.Framework.Cs;
 namespace Wonga.QA.Tests.Payments.Command
 {
    [TestFixture]
+   [Parallelizable(TestScope.All)]
    public class CsExtendFixedTermLoanTest
    {
        [Test]

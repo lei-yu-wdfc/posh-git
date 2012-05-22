@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 
@@ -106,7 +107,7 @@ namespace Wonga.QA.Framework
             if (Decision == ApplicationDecisionStatus.Declined)
             {
                 WaitForRiskDecisionToBeMade();
-                return new BusinessApplication(Id);
+                return new BusinessApplication(Id, Customer.Id, Company.Id);
             }
 
             /* STEP 5
@@ -159,9 +160,10 @@ namespace Wonga.QA.Framework
              * And I wait for Payments to create the application, but only when the expected decision is Accepted */
             if (Decision == ApplicationDecisionStatus.Accepted)
             {
-                Do.With.Message("The initial transactions have not been created").Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).Transactions.Count == 3);
+                var id = Drive.Data.Payments.Db.Applications.FindByExternalId(Id).ApplicationId;
+                Do.With.Message("The initial transactions have not been created").Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(id).Count()==3);
             }
-            return new BusinessApplication(Id);
+            return new BusinessApplication(Id, Customer.Id, Company.Id);
         }
 
         private void WaitForRiskDecisionToBeMade()

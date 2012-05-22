@@ -71,6 +71,7 @@ namespace Wonga.QA.Tests.Payments.Queries
                 }
             } 
 
+            [Parallelizable(TestScope.Self)]
             public class WhenAnExtensionThatShouldSucceedIsRequested : GivenACustomerWithAnApprovedLoan
             {
                 [SetUp]

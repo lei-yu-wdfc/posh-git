@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using Gallio.Framework;
+﻿using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
@@ -12,7 +9,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments
 {
-    //[Parallelizable(TestScope.All)]
+    [Parallelizable(TestScope.All)]
     public class ExtraPaymentsTests
     {
         private static void InitApplication(out PaymentPlanEntity paymentPlan, out BusinessApplication application)
@@ -24,27 +21,6 @@ namespace Wonga.QA.Tests.Payments
                 ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build()
                 as BusinessApplication;
             paymentPlan = application.GetPaymentPlan();
-        }
-
-        private void CreateExtraPayment(decimal extraPaymentAmount, Guid applicationId)
-        {
-            var command = new CreateTransactionCommand
-                              {
-                                  Amount = extraPaymentAmount,
-                                  ApplicationId = applicationId,
-                                  Currency = CurrencyCodeIso4217Enum.GBP,
-                                  ExternalId = Guid.NewGuid(),
-                                  ComponentTransactionId = Guid.Empty,
-                                  PostedOn = DateTime.Now,
-                                  Scope = PaymentTransactionScopeEnum.Credit,
-                                  Source = PaymentTransactionSourceEnum.System,
-                                  Type = PaymentTransactionEnum.Cheque
-                              };
-
-            Drive.Msmq.Payments.Send(command);
-            Do.With.Timeout(2).Message("Transaction was not created").Until(() => Drive.Data.Payments.Db.Transations.FindExternalId(command.ExternalId));
-            // Wait for the TX to be processed
-            Thread.Sleep(15000);
         }
 
         /// <summary>
@@ -60,7 +36,7 @@ namespace Wonga.QA.Tests.Payments
             InitApplication(out paymentPlan, out application);
 
             decimal extraPaymentAmount = paymentPlan.RegularAmount / 2M;
-            CreateExtraPayment(extraPaymentAmount, application.Id);
+            application.CreateExtraPayment(extraPaymentAmount);
             var newPaymentPlan = application.GetPaymentPlan();
             Assert.LessThan(newPaymentPlan.RegularAmount, paymentPlan.RegularAmount);
             Do.Until(() => Drive.Db.Payments.Transactions.Single(t => t.ApplicationEntity.ExternalId == application.Id
@@ -82,7 +58,7 @@ namespace Wonga.QA.Tests.Payments
             decimal extraPaymentAmount = paymentPlan.RegularAmount * 2M;
             application.PutApplicationIntoArrears();
 
-            CreateExtraPayment(extraPaymentAmount, application.Id);
+            application.CreateExtraPayment(extraPaymentAmount);
             var newPaymentPlan = application.GetPaymentPlan();
 
             Assert.LessThan(newPaymentPlan.RegularAmount, paymentPlan.RegularAmount);
@@ -107,7 +83,7 @@ namespace Wonga.QA.Tests.Payments
             decimal extraPaymentAmount = paymentPlan.RegularAmount / 2M;
             application.PutApplicationIntoArrears();
 
-            CreateExtraPayment(extraPaymentAmount, application.Id);
+            application.CreateExtraPayment(extraPaymentAmount);
             var newPaymentPlan = application.GetPaymentPlan();
 
             Assert.AreEqual(newPaymentPlan.RegularAmount, paymentPlan.RegularAmount);
@@ -130,7 +106,7 @@ namespace Wonga.QA.Tests.Payments
             decimal extraPaymentAmount = paymentPlan.RegularAmount;
             application.PutApplicationIntoArrears();
 
-            CreateExtraPayment(extraPaymentAmount, application.Id);
+            application.CreateExtraPayment(extraPaymentAmount);
             var newPaymentPlan = application.GetPaymentPlan();
 
             Assert.AreEqual(newPaymentPlan.RegularAmount, paymentPlan.RegularAmount);
@@ -154,7 +130,7 @@ namespace Wonga.QA.Tests.Payments
             decimal extraPaymentAmount = paymentPlan.RegularAmount + 10;
             application.PutApplicationIntoArrears();
 
-            CreateExtraPayment(extraPaymentAmount, application.Id);
+            application.CreateExtraPayment(extraPaymentAmount);
             var newPaymentPlan = application.GetPaymentPlan();
 
             Assert.AreEqual(newPaymentPlan.RegularAmount, paymentPlan.RegularAmount);

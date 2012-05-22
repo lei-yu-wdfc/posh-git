@@ -12,6 +12,7 @@ namespace Wonga.QA.Tests.Payments.Command
 {
     [TestFixture]
     [AUT(AUT.Uk)]
+    [Parallelizable(TestScope.Self)]
     public class DeletePersonalPaymentCardCsApiCommandTests
     {
 		[Test, AUT(AUT.Uk)]

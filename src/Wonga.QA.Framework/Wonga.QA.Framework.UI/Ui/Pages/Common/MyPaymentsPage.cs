@@ -32,6 +32,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             {
                 case AUT.Za:
                 case AUT.Ca:  //TODO find out what xpath for button on Ca
+                case AUT.Wb:
                     Navigation = new MyAccountNavigationElement(this);
                     break;
             }
@@ -76,6 +77,19 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _popupLengthOfTime.SelectOption(lenghtOfTime);
             _popupAddBankAccountButton.Click();
             
+        }
+
+        public bool IsInvalidBankAccountCauseWarning()
+        {
+            if (Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.InvalidBankAccountWarning)).Text.Equals(UI.ContentMap.Get.MyPaymentsPage.InvalidBankAccountWarning))
+            {
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("Current message: " + Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.InvalidBankAccountWarning)).Text);
+                return false;
+            }
         }
 
         public void ClickCloseButton()

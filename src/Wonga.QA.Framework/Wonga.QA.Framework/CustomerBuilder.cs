@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using Simple.Data;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
@@ -63,7 +64,7 @@ namespace Wonga.QA.Framework
             _verification = Get.GetId();
             _employerName = Get.GetEmployerName();
             _employerStatus = Get.GetEmploymentStatus();
-            _netMonthlyIncome = Get.RandomInt(1000, 2000);
+            _netMonthlyIncome = 1500;
             _dateOfBirth = Get.GetDoB();
             _gender = GenderEnum.Female;
             if (Config.AUT == AUT.Za) //TODO implement nationalNumber generators for other regions
@@ -444,6 +445,7 @@ namespace Wonga.QA.Framework
                             r.AccountId = _id;
                             r.EmployerName = _employerName;
                         	r.NetMonthlyIncome = _netMonthlyIncome;
+                        	r.Status = _employerStatus;
                         }),
                         VerifyMobilePhoneCaCommand.New(r =>
                         {
@@ -574,16 +576,16 @@ namespace Wonga.QA.Framework
 
             Drive.Api.Commands.Post(requests);
 
-            Do.With.Timeout(2).Until(() => Drive.Db.Ops.Accounts.Single(a => a.ExternalId == _id));
-            Do.With.Timeout(2).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == _id));
-            Do.With.Timeout(2).Until(() => Drive.Db.Risk.RiskAccounts.Single(a => a.AccountId == _id));
+            Do.With.Timeout(2).Until(() => Drive.Data.Ops.Db.Accounts.FindAllByExternalId(_id).Single());
+            Do.With.Timeout(2).Until(() => Drive.Data.Payments.Db.AccountPreferences.FindAllByAccountId(_id).Single());
+            Do.With.Timeout(2).Until(() => Drive.Data.Risk.Db.RiskAccounts.FindAllByAccountId(_id).Single());
 
             switch (Config.AUT)
             {
                 case AUT.Wb:
                     Do.Until(
                         () =>
-                        Drive.Db.Payments.AccountPreferences.Single(ap => ap.AccountId == _id).PaymentCardsBaseEntity);
+                        Drive.Data.Payments.Db.AccountPreferences.FindAllByAccountId(_id).Single().PaymentCardsBase);
                     break;
 
                 case AUT.Ca:

@@ -14,7 +14,7 @@ namespace Wonga.QA.Framework.UI
         public void Testz()
         {
             var res = UiMap.Get.AcceptedPage;
-            var content = Content.Get.LoanAgreement.Header;
+            var content = ContentMap.Get.LoanAgreement.Header;
         }
     }
 }

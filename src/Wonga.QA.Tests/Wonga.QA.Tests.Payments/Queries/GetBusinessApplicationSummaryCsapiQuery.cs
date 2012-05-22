@@ -9,6 +9,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Payments.Queries
 {
     [TestFixture]
+    [Parallelizable(TestScope.All)]
     public class GetBusinessApplicationSummaryCsapiQuery
     {
         [Test, JIRA("SME-375"), AUT(AUT.Wb)]

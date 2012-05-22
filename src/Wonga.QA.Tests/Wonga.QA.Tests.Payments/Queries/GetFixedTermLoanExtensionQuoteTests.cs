@@ -14,6 +14,7 @@ using Wonga.QA.Tests.Payments.Helpers;
 namespace Wonga.QA.Tests.Payments.Queries
 {
     [TestFixture]
+    [Parallelizable(TestScope.All)]
     public class GetFixedTermLoanExtensionQuoteTests
     {
         [Test, AUT(AUT.Uk)]

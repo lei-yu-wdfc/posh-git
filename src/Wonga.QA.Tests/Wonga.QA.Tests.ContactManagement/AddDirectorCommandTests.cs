@@ -14,6 +14,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.ContactManagement
 {
     [TestFixture]
+    [Parallelizable(TestScope.All)]
     public class AddDirectorCommandTests
     {
         [Test, JIRA("SME-1128"), Description("This test validates email uniquess check of command validator"), AUT(AUT.Wb)]        
