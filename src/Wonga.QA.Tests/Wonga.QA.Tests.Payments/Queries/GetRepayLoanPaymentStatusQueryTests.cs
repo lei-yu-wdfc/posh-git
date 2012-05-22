@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Wonga.QA.Tests.Payments.Helpers;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
@@ -23,6 +23,27 @@ namespace Wonga.QA.Tests.Payments.Queries
             var response = Drive.Api.Queries.Post(new GetRepayLoanPaymentStatusUkQuery{ ApplicationId = appId, RepaymentRequestId = requestId });
 
             Assert.AreEqual(appId.ToString(), response.Values["ApplicationId"].Single(), "ApplicationId incorrect");
+        }
+
+        [Test, AUT(AUT.Uk)]
+        public void PaymentTaken()
+        {
+            var setup = new RepayLoanFunctions();
+            var appId = Guid.NewGuid();
+            var requestId = Guid.NewGuid();
+            var paymentCardId = Guid.NewGuid();
+            setup.RepayEarlyOnLoanStartDate(appId, paymentCardId, Guid.NewGuid(), Guid.NewGuid(), 400.00M);
+
+            
+            var response = Drive.Api.Commands.Post(new RepayLoanViaCardCommand { ApplicationId = appId, RepaymentRequestId = requestId, ActionDate = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd"), Amount = 5.50M, CashEntityId = paymentCardId, PaymentCardCv2 = 123 });
+            
+            // Check Repayment Exists in DB
+            Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.RepaymentRequestDetails.FindByExternalId(requestId));
+
+            //Call Api Query
+            var response2 = Drive.Api.Queries.Post(new GetRepayLoanPaymentStatusUkQuery { ApplicationId = appId, RepaymentRequestId = requestId });
+
+            Assert.AreEqual(appId.ToString(), response2.Values["ApplicationId"].Single(), "ApplicationId incorrect");
         }
     }
 }
