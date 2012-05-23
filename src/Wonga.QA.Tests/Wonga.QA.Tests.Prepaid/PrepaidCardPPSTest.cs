@@ -34,9 +34,7 @@ namespace Wonga.QA.Tests.Prepaid
         private static readonly String PREMIUM_CARD_TYPE = "1";
 
         private static readonly String CARD_STATUS_ACTIVE = "2";
-
-        private static readonly String PPS_OPERATION_SUCCESSFULL_STATUS = "CWS0000";
-
+		
         private static readonly dynamic _prepaidCardDb = Drive.Data.PrepaidCard.Db;
         private static readonly dynamic _qaDataDb = Drive.Data.QaData.Db;
 
@@ -151,6 +149,26 @@ namespace Wonga.QA.Tests.Prepaid
             CustomerOperations.UpdateMobilePhone(_eligibleCustomer.Id);
 
             var operationLogsList = _prepaidCardDb.OperationsLogs.FindByCustomerExternalId(_eligibleCustomer.Id);
+        }
+
+        [Test,AUT(AUT.Uk),JIRA("PP-215")]
+        public void CustomerShouldGetTransactionListFromPPS()
+        {
+            ExecuteCommonPPSCommands();
+            CheckOnAddingRecordsToPrepaidCard(_eligibleCustomer.Id);
+
+            var validRequest = new GetPrepaidCardTransactionsQuery();
+            validRequest.AccountId = _eligibleCustomer.Id;
+
+            var invalidRequestForNonExistingAccount = new GetPrepaidCardTransactionsQuery();
+            invalidRequestForNonExistingAccount.AccountId = Guid.Empty;
+
+            var invalidRequest = new GetPrepaidCardTransactionsQuery();
+            invalidRequest.AccountId = _nonEligibleCustomer.Id;
+
+            Drive.Api.Queries.Post(validRequest);
+            Assert.Throws<ValidatorException>(() => Drive.Api.Queries.Post(invalidRequestForNonExistingAccount));
+            Assert.Throws<ValidatorException>(() => Drive.Api.Queries.Post(invalidRequest));
         }
 
         [TearDown]
