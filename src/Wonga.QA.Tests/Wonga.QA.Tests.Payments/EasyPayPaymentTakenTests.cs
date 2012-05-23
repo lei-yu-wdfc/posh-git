@@ -22,13 +22,15 @@ namespace Wonga.QA.Tests.Payments
 
             var app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
 
-        	var repaymentNumber = GenerateEasyPayNumberWithCsApi(customer);
+            dynamic repaymentAccounts = Drive.Data.Payments.Db.RepaymentAccount;
+            var ra = Do.Until(() => repaymentAccounts.FindAll(repaymentAccounts.AccountId == customer.Id)
+                                                    .FirstOrDefault());
 
             Drive.Msmq.EasyPay.Send(new PaymentResponseDetailRecordZaCommand
                                             {
                                                 ActionDate = DateTime.UtcNow.Date,
                                                 Amount = 10M,
-												RepaymentNumber = repaymentNumber,
+												RepaymentNumber = ra.RepaymentNumber,
                                                 Filename = "TestFile"
                                             });
 

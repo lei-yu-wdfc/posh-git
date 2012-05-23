@@ -111,14 +111,6 @@ namespace Wonga.QA.Tests.BankGateway
 
 			var app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
 
-			//Request to generate easypay number via csapi
-			var generateRepaymentNumberCommand = new Framework.Cs.GenerateRepaymentNumberCommand
-			{
-				AccountId = customer.Id
-			};
-
-			Drive.Cs.Commands.Post(generateRepaymentNumberCommand);
-
 			dynamic repaymentAccount = Drive.Data.Payments.Db.RepaymentAccount;
 			var ra = Do.Until(() => repaymentAccount.FindAll(repaymentAccount.AccountId == customer.Id)
 													.FirstOrDefault());
@@ -158,14 +150,6 @@ namespace Wonga.QA.Tests.BankGateway
 			var application = ApplicationBuilder.New(customer).Build();
 
 			var app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
-
-			//Request to generate easypay number via csapi
-			var generateRepaymentNumberCommand = new Framework.Cs.GenerateRepaymentNumberCommand
-			{
-				AccountId = customer.Id
-			};
-
-			Drive.Cs.Commands.Post(generateRepaymentNumberCommand);
 
 			dynamic repaymentAccount = Drive.Data.Payments.Db.RepaymentAccount;
 			var ra = Do.Until(() => repaymentAccount.FindAll(repaymentAccount.AccountId == customer.Id)
