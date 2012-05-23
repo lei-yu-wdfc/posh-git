@@ -11,6 +11,9 @@ namespace Wonga.QA.Tests.Payments
     [Ignore("Work in progress")]
     public class AccruedInterestSuspensionTests
     {
+        /// <summary>
+        /// Transactions db table
+        /// </summary>
         private dynamic _transactionsDb;
 
         private Application _application;
@@ -20,8 +23,8 @@ namespace Wonga.QA.Tests.Payments
         public void Setup()
         {
             _customer = CustomerBuilder.New().Build();
-            _application = ApplicationBuilder.New(_customer).Build();
-
+            _promiseDate = DateTime.Now.AddDays(12);
+            _application = ApplicationBuilder.New(_customer).WithPromiseDate(new Date(_promiseDate)).Build();
             _transactionsDb = Drive.Data.Payments.Db.Transactions;
         }
 
@@ -31,7 +34,9 @@ namespace Wonga.QA.Tests.Payments
             _application.PutApplicationIntoArrears(1);
             dynamic suspendTransaction = null;
             Do.Until(() => suspendTransaction = _transactionsDb
-                                                    .FindBy(Type: PaymentTransactionEnum.SuspendInterestAccrual));
+                                                    .FindBy(Type: PaymentTransactionEnum.SuspendInterestAccrual,
+                                                            PostedOn: _promiseDate.AddDays(60)));
+            Assert.IsNotNull(suspendTransaction);
         }
     }
 }
