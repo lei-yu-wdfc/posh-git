@@ -49,7 +49,7 @@ namespace Wonga.QA.Tests.Meta
         [Test, Factory("Endpoints")]
         public void EndpointIsWarmedUpAndSchemaIsValid(ApiEndpoint endpoint)
         {
-            Do.Until(() =>
+            Do.With.Timeout(5).Until(() =>
             {
                 try
                 {
