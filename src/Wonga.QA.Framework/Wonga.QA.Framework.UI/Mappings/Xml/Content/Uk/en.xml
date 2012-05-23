@@ -47,6 +47,10 @@
   <L0DeclinedPage>
     <HeaderText>Unfortunately we can’t approve your application</HeaderText>
   </L0DeclinedPage>
-  
+
+  <TimeoutTestPage>
+    <HeaderText>Timeout Test</HeaderText>
+  </TimeoutTestPage>
+
 </ContentMap>
 
