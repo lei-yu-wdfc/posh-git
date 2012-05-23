@@ -41,16 +41,6 @@ namespace Wonga.QA.Tests.Payments.Command
 			var customer = CustomerBuilder.New().Build();
 			var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
-			var generateRepaymentNumberCommand = new Framework.Cs.GenerateRepaymentNumberCommand
-			{
-				AccountId = app.AccountId
-			};
-
-			//Act
-			Drive.Cs.Commands.Post(generateRepaymentNumberCommand);
-
-			Thread.Sleep(delay);
-
 			//Assert
 			var repaymentAccount = Do.Until(() => _repaymentAccount.FindAll(_repaymentAccount.AccountId == app.AccountId)
 													.FirstOrDefault());
@@ -65,16 +55,6 @@ namespace Wonga.QA.Tests.Payments.Command
             //Arrange
             var customer = CustomerBuilder.New().Build();
             var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
-
-            var command = new GenerateEasyPayNumberZaCommand()
-            {
-                AccountId = app.AccountId
-            };
-
-            //Act
-            Drive.Api.Commands.Post(command);
-
-            Thread.Sleep(delay);
 
             //Assert
             var repaymentAccount = Do.Until(() => _repaymentAccount.FindAll(_repaymentAccount.AccountId == app.AccountId)
