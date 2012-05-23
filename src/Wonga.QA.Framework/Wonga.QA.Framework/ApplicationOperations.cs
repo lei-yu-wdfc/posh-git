@@ -21,41 +21,50 @@ namespace Wonga.QA.Framework
             Drive.Db.RewindApplicationDates(application, riskApplication, span);
             return app;
         }
-        /*
+        
         /// <summary>
         /// this is the new RewindApplicationDates method for Drive.Data
         /// </summary>
-        /// <param name="db"></param>
         /// <param name="application"></param>
         /// <param name="riskApp"></param>
         /// <param name="span"></param>
-        public static void RewindApplicationDates(this DataDriver db, ApplicationEntity application, RiskApplicationEntity riskApp, TimeSpan span)
+        public static void RewindApplicationDates(dynamic application, dynamic riskApp, TimeSpan span)
         {
             application.ApplicationDate -= span;
             application.SignedOn -= span;
             application.CreatedOn -= span;
             application.AcceptedOn -= span;
-            application.FixedTermLoanApplicationEntity.PromiseDate -= span;
-            application.FixedTermLoanApplicationEntity.NextDueDate -= span;
+
+            var fixedTermLoanApplication =
+                Drive.Data.Payments.Db.FixedTermLoanApplications.FindByApplicationId(application.ApplicationId);
+
+            fixedTermLoanApplication.PromiseDate -= span;
+            fixedTermLoanApplication.NextDueDate -= span;
             if (application.ClosedOn != null)
                 application.ClosedOn -= span;
-            application.Submit(true);
 
-            application.Transactions.ForEach(t => t.CreatedOn -= span);
+            Drive.Data.Payments.Db.Applications.Update(application);
+            Drive.Data.Payments.Db.FixedTermLoanApplications.Update(fixedTermLoanApplication);
+
+            // find a way to 
+           /*application.Transactions.ForEach(t => t.CreatedOn -= span);
             application.Transactions.ForEach(t => t.PostedOn -= span);
-            application.Transactions.ForEach(t => t.Submit(true));
+            application.Transactions.ForEach(t => t.Submit(true));*/
 
-            if (application.ArrearEntity != null)
+            var arrearEntity = Drive.Data.Payments.Db.Arrears.FindByApplicationId(application.ApplicationId);
+
+            if (arrearEntity != null)
             {
-                application.ArrearEntity.CreatedOn -= span;
-                application.ArrearEntity.Submit(true);
+                arrearEntity.CreatedOn -= span;
+                Drive.Data.Payments.Db.Arrears.Update(arrearEntity);
             }
 
             riskApp.ApplicationDate -= span;
             riskApp.PromiseDate -= span;
             if (riskApp.ClosedOn != null)
                 riskApp.ClosedOn -= span;
-            riskApp.Submit(true);
-        }*/
+
+            Drive.Data.Risk.Db.RiskApplications.Update(riskApp);
+        }
     }
 }
