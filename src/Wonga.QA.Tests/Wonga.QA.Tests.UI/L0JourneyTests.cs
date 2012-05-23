@@ -214,7 +214,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-175"), Pending("Wierd selenium problem"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-175"), Pending("Wierd selenium problem")]
         public void ChangeLoanAmountAndDurationOnPersonalDetailsViaSlidersMotion()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -450,7 +450,7 @@ namespace Wonga.QA.Tests.Ui
             homePage.AssertThatIsWbHomePage();
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk), JIRA("QA-181"), Pending("ZA-2512"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk), JIRA("QA-181"), Pending("ZA-2512")]
         public void L0JourneyCustomerOnCurrentAddressPageDoesNotEnterSomeRequiredFieldsWarningMessageDisplayed()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -725,7 +725,7 @@ namespace Wonga.QA.Tests.Ui
                     personalDetailsPageZa.EmploymentDetails.SalaryPaidToBank = true;
                     personalDetailsPageZa.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d/MMM/yyyy");
                     personalDetailsPageZa.EmploymentDetails.IncomeFrequency = "Monthly";
-                    personalDetailsPageZa.ContactingYou.CellPhoneNumber = "077009" + Get.RandomLong(10000, 99999);
+                    personalDetailsPageZa.ContactingYou.CellPhoneNumber = "077009" + Get.RandomLong(1000, 9999);
                     personalDetailsPageZa.ContactingYou.EmailAddress = emailZa;
                     personalDetailsPageZa.ContactingYou.ConfirmEmailAddress = emailZa;
                     personalDetailsPageZa.PrivacyPolicy = true;
@@ -908,7 +908,7 @@ namespace Wonga.QA.Tests.Ui
                     personalDetailsPageZa.EmploymentDetails.SalaryPaidToBank = true;
                     personalDetailsPageZa.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d/MMM/yyyy");
                     personalDetailsPageZa.EmploymentDetails.IncomeFrequency = "Monthly";
-                    personalDetailsPageZa.ContactingYou.CellPhoneNumber = "07700900001";
+                    personalDetailsPageZa.ContactingYou.CellPhoneNumber = "0770090001";
                     personalDetailsPageZa.ContactingYou.EmailAddress = email;
                     personalDetailsPageZa.ContactingYou.ConfirmEmailAddress = email;
                     personalDetailsPageZa.PrivacyPolicy = true;
@@ -1184,7 +1184,7 @@ namespace Wonga.QA.Tests.Ui
             personalDetailsPageZa.EmploymentDetails.SalaryPaidToBank = true;
             personalDetailsPageZa.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d/MMM/yyyy");
             personalDetailsPageZa.EmploymentDetails.IncomeFrequency = "Monthly";
-            personalDetailsPageZa.ContactingYou.CellPhoneNumber = "07700900000";
+            personalDetailsPageZa.ContactingYou.CellPhoneNumber = "0770090000";
             personalDetailsPageZa.ContactingYou.EmailAddress = emael;
             personalDetailsPageZa.ContactingYou.ConfirmEmailAddress = emael;
             personalDetailsPageZa.PrivacyPolicy = true;
@@ -1201,7 +1201,7 @@ namespace Wonga.QA.Tests.Ui
             journeyZa.CurrentPage = personalDetailsPageZa.Submit() as AddressDetailsPage;
         }
 
-        [Test, AUT(AUT.Za), Category(TestCategories.Smoke), JIRA("QA-275"), Pending("ZA-1952, Za-2489")]
+        [Test, AUT(AUT.Za), JIRA("QA-275"), Pending("ZA-1952, Za-2489")]
         public void PasswordThatEqualToTheEmailWithUpperLastSimbolAddressWarningMessageShouldDisplayed()
         {
             var email = Get.RandomEmail();
@@ -1228,7 +1228,7 @@ namespace Wonga.QA.Tests.Ui
             personalDetailsPageZa.EmploymentDetails.SalaryPaidToBank = true;
             personalDetailsPageZa.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d/MMM/yyyy");
             personalDetailsPageZa.EmploymentDetails.IncomeFrequency = "Monthly";
-            personalDetailsPageZa.ContactingYou.CellPhoneNumber = "07700900000";
+            personalDetailsPageZa.ContactingYou.CellPhoneNumber = "0770090000";
             personalDetailsPageZa.ContactingYou.EmailAddress = email;
             personalDetailsPageZa.ContactingYou.ConfirmEmailAddress = email;
             personalDetailsPageZa.PrivacyPolicy = true;
