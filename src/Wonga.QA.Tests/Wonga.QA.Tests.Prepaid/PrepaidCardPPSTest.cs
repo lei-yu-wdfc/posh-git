@@ -23,8 +23,6 @@ namespace Wonga.QA.Tests.Prepaid
 
         private static readonly String STANDARD_CARD_TEMPLATE_NAME = "34327";
         private static readonly String PREMIUM_CARD_TEMPLATE_NAME = "34328";
-        private static readonly String STANDARD_CARD_TYPE = "0";
-        private static readonly String PREMIUM_CARD_TYPE = "1";
 
         private static readonly String CARD_STATUS_ACTIVE = "2";
 		
