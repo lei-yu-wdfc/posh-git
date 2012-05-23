@@ -109,10 +109,14 @@ namespace Wonga.QA.Framework.Core
                     {
                         return "021" + RandomLong(1000000, 9999999);
                     }
+                case AUT.Wb:
+                    {
+                        return "077009" + RandomLong(10000, 99999);
+                    }
 
                 default:
                     {
-                        return "07500000000";
+                        return "077009" + RandomLong(10000, 99999);
                     }
             }
         }
@@ -210,7 +214,6 @@ namespace Wonga.QA.Framework.Core
         {
             return RandomInt(0000, 9999).ToString().PadLeft(4, '0');
         }
-
         public static Uri GetSchema(Uri uri)
         {
             UriBuilder builder = new UriBuilder(uri);

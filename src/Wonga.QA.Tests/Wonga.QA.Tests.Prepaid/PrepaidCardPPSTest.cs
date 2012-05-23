@@ -35,6 +35,8 @@ namespace Wonga.QA.Tests.Prepaid
 
         private static readonly String CARD_STATUS_ACTIVE = "2";
 
+        private static readonly String PPS_OPERATION_SUCCESSFULL_STATUS = "CWS0000";
+
         private static readonly dynamic _prepaidCardDb = Drive.Data.PrepaidCard.Db;
         private static readonly dynamic _qaDataDb = Drive.Data.QaData.Db;
 
@@ -138,20 +140,25 @@ namespace Wonga.QA.Tests.Prepaid
             Drive.Api.Commands.Post(setFundsCommand);
         }
 
+        [Test,AUT(AUT.Uk),JIRA("PP-31"),Pending("Command not fully implemented")]
+        public void CustomerShouldUpdatePersonalDetailsAndUpdateItOnPPS()
+        {
+            ExecuteCommonPPSCommands();
+            CheckOnAddingRecordsToPrepaidCard(_eligibleCustomer.Id);
+
+            CustomerOperations.UpdateAddress(_eligibleCustomer.Id);
+            CustomerOperations.UpdateEmail(_eligibleCustomer.Id);
+            CustomerOperations.UpdateMobilePhone(_eligibleCustomer.Id);
+
+            var operationLogsList = _prepaidCardDb.OperationsLogs.FindByCustomerExternalId(_eligibleCustomer.Id);
+        }
+
         [TearDown]
         public void Rollback()
         {
             CustomerOperations.DeleteMarketingEligibility(_eligibleCustomer.Id);
             CustomerOperations.DeleteMarketingEligibility(_nonEligibleCustomerInArrears.Id);
             CustomerOperations.DeleteMarketingEligibility(_customerWithWromgEmail.Id);
-        }
-
-        [Test]
-        public void Hi()
-        {
-            Customer ct = CustomerBuilder.New().Build();
-            Application app = ApplicationBuilder.New(ct).Build();
-            app.RepayOnDueDate();
         }
 
         private void CheckOnAddingRecordsToPrepaidCard(Guid customerId)
