@@ -24,7 +24,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             Drive.Data.Risk.Db.RiskAccountMobilePhones.Delete(MobilePhone: phone);
         }
 
-		[Test]
+		[Test, AUT(AUT.Uk)]
 		[JIRA("UK-1563")]
 		public void L0_MobilePhoneIsUnique_LoanIsAccepted()
 		{
@@ -40,7 +40,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		    }
 		}
 
-		[Test]
+        [Test, AUT(AUT.Uk)]
 		[JIRA("UK-1563")]
 		public void L0_MobilePhoneIsNotUnique_LoanIsDeclined()
 		{
