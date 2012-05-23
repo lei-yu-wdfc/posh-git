@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentMap>
   <YourDetails>Your Details</YourDetails>
+ 
   <RepayEarlyPaymentFailedPage>
     <HeaderText>Sorry we couldn't collect your payment</HeaderText>
   </RepayEarlyPaymentFailedPage>
@@ -46,5 +47,10 @@
   <L0DeclinedPage>
     <HeaderText>Unfortunately we can’t approve your application</HeaderText>
   </L0DeclinedPage>
-  
-  </ContentMap>
+
+  <TimeoutTestPage>
+    <HeaderText>Timeout Test</HeaderText>
+  </TimeoutTestPage>
+
+</ContentMap>
+

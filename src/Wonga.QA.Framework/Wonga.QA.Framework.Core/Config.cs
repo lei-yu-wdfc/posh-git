@@ -603,7 +603,16 @@ namespace Wonga.QA.Framework.Core
             }
         }
 
-        public class CommonApiConfig        {            public Uri Commands { get; set; }            public CommonApiConfig(String host)            {                Uri uri = new UriBuilder { Host = host }.Uri;                Commands = new Uri(uri, "commands");            }        }    }
+        public class CommonApiConfig
+        {
+            public Uri Commands { get; set; }
+            public CommonApiConfig(String host)
+            {
+                Uri uri = new UriBuilder { Host = host }.Uri;
+                Commands = new Uri(uri, "commands");
+            }
+        }
+    }
 
     public static class Connections
     {

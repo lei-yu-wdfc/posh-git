@@ -69,7 +69,8 @@ namespace Wonga.QA.Framework.UI
         public RepayDueFullpaySuccessPage RepayDueFullpaySuccessPage { get; set; }
         public RepayOverdueFullpaySuccessPage RepayOverdueFullpaySuccessPage { get; set; }
         public ExtensionAgreementPage ExtensionAgreementPage { get; set; }
-        public L0DeclinedPage L0DeclinedPage { get; set; }        
+        public L0DeclinedPage L0DeclinedPage { get; set; }
+        public TimeoutTestPage TimeoutTestPage { get; set; }
 #endregion
     }
 }

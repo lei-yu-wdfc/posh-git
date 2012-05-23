@@ -430,7 +430,7 @@
     <Header>#content-area .wonga-box-top-right h2</Header>
     <ContentArea>#content-area .wonga-box-top-right</ContentArea>
   </RepayOverduePaymentFailedPage>
-
+  
   <RepayEarlyPartpaySuccessPage>
     <Header>#content-area .wonga-box-top-right h2</Header>
     <ContentArea>#content-area .wonga-box-top-right</ContentArea>
