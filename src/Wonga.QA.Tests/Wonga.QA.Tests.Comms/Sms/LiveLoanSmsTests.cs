@@ -40,7 +40,7 @@ namespace Wonga.QA.Tests.Comms.Sms
             _applicationsTable = Drive.Data.Payments.Db.Applications;
             _createAndStoreSagaTable = Drive.Data.OpsSagas.Db.CreateAndStorePaymentNotificationSmsSagaEntity;
             _smsTable = Drive.Data.Sms.Db.SmsMessages;
-            _mobilePhonePart = GetPhoneNumber();
+            _mobilePhonePart = String.Format("700900{0}",GetPhoneNumber());
             _mobilePhone = BuildPhoneNumber(_mobilePhonePart);
             _customer = CustomerBuilder.New().WithMobileNumber(_mobilePhone).Build();
             _loanAmount = 222.22m;
@@ -115,7 +115,7 @@ namespace Wonga.QA.Tests.Comms.Sms
 
         protected string GetPhoneNumber()
         {
-            return Get.RandomLong(100000000, 1000000000).ToString(CultureInfo.InvariantCulture);
+            return Get.RandomInt(100, 999).ToString(CultureInfo.InvariantCulture);
         }
 
         protected string BuildPhoneNumber(string n)
