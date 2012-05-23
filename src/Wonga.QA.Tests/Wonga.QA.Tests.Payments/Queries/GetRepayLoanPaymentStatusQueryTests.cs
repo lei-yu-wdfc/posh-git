@@ -72,7 +72,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             Do.Until(() => (response2 = Drive.Api.Queries.Post(new GetRepayLoanPaymentStatusUkQuery { ApplicationId = appId, RepaymentRequestId = requestId })).Values["PaymentStatus"].Single() != "Pending");
 
             Assert.AreEqual(appId.ToString(), response2.Values["ApplicationId"].Single(), "ApplicationId incorrect");
-            Assert.AreEqual("PaymentTaken", response2.Values["PaymentStatus"].Single(), "PaymentStatus incorrect");
+            Assert.AreEqual("PartPaymentTaken", response2.Values["PaymentStatus"].Single(), "PaymentStatus incorrect");
         }
     }
 }
