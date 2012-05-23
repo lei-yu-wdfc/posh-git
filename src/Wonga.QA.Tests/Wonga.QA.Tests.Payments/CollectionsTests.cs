@@ -51,7 +51,7 @@ namespace Wonga.QA.Tests.Payments
 			db.Ops.SubmitChanges();
 		}
 
-		[Test, AUT(AUT.Za),Pending]
+		[Test, AUT(AUT.Za)]
 		public void CollectionsNaedoEntireWorkflowTest()
 		{
 			const int term = 25;
@@ -161,8 +161,7 @@ namespace Wonga.QA.Tests.Payments
 			{
 				now = fixedTermLoanApplication.NextDueDate.Value;
 				SetPaymentsUtcNow(now);
-
-				new MsmqDriver().Payments.Send(new ProcessScheduledPaymentCommand { ApplicationId = fixedTermLoanApplication.ApplicationId });
+				
 				Do.Until(() => Drive.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(a => a.ApplicationGuid == application.Id));
 			}
 
