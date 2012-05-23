@@ -327,13 +327,13 @@ namespace Wonga.QA.Tests.BankGateway
                                                                         {
                                                                             AccountId = Guid.NewGuid(),
                                                                             CreatedOn = DateTime.UtcNow,
-                                                                            DateOfBirth = DateTime.UtcNow.AddYears(-20),
-                                                                            Forename = "XYX",
-                                                                            Surname = "Ddddd",
-                                                                            Email = "asdasD@asdasd.com",
+                                                                            DateOfBirth = Get.GetDoB(),
+                                                                            Forename = Get.GetName(),
+                                                                            Surname = Get.GetName(),
+                                                                            Email = Get.GetEmail(),
                                                                             Gender = GenderEnum.Male,
-                                                                            HomePhone = "020123123",
-                                                                            MobilePhone = "070123123",
+                                                                            HomePhone = "02088123123",
+                                                                            MobilePhone = Get.GetMobilePhone(),
                                                                             Title = TitleEnum.Mr,
                                                                         };
             Drive.Msmq.Comms.Send(saveCustomerDetailsCommand);
