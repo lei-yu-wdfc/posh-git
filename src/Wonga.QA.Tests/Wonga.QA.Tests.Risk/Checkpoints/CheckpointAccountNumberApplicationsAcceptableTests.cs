@@ -41,7 +41,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			AssertCheckpointAndVerificationExecution(lnApplication);
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879"), Timeout(0), Parallelizable]
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879"), Timeout(0)]
 		public void Ln_NumberOfApplicationDailyOverThresholdDeclined()
 		{
 			var customerLn = CustomerBuilder.New().WithEmployer(RiskMask.TESTEmployedMask).WithEmployerStatus("Unemployed").Build();
@@ -58,7 +58,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			AssertApplicationDeclinedWithCorrectCheckPointAndVerification(lnApplication);
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879"), Timeout(0), Parallelizable]
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879"), Timeout(0)]
 		public void Ln_NumberOfApplicationMonthlyOverThresholdDeclined()
 		{
 			//make one app per day up until the monthly threshold so that the daily limit is not exceeded

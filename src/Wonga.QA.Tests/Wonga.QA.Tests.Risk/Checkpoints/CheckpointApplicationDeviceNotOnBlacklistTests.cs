@@ -9,99 +9,59 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[Parallelizable(TestScope.Self)]
     public class CheckpointApplicationDeviceNotOnBlacklistTests
     {
         private const string IsManualVerificationEnabledKey = "Risk.IsManualVerificationEnabled";
         private const string IsIovationReviewAcceptedKey = "Risk.IsIovationReviewAccepted";
 
-		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Wb), JIRA("CA-1735", "SME-130", "UK-1567")]
-		public void L0_CheckpointApplicationFailsIovation_LoanIsDeclined()
-        {
-            var customerBuilder = CustomerBuilder.New();
-            Application application;
+    	private Customer customer;
 
-            var customer = Config.AUT == AUT.Wb
-                               ? customerBuilder.WithMiddleName(RiskMask.TESTApplicationDeviceNotOnBlacklist).Build()
-                               : customerBuilder.WithEmployer(RiskMask.TESTDeviceNotOnBlacklist).Build();
-            
-            if (Config.AUT == AUT.Wb)
-            {
-                var organisation = OrganisationBuilder.New(customer).Build();
-                application = ApplicationBuilder.New(customer, organisation).WithIovationBlackBox(IovationMockResponse.Deny).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
-            }
-            else
-                application =
-                    ApplicationBuilder.New(customer).WithIovationBlackBox(IovationMockResponse.Deny).WithExpectedDecision(
-                        ApplicationDecisionStatus.Declined).Build();
-
-            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id,RiskWorkflowTypes.MainApplicant);
-            Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
-			Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.HardwareBlacklistCheck));
+		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Wb, AUT.Za), JIRA("CA-1735", "SME-130", "UK-1567"), Parallelizable(TestScope.All)]
+		public void L0IovationDenyIsDeclined()
+		{
+			var application = BuildApplication(ApplicationDecisionStatus.Declined, IovationMockResponse.Deny);
+			VerifyRiskApplication(application, RiskCheckpointStatus.Failed);
         }
 
-		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Wb), JIRA("CA-1735", "SME-130", "UK-1567")]
-		public void L0_CheckpointApplicationPassesIovation_LoanIsAccepted()
-        {
-            var customerBuilder = CustomerBuilder.New();
-            Application application;
+		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Wb, AUT.Za), JIRA("CA-1735", "SME-130", "UK-1567"), Parallelizable(TestScope.All)]
+		public void L0IovationAllowIsAccepted()
+		{
+			customer = BuildCustomer();
+			var application = BuildApplication(ApplicationDecisionStatus.Accepted, IovationMockResponse.Allow);
+			VerifyRiskApplication(application, RiskCheckpointStatus.Verified);
+			application.RepayOnDueDate();
+		}
 
-            var customer = Config.AUT == AUT.Wb
-                               ? customerBuilder.WithMiddleName(RiskMask.TESTApplicationDeviceNotOnBlacklist).Build()
-                               : customerBuilder.WithEmployer(RiskMask.TESTDeviceNotOnBlacklist).Build();
+		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Wb, AUT.Za), JIRA("CA-1735", "SME-130", "UK-1567"), Parallelizable(TestScope.All)]
+		public void L0IovationUnknownIsAccepted()
+		{
+			var application = BuildApplication(ApplicationDecisionStatus.Accepted, IovationMockResponse.Unknown);
+			VerifyRiskApplication(application, RiskCheckpointStatus.Verified);
+		}
 
-            if (Config.AUT == AUT.Wb)
-            {
-                var organisation = OrganisationBuilder.New(customer).Build();
-                application = ApplicationBuilder.New(customer, organisation).WithIovationBlackBox(IovationMockResponse.Allow).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
-            }
-            else
-                application =
-                    ApplicationBuilder.New(customer).WithIovationBlackBox(IovationMockResponse.Allow).WithExpectedDecision(
-                        ApplicationDecisionStatus.Accepted).Build();
-
-            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id,RiskWorkflowTypes.MainApplicant);
-            Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
-			Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.HardwareBlacklistCheck));
-        }
-
-        [Test, AUT(AUT.Ca, AUT.Uk, AUT.Wb), JIRA("CA-1735", "SME-130", "UK-1567")]
-        public void L0_CheckpointApplicationGetsIovationReviewWithManualVerificationWithIovationReviewAccepted_LoanIsAccepted()
+		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Wb, AUT.Za), JIRA("CA-1735", "SME-130", "UK-1567")]
+		[Row(true,true)]
+		[Row(true,false)]
+		[Row(false, false)]
+        public void L0IovationReview(bool manualVerificationEnabled, bool iovationReviewAccepted)
         {
             var isManualVerificationEnabled =
                     Drive.Data.Ops.GetServiceConfiguration<bool>(IsManualVerificationEnabledKey);
             var isIovationReviewAccepted =
                     Drive.Data.Ops.GetServiceConfiguration<bool>(IsIovationReviewAcceptedKey);
+
+			Drive.Data.Ops.SetServiceConfiguration<bool>(IsManualVerificationEnabledKey, manualVerificationEnabled);
+			Drive.Data.Ops.SetServiceConfiguration<bool>(IsIovationReviewAcceptedKey, iovationReviewAccepted);
+
+			var expectedDecision = manualVerificationEnabled && iovationReviewAccepted ? ApplicationDecisionStatus.Accepted : ApplicationDecisionStatus.Declined;
+			var expectedCheckpointStatus = manualVerificationEnabled && iovationReviewAccepted ? RiskCheckpointStatus.Verified : RiskCheckpointStatus.Failed;
+
             try
             {
-                var customerBuilder = CustomerBuilder.New();
-                Application application;
-
-                var customer = Config.AUT == AUT.Wb
-                                   ? customerBuilder.WithMiddleName(RiskMask.TESTApplicationDeviceNotOnBlacklist).Build()
-                                   : customerBuilder.WithEmployer(RiskMask.TESTDeviceNotOnBlacklist).Build();
-
-                Drive.Data.Ops.SetServiceConfiguration<bool>(IsManualVerificationEnabledKey, true);
-                Drive.Data.Ops.SetServiceConfiguration<bool>(IsIovationReviewAcceptedKey, true);
-
-                if (Config.AUT == AUT.Wb)
-                {
-                    var organisation = OrganisationBuilder.New(customer).Build();
-                    application = ApplicationBuilder.New(customer, organisation).WithIovationBlackBox(IovationMockResponse.Review).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
-                }
-                else
-                    application =
-                        ApplicationBuilder.New(customer).WithIovationBlackBox(IovationMockResponse.Review).WithExpectedDecision(
-                            ApplicationDecisionStatus.Accepted).Build();
-
-                var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
-                Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
-                Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.HardwareBlacklistCheck));
+				var application = BuildApplication(expectedDecision, IovationMockResponse.Review);
+				VerifyRiskApplication(application, expectedCheckpointStatus);
             }
-            catch (Exception)
-            {
-                throw;
-            }
+
             finally
             {
                 Drive.Data.Ops.SetServiceConfiguration(IsManualVerificationEnabledKey, isManualVerificationEnabled);
@@ -109,171 +69,72 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             }
         }
 
-        [Test, AUT(AUT.Ca, AUT.Uk, AUT.Wb), JIRA("CA-1735", "SME-130", "UK-1567")]
-        public void L0_CheckpointApplicationGetsIovationReviewWithManualVerificationWithoutIovationReviewAccepted_LoanIsDeclined()
-        {
-            var isManualVerificationEnabled =
-                    Drive.Data.Ops.GetServiceConfiguration<bool>(IsManualVerificationEnabledKey);
-            var isIovationReviewAccepted =
-                    Drive.Data.Ops.GetServiceConfiguration<bool>(IsIovationReviewAcceptedKey);
-            try
-            {
-                var customerBuilder = CustomerBuilder.New();
-                Application application;
-
-                var customer = Config.AUT == AUT.Wb
-                                   ? customerBuilder.WithMiddleName(RiskMask.TESTApplicationDeviceNotOnBlacklist).Build()
-                                   : customerBuilder.WithEmployer(RiskMask.TESTDeviceNotOnBlacklist).Build();
-
-                Drive.Data.Ops.SetServiceConfiguration<bool>(IsManualVerificationEnabledKey, true);
-                Drive.Data.Ops.SetServiceConfiguration<bool>(IsIovationReviewAcceptedKey, false);
-
-                if (Config.AUT == AUT.Wb)
-                {
-                    var organisation = OrganisationBuilder.New(customer).Build();
-                    application = ApplicationBuilder.New(customer, organisation).WithIovationBlackBox(IovationMockResponse.Review).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
-                }
-                else
-                    application =
-                        ApplicationBuilder.New(customer).WithIovationBlackBox(IovationMockResponse.Review).WithExpectedDecision(
-                            ApplicationDecisionStatus.Declined).Build();
-
-                var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
-                Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
-                Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.HardwareBlacklistCheck));
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                Drive.Data.Ops.SetServiceConfiguration(IsManualVerificationEnabledKey, isManualVerificationEnabled);
-                Drive.Data.Ops.SetServiceConfiguration(IsIovationReviewAcceptedKey, isIovationReviewAccepted);
-            }
+		[Test, AUT(AUT.Uk, AUT.Za), JIRA("UK-1567"), DependsOn("L0IovationAllowIsAccepted"), Parallelizable(TestScope.All)]
+        public void LnIovationDenyIsDeclined()
+		{
+			var application = BuildApplication(customer, ApplicationDecisionStatus.Declined, IovationMockResponse.Deny);
+			VerifyRiskApplication(application, RiskCheckpointStatus.Failed);
         }
 
-        [Test, AUT(AUT.Ca, AUT.Uk, AUT.Wb), JIRA("UK-1567")]
-        public void L0_CheckpointApplicationGetsIovationReviewWithNoManualVerification_LoanIsDeclined()
+		[Test, AUT(AUT.Uk, AUT.Za), JIRA("UK-1567"), DependsOn("LnIovationDenyIsDeclined"), Parallelizable(TestScope.All)]
+        public void LnIovationAllowIsAccepted()
         {
-            var isManualVerificationEnabled =
-                    Drive.Data.Ops.GetServiceConfiguration<bool>(IsManualVerificationEnabledKey);
-            try
-            {
-                var customerBuilder = CustomerBuilder.New();
-                Application application;
-
-                var customer = Config.AUT == AUT.Wb
-                                   ? customerBuilder.WithMiddleName(RiskMask.TESTApplicationDeviceNotOnBlacklist).Build()
-                                   : customerBuilder.WithEmployer(RiskMask.TESTDeviceNotOnBlacklist).Build();
-
-                Drive.Data.Ops.SetServiceConfiguration<bool>(IsManualVerificationEnabledKey, false);
-
-                if (Config.AUT == AUT.Wb)
-                {
-                    var organisation = OrganisationBuilder.New(customer).Build();
-                    application = ApplicationBuilder.New(customer, organisation).WithIovationBlackBox(IovationMockResponse.Review).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
-                }
-                else
-                    application =
-                        ApplicationBuilder.New(customer).WithIovationBlackBox(IovationMockResponse.Review).WithExpectedDecision(
-                            ApplicationDecisionStatus.Declined).Build();
-
-                var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
-                Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
-                Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.HardwareBlacklistCheck));
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                Drive.Data.Ops.SetServiceConfiguration(IsManualVerificationEnabledKey, isManualVerificationEnabled);
-            }
+			var application = BuildApplication(customer, ApplicationDecisionStatus.Accepted, IovationMockResponse.Allow);
+			VerifyRiskApplication(application, RiskCheckpointStatus.Verified);
+			application.RepayOnDueDate();
         }
 
-        [Test, AUT(AUT.Ca, AUT.Uk, AUT.Wb), JIRA("CA-1735", "SME-130", "UK-1567")]
-        public void L0_CheckpointApplicationGetsIovationUnknown_LoanIsAccepted()
+		[Test, AUT(AUT.Uk, AUT.Za), JIRA("UK-1567"), DependsOn("LnIovationAllowIsAccepted"), Parallelizable(TestScope.All)]
+        public void LnIovationReviewIsAccepted()
         {
-            var customerBuilder = CustomerBuilder.New();
-            Application application;
-
-            var customer = Config.AUT == AUT.Wb
-                               ? customerBuilder.WithMiddleName(RiskMask.TESTApplicationDeviceNotOnBlacklist).Build()
-                               : customerBuilder.WithEmployer(RiskMask.TESTDeviceNotOnBlacklist).Build();
-
-            if (Config.AUT == AUT.Wb)
-            {
-                var organisation = OrganisationBuilder.New(customer).Build();
-                application = ApplicationBuilder.New(customer, organisation).WithIovationBlackBox(IovationMockResponse.Unknown).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
-            }
-            else
-                application =
-                    ApplicationBuilder.New(customer).WithIovationBlackBox(IovationMockResponse.Unknown).WithExpectedDecision(
-                        ApplicationDecisionStatus.Accepted).Build();
-
-            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
-            Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
-			Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.HardwareBlacklistCheck));
+			var application = BuildApplication(customer, ApplicationDecisionStatus.Accepted, IovationMockResponse.Review);
+			VerifyRiskApplication(application, RiskCheckpointStatus.Verified);
+			application.RepayOnDueDate();
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1567")]
-        public void Ln_CheckpointApplicationFailsIovation_LoanIsDeclined()
+		[Test, AUT(AUT.Uk, AUT.Za), JIRA("UK-1567"), DependsOn("LnIovationReviewIsAccepted"), Parallelizable(TestScope.All)]
+        public void LnIovationUnknownIsAccepted()
         {
-            var customer = CustomerBuilder.New().WithEmployer(RiskMask.TESTEmployedMask).Build();
-            var l0Application = ApplicationBuilder.New(customer).Build();
-            l0Application.RepayOnDueDate();
-
-            Drive.Db.UpdateEmployerName(customer.Id, RiskMask.TESTDeviceNotOnBlacklist.ToString());
-
-            var lnApplication = ApplicationBuilder.New(customer).WithIovationBlackBox(IovationMockResponse.Deny).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
-
-            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(lnApplication.Id, RiskWorkflowTypes.MainApplicant);
-            Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.HardwareBlacklistCheck));
+			var application = BuildApplication(customer, ApplicationDecisionStatus.Accepted, IovationMockResponse.Unknown);
+			VerifyRiskApplication(application, RiskCheckpointStatus.Verified);
+			application.RepayOnDueDate();
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1567")]
-        public void Ln_CheckpointApplicationPassesIovation_LoanIsAccepted()
-        {
-            var customer = CustomerBuilder.New().WithEmployer(RiskMask.TESTDeviceNotOnBlacklist).Build();
-            var l0Application = ApplicationBuilder.New(customer).Build();
-            l0Application.RepayOnDueDate();
+		#region Helpers
 
-            var lnApplication = ApplicationBuilder.New(customer).WithIovationBlackBox(IovationMockResponse.Allow).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+		private Customer BuildCustomer()
+		{
+			return Config.AUT == AUT.Wb
+			       	? CustomerBuilder.New().WithMiddleName(RiskMask.TESTApplicationDeviceNotOnBlacklist).Build()
+			       	: CustomerBuilder.New().WithEmployer(RiskMask.TESTDeviceNotOnBlacklist).Build();
+		}
 
-            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(lnApplication.Id, RiskWorkflowTypes.MainApplicant);
-            Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.HardwareBlacklistCheck));
-        }
+		private Application BuildApplication(Customer customer, ApplicationDecisionStatus expectedDecision, IovationMockResponse iovationMockResponse)
+		{
+			if (Config.AUT == AUT.Wb)
+			{
+				var organisation = OrganisationBuilder.New(customer).Build();
+				return ApplicationBuilder.New(customer, organisation).WithIovationBlackBox(iovationMockResponse).WithExpectedDecision(expectedDecision).Build();
+			}
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1567")]
-        public void Ln_CheckpointApplicationGetsIovationReview_LoanIsAccepted()
-        {
-            var customer = CustomerBuilder.New().WithEmployer(RiskMask.TESTDeviceNotOnBlacklist).Build();
-            var l0Application = ApplicationBuilder.New(customer).Build();
-            l0Application.RepayOnDueDate();
+			return ApplicationBuilder.New(customer).WithIovationBlackBox(iovationMockResponse).WithExpectedDecision(
+				expectedDecision).Build();
+		}
 
-            var lnApplication = ApplicationBuilder.New(customer).WithIovationBlackBox(IovationMockResponse.Review).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+		private Application BuildApplication(ApplicationDecisionStatus expectedDecision, IovationMockResponse iovationMockResponse)
+		{
+			var customer = BuildCustomer();
+			return BuildApplication(customer, expectedDecision, iovationMockResponse);
+		}
 
-            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(lnApplication.Id, RiskWorkflowTypes.MainApplicant);
-            Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.HardwareBlacklistCheck));
-        }
+		private void VerifyRiskApplication(Application application, RiskCheckpointStatus expectedCheckpointStatus)
+		{
+			var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
+			Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
+			Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, expectedCheckpointStatus), Get.EnumToString(RiskCheckpointDefinitionEnum.HardwareBlacklistCheck));
+		}
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1567")]
-        public void Ln_CheckpointApplicationGetsIovationUnknown_LoanIsAccepted()
-        {
-            var customer = CustomerBuilder.New().WithEmployer(RiskMask.TESTDeviceNotOnBlacklist).Build();
-            var l0Application = ApplicationBuilder.New(customer).Build();
-            l0Application.RepayOnDueDate();
+		#endregion 
 
-            var lnApplication = ApplicationBuilder.New(customer).WithIovationBlackBox(IovationMockResponse.Unknown).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
-
-            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(lnApplication.Id, RiskWorkflowTypes.MainApplicant);
-            Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
-            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.HardwareBlacklistCheck));
-        }
-    }
+	}
 }
