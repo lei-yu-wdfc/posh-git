@@ -72,8 +72,7 @@ namespace Wonga.QA.Tests.Payments.Command
             var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
             //Assert
-            var repaymentAccount = Do.Until(() => _repaymentAccount.FindAll(_repaymentAccount.AccountId == app.AccountId)
-                                                    .FirstOrDefault());
+            var repaymentAccount = Do.Until(() => _repaymentAccount.FindByAccountId(app.AccountId));
             Assert.IsNotNull(repaymentAccount);
             Assert.IsNotNull(repaymentAccount.RepaymentNumber);
         }
