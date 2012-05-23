@@ -2,6 +2,7 @@
 using System.Globalization;
 using MbUnit.Framework;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Api.Enums;
 using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework
@@ -14,6 +15,9 @@ namespace Wonga.QA.Framework
         private static readonly String VERIFICATION_PIN = "0000";
         private static readonly String COUNTTRY_CODE = "UK";
         private static readonly String POST_CODE = "SW6 6PN";
+
+        public static readonly String STANDARD_CARD_TYPE = "Standard";
+        public static readonly String PREMIUM_CARD_TYPE = "Premium";
                       
         public static void CreateMarketingEligibility(Guid customerId, bool isEligible)
         {
@@ -123,6 +127,40 @@ namespace Wonga.QA.Framework
             completeEmailVerification.ChangeId = emailVerification.ChangeId;
             
             Drive.Api.Commands.Post(completeEmailVerification);
+        }
+
+        public static void CreatePrepaidCardForCustomer(Guid customerId,bool isPremiumCard)
+        {
+            if(isPremiumCard.Equals(true))
+            {
+                var request = new SignupCustomerForPremiumCardCommand();
+                request.CustomerExternalId = customerId;
+                Drive.Api.Queries.Post(request);
+            }
+
+            else
+            {
+                var request = new SignupCustomerForStandardCardCommand();
+                request.CustomerExternalId = customerId;
+                Drive.Api.Queries.Post(request);
+            }
+        }
+
+        public static void SetFundsForCustomer(Guid applicationId,bool isPrepaidFunds)
+        {
+            var request = new SetFundsTransferMethodCommand();
+            request.ApplicationId = applicationId;
+
+            if(isPrepaidFunds.Equals(true))
+            {
+                request.TransferMethod = FundsTransferEnum.SendToPrepaidCard;   
+            }
+            else
+            {
+                request.TransferMethod = FundsTransferEnum.DefaultAutomaticallyChosen;
+            }
+
+            Drive.Api.Commands.Post(request);
         }
     }
 }
