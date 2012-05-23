@@ -9,10 +9,10 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
 
-namespace Wonga.QA.Tests.Comms
+namespace Wonga.QA.Tests.Email
 {
 	[TestFixture, AUT(AUT.Za), Parallelizable(TestScope.All)]
-	public class EasyPayTests
+	public class EasyPayServiceEmailTests
 	{
 		private const string FinanceEmailAddress = "qa.wonga.com+financeza@gmail.com";
 		private const string InvalidEasyPayNumberReceivedEmailTemplate = "34407";
