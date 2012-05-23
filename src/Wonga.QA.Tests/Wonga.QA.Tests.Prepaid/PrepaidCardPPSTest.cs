@@ -12,26 +12,17 @@ namespace Wonga.QA.Tests.Prepaid
     [TestFixture, Parallelizable(TestScope.All)]
     class PrepaidCardPPSTest
     {
-        private Customer _eligibleCustomer = null;
+        private Customer _eligibleCustomerForStandardCard = null;
         private Customer _nonEligibleCustomer = null;
         private Customer _nonEligibleCustomerInArrears = null;
         private Customer _customerWithWromgEmail = null;
-
-        private SignupCustomerForStandardCardCommand _validRequest = null;
-        private SignupCustomerForStandardCardCommand _requestWithInvalidCustomerId = null;
-        private SignupCustomerForStandardCardCommand _requestWithCustomerInArrears = null;
-        private SignupCustomerForStandardCardCommand _requestWithInvalidCustomerEmail = null;
-
-        private SignupCustomerForPremiumCardCommand _validPremiumCardRequest = null;
-        private SignupCustomerForPremiumCardCommand _invalidPremiumCardRequest = null;
+        private Customer _eligibleCustomerForPremiumCard = null;
 
         private static readonly int VALID_ACCOUNT_NUMBER_LENGTH = 14;
         private static readonly int VALID_SERIAL_NUMBER_LENGTH = 10;
 
         private static readonly String STANDARD_CARD_TEMPLATE_NAME = "34327";
         private static readonly String PREMIUM_CARD_TEMPLATE_NAME = "34328";
-        private static readonly String STANDARD_CARD_TYPE = "0";
-        private static readonly String PREMIUM_CARD_TYPE = "1";
 
         private static readonly String CARD_STATUS_ACTIVE = "2";
 		
@@ -41,124 +32,111 @@ namespace Wonga.QA.Tests.Prepaid
         [SetUp]
         public void Init()
         {
-            _eligibleCustomer = CustomerBuilder.New().WithEmailAddress(Get.GetEmail(50)).Build();
+            _eligibleCustomerForStandardCard = CustomerBuilder.New().WithEmailAddress(Get.GetEmail(50)).Build();
             _nonEligibleCustomer = CustomerBuilder.New().WithEmailAddress(Get.GetEmail(50)).Build();
             _nonEligibleCustomerInArrears = CustomerBuilder.New().WithEmailAddress(Get.GetEmail(50)).Build();
             _customerWithWromgEmail = CustomerBuilder.New().Build();
+            _eligibleCustomerForPremiumCard = CustomerBuilder.New().WithEmailAddress(Get.GetEmail(50)).Build();
 
-            CustomerOperations.CreateMarketingEligibility(_eligibleCustomer.Id, true);
+            CustomerOperations.CreateMarketingEligibility(_eligibleCustomerForStandardCard.Id, true);
             CustomerOperations.CreateMarketingEligibility(_nonEligibleCustomerInArrears.Id, false);
             CustomerOperations.CreateMarketingEligibility(_customerWithWromgEmail.Id, true);
+            CustomerOperations.CreateMarketingEligibility(_eligibleCustomerForPremiumCard.Id,true);
 
-            _validRequest = new SignupCustomerForStandardCardCommand();
-            _validRequest.CustomerExternalId = _eligibleCustomer.Id;
-
-            _requestWithInvalidCustomerId = new SignupCustomerForStandardCardCommand();
-            _requestWithInvalidCustomerId.CustomerExternalId = _nonEligibleCustomer.Id;
-
-            _requestWithCustomerInArrears = new SignupCustomerForStandardCardCommand();
-            _requestWithCustomerInArrears.CustomerExternalId = _nonEligibleCustomerInArrears.Id;
-
-            _requestWithInvalidCustomerEmail = new SignupCustomerForStandardCardCommand();
-            _requestWithInvalidCustomerEmail.CustomerExternalId = _customerWithWromgEmail.Id;
-
-            _validPremiumCardRequest = new SignupCustomerForPremiumCardCommand();
-            _validPremiumCardRequest.CustomerExternalId = _eligibleCustomer.Id;
-
-            _invalidPremiumCardRequest = new SignupCustomerForPremiumCardCommand();
-            _invalidPremiumCardRequest.CustomerExternalId = _nonEligibleCustomer.Id;
+            ExecuteCommonPPSCommands();
+            CheckOnAddingRecordsToPrepaidCard(_eligibleCustomerForStandardCard.Id, CustomerOperations.STANDARD_CARD_TYPE);
+            CheckOnAddingRecordsToPrepaidCard(_eligibleCustomerForPremiumCard.Id, CustomerOperations.PREMIUM_CARD_TYPE);
         }
 
         [Test, AUT(AUT.Uk), JIRA("PP-8", "PP-150")]
         public void CustomerShouldApplyForPrepaidCard()
         {
-            ExecuteCommonPPSCommands();
-            CheckOnAddingRecordsToPrepaidCard(_eligibleCustomer.Id);
-            Assert.Throws<Exception>(() => CheckOnAddingRecordsToPrepaidCard(_customerWithWromgEmail.Id));
+            Assert.Throws<Exception>(() => CheckOnAddingRecordsToPrepaidCard(_customerWithWromgEmail.Id,CustomerOperations.STANDARD_CARD_TYPE));
+            Assert.Throws<Exception>(() => CheckOnAddingRecordsToPrepaidCard(_customerWithWromgEmail.Id, CustomerOperations.PREMIUM_CARD_TYPE));
         }
 
         [Test, AUT(AUT.Uk), JIRA("PP-79")]
         public void CustomerShouldsendRequestForResetPINCode()
         {
-            ExecuteCommonPPSCommands();
-            CheckOnAddingRecordsToPrepaidCard(_eligibleCustomer.Id);
 
-            var validRequest = new GetPrepaidResetCodeQuery();
+            var validRequestForStandardCard = new GetPrepaidResetCodeQuery();
             var invalidRequest = new GetPrepaidResetCodeQuery();
             var invalidRequestForCustomerInArrears = new GetPrepaidResetCodeQuery();
             var invalidRequestCustomerWithWrongEmail = new GetPrepaidResetCodeQuery();
+            var validRequestForPremiumCard = new GetPrepaidResetCodeQuery();
 
-            validRequest.CustomerExternalId = _eligibleCustomer.Id;
+            validRequestForStandardCard.CustomerExternalId = _eligibleCustomerForStandardCard.Id;
             invalidRequest.CustomerExternalId = _nonEligibleCustomer.Id;
             invalidRequestForCustomerInArrears.CustomerExternalId = _nonEligibleCustomerInArrears.Id;
             invalidRequestCustomerWithWrongEmail.CustomerExternalId = _nonEligibleCustomerInArrears.Id;
+            validRequestForPremiumCard.CustomerExternalId = _eligibleCustomerForPremiumCard.Id;
 
-            var successResponse = Drive.Api.Queries.Post(validRequest);
+            var successResponseForStandard = Drive.Api.Queries.Post(validRequestForStandardCard);
+            var successResponseForPremium = Drive.Api.Queries.Post(validRequestForPremiumCard);
+            
             Assert.Throws<ValidatorException>(() => Drive.Api.Queries.Post(invalidRequest));
             Assert.Throws<ValidatorException>(() => Drive.Api.Queries.Post(invalidRequestForCustomerInArrears));
             Assert.Throws<ValidatorException>(() => Drive.Api.Queries.Post(invalidRequestCustomerWithWrongEmail));
-            Assert.IsNotNull(successResponse.Values["ResetCode"]);
+
+            Assert.IsNotNull(successResponseForStandard.Values["ResetCode"]);
+            Assert.IsNotNull(successResponseForPremium.Values["ResetCode"]);
         }
 
         [Test, AUT(AUT.Uk), JIRA("PP-11")]
         public void CustomerShouldReceiveEmailWhenApplyPrepaidCard()
         {
-            ExecuteCommonPPSCommands();
-            CheckOnAddingRecordsToPrepaidCard(_eligibleCustomer.Id);
 
-            Do.Until(() => _qaDataDb.Email.FindBy(EmailAddress: _eligibleCustomer.GetEmail(), TemplateName: STANDARD_CARD_TEMPLATE_NAME));
-            Do.Until(() => _qaDataDb.Email.FindBy(EmailAddress: _eligibleCustomer.GetEmail(), TemplateName: PREMIUM_CARD_TEMPLATE_NAME));
+            Do.Until(() => _qaDataDb.Email.FindBy(EmailAddress: _eligibleCustomerForStandardCard.GetEmail(), TemplateName: STANDARD_CARD_TEMPLATE_NAME));
+            Do.Until(() => _qaDataDb.Email.FindBy(EmailAddress: _eligibleCustomerForPremiumCard.GetEmail(), TemplateName: PREMIUM_CARD_TEMPLATE_NAME));
         }
 
-        [Test,AUT(AUT.Uk),JIRA("PP-34"),Pending("Command not fully implemented ")]
+        [Test,AUT(AUT.Uk),JIRA("PP-34,PP-35")]
         public void CustomerShouldApplyPrepaidCardAndSetPrepaidFunds()
         {
-            ExecuteCommonPPSCommands();
-            CheckOnAddingRecordsToPrepaidCard(_eligibleCustomer.Id);
-            Application application = ApplicationBuilder.New(_eligibleCustomer).Build();
 
-            var setFundsCommand = new SetFundsTransferMethodCommand();
-            setFundsCommand.ApplicationId = application.Id;
-            setFundsCommand.TransferMethod = FundsTransferEnum.SendToPrepaidCard;
+            Application appForStandard = ApplicationBuilder.New(_eligibleCustomerForStandardCard).Build();
+            Application appForPremium = ApplicationBuilder.New(_eligibleCustomerForPremiumCard).Build();
 
-            Drive.Api.Commands.Post(setFundsCommand);
+            CustomerOperations.SetFundsForCustomer(appForStandard.Id,true);
+            CustomerOperations.SetFundsForCustomer(appForPremium.Id,true);
+
+            Assert.Throws<Exception>(() => CustomerOperations.SetFundsForCustomer(Guid.Empty,true));
         }
 
-        [Test, AUT(AUT.Uk), JIRA("PP-34"), Pending("Command not fully implemented")]
+        [Test, AUT(AUT.Uk), JIRA("PP-34,PP-35")]
         public void CustomerShouldApplyPrepaidCardAndSetDefaultFunds()
         {
-            ExecuteCommonPPSCommands();
-            CheckOnAddingRecordsToPrepaidCard(_eligibleCustomer.Id);
-            Application application = ApplicationBuilder.New(_eligibleCustomer).Build();
+            Application appForStandard = ApplicationBuilder.New(_eligibleCustomerForStandardCard).Build();
+            Application appForPremium = ApplicationBuilder.New(_eligibleCustomerForPremiumCard).Build();
 
-            var setFundsCommand = new SetFundsTransferMethodCommand();
-            setFundsCommand.ApplicationId = application.Id;
-            setFundsCommand.TransferMethod = FundsTransferEnum.DefaultAutomaticallyChosen;
+            CustomerOperations.SetFundsForCustomer(appForStandard.Id,false);
+            CustomerOperations.SetFundsForCustomer(appForPremium.Id,false);
 
-            Drive.Api.Commands.Post(setFundsCommand);
+            Assert.Throws<Exception>(() => CustomerOperations.SetFundsForCustomer(Guid.Empty, true));
         }
 
-        [Test,AUT(AUT.Uk),JIRA("PP-31"),Pending("Command not fully implemented")]
+        [Test,AUT(AUT.Uk),JIRA("PP-31")]
         public void CustomerShouldUpdatePersonalDetailsAndUpdateItOnPPS()
         {
-            ExecuteCommonPPSCommands();
-            CheckOnAddingRecordsToPrepaidCard(_eligibleCustomer.Id);
 
-            CustomerOperations.UpdateAddress(_eligibleCustomer.Id);
-            CustomerOperations.UpdateEmail(_eligibleCustomer.Id);
-            CustomerOperations.UpdateMobilePhone(_eligibleCustomer.Id);
+            CustomerOperations.UpdateAddress(_eligibleCustomerForStandardCard.Id);
+            CustomerOperations.UpdateEmail(_eligibleCustomerForStandardCard.Id);
+            CustomerOperations.UpdateMobilePhone(_eligibleCustomerForPremiumCard.Id);
 
-            var operationLogsList = _prepaidCardDb.OperationsLogs.FindByCustomerExternalId(_eligibleCustomer.Id);
+            CustomerOperations.UpdateAddress(_eligibleCustomerForPremiumCard.Id);
+            CustomerOperations.UpdateEmail(_eligibleCustomerForPremiumCard.Id);
+            CustomerOperations.UpdateMobilePhone(_eligibleCustomerForPremiumCard.Id);
+
+            var operationsForStandardCardUser = _prepaidCardDb.OperationsLogs.FindByCustomerExternalId(_eligibleCustomerForStandardCard.Id);
+            var operationsForPremiumCardUser = _prepaidCardDb.OperationsLogs.FindByCustomerExternalId(_eligibleCustomerForPremiumCard.Id);
         }
 
         [Test,AUT(AUT.Uk),JIRA("PP-215")]
         public void CustomerShouldGetTransactionListFromPPS()
         {
-            ExecuteCommonPPSCommands();
-            CheckOnAddingRecordsToPrepaidCard(_eligibleCustomer.Id);
 
-            var validRequest = new GetPrepaidCardTransactionsQuery();
-            validRequest.AccountId = _eligibleCustomer.Id;
+            var validRequestForStandardCard = new GetPrepaidCardTransactionsQuery();
+            validRequestForStandardCard.AccountId = _eligibleCustomerForStandardCard.Id;
 
             var invalidRequestForNonExistingAccount = new GetPrepaidCardTransactionsQuery();
             invalidRequestForNonExistingAccount.AccountId = Guid.Empty;
@@ -166,7 +144,11 @@ namespace Wonga.QA.Tests.Prepaid
             var invalidRequest = new GetPrepaidCardTransactionsQuery();
             invalidRequest.AccountId = _nonEligibleCustomer.Id;
 
-            Drive.Api.Queries.Post(validRequest);
+            var validRequestForPremiumCard = new GetPrepaidCardTransactionsQuery();
+            validRequestForPremiumCard.AccountId = _eligibleCustomerForPremiumCard.Id;
+
+            Drive.Api.Queries.Post(validRequestForStandardCard);
+            Drive.Api.Queries.Post(validRequestForPremiumCard);
             Assert.Throws<ValidatorException>(() => Drive.Api.Queries.Post(invalidRequestForNonExistingAccount));
             Assert.Throws<ValidatorException>(() => Drive.Api.Queries.Post(invalidRequest));
         }
@@ -174,63 +156,38 @@ namespace Wonga.QA.Tests.Prepaid
         [TearDown]
         public void Rollback()
         {
-            CustomerOperations.DeleteMarketingEligibility(_eligibleCustomer.Id);
+            CustomerOperations.DeleteMarketingEligibility(_eligibleCustomerForStandardCard.Id);
             CustomerOperations.DeleteMarketingEligibility(_nonEligibleCustomerInArrears.Id);
             CustomerOperations.DeleteMarketingEligibility(_customerWithWromgEmail.Id);
+            CustomerOperations.DeleteMarketingEligibility(_eligibleCustomerForPremiumCard.Id);
         }
 
-        private void CheckOnAddingRecordsToPrepaidCard(Guid customerId)
+        private void CheckOnAddingRecordsToPrepaidCard(Guid customerId,String cardType)
         {
             var cardHolderId = Do.Until(() => _prepaidCardDb.CardHolderDetails.FindAllByCustomerExternalId(customerId));
-            var standardCardDetails = Do.Until(() => _prepaidCardDb.CardDetails.FindBy(CardHolderExternalId: cardHolderId.First().ExternalId, CardType: STANDARD_CARD_TYPE));
-            var premiumCardDetails = Do.Until(() => _prepaidCardDb.CardDetails.FindBy(CardHolderExternalId: cardHolderId.OrderByIdDescending().First().ExternalId, CardType: PREMIUM_CARD_TYPE));
+            var cardDetails = Do.Until(() => _prepaidCardDb.CardDetails.FindBy(CardHolderExternalId: cardHolderId.First().ExternalId, CardType: cardType));
            
-            String standardCardAccountNumber = standardCardDetails.AccountNumber;
-            String standardCardSerialnumber = standardCardDetails.SerialNumber;
-            String standardCardStatus = standardCardDetails.CardStatus;
+            String cardAccountNumber = cardDetails.AccountNumber;
+            String cardSerialnumber = cardDetails.SerialNumber;
+            String cardStatus = cardDetails.CardStatus;
 
-            String premiumCardAccountNumber = premiumCardDetails.AccountNumber;
-            String premiumCardSerialnumber = premiumCardDetails.SerialNumber;
-            String premiumCardStatus = premiumCardDetails.CardStatus;
-
-            Assert.IsNotNull(standardCardDetails.AccountNumber);
-            Assert.IsNotNull(premiumCardDetails.AccountNumber);
-            Assert.IsNotNull(standardCardDetails.SerialNumber);
-            Assert.IsNotNull(premiumCardDetails.SerialNumber);
-
-            Assert.IsTrue(standardCardAccountNumber.Length <= VALID_ACCOUNT_NUMBER_LENGTH);
-            Assert.IsTrue(premiumCardAccountNumber.Length <= VALID_ACCOUNT_NUMBER_LENGTH);
-            Assert.IsTrue(standardCardSerialnumber.Length <= VALID_SERIAL_NUMBER_LENGTH);
-            Assert.IsTrue(premiumCardSerialnumber.Length <= VALID_SERIAL_NUMBER_LENGTH);
-
-            Assert.IsTrue(standardCardStatus.Equals(CARD_STATUS_ACTIVE));
-            Assert.IsTrue(premiumCardStatus.Equals(CARD_STATUS_ACTIVE));
-
-            Assert.IsNotNull(standardCardDetails.CardPan);
-            Assert.IsNotNull(premiumCardDetails.CardPan);
-        }
-
-        private void ExecuteAPICommand(ApiRequest request, bool isThrowException)
-        {
-            if (isThrowException.Equals(true))
-            {
-                Assert.Throws<Exception>(() => Drive.Api.Commands.Post(request));
-            }
-            else
-            {
-                Drive.Api.Commands.Post(request);
-            }
+            Assert.IsTrue(cardAccountNumber.Length <= VALID_ACCOUNT_NUMBER_LENGTH);
+            Assert.IsTrue(cardSerialnumber.Length <= VALID_SERIAL_NUMBER_LENGTH);
+            Assert.IsTrue(cardStatus.Equals(CARD_STATUS_ACTIVE));
+            Assert.IsNotNull(cardDetails.CardPan);
         }
 
         private void ExecuteCommonPPSCommands()
         {
-            ExecuteAPICommand(_validRequest, false);
-            ExecuteAPICommand(_requestWithInvalidCustomerId, true);
-            ExecuteAPICommand(_requestWithCustomerInArrears, true);
-            ExecuteAPICommand(_requestWithInvalidCustomerEmail, false);
+            CustomerOperations.CreatePrepaidCardForCustomer(_eligibleCustomerForStandardCard.Id,false);
+            CustomerOperations.CreatePrepaidCardForCustomer(_eligibleCustomerForPremiumCard.Id,true);
 
-            ExecuteAPICommand(_validPremiumCardRequest,false);
-            ExecuteAPICommand(_invalidPremiumCardRequest,true);
+            Assert.Throws<Exception>(() => CustomerOperations.CreatePrepaidCardForCustomer(_nonEligibleCustomer.Id,false));
+            Assert.Throws<Exception>(() => CustomerOperations.CreatePrepaidCardForCustomer(_nonEligibleCustomer.Id, true));
+            Assert.Throws<Exception>(() => CustomerOperations.CreatePrepaidCardForCustomer(_nonEligibleCustomerInArrears.Id, false));
+            Assert.Throws<Exception>(() => CustomerOperations.CreatePrepaidCardForCustomer(_nonEligibleCustomerInArrears.Id, true));
+            Assert.Throws<Exception>(() => CustomerOperations.CreatePrepaidCardForCustomer(_customerWithWromgEmail.Id, false));
+            Assert.Throws<Exception>(() => CustomerOperations.CreatePrepaidCardForCustomer(_customerWithWromgEmail.Id, true));
         }
     }
 }
