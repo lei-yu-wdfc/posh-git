@@ -23,7 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,7 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -105,91 +105,6 @@
     <None Include="Service References\ExactTargetService\Wonga.QA.Framework.ThirdParties.ExactTargetService.VersionInfoResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\SalesforceApi\enterprise.wsdl" />
-    <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.DebuggingInfo.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.DeleteResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.DescribeDataCategoryGroupResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.DescribeDataCategoryGroupStructureResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.DescribeGlobalResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.DescribeLayoutResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.DescribeSObjectResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.DescribeSoftphoneLayoutResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.DescribeTabSetResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.EmptyRecycleBinResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.GetDeletedResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.GetServerTimestampResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.GetUpdatedResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.GetUserInfoResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.InvalidateSessionsResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.LeadConvertResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.LoginResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.MergeResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.ProcessResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.QueryResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.ResetPasswordResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.SaveResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.SearchResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.SendEmailResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.SetPasswordResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.sObject.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.UndeleteResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\SalesforceApi\Wonga.QA.Framework.ThirdParties.SalesforceApi.UpsertResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ExactTargetService\" />
@@ -206,12 +121,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\SalesforceApi\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\SalesforceApi\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\SalesforceApi\Reference.svcmap">
