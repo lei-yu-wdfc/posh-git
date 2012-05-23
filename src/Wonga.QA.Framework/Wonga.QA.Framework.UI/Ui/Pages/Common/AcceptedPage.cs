@@ -226,10 +226,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public IApplyPage Submit()
         {
-            _form.FindElement(By.CssSelector(UiMap.Get.AcceptedPage.SubmitButton)).Submit();
+            _form.FindElement(By.CssSelector(UiMap.Get.AcceptedPage.SubmitButton)).Click();
             if (Config.AUT.Equals(AUT.Wb))
                 return new ReferPage(Client);
-            return new DealDonePage(Client);
+            return Do.With.Timeout(2).Until(() => new DealDonePage(Client));
         }
 
         public bool IsAgreementFormDisplayed()
