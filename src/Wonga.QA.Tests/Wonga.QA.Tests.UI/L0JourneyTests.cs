@@ -725,7 +725,7 @@ namespace Wonga.QA.Tests.Ui
                     personalDetailsPageZa.EmploymentDetails.SalaryPaidToBank = true;
                     personalDetailsPageZa.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d/MMM/yyyy");
                     personalDetailsPageZa.EmploymentDetails.IncomeFrequency = "Monthly";
-                    personalDetailsPageZa.ContactingYou.CellPhoneNumber = "077009" + Get.RandomLong(10000, 99999);
+                    personalDetailsPageZa.ContactingYou.CellPhoneNumber = "077009" + Get.RandomLong(1000, 9999);
                     personalDetailsPageZa.ContactingYou.EmailAddress = emailZa;
                     personalDetailsPageZa.ContactingYou.ConfirmEmailAddress = emailZa;
                     personalDetailsPageZa.PrivacyPolicy = true;
@@ -908,7 +908,7 @@ namespace Wonga.QA.Tests.Ui
                     personalDetailsPageZa.EmploymentDetails.SalaryPaidToBank = true;
                     personalDetailsPageZa.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d/MMM/yyyy");
                     personalDetailsPageZa.EmploymentDetails.IncomeFrequency = "Monthly";
-                    personalDetailsPageZa.ContactingYou.CellPhoneNumber = "07700900001";
+                    personalDetailsPageZa.ContactingYou.CellPhoneNumber = "0770090001";
                     personalDetailsPageZa.ContactingYou.EmailAddress = email;
                     personalDetailsPageZa.ContactingYou.ConfirmEmailAddress = email;
                     personalDetailsPageZa.PrivacyPolicy = true;
@@ -1184,7 +1184,7 @@ namespace Wonga.QA.Tests.Ui
             personalDetailsPageZa.EmploymentDetails.SalaryPaidToBank = true;
             personalDetailsPageZa.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d/MMM/yyyy");
             personalDetailsPageZa.EmploymentDetails.IncomeFrequency = "Monthly";
-            personalDetailsPageZa.ContactingYou.CellPhoneNumber = "07700900000";
+            personalDetailsPageZa.ContactingYou.CellPhoneNumber = "0770090000";
             personalDetailsPageZa.ContactingYou.EmailAddress = emael;
             personalDetailsPageZa.ContactingYou.ConfirmEmailAddress = emael;
             personalDetailsPageZa.PrivacyPolicy = true;
@@ -1228,7 +1228,7 @@ namespace Wonga.QA.Tests.Ui
             personalDetailsPageZa.EmploymentDetails.SalaryPaidToBank = true;
             personalDetailsPageZa.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d/MMM/yyyy");
             personalDetailsPageZa.EmploymentDetails.IncomeFrequency = "Monthly";
-            personalDetailsPageZa.ContactingYou.CellPhoneNumber = "07700900000";
+            personalDetailsPageZa.ContactingYou.CellPhoneNumber = "0770090000";
             personalDetailsPageZa.ContactingYou.EmailAddress = email;
             personalDetailsPageZa.ContactingYou.ConfirmEmailAddress = email;
             personalDetailsPageZa.PrivacyPolicy = true;
