@@ -13,22 +13,33 @@ namespace Wonga.QA.Tests.Prepaid
 {
     public class GettingCardBalanceTests
     {
+        private Customer _eligibleCustomer;
+        private static readonly dynamic _cachedAccountBalancesEntity = Drive.Data.PPS.Db.CachedAccountBalances;
+        private static readonly dynamic _serviceConfigurationsEntity = Drive.Data.Ops.Db.ServiceConfigurations;
+
+        [SetUp]
+        public void Init()
+        {
+            _eligibleCustomer = CustomerBuilder.New().WithEmailAddress(Get.GetEmail(50)).Build();
+            CustomerOperations.CreateMarketingEligibility(_eligibleCustomer.Id, true);
+            CustomerOperations.CreatePrepaidCardForCustomer(_eligibleCustomer.Id, false);
+        }
+
         [Test, AUT(AUT.Uk), JIRA("PP-203")]
         public void GettingAvailableBalanceFromDatabaseTest()
         {
             var query = new GetPrepaidAvailableAccountBalanceQuery()
             {
-                CustomerExternalId = new Guid("5b247b31-2e31-4625-a04b-2373054e5a57")
+                CustomerExternalId = _eligibleCustomer.Id
             };
             var firstResponse = Drive.Api.Queries.Post(query);
 
-            var CachedAccountBalances = Drive.Data.PPS.Db.CachedAccountBalances;
-            var allRecords = Do.Until(() => CachedAccountBalances.FindAll(CachedAccountBalances.Id > 0));
+            var allRecords = Do.Until(() => _cachedAccountBalancesEntity.FindAll(_cachedAccountBalancesEntity.Id > 0));
             var firstTimeRecordsCount = allRecords.Count();
 
             var secondResponce = Drive.Api.Queries.Post(query);
 
-            allRecords = Do.Until(() => CachedAccountBalances.FindAll(CachedAccountBalances.Id > 0));
+            allRecords = Do.Until(() => _cachedAccountBalancesEntity.FindAll(_cachedAccountBalancesEntity.Id > 0));
             var secondTimeRecordsCount = allRecords.Count();
             
             Assert.AreEqual(firstResponse.Values["Balance"].Single(), secondResponce.Values["Balance"].Single());
@@ -42,18 +53,17 @@ namespace Wonga.QA.Tests.Prepaid
 
             var query = new GetPrepaidAvailableAccountBalanceQuery()
             {
-                CustomerExternalId = new Guid("5b247b31-2e31-4625-a04b-2373054e5a57")
+                CustomerExternalId = _eligibleCustomer.Id
             };
             var firstResponse = Drive.Api.Queries.Post(query);
 
-            var CachedAccountBalances = Drive.Data.PPS.Db.CachedAccountBalances;
-            var allRecords = Do.Until(() => CachedAccountBalances.FindAll(CachedAccountBalances.Id > 0));
+            var allRecords = Do.Until(() => _cachedAccountBalancesEntity.FindAll(_cachedAccountBalancesEntity.Id > 0));
             var firstTimeRecordsCount = allRecords.Count();
 
-            var ServiceConfigurations = Drive.Data.Ops.Db.ServiceConfigurations;
-            var confRecord = Do.Until(() => ServiceConfigurations.Find(ServiceConfigurations.Key == configurationKey ));
+
+            var confRecord = Do.Until(() => _serviceConfigurationsEntity.Find(_serviceConfigurationsEntity.Key == configurationKey));
             var waitValue = confRecord.Value;
-            Do.Until(() => ServiceConfigurations.UpdateByKey(
+            Do.Until(() => _serviceConfigurationsEntity.UpdateByKey(
                      Key: configurationKey,
                      Value: 1));
 
@@ -61,11 +71,11 @@ namespace Wonga.QA.Tests.Prepaid
 
             var secondResponce = Drive.Api.Queries.Post(query);
 
-            Do.Until(() => ServiceConfigurations.UpdateByKey(
+            Do.Until(() => _serviceConfigurationsEntity.UpdateByKey(
                      Key: configurationKey,
                      Value: waitValue));
 
-            allRecords = Do.Until(() => CachedAccountBalances.FindAll(CachedAccountBalances.Id > 0));
+            allRecords = Do.Until(() => _cachedAccountBalancesEntity.FindAll(_cachedAccountBalancesEntity.Id > 0));
             var secondTimeRecordsCount = allRecords.Count();
 
             Assert.AreNotEqual(firstTimeRecordsCount, secondTimeRecordsCount);
