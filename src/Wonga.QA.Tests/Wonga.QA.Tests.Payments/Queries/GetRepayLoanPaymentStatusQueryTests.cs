@@ -32,18 +32,47 @@ namespace Wonga.QA.Tests.Payments.Queries
             var appId = Guid.NewGuid();
             var requestId = Guid.NewGuid();
             var paymentCardId = Guid.NewGuid();
+            const decimal paymentAmount = 105.50M;
+
             setup.RepayEarlyOnLoanStartDate(appId, paymentCardId, Guid.NewGuid(), Guid.NewGuid(), 400.00M);
 
+            var response = Drive.Api.Commands.Post(new RepayLoanViaCardCommand { ApplicationId = appId, PaymentRequestId = requestId, Amount = paymentAmount, PaymentCardId = paymentCardId, PaymentCardCv2 = 123 });
+            Assert.AreEqual(0, response.GetErrors().Count(), "RepayLoanViaCardCommand was rejected by API");
 
-            Drive.Api.Commands.Post(new RepayLoanViaCardCommand {ApplicationId = appId, PaymentRequestId = requestId, Amount = 5.50M, PaymentCardId = paymentCardId, PaymentCardCv2 = 123});
-            
             // Check Repayment Exists in DB
-            Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.RepaymentRequestDetails.FindByExternalId(requestId));
-
+            Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.PaymentCardRepaymentRequests.FindByExternalId(requestId));
+            
             //Call Api Query
-            var response2 = Drive.Api.Queries.Post(new GetRepayLoanPaymentStatusUkQuery { ApplicationId = appId, RepaymentRequestId = requestId });
+            ApiResponse response2=null;
+            Do.Until(() => (response2=Drive.Api.Queries.Post(new GetRepayLoanPaymentStatusUkQuery { ApplicationId = appId, RepaymentRequestId = requestId })).Values["PaymentStatus"].Single() != "Pending");
 
             Assert.AreEqual(appId.ToString(), response2.Values["ApplicationId"].Single(), "ApplicationId incorrect");
+            Assert.AreEqual("PaymentTaken", response2.Values["PaymentStatus"].Single(), "PaymentStatus incorrect");
+        }
+
+        [Test, AUT(AUT.Uk)]
+        public void PartPaymentTaken()
+        {
+            var setup = new RepayLoanFunctions();
+            var appId = Guid.NewGuid();
+            var requestId = Guid.NewGuid();
+            var paymentCardId = Guid.NewGuid();
+            const decimal paymentAmount = 5.50M;
+
+            setup.RepayEarlyOnLoanStartDate(appId, paymentCardId, Guid.NewGuid(), Guid.NewGuid(), 400.00M);
+
+            var response = Drive.Api.Commands.Post(new RepayLoanViaCardCommand { ApplicationId = appId, PaymentRequestId = requestId, Amount = paymentAmount, PaymentCardId = paymentCardId, PaymentCardCv2 = 123 });
+            Assert.AreEqual(0, response.GetErrors().Count(), "RepayLoanViaCardCommand was rejected by API");
+
+            // Check Repayment Exists in DB
+            Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.PaymentCardRepaymentRequests.FindByExternalId(requestId));
+
+            //Call Api Query
+            ApiResponse response2 = null;
+            Do.Until(() => (response2 = Drive.Api.Queries.Post(new GetRepayLoanPaymentStatusUkQuery { ApplicationId = appId, RepaymentRequestId = requestId })).Values["PaymentStatus"].Single() != "Pending");
+
+            Assert.AreEqual(appId.ToString(), response2.Values["ApplicationId"].Single(), "ApplicationId incorrect");
+            Assert.AreEqual("PaymentTaken", response2.Values["PaymentStatus"].Single(), "PaymentStatus incorrect");
         }
     }
 }
