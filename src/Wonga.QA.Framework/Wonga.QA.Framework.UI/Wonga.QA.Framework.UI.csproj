@@ -109,6 +109,7 @@
     <Compile Include="Mappings\Ui\Pages\Common\RepayDueFullpaySuccessPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayEarlyFullpaySuccessPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayEarlyPaymentFailedPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\RepaymentOptionsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayOverdueFullpaySuccessPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayOverduePartpaySuccessPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayDuePartpaySuccessPage.cs" />
@@ -214,6 +215,7 @@
     <Compile Include="Ui\Pages\Common\ApplyTermsPage.cs" />
     <Compile Include="Ui\Pages\Common\BlogPage.cs" />
     <Compile Include="Ui\Pages\Common\TimeoutTestPage.cs" />
+    <Compile Include="Ui\Pages\Common\RepaymentOptionsPage.cs" />
     <Compile Include="Ui\Pages\Common\RepayOverdueFullpaySuccessPage.cs" />
     <Compile Include="Ui\Pages\Common\RepayDueFullpaySuccessPage.cs" />
     <Compile Include="Ui\Pages\Common\RepayEarlyFullpaySuccessPage.cs" />

@@ -159,6 +159,7 @@
    <PopupForm>#fancybox-content</PopupForm>
    <PopupMySummaryTitle>h1#my-summary</PopupMySummaryTitle>
    <PopupSummaryDetailsTable>table#summary-details</PopupSummaryDetailsTable>
+   <RepayButton>#cloud ul a.repay</RepayButton>
   </MySummaryPage>
 
   <HomePage>
@@ -188,6 +189,11 @@
   <FAQPage>
     <CouncilForDebtCollectorsLink>a[title='Council for Debt Collectors']</CouncilForDebtCollectorsLink>
   </FAQPage>
+
+  <RepaymentOptionsPage>
+    <EasypayNumber>div.easypay-number-container span.easypay-number</EasypayNumber>
+    <EasypayPrintButton>div.easypay-website-link a</EasypayPrintButton>
+  </RepaymentOptionsPage>
 
   
 </UiMap>
