@@ -1,3 +1,30 @@
-﻿using MbUnit.Framework;
+﻿using System;
+using Gallio.Framework.Pattern;
+using MbUnit.Framework;
+using Wonga.QA.Framework.Core;
 
-[assembly: DegreeOfParallelism(1)]
+[AssemblyFixture]
+public class MbUnitConfig
+{
+    [FixtureSetUp]
+    public void Setup()
+    {
+        SetDegreeOfParallelism();
+    }
+
+    private void SetDegreeOfParallelism()
+    {
+        switch(Config.AUT)
+        {
+            case(AUT.Ca):
+                TestAssemblyExecutionParameters.DegreeOfParallelism = Environment.ProcessorCount;
+                break;
+            case (AUT.Wb):
+                TestAssemblyExecutionParameters.DegreeOfParallelism = 1;
+                break;
+            default:
+                TestAssemblyExecutionParameters.DegreeOfParallelism = Environment.ProcessorCount;
+                break;
+        }
+    }
+}
