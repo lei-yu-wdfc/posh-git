@@ -13,7 +13,6 @@ using PaymentTransactionScopeEnum = Wonga.QA.Framework.Msmq.PaymentTransactionSc
 namespace Wonga.QA.Tests.Payments
 {
     [TestFixture, AUT(AUT.Wb)]
-    [Parallelizable(TestScope.All)]
     public class RepaymentTests
     {
         private BusinessApplication _applicationInfo;
