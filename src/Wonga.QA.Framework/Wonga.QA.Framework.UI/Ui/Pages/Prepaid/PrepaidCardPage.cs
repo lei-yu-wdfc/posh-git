@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using OpenQA.Selenium;
 using Wonga.QA.Framework.UI.Elements;
 using Wonga.QA.Framework.UI.Mappings;
 using Wonga.QA.Framework.UI.Ui.Elements.Prepaid;
@@ -112,6 +113,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             IWebElement resetCodeTextField =
                 Client.Driver.FindElement(By.CssSelector(UiMap.Get.PrepaidCardPage.ResetCodeTextField));
             return resetCodeTextField;
+        }
+
+        public String GetAvailableBalanceValue()
+        {
+            IWebElement availableBalanceField = Client.Driver.FindElement(By.CssSelector(UiMap.Get.PrepaidCardPage.AvailableBalanceField));
+            return availableBalanceField.Text;
         }
     }
 }

@@ -151,6 +151,7 @@
     <ResetCodeTextField>#request</ResetCodeTextField>
     <BalanceBlock>#block-wonga_prepaid-1 div.content div </BalanceBlock>
     <HighlightedOffersBlock>.wonga_prepaid_wrapper</HighlightedOffersBlock>
+    <AvailableBalanceField>#block-wonga_prepaid-1 div p</AvailableBalanceField>
   </PrepaidCardPage>
 
   <PrepaidRegisterDetailsPage>

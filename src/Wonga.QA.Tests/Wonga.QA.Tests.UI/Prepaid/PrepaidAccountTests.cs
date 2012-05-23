@@ -206,6 +206,26 @@ namespace Wonga.QA.Tests.Ui.Prepaid
             prepaidPage.FindHighlightedOffersBlock();
         }
 
+        [Test, AUT(AUT.Uk), JIRA("PP-203")]
+        public void ShowAvailableCustomerBalanceOnSummaryPageTest()
+        {
+            var CustomerDetails = Drive.Data.Comms.Db.CustomerDetails;
+            var guid = new Guid("5b247b31-2e31-4625-a04b-2373054e5a57");
+            var customer =
+                Do.Until(() => CustomerDetails.Find(CustomerDetails.AccountId == guid));
+
+            var loginPage = Client.Login();
+            var summaryPage = loginPage.LoginAs(customer.Email);
+            var prepaidPage = summaryPage.Navigation.MyPrepaidCardButtonClick();
+            String availableBalance = prepaidPage.GetAvailableBalanceValue();
+
+            var query = new GetPrepaidAvailableAccountBalanceQuery();
+            query.CustomerExternalId = customer.AccountId;
+            var response = Drive.Api.Queries.Post(query);
+            String expectedAvailableBalance = String.Format("Current balance : £{0}", response.Values["Balance"].Single());
+            Assert.AreEqual(availableBalance, expectedAvailableBalance);
+        }
+
         [TearDown]
         public void Rollback()
         {
