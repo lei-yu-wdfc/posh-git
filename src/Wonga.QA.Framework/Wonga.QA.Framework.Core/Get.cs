@@ -31,6 +31,11 @@ namespace Wonga.QA.Framework.Core
             return Guid.NewGuid();
         }
 
+        public static String GetId(Guid id)
+        {
+            return (id.ToString().Replace("-", string.Empty));
+        }
+
         public static DateTime GetDateTimeMin()
         {
             return SqlDateTime.MinValue.Value;
