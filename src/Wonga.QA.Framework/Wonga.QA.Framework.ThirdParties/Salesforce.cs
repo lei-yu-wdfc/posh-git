@@ -387,6 +387,30 @@ namespace Wonga.QA.Framework.ThirdParties
             return contact;
         }
 
+        public Account GetAccountByAccountId(string accountId)
+        {
+            SessionHeader sessionHeader;
+            SoapClient client = Login(out sessionHeader);
+
+            var query =
+                String.Format(@"Select p.Birthdate__c,p.CCIN__pc,p.PersonEmail,p.FirstName,p.Guarantor_Status_ID__pc,
+                              p.PersonHomePhone,p.Is_Primary_Applicant__pc,p.LastName,p.PersonMailingCity,
+                              p.PersonMailingCountry,p.PersonMailingPostalCode,p.PersonMailingState,
+                              p.PersonMailingStreet,p.PersonMobilePhone,p.PO_Box__pc,p.Phone,p.V3_Account_Id__c,
+                              p.EasyPay_Number__c
+                              From Account p 
+                              Where p.V3_Account_Id__c = '{0}'",
+                              accountId);
+
+            QueryResult result = client.query(sessionHeader, null, null, null, query);
+
+            if (result == null || result.records == null) return null;
+
+            var account = result.records.FirstOrDefault() as Account;
+
+            return account;
+        }
+
         private string GetAllPropertyNames(string prefix,Type targetType)
         {
             StringBuilder sb = new StringBuilder();

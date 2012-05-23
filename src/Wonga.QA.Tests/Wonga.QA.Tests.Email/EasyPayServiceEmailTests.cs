@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
@@ -14,16 +13,6 @@ namespace Wonga.QA.Tests.Email
 	[TestFixture, AUT(AUT.Za), Parallelizable(TestScope.All)]
 	public class EasyPayServiceEmailTests
 	{
-		private const string FinanceEmailAddress = "qa.wonga.com+financeza@gmail.com";
-		private const string InvalidEasyPayNumberReceivedEmailTemplate = "34407";
-		private const string NoOpenApplicationForEasyPayNumberReceivedEmailTemplate = "34408";
-		private const string HtmlBody = "Html_body";
-		private const string PlainBody = "Plain_body";
-
-		private readonly dynamic _emailTokenTable = Drive.Data.QaData.Db.EmailToken;
-		private readonly dynamic _repaymentAccountsTable = Drive.Data.Payments.Db.RepaymentAccount;
-
-
 		[Test, AUT(AUT.Za), JIRA("ZA-2289", "ZA-2396")]
 		public void EmailIsSentWhenNoAccountCanBeFoundForEasyPayNumber()
 		{
@@ -42,52 +31,20 @@ namespace Wonga.QA.Tests.Email
 		public void EmailIsSentWhenNoApplicationCanBeFoundForEasyPayNumber()
 		{
 			var customer = CustomerBuilder.New().Build();
-			CreateEasyPayNumberForCustomer(customer);
 
-			EmailIsSentForCustomerWithNoOpenApplication(customer);
+			EmailIsSentForCustomerWithNoOpenApplication(customer.Id);
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-2289", "ZA-2396")]
 		public void EmailIsSentWhenNoOpenApplicationCanBeFoundForEasyPayNumber()
 		{
 			var customer = CustomerBuilder.New().Build();
-			CreateEasyPayNumberForCustomer(customer);
 			ApplicationBuilder.New(customer).Build().RepayOnDueDate();
 
-			EmailIsSentForCustomerWithNoOpenApplication(customer);
+			EmailIsSentForCustomerWithNoOpenApplication(customer.Id);
 		}
 
 		#region Helpers
-
-		private void EmailIsSentForCustomerWithNoOpenApplication(Customer customer)
-		{
-			DateTime actionDate = DateTime.UtcNow;
-			const decimal amount = 100.25m;
-			string amountString = amount.ToString("F2", CultureInfo.InvariantCulture);
-			string easyPayNumber = GetEasyPayNumber(customer);
-			string rawContent = GenerateRawContent(amountString, easyPayNumber, actionDate);
-
-			Act(easyPayNumber, rawContent, actionDate, amount);
-
-			AssertNoOpenApplicationEmailIsSent(customer, easyPayNumber, amountString);
-		}
-
-		private static void CreateEasyPayNumberForCustomer(Customer customer)
-		{
-			Drive.Msmq.Payments.Send(new GenerateRepaymentNumberCsCommand
-			{
-				AccountId = customer.Id
-			});
-		}
-
-		private string GetEasyPayNumber(Customer customer)
-		{
-			var repaymentAccount =
-				Do.Until(() => _repaymentAccountsTable.FindBy(AccountId: customer.Id, RepaymentAccountType: 1));
-			Assert.IsNotNull(repaymentAccount);
-			Assert.IsNotNull(repaymentAccount.RepaymentNumber);
-			return repaymentAccount.RepaymentNumber;
-		}
 
 		private static string GenerateRawContent(string amountString, string easyPayNumber, DateTime actionDate)
 		{
@@ -101,56 +58,70 @@ namespace Wonga.QA.Tests.Email
 		private static void Act(string easyPayNumber, string rawContent, DateTime actionDate, decimal amount)
 		{
 			Drive.Msmq.EasyPay.Send(new PaymentResponseDetailRecordZaCommand
+			                        	{
+			                        		ActionDate = actionDate,
+			                        		Amount = amount,
+			                        		RepaymentNumber = easyPayNumber,
+			                        		Filename = "TestFile",
+			                        		RawContent = rawContent
+			                        	});
+		}
+
+		private static void EmailIsSentForCustomerWithNoOpenApplication(Guid accountId)
+		{
+			DateTime actionDate = DateTime.UtcNow;
+			const decimal amount = 100.25m;
+			string amountString = amount.ToString("F2", CultureInfo.InvariantCulture);
+			string easyPayNumber = GetEasyPayNumber(accountId);
+			string rawContent = GenerateRawContent(amountString, easyPayNumber, actionDate);
+
+			Act(easyPayNumber, rawContent, actionDate, amount);
+
+			AssertNoOpenApplicationEmailIsSent(easyPayNumber, amountString, accountId);
+		}
+
+		private static string GetEasyPayNumber(Guid accountId)
+		{
+			var repaymentAccount =
+				Do.Until(() => Drive.Data.Payments.Db.RepaymentAccount.FindBy(
+					AccountId: accountId, RepaymentAccountType: 1));
+			Assert.IsNotNull(repaymentAccount);
+			Assert.IsNotNull(repaymentAccount.RepaymentNumber);
+			return repaymentAccount.RepaymentNumber;
+		}
+
+		private static void AssertInvalidEasyPayNumberEmailIsSent(string amountString, string easyPayNumber)
+		{
+			var query = CreateEmailTokensQuery(easyPayNumber, "34407");
+
+			AssertTokensContain(query, amountString, easyPayNumber);
+		}
+
+		private static void AssertNoOpenApplicationEmailIsSent(string easyPayNumber, string amountString, Guid accountId)
+		{
+			var query = CreateEmailTokensQuery(easyPayNumber, "34408");
+
+			AssertTokensContain(query, amountString, easyPayNumber, accountId.ToString());
+		}
+
+		private static dynamic CreateEmailTokensQuery(string easyPayNumber, string templateName)
+		{
+			const string financeEmailAddress = "qa.wonga.com+financeza@gmail.com";
+			dynamic emailTokenTable = Drive.Data.QaData.Db.EmailToken;
+
+			return Do.Until(() => emailTokenTable.FindAll(
+				emailTokenTable.Email.EmailAddress == financeEmailAddress &&
+				emailTokenTable.Email.TemplateName == templateName &&
+				emailTokenTable.Value.Like(string.Format("%{0}%", easyPayNumber))));
+		}
+
+		private static void AssertTokensContain(dynamic query, params string[] values)
+		{
+			foreach (string value in values)
 			{
-				ActionDate = actionDate,
-				Amount = amount,
-				RepaymentNumber = easyPayNumber,
-				Filename = "TestFile",
-				RawContent = rawContent
-			});
-		}
-
-		private void AssertInvalidEasyPayNumberEmailIsSent(string amountString, string easyPayNumber)
-		{
-			var query = CreateEmailTokensQuery(easyPayNumber, InvalidEasyPayNumberReceivedEmailTemplate);
-			var htmlToken = GetEmailToken(query, HtmlBody);
-			var plainToken = GetEmailToken(query, PlainBody);
-
-			Assert.IsNotNull(htmlToken);
-			Assert.IsNotNull(plainToken);
-
-			Assert.Contains(htmlToken.Value, amountString);
-			Assert.Contains(plainToken.Value, amountString);
-
-			Assert.Contains(htmlToken.Value, easyPayNumber);
-			Assert.Contains(plainToken.Value, easyPayNumber);
-		}
-
-		private void AssertNoOpenApplicationEmailIsSent(Customer customer, string easyPayNumber, string amountString)
-		{
-			var query = CreateEmailTokensQuery(easyPayNumber, NoOpenApplicationForEasyPayNumberReceivedEmailTemplate);
-			var htmlToken = GetEmailToken(query, HtmlBody);
-			var plainToken = GetEmailToken(query, PlainBody);
-
-			Assert.IsNotNull(htmlToken);
-			Assert.IsNotNull(plainToken);
-
-			Assert.Contains(htmlToken.Value, amountString);
-			Assert.Contains(plainToken.Value, amountString);
-
-			Assert.Contains(htmlToken.Value, easyPayNumber);
-			Assert.Contains(plainToken.Value, easyPayNumber);
-
-			Assert.Contains(htmlToken.Value, customer.Id.ToString());
-			Assert.Contains(plainToken.Value, customer.Id.ToString());
-		}
-
-		private dynamic CreateEmailTokensQuery(string easyPayNumber, string templateName)
-		{
-			return Do.Until(() => _emailTokenTable.FindAll(
-				_emailTokenTable.Email.EmailAddress == FinanceEmailAddress &&
-				_emailTokenTable.Email.TemplateName == templateName &&
-				_emailTokenTable.Value.Like(string.Format("%{0}%", easyPayNumber))));
+				Assert.Contains(GetEmailToken(query, "Html_body").Value, value);
+				Assert.Contains(GetEmailToken(query, "Plain_body").Value, value);
+			}
 		}
 
 		private static dynamic GetEmailToken(dynamic query, string key)
