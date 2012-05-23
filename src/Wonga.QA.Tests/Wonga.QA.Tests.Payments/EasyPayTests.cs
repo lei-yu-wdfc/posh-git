@@ -22,29 +22,42 @@ namespace Wonga.QA.Tests.Payments
 			var customer = CustomerBuilder.New().Build();
 			var application = ApplicationBuilder.New(customer).Build();
 
-			//var app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
-			var paymentsAppId = (int)(Drive.Data.Payments.Db.Applications.FindByExternalId(application.Id)).ApplicationId;
-
-			CreateEasyPayNumberForCustomer(customer);
 			string easyPayNumber = GetEasyPayNumber(customer);
+			RepayWithEasyPay(easyPayNumber, null, DateTime.UtcNow.Date, 10M);
 
-			Act(easyPayNumber, null, DateTime.UtcNow.Date, 10M);
-
-			//This will cause payment to handle event and create transaction.
+			var paymentsAppId = (int)(Drive.Data.Payments.Db.Applications.FindByExternalId(application.Id)).ApplicationId;
 			var transactionReference = (string)(Do.Until(() => Drive.Data.Payments.Db.Transactions.FindByAmountAndApplicationId(-10M, paymentsAppId))).Reference;
 
 			Assert.AreEqual("Payment from EasyPay", transactionReference);
 		}
 
-		#region Helpers
-
-		private static void CreateEasyPayNumberForCustomer(Customer customer)
+		[Test, AUT(AUT.Za), JIRA("ZA-2395")]
+		public void RepayUsingEasyPayFullRepaymentBeforeDueDateClosesApplication()
 		{
-			Drive.Msmq.Payments.Send(new GenerateRepaymentNumberCsCommand
-			                         	{
-			                         		AccountId = customer.Id
-			                         	});
+			var customer = CustomerBuilder.New().Build();
+			var application = ApplicationBuilder.New(customer).Build();
+
+			var balance = application.GetBalanceToday();
+			string easyPayNumber = GetEasyPayNumber(customer);
+			RepayWithEasyPay(easyPayNumber, null, DateTime.UtcNow.Date, balance);
+
+			Do.Until(() => application.IsClosed);
 		}
+
+		[Test, AUT(AUT.Za), JIRA("ZA-2395") , ExpectedException(typeof(DoException))]
+		public void RepayUsingEasyPayPartialRepaymentBeforeDueDateDoesntCloseApplication()
+		{
+			var customer = CustomerBuilder.New().Build();
+			var application = ApplicationBuilder.New(customer).Build();
+
+			var balance = application.GetBalanceToday();
+			string easyPayNumber = GetEasyPayNumber(customer);
+			RepayWithEasyPay(easyPayNumber, null, DateTime.UtcNow.Date, balance / 2);
+
+			Do.With.Timeout(new TimeSpan(0, 0, 0, 10)).Until(() => application.IsClosed);
+		}
+
+		#region Helpers
 
 		private string GetEasyPayNumber(Customer customer)
 		{
@@ -55,7 +68,7 @@ namespace Wonga.QA.Tests.Payments
 			return repaymentAccount.RepaymentNumber;
 		}
 
-		private static void Act(string easyPayNumber, string rawContent, DateTime actionDate, decimal amount)
+		private static void RepayWithEasyPay(string easyPayNumber, string rawContent, DateTime actionDate, decimal amount)
 		{
 			Drive.Msmq.EasyPay.Send(new PaymentResponseDetailRecordZaCommand
 			                        	{

@@ -52,7 +52,6 @@
     <Compile Include="CsapiCreateTransactionTest.cs" />
     <Compile Include="EarlyRepaymentTests.cs" />
     <Compile Include="EasyPayTests.cs" />
-    <Compile Include="EasyPayPaymentTakenTests.cs" />
     <Compile Include="ExternalDebtCollectionTests.cs" />
     <Compile Include="GetApplicationAprTest.cs" />
     <Compile Include="GetAvailabelCreditTest.cs" />
