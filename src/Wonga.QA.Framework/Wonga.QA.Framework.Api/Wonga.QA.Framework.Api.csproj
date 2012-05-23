@@ -164,6 +164,7 @@
     <Compile Include="Requests\GetPreApprovedDirectDebitFormCaQuery.cs" />
     <Compile Include="Requests\GetPromoCodeParametersQuery.cs" />
     <Compile Include="Requests\GetPrePaidPinResetCodeQuery.cs" />
+	<Compile Include="Requests\GetPrepaidCardTransactionsQuery.cs" />
     <Compile Include="Requests\GetRepayLoanCalculationQuery.cs" />
     <Compile Include="Requests\GetRepayLoanParametersQuery.cs" />
     <Compile Include="Requests\GetRepayLoanQuoteUkQuery.cs" />
@@ -201,6 +202,9 @@
     <Compile Include="Requests\SavePaymentCardBillingAddressCommand.cs" />
     <Compile Include="Requests\SaveSocialDetailsCommand.cs" />
     <Compile Include="Requests\SaveTrackingDataCommand.cs" />
+    <Compile Include="Requests\SaveServerSideTrackingDeviceCommand.cs" />
+    <Compile Include="Requests\SaveServerSidePageTrackingDataCommand.cs" />
+    <Compile Include="Requests\SaveServerSideInitialTrackingDataCommand.cs" />
     <Compile Include="Requests\SendExtensionWindowOpenedReminderCommand.cs" />
     <Compile Include="Requests\SendPasswordResetEmailCommand.cs" />
     <Compile Include="Requests\SendVerificationEmailCommand.cs" />
@@ -255,6 +259,7 @@
     <Compile Include="Enums\ProvinceEnum.cs" />
     <Compile Include="Enums\SliderPositionEnum.cs" />
     <Compile Include="Enums\TitleEnum.cs" />
+    <Compile Include="Enums\FundsTransferEnum.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />

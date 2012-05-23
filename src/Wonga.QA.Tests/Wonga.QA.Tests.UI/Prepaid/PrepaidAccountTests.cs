@@ -224,6 +224,16 @@ namespace Wonga.QA.Tests.Ui.Prepaid
             var response = Drive.Api.Queries.Post(query);
             String expectedAvailableBalance = String.Format("Current balance : £{0}", response.Values["Balance"].Single());
             Assert.AreEqual(availableBalance, expectedAvailableBalance);
+		}
+		
+        [Test,AUT(AUT.Uk),JIRA("PP-33")]
+        public void CustomerShouldSeeLoadChoicesWithLoan()
+        {
+            var loginPage = Client.Login();
+            var summaryPage = loginPage.LoginAs(_eligibleCustomer.GetEmail());
+            var prepaidCardPage = summaryPage.Navigation.MyPrepaidCardButtonClick();
+            prepaidCardPage.ShowMenuElementsForStandardCard();
+            prepaidCardPage.TopUpClick();
         }
 
         [TearDown]
