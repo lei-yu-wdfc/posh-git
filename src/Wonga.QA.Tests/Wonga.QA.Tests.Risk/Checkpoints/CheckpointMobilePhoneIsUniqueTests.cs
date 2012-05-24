@@ -24,8 +24,8 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             Drive.Data.Risk.Db.RiskAccountMobilePhones.Delete(MobilePhone: phone);
         }
 
-		[Test, AUT(AUT.Uk)]
-		[JIRA("UK-1563")]
+		[Test]
+		[JIRA("UK-1563"), Description("Scenario 1: Accepted")]
 		public void L0_MobilePhoneIsUnique_LoanIsAccepted()
 		{
             var phone = GetMobilePhone();
@@ -40,13 +40,13 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		    }
 		}
 
-        [Test, AUT(AUT.Uk)]
-		[JIRA("UK-1563")]
-		public void L0_MobilePhoneIsNotUnique_LoanIsDeclined()
-		{
+        [Test]
+        [JIRA("UK-1563"), Description("Scenario 1, Scenario 2: Declined")]
+        public void L0_MobilePhoneIsNotUnique_LoanIsDeclined()
+        {
             var phone = GetMobilePhone();
-		    try
-		    {
+            try
+            {
                 //Create previous customer record
                 Customer customer1 = CreateCustomerWithVerifiedMobileNumber(phone);
                 ApplicationBuilder.New(customer1).Build();
@@ -54,12 +54,41 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
                 //Create and check new customer
                 Customer customer = CreateCustomerWithVerifiedMobileNumber(phone);
                 ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+            }
+            finally
+            {
+                CleanPhone(phone);
+            }
+        }
+
+		[Test]
+        [JIRA("UK-1563"), Description("Scenario 2: Accepted")]
+		public void L0_MobilePhoneIsUniqueSecondPhoneIsNotValidated_LoanIsAccepted()
+		{
+            var phone = GetMobilePhone();
+		    try
+		    {
+                //Create previous customer record
+                Customer customer1 = CreateCustomerWithoutVerifiedMobileNumber(phone);
+                ApplicationBuilder.New(customer1).Build();
+
+                //Create and check new customer
+                Customer customer = CreateCustomerWithVerifiedMobileNumber(phone);
+                ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 		    }
 		    finally
 		    {
                 CleanPhone(phone);
 		    }
 		}
+
+        private static Customer CreateCustomerWithoutVerifiedMobileNumber(string phoneNumber)
+        {
+            CustomerBuilder customerBuilder = CustomerBuilder.New().WithMobileNumber(phoneNumber).WithEmployer(TestMask);
+            Customer customer = customerBuilder.Build();
+
+            return customer;
+        }
 
 		private static Customer CreateCustomerWithVerifiedMobileNumber(string phoneNumber)
 		{
@@ -72,16 +101,26 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Assert.IsNotNull(mobileVerificationEntity.Pin);
 
 			//Force the mobile phone number to be verified successfully..
-			Assert.DoesNotThrow(() => Drive.Api.Commands.Post(new CompleteMobilePhoneVerificationCommand
-			{
-				Pin = mobileVerificationEntity.Pin,
-				VerificationId = mobileVerificationEntity.VerificationId
-			}));
+		    var command = new CompleteMobilePhoneVerificationCommand
+		                      {
+		                          Pin = mobileVerificationEntity.Pin,
+		                          VerificationId = mobileVerificationEntity.VerificationId
+		                      };
+		    VerifyCustomersMobileNumber(command);
 
 			return customer;
 		}
 
-		//private const String GoodCompanyRegNumber = "00000086";
+        private static void VerifyCustomersMobileNumber(CompleteMobilePhoneVerificationCommand command)
+        {
+            Assert.DoesNotThrow(() => Drive.Api.Commands.Post(new CompleteMobilePhoneVerificationCommand
+            {
+                Pin = command.Pin,
+                VerificationId = command.VerificationId
+            }));
+        }
+
+        //private const String GoodCompanyRegNumber = "00000086";
 		//private const String MobilePhoneNumber = "07771269999";
 
 		//[Test, AUT(AUT.Wb)]
