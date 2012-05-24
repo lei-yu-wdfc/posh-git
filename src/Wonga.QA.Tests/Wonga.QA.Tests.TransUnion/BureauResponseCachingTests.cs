@@ -25,9 +25,9 @@ namespace Wonga.QA.Tests.TransUnion
 			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 
 			dynamic transunionResponse = Drive.Data.TransUnion.Db.TransunionResponse.FindByAccountId(customer.Id);
-			
+
 			Assert.IsNotNull(transunionResponse);
-			Assert.AreEqual(customer.Id, (Guid)transunionResponse.AccountId );
+			Assert.AreEqual(customer.Id, (Guid)transunionResponse.AccountId);
 			Assert.AreEqual(GetBureauResponseCount(customer), 1);
 		}
 
@@ -48,7 +48,7 @@ namespace Wonga.QA.Tests.TransUnion
 
 			Assert.AreEqual(2, GetBureauResponseCount(customer));
 		}
-		
+
 		#region Helpers
 
 		private void RewindBureauResponseCreatedOn(Customer customer, uint days)
@@ -59,12 +59,12 @@ namespace Wonga.QA.Tests.TransUnion
 
 		private DateTime GetBureauResponseCreationDate(Customer customer)
 		{
-			return (DateTime) (Drive.Data.TransUnion.Db.TransunionResponse.FindByAccountId(customer.Id).CreationDate);
+			return (DateTime)(Drive.Data.TransUnion.Db.TransunionResponse.FindByAccountId(customer.Id).CreationDate);
 		}
 
 		private int GetBureauResponseCount(Customer customer)
 		{
-			var responses  = Drive.Data.TransUnion.Db.TransunionResponse.FindAllByAccountId(customer.Id).ToList<dynamic>();
+			var responses = Drive.Data.TransUnion.Db.TransunionResponse.FindAllByAccountId(customer.Id).ToList<dynamic>();
 
 			return responses.Count;
 		}

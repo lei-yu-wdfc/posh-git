@@ -113,7 +113,7 @@ namespace Wonga.QA.Tests.Payments
 			Do.Until(() => Drive.Db.OpsSagas.ScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id) == false);
 			Do.Until(() => Drive.Db.OpsSagas.PendingScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id) == false);
 		}
-		
+
 		[Test, AUT(AUT.Za)]
 		public void CollectionsNaedoPartialPaymentAfterTrackingEndsContinuesTrackingTest()
 		{
@@ -161,8 +161,7 @@ namespace Wonga.QA.Tests.Payments
 			{
 				now = fixedTermLoanApplication.NextDueDate.Value;
 				SetPaymentsUtcNow(now);
-
-				new MsmqDriver().Payments.Send(new ProcessScheduledPaymentCommand { ApplicationId = fixedTermLoanApplication.ApplicationId });
+				
 				Do.Until(() => Drive.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(a => a.ApplicationGuid == application.Id));
 			}
 
@@ -177,13 +176,13 @@ namespace Wonga.QA.Tests.Payments
 				new MsmqDriver().Payments.Send(new TimeoutMessage { SagaId = pendingScheduledPayment.Id });
 				Do.Until(() => Drive.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(a => a.ApplicationGuid == application.Id).PaymentRequestDate != scheduledPaymentDate);
 
-				now = (DateTime) Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id).ScheduledPayments.OrderBy(a => a.CreatedOn).ToArray()[attempt -1].ToBeRetriedOnDate;
+				now = (DateTime)Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id).ScheduledPayments.OrderBy(a => a.CreatedOn).ToArray()[attempt - 1].ToBeRetriedOnDate;
 			}
-			
+
 			var scheduledPayment = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id).ScheduledPayments.OrderBy(a => a.CreatedOn).ToArray()[attempt];
-			
+
 			if (IsTrackingForMoreThanMaxDays(application, now))
-			    return;
+				return;
 
 			var expectedPaymentRequestDate = GetExpectedPaymentRequestDate(application, attempt, now);
 			var expectedTrackingDays = GetExpectedTrackingDays(expectedPaymentRequestDate, attempt);
@@ -253,16 +252,16 @@ namespace Wonga.QA.Tests.Payments
 			{
 				case 0:
 					{
-						return (DateTime) GetFixedTermLoanApplicationEntity(application).NextDueDate;
+						return (DateTime)GetFixedTermLoanApplicationEntity(application).NextDueDate;
 					}
 				case 1:
 					{
 						//Payday of month - 1
 						var selfReportedPayDay = GetSelfReportedPayDayForApplication(application);
 						var month = selfReportedPayDay > now.Day ? now.Month : now.Month + 1;
-						var validPayDay = Drive.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, month,  selfReportedPayDay))).DateTime.Day;
+						var validPayDay = Drive.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, month, selfReportedPayDay))).DateTime.Day;
 
-						paymentRequestDate = Drive.Db.GetPreviousWorkingDay(new Date(new DateTime(now.Year, month, validPayDay - 1)));
+						paymentRequestDate = new Date(new DateTime(now.Year, month, validPayDay - 1));
 					}
 					break;
 				default:
@@ -278,8 +277,8 @@ namespace Wonga.QA.Tests.Payments
 		private int GetExpectedTrackingDays(DateTime paymentRequestDate, uint attempt)
 		{
 			var dateTrackingBegins = attempt == 0
-			                         	? paymentRequestDate
-			                         	: new Date(paymentRequestDate).DateTime;
+										? paymentRequestDate
+										: new Date(paymentRequestDate).DateTime;
 
 
 			int trackingDays = 0;
@@ -288,7 +287,7 @@ namespace Wonga.QA.Tests.Payments
 				trackingDays = 3;
 			else
 				trackingDays = (DateTime.DaysInMonth(dateTrackingBegins.Year, dateTrackingBegins.Month)) - dateTrackingBegins.Day + 3; //3 = actionDate + til 2nd of month 
-			
+
 			trackingDays = NaedoTrackingDays.Where(a => trackingDays >= a).Max();
 
 			return trackingDays;
@@ -322,7 +321,7 @@ namespace Wonga.QA.Tests.Payments
 		{
 			var db = new DbDriver();
 			return (db.Risk.RiskApplications.Join(db.Risk.EmploymentDetails, ra => ra.AccountId, ed => ed.AccountId,
-			                                      (ra, ed) => new {ra, ed}).Where(@t => @t.ra.ApplicationId == application.Id).
+												  (ra, ed) => new { ra, ed }).Where(@t => @t.ra.ApplicationId == application.Id).
 				Select(@t => @t.ed.NextPayDate)).Single().Value.Day;
 
 		}

@@ -210,7 +210,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-216"), Pending("need refinement"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-216"), Pending("need refinement")]
         public void CustomerShouldBeAbleToChangePassword()
         {
             var loginPage = Client.Login();
@@ -705,7 +705,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-219"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-219")]
         public void CustomerShouldBeAbleToAddBankAccount()
         {
             var accountPreferences = Drive.Data.Payments.Db.AccountPreferences;
