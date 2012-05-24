@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Wonga.QA.Framework.Data
 {
-    public class PPSDatabase : QAFDatabase
+    public class PpsDatabase : QAFDatabase
     {
-        public PPSDatabase(string connectionString)
+        public PpsDatabase(string connectionString)
             : base(connectionString)
         {
 
