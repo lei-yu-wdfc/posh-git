@@ -63,5 +63,46 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             _homeStatus = Section.FindElement(By.CssSelector(UiMap.Get.YourDetailsSection.HomeStatus));
             _maritalStatus = Section.FindElement(By.CssSelector(UiMap.Get.YourDetailsSection.MaritalStatus));
         }
+
+        public bool IsGenderDoesntMutchIdNumber()
+        {
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    var messages = Do.Until(() => Section.FindElements(By.CssSelector(UiMap.Get.YourDetailsSection.Warning)));
+                    Console.WriteLine(messages[1].Text);
+
+                    if (messages[1].Text.Equals(ContentMap.Get.YourDetailsSection.IdNumberWarning))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        public bool IsDOBDoesntMutchIdNumber()
+        {
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    var messages = Do.Until(() => Section.FindElements(By.CssSelector(UiMap.Get.YourDetailsSection.Warning)));
+                    Console.WriteLine(messages[2].Text);
+                    if (messages[2].Text.Equals(ContentMap.Get.YourDetailsSection.IdNumberWarning))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                default:
+                    throw new NotImplementedException();
+            }
+        }
     }
 }

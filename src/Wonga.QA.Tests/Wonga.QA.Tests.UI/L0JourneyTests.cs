@@ -1195,8 +1195,8 @@ namespace Wonga.QA.Tests.Ui
             personalDetailsPageZa.YourDetails.Number = Get.GetNationalNumber(new DateTime(1957, 3, 10), true);
             personalDetailsPageZa.YourDetails.Gender = "Male";
             personalDetailsPageZa.YourDetails.DateOfBirth = "9/Mar/1957";
-            Assert.IsTrue(personalDetailsPageZa.IsGenderDoesntMutchIdNumber());
-            Assert.IsTrue(personalDetailsPageZa.IsDOBDoesntMutchIdNumber());
+            Assert.IsTrue(personalDetailsPageZa.YourDetails.IsGenderDoesntMutchIdNumber());
+            Assert.IsTrue(personalDetailsPageZa.YourDetails.IsDOBDoesntMutchIdNumber());
             personalDetailsPageZa.YourDetails.Gender = "Female";
             personalDetailsPageZa.YourDetails.DateOfBirth = "10/Mar/1957";
             journeyZa.CurrentPage = personalDetailsPageZa.Submit() as AddressDetailsPage;

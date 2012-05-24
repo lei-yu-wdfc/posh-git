@@ -71,6 +71,7 @@ namespace Wonga.QA.Framework.UI
         public ExtensionAgreementPage ExtensionAgreementPage { get; set; }
         public L0DeclinedPage L0DeclinedPage { get; set; }
         public TimeoutTestPage TimeoutTestPage { get; set; }
+        public YourDetailsSection YourDetailsSection { get; set; }
 #endregion
     }
 }

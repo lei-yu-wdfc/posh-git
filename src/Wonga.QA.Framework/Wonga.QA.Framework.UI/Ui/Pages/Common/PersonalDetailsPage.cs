@@ -189,45 +189,6 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             return hrefs;
         }
 
-        public bool IsGenderDoesntMutchIdNumber()
-        {
-            switch (Config.AUT)
-            {
-                case AUT.Za:
-                    var message = Do.Until(() => Client.Driver.FindElement(By.XPath(UiMap.Get.PersonalDetailsPage.GenderWarning)));
-                    Console.WriteLine(message.Text);
-                    
-                    if (message.Text == "Oops! This doesn't match your ID number.")
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                default:
-                    throw new NotImplementedException();
-            }
-        }
 
-        public bool IsDOBDoesntMutchIdNumber()
-        {
-            switch (Config.AUT)
-            {
-                case AUT.Za:
-                    var message = Do.Until(() => Client.Driver.FindElement(By.XPath(UiMap.Get.PersonalDetailsPage.DateOfBirthWarning)));
-                    Console.WriteLine(message.Text);
-                    if (message.Text == "Oops! This doesn't match your ID number.")
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                default:
-                    throw new NotImplementedException();
-            }
-        }
     }
 }
