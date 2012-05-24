@@ -291,6 +291,42 @@ namespace Wonga.QA.Framework.ThirdParties
 
             return result.records.FirstOrDefault() as Billing_Card__c;
         }
+
+        public Contact GetContactByAccountId(string accountId)
+        {
+            SessionHeader sessionHeader;
+            SoapClient client = Login(out sessionHeader);
+
+            var query =
+                String.Format(@"Select p.Birthdate,p.CCIN__c,p.Email,p.FirstName,p.Guarantor_Status_ID__c,p.HomePhone,p.Is_Primary_Applicant__c,
+                              p.LastName,p.MailingCity,p.MailingCountry,p.MailingPostalCode,p.MailingState,p.MailingStreet,p.MobilePhone,p.PO_Box__c,
+                              p.Phone,p.V3_Account_Id__c
+                              From Contact p 
+                              Where p.V3_Account_Id__c = '{0}'",
+                              accountId);
+
+            QueryResult result = client.query(sessionHeader, null, null, null, query);
+
+            if (result == null || result.records == null) return null;
+
+            var contact = result.records.FirstOrDefault() as Contact;
+
+            return contact;
+        }
+
+        private string GetAllPropertyNames(string prefix,Type targetType)
+        {
+            StringBuilder sb = new StringBuilder();
+            var properties = targetType.GetProperties().Where(p => !p.Name.EndsWith("Specified") 
+                && !p.PropertyType.FullName.StartsWith("Wonga.QA.Framework.ThirdParties.SalesforceApi"));
+
+            foreach (var property in properties)
+            {
+                sb.AppendFormat("{0}.{1},",prefix,property.Name);
+            }
+
+            return sb.ToString().TrimEnd(',');
+        }
         
          public IEnumerable<Loan_Application__History> GetApplicationHistoryById(Guid applicationId, string fieldFilter = null)
         {
