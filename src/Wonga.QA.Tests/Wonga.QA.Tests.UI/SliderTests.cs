@@ -258,7 +258,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-156", "QA-238")]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-156", "QA-238", "QA-295")]
         public void DefaultAmountSliderValueShouldBeCorrectLn()
         {
             var loginPage = Client.Login();
@@ -276,6 +276,10 @@ namespace Wonga.QA.Tests.Ui
                     break;
                 case AUT.Ca:
                     Assert.AreEqual(page.Sliders.HowMuch, "265");
+                    break;
+                case AUT.Wb:
+                    var defaultWbAmount = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Payments.Wb.DefaultLoanAmount").Value.ToString();
+                    Assert.AreEqual(page.Sliders.HowMuch.Replace(",", ""), defaultWbAmount);
                     break;
             }
         }
