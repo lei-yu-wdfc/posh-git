@@ -54,27 +54,6 @@ namespace Wonga.QA.Tests.Experian
                                                                      RiskVerificationDefinitions.CreditBureauCustomerIsSolventVerification);
         }
 
-        [Test, AUT(AUT.Wb,AUT.Uk)]
-        [JIRA("SME-638"), Description("Experian -> This test creates a loan for the insolvent customer, then checks the risk checkpoint")]
-		[Pending("Experian still not working")]
-        public void TestExperianMainApplicantIsInsolvent_LoanIsDeclined()
-        {
-            const String forename = "laura";
-            const String surname = "Insolvent";
-
-            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTExperianApplicantIsSolvent);
-            ScrubNames(mainApplicantBuilder);
-            var mainApplicant = mainApplicantBuilder.Build();
-
-            var application = CreateL0Application(mainApplicant,  ApplicationDecisionStatus.Declined);
-            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
-
-            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
-                                                                     RiskCheckpointDefinitionEnum.CustomerIsSolvent,
-                                                                     RiskCheckpointStatus.Failed,
-                                                                     RiskVerificationDefinitions.CreditBureauCustomerIsSolventVerification);
-        }
-
         /* Main Applicant Solvent LN */
 
         [Test, AUT(AUT.Uk)]
@@ -443,26 +422,26 @@ namespace Wonga.QA.Tests.Experian
                                                                      RiskVerificationDefinitions.CreditBureauDataIsAvailableVerification);
         }
 
-        [Test, AUT(AUT.Wb)]
-        [JIRA("SME-638"), Description("Experian -> This test creates a loan for the insolvent customer, then checks the risk checkpoint")]
-        [Pending("Experian still not working")]
-        public void TestExperianMainApplicantIsInsolvent_LoanIsDeclined()
-        {
-            const String forename = "laura";
-			const String surname = "ApplicantIsInsolvent";
+		[Test, AUT(AUT.Wb, AUT.Uk)]
+		[JIRA("SME-638"), Description("Experian -> This test creates a loan for the insolvent customer, then checks the risk checkpoint")]
+		[Pending("Experian still not working")]
+		public void TestExperianMainApplicantIsInsolvent_LoanIsDeclined()
+		{
+			const String forename = "laura";
+			const String surname = "Insolvent";
 
-            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicantIsSolvent);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
+			var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTExperianApplicantIsSolvent);
+			ScrubNames(mainApplicantBuilder);
+			var mainApplicant = mainApplicantBuilder.Build();
 
-            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
+			var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Declined);
+			var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
 
-            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
-                                                                     RiskCheckpointDefinitionEnum.CustomerIsSolvent,
-                                                                     RiskCheckpointStatus.Failed,
-                                                                     RiskVerificationDefinitions.CreditBureauCustomerIsSolventVerification);
-
-        }
-
+			VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
+																	 RiskCheckpointDefinitionEnum.CustomerIsSolvent,
+																	 RiskCheckpointStatus.Failed,
+																	 RiskVerificationDefinitions.CreditBureauCustomerIsSolventVerification);
+		}
 
         /* Main applicant DOB check */
 
