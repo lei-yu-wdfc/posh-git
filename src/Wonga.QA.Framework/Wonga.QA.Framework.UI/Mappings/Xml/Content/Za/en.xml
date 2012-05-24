@@ -31,4 +31,8 @@
 	<MyPaymentsPage>
 		<InvalidBankAccountWarning>Please enter a valid bank account number</InvalidBankAccountWarning>
 	</MyPaymentsPage>
+
+	<YourDetailsSection>
+		<IdNumberWarning>Oops! This doesn't match your ID number.</IdNumberWarning>
+	</YourDetailsSection>
 	</ContentMap>

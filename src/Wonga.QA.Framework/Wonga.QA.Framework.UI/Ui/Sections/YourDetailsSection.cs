@@ -72,7 +72,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
                     var messages = Do.Until(() => Section.FindElements(By.CssSelector(UiMap.Get.YourDetailsSection.Warning)));
                     Console.WriteLine(messages[1].Text);
 
-                    if (messages[2].Text == "Oops! This doesn't match your ID number.")
+                    if (messages[1].Text.Equals(ContentMap.Get.YourDetailsSection.IdNumberWarning))
                     {
                         return true;
                     }
@@ -92,7 +92,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
                 case AUT.Za:
                     var messages = Do.Until(() => Section.FindElements(By.CssSelector(UiMap.Get.YourDetailsSection.Warning)));
                     Console.WriteLine(messages[2].Text);
-                    if (messages[2].Text == "Oops! This doesn't match your ID number.")
+                    if (messages[2].Text.Equals(ContentMap.Get.YourDetailsSection.IdNumberWarning))
                     {
                         return true;
                     }

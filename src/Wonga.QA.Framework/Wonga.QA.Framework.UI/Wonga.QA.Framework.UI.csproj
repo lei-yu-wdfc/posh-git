@@ -86,6 +86,7 @@
     <Compile Include="Mappings\Content\Pages\RepayEarlyPartpaySuccessPage.cs" />
     <Compile Include="Mappings\Content\Pages\RepayOverdueFullpaySuccessPage.cs" />
     <Compile Include="Mappings\Content\Pages\RepayOverduePartpaySuccessPage.cs" />
+    <Compile Include="Mappings\Content\Sections\YourDetailsSection.cs" />
     <Compile Include="Mappings\Ui\Elements\ChangeMyAddressElement.cs" />
     <Compile Include="Mappings\Ui\Elements\HomePageWelcomePopup.cs" />
     <Compile Include="Mappings\Ui\Elements\TabsElementMobile.cs" />
