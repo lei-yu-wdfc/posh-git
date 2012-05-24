@@ -11,26 +11,22 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Prepaid
 {
+    [TestFixture, Parallelizable(TestScope.All)]
     public class GettingCardBalanceTests
     {
-        private Customer _eligibleCustomer;
         private static readonly dynamic _cachedAccountBalancesEntity = Drive.Data.PPS.Db.CachedAccountBalances;
         private static readonly dynamic _serviceConfigurationsEntity = Drive.Data.Ops.Db.ServiceConfigurations;
-
-        [SetUp]
-        public void Init()
-        {
-            _eligibleCustomer = CustomerBuilder.New().WithEmailAddress(Get.GetEmail(50)).Build();
-            CustomerOperations.CreateMarketingEligibility(_eligibleCustomer.Id, true);
-            CustomerOperations.CreatePrepaidCardForCustomer(_eligibleCustomer.Id, false);
-        }
 
         [Test, AUT(AUT.Uk), JIRA("PP-203")]
         public void GettingAvailableBalanceFromDatabaseTest()
         {
+            var eligibleCustomer = CustomerBuilder.New().WithEmailAddress(Get.GetEmail(50)).Build();
+            CustomerOperations.CreateMarketingEligibility(eligibleCustomer.Id, true);
+            CustomerOperations.CreatePrepaidCardForCustomer(eligibleCustomer.Id, false);
+
             var query = new GetPrepaidAvailableAccountBalanceQuery()
             {
-                CustomerExternalId = _eligibleCustomer.Id
+                CustomerExternalId = eligibleCustomer.Id
             };
             var firstResponse = Drive.Api.Queries.Post(query);
 
@@ -51,9 +47,13 @@ namespace Wonga.QA.Tests.Prepaid
         {
             const String configurationKey = "PrepaidCard.TIME_OF_ACTUALLY_CACHED_ACCOUNT_BALANCE_DATA_IN_MINUTES";
 
+            var eligibleCustomer = CustomerBuilder.New().WithEmailAddress(Get.GetEmail(50)).Build();
+            CustomerOperations.CreateMarketingEligibility(eligibleCustomer.Id, true);
+            CustomerOperations.CreatePrepaidCardForCustomer(eligibleCustomer.Id, false);
+
             var query = new GetPrepaidAvailableAccountBalanceQuery()
             {
-                CustomerExternalId = _eligibleCustomer.Id
+                CustomerExternalId = eligibleCustomer.Id
             };
             var firstResponse = Drive.Api.Queries.Post(query);
 
