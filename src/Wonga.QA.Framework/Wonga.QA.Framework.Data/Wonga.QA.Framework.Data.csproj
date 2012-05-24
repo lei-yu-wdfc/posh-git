@@ -43,6 +43,7 @@
     <Compile Include="Databases\CallValidateDatabase.cs" />
     <Compile Include="Databases\CardPaymentDatabase.cs" />
     <Compile Include="Databases\ColdStorageDatabase.cs" />
+    <Compile Include="Databases\PPSDatabase.cs" />
     <Compile Include="Databases\SchedulerDatabase.cs" />
     <Compile Include="Databases\WongaPayDatabase.cs" />
     <Compile Include="Databases\UruDatabase.cs" />
@@ -61,7 +62,7 @@
     <Compile Include="Databases\OpsSagasDatabase.cs" />
     <Compile Include="Databases\PaymentsDatabase.cs" />
     <Compile Include="Databases\MarketingDatabase.cs" />
-	<Compile Include="Databases\PrepaidCardDatabase.cs" />
+    <Compile Include="Databases\PrepaidCardDatabase.cs" />
     <Compile Include="Databases\QAFDatabase.cs">
       <SubType>Code</SubType>
     </Compile>

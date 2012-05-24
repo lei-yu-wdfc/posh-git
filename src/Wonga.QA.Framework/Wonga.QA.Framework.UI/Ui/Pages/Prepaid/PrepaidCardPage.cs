@@ -118,6 +118,13 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             return resetCodeTextField;
         }
 
+        public String GetAvailableBalanceValue()
+        {
+            IWebElement availableBalanceField =
+                Client.Driver.FindElement(By.CssSelector(UiMap.Get.PrepaidCardPage.AvailableBalanceField));
+            return availableBalanceField.Text;
+        }
+
         public void TopUpClick()
         {
             _menu.TopUpMenuClick();

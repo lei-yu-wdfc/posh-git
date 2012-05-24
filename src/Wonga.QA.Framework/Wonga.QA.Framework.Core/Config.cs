@@ -410,6 +410,7 @@ namespace Wonga.QA.Framework.Core
             public String WongaPay { get; set; }
             public String Marketing { get; set; }
             public String PrepaidCard { get; set; }
+            public String PPS { get; set; }
 
             public String OpsLogs { get; set; }
             public String OpsSagas { get; set; }
@@ -449,6 +450,7 @@ namespace Wonga.QA.Framework.Core
                 WongaPay = builder("WongaPay");
                 Marketing = builder("Marketing");
                 PrepaidCard = builder("PrepaidCard");
+                PPS = builder("PPS");
             }
         }
 
