@@ -166,7 +166,10 @@
   </CashOutPage>
 
   <AccountDetailsPage>
-    <FormId>.wonga-apply-lzero-form</FormId>  
+    <FormId>.wonga-apply-lzero-form</FormId>
+    <SecciLink>secci_link</SecciLink>
+    <TermAndConditionsLink>terms_and_conditions_link</TermAndConditionsLink>
+    <ExplanationLink>explanation_link</ExplanationLink>
   </AccountDetailsPage>
 
   <DeclinedPage>
