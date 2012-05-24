@@ -191,9 +191,14 @@
   </FAQPage>
 
   <RepaymentOptionsPage>
-    <EasypayNumber>div.easypay-number-container span.easypay-number</EasypayNumber>
+    <RepaymentOptionsContainer>.repayment-options</RepaymentOptionsContainer>
+    <EasypayNumber>span.easypay-number</EasypayNumber>
     <EasypayPrintButton>div.easypay-website-link a</EasypayPrintButton>
   </RepaymentOptionsPage>
+
+  <EasypaymentNumberPrintPage>
+    <YourEasyPayNumber>#easypaynumber_container #easypaynumber</YourEasyPayNumber>
+  </EasypaymentNumberPrintPage>
 
   
 </UiMap>

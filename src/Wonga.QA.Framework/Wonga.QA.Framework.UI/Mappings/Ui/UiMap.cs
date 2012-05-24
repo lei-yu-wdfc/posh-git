@@ -136,6 +136,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual RepayDueFullpaySuccessPage RepayDueFullpaySuccessPage { get; set; }
         public virtual RepayOverdueFullpaySuccessPage RepayOverdueFullpaySuccessPage { get; set; }
         public virtual RepaymentOptionsPage RepaymentOptionsPage { get; set; }
+        public virtual EasypaymentNumberPrintPage EasypaymentNumberPrintPage { get; set; }
         #endregion
 
         #region SalesForcePages
