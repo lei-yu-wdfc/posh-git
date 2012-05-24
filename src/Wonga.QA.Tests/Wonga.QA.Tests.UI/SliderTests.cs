@@ -307,7 +307,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Ca), JIRA("QA-241", "QA-159")]
+        [Test, AUT(AUT.Ca,AUT.Za, AUT.Wb), JIRA("QA-241", "QA-159", "QA-296")]
         public void DefaultDurationSliderValueShouldBeCorrectLn()
         {
             var loginPage = Client.Login();
@@ -334,6 +334,9 @@ namespace Wonga.QA.Tests.Ui
                     break;
                 case AUT.Ca:
                     Assert.AreEqual(page.Sliders.HowLong, DefaultLoanTerm.ToString());
+                    break;
+                case AUT.Wb:
+                    Assert.AreEqual(page.Sliders.HowLong, "16");
                     break;
             }
 
