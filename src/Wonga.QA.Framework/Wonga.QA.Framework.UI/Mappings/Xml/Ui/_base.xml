@@ -183,6 +183,7 @@
     <HomeStatus>#edit-home-status</HomeStatus>
     <MaritalStatus>#edit-marital-status</MaritalStatus>
     <HomeLanguage>#edit-home-language</HomeLanguage>
+	<Warning>.invalid</Warning>
   </YourDetailsSection>
 
   <ContactingYouSection>
