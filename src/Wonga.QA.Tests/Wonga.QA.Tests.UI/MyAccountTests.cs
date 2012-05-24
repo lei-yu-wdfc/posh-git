@@ -322,7 +322,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-193"), Pending("need refinement"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-193"), Pending("need refinement")]
         public void ArrearsCustomerCheckDataOnMySummaryAndSF()
         {
             int loanTerm = 10;
