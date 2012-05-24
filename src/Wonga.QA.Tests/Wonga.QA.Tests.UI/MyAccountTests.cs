@@ -554,7 +554,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-215"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-215")] //Removed from smoke because of selenium problem with new sliders
         public void MyAccountPostcodeMustBeTheSameAsUserEntered()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
