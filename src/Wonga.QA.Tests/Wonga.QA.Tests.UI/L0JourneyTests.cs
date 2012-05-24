@@ -1549,5 +1549,33 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
+        [Test, AUT(AUT.Uk), JIRA("UK-969"), MultipleAsserts, Pending("Test is in development. Also waiting for functionality implementation.")]
+        public void L0PreAgreementPartonAccountSetupPageTest()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Console.WriteLine("email={0}", email);
+
+            // L0 journey
+            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home());
+            var accountSetupPage = journeyL0.ApplyForLoan(200, 10)
+                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                .FillAddressDetails() as AccountDetailsPage;
+
+            Assert.IsTrue(accountSetupPage.IsSecciLinkVisible());
+            Assert.IsTrue(accountSetupPage.IsTermsAndConditionsLinkVisible());
+            Assert.IsTrue(accountSetupPage.IsExplanationLinkVisible());
+
+            accountSetupPage.ClickSecciLink();
+            // TBD: check header and values
+            accountSetupPage.ClickTermsAndConditionsLink();
+            // TBD: check header and values
+            accountSetupPage.ClickExplanationLink();
+            // TBD: check header and values
+
+            // Manually check that loan agreement and SECCI emails are sent
+            Console.WriteLine("Manually check that that loan agreement and SECCI emails are sent for user={0}", email);
+        }
+
     }
 }
