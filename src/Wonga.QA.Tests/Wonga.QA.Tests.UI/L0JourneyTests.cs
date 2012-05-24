@@ -1541,21 +1541,5 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(URLbefore, URLafter);
             //Assert.IsTrue(e.Message.Contains("was Box must be ticked to proceed"));
         }
-
-        [Test, AUT(AUT.Za)]
-        public void L0DropOff()
-        {
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var mySummary = journey.ApplyForLoan(200, 10)
-                                 .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
-                                 .FillAddressDetails()
-                                 .FillAccountDetails()
-                                 .FillBankDetails()
-                                 .WaitForAcceptedPage()
-                                 .IgnoreAcceptingLoanAndReturnToHomePageAndLogin()
-                                 .CurrentPage as MySummaryPage;
-            Thread.Sleep(120000);
-
-        }
     }
 }
