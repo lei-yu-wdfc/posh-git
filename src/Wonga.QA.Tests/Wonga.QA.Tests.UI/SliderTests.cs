@@ -284,20 +284,30 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Ca), JIRA("QA-241", "QA-159"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Ca,  AUT.Wb), JIRA("QA-241", "QA-159", "QA-296"), Category(TestCategories.Smoke)]
         public void DefaultDurationSliderValueShouldBeCorrectL0()
         {
-            var page = Client.Home();
-            string[] dateArray = page.Sliders.GetRepaymentDate.Split(' ');
-            string day = Char.IsDigit(dateArray[1].ElementAt(1)) ? dateArray[1].Remove(2, 2) : dateArray[1].Remove(1, 2);
-            _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
+           var page = Client.Home();
+            switch (Config.AUT)
+            {
+                case AUT.Ca:
+                    string[] dateArray = page.Sliders.GetRepaymentDate.Split(' ');
+                    string day = Char.IsDigit(dateArray[1].ElementAt(1))
+                                     ? dateArray[1].Remove(2, 2)
+                                     : dateArray[1].Remove(1, 2);
+                    _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
 
-            var expectedDate = GetExpectedDefaultPromiseDateL0();
-            Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate), _repaymentDate);
+                    var expectedDate = GetExpectedDefaultPromiseDateL0();
+                    Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate), _repaymentDate);
+                    break;
+                case AUT.Wb:
+                    Assert.AreEqual(page.Sliders.HowLong, "16");
+                    break;
+            }
 
         }
 
-        [Test, AUT(AUT.Ca), JIRA("QA-241", "QA-159")]
+        [Test, AUT(AUT.Ca,AUT.Za, AUT.Wb), JIRA("QA-241", "QA-159", "QA-296")]
         public void DefaultDurationSliderValueShouldBeCorrectLn()
         {
             var loginPage = Client.Login();
@@ -324,6 +334,9 @@ namespace Wonga.QA.Tests.Ui
                     break;
                 case AUT.Ca:
                     Assert.AreEqual(page.Sliders.HowLong, DefaultLoanTerm.ToString());
+                    break;
+                case AUT.Wb:
+                    Assert.AreEqual(page.Sliders.HowLong, "16");
                     break;
             }
 
