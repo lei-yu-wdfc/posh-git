@@ -69,23 +69,8 @@ namespace Wonga.QA.Tests.Comms
         #endregion
         [Test]
         [AUT(AUT.Uk), JIRA("UK-1555")]
-        //SMS Type, Day of transmision.
-        [Row (0, 1)]
-        [Row(0, 5)]
-        [Row(0, 29)]
-        [Row(1, 3)]
-        [Row(1, 27)]
-        [Row(1, 31)]
-        [Row(2, 10)]
-        [Row(2, 24)]
-        [Row(3, 17)]
-        [Row(3, 38)]
-        [Row(3, 56)]
-        [Row(4, 45)]
-        [Row(5, 52)]
-        [Row(5, 58)]
-        [Row(6, 60)]
-        public void VerifySMSSentOnDay(int smsType, uint days)
+        [Row(60)]
+        public void VerifySMSSentOnDaysUpTo(uint days)
         {
             DateTime startTime = DateTime.Now;
             string phonePart = GetPhoneNumber();
@@ -113,11 +98,35 @@ namespace Wonga.QA.Tests.Comms
             loan.PutApplicationIntoArrears(days);
 
             TimeoutNotificationSagaForDays(loan, days);
+            
+            //Changed this to optimize the number of applicants created.
+            var daysInQuestion = from d in _dayToSMSMap.Keys where d <= days select d;
 
-            AssertSmsIsSent(FormatPhoneNumber(phonePart), _smsTexts[_dayToSMSMap[days]], startTime);
-
+            foreach (uint day in daysInQuestion)
+            {
+                AssertSmsIsSent(FormatPhoneNumber(phonePart), _smsTexts[_dayToSMSMap[day]], startTime);
+            }
         }
 
+        //[Test]
+        // This is useful for demos.
+        //[AUT(AUT.Uk)]
+        //public void PushSpecificLoanIntoArrears()
+        //{
+        //    Guid applicationGuid = Guid.Parse("4fbde69e-98fc-41e9-840a-7f3cc0a819f3");
+        //    Guid cardId = Guid.Parse("4FBDE6C1-34E4-4134-96AC-7F3CC0A819F3");
+        //    const uint days = 60;
+
+        //    Application application = new Application(applicationGuid);
+
+        //    //Make sure the payment attempt fails by changing the expiry date of the card.
+        //    Drive.Data.Payments.Db.PaymentCardsBase.UpdateByExternalId(ExternalId : cardId, ExpiryDate : new DateTime(DateTime.Now.Year -1, 1, 31));
+
+        //    application.PutApplicationIntoArrears(days);
+
+        //    TimeoutNotificationSagaForDays(application, days);
+
+        //}
         protected string GetPhoneNumber()
         {
             //return an unallocated number
