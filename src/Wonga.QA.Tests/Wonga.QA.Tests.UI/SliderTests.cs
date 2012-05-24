@@ -359,7 +359,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-155", "QA-285"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-155", "QA-285")]
         public void MaxAmountSliderValueShouldBeCorrectLn()
         {
             var riskAccounts = Drive.Data.Risk.Db.RiskAccounts;
@@ -402,7 +402,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(maxLoanDuration.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-157"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-157")]
         public void MinDurationSliderValueShouldBeCorrectL0()
         {
             int minDurationValue = GetExpectedMinTerm();
@@ -447,7 +447,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-152"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-152")]
         public void CustomerTriesEnterSomeRubbishDataToFieldsThenAmountsShouldntBeChanged()
         {
             var page = Client.Home();
