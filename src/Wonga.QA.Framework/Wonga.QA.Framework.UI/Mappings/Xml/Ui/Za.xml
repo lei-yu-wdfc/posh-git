@@ -33,8 +33,8 @@
 
   <PersonalDetailsPage>
     <FormId>#lzero-personal-form .form-inner</FormId>
-    <GenderWarning>.//*[@id='details']/div[2]/div/div[3]/div</GenderWarning>
-	  <DateOfBirthWarning>.//*[@id='edit-date-of-birth-wrapper']/div[3]/div</DateOfBirthWarning>
+    <GenderWarning>#details div:first-child + div div div:first-child + div + div div</GenderWarning>
+	  <DateOfBirthWarning>#edit-date-of-birth-wrapper div:first-child + div + div div</DateOfBirthWarning>
     <MarriedInCommunityProperty>input[type="radio"][name="married"]</MarriedInCommunityProperty>
   </PersonalDetailsPage>
   

@@ -194,7 +194,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             switch (Config.AUT)
             {
                 case AUT.Za:
-                    var message = Do.Until(() => Client.Driver.FindElement(By.XPath(UiMap.Get.PersonalDetailsPage.GenderWarning)));
+                    var message = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.GenderWarning)));
                     Console.WriteLine(message.Text);
                     
                     if (message.Text == "Oops! This doesn't match your ID number.")
@@ -215,7 +215,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             switch (Config.AUT)
             {
                 case AUT.Za:
-                    var message = Do.Until(() => Client.Driver.FindElement(By.XPath(UiMap.Get.PersonalDetailsPage.DateOfBirthWarning)));
+                    var message = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.DateOfBirthWarning)));
                     Console.WriteLine(message.Text);
                     if (message.Text == "Oops! This doesn't match your ID number.")
                     {
