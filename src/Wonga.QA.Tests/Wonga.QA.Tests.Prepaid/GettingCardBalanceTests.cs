@@ -14,7 +14,7 @@ namespace Wonga.QA.Tests.Prepaid
     [TestFixture, Parallelizable(TestScope.All)]
     public class GettingCardBalanceTests
     {
-        private static readonly dynamic _cachedAccountBalancesEntity = Drive.Data.PPS.Db.CachedAccountBalances;
+        private static readonly dynamic _cachedAccountBalancesEntity = Drive.Data.Pps.Db.CachedAccountBalances;
         private static readonly dynamic _serviceConfigurationsEntity = Drive.Data.Ops.Db.ServiceConfigurations;
 
         [Test, AUT(AUT.Uk), JIRA("PP-203")]
