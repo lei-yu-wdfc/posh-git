@@ -9,7 +9,7 @@ namespace Wonga.QA.Tests.Ui
 {
     class TimeoutTest : UiTest
     {
-        [Test, AUT(AUT.Uk), JIRA("UK-794")]
+        [Test, AUT(AUT.Uk), JIRA("UK-794"), Pending("In development")]
         public void AutologoutRedirectTest()
         {
             var loginPage = Client.Login();
