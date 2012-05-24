@@ -76,6 +76,7 @@
     <Compile Include="GettingCardBalanceTests.cs" />
     <Compile Include="PrepaidCardInternalMessagesTests.cs" />
     <Compile Include="PrepaidCardPPSTest.cs" />
+    <Compile Include="PrepaidCardRewardsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
