@@ -38,7 +38,7 @@ namespace Wonga.QA.Tests.Ui
             if (!Config.Ui.RemoteMode)
                 TestLog.EmbedImage(name + ".Screen", Client.Screen());
             TestLog.AttachHtml(name + ".Source", Client.Source());
-            Client.Dispose();
+            //Client.Dispose();
         }
 
         public void SourceContains(string token)
