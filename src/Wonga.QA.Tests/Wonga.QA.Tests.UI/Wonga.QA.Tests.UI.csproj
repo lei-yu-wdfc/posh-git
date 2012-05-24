@@ -39,6 +39,7 @@
     <Compile Include="BehaviourAndAdvertTracking.cs" />
     <Compile Include="TimeoutTest.cs" />
     <Compile Include="ExtensionAgreementTest.cs" />
+    <Compile Include="RepaymentTest.cs" />
     <Compile Include="RepaySliderTests.cs" />
     <Compile Include="ExtensionTests.cs" />
     <Compile Include="DealDonePageTest.cs" />
