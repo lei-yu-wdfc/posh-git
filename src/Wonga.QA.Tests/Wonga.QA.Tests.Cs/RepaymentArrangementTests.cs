@@ -57,7 +57,7 @@ namespace Wonga.QA.Tests.Cs
 			Application application = ApplicationBuilder.New(customer).Build().PutApplicationIntoArrears(35);
 
 			Drive.Msmq.Payments.Send(new IDisputeStatusChangedEvent { AccountId = customer.Id, HasDispute = true });
-			Do.Until(() => (bool)Drive.Data.Payments.Db.AccountPreferences.FindByAccountId(customer.Id).IsDispute == true);
+			Do.With.Timeout(2).Until(() => (bool)Drive.Data.Payments.Db.AccountPreferences.FindByAccountId(customer.Id).IsDispute == true);
 
 			var planIsAllowed = PlanIsAllowed(application);
 			Assert.IsFalse(planIsAllowed);

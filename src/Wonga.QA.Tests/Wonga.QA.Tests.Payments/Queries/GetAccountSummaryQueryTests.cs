@@ -44,14 +44,6 @@ namespace Wonga.QA.Tests.Payments
             Customer customer = CustomerBuilder.New().WithMiddleName(RiskMask.TESTNoCheck).Build();
             ApplicationBuilder.New(customer).Build();
 
-            var generateRepaymentNumberCommand = new Framework.Cs.GenerateRepaymentNumberCommand
-            {
-                AccountId = customer.Id
-            };
-
-            //Act
-            Drive.Cs.Commands.Post(generateRepaymentNumberCommand);
-
             //Assert
             dynamic repaymentAccount = Drive.Data.Payments.Db.RepaymentAccount;
             var ra = Do.Until(() => repaymentAccount.FindAll(repaymentAccount.AccountId == customer.Id)
