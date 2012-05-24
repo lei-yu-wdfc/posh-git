@@ -32,7 +32,7 @@ namespace Wonga.QA.Tests.Api
         public void ApiL0JourneyAccepted()
         {
             Customer cust = CustomerBuilder.New().WithForename("James").WithSurname("Bond").Build();
-            ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Accepted).WithLoanAmount(200).Build();
+            ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Accepted).WithLoanAmount(200).Build().RepayOnDueDate();
         }
 
         [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]

@@ -20,29 +20,29 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		private const int DailyThreshold = 5;
 		private const int ThirtyDayThreshold = 15;
 
-		private Customer customer;
-		private Application application;
+		private Customer _customer;
+		private Application _application;
 
 		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879")]
-		public void L0_NumberOfApplicationsBelowThresholdAccepted()
+		public void L0NumberOfApplicationsBelowThresholdAccepted()
 		{
-			customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
-			application = ApplicationBuilder.New(customer).Build();
+			_customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
+			_application = ApplicationBuilder.New(_customer).Build();
 
 			AssertCheckpointAndVerificationExecution();
 		}
 
 		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879"), DependsOn("L0_NumberOfApplicationsBelowThresholdAccepted")]
-		public void Ln_NumberOfApplicationsBelowThresholdAccepted()
+		public void LnNumberOfApplicationsBelowThresholdAccepted()
 		{
-			application.RepayOnDueDate();
-			Application lnApplication = ApplicationBuilder.New(customer).Build();
+			_application.RepayOnDueDate();
+			Application lnApplication = ApplicationBuilder.New(_customer).Build();
 
 			AssertCheckpointAndVerificationExecution(lnApplication);
 		}
 
 		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879"), Timeout(0)]
-		public void Ln_NumberOfApplicationDailyOverThresholdDeclined()
+		public void LnNumberOfApplicationDailyOverThresholdDeclined()
 		{
 			var customerLn = CustomerBuilder.New().WithEmployer(RiskMask.TESTEmployedMask).WithEmployerStatus("Unemployed").Build();
 			
@@ -59,7 +59,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		}
 
 		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879"), Timeout(0)]
-		public void Ln_NumberOfApplicationMonthlyOverThresholdDeclined()
+		public void LnNumberOfApplicationMonthlyOverThresholdDeclined()
 		{
 			//make one app per day up until the monthly threshold so that the daily limit is not exceeded
 			var customerLn = CustomerBuilder.New().WithEmployer(RiskMask.TESTEmployedMask).WithEmployerStatus("Unemployed").Build();
@@ -90,9 +90,9 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			try
 			{
 				//don't use mask so that the workflow builder is run!
-				customer = CustomerBuilder.New().WithEmployer("Wonga").Build();
+				_customer = CustomerBuilder.New().WithEmployer("Wonga").Build();
 
-				application = ApplicationBuilder.New(customer).WithoutExpectedDecision().Build();
+				_application = ApplicationBuilder.New(_customer).WithoutExpectedDecision().Build();
 
 				AssertCheckpointAndVerificationExecution(featureSwitchValue);
 			}
@@ -111,15 +111,15 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 			try
 			{
-				customer = CustomerBuilder.New().WithEmployer(RiskMask.TESTNoCheck).Build();
+				_customer = CustomerBuilder.New().WithEmployer(RiskMask.TESTNoCheck).Build();
 
-				application = ApplicationBuilder.New(customer).Build();
-				application.RepayOnDueDate();
+				_application = ApplicationBuilder.New(_customer).Build();
+				_application.RepayOnDueDate();
 
 				//don't use mask so that the workflow builder is run!
-				Drive.Db.UpdateEmployerName(customer.Id, "Wonga");
+				Drive.Db.UpdateEmployerName(_customer.Id, "Wonga");
 
-				var lnApplication = ApplicationBuilder.New(customer).WithoutExpectedDecision().Build();
+				var lnApplication = ApplicationBuilder.New(_customer).WithoutExpectedDecision().Build();
 
 				AssertCheckpointAndVerificationExecution(lnApplication,featureSwitchValue);
 			}
@@ -151,7 +151,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 		private void AssertCheckpointAndVerificationExecution(bool executed = true)
 		{
-			AssertCheckpointAndVerificationExecution(application, executed);
+			AssertCheckpointAndVerificationExecution(_application, executed);
 		}
 
 		private void AssertCheckpointAndVerificationExecution(Application loanApplication, bool executed = true)
