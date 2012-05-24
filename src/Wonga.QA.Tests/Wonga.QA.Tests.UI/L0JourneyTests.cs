@@ -72,7 +72,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-177"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-177"), Category(TestCategories.Smoke)] //AUT.Ca removed because of sliders changing
         public void ChangeLoanAmountAndDurationOnPersonalDetailsViaPlusMinusOptions()
         {
             //CA is out due to new wonga sliders being implemented on homepage only 
@@ -146,7 +146,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-176"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-176"), Category(TestCategories.Smoke)] //AUT.Ca removed because of sliders changing
         public void ChangeLoanAmountAndDurationOnPersonalDetailsViaTypingToTheFields()
         {
             //CA is out due to new wonga sliders being implemented on homepage only 
@@ -441,7 +441,7 @@ namespace Wonga.QA.Tests.Ui
                 .FillAcceptedPage().CurrentPage as DealDonePage;
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-170"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-170")] //Removed from smoke because of the problem with sliders update
         public void CustomerOnHowItWorksPageShouldBeAbleUseSlidersProperly()
         {
             //CA is out due to new wonga sliders being implemented on homepage only 
@@ -569,7 +569,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(addressDetailsPage.IsPostcodeWarningOccurred());
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-191"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-191")] //Removed from smoke because of selenium problem with new sliders
         public void CustomerClicksAcceptButtonChosenLoanAmountShouldDepositedIntoAccountCheckDatabase()
         {
             DateTime date;
@@ -658,7 +658,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-188"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-188")] //Removed from smoke because of selenium problem with new sliders
         public void CustomerOnBankDetailsPageClicksOnResendPinLinkMessageShouldDisplayedAndPinShouldResent()
         {
             Random rand = new Random();
@@ -1343,7 +1343,7 @@ namespace Wonga.QA.Tests.Ui
                                  .CurrentPage as ProcessingPage;
         }
 
-        [Test, AUT(AUT.Ca), Category(TestCategories.Smoke), JIRA("QA-280"), Pending("There is no <<Your previous addres>> section whan I select eny addres periods.")]
+        [Test, AUT(AUT.Ca), JIRA("QA-280"), Pending("There is no <<Your previous addres>> section whan I select eny addres periods.")]
         public void L0CustomerEntersInappropriatePostcodeToPreviousAddressSectionShouldNotGoFurther()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
