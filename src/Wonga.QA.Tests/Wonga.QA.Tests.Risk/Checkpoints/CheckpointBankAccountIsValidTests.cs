@@ -30,7 +30,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Drive.Db.SetServiceConfiguration("Mocks.HyphenAHVWebServiceEnabled", AhvMockOriginalValue);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1910")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1910"), Pending("ZA-2565")]
 		public void CheckpointBankAccountIsValidShouldReturnReadyToSignStatus()
 		{
 			var bankAccountNumber = Get.GetBankAccountNumber().ToString();

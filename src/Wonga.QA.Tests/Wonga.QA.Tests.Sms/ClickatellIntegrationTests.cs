@@ -32,7 +32,7 @@ namespace Wonga.QA.Tests.Sms
 				_smsMockEnabled);
 		}
 
-		[Test, JIRA("ZA-2414"), AUT(AUT.Za)]
+		[Test, JIRA("ZA-2414"), AUT(AUT.Za), Pending("ZA-2565")]
 		public void ClickatellIntegrationIsWorkingForZa()
 		{
 			const string phoneNumber = "27999900001";

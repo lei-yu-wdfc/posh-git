@@ -25,7 +25,7 @@ namespace Wonga.QA.Tests.Payments
 		private dynamic _applications = Drive.Data.Payments.Db.Applications;
 
 		[Parallelizable]
-		[Test, AUT(AUT.Za), JIRA("ZA-2201")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2201"), Pending("ZA-2565")]
 		public void Close_InDuplumViolation_Application_Creates_CompensatingTransaction()
 		{
 			var customer = CustomerBuilder.New().Build();
@@ -85,7 +85,7 @@ namespace Wonga.QA.Tests.Payments
 		}
 
 		[Parallelizable]
-		[Test, AUT(AUT.Za), JIRA("ZA-2201")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2201"), Pending("ZA-2565")]
 		public void Close_NonInDuplumViolation_Application_DoesNotCreate_CompensatingTransaction()
 		{
 			var customer = CustomerBuilder.New().Build();
@@ -140,7 +140,7 @@ namespace Wonga.QA.Tests.Payments
 		}
 
 		[Parallelizable]
-		[Test, AUT(AUT.Za), JIRA("ZA-2360")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2360"), Pending("ZA-2565")]
 		public void Close_InDuplumViolation_Application_BalanceShouldBeZero()
 		{
 			var customer = CustomerBuilder.New().Build();

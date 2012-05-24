@@ -8,7 +8,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Api
 {
-    [Parallelizable(TestScope.All)]
+	[Parallelizable(TestScope.All), Pending("ZA-2565")]
     public class ApiJourneys
     {
         [Test, AUT(AUT.Wb)]
@@ -28,21 +28,21 @@ namespace Wonga.QA.Tests.Api
             ApplicationBuilder.New(cust, comp).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
         }
 
-        [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
+		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Za), Pending("ZA-2565")]
         public void ApiL0JourneyAccepted()
         {
             Customer cust = CustomerBuilder.New().WithForename("James").WithSurname("Bond").Build();
             ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Accepted).WithLoanAmount(200).Build().RepayOnDueDate();
         }
 
-        [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
+		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Za), Pending("ZA-2565")]
         public void ApiL0JourneyDeclined()
         {
             Customer cust = CustomerBuilder.New().WithEmployer("Wonga").Build();
             ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
         }
 
-        [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
+		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Za), Pending("ZA-2565")]
         public void ApiLnJourneyAccepted()
         {
             Customer cust = CustomerBuilder.New().Build();
@@ -53,7 +53,7 @@ namespace Wonga.QA.Tests.Api
             ApplicationBuilder.New(cust).Build();
         }
 
-        [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
+		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Za), Pending("ZA-2565")]
         public void ApiLnJourneyDeclined()
         {
             Customer cust = CustomerBuilder.New().Build();
@@ -63,7 +63,7 @@ namespace Wonga.QA.Tests.Api
             ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
         }
 
-		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
+		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Za), Pending("ZA-2565")]
 		public void ApiRepayingOnDueDateClosesApplication()
 		{
 			var customer = CustomerBuilder.New().Build();

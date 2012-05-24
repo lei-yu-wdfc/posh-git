@@ -28,7 +28,7 @@ namespace Wonga.QA.Tests.Payments
 			ConfigurationFunctions.SetBankGatewayTestMode(_bankGatewayTestModeOriginal);
 		}
 
-		[Test, JIRA("ZA-1676"), Parallelizable]
+		[Test, JIRA("ZA-1676"), Parallelizable, Pending("ZA-2565")]
 		public void ApplicationInArrearsSagaCreatedTest()
 		{
 			Application application = ArrangeApplication();
@@ -39,7 +39,7 @@ namespace Wonga.QA.Tests.Payments
 			Assert.AreEqual(0, saga.DaysInArrears);
 		}
 
-		[Test, JIRA("ZA-1676"), Parallelizable]
+		[Test, JIRA("ZA-1676"), Parallelizable, Pending("ZA-2565")]
 		public void ApplicationClosedSagaCompleteTest()
 		{
 			Application application = ArrangeApplication();

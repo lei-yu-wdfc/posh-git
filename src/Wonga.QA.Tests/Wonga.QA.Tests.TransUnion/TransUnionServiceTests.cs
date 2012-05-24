@@ -5,7 +5,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.TransUnion
 {
-    [Parallelizable(TestScope.All)]
+	[Parallelizable(TestScope.All), Pending("ZA-2565")]
     public class TransUnionServiceTests
     {
         [Test, AUT(AUT.Za)]

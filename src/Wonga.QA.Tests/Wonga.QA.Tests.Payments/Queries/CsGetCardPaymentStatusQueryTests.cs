@@ -8,7 +8,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments.Queries
 {
-    [TestFixture]
+	[TestFixture, Pending("ZA-2565")]
     public class CsGetCardPaymentStatusQueryTests
     {
         protected Application _application;

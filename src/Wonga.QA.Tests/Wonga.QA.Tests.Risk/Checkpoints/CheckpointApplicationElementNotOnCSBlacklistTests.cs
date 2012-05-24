@@ -11,7 +11,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[TestFixture, AUT(AUT.Ca, AUT.Za)]
+	[TestFixture, AUT(AUT.Ca)]
 	class CheckpointApplicationElementNotOnCSBlacklistTests
 	{
 		private static readonly RiskMask TestMask = GetRiskMask();
@@ -19,7 +19,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 		private Customer _customer;
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("CA-1974"), Parallelizable(TestScope.All)]
+		[Test, AUT(AUT.Ca), JIRA("CA-1974"), Parallelizable(TestScope.All)]
 		public void L0NotFlaggedDoNotRelendIsAccepted()
 		{
 			_customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
@@ -27,7 +27,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			AssertCheckpointAndVerificationExecution(true, application);
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("CA-1974"), Parallelizable(TestScope.All)]
+		[Test, AUT(AUT.Ca), JIRA("CA-1974"), Parallelizable(TestScope.All)]
 		public void L0FlaggedDoNotRelendIsDeclined()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
@@ -37,14 +37,14 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			AssertApplicationDeclinedWithCorrectCheckPointAndVerification(application);
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("CA-1974"), DependsOn("L0NotFlaggedDoNotRelendIsAccepted"), Parallelizable(TestScope.All)]
+		[Test, AUT(AUT.Ca), JIRA("CA-1974"), DependsOn("L0NotFlaggedDoNotRelendIsAccepted"), Parallelizable(TestScope.All)]
 		public void LnNotFlaggedDoNotRelendIsAccepted()
 		{
 			var application = ApplicationBuilder.New(_customer).Build().RepayOnDueDate();
 			AssertCheckpointAndVerificationExecution(true, application);
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("CA-1974"), DependsOn("LnNotFlaggedDoNotRelendIsAccepted"), Parallelizable(TestScope.All)]
+		[Test, AUT(AUT.Ca), JIRA("CA-1974"), DependsOn("LnNotFlaggedDoNotRelendIsAccepted"), Parallelizable(TestScope.All)]
 		public void LnFlaggedDoNotRelendIsDeclined()
 		{
 			RegisterDoNotRelend(_customer);

@@ -31,7 +31,7 @@ namespace Wonga.QA.Tests.Payments
 			}
 		}
 
-        [Test, AUT(AUT.Za), JIRA("ZA-2024")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2024"), Pending("ZA-2565")]
         [Row("2012-2-23", 30, 36, Order = 0)]
         [Row("2012-3-1", 23, 30, Order = 1)]
         [Row("2012-8-1", 24, 30, Order = 2)]
@@ -45,7 +45,7 @@ namespace Wonga.QA.Tests.Payments
             Assert.AreEqual(maxTerm, int.Parse(response.Values["TermMax"].Single()));
         }
 
-		[Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za), Pending("ZA-2565")]
 		public void DefaultTermIsDefaultPayDay()
 		{
 			for( int i = 0; i < NumOfDaysToTest; i++)

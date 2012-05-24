@@ -17,7 +17,7 @@ using Wonga.QA.Framework.Data.Enums.Risk;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[TestFixture, Parallelizable(TestScope.All)]
+	[TestFixture, Parallelizable(TestScope.All), Pending("ZA-2565")]
 	class CheckpointReputationPredictionPositiveTests
 	{
 		private const RiskMask TestMask = RiskMask.TESTReputationtPredictionPositive;
@@ -57,7 +57,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			}
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889")]
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889"), Pending("ZA-2565")]
 		public void CheckpointReputationPredictionPositiveAccept()
 		{
 			var customer = CustomerBuilder.New()
@@ -81,7 +81,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			}
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889")]
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889"), Pending("ZA-2565")]
 		public void CheckpointReputationPredictionPositiveDecline()
 		{
 			var customer = CustomerBuilder.New()
@@ -94,14 +94,14 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Assert.LessThan(actualScore, ReputationScoreCutoff);
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889"), DependsOn("CheckpointReputationPredictionPositiveAccept")]
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889"), DependsOn("CheckpointReputationPredictionPositiveAccept"), Pending("ZA-2565")]
 		public void CheckpointReputationPredictionPositiveCorrectFactorsUsed()
 		{
 			var actualFactorNames = GetFactorNamesUsed(l0Application);
 			Assert.AreElementsEqualIgnoringOrder(_factorNames, actualFactorNames);
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889"), DependsOn("CheckpointReputationPredictionPositiveAccept")]
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889"), DependsOn("CheckpointReputationPredictionPositiveAccept"), Pending("ZA-2565")]
 		public void CheckpointReputationPredictionPositiveTablesUpdateWhenAccountRankIncreases()
 		{
 			var prevAccountRank = (int)Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(l0Application.Id).AccountRank;
@@ -112,7 +112,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Do.Until(() => Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(l0Application.Id).AccountRank == 1);
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889")]
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889"), Pending("ZA-2565")]
 		public void CheckpointReputationPredictionPositivePostCodeWithHighArrearsRateLowersScore()
 		{
 			string postcode = GetPostcode();
@@ -142,7 +142,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			}
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889")]
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889"), Pending("ZA-2565")]
 		public void CheckpointReputationPredictionPositiveTablesUpdateWhenInArrears()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(GetPostcode()).Build();
@@ -167,7 +167,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			}
 		}
 
-		[Test, AUT(AUT.Ca), JIRA("CA-1889")]
+		[Test, AUT(AUT.Ca), JIRA("CA-1889"), Pending("ZA-2565")]
 		[Row(false)]
 		[Row(true)]
 		public void CheckpointReputationPredictionPositiveCheckL0ExecutionForReputationScoreCardUsageConfiguration(bool useScoreCard)

@@ -10,10 +10,10 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Email
 {
-	[TestFixture, AUT(AUT.Za), Parallelizable(TestScope.All)]
+	[TestFixture, AUT(AUT.Za), Parallelizable(TestScope.All), Pending("ZA-2565")]
 	public class EasyPayServiceEmailTests
 	{
-		[Test, AUT(AUT.Za), JIRA("ZA-2289", "ZA-2396")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2289", "ZA-2396"), Pending("ZA-2565")]
 		public void EmailIsSentWhenNoAccountCanBeFoundForEasyPayNumber()
 		{
 			DateTime actionDate = DateTime.UtcNow;
@@ -27,7 +27,7 @@ namespace Wonga.QA.Tests.Email
 			AssertInvalidEasyPayNumberEmailIsSent(amountString, easyPayNumber);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2289", "ZA-2396")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2289", "ZA-2396"), Pending("ZA-2565")]
 		public void EmailIsSentWhenNoApplicationCanBeFoundForEasyPayNumber()
 		{
 			var customer = CustomerBuilder.New().Build();
@@ -35,7 +35,7 @@ namespace Wonga.QA.Tests.Email
 			EmailIsSentForCustomerWithNoOpenApplication(customer.Id);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2289", "ZA-2396")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2289", "ZA-2396"), Pending("ZA-2565")]
 		public void EmailIsSentWhenNoOpenApplicationCanBeFoundForEasyPayNumber()
 		{
 			var customer = CustomerBuilder.New().Build();

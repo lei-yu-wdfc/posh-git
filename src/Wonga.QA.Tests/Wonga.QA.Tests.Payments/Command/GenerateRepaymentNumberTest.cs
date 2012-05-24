@@ -34,7 +34,7 @@ namespace Wonga.QA.Tests.Payments.Command
 			
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2290")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2290"), Pending("ZA-2565")]
 		public void GenerateRepaymentNumber_ShouldSaveRepaymentNumberToAccountRepayment()
 		{
 			//Arrange
@@ -49,7 +49,7 @@ namespace Wonga.QA.Tests.Payments.Command
 
 		}
 
-        [Test, AUT(AUT.Za), JIRA("ZA-1972")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1972"), Pending("ZA-2565")]
         public void GenerateEasyPayNumber_ShouldSaveRepaymentNumberToAccountRepayment()
         {
             //Arrange
@@ -64,7 +64,7 @@ namespace Wonga.QA.Tests.Payments.Command
 
         }
 
-        [Test, AUT(AUT.Za), JIRA("ZA-1972")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1972"), Pending("ZA-2565")]
         public void IAccountCreated_ShouldSaveRepaymentNumberToAccountRepayment()
         {
             //Arrange
@@ -78,7 +78,7 @@ namespace Wonga.QA.Tests.Payments.Command
         }
 
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2290")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2290"), Pending("ZA-2565")]
 		[ExpectedException(typeof(ValidatorException), "Payments_GenerateRepaymentNumber_RepaymentNumberForAccountAlreadyExists")]
 		public void GenerateRepaymentNumber_ForAccountWithExistingRepaymentNumber_ExpectValidationException()
 		{
@@ -98,7 +98,7 @@ namespace Wonga.QA.Tests.Payments.Command
 			Drive.Cs.Commands.Post(generateRepaymentNumberCommand);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2290")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2290"), Pending("ZA-2565")]
 		[ExpectedException(typeof(ValidatorException), "Payments_GenerateRepaymentNumber_AccountDoesNotExist")]
 		public void GenerateRepaymentNumber_ForNonExistingAccount_ExpectValidationException()
 		{

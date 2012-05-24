@@ -10,7 +10,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.TransUnion
 {
-	[TestFixture, Parallelizable(TestScope.All)]
+	[TestFixture, Parallelizable(TestScope.All), Pending("ZA-2565")]
 	class BureauResponseCachingTests
 	{
 		private const RiskMask TestMask = RiskMask.TESTCustomerNameIsCorrect;
@@ -18,7 +18,7 @@ namespace Wonga.QA.Tests.TransUnion
 
 		private Customer customer;
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2400")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2400"), Pending("ZA-2565")]
 		public void BureauResponseSavedToDatabase()
 		{
 			customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
@@ -31,7 +31,7 @@ namespace Wonga.QA.Tests.TransUnion
 			Assert.AreEqual(GetBureauResponseCount(customer), 1);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2400"), DependsOn("BureauResponseSavedToDatabase")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2400"), DependsOn("BureauResponseSavedToDatabase"), Pending("ZA-2565")]
 		public void BureauResponseNotSavedBeforePreviousResponseDecays()
 		{
 			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
@@ -39,7 +39,7 @@ namespace Wonga.QA.Tests.TransUnion
 			Assert.AreEqual(1, GetBureauResponseCount(customer));
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2400"), DependsOn("BureauResponseNotSavedBeforePreviousResponseDecays")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2400"), DependsOn("BureauResponseNotSavedBeforePreviousResponseDecays"), Pending("ZA-2565")]
 		public void BureauResponseCreatedAfterPreviousResponseDecays()
 		{
 			RewindBureauResponseCreatedOn(customer, ResponseDecayDays + 1);

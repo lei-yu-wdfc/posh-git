@@ -14,7 +14,7 @@ using SignApplicationCommand = Wonga.QA.Framework.Api.SignApplicationCommand;
 
 namespace Wonga.QA.Tests.Payments
 {
-    [TestFixture, Parallelizable(TestScope.All)]
+	[TestFixture, Parallelizable(TestScope.All), Pending("ZA-2565")]
 	public class MoveApplicationToDcaTests
 	{
         //private const string BankGatewayIsTestModeKey = "BankGateway.IsTestMode";
@@ -49,7 +49,7 @@ namespace Wonga.QA.Tests.Payments
 		}
 
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2256")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2256"), Pending("ZA-2565")]
 		public void MoveApplicationToDca_AfterDcaDelayPeriod()
 		{
 			var customer = CustomerBuilder.New().Build();
@@ -83,7 +83,7 @@ namespace Wonga.QA.Tests.Payments
 			Assert.AreEqual(debtCollection.MovedToAgency, true);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2256")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2256"), Pending("ZA-2565")]
 		public void MoveApplicationToDca_AfterDcaDelayPeriod_SuspendInterstTransactionIsPosted()
 		{
 			var customer = CustomerBuilder.New().Build();

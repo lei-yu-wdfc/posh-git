@@ -60,43 +60,43 @@ namespace Wonga.QA.Tests.Comms
 			ConfigurationFunctions.SetBankGatewayTestMode(_bankGatewayTestModeOriginal);
 		}
 
-		[Test, JIRA("ZA-1676"), AUT(AUT.Za)]
+		[Test, JIRA("ZA-1676"), AUT(AUT.Za), Pending("ZA-2565")]
 		public void A2SmsIsSentTest()
 		{
 			VerifySmsIsSentAfterDaysInArrears(0, A2Text);
 		}
 
-		[Test, JIRA("ZA-1676"), AUT(AUT.Za)]
+		[Test, JIRA("ZA-1676"), AUT(AUT.Za), Pending("ZA-2565")]
 		public void A3SmsIsSentTest()
 		{
 			VerifySmsIsSentAfterDaysInArrears(5, A3Text);
 		}
 
-		[Test, JIRA("ZA-1676"), AUT(AUT.Za)]
+		[Test, JIRA("ZA-1676"), AUT(AUT.Za), Pending("ZA-2565")]
 		public void A4SmsIsSentTest()
 		{
 			VerifySmsIsSentAfterDaysInArrears(15, A4Text);
 		}
 
-		[Test, JIRA("ZA-2233", "ZA-1676"), AUT(AUT.Za)]
+		[Test, JIRA("ZA-2233", "ZA-1676"), AUT(AUT.Za), Pending("ZA-2565")]
 		public void A5SmsIsSentTest()
 		{
 			VerifySmsIsSentAfterDaysInArrears(20, A5Text);
 		}
 
-		[Test, JIRA("ZA-2233", "ZA-1676"), AUT(AUT.Za)]
+		[Test, JIRA("ZA-2233", "ZA-1676"), AUT(AUT.Za), Pending("ZA-2565")]
 		public void A6SmsIsSentTest()
 		{
 			VerifySmsIsSentAfterDaysInArrears(30, A6Text);
 		}
 
-		[Test, JIRA("ZA-2233", "ZA-1676"), AUT(AUT.Za)]
+		[Test, JIRA("ZA-2233", "ZA-1676"), AUT(AUT.Za), Pending("ZA-2565")]
 		public void A7SmsIsSentTest()
 		{
 			VerifySmsIsSentAfterDaysInArrears(40, A7Text);
 		}
 
-		[Test, JIRA("ZA-1676"), AUT(AUT.Za)]
+		[Test, JIRA("ZA-1676"), AUT(AUT.Za), Pending("ZA-2565")]
 		public void WhenInHardshipSmsIsNotSent()
 		{
 			VerifyA2SentA3SuppressedA4Sent(
@@ -104,7 +104,7 @@ namespace Wonga.QA.Tests.Comms
 				a => AccountPreferences.UpdateByAccountId(AccountId: a.AccountId, IsHardship: false));
 		}
 
-		[Test, JIRA("ZA-1676"), AUT(AUT.Za)]
+		[Test, JIRA("ZA-1676"), AUT(AUT.Za), Pending("ZA-2565")]
 		public void WhenInDisputeSmsIsNotSent()
 		{
 			VerifyA2SentA3SuppressedA4Sent(

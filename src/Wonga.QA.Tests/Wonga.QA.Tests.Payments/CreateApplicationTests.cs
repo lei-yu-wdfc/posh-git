@@ -13,7 +13,7 @@ namespace Wonga.QA.Tests.Payments
     [TestFixture, Parallelizable(TestScope.All)]
     public class CreateApplicationTests
     {
-        [Test, AUT(AUT.Za), JIRA("ZA-2024")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2024"), Pending("ZA-2565")]
         public void CreateApplicationDueDayOnSaturdayTest()
         {
             Guid appId = Guid.NewGuid();

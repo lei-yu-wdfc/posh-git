@@ -10,13 +10,13 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[Parallelizable(TestScope.All)]
+	[Parallelizable(TestScope.All), Pending("ZA-2565")]
 	class CheckpointMonthlyIncomeEnoughForRepaymentTests
 	{
         private const RiskMask TestMask = RiskMask.TESTMonthlyIncomeEnoughForRepayment;
 		private static readonly decimal NetMonthlyIncome = GetDefaultCreditLimit()*4;
 
-		[Test, AUT(AUT.Za, AUT.Uk), JIRA("SME-866","UK-866"), Description("Scenario 1: Accepted")]
+		[Test, AUT(AUT.Uk), JIRA("SME-866","UK-866"), Description("Scenario 1: Accepted")]
 		public void CheckpointMonthlyIncomeEnoughForRepaymentAccept()
 		{
 			var customer = CustomerBuilder.New()
@@ -29,7 +29,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.Build();
 		}
 
-        [Test, AUT(AUT.Za, AUT.Uk), JIRA("SME-866", "UK-866"), Description("Scenario 1: Declined")]
+        [Test, AUT(AUT.Uk), JIRA("SME-866", "UK-866"), Description("Scenario 1: Declined")]
 		public void CheckpointMonthlyIncomeEnoughForRepaymentDecline()
 		{
 			var customer = CustomerBuilder.New()

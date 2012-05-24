@@ -61,12 +61,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="RiskApiTests\ApplicationBuilderConfig.cs" />
-    <Compile Include="RiskApiTests\BaseL0RiskApiCheckpointAndVerificationTests.cs" />
-    <Compile Include="RiskApiTests\BaseLnRiskApiCheckpointAndVerificationTests.cs" />
-    <Compile Include="RiskApiTests\BaseRiskApiCheckpointAndVerificationTests.cs" />
-    <Compile Include="RiskApiTests\L0RiskApiCheckpointAndVerificationTests.cs" />
-    <Compile Include="RiskApiTests\LnRiskApiCheckpointAndVerificationTests.cs" />
     <Compile Include="RiskServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Workflows\WorkflowCheckpointsTests.cs" />

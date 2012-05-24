@@ -16,6 +16,7 @@ using RepayLoanViaBankCommand = Wonga.QA.Framework.Api.RepayLoanViaBankCommand;
 
 namespace Wonga.QA.Tests.Payments
 {
+	[TestFixture, Pending("ZA-2565")]
     public class RepayLoanTests
     {
         private Guid _accountId;
@@ -66,7 +67,7 @@ namespace Wonga.QA.Tests.Payments
             }
         }
 
-        [Test, AUT(AUT.Za), JIRA("ZA-2099")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2099"), Pending("ZA-2565")]
         public void GetRepayLoanParameterQueryTest_HasPendingRequest()
         {
             var command = new RepayLoanViaBankCommand()
@@ -94,7 +95,7 @@ namespace Wonga.QA.Tests.Payments
         }
 
 
-        [Test, AUT(AUT.Za), JIRA("ZA-2099")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2099"), Pending("ZA-2565")]
         [Row("2012/3/8 10:00:00", "2012/3/9", Order = 0)]
         [Row("2012/3/8 14:00:00", "2012/3/10", Order = 1)]
         [Row("2012/3/10 5:00:00", "2012/3/12", Order = 2)]
@@ -110,7 +111,7 @@ namespace Wonga.QA.Tests.Payments
 
         }
 
-        [Test, AUT(AUT.Za), JIRA("ZA-2099")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2099"), Pending("ZA-2565")]
         public void GetRepayLoanStatusQueryTest()
         {
             var response = Drive.Api.Queries.Post(new GetRepayLoanStatusQuery()
@@ -119,7 +120,7 @@ namespace Wonga.QA.Tests.Payments
                                                        });
         }
 
-        [Test, AUT(AUT.Za), JIRA("ZA-2099")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2099"), Pending("ZA-2565")]
         public void RepayLoanViaBankTest_EarlyRepay()
         {
             var command = new RepayLoanViaBankCommand()
@@ -153,7 +154,7 @@ namespace Wonga.QA.Tests.Payments
             Assert.AreEqual(3, requestDetail.First().StatusCode);
         }
 
-        [Test, AUT(AUT.Za), JIRA("ZA-2099")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2099"), Pending("ZA-2565")]
         public void RepayLoanViaBankTest_ArrearsRepay()
         {            
             var app = Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == _application.Id));
@@ -196,7 +197,7 @@ namespace Wonga.QA.Tests.Payments
             Assert.IsTrue(collectionForRepay.Amount == _application.LoanAmount);
         }
 
-        [Test, AUT(AUT.Za), JIRA("ZA-2099")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2099"), Pending("ZA-2565")]
         [Explicit]
         public void RepayLoanViaBankTest_Timeout()
         {

@@ -13,7 +13,7 @@ using CreateFixedTermLoanExtensionCommand = Wonga.QA.Framework.Api.CreateFixedTe
 namespace Wonga.QA.Tests.Comms.Email
 {
 
-    [TestFixture, Parallelizable(TestScope.All)]
+	[TestFixture, Parallelizable(TestScope.All), AUT(AUT.Uk)]
     public class ExtensionLoanEmailTests
     {
         private LoanExtensionEntity _extension;
@@ -21,15 +21,10 @@ namespace Wonga.QA.Tests.Comms.Email
     	private Guid _accountId;
     	private Guid _applicationId;
 		
-		public ExtensionLoanEmailTests()
-        {
+		[FixtureSetUp]
+		public void FixtureSetUp()
+		{
             _extension = CreateLoanAndExtend(); //run once for all tests.
-        }
-        
-        [SetUp]
-        public void Setup()
-        {
-            
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-1281")]

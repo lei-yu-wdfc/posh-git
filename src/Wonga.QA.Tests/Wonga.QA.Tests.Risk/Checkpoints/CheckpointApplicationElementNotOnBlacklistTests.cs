@@ -14,7 +14,7 @@ using Wonga.QA.Framework.Db;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-    [AUT(AUT.Za, AUT.Wb, AUT.Uk)]
+	[AUT(AUT.Wb, AUT.Uk), Pending("ZA-2565")]
     [Parallelizable(TestScope.All)]
     class CheckpointApplicationElementNotOnBlacklistTests
     {
@@ -27,7 +27,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             _testMask = Config.AUT == AUT.Wb ? RiskMask.TESTBlacklistSME : RiskMask.TESTBlacklist;
         }
 
-        [Test, AUT(AUT.Za, AUT.Wb, AUT.Uk)]
+		[Test, AUT(AUT.Za, AUT.Wb, AUT.Uk), Pending("ZA-2565")]
 		[JIRA("SME-131", "SME-1363","UK-847")]
         public void ApplicationElementNotOnBlackList_LoanIsAccepted()
         {
@@ -88,7 +88,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             }
         }
 
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb), Pending("ZA-2565")]
         [JIRA("SME-131","SME-1363")]
         public void ApplicationElementIsOnBlackList_LoanIsDeclined()
         {
@@ -106,7 +106,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicationDataBlacklistCheck));
         }
 
-        [Test, AUT(AUT.Za)]
+        [Test, AUT(AUT.Za), Pending("ZA-2565")]
         public void ApplicationElementIsOnBlackList_MobilePhone_LoanIsDeclined()
         {
             var mobilePhoneNumber = Get.GetMobilePhone();
@@ -124,7 +124,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
         }
 
-        [Test, AUT(AUT.Za, AUT.Uk)]
+        [Test, AUT(AUT.Za, AUT.Uk), Pending("ZA-2565")]
         [JIRA("UK-847")]
         public void ApplicationElementIsOnBlackList_BankAccount_LoanIsDeclined()
         {
@@ -146,7 +146,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
                 Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicationDataBlacklistCheck));
         }
 
-        [Test, AUT(AUT.Za, AUT.Uk)]
+        [Test, AUT(AUT.Za, AUT.Uk), Pending("ZA-2565")]
         [JIRA("UK-847")]
         public void ApplicationElementIsOnBlackList_Surname_LoanIsDeclined()
         {

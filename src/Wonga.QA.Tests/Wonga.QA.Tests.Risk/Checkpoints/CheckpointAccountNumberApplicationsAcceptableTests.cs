@@ -12,7 +12,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[TestFixture, Parallelizable(TestScope.All)]
+	[TestFixture, Parallelizable(TestScope.All), Pending("ZA-2565")]
 	public class CheckpointAccountNumberApplicationsAcceptableTests
 	{
 		private const RiskMask TestMask = RiskMask.TESTAccountNumberApplicationsAcceptable;
@@ -23,7 +23,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		private Customer _customer;
 		private Application _application;
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879")]
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879"), Pending("ZA-2565")]
 		public void L0NumberOfApplicationsBelowThresholdAccepted()
 		{
 			_customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
@@ -32,7 +32,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			AssertCheckpointAndVerificationExecution();
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879"), DependsOn("L0_NumberOfApplicationsBelowThresholdAccepted")]
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879"), DependsOn("L0NumberOfApplicationsBelowThresholdAccepted"), Pending("ZA-2565")]
 		public void LnNumberOfApplicationsBelowThresholdAccepted()
 		{
 			_application.RepayOnDueDate();
@@ -41,7 +41,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			AssertCheckpointAndVerificationExecution(lnApplication);
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879"), Timeout(0)]
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879"), Timeout(0), Pending("ZA-2565")]
 		public void LnNumberOfApplicationDailyOverThresholdDeclined()
 		{
 			var customerLn = CustomerBuilder.New().WithEmployer(RiskMask.TESTEmployedMask).WithEmployerStatus("Unemployed").Build();
@@ -58,7 +58,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			AssertApplicationDeclinedWithCorrectCheckPointAndVerification(lnApplication);
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879"), Timeout(0)]
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879"), Timeout(0), Pending("ZA-2565")]
 		public void LnNumberOfApplicationMonthlyOverThresholdDeclined()
 		{
 			//make one app per day up until the monthly threshold so that the daily limit is not exceeded

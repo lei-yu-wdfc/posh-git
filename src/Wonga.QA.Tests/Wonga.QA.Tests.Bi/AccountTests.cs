@@ -11,7 +11,7 @@ namespace Wonga.QA.Tests.Bi
 	[Parallelizable(TestScope.All), Ignore("This test keeps failing due to a known issue  with BI")]
 	class AccountTests
 	{
-		[Test]
+		[Test, Pending("ZA-2565")]
 		public void AccountDetailsStoredInBiTable()
 		{
 			var customer = CustomerBuilder.New().Build();

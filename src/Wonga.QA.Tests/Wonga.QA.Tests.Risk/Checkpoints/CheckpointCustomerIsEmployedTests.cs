@@ -12,14 +12,13 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[Parallelizable(TestScope.All), AUT(AUT.Za,AUT.Uk)]
+	[Parallelizable(TestScope.All), AUT(AUT.Uk), Pending("ZA-2565")]
 	public class CheckpointCustomerIsEmployedTests
 	{
         private const RiskMask TestMask = RiskMask.TESTCustomerIsEmployed;
 		private Application l0Application;
 
-		[Test]
-        [JIRA("UK-1566")]
+		[Test, JIRA("UK-1566")]
 		public void L0_CustomerIsEmployed_LoanIsAccepted()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithEmployerStatus(EmploymentStatusEnum.EmployedFullTime.ToString()).Build();
@@ -30,8 +29,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.CustomerIsEmployed));
 		}
 
-		[Test]
-        [JIRA("UK-1566")]
+		[Test, JIRA("UK-1566")]
 		public void L0_CustomerIsUnemployed_LoanIsDeclined()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithEmployerStatus(EmploymentStatusEnum.Unemployed.ToString()).Build();

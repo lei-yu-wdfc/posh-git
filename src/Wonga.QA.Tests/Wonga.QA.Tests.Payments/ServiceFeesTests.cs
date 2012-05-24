@@ -12,6 +12,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments
 {
+	[TestFixture, Pending("ZA-2565")]
 	public class ServiceFeesTests
 	{
 		private const string NowServiceConfigKey =
@@ -32,7 +33,7 @@ namespace Wonga.QA.Tests.Payments
 			db.Ops.SubmitChanges();
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1969"), Parallelizable]
+		[Test, AUT(AUT.Za), JIRA("ZA-1969"), Parallelizable, Pending("ZA-2565")]
 		public void AllServiceFeesArePostedUpfrontOnApplication()
 		{
 			Customer customer = CustomerBuilder.New().Build();
@@ -64,7 +65,7 @@ namespace Wonga.QA.Tests.Payments
 			    cashAdvance.PostedOn.AddDays(90), serviceFees[3].PostedOn, TimeSpan.FromMinutes(10));
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1969", "ZA-2193"), Parallelizable]
+		[Test, AUT(AUT.Za), JIRA("ZA-1969", "ZA-2193"), Parallelizable, Pending("ZA-2565")]
 		public void SmallLoanHasPositiveBalanceAfterApplication()
 		{
 			Customer customer = CustomerBuilder.New().Build();
@@ -82,7 +83,7 @@ namespace Wonga.QA.Tests.Payments
 			Assert.AreEqual("74.10", response.Values["Fees"].Single());
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1969", "ZA-2193"), Parallelizable]
+		[Test, AUT(AUT.Za), JIRA("ZA-1969", "ZA-2193"), Parallelizable, Pending("ZA-2565")]
 		public void DueAmountObeysInDuplumRule()
 		{
 			Customer customer = CustomerBuilder.New().Build();

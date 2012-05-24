@@ -16,7 +16,7 @@ namespace Wonga.QA.Tests.Payments.Queries
     public class GetTransactionsCsapiQuery
     {
         private dynamic _transactions = Drive.Data.Payments.Db.Transactions;
-		[Test, AUT(AUT.Za), JIRA("ZA-2227")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2227"), Pending("ZA-2565")]
 		public void GetTransactions_ShouldOnlyShowServiceFeeTransactionsPostedTillPostingDate()
 		{
 			//Arrange
