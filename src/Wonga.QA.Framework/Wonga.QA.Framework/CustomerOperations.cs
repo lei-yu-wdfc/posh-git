@@ -135,14 +135,14 @@ namespace Wonga.QA.Framework
             {
                 var request = new SignupCustomerForPremiumCardCommand();
                 request.CustomerExternalId = customerId;
-                Drive.Api.Queries.Post(request);
+                Drive.Api.Commands.Post(request);
             }
 
             else
             {
                 var request = new SignupCustomerForStandardCardCommand();
                 request.CustomerExternalId = customerId;
-                Drive.Api.Queries.Post(request);
+                Drive.Api.Commands.Post(request);
             }
         }
 
