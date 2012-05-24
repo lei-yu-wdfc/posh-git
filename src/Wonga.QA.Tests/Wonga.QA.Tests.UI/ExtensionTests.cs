@@ -177,12 +177,12 @@ namespace Wonga.QA.Tests.Ui
             //var futureInterestAndFees = decimal.Parse(_response.Values["LoanExtensionFee"].Single()); wrong
             //var sFutureInterestAndFees = String.Format("£{0}", futureInterestAndFees.ToString("#.00")); wrong
 
-            var expectedRepaymentDate = Date.GetOrdinalDate(DateTime.Now.AddDays(loanTerm).AddDays(1), "d MMM yyyy");
+            var expectedRepaymentDate = Date.GetOrdinalDate(DateTime.Now.AddDays(loanTerm).AddDays(1), "d MMMM yyyy");
 
             // Main checks
             Assert.AreEqual("1", sliderMinDays);
             Assert.AreEqual("30", sliderMaxDays);
-            Assert.AreEqual(expectedRepaymentDate, extensionRequestPage.RepaymentDate); // Repayment Date
+            Assert.AreEqual(expectedRepaymentDate, extensionRequestPage.RepaymentDate, "Repayment Date is incorrect."); // Repayment Date
             Assert.AreEqual(extensionDays.ToString("#"), extensionRequestPage.InformativeBox, "InformativeBox"); // Days (for extention)
             Assert.AreEqual(sOweToday, extensionRequestPage.OweToday, "OweToday"); // Owe today
             Assert.AreEqual(sTotalRepayToday, extensionRequestPage.TotalRepayToday, "TotalRepayToday"); // Total to Repay Today
