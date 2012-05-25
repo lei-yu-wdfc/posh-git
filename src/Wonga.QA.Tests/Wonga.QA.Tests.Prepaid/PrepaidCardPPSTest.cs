@@ -12,9 +12,9 @@ namespace Wonga.QA.Tests.Prepaid
     [TestFixture, Parallelizable(TestScope.All)]
     class PrepaidCardPPSTest
     {
-        private Customer _eligibleCustomerForStandardCard = null;
-        private Customer _invalidCustomer = null;
-        private Customer _eligibleCustomerForPremiumCard = null;
+        private TestLocal<Customer> _eligibleCustomerForStandardCard = new TestLocal<Customer>();
+        private TestLocal<Customer> _invalidCustomer = new TestLocal<Customer>();
+        private TestLocal<Customer> _eligibleCustomerForPremiumCard =new TestLocal<Customer>();
 
         private static readonly int VALID_ACCOUNT_NUMBER_LENGTH = 14;
         private static readonly int VALID_SERIAL_NUMBER_LENGTH = 10;
@@ -31,12 +31,12 @@ namespace Wonga.QA.Tests.Prepaid
         [SetUp]
         public void Init()
         {
-            _eligibleCustomerForStandardCard = CustomerBuilder.New().WithEmailAddress(Get.GetEmail(50)).Build();
-            _eligibleCustomerForPremiumCard = CustomerBuilder.New().WithEmailAddress(Get.GetEmail(50)).Build();
-            _invalidCustomer = CustomerBuilder.New().Build();
+            _eligibleCustomerForStandardCard.Value = CustomerBuilder.New().WithEmailAddress(Get.GetEmail(50)).Build();
+            _eligibleCustomerForPremiumCard.Value = CustomerBuilder.New().WithEmailAddress(Get.GetEmail(50)).Build();
+            _invalidCustomer.Value = CustomerBuilder.New().Build();
 
-            CustomerOperations.CreateMarketingEligibility(_eligibleCustomerForStandardCard.Id, true);
-            CustomerOperations.CreateMarketingEligibility(_eligibleCustomerForPremiumCard.Id,true);
+            CustomerOperations.CreateMarketingEligibility(_eligibleCustomerForStandardCard.Value.Id, true);
+            CustomerOperations.CreateMarketingEligibility(_eligibleCustomerForPremiumCard.Value.Id,true);
             
             ExecuteCommonPPSCommands();
         }
@@ -44,10 +44,10 @@ namespace Wonga.QA.Tests.Prepaid
         [Test, AUT(AUT.Uk), JIRA("PP-8", "PP-150")]
         public void CustomerShouldApplyForPrepaidCard()
         {
-            CheckOnAddingRecordsToPrepaidCard(_eligibleCustomerForStandardCard.Id, CustomerOperations.STANDARD_CARD_TYPE);
-            CheckOnAddingRecordsToPrepaidCard(_eligibleCustomerForPremiumCard.Id, CustomerOperations.PREMIUM_CARD_TYPE);
+            CheckOnAddingRecordsToPrepaidCard(_eligibleCustomerForStandardCard.Value.Id, CustomerOperations.STANDARD_CARD_TYPE);
+            CheckOnAddingRecordsToPrepaidCard(_eligibleCustomerForPremiumCard.Value.Id, CustomerOperations.PREMIUM_CARD_TYPE);
 
-            Assert.Throws<Exception>(() => CheckOnAddingRecordsToPrepaidCard(_invalidCustomer.Id, CustomerOperations.PREMIUM_CARD_TYPE));
+            Assert.Throws<Exception>(() => CheckOnAddingRecordsToPrepaidCard(_invalidCustomer.Value.Id, CustomerOperations.PREMIUM_CARD_TYPE));
         }
 
         [Test, AUT(AUT.Uk), JIRA("PP-79")]
@@ -58,9 +58,9 @@ namespace Wonga.QA.Tests.Prepaid
             var invalidRequest = new GetPrePaidPinResetCodeQuery();
             var validRequestForPremiumCard = new GetPrePaidPinResetCodeQuery();
 
-            validRequestForStandardCard.CustomerExternalId = _eligibleCustomerForStandardCard.Id;
-            invalidRequest.CustomerExternalId = _invalidCustomer.Id;
-            validRequestForPremiumCard.CustomerExternalId = _eligibleCustomerForPremiumCard.Id;
+            validRequestForStandardCard.CustomerExternalId = _eligibleCustomerForStandardCard.Value.Id;
+            invalidRequest.CustomerExternalId = _invalidCustomer.Value.Id;
+            validRequestForPremiumCard.CustomerExternalId = _eligibleCustomerForPremiumCard.Value.Id;
 
             var successResponseForStandard = Drive.Api.Queries.Post(validRequestForStandardCard);
             var successResponseForPremium = Drive.Api.Queries.Post(validRequestForPremiumCard);
@@ -73,15 +73,15 @@ namespace Wonga.QA.Tests.Prepaid
         [Test, AUT(AUT.Uk), JIRA("PP-11")]
         public void CustomerShouldReceiveEmailWhenApplyPrepaidCard()
         {
-            Do.Until(() => _qaDataDb.Email.FindBy(EmailAddress: _eligibleCustomerForStandardCard.GetEmail(), TemplateName: STANDARD_CARD_TEMPLATE_NAME));
-            Do.Until(() => _qaDataDb.Email.FindBy(EmailAddress: _eligibleCustomerForPremiumCard.GetEmail(), TemplateName: PREMIUM_CARD_TEMPLATE_NAME));
+            Do.Until(() => _qaDataDb.Email.FindBy(EmailAddress: _eligibleCustomerForStandardCard.Value.GetEmail(), TemplateName: STANDARD_CARD_TEMPLATE_NAME));
+            Do.Until(() => _qaDataDb.Email.FindBy(EmailAddress: _eligibleCustomerForPremiumCard.Value.GetEmail(), TemplateName: PREMIUM_CARD_TEMPLATE_NAME));
         }
 
         [Test,AUT(AUT.Uk),JIRA("PP-34,PP-35")]
         public void CustomerShouldApplyPrepaidCardAndSetPrepaidFunds()
         {
-            Application appForStandard = ApplicationBuilder.New(_eligibleCustomerForStandardCard).Build();
-            Application appForPremium = ApplicationBuilder.New(_eligibleCustomerForPremiumCard).Build();
+            Application appForStandard = ApplicationBuilder.New(_eligibleCustomerForStandardCard.Value).Build();
+            Application appForPremium = ApplicationBuilder.New(_eligibleCustomerForPremiumCard.Value).Build();
 
             CustomerOperations.SetFundsForCustomer(appForStandard.Id,true);
             CustomerOperations.SetFundsForCustomer(appForPremium.Id,true);
@@ -92,8 +92,8 @@ namespace Wonga.QA.Tests.Prepaid
         [Test, AUT(AUT.Uk), JIRA("PP-34,PP-35")]
         public void CustomerShouldApplyPrepaidCardAndSetDefaultFunds()
         {
-            Application appForStandard = ApplicationBuilder.New(_eligibleCustomerForStandardCard).Build();
-            Application appForPremium = ApplicationBuilder.New(_eligibleCustomerForPremiumCard).Build();
+            Application appForStandard = ApplicationBuilder.New(_eligibleCustomerForStandardCard.Value).Build();
+            Application appForPremium = ApplicationBuilder.New(_eligibleCustomerForPremiumCard.Value).Build();
 
             CustomerOperations.SetFundsForCustomer(appForStandard.Id,false);
             CustomerOperations.SetFundsForCustomer(appForPremium.Id,false);
@@ -105,19 +105,22 @@ namespace Wonga.QA.Tests.Prepaid
         public void CustomerShouldUpdatePersonalDetailsAndUpdateItOnPPS()
         {
 
-            CustomerOperations.UpdateAddress(_eligibleCustomerForStandardCard.Id);
-            CustomerOperations.UpdateEmail(_eligibleCustomerForStandardCard.Id);
-            CustomerOperations.UpdateMobilePhone(_eligibleCustomerForPremiumCard.Id);
+            CustomerOperations.UpdateAddress(_eligibleCustomerForStandardCard.Value.Id);
+            CustomerOperations.UpdateEmail(_eligibleCustomerForStandardCard.Value.Id);
+            CustomerOperations.UpdateMobilePhone(_eligibleCustomerForPremiumCard.Value.Id);
 
-            CustomerOperations.UpdateAddress(_eligibleCustomerForPremiumCard.Id);
-            CustomerOperations.UpdateEmail(_eligibleCustomerForPremiumCard.Id);
-            CustomerOperations.UpdateMobilePhone(_eligibleCustomerForPremiumCard.Id);
+            CustomerOperations.UpdateAddress(_eligibleCustomerForPremiumCard.Value.Id);
+            CustomerOperations.UpdateEmail(_eligibleCustomerForPremiumCard.Value.Id);
+            CustomerOperations.UpdateMobilePhone(_eligibleCustomerForPremiumCard.Value.Id);
 
-            var operationsForStandardCardUser = Do.Until(() => _prepaidCardDb.OperationsLogs.FindAllBy(CustomerExternalId: _eligibleCustomerForStandardCard.Id,
-                                                                                                       StatusCode: OPERATION_SUCCESS_STATUS));
+            var operationsForStandardCardUser = Do.Until(() => _prepaidCardDb.OperationsLogs.FindAllBy(
+                                                                    CustomerExternalId: _eligibleCustomerForStandardCard.Value.Id,
+                                                                    StatusCode: OPERATION_SUCCESS_STATUS));
 
-            var operationsForPremiumCardUser = Do.Until(() => _prepaidCardDb.OperationsLogs.FindAllBy(CustomerExternalId: _eligibleCustomerForPremiumCard.Id,
-                                                                                                      StatusCode: OPERATION_SUCCESS_STATUS));
+            var operationsForPremiumCardUser = Do.Until(() => _prepaidCardDb.OperationsLogs.FindAllBy(
+                                                                    CustomerExternalId: _eligibleCustomerForPremiumCard.Value.Id,
+                                                                    StatusCode: OPERATION_SUCCESS_STATUS));
+               
 
             Assert.IsTrue(operationsForStandardCardUser.Count() == operationsForPremiumCardUser.Count());
         }
@@ -127,16 +130,16 @@ namespace Wonga.QA.Tests.Prepaid
         {
 
             var validRequestForStandardCard = new GetPrepaidCardTransactionsQuery();
-            validRequestForStandardCard.AccountId = _eligibleCustomerForStandardCard.Id;
+            validRequestForStandardCard.AccountId = _eligibleCustomerForStandardCard.Value.Id;
 
             var invalidRequestForNonExistingAccount = new GetPrepaidCardTransactionsQuery();
             invalidRequestForNonExistingAccount.AccountId = Guid.Empty;
 
             var invalidRequest = new GetPrepaidCardTransactionsQuery();
-            invalidRequest.AccountId = _invalidCustomer.Id;
+            invalidRequest.AccountId = _invalidCustomer.Value.Id;
 
             var validRequestForPremiumCard = new GetPrepaidCardTransactionsQuery();
-            validRequestForPremiumCard.AccountId = _eligibleCustomerForPremiumCard.Id;
+            validRequestForPremiumCard.AccountId = _eligibleCustomerForPremiumCard.Value.Id;
 
             Drive.Api.Queries.Post(validRequestForStandardCard);
             Drive.Api.Queries.Post(validRequestForPremiumCard);
@@ -148,8 +151,12 @@ namespace Wonga.QA.Tests.Prepaid
         [TearDown]
         public void Rollback()
         {
-            CustomerOperations.DeleteMarketingEligibility(_eligibleCustomerForStandardCard.Id);
-            CustomerOperations.DeleteMarketingEligibility(_eligibleCustomerForPremiumCard.Id);
+            CustomerOperations.DeleteMarketingEligibility(_eligibleCustomerForStandardCard.Value.Id);
+            CustomerOperations.DeleteMarketingEligibility(_eligibleCustomerForPremiumCard.Value.Id);
+
+            _eligibleCustomerForPremiumCard.Value = null;
+            _eligibleCustomerForStandardCard.Value = null;
+            _invalidCustomer.Value = null;
         }
 
         private void CheckOnAddingRecordsToPrepaidCard(Guid customerId,String cardType)
@@ -169,8 +176,8 @@ namespace Wonga.QA.Tests.Prepaid
 
         private void ExecuteCommonPPSCommands()
         {
-            CustomerOperations.CreatePrepaidCardForCustomer(_eligibleCustomerForStandardCard.Id,false);
-            CustomerOperations.CreatePrepaidCardForCustomer(_eligibleCustomerForPremiumCard.Id,true);
+            CustomerOperations.CreatePrepaidCardForCustomer(_eligibleCustomerForStandardCard.Value.Id,false);
+            CustomerOperations.CreatePrepaidCardForCustomer(_eligibleCustomerForPremiumCard.Value.Id,true);
         }
     }
 }
