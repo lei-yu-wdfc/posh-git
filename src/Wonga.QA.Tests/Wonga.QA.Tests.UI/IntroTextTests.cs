@@ -21,6 +21,7 @@ using CreateScheduledPaymentRequestCommand = Wonga.QA.Framework.Msmq.CreateSched
 
 namespace Wonga.QA.Tests.Ui
 {
+    [Parallelizable(TestScope.All)]
     public class IntroTextTests: UiTest
     {
         Dictionary<int, string> introTexts = new Dictionary<int, string> 
