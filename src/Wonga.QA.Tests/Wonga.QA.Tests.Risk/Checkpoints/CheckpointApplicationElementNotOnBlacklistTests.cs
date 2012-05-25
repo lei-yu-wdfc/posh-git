@@ -14,7 +14,7 @@ using Wonga.QA.Framework.Db;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[AUT(AUT.Wb, AUT.Uk), Pending("ZA-2565")]
+	[AUT(AUT.Wb, AUT.Uk)]
     [Parallelizable(TestScope.All)]
     class CheckpointApplicationElementNotOnBlacklistTests
     {
@@ -27,7 +27,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             _testMask = Config.AUT == AUT.Wb ? RiskMask.TESTBlacklistSME : RiskMask.TESTBlacklist;
         }
 
-		[Test, AUT(AUT.Za, AUT.Wb, AUT.Uk), Pending("ZA-2565")]
+		[Test, AUT(AUT.Wb, AUT.Uk, AUT.Za), Pending("ZA-2565")]
 		[JIRA("SME-131", "SME-1363","UK-847")]
         public void ApplicationElementNotOnBlackList_LoanIsAccepted()
         {

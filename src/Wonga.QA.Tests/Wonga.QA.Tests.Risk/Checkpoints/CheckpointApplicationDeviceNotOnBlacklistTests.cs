@@ -17,14 +17,14 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
     	private Customer _customer;
 
-		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Wb), JIRA("CA-1735", "SME-130", "UK-1567"), Parallelizable(TestScope.All)]
+		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Wb, AUT.Za), JIRA("CA-1735", "SME-130", "UK-1567"), Parallelizable(TestScope.All)]
 		public void L0IovationDenyIsDeclined()
 		{
 			var application = BuildApplication(ApplicationDecisionStatus.Declined, IovationMockResponse.Deny);
 			VerifyRiskApplication(application, RiskCheckpointStatus.Failed);
         }
 
-		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Wb), JIRA("CA-1735", "SME-130", "UK-1567"), Parallelizable(TestScope.All)]
+		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Wb, AUT.Za), JIRA("CA-1735", "SME-130", "UK-1567"), Parallelizable(TestScope.All)]
 		public void L0IovationAllowIsAccepted()
 		{
 			_customer = BuildCustomer();
@@ -33,14 +33,14 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			application.RepayOnDueDate();
 		}
 
-		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Wb), JIRA("CA-1735", "SME-130", "UK-1567"), Parallelizable(TestScope.All)]
+		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Wb, AUT.Za), JIRA("CA-1735", "SME-130", "UK-1567"), Parallelizable(TestScope.All)]
 		public void L0IovationUnknownIsAccepted()
 		{
 			var application = BuildApplication(ApplicationDecisionStatus.Accepted, IovationMockResponse.Unknown);
 			VerifyRiskApplication(application, RiskCheckpointStatus.Verified);
 		}
 
-		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Wb), JIRA("CA-1735", "SME-130", "UK-1567")]
+		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Wb, AUT.Za), JIRA("CA-1735", "SME-130", "UK-1567")]
 		[Row(true,true)]
 		[Row(true,false)]
 		[Row(false, false)]
@@ -70,14 +70,14 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             }
         }
 
-		[Test, AUT(AUT.Uk), JIRA("UK-1567"), DependsOn("L0IovationAllowIsAccepted"), Parallelizable(TestScope.All)]
+		[Test, AUT(AUT.Uk, AUT.Za), JIRA("UK-1567"), DependsOn("L0IovationAllowIsAccepted"), Parallelizable(TestScope.All)]
         public void LnIovationDenyIsDeclined()
 		{
 			var application = BuildApplication(_customer, ApplicationDecisionStatus.Declined, IovationMockResponse.Deny);
 			VerifyRiskApplication(application, RiskCheckpointStatus.Failed);
         }
 
-		[Test, AUT(AUT.Uk), JIRA("UK-1567"), DependsOn("LnIovationDenyIsDeclined"), Parallelizable(TestScope.All)]
+		[Test, AUT(AUT.Uk, AUT.Za), JIRA("UK-1567"), DependsOn("LnIovationDenyIsDeclined"), Parallelizable(TestScope.All)]
         public void LnIovationAllowIsAccepted()
         {
 			var application = BuildApplication(_customer, ApplicationDecisionStatus.Accepted, IovationMockResponse.Allow);
@@ -85,7 +85,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			application.RepayOnDueDate();
         }
 
-		[Test, AUT(AUT.Uk), JIRA("UK-1567"), DependsOn("LnIovationAllowIsAccepted"), Parallelizable(TestScope.All)]
+		[Test, AUT(AUT.Uk, AUT.Za), JIRA("UK-1567"), DependsOn("LnIovationAllowIsAccepted"), Parallelizable(TestScope.All)]
         public void LnIovationReviewIsAccepted()
         {
 			var application = BuildApplication(_customer, ApplicationDecisionStatus.Accepted, IovationMockResponse.Review);
@@ -93,12 +93,11 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			application.RepayOnDueDate();
         }
 
-		[Test, AUT(AUT.Uk), JIRA("UK-1567"), DependsOn("LnIovationReviewIsAccepted"), Parallelizable(TestScope.All)]
+		[Test, AUT(AUT.Uk, AUT.Za), JIRA("UK-1567"), DependsOn("LnIovationReviewIsAccepted"), Parallelizable(TestScope.All)]
         public void LnIovationUnknownIsAccepted()
         {
 			var application = BuildApplication(_customer, ApplicationDecisionStatus.Accepted, IovationMockResponse.Unknown);
 			VerifyRiskApplication(application, RiskCheckpointStatus.Verified);
-			application.RepayOnDueDate();
         }
 
 		#region Helpers
