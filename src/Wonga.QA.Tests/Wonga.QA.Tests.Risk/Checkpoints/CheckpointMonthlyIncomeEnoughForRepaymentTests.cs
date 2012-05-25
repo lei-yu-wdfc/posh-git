@@ -10,7 +10,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[Parallelizable(TestScope.All), Pending("ZA-2565")]
+	[Parallelizable(TestScope.All)]
 	class CheckpointMonthlyIncomeEnoughForRepaymentTests
 	{
         private const RiskMask TestMask = RiskMask.TESTMonthlyIncomeEnoughForRepayment;
