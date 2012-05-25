@@ -66,7 +66,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.Throws<AssertionFailureException>(() => { var processingPage = bankDetailsPage2.Next(); });
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-202"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-202")]
         public void LNJourneyInvalidAccountNumberShouldCauseWarningMessageOnNextPage()
         {
             var loginPage = Client.Login();
@@ -111,7 +111,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-201"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-201")]
         public void WhenLoggedCustomerWithoutLiveLoanAddsNewBankAccountItShouldBecomePrimary()
         {
             string accountNumber = "1234567";
