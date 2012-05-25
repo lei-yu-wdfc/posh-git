@@ -24,7 +24,13 @@ namespace Wonga.QA.Tests.Core
                     return _dict.ContainsKey(GetTestId()) ? _dict[GetTestId()] : default(T);
                 }
             }
-            set { _dict[GetTestId()] = value; }
+            set
+            {
+                lock(_lock)
+                {
+                    _dict[GetTestId()] = value;
+                }
+            }
         }
 
         private string GetTestId()
