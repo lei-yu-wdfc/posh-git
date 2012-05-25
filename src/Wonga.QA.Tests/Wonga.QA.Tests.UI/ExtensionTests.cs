@@ -20,9 +20,10 @@ using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 namespace Wonga.QA.Tests.Ui
 {
     /// <summary>
-    /// Extension Journey tests for UK
+    /// Extension tests for UK
     /// </summary>
     /// 
+    [Parallelizable(TestScope.All)]
     class ExtensionTests : UiTest
     {
         private int _amountMax;
