@@ -11,6 +11,7 @@ namespace Wonga.QA.Framework
     {
         private static readonly dynamic _eligibleCustomersEntity = Drive.Data.Marketing.Db.MarketingEligibleCustomers;
         private static readonly dynamic _commsDb = Drive.Data.Comms.Db;
+        private static readonly dynamic _prepaidDb = Drive.Data.PrepaidCard.Db;
 
         private static readonly String VERIFICATION_PIN = "0000";
         private static readonly String COUNTTRY_CODE = "UK";
@@ -85,6 +86,9 @@ namespace Wonga.QA.Framework
 
             Drive.Api.Commands.Post(verificationMobileCommand);
             Drive.Api.Commands.Post(resendMobilePin);
+
+            Do.Until(() => _commsDb.CustomerDetails.FindBy(AccountId: customerId, MobilePhone: verificationMobileCommand.MobilePhone));
+                                                           
         }
 
         public static void UpdateAddress(Guid customerId)
@@ -104,9 +108,9 @@ namespace Wonga.QA.Framework
             command.Street = Get.RandomString(15);
             command.Town = Get.RandomString(15);
             command.County = Get.RandomString(15);
-                                  
 
             Drive.Api.Commands.Post(command);
+            Do.Until(() => _commsDb.Addresses.FindBy(AccountId: customerId, Street: command.Street, Town: command.Town));
         }
 
         public static void UpdateEmail(Guid customerId)
@@ -127,6 +131,7 @@ namespace Wonga.QA.Framework
             completeEmailVerification.ChangeId = emailVerification.ChangeId;
             
             Drive.Api.Commands.Post(completeEmailVerification);
+            Do.Until(() => _commsDb.CustomerDetails.FindBy(AccountId: customerId , Email: verificationEmail.Email));
         }
 
         public static void CreatePrepaidCardForCustomer(Guid customerId,bool isPremiumCard)
@@ -144,6 +149,8 @@ namespace Wonga.QA.Framework
                 request.CustomerExternalId = customerId;
                 Drive.Api.Commands.Post(request);
             }
+            var cardHolder = Do.Until(() => _prepaidDb.CardHolderDetails.FindByCustomerExternalId(customerId));
+            Do.Until(() => _prepaidDb.CardDetails.FindByCardHolderExternalId(cardHolder.ExternalId));
         }
 
         public static void SetFundsForCustomer(Guid applicationId,bool isPrepaidFunds)
