@@ -190,7 +190,7 @@
 
   <RepaymentOptionsPage>
     <RepaymentOptionsContainer>.repayment-options</RepaymentOptionsContainer>
-    <EasypayNumber>span.easypay-number</EasypayNumber>
+    <EasypayNumber>div.easypay-number-container span.easypay-number</EasypayNumber>
     <EasypayPrintButton>div.easypay-website-link a</EasypayPrintButton>
   </RepaymentOptionsPage>
 
