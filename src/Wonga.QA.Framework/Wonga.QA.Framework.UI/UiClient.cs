@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Gallio.Framework;
 using Gallio.Framework.Assertions;
 using MbUnit.Framework;
@@ -25,20 +26,26 @@ namespace Wonga.QA.Framework.UI
 {
     public class UiClient : IDisposable
     {
-        public IWebDriver Driver;
+        private IWebDriver _iWebDriver;
+        public IWebDriver Driver
+        {
+            get { return _iWebDriver; }
+        }
+
+        
         public IList<BrowserCapability> BrowserCapabilities;
 
         public UiClient()
         {
             InitializeBrowserCapabilities();
-            var capabillities = GetDesiredCapabilities();
-            Driver = GetWebDriver(capabillities);
+            _iWebDriver = GetWebDriver();
             if (Driver is CustomRemoteWebDriver)
                 TestContext.CurrentContext.AddMetadata("JobURL", string.Format("https://saucelabs.com/jobs/{0}", ((CustomRemoteWebDriver)Driver).GetSessionId()));
         }
 
-        private IWebDriver GetWebDriver(DesiredCapabilities capabilities)
+        private IWebDriver GetWebDriver()
         {
+            var capabilities = GetDesiredCapabilities();
             if(Config.Ui.RemoteMode)
                 return new CustomRemoteWebDriver(Config.Ui.RemoteUri, capabilities);
             switch (Config.Ui.Browser)

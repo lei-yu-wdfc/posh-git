@@ -1,8 +1,10 @@
 ﻿using MbUnit.Framework;
 using Wonga.QA.Framework.UI;
+using System;
 
 namespace Wonga.QA.Tests.Ui.Admin
 {
+    [Obsolete("Do not use")]
     public abstract class AdminTest
     {
         public UiClient Client;

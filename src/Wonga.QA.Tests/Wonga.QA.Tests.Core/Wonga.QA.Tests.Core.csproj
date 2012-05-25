@@ -41,6 +41,7 @@
     <Compile Include="MbUnitConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestCategories.cs" />
+    <Compile Include="TestLocal.cs" />
     <Compile Include="TestLayer.cs" />
   </ItemGroup>
   <ItemGroup>

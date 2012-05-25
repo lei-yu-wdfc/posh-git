@@ -12,33 +12,48 @@ using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.Mappings.Sections;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Framework.UI.UiElements.Pages.Wb;
+using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Ui
 {
     public abstract class UiTest
     {
-        public UiClient Client;
+        private TestLocal<UiClient> _uiClient = new TestLocal<UiClient>(() => GetNewClient());
+
+        private static UiClient GetNewClient()
+        {
+            return new UiClient();
+        }
+
+        public UiClient Client
+        {
+            get { return _uiClient.Value; }
+        }
         protected String _firstName;
         protected String _lastName;
 
         [SetUp]
         public void SetUp()
         {
-            Client = new UiClient();
-            _firstName = Get.GetName();
-            _lastName = Get.RandomString(10);
+            
         }
 
         [TearDown]
         public void TearDown()
         {
-            var name = TestContext.CurrentContext.Test.Name;
-            if (Client.Driver is CustomRemoteWebDriver)
-                SauceRestClient.UpdateJobPassFailStatus(((CustomRemoteWebDriver)Client.Driver).GetSessionId());
-            if (!Config.Ui.RemoteMode)
-                TestLog.EmbedImage(name + ".Screen", Client.Screen());
-            TestLog.AttachHtml(name + ".Source", Client.Source());
-            Client.Dispose();
+            try
+            {
+                var name = TestContext.CurrentContext.Test.Name;
+                if (Client.Driver is CustomRemoteWebDriver)
+                    SauceRestClient.UpdateJobPassFailStatus(((CustomRemoteWebDriver)Client.Driver).GetSessionId());
+                if (!Config.Ui.RemoteMode)
+                    TestLog.EmbedImage(name + ".Screen", Client.Screen());
+                TestLog.AttachHtml(name + ".Source", Client.Source());
+            }
+            finally
+            {
+                Client.Dispose();
+            }
         }
 
         public void SourceContains(string token)
