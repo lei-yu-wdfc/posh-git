@@ -108,6 +108,8 @@
     <EditMobileNumber>#edit-mobile-phone</EditMobileNumber>
     <PopupSaveButton>#edit-submit[value='Save']</PopupSaveButton>
     <PopupCloseButton>#edit-submit[value='Close']</PopupCloseButton>
+    <PopupCancelButton>#edit-back[value='Cancel']</PopupCancelButton>
+    <PopupErrorMessage>.messages</PopupErrorMessage>
   </ApplyPage>
 
   <PayLaterLoginPage>
@@ -182,6 +184,8 @@
     <Rewards>.menu-mlid-9439 a</Rewards>
     <ForgottenPin>.menu-mlid-9438</ForgottenPin>
   </PrepaidCardMenuElement>
+  </DeclinedPage>
+  
   
   <ChooseCardTypeMenuElement>
     <StandardCard>.menu-mlid-9419 a</StandardCard>
@@ -199,4 +203,13 @@
     <Salary>#target_salary</Salary>
   </PrepaidTopupChoiceElement>
   
+<PrepaidCardMenuElement>
+    <Summary>.menu-mlid-9440 a</Summary>
+    <Transaction>.menu-mlid-9442</Transaction>
+    <TopUp>.menu-mlid-9441 a</TopUp>
+    <Budjet>.menu-mlid-9436</Budjet>
+    <Cashback>.menu-mlid-9437</Cashback>
+    <Rewards>.menu-mlid-9439 a</Rewards>
+    <ForgottenPin>.menu-mlid-9438</ForgottenPin>
+  </PrepaidCardMenuElement>
 </UiMap>

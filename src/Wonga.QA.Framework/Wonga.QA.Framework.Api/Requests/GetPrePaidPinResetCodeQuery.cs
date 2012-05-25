@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System;
 using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Api
 {
+    /// <summary> Wonga.PrepaidCard.Queries.GetPrePaidPinResetCode </summary>
     [XmlRoot("GetPrePaidPinResetCode")]
-    public partial class GetPrepaidResetCodeQuery : ApiRequest<GetPrepaidResetCodeQuery>
+    public partial class GetPrePaidPinResetCodeQuery : ApiRequest<GetPrePaidPinResetCodeQuery>
     {
-        public Guid CustomerExternalId { get; set; }
+        public Object CustomerExternalId { get; set; }
     }
 }

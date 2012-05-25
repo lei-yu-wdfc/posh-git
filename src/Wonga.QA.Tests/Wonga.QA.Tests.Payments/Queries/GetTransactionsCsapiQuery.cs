@@ -12,7 +12,7 @@ using Wonga.QA.Tests.Payments.Enums;
 
 namespace Wonga.QA.Tests.Payments.Queries
 {
-    [TestFixture]
+    [TestFixture, Parallelizable(TestScope.All)]
     public class GetTransactionsCsapiQuery
     {
         private dynamic _transactions = Drive.Data.Payments.Db.Transactions;

@@ -5,6 +5,7 @@ using System.Xml;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Data.Enums.Risk;
+using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Helpers;
 
 namespace Wonga.QA.Framework
@@ -15,9 +16,10 @@ namespace Wonga.QA.Framework
         protected Customer Customer;
         protected decimal LoanAmount;
         protected Date PromiseDate;
-        protected ApplicationDecisionStatus Decision = ApplicationDecisionStatus.Accepted;
+        protected ApplicationDecisionStatus ? Decision = ApplicationDecisionStatus.Accepted;
         protected int LoanTerm;
-        protected IovationMockResponse IovationBlackBox;
+        //protected IovationMockResponse IovationBlackBox;
+    	protected string IovationBlackBox;
         protected Dictionary<int, List<bool>> EidSessionInteraction = new Dictionary<int, List<bool>>();
 
         //WB specific members
@@ -114,7 +116,7 @@ namespace Wonga.QA.Framework
         {
             Id = Guid.NewGuid();
             LoanAmount = Get.GetLoanAmount();
-            IovationBlackBox = IovationMockResponse.Unknown;
+            IovationBlackBox = IovationMockResponse.Unknown.ToString();
 
             _setPromiseDateAndLoanTerm = () =>
                                   {
@@ -248,16 +250,21 @@ namespace Wonga.QA.Framework
 
             ApiResponse response = null;
             Do.With.Timeout(3).Until(() => (ApplicationDecisionStatus)
-                Enum.Parse(typeof(ApplicationDecisionStatus), (response = Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = Id })).Values["ApplicationDecisionStatus"].Single()) == Decision);
+                Enum.Parse(typeof(ApplicationDecisionStatus), (response = Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = Id })).Values["ApplicationDecisionStatus"].Single()) == Decision 
+				|| Decision == null);
 
-			if( Decision == ApplicationDecisionStatus.Pending )
-			{
-				return new Application(Id);
-			}
+        	switch (Decision)
+        	{
+				case null:
+        			Do.With.Timeout(TimeSpan.FromSeconds(20)).Until(() => Drive.Db.GetCheckpointDefinitionsForApplication(Id).Count() > 0);
+					Do.With.Timeout(TimeSpan.FromSeconds(20)).Until(() => Drive.Db.GetVerificationDefinitionsForApplication(Id).Count() > 0);
+					return new Application(Id);
 
-            if (Decision == ApplicationDecisionStatus.Declined)
-            {
-                return new Application(Id, GetFailedCheckpointFromApplicationDecisionResponse(response));
+				case ApplicationDecisionStatus.Pending:
+					return new Application(Id);
+
+				case ApplicationDecisionStatus.Declined:
+				   return new Application(Id, GetFailedCheckpointFromApplicationDecisionResponse(response));
             }
 
             Drive.Api.Commands.Post(new SignApplicationCommand { AccountId = Customer.Id, ApplicationId = Id });
@@ -318,11 +325,22 @@ namespace Wonga.QA.Framework
             return this;
         }
 
+		public ApplicationBuilder WithoutExpectedDecision()
+		{
+			Decision = null;
+			return this;
+		}
+
         public ApplicationBuilder WithIovationBlackBox(IovationMockResponse iovationBlackBox)
         {
-            IovationBlackBox = iovationBlackBox;
-            return this;
+        	return WithIovationBlackBox(iovationBlackBox.ToString());
         }
+
+		public ApplicationBuilder WithIovationBlackBox(string iovationBlackBox)
+		{
+			IovationBlackBox = iovationBlackBox;
+			return this;
+		}
         
         #endregion
 

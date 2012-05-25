@@ -12,6 +12,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Payments.Queries
 {
     [TestFixture]
+    [Parallelizable(TestScope.Self)]
     [AUT(AUT.Uk), JIRA("UK-1103")]
     public class CardRepaymentRequestCsApiTests
     {
@@ -77,6 +78,7 @@ namespace Wonga.QA.Tests.Payments.Queries
 
 
     [TestFixture]
+    [Parallelizable(TestScope.Self)]
     public class GetPersonalPaymentCardsCsapiQueryTests
     {
         [Test, AUT(AUT.Uk), JIRA("UK-1194")]

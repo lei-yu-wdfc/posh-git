@@ -12,6 +12,7 @@ using System.Linq;
 namespace Wonga.QA.Tests.Payments.Command
 {
     [TestFixture]
+    [Parallelizable(TestScope.Self)]
     public class SavePaymentCardBillingAddress
     {
         [Test, AUT(AUT.Wb)]

@@ -20,5 +20,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Sections
         public String HomeStatus { get; set; }
         public String MaritalStatus { get; set; }
         public String HomeLanguage { get; set; }
+        public String Warning { get; set; }
     }
 }

@@ -10,6 +10,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments
 {
+    [TestFixture, Parallelizable(TestScope.All)]
     public class CreateApplicationTests
     {
         [Test, AUT(AUT.Za), JIRA("ZA-2024")]

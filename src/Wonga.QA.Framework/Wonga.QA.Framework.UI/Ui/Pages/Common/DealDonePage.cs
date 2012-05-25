@@ -39,7 +39,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public IApplyPage ContinueToMyAccount()
         {
             _continueButton.Click();
-            return new MySummaryPage(Client);
+            return Do.Until(() => new MySummaryPage(Client));
         }
 
         public String GetDealDonePageText

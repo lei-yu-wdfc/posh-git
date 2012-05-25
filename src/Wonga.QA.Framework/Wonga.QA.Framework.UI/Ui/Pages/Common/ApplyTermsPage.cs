@@ -10,9 +10,11 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
     public class ApplyTermsPage : BasePage, IDecisionPage
     {
-
+        private IWebElement _form;
         private readonly IWebElement _next;
         private readonly IWebElement _editLoanDurationField;
+        private IWebElement _loanAmount;
+        private IWebElement _termsOfLoan;
         
         public ApplyTermsPage(UiClient client) : base(client)
         {
@@ -29,6 +31,18 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             _next.Click();
             return new AcceptedPage(Client);
+        }
+        public string GetLoanAmount()
+        {
+               _form = Content.FindElement(By.CssSelector(UiMap.Get.ApplyTermsPage.FormId));
+               _loanAmount = _form.FindElement(By.CssSelector(UiMap.Get.ApplyTermsPage.LoanAmount));
+            return _loanAmount.Text;
+        }   
+        public string GetTermsOfLoan()
+        {
+            _form = Content.FindElement(By.CssSelector(UiMap.Get.ApplyTermsPage.FormId));
+            _termsOfLoan = _form.FindElement(By.CssSelector(UiMap.Get.ApplyTermsPage.TermsOfLoan));
+            return _termsOfLoan.Text;
         }
     }
 }

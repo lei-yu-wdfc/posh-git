@@ -17,7 +17,7 @@ namespace Wonga.QA.Tests.Ui
 {
     class AboutUsTest : UiTest
     {
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-169")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-169"), Category(TestCategories.Smoke)]
         public void CustomerOnAboutUsPageShouldBeAbleChooseEveryLink()
         {
             string news = "wonga.com/blog";

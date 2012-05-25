@@ -11,6 +11,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Comms
 {
     [TestFixture]
+    [Parallelizable(TestScope.All)]
     public class DocumentsEmailsTests
     {
         protected const int NumberOfSecondaryDirectors=2;
@@ -31,13 +32,15 @@ namespace Wonga.QA.Tests.Comms
             var businessApplicationBuilder = ApplicationBuilder.New(mainApplicant, company) as BusinessApplicationBuilder;
             var application = businessApplicationBuilder.WithGuarantors(listOfGuarantors).WithUnsignedGuarantors().Build();
 
-            var emailCorrelationRecords = Do.With.Timeout(2).Interval(20).Until(() => Drive.Db.Comms.EmailReturnLinkCorrelationWbUks.Count(p => p.OrganisationId == company.Id) == NumberOfSecondaryDirectors);
+            var emailRetLinkCorreclationWbUksTab = Drive.Data.Comms.Db.EmailReturnLinkCorrelationWbUks;
+            var emailCorrelationRecords = Do.With.Timeout(2).Interval(20).Until(() => emailRetLinkCorreclationWbUksTab.FindAll(emailRetLinkCorreclationWbUksTab.OrganisationId == company.Id).Count() == NumberOfSecondaryDirectors);
 
             var directors = company.GetSecondaryDirectors();
+            var legalDocTab = Drive.Data.Comms.Db.LegalDocuments;
             foreach (var director in directors)
             {
-                Do.With.Timeout(2).Interval(20).Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId == director.AccountId && p.DocumentType == 9) == 1);
-                Do.With.Timeout(2).Interval(20).Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId == director.AccountId && p.DocumentType == 12) == 1);
+                Do.With.Timeout(2).Interval(20).Until(() => legalDocTab.FindAll(legalDocTab.ApplicationId == application.Id && legalDocTab.AccountId == director.AccountId && legalDocTab.DocumentType == 9).Count() == 1);
+                Do.With.Timeout(2).Interval(20).Until(() => legalDocTab.FindAll(legalDocTab.ApplicationId == application.Id && legalDocTab.AccountId == director.AccountId && legalDocTab.DocumentType == 12).Count() == 1);
             }
         }
 
@@ -55,11 +58,12 @@ namespace Wonga.QA.Tests.Comms
             var company = OrganisationBuilder.New(mainDirector).Build();
             
             var businessApplicationBuilder = ApplicationBuilder.New(mainDirector, company) as BusinessApplicationBuilder;
-            var application = businessApplicationBuilder.WithGuarantors(listOfGuarantors).Build();            
-                        
-            Do.With.Timeout(2).Interval(20).Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId == mainDirector.Id && p.DocumentType == 9) == 1);
-            Do.With.Timeout(2).Interval(20).Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId == mainDirector.Id && p.DocumentType == 10) == 1);
-            Do.With.Timeout(2).Interval(20).Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId == mainDirector.Id && p.DocumentType == 11) == 1);            
+            var application = businessApplicationBuilder.WithGuarantors(listOfGuarantors).Build();
+
+            var legalDocTab = Drive.Data.Comms.Db.LegalDocuments;
+            Do.With.Timeout(2).Interval(20).Until(() => legalDocTab.FindAll(legalDocTab.ApplicationId == application.Id && legalDocTab.AccountId == mainDirector.Id && legalDocTab.DocumentType == 9).Count() == 1);
+            Do.With.Timeout(2).Interval(20).Until(() => legalDocTab.FindAll(legalDocTab.ApplicationId == application.Id && legalDocTab.AccountId == mainDirector.Id && legalDocTab.DocumentType == 10).Count() == 1);
+            Do.With.Timeout(2).Interval(20).Until(() => legalDocTab.FindAll(legalDocTab.ApplicationId == application.Id && legalDocTab.AccountId == mainDirector.Id && legalDocTab.DocumentType == 11).Count() == 1);            
         }
 
         [Test, AUT(AUT.Wb), JIRA("SME-209")]
@@ -82,8 +86,9 @@ namespace Wonga.QA.Tests.Comms
             //organisationBuilder.BuildSecondaryDirectors();
             //businessApplicationBuilder.SignApplicationForSecondaryDirectors();
 
-            Do.With.Timeout(2).Interval(20).Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId == mainDirector.Id && p.DocumentType == 15) == 1);
-            Do.With.Timeout(2).Interval(20).Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId == mainDirector.Id && p.DocumentType == 16) == 1);            
+            var legalDocTab = Drive.Data.Comms.Db.LegalDocuments;
+            Do.With.Timeout(2).Interval(20).Until(() => legalDocTab.FindAll(legalDocTab.ApplicationId == application.Id && legalDocTab.AccountId == mainDirector.Id && legalDocTab.DocumentType == 15).Count() == 1);
+            Do.With.Timeout(2).Interval(20).Until(() => legalDocTab.FindAll(legalDocTab.ApplicationId == application.Id && legalDocTab.AccountId == mainDirector.Id && legalDocTab.DocumentType == 16).Count() == 1);            
         }
 
         [Test, AUT(AUT.Wb), JIRA("SME-1043")] 
@@ -107,10 +112,11 @@ namespace Wonga.QA.Tests.Comms
             //businessApplicationBuilder.SignApplicationForSecondaryDirectors();
 
             var directors = company.GetSecondaryDirectors();
+            var legalDocTab = Drive.Data.Comms.Db.LegalDocuments;
             foreach (var director in directors)
             {
-                Do.With.Timeout(2).Interval(20).Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId == director.AccountId && p.DocumentType == 14) == 1);
-                Do.With.Timeout(2).Interval(20).Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId == director.AccountId && p.DocumentType == 15) == 1);
+                Do.With.Timeout(2).Interval(20).Until(() => legalDocTab.FindAll(legalDocTab.ApplicationId == application.Id && legalDocTab.AccountId == director.AccountId && legalDocTab.DocumentType == 14).Count() == 1);
+                Do.With.Timeout(2).Interval(20).Until(() => legalDocTab.FindAll(legalDocTab.ApplicationId == application.Id && legalDocTab.AccountId == director.AccountId && legalDocTab.DocumentType == 15).Count() == 1);
             }
         }
 
@@ -132,10 +138,11 @@ namespace Wonga.QA.Tests.Comms
             var application = businessApplicationBuilder.WithGuarantors(guarantorList).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
             
             var directors = company.GetSecondaryDirectors();
-            Do.With.Timeout(2).Interval(20).Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId == mainApplicant.Id && p.DocumentType == 17) == 1);
+            var legalDocTab = Drive.Data.Comms.Db.LegalDocuments;
+            Do.With.Timeout(2).Interval(20).Until(() => legalDocTab.FindAll(legalDocTab.ApplicationId == application.Id && legalDocTab.AccountId == mainApplicant.Id && legalDocTab.DocumentType == 17).Count() == 1);
             foreach (var director in directors)
             {
-                Do.With.Timeout(2).Interval(20).Until(() => Drive.Db.Comms.LegalDocuments.Count(p => p.ApplicationId == application.Id && p.AccountId == director.AccountId && p.DocumentType == 17) == 1);                
+                Do.With.Timeout(2).Interval(20).Until(() => legalDocTab.FindAll(legalDocTab.ApplicationId == application.Id && legalDocTab.AccountId == director.AccountId && legalDocTab.DocumentType == 17).Count() == 1);                
             }
         }
     }

@@ -15,6 +15,7 @@ using Wonga.QA.Framework.Db;
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
     [AUT(AUT.Za, AUT.Wb, AUT.Uk)]
+    [Parallelizable(TestScope.All)]
     class CheckpointApplicationElementNotOnBlacklistTests
     {
         private RiskMask _testMask;
@@ -32,9 +33,38 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
         {
             switch (Config.AUT)
             {
-                 case AUT.Uk: case AUT.Za:
+                 case AUT.Uk:
+            		{
+            			var dateOfBirth = Get.GetDoB();
+                        var bankAccountNumber = Get.RandomLong(10000000, 99999999).ToString();
+
+                        var customer = CustomerBuilder.New()
+							.WithEmployer(_testMask)
+							.WithDateOfBirth(dateOfBirth)
+							.WithBankAccountNumber(bankAccountNumber)
+							.Build();
+
+                        var application = ApplicationBuilder.New(customer).Build();
+                        Assert.IsNotNull(application);
+
+                        var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
+                        Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
+                        Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicationDataBlacklistCheck));
+                    }
+                    break;
+                 case AUT.Za:
                     {
-                        var customer = CustomerBuilder.New().WithEmployer(_testMask).WithBankAccountNumber(Get.GetBankAccountNumber().ToString()).Build();
+                        var dateOfBirth = Get.GetDoB();
+                        var nationalNumber = Get.GetNationalNumber(dateOfBirth, true);
+                        var bankAccountNumber = Get.GetBankAccountNumber();
+
+                        var customer = CustomerBuilder.New()
+                            .WithEmployer(_testMask)
+                            .WithDateOfBirth(dateOfBirth)
+                            .WithNationalNumber(nationalNumber)
+                            .WithBankAccountNumber(bankAccountNumber)
+                            .Build();
+
                         var application = ApplicationBuilder.New(customer).Build();
                         Assert.IsNotNull(application);
 

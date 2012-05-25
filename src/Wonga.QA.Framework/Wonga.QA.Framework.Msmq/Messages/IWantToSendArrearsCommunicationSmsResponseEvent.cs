@@ -4,8 +4,8 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq
 {
-    /// <summary> Wonga.PublicMessages.Comms.Instructions.IWantToSendArrearsCommunicationSMSResponse </summary>
-    [XmlRoot("IWantToSendArrearsCommunicationSMSResponse", Namespace = "Wonga.PublicMessages.Comms.Instructions", DataType = "")]
+    /// <summary> Wonga.PublicMessages.Comms.Instructions.IWantToSendArrearsCommunicationSmsResponse </summary>
+    [XmlRoot("IWantToSendArrearsCommunicationSmsResponse", Namespace = "Wonga.PublicMessages.Comms.Instructions", DataType = "")]
     public partial class IWantToSendArrearsCommunicationSmsResponseEvent : MsmqMessage<IWantToSendArrearsCommunicationSmsResponseEvent>
     {
         public Guid ArrearsCommunicationId { get; set; }

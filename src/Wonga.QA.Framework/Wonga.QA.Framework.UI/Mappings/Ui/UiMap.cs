@@ -91,6 +91,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual ChangeMyAddressElement ChangeMyAddressElement { get; set; }
         public virtual SmallRepaySlidersElement SmallRepaySlidersElement { get; set; }
         public virtual TabsElementMobile TabsElementMobile { get; set; }
+        public virtual HomePageWelcomePopup HomePageWelcomePopup { get; set; }
 
         #endregion
 
@@ -145,7 +146,17 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual ExtensionRequestPage ExtensionRequestPage { get; set; }
         public virtual RepayRequestPage RepayRequestPage { get; set; }
         public virtual FAQPage FAQPage { get; set; }
-
+        public virtual RepayEarlyPaymentFailedPage RepayEarlyPaymentFailedPage { get; set; }
+        public virtual RepayDuePaymentFailedPage RepayDuePaymentFailedPage { get; set; }
+        public virtual RepayOverduePaymentFailedPage RepayOverduePaymentFailedPage { get; set; }
+        public virtual RepayEarlyPartpaySuccessPage RepayEarlyPartpaySuccessPage { get; set; }
+        public virtual RepayDuePartpaySuccessPage RepayDuePartpaySuccessPage { get; set; }
+        public virtual RepayOverduePartpaySuccessPage RepayOverduePartpaySuccessPage { get; set; }
+        public virtual RepayEarlyFullpaySuccessPage RepayEarlyFullpaySuccessPage { get; set; }
+        public virtual RepayDueFullpaySuccessPage RepayDueFullpaySuccessPage { get; set; }
+        public virtual RepayOverdueFullpaySuccessPage RepayOverdueFullpaySuccessPage { get; set; }
+        public virtual RepaymentOptionsPage RepaymentOptionsPage { get; set; }
+        public virtual EasypaymentNumberPrintPage EasypaymentNumberPrintPage { get; set; }
         #endregion
 
         #region SalesForcePages

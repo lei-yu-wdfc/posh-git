@@ -42,7 +42,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 		private int _expectedScoreCutoffNewUsers;
 		private int _expectedScoreCutoffExistingUsers;
-		private const int ScoreCutoffNewUsersZa = 600;
+		private const int ScoreCutoffNewUsersZa = 580;
 		private const int ScoreCutoffExistingUsersZa = 600;
 
 		#endregion
@@ -58,6 +58,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		                                                           		"LoanAmount",
 		                                                           		"LoanTerm",
 		                                                           		"LoanNumber",
+																		"TotalCurrentBalance",
 		                                                           		"AppNetMonthlyIncome",
 		                                                           		"NumAccounts",
 		                                                           		"EmpiricaScore",

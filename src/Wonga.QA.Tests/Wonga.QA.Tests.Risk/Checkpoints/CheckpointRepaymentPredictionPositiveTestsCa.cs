@@ -10,6 +10,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
 	[AUT(AUT.Ca)]
+    [Parallelizable(TestScope.Self)]
 	public class CheckpointRepaymentPredictionPositiveTestsCa
 	{
         //TODO: When LN score card is implemented then we can merge into ZA TESTRepaymentPredictionPositive tests 

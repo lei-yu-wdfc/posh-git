@@ -9,5 +9,8 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
     {
         public String NextButton { get; set; }
         public String EditLoanDurationField { get; set; }
+        public String TermsOfLoan { get; set; }
+        public String LoanAmount { get; set; }
+        public String FormId { get; set; }
     }
 }

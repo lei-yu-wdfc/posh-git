@@ -58,7 +58,7 @@ namespace Wonga.QA.Framework.UI
             personalDetailsPage.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d/MMM/yyyy");
             personalDetailsPage.EmploymentDetails.IncomeFrequency = "Monthly";
             personalDetailsPage.EmploymentDetails.WorkPhone = "02087111222";
-            personalDetailsPage.ContactingYou.CellPhoneNumber = "07707111222";
+            personalDetailsPage.ContactingYou.CellPhoneNumber = "07700900000";
             personalDetailsPage.ContactingYou.EmailAddress = email;
             personalDetailsPage.ContactingYou.ConfirmEmailAddress = email;
             personalDetailsPage.PrivacyPolicy = true;
@@ -93,7 +93,7 @@ namespace Wonga.QA.Framework.UI
             personalDetailsPage.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d/MMM/yyyy");
             personalDetailsPage.EmploymentDetails.IncomeFrequency = "Monthly";
             personalDetailsPage.EmploymentDetails.WorkPhone = "02087111222";
-            personalDetailsPage.ContactingYou.CellPhoneNumber = "07707111222";
+            personalDetailsPage.ContactingYou.CellPhoneNumber = "07700900000";
             personalDetailsPage.ContactingYou.EmailAddress = email;
             personalDetailsPage.ContactingYou.ConfirmEmailAddress = email;
             personalDetailsPage.PrivacyPolicy = true;
@@ -179,6 +179,11 @@ namespace Wonga.QA.Framework.UI
             var dealDonePage = CurrentPage as DealDonePage;
             CurrentPage = dealDonePage.ContinueToMyAccount() as MySummaryPage;
             return this;
+        }
+
+        public IL0ConsumerJourney IgnoreAcceptingLoanAndReturnToHomePageAndLogin()
+        {
+            throw new NotImplementedException();
         }
     }
 }

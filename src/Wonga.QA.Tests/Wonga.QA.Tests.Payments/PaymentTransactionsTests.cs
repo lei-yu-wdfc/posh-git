@@ -12,10 +12,13 @@ using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Framework;
+using PaymentTransactionEnum = Wonga.QA.Framework.Msmq.PaymentTransactionEnum;
+using PaymentTransactionScopeEnum = Wonga.QA.Framework.Msmq.PaymentTransactionScopeEnum;
 
 namespace Wonga.QA.Tests.Payments
 {
     [TestFixture]
+    [Parallelizable(TestScope.Self)]
     public class PaymentTransactionsTests
     {
         /*

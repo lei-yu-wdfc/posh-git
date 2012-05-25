@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Globalization;
 using MbUnit.Framework;
 using Wonga.QA.Framework.Api;
@@ -13,9 +16,13 @@ namespace Wonga.QA.Framework
         private static readonly dynamic _commsDb = Drive.Data.Comms.Db;
         private static readonly dynamic _prepaidDb = Drive.Data.PrepaidCard.Db;
 
+        public static readonly String CUSTOMER_FULL_NAME = "FULL_NAME";
+        public static readonly String CUSTOMER_FULL_ADDRESS = "FULL_ADDRESS";
         private static readonly String VERIFICATION_PIN = "0000";
         private static readonly String COUNTTRY_CODE = "UK";
         private static readonly String POST_CODE = "SW6 6PN";
+
+        private static readonly dynamic _eligibleCustomersEntity = Drive.Data.Marketing.Db.MarketingEligibleCustomers;
 
         public static readonly String STANDARD_CARD_TYPE = "Standard";
         public static readonly String PREMIUM_CARD_TYPE = "Premium";
@@ -34,13 +41,17 @@ namespace Wonga.QA.Framework
             }
         }
 
+
+
         public static void MakeZeroCardsForCustomer(Guid customerId)
         {
             Do.Until(() => _eligibleCustomersEntity.UpdateByEligibleCustomerId(EligibleCustomerId: customerId, HasStandardCard: 0, HasPremiumCard: 0));                                                                       
         }
 
+        public static void DeleteMarketingEligibility(Guid customerId)
         public static void UpdateCustomerPrepaidCard(Guid customerId,bool isPremiumCard)
         {
+            Do.Until(() => _eligibleCustomersEntity.Delete(EligibleCustomerId: customerId));
             if (isPremiumCard.Equals(true))
             {
                 Do.Until(() => _eligibleCustomersEntity.UpdateByEligibleCustomerId(EligibleCustomerId: customerId, HasStandardCard: 0, HasPremiumCard: 1));                                                        
@@ -51,10 +62,16 @@ namespace Wonga.QA.Framework
             }  
         }
 
+        public static Dictionary<String, String> GetFullCustomerInfo(Guid customerId)
         public static void DeleteMarketingEligibility(Guid customerId)
         {
+            Dictionary<String, String> result = new Dictionary<string, string>();
+            result.Add(CUSTOMER_FULL_NAME, GetFullCustomerName(customerId));
+            result.Add(CUSTOMER_FULL_ADDRESS, GetFullCustomerAddress(customerId));
+            return result;
             Do.Until(() => _eligibleCustomersEntity.Delete(EligibleCustomerId: customerId));
         }
+
         
         public static void ChangeMarketingEligibility(Guid customerId,bool isEligible)
         {
@@ -70,20 +87,31 @@ namespace Wonga.QA.Framework
             }
         }
 
+        private static String GetFullCustomerName(Guid customerId)
         public static void UpdateMobilePhone(Guid customerId)
         {
+            StringBuilder builder = new StringBuilder();
             var customer = Do.Until(() => _commsDb.CustomerDetails.FindByAccountId(customerId));
 
+            var request = new GetCustomerDetailsQuery();
+            request.AccountId = customerId;
             var verificationMobileCommand = new VerifyMobilePhoneUkCommand();
             verificationMobileCommand.AccountId = customerId;
             verificationMobileCommand.Forename = customer.Forename;
             verificationMobileCommand.MobilePhone = Get.GetMobilePhone();
             verificationMobileCommand.VerificationId = Guid.NewGuid();
 
+            var response = Drive.Api.Queries.Post(request);
+            builder.Append(response.Values["Forename"].First());
+            builder.Append(" ");
+            builder.Append(response.Values["MiddleName"].First());
+            builder.Append(" ");
+            builder.Append(response.Values["Surname"].First());
             var resendMobilePin = new CompleteMobilePhoneVerificationCommand();
             resendMobilePin.VerificationId = verificationMobileCommand.VerificationId;
             resendMobilePin.Pin = VERIFICATION_PIN;
 
+            return builder.ToString();
             Drive.Api.Commands.Post(verificationMobileCommand);
             Drive.Api.Commands.Post(resendMobilePin);
 
@@ -91,11 +119,15 @@ namespace Wonga.QA.Framework
                                                            
         }
 
+        private static String GetFullCustomerAddress(Guid customerId)
         public static void UpdateAddress(Guid customerId)
         {
+            StringBuilder builder = new StringBuilder();
             var customer = Do.Until(() => _commsDb.CustomerDetails.FindByAccountId(customerId));
             var address = Do.Until(() => _commsDb.Addresses.FindByAccountId(customerId));
 
+            var request = new GetCurrentAddressQuery();
+            request.AccountId = customerId;
             var command = new UpdateCustomerAddressUkCommand();
             command.AccountId = customerId;
             command.AddressId = address.ExternalId;
@@ -109,10 +141,20 @@ namespace Wonga.QA.Framework
             command.Town = Get.RandomString(15);
             command.County = Get.RandomString(15);
 
+            var response = Drive.Api.Queries.Post(request);
+            builder.Append(response.Values["HouseName"].First());
+            builder.Append(response.Values["HouseNumber"].First());
+            builder.Append(" ");
+            builder.Append(response.Values["Street"].First());
+            builder.Append("<br />");
+            builder.Append(response.Values["Town"].First());
+            builder.Append(" ");
+            builder.Append(response.Values["Postcode"].First());
             Drive.Api.Commands.Post(command);
             Do.Until(() => _commsDb.Addresses.FindBy(AccountId: customerId, Street: command.Street, Town: command.Town));
         }
 
+            return builder.ToString();
         public static void UpdateEmail(Guid customerId)
         {
             var customer = Do.Until(() => _commsDb.CustomerDetails.FindByAccountId(customerId));

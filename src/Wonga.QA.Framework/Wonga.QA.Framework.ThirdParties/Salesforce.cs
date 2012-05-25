@@ -46,6 +46,40 @@ namespace Wonga.QA.Framework.ThirdParties
             WrittenOff = 28,
         }
 
+        public enum BusinessLoanApplicationStatus
+        {
+            New = 100,
+            AcceptedInPrinciple = 101,
+            PricingAcceptedAndTermsSigned = 102,
+            GuarantorNotificationIssued = 103,
+            GuarantorAgreementSigned = 104,
+            GuarantorAccepted = 105,
+            GuarantorDeclined = 106,
+            Referral = 107,
+            FraudBusinessBankCheck = 108,
+            FraudManualV2Checks = 109,
+            LoanDeclined = 110,
+            LoanApproved = 111,
+            Live = 112,
+            InArrears = 113,
+            InArrearsFirstPaymentMissed = 114,
+            InArrearsSecondPaymentMissed = 115,
+            InArrearsThirdPaymentMissed = 116,
+            InArrearsFourthPaymentMissed = 117,
+            DCAInternal = 118,
+            DCAExternal = 119,
+            RepaymentArrangement = 120,
+            RepaymentArrangementBroken = 121,
+            ManagementReview = 122,
+            Bankrupt = 123,
+            Complaint = 124,
+            Refund = 125,
+            DebtSold = 126,
+            PaidInFull = 127,
+            SettledInFull = 128,
+            WrittenOff = 129
+        }
+
         public string SalesforceUsername { get; set; }
         public string SalesforcePassword { get; set; }
         public string SalesforceUrl { get; set; }
@@ -257,8 +291,54 @@ namespace Wonga.QA.Framework.ThirdParties
 
             return result.records.FirstOrDefault() as Billing_Card__c;
         }
-        
-         public IEnumerable<Loan_Application__History> GetApplicationHistoryById(Guid applicationId, string fieldFilter = null)
+
+        public Contact GetContactByAccountId(string accountId)
+        {
+            SessionHeader sessionHeader;
+            SoapClient client = Login(out sessionHeader);
+
+            var query =
+                String.Format(@"Select p.Birthdate,p.CCIN__c,p.Email,p.FirstName,p.Guarantor_Status_ID__c,p.HomePhone,p.Is_Primary_Applicant__c,
+                              p.LastName,p.MailingCity,p.MailingCountry,p.MailingPostalCode,p.MailingState,p.MailingStreet,p.MobilePhone,p.PO_Box__c,
+                              p.Phone,p.V3_Account_Id__c
+                              From Contact p 
+                              Where p.V3_Account_Id__c = '{0}'",
+                              accountId);
+
+            QueryResult result = client.query(sessionHeader, null, null, null, query);
+
+            if (result == null || result.records == null) return null;
+
+            var contact = result.records.FirstOrDefault() as Contact;
+
+            return contact;
+        }
+
+        public Account GetAccountByAccountId(string accountId)
+        {
+            SessionHeader sessionHeader;
+            SoapClient client = Login(out sessionHeader);
+
+            var query =
+                String.Format(@"Select p.Birthdate__c,p.CCIN__pc,p.PersonEmail,p.FirstName,p.Guarantor_Status_ID__pc,
+                              p.PersonHomePhone,p.Is_Primary_Applicant__pc,p.LastName,p.PersonMailingCity,
+                              p.PersonMailingCountry,p.PersonMailingPostalCode,p.PersonMailingState,
+                              p.PersonMailingStreet,p.PersonMobilePhone,p.PO_Box__pc,p.Phone,p.V3_Account_Id__c,
+                              p.EasyPay_Number__c
+                              From Account p 
+                              Where p.V3_Account_Id__c = '{0}'",
+                              accountId);
+
+            QueryResult result = client.query(sessionHeader, null, null, null, query);
+
+            if (result == null || result.records == null) return null;
+
+            var account = result.records.FirstOrDefault() as Account;
+
+            return account;
+        }
+
+        public IEnumerable<Loan_Application__History> GetApplicationHistoryById(Guid applicationId, string fieldFilter = null)
         {
             if (!String.IsNullOrEmpty(fieldFilter))
             {
@@ -305,43 +385,44 @@ namespace Wonga.QA.Framework.ThirdParties
 
             return (from r in appHistory.records select r as Loan_Application__History).AsEnumerable();
         }
-        
-        public Contact GetContactByAccountId(string accountId)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="salesforceContactId"></param>
+        /// <param name="parentType">Can be WhatId (for accounts) or WhoId(for Contacts/Leads)</param>
+        /// <param name="taskType"></param>
+        /// <param name="subject"></param>
+        /// <returns></returns>
+        public IEnumerable<Task> GetTask(string salesforceContactId,string parentType, string taskType, string subject)
         {
             SessionHeader sessionHeader;
             SoapClient client = Login(out sessionHeader);
 
             var query =
-                String.Format(@"Select p.Birthdate,p.CCIN__c,p.Email,p.FirstName,p.Guarantor_Status_ID__c,p.HomePhone,p.Is_Primary_Applicant__c,
-                              p.LastName,p.MailingCity,p.MailingCountry,p.MailingPostalCode,p.MailingState,p.MailingStreet,p.MobilePhone,p.PO_Box__c,
-                              p.Phone,p.V3_Account_Id__c
-                              From Contact p 
-                              Where p.V3_Account_Id__c = '{0}'",
-                              accountId);
+                String.Format(@"Select t.ActivityDate, t.WhatId, t.Type, t.Subject
+                              From Task t 
+                              Where t.{3} = '{0}' AND t.Type = '{1}' AND t.Subject = '{2}'",
+                              salesforceContactId, taskType, subject,parentType);
 
             QueryResult result = client.query(sessionHeader, null, null, null, query);
 
-            if (result == null || result.records == null) return null;
 
-            var contact = result.records.FirstOrDefault() as Contact;
-
-            return contact;
+            return (from r in result.records select r as Task).AsEnumerable();
         }
+        
+		private string GetAllPropertyNames(string prefix, Type targetType)
+		{
+			StringBuilder sb = new StringBuilder();
+			var properties = targetType.GetProperties().Where(p => !p.Name.EndsWith("Specified")
+				&& !p.PropertyType.FullName.StartsWith("Wonga.QA.Framework.ThirdParties.SalesforceApi"));
 
-        private string GetAllPropertyNames(string prefix,Type targetType)
-        {
-            StringBuilder sb = new StringBuilder();
-            var properties = targetType.GetProperties().Where(p => !p.Name.EndsWith("Specified") 
-                && !p.PropertyType.FullName.StartsWith("Wonga.QA.Framework.ThirdParties.SalesforceApi"));
+			foreach (var property in properties)
+			{
+				sb.AppendFormat("{0}.{1},", prefix, property.Name);
+			}
 
-            foreach (var property in properties)
-            {
-                sb.AppendFormat("{0}.{1},",prefix,property.Name);
-            }
-
-            return sb.ToString().TrimEnd(',');
-        }
-
-
+			return sb.ToString().TrimEnd(',');
+		}
     }
 }

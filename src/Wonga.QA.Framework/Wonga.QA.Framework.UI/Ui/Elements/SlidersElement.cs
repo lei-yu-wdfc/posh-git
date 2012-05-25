@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Threading;
+using MbUnit.Framework;
+using NHamcrest.Core;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
@@ -53,20 +57,46 @@ namespace Wonga.QA.Framework.UI.Elements
         public String HowMuch
         {
             get { return _loanAmount.GetValue(); }
-            set { _loanAmount.SendValue(value); }
+            set
+            {
+                if (Config.AUT.Equals(AUT.Wb))
+                {
+                    _loanAmount.Clear();
+                    _loanAmount.SendKeys(value);
+                }
+                else
+                {
+                    new Actions(Page.Client.Driver).DoubleClick(_loanAmount).Build().Perform();
+                    _loanAmount.SendKeys(value);
+                    Page.Content.Click();
+                }
+            }
         }
         public String HowLong
         {
             get { return _loanDuration.GetValue(); }
-            set { _loanDuration.SendValue(value); }
+            set
+            {
+                if (Config.AUT.Equals(AUT.Wb))
+                {
+                    _loanDuration.Clear();
+                    _loanDuration.SendKeys(value);
+                }
+                else
+                {
+                    new Actions(Page.Client.Driver).DoubleClick(_loanDuration).Build().Perform();
+                    _loanDuration.SendKeys(value);
+                    Page.Content.Click();
+                }
+            }
         }
         public int MoveAmountSlider //Moving by pixels NOT by cash value
         {
-            set { Do.Until(()=>_amountSlider.DragAndDropToOffset(value,0)); }
+            set { Do.Until(() => _amountSlider.DragAndDropToOffset(value, 0)); }
         }
         public int MoveDurationSlider //Moving by pixels NOT by cash value
         {
-            set { Do.Until(()=>_durationSlider.DragAndDropToOffset(value,0)); }
+            set { Do.Until(() => _durationSlider.DragAndDropToOffset(value, 0)); }
         }
         public String GetTotalAmount
         {

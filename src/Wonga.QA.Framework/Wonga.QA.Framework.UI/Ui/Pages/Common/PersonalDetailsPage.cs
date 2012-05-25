@@ -61,7 +61,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             : base(client)
         {
             _form = Content.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.FormId));
-            if (!Config.AUT.Equals(AUT.Wb))
+            if (!Config.AUT.Equals(AUT.Wb) || Config.Ui.Browser.Equals(Config.UiConfig.BrowserType.FirefoxMobile))
             {
                 //On WB you cannot edit your loan details on the Personal Details page
                 _slidersForm = Content.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.SlidersFormId));
@@ -189,45 +189,6 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             return hrefs;
         }
 
-        public bool IsGenderDoesntMutchIdNumber()
-        {
-            switch (Config.AUT)
-            {
-                case AUT.Za:
-                    var message = Do.Until(() => Client.Driver.FindElement(By.XPath(UiMap.Get.PersonalDetailsPage.GenderWarning)));
-                    Console.WriteLine(message.Text);
-                    
-                    if (message.Text == "Oops! This doesn't match your ID number.")
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                default:
-                    throw new NotImplementedException();
-            }
-        }
 
-        public bool IsDOBDoesntMutchIdNumber()
-        {
-            switch (Config.AUT)
-            {
-                case AUT.Za:
-                    var message = Do.Until(() => Client.Driver.FindElement(By.XPath(UiMap.Get.PersonalDetailsPage.DateOfBirthWarning)));
-                    Console.WriteLine(message.Text);
-                    if (message.Text == "Oops! This doesn't match your ID number.")
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                default:
-                    throw new NotImplementedException();
-            }
-        }
     }
 }

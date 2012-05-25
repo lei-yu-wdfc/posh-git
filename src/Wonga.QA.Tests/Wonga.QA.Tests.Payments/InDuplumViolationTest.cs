@@ -16,6 +16,8 @@ using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
 using System.Threading;
 using CreateTransactionCommand = Wonga.QA.Framework.Msmq.CreateTransactionCommand;
+using PaymentTransactionEnum = Wonga.QA.Framework.Msmq.PaymentTransactionEnum;
+using PaymentTransactionScopeEnum = Wonga.QA.Framework.Msmq.PaymentTransactionScopeEnum;
 
 namespace Wonga.QA.Tests.Payments
 {
@@ -65,7 +67,7 @@ namespace Wonga.QA.Tests.Payments
 
 			//ClosedApplicationSaga timesout after 30sec before closing off application
 			//Therefore delay is necessay
-			Thread.Sleep(45000);
+			Do.Until(() => app.IsClosed == false);
 
 			var compensatingTransaction = Do.Until(() => _transactions.FindAll(	_transactions.ApplicationId == loanApp.ApplicationId &&
 																				_transactions.Type == PaymentTransactionEnum.WriteOff.ToString())
@@ -74,7 +76,6 @@ namespace Wonga.QA.Tests.Payments
 			loanApp = Do.Until(() => _applications.FindAllByExternalId(app.Id).Single());
 
 			Assert.IsNotNull(compensatingTransaction);
-			Assert.IsNotNull(loanApp.ClosedOn);
 
 			//Calculations:
 			//GetBal = 174.1 (100 + 57 + 17.1)
@@ -128,7 +129,7 @@ namespace Wonga.QA.Tests.Payments
 
 			//ClosedApplicationSaga timesout after 30sec before closing off application
 			//Therefore delay is necessay
-			Thread.Sleep(45000);
+			Do.Until(() => app.IsClosed == false);
 
 			//Assert
 			var compensatingTransaction = _transactions.FindAll(_transactions.ApplicationId == loanApp.ApplicationId && 
@@ -138,10 +139,9 @@ namespace Wonga.QA.Tests.Payments
 			loanApp = Do.Until(() => _applications.FindAllByExternalId(app.Id).Single());
 
 			Assert.IsNull(compensatingTransaction);
-			Assert.IsNotNull(loanApp.ClosedOn);
-
 		}
 
+		[Parallelizable]
 		[Test, AUT(AUT.Za), JIRA("ZA-2360")]
 		public void Close_InDuplumViolation_Application_BalanceShouldBeZero()
 		{
@@ -182,17 +182,20 @@ namespace Wonga.QA.Tests.Payments
 
 			//ClosedApplicationSaga timesout after 30sec before closing off application
 			//Therefore delay is necessay
-			Thread.Sleep(45000);
+			Do.Until(() => app.IsClosed == false);
 
-
-			var query = new GetLoanAgreementsQuery() { AccountId = customer.Id, IsActive = null };
-			CsResponse response = Drive.Cs.Queries.Post(query);
-			Application[] applications = customer.GetApplications();
-
-			//Assert.IsNotNull(response.Values["ClosedOn"].SingleOrDefault());
-			Assert.AreEqual<decimal>(0, decimal.Parse(response.Values["TodaysBalance"].SingleOrDefault()));
-			Assert.AreEqual<decimal>(0, decimal.Parse(response.Values["FinalBalance"].SingleOrDefault()));
-
+			Do.Until( () => decimal.Parse(GetLoanAgreements(customer).Values["TodaysBalance"].SingleOrDefault()) == 0);
+			Do.Until(() => decimal.Parse(GetLoanAgreements(customer).Values["FinalBalance"].SingleOrDefault()) == 0);
 		}
+
+		#region Helpers
+
+		private CsResponse GetLoanAgreements(Customer customer)
+		{
+			var query = new GetLoanAgreementsQuery() { AccountId = customer.Id, IsActive = null };
+			return Drive.Cs.Queries.Post(query);
+		}
+
+		#endregion
 	}
 }

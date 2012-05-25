@@ -340,7 +340,7 @@ namespace Wonga.QA.Tests.Payments
             Assert.IsNull(debtCollectionEntity);
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1862")]
+        [Test, AUT(AUT.Ca), JIRA("CA-1862"), Ignore("SF takes too long to respond and therefore test keeps timing out")]
         public void WhenApplicationMovedToDcaSalesForceStatusShouldBeUpdated()
         {
             var customer = CustomerBuilder.New().Build();

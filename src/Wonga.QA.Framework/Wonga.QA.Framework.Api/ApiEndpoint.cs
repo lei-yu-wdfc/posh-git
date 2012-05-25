@@ -5,7 +5,6 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Xml.Schema;
-using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework.Api
 {
@@ -25,28 +24,34 @@ namespace Wonga.QA.Framework.Api
 
         public ApiResponse Post(IEnumerable<ApiRequest> requests)
         {
-            StringBuilder builder = new StringBuilder().AppendLine("<Messages xmlns=\"http://www.wonga.com/api/3.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">");
-            foreach (ApiRequest request in requests)
+            var builder = new StringBuilder().AppendLine("<Messages xmlns=\"http://www.wonga.com/api/3.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">");
+            foreach (var request in requests)
                 builder.AppendLine(request.ToString());
             return Post(builder.AppendLine("</Messages>").ToString());
         }
 
         public ApiResponse Post(String body)
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_endpoint);
+            var request = (HttpWebRequest)WebRequest.Create(_endpoint);
             request.Method = "POST";
 
-            using (StreamWriter writer = new StreamWriter(request.GetRequestStream()))
+            using (var writer = new StreamWriter(request.GetRequestStream()))
                 writer.Write(body);
-            Trace.WriteLine(Get.Indent(body), GetType().FullName);
+            Trace.WriteLine(Core.Get.Indent(body), GetType().FullName);
 
             return new ApiResponse(request);
         }
 
+        public String Get(Uri uri = null)
+        {
+            using (var client = new WebClient())
+                return client.DownloadString(uri ?? _endpoint);
+        }
+
         public XmlSchema GetShema()
         {
-            XmlSchema schema = XmlSchema.Read(new StringReader(new WebClient().DownloadString(Get.GetSchema(_endpoint))), (s, a) => { throw a.Exception; });
-            XmlSchemaSet set = new XmlSchemaSet();
+            var schema = XmlSchema.Read(new StringReader(Get(Core.Get.GetSchema(_endpoint))), (s, a) => { throw a.Exception; });
+            var set = new XmlSchemaSet();
             set.Add(schema);
             set.Compile();
             return schema;

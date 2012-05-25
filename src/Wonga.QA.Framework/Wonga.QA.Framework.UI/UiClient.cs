@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Gallio.Framework;
 using Gallio.Framework.Assertions;
 using MbUnit.Framework;
@@ -25,25 +26,26 @@ namespace Wonga.QA.Framework.UI
 {
     public class UiClient : IDisposable
     {
-        public IWebDriver Driver;
-
-        [Obsolete]
-        public UiClient(String profileDir)
+        private IWebDriver _iWebDriver;
+        public IWebDriver Driver
         {
-            var firefoxProfile = new FirefoxProfile(profileDir);
-            Driver = new FirefoxDriver(firefoxProfile);
+            get { return _iWebDriver; }
         }
+
+        
+        public IList<BrowserCapability> BrowserCapabilities;
 
         public UiClient()
         {
-            var capabillities = GetDesiredCapabilities();
-            Driver = GetWebDriver(capabillities);
+            InitializeBrowserCapabilities();
+            _iWebDriver = GetWebDriver();
             if (Driver is CustomRemoteWebDriver)
                 TestContext.CurrentContext.AddMetadata("JobURL", string.Format("https://saucelabs.com/jobs/{0}", ((CustomRemoteWebDriver)Driver).GetSessionId()));
         }
 
-        private IWebDriver GetWebDriver(DesiredCapabilities capabilities)
+        private IWebDriver GetWebDriver()
         {
+            var capabilities = GetDesiredCapabilities();
             if(Config.Ui.RemoteMode)
                 return new CustomRemoteWebDriver(Config.Ui.RemoteUri, capabilities);
             switch (Config.Ui.Browser)
@@ -71,6 +73,7 @@ namespace Wonga.QA.Framework.UI
 
         private DesiredCapabilities GetDesiredCapabilities()
         {
+            BrowserCapability browserCapability = GetBrowserCapability();
             DesiredCapabilities capabilities;
             switch (Config.Ui.Browser)
             {
@@ -95,7 +98,7 @@ namespace Wonga.QA.Framework.UI
                     throw new ArgumentException("Please select a QAFBrowser environment variable.");
             }
             capabilities.SetCapability(CapabilityType.Version, Config.Ui.BrowserVersion);
-            capabilities.SetCapability(CapabilityType.Platform, new Platform(PlatformType.XP));
+            capabilities.SetCapability(CapabilityType.Platform, new Platform(browserCapability.Platform));
             capabilities.SetCapability("name", TestContext.CurrentContext.Test.Name);
             capabilities.SetCapability("username", Config.Ui.RemoteUsername);
             capabilities.SetCapability("accessKey", Config.Ui.RemoteApiKey);
@@ -231,5 +234,50 @@ namespace Wonga.QA.Framework.UI
         }
 
         #endregion
+
+        private void InitializeBrowserCapabilities()
+        {
+            BrowserCapabilities = new List<BrowserCapability>();
+            //FF
+            BrowserCapabilities.Add(new BrowserCapability(){BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.XP, Version = "3.0"});
+            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.XP, Version = "3.5" });
+            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.XP, Version = "3.6" });
+            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.Vista, Version = "4" });
+            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.Vista, Version = "5" });
+            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.Vista, Version = "6" });
+            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.Vista, Version = "7" });
+            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.Vista, Version = "8" });
+            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.Vista, Version = "9" });
+            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.Vista, Version = "10" });
+            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.Vista, Version = "11" });
+
+            //IE
+            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.InternetExplorer, Platform = PlatformType.XP, Version = "6" });
+            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.InternetExplorer, Platform = PlatformType.XP, Version = "7" });
+            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.InternetExplorer, Platform = PlatformType.XP, Version = "8" });
+            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.InternetExplorer, Platform = PlatformType.Vista, Version = "9" });
+
+            //Chrome
+            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Chrome, Platform = PlatformType.Vista, Version = null });
+        }
+
+        public BrowserCapability GetBrowserCapability()
+        {
+            if (!Config.Ui.RemoteMode)
+                return new BrowserCapability { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.XP, Version = null };
+            return
+                BrowserCapabilities.Where(
+                    x =>
+                    x.BrowserType == Config.Ui.Browser &&
+                    (Config.Ui.BrowserVersion == x.Version || Config.Ui.Browser == Config.UiConfig.BrowserType.Chrome)).
+                    Single();
+        }
+    }
+
+    public class BrowserCapability
+    {
+        public Config.UiConfig.BrowserType BrowserType { get; set; }
+        public string Version { get; set; }
+        public PlatformType Platform { get; set; }
     }
 }

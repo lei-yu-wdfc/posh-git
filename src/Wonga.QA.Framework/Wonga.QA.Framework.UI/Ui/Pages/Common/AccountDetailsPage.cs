@@ -27,8 +27,39 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public AccountDetailsPage NextClick()
         {
-            _next.Click();
+            _next.Submit();
             return new AccountDetailsPage(Client);
         }
+
+        public bool IsSecciLinkVisible()
+        {
+            return Content.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.SecciLink)).Displayed;
+        }
+
+        public bool IsTermsAndConditionsLinkVisible()
+        {
+            return Content.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.TermAndConditionsLink)).Displayed;
+        }
+
+        public bool IsExplanationLinkVisible()
+        {
+            return Content.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.ExplanationLink)).Displayed;
+        }
+
+        public void ClickSecciLink()
+        {
+            Content.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.SecciLink)).Click();
+        }
+
+        public void ClickTermsAndConditionsLink()
+        {
+            Content.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.TermAndConditionsLink)).Click();
+        }
+
+        public void ClickExplanationLink()
+        {
+            Content.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.ExplanationLink)).Click();
+        }
+
     }
 }

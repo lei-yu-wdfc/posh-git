@@ -48,6 +48,33 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                 Do.While(IsPopupCloseButtonDisplayed);
             }
         }
+
+        public string SetIncorrectMobilePhone
+        {
+            set
+            {
+                ApplicationSection.ClickChangeMobileButton();
+                Do.Until(IsEditMobileNumberDisplayed);
+                _editMobileNumber.SendValue(value);
+                Client.Driver.FindElement(By.CssSelector(UiMap.Get.ApplyPage.PopupSaveButton)).Click();
+                Do.Until(IsPhoneNumberNotChangedMessageVisible);
+            }
+        }
+
+        public bool IsPhoneNumberNotChangedMessageVisible()
+        {
+            return Client.Driver.FindElement(By.CssSelector(UiMap.Get.ApplyPage.PopupErrorMessage)).Displayed;
+        }
+
+        public bool IsMobilePhonePopupCancelButtonEnabled()
+        {
+            return Client.Driver.FindElement(By.CssSelector(UiMap.Get.ApplyPage.PopupCancelButton)).Enabled;
+        }
+
+        public bool IsMobilePhonePopupSaveButtonEnabled()
+        {
+            return Client.Driver.FindElement(By.CssSelector(UiMap.Get.ApplyPage.PopupSaveButton)).Enabled;
+        }
         public string GetCurrentBankAccount
         {
             get

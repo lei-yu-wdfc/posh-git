@@ -13,6 +13,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.CallReport
 {
+    [Parallelizable(TestScope.All)]
     public class CheckpointsTests
     {
         private const String GoodCompanyRegNumber = "00000086";
@@ -478,10 +479,10 @@ namespace Wonga.QA.Tests.CallReport
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-644"), Description("CallReport -> This test creates a loan for a customer with the not provided date of birth, then checks the risk checkpoint")]
-        public void TestCallReportMainApplicantDateOfBirthNotProvided_LoanIsDeclined()
+        public void TestCallReportMainApplicantDateOfBirthNotProvided_LoanIsApproved()
         {
-            const String forename = "kathleen";
-            const String surname = "bridson";
+            const String forename = "unknown";
+            const String surname = "customer";
             var wrongDateOfBirth = new Date(new DateTime(1973, 5, 11), DateFormat.Date);
 
             //Cannot use the CreateCustomerBuilder here because the masks are different
@@ -496,11 +497,11 @@ namespace Wonga.QA.Tests.CallReport
             var mainApplicant = mainApplicantBuilder.Build();
             var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Declined);
 
-            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
 
             VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
                                                                      RiskCheckpointDefinitionEnum.DateOfBirthIsCorrect,
-                                                                     RiskCheckpointStatus.Failed,
+                                                                     RiskCheckpointStatus.Verified,
                                                                      RiskVerificationDefinitions.DateOfBirthIsCorrectVerification);
 
         }
@@ -837,6 +838,12 @@ namespace Wonga.QA.Tests.CallReport
             if (guarantors != null)
             {
                 applicationBuilder.WithGuarantors(guarantors);
+
+                foreach (var customerBuilder in guarantors)
+                {
+                    customerBuilder.ScrubForename(customerBuilder.Forename);
+                    customerBuilder.ScrubSurname(customerBuilder.Surname);
+                }
             }
 
             //STEP5 - Build the application + send the list of guarantors

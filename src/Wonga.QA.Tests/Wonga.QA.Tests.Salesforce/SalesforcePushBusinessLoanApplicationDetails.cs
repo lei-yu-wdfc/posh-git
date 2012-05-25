@@ -6,6 +6,8 @@ using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
+using PaymentTransactionEnum = Wonga.QA.Framework.Msmq.PaymentTransactionEnum;
+using PaymentTransactionScopeEnum = Wonga.QA.Framework.Msmq.PaymentTransactionScopeEnum;
 using UpdateLoanTermWbUkCommand = Wonga.QA.Framework.Api.UpdateLoanTermWbUkCommand;
 
 namespace Wonga.QA.Tests.Salesforce
@@ -98,13 +100,12 @@ namespace Wonga.QA.Tests.Salesforce
         [Ignore]
 		public void PaymentsShouldPushNewBusinessLoanApplicationStatusToSF_WhenMainApplicantIsAccepted()
 		{
-			const int acceptedInPrincipleStatus = 101;
 			var customer = CustomerBuilder.New().Build();
 			//var organisation = OrganisationBuilder.New(customer).WithSoManySecondaryDirectors(2).Build();
             var organisation = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organisation).Build();
 
-			var query = String.Format(GetApplicationWithUpdatedStatus, application.Id, acceptedInPrincipleStatus);
+            var query = String.Format(GetApplicationWithUpdatedStatus, application.Id, (int)Framework.ThirdParties.Salesforce.BusinessLoanApplicationStatus.AcceptedInPrinciple);
 
 			Do.Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, query));
 		}
@@ -113,12 +114,11 @@ namespace Wonga.QA.Tests.Salesforce
         [Ignore("SF tests are failing because message congestion in SF TC queue, explicit until fixed")]
 		public void PaymentsShouldPushNewBusinessLoanApplicationStatusToSF_WhenApplicationIsAccepted()
 		{
-			const int acceptedStatus = 111;
 			var customer = CustomerBuilder.New().Build();
 			var organisation = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
-			var query = String.Format(GetApplicationWithUpdatedStatus, application.Id, acceptedStatus);
+			var query = String.Format(GetApplicationWithUpdatedStatus, application.Id, (int)Framework.ThirdParties.Salesforce.BusinessLoanApplicationStatus.LoanApproved);
 
 			Do.Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, query));
 		}
@@ -127,13 +127,11 @@ namespace Wonga.QA.Tests.Salesforce
         [Ignore("SF tests are failing because message congestion in SF TC queue, explicit until fixed")]
 		public void PaymentsShouldPushNewBusinessLoanApplicationStatusToSF_WhenApplicationIsDeclined()
 		{
-			const int declinedStatus = 110;
-	
 			var customer = CustomerBuilder.New().WithMiddleName("Middle").Build();
 			var organisation = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 
-			var query = String.Format(GetApplicationWithUpdatedStatus, application.Id, declinedStatus);
+			var query = String.Format(GetApplicationWithUpdatedStatus, application.Id, (int)Framework.ThirdParties.Salesforce.BusinessLoanApplicationStatus.LoanDeclined);
 
 			Do.Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, query));
 		}
@@ -142,14 +140,12 @@ namespace Wonga.QA.Tests.Salesforce
         [Ignore("SF tests are failing because message congestion in SF TC queue, explicit until fixed")]
 		public void PaymentsShouldPushNewBusinessLoanApplicationStatusToSF_WhenApplicationIsAddedToInArrears()
 		{
-			const int inArrearsStatus = 113;
-
 			var customer = CustomerBuilder.New().Build();
 			var organization = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organization)
 				.WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutApplicationIntoArrears();
 
-			var query = string.Format(GetApplicationWithUpdatedStatus, application.Id, inArrearsStatus);
+			var query = string.Format(GetApplicationWithUpdatedStatus, application.Id, (int)Framework.ThirdParties.Salesforce.BusinessLoanApplicationStatus.InArrears);
 
 			Do.With.Timeout(2).Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, query));													
 		}
@@ -158,8 +154,6 @@ namespace Wonga.QA.Tests.Salesforce
         [Ignore("SF tests are failing because message congestion in SF TC queue, explicit until fixed")]
 		public void PaymentsShouldPushNewBusinessLoanApplicationStatusToSF_WhenApplicationIsRemovedFromArrears()
 		{
-			const int loanLiveStatus = 112;
-
 			var customer = CustomerBuilder.New().Build();
 			var organization = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organization)
@@ -181,7 +175,7 @@ namespace Wonga.QA.Tests.Salesforce
 				Type = PaymentTransactionEnum.Cheque
 			});
 
-			var removedFromArrearsQuery = string.Format(GetApplicationWithUpdatedStatus, application.Id, loanLiveStatus);
+			var removedFromArrearsQuery = string.Format(GetApplicationWithUpdatedStatus, application.Id, (int)Framework.ThirdParties.Salesforce.BusinessLoanApplicationStatus.Live);
 			Do.With.Timeout(2).Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, removedFromArrearsQuery));													
 		}
 

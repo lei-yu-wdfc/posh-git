@@ -23,7 +23,7 @@
 			<Projects Include="$(Src)\$(Framework)\$(Framework).sln" />
 			<Projects Include="$(Src)\$(Tests)\$(Tests).sln" />
 		</ItemGroup>
-		<MSBuild Projects="@(Projects)" />
+		<MSBuild Projects="@(Projects)" StopOnFirstFailure="true"/>
 	</Target>
 	
 	<Target Name="PreGenerateSerializers">
@@ -35,9 +35,12 @@
 			<Exclude Include="$(Bin)\$(Tests).Core.dll" />
 			<Exclude Include="$(Bin)\$(Tests).Meta.dll" />
 			<Exclude Include="$(Bin)\$(Tests).Ui.dll" />
+			<Exclude Include="$(Bin)\$(Tests).Ui.Mobile.dll" />
+			<Exclude Include="$(Bin)\$(Tests).Ui.Admin.dll" />
 			<Command Include='"$(MSBuildProgramFiles32)\Microsoft\ILMerge\ILMerge.exe"' />
 			<Command Include="/targetplatform:v4,$(MSBuildToolsPath)" />
 			<Command Include="/out:$(Bin)\$(Tests).dll" />
+			<Command Include="$(Bin)\$(Tests).Core.dll" />
 			<Command Include="$(Bin)\$(Tests).*.dll" Exclude="@(Exclude)" />
 		</ItemGroup>
 		<Exec Command="@(Command, ' ')" />
@@ -50,6 +53,7 @@
 			<Files Include="$(Bin)\$(Tests).%(Split.Identity).dll" Condition="'$(Files)'!=''" />
 		</ItemGroup>
 		<Gallio
+			Filter="$(TestFilter)"
 			Files="@(Files)"
 			ReportTypes="xml"
 			ReportDirectory="$(Bin)\$(Tests).Report"
@@ -57,9 +61,8 @@
 	</Target>
 	
 	<Target Name="Default">
-		<CallTarget Targets="Config;Build;PreGenerateSerializers" />
+		<CallTarget Targets="Config;Build;Merge;PreGenerateSerializers" />
 		<MsBuild Condition="'$(Files)'==''" Projects="$(MSBuildProjectFullPath)" Targets="Test" Properties="Files=Meta" />
-		<CallTarget Condition="'$(Files)'==''" Targets="Merge;PreGenerateSerializers" />
 		<CallTarget Targets="Test" />
 	</Target>
 </Project>

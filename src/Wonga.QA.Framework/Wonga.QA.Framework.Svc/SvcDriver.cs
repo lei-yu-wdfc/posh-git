@@ -42,6 +42,7 @@ namespace Wonga.QA.Framework.Svc
         private SvcService _transUnion;
         private SvcService _uru;
         private SvcService _wongaPay;
+    	private SvcService _easyPay;
 
         public SvcService Ops
         {
@@ -262,6 +263,12 @@ namespace Wonga.QA.Framework.Svc
         {
             get { return _wongaPay ?? (_wongaPay = new SvcService(Config.Svc.WongaPay.Key, Config.Svc.WongaPay.Value)); }
             set { _wongaPay = value; }
+        }
+
+		public SvcService EasyPay
+        {
+			get { return _easyPay ?? (_easyPay = new SvcService(Config.Svc.EasyPay.Key, Config.Svc.EasyPay.Value)); }
+			set { _easyPay = value; }
         }
     }
 }

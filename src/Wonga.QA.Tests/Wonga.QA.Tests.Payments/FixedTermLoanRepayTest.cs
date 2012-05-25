@@ -10,6 +10,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Payments
 {
 	[TestFixture]
+    [Parallelizable(TestScope.All)]
 	public class FixedTermLoanRepayTest
 	{
 		[Test, AUT(AUT.Uk), JIRA("UK-921"), Description("")]
@@ -40,10 +41,8 @@ namespace Wonga.QA.Tests.Payments
 				ApplicationId = app.Id,
 				Amount = repayAmount,
 				PaymentCardCv2 = "111",
-				CashEntityId = cardId,
-				RepaymentRequestId = Guid.NewGuid(),
-                //SH: Added this - test failing otherwise.
-                ActionDate = (DateTime.Now + TimeSpan.FromDays(1)).ToString("yyyy-MM-dd")
+				PaymentCardId = cardId,
+				PaymentRequestId = Guid.NewGuid(),
 			};
 
 			var cmdAct = new Gallio.Common.Action(() => Drive.Api.Commands.Post(cmd));

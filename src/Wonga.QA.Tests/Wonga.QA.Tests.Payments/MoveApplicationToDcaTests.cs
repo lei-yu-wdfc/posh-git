@@ -10,10 +10,12 @@ using Wonga.QA.Framework.Db.Ops;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
 using CreateFixedTermLoanApplicationCommand = Wonga.QA.Framework.Api.CreateFixedTermLoanApplicationCommand;
+using PaymentTransactionEnum = Wonga.QA.Framework.Msmq.PaymentTransactionEnum;
 using SignApplicationCommand = Wonga.QA.Framework.Api.SignApplicationCommand;
 
 namespace Wonga.QA.Tests.Payments
 {
+    [TestFixture, Parallelizable(TestScope.All)]
 	public class MoveApplicationToDcaTests
 	{
         //private const string BankGatewayIsTestModeKey = "BankGateway.IsTestMode";

@@ -297,7 +297,7 @@ namespace Wonga.QA.Tests.BankGateway
         {
             var integration = Drive.Data.BankGateway.Db.BankIntegrations;
             var starttime = integration.FindByDescription("HSBC").MondayToFridayStartTime;
-            var endtime = integration.FindByDescription("HSBC").MondayToFridayEndTime;
+            //var endtime = integration.FindByDescription("HSBC").MondayToFridayEndTime;
 
             integration.UpdateByDescription(Description: "HSBC", MondayToFridayEndTime: starttime.AddMinutes(1));
             try
@@ -310,13 +310,13 @@ namespace Wonga.QA.Tests.BankGateway
                 var application = ApplicationBuilder.New(customer).WithLoanAmount(123).Build();
 
                 var exception = Assert.Throws<DoException>(() => Do.With.Timeout(5).Until<Boolean>(() => Drive.Data.BankGateway.Db.Transactions.FindByApplicationId(application.Id).TransactionStatus > 1));
-                Assert.IsInstanceOfType<TimeoutException>(exception.Exceptions.Last());
+                Assert.IsInstanceOfType<TimeoutException>(exception.Exceptions.Last().Item3);
                 Assert.IsNull(Drive.Data.BankGateway.Db.Transactions.FindByApplicationId(application.Id).FileId);
             }
             finally
             {
-                //integration.UpdateByDescription(Description: "HSBC", MondayToFridayEndTime: DateTime.Parse("1900-01-01 23:50:00.000"));
-                integration.UpdateByDescription(Description: "HSBC", MondayToFridayEndTime: endtime);
+                integration.UpdateByDescription(Description: "HSBC", MondayToFridayEndTime: DateTime.Parse("1900-01-01 23:50:00.000"));
+                //integration.UpdateByDescription(Description: "HSBC", MondayToFridayEndTime: endtime);
                 Drive.Svc.Hsbc.Restart();
             }
         }
@@ -327,13 +327,13 @@ namespace Wonga.QA.Tests.BankGateway
                                                                         {
                                                                             AccountId = Guid.NewGuid(),
                                                                             CreatedOn = DateTime.UtcNow,
-                                                                            DateOfBirth = DateTime.UtcNow.AddYears(-20),
-                                                                            Forename = "XYX",
-                                                                            Surname = "Ddddd",
-                                                                            Email = "asdasD@asdasd.com",
+                                                                            DateOfBirth = Get.GetDoB(),
+                                                                            Forename = Get.GetName(),
+                                                                            Surname = Get.GetName(),
+                                                                            Email = Get.GetEmail(),
                                                                             Gender = GenderEnum.Male,
-                                                                            HomePhone = "020123123",
-                                                                            MobilePhone = "070123123",
+                                                                            HomePhone = "02088123123",
+                                                                            MobilePhone = Get.GetMobilePhone(),
                                                                             Title = TitleEnum.Mr,
                                                                         };
             Drive.Msmq.Comms.Send(saveCustomerDetailsCommand);

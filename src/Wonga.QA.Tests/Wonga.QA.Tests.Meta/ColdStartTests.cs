@@ -49,6 +49,20 @@ namespace Wonga.QA.Tests.Meta
         [Test, Factory("Endpoints")]
         public void EndpointIsWarmedUpAndSchemaIsValid(ApiEndpoint endpoint)
         {
+            Do.With.Timeout(5).Until(() =>
+            {
+                try
+                {
+                    endpoint.Get();
+                }
+                catch (WebException exception)
+                {
+                    if (exception.Status == WebExceptionStatus.Timeout)
+                        throw;
+                }
+                return true;
+            });
+
             Assert.DoesNotThrow(() => endpoint.GetShema());
         }
 
