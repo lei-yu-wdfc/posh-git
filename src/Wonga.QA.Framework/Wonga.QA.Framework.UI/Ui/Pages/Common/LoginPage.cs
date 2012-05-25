@@ -34,6 +34,13 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             return new MySummaryPage(Client);
         }
 
+        public void LoginRedirectAs(string email)
+        {
+            _username.SendKeys(email);
+            _password.SendKeys(Get.GetPassword());
+            _buttonLogin.Click();
+        }
+        
         public ForgotPasswordPage ForgotPasswordClick()
         {
             _forgotPassword.Click();
