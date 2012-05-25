@@ -2,7 +2,9 @@
 using OpenQA.Selenium;
 using Wonga.QA.Framework.UI.Elements;
 using Wonga.QA.Framework.UI.Mappings;
-using Wonga.QA.Framework.UI.Ui.Elements.Prepaid;
+using Wonga.QA.Framework.UI.Mappings.Elements;
+using ChooseCardTypeMenuElement = Wonga.QA.Framework.UI.Ui.Elements.Prepaid.ChooseCardTypeMenuElement;
+using PrepaidCardMenuElement = Wonga.QA.Framework.UI.Elements.PrepaidCardMenuElement;
 
 
 namespace Wonga.QA.Framework.UI.UiElements.Pages

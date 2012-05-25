@@ -16,14 +16,14 @@ namespace Wonga.QA.Framework.UI.Elements
         public PrepaidBalanceBlock(BasePage page) : base(page)
         {
             _balanceBlock = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.PrepaidCardPage.BalanceBlock));
-            Assert.IsTrue(_balanceBlock.Text.Contains(Content.Get.PrepaidbalanceBlock.CurrentBalance));
+            Assert.IsTrue(_balanceBlock.Text.Contains(ContentMap.Get.PrepaidBalanceBlock.CurrentBalance));
         }
 
         public void DisplayForPremiumCard()
         {
-            Assert.IsTrue(_balanceBlock.Text.Contains(Content.Get.PrepaidbalanceBlock.MoneyIn));
-            Assert.IsTrue(_balanceBlock.Text.Contains(Content.Get.PrepaidbalanceBlock.MoneyOut));
-            Assert.IsTrue(_balanceBlock.Text.Contains(Content.Get.PrepaidbalanceBlock.CashbackEarned));
+            Assert.IsTrue(_balanceBlock.Text.Contains(ContentMap.Get.PrepaidBalanceBlock.MoneyOut));
+            Assert.IsTrue(_balanceBlock.Text.Contains(ContentMap.Get.PrepaidBalanceBlock.MoneyOut));
+            Assert.IsTrue(_balanceBlock.Text.Contains(ContentMap.Get.PrepaidBalanceBlock.CashbackEarned));
         }
     }
 }

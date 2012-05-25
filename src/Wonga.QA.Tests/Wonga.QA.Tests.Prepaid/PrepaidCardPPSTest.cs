@@ -54,9 +54,9 @@ namespace Wonga.QA.Tests.Prepaid
         public void CustomerShouldSendRequestForResetPINCode()
         {
 
-            var validRequestForStandardCard = new GetPrepaidResetCodeQuery();
-            var invalidRequest = new GetPrepaidResetCodeQuery();
-            var validRequestForPremiumCard = new GetPrepaidResetCodeQuery();
+            var validRequestForStandardCard = new GetPrePaidPinResetCodeQuery();
+            var invalidRequest = new GetPrePaidPinResetCodeQuery();
+            var validRequestForPremiumCard = new GetPrePaidPinResetCodeQuery();
 
             validRequestForStandardCard.CustomerExternalId = _eligibleCustomerForStandardCard.Id;
             invalidRequest.CustomerExternalId = _invalidCustomer.Id;

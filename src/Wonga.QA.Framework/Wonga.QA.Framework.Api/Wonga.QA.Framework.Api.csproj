@@ -81,7 +81,6 @@
     <Compile Include="Exceptions\SchemaException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\GetPrepaidAvailableAccountBalanceQuery.cs" />
-    <Compile Include="Requests\SetFundsTransferMethodCommand.cs" />
     <Compile Include="Temp\ApplicationDecisionStatusEnum.cs" />
     <Compile Include="Temp\RiskMask.cs" />
     <Compile Include="Requests\AddBankAccountCaCommand.cs" />
@@ -182,7 +181,6 @@
     <Compile Include="Requests\GetPreApprovedDirectDebitFormCaQuery.cs" />
     <Compile Include="Requests\GetPrePaidPinResetCodeQuery.cs" />
     <Compile Include="Requests\GetPromoCodeParametersQuery.cs" />
-    <Compile Include="Requests\GetPrePaidPinResetCodeQuery.cs" />
 	<Compile Include="Requests\GetPrepaidCardTransactionsQuery.cs" />
     <Compile Include="Requests\GetRepayLoanCalculationQuery.cs" />
     <Compile Include="Requests\GetRepayLoanParametersQuery.cs" />
