@@ -8,7 +8,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Ui.Admin
 {
-    class AccountingTest : AdminTest
+    class AccountingTest : UiTest
     {
         /// <summary>
         /// Verifies canceled application 
@@ -23,7 +23,6 @@ namespace Wonga.QA.Tests.Ui.Admin
             var db_trans = Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(db_app.ApplicationId);
             Assert.IsNotNull(db_trans);
 
-            Client = new UiClient();
             var accountingPage = Client.Accounting().CashOut();
             accountingPage.SelectedTransactionType = "Unmatched Transactions V3 Records";
             accountingPage.FilterBy = "ApplicationId";
@@ -32,7 +31,6 @@ namespace Wonga.QA.Tests.Ui.Admin
             accountingPage.GetSearchResults();
             accountingPage.MarkCancel(0);
             accountingPage.Update();
-            Client.Dispose();
             db_trans = Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(db_app.ApplicationId);
 
             Decimal Balance = 0;
@@ -64,7 +62,6 @@ namespace Wonga.QA.Tests.Ui.Admin
             var db_app = Drive.Data.Payments.Db.Applications.FindByExternalId(app.Id);
             Assert.IsNotNull(db_app);
 
-            Client = new UiClient();
             var accountingPage = Client.Accounting().CashOut();
             accountingPage.SelectedTransactionType = "Unmatched Transactions V3 Records";
             accountingPage.FilterBy = "ApplicationId";
@@ -78,7 +75,6 @@ namespace Wonga.QA.Tests.Ui.Admin
 
             accountingPage.MarkSendPayment(0);
             accountingPage.Update();
-            Client.Dispose();
 
             Do.With.Timeout(2).Until(
                 () =>
