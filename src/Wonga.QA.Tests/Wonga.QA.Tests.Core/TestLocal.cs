@@ -17,21 +17,22 @@ namespace Wonga.QA.Tests.Core
         {
             get
             {
-                string testKey = null;
                 lock(_lock)
                 {
-                    testKey = TestContext.CurrentContext.TestStep.Id;
-                    if (!_dict.ContainsKey(testKey))
-                    {
-                        Trace.WriteLine("New test: " + testKey);
-                        _dict[testKey] = _function();
-                    }
+                    if (!_dict.ContainsKey(GetTestId()) && _function != null)
+                        _dict[GetTestId()] = _function();
+                    return _dict.ContainsKey(GetTestId()) ? _dict[GetTestId()] : default(T);
                 }
-                return _dict[testKey];
             }
+            set { _dict[GetTestId()] = value; }
         }
 
-        public TestLocal(Func<T> function)
+        private string GetTestId()
+        {
+            return TestContext.CurrentContext.TestStep.Id;
+        }
+
+        public TestLocal(Func<T> function = null)
         {
             _function = function;
         }
