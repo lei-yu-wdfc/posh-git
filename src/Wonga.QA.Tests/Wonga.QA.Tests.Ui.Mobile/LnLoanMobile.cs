@@ -8,7 +8,7 @@ namespace Wonga.QA.Tests.Ui.Mobile
 {
     class LnLoanMobile : UiMobileTest
     {
-        [Test]
+        [Test, Pending("Test not yet complete")]
         public void FullLnMobile()
         {
             var loginPage = Client.Login();
