@@ -69,12 +69,14 @@
     <Compile Include="Journey\ZaL0Journey.cs" />
     <Compile Include="Journey\CaLnJourney.cs" />
     <Compile Include="Journey\ZaLnJourney.cs" />
+    <Compile Include="Journey\ZaMobileLnJourney.cs" />
     <Compile Include="Mappings\Content\ContentMap.cs" />
     <Compile Include="Mappings\Content\Agreements\LoanAgreement.cs" />
     <Compile Include="Mappings\Content\Elements\TabsElementMobile.cs" />
     <Compile Include="Mappings\Content\ErrorsMessages\AddressDetailsPage.cs" />
     <Compile Include="Mappings\Content\ErrorsMessages\MobilePinVerificationSection.cs" />
     <Compile Include="Mappings\Content\Links\FAQPageLinks.cs" />
+    <Compile Include="Mappings\Content\Pages\MySummaryPageMobile.cs" />
     <Compile Include="Mappings\Content\Pages\TimeoutTestPage.cs" />
     <Compile Include="Mappings\Content\Pages\ExtensionAgreementPage.cs" />
     <Compile Include="Mappings\Content\Pages\L0DeclinedPage.cs" />
@@ -109,6 +111,7 @@
     <Compile Include="Mappings\Ui\Pages\Common\ApplyTermsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\BlogPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\EasypaymentNumberPrintPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\MySummaryPageMobile.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayDueFullpaySuccessPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayEarlyFullpaySuccessPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayEarlyPaymentFailedPage.cs" />
