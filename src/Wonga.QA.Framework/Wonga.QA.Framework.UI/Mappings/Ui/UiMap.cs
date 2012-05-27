@@ -7,6 +7,7 @@ using Wonga.QA.Framework.UI.Mappings.Pages.Wb;
 using Wonga.QA.Framework.UI.Mappings.Sections;
 using Wonga.QA.Framework.UI.Mappings.Pages.SalesForce;
 using Wonga.QA.Framework.UI.Mappings.Ui.Elements;
+using AccountDetailsSection = Wonga.QA.Framework.UI.Mappings.Sections.AccountDetailsSection;
 using AddressDetailsPage = Wonga.QA.Framework.UI.Mappings.Pages.AddressDetailsPage;
 using ExtensionAgreementPage = Wonga.QA.Framework.UI.Mappings.Pages.ExtensionAgreementPage;
 using HomePage = Wonga.QA.Framework.UI.Mappings.Pages.HomePage;
