@@ -31,7 +31,7 @@ namespace Wonga.QA.Tests.Ui
             var timeoutPageReopened = new TimeoutTestPage(this.Client); // redirected to test page. 
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-794"), Pending("Waiting for implementation of no-redirect page")]
+        [Test, AUT(AUT.Uk), JIRA("UK-794")]
         public void AutologoutDoesNotRedirectTest()
         {
             string email = Get.RandomEmail();
