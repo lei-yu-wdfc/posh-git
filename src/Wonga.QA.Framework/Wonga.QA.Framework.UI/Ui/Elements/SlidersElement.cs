@@ -59,18 +59,8 @@ namespace Wonga.QA.Framework.UI.Elements
             get { return _loanAmount.GetValue(); }
             set
             {
-                if (Config.AUT.Equals(AUT.Wb))
-                {
-                    _loanAmount.Clear();
-                    _loanAmount.SendKeys(value);
-                }
-                else
-                {
-                    _loanAmount.Click();
-                    _loanAmount.SendKeys(Keys.End + Keys.Backspace + Keys.Backspace + Keys.Backspace + Keys.Backspace);
-                    _loanAmount.SendKeys(value);
-                    Page.Content.Click();
-                }
+                _loanAmount.EraseAll();
+                _loanAmount.SendKeys(value);
             }
         }
         public String HowLong
@@ -78,18 +68,8 @@ namespace Wonga.QA.Framework.UI.Elements
             get { return _loanDuration.GetValue(); }
             set
             {
-                if (Config.AUT.Equals(AUT.Wb))
-                {
-                    _loanDuration.Clear();
-                    _loanDuration.SendKeys(value);
-                }
-                else
-                {
-                    _loanDuration.Click();
-                    _loanDuration.SendKeys(Keys.End + Keys.Backspace + Keys.Backspace);
-                    _loanDuration.SendKeys(value);
-                    Page.Content.Click();
-                }
+                _loanDuration.EraseAll();
+                _loanDuration.SendKeys(value);
             }
         }
         public int MoveAmountSlider //Moving by pixels NOT by cash value

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -84,6 +85,37 @@ namespace Wonga.QA.Framework.UI
             actions.DragAndDropToOffset(element, xOffset, yOffset).Perform();
             return true;
         }
+
+
+        public static void EraseAll(this IWebElement element)
+        {
+            element.Click();
+            element.SendKeys(Keys.End);
+            int numberOfCharsToErase = element.GetValue().Length;
+            for (int i = 0; i < numberOfCharsToErase; i++)
+            {
+                element.SendKeys(Keys.Backspace);
+            }
+        }
+
+        public static void EraseFromEnd(this IWebElement element, int numberOfCharsToErase)
+        {
+            element.Click();
+            element.SendKeys(Keys.End);
+            for(int i =0; i<numberOfCharsToErase;i++)
+            {
+                element.SendKeys(Keys.Backspace);
+            }
+        }
+        public static void EraseFromStart(this IWebElement element, int numberOfCharsToErase)
+        {
+            element.Click();
+            for (int i = 0; i < numberOfCharsToErase; i++)
+            {
+                element.SendKeys(Keys.Delete);
+            }
+        }
+
 
         //Does not work in Firefox and IE only Chrome atm.
         //public static void MouseOver(this IWebElement element)

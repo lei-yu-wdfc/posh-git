@@ -42,11 +42,11 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private readonly ReadOnlyCollection<IWebElement> _marriedInCommunityProperty;
         private readonly IWebElement _privacy;
         private readonly ReadOnlyCollection<IWebElement> _contact;
-        private readonly IWebElement _next;
-        private readonly IWebElement _totalToRepay;
-        private readonly IWebElement _repaymentDate;
-        private readonly IWebElement _totalAmount;
-        private readonly IWebElement _totalFees;
+        private IWebElement _next;
+        private IWebElement _totalToRepay;
+        private IWebElement _repaymentDate;
+        private IWebElement _totalAmount;
+        private IWebElement _totalFees;
         private IWebElement _amountSlider;
         private IWebElement _durationSlider;
         private IWebElement _loanAmount;
@@ -65,10 +65,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             {
                 //On WB you cannot edit your loan details on the Personal Details page
                 _slidersForm = Content.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.SlidersFormId));
-                _totalToRepay = _slidersForm.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.TotalToRepay));
-                _repaymentDate = _slidersForm.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.RepaymentDate));
-                _totalAmount = _slidersForm.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.TotalAmount));
-                _totalFees = _slidersForm.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.TotalFees));
+
+
+
+
             }
             _privacy = _form.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.CheckPrivacyPolicy));
             _contact = _form.FindElements(By.CssSelector(UiMap.Get.PersonalDetailsPage.CheckCanContact));
@@ -120,19 +120,19 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         }
         public String GetTotalAmount
         {
-            get { return _totalAmount.Text; }
+            get { _totalAmount = _slidersForm.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.TotalAmount)); return _totalAmount.Text; }
         }
         public String GetTotalFees
         {
-            get { return _totalFees.Text; }
+            get { _totalFees = _slidersForm.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.TotalFees)); return _totalFees.Text; }
         }
         public String GetTotalToRepay
         {
-            get { return _totalToRepay.Text; }
+            get { _totalToRepay = _slidersForm.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.TotalToRepay)); return _totalToRepay.Text; }
         }
         public String GetRepaymentDate
         {
-            get { return _repaymentDate.Text; }
+            get { _repaymentDate = _slidersForm.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.RepaymentDate)); return _repaymentDate.Text; }
         }
         public String HowMuch
         {
