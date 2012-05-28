@@ -296,5 +296,21 @@ namespace Wonga.QA.Tests.Ui
                     break;
             }
         }
+
+        [Test, AUT(AUT.Wb), Pending("Test not yet complete")]
+        public void WbLnJourney()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            var organization = OrganisationBuilder.New(customer).Build();
+            var applicationInfo =
+                ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatus.Accepted).
+                    Build() as BusinessApplication;
+            var paymentPlan = applicationInfo.GetPaymentPlan();
+            applicationInfo.MorningCollectionAttempt(paymentPlan, true, true);
+
+            loginPage.LoginAs(email);
+        }
     }
 }
