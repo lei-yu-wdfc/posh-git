@@ -22,6 +22,12 @@ namespace Wonga.QA.Tests.Ui
 {
     public class RepaymentTest : UiTest
     {
+        [Test, AUT(AUT.Za)]
+        public void ZaManualNaedoRepayment()
+        {
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+
+        }
         [Test, AUT(AUT.Za), Pending("Code not yet on rc.za.wonga.com as of 24/05/12")]
         public void ZaEasyPayRepayment()
         {

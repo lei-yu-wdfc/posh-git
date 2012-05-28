@@ -155,6 +155,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual RepaymentOptionsPage RepaymentOptionsPage { get; set; }
         public virtual EasypaymentNumberPrintPage EasypaymentNumberPrintPage { get; set; }
         public virtual MySummaryPageMobile MySummaryPageMobile { get; set; }
+        public virtual MyAccountRepayManualPage MyAccountRepayManualPage { get; set; }
         #endregion
 
         #region SalesForcePages

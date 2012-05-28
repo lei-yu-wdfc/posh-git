@@ -16,13 +16,16 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private readonly IWebElement _repaymentOptionsContainer;
         private readonly IWebElement _easypayNumber;
         private readonly IWebElement _easypayPrintButton;
-
+        private readonly IWebElement _manualRepaymentButton;
         
         public RepaymentOptionsPage(UiClient client) : base(client)
         {
             _repaymentOptionsContainer = Content.FindElement(By.CssSelector(UiMap.Get.RepaymentOptionsPage.RepaymentOptionsContainer));
             _easypayNumber = _repaymentOptionsContainer.FindElement(By.CssSelector(UiMap.Get.RepaymentOptionsPage.EasypayNumber));
             _easypayPrintButton = _repaymentOptionsContainer.FindElement(By.CssSelector(UiMap.Get.RepaymentOptionsPage.EasypayPrintButton));
+            _manualRepaymentButton =
+                _repaymentOptionsContainer.FindElement(
+                    By.CssSelector(UiMap.Get.RepaymentOptionsPage.ManualRepaymentButton));
         }
 
         public String EasypayNumber

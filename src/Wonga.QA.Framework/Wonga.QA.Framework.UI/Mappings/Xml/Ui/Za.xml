@@ -192,8 +192,19 @@
     <RepaymentOptionsContainer>.repayment-options</RepaymentOptionsContainer>
     <EasypayNumber>div.easypay-number-container span.easypay-number</EasypayNumber>
     <EasypayPrintButton>div.easypay-website-link a</EasypayPrintButton>
+    <ManualRepaymentButton>div.repayment-option-manual a.button</ManualRepaymentButton>
   </RepaymentOptionsPage>
 
+  <MyAccountRepayManualPage>
+    <RepaymentDate>#edit-repayment-date-friendly</RepaymentDate>
+    <AmountDueOnDueDate>#edit-amount-due-on-due-date</AmountDueOnDueDate>
+    <RepaymentAmount>#edit-repayment-amount</RepaymentAmount>
+    <RemainderToRepay>#edit-remainder-to-repay</RemainderToRepay>
+    <BankAccountMasked>#edit-bank-account-masked</BankAccountMasked>
+    <PleaseReadMeRepaymentAmount>#please_read_me_repayment_amount</PleaseReadMeRepaymentAmount>
+    <BankAccountMaskedLabelRepaymentAmount>#bank_account_masked_label_repayment_amount</BankAccountMaskedLabelRepaymentAmount>
+  </MyAccountRepayManualPage>
+  
   <EasypaymentNumberPrintPage>
     <YourEasyPayNumber>#easypaynumber_container #easypaynumber</YourEasyPayNumber>
   </EasypaymentNumberPrintPage>
