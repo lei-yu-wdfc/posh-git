@@ -1067,7 +1067,16 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-174")]
         public void L0JourneyCustomerUsesCombinationOfFirstNameLastNameAndEmailThatIsInDbRedirectedToLoginPage()
         {
-            var customer = Do.Until(() => Drive.Data.Comms.Db.CustomerDetails.FindAllByGender(2).FirstOrDefault());
+            string email = Get.RandomEmail();
+            string name = Get.GetName();
+            string surname = Get.RandomString(10);
+            Customer customer = CustomerBuilder
+                .New()
+                .WithEmailAddress(email)
+                .WithForename(name)
+                .WithSurname(surname)
+                .Build();
+
             string telephone = Get.RandomLong(1000000, 9999999).ToString();
             switch (Config.AUT)
             {
@@ -1077,9 +1086,8 @@ namespace Wonga.QA.Tests.Ui
                     var personalDetailsPageCa = journeyCa.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
                     personalDetailsPageCa.ProvinceSection.Province = "British Columbia";
                     Do.Until(() => personalDetailsPageCa.ProvinceSection.ClosePopup());
-                    personalDetailsPageCa.YourName.FirstName = customer.Forename;
-                    // personalDetailsPageCa.YourName.MiddleName = "MiddleName";
-                    personalDetailsPageCa.YourName.LastName = customer.Surname;
+                    personalDetailsPageCa.YourName.FirstName = name;
+                    personalDetailsPageCa.YourName.LastName = surname;
                     personalDetailsPageCa.YourName.Title = "Mr";
                     personalDetailsPageCa.YourDetails.Number = "123213126";
                     personalDetailsPageCa.YourDetails.DateOfBirth = "1/Jan/1980";
@@ -1096,7 +1104,7 @@ namespace Wonga.QA.Tests.Ui
                     personalDetailsPageCa.EmploymentDetails.SalaryPaidToBank = true;
                     personalDetailsPageCa.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("dd MMM yyyy");
                     personalDetailsPageCa.EmploymentDetails.IncomeFrequency = "Monthly";
-                    personalDetailsPageCa.ContactingYou.CellPhoneNumber = "07700900000";
+                    personalDetailsPageCa.ContactingYou.CellPhoneNumber = Get.GetMobilePhone();
                     personalDetailsPageCa.ContactingYou.EmailAddress = customer.Email;
                     personalDetailsPageCa.ContactingYou.ConfirmEmailAddress = customer.Email;
                     personalDetailsPageCa.PrivacyPolicy = true;
@@ -1110,8 +1118,8 @@ namespace Wonga.QA.Tests.Ui
                 case AUT.Za:
                     var journeyZa = JourneyFactory.GetL0Journey(Client.Home());
                     var personalDetailsPageZa = journeyZa.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
-                    personalDetailsPageZa.YourName.FirstName = customer.Forename;
-                    personalDetailsPageZa.YourName.LastName = customer.Surname;
+                    personalDetailsPageZa.YourName.FirstName = name;
+                    personalDetailsPageZa.YourName.LastName = surname;
                     personalDetailsPageZa.YourName.Title = "Mr";
                     personalDetailsPageZa.YourDetails.Number = Get.GetNationalNumber(new DateTime(1957, 3, 10), true);
                     personalDetailsPageZa.YourDetails.DateOfBirth = "10/Mar/1957";
@@ -1131,7 +1139,7 @@ namespace Wonga.QA.Tests.Ui
                     personalDetailsPageZa.EmploymentDetails.SalaryPaidToBank = true;
                     personalDetailsPageZa.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d/MMM/yyyy");
                     personalDetailsPageZa.EmploymentDetails.IncomeFrequency = "Monthly";
-                    personalDetailsPageZa.ContactingYou.CellPhoneNumber = "07700900000";
+                    personalDetailsPageZa.ContactingYou.CellPhoneNumber = Get.GetMobilePhone();
                     personalDetailsPageZa.ContactingYou.EmailAddress = customer.Email;
                     personalDetailsPageZa.ContactingYou.ConfirmEmailAddress = customer.Email;
                     personalDetailsPageZa.PrivacyPolicy = true;
@@ -1148,8 +1156,8 @@ namespace Wonga.QA.Tests.Ui
                     var journeyWb = JourneyFactory.GetL0JourneyWB(Client.Home());
                     var personalDetailsPageWb = journeyWb.ApplyForLoan(5500, 30)
                     .AnswerEligibilityQuestions().CurrentPage as PersonalDetailsPage;
-                    personalDetailsPageWb.YourName.FirstName = customer.Forename;
-                    personalDetailsPageWb.YourName.LastName = customer.Surname;
+                    personalDetailsPageWb.YourName.FirstName = name;
+                    personalDetailsPageWb.YourName.LastName = surname;
                     personalDetailsPageWb.YourName.Title = "Mr";
                     personalDetailsPageWb.YourDetails.Gender = "Female";
                     personalDetailsPageWb.YourDetails.DateOfBirth = "1/Jan/1990";
