@@ -118,8 +118,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 		{
 			var customer = CustomerBuilder.New().Build();
 			ApplicationBuilder.New(customer).Build().RepayOnDueDate();
-
-			Drive.Db.UpdateEmployerName(customer.Id, "Wonga");
+            CustomerOperations.UpdateEmployerNameInRisk(customer.Id, "Wonga");
 
 			var application =
 				ApplicationBuilder.New(customer)

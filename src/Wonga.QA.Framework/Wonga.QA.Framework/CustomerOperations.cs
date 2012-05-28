@@ -12,28 +12,28 @@ namespace Wonga.QA.Framework
 
         public static readonly String CUSTOMER_FULL_NAME = "FULL_NAME";
         public static readonly String CUSTOMER_FULL_ADDRESS = "FULL_ADDRESS";
+        private static readonly dynamic MarketingEligibleCustomersEntity = Drive.Data.Marketing.Db.MarketingEligibleCustomers;
+        private static readonly dynamic RiskDb = Drive.Data.Risk.Db;
 
-        private static readonly dynamic _eligibleCustomersEntity = Drive.Data.Marketing.Db.MarketingEligibleCustomers;
-
+        #region Public Members
+        /* Marketing Stuff */
         public static void CreateMarketingEligibility(Guid customerId, bool isEligible)
         {
             if (isEligible.Equals(true))
             {
-                Do.Until(() => _eligibleCustomersEntity.Insert(EligibleCustomerId: customerId, ShowAd: 1, CustomerInArrears: 0,
+                Do.Until(() => MarketingEligibleCustomersEntity.Insert(EligibleCustomerId: customerId, ShowAd: 1, CustomerInArrears: 0,
                                                CreateOn: Get.RandomDate(), HasStandardCard: 1, HasPremiumCard: 0));
             }
             else
             {
-                Do.Until(() => _eligibleCustomersEntity.Insert(EligibleCustomerId: customerId, ShowAd: 0, CustomerInArrears: 1,
+                Do.Until(() => MarketingEligibleCustomersEntity.Insert(EligibleCustomerId: customerId, ShowAd: 0, CustomerInArrears: 1,
                                               CreateOn: Get.RandomDate(), HasStandardCard: 1, HasPremiumCard: 0));
             }
         }
-		
         public static void DeleteMarketingEligibility(Guid customerId)
         {
-            Do.Until(() => _eligibleCustomersEntity.Delete(EligibleCustomerId: customerId));
+            Do.Until(() => MarketingEligibleCustomersEntity.Delete(EligibleCustomerId: customerId));
         }
-
         public static Dictionary<String, String> GetFullCustomerInfo(Guid customerId)
         {
             Dictionary<String, String> result = new Dictionary<string, string>();
@@ -41,20 +41,58 @@ namespace Wonga.QA.Framework
             result.Add(CUSTOMER_FULL_ADDRESS, GetFullCustomerAddress(customerId));
             return result;
         }
-
-        public static void ChangeMarketingEligibility(Guid customerId,bool isEligible)
+        public static void ChangeMarketingEligibility(Guid customerId, bool isEligible)
         {
             if (isEligible.Equals(true))
             {
-                Do.Until(() => _eligibleCustomersEntity.UpdateByEligibleCustomerId(EligibleCustomerId:customerId,
-                                                                                   CustomerInArrears:1));
+                Do.Until(() => MarketingEligibleCustomersEntity.UpdateByEligibleCustomerId(EligibleCustomerId: customerId,
+                                                                                   CustomerInArrears: 1));
             }
             else
             {
-                Do.Until(() => _eligibleCustomersEntity.UpdateByEligibleCustomerId(EligibleCustomerId:customerId,
-                                                                                    CustomerInArrears:0));
+                Do.Until(() => MarketingEligibleCustomersEntity.UpdateByEligibleCustomerId(EligibleCustomerId: customerId,
+                                                                                    CustomerInArrears: 0));
             }
         }
+
+        /* Risk stuff */
+        public static void UpdateEmployerNameInRisk(Guid accountId, string employerName)
+        {
+            Do.Until(() => RiskDb.EmploymentDetails.UpdateByAccountId(AccountId: accountId, EmployerName: employerName));
+        }
+        public static void UpdateMiddleNameInRisk(Guid accountId, string middleName)
+        {
+            Do.Until(() => RiskDb.RiskAccounts.UpdateByAccountId(AccountId: accountId, MiddleName: middleName));
+        }
+        public static void RemovePhoneNumberFromRisk(string phoneNumber)
+        {
+            Do.Until(() => RiskDb.RiskAccountMobilePhones.DeleteAllByMobilePhone(phoneNumber));
+        }
+        public static void AddPhoneNumberToRisk(string mobilePhoneNumber)
+        {
+            var tempGuid = Guid.NewGuid();
+
+            //Insert a new RiskAccount
+            Do.Until(
+                () =>
+                RiskDb.RiskAccounts.Insert(AccountId: tempGuid, AccountRank: 1, HasAccount: true, CreditLimit: 400,
+                                           ConfirmedFraud: false, DateOfBirth: Get.GetDoB(), DoNotRelend: false,
+                                           Forename: Get.RandomString(8), IsDebtSale: false, IsDispute: false,
+                                           IsHardship: false, Postcode: "KT2 5DL", MaidenName: Get.RandomString(8),
+                                           Middlename: Get.RandomString(8), Surname: Get.RandomString(8)));
+
+            //Insert a new RiskAccountMobilePhone
+            Do.Until(
+                () =>
+                RiskDb.RiskAccountMobilePhones.Insert(AccountId: tempGuid,
+                                                      DateUpdated: new DateTime(2010, 10, 06).ToDate(),
+                                                      MobilePhone: mobilePhoneNumber));
+
+        }
+
+        #endregion
+
+        #region Private Members
 
         private static String GetFullCustomerName(Guid customerId)
         {
@@ -72,7 +110,6 @@ namespace Wonga.QA.Framework
 
             return builder.ToString();
         }
-
         private static String GetFullCustomerAddress(Guid customerId)
         {
             StringBuilder builder = new StringBuilder();
@@ -92,5 +129,9 @@ namespace Wonga.QA.Framework
 
             return builder.ToString();
         }
+
+        #endregion
+
+        
     }
 }
