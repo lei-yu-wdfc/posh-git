@@ -190,7 +190,8 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-150"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-150"), Pending("Waiting for new sliders")]
+        // Category(TestCategories.Smoke) - return when test is enabled
         public void CustomerTypesValidValuesIntoAmountAndDurationFields()
         {
             var termCustomerEnter = Get.RandomInt(_termMin, _termMax);
