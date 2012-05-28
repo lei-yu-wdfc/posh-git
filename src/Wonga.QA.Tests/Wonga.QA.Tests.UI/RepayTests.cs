@@ -254,11 +254,12 @@ namespace Wonga.QA.Tests.Ui
             var daysShift = 7;
 
             //time-shift loan so it's due today
-            //TODO - Update the following code to use new Drive.Data
-            ApplicationEntity applicationEntity = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
-            RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == application.Id);
+            var applicationsTab = Drive.Data.Payments.Db.Applications;
+            dynamic applicationEntity = applicationsTab.FindAll(applicationsTab.ExternalId == application.Id).Single();
+            var riskApplicationsTab = Drive.Data.Risk.Db.RiskApplications;
+            dynamic riskApplicationEntity = riskApplicationsTab.FindAll(riskApplicationsTab.ApplicationId == application.Id).Single(); 
             TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
-            ApplicationOperations.RewindApplicationDates(applicationEntity, riskApplication, daysShiftSpan);
+            ApplicationOperations.RewindApplicationDates(applicationEntity, riskApplicationEntity, daysShiftSpan);
 
             var loginPage = Client.Login();
             var myAccountPage = loginPage.LoginAs(email);
@@ -289,11 +290,12 @@ namespace Wonga.QA.Tests.Ui
             var daysShift = 9;
 
             //time-shift loan so it's due today
-            //TODO - Update the following code to use new Drive.Data
-            ApplicationEntity applicationEntity = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
-            RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == application.Id);
+            var applicationsTab = Drive.Data.Payments.Db.Applications;
+            dynamic applicationEntity = applicationsTab.FindAll(applicationsTab.ExternalId == application.Id).Single();
+            var riskApplicationsTab = Drive.Data.Risk.Db.RiskApplications;
+            dynamic riskApplicationEntity = riskApplicationsTab.FindAll(riskApplicationsTab.ApplicationId == application.Id).Single(); 
             TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
-            ApplicationOperations.RewindApplicationDates(applicationEntity, riskApplication, daysShiftSpan);
+            ApplicationOperations.RewindApplicationDates(applicationEntity, riskApplicationEntity, daysShiftSpan);
 
             var loginPage = Client.Login();
             var myAccountPage = loginPage.LoginAs(email);
