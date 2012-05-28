@@ -254,6 +254,7 @@ namespace Wonga.QA.Tests.Ui
             var daysShift = 7;
 
             //time-shift loan so it's due today
+            //TODO - Update the following code to use new Drive.Data
             ApplicationEntity applicationEntity = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
             RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == application.Id);
             TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
@@ -288,6 +289,7 @@ namespace Wonga.QA.Tests.Ui
             var daysShift = 9;
 
             //time-shift loan so it's due today
+            //TODO - Update the following code to use new Drive.Data
             ApplicationEntity applicationEntity = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
             RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == application.Id);
             TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
