@@ -21,7 +21,7 @@
   <MobilePinVerificationSection>
     <Pin>#edit-pin-za</Pin>
 	<ResendPin>.resend-pin.mod</ResendPin>
-	<ResendPinMessage>#fancybox-content div div p</ResendPinMessage>  
+	<ResendPinMessage>#fancybox-content div</ResendPinMessage>  
   </MobilePinVerificationSection>
   
   <EmploymentDetailsSection>
@@ -49,7 +49,7 @@
 
   <AccountDetailsSection>
     <Fieldset>#lzero-account-setup-form</Fieldset>
-	  <PasswordErrorForm>#edit-password-wrapper .form-error .invalid</PasswordErrorForm>
+	  <PasswordErrorForm>#edit-password .form-error .invalid</PasswordErrorForm>
     <PasswordConfirmErrorForm>#edit-password-confirm-wrapper .form-error .invalid</PasswordConfirmErrorForm>
   </AccountDetailsSection>
 

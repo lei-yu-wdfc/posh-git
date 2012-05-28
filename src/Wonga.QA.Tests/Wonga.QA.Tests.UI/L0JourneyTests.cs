@@ -1120,7 +1120,7 @@ namespace Wonga.QA.Tests.Ui
                     personalDetailsPageZa.EmploymentDetails.SalaryPaidToBank = true;
                     personalDetailsPageZa.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d/MMM/yyyy");
                     personalDetailsPageZa.EmploymentDetails.IncomeFrequency = "Monthly";
-                    personalDetailsPageZa.ContactingYou.CellPhoneNumber = "07700900000";
+                    personalDetailsPageZa.ContactingYou.CellPhoneNumber = "0770090000";
                     personalDetailsPageZa.ContactingYou.EmailAddress = customer.Email;
                     personalDetailsPageZa.ContactingYou.ConfirmEmailAddress = customer.Email;
                     personalDetailsPageZa.PrivacyPolicy = true;
