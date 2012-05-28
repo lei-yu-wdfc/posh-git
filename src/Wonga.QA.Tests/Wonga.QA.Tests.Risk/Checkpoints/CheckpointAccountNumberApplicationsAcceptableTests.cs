@@ -32,7 +32,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			AssertCheckpointAndVerificationExecution();
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879"), DependsOn("L0NumberOfApplicationsBelowThresholdAccepted")]
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879"), DependsOn("L0NumberOfApplicationsBelowThresholdIsAccepted")]
 		public void LnNumberOfApplicationsBelowThresholdIsAccepted()
 		{
 			_application.RepayOnDueDate();
