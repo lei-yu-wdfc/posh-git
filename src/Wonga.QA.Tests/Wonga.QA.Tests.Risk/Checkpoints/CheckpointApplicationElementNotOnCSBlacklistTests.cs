@@ -44,8 +44,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 			var l0Application = ApplicationBuilder.New(customer).Build();
 			l0Application.RepayOnDueDate();
-
-			Drive.Db.UpdateEmployerName(customer.Id, TestMask.ToString());
+            CustomerOperations.UpdateEmployerNameInRisk(customer.Id, TestMask.ToString());
 
 			ApplicationBuilder.New(customer).Build();
 		}
@@ -56,8 +55,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			var customer = CustomerBuilder.New().WithEmployer(RiskMask.TESTNoCheck).Build();
 			var l0Application = ApplicationBuilder.New(customer).Build();
 			l0Application.RepayOnDueDate();
-
-			Drive.Db.UpdateEmployerName(customer.Id, TestMask.ToString());
+            CustomerOperations.UpdateEmployerNameInRisk(customer.Id, TestMask.ToString());
 
 			Drive.Msmq.Risk.Send(new RegisterDoNotRelendCommand { AccountId = customer.Id, DoNotRelend = true });
 			Do.Until(() => Drive.Data.Risk.Db.RiskAccounts.FindByAccountId(customer.Id).DoNotRelend);
