@@ -72,7 +72,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-177"), Category(TestCategories.Smoke)]//Test correct - need fix sliders
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-177"), Category(TestCategories.Smoke)]
         public void ChangeLoanAmountAndDurationOnPersonalDetailsViaPlusMinusOptions()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -143,7 +143,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-176"), Category(TestCategories.Smoke)]//Test is correct - need fix sliders
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-176"), Category(TestCategories.Smoke)]
         public void ChangeLoanAmountAndDurationOnPersonalDetailsViaTypingToTheFields()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -596,10 +596,10 @@ namespace Wonga.QA.Tests.Ui
                                           .FillAcceptedPage()
                                           .GoToMySummaryPage().CurrentPage as MySummaryPage;
                     var customerZa = Do.Until(() => Drive.Data.Comms.Db.CustomerDetails.FindBy(Forename: journey.FirstName, Surname: journey.LastName));
-                    //Console.WriteLine(customerZa.Email.ToString());
-                    //Console.WriteLine(customerZa.AccountId.ToString());
+                    Console.WriteLine(customerZa.Email.ToString());
+                    Console.WriteLine(customerZa.AccountId.ToString());
                     var applicationZa = Do.Until(() => Drive.Data.Payments.Db.Applications.FindBy(AccountId: customerZa.AccountId));
-                   // Console.WriteLine(applicationZa.AccountId.ToString());
+                    Console.WriteLine(applicationZa.AccountId.ToString());
                     var fixedTermApplicationZa = Do.Until(() => Drive.Data.Payments.Db.FixedTermLoanApplications.FindByApplicationId(applicationZa.ApplicationId));
                     Assert.AreEqual("200.00", fixedTermApplicationZa.LoanAmount.ToString());
                     Assert.AreEqual(String.Format("{0:d MMMM yyyy}", date), String.Format("{0:d MMMM yyyy}", fixedTermApplicationZa.PromiseDate));
