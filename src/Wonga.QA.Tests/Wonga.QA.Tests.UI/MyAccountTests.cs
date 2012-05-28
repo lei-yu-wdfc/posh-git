@@ -210,7 +210,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-216"), Pending("need refinement")]
+        [Test, AUT(AUT.Za), JIRA("QA-216"), Pending("need refinement"), Category(TestCategories.Smoke)]
         public void CustomerShouldBeAbleToChangePassword()
         {
             var loginPage = Client.Login();
@@ -554,7 +554,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-215"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-215")] //Removed from smoke because of selenium problem with new sliders
         public void MyAccountPostcodeMustBeTheSameAsUserEntered()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -705,7 +705,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-219")]
+        [Test, AUT(AUT.Za), JIRA("QA-219"), Category(TestCategories.Smoke)]
         public void CustomerShouldBeAbleToAddBankAccount()
         {
             var accountPreferences = Drive.Data.Payments.Db.AccountPreferences;

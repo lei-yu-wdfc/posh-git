@@ -14,6 +14,7 @@ using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Framework.Data.Enums.Risk;
+using Wonga.QA.Framework.Mocks;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
@@ -198,7 +199,30 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			}
 		}
 
-		[Test, AUT(AUT.Ca), JIRA("CA-2218"), Parallelizable]
+
+		[Test, AUT(AUT.Ca), JIRA("CA-2218")]
+		public void ReputationScoreShouldNotRunForBrandNewDevice()
+		{
+			string uniqueAlias = Guid.NewGuid().ToString("N");
+
+			IovationResponseBuilder.New()
+				.ForBlackBox(IovationMockResponse.AllowUniqueDevice)
+				.UseDeviceAlias(uniqueAlias)
+				.OnResponseBasedOn(IovationMockResponse.Allow);
+				
+			var customer = CustomerBuilder.New()
+				.WithEmployer(TestMask)
+				.WithPostcodeInAddress(GetPostcode())
+				.Build();
+
+			var application = ApplicationBuilder.New(customer)
+				.WithIovationBlackBox(IovationMockResponse.AllowUniqueDevice)
+				.WithExpectedDecision(ApplicationDecisionStatus.Accepted)
+				.Build();
+
+			AssertNoReputationPredictionScore(application);
+		}
+
 		#region Helpers
 
 		private string GetUseReputationScoreModelKeyName()
@@ -222,6 +246,12 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			var score = (double)Do.Until(() => Drive.Data.Risk.Db.RiskDecisionData.FindByRiskWorkflowId(riskWorkflowId).ValueDouble);
 
 			return score;
+		}
+
+		private void AssertNoReputationPredictionScore(Application application)
+		{
+			var riskWorkflowId = (int)Do.Until(() => Drive.Data.Risk.Db.RiskWorkflows.FindByApplicationId(application.Id)).RiskWorkflowId;
+			Assert.IsNull(Drive.Data.Risk.Db.RiskDecisionData.FindByRiskWorkflowId(riskWorkflowId));
 		}
 
 		private IEnumerable<string> GetFactorNamesUsed(Application application)
@@ -347,7 +377,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			switch (Config.AUT)
 			{
 				case AUT.Ca:
-					return 400;
+					return 610;
 
 				case AUT.Za:
 					return 200;

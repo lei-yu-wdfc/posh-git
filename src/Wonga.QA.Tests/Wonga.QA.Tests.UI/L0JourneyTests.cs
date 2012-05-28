@@ -73,9 +73,12 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-177"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-177"), Category(TestCategories.Smoke)] //AUT.Ca removed because of sliders changing
         public void ChangeLoanAmountAndDurationOnPersonalDetailsViaPlusMinusOptions()
         {
+            //CA is out due to new wonga sliders being implemented on homepage only 
+            //soon it will be on "my account" and in other regions
+
             var journey = JourneyFactory.GetL0Journey(Client.Home());
             var personalDetailsPage = journey.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
             personalDetailsPage.ClickSliderToggler();
@@ -144,9 +147,12 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-176"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-176"), Category(TestCategories.Smoke)] //AUT.Ca removed because of sliders changing
         public void ChangeLoanAmountAndDurationOnPersonalDetailsViaTypingToTheFields()
         {
+            //CA is out due to new wonga sliders being implemented on homepage only 
+            //soon it will be on "my account" and in other regions
+            
             var journey = JourneyFactory.GetL0Journey(Client.Home());
             var personalDetailsPage = journey.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
             personalDetailsPage.ClickSliderToggler();
@@ -344,7 +350,7 @@ namespace Wonga.QA.Tests.Ui
                 case AUT.Ca:
                     string[] date = acceptedPage.GetPaymentDueDate.Replace(",", "").Split(' ');
                     string day = date[2][0] == '0' ? date[2].Remove(0, 1) : date[2];
-                    string paymentDate = date[0] + " " + day + " " + date[1] + " " + date[3]; // Note: Temp fix, need better solutions
+                    string paymentDate = date[0] + " " + day + " " + date[1].Remove(3) + " " + date[3]; // Note: Temp fix, need better solutions
 
                     Assert.AreEqual(totalAmountOnPersonalDetails, acceptedPage.GetPrincipalAmountBorrowed);
                     Assert.AreEqual(totalAmountOnPersonalDetails, acceptedPage.GetPrincipalAmountToBeTransfered);
@@ -436,9 +442,12 @@ namespace Wonga.QA.Tests.Ui
                 .FillAcceptedPage().CurrentPage as DealDonePage;
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-170"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-170")] //Removed from smoke because of the problem with sliders update
         public void CustomerOnHowItWorksPageShouldBeAbleUseSlidersProperly()
         {
+            //CA is out due to new wonga sliders being implemented on homepage only 
+            //soon it will be on "my account" and in other regions
+            
             var howItWorks = Client.HowItWorks();
             var personalDetailsPage = howItWorks.ApplyForLoan(200, 10);
             Assert.IsTrue(personalDetailsPage is PersonalDetailsPage);
@@ -561,7 +570,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(addressDetailsPage.IsPostcodeWarningOccurred());
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-191"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-191")] //Removed from smoke because of selenium problem with new sliders
         public void CustomerClicksAcceptButtonChosenLoanAmountShouldDepositedIntoAccountCheckDatabase()
         {
             DateTime date;
@@ -650,7 +659,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-188")]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-188")] //Removed from smoke because of selenium problem with new sliders
         public void CustomerOnBankDetailsPageClicksOnResendPinLinkMessageShouldDisplayedAndPinShouldResent()
         {
             Random rand = new Random();
@@ -1335,7 +1344,7 @@ namespace Wonga.QA.Tests.Ui
                                  .CurrentPage as ProcessingPage;
         }
 
-        [Test, AUT(AUT.Ca), Category(TestCategories.Smoke), JIRA("QA-280"), Pending("There is no <<Your previous addres>> section whan I select eny addres periods.")]
+        [Test, AUT(AUT.Ca), JIRA("QA-280"), Pending("There is no <<Your previous addres>> section whan I select eny addres periods.")]
         public void L0CustomerEntersInappropriatePostcodeToPreviousAddressSectionShouldNotGoFurther()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
