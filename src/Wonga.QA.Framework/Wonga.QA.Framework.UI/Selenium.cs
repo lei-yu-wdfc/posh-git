@@ -116,6 +116,11 @@ namespace Wonga.QA.Framework.UI
             }
         }
 
+        public static void LostFocus(this IWebElement element)
+        {
+            element.SendKeys(Keys.Tab);
+        }
+
 
         //Does not work in Firefox and IE only Chrome atm.
         //public static void MouseOver(this IWebElement element)
