@@ -325,7 +325,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-190"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-190"), Category(TestCategories.Smoke), Pending("Waiting for implementation of new sliders")]
         public void L0JourneyDataOnAcceptedPageShouldBeCorrect()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
