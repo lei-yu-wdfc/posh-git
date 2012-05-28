@@ -30,11 +30,15 @@ namespace Wonga.QA.Tests.Comms.Email
                 TopupAmount = 150
             });
 
-            var app = Drive.Db.Payments.Applications.Single(x => x.ExternalId == application.Id);
-            Assert.IsNotNull(Do.Until(() => Drive.Db.Payments.Topups.Single(x => x.ApplicationId == app.ApplicationId)));
+            var appTab = Drive.Data.Payments.Db.Applications;
+            var app = appTab.FindAll(appTab.ExternalId == application.Id).Single();
+            var topupsTab = Drive.Data.Payments.Db.Topups;
+            Assert.IsNotNull(Do.Until(() => topupsTab.FindAll(topupsTab.ApplicationId == app.ApplicationId).Single()));
 
-            var legalDocumentEntity = Do.Until(() => Drive.Db.Comms.LegalDocuments.Single(p => p.ApplicationId == application.Id && p.AccountId == customer.Id && p.DocumentType == 4)); //SECCI Document
-            Do.Until(() => Drive.Db.FileStorage.Files.Single(f => f.FileId == legalDocumentEntity.ExternalId));
+            var legalDocsTab = Drive.Data.Comms.Db.LegalDocuments;
+            var legalDocumentEntity = Do.Until(() => legalDocsTab.FindAll(legalDocsTab.ApplicationId == application.Id &&legalDocsTab.AccountId == customer.Id && legalDocsTab.DocumentType == 4).Single()); //SECCI Document
+            var filesTab = Drive.Data.FileStorage.Db.Files;
+            Do.Until(() => filesTab.FindAll(filesTab.FileId == legalDocumentEntity.ExternalId).Single());
         }
 
 
