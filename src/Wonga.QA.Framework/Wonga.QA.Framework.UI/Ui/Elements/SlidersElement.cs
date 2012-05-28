@@ -66,7 +66,8 @@ namespace Wonga.QA.Framework.UI.Elements
                 }
                 else
                 {
-                    new Actions(Page.Client.Driver).DoubleClick(_loanAmount).Build().Perform();
+                    _loanAmount.Click();
+                    _loanAmount.SendKeys(Keys.End + Keys.Backspace + Keys.Backspace + Keys.Backspace + Keys.Backspace);
                     _loanAmount.SendKeys(value);
                     Page.Content.Click();
                 }
@@ -84,7 +85,8 @@ namespace Wonga.QA.Framework.UI.Elements
                 }
                 else
                 {
-                    new Actions(Page.Client.Driver).DoubleClick(_loanDuration).Build().Perform();
+                    _loanDuration.Click();
+                    _loanDuration.SendKeys(Keys.End + Keys.Backspace + Keys.Backspace);
                     _loanDuration.SendKeys(value);
                     Page.Content.Click();
                 }
