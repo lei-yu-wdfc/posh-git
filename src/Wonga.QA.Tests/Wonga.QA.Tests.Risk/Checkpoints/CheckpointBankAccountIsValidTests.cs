@@ -12,25 +12,12 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[AUT(AUT.Za), Explicit("Must investigate issue with mock")]
+	[TestFixture, Parallelizable(TestScope.All)]
 	class CheckpointBankAccountIsValidTests
 	{
         private const RiskMask TestMask = RiskMask.TESTBankAccountIsValid;
-		private static readonly string AhvMockOriginalValue = Drive.Db.GetServiceConfiguration("Mocks.HyphenAHVWebServiceEnabled").Value;
 
-		[FixtureSetUp]
-		public void FixtureSetUp()
-		{
-			Drive.Db.SetServiceConfiguration("Mocks.HyphenAHVWebServiceEnabled", "false");
-		}
-
-		[FixtureTearDown]
-		public void FixtureTearDown()
-		{
-			Drive.Db.SetServiceConfiguration("Mocks.HyphenAHVWebServiceEnabled", AhvMockOriginalValue);
-		}
-
-		[Test, AUT(AUT.Za), JIRA("ZA-1910"), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1910")]
 		public void CheckpointBankAccountIsValidShouldReturnReadyToSignStatus()
 		{
 			var bankAccountNumber = Get.GetBankAccountNumber().ToString();

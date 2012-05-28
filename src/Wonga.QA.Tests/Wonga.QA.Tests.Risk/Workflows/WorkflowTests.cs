@@ -12,11 +12,9 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Workflows
 {
-	[TestFixture]
+	[TestFixture, Parallelizable(TestScope.All), Pending("ZA-2565")]
 	public partial class WorkflowTests
 	{
-		private Dictionary<string, string> _originalServiceConfiguration = new Dictionary<string, string>();
-		
 		[FixtureSetUp]
 		public void FixtureSetUp()
 		{
@@ -24,11 +22,13 @@ namespace Wonga.QA.Tests.Risk.Workflows
 			{
 				case (AUT.Za):
 					{
-						_originalServiceConfiguration.Add("Mocks.HyphenAHVWebServiceEnabled", Drive.Db.GetServiceConfiguration("Mocks.HyphenAHVWebServiceEnabled").Value);
-						Drive.Db.SetServiceConfiguration("Mocks.HyphenAHVWebServiceEnabled", "false");
+						var hyphenAhvServiceEnabled = Drive.Data.Ops.GetServiceConfiguration<bool?>("Mocks.HyphenAHVWebServiceEnabled");
+						var iovationMockEnabled = Drive.Data.Ops.GetServiceConfiguration<bool?>("Mocks.IovationEnabled");
 
-						_originalServiceConfiguration.Add("Mocks.IovationEnabled", "true");
-						Drive.Db.SetServiceConfiguration("Mocks.IovationEnabled", "false");
+						if( hyphenAhvServiceEnabled == null || hyphenAhvServiceEnabled == false || iovationMockEnabled == null || iovationMockEnabled == false)
+						{
+							Assert.Inconclusive("Test could not be ran due to service configuration");
+						}
 					}
 					break;
 
@@ -37,12 +37,6 @@ namespace Wonga.QA.Tests.Risk.Workflows
 						return;
 					}
 			}
-		}
-
-		[FixtureTearDown]
-		public void FixtureTearDown()
-		{
-			Drive.Db.SetServiceConfigurations(_originalServiceConfiguration);
 		}
 
 		[Test, AUT(AUT.Za, AUT.Ca), Pending("Pedro is working on a refactor")]
