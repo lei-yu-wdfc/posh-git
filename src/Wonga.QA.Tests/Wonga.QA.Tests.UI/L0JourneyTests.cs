@@ -152,7 +152,7 @@ namespace Wonga.QA.Tests.Ui
         {
             //CA is out due to new wonga sliders being implemented on homepage only 
             //soon it will be on "my account" and in other regions
-            
+
             var journey = JourneyFactory.GetL0Journey(Client.Home());
             var personalDetailsPage = journey.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
             personalDetailsPage.ClickSliderToggler();
@@ -448,7 +448,7 @@ namespace Wonga.QA.Tests.Ui
         {
             //CA is out due to new wonga sliders being implemented on homepage only 
             //soon it will be on "my account" and in other regions
-            
+
             var howItWorks = Client.HowItWorks();
             var personalDetailsPage = howItWorks.ApplyForLoan(200, 10);
             Assert.IsTrue(personalDetailsPage is PersonalDetailsPage);
@@ -1604,7 +1604,8 @@ namespace Wonga.QA.Tests.Ui
 
                     var acceptedPageCa = processingPageCa.WaitFor<AcceptedPage>() as AcceptedPage;
                     acceptedPageCa.SignConfirmCaL0(DateTime.Now.ToString("d MMM yyyy"), journeyCa.FirstName, journeyCa.LastName);
-                    var dealDoneCa = acceptedPageCa.Submit();
+                    var dealDoneCa = acceptedPageCa.Submit() as DealDonePage;
+                    var mySummaryCa = dealDoneCa.ContinueToMyAccount();
                     break;
 
                 case AUT.Za:
@@ -1616,15 +1617,16 @@ namespace Wonga.QA.Tests.Ui
                                          .FillBankDetails()
                                          .CurrentPage as ProcessingPage;
 
-                    var acceptedPageZa = processingPageZa.WaitFor<AcceptedPage>() as AcceptedPage;
-                    acceptedPageZa.SignConfirmCaL0(DateTime.Now.ToString("d MMM yyyy"), journeyZa.FirstName, journeyZa.LastName);
-                    var dealDoneZa = acceptedPageZa.Submit();
+                    var acceptedPage = processingPageZa.WaitFor<AcceptedPage>() as AcceptedPage;
+                    acceptedPage.SignAgreementConfirm();
+                    acceptedPage.SignDirectDebitConfirm();
+                    var dealDoneZa = acceptedPage.Submit() as DealDonePage;
+                    var mySummaryZa = dealDoneZa.ContinueToMyAccount();
                     break;
             }
             var mail = Do.Until(() => Drive.Data.QaData.Db.Emails.FindByEmailAddress(email));
             var mailTemplate = Do.Until(() => Drive.Data.QaData.Db.EmailToken.FindAllBy(EmailId: mail.EmailId, Key: "Html_body"));
             Console.WriteLine(mailTemplate.Count);
-
         }
     }
 }
