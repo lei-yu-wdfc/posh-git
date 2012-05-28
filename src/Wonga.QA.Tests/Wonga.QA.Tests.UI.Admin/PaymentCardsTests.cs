@@ -5,13 +5,12 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Ui.Admin
 {
-    class PaymentCardsTest : AdminTest
+    class PaymentCardsTest : UiTest 
     {
         [Ignore]
         [Test, AUT(AUT.Uk)]
         public void CustomerOnAboutUsPageShouldBeAbleChooseEveryLink()
         {
-            Client = new UiClient();
             Client.PaymentCards().AddCard();
         }
     }
