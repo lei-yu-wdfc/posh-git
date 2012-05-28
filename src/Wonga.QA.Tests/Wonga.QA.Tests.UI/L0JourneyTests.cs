@@ -1397,7 +1397,7 @@ namespace Wonga.QA.Tests.Ui
             }
 
             _response = Drive.Api.Queries.Post(request);
-            _amountMax = (int) Decimal.Parse(_response.Values["AmountMax"].Single(), CultureInfo.InvariantCulture);
+            _amountMax = (int)Decimal.Parse(_response.Values["AmountMax"].Single(), CultureInfo.InvariantCulture);
             _termMax = Int32.Parse(_response.Values["TermMax"].Single(), CultureInfo.InvariantCulture);
 
             amountOfLoan = _amountMax;
@@ -1515,7 +1515,7 @@ namespace Wonga.QA.Tests.Ui
                     break;
             }
         }
-        [Test, AUT(AUT.Wb),JIRA("QA-287"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Wb), JIRA("QA-287"), Category(TestCategories.Smoke)]
         public void WbL0JourneyShouldNotBeAbleToProceedWithoutAcceptingAllEligibilityQuestions()
         {
             int getRandomNumber = Get.RandomInt(0, 7);
@@ -1587,5 +1587,44 @@ namespace Wonga.QA.Tests.Ui
             Console.WriteLine("Manually check that that loan agreement and SECCI emails are sent for user={0}", email);
         }
 
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-204")]
+        public void WhenUserAcceptsTheAgreementThenHeGotEmail()
+        {
+            var email = Get.RandomEmail();
+            switch (Config.AUT)
+            {
+                case AUT.Ca:
+                    var journeyCa = JourneyFactory.GetL0Journey(Client.Home());
+                    var processingPageCa = journeyCa.ApplyForLoan(200, 10)
+                                         .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                                         .FillAddressDetails()
+                                         .FillAccountDetails()
+                                         .FillBankDetails()
+                                         .CurrentPage as ProcessingPage;
+
+                    var acceptedPageCa = processingPageCa.WaitFor<AcceptedPage>() as AcceptedPage;
+                    acceptedPageCa.SignConfirmCaL0(DateTime.Now.ToString("d MMM yyyy"), journeyCa.FirstName, journeyCa.LastName);
+                    var dealDoneCa = acceptedPageCa.Submit();
+                    break;
+
+                case AUT.Za:
+                    var journeyZa = JourneyFactory.GetL0Journey(Client.Home());
+                    var processingPageZa = journeyZa.ApplyForLoan(200, 10)
+                                         .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                                         .FillAddressDetails()
+                                         .FillAccountDetails()
+                                         .FillBankDetails()
+                                         .CurrentPage as ProcessingPage;
+
+                    var acceptedPageZa = processingPageZa.WaitFor<AcceptedPage>() as AcceptedPage;
+                    acceptedPageZa.SignConfirmCaL0(DateTime.Now.ToString("d MMM yyyy"), journeyZa.FirstName, journeyZa.LastName);
+                    var dealDoneZa = acceptedPageZa.Submit();
+                    break;
+            }
+            var mail = Do.Until(() => Drive.Data.QaData.Db.Emails.FindByEmailAddress(email));
+            var mailTemplate = Do.Until(() => Drive.Data.QaData.Db.EmailToken.FindAllBy(EmailId: mail.EmailId, Key: "Html_body"));
+            Console.WriteLine(mailTemplate.Count);
+
+        }
     }
 }
