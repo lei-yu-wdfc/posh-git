@@ -16,7 +16,7 @@ namespace Wonga.QA.Tests.Payments.Command
             Guid caseId = Guid.NewGuid();
 
 
-            Drive.Cs.Commands.Post();
+            //Drive.Cs.Commands.Post();
         }
     }
 }
