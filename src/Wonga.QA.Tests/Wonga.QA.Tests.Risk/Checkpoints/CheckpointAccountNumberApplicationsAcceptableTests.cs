@@ -24,7 +24,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		private Application _application;
 
 		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879")]
-		public void L0NumberOfApplicationsBelowThresholdAccepted()
+		public void L0NumberOfApplicationsBelowThresholdIsAccepted()
 		{
 			_customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
 			_application = ApplicationBuilder.New(_customer).Build();
@@ -33,7 +33,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		}
 
 		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879"), DependsOn("L0NumberOfApplicationsBelowThresholdAccepted")]
-		public void LnNumberOfApplicationsBelowThresholdAccepted()
+		public void LnNumberOfApplicationsBelowThresholdIsAccepted()
 		{
 			_application.RepayOnDueDate();
 			Application lnApplication = ApplicationBuilder.New(_customer).Build();
@@ -42,7 +42,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		}
 
 		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879"), Timeout(0)]
-		public void LnNumberOfApplicationDailyOverThresholdDeclined()
+		public void LnNumberOfApplicationDailyOverThresholdIsDeclined()
 		{
 			var customerLn = CustomerBuilder.New().WithEmployer(RiskMask.TESTEmployedMask).WithEmployerStatus("Unemployed").Build();
 			
@@ -59,7 +59,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		}
 
 		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879"), Timeout(0)]
-		public void LnNumberOfApplicationMonthlyOverThresholdDeclined()
+		public void LnNumberOfApplicationMonthlyOverThresholdIsDeclined()
 		{
 			//make one app per day up until the monthly threshold so that the daily limit is not exceeded
 			var customerLn = CustomerBuilder.New().WithEmployer(RiskMask.TESTEmployedMask).WithEmployerStatus("Unemployed").Build();

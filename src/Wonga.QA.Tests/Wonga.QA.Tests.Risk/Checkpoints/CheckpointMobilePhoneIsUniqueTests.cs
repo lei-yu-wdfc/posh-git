@@ -6,42 +6,25 @@ using Wonga.QA.Framework;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
+	[TestFixture, Parallelizable(TestScope.All)]
 	public class CheckpointMobilePhoneIsUniqueTests
 	{
 		private const RiskMask TestMask = RiskMask.TESTMobilePhoneIsUnique;
-		string _phoneNumber;
+		private Customer _customer;
+		private static readonly string _phoneNumber = Get.GetMobilePhone();
 
-		[SetUp]
-		public void Setup()
-		{
-			_phoneNumber = Get.GetMobilePhone();
-			Drive.Data.Risk.Db.RiskAccountMobilePhones.Delete(MobilePhone: _phoneNumber);
-		}
-
-		[TearDown]
-		public void TearDown()
-		{
-
-			Drive.Data.Risk.Db.RiskAccountMobilePhones.Delete(MobilePhone: _phoneNumber);
-		}
-
-		[Test, Pending("ZA-2565")]
+		[Test]
 		[JIRA("UK-1563")]
 		public void L0_MobilePhoneIsUnique_LoanIsAccepted()
 		{
-			Customer customer = CreateCustomerWithVerifiedMobileNumber(_phoneNumber);
-			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+			_customer = CreateCustomerWithVerifiedMobileNumber(_phoneNumber);
+			ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 		}
 
-		[Test, Pending("ZA-2565")]
+		[Test, DependsOn("L0_MobilePhoneIsUnique_LoanIsAccepted")]
 		[JIRA("UK-1563")]
 		public void L0_MobilePhoneIsNotUnique_LoanIsDeclined()
 		{
-			//Create previous customer record
-			Customer customer1 = CreateCustomerWithVerifiedMobileNumber(_phoneNumber);
-			ApplicationBuilder.New(customer1).Build();
-
-
 			//Create and check new customer
 			Customer customer = CreateCustomerWithVerifiedMobileNumber(_phoneNumber);
 			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();

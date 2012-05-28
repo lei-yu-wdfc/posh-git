@@ -18,7 +18,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
         private const RiskMask TestMask = RiskMask.TESTBankAccountIsValid;
 
 		[Test, AUT(AUT.Za), JIRA("ZA-1910")]
-		public void CheckpointBankAccountIsValidShouldReturnReadyToSignStatus()
+		public void CheckpointShouldReturnReadyToSignStatus()
 		{
 			var bankAccountNumber = Get.GetBankAccountNumber().ToString();
 
