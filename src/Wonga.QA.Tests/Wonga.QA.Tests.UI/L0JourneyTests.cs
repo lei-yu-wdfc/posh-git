@@ -1077,7 +1077,6 @@ namespace Wonga.QA.Tests.Ui
                 .WithSurname(surname)
                 .Build();
 
-            string telephone = Get.RandomLong(1000000, 9999999).ToString();
             switch (Config.AUT)
             {
                 #region Ca
@@ -1165,7 +1164,7 @@ namespace Wonga.QA.Tests.Ui
                     personalDetailsPageWb.YourDetails.MaritalStatus = "Single";
                     personalDetailsPageWb.YourDetails.NumberOfDependants = "0";
                     personalDetailsPageWb.ContactingYou.HomePhoneNumber = "02071111234";
-                    personalDetailsPageWb.ContactingYou.CellPhoneNumber = "077" + "0" + telephone;
+                    personalDetailsPageWb.ContactingYou.CellPhoneNumber = Get.GetMobilePhone();
                     personalDetailsPageWb.ContactingYou.EmailAddress = customer.Email;
                     personalDetailsPageWb.ContactingYou.ConfirmEmailAddress = customer.Email;
                     personalDetailsPageWb.CanContact = "No";
