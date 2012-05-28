@@ -59,12 +59,15 @@ namespace Wonga.QA.Tests.Comms.Email
                 FixedTermLoanTopupId = fixedTermLoanTopupId,
                 TopupAmount = 150
             });
+            var appTab = Drive.Data.Payments.Db.Applications;
+            var app = appTab.FindAll(appTab.ExternalId == application.Id).Single();
+            var topupsTab = Drive.Data.Payments.Db.Topups;
+            Assert.IsNotNull(Do.Until(() => topupsTab.FindAll(topupsTab.ApplicationId == app.ApplicationId).Single()));
+            var legDocsTab = Drive.Data.Comms.Db.LegalDocuments;
+            Do.Until(() => legDocsTab.FindAll(legDocsTab.ApplicationId == application.Id && legDocsTab.AccountId == customer.Id && legDocsTab.DocumentType == 5).Single()); //Agreement document
 
-            var app = Drive.Db.Payments.Applications.Single(x => x.ExternalId == application.Id);
-            Assert.IsNotNull(Do.Until(() => Drive.Db.Payments.Topups.Single(x => x.ApplicationId == app.ApplicationId)));
-            Do.Until(() => Drive.Db.Comms.LegalDocuments.Single(p => p.ApplicationId == application.Id && p.AccountId == customer.Id && p.DocumentType == 5)); //Agreement document
-
-            Do.Until(() => Drive.Db.OpsSagas.EmailTopUpAgreementEntities.Single(x => x.TopUpId == fixedTermLoanTopupId)); //Email TopUp Agreement Saga in progress
+            var emailTopupAgreementTab = Drive.Data.OpsSagas.Db.EmailTopupAgreementEntity;
+            Do.Until(() => emailTopupAgreementTab.FindAll(emailTopupAgreementTab.TopUpId == fixedTermLoanTopupId).Single()); //Email TopUp Agreement Saga in progress
 
             Drive.Msmq.Comms.Send(new ILoanToppedUpEvent
             {
@@ -74,7 +77,7 @@ namespace Wonga.QA.Tests.Comms.Email
                 TopupId = fixedTermLoanTopupId,
             }
                 );
-            Do.Until(() => !Drive.Db.OpsSagas.EmailTopUpAgreementEntities.Any(x => x.TopUpId == fixedTermLoanTopupId)); //Email TopUp Agreement Saga completed
+            Do.Until(() => !emailTopupAgreementTab.FindAll(emailTopupAgreementTab.TopUpId == fixedTermLoanTopupId).Any()); //Email TopUp Agreement Saga completed
         }
     }
 }
