@@ -76,6 +76,7 @@
     <Compile Include="Mappings\Content\ErrorsMessages\AddressDetailsPage.cs" />
     <Compile Include="Mappings\Content\ErrorsMessages\MobilePinVerificationSection.cs" />
     <Compile Include="Mappings\Content\Links\FAQPageLinks.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\MyAccountRepayManualPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\MySummaryPageMobile.cs" />
     <Compile Include="Mappings\Content\Pages\TimeoutTestPage.cs" />
     <Compile Include="Mappings\Content\Pages\ExtensionAgreementPage.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Mappings\Ui\Pages\Common\ApplyTermsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\BlogPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\EasypaymentNumberPrintPage.cs" />
+    <Compile Include="Ui\Pages\Common\MyAccountRepayManualPage.cs" />
     <Compile Include="Ui\Pages\Common\MySummaryPageMobile.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayDueFullpaySuccessPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayEarlyFullpaySuccessPage.cs" />
