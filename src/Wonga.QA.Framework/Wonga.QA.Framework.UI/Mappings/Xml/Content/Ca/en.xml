@@ -5,6 +5,7 @@
   <MobilePinVerificationSection>
     <ResendPinMessage1>Your pin has now been resent to your phone. You should receive it within a few minutes.</ResendPinMessage1>
     <ResendPinMessage2>We have resent your PIN.</ResendPinMessage2>
+    <ResendPinMessage3>Thanks, we have re-sent your PIN. If you still don't receive your PIN, please contact our customer services team on the number displayed on our contact us page for assistance.</ResendPinMessage3>
   </MobilePinVerificationSection>
 
 	<AccountDetailsSection>
