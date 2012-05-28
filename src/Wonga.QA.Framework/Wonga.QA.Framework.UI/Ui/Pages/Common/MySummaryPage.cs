@@ -25,7 +25,6 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                 case (AUT.Za) :
                     Navigation = new MyAccountNavigationElement(this);
                     Tabs = new TabsElement(this);
-                    //RepayButton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.RepayButton));
                     break;
 
                 case (AUT.Ca) :

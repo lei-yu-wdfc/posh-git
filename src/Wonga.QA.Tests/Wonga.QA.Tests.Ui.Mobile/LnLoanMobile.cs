@@ -3,12 +3,13 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
+using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Ui.Mobile
 {
     class LnLoanMobile : UiMobileTest
     {
-        [Test, Pending("Test not yet complete")]
+        [Test, AUT(AUT.Za), Pending("Test not yet complete")]
         public void FullLnMobile()
         {
             var loginPage = Client.Login();
