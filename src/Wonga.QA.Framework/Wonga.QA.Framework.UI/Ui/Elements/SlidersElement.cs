@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Threading;
+using MbUnit.Framework;
+using NHamcrest.Core;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using Wonga.QA.Framework.Core;
@@ -57,9 +59,18 @@ namespace Wonga.QA.Framework.UI.Elements
             get { return _loanAmount.GetValue(); }
             set
             {
-                new Actions(Page.Client.Driver).DoubleClick(_loanAmount).Build().Perform();
-                _loanAmount.SendKeys(value);
-                Page.Content.Click();
+                if (Config.AUT.Equals(AUT.Wb))
+                {
+                    _loanAmount.Clear();
+                    _loanAmount.SendKeys(value);
+                }
+                else
+                {
+                    _loanAmount.Click();
+                    _loanAmount.SendKeys(Keys.End + Keys.Backspace + Keys.Backspace + Keys.Backspace + Keys.Backspace);
+                    _loanAmount.SendKeys(value);
+                    Page.Content.Click();
+                }
             }
         }
         public String HowLong
@@ -67,9 +78,18 @@ namespace Wonga.QA.Framework.UI.Elements
             get { return _loanDuration.GetValue(); }
             set
             {
-                new Actions(Page.Client.Driver).DoubleClick(_loanDuration).Build().Perform();
-                _loanDuration.SendKeys(value);
-                Page.Content.Click();
+                if (Config.AUT.Equals(AUT.Wb))
+                {
+                    _loanDuration.Clear();
+                    _loanDuration.SendKeys(value);
+                }
+                else
+                {
+                    _loanDuration.Click();
+                    _loanDuration.SendKeys(Keys.End + Keys.Backspace + Keys.Backspace);
+                    _loanDuration.SendKeys(value);
+                    Page.Content.Click();
+                }
             }
         }
         public int MoveAmountSlider //Moving by pixels NOT by cash value
