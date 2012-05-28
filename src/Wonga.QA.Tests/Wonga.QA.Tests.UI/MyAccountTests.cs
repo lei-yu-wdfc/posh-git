@@ -111,7 +111,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-201")]
+        [Test, AUT(AUT.Za), JIRA("QA-201"), Category(TestCategories.Smoke)]
         public void WhenLoggedCustomerWithoutLiveLoanAddsNewBankAccountItShouldBecomePrimary()
         {
             string accountNumber = "1234567";
@@ -210,7 +210,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-216"), Pending("need refinement")]
+        [Test, AUT(AUT.Za), JIRA("QA-216"), Pending("need refinement"), Category(TestCategories.Smoke)]
         public void CustomerShouldBeAbleToChangePassword()
         {
             var loginPage = Client.Login();
@@ -450,7 +450,7 @@ namespace Wonga.QA.Tests.Ui
             // need to add check data in SF whan it well be ready for this
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-187"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-187"), Category(TestCategories.Smoke)]
         public void CustomerEntersInvalidBankAccountWarningMessageShouldBeDisplayed()
         {
             var accounts = new List<string> { "dfgsfgfgsdf", "123 342", "123f445", "+135-6887" };
@@ -705,7 +705,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-219")]
+        [Test, AUT(AUT.Za), JIRA("QA-219"), Category(TestCategories.Smoke)]
         public void CustomerShouldBeAbleToAddBankAccount()
         {
             var accountPreferences = Drive.Data.Payments.Db.AccountPreferences;
