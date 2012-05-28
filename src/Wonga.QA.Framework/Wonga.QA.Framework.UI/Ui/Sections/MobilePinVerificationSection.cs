@@ -26,6 +26,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             try
             {
                 _resendPinMessege = Do.Until(() => Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.MobilePinVerificationSection.ResendPinMessage)));
+                if(_resendPinMessege == null)
+                {
+                    Console.WriteLine("What it`s wrong?");
+                }
                 if (_resendPinMessege.Text.Equals(ContentMap.Get.MobilePinVerificationSection.ResendPinMessage1) || _resendPinMessege.Text.Equals(ContentMap.Get.MobilePinVerificationSection.ResendPinMessage2))
                 {
                     return true;
