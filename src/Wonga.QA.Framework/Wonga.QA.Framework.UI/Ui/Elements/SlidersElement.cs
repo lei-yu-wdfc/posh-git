@@ -61,6 +61,7 @@ namespace Wonga.QA.Framework.UI.Elements
             {
                 _loanAmount.EraseAll();
                 _loanAmount.SendKeys(value);
+                _loanAmount.LostFocus();
             }
         }
         public String HowLong
@@ -70,6 +71,7 @@ namespace Wonga.QA.Framework.UI.Elements
             {
                 _loanDuration.EraseAll();
                 _loanDuration.SendKeys(value);
+                _loanDuration.LostFocus();
             }
         }
         public int MoveAmountSlider //Moving by pixels NOT by cash value
