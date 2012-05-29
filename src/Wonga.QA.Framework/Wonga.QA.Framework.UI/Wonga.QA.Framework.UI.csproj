@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="CustomRemoteWebDriver.cs" />
     <Compile Include="Journey\CaL0Journey.cs" />
+    <Compile Include="Journey\WbLnJourney.cs" />
     <Compile Include="Journey\ZaMobileL0Journey.cs" />
     <Compile Include="Journey\IL0ConsumerJourney.cs" />
     <Compile Include="Journey\ILnConsumerJourney.cs" />
@@ -80,6 +81,8 @@
     <Compile Include="Mappings\Content\Links\FAQPageLinks.cs" />
     <Compile Include="Mappings\Content\Pages\AboutUsPage.cs" />
     <Compile Include="Mappings\Content\Pages\TopupDealDonePage.cs" />
+    <Compile Include="Mappings\Content\Sections\ApplicationSection.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\BusinessSummaryPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\MySummaryPageMobile.cs" />
     <Compile Include="Mappings\Content\Pages\TimeoutTestPage.cs" />
     <Compile Include="Mappings\Content\Pages\ExtensionAgreementPage.cs" />
@@ -115,6 +118,7 @@
     <Compile Include="Mappings\Ui\Pages\Common\ApplyTermsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\BlogPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\EasypaymentNumberPrintPage.cs" />
+    <Compile Include="Ui\Pages\Common\BusinessSummaryPage.cs" />
     <Compile Include="Ui\Pages\Common\MySummaryPageMobile.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayDueFullpaySuccessPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayEarlyFullpaySuccessPage.cs" />

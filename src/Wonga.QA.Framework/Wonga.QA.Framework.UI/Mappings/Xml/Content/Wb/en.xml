@@ -45,4 +45,9 @@
 		<OuchMessage>Ouch! We're very sorry</OuchMessage>
 		<WeSorryMessage>We're sorry</WeSorryMessage>
 	</ExtensionErrorPage>
+
+  <ApplicationSection>
+    <BusinessLoanApplicationDetails>Wonga Business Loan Application</BusinessLoanApplicationDetails>
+    <AdditionalDirectorsOrPartners>Additional Directors or Partners</AdditionalDirectorsOrPartners>
+  </ApplicationSection>
 </ContentMap>

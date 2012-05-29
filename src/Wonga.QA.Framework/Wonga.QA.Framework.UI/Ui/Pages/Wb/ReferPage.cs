@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MbUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using Wonga.QA.Framework.UI.Mappings;
 using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
 using NHamcrest.Core;
