@@ -74,6 +74,7 @@ namespace Wonga.QA.Framework.UI
         public YourDetailsSection YourDetailsSection { get; set; }
         public AccountDetailsSection AccountDetailsSection { get; set; }
         public HelpElement HelpElement { get; set; }
+        public AboutUsPage AboutUsPage { get; set; }
 #endregion
     }
 }

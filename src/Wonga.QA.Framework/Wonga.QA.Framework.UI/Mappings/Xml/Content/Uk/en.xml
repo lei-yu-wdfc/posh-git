@@ -61,6 +61,12 @@
 	<HelpElement>
 		<SelectQuestion>Please select a question...</SelectQuestion>
 	</HelpElement>
-	
+
+	<AboutUsPage>
+		<WeDifferent>We're different</WeDifferent>
+		<WeFast>We're fast</WeFast>
+		<WeResponsible>We're responsible</WeResponsible>
+		<WongaMoments>Wonga moments</WongaMoments>
+	</AboutUsPage>
 </ContentMap>
 
