@@ -99,6 +99,8 @@ namespace Wonga.QA.Tests.Comms
 
 		private void TimeoutCollectionsChaseSagaForDays(Application application, uint days)
 		{
+			Do.Until(() => Drive.Data.OpsSagas.Db.CollectionsChaseSagaEntity.FindByApplicationId(application.Id) != null);
+
 			var sagaId = (Guid)(Drive.Data.OpsSagas.Db.CollectionsChaseSagaEntity.FindByApplicationId(application.Id)).Id;
 			Drive.Data.OpsSagas.Db.CollectionsChaseSagaEntity.UpdateById(Id: sagaId, DueDate: DateTime.Today.AddDays(-days));
 			Drive.Msmq.Comms.Send(new TimeoutMessage{SagaId = sagaId});
