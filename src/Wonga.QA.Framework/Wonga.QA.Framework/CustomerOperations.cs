@@ -17,8 +17,12 @@ namespace Wonga.QA.Framework
         private static readonly String COUNTTRY_CODE = "UK";
         private static readonly String POST_CODE = "SW6 6PN";
 
-        public static readonly String STANDARD_CARD_TYPE = "Standard";
-        public static readonly String PREMIUM_CARD_TYPE = "Premium";
+        public static readonly String STANDARD_CARD_TYPE = "0";
+        public static readonly String PREMIUM_CARD_TYPE = "1";
+
+        public static readonly int CREATED_CARD_STATUS = 2;
+        public static readonly int ACTIVATED_CARD_STATUS = 3;
+
 
         public static void CreateMarketingEligibility(Guid customerId, bool isEligible)
         {
@@ -169,5 +173,8 @@ namespace Wonga.QA.Framework
 
             Drive.Api.Commands.Post(request);
         }
+
+
+
     }
 }
