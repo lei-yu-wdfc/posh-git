@@ -39,7 +39,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual("100.00", response.Values["CurrentPrincipleAmount"].Single(), "CurrentPrincipleAmount incorrect");
             Assert.AreEqual("110.70", response.Values["TotalAmountDueToday"].Single(), "TotalAmountDueToday incorrect");
             Assert.AreEqual("10.70", response.Values["ExtensionPartPaymentAmount"].Single(), "ExtensionPartPaymentAmount incorrect");
-            Assert.AreEqual("10.00", response.Values["LoanExtensionFee"].Single(), "LoanExtensionFee incorrect");
+            Assert.AreEqual("10", response.Values["LoanExtensionFee"].Single(), "LoanExtensionFee incorrect");
 
             Assert.AreEqual(day1ExtendDate, DateTime.Parse(response.Values["ExtensionDate"].ToArray()[0]).Date, "First Day Extend Date Incorrec" );
         }
