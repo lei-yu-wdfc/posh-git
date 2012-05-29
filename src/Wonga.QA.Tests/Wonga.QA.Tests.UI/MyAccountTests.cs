@@ -686,9 +686,9 @@ namespace Wonga.QA.Tests.Ui
             myPersonalDetailsPage.Submit();
 
             var addresses = Drive.Data.Comms.Db.Addresses;
-            var currentAddress = addresses.FindAllByAccountId(customer.Id).FirstOrDefault();
-            Do.Until(() => currentAddress.Town != oldTown);
-
+            
+            Do.Until(() => addresses.FindByAccountId(customer.Id).Town != oldTown);
+            var currentAddress = addresses.FindByAccountId(customer.Id);
             //Check changes in DB
             Assert.AreEqual(currentAddress.Flat, newFlat);
             Assert.AreEqual(currentAddress.Street, newStreet);
