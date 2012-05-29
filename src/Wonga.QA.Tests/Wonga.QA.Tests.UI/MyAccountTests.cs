@@ -210,7 +210,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-216"), Pending("need refinement"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-216"), Pending("need refinement")]
         public void CustomerShouldBeAbleToChangePassword()
         {
             var loginPage = Client.Login();
@@ -266,7 +266,7 @@ namespace Wonga.QA.Tests.Ui
             myPersonalDetailsPage.WaitForSuccessPopup();
             myPersonalDetailsPage.Submit();
 
-            Do.With.Timeout(10).Until(() => Drive.Db.Comms.CustomerDetails.Single(c => c.Email == email).HomePhone != "0210000000");
+            Do.Until(() => Drive.Db.Comms.CustomerDetails.Single(c => c.Email == email).HomePhone != "0210000000");
             var homePhone = Drive.Db.Comms.CustomerDetails.FirstOrDefault(c => c.Email == email).HomePhone;
 
             Assert.AreEqual("0123000000", myPersonalDetailsPage.GetHomePhone);
@@ -293,7 +293,7 @@ namespace Wonga.QA.Tests.Ui
             myPersonalDetailsPage.WaitForSuccessPopup();
             myPersonalDetailsPage.Submit();
 
-            Do.With.Timeout(10).Until(() => Drive.Db.Comms.CustomerDetails.Single(c => c.Email == email).MobilePhone != "0212571908");
+            Do.Until(() => Drive.Db.Comms.CustomerDetails.Single(c => c.Email == email).MobilePhone != "0212571908");
             var mobilePhone = Drive.Db.Comms.CustomerDetails.FirstOrDefault(c => c.Email == email).MobilePhone;
 
             Assert.AreEqual("0213456789", myPersonalDetailsPage.GetMobilePhone);
@@ -686,9 +686,9 @@ namespace Wonga.QA.Tests.Ui
             myPersonalDetailsPage.Submit();
 
             var addresses = Drive.Data.Comms.Db.Addresses;
-            var currentAddress = addresses.FindAllByAccountId(customer.Id).FirstOrDefault();
-            Do.With.Timeout(10).Until(() => currentAddress.Town != oldTown);
-
+            
+            Do.Until(() => addresses.FindByAccountId(customer.Id).Town != oldTown);
+            var currentAddress = addresses.FindByAccountId(customer.Id);
             //Check changes in DB
             Assert.AreEqual(currentAddress.Flat, newFlat);
             Assert.AreEqual(currentAddress.Street, newStreet);

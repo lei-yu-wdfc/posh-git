@@ -65,7 +65,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public void AddBankAccount(string bankName, string bankType, string accountNumber, string lenghtOfTime)
         {
-            _popupBankName = Do.With.Timeout(3).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.PopupBankName)));
+            _popupBankName = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.PopupBankName)));
             _popupBankAccountType = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.PopupBankAccountType)));
             _popupAccountNumber = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.PopupAccountNumber)));
             _popupLengthOfTime = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.PopupLengthOfTime)));
@@ -102,7 +102,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         private void WaitForSuccessPopup()
         {
-            Do.With.Timeout(10).Until(
+            Do.Until(
                 () =>
                 Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.PopupSuccessTitle)).Displayed);
         }
