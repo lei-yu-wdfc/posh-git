@@ -79,7 +79,7 @@
   <MobilePinVerificationSection>
     <Pin>#edit-pin-ca</Pin>
 	<ResendPin>.resend-pin.mod</ResendPin>
-	<ResendPinMessage>#fancybox-content div div p</ResendPinMessage>
+	<ResendPinMessage>#fancybox-content</ResendPinMessage>
   </MobilePinVerificationSection>
 
   <AcceptedPage>

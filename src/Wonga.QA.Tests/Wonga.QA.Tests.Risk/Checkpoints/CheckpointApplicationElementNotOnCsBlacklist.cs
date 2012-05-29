@@ -38,7 +38,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             var customer = CustomerBuilder.New().WithEmployer(RiskMask.TESTEmployedMask).Build();
             var l0Application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
             l0Application.RepayOnDueDate();
-            Drive.Db.UpdateEmployerName(customer.Id, RiskMask.TESTDoNotRelend.ToString());
+            CustomerOperations.UpdateEmployerNameInRisk(customer.Id, RiskMask.TESTDoNotRelend.ToString());
 
             var lnApplication = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
@@ -68,7 +68,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             var customer = CustomerBuilder.New().WithEmployer(RiskMask.TESTEmployedMask).Build();
             var l0Application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
             l0Application.RepayOnDueDate();
-            Drive.Db.UpdateEmployerName(customer.Id, RiskMask.TESTDoNotRelend.ToString());
+            CustomerOperations.UpdateEmployerNameInRisk(customer.Id, RiskMask.TESTDoNotRelend.ToString());
 
             Drive.Cs.Commands.Post(new SuspectFraudCommand() { AccountId = customer.Id, CaseId = Get.RandomString(5) });
             var lnApplication = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();

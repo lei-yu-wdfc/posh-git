@@ -224,8 +224,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             var customer = CustomerBuilder.New().WithEmployer(RiskMask.TESTEmployedMask).Build();
             var l0Application = ApplicationBuilder.New(customer).Build();
             l0Application.RepayOnDueDate();
-
-            Drive.Db.UpdateEmployerName(customer.Id, RiskMask.TESTDeviceNotOnBlacklist.ToString());
+            CustomerOperations.UpdateEmployerNameInRisk(customer.Id, RiskMask.TESTDeviceNotOnBlacklist.ToString());
 
             var lnApplication = ApplicationBuilder.New(customer).WithIovationBlackBox(IovationMockResponse.Deny).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 

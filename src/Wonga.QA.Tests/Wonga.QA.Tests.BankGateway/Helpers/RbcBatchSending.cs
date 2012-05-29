@@ -9,20 +9,18 @@ namespace Wonga.QA.Tests.BankGateway.Helpers
 {
 	public class RbcBatchSending : IDisposable
 	{
-        private readonly string _configKey = "BankGateway.Rbc.FileTransferTimes";
-		private readonly string _originalSchedule;
+		private const string _configKey = "BankGateway.Rbc.FileTransferTimes";
 
-        private readonly dynamic _opsSagasCa = Drive.Data.OpsSagas.Db.SendRbcPaymentSagaEntity;
+		private readonly dynamic _opsSagasCa = Drive.Data.OpsSagas.Db.SendRbcPaymentSagaEntity;
 
 		public RbcBatchSending()
 		{
-            _originalSchedule = Drive.Data.Ops.GetServiceConfiguration<string>(_configKey);
             Drive.Data.Ops.SetServiceConfiguration(_configKey, DateTime.UtcNow.AddHours(2).TimeOfDay.ToString("%h") + ":00");
 		}
 
 		public void Dispose()
 		{
-            Drive.Data.Ops.SetServiceConfiguration(_configKey, _originalSchedule);
+            Drive.Data.Ops.SetServiceConfiguration(_configKey, string.Empty);
 
             var batchSaga = Do.Until(() => _opsSagasCa.All().First());
             Drive.Msmq.BankGatewayRbc.Send(new TimeoutMessage { SagaId = batchSaga.Id });

@@ -49,6 +49,7 @@
     <Compile Include="Entities\RbcResponse.cs" />
     <Compile Include="RbcResponseBuilder.cs" />
     <Compile Include="Entities\BmoResponse.cs" />
+    <Compile Include="IovationResponseBuilder.cs" />
     <Compile Include="Scotia.cs" />
     <Compile Include="Entities\OnlineBillPaymentTransaction.cs" />
     <Compile Include="ExtensionMethods.cs" />

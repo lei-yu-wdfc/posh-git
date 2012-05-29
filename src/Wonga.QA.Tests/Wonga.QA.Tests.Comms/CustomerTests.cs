@@ -17,7 +17,7 @@ namespace Wonga.QA.Tests.Comms
     [Parallelizable(TestScope.All)]
     public class CustomerTests
     {
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
         [JIRA("SME-561"), Description("This test verifies the save customer address command by verifying its response and verifying that the record has been created in the repository")]
         public void TestAddressOverridesCorrectlySaved()
         {
@@ -42,7 +42,7 @@ namespace Wonga.QA.Tests.Comms
             Assert.AreEqual(addressEntity.Town, "MyTown", "These values should be equal");
         }
 
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
         [JIRA("SME-561"), Description("This test verifies update customer address command by issuing a command and verifying its successful response and that the record in the repository has been changed")]
         public void TestUpdateCustomerAddressCommand()
         {
@@ -158,7 +158,7 @@ namespace Wonga.QA.Tests.Comms
             }
         }
 
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
         [JIRA("SME-561"), Description("This test verifies Save customer personal and phone details by issuing and API call, verifying its response and locating the expected record in the DB")]
         public void TestSaveCustomerDetailsCommand()
         {
@@ -216,7 +216,7 @@ namespace Wonga.QA.Tests.Comms
             var x = response.GetErrors();
         }
 
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
         [JIRA("SME-561"), Description("This test verifies minimum age validation by attempting to submit underage and verifies expected failure response")]
         public void TestSaveCustomerDetailsCommand_Underage()
         {
@@ -238,7 +238,7 @@ namespace Wonga.QA.Tests.Comms
             Assert.AreEqual(error.Errors.ToList()[0], "Comms_Age_BelowMinuimumAge", "These values should be equal");
         }
 
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
         [JIRA("SME-561"), Description("This test verifies GetCustomerDetails query by creating new customer details record, issuing the query, verifying its response and comparing the data it returns to repository record")]
         public void TestGetCustomerDetailsQuery()
         {
@@ -267,7 +267,7 @@ namespace Wonga.QA.Tests.Comms
             Assert.AreEqual(response.Values["Email"].Single(), newEntity.Email, "These values should be equal");
         }
 
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
         [JIRA("SME-561"), Description("This test verifies the SaveContactPreferences command by issuing it, checking its response and verifying that the repository record has been created and compare the data in the repository to expected values")]
         public void TestSaveContactPreferencesCommand()
         {
@@ -308,7 +308,7 @@ namespace Wonga.QA.Tests.Comms
             Assert.AreEqual<Boolean>(bool.Parse(response.Values["AcceptMarketingContact"].Single()), saveContactPreferencesEntity.AcceptMarketingContact, "These values should be equal");
         }
 
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
         [JIRA("SME-561"), Description("This test verifies Password reset email command to random email by issuing the command and checking its response")]
         public void TestSendPasswordResetEmailCommand()
         {
@@ -338,7 +338,7 @@ namespace Wonga.QA.Tests.Comms
                                                                    }));
         }
 
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
         [JIRA("SME-561"), Description("This test updates home phone details of the customer and checks that the repository record has been correctly updated")]
         public void TestUpdateHomePhoneCommand()
         {
@@ -370,7 +370,7 @@ namespace Wonga.QA.Tests.Comms
             Assert.AreEqual(updateHomePhoneMessage.HomePhone, detailsEntity.HomePhone, "These values should be equal");
         }
 
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
         [JIRA("SME-561"), Description("This test verifies email verification command by issuing it and checking its response")]
         public void TestSendVerificationEmailCommand()
         {
@@ -402,7 +402,7 @@ namespace Wonga.QA.Tests.Comms
                                                         }));
         }
 
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
         [JIRA("SME-561"), Description("This test verifies completion of email verification process by issuing the CompleteEmailVerification command and checking its response")]
         public void TestCompleteEmailVerificationCommand()
         {

@@ -41,7 +41,7 @@
     <Compile Include="ExtensionAgreementTest.cs" />
     <Compile Include="RepaymentTest.cs" />
     <Compile Include="RepayLoanTests.cs" />
-    <Compile Include="RepaySliderTests.cs" />
+    <Compile Include="RepayTests.cs" />
     <Compile Include="ExtensionTests.cs" />
     <Compile Include="DealDonePageTest.cs" />
     <Compile Include="EndToEndApplicationTests.cs" />

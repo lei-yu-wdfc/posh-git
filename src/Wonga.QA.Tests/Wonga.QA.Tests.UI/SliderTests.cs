@@ -76,7 +76,7 @@ namespace Wonga.QA.Tests.Ui
             //maximum charge is 21$ for each 100$ borrowed for 30 days.
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-149"), Pending("Wierd selenium problem"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-149"), Pending("Wierd selenium problem")]
         public void ChooseLoanAmountAndDurationViaSlidersMotion()
         {
             var homePage = Client.Home();
@@ -124,7 +124,8 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-282"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-282"), Pending("Waiting for implementation of new sliders")]
+        //[Category(TestCategories.Smoke)] - return when test is enabled
         public void ChooseLoanAmountAndDurationViaPlusMinusButtons()
         {
             var homePage = Client.Home();
@@ -189,7 +190,8 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-150"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-150"), Pending("Waiting for new sliders")]
+        // Category(TestCategories.Smoke) - return when test is enabled
         public void CustomerTypesValidValuesIntoAmountAndDurationFields()
         {
             var termCustomerEnter = Get.RandomInt(_termMin, _termMax);
@@ -261,11 +263,19 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-156", "QA-238", "QA-295")]
         public void DefaultAmountSliderValueShouldBeCorrectLn()
         {
-            var loginPage = Client.Login();
             string email = Get.RandomEmail();
-            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            Application application = ApplicationBuilder.New(customer).Build();
-            application.RepayOnDueDate();
+            if(Config.AUT.Equals(AUT.Wb))
+            {
+                Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+                Organisation organisation = OrganisationBuilder.New(customer).Build();
+                ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();    
+            }
+            else
+            {
+                Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+                ApplicationBuilder.New(customer).Build().RepayOnDueDate();   
+            }
+            var loginPage = Client.Login();
             loginPage.LoginAs(email);
 
             var page = Client.Home();
@@ -310,11 +320,19 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Ca,AUT.Za, AUT.Wb), JIRA("QA-241", "QA-159", "QA-296")]
         public void DefaultDurationSliderValueShouldBeCorrectLn()
         {
-            var loginPage = Client.Login();
             string email = Get.RandomEmail();
-            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            Application application = ApplicationBuilder.New(customer).Build().RepayOnDueDate();
-
+            if (Config.AUT.Equals(AUT.Wb))
+            {
+                Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+                Organisation organisation = OrganisationBuilder.New(customer).Build();
+                ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+            }
+            else
+            {
+                Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+                ApplicationBuilder.New(customer).Build().RepayOnDueDate();
+            }
+            var loginPage = Client.Login();
             loginPage.LoginAs(email);
 
             var page = Client.Home();
@@ -377,7 +395,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-155", "QA-285")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-155", "QA-285"), Category(TestCategories.Smoke)]
         public void MaxAmountSliderValueShouldBeCorrectLn()
         {
             var riskAccounts = Drive.Data.Risk.Db.RiskAccounts;
@@ -420,7 +438,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(maxLoanDuration.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-157")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-157"), Category(TestCategories.Smoke)]
         public void MinDurationSliderValueShouldBeCorrectL0()
         {
             int minDurationValue = GetExpectedMinTerm();
@@ -465,56 +483,39 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-152")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-152"), Category(TestCategories.Smoke), MultipleAsserts]
         public void CustomerTriesEnterSomeRubbishDataToFieldsThenAmountsShouldntBeChanged()
         {
             var page = Client.Home();
 
             #region enter an empty string
-            page.Sliders.HowMuch = "";
-            page.Sliders.HowLong = "";
-            Assert.AreEqual(_amountMin.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
-            Thread.Sleep(1000);
-            page.Sliders.HowMuch = ""; // to lost focus
-            Thread.Sleep(1000);
-            Assert.AreEqual(_termMin.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
+            page.Sliders.LoanAmount.Clear();
+            page.Sliders.LoanDuration.Clear();
+            Assert.AreEqual("100", page.Sliders.HowMuch);
+            Assert.AreEqual("1", page.Sliders.HowLong);
             #endregion
+
 
             #region enter negative values
             page.Sliders.HowMuch = "-200";
             page.Sliders.HowLong = "-10";
             Assert.AreEqual("200", page.Sliders.HowMuch);
-            Thread.Sleep(1000);
-            page.Sliders.HowMuch = ""; // to lost focus
-            Thread.Sleep(1000);
             Assert.AreEqual("10", page.Sliders.HowLong);
             #endregion
-
-            #region enter letters
-            page.Sliders.HowMuch = "sdfgsghfg";
-            page.Sliders.HowLong = "sdfgsghfg";
-            Assert.AreEqual(_amountMin.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
-            Thread.Sleep(1000);
-            page.Sliders.HowMuch = ""; // to lost focus
-            Thread.Sleep(1000);
-            Assert.AreEqual(_termMin.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
-            #endregion
+            
 
             #region enter bigger than max possible values
             page.Sliders.HowMuch = "5000";
             page.Sliders.HowLong = "100";
             Assert.AreEqual(_amountMax.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
-            Thread.Sleep(1000);
             Assert.AreEqual(_termMax.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
             #endregion
 
+            
             #region enter mixed data
             page.Sliders.HowMuch = "kjh2-dsf0sdf0";
             page.Sliders.HowLong = "dfg1dfg-0df";
             Assert.AreEqual("200", page.Sliders.HowMuch);
-            Thread.Sleep(1000);
-            page.Sliders.HowMuch = ""; // to lost focus
-            Thread.Sleep(1000);
             Assert.AreEqual("10", page.Sliders.HowLong);
             #endregion
         }

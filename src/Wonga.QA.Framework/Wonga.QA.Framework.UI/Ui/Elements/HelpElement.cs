@@ -46,7 +46,7 @@ namespace Wonga.QA.Framework.UI.Elements
         public List<string> GetListQuestions()
         {
             List<string> questions = _listQuestions.FindElements(By.TagName("option")).Select(option => option.Text.Trim(' ')).ToList();
-            questions.Remove("Please select a question...");
+            questions.Remove(ContentMap.Get.HelpElement.SelectQuestion);
             return questions;
         }
         public FAQPage SelectQuestion(string question)
@@ -58,7 +58,7 @@ namespace Wonga.QA.Framework.UI.Elements
         public List<string> GetTroubleshootingQuestions()
         {
             List<string> questions = _troubleshooting.FindElements(By.TagName("option")).Select(option => option.Text.Trim(' ')).ToList();
-            questions.Remove("Please select a question...");
+            questions.Remove(ContentMap.Get.HelpElement.SelectQuestion);
             return questions;
         }
         public FAQPage SelectTroubleshootingQuestion(string question)

@@ -196,11 +196,6 @@ namespace Wonga.QA.Tests.BankGateway
 
             var applicationId = ApplicationBuilder.New(customer).Build().Id;
 
-            var ackType = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == 2 && a.Name == "DEFT220");
-
-            var pendingTransaction = Do.Until(() => Drive.Db.BankGateway.Transactions.Single(
-                t => t.ApplicationId == applicationId && t.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo && t.TransactionStatus == (int)BankGatewayTransactionStatus.InProgress));
-
             // Transaction should NOT go into success status - we corrupted the response with invalid data
             Do.With.Timeout(TimeSpan.FromSeconds(5)).While(() => Drive.Db.BankGateway.Transactions.Single(
                 t => t.ApplicationId == applicationId && t.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo && t.TransactionStatus == (int)BankGatewayTransactionStatus.Paid));
@@ -382,9 +377,6 @@ namespace Wonga.QA.Tests.BankGateway
             var applicationId = ApplicationBuilder.New(customer).Build().Id;
 
             var ackType = Drive.Db.BankGateway.AcknowledgeTypes.Single(a => a.BankIntegrationId == 2 && a.Name == "DEFT210-211-260");
-
-            var pendingTransaction = Do.Until(() => Drive.Db.BankGateway.Transactions.Single(
-                t => t.ApplicationId == applicationId && t.BankIntegrationId == (int)BankGatewayIntegrationId.Bmo && t.TransactionStatus == (int)BankGatewayTransactionStatus.InProgress));
 
             // Transaction should NOT go into success status - we corrupted the response with invalid data
             Do.With.Timeout(TimeSpan.FromSeconds(5)).While(() => Drive.Db.BankGateway.Transactions.Single(

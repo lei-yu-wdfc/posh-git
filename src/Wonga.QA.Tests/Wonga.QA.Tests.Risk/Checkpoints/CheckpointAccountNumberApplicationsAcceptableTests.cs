@@ -115,9 +115,8 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 				application = ApplicationBuilder.New(customer).Build();
 				application.RepayOnDueDate();
-
+                CustomerOperations.UpdateEmployerNameInRisk(customer.Id, "Wonga");
 				//don't use mask so that the workflow builder is run!
-				Drive.Db.UpdateEmployerName(customer.Id, "Wonga");
 
 				var lnApplication = ApplicationBuilder.New(customer).WithoutExpectedDecision().Build();
 
