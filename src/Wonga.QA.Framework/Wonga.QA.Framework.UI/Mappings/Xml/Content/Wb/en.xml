@@ -20,4 +20,29 @@
 		<PasswordInvalidFormatWarning>Your password must be 8 or more characters and must include a capital letter and a number.</PasswordInvalidFormatWarning>
 		<PasswordEqualsEmailWarning>Password must not contain user name.</PasswordEqualsEmailWarning>
 	</AccountDetailsSection>
+
+	<HelpElement>
+		<SelectQuestion>Please select a question...</SelectQuestion>
+	</HelpElement>
+	
+	<AboutUsPage>
+		<WeDifferent>We're different</WeDifferent>
+		<WeFast>We're fast</WeFast>
+		<WeResponsible>We're responsible</WeResponsible>
+		<WongaMoments>Wonga moments</WongaMoments>
+	</AboutUsPage>
+
+	<AddressDetailsPage>
+		<AddresPeriodLess4Month>Less than 4 month</AddresPeriodLess4Month>
+		<PostcodeError>Sorry, that is not a valid postcode.</PostcodeError>
+	</AddressDetailsPage>
+	
+	<TopupDealDonePage>
+		<SuccessMessage>Success! Your request for some extra credit has been approved.</SuccessMessage>
+	</TopupDealDonePage>
+
+	<ExtensionErrorPage>
+		<OuchMessage>Ouch! We're very sorry</OuchMessage>
+		<WeSorryMessage>We're sorry</WeSorryMessage>
+	</ExtensionErrorPage>
 </ContentMap>
