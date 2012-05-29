@@ -11,7 +11,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[TestFixture, Parallelizable(TestScope.All), Pending("ZA-2565")]
+	[TestFixture, Parallelizable(TestScope.All)]
 	public class CheckpointCustomerNameIsCorrectTests
 	{
         private const RiskMask TestMask = RiskMask.TESTCustomerNameIsCorrect;
@@ -43,7 +43,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			}
 		}
 
-		[Test, AUT(AUT.Za), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za)]
 		public void CheckpointCustomerNameIsCorrectAccept()
 		{
 			var customer = CustomerBuilder.New()
@@ -58,7 +58,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			ApplicationBuilder.New(customer).Build();
 		}
 
-		[Test, AUT(AUT.Za), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za)]
 		public void CheckpointCustomerNameIsCorrectIncorrectSurnameDeclines()
 		{
 			var customer = CustomerBuilder.New()
@@ -73,7 +73,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
 
-		[Test, AUT(AUT.Za), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za)]
 		public void CheckpointCustomerNameIsCorrectIncorrectForenameDeclines()
 		{
 			string incorrectForename = Get.GetName();
@@ -94,7 +94,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
 
-		[Test, AUT(AUT.Za), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za)]
 		public void CheckpointCustomerNameIsCorrectIncorrectNationalNumberDeclines()
 		{
 			var customer = CustomerBuilder.New()
@@ -109,7 +109,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
 
-		[Test, AUT(AUT.Za), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za)]
 		public void CheckpointCustomerNameIsCorrectFirstLetterOfForenameMatchesAccepts()
 		{
 			string incorrectForename = Get.GetName();
@@ -127,7 +127,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			ApplicationBuilder.New(customer).Build();
 		}
 
-		[Test, AUT(AUT.Za), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za)]
 		public void CheckpointCustomerNameIsCorrectForenameAndMiddleNameSwappedAccepts()
 		{
 			var customer = CustomerBuilder.New()
@@ -142,7 +142,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			ApplicationBuilder.New(customer).Build();
 		}
 
-		[Test, AUT(AUT.Za), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za)]
 		public void CheckpointCustomerNameIsCorrectMaidenNameMatchedAccepts()
 		{
 			var incorrectSurname = "Incorrectsurname";
@@ -160,7 +160,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			ApplicationBuilder.New(customer).Build();
 		}
 
-		[Test, AUT(AUT.Za), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za)]
 		public void CheckpointCustomerNameIsCorrectIncorrectSurnameAndMaidenNameDeclines()
 		{
 			var customer = CustomerBuilder.New()
@@ -176,7 +176,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
 
-		[Test, AUT(AUT.Za), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za)]
 		public void CheckpointCustomerNameIsCorrectMaidenNameMatchedAndForenameAndSurnameSwappedDeclines()
 		{
 			var customer = CustomerBuilder.New()
