@@ -124,7 +124,8 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-282"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-282"), Pending("Waiting for implementation of new sliders")]
+        //[Category(TestCategories.Smoke)] - return when test is enabled
         public void ChooseLoanAmountAndDurationViaPlusMinusButtons()
         {
             var homePage = Client.Home();
@@ -189,7 +190,8 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-150"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-150"), Pending("Waiting for new sliders")]
+        // Category(TestCategories.Smoke) - return when test is enabled
         public void CustomerTypesValidValuesIntoAmountAndDurationFields()
         {
             var termCustomerEnter = Get.RandomInt(_termMin, _termMax);
@@ -237,9 +239,10 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-156", "QA-238"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-156", "QA-238", "QA-295"), Category(TestCategories.Smoke)]
         public void DefaultAmountSliderValueShouldBeCorrectL0()
         {
+           
             var page = Client.Home();
             switch (Config.AUT)
             {
@@ -250,20 +253,20 @@ namespace Wonga.QA.Tests.Ui
                     Assert.AreEqual(page.Sliders.HowMuch, "265");
                     break;
                 case AUT.Wb:
-                    Assert.AreEqual(page.Sliders.HowMuch, "9,000");
+                    var defaultWbAmount = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Payments.Wb.DefaultLoanAmount").Value.ToString();
+                    Assert.AreEqual(page.Sliders.HowMuch.Replace(",", ""), defaultWbAmount);
                     break;
             }
 
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-156", "QA-238")]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-156", "QA-238", "QA-295")]
         public void DefaultAmountSliderValueShouldBeCorrectLn()
         {
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            Application application = ApplicationBuilder.New(customer)
-                .Build();
+            Application application = ApplicationBuilder.New(customer).Build();
             application.RepayOnDueDate();
             loginPage.LoginAs(email);
 
@@ -276,23 +279,37 @@ namespace Wonga.QA.Tests.Ui
                 case AUT.Ca:
                     Assert.AreEqual(page.Sliders.HowMuch, "265");
                     break;
+                case AUT.Wb:
+                    var defaultWbAmount = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Payments.Wb.DefaultLoanAmount").Value.ToString();
+                    Assert.AreEqual(page.Sliders.HowMuch.Replace(",", ""), defaultWbAmount);
+                    break;
             }
         }
 
-        [Test, AUT(AUT.Ca), JIRA("QA-241", "QA-159"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Ca,  AUT.Wb), JIRA("QA-241", "QA-159", "QA-296"), Category(TestCategories.Smoke)]
         public void DefaultDurationSliderValueShouldBeCorrectL0()
         {
-            var page = Client.Home();
-            string[] dateArray = page.Sliders.GetRepaymentDate.Split(' ');
-            string day = Char.IsDigit(dateArray[1].ElementAt(1)) ? dateArray[1].Remove(2, 2) : dateArray[1].Remove(1, 2);
-            _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
+           var page = Client.Home();
+            switch (Config.AUT)
+            {
+                case AUT.Ca:
+                    string[] dateArray = page.Sliders.GetRepaymentDate.Split(' ');
+                    string day = Char.IsDigit(dateArray[1].ElementAt(1))
+                                     ? dateArray[1].Remove(2, 2)
+                                     : dateArray[1].Remove(1, 2);
+                    _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
 
-            var expectedDate = GetExpectedDefaultPromiseDateL0();
-            Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate), _repaymentDate);
+                    var expectedDate = GetExpectedDefaultPromiseDateL0();
+                    Assert.AreEqual(String.Format("{0:d MMM yyyy}", expectedDate), _repaymentDate);
+                    break;
+                case AUT.Wb:
+                    Assert.AreEqual(page.Sliders.HowLong, "16");
+                    break;
+            }
 
         }
 
-        [Test, AUT(AUT.Ca), JIRA("QA-241", "QA-159")]
+        [Test, AUT(AUT.Ca,AUT.Za, AUT.Wb), JIRA("QA-241", "QA-159", "QA-296")]
         public void DefaultDurationSliderValueShouldBeCorrectLn()
         {
             var loginPage = Client.Login();
@@ -319,6 +336,9 @@ namespace Wonga.QA.Tests.Ui
                     break;
                 case AUT.Ca:
                     Assert.AreEqual(page.Sliders.HowLong, DefaultLoanTerm.ToString());
+                    break;
+                case AUT.Wb:
+                    Assert.AreEqual(page.Sliders.HowLong, "16");
                     break;
             }
 
@@ -447,7 +467,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-152"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-152"), Pending("Wait for new sliders")]
         public void CustomerTriesEnterSomeRubbishDataToFieldsThenAmountsShouldntBeChanged()
         {
             var page = Client.Home();
