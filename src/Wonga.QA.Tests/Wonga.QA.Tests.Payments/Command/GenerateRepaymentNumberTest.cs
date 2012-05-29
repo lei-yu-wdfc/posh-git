@@ -21,55 +21,14 @@ namespace Wonga.QA.Tests.Payments.Command
 	{
 		private const int delay = 15000;
 		private dynamic _repaymentAccount = Drive.Data.Payments.Db.RepaymentAccount;
+    	private Customer _customer;
 
-		[FixtureSetUp]
-		public void FixtureSetUp()
-		{
-			
-		}
-
-		[FixtureTearDown]
-		public void FixtureTearDown()
-		{
-			
-		}
-
-		[Test, AUT(AUT.Za), JIRA("ZA-2290"), Pending("ZA-2565")]
-		public void GenerateRepaymentNumber_ShouldSaveRepaymentNumberToAccountRepayment()
-		{
-			//Arrange
-			var customer = CustomerBuilder.New().Build();
-			var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
-
-			//Assert
-			var repaymentAccount = Do.Until(() => _repaymentAccount.FindAll(_repaymentAccount.AccountId == app.AccountId)
-													.FirstOrDefault());
-			Assert.IsNotNull(repaymentAccount);
-			Assert.IsNotNull(repaymentAccount.RepaymentNumber);
-
-		}
-
-		[Test, AUT(AUT.Za), JIRA("ZA-1972"), Pending("ZA-2565")]
-        public void GenerateEasyPayNumber_ShouldSaveRepaymentNumberToAccountRepayment()
+		[Test, AUT(AUT.Za), JIRA("ZA-1972")]
+        public void AccountCreation_ShouldSaveRepaymentNumberToAccountRepayment()
         {
             //Arrange
-            var customer = CustomerBuilder.New().Build();
-            var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
-
-            //Assert
-            var repaymentAccount = Do.Until(() => _repaymentAccount.FindAll(_repaymentAccount.AccountId == app.AccountId)
-                                                    .FirstOrDefault());
-            Assert.IsNotNull(repaymentAccount);
-            Assert.IsNotNull(repaymentAccount.RepaymentNumber);
-
-        }
-
-		[Test, AUT(AUT.Za), JIRA("ZA-1972"), Pending("ZA-2565")]
-        public void IAccountCreated_ShouldSaveRepaymentNumberToAccountRepayment()
-        {
-            //Arrange
-            var customer = CustomerBuilder.New().Build();
-            var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+            _customer = CustomerBuilder.New().Build();
+            var app = ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
             //Assert
             var repaymentAccount = Do.Until(() => _repaymentAccount.FindByAccountId(app.AccountId));
@@ -77,28 +36,20 @@ namespace Wonga.QA.Tests.Payments.Command
             Assert.IsNotNull(repaymentAccount.RepaymentNumber);
         }
 
-
-		[Test, AUT(AUT.Za), JIRA("ZA-2290"), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2290"), DependsOn("AccountCreation_ShouldSaveRepaymentNumberToAccountRepayment")]
 		[ExpectedException(typeof(ValidatorException), "Payments_GenerateRepaymentNumber_RepaymentNumberForAccountAlreadyExists")]
 		public void GenerateRepaymentNumber_ForAccountWithExistingRepaymentNumber_ExpectValidationException()
 		{
-			//Arrange
-			var customer = CustomerBuilder.New().Build();
-			var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
-
+			
 			var generateRepaymentNumberCommand = new Framework.Cs.GenerateRepaymentNumberCommand
 			{
-				AccountId = app.AccountId
+				AccountId = _customer.Id
 			};
 
 			Drive.Cs.Commands.Post(generateRepaymentNumberCommand);
-			Thread.Sleep(5000);
-
-			//Act
-			Drive.Cs.Commands.Post(generateRepaymentNumberCommand);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2290"), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2290")]
 		[ExpectedException(typeof(ValidatorException), "Payments_GenerateRepaymentNumber_AccountDoesNotExist")]
 		public void GenerateRepaymentNumber_ForNonExistingAccount_ExpectValidationException()
 		{
@@ -110,6 +61,5 @@ namespace Wonga.QA.Tests.Payments.Command
 			//Act
 			Drive.Cs.Commands.Post(generateRepaymentNumberCommand);
 		}
-
 	}
 }
