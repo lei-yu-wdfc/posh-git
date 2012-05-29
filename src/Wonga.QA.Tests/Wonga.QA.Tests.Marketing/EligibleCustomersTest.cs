@@ -54,7 +54,7 @@ namespace Wonga.QA.Tests.Marketing
 
             Assert.IsTrue(Drive.Api.Queries.Post(eligibleCustomerMessage).Values[ELIGIBLE_RESPONSE_KEY].First().Equals(ELIGIBLE_CUSTOMER_RESPONSE));
             Assert.IsTrue(Drive.Api.Queries.Post(nonEligibleCustomerInArrearsMessage).Values[ELIGIBLE_RESPONSE_KEY].First().Equals(NON_ELIGIBLE_CUSTOMER_RESPONSE));
-            Assert.Throws<ValidatorException>(() => Drive.Api.Queries.Post(nonEligibleCustomerMessage));
+            Assert.IsTrue(Drive.Api.Queries.Post(nonEligibleCustomerMessage).Values[ELIGIBLE_RESPONSE_KEY].First().Equals(NON_ELIGIBLE_CUSTOMER_RESPONSE));
             
         }
 
