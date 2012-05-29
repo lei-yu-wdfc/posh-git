@@ -46,10 +46,15 @@ namespace Wonga.QA.Framework
             Drive.Data.Payments.Db.Applications.Update(application);
             Drive.Data.Payments.Db.FixedTermLoanApplications.Update(fixedTermLoanApplication);
 
-            // find a way to 
-           /*application.Transactions.ForEach(t => t.CreatedOn -= span);
-            application.Transactions.ForEach(t => t.PostedOn -= span);
-            application.Transactions.ForEach(t => t.Submit(true));*/
+            var transactionsTab = Drive.Data.Payments.Db.Transactions;
+            var transactions = transactionsTab.FindAllByApplicationId(application.ApplicationId);
+
+            foreach(var transaction in transactions)
+            {
+                transaction.CreatedOn -= span;
+                transaction.PostedOn -= span;
+                transactionsTab.Update(transaction);
+            }
 
             var arrearEntity = Drive.Data.Payments.Db.Arrears.FindByApplicationId(application.ApplicationId);
 
