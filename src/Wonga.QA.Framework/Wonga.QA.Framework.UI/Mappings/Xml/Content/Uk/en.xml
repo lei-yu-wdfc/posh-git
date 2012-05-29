@@ -73,5 +73,14 @@
 		<AddresPeriodLess4Month>Less than 4 month</AddresPeriodLess4Month>
 		<PostcodeError>Sorry, that is not a valid postcode.</PostcodeError>
 	</AddressDetailsPage>
+
+	<TopupDealDonePage>
+		<SuccessMessage>Success! Your request for some extra credit has been approved.</SuccessMessage>
+	</TopupDealDonePage>
+
+	<ExtensionErrorPage>
+		<OuchMessage>Ouch! We're very sorry</OuchMessage>
+		<WeSorryMessage>We're sorry</WeSorryMessage>
+	</ExtensionErrorPage>
 </ContentMap>
 

@@ -10,6 +10,8 @@ using Wonga.QA.Framework.UI.Mappings.Content;
 using Wonga.QA.Framework.UI.Mappings.Content.Agreements;
 using Wonga.QA.Framework.UI.Mappings.Content.Elements;
 using Wonga.QA.Framework.UI.Mappings.Content.Links;
+using ExtensionErrorPage = Wonga.QA.Framework.UI.Mappings.Content.ExtensionErrorPage;
+using TopupDealDonePage = Wonga.QA.Framework.UI.Mappings.Content.TopupDealDonePage;
 
 namespace Wonga.QA.Framework.UI
 {
@@ -75,6 +77,8 @@ namespace Wonga.QA.Framework.UI
         public AccountDetailsSection AccountDetailsSection { get; set; }
         public HelpElement HelpElement { get; set; }
         public AboutUsPage AboutUsPage { get; set; }
+        public TopupDealDonePage TopupDealDonePage { get; set; }
+        public ExtensionErrorPage ExtensionErrorPage { get; set; }
 #endregion
     }
 }

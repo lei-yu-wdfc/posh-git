@@ -54,5 +54,13 @@
 		<WeResponsible>We're responsible</WeResponsible>
 		<WongaMoments>Wonga moments</WongaMoments>
 	</AboutUsPage>
-	
+
+	<TopupDealDonePage>
+		<SuccessMessage>Success! Your request for some extra credit has been approved.</SuccessMessage>
+	</TopupDealDonePage>
+
+	<ExtensionErrorPage>
+		<OuchMessage>Ouch! We're very sorry</OuchMessage>
+		<WeSorryMessage>We're sorry</WeSorryMessage>
+	</ExtensionErrorPage>
 	</ContentMap>

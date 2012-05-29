@@ -74,10 +74,12 @@
     <Compile Include="Mappings\Content\Agreements\LoanAgreement.cs" />
     <Compile Include="Mappings\Content\Elements\HelpElement.cs" />
     <Compile Include="Mappings\Content\Elements\TabsElementMobile.cs" />
+    <Compile Include="Mappings\Content\ErrorsMessages\ExtensionErrorPage.cs" />
     <Compile Include="Mappings\Content\Pages\AddressDetailsPage.cs" />
     <Compile Include="Mappings\Content\ErrorsMessages\MobilePinVerificationSection.cs" />
     <Compile Include="Mappings\Content\Links\FAQPageLinks.cs" />
     <Compile Include="Mappings\Content\Pages\AboutUsPage.cs" />
+    <Compile Include="Mappings\Content\Pages\TopupDealDonePage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\MySummaryPageMobile.cs" />
     <Compile Include="Mappings\Content\Pages\TimeoutTestPage.cs" />
     <Compile Include="Mappings\Content\Pages\ExtensionAgreementPage.cs" />
