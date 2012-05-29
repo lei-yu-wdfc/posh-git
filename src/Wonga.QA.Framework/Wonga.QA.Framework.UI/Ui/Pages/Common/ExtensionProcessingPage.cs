@@ -11,9 +11,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
     public class ExtensionProcessingPage : BasePage
     {
+        private IWebElement _staticLink;
+
         public ExtensionProcessingPage(UiClient client) : base(client)
         {
-            //assert that
+            Assert.That(Headers, Has.Item(Wonga.QA.Framework.UI.ContentMap.Get.ExtensionProcessingPage.HeaderText));
+            _staticLink = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionProcessingPage.ProcessingStaticLink));
         }
 
         public IExtensionPaymentPage WaitFor<T>() where T : IExtensionPaymentPage
