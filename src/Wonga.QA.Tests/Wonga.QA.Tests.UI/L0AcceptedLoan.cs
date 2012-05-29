@@ -10,6 +10,7 @@ using Wonga.QA.Framework.Api;
 
 namespace Wonga.QA.Tests.Ui
 {
+    [Parallelizable(TestScope.All)]
     public class L0AcceptedLoan : UiTest
     {
         private const String MiddleNameMask = "TESTNoCheck";

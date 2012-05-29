@@ -9,7 +9,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Ui
 {
-	[TestFixture]
+    [Parallelizable(TestScope.All)]
 	public class RepayLoanTests : UiTest
 	{
 		[Test, AUT(AUT.Za), JIRA("ZA-1972"), Pending]

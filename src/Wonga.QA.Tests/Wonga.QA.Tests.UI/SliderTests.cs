@@ -21,6 +21,7 @@ namespace Wonga.QA.Tests.Ui
     /// Slider tests for Za
     /// </summary>
     /// 
+    [Parallelizable(TestScope.All)]
     class SliderTests : UiTest
     {
         private int _amountMax;

@@ -20,6 +20,7 @@ using Wonga.QA.Framework.UI;
 
 namespace Wonga.QA.Tests.Ui
 {
+    [Parallelizable(TestScope.All)]
     class L0JourneyTests : UiTest
     {
         [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-180"), Category(TestCategories.Smoke)]

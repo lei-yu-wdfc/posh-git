@@ -6,6 +6,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Ui
 {
+    [Parallelizable(TestScope.All)]
     class LoginTest : UiTest
     {
         [Test, AUT(AUT.Ca), JIRA("QA-160"), Category(TestCategories.Smoke)]//don`t work yet
