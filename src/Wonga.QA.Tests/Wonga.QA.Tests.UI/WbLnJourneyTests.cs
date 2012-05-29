@@ -7,6 +7,7 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI;
+using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Ui
@@ -30,14 +31,30 @@ namespace Wonga.QA.Tests.Ui
                         .GoHomePage();
         }
 
-        [Test, AUT(AUT.Wb), Pending("Test not yet complete")]
+        [Test, AUT(AUT.Wb)]
         public void WbDeclinedLnLoan()
         {
+            var l0journey = JourneyFactory.GetL0JourneyWB(Client.Home());
+            var l0DeclinedPage = l0journey.ApplyForLoan(5500, 30)
+                                .AnswerEligibilityQuestions()
+                                .FillPersonalDetails()
+                                .FillAddressDetails("More than 4 years")
+                                .FillAccountDetails()
+                                .FillBankDetails()
+                                .FillCardDetails()
+                                .EnterBusinessDetails()
+                                .DeclineAddAdditionalDirector()
+                                .EnterBusinessBankAccountDetails()
+                                .EnterBusinessDebitCardDetails()
+                                .WaitForDeclinedPage()
+                                .CurrentPage as DeclinedPage;
 
-            var loginPage = Client.Login();
-            loginPage.LoginAs("qa.wonga.com+QB-WK-156-77b99268-ff34-451e-a067-4b0c48f3c5ac@gmail.com");
-            var journey = JourneyFactory.GetLNJourneyWB(Client.Home());
-            var declinedPage = journey.ApplyForLoan(5000, 15)
+            string loginUrl = Client.Home().Url + "login";
+            l0DeclinedPage.Client.Driver.Navigate().GoToUrl(loginUrl);
+            var loginPage = Do.Until(() => new LoginPage(Client));
+            var summaryPage = loginPage.LoginAs(l0journey.EmailAddress);
+            var lNjourney = JourneyFactory.GetLNJourneyWB(Client.Home());
+            var declinedPage = lNjourney.ApplyForLoan(5000, 15)
                                             .ApplyNow()
                                             .WaitForDeclinedPage();
         }
