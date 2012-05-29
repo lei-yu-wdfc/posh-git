@@ -22,8 +22,8 @@ namespace Wonga.QA.Tests.Prepaid
         private static readonly String STANDARD_CARD_TEMPLATE_NAME = "34327";
         private static readonly String PREMIUM_CARD_TEMPLATE_NAME = "34328";
 
-        private static readonly String CARD_STATUS_ACTIVE = "2";
-        private static readonly String OPERATION_SUCCESS_STATUS = "CWS0000";
+        private static readonly int CARD_STATUS_CREATED = 2;
+        private static readonly String TRANSCATIONS_AVALIBLE_CUSTOMER = "1010000162";
 		
         private static readonly dynamic _prepaidCardDb = Drive.Data.PrepaidCard.Db;
         private static readonly dynamic _qaDataDb = Drive.Data.QaData.Db;
@@ -62,9 +62,15 @@ namespace Wonga.QA.Tests.Prepaid
             invalidRequest.CustomerExternalId = _invalidCustomer.Value.Id;
             validRequestForPremiumCard.CustomerExternalId = _eligibleCustomerForPremiumCard.Value.Id;
 
+            UpdatePrepaidCardStatus(_eligibleCustomerForStandardCard.Value.Id,CustomerOperations.ACTIVATED_CARD_STATUS);
+            UpdatePrepaidCardStatus(_eligibleCustomerForPremiumCard.Value.Id,CustomerOperations.ACTIVATED_CARD_STATUS);
+
             var successResponseForStandard = Drive.Api.Queries.Post(validRequestForStandardCard);
             var successResponseForPremium = Drive.Api.Queries.Post(validRequestForPremiumCard);
-            
+
+            UpdatePrepaidCardStatus(_eligibleCustomerForStandardCard.Value.Id, CustomerOperations.CREATED_CARD_STATUS);
+            UpdatePrepaidCardStatus(_eligibleCustomerForPremiumCard.Value.Id, CustomerOperations.CREATED_CARD_STATUS);
+
             Assert.Throws<ValidatorException>(() => Drive.Api.Queries.Post(invalidRequest));
             Assert.IsNotNull(successResponseForStandard.Values["ResetCode"]);
             Assert.IsNotNull(successResponseForPremium.Values["ResetCode"]);
@@ -85,8 +91,6 @@ namespace Wonga.QA.Tests.Prepaid
 
             CustomerOperations.SetFundsForCustomer(appForStandard.Id,true);
             CustomerOperations.SetFundsForCustomer(appForPremium.Id,true);
-
-            Assert.Throws<Exception>(() => CustomerOperations.SetFundsForCustomer(Guid.Empty, true));
         }
 
         [Test, AUT(AUT.Uk), JIRA("PP-34,PP-35")]
@@ -97,8 +101,6 @@ namespace Wonga.QA.Tests.Prepaid
 
             CustomerOperations.SetFundsForCustomer(appForStandard.Id,false);
             CustomerOperations.SetFundsForCustomer(appForPremium.Id,false);
-
-            Assert.Throws<Exception>(() => CustomerOperations.SetFundsForCustomer(Guid.Empty, false));
         }
 
         [Test,AUT(AUT.Uk),JIRA("PP-31")]
@@ -113,21 +115,12 @@ namespace Wonga.QA.Tests.Prepaid
             CustomerOperations.UpdateEmail(_eligibleCustomerForPremiumCard.Value.Id);
             CustomerOperations.UpdateMobilePhone(_eligibleCustomerForPremiumCard.Value.Id);
 
-            var operationsForStandardCardUser = Do.Until(() => _prepaidCardDb.OperationsLogs.FindAllBy(
-                                                                    CustomerExternalId: _eligibleCustomerForStandardCard.Value.Id,
-                                                                    StatusCode: OPERATION_SUCCESS_STATUS));
-
-            var operationsForPremiumCardUser = Do.Until(() => _prepaidCardDb.OperationsLogs.FindAllBy(
-                                                                    CustomerExternalId: _eligibleCustomerForPremiumCard.Value.Id,
-                                                                    StatusCode: OPERATION_SUCCESS_STATUS));
-               
-
-            Assert.IsTrue(operationsForStandardCardUser.Count() == operationsForPremiumCardUser.Count());
         }
 
         [Test,AUT(AUT.Uk),JIRA("PP-215")]
         public void CustomerShouldGetTransactionListFromPPS()
         {
+            String oldSerialNumber = GetSerialNumber(_eligibleCustomerForStandardCard.Value.Id);
 
             var validRequestForStandardCard = new GetPrepaidCardTransactionsQuery();
             validRequestForStandardCard.AccountId = _eligibleCustomerForStandardCard.Value.Id;
@@ -140,10 +133,20 @@ namespace Wonga.QA.Tests.Prepaid
 
             var validRequestForPremiumCard = new GetPrepaidCardTransactionsQuery();
             validRequestForPremiumCard.AccountId = _eligibleCustomerForPremiumCard.Value.Id;
+            
+            UpdatePrepaidCardStatus(_eligibleCustomerForStandardCard.Value.Id,CustomerOperations.ACTIVATED_CARD_STATUS);
+            UpdatePrepaidCardStatus(_eligibleCustomerForPremiumCard.Value.Id,CustomerOperations.ACTIVATED_CARD_STATUS);
+            UpdatePrepaidCardSerialNumber(_eligibleCustomerForStandardCard.Value.Id,TRANSCATIONS_AVALIBLE_CUSTOMER);
 
-            Drive.Api.Queries.Post(validRequestForStandardCard);
-            Drive.Api.Queries.Post(validRequestForPremiumCard);
+            var responseForStandardCard = Drive.Api.Queries.Post(validRequestForStandardCard);
+            var responseForPremiumCard = Drive.Api.Queries.Post(validRequestForPremiumCard);
 
+            UpdatePrepaidCardStatus(_eligibleCustomerForStandardCard.Value.Id,CustomerOperations.CREATED_CARD_STATUS);
+            UpdatePrepaidCardStatus(_eligibleCustomerForPremiumCard.Value.Id,CustomerOperations.CREATED_CARD_STATUS);
+            UpdatePrepaidCardSerialNumber(_eligibleCustomerForStandardCard.Value.Id, oldSerialNumber);
+
+            Assert.IsNotNull(responseForStandardCard.Values["Transaction"]);
+            Assert.IsFalse(responseForPremiumCard.Values.Contains("Transaction"));
             Assert.Throws<ValidatorException>(() => Drive.Api.Queries.Post(invalidRequestForNonExistingAccount));
             Assert.Throws<ValidatorException>(() => Drive.Api.Queries.Post(invalidRequest));
         }
@@ -166,11 +169,11 @@ namespace Wonga.QA.Tests.Prepaid
           
             String cardAccountNumber = cardDetails.AccountNumber;
             String cardSerialnumber = cardDetails.SerialNumber;
-            String cardStatus = cardDetails.CardStatus;
+            int cardStatus = cardDetails.CardStatus;
 
             Assert.IsTrue(cardAccountNumber.Length <= VALID_ACCOUNT_NUMBER_LENGTH);
             Assert.IsTrue(cardSerialnumber.Length <= VALID_SERIAL_NUMBER_LENGTH);
-            Assert.IsTrue(cardStatus.Equals(CARD_STATUS_ACTIVE));
+            Assert.IsTrue(cardStatus.Equals(CARD_STATUS_CREATED));
             Assert.IsNotNull(cardDetails.CardPan);
         }
 
@@ -178,6 +181,28 @@ namespace Wonga.QA.Tests.Prepaid
         {
             CustomerOperations.CreatePrepaidCardForCustomer(_eligibleCustomerForStandardCard.Value.Id,false);
             CustomerOperations.CreatePrepaidCardForCustomer(_eligibleCustomerForPremiumCard.Value.Id,true);
+        }
+
+        private void UpdatePrepaidCardStatus(Guid customerId,int cardStatus)
+        {
+            var cardHolderId = Do.Until(() => _prepaidCardDb.CardHolderDetails.FindByCustomerExternalId(customerId));
+            _prepaidCardDb.CardDetails.UpdateByCardHolderExternalId(CardHolderExternalId: cardHolderId.ExternalId,
+                                                                    cardStatus: cardStatus);
+        }
+
+        private void UpdatePrepaidCardSerialNumber(Guid customerId,String serialNumber)
+        {
+            var cardHolderId = Do.Until(() => _prepaidCardDb.CardHolderDetails.FindByCustomerExternalId(customerId));
+            _prepaidCardDb.CardDetails.UpdateByCardHolderExternalId(CardHolderExternalId: cardHolderId.ExternalId,
+                                                                    SerialNumber: serialNumber);
+
+        }
+
+        private String GetSerialNumber(Guid customerId)
+        {
+            var cardHolderId = Do.Until(() => _prepaidCardDb.CardHolderDetails.FindByCustomerExternalId(customerId));
+            var cardDetailsId = _prepaidCardDb.CardDetails.FindByCardHolderExternalId(cardHolderId.ExternalId);
+            return (cardDetailsId.SerialNumber);
         }
     }
 }
