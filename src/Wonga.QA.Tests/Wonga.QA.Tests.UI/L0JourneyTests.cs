@@ -1069,8 +1069,6 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-174")]
         public void L0JourneyCustomerUsesCombinationOfFirstNameLastNameAndEmailThatIsInDbRedirectedToLoginPage()
         {
-            var customer = Do.Until(() => Drive.Data.Comms.Db.CustomerDetails.FindAllByGender(2).FirstOrDefault());
-            string telephone = Get.RandomLong(1000000, 9999999).ToString();
             string email = Get.RandomEmail();
             string name = Get.GetName();
             string surname = Get.RandomString(10);
@@ -1081,8 +1079,6 @@ namespace Wonga.QA.Tests.Ui
                 .WithSurname(surname)
                 .Build();
 
-            var customer = Do.Until(() => Drive.Data.Comms.Db.CustomerDetails.FindAllByGender(2).FirstOrDefault());
-            string telephone = Get.GetMobilePhone();
             switch (Config.AUT)
             {
                 #region Ca
@@ -1170,9 +1166,7 @@ namespace Wonga.QA.Tests.Ui
                     personalDetailsPageWb.YourDetails.MaritalStatus = "Single";
                     personalDetailsPageWb.YourDetails.NumberOfDependants = "0";
                     personalDetailsPageWb.ContactingYou.HomePhoneNumber = "02071111234";
-                    personalDetailsPageWb.ContactingYou.CellPhoneNumber = "077" + "0" + telephone;
                     personalDetailsPageWb.ContactingYou.CellPhoneNumber = Get.GetMobilePhone();
-                    personalDetailsPageWb.ContactingYou.CellPhoneNumber = telephone;
                     personalDetailsPageWb.ContactingYou.EmailAddress = customer.Email;
                     personalDetailsPageWb.ContactingYou.ConfirmEmailAddress = customer.Email;
                     personalDetailsPageWb.CanContact = "No";
@@ -1189,7 +1183,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Za), JIRA("QA-179"), Category(TestCategories.Smoke)]
         public void L0JourneyCustomerIdNumberShouldBeAlignedWithDOBAndGender()
         {
-            var emael = Get.RandomEmail();
+            var email = Get.RandomEmail();
             var journeyZa = JourneyFactory.GetL0Journey(Client.Home());
             var personalDetailsPageZa = journeyZa.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
             personalDetailsPageZa.YourName.FirstName = Get.RandomString(3, 10);
@@ -1211,8 +1205,8 @@ namespace Wonga.QA.Tests.Ui
             personalDetailsPageZa.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d/MMM/yyyy");
             personalDetailsPageZa.EmploymentDetails.IncomeFrequency = "Monthly";
             personalDetailsPageZa.ContactingYou.CellPhoneNumber = "0770090000";
-            personalDetailsPageZa.ContactingYou.EmailAddress = emael;
-            personalDetailsPageZa.ContactingYou.ConfirmEmailAddress = emael;
+            personalDetailsPageZa.ContactingYou.EmailAddress = email;
+            personalDetailsPageZa.ContactingYou.ConfirmEmailAddress = email;
             personalDetailsPageZa.PrivacyPolicy = true;
             personalDetailsPageZa.CanContact = "Yes";
             personalDetailsPageZa.MarriedInCommunityProperty =

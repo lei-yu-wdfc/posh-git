@@ -37,7 +37,6 @@ namespace Wonga.QA.Framework.UI
 
         public UiClient()
         {
-            //Config.Ui.Browser = Config.UiConfig.BrowserType.Chrome;
             InitializeBrowserCapabilities();
             _iWebDriver = GetWebDriver();
             if (Driver is CustomRemoteWebDriver)
