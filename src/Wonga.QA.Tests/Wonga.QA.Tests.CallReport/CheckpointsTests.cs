@@ -126,8 +126,8 @@ namespace Wonga.QA.Tests.CallReport
 
             var l0Application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted);
             l0Application.RepayOnDueDate();
-
-            Drive.Db.UpdateEmployerName(mainApplicant.Id, RiskMask.TESTApplicantIsNotDeceased.ToString());
+            CustomerOperations.UpdateEmployerNameInRisk(mainApplicant.Id, RiskMask.TESTApplicantIsNotDeceased.ToString());
+            //Drive.Db.UpdateEmployerName(mainApplicant.Id, RiskMask.TESTApplicantIsNotDeceased.ToString());
 
             var lnAplication = CreateLnApplication(mainApplicant, ApplicationDecisionStatus.Declined);
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(lnAplication.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
@@ -219,8 +219,7 @@ namespace Wonga.QA.Tests.CallReport
 
             var l0Application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted);
             l0Application.RepayOnDueDate();
-
-            Drive.Db.UpdateEmployerName(mainApplicant.Id, RiskMask.TESTApplicationElementNotCIFASFlagged.ToString());
+            CustomerOperations.UpdateEmployerNameInRisk(mainApplicant.Id, RiskMask.TESTApplicationElementNotCIFASFlagged.ToString());
 
             var lnAplication = CreateLnApplication(mainApplicant, ApplicationDecisionStatus.Declined);
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(lnAplication.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
@@ -311,8 +310,7 @@ namespace Wonga.QA.Tests.CallReport
 
             var l0Application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted);
             l0Application.RepayOnDueDate();
-
-            Drive.Db.UpdateEmployerName(mainApplicant.Id, RiskMask.TESTCreditBureauDataIsAvailable.ToString());
+            CustomerOperations.UpdateEmployerNameInRisk(mainApplicant.Id, RiskMask.TESTCreditBureauDataIsAvailable.ToString());
 
             var lnAplication = CreateLnApplication(mainApplicant, ApplicationDecisionStatus.Declined);
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(lnAplication.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
@@ -406,8 +404,7 @@ namespace Wonga.QA.Tests.CallReport
 
             var l0Application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted);
             l0Application.RepayOnDueDate();
-
-            Drive.Db.UpdateEmployerName(mainApplicant.Id, RiskMask.TESTApplicantIsSolvent.ToString());
+            CustomerOperations.UpdateEmployerNameInRisk(mainApplicant.Id, RiskMask.TESTApplicantIsSolvent.ToString());
 
             var lnAplication = CreateLnApplication(mainApplicant, ApplicationDecisionStatus.Declined);
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(lnAplication.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);

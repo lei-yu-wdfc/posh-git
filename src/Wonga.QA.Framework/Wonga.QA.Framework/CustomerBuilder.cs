@@ -108,8 +108,6 @@ namespace Wonga.QA.Framework
                 _postcode = "K0A0A0";
                 _province = ProvinceEnum.ON;
             }
-            _bankCode = null;
-            _bankAccountNumber = null;
         }
 
         public static CustomerBuilder New()

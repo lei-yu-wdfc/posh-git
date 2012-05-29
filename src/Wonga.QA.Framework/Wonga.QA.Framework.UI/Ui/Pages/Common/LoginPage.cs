@@ -33,6 +33,22 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             return new MySummaryPage(Client);
         }
 
+        public MySummaryPageMobile LoginAsMobile(string email)
+        {
+
+            _username.SendKeys(email);
+            _password.SendKeys(Get.GetPassword());
+            _buttonLogin.Click();
+            return new MySummaryPageMobile(Client);
+        }
+
+        public void LoginRedirectAs(string email)
+        {
+            _username.SendKeys(email);
+            _password.SendKeys(Get.GetPassword());
+            _buttonLogin.Click();
+        }
+        
         public PrepaidAdminPage LoginAs()
         {
             _username.SendKeys(Config.PrepaidAdminUI.User);
@@ -42,7 +58,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             Client.Driver.Navigate().GoToUrl(Config.PrepaidAdminUI.Home);
             return new PrepaidAdminPage(Client);
         }
-
+        
         public ForgotPasswordPage ForgotPasswordClick()
         {
             _forgotPassword.Click();

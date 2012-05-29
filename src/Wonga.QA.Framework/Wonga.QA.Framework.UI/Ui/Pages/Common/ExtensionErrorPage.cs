@@ -18,14 +18,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public ExtensionErrorPage(UiClient client) : base(client)
         {
-            Content.Driver().PageSource.Contains("Ouch! We're very sorry");
+            Content.Driver().PageSource.Contains(ContentMap.Get.ExtensionErrorPage.OuchMessage);
             _header = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionErrorPage.Header));
             _bodyContent = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionErrorPage.BodyText));
         }
 
         public bool IsErrorPageSorryNotPresent()
         {
-            bool tokenResult = Content.Driver().PageSource.Contains("We're sorry");
+            bool tokenResult = Content.Driver().PageSource.Contains(ContentMap.Get.ExtensionErrorPage.WeSorryMessage);
             return !tokenResult;
         }
 

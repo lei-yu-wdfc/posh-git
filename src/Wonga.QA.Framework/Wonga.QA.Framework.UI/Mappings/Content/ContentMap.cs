@@ -10,6 +10,9 @@ using Wonga.QA.Framework.UI.Mappings.Content;
 using Wonga.QA.Framework.UI.Mappings.Content.Agreements;
 using Wonga.QA.Framework.UI.Mappings.Content.Elements;
 using Wonga.QA.Framework.UI.Mappings.Content.Links;
+using ExtensionErrorPage = Wonga.QA.Framework.UI.Mappings.Content.ExtensionErrorPage;
+using TopupDealDonePage = Wonga.QA.Framework.UI.Mappings.Content.TopupDealDonePage;
+using Wonga.QA.Framework.UI.Mappings.Content.Sections;
 
 namespace Wonga.QA.Framework.UI
 {
@@ -72,9 +75,14 @@ namespace Wonga.QA.Framework.UI
         public L0DeclinedPage L0DeclinedPage { get; set; }
         public TimeoutTestPage TimeoutTestPage { get; set; }
         public YourDetailsSection YourDetailsSection { get; set; }
+        public AccountDetailsSection AccountDetailsSection { get; set; }
+        public HelpElement HelpElement { get; set; }
+        public AboutUsPage AboutUsPage { get; set; }
+        public TopupDealDonePage TopupDealDonePage { get; set; }
+        public ExtensionErrorPage ExtensionErrorPage { get; set; }
+        public ApplicationSection ApplicationSection { get; set; }
 
         public PrepaidBalanceBlock PrepaidBalanceBlock { get; set; }
-
 #endregion
     }
 }

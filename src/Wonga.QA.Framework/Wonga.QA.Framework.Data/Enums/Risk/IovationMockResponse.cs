@@ -6,6 +6,7 @@ namespace Wonga.QA.Framework.Data.Enums.Risk
         Allow,
         Deny,
         Review,
-        Unknown
+        Unknown,
+		AllowUniqueDevice
     }
 }

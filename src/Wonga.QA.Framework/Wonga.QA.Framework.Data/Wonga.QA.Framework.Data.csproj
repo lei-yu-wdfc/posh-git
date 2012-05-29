@@ -23,7 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,7 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Databases\AccountingDatabase.cs" />
@@ -80,6 +80,8 @@
     <Compile Include="Enums\Risk\RiskWorkflowStatusEnum.cs" />
     <Compile Include="Enums\Risk\RiskWorkflowTypesEnum.cs" />
     <Compile Include="Enums\Risk\SliderPositionTypeEnum.cs" />
+	<Compile Include="Enums\Prepaid\PrepaidCardType.cs" />
+	<Compile Include="Enums\Prepaid\PrepaidCardStatuses.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

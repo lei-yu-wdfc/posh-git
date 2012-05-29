@@ -16,6 +16,7 @@ namespace Wonga.QA.Framework.UI.Journey
         public string LastName { get; set; }
         public string NationalId { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public string EmailAddress { get; set; }
 
         public BasePage CurrentPage { get; set; }
 
@@ -24,6 +25,7 @@ namespace Wonga.QA.Framework.UI.Journey
             CurrentPage = homePage as HomePage;
             FirstName = Get.GetName();
             LastName = Get.RandomString(10);
+            EmailAddress = Get.RandomEmail(); 
         }
 
         public WbL0Journey ApplyForLoan(int amount, int duration)
@@ -55,7 +57,6 @@ namespace Wonga.QA.Framework.UI.Journey
         public WbL0Journey FillPersonalDetails(String middleNameMask = null)
         {
             var middleName = middleNameMask ?? Get.RandomString(3, 15); 
-            var emailAddress = Get.RandomEmail(); 
             var personalDetailsPage = CurrentPage as PersonalDetailsPage;
 
             personalDetailsPage.YourName.FirstName = FirstName;
@@ -71,8 +72,8 @@ namespace Wonga.QA.Framework.UI.Journey
 
             personalDetailsPage.ContactingYou.HomePhoneNumber = "02071111234";
             personalDetailsPage.ContactingYou.CellPhoneNumber = "07700900000";
-            personalDetailsPage.ContactingYou.EmailAddress = emailAddress;
-            personalDetailsPage.ContactingYou.ConfirmEmailAddress = emailAddress;
+            personalDetailsPage.ContactingYou.EmailAddress = EmailAddress;
+            personalDetailsPage.ContactingYou.ConfirmEmailAddress = EmailAddress;
 
             personalDetailsPage.CanContact = "No";
             personalDetailsPage.PrivacyPolicy = true;
@@ -123,9 +124,10 @@ namespace Wonga.QA.Framework.UI.Journey
 
         public WbL0Journey FillAccountDetails()
         {
+            var password = Get.GetPassword();
             var accountDetailsPage = CurrentPage as AccountDetailsPage;
-            accountDetailsPage.AccountDetailsSection.Password = "PassW0rd";
-            accountDetailsPage.AccountDetailsSection.PasswordConfirm = "PassW0rd";
+            accountDetailsPage.AccountDetailsSection.Password = password;
+            accountDetailsPage.AccountDetailsSection.PasswordConfirm = password;
             accountDetailsPage.AccountDetailsSection.SecretQuestion = "How deep the rabbit hole goes?";
             accountDetailsPage.AccountDetailsSection.SecretAnswer = "Very";
             CurrentPage = accountDetailsPage.Next();

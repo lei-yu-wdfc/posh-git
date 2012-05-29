@@ -7,7 +7,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Ui.Pages.Prepaid
 {
     public class PrepaidAdminPage
     {
-        public String DisablePremiumCard { get; set;}
+        public String DisablePremiumCard { get; set; }
         public String SaveConfiguration { get; set; }
     }
 }

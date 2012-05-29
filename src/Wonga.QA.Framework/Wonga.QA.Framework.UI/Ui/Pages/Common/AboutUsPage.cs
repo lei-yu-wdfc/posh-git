@@ -63,7 +63,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _wereDifferent = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AboutUsPage.WereDifferent));
             _wereDifferent.Click();
             _tabTitle = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AboutUsPage.WereDifferentTitle));
-            if (_tabTitle.Text == "We're different")
+            if (_tabTitle.Text.Equals(ContentMap.Get.AboutUsPage.WeDifferent))
             {
                 return true;
             }
@@ -78,7 +78,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _wereFast = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AboutUsPage.WereFast));
             _wereFast.Click();
             _tabTitle = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AboutUsPage.WereFastTitle));
-            if (_tabTitle.Text == "We're fast")
+            if (_tabTitle.Text.Equals(ContentMap.Get.AboutUsPage.WeFast))
             {
                 return true;
             }
@@ -93,7 +93,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _wereResponsible = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AboutUsPage.WereResponsible));
             _wereResponsible.Click();
             _tabTitle = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AboutUsPage.WereResponsibleTitle));
-            if (_tabTitle.Text == "We're responsible")
+            if (_tabTitle.Text.Equals(ContentMap.Get.AboutUsPage.WeResponsible))
             {
                 return true;
             }
@@ -108,7 +108,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _wongaMoments = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AboutUsPage.WongaMoments));
             _wongaMoments.Click();
             _tabTitle = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AboutUsPage.WongaMomentsTitle));
-            if (_tabTitle.Text == "Wonga moments")
+            if (_tabTitle.Text.Equals(ContentMap.Get.AboutUsPage.WongaMoments))
             {
                 return true;
             }

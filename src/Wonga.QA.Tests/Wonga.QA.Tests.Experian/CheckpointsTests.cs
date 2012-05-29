@@ -97,9 +97,7 @@ namespace Wonga.QA.Tests.Experian
 
             var l0Application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted);
             l0Application.RepayOnDueDate();
-
-            Drive.Db.UpdateEmployerName(mainApplicant.Id, RiskMask.TESTExperianApplicantIsSolvent.ToString());
-
+            CustomerOperations.UpdateEmployerNameInRisk(mainApplicant.Id, RiskMask.TESTExperianApplicantIsSolvent.ToString());
             var lnApplication = CreateLnApplication(mainApplicant, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(lnApplication.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
@@ -214,8 +212,7 @@ namespace Wonga.QA.Tests.Experian
 
             var l0Application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted);
             l0Application.RepayOnDueDate();
-
-            Drive.Db.UpdateEmployerName(mainApplicant.Id, RiskMask.TESTExperianApplicantIsNotDeceased.ToString());
+            CustomerOperations.UpdateEmployerNameInRisk(mainApplicant.Id, RiskMask.TESTExperianApplicantIsNotDeceased.ToString());
 
             var lnAplication = CreateLnApplication(mainApplicant, ApplicationDecisionStatus.Declined);
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(lnAplication.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
@@ -309,8 +306,7 @@ namespace Wonga.QA.Tests.Experian
 
             var l0Application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted);
             l0Application.RepayOnDueDate();
-
-            Drive.Db.UpdateEmployerName(mainApplicant.Id, RiskMask.TESTExperianApplicationElementNotCIFASFlagged.ToString());
+            CustomerOperations.UpdateEmployerNameInRisk(mainApplicant.Id, RiskMask.TESTExperianApplicationElementNotCIFASFlagged.ToString());
 
             var lnAplication = CreateLnApplication(mainApplicant, ApplicationDecisionStatus.Declined);
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(lnAplication.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
@@ -409,8 +405,7 @@ namespace Wonga.QA.Tests.Experian
 
             var l0Application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted);
             l0Application.RepayOnDueDate();
-
-            Drive.Db.UpdateEmployerName(mainApplicant.Id, RiskMask.TESTExperianCreditBureauDataIsAvailable.ToString());
+            CustomerOperations.UpdateEmployerNameInRisk(mainApplicant.Id, RiskMask.TESTExperianCreditBureauDataIsAvailable.ToString());
 
             var lnApplication = CreateLnApplication(mainApplicant, ApplicationDecisionStatus.Declined);
 
