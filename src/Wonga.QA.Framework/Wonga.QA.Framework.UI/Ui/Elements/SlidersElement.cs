@@ -54,6 +54,16 @@ namespace Wonga.QA.Framework.UI.Elements
             }
         }
 
+        public IWebElement LoanAmount
+        {
+            get { return _loanAmount; }
+        }
+
+        public IWebElement LoanDuration
+        {
+            get { return _loanDuration; }
+        }
+
         public String HowMuch
         {
             get { return _loanAmount.GetValue(); }
