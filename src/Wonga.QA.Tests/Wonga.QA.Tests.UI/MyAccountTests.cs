@@ -66,7 +66,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.Throws<AssertionFailureException>(() => { var processingPage = bankDetailsPage2.Next(); });
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-202")]
+        [Test, AUT(AUT.Za), JIRA("QA-202"), Category(TestCategories.Smoke)]
         public void LNJourneyInvalidAccountNumberShouldCauseWarningMessageOnNextPage()
         {
             var loginPage = Client.Login();
@@ -111,7 +111,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-201")]
+        [Test, AUT(AUT.Za), JIRA("QA-201"), Category(TestCategories.Smoke)]
         public void WhenLoggedCustomerWithoutLiveLoanAddsNewBankAccountItShouldBecomePrimary()
         {
             string accountNumber = "1234567";
@@ -210,7 +210,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-216"), Pending("need refinement")]
+        [Test, AUT(AUT.Za), JIRA("QA-216"), Category(TestCategories.Smoke)]
         public void CustomerShouldBeAbleToChangePassword()
         {
             var loginPage = Client.Login();
@@ -322,7 +322,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-193"), Pending("need refinement")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-193"), Pending("need refinement")]//On RCRelease, at summary page have not insufficiently, information need refinement
         public void ArrearsCustomerCheckDataOnMySummaryAndSF()
         {
             int loanTerm = 10;
@@ -370,8 +370,8 @@ namespace Wonga.QA.Tests.Ui
                     }
                     #endregion
                     Assert.AreEqual("R655.23", mySummaryPage.GetTotalToRepay);
-                    Assert.AreEqual("R649.89", mySummaryPage.GetPromisedRepayAmount);
-                    Assert.AreEqual(actualPromisedRepayDate, mySummaryPage.GetPromisedRepayDate);
+                  //  Assert.AreEqual("R649.89", mySummaryPage.GetPromisedRepayAmount);
+                 //   Assert.AreEqual(actualPromisedRepayDate, mySummaryPage.GetPromisedRepayDate);
                     // need to add check data on popup, whan it well be added
                     break;
                 case (AUT.Ca):
@@ -450,7 +450,7 @@ namespace Wonga.QA.Tests.Ui
             // need to add check data in SF whan it well be ready for this
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-187"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-187"), Category(TestCategories.Smoke)]
         public void CustomerEntersInvalidBankAccountWarningMessageShouldBeDisplayed()
         {
             var accounts = new List<string> { "dfgsfgfgsdf", "123 342", "123f445", "+135-6887" };
@@ -705,7 +705,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-219")]
+        [Test, AUT(AUT.Za), JIRA("QA-219"), Category(TestCategories.Smoke)]
         public void CustomerShouldBeAbleToAddBankAccount()
         {
             var accountPreferences = Drive.Data.Payments.Db.AccountPreferences;

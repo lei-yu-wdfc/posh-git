@@ -189,7 +189,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-150")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-150"), Category(TestCategories.Smoke)]
         public void CustomerTypesValidValuesIntoAmountAndDurationFields()
         {
             var termCustomerEnter = Get.RandomInt(_termMin, _termMax);
@@ -324,7 +324,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-237", "QA-153")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-237", "QA-153"), Category(TestCategories.Smoke)]
         public void ChangingAmountBeyondMinIsNotAllowedByFrontEnd()
         {
             var product = Drive.Db.Payments.Products.FirstOrDefault();
@@ -359,7 +359,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-155", "QA-285")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-155", "QA-285"), Category(TestCategories.Smoke)]
         public void MaxAmountSliderValueShouldBeCorrectLn()
         {
             var riskAccounts = Drive.Data.Risk.Db.RiskAccounts;
@@ -402,7 +402,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(maxLoanDuration.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-157")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-157"), Category(TestCategories.Smoke)]
         public void MinDurationSliderValueShouldBeCorrectL0()
         {
             int minDurationValue = GetExpectedMinTerm();
@@ -503,7 +503,7 @@ namespace Wonga.QA.Tests.Ui
             #endregion
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-283"), Pending("CA code appearing in ZA - Michael Nowicki to fix")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-283"),Category(TestCategories.Smoke)]// Pending("CA code appearing in ZA - Michael Nowicki to fix")]
         public void CustomerTryToChooseLoanAountAndDurationBiggerThanMaxAndTakeLoan()
         {
             var serviceConfigurations = Drive.Data.Ops.Db.ServiceConfigurations;
