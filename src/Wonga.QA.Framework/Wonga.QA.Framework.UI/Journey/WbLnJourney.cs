@@ -5,6 +5,7 @@ using System.Text;
 using Wonga.QA.Framework.UI.Ui.Pages.Common;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
+using Wonga.QA.Framework.UI.UiElements.Pages.Wb;
 
 namespace Wonga.QA.Framework.UI.Journey
 {
@@ -32,6 +33,13 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
+        public WbLnJourney WaitForApplyTermsPage()
+        {
+            var processingPage = CurrentPage as ProcessingPage;
+            CurrentPage = processingPage.WaitFor<ApplyTermsPage>() as ApplyTermsPage;
+            return this;
+        }
+
         
         public WbLnJourney WaitForAcceptedPage()
         {
@@ -44,6 +52,29 @@ namespace Wonga.QA.Framework.UI.Journey
         {
             var processingPage = CurrentPage as ProcessingPage;
             CurrentPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
+            return this;
+        }
+
+        public WbLnJourney ApplyTerms()
+        {
+            var applyTermsPage = CurrentPage as ApplyTermsPage;
+            CurrentPage = applyTermsPage.Next();
+            return this;
+        }
+
+        public WbLnJourney FillAcceptedPage()
+        {
+            var acceptedPage = CurrentPage as AcceptedPage;
+            acceptedPage.SignTermsMainApplicant();
+            acceptedPage.SignTermsGuarantor();
+            CurrentPage = acceptedPage.Submit() as ReferPage;
+            return this;
+        }
+
+        public WbLnJourney GoHomePage()
+        {
+            var referPage = CurrentPage as ReferPage;
+            CurrentPage = referPage.GoHome();
             return this;
         }
     }
