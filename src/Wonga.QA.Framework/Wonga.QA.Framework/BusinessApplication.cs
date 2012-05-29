@@ -146,7 +146,7 @@ namespace Wonga.QA.Framework
             }
         }
 
-        public bool IsInArrears()
+        public override bool IsInArrears()
         {
             var accountId = Do.Until(() => Drive.Db.Payments.AccountsApplications.Single(a => a.ApplicationEntity.ExternalId == Id).AccountId);
             var response = Drive.Api.Queries.Post(new GetBusinessAccountSummaryWbUkQuery

@@ -44,7 +44,7 @@ namespace Wonga.QA.Framework
 		{
 			get { return Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).ClosedOn.HasValue; }
 		}
-
+		 
 		public Guid AccountId
 		{
 			get { return Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).AccountId; }
@@ -191,9 +191,19 @@ namespace Wonga.QA.Framework
 
 		public virtual Application PutApplicationIntoArrears(uint daysInArrears)
 		{
-			PutApplicationIntoArrears();
+			var totalDays = daysInArrears;
 
-			Drive.Db.Rewind(Id, (int)daysInArrears);
+			if( !IsInArrears())
+			{
+				PutApplicationIntoArrears();
+			}
+
+			else
+			{
+				totalDays = totalDays - DaysInArrears();
+			}
+				
+			Drive.Db.Rewind(Id, (int) totalDays);
 
 			return this;
 		}
@@ -237,9 +247,31 @@ namespace Wonga.QA.Framework
                 Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = sp.Id }); 
             }
 
-			Do.Until(() => Drive.Db.Payments.Arrears.Single(s => s.ApplicationId == application.ApplicationId));
+			Do.Until(IsInArrears);
 
+			var arrearsDate = (DateTime)(Drive.Data.Payments.Db.Arrears.FindByApplicationId(application.ApplicationId)).CreatedOn;
+			Drive.Data.Payments.Db.Arrears.UpdateByApplicationId(ApplicationId: application.ApplicationId, CreatedOn: new DateTime(arrearsDate.Year, arrearsDate.Month, arrearsDate.Day));
+			
 			return this;
+		}
+
+		public virtual bool IsInArrears()
+		{
+			var appId = ((ApplicationEntity) Drive.Data.Payments.Db.Applications.FindByExternalId(Id)).ApplicationId;
+			return (Drive.Data.Payments.Db.Arrears.FindByApplicationId(appId)) != null;
+		}
+
+		public uint DaysInArrears()
+		{
+			if( IsInArrears() == false)
+			{
+				return 0;
+			}
+
+			var appId = ((ApplicationEntity)Drive.Data.Payments.Db.Applications.FindByExternalId(Id)).ApplicationId;
+			var arrearDate = (DateTime)(Drive.Data.Payments.Db.Arrears.FindByApplicationId(appId)).CreatedOn;
+
+			return (uint) (DateTime.Today - arrearDate).Days;
 		}
 
 		public Application CreateRepaymentArrangement()
