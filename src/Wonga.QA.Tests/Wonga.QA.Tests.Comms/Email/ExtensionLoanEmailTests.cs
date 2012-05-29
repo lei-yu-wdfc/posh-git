@@ -113,7 +113,7 @@ namespace Wonga.QA.Tests.Comms.Email
 
         private LoanExtensionEntity CreateLoanAndExtend()
         {
-            const decimal trustRating = 400.00M;
+           const decimal trustRating = 400.00M;
             _accountId = Guid.NewGuid();
             var bankAccountId = Guid.NewGuid();
             var paymentCardId = Guid.NewGuid();
@@ -127,10 +127,12 @@ namespace Wonga.QA.Tests.Comms.Email
 
             setupData.Scenario03Setup(_applicationId, paymentCardId, bankAccountId, _accountId, trustRating);
 
-            var app = Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(x => x.ExternalId == _applicationId));
+            var applicationTab = Drive.Data.Payments.Db.Applications;
+            var app = Do.With.Interval(1).Until(() => applicationTab.FindAll(applicationTab.ExternalId == _applicationId).Single());
+            var fixedTermLoanAppTab = Drive.Data.Payments.Db.FixedTermLoanApplications;
             var fixedTermApp =
                 Do.With.Interval(1).Until(
-                    () => Drive.Db.Payments.FixedTermLoanApplications.Single(x => x.ApplicationId == app.ApplicationId));
+                    () => fixedTermLoanAppTab.FindAll(fixedTermLoanAppTab.ApplicationId == app.ApplicationId).Single());
 
             Drive.Api.Commands.Post(new AddPaymentCardCommand
             {
@@ -147,24 +149,27 @@ namespace Wonga.QA.Tests.Comms.Email
                 IsPrimary = true,
             });
 
+            var paymentCardsBaseTab = Drive.Data.Payments.Db.PaymentCardsBase;
             Do.With.Interval(1).Until(
-                () => Drive.Db.Payments.PaymentCardsBases.Single(x => x.ExternalId == paymentCardId && x.AuthorizedOn != null));
+                () => paymentCardsBaseTab.FindAll(paymentCardsBaseTab.ExternalId == paymentCardId && paymentCardsBaseTab.AuthorizedOn != null).Single());
 
             Drive.Api.Commands.Post(new CreateFixedTermLoanExtensionCommand
             {
                 ApplicationId = _applicationId,
-                ExtendDate = new Date(fixedTermApp.NextDueDate.Value.AddDays(2), DateFormat.Date),
+                ExtendDate = new Date(fixedTermApp.NextDueDate.Date.AddDays(2), DateFormat.Date),
                 ExtensionId = extensionId,
                 PartPaymentAmount = 20M,
                 PaymentCardCv2 = "000",
                 PaymentCardId = paymentCardId
             });
 
+            var loanExtTab = Drive.Data.Payments.Db.LoanExtensions;
             var loanExtension =
                 Do.With.Interval(1).Until(
                     () =>
-                    Drive.Db.Payments.LoanExtensions.Single(x => x.ExternalId == extensionId && x.ApplicationId == app.ApplicationId
-                        && x.PartPaymentTakenOn != null));
+                    loanExtTab.FindAll(loanExtTab.ExternalId == extensionId &&
+                                       loanExtTab.ApplicationId == app.ApplicationId &&
+                                       loanExtTab.PartPaymentTakenOn != null).Single());
 
             Assert.IsNotNull(loanExtension, "A loan extension should be created");
 
