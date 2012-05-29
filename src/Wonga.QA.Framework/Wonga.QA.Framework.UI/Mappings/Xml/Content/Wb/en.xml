@@ -20,4 +20,8 @@
 		<PasswordInvalidFormatWarning>Your password must be 8 or more characters and must include a capital letter and a number.</PasswordInvalidFormatWarning>
 		<PasswordEqualsEmailWarning>Password must not contain user name.</PasswordEqualsEmailWarning>
 	</AccountDetailsSection>
+
+	<HelpElement>
+		<SelectQuestion>Please select a question...</SelectQuestion>
+	</HelpElement>
 </ContentMap>

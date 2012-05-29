@@ -10,6 +10,7 @@ using Wonga.QA.Framework.UI.Mappings.Ui.Elements;
 using AccountDetailsSection = Wonga.QA.Framework.UI.Mappings.Sections.AccountDetailsSection;
 using AddressDetailsPage = Wonga.QA.Framework.UI.Mappings.Pages.AddressDetailsPage;
 using ExtensionAgreementPage = Wonga.QA.Framework.UI.Mappings.Pages.ExtensionAgreementPage;
+using HelpElement = Wonga.QA.Framework.UI.Mappings.Elements.HelpElement;
 using HomePage = Wonga.QA.Framework.UI.Mappings.Pages.HomePage;
 using MobilePinVerificationSection = Wonga.QA.Framework.UI.Mappings.Sections.MobilePinVerificationSection;
 using MyPaymentsPage = Wonga.QA.Framework.UI.Mappings.Pages.MyPaymentsPage;
