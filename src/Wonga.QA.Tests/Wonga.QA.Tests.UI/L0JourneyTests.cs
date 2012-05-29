@@ -21,7 +21,7 @@ namespace Wonga.QA.Tests.Ui
 {
     class L0JourneyTests : UiTest
     {
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-180")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-180"), Category(TestCategories.Smoke)]
         public void L0JourneyInvalidPostcodeShouldCauseWarningMessage()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -318,7 +318,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-190")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-190"), Category(TestCategories.Smoke)]
         public void L0JourneyDataOnAcceptedPageShouldBeCorrect()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -560,7 +560,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(addressDetailsPage.IsPostcodeWarningOccurred());
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-191")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-191"), Category(TestCategories.Smoke)]
         public void CustomerClicksAcceptButtonChosenLoanAmountShouldDepositedIntoAccountCheckDatabase()
         {
             DateTime date;
@@ -1160,7 +1160,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-179")]
+        [Test, AUT(AUT.Za), JIRA("QA-179"), Category(TestCategories.Smoke)]
         public void L0JourneyCustomerIdNumberShouldBeAlignedWithDOBAndGender()
         {
             var emael = Get.RandomEmail();
@@ -1355,7 +1355,7 @@ namespace Wonga.QA.Tests.Ui
             addressPage.Next();
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-172"), Pending("CA code appearing in ZA - Michael Nowicki to fix"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-172"), Category(TestCategories.Smoke)]
         public void L0JourneyCustomerMakeALoanCheckOneLastStepPageValidDataDisplayed()
         {
             int _amountMax;
