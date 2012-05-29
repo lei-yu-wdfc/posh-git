@@ -71,5 +71,17 @@ namespace Wonga.QA.Framework
 
             Drive.Data.Risk.Db.RiskApplications.Update(riskApp);
         }
+
+        public static void RewindApplicationDates(dynamic application, TimeSpan span)
+        {
+            var paymentsAppsTab = Drive.Data.Payments.Db.Applications;
+            dynamic applicationEntity =
+                paymentsAppsTab.FindAll(paymentsAppsTab.ExternalId == application.Id).Single();
+
+            var riskAppTab = Drive.Data.Risk.Db.RiskApplications;
+            dynamic riskApplication = riskAppTab.FindAll(riskAppTab.ApplicationId == application.Id).Single();
+
+            ApplicationOperations.RewindApplicationDates(applicationEntity, riskApplication, span);
+        }
     }
 }
