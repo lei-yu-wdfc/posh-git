@@ -47,5 +47,10 @@ namespace Wonga.QA.Framework.UI
         {
             return new WbL0Journey(homePage);
         }
+
+        public static WbLnJourney GetLNJourneyWB(BasePage homePage)
+        {
+            return new WbLnJourney(homePage);
+        }
     }
 }

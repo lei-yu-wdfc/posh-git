@@ -12,6 +12,7 @@ using Wonga.QA.Framework.UI.Mappings.Content.Elements;
 using Wonga.QA.Framework.UI.Mappings.Content.Links;
 using ExtensionErrorPage = Wonga.QA.Framework.UI.Mappings.Content.ExtensionErrorPage;
 using TopupDealDonePage = Wonga.QA.Framework.UI.Mappings.Content.TopupDealDonePage;
+using Wonga.QA.Framework.UI.Mappings.Content.Sections;
 
 namespace Wonga.QA.Framework.UI
 {
@@ -79,6 +80,7 @@ namespace Wonga.QA.Framework.UI
         public AboutUsPage AboutUsPage { get; set; }
         public TopupDealDonePage TopupDealDonePage { get; set; }
         public ExtensionErrorPage ExtensionErrorPage { get; set; }
+        public ApplicationSection ApplicationSection { get; set; }
 #endregion
     }
 }

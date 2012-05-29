@@ -143,6 +143,8 @@ namespace Wonga.QA.Framework.UI.Elements
             _submit.Click();
             switch (Config.AUT)
             {
+
+                case AUT.Wb:
                 case AUT.Za:
                 case AUT.Uk:
                     return new ApplyPage(Page.Client);

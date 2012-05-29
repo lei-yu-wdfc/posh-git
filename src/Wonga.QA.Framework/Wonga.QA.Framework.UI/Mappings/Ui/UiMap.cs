@@ -8,8 +8,10 @@ using Wonga.QA.Framework.UI.Mappings.Sections;
 using Wonga.QA.Framework.UI.Mappings.Pages.SalesForce;
 using Wonga.QA.Framework.UI.Mappings.Ui.Elements;
 using AboutUsPage = Wonga.QA.Framework.UI.Mappings.Pages.AboutUsPage;
+using Wonga.QA.Framework.UI.Ui.Pages.Common;
 using AccountDetailsSection = Wonga.QA.Framework.UI.Mappings.Sections.AccountDetailsSection;
 using AddressDetailsPage = Wonga.QA.Framework.UI.Mappings.Pages.AddressDetailsPage;
+using BusinessSummaryPage = Wonga.QA.Framework.UI.Mappings.Pages.BusinessSummaryPage;
 using ExtensionAgreementPage = Wonga.QA.Framework.UI.Mappings.Pages.ExtensionAgreementPage;
 using HelpElement = Wonga.QA.Framework.UI.Mappings.Elements.HelpElement;
 using HomePage = Wonga.QA.Framework.UI.Mappings.Pages.HomePage;
@@ -157,6 +159,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual RepaymentOptionsPage RepaymentOptionsPage { get; set; }
         public virtual EasypaymentNumberPrintPage EasypaymentNumberPrintPage { get; set; }
         public virtual MySummaryPageMobile MySummaryPageMobile { get; set; }
+        public virtual BusinessSummaryPage BusinessSummaryPage { get; set; }
         #endregion
 
         #region SalesForcePages

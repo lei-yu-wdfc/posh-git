@@ -263,11 +263,19 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-156", "QA-238", "QA-295")]
         public void DefaultAmountSliderValueShouldBeCorrectLn()
         {
-            var loginPage = Client.Login();
             string email = Get.RandomEmail();
-            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            Application application = ApplicationBuilder.New(customer).Build();
-            application.RepayOnDueDate();
+            if(Config.AUT.Equals(AUT.Wb))
+            {
+                Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+                Organisation organisation = OrganisationBuilder.New(customer).Build();
+                ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();    
+            }
+            else
+            {
+                Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+                ApplicationBuilder.New(customer).Build().RepayOnDueDate();   
+            }
+            var loginPage = Client.Login();
             loginPage.LoginAs(email);
 
             var page = Client.Home();
@@ -312,11 +320,19 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Ca,AUT.Za, AUT.Wb), JIRA("QA-241", "QA-159", "QA-296")]
         public void DefaultDurationSliderValueShouldBeCorrectLn()
         {
-            var loginPage = Client.Login();
             string email = Get.RandomEmail();
-            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            Application application = ApplicationBuilder.New(customer).Build().RepayOnDueDate();
-
+            if (Config.AUT.Equals(AUT.Wb))
+            {
+                Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+                Organisation organisation = OrganisationBuilder.New(customer).Build();
+                ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+            }
+            else
+            {
+                Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+                ApplicationBuilder.New(customer).Build().RepayOnDueDate();
+            }
+            var loginPage = Client.Login();
             loginPage.LoginAs(email);
 
             var page = Client.Home();
