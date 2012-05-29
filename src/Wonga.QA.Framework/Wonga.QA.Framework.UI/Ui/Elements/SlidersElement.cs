@@ -132,7 +132,7 @@ namespace Wonga.QA.Framework.UI.Elements
             _submit.Click();
             if (Config.AUT == AUT.Wb)
                 return new EligibilityQuestionsPage(Page.Client);
-            if (Config.AUT == AUT.Uk || Config.AUT == AUT.Za || Config.AUT == AUT.Ca)
+            if (Config.AUT == AUT.Uk || Config.AUT == AUT.Za || Config.AUT == AUT.Ca || Config.AUT == AUT.Pl)
                 return new PersonalDetailsPage(Page.Client);
             return null;
         }

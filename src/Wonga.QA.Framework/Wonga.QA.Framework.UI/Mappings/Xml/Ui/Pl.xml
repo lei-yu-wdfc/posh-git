@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<UiMap>
+  <PersonalDetailsPage>
+    <Captcha>#edit-captcha-code</Captcha>
+    <FormId>#lzero-personal-form</FormId>
+    <SlidersFormId>#wonga-alterable-loan-details-fieldset</SlidersFormId>
+    <CheckBikVerification>#edit-bik-acceptance</CheckBikVerification>
+    <BikVerificationErrorForm>#edit-bik-acceptance-wrapper div div</BikVerificationErrorForm>
+    <CheckMarketingAcceptance>#edit-marketing-acceptance</CheckMarketingAcceptance>
+    <NextButton>#edit-submit</NextButton>
+    <SliderToggler>#slider-toggler</SliderToggler>
+    <TotalToRepay>span.loan-total</TotalToRepay>
+    <RepaymentDate>span.repayment-date</RepaymentDate>
+    <TotalAmount>span.loan-amount</TotalAmount>
+    <TotalFees>span.loan-fees</TotalFees>
+    <LoanAmount>#edit-loan-amount</LoanAmount>
+    <LoanDuration>#edit-loan-duration</LoanDuration>
+    <AmountMinusButton>#wonga-amount-slider-wrapper button.slider-minus</AmountMinusButton>
+    <AmountPlusButton>#wonga-amount-slider-wrapper button.slider-plus</AmountPlusButton>
+    <DurationMinusButton>#wonga-duration-slider-wrapper button.slider-minus</DurationMinusButton>
+    <DurationPlusButton>#wonga-duration-slider-wrapper button.slider-plus</DurationPlusButton>
+  </PersonalDetailsPage>
+
+  <EmploymentDetailsSection>
+    <MonthlyIncome>#edit-monthly-income</MonthlyIncome>
+    <MonthlyIncomeErrorForm>#edit-monthly-income-wrapper div div</MonthlyIncomeErrorForm>
+    <UniversityType>#edit-employment-university-type</UniversityType>
+    <UniversityTypeErrorForm>#edit-employment-university-type-wrapper .form-error div</UniversityTypeErrorForm>
+    <UniversityCity>#edit-employment-university-city</UniversityCity>
+    <UniversityCityErrorForm>#edit-employment-university-city-wrapper .form-error div</UniversityCityErrorForm>
+    <YearsInUniversity>#edit-employment-university-years</YearsInUniversity>
+    <YearsInUniversityErrorForm>#edit-employment-university-years-wrapper .form-error div</YearsInUniversityErrorForm>
+    <UniversityName>#employment-university-name div  div:first-child  div:first-child  div:first-child +div select</UniversityName>
+    <UniversityNameErrorForm>#employment-university-name div:first-child div:first-child .form-error div</UniversityNameErrorForm>
+    <NextPaydayDateDay>#edit-next-payday-day</NextPaydayDateDay>
+    <NextPaydayDateMonth>#edit-next-payday-month</NextPaydayDateMonth>
+    <NextPaydayDateYear>#edit-next-payday-year</NextPaydayDateYear>
+  </EmploymentDetailsSection>
+
+  <YourDetailsSection>
+    <PeselNumber>#edit-pesel</PeselNumber>
+    <MotherMaidenName>#edit-mothers-maiden-name</MotherMaidenName>
+    <MotherMaidenNameWarningForm>#edit-mothers-maiden-name-wrapper div div</MotherMaidenNameWarningForm>
+    <PeselWarningForm>#edit-pesel-wrapper div div</PeselWarningForm>
+    <IdNumber>#edit-ID-number</IdNumber>
+    <IdNumberWarningForm>#edit-ID-number-wrapper div div</IdNumberWarningForm>
+    <EducationLevel>#edit-education-level</EducationLevel>
+    <EducationLevelErrorForm>#edit-education-level-wrapper div div</EducationLevelErrorForm>
+    <VehicleOwner>#edit-vehicle-owner</VehicleOwner>
+    <VehicleOwnerErrorForm>#edit-vehicle-owner-wrapper div div</VehicleOwnerErrorForm>
+    <AllegroLogin>#edit-allegro-account</AllegroLogin>
+    <AllegroLoginErrorForm>#edit-allegro-account-wrapper div div</AllegroLoginErrorForm>
+  </YourDetailsSection>
+
+</UiMap>

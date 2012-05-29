@@ -36,6 +36,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
                     Tabs = new TabsElement(this);
                     break;
                 case (AUT.Za):
+                case (AUT.Pl):
                     Contact = new ContactElement(this);
                     Help = new HelpElement(this);
                     InternationalElements = new InternationalElement(this);

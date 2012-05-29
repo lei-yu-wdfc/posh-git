@@ -28,6 +28,7 @@ namespace Wonga.QA.Framework.UI.Elements
             {
                 case AUT.Za:
                 case AUT.Ca:
+                case AUT.Pl:
                     _troubleshooting =
                     Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.HelpElement.TroubleshootingQuestions));
                     _jargonBuster = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.HelpElement.JargonBuster));
