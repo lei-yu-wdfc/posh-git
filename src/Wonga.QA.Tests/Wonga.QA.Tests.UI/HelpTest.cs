@@ -19,6 +19,7 @@ using Wonga.QA.Framework.UI.UiElements.Pages;
 
 namespace Wonga.QA.Tests.Ui
 {
+    [Parallelizable(TestScope.All)]
     public class HelpTest : UiTest
     {
 

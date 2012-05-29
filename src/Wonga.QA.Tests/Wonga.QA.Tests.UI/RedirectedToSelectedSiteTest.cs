@@ -17,6 +17,7 @@ using Wonga.QA.Framework.UI.UiElements.Pages;
 
 namespace Wonga.QA.Tests.Ui
 {
+    [Parallelizable(TestScope.All)]
     public class RedirectedToSelectedSiteTest : UiTest
     {
         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-240, QA-168"), Pending("FE bug, button in top of page are broken, ZA-2490, CA-2234")]

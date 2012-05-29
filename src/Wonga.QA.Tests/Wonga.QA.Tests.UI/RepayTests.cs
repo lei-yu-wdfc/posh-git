@@ -23,6 +23,7 @@ namespace Wonga.QA.Tests.Ui
     /// TopupSlider tests for UK
     /// </summary>
     /// 
+    [Parallelizable(TestScope.All)]
     class RepayTests : UiTest
     {
         //private int _amountMax;

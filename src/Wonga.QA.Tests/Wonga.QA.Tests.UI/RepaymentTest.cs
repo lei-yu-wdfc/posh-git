@@ -20,6 +20,7 @@ using Wonga.QA.Framework.UI;
 
 namespace Wonga.QA.Tests.Ui
 {
+    [Parallelizable(TestScope.All)]
     public class RepaymentTest : UiTest
     {
         [Test, AUT(AUT.Za), Pending("Code not yet on rc.za.wonga.com as of 24/05/12")]

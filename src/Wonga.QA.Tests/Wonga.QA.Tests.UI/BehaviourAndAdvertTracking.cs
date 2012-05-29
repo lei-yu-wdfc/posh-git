@@ -19,6 +19,7 @@ using Wonga.QA.Framework.UI.UiElements.Pages;
 
 namespace Wonga.QA.Tests.Ui
 {
+    [Parallelizable(TestScope.All)]
     class BehaviourAndAdvertTracking : UiTest
     {
         [Test, AUT(AUT.Za), JIRA("ZA-2115"), Pending("Broken")]
