@@ -299,39 +299,5 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Wb), Pending("Test not yet complete")]
-        public void WbAcceptedLnLoan()
-        {
-            var loginPage = Client.Login();
-            string email = Get.RandomEmail();
-            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            var organization = OrganisationBuilder.New(customer).Build();
-            var applicationInfo =
-                ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatus.Accepted).
-                    Build() as BusinessApplication;
-            var paymentPlan = applicationInfo.GetPaymentPlan();
-            applicationInfo.MorningCollectionAttempt(paymentPlan, false, true);
-
-            //Need to find or write code that pays outstanding balance
-
-            loginPage.LoginAs(email);
-            var journey = JourneyFactory.GetLNJourneyWB(Client.Home());
-            var declinedPage = journey.ApplyForLoan(5000, 15)
-                                            .ApplyNow()
-                                            .WaitForAcceptedPage();
-        }
-
-        [Test, AUT(AUT.Wb), Pending("Test not yet complete")]
-        public void WbDeclinedLnLoan()
-        {
-
-            var loginPage = Client.Login();
-            loginPage.LoginAs("qa.wonga.com+QB-WK-156-77b99268-ff34-451e-a067-4b0c48f3c5ac@gmail.com");
-            var journey = JourneyFactory.GetLNJourneyWB(Client.Home());
-            var declinedPage = journey.ApplyForLoan(5000, 15)
-                                            .ApplyNow()
-                                            .WaitForDeclinedPage();
-        }
-
     }
 }
