@@ -184,6 +184,9 @@
     <Rewards>.menu-mlid-9439 a</Rewards>
     <ForgottenPin>.menu-mlid-9438</ForgottenPin>
   </PrepaidCardMenuElement>
+
+  <DeclinedPage>
+    <DeclineAdvice>.wonga-decision-box</DeclineAdvice>
   </DeclinedPage>
   
   

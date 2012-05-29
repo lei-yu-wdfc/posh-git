@@ -13,17 +13,6 @@ namespace Wonga.QA.Framework
         private static readonly dynamic _commsDb = Drive.Data.Comms.Db;
         private static readonly dynamic _prepaidDb = Drive.Data.PrepaidCard.Db;
 
-        private static readonly String VERIFICATION_PIN = "0000";
-        private static readonly String COUNTTRY_CODE = "UK";
-        private static readonly String POST_CODE = "SW6 6PN";
-
-        public static readonly String STANDARD_CARD_TYPE = "0";
-        public static readonly String PREMIUM_CARD_TYPE = "1";
-
-        public static readonly int CREATED_CARD_STATUS = 2;
-        public static readonly int ACTIVATED_CARD_STATUS = 3;
-
-
         public static void CreateMarketingEligibility(Guid customerId, bool isEligible)
         {
             if (isEligible.Equals(true))
@@ -86,7 +75,7 @@ namespace Wonga.QA.Framework
 
             var resendMobilePin = new CompleteMobilePhoneVerificationCommand();
             resendMobilePin.VerificationId = verificationMobileCommand.VerificationId;
-            resendMobilePin.Pin = VERIFICATION_PIN;
+            resendMobilePin.Pin = Get.GetVerificationPin();
 
             Drive.Api.Commands.Post(verificationMobileCommand);
             Drive.Api.Commands.Post(resendMobilePin);
@@ -104,8 +93,8 @@ namespace Wonga.QA.Framework
             command.AccountId = customerId;
             command.AddressId = address.ExternalId;
             command.AtAddressFrom = DateTime.Today.AddYears(-4).ToDate(DateFormat.Date);
-            command.CountryCode = COUNTTRY_CODE;
-            command.Postcode = POST_CODE;
+            command.Postcode = Get.GetPostcode();
+            command.CountryCode = Get.GetCountryCode();
             command.HouseName = Get.RandomString(8);
             command.HouseNumber = Get.RandomInt(1, 100).ToString(CultureInfo.InvariantCulture);
             command.District = Get.RandomString(15);
