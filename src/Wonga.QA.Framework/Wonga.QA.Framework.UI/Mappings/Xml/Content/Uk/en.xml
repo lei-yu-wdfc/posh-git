@@ -68,5 +68,10 @@
 		<WeResponsible>We're responsible</WeResponsible>
 		<WongaMoments>Wonga moments</WongaMoments>
 	</AboutUsPage>
+
+	<AddressDetailsPage>
+		<AddresPeriodLess4Month>Less than 4 month</AddresPeriodLess4Month>
+		<PostcodeError>Sorry, that is not a valid postcode.</PostcodeError>
+	</AddressDetailsPage>
 </ContentMap>
 

@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentMap>
-  <YourDetails>Your Details</YourDetails>
+	<YourDetails>Your Details</YourDetails>
 
-  <MobilePinVerificationSection>
-    <ResendPinMessage1>Your pin has now been resent to your phone. You should receive it within a few minutes.</ResendPinMessage1>
-    <ResendPinMessage2>We have resent your PIN.</ResendPinMessage2>
-    <ResendPinMessage3>Thanks, we have re-sent your PIN. If you still don't receive your PIN, please contact our customer services team on the number displayed on our contact us page for assistance.</ResendPinMessage3>
-  </MobilePinVerificationSection>
+	<MobilePinVerificationSection>
+		<ResendPinMessage1>Your pin has now been resent to your phone. You should receive it within a few minutes.</ResendPinMessage1>
+		<ResendPinMessage2>We have resent your PIN.</ResendPinMessage2>
+		<ResendPinMessage3>Thanks, we have re-sent your PIN. If you still don't receive your PIN, please contact our customer services team on the number displayed on our contact us page for assistance.</ResendPinMessage3>
+	</MobilePinVerificationSection>
 
 	<AccountDetailsSection>
 		<PasswordMismatchWarning>Passwords must match</PasswordMismatchWarning>
@@ -24,4 +24,9 @@
 		<WeResponsible>We're responsible</WeResponsible>
 		<WongaMoments>Wonga moments</WongaMoments>
 	</AboutUsPage>
+
+	<AddressDetailsPage>
+		<AddresPeriodLess4Month>Less than 4 month</AddresPeriodLess4Month>
+		<PostcodeError>Sorry, that is not a valid postcode.</PostcodeError>
+	</AddressDetailsPage>
 </ContentMap>

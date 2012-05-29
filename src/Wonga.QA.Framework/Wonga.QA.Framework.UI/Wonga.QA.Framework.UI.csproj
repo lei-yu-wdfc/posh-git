@@ -74,7 +74,7 @@
     <Compile Include="Mappings\Content\Agreements\LoanAgreement.cs" />
     <Compile Include="Mappings\Content\Elements\HelpElement.cs" />
     <Compile Include="Mappings\Content\Elements\TabsElementMobile.cs" />
-    <Compile Include="Mappings\Content\ErrorsMessages\AddressDetailsPage.cs" />
+    <Compile Include="Mappings\Content\Pages\AddressDetailsPage.cs" />
     <Compile Include="Mappings\Content\ErrorsMessages\MobilePinVerificationSection.cs" />
     <Compile Include="Mappings\Content\Links\FAQPageLinks.cs" />
     <Compile Include="Mappings\Content\Pages\AboutUsPage.cs" />
