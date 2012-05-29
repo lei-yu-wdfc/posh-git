@@ -7,6 +7,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Content
 {
     public class ExtensionProcessingPage
     {
+        public String HeaderText { get; set; }
         public String WaitMessage { get; set; }
     }
 }
