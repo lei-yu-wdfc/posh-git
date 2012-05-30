@@ -82,5 +82,21 @@
 		<OuchMessage>Ouch! We're very sorry</OuchMessage>
 		<WeSorryMessage>We're sorry</WeSorryMessage>
 	</ExtensionErrorPage>
+
+  <TopupProcessingPage>
+    <HeaderText>Processing</HeaderText>
+    <WaitMessage>We are processing your application, please be patient. If the page doesn't reload click here.</WaitMessage>
+  </TopupProcessingPage>
+
+  <ExtensionProcessingPage>
+    <HeaderText>Processing</HeaderText>
+    <WaitMessage>We are processing your application, please be patient. If the page doesn't reload click here.</WaitMessage>
+  </ExtensionProcessingPage>
+
+  <RepayProcessingPage>
+    <HeaderText>Processing</HeaderText>
+    <WaitMessage>We are processing your payment, please be patient. If the page doesn't reload click here.</WaitMessage>
+  </RepayProcessingPage>
+  
 </ContentMap>
 

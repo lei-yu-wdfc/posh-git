@@ -7,7 +7,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
 {
     public class ExtensionProcessingPage
     {
-        public String ProcessingText { get; set; }
+        public String ProcessingStaticLink { get; set; }
         public String ProcessingTextContainer { get; set; }
     }
 }

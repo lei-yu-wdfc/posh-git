@@ -11,11 +11,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
     public class RepayProcessingPage : BasePage
     {
+        private IWebElement _staticLink;
+
         public RepayProcessingPage(UiClient client) : base(client)
         {
-            //var processing = Client.Driver.FindElement(By.Id(UiMap.Get.ProcessingPage.FormId));
-            //var img = processing.FindElement(By.CssSelector(UiMap.Get.ProcessingPage.ProcessingImageTag));
-            //Assert.That(img.GetAttribute(UiMap.Get.ProcessingPage.ProcessingImageAttributeName), Is.EqualTo(UiMap.Get.ProcessingPage.ProcessingImageAttributeText));
+            Assert.That(Headers, Has.Item(Wonga.QA.Framework.UI.ContentMap.Get.ExtensionProcessingPage.HeaderText));
+            _staticLink = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionProcessingPage.ProcessingStaticLink));
         }
 
         public IRepayPaymentPage WaitFor<T>() where T : IRepayPaymentPage
