@@ -85,12 +85,13 @@ namespace Wonga.QA.Tests.Ui
                 Assert.IsTrue(jargonBasterPage.Url.Contains("#" + element.Text.ToLower()));
             }
         }
-
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-167"), Pending("FE bug, button in top of page are broken, ZA-2490, CA-2234")]
+        
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-167")]
         public void ClickOnContactUsCauseContactInformationDisplayedOnPage()
         {
             var page = Client.Home();
             page.Help.HelpTriggerClick();
+            Thread.Sleep(1000); //wait for ajax load help submenu
             page.Help.ContactUsClick();
             Thread.Sleep(5000); //wait for ajax load the popup
             Assert.IsTrue(page.Contact.IsContactPopupPresent());

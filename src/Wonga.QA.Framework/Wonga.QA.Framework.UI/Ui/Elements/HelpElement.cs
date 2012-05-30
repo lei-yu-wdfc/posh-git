@@ -34,7 +34,7 @@ namespace Wonga.QA.Framework.UI.Elements
                     _jargonBuster = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.HelpElement.JargonBuster));
                     break;
             }
-            _helpTrigger = Page.Client.Driver.FindElement(By.Id(UiMap.Get.HelpElement.HelpTrigger));
+            _helpTrigger = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.HelpElement.HelpTrigger));
             _listQuestions = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.HelpElement.HelplistQuestions));
 
         }
