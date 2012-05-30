@@ -12,7 +12,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[TestFixture, Parallelizable(TestScope.All)]
+	[TestFixture]
 	public class CheckpointAccountNumberApplicationsAcceptableTests
 	{
 		private const RiskMask TestMask = RiskMask.TESTAccountNumberApplicationsAcceptable;
@@ -32,7 +32,8 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			AssertCheckpointAndVerificationExecution();
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879"), DependsOn("L0_NumberOfApplicationsBelowThresholdAccepted")]
+		
+		[Test, AUT(AUT.Za), JIRA("ZA-2228"), DependsOn("L0_NumberOfApplicationsBelowThresholdAccepted")]
 		public void Ln_NumberOfApplicationsBelowThresholdAccepted()
 		{
 			application.RepayOnDueDate();
@@ -80,7 +81,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 		#region feature switch
 
-		[Test, AUT(AUT.Ca), JIRA("CA-1879")]
+		[Test, AUT(AUT.Ca), JIRA("CA-2309")]
 		[Row(true)]
 		[Row(false)]
 		public void GivenNewCustomer_WhenFeatureSwitchIsConfigured_ThenCheckApplicationWorkflowContainsCheckpoint(bool featureSwitchValue)
@@ -102,10 +103,10 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			}
 		}
 
-		[Test, AUT(AUT.Ca), JIRA("CA-1879")]
+		[Test, AUT(AUT.Ca), JIRA("CA-2309")]
 		[Row(true)]
 		[Row(false)]
-		public void GivenExistingCustomer_WhenFeatureSwitchIsConfigured_ThenCheckApplicationWorkflowDoesNotContainCheckpoint(bool featureSwitchValue)
+		public void GivenExistingCustomer_WhenFeatureSwitchIsConfigured_ThenApplicationWorkflowDoesNotContainCheckpoint(bool featureSwitchValue)
 		{
 			bool currentValue = Drive.Data.Ops.SetServiceConfiguration(GetFeatureSwitchKeyName(), featureSwitchValue);
 
