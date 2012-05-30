@@ -503,6 +503,8 @@
     <Compile Include="Messages\IMobilePhoneUpdatedEvent.cs" />
     <Compile Include="Messages\IMobilePhoneUpdatedInternalEvent.cs" />
     <Compile Include="Messages\INegativeCounterOfferAcceptedEvent.cs" />
+	<Compile Include="Messages\INewPremiumCardCommandDoneEvent.cs" />
+    <Compile Include="Messages\INewStandardCardCommandDoneEvent.cs" />
     <Compile Include="Messages\INotifyA1SmsShouldBeScheduledEvent.cs" />
     <Compile Include="Messages\INotifyBeforeEndLoanAutoEvent.cs" />
     <Compile Include="Messages\INotifyBeforeEndLoanEvent.cs" />

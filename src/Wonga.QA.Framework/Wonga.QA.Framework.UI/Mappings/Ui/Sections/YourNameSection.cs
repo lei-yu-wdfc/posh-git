@@ -17,5 +17,8 @@ namespace Wonga.QA.Framework.UI.Mappings.Sections
         public String FirstName { get; set; }
         public String LastName { get; set; }
         public String MiddleName { get; set; }
+        public String FirstNameErrorForm { get; set; }
+        public String MiddleNameErrorForm { get; set; }
+        public String LastNameErrorForm { get; set; }
     }
 }

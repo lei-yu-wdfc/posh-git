@@ -31,6 +31,11 @@ namespace Wonga.QA.Framework.Core
             return Guid.NewGuid();
         }
 
+        public static String GetId(Guid id)
+        {
+            return (id.ToString().Replace("-", string.Empty));
+        }
+
         public static DateTime GetDateTimeMin()
         {
             return SqlDateTime.MinValue.Value;
@@ -44,6 +49,12 @@ namespace Wonga.QA.Framework.Core
         public static String GetEmail()
         {
             return "qa.wonga.com@gmail.com";
+        }
+
+        public static String GetEmail(int mailLength)
+        {
+            String guid = Guid.NewGuid().ToString();
+            return String.Format("qa.wonga.com{0}@gmail.com", guid.Substring(0, mailLength - GetEmail().Length - 1));
         }
 
         public static String RandomEmail()
@@ -116,6 +127,11 @@ namespace Wonga.QA.Framework.Core
                         return "07700900" + RandomLong(100, 999);
                     }
             }
+        }
+
+        public static string  GetVerificationPin()
+        {
+            return "0000";
         }
 
         public static String GetNationalNumber()
@@ -209,7 +225,33 @@ namespace Wonga.QA.Framework.Core
 
         public static String GetPostcode()
         {
-            return RandomInt(0000, 9999).ToString().PadLeft(4, '0');
+            switch (Config.AUT)
+            {
+                case AUT.Uk:
+                    {
+                        return "SW6 6PN";  
+                    }
+                default:
+                    {
+                        return RandomInt(0000, 9999).ToString().PadLeft(4, '0'); 
+                    }
+            }
+            
+        }
+
+        public static String GetCountryCode()
+        {
+            String result = "";
+            switch (Config.AUT)
+            {
+               case AUT.Uk:
+                    {
+                        result = "UK";
+                    }
+                    break;
+            }
+
+            return result;
         }
 
         public static Uri GetSchema(Uri uri)

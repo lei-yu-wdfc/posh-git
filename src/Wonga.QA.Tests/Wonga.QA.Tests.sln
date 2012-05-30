@@ -79,6 +79,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Accounting",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Ui.Mobile", "Wonga.QA.Tests.Ui.Mobile\Wonga.QA.Tests.Ui.Mobile.csproj", "{13CA11B4-FAEE-4901-8067-B00A6F85AE33}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Prepaid", "Wonga.QA.Tests.Prepaid\Wonga.QA.Tests.Prepaid.csproj", "{8F318EC1-E001-4CF2-A89A-A2B0C94E1D98}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -458,6 +460,16 @@ Global
 		{13CA11B4-FAEE-4901-8067-B00A6F85AE33}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{13CA11B4-FAEE-4901-8067-B00A6F85AE33}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{13CA11B4-FAEE-4901-8067-B00A6F85AE33}.Release|x86.ActiveCfg = Release|Any CPU
+		{8F318EC1-E001-4CF2-A89A-A2B0C94E1D98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F318EC1-E001-4CF2-A89A-A2B0C94E1D98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F318EC1-E001-4CF2-A89A-A2B0C94E1D98}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8F318EC1-E001-4CF2-A89A-A2B0C94E1D98}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8F318EC1-E001-4CF2-A89A-A2B0C94E1D98}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8F318EC1-E001-4CF2-A89A-A2B0C94E1D98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F318EC1-E001-4CF2-A89A-A2B0C94E1D98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F318EC1-E001-4CF2-A89A-A2B0C94E1D98}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8F318EC1-E001-4CF2-A89A-A2B0C94E1D98}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8F318EC1-E001-4CF2-A89A-A2B0C94E1D98}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

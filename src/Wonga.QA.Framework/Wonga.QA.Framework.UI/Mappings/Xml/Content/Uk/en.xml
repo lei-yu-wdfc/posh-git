@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentMap>
   <YourDetails>Your Details</YourDetails>
- 
-  <RepayEarlyPaymentFailedPage>
+   <RepayEarlyPaymentFailedPage>
     <HeaderText>Sorry we couldn't collect your payment</HeaderText>
   </RepayEarlyPaymentFailedPage>
 
@@ -83,6 +82,12 @@
 		<WeSorryMessage>We're sorry</WeSorryMessage>
 	</ExtensionErrorPage>
 
+    <PrepaidBalanceBlock>
+     <CurrentBalance>Current balance</CurrentBalance>
+     <CashbackEarned>Cashback earned</CashbackEarned>
+     <MoneyIn>Money in</MoneyIn>
+     <MoneyOut>Money out </MoneyOut>
+    </PrepaidBalanceBlock>
   <TopupProcessingPage>
     <HeaderText>Processing</HeaderText>
     <WaitMessage>We are processing your application, please be patient. If the page doesn't reload click here.</WaitMessage>
@@ -99,4 +104,3 @@
   </RepayProcessingPage>
   
 </ContentMap>
-

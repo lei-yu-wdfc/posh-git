@@ -1,73 +1,182 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Globalization;
+using MbUnit.Framework;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Api.Enums;
 using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework
 {
     public static class CustomerOperations
     {
-
-        public static readonly String CUSTOMER_FULL_NAME = "FULL_NAME";
-        public static readonly String CUSTOMER_FULL_ADDRESS = "FULL_ADDRESS";
-        private static readonly dynamic MarketingEligibleCustomersEntity = Drive.Data.Marketing.Db.MarketingEligibleCustomers;
+        private static readonly dynamic _eligibleCustomersEntity = Drive.Data.Marketing.Db.MarketingEligibleCustomers;
+        private static readonly dynamic _commsDb = Drive.Data.Comms.Db;
+        private static readonly dynamic _prepaidDb = Drive.Data.PrepaidCard.Db;
         private static readonly dynamic RiskDb = Drive.Data.Risk.Db;
 
-        #region Public Members
-        /* Marketing Stuff */
         public static void CreateMarketingEligibility(Guid customerId, bool isEligible)
         {
             if (isEligible.Equals(true))
             {
-                Do.Until(() => MarketingEligibleCustomersEntity.Insert(EligibleCustomerId: customerId, ShowAd: 1, CustomerInArrears: 0,
+                Do.Until(() => _eligibleCustomersEntity.Insert(EligibleCustomerId: customerId, ShowAd: 1, CustomerInArrears: 0,
                                                CreateOn: Get.RandomDate(), HasStandardCard: 1, HasPremiumCard: 0));
             }
             else
             {
-                Do.Until(() => MarketingEligibleCustomersEntity.Insert(EligibleCustomerId: customerId, ShowAd: 0, CustomerInArrears: 1,
+                Do.Until(() => _eligibleCustomersEntity.Insert(EligibleCustomerId: customerId, ShowAd: 0, CustomerInArrears: 1,
                                               CreateOn: Get.RandomDate(), HasStandardCard: 1, HasPremiumCard: 0));
             }
         }
+
+        public static void MakeZeroCardsForCustomer(Guid customerId)
+        {
+            Do.Until(() => _eligibleCustomersEntity.UpdateByEligibleCustomerId(EligibleCustomerId: customerId, HasStandardCard: 0, HasPremiumCard: 0));
+        }
+        public static void UpdateCustomerPrepaidCard(Guid customerId, bool isPremiumCard)
+        {
+            if (isPremiumCard.Equals(true))
+            {
+                Do.Until(() => _eligibleCustomersEntity.UpdateByEligibleCustomerId(EligibleCustomerId: customerId, HasStandardCard: 0, HasPremiumCard: 1));
+            }
+            else
+            {
+                Do.Until(() => _eligibleCustomersEntity.UpdateByEligibleCustomerId(EligibleCustomerId: customerId, HasStandardCard: 1, HasPremiumCard: 0));
+            }
+        }
+
         public static void DeleteMarketingEligibility(Guid customerId)
         {
-            Do.Until(() => MarketingEligibleCustomersEntity.Delete(EligibleCustomerId: customerId));
+            Do.Until(() => _eligibleCustomersEntity.Delete(EligibleCustomerId: customerId));
         }
-        public static Dictionary<String, String> GetFullCustomerInfo(Guid customerId)
-        {
-            Dictionary<String, String> result = new Dictionary<string, string>();
-            result.Add(CUSTOMER_FULL_NAME, GetFullCustomerName(customerId));
-            result.Add(CUSTOMER_FULL_ADDRESS, GetFullCustomerAddress(customerId));
-            return result;
-        }
+
         public static void ChangeMarketingEligibility(Guid customerId, bool isEligible)
         {
             if (isEligible.Equals(true))
             {
-                Do.Until(() => MarketingEligibleCustomersEntity.UpdateByEligibleCustomerId(EligibleCustomerId: customerId,
+                Do.Until(() => _eligibleCustomersEntity.UpdateByEligibleCustomerId(EligibleCustomerId: customerId,
                                                                                    CustomerInArrears: 1));
             }
             else
             {
-                Do.Until(() => MarketingEligibleCustomersEntity.UpdateByEligibleCustomerId(EligibleCustomerId: customerId,
+                Do.Until(() => _eligibleCustomersEntity.UpdateByEligibleCustomerId(EligibleCustomerId: customerId,
                                                                                     CustomerInArrears: 0));
             }
         }
 
-        /* Risk stuff */
+        public static void UpdateMobilePhone(Guid customerId)
+        {
+            var customer = Do.Until(() => _commsDb.CustomerDetails.FindByAccountId(customerId));
+
+            var verificationMobileCommand = new VerifyMobilePhoneUkCommand();
+            verificationMobileCommand.AccountId = customerId;
+            verificationMobileCommand.Forename = customer.Forename;
+            verificationMobileCommand.MobilePhone = Get.GetMobilePhone();
+            verificationMobileCommand.VerificationId = Guid.NewGuid();
+
+            var resendMobilePin = new CompleteMobilePhoneVerificationCommand();
+            resendMobilePin.VerificationId = verificationMobileCommand.VerificationId;
+            resendMobilePin.Pin = Get.GetVerificationPin();
+
+            Drive.Api.Commands.Post(verificationMobileCommand);
+            Drive.Api.Commands.Post(resendMobilePin);
+
+            Do.Until(() => _commsDb.CustomerDetails.FindBy(AccountId: customerId, MobilePhone: verificationMobileCommand.MobilePhone));
+
+        }
+        public static void UpdateAddress(Guid customerId)
+        {
+            var customer = Do.Until(() => _commsDb.CustomerDetails.FindByAccountId(customerId));
+            var address = Do.Until(() => _commsDb.Addresses.FindByAccountId(customerId));
+
+            var command = new UpdateCustomerAddressUkCommand();
+            command.AccountId = customerId;
+            command.AddressId = address.ExternalId;
+            command.AtAddressFrom = DateTime.Today.AddYears(-4).ToDate(DateFormat.Date);
+            command.Postcode = Get.GetPostcode();
+            command.CountryCode = Get.GetCountryCode();
+            command.HouseName = Get.RandomString(8);
+            command.HouseNumber = Get.RandomInt(1, 100).ToString(CultureInfo.InvariantCulture);
+            command.District = Get.RandomString(15);
+            command.Street = Get.RandomString(15);
+            command.Town = Get.RandomString(15);
+            command.County = Get.RandomString(15);
+
+            Drive.Api.Commands.Post(command);
+            Do.Until(() => _commsDb.Addresses.FindBy(AccountId: customerId, Street: command.Street, Town: command.Town));
+        }
+
+        public static void UpdateEmail(Guid customerId)
+        {
+            var customer = Do.Until(() => _commsDb.CustomerDetails.FindByAccountId(customerId));
+
+            var verificationEmail = new SendVerificationEmailCommand();
+            verificationEmail.AccountId = customerId;
+            verificationEmail.Email = Get.GetEmail(50);
+            verificationEmail.UriFragment = Config.Ui.Home + "confirm-new-email-address/";
+
+            Drive.Api.Commands.Post(verificationEmail);
+
+            var emailVerification = Do.Until(() => _commsDb.EmailVerification.FindByAccountId(customerId));
+
+            var completeEmailVerification = new CompleteEmailVerificationCommand();
+            completeEmailVerification.AccountId = customerId;
+            completeEmailVerification.ChangeId = emailVerification.ChangeId;
+
+            Drive.Api.Commands.Post(completeEmailVerification);
+            Do.Until(() => _commsDb.CustomerDetails.FindBy(AccountId: customerId, Email: verificationEmail.Email));
+        }
+
+        public static void CreatePrepaidCardForCustomer(Guid customerId, bool isPremiumCard)
+        {
+            if (isPremiumCard.Equals(true))
+            {
+                var request = new SignupCustomerForPremiumCardCommand();
+                request.CustomerExternalId = customerId;
+                Drive.Api.Commands.Post(request);
+            }
+
+            else
+            {
+                var request = new SignupCustomerForStandardCardCommand();
+                request.CustomerExternalId = customerId;
+                Drive.Api.Commands.Post(request);
+            }
+            var cardHolder = Do.Until(() => _prepaidDb.CardHolderDetails.FindByCustomerExternalId(customerId));
+            Do.Until(() => _prepaidDb.CardDetails.FindByCardHolderExternalId(cardHolder.ExternalId));
+        }
+
+        public static void SetFundsForCustomer(Guid applicationId, bool isPrepaidFunds)
+        {
+            var request = new SetFundsTransferMethodCommand();
+            request.ApplicationId = applicationId;
+
+            if (isPrepaidFunds.Equals(true))
+            {
+                request.TransferMethod = FundsTransferEnum.SendToPrepaidCard;
+            }
+            else
+            {
+                request.TransferMethod = FundsTransferEnum.DefaultAutomaticallyChosen;
+            }
+
+            Drive.Api.Commands.Post(request);
+        }
+
         public static void UpdateEmployerNameInRisk(Guid accountId, string employerName)
         {
             Do.Until(() => RiskDb.EmploymentDetails.UpdateByAccountId(AccountId: accountId, EmployerName: employerName));
         }
+
         public static void UpdateMiddleNameInRisk(Guid accountId, string middleName)
         {
             Do.Until(() => RiskDb.RiskAccounts.UpdateByAccountId(AccountId: accountId, MiddleName: middleName));
         }
+
         public static void RemovePhoneNumberFromRisk(string phoneNumber)
         {
             Do.Until(() => RiskDb.RiskAccountMobilePhones.DeleteAllByMobilePhone(phoneNumber));
         }
+
         public static void AddPhoneNumberToRisk(string mobilePhoneNumber)
         {
             var tempGuid = Guid.NewGuid();
@@ -90,48 +199,7 @@ namespace Wonga.QA.Framework
 
         }
 
-        #endregion
 
-        #region Private Members
 
-        private static String GetFullCustomerName(Guid customerId)
-        {
-            StringBuilder builder = new StringBuilder();
-
-            var request = new GetCustomerDetailsQuery();
-            request.AccountId = customerId;
-
-            var response = Drive.Api.Queries.Post(request);
-            builder.Append(response.Values["Forename"].First());
-            builder.Append(" ");
-            builder.Append(response.Values["MiddleName"].First());
-            builder.Append(" ");
-            builder.Append(response.Values["Surname"].First());
-
-            return builder.ToString();
-        }
-        private static String GetFullCustomerAddress(Guid customerId)
-        {
-            StringBuilder builder = new StringBuilder();
-
-            var request = new GetCurrentAddressQuery();
-            request.AccountId = customerId;
-
-            var response = Drive.Api.Queries.Post(request);
-            builder.Append(response.Values["HouseName"].First());
-            builder.Append(response.Values["HouseNumber"].First());
-            builder.Append(" ");
-            builder.Append(response.Values["Street"].First());
-            builder.Append("<br />");
-            builder.Append(response.Values["Town"].First());
-            builder.Append(" ");
-            builder.Append(response.Values["Postcode"].First());
-
-            return builder.ToString();
-        }
-
-        #endregion
-
-        
     }
 }

@@ -82,6 +82,7 @@ namespace Wonga.QA.Framework.UI
         public TopupDealDonePage TopupDealDonePage { get; set; }
         public ExtensionErrorPage ExtensionErrorPage { get; set; }
         public ApplicationSection ApplicationSection { get; set; }
+        public PrepaidBalanceBlock PrepaidBalanceBlock { get; set; }
         public ExtensionProcessingPage ExtensionProcessingPage { get; set; }
         public RepayProcessingPage RepayProcessingPage { get; set; }
         public TopupProcessingPage TopupProcessingPage { get; set; }

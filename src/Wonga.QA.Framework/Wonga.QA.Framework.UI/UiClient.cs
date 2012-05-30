@@ -130,6 +130,12 @@ namespace Wonga.QA.Framework.UI
             return new LoginPage(this);
         }
 
+        public LoginPage LoginPrepaidAdmin()
+        {
+            Driver.Navigate().GoToUrl(Config.Ui.Home + "/login");
+            return new LoginPage(this);
+        }
+
         public MyPaymentsPage Payments()
         {
             Driver.Navigate().GoToUrl(Config.Ui.Home + "/my-account/details");
@@ -174,6 +180,13 @@ namespace Wonga.QA.Framework.UI
         {
             Driver.Navigate().GoToUrl(Config.Ui.Home + "/frequently-asked-questions");
             return new FAQPage(this);
+        }
+
+        public PrepaidCardPage PrepaidCardPage()
+        {
+            Driver.Navigate().GoToUrl(Config.Ui.Home + "my-account/prepaid/");
+            Driver.Url = Config.Ui.Home + "my-account/prepaid/";
+            return new PrepaidCardPage(this);
         }
 
         public Image Screen()

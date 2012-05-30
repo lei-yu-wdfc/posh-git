@@ -18,6 +18,11 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         private readonly IWebElement _homeStatus;
         private readonly IWebElement _homeLanguage;
         private readonly IWebElement _maritalStatus;
+        private readonly IWebElement _peselNumber;
+        private readonly IWebElement _motherMaidenName;
+        private readonly IWebElement _educationLevel;
+        private readonly IWebElement _vehicleOwner;
+        private readonly IWebElement _allegroLogin;
 
         public String Number { set { _idNumber.SendValue(value); } }
         public String Gender { set { _gender.SelectLabel(value); } }
@@ -35,6 +40,11 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         public String HomeLanguage { set { _homeLanguage.SelectOption(value); } }
         public String MaritalStatus { set { _maritalStatus.SelectOption(value); } }
         public String NumberOfDependants { set { _dependants.SelectOption(value); } }
+        public String PeselNumber  { set {_peselNumber.SendValue(value);} }
+        public String MotherMaidenName { set { _motherMaidenName.SendValue(value); } }
+        public String EducationLevel { set { _educationLevel.SelectOption(value); } }
+        public String VehicleOwner { set { _vehicleOwner.SelectOption(value); } }
+ 	 	public String AllegroLogin { set { _allegroLogin.SendValue(value); } }
 
         public YourDetailsSection(BasePage page) : base(UiMap.Get.YourDetailsSection.Fieldset, page)
         {
@@ -54,14 +64,32 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
                 case(AUT.Uk):
                     _dependants = Section.FindElement(By.CssSelector(UiMap.Get.YourDetailsSection.Dependants));
                     break;
+                case (AUT.Pl):
+                    _idNumber = Section.FindElement(By.CssSelector(UiMap.Get.YourDetailsSection.IdNumber));
+                    _dependants = Section.FindElement(By.CssSelector(UiMap.Get.YourDetailsSection.Dependants));
+                    _peselNumber = Section.FindElement(By.CssSelector(UiMap.Get.YourDetailsSection.PeselNumber));
+                    _motherMaidenName = Section.FindElement(By.CssSelector(UiMap.Get.YourDetailsSection.MotherMaidenName));
+
+                    _educationLevel = Section.FindElement(By.CssSelector(UiMap.Get.YourDetailsSection.EducationLevel));
+                    _vehicleOwner = Section.FindElement(By.CssSelector(UiMap.Get.YourDetailsSection.VehicleOwner));
+                    _allegroLogin = Section.FindElement(By.CssSelector(UiMap.Get.YourDetailsSection.AllegroLogin));
+                    break;
             }
 
             _gender = Section.FindElements(By.CssSelector(UiMap.Get.YourDetailsSection.Gender));
-            _dateOfBirthDay = Section.FindElement(By.CssSelector(UiMap.Get.YourDetailsSection.DateOfBirthDay));
-            _dateOfBirthMonth = Section.FindElement(By.CssSelector(UiMap.Get.YourDetailsSection.DateOfBirthMonth));
-            _dateOfBirthYear = Section.FindElement(By.CssSelector(UiMap.Get.YourDetailsSection.DateOfBirthYear));
-            _homeStatus = Section.FindElement(By.CssSelector(UiMap.Get.YourDetailsSection.HomeStatus));
             _maritalStatus = Section.FindElement(By.CssSelector(UiMap.Get.YourDetailsSection.MaritalStatus));
+            switch (Config.AUT)
+            {
+                case AUT.Ca:
+                case AUT.Wb:
+                case AUT.Uk:
+                case AUT.Za:
+                    _homeStatus = Section.FindElement(By.CssSelector(UiMap.Get.YourDetailsSection.HomeStatus));
+                    _dateOfBirthDay = Section.FindElement(By.CssSelector(UiMap.Get.YourDetailsSection.DateOfBirthDay));
+                    _dateOfBirthMonth = Section.FindElement(By.CssSelector(UiMap.Get.YourDetailsSection.DateOfBirthMonth));
+                    _dateOfBirthYear = Section.FindElement(By.CssSelector(UiMap.Get.YourDetailsSection.DateOfBirthYear));
+                    break;
+            }
         }
 
         public bool IsGenderDoesntMutchIdNumber()
