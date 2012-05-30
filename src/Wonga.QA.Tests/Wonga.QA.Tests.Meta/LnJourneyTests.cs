@@ -15,6 +15,7 @@ namespace Wonga.QA.Tests.Meta
     public class LnJourneyTests : UiTest
     {
         [Test, AUT(AUT.Uk), JIRA("UK-1533")]
+        [Pending("This should not be part of Meta")]
         public void L0LnJourneyTest()
         {
             var loginPage = Client.Login();
