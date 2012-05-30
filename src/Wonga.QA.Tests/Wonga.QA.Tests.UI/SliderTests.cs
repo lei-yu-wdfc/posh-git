@@ -26,8 +26,10 @@ namespace Wonga.QA.Tests.Ui
     {
         private int _amountMax;
         private int _amountMin;
+        private int _amountDefault;
         private int _termMax;
         private int _termMin;
+        private int _termDefault;
         private string _repaymentDate;
         private ApiResponse _response;
         //private DateTime _actualDate;
@@ -62,8 +64,10 @@ namespace Wonga.QA.Tests.Ui
             _response = Drive.Api.Queries.Post(request);
             _amountMax = (int)Decimal.Parse(_response.Values["AmountMax"].Single(), CultureInfo.InvariantCulture);
             _amountMin = (int)Double.Parse(_response.Values["AmountMin"].Single(), CultureInfo.InvariantCulture);
+            _amountDefault = (int)Decimal.Parse(_response.Values["AmountDefault"].Single(), CultureInfo.InvariantCulture);
             _termMax = Int32.Parse(_response.Values["TermMax"].Single(), CultureInfo.InvariantCulture);
             _termMin = Int32.Parse(_response.Values["TermMin"].Single(), CultureInfo.InvariantCulture);
+            _termDefault = Int32.Parse(_response.Values["TermDefault"].Single(), CultureInfo.InvariantCulture);
         }
 
         [Test, AUT(AUT.Ca)]
@@ -77,7 +81,9 @@ namespace Wonga.QA.Tests.Ui
             //maximum charge is 21$ for each 100$ borrowed for 30 days.
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-149"), Pending("Wierd selenium problem")]
+        
+        //Pending("Wierd selenium problem") fixed in ZA =>  once new sliders been enabled!
+        [Test, AUT(AUT.Ca), JIRA("QA-149")]
         public void ChooseLoanAmountAndDurationViaSlidersMotion()
         {
             var homePage = Client.Home();
@@ -246,10 +252,10 @@ namespace Wonga.QA.Tests.Ui
             switch (Config.AUT)
             {
                 case AUT.Za:
-                    Assert.AreEqual(page.Sliders.HowMuch, "1335");
+                    Assert.AreEqual(page.Sliders.HowMuch, _amountDefault.ToString(CultureInfo.InvariantCulture));
                     break;
                 case AUT.Ca:
-                    Assert.AreEqual(page.Sliders.HowMuch, "265");
+                    Assert.AreEqual(page.Sliders.HowMuch, _amountDefault.ToString(CultureInfo.InvariantCulture));
                     break;
                 case AUT.Wb:
                     var defaultWbAmount = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Payments.Wb.DefaultLoanAmount").Value.ToString();
@@ -281,10 +287,10 @@ namespace Wonga.QA.Tests.Ui
             switch (Config.AUT)
             {
                 case AUT.Za:
-                    Assert.AreEqual(page.Sliders.HowMuch, "1335");
+                    Assert.AreEqual(page.Sliders.HowMuch, _amountDefault.ToString(CultureInfo.InvariantCulture));
                     break;
                 case AUT.Ca:
-                    Assert.AreEqual(page.Sliders.HowMuch, "265");
+                    Assert.AreEqual(page.Sliders.HowMuch, _amountDefault.ToString(CultureInfo.InvariantCulture));
                     break;
                 case AUT.Wb:
                     var defaultWbAmount = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Payments.Wb.DefaultLoanAmount").Value.ToString();
@@ -490,33 +496,32 @@ namespace Wonga.QA.Tests.Ui
             #region enter an empty string
             page.Sliders.LoanAmount.Clear();
             page.Sliders.LoanDuration.Clear();
-            Assert.AreEqual("100", page.Sliders.HowMuch);
-            Assert.AreEqual("1", page.Sliders.HowLong);
+            Assert.AreEqual(_amountDefault.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
+            Assert.AreEqual(_termDefault.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
             #endregion
-
 
             #region enter negative values
             page.Sliders.HowMuch = "-200";
             page.Sliders.HowLong = "-10";
-            Assert.AreEqual("200", page.Sliders.HowMuch);
-            Assert.AreEqual("10", page.Sliders.HowLong);
-            #endregion
-            
-
-            #region enter bigger than max possible values
-            page.Sliders.HowMuch = "5000";
-            page.Sliders.HowLong = "100";
-            Assert.AreEqual(_amountMax.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
-            Assert.AreEqual(_termMax.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
+            Assert.AreEqual("200".ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
+            Assert.AreEqual("10".ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
             #endregion
 
-            
             #region enter mixed data
             page.Sliders.HowMuch = "kjh2-dsf0sdf0";
             page.Sliders.HowLong = "dfg1dfg-0df";
-            Assert.AreEqual("200", page.Sliders.HowMuch);
-            Assert.AreEqual("10", page.Sliders.HowLong);
+            Assert.AreEqual("200".ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
+            Assert.AreEqual("10".ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
             #endregion
+
+            #region enter bigger than max possible values
+            page.Sliders.HowMuch = "5000";
+            page.Sliders.HowLong = "1000";
+            Assert.AreEqual(_amountMax.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
+            Assert.AreEqual(_termMax.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
+            #endregion
+            
+            
         }
 
         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-283"), Pending("CA code appearing in ZA - Michael Nowicki to fix"), Category(TestCategories.Smoke)]
