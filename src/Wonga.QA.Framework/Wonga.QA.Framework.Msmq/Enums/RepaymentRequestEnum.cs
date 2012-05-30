@@ -6,5 +6,6 @@ namespace Wonga.QA.Framework.Msmq
         RepayLoan = 1,
         CsAgent = 2,
         ExtendLoanPartPayment = 3,
+        CustomerViaMyAccount = 4,
     }
 }
