@@ -10,6 +10,7 @@ using Wonga.QA.Framework.Api;
 
 namespace Wonga.QA.Tests.Ui
 {
+    [Parallelizable(TestScope.All)]
     public class L0AcceptedLoan : UiTest
     {
         private const String MiddleNameMask = "TESTNoCheck";
@@ -31,7 +32,7 @@ namespace Wonga.QA.Tests.Ui
             var dealDone = acceptedPage.Submit();
         }
 
-       [Test, AUT(AUT.Ca), Pending("CA WIP,RC FE seems broken - postponing the push of the selenium tests")]
+       [Test, AUT(AUT.Ca), Category(TestCategories.Smoke)]
         public void CaAcceptedLoan()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home()); 

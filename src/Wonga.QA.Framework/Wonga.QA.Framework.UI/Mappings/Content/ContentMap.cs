@@ -14,6 +14,7 @@ using ExtensionErrorPage = Wonga.QA.Framework.UI.Mappings.Content.ExtensionError
 using TopupDealDonePage = Wonga.QA.Framework.UI.Mappings.Content.TopupDealDonePage;
 using Wonga.QA.Framework.UI.Mappings.Content.Sections;
 
+
 namespace Wonga.QA.Framework.UI
 {
     public class ContentMap
@@ -50,7 +51,7 @@ namespace Wonga.QA.Framework.UI
         }
 
 #region Content
-        public string YourDetails { get; set; }
+        public String YourDetails { get; set; }
         public String ProblemProcessingDetailsMessage { get; set; }
         public String PasswordWarningMessage { get; set; }
         public String ApplicationErrorMessage { get; set; }
@@ -81,8 +82,10 @@ namespace Wonga.QA.Framework.UI
         public TopupDealDonePage TopupDealDonePage { get; set; }
         public ExtensionErrorPage ExtensionErrorPage { get; set; }
         public ApplicationSection ApplicationSection { get; set; }
-
         public PrepaidBalanceBlock PrepaidBalanceBlock { get; set; }
+        public ExtensionProcessingPage ExtensionProcessingPage { get; set; }
+        public RepayProcessingPage RepayProcessingPage { get; set; }
+        public TopupProcessingPage TopupProcessingPage { get; set; }
 #endregion
     }
 }

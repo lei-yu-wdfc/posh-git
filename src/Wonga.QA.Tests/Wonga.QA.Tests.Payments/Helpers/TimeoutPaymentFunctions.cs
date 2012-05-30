@@ -17,12 +17,6 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = sagaId.Id });
             return Guid.Parse(sagaId.ToString());
         }
-            
-        public static void TimeoutPaymentsInArrearsSagaEntity(Guid applicationGuid)
-        {
-            var sagaId = Drive.Db.OpsSagas.PaymentsInArrearsSagaEntities.Single(a => a.ApplicationId == applicationGuid);
-            Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = sagaId.Id });
-        }
 
         public static void TimeoutCloseApplicationSaga(TransactionEntity transaction)
         {

@@ -82,9 +82,13 @@
     <Compile Include="Mappings\Content\ErrorsMessages\MobilePinVerificationSection.cs" />
     <Compile Include="Mappings\Content\Links\FAQPageLinks.cs" />
     <Compile Include="Mappings\Content\Pages\AboutUsPage.cs" />
+    <Compile Include="Mappings\Content\Pages\RepayProcessingPage.cs" />
+    <Compile Include="Mappings\Content\Pages\ExtensionProcessingPage.cs" />
     <Compile Include="Mappings\Content\Pages\TopupDealDonePage.cs" />
     <Compile Include="Mappings\Content\Sections\ApplicationSection.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\BusinessSummaryPage.cs" />
+    <Compile Include="Mappings\Content\Pages\TopupProcessingPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\RepayProcessingPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\MySummaryPageMobile.cs" />
     <Compile Include="Mappings\Content\Pages\TimeoutTestPage.cs" />
     <Compile Include="Mappings\Content\Pages\ExtensionAgreementPage.cs" />

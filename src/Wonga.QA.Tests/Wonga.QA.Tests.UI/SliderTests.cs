@@ -21,6 +21,7 @@ namespace Wonga.QA.Tests.Ui
     /// Slider tests for Za
     /// </summary>
     /// 
+    [Parallelizable(TestScope.All)]
     class SliderTests : UiTest
     {
         private int _amountMax;
@@ -124,8 +125,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-282"), Pending("Waiting for implementation of new sliders")]
-        //[Category(TestCategories.Smoke)] - return when test is enabled
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-282"), Category(TestCategories.Smoke)]
         public void ChooseLoanAmountAndDurationViaPlusMinusButtons()
         {
             var homePage = Client.Home();
@@ -190,8 +190,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-150"), Pending("Waiting for new sliders")]
-        // Category(TestCategories.Smoke) - return when test is enabled
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-150"), Category(TestCategories.Smoke)]
         public void CustomerTypesValidValuesIntoAmountAndDurationFields()
         {
             var termCustomerEnter = Get.RandomInt(_termMin, _termMax);

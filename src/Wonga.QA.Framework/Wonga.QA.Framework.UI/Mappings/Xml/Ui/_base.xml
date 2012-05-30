@@ -318,6 +318,11 @@
     <TopupRequestPageSliderSmall>#wonga-account-top-form</TopupRequestPageSliderSmall>
   </TopupRequestPage>
 
+  <TopupProcessingPage>
+    <ProcessingStaticLink>.static-processing-link</ProcessingStaticLink>
+    <ProcessingTextContainer>.processing-text</ProcessingTextContainer>
+  </TopupProcessingPage>
+
   <TopupAgreementPage>
     <TopupAgreementAcceptButton>#edit-accept</TopupAgreementAcceptButton>
     <TopupAgreementscroll>#agreementscroll</TopupAgreementscroll>
@@ -343,9 +348,7 @@
   </ExtensionDealDonePage>
 
   <ExtensionProcessingPage>
-    <!--<FormId>wonga-processing</FormId>-->
-    <!--<ProcessingImage>#wonga-processing>img</ProcessingImage>-->
-    <ProcessingText>We are processing your application</ProcessingText>
+    <ProcessingStaticLink>.static-processing-link</ProcessingStaticLink>
     <ProcessingTextContainer>.processing-text</ProcessingTextContainer>
   </ExtensionProcessingPage>
 
@@ -413,6 +416,11 @@
     <RepayRequestPageReadMeMessageRepayTotal>.repay-total</RepayRequestPageReadMeMessageRepayTotal>
     <RepayRequestPageLoanPeriodClarification>.loan-period-clarification</RepayRequestPageLoanPeriodClarification>    
   </RepayRequestPage>
+
+  <RepayProcessingPage>
+    <ProcessingStaticLink>.static-processing-link</ProcessingStaticLink>
+    <ProcessingTextContainer>.processing-text</ProcessingTextContainer>
+  </RepayProcessingPage>
 
   <SmallRepaySlidersElement>
     <FormId>#wonga-account-repay-form</FormId>

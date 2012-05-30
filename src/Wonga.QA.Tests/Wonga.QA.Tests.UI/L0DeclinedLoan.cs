@@ -19,6 +19,7 @@ using EmploymentStatusEnum = Wonga.QA.Framework.Msmq.EmploymentStatusEnum;
 
 namespace Wonga.QA.Tests.Ui
 {
+    [Parallelizable(TestScope.All)]
     public class L0DeclinedLoan : UiTest
     {
         [Test, AUT(AUT.Wb)]

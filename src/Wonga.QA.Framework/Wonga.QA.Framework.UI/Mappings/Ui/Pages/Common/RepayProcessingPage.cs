@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Wonga.QA.Framework.UI.Mappings.Pages
 {
-    public class TopupProcessingPage
+    public class RepayProcessingPage
     {
         public String ProcessingStaticLink { get; set; }
         public String ProcessingTextContainer { get; set; }
