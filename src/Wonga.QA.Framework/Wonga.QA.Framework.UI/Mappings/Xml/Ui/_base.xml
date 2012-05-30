@@ -122,11 +122,11 @@
   </ContactElement>
 
   <HelpElement>
-    <HelpTrigger>help-trigger</HelpTrigger>
+    <HelpTrigger>#help-trigger</HelpTrigger>
     <HelplistQuestions>#listQuestions</HelplistQuestions>
     <TroubleshootingQuestions>div#help-panel div.control-bar-panel div.panel:first-child + div.panel >#listQuestions</TroubleshootingQuestions>
     <JargonBuster>#help-panel div div:first-child + div + div p:first-child a</JargonBuster>
-    <ContactUs>#help-panel div div:first-child + div + div p:first-child + p + p a</ContactUs>
+    <ContactUs>#help-panel div div + div + div p + p a</ContactUs>
   </HelpElement>
 
   <JargonBusterPage>
