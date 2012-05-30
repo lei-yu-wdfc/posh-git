@@ -653,7 +653,7 @@ namespace Wonga.QA.Tests.Ui
         public void CustomerOnBankDetailsPageClicksOnResendPinLinkMessageShouldDisplayedAndPinShouldResent()
         {
             Random rand = new Random();
-            string telephone = Get.RandomLong(1000000, 9999999).ToString();
+            string telephone = "077009" + Get.RandomLong(1000, 9999).ToString();
             switch (Config.AUT)
             {
                 #region Ca
@@ -725,7 +725,7 @@ namespace Wonga.QA.Tests.Ui
                     personalDetailsPageZa.EmploymentDetails.SalaryPaidToBank = true;
                     personalDetailsPageZa.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d/MMM/yyyy");
                     personalDetailsPageZa.EmploymentDetails.IncomeFrequency = "Monthly";
-                    personalDetailsPageZa.ContactingYou.CellPhoneNumber = "077009" + Get.RandomLong(1000, 9999);
+                    personalDetailsPageZa.ContactingYou.CellPhoneNumber = telephone;
                     personalDetailsPageZa.ContactingYou.EmailAddress = emailZa;
                     personalDetailsPageZa.ContactingYou.ConfirmEmailAddress = emailZa;
                     personalDetailsPageZa.PrivacyPolicy = true;
@@ -735,7 +735,7 @@ namespace Wonga.QA.Tests.Ui
                     journeyZa.CurrentPage = personalDetailsPageZa.Submit() as AddressDetailsPage;
                     var myBankAccountZa = journeyZa.FillAddressDetails().FillAccountDetails().CurrentPage as PersonalBankAccountPage;
                     Assert.IsTrue(myBankAccountZa.PinVerificationSection.ResendPinClickAndCheck());
-                    var smsZa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber("2775" + telephone));
+                    var smsZa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(telephone.Replace("077", "2777")));
                     foreach (var sms in smsZa)
                     {
                         Console.WriteLine(sms.MessageText + "/" + sms.CreatedOn);

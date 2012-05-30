@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -97,16 +98,23 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public void ChangePassword(string currentPass, string newPass, string confirmPass)
         {
-            _editPasswordCurrent =
-               Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.EditPasswordCurrent));
+            var header = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.EditPasswordHeader)));
+            Do.Until(() => header.Displayed);
+            _editPasswordCurrent = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.EditPasswordCurrent));
             _editPasswordNew = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.EditPasswordNew));
             _editPasswordConfirm =
                 Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.EditPasswordConfirm));
             _submitButton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.SubmitButton));
 
-            _editPasswordCurrent.SendKeys(currentPass);
-            _editPasswordNew.SendKeys(newPass);
-            _editPasswordConfirm.SendKeys(confirmPass);
+            _editPasswordCurrent.SendValue(currentPass);
+            _editPasswordNew.SendValue(newPass);
+            _editPasswordConfirm.SendValue(confirmPass);
+        }
+
+        public void PassPopupLostFocus()
+        {
+            var header = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.EditPasswordHeader));
+            header.Click();
         }
 
         public bool ChangePhone(string homePhone, string mobilePhone, string pin)
@@ -182,7 +190,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public void WaitForSuccessPopup()
         {
-            Do.With.Timeout(10).Until(
+            Do.With.Timeout(2).Until(
                 () =>
                 Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.PopupSuccessTitle)).Displayed);
         }
@@ -216,12 +224,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             try
             {
-                _editPasswordErrorMessage =
-                    Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.EditPasswordErrorMessage));
+                _editPasswordErrorMessage = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.EditPasswordErrorMessage)));
                 return true;
             }
-            catch (NoSuchElementException)
+            catch (Exception e)
             {
+                Trace.WriteLine("There is no warning message: " + e.StackTrace);
                 return false;
             }
         }
@@ -229,12 +237,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             try
             {
-                _editPasswordPopupErrorMessage =
-                    Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.EditPasswordPopupErrorMessage));
+                _editPasswordPopupErrorMessage = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.EditPasswordPopupErrorMessage)));
                 return true;
             }
-            catch (NoSuchElementException)
+            catch (Exception e)
             {
+                Trace.WriteLine("There is no error message: " + e.StackTrace);
                 return false;
             }
 

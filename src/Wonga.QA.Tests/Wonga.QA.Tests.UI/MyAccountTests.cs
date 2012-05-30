@@ -210,7 +210,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-216"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-216"), Pending]
         public void CustomerShouldBeAbleToChangePassword()
         {
             var loginPage = Client.Login();
@@ -222,23 +222,15 @@ namespace Wonga.QA.Tests.Ui
             var myPersonalDetailsPage = mySummaryPage.Navigation.MyPersonalDetailsButtonClick();
 
             myPersonalDetailsPage.PasswordClick();
-            Thread.Sleep(10000); //here and below - waiting for a pop-up
             myPersonalDetailsPage.ChangePassword("Passw0rd", "Passw0rd", "Passw0rd");
             myPersonalDetailsPage.Submit();
 
-            Thread.Sleep(10000);
             Assert.IsTrue(myPersonalDetailsPage.IsPasswordPopupHasErrorMessage());
-            myPersonalDetailsPage.PasswordClick();
-            myPersonalDetailsPage.PasswordClick();
-            Thread.Sleep(10000);
+            Thread.Sleep(1000);
             myPersonalDetailsPage.ChangePassword("Passw0rd", "Pass", "Pass");
-
-            Thread.Sleep(10000);
             Assert.IsTrue(myPersonalDetailsPage.IsPasswordWarningMessageOccurs());
-
-            myPersonalDetailsPage.PasswordClick();
-            myPersonalDetailsPage.PasswordClick();
-            Thread.Sleep(10000);
+            Thread.Sleep(1000);
+            myPersonalDetailsPage.PassPopupLostFocus();
             myPersonalDetailsPage.ChangePassword("Passw0rd", "QWEasd12", "QWEasd12");
             myPersonalDetailsPage.Submit();
             Thread.Sleep(10000);
