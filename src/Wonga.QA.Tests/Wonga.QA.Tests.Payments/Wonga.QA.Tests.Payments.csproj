@@ -115,6 +115,7 @@
     <Compile Include="RepaymentTests.cs" />
     <Compile Include="RiskBasedPricingTests.cs" />
     <Compile Include="Sagas\LoanDueNotificationSagaTests.cs" />
+    <Compile Include="Sagas\PayUPaymentConfirmationSagaTests.cs" />
     <Compile Include="Sagas\SchedulePaymentSagaTests.cs" />
     <Compile Include="ServiceFeesTests.cs" />
     <Compile Include="UpdateLoanTermTests.cs" />
