@@ -1213,8 +1213,6 @@ namespace Wonga.QA.Tests.Ui
             personalDetailsPageZa.YourDetails.Number = Get.GetNationalNumber(new DateTime(1957, 3, 10), true);
             personalDetailsPageZa.YourDetails.Gender = "Male";
             personalDetailsPageZa.YourDetails.DateOfBirth = "9/Mar/1957";
-            Assert.IsTrue(personalDetailsPageZa.YourDetails.IsGenderDoesntMutchIdNumber());
-            Assert.IsTrue(personalDetailsPageZa.YourDetails.IsDOBDoesntMutchIdNumber());
             personalDetailsPageZa.YourDetails.Gender = "Female";
             personalDetailsPageZa.YourDetails.DateOfBirth = "10/Mar/1957";
             journeyZa.CurrentPage = personalDetailsPageZa.Submit() as AddressDetailsPage;
@@ -1550,49 +1548,6 @@ namespace Wonga.QA.Tests.Ui
 
             Assert.AreEqual(URLbefore, URLafter);
             //Assert.IsTrue(e.Message.Contains("was Box must be ticked to proceed"));
-        }
-
-        [Test, AUT(AUT.Za), Pending("Test is yet to be complete. Author: Ben Ifie")]
-        public void L0DropOff()
-        {
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var mySummary = journey.ApplyForLoan(200, 10)
-                                 .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
-                                 .FillAddressDetails()
-                                 .FillAccountDetails()
-                                 .FillBankDetails()
-                                 .WaitForAcceptedPage()
-                                 .IgnoreAcceptingLoanAndReturnToHomePageAndLogin()
-                                 .CurrentPage as MySummaryPage;
-
-        }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-969"), MultipleAsserts, Pending("Test is in development. Also waiting for functionality implementation.")]
-        public void L0PreAgreementPartonAccountSetupPageTest()
-        {
-            var loginPage = Client.Login();
-            string email = Get.RandomEmail();
-            Console.WriteLine("email={0}", email);
-
-            // L0 journey
-            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home());
-            var accountSetupPage = journeyL0.ApplyForLoan(200, 10)
-                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
-                .FillAddressDetails() as AccountDetailsPage;
-
-            Assert.IsTrue(accountSetupPage.IsSecciLinkVisible());
-            Assert.IsTrue(accountSetupPage.IsTermsAndConditionsLinkVisible());
-            Assert.IsTrue(accountSetupPage.IsExplanationLinkVisible());
-
-            accountSetupPage.ClickSecciLink();
-            // TBD: check header and values
-            accountSetupPage.ClickTermsAndConditionsLink();
-            // TBD: check header and values
-            accountSetupPage.ClickExplanationLink();
-            // TBD: check header and values
-
-            // Manually check that loan agreement and SECCI emails are sent
-            Console.WriteLine("Manually check that that loan agreement and SECCI emails are sent for user={0}", email);
         }
 
         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-204"), Pending("work in progress")]

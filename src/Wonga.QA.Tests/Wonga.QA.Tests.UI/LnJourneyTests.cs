@@ -171,46 +171,6 @@ namespace Wonga.QA.Tests.Ui
                            .CurrentPage as MySummaryPage;
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-886"), MultipleAsserts]
-        public void ExistingMobilePhoneNumberNotAccepted()
-        {
-            var loginPage = Client.Login();
-            string email = Get.RandomEmail();
-            
-            Console.WriteLine("email={0}", email);
-
-            // L0 journey
-            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home());
-            var mySummary = journeyL0.ApplyForLoan(200, 10)
-                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
-                .FillAddressDetails()
-                .FillAccountDetails()
-                .FillBankDetails()
-                .FillCardDetails()
-                .WaitForAcceptedPage()
-                .FillAcceptedPage();
-
-            var customer = new Customer(Guid.Parse(Drive.Api.Queries.Post(new GetAccountQuery { Login = email, Password = Get.GetPassword() }).Values["AccountId"].Single()));
-            var application = customer.GetApplication();
-            
-            var mobileNumber = customer.GetCustomerMobileNumber();
-            
-
-            // Repay
-            application.RepayOnDueDate();
-
-           // Ln journey
-            var journey = JourneyFactory.GetLnJourney(Client.Home());
-            var page = journey.ApplyForLoan(200, 10);
-
-            var applyPage = page.CurrentPage as ApplyPage;
-            applyPage.SetIncorrectMobilePhone = mobileNumber;
-
-            Assert.IsTrue(applyPage.IsMobilePhonePopupCancelButtonEnabled(), "Cancel button is not enabled");
-            Assert.IsTrue(applyPage.IsMobilePhonePopupSaveButtonEnabled(), "Save button is not disabled");
-            Assert.IsTrue(applyPage.IsPhoneNumberNotChangedMessageVisible(), "Message that mobile phone number has not changed is not dispalyed");
-        }
-
         [Test, AUT(AUT.Uk), JIRA("UK-1533")]
         public void L0LnJourneyTest()
         {
@@ -297,40 +257,6 @@ namespace Wonga.QA.Tests.Ui
                     Assert.AreEqual(2, smsCa.Count());            
                     break;
             }
-        }
-
-        [Test, AUT(AUT.Wb), Pending("Test not yet complete")]
-        public void WbAcceptedLnLoan()
-        {
-            var loginPage = Client.Login();
-            string email = Get.RandomEmail();
-            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            var organization = OrganisationBuilder.New(customer).Build();
-            var applicationInfo =
-                ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatus.Accepted).
-                    Build() as BusinessApplication;
-            var paymentPlan = applicationInfo.GetPaymentPlan();
-            applicationInfo.MorningCollectionAttempt(paymentPlan, false, true);
-
-            //Need to find or write code that pays outstanding balance
-
-            loginPage.LoginAs(email);
-            var journey = JourneyFactory.GetLNJourneyWB(Client.Home());
-            var declinedPage = journey.ApplyForLoan(5000, 15)
-                                            .ApplyNow()
-                                            .WaitForAcceptedPage();
-        }
-
-        [Test, AUT(AUT.Wb), Pending("Test not yet complete")]
-        public void WbDeclinedLnLoan()
-        {
-
-            var loginPage = Client.Login();
-            loginPage.LoginAs("qa.wonga.com+QB-WK-156-77b99268-ff34-451e-a067-4b0c48f3c5ac@gmail.com");
-            var journey = JourneyFactory.GetLNJourneyWB(Client.Home());
-            var declinedPage = journey.ApplyForLoan(5000, 15)
-                                            .ApplyNow()
-                                            .WaitForDeclinedPage();
         }
 
     }
