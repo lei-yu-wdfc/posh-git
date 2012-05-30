@@ -250,6 +250,7 @@ namespace Wonga.QA.Framework.Core
             public KeyValuePair<String, String> ExperianBulk { get; set; }
             public KeyValuePair<String, String> FileStorage { get; set; }
             public KeyValuePair<String, String> Graydon { get; set; }
+            public KeyValuePair<String, String> Hds { get; set; }
             public KeyValuePair<String, String> Hpi { get; set; }
             public KeyValuePair<String, String> Hsbc { get; set; }
             public KeyValuePair<String, String> Hyphen { get; set; }
@@ -342,6 +343,7 @@ namespace Wonga.QA.Framework.Core
             public String ExperianBulk { get; set; }
             public String FileStorage { get; set; }
             public String Graydon { get; set; }
+            public String Hds { get; set; }
             public String Hpi { get; set; }
             public String Iovation { get; set; }
             public String Salesforce { get; set; }
@@ -420,6 +422,7 @@ namespace Wonga.QA.Framework.Core
             public String Experian { get; set; }
             public String ExperianBulk { get; set; }
             public String FileStorage { get; set; }
+            public String Hds { get; set; }
             public String Hpi { get; set; }
             public String IpLookup { get; set; }
             public String Salesforce { get; set; }
@@ -460,6 +463,7 @@ namespace Wonga.QA.Framework.Core
                 Experian = builder("Experian");
                 ExperianBulk = builder("ExperianBulk");
                 FileStorage = builder("FileStorage");
+                Hpi = builder("Hds");
                 Hpi = builder("Hpi");
                 IpLookup = builder("IpLookup");
                 QaData = builder("QaData");

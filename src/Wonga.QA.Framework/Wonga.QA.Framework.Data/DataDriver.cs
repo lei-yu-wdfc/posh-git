@@ -29,6 +29,7 @@ namespace Wonga.QA.Framework.Data
         private Lazy<ExperianDatabase> _experian = new Lazy<ExperianDatabase>(() => new ExperianDatabase(Config.Db.Experian));
         private Lazy<ExperianBulkDatabase> _experianBulk = new Lazy<ExperianBulkDatabase>(() => new ExperianBulkDatabase(Config.Db.ExperianBulk));
         private Lazy<FileStorageDatabase> _fileStorage = new Lazy<FileStorageDatabase>(() => new FileStorageDatabase(Config.Db.FileStorage));
+        private Lazy<HdsDatabase> _hds = new Lazy<HdsDatabase>(() => new HdsDatabase(Config.Db.Hds));
         private Lazy<HpiDatabase> _hpi = new Lazy<HpiDatabase>(() => new HpiDatabase(Config.Db.Hpi));
         private Lazy<IpLookupDatabase> _ipLookup = new Lazy<IpLookupDatabase>(() => new IpLookupDatabase(Config.Db.IpLookup));
         private Lazy<QaDataDatabase> _qaData = new Lazy<QaDataDatabase>(() => new QaDataDatabase(Config.Db.QaData));
@@ -62,6 +63,7 @@ namespace Wonga.QA.Framework.Data
         public ExperianDatabase Experian { get { return _experian.Value; } }
         public ExperianBulkDatabase ExperianBulk { get { return _experianBulk.Value; } }
         public FileStorageDatabase FileStorage { get { return _fileStorage.Value; } }
+        public HdsDatabase Hds { get { return _hds.Value; } }
         public HpiDatabase Hpi { get { return _hpi.Value; } }
         public IpLookupDatabase IpLookup { get { return _ipLookup.Value; } }
         public QaDataDatabase QaData { get { return _qaData.Value; } }
