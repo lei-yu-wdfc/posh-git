@@ -66,7 +66,7 @@ namespace Wonga.QA.Framework.UI.Elements
                 }
                 else
                 {
-                    new Actions(Page.Client.Driver).DoubleClick(_loanAmount).Build().Perform();
+                    new Actions(Page.Client.Driver).Click(_loanAmount).Build().Perform();
                     _loanAmount.SendKeys(value);
                     Page.Content.Click();
                 }
@@ -138,7 +138,7 @@ namespace Wonga.QA.Framework.UI.Elements
             _submit.Click();
             if (Config.AUT == AUT.Wb)
                 return new EligibilityQuestionsPage(Page.Client);
-            if (Config.AUT == AUT.Uk || Config.AUT == AUT.Za || Config.AUT == AUT.Ca)
+            if (Config.AUT == AUT.Uk || Config.AUT == AUT.Za || Config.AUT == AUT.Ca || Config.AUT == AUT.Pl)
                 return new PersonalDetailsPage(Page.Client);
             return null;
         }

@@ -22,6 +22,8 @@ namespace Wonga.QA.Framework.UI
                     return new CaL0Journey(homePage);
                 case AUT.Uk:
                     return new UkL0Journey(homePage);
+                case AUT.Pl:
+                    return new PlL0Journey(homePage);
                 default:
                     throw new NotImplementedException();
             }
