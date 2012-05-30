@@ -17,6 +17,5 @@ namespace Wonga.QA.Framework.Api
         public Object Town { get; set; }
         public Object County { get; set; }
         public Object Postcode { get; set; }
-        public Object CountryCode { get; set; }
     }
 }
