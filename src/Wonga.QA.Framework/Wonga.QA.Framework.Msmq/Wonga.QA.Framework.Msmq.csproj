@@ -665,6 +665,7 @@
     <Compile Include="Messages\ISignupCustomerForPremiumCardEvent.cs" />
     <Compile Include="Messages\ISignupCustomerForStandardCardCommand.cs" />
     <Compile Include="Messages\ISignupCustomerForStandardCardEvent.cs" />
+    <Compile Include="Messages\ISocialDetailsUpdatedEvent.cs" />
     <Compile Include="Messages\IStartBusinessFixedInstallmentLoanEvent.cs" />
     <Compile Include="Messages\IStatusEvent.cs" />
     <Compile Include="Messages\ITermsAgreedEvent.cs" />
@@ -847,12 +848,16 @@
     <Compile Include="Messages\SaveOrganisationDetailsCommand.cs" />
     <Compile Include="Messages\SavePasswordRecoveryDetailsCommand.cs" />
     <Compile Include="Messages\SavePaymentCardBillingAddressCommand.cs" />
+    <Compile Include="Messages\SavePayURequestZaCommand.cs" />
+    <Compile Include="Messages\SavePayUResponseZaCommand.cs" />
     <Compile Include="Messages\SavePlainEmailFileCompleteZaCommand.cs" />
     <Compile Include="Messages\SavePlainEmailFileZaCommand.cs" />
+    <Compile Include="Messages\SaveServerSideInitialTrackingDataCommand.cs" />
+    <Compile Include="Messages\SaveServerSidePageTrackingDataCommand.cs" />
+    <Compile Include="Messages\SaveServerSideTrackingDeviceCommand.cs" />
     <Compile Include="Messages\SaveSocialDetailsBaseCommand.cs" />
     <Compile Include="Messages\SaveSocialDetailsCommand.cs" />
     <Compile Include="Messages\SaveSuppressionCommand.cs" />
-    <Compile Include="Messages\SaveTrackingDataCommand.cs" />
     <Compile Include="Messages\SchedulePaymentCommand.cs" />
     <Compile Include="Messages\ScheduleServiceFeeCommand.cs" />
     <Compile Include="Messages\SendA1SmsZaCommand.cs" />
