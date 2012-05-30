@@ -13,7 +13,7 @@ namespace Wonga.QA.Tests.Payments
     [TestFixture, Parallelizable(TestScope.All)]
     public class CreateApplicationTests
     {
-		[Test, AUT(AUT.Za), JIRA("ZA-2024"), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2024")]
         public void CreateApplicationDueDayOnSaturdayTest()
         {
             Guid appId = Guid.NewGuid();
@@ -30,7 +30,8 @@ namespace Wonga.QA.Tests.Payments
                                          });
            var app = Do.Until(() => Drive.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationEntity.ExternalId == appId));
 
-            Assert.AreEqual(promisedDate.Date, app.NextDueDate);
+			var expectedPromiseDate = promisedDate.GetNextWorkingDay();
+            Assert.AreEqual(expectedPromiseDate, app.NextDueDate);
         }
 
         private DateTime FindPromiseDateOfExpectedDayOfWeek(DayOfWeek expectedDayOfWeek)
