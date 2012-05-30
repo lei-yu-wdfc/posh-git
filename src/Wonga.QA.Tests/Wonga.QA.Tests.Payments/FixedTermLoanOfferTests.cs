@@ -10,7 +10,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments
 {
-	[Pending("")]
+	[TestFixture, Parallelizable(TestScope.All)]
     public class FixedTermLoanOfferTests
     {
 		[Test, AUT(AUT.Za), JIRA("ZA-2024"), Pending("ZA-2565")]
