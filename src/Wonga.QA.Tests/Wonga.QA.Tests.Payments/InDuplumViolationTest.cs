@@ -1,35 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Xml;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
-using Wonga.QA.Framework.Api.Exceptions;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Cs;
-using Wonga.QA.Framework.Db.Ops;
-using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
-using System.Threading;
 using CreateTransactionCommand = Wonga.QA.Framework.Msmq.CreateTransactionCommand;
 
 namespace Wonga.QA.Tests.Payments
 {
+	[TestFixture, AUT(AUT.Za), Parallelizable(TestScope.All)]
 	public class InDuplumViolationTest
 	{
 		private dynamic _transactions = Drive.Data.Payments.Db.Transactions;
 		private dynamic _applications = Drive.Data.Payments.Db.Applications;
+		private Customer _customer;
 
-		[Parallelizable]
-		[Test, AUT(AUT.Za), JIRA("ZA-2201"), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2201")]
 		public void Close_InDuplumViolation_Application_Creates_CompensatingTransaction()
 		{
-			var customer = CustomerBuilder.New().Build();
-			var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).WithLoanAmount(100).
+			_customer = CustomerBuilder.New().Build();
+			var app = ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).WithLoanAmount(100).
 				Build();
 
 			var loanApp = Do.Until(() => _applications.FindAllByExternalId(app.Id).Single());
@@ -81,11 +74,16 @@ namespace Wonga.QA.Tests.Payments
 			//LoanCap = 200
 			//Therefore TrackedAmount 124.1 = (150 + 174.1) - 200
 			Assert.AreEqual(-124.1m ,compensatingTransaction.Amount);
-
 		}
 
-		[Parallelizable]
-		[Test, AUT(AUT.Za), JIRA("ZA-2201"), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2360"), DependsOn("Close_InDuplumViolation_Application_Creates_CompensatingTransaction")]
+		public void Close_InDuplumViolation_Application_BalanceShouldBeZero()
+		{
+			Do.Until(() => decimal.Parse(GetLoanAgreements(_customer).Values["TodaysBalance"].SingleOrDefault()) == 0);
+			Do.Until(() => decimal.Parse(GetLoanAgreements(_customer).Values["FinalBalance"].SingleOrDefault()) == 0);
+		}
+
+		[Test, AUT(AUT.Za), JIRA("ZA-2201")]
 		public void Close_NonInDuplumViolation_Application_DoesNotCreate_CompensatingTransaction()
 		{
 			var customer = CustomerBuilder.New().Build();
@@ -137,53 +135,6 @@ namespace Wonga.QA.Tests.Payments
 			loanApp = Do.Until(() => _applications.FindAllByExternalId(app.Id).Single());
 
 			Assert.IsNull(compensatingTransaction);
-		}
-
-		[Parallelizable]
-		[Test, AUT(AUT.Za), JIRA("ZA-2360"), Pending("ZA-2565")]
-		public void Close_InDuplumViolation_Application_BalanceShouldBeZero()
-		{
-			var customer = CustomerBuilder.New().Build();
-			var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).WithLoanAmount(100).
-				Build();
-
-			var loanApp = Do.Until(() => _applications.FindAllByExternalId(app.Id).Single());
-
-			//fire refund transaction which cause InDuplum violation
-			Drive.Msmq.Payments.Send(new Wonga.QA.Framework.Msmq.CreateTransactionCommand
-			{
-				Amount = 150,
-				ApplicationId = app.Id,
-				Currency = CurrencyCodeIso4217Enum.ZAR,
-				ExternalId = Guid.NewGuid(),
-				ComponentTransactionId = Guid.Empty,
-				PostedOn = DateTime.UtcNow,
-				Scope = PaymentTransactionScopeEnum.Debit,
-				Source = PaymentTransactionSourceEnum.System,
-				Type = PaymentTransactionEnum.Refund
-			});
-
-			//fire Direct Bank payment transaction to close off application so that compensating transaction 
-			//will be created.
-			Drive.Msmq.Payments.Send(new Wonga.QA.Framework.Msmq.CreateTransactionCommand
-			{
-				Amount = -200,
-				ApplicationId = app.Id,
-				Currency = CurrencyCodeIso4217Enum.ZAR,
-				ExternalId = Guid.NewGuid(),
-				ComponentTransactionId = Guid.Empty,
-				PostedOn = DateTime.UtcNow,
-				Scope = PaymentTransactionScopeEnum.Credit,
-				Source = PaymentTransactionSourceEnum.System,
-				Type = PaymentTransactionEnum.DirectBankPayment
-			});
-
-			//ClosedApplicationSaga timesout after 30sec before closing off application
-			//Therefore delay is necessay
-			Do.Until(() => app.IsClosed == false);
-
-			Do.Until( () => decimal.Parse(GetLoanAgreements(customer).Values["TodaysBalance"].SingleOrDefault()) == 0);
-			Do.Until(() => decimal.Parse(GetLoanAgreements(customer).Values["FinalBalance"].SingleOrDefault()) == 0);
 		}
 
 		#region Helpers
