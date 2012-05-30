@@ -2,6 +2,6 @@
 {
     public class FeatureSwitchConstants
     {
-        public const string PadRepresentmentOptimizationFeatureSwitchKey = "FeatureSwitch.CA.UseMultipleArrearsRepresentments";
+        public const string MultipleRepresentmentsInArrearsFeatureSwitchKey = "FeatureSwitch.MultipleRepresentmentsInArrears";
     }
 }

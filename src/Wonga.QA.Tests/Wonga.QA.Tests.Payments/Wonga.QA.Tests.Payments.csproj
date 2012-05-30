@@ -54,12 +54,14 @@
     <Compile Include="CsapiCreateTransactionTest.cs" />
     <Compile Include="EarlyRepaymentTests.cs" />
     <Compile Include="EasyPayTests.cs" />
+    <Compile Include="Enums\PaymentFrequency.cs" />
     <Compile Include="ExternalDebtCollectionTests.cs" />
     <Compile Include="GetApplicationAprTest.cs" />
     <Compile Include="GetAvailabelCreditTest.cs" />
     <Compile Include="GetInstallmentQuoteTest.cs" />
     <Compile Include="GetRepaymentDetailsTest.cs" />
     <Compile Include="Helpers\AccountSummarySetupFunctions.cs" />
+    <Compile Include="Helpers\Ca\CalculateNextPayDateFunctionsCa.cs" />
     <Compile Include="Helpers\ExtendLoanFunctions.cs" />
     <Compile Include="Helpers\FeatureSwitchConstants.cs" />
     <Compile Include="Helpers\RepayLoanFunctions.cs" />

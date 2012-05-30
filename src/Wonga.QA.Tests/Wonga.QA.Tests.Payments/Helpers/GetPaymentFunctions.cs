@@ -112,11 +112,6 @@ namespace Wonga.QA.Tests.Payments.Helpers
             return Drive.Api.Queries.Post(new GetFixedTermLoanOfferCaQuery());
         } 
 
-        private static bool GetIsBankGatewayTestMode()
-        {
-            return Convert.ToBoolean(Drive.Db.Ops.ServiceConfigurations.Single(bg => bg.Key == ConfigurationFunctions.BankGateWayIsTestMode).Value);
-        }
-
         public static List<TransactionEntity> GetCurrentVariableInterestRates(int loanTerm)
         {
             var expectedRates = new List<TransactionEntity>();
