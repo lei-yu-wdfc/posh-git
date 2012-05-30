@@ -123,6 +123,11 @@ namespace Wonga.QA.Framework
             return Do.Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == Id)).NextPayDate.ToString();
         }
 
+        public string GetIncomeFrequency()
+        {
+            return Do.Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == Id)).IncomeFrequency.ToString();
+        }
+
         public string GetCustomerFullName()
         {
             var customerDetailsRow = Drive.Db.Comms.CustomerDetails.Single(cd => cd.AccountId == Id);
