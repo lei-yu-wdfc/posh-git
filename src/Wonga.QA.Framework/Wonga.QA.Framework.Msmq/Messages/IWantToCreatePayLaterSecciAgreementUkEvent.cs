@@ -9,5 +9,6 @@ namespace Wonga.QA.Framework.Msmq
     public partial class IWantToCreatePayLaterSecciAgreementUkEvent : MsmqMessage<IWantToCreatePayLaterSecciAgreementUkEvent>
     {
         public Guid AccountId { get; set; }
+        public Guid ApplicationId { get; set; }
     }
 }

@@ -9,6 +9,7 @@ namespace Wonga.QA.Framework.Msmq
     public partial class AddBankAccountUkCommand : MsmqMessage<AddBankAccountUkCommand>
     {
         public String BankCode { get; set; }
+        public Boolean IsValid { get; set; }
         public Guid AccountId { get; set; }
         public Guid BankAccountId { get; set; }
         public String BankName { get; set; }
