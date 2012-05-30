@@ -8,7 +8,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments.Queries
 {
-	[TestFixture, Pending("ZA-2565")]
+	[TestFixture, Parallelizable(TestScope.All)]
     public class CsGetCardPaymentStatusQueryTests
     {
         protected Application _application;
@@ -109,7 +109,6 @@ namespace Wonga.QA.Tests.Payments.Queries
                     _paymentAmount = 13m; //Make it fail.
                 }
             }
-
         }
     }
 }

@@ -38,7 +38,7 @@ namespace Wonga.QA.Tests.Payments
 			Assert.IsNull(response.Values["CashoutPaymentMethod"].Single());
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1972"), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1972")]
         public void GetAccountSummary_return_EasyPayNumber()
         {
             Customer customer = CustomerBuilder.New().WithMiddleName(RiskMask.TESTNoCheck).Build();
