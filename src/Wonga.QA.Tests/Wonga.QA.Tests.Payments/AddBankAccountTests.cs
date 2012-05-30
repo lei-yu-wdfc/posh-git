@@ -147,18 +147,18 @@ namespace Wonga.QA.Tests.Payments
 		/// </summary>
 		private static AddBankAccountUkCommand AddBankAccountWbInternal(Guid accountId, Boolean isPrimary, string accountNumber = "14690568", string sortCode = "309894")
 		{
-			return new AddBankAccountUkCommand()
-			{
-				AccountId = accountId,
-				AccountNumber = accountNumber,
-				AccountOpenDate = DateTime.Now.AddMonths(-6),
-				BankAccountId = Guid.NewGuid(),
-				BankCode = sortCode,
-				BankName = "HSBC",
-				CountryCode = "UK",
-				HolderName = "Test Holder",
-				IsPrimary = isPrimary,
-			};
+			return AddBankAccountUkCommand.New(x =>
+			                                {
+			                                    x.AccountId = accountId;
+			                                    x.AccountNumber = accountNumber;
+			                                    x.AccountOpenDate = DateTime.Now.AddMonths(-6);
+			                                    x.BankAccountId = Guid.NewGuid();
+			                                    x.BankCode = sortCode;
+			                                    x.BankName = "HSBC";
+			                                    x.CountryCode = "UK";
+			                                    x.HolderName = "Test Holder";
+			                                    x.IsPrimary = isPrimary;
+			                                });
 		}
 
 		/// <summary>
