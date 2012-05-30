@@ -12,7 +12,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[TestFixture, Parallelizable(TestScope.All)]
+	[TestFixture]
 	public class CheckpointAccountNumberApplicationsAcceptableTests
 	{
 		private const RiskMask TestMask = RiskMask.TESTAccountNumberApplicationsAcceptable;
@@ -32,7 +32,8 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			AssertCheckpointAndVerificationExecution();
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879"), DependsOn("L0_NumberOfApplicationsBelowThresholdAccepted")]
+		
+		[Test, AUT(AUT.Za), JIRA("ZA-2228"), DependsOn("L0_NumberOfApplicationsBelowThresholdAccepted")]
 		public void Ln_NumberOfApplicationsBelowThresholdAccepted()
 		{
 			application.RepayOnDueDate();
@@ -41,7 +42,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			AssertCheckpointAndVerificationExecution(lnApplication);
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879"), Timeout(0), Parallelizable]
+		[Test, AUT(AUT.Za), JIRA("ZA-2228"), Timeout(0), Parallelizable]
 		public void Ln_NumberOfApplicationDailyOverThresholdDeclined()
 		{
 			var customerLn = CustomerBuilder.New().WithEmployer(RiskMask.TESTEmployedMask).WithEmployerStatus("Unemployed").Build();
@@ -58,7 +59,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			AssertApplicationDeclinedWithCorrectCheckPointAndVerification(lnApplication);
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879"), Timeout(0), Parallelizable]
+		[Test, AUT(AUT.Za), JIRA("ZA-2228"), Timeout(0), Parallelizable]
 		public void Ln_NumberOfApplicationMonthlyOverThresholdDeclined()
 		{
 			//make one app per day up until the monthly threshold so that the daily limit is not exceeded
@@ -80,7 +81,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 		#region feature switch
 
-		[Test, AUT(AUT.Ca), JIRA("CA-1879")]
+		[Test, AUT(AUT.Ca), JIRA("CA-2309")]
 		[Row(true)]
 		[Row(false)]
 		public void GivenNewCustomer_WhenFeatureSwitchIsConfigured_ThenCheckApplicationWorkflowContainsCheckpoint(bool featureSwitchValue)
@@ -102,10 +103,10 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			}
 		}
 
-		[Test, AUT(AUT.Ca), JIRA("CA-1879")]
+		[Test, AUT(AUT.Ca), JIRA("CA-2309")]
 		[Row(true)]
 		[Row(false)]
-		public void GivenExistingCustomer_WhenFeatureSwitchIsConfigured_ThenCheckApplicationWorkflowContainsCheckpoint(bool featureSwitchValue)
+		public void GivenExistingCustomer_WhenFeatureSwitchIsConfigured_ThenApplicationWorkflowDoesNotContainCheckpoint(bool featureSwitchValue)
 		{
 			bool currentValue = Drive.Data.Ops.SetServiceConfiguration(GetFeatureSwitchKeyName(), featureSwitchValue);
 
@@ -116,11 +117,10 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				application = ApplicationBuilder.New(customer).Build();
 				application.RepayOnDueDate();
                 CustomerOperations.UpdateEmployerNameInRisk(customer.Id, "Wonga");
-				//don't use mask so that the workflow builder is run!
-
+				
 				var lnApplication = ApplicationBuilder.New(customer).WithoutExpectedDecision().Build();
 
-				AssertCheckpointAndVerificationExecution(lnApplication,featureSwitchValue);
+				AssertCheckpointAndVerificationExecution(lnApplication,false);
 			}
 			finally
 			{
