@@ -25,7 +25,6 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                 case (AUT.Za) :
                     Navigation = new MyAccountNavigationElement(this);
                     Tabs = new TabsElement(this);
-                    RepayButton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.RepayButton));
                     break;
 
                 case (AUT.Ca) :
@@ -116,7 +115,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public void RepayButtonClick()
         {
-            Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.RepayButton)).Click();
+            RepayButton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.RepayButton)); 
+            RepayButton.Click();
         }
 
         public void ChangePromiseDateButtonClick()
@@ -230,6 +230,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public RepaymentOptionsPage RepayClick()
         {
+            RepayButton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.RepayButton)); 
             RepayButton.Click();
             return new RepaymentOptionsPage(Client);
         }

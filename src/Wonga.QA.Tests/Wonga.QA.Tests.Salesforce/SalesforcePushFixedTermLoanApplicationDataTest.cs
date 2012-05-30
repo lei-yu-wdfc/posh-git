@@ -55,5 +55,35 @@ namespace Wonga.QA.Tests.Salesforce
 
             Do.With.Timeout(TimeSpan.FromSeconds(5)).Until(() => Salesforce.ApplicationExists(app.Id));          
         }
+
+		[Test, AUT(AUT.Ca), JIRA("ZA-2459")]
+		public void PushTest_AccountCreateLaterThanApplicationMessageCa()
+		{
+			Customer customer = CustomerBuilder.New().Build();
+			Do.Until(customer.GetBankAccount);
+
+			//Remove salesforce account record to simulate account is not created yet.
+
+			var db = new DbDriver();
+			var salesForceAccount = Do.Until(() => db.Salesforce.SalesforceAccounts.Single(a => a.AccountId == customer.Id));
+			db.Salesforce.SalesforceAccounts.DeleteOnSubmit(salesForceAccount);
+			db.Salesforce.SubmitChanges();
+
+			var app = ApplicationBuilder.New(customer).Build();
+			var saga = Do.Until(() => db.OpsSagas.SaveFixedTermLoanApplicationEntities.Single(se => se.AccountId == customer.Id));
+
+			db.Salesforce.SalesforceAccounts.InsertOnSubmit(new SalesforceAccountEntity()
+			{
+				AccountId = customer.Id,
+				SalesforceId = salesForceAccount.SalesforceId,
+			});
+			db.Salesforce.SubmitChanges();
+			Drive.Msmq.Salesforce.Send(new SaveCustomerDetailsToSalesforceCaCommand
+			{
+				AccountId = customer.Id
+			});
+
+			Do.With.Timeout(TimeSpan.FromSeconds(5)).Until(() => Salesforce.ApplicationExists(app.Id));
+		}
 	}
 }

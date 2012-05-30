@@ -181,7 +181,7 @@
     <Compile Include="Requests\GetPreApprovedDirectDebitFormCaQuery.cs" />
     <Compile Include="Requests\GetPrePaidPinResetCodeQuery.cs" />
     <Compile Include="Requests\GetPromoCodeParametersQuery.cs" />
-	<Compile Include="Requests\GetPrepaidCardTransactionsQuery.cs" />
+    <Compile Include="Requests\GetPrepaidCardTransactionsQuery.cs" />
     <Compile Include="Requests\GetRepayLoanCalculationQuery.cs" />
     <Compile Include="Requests\GetRepayLoanParametersQuery.cs" />
     <Compile Include="Requests\GetRepayLoanPaymentStatusUkQuery.cs" />
@@ -280,7 +280,6 @@
     <Compile Include="Enums\EmploymentPositionEnum.cs" />
     <Compile Include="Enums\EmploymentStatusEnum.cs" />
     <Compile Include="Enums\ExtensionReminderEnum.cs" />
-    <Compile Include="Enums\FundsTransferMethodEnum.cs" />
     <Compile Include="Enums\GenderEnum.cs" />
     <Compile Include="Enums\IncomeFrequencyEnum.cs" />
     <Compile Include="Enums\LanguageZaEnum.cs" />

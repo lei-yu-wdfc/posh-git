@@ -54,22 +54,24 @@ namespace Wonga.QA.Framework.UI.Elements
             }
         }
 
+        public IWebElement LoanAmount
+        {
+            get { return _loanAmount; }
+        }
+
+        public IWebElement LoanDuration
+        {
+            get { return _loanDuration; }
+        }
+
         public String HowMuch
         {
             get { return _loanAmount.GetValue(); }
             set
             {
-                if (Config.AUT.Equals(AUT.Wb))
-                {
-                    _loanAmount.Clear();
-                    _loanAmount.SendKeys(value);
-                }
-                else
-                {
-                    new Actions(Page.Client.Driver).Click(_loanAmount).Build().Perform();
-                    _loanAmount.SendKeys(value);
-                    Page.Content.Click();
-                }
+                _loanAmount.EraseAll();
+                _loanAmount.SendKeys(value);
+                _loanAmount.LostFocus();
             }
         }
         public String HowLong
@@ -77,17 +79,9 @@ namespace Wonga.QA.Framework.UI.Elements
             get { return _loanDuration.GetValue(); }
             set
             {
-                if (Config.AUT.Equals(AUT.Wb))
-                {
-                    _loanDuration.Clear();
-                    _loanDuration.SendKeys(value);
-                }
-                else
-                {
-                    new Actions(Page.Client.Driver).DoubleClick(_loanDuration).Build().Perform();
-                    _loanDuration.SendKeys(value);
-                    Page.Content.Click();
-                }
+                _loanDuration.EraseAll();
+                _loanDuration.SendKeys(value);
+                _loanDuration.LostFocus();
             }
         }
         public int MoveAmountSlider //Moving by pixels NOT by cash value
@@ -149,6 +143,8 @@ namespace Wonga.QA.Framework.UI.Elements
             _submit.Click();
             switch (Config.AUT)
             {
+
+                case AUT.Wb:
                 case AUT.Za:
                 case AUT.Uk:
                     return new ApplyPage(Page.Client);

@@ -12,6 +12,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
     {
         private IWebElement _submitButton;
         private IWebElement _informativeBox;
+        private IWebElement _card;
+        private IWebElement _securityCode;
         private ApiResponse _response;
         private IWebElement _repayAmount;
         private IWebElement _remainderAmount;
@@ -26,6 +28,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             _submitButton = Content.FindElement(By.CssSelector(UiMap.Get.RepayRequestPage.RepayRequestPageSubmitButton));
             _informativeBox = Content.FindElement(By.CssSelector(UiMap.Get.RepayRequestPage.RepayRequestPageInformativeBox));
+            _card = Content.FindElement(By.CssSelector(UiMap.Get.RepayRequestPage.RepayRequestPageCard));
+            _securityCode = Content.FindElement(By.CssSelector(UiMap.Get.RepayRequestPage.RepayRequestPageSecurityCode));
             _repayAmount = Content.FindElement(By.CssSelector(UiMap.Get.RepayRequestPage.RepayRequestPageRepayAmount));
             _remainderAmount = Content.FindElement(By.CssSelector(UiMap.Get.RepayRequestPage.RepayRequestPageRemainderAmount));
             _cancelButton = Content.FindElement(By.CssSelector(UiMap.Get.RepayRequestPage.RepayRequestPageCancelButton));
@@ -39,16 +43,21 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _informativeBox = Client.Driver.FindElement(By.CssSelector(UiMap.Get.RepayRequestPage.RepayRequestPageInformativeBox));
             return _informativeBox.Displayed;
         }
-        
+
+        public void setSecurityCode(string code)
+        {
+            _securityCode.SendKeys(code);
+        }
+
         public void SubmitButtonClick()
         {
             _submitButton.Click();
             //return new TopupProcessingPage(Client);
         }
        
-        public void IsRepayRequestPageSliderReturningCorrectValuesOnChange(string applicationId)
+        public void IsRepayRequestPageSliderReturningCorrectValuesOnChange(string applicationId, string repayRequestAmount)
         {
-            const string repayRequestAmount = "50";
+            //const string repayRequestAmount = "50";
             DateTime todayDate = DateTime.Now;
             Sliders = new SmallRepaySlidersElement(this);
             Sliders.HowMuch = repayRequestAmount;
@@ -60,7 +69,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
             var remainderAmount = _response.Values["TotalRepayableOnDueDate"].Single();
             
-            //check the output matches the returned values for 50 quid repayRequestAmount
+            //check the output matches the returned values for repayRequestAmount
             Assert.AreEqual(Decimal.Parse(Sliders.GetRemainderTotal.Remove(0, 1)), Decimal.Parse(remainderAmount));
         }
 

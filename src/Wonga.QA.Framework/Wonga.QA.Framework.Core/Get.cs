@@ -116,14 +116,19 @@ namespace Wonga.QA.Framework.Core
                     }
                 case AUT.Wb:
                     {
-                        return "077009" + RandomLong(10000, 99999);
+                        return "07700900" + RandomLong(100, 999);
                     }
 
                 default:
                     {
-                        return "077009" + RandomLong(10000, 99999);
+                        return "07700900" + RandomLong(100, 999);
                     }
             }
+        }
+
+        public static string  GetVerificationPin()
+        {
+            return "0000";
         }
 
         public static String GetNationalNumber()
@@ -217,8 +222,35 @@ namespace Wonga.QA.Framework.Core
 
         public static String GetPostcode()
         {
-            return RandomInt(0000, 9999).ToString().PadLeft(4, '0');
+            switch (Config.AUT)
+            {
+                case AUT.Uk:
+                    {
+                        return "SW6 6PN";  
+                    }
+                default:
+                    {
+                        return RandomInt(0000, 9999).ToString().PadLeft(4, '0'); 
+                    }
+            }
+            
         }
+
+        public static String GetCountryCode()
+        {
+            String result = "";
+            switch (Config.AUT)
+            {
+               case AUT.Uk:
+                    {
+                        result = "UK";
+                    }
+                    break;
+            }
+
+            return result;
+        }
+
         public static Uri GetSchema(Uri uri)
         {
             UriBuilder builder = new UriBuilder(uri);

@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="L0LoanMobile.cs" />
+    <Compile Include="LnLoanMobile.cs" />
     <Compile Include="UiMobileTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

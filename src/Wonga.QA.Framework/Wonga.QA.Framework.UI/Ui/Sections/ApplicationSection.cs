@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MbUnit.Framework;
+using NHamcrest.Core;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Mappings;
@@ -14,6 +16,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
     {
         private readonly IWebElement _securityCode;
         private readonly IWebElement _minCash;
+
+        private IWebElement _businessLoanApplicationDetails;
+        private IWebElement _additionalDirectorsOrPartners;
 
         public String SetSecurityCode
         {
@@ -42,7 +47,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
                     _securityCode = Section.FindElement(By.CssSelector(UiMap.Get.ApplicationSection.SecurityCode));
                     _minCash = Section.FindElement(By.CssSelector(UiMap.Get.ApplicationSection.MinCash));
                     break;
-
+                case AUT.Wb:
+                    _businessLoanApplicationDetails = Section.FindElement(By.CssSelector(UiMap.Get.ApplicationSection.BusinessLoanApplicationDetails));
+                    _additionalDirectorsOrPartners = Section.FindElement(By.CssSelector(UiMap.Get.ApplicationSection.AdditionalDirectorsOrPartners));
+                    Assert.That(_businessLoanApplicationDetails.Text, Is.EqualTo(ContentMap.Get.ApplicationSection.BusinessLoanApplicationDetails));
+                    Assert.That(_additionalDirectorsOrPartners.Text, Is.EqualTo(ContentMap.Get.ApplicationSection.AdditionalDirectorsOrPartners));
+                    break;
             }
         }
 

@@ -56,7 +56,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             set
             {
                 _addressPeriod.SelectOption(value);
-                if (value.Equals("Less than 4 month"))
+                if (value.Equals(ContentMap.Get.AddressDeatailsPage.AddresPeriodLess4Month))
                 {
                     PreviousAddresDetails = new PreviousAddresDetailsSection(this);
                 }
@@ -160,7 +160,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                            _form.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.PostcodeErrorForm));
                 string postCodeErrorFormClass = _postCodeErrorForm.GetAttribute("class");
 
-                if (postCodeErrorFormClass.Equals("invalid"))
+                if (postCodeErrorFormClass.Contains("invalid"))
                 {
                     return true;
                 }
@@ -201,7 +201,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                            _form.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.StreetErrorForm));
                 string streetErrorFormClass = _streetErrorForm.GetAttribute("class");
 
-                if (streetErrorFormClass.Equals("invalid"))
+                if (streetErrorFormClass.Contains("invalid"))
                 {
                     return true;
                 }
@@ -222,7 +222,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                            _form.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.TownErrorForm));
                 string townErrorFormClass = _townErrorForm.GetAttribute("class");
 
-                if (townErrorFormClass.Equals("invalid"))
+                if (townErrorFormClass.Contains("invalid"))
                 {
                     return true;
                 }
@@ -242,7 +242,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                            _form.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.CountyErrorForm));
                 string countyErrorFormClass = _countyErrorForm.GetAttribute("class");
 
-                if (countyErrorFormClass.Equals("invalid"))
+                if (countyErrorFormClass.Contains("invalid"))
                 {
                     return true;
                 }
@@ -262,7 +262,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                            _form.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.AddressPeriodErrorForm));
                 string addressPeriodErrorFormClass = _addressPeriodErrorForm.GetAttribute("class");
 
-                if (addressPeriodErrorFormClass.Equals("invalid"))
+                if (addressPeriodErrorFormClass.Contains("invalid"))
                 {
                     return true;
                 }

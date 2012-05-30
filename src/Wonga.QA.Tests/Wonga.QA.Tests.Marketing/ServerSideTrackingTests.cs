@@ -43,7 +43,7 @@ namespace Wonga.QA.Tests.Marketing
                 Uri = BuildUri(false, guids)
             };
 
-            var validResponse = Drive.Api.Commands.Post(validCommand);
+            Drive.Api.Commands.Post(validCommand);
             Assert.Throws<Exception>(() => Drive.Api.Commands.Post(invalidCommand));
 
             var serverSideInitialtracingRecord = Do.Until(() => _marketingDb.ServerSideInitialTracking.FindBySessionId(sessionIdGuid));
@@ -70,7 +70,7 @@ namespace Wonga.QA.Tests.Marketing
                 Uri = DEFAULT_URI
             };
 
-            var response = Drive.Api.Commands.Post(validCommand);
+            Drive.Api.Commands.Post(validCommand);
             var serversideTrackingRecord = Do.Until(() => _marketingDb.ServerSidePageTracking.FindBySessionId((sessionIdGuid)));
 
             Assert.IsTrue(DEFAULT_URI.Equals(serversideTrackingRecord.Uri));
@@ -91,7 +91,7 @@ namespace Wonga.QA.Tests.Marketing
                 SessionId = sessionId
             };
 
-            var response = Drive.Api.Commands.Post(command);
+            Drive.Api.Commands.Post(command);
             var trackingDeviceRecord = Do.Until(() => _marketingDb.ServerSideTrackingDevice.FindBySessionId((sessionIdGuid)));
 
             Assert.IsTrue(sessionIdGuid.Equals(trackingDeviceRecord.SessionId));

@@ -1,4 +1,5 @@
-﻿using MbUnit.Framework;
+﻿using System;
+using MbUnit.Framework;
 using NHamcrest.Core;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
@@ -81,9 +82,15 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
 
         public void CloseWbWelcomePopup()
         {
-            if (Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePageWelcomePopup.Frame)).Displayed)
-                Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePageWelcomePopup.Close)).Click();    
-               
+            try
+            {
+                var wbWelcomePopUp = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePageWelcomePopup.Frame));
+                if(wbWelcomePopUp.Displayed)
+                    Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePageWelcomePopup.Close)).Click(); 
+
+            }
+            catch (NoSuchElementException)
+            {}
         }
 
     }

@@ -12,13 +12,7 @@ namespace Wonga.QA.Framework
         private static readonly dynamic _eligibleCustomersEntity = Drive.Data.Marketing.Db.MarketingEligibleCustomers;
         private static readonly dynamic _commsDb = Drive.Data.Comms.Db;
         private static readonly dynamic _prepaidDb = Drive.Data.PrepaidCard.Db;
-
-        private static readonly String VERIFICATION_PIN = "0000";
-        private static readonly String COUNTTRY_CODE = "UK";
-        private static readonly String POST_CODE = "SW6 6PN";
-
-        public static readonly String STANDARD_CARD_TYPE = "Standard";
-        public static readonly String PREMIUM_CARD_TYPE = "Premium";
+        private static readonly dynamic RiskDb = Drive.Data.Risk.Db;
 
         public static void CreateMarketingEligibility(Guid customerId, bool isEligible)
         {
@@ -38,7 +32,6 @@ namespace Wonga.QA.Framework
         {
             Do.Until(() => _eligibleCustomersEntity.UpdateByEligibleCustomerId(EligibleCustomerId: customerId, HasStandardCard: 0, HasPremiumCard: 0));
         }
-
         public static void UpdateCustomerPrepaidCard(Guid customerId, bool isPremiumCard)
         {
             if (isPremiumCard.Equals(true))
@@ -82,7 +75,7 @@ namespace Wonga.QA.Framework
 
             var resendMobilePin = new CompleteMobilePhoneVerificationCommand();
             resendMobilePin.VerificationId = verificationMobileCommand.VerificationId;
-            resendMobilePin.Pin = VERIFICATION_PIN;
+            resendMobilePin.Pin = Get.GetVerificationPin();
 
             Drive.Api.Commands.Post(verificationMobileCommand);
             Drive.Api.Commands.Post(resendMobilePin);
@@ -90,7 +83,6 @@ namespace Wonga.QA.Framework
             Do.Until(() => _commsDb.CustomerDetails.FindBy(AccountId: customerId, MobilePhone: verificationMobileCommand.MobilePhone));
 
         }
-
         public static void UpdateAddress(Guid customerId)
         {
             var customer = Do.Until(() => _commsDb.CustomerDetails.FindByAccountId(customerId));
@@ -100,8 +92,8 @@ namespace Wonga.QA.Framework
             command.AccountId = customerId;
             command.AddressId = address.ExternalId;
             command.AtAddressFrom = DateTime.Today.AddYears(-4).ToDate(DateFormat.Date);
-            command.CountryCode = COUNTTRY_CODE;
-            command.Postcode = POST_CODE;
+            command.Postcode = Get.GetPostcode();
+            command.CountryCode = Get.GetCountryCode();
             command.HouseName = Get.RandomString(8);
             command.HouseNumber = Get.RandomInt(1, 100).ToString(CultureInfo.InvariantCulture);
             command.District = Get.RandomString(15);
@@ -169,5 +161,45 @@ namespace Wonga.QA.Framework
 
             Drive.Api.Commands.Post(request);
         }
+
+        public static void UpdateEmployerNameInRisk(Guid accountId, string employerName)
+        {
+            Do.Until(() => RiskDb.EmploymentDetails.UpdateByAccountId(AccountId: accountId, EmployerName: employerName));
+        }
+
+        public static void UpdateMiddleNameInRisk(Guid accountId, string middleName)
+        {
+            Do.Until(() => RiskDb.RiskAccounts.UpdateByAccountId(AccountId: accountId, MiddleName: middleName));
+        }
+
+        public static void RemovePhoneNumberFromRisk(string phoneNumber)
+        {
+            Do.Until(() => RiskDb.RiskAccountMobilePhones.DeleteAllByMobilePhone(phoneNumber));
+        }
+
+        public static void AddPhoneNumberToRisk(string mobilePhoneNumber)
+        {
+            var tempGuid = Guid.NewGuid();
+
+            //Insert a new RiskAccount
+            Do.Until(
+                () =>
+                RiskDb.RiskAccounts.Insert(AccountId: tempGuid, AccountRank: 1, HasAccount: true, CreditLimit: 400,
+                                           ConfirmedFraud: false, DateOfBirth: Get.GetDoB(), DoNotRelend: false,
+                                           Forename: Get.RandomString(8), IsDebtSale: false, IsDispute: false,
+                                           IsHardship: false, Postcode: "KT2 5DL", MaidenName: Get.RandomString(8),
+                                           Middlename: Get.RandomString(8), Surname: Get.RandomString(8)));
+
+            //Insert a new RiskAccountMobilePhone
+            Do.Until(
+                () =>
+                RiskDb.RiskAccountMobilePhones.Insert(AccountId: tempGuid,
+                                                      DateUpdated: new DateTime(2010, 10, 06).ToDate(),
+                                                      MobilePhone: mobilePhoneNumber));
+
+        }
+
+
+
     }
 }

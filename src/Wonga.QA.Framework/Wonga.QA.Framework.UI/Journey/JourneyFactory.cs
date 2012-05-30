@@ -33,6 +33,8 @@ namespace Wonga.QA.Framework.UI
             switch (Config.AUT)
             {
                 case AUT.Za:
+                    if (Config.Ui.Browser.Equals(Config.UiConfig.BrowserType.FirefoxMobile))
+                        return new ZaMobileLnJourney(homePage);
                     return new ZaLnJourney(homePage);
                 case AUT.Ca:
                     return new CaLnJourney(homePage);
@@ -46,6 +48,11 @@ namespace Wonga.QA.Framework.UI
         public static WbL0Journey GetL0JourneyWB(BasePage homePage)
         {
             return new WbL0Journey(homePage);
+        }
+
+        public static WbLnJourney GetLNJourneyWB(BasePage homePage)
+        {
+            return new WbLnJourney(homePage);
         }
     }
 }
