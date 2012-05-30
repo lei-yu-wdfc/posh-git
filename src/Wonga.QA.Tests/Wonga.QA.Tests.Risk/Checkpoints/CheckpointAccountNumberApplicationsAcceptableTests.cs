@@ -41,7 +41,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			AssertCheckpointAndVerificationExecution(lnApplication);
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879"), Timeout(0), Parallelizable]
+		[Test, AUT(AUT.Za), JIRA("ZA-2228"), Timeout(0), Parallelizable]
 		public void Ln_NumberOfApplicationDailyOverThresholdDeclined()
 		{
 			var customerLn = CustomerBuilder.New().WithEmployer(RiskMask.TESTEmployedMask).WithEmployerStatus("Unemployed").Build();
@@ -58,7 +58,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			AssertApplicationDeclinedWithCorrectCheckPointAndVerification(lnApplication);
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-2228", "CA-1879"), Timeout(0), Parallelizable]
+		[Test, AUT(AUT.Za), JIRA("ZA-2228"), Timeout(0), Parallelizable]
 		public void Ln_NumberOfApplicationMonthlyOverThresholdDeclined()
 		{
 			//make one app per day up until the monthly threshold so that the daily limit is not exceeded
@@ -105,7 +105,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[Test, AUT(AUT.Ca), JIRA("CA-1879")]
 		[Row(true)]
 		[Row(false)]
-		public void GivenExistingCustomer_WhenFeatureSwitchIsConfigured_ThenCheckApplicationWorkflowContainsCheckpoint(bool featureSwitchValue)
+		public void GivenExistingCustomer_WhenFeatureSwitchIsConfigured_ThenCheckApplicationWorkflowDoesNotContainCheckpoint(bool featureSwitchValue)
 		{
 			bool currentValue = Drive.Data.Ops.SetServiceConfiguration(GetFeatureSwitchKeyName(), featureSwitchValue);
 
@@ -116,11 +116,10 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				application = ApplicationBuilder.New(customer).Build();
 				application.RepayOnDueDate();
                 CustomerOperations.UpdateEmployerNameInRisk(customer.Id, "Wonga");
-				//don't use mask so that the workflow builder is run!
-
+				
 				var lnApplication = ApplicationBuilder.New(customer).WithoutExpectedDecision().Build();
 
-				AssertCheckpointAndVerificationExecution(lnApplication,featureSwitchValue);
+				AssertCheckpointAndVerificationExecution(lnApplication,false);
 			}
 			finally
 			{
