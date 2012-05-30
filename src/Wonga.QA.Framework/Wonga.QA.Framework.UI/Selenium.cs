@@ -231,7 +231,7 @@ namespace Wonga.QA.Framework.UI
             return CanSendValue(element, "aaa") && !CanSelectOption(element, "aaa");
         }
 
-        public static Boolean IscheckBox(BasePage page, string selector)
+        public static Boolean IsCheckBox(BasePage page, string selector)
         {
             IWebElement element = page.Client.Driver.FindElement(By.CssSelector(selector));
             return element.CanToggle();

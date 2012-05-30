@@ -28,13 +28,13 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         private readonly ReadOnlyCollection<IWebElement> _salaryPaidToBank;
         private readonly IWebElement _universityType;
         private readonly IWebElement _universityCity;
-        private readonly IWebElement _universityName;
+        //private readonly IWebElement _universityName;
         private readonly IWebElement _yearsInUniversity;
         
-        public string  UniversityName
-        {
-            set {_universityName.SelectOption(value); }
-        }
+        //public string  UniversityName
+        //{
+        //    set {_universityName.SelectOption(value); }
+        //}
        public string UniversityType
         {
             set {_universityType.SelectOption(value); }
@@ -134,7 +134,6 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             _employmentStatus = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.EmploymentStatus));
             _employerIndustry = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.EmployerIndustry));
             _employerName = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.EmployerName));
-            _employmentPosition = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.EmploymentPosition));
             _timeWithEmployerYears = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.TimeWithEmployerYears));
             _timeWithEmployerMonths = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.TimeWithEmployerMonths));
             _monthlyIncome = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.MonthlyIncome));
@@ -143,15 +142,18 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             switch (Config.AUT)
             {
                 case (AUT.Za):
+                    _employmentPosition = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.EmploymentPosition));
                     _workPhone = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.WorkPhone));
                     _nextPaydayDateDay = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.NextPaydayDateDay));
                     _nextPaydayDateMonth = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.NextPaydayDateMonth));
                     _nextPaydayDateYear = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.NextPaydayDateYear));
                     break;
                 case (AUT.Ca):
+                    _employmentPosition = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.EmploymentPosition));
                     _nextPaydayDate = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.NextPaydayDate));
                     break;
                 case (AUT.Uk):
+                    _employmentPosition = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.EmploymentPosition));
                     _nextPaydayDateDay = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.NextPaydayDateDay));
                     _nextPaydayDateMonth = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.NextPaydayDateMonth));
                     _nextPaydayDateYear = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.NextPaydayDateYear));
@@ -166,8 +168,11 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
                         Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.UniversityType));
                     _universityCity = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.UniversityCity));
                     _yearsInUniversity = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.YearsInUniversity));
-                    _universityName =
-                        Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.UniversityName));
+                    //_universityName =
+                       // Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.UniversityName));
+                    break;
+                    default:
+                        _employmentPosition = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.EmploymentPosition));
                     break;
 
             }
