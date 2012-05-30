@@ -12,7 +12,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[Parallelizable(TestScope.All), AUT(AUT.Za)]
+	[Parallelizable(TestScope.All), AUT(AUT.Za), Pending("Transunion TC delayed response")]
 	public class CheckpointRepaymentPredictionPositiveTests
 	{
 		private const RiskMask TestMask = RiskMask.TESTRepaymentPredictionPositive;
@@ -111,7 +111,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			}
 		}
 
-		[Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za), Pending("Transunion TC delayed response")]
 		public void CheckpointRepaymentPredictionPositiveL0Accept()
 		{
 			var customer = BuildCustomerForScorecardAccept();
@@ -123,7 +123,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			customerLn = customer;
 		}
 
-		[Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za), Pending("Transunion TC delayed response")]
 		public void CheckpointRepaymentPredictionPositiveL0Decline()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
@@ -133,14 +133,14 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Assert.LessThan(repaymentPredictionScore, ScoreCutoffNewUsers);
 		}
 
-		[Test, AUT(AUT.Za), DependsOn("CheckpointRepaymentPredictionPositiveL0Accept")]
+		[Test, AUT(AUT.Za), DependsOn("CheckpointRepaymentPredictionPositiveL0Accept"), Pending("Transunion TC delayed response")]
 		public void CheckpointRepaymentPredicitionPositiveFactorsUsedAreCorrectL0()
 		{
 			var factorNames = GetFactors(applicationL0);
 			Assert.AreElementsEqualIgnoringOrder(_expectedFactorNamesL0, factorNames);
 		}
 
-		[Test, AUT(AUT.Za), DependsOn("CheckpointRepaymentPredictionPositiveL0Accept")]
+		[Test, AUT(AUT.Za), DependsOn("CheckpointRepaymentPredictionPositiveL0Accept"), Pending("Transunion TC delayed response")]
 		public void CheckpointRepaymentPredictionPositiveLnAccept()
 		{
 			applicationL0.RepayOnDueDate();
@@ -150,34 +150,34 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Assert.GreaterThan(repaymentPredictionScore, ScoreCutoffExistingUsers);
 		}
 
-		[Test, AUT(AUT.Za), DependsOn("CheckpointRepaymentPredictionPositiveLnAccept")]
+		[Test, AUT(AUT.Za), DependsOn("CheckpointRepaymentPredictionPositiveLnAccept"), Pending("Transunion TC delayed response")]
 		public void CheckpointRepaymentPredicitionPositiveFactorsUsedAreCorrectLn()
 		{
 			var factorNames = GetFactors(applicationLn);
 			Assert.AreElementsEqualIgnoringOrder(_expectedFactorNamesLn, factorNames);
 		}
 
-		[Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za), Pending("Transunion TC delayed response")]
 		public void CheckpointRepaymentPredictionPositiveCorrectScorecardUsedL0()
 		{
 			var scorecardName = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Risk.RepaymentModelForNewUsers").Value;
 			Assert.AreEqual(_expectedScorecardNameL0, scorecardName);
 		}
 
-		[Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za), Pending("Transunion TC delayed response")]
 		public void CheckpointRepaymentPredictionPositiveCorrectScorecardUsedLn()
 		{
 			var scorecardName = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Risk.RepaymentModelForExistingUsers").Value;
 			Assert.AreEqual(_expectedScorecardNameLn, scorecardName);
 		}
 
-		[Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za), Pending("Transunion TC delayed response")]
 		public void CheckpointRepaymentPredictionPositiveCorrectCutoffL0()
 		{
 			Assert.AreEqual(_expectedScoreCutoffNewUsers, ScoreCutoffNewUsers);
 		}
 
-		[Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za), Pending("Transunion TC delayed response")]
 		public void CheckpointRepaymentPredictionPositiveCorrectCutoffLn()
 		{
 			Assert.AreEqual(_expectedScoreCutoffExistingUsers, ScoreCutoffExistingUsers);
