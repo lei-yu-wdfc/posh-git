@@ -51,7 +51,7 @@ namespace Wonga.QA.Tests.Payments
 			db.Ops.SubmitChanges();
 		}
 
-		[Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za), Pending]
 		public void CollectionsNaedoEntireWorkflowTest()
 		{
 			const int term = 25;
@@ -85,7 +85,7 @@ namespace Wonga.QA.Tests.Payments
 			FailNaedoCollection(application, 3);
 		}
 
-		[Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za), Pending]
 		public void CollectionsNaedoFullPaymentAfterTrackingEndsClosesLoanTest()
 		{
 			const int term = 25;
@@ -116,7 +116,7 @@ namespace Wonga.QA.Tests.Payments
 			Do.Until(() => Drive.Db.OpsSagas.PendingScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id) == false);
 		}
 
-		[Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za), Pending]
 		public void CollectionsNaedoPartialPaymentAfterTrackingEndsContinuesTrackingTest()
 		{
 			const int term = 25;
