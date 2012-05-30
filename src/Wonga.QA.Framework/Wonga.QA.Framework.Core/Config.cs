@@ -28,6 +28,7 @@ namespace Wonga.QA.Framework.Core
         public static EmailConfig Email { get; set; }
         public static PayLaterConfig PayLaterUi { get; set; }
         public static PayLaterConfig PayLaterApi { get; set; }
+        public static PrepaidAdminConfig PrepaidAdminUI { get; set; }
         public static CommonApiConfig CommonApi { get; set; }
         
 
@@ -57,8 +58,9 @@ namespace Wonga.QA.Framework.Core
                     Svc = new SvcConfig(".");
                     Msmq = new MsmqConfig(".");
                     Db = new DbConfig(".");
-                    Ui.SetUri("localhost");
-                    Admin = new AdminConfig("localhost/admin");					
+                    Ui.SetUri("dev.wonga.com");
+                    Admin = new AdminConfig("localhost/admin");
+                    PrepaidAdminUI = new PrepaidAdminConfig();
                     SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.wip", "Allw0nga");
                     SalesforceApi =
                         AUT == AUT.Ca ? new SalesforceApiConfig("v3integration@wonga.com.int") :
@@ -424,6 +426,8 @@ namespace Wonga.QA.Framework.Core
             public String Uru { get; set; }
             public String WongaPay { get; set; }
             public String Marketing { get; set; }
+            public String PrepaidCard { get; set; }
+            public String Pps { get; set; }
 
             public String OpsLogs { get; set; }
             public String OpsSagas { get; set; }
@@ -463,6 +467,8 @@ namespace Wonga.QA.Framework.Core
                 Uru = builder("Uru");
                 WongaPay = builder("WongaPay");
                 Marketing = builder("Marketing");
+                PrepaidCard = builder("PrepaidCard");
+                Pps = builder("Pps");
             }
         }
 
@@ -521,6 +527,20 @@ namespace Wonga.QA.Framework.Core
             public AdminConfig(String host)
             {
                 Home = new UriBuilder {Host = host}.Uri;
+            }
+        }
+
+        public class PrepaidAdminConfig
+        {
+            public Uri Home { get; set; }
+            public String User { get; private set; }
+            public String Pwd { get; private set; }
+
+            public PrepaidAdminConfig()
+            {
+                Home = new Uri(Ui.Url + "admin/settings/wonga_prepaid");
+                this.User = "root";
+                this.Pwd = "root";
             }
         }
 

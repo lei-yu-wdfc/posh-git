@@ -20,7 +20,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public ContactingYouSection ContactingYou { get; set; }
         public ProvinceSection ProvinceSection { get; set; }
         public Boolean PrivacyPolicy { set { _privacy.Toggle(value); } }
-        public Object CanContact
+        public Boolean BikVerification {set { _bikVeryfication.Toggle(value);} }
+        public Boolean MarketingAcceptance { set { _marketingAcceptance.Toggle(value); } }
+       
+            public Object CanContact
         {
             set
             {
@@ -37,6 +40,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                 _marriedInCommunityProperty.SelectLabel(value);
             }
         }
+        private readonly IWebElement _bikVeryfication;
+        private readonly IWebElement _marketingAcceptance;
         private readonly IWebElement _form;
         private readonly IWebElement _slidersForm;
         private readonly ReadOnlyCollection<IWebElement> _marriedInCommunityProperty;
@@ -73,6 +78,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _privacy = _form.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.CheckPrivacyPolicy));
             _contact = _form.FindElements(By.CssSelector(UiMap.Get.PersonalDetailsPage.CheckCanContact));
             _next = _form.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.NextButton));
+            _bikVeryfication = _form.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.CheckBikVerification));
+
+            _marketingAcceptance =
+                _form.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.CheckMarketingAcceptance));
 
             YourName = new YourNameSection(this);
             YourDetails = new YourDetailsSection(this);
@@ -85,6 +94,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     ProvinceSection = new ProvinceSection(this);
                     break;
                 case (AUT.Uk):
+                case(AUT.Pl):
                     EmploymentDetails = new EmploymentDetailsSection(this);
                     break;
                 case (AUT.Za):

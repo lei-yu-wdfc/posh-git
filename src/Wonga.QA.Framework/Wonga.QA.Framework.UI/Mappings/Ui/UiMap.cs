@@ -1,14 +1,12 @@
 ﻿using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.UI.Mappings.Content;
 using Wonga.QA.Framework.UI.Mappings.Elements;
 using Wonga.QA.Framework.UI.Mappings.Pages;
-using Wonga.QA.Framework.UI.Mappings.Pages.PayLater;
 using Wonga.QA.Framework.UI.Mappings.Pages.Wb;
 using Wonga.QA.Framework.UI.Mappings.Sections;
 using Wonga.QA.Framework.UI.Mappings.Pages.SalesForce;
 using Wonga.QA.Framework.UI.Mappings.Ui.Elements;
+using Wonga.QA.Framework.UI.Mappings.Ui.Pages.Prepaid;
 using AboutUsPage = Wonga.QA.Framework.UI.Mappings.Pages.AboutUsPage;
-using Wonga.QA.Framework.UI.Ui.Pages.Common;
 using AccountDetailsSection = Wonga.QA.Framework.UI.Mappings.Sections.AccountDetailsSection;
 using AddressDetailsPage = Wonga.QA.Framework.UI.Mappings.Pages.AddressDetailsPage;
 using BusinessSummaryPage = Wonga.QA.Framework.UI.Mappings.Pages.BusinessSummaryPage;
@@ -18,6 +16,8 @@ using HomePage = Wonga.QA.Framework.UI.Mappings.Pages.HomePage;
 using MobilePinVerificationSection = Wonga.QA.Framework.UI.Mappings.Sections.MobilePinVerificationSection;
 using MyPaymentsPage = Wonga.QA.Framework.UI.Mappings.Pages.MyPaymentsPage;
 using MySummaryPage = Wonga.QA.Framework.UI.Mappings.Pages.MySummaryPage;
+using InternationalElement = Wonga.QA.Framework.UI.Mappings.Elements.InternationalElement;
+using LoginElement = Wonga.QA.Framework.UI.Mappings.Elements.LoginElement;
 using PayLaterLoginPage = Wonga.QA.Framework.UI.Mappings.Pages.PayLaterLoginPage;
 using RepayDueFullpaySuccessPage = Wonga.QA.Framework.UI.Mappings.Pages.RepayDueFullpaySuccessPage;
 using RepayDuePartpaySuccessPage = Wonga.QA.Framework.UI.Mappings.Pages.RepayDuePartpaySuccessPage;
@@ -32,8 +32,19 @@ using RepayProcessingPage = Wonga.QA.Framework.UI.Mappings.Pages.RepayProcessing
 using TopupProcessingPage = Wonga.QA.Framework.UI.Mappings.Pages.TopupProcessingPage;
 using ExtensionProcessingPage = Wonga.QA.Framework.UI.Mappings.Pages.ExtensionProcessingPage;
 using YourDetailsSection = Wonga.QA.Framework.UI.Mappings.Sections.YourDetailsSection;
+using PrepaidCardMenuElement = Wonga.QA.Framework.UI.Mappings.Elements.PrepaidCardMenuElement;
+using PrepaidCardPage = Wonga.QA.Framework.UI.Mappings.Pages.PrepaidCardPage;
+using PrepaidRegisterDetailsPage = Wonga.QA.Framework.UI.Mappings.Pages.PrepaidRegisterDetailsPage;
+using SlidersElement = Wonga.QA.Framework.UI.Mappings.Elements.SlidersElement;
+using SmallExtensionSlidersElement = Wonga.QA.Framework.UI.Mappings.Elements.SmallExtensionSlidersElement;
+using SmallRepaySlidersElement = Wonga.QA.Framework.UI.Mappings.Elements.SmallRepaySlidersElement;
+using SmallTopupSlidersElement = Wonga.QA.Framework.UI.Mappings.Elements.SmallTopupSlidersElement;
+using SubmitionPage = Wonga.QA.Framework.UI.Mappings.Pages.PayLater.SubmitionPage;
+using SurveyElement = Wonga.QA.Framework.UI.Mappings.Elements.SurveyElement;
+using TabsElement = Wonga.QA.Framework.UI.Mappings.Elements.TabsElement;
 using TopupDealDonePage = Wonga.QA.Framework.UI.Mappings.Pages.TopupDealDonePage;
 using ExtensionErrorPage = Wonga.QA.Framework.UI.Mappings.Pages.ExtensionErrorPage;
+
 
 
 namespace Wonga.QA.Framework.UI.Mappings
@@ -185,11 +196,19 @@ namespace Wonga.QA.Framework.UI.Mappings
         #endregion
 
 
-        #region PrePaid
+        #region PrepaidPages
 
         public virtual PrepaidCardPage PrepaidCardPage { get; set; }
         public virtual PrepaidRegisterDetailsPage PrepaidRegisterDetailsPage { get; set; }
 
+        #endregion
+
+        #region PrepaidElements
+
+        public virtual PrepaidCardMenuElement PrepaidCardMenuElement { get; set; }
+        public virtual ChooseCardTypeMenuElement ChooseCardTypeMenuElement { get; set; }
+        public virtual PrepaidTopupChoiceElement PrepaidTopupChoiceElements { get; set; }
+        public virtual PrepaidAdminPage PrepaidAdminPage { get; set; } 
         #endregion
 
         #region AdminPages

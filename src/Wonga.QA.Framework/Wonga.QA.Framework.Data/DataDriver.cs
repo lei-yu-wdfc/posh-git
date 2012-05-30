@@ -40,6 +40,8 @@ namespace Wonga.QA.Framework.Data
         private Lazy<UruDatabase> _uru = new Lazy<UruDatabase>(() => new UruDatabase(Config.Db.Uru));
         private Lazy<WongaPayDatabase> _wongaPay = new Lazy<WongaPayDatabase>(() => new WongaPayDatabase(Config.Db.WongaPay));
         private Lazy<MarketingDatabase> _marketing = new Lazy<MarketingDatabase>(() => new MarketingDatabase(Config.Db.Marketing));
+        private Lazy<PrepaidCardDatabase> _prepaidCard = new Lazy<PrepaidCardDatabase>(() => new PrepaidCardDatabase(Config.Db.PrepaidCard));
+        private Lazy<PpsDatabase> _pps = new Lazy<PpsDatabase>(() => new PpsDatabase(Config.Db.Pps));
 
         public AccountingDatabase Accounting{get { return _accounting.Value; }}
         public OpsSagasDatabase OpsSagas { get { return _opsSagas.Value;} }
@@ -71,5 +73,7 @@ namespace Wonga.QA.Framework.Data
         public UruDatabase Uru { get { return _uru.Value; } }
         public WongaPayDatabase WongaPay { get { return _wongaPay.Value; } }
         public MarketingDatabase Marketing { get { return _marketing.Value; } }
+        public PrepaidCardDatabase PrepaidCard { get { return _prepaidCard.Value; } }
+        public PpsDatabase Pps { get { return _pps.Value; } }
     }
 }

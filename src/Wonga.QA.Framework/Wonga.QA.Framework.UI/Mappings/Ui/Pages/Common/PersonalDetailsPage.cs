@@ -28,5 +28,9 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String DurationPlusButton { get; set; }
         public String GenderWarning { get; set; }
         public String DateOfBirthWarning { get; set; }
+        public String PrivatePolicyErrorForm { get; set; }
+       public String CheckBikVerification { get; set; }
+        public String BikVerificationErrorForm { get; set; }
+        public String CheckMarketingAcceptance { get; set; }
     }
 }

@@ -64,6 +64,8 @@
     <Compile Include="Databases\OpsSagasDatabase.cs" />
     <Compile Include="Databases\PaymentsDatabase.cs" />
     <Compile Include="Databases\MarketingDatabase.cs" />
+    <Compile Include="Databases\PrepaidCardDatabase.cs" />
+    <Compile Include="Databases\PpsDatabase.cs" />    
     <Compile Include="Databases\QAFDatabase.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -78,6 +80,8 @@
     <Compile Include="Enums\Risk\RiskWorkflowStatusEnum.cs" />
     <Compile Include="Enums\Risk\RiskWorkflowTypesEnum.cs" />
     <Compile Include="Enums\Risk\SliderPositionTypeEnum.cs" />
+	<Compile Include="Enums\Prepaid\PrepaidCardType.cs" />
+	<Compile Include="Enums\Prepaid\PrepaidCardStatuses.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

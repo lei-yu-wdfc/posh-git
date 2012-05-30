@@ -20,9 +20,9 @@ namespace Wonga.QA.Tests.Marketing
         private Customer _nonEligibleCustomer = null;
         private Customer _nonEligibleCustomerInArrears = null;
 
-        //private static readonly String ELIGIBLE_RESPONSE_KEY = "IsEligible";
-        //private static readonly String ELIGIBLE_CUSTOMER_RESPONSE = "true";
-        //private static readonly String NON_ELIGIBLE_CUSTOMER_RESPONSE = "false";
+        private static readonly String ELIGIBLE_RESPONSE_KEY = "IsEligible";
+        private static readonly String ELIGIBLE_CUSTOMER_RESPONSE = "true";
+        private static readonly String NON_ELIGIBLE_CUSTOMER_RESPONSE = "false";
 
         [SetUp]
         public void Init()
@@ -33,29 +33,28 @@ namespace Wonga.QA.Tests.Marketing
 
             CustomerOperations.CreateMarketingEligibility(_eligibleCustomer.Id,true);
             CustomerOperations.CreateMarketingEligibility(_nonEligibleCustomerInArrears.Id,false);
-
         }
 
 
-        [Test, AUT(AUT.Uk), JIRA("PP-32"), Pending("Commented out until query is added to the API")]
+        [Test, AUT(AUT.Uk), JIRA("PP-32")]
         public void ExecuteGetEligibleCustomersQuery()
         {
-            //GetCustomerPrePaidEligibilityQuery eligibleCustomerMessage = new GetCustomerPrePaidEligibilityQuery
-            //                                                                 {
-            //                                                                     AccountId = _eligibleCustomer.Id
-            //                                                                 };
-            //GetCustomerPrePaidEligibilityQuery nonEligibleCustomerMessage = new GetCustomerPrePaidEligibilityQuery
-            //                                                                 {
-            //                                                                     AccountId = _nonEligibleCustomer.Id
-            //                                                                 };
-            //GetCustomerPrePaidEligibilityQuery nonEligibleCustomerInArrearsMessage = new GetCustomerPrePaidEligibilityQuery
-            //                                                                 {
-            //                                                                    AccountId = _nonEligibleCustomerInArrears.Id
-            //                                                                 };
+            GetCustomerPrepaidEligibilityQuery eligibleCustomerMessage = new GetCustomerPrepaidEligibilityQuery
+                                                                             {
+                                                                                 AccountId = _eligibleCustomer.Id
+                                                                             };
+            GetCustomerPrepaidEligibilityQuery nonEligibleCustomerMessage = new GetCustomerPrepaidEligibilityQuery
+                                                                             {
+                                                                                 AccountId = _nonEligibleCustomer.Id
+                                                                             };
+            GetCustomerPrepaidEligibilityQuery nonEligibleCustomerInArrearsMessage = new GetCustomerPrepaidEligibilityQuery
+                                                                             {
+                                                                                AccountId = _nonEligibleCustomerInArrears.Id
+                                                                             };
 
-            //Assert.IsTrue(Drive.Api.Queries.Post(eligibleCustomerMessage).Values[ELIGIBLE_RESPONSE_KEY].First().Equals(ELIGIBLE_CUSTOMER_RESPONSE));
-            //Assert.IsTrue(Drive.Api.Queries.Post(nonEligibleCustomerInArrearsMessage).Values[ELIGIBLE_RESPONSE_KEY].First().Equals(NON_ELIGIBLE_CUSTOMER_RESPONSE));
-            //Assert.Throws<ValidatorException>(() => Drive.Api.Queries.Post(nonEligibleCustomerMessage));
+            Assert.IsTrue(Drive.Api.Queries.Post(eligibleCustomerMessage).Values[ELIGIBLE_RESPONSE_KEY].First().Equals(ELIGIBLE_CUSTOMER_RESPONSE));
+            Assert.IsTrue(Drive.Api.Queries.Post(nonEligibleCustomerInArrearsMessage).Values[ELIGIBLE_RESPONSE_KEY].First().Equals(NON_ELIGIBLE_CUSTOMER_RESPONSE));
+            Assert.IsTrue(Drive.Api.Queries.Post(nonEligibleCustomerMessage).Values[ELIGIBLE_RESPONSE_KEY].First().Equals(NON_ELIGIBLE_CUSTOMER_RESPONSE));
             
         }
 
