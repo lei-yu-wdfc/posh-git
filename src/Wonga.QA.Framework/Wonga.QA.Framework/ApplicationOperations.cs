@@ -46,10 +46,15 @@ namespace Wonga.QA.Framework
             Drive.Data.Payments.Db.Applications.Update(application);
             Drive.Data.Payments.Db.FixedTermLoanApplications.Update(fixedTermLoanApplication);
 
-            // find a way to 
-           /*application.Transactions.ForEach(t => t.CreatedOn -= span);
-            application.Transactions.ForEach(t => t.PostedOn -= span);
-            application.Transactions.ForEach(t => t.Submit(true));*/
+            var transactionsTab = Drive.Data.Payments.Db.Transactions;
+            var transactions = transactionsTab.FindAllByApplicationId(application.ApplicationId);
+
+            foreach(var transaction in transactions)
+            {
+                transaction.CreatedOn -= span;
+                transaction.PostedOn -= span;
+                transactionsTab.Update(transaction);
+            }
 
             var arrearEntity = Drive.Data.Payments.Db.Arrears.FindByApplicationId(application.ApplicationId);
 
@@ -65,6 +70,18 @@ namespace Wonga.QA.Framework
                 riskApp.ClosedOn -= span;
 
             Drive.Data.Risk.Db.RiskApplications.Update(riskApp);
+        }
+
+        public static void RewindApplicationDates(dynamic application, TimeSpan span)
+        {
+            var paymentsAppsTab = Drive.Data.Payments.Db.Applications;
+            dynamic applicationEntity =
+                paymentsAppsTab.FindAll(paymentsAppsTab.ExternalId == application.Id).Single();
+
+            var riskAppTab = Drive.Data.Risk.Db.RiskApplications;
+            dynamic riskApplication = riskAppTab.FindAll(riskAppTab.ApplicationId == application.Id).Single();
+
+            ApplicationOperations.RewindApplicationDates(applicationEntity, riskApplication, span);
         }
     }
 }

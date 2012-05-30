@@ -13,6 +13,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Ui
 {
+    [Parallelizable(TestScope.All)]
 	class EndToEndApplicationTests : UiTest
 	{
 		private Dictionary<string, string> _originalServiceConfiguration = new Dictionary<string, string>();

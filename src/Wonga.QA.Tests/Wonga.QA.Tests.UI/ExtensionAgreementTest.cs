@@ -23,6 +23,7 @@ using System.ComponentModel;
 
 namespace Wonga.QA.Tests.Ui
 {
+    [Parallelizable(TestScope.All)]
     class ExtensionAgreementTest : UiTest
     {
         [Test, AUT(AUT.Uk), JIRA("UK-971"), Pending("Fails due to bug UK-2293"), MultipleAsserts]

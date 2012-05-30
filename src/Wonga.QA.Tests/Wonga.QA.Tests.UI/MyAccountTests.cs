@@ -19,6 +19,7 @@ using Wonga.QA.Framework.UI;
 
 namespace Wonga.QA.Tests.Ui
 {
+    [Parallelizable(TestScope.All)]
     class MyAccountTests : UiTest
     {
         [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-218"), Category(TestCategories.Smoke)]

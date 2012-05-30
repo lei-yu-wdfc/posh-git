@@ -13,6 +13,7 @@ using System.Threading;
 
 namespace Wonga.QA.Tests.Ui
 {
+    [Parallelizable(TestScope.All)]
     class LogoutTest : UiTest
     {
         [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-161"), Category(TestCategories.Smoke)]

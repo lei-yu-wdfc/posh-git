@@ -18,6 +18,7 @@ using System.ComponentModel;
 
 namespace Wonga.QA.Tests.Ui
 {
+    [Parallelizable(TestScope.All)]
     class MySummaryScenarioTest : UiTest
     {
         [Test, AUT(AUT.Uk), JIRA("UK-822"), Pending("Fails as cannot find webelement .summary-text .blue-text")]

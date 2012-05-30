@@ -52,7 +52,7 @@ namespace Wonga.QA.Framework.Core
             switch (SUT)
             {
                 case SUT.Dev:
-                    Api = new ApiConfig("localhost");
+                    Api = new ApiConfig("localhost/API");
                     CommonApi = new CommonApiConfig("localhost/IVRWebApi");
                     Cs = new CsConfig("localhost/CSAPI");
                     Svc = new SvcConfig(".");

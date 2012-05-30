@@ -23,6 +23,7 @@ namespace Wonga.QA.Tests.Ui
     /// TopupSlider tests for UK
     /// </summary>
     /// 
+    [Parallelizable(TestScope.All)]
     class RepayTests : UiTest
     {
         //private int _amountMax;
@@ -226,7 +227,7 @@ namespace Wonga.QA.Tests.Ui
             var loginPage = Client.Login();
             var myAccountPage = loginPage.LoginAs(email);
             var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
-
+            //var originalRepay = mySummaryPage.GetTotalToRepay();
             mySummaryPage.RepayButtonClick();
             var requestPage = new RepayRequestPage(this.Client);
 
@@ -240,6 +241,39 @@ namespace Wonga.QA.Tests.Ui
 
             Assert.IsFalse(paymentTakenPage.IsRepayEarlyFullpaySuccessPageAmountTokenNotPresent());
             Assert.IsFalse(paymentTakenPage.IsRepayEarlyFullpaySuccessPageDateTokenNotPresent());
+            //TODO: Check that Interest Saved calculation is correct
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-1827"), Pending("In development")]
+        public void RepayEarlyPart()
+        {
+            //build L0 loan
+            string email = Get.RandomEmail();
+            DateTime todayDate = DateTime.Now;
+
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
+
+            var loginPage = Client.Login();
+            var myAccountPage = loginPage.LoginAs(email);
+            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+
+            mySummaryPage.RepayButtonClick();
+            var requestPage = new RepayRequestPage(this.Client);
+
+            //Set partial payment amount, test for correct values at same time
+            requestPage.IsRepayRequestPageSliderReturningCorrectValuesOnChange(application.Id.ToString(), "100");
+
+            //Branch point - Add Cv2 for each path and proceed
+            requestPage.setSecurityCode("123");
+            requestPage.SubmitButtonClick();
+
+            var repayProcessingPage = new RepayProcessingPage(this.Client);
+
+            var paymentTakenPage = repayProcessingPage.WaitFor<RepayEarlyPartpaySuccessPage>() as RepayEarlyPartpaySuccessPage;
+
+            Assert.IsFalse(paymentTakenPage.IsRepayEarlyPartpaySuccessPageAmountTokenNotPresent());
+            Assert.IsFalse(paymentTakenPage.IsRepayEarlyPartpaySuccessPageDateTokenNotPresent());
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-1827"), Pending("In development")]
@@ -279,6 +313,45 @@ namespace Wonga.QA.Tests.Ui
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-1827"), Pending("In development")]
+        public void RepayDuePart()
+        {
+            //build L0 loan
+            string email = Get.RandomEmail();
+            DateTime todayDate = DateTime.Now;
+
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
+            var daysShift = 7;
+
+            //time-shift loan so it's due today
+            var applicationsTab = Drive.Data.Payments.Db.Applications;
+            dynamic applicationEntity = applicationsTab.FindAll(applicationsTab.ExternalId == application.Id).Single();
+            var riskApplicationsTab = Drive.Data.Risk.Db.RiskApplications;
+            dynamic riskApplicationEntity = riskApplicationsTab.FindAll(riskApplicationsTab.ApplicationId == application.Id).Single();
+            TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
+            ApplicationOperations.RewindApplicationDates(applicationEntity, riskApplicationEntity, daysShiftSpan);
+
+            var loginPage = Client.Login();
+            var myAccountPage = loginPage.LoginAs(email);
+            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+
+            mySummaryPage.RepayButtonClick();
+            var requestPage = new RepayRequestPage(this.Client);
+
+            //Set partial payment amount, test for correct values at same time
+            requestPage.IsRepayRequestPageSliderReturningCorrectValuesOnChange(application.Id.ToString(), "100");
+
+            //Branch point - Add Cv2 for each path and proceed
+            requestPage.setSecurityCode("123");
+            requestPage.SubmitButtonClick();
+
+            var repayProcessingPage = new RepayProcessingPage(this.Client);
+
+            var paymentTakenPage = repayProcessingPage.WaitFor<RepayDuePartpaySuccessPage>() as RepayDuePartpaySuccessPage;
+
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-1827"), Pending("In development")]
         public void RepayOverdueFull()
         {
             //build L0 loan
@@ -287,7 +360,7 @@ namespace Wonga.QA.Tests.Ui
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
-            var daysShift = 9;
+            var daysShift = 15;
 
             //time-shift loan so it's due today
             var applicationsTab = Drive.Data.Payments.Db.Applications;
@@ -306,15 +379,16 @@ namespace Wonga.QA.Tests.Ui
 
             //Branch point - Add Cv2 for each path and proceed
             requestPage.setSecurityCode("123");
-            //requestPage.SubmitButtonClick();
+            requestPage.SubmitButtonClick();
 
-            //var repayProcessingPage = new RepayProcessingPage(this.Client);
+            var repayProcessingPage = new RepayProcessingPage(this.Client);
 
-            //var paymentTakenPage = repayProcessingPage.WaitFor<RepayOverdueFullpaySuccessPage>() as RepayOverdueFullpaySuccessPage;
+            var paymentTakenPage = repayProcessingPage.WaitFor<RepayOverduePartpaySuccessPage>() as RepayOverduePartpaySuccessPage;
 
         }
+
         [Test, AUT(AUT.Uk), JIRA("UK-1827"), Pending("In development")]
-        public void RepayEarlyPart()
+        public void RepayOverduePart()
         {
             //build L0 loan
             string email = Get.RandomEmail();
@@ -322,6 +396,15 @@ namespace Wonga.QA.Tests.Ui
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
+            var daysShift = 15;
+
+            //time-shift loan so it's due today
+            var applicationsTab = Drive.Data.Payments.Db.Applications;
+            dynamic applicationEntity = applicationsTab.FindAll(applicationsTab.ExternalId == application.Id).Single();
+            var riskApplicationsTab = Drive.Data.Risk.Db.RiskApplications;
+            dynamic riskApplicationEntity = riskApplicationsTab.FindAll(riskApplicationsTab.ApplicationId == application.Id).Single();
+            TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
+            ApplicationOperations.RewindApplicationDates(applicationEntity, riskApplicationEntity, daysShiftSpan);
 
             var loginPage = Client.Login();
             var myAccountPage = loginPage.LoginAs(email);
@@ -339,11 +422,12 @@ namespace Wonga.QA.Tests.Ui
 
             var repayProcessingPage = new RepayProcessingPage(this.Client);
 
-            var paymentTakenPage = repayProcessingPage.WaitFor<RepayEarlyPartpaySuccessPage>() as RepayEarlyPartpaySuccessPage;
+            var paymentTakenPage = repayProcessingPage.WaitFor<RepayOverdueFullpaySuccessPage>() as RepayOverdueFullpaySuccessPage;
 
-            Assert.IsFalse(paymentTakenPage.IsRepayEarlyPartpaySuccessPageAmountTokenNotPresent());
-            Assert.IsFalse(paymentTakenPage.IsRepayEarlyPartpaySuccessPageDateTokenNotPresent());
         }
+
+
+        
 
     }
 }

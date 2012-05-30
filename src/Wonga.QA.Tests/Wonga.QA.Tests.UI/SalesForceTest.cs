@@ -17,6 +17,7 @@ using Application = Wonga.QA.Framework.Application;
 
 namespace Wonga.QA.Tests.Ui
 {
+    [Parallelizable(TestScope.All)]
     class SalesForceTest : UiTest
     {
         [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-220"), Pending("Problem with presents customers in SF")]

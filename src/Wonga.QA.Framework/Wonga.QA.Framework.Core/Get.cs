@@ -110,6 +110,9 @@ namespace Wonga.QA.Framework.Core
             switch (Config.AUT)
             {
                 case AUT.Ca:
+                    {
+                        return "9876543219";
+                    }    
                 case AUT.Za:
                     {
                         return "021" + RandomLong(1000000, 9999999);

@@ -28,6 +28,9 @@ using RepayEarlyPaymentFailedPage = Wonga.QA.Framework.UI.Mappings.Pages.RepayEa
 using RepayOverdueFullpaySuccessPage = Wonga.QA.Framework.UI.Mappings.Pages.RepayOverdueFullpaySuccessPage;
 using RepayOverduePartpaySuccessPage = Wonga.QA.Framework.UI.Mappings.Pages.RepayOverduePartpaySuccessPage;
 using RepayOverduePaymentFailedPage = Wonga.QA.Framework.UI.Mappings.Pages.RepayOverduePaymentFailedPage;
+using RepayProcessingPage = Wonga.QA.Framework.UI.Mappings.Pages.RepayProcessingPage;
+using TopupProcessingPage = Wonga.QA.Framework.UI.Mappings.Pages.TopupProcessingPage;
+using ExtensionProcessingPage = Wonga.QA.Framework.UI.Mappings.Pages.ExtensionProcessingPage;
 using YourDetailsSection = Wonga.QA.Framework.UI.Mappings.Sections.YourDetailsSection;
 using PrepaidCardMenuElement = Wonga.QA.Framework.UI.Mappings.Elements.PrepaidCardMenuElement;
 using PrepaidCardPage = Wonga.QA.Framework.UI.Mappings.Pages.PrepaidCardPage;
@@ -39,6 +42,8 @@ using SmallTopupSlidersElement = Wonga.QA.Framework.UI.Mappings.Elements.SmallTo
 using SubmitionPage = Wonga.QA.Framework.UI.Mappings.Pages.PayLater.SubmitionPage;
 using SurveyElement = Wonga.QA.Framework.UI.Mappings.Elements.SurveyElement;
 using TabsElement = Wonga.QA.Framework.UI.Mappings.Elements.TabsElement;
+using TopupDealDonePage = Wonga.QA.Framework.UI.Mappings.Pages.TopupDealDonePage;
+using ExtensionErrorPage = Wonga.QA.Framework.UI.Mappings.Pages.ExtensionErrorPage;
 
 
 
@@ -150,13 +155,14 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual TopupProcessingPage TopupProcessingPage { get; set; }
         public virtual TopupRequestPage TopupRequestPage { get; set; }
         public virtual ApplyTermsPage ApplyTermsPage { get; set; }
-        public virtual ExtensionProcessingPage ExtensionProcessingPage { get; set; }
         public virtual ExtensionPaymentFailedPage ExtensionPaymentFailedPage { get; set; }
         public virtual ExtensionAgreementPage ExtensionAgreementPage { get; set; }
         public virtual ExtensionDealDonePage ExtensionDealDonePage { get; set; }
         public virtual ExtensionErrorPage ExtensionErrorPage { get; set; }
         public virtual ExtensionRequestPage ExtensionRequestPage { get; set; }
+        public virtual ExtensionProcessingPage ExtensionProcessingPage { get; set; }
         public virtual RepayRequestPage RepayRequestPage { get; set; }
+        public virtual RepayProcessingPage RepayProcessingPage { get; set; }
         public virtual FAQPage FAQPage { get; set; }
         public virtual RepayEarlyPaymentFailedPage RepayEarlyPaymentFailedPage { get; set; }
         public virtual RepayDuePaymentFailedPage RepayDuePaymentFailedPage { get; set; }

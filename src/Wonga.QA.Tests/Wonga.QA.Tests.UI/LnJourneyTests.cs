@@ -252,18 +252,19 @@ namespace Wonga.QA.Tests.Ui
             string email = Get.RandomEmail();
             string name = Get.RandomString(3, 10);
             string surname = Get.RandomString(3, 10);
-            string phone = Get.RandomLong(1000000, 9999999).ToString();
+            string oldphone = "077009" + Get.RandomLong(1000, 9999).ToString();
             Customer customer = CustomerBuilder
                  .New()
                  .WithForename(name)
                  .WithSurname(surname)
                  .WithEmailAddress(email)
-                 .WithMobileNumber("07700900" + Get.RandomLong(100, 999))
+                 .WithMobileNumber(oldphone)
                  .Build();
             Application application = ApplicationBuilder
                 .New(customer)
                 .Build();
             application.RepayOnDueDate();
+            string phone = "077009" + Get.RandomLong(1000, 9999).ToString();
            var loginPage = Client.Login();
             loginPage.LoginAs(email);
             switch (Config.AUT)
@@ -271,9 +272,9 @@ namespace Wonga.QA.Tests.Ui
                 case AUT.Za:
                     var journeyZa = JourneyFactory.GetLnJourney(Client.Home());
                     var pageZA = journeyZa.ApplyForLoan(200, 20).CurrentPage as ApplyPage;
-                    pageZA.SetNewMobilePhone = "07700900" + Get.RandomLong(100, 999);
+                    pageZA.SetNewMobilePhone = phone;
                     pageZA.ResendPinClick();
-                    var smsZa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber("2775" + phone));
+                    var smsZa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(phone.Replace("077","2777")));
                     foreach (var sms in smsZa)
                     {
                         Console.WriteLine(sms.MessageText + "/" + sms.CreatedOn);
@@ -285,9 +286,9 @@ namespace Wonga.QA.Tests.Ui
                     var journeyCa = JourneyFactory.GetLnJourney(Client.Home());
                     var pageCa = journeyCa.ApplyForLoan(200, 25)
                                    .SetName(name, surname).CurrentPage as ApplyPage;
-                    pageCa.SetNewMobilePhone = "07700900" + Get.RandomLong(100, 999);
+                    pageCa.SetNewMobilePhone = phone;
                     pageCa.ResendPinClick();
-                    var smsCa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber("175" + phone));
+                    var smsCa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(phone.Replace("077", "177")));
                     foreach (var sms in smsCa)
                     {
                         Console.WriteLine(sms.MessageText + "/" + sms.CreatedOn);
@@ -296,40 +297,6 @@ namespace Wonga.QA.Tests.Ui
                     Assert.AreEqual(2, smsCa.Count());            
                     break;
             }
-        }
-
-        [Test, AUT(AUT.Wb), Pending("Test not yet complete")]
-        public void WbAcceptedLnLoan()
-        {
-            var loginPage = Client.Login();
-            string email = Get.RandomEmail();
-            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            var organization = OrganisationBuilder.New(customer).Build();
-            var applicationInfo =
-                ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatus.Accepted).
-                    Build() as BusinessApplication;
-            var paymentPlan = applicationInfo.GetPaymentPlan();
-            applicationInfo.MorningCollectionAttempt(paymentPlan, false, true);
-
-            //Need to find or write code that pays outstanding balance
-
-            loginPage.LoginAs(email);
-            var journey = JourneyFactory.GetLNJourneyWB(Client.Home());
-            var declinedPage = journey.ApplyForLoan(5000, 15)
-                                            .ApplyNow()
-                                            .WaitForAcceptedPage();
-        }
-
-        [Test, AUT(AUT.Wb), Pending("Test not yet complete")]
-        public void WbDeclinedLnLoan()
-        {
-
-            var loginPage = Client.Login();
-            loginPage.LoginAs("qa.wonga.com+QB-WK-156-77b99268-ff34-451e-a067-4b0c48f3c5ac@gmail.com");
-            var journey = JourneyFactory.GetLNJourneyWB(Client.Home());
-            var declinedPage = journey.ApplyForLoan(5000, 15)
-                                            .ApplyNow()
-                                            .WaitForDeclinedPage();
         }
 
     }
