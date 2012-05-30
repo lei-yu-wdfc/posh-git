@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading;
 using Gallio.Framework;
@@ -24,7 +25,7 @@ using SubmitionPage = Wonga.QA.Framework.UI.UiElements.Pages.SubmitionPage;
 
 namespace Wonga.QA.Framework.UI
 {
-    public class UiClient : IDisposable
+    public class UiClient : IDisposable 
     {
         private IWebDriver _iWebDriver;
         public IWebDriver Driver
@@ -191,7 +192,22 @@ namespace Wonga.QA.Framework.UI
 
         public void Dispose()
         {
-            Do.Until(() => { Driver.Quit(); return true; });
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            Do.Until(() =>
+                         {
+                             Driver.Quit();
+                             return true;
+                         });
+        }
+
+        ~UiClient()
+        {
+            Dispose(false);
         }
 
         public SalesForceLoginPage SalesForceStart()
