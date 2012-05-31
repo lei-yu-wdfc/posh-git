@@ -15,7 +15,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Ui
 {
-	[TestFixture, Parallelizable(TestScope.All)]
+    [TestFixture, Parallelizable(TestScope.All)]
     class LnJourneyTests : UiTest
     {
         [Test, AUT(AUT.Za), JIRA("QA-196"), Pending("ZA-2510"), Category(TestCategories.Smoke)]
@@ -176,7 +176,7 @@ namespace Wonga.QA.Tests.Ui
         {
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
-            
+
             Console.WriteLine("email={0}", email);
 
             // L0 journey
@@ -192,14 +192,14 @@ namespace Wonga.QA.Tests.Ui
 
             var customer = new Customer(Guid.Parse(Drive.Api.Queries.Post(new GetAccountQuery { Login = email, Password = Get.GetPassword() }).Values["AccountId"].Single()));
             var application = customer.GetApplication();
-            
+
             var mobileNumber = customer.GetCustomerMobileNumber();
-            
+
 
             // Repay
             application.RepayOnDueDate();
 
-           // Ln journey
+            // Ln journey
             var journey = JourneyFactory.GetLnJourney(Client.Home());
             var page = journey.ApplyForLoan(200, 10);
 
@@ -228,7 +228,7 @@ namespace Wonga.QA.Tests.Ui
                 .FillCardDetails()
                 .WaitForAcceptedPage()
                 .FillAcceptedPage();
-            
+
             var customer = new Customer(Guid.Parse(Drive.Api.Queries.Post(new GetAccountQuery { Login = email, Password = Get.GetPassword() }).Values["AccountId"].Single()));
             var application = customer.GetApplication();
 
@@ -265,7 +265,7 @@ namespace Wonga.QA.Tests.Ui
                 .Build();
             application.RepayOnDueDate();
             string phone = "077009" + Get.RandomLong(1000, 9999).ToString();
-           var loginPage = Client.Login();
+            var loginPage = Client.Login();
             loginPage.LoginAs(email);
             switch (Config.AUT)
             {
@@ -274,13 +274,13 @@ namespace Wonga.QA.Tests.Ui
                     var pageZA = journeyZa.ApplyForLoan(200, 20).CurrentPage as ApplyPage;
                     pageZA.SetNewMobilePhone = phone;
                     pageZA.ResendPinClick();
-                    var smsZa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(phone.Replace("077","2777")));
+                    var smsZa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(phone.Replace("077", "2777")));
                     foreach (var sms in smsZa)
                     {
                         Console.WriteLine(sms.MessageText + "/" + sms.CreatedOn);
                         Assert.IsTrue(sms.MessageText.Contains("You will need it to complete your application back at Wonga.com."));
                     }
-                   // Assert.AreEqual(2, smsZa.Count());
+                    // Assert.AreEqual(2, smsZa.Count());
                     break;
                 case AUT.Ca:
                     var journeyCa = JourneyFactory.GetLnJourney(Client.Home());
@@ -294,10 +294,33 @@ namespace Wonga.QA.Tests.Ui
                         Console.WriteLine(sms.MessageText + "/" + sms.CreatedOn);
                         Assert.IsTrue(sms.MessageText.Contains("You will need it to complete your application back at Wonga.ca."));
                     }
-                    Assert.AreEqual(2, smsCa.Count());            
+                    Assert.AreEqual(2, smsCa.Count());
                     break;
             }
         }
 
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-205"), Pending("work in progress")]
+        public void CheckEmailsWhenLoanTakenOutAsLNCustomer()
+        {
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder
+                .New()
+                .WithEmailAddress(email)
+                .Build();
+            Application application1 = ApplicationBuilder
+                .New(customer)
+                .Build();
+            application1.RepayOnDueDate();
+            Application application2 = ApplicationBuilder
+                .New(customer)
+                .Build();
+
+            var mail = Do.Until(() => Drive.Data.QaData.Db.Email.FindAllByEmailAddress(email)).FirstOrDefault();
+            Console.WriteLine(mail.EmailId);
+            var mailTemplate = Do.Until(() => Drive.Data.QaData.Db.EmailToken.FindBy(EmailId: mail.EmailId, Key: "Loan_Agreement"));
+            Console.WriteLine(mailTemplate.Value.ToString());
+            Assert.IsNotNull(mailTemplate);
+            Assert.IsTrue(mailTemplate.value.ToString().Contains("You promise to pay and will make one repayment of"));
+        }
     }
 }
