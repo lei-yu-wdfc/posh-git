@@ -1,19 +1,10 @@
 using System;
-using System.Linq;
-using System.Xml.Serialization;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
-using Wonga.QA.Framework.Api.Exceptions;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Cs;
-using Wonga.QA.Framework.Db.OpsSagasCa;
-using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
-using CloseApplicationSagaEntity = Wonga.QA.Framework.Db.OpsSagas.CloseApplicationSagaEntity;
-using System.Threading;
-using Wonga.QA.Framework.Db;
 
 namespace Wonga.QA.Tests.Payments
 {
@@ -22,8 +13,10 @@ namespace Wonga.QA.Tests.Payments
     {
     	private const string FeatureSwitchKey = "FeatureSwitch.MoveLoanToDcaOnFailedRepresentment";
     	private static bool _bankGatewayIsinTestMode;
+    	private readonly dynamic _debtCollection = Drive.Data.Payments.Db.DebtCollection;
+    	private readonly dynamic _externalDebtCollectionSaga = Drive.Data.OpsSagas.Db.ExternalDebtCollectionOnFailedRepresentmentSagaEntity;
 
-        [FixtureSetUp]
+    	[FixtureSetUp]
         public static void FixtureSetUp()
         {
             _bankGatewayIsinTestMode = ConfigurationFunctions.GetBankGatewayTestMode();
@@ -46,7 +39,7 @@ namespace Wonga.QA.Tests.Payments
 			application.PutApplicationIntoArrears();
 
 			// Validate that external debt collection finished
-			Do.Until(() => Drive.Data.OpsSagas.Db.ExternalDebtCollectionOnFailedRepresentmentSagaEntity.FindByApplicationId(application.Id));
+			Do.Until(() => _externalDebtCollectionSaga.FindByApplicationId(application.Id));
 
 			Drive.Msmq.Payments.Send(new IApplicationClosedEvent
 			                         	{
@@ -56,10 +49,10 @@ namespace Wonga.QA.Tests.Payments
 			                         	});
 
     		// Validate that external debt collection finished
-			Do.Until(() => Drive.Data.OpsSagas.Db.ExternalDebtCollectionOnFailedRepresentmentSagaEntity.FindByApplicationId(application.Id) == null);
+			Do.Until(() => _externalDebtCollectionSaga.FindByApplicationId(application.Id) == null);
 
 			// And no debt collection record was created
-			Assert.AreEqual(0, Drive.Db.Payments.DebtCollections.Count(d => d.ApplicationEntity.ExternalId == application.Id));
+			Assert.AreEqual(0, _debtCollection.FindAll(_debtCollection.Applications.ExternalId == application.Id).Count());
 		}
 
 		[Test, AUT(AUT.Ca), JIRA("CA-2285"), FeatureSwitch(FeatureSwitchKey)]
@@ -80,13 +73,13 @@ namespace Wonga.QA.Tests.Payments
 
 			// Trigger 31 days timeout of debt collection agency
 			var debtCollectionSaga = Do.Until(() =>
-				Drive.Data.OpsSagas.Db.ExternalDebtCollectionOnFailedRepresentmentSagaEntity.
+				_externalDebtCollectionSaga.
 				FindByApplicationId(application.Id));
 
 			Drive.Msmq.Payments.Send(new TimeoutMessage{ SagaId = debtCollectionSaga.Id});
 
 			// Wait for debt collection to be created
-			Do.Until( () => Drive.Db.Payments.DebtCollections.Single(d => d.ApplicationEntity.ExternalId == application.Id && d.MovedToAgency ));
+			Do.Until(() => _debtCollection.FindAll(_debtCollection.Applications.ExternalId == application.Id).Single());
 		}
 	}
 }
