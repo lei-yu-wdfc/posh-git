@@ -450,7 +450,7 @@ namespace Wonga.QA.Tests.Ui
             homePage.AssertThatIsWbHomePage();
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk), JIRA("QA-181"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk), JIRA("QA-181"), Pending("ZA-2560")]
         public void L0JourneyCustomerOnCurrentAddressPageDoesNotEnterSomeRequiredFieldsWarningMessageDisplayed()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
