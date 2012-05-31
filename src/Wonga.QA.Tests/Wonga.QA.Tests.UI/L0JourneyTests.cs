@@ -1802,60 +1802,60 @@ namespace Wonga.QA.Tests.Ui
             Console.WriteLine("Manually check that that loan agreement and SECCI emails are sent for user={0}", email);
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-204")]
-        public void WhenUserAcceptsTheAgreementThenHeGotEmail()
-        {
-            string email = Get.RandomEmail();
-            Customer customer = CustomerBuilder
-                  .New()
-                  .WithEmailAddress(email)
-                  .Build();
-            Application application = ApplicationBuilder
-                .New(customer)
-                .Build();
 
-            var mail = Do.Until(() => Drive.Data.QaData.Db.Email.FindAllByEmailAddress(email)).FirstOrDefault();
-            Console.WriteLine(mail.EmailId);
-            var mailTemplate = Do.Until(() => Drive.Data.QaData.Db.EmailToken.FindBy(EmailId: mail.EmailId, Key: "Loan_Agreement"));
-            Console.WriteLine(mailTemplate.Value.ToString());
-            Assert.IsNotNull(mailTemplate);
-            Assert.IsTrue(mailTemplate.value.ToString().Contains("You promise to pay and will make one repayment of"));
-        }
 
-        [Test, AUT(AUT.Za), JIRA("QA-247")]
-        [Row(100, 37)]
-        [Row(100, 31)]
-        [Row(131, 34)]
-        [Row(153, 37)]
-        public void VerifyThatInduplumNeverBrokenAndTotalToRepayIsSmalestThenTwoLoanAmount(int _loanAmount, int _duration)
-        {
-            int controlSum = _loanAmount*2; 
-            double totalToRepay;
 
-            var HomePage = Client.Home();
 
-            HomePage.Sliders.HowMuch = _loanAmount.ToString();
-            HomePage.Sliders.HowLong = _duration.ToString();
 
-            totalToRepay = Convert.ToDouble(HomePage.Sliders.GetTotalToRepay.Remove(0, 1));
-            Assert.IsTrue(totalToRepay<=controlSum);
 
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var personalDetails = journey.ApplyForLoan(_loanAmount, _duration).CurrentPage as PersonalDetailsPage;
 
-            totalToRepay = Convert.ToDouble(personalDetails.GetTotalToRepay.Remove(0, 1));
-            Assert.IsTrue(totalToRepay <= controlSum);
 
-            var SummaryPage = journey.FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
-                                    .FillAddressDetails()
-                                    .FillAccountDetails()
-                                    .FillBankDetails()
-                                    .WaitForAcceptedPage()
-                                    .IgnoreAcceptingLoanAndReturnToHomePageAndLogin()
-                                    .CurrentPage as MySummaryPage;
 
-            totalToRepay = Convert.ToDouble(SummaryPage.GetTotalToRepay.Remove(0, 1));
-            Assert.IsTrue(totalToRepay <= controlSum);
-        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }
