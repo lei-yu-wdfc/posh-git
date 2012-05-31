@@ -44,9 +44,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
                     Tabs = new TabsElement(this);
                     break;
                 case (AUT.Wb):
-                Help = new HelpElement(this);
+                    Help = new HelpElement(this);
                     Tabs= new TabsElement(this);
                     Login = new LoginElement(this);
+                    Contact = new ContactElement(this);
                     break;
 
             }
