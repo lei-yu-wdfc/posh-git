@@ -423,11 +423,95 @@ namespace Wonga.QA.Tests.Ui
             var repayProcessingPage = new RepayProcessingPage(this.Client);
 
             var paymentTakenPage = repayProcessingPage.WaitFor<RepayOverdueFullpaySuccessPage>() as RepayOverdueFullpaySuccessPage;
-
         }
 
 
-        
+        [Test, AUT(AUT.Uk), JIRA("UK-1833")]
+        public void RepayEarlyDecline()
+        {
+            string email = Get.RandomEmail();
 
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
+                      
+            var loginPage = Client.Login();
+            var myAccountPage = loginPage.LoginAs(email);
+            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+
+            mySummaryPage.RepayButtonClick();
+            var requestPage = new RepayRequestPage(this.Client);
+
+            requestPage.setSecurityCode("888");
+            requestPage.SubmitButtonClick();
+
+            var repayProcessingPage = new RepayProcessingPage(this.Client);
+
+            var declinedPage = repayProcessingPage.WaitFor<RepayEarlyPaymentFailedPage>() as RepayEarlyPaymentFailedPage;
+
+            Assert.IsFalse(declinedPage.IsPaymentFailedAmountNotPresent());
+            Assert.IsFalse(declinedPage.IsPaymentFailedDateNotPresent());
+        }
+
+
+        [Test, AUT(AUT.Uk), JIRA("UK-1833")]
+        public void RepayDueDecline()
+        {
+            //build L0 loan
+            string email = Get.RandomEmail();
+            var daysShift = 9;
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(daysShift).Build();
+            
+            TimeSpan daysShiftSpan = TimeSpan.FromDays((Double)daysShift);
+            ApplicationOperations.RewindApplicationDates(application, daysShiftSpan);
+
+            var loginPage = Client.Login();
+            var myAccountPage = loginPage.LoginAs(email);
+            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+
+            mySummaryPage.RepayButtonClick();
+            var requestPage = new RepayRequestPage(this.Client);
+
+            requestPage.setSecurityCode("888");
+            requestPage.SubmitButtonClick();
+
+            var repayProcessingPage = new RepayProcessingPage(this.Client);
+
+            var declinedPage = repayProcessingPage.WaitFor<RepayDuePaymentFailedPage>() as RepayDuePaymentFailedPage;
+
+            Assert.IsFalse(declinedPage.IsPaymentFailedAmountNotPresent());
+            Assert.IsFalse(declinedPage.IsPaymentFailedDateNotPresent());
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-1833")]
+        public void RepayOverdueDecline()
+        {
+            //build L0 loan
+            string email = Get.RandomEmail();
+            //DateTime todayDate = DateTime.Now;
+            var loanTerm = 7;
+            var daysShift = 15;
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(loanTerm).Build();
+
+            TimeSpan daysShiftSpan = TimeSpan.FromDays((Double)daysShift);
+            ApplicationOperations.RewindApplicationDates(application, daysShiftSpan);
+
+            var loginPage = Client.Login();
+            var myAccountPage = loginPage.LoginAs(email);
+            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+
+            mySummaryPage.RepayButtonClick();
+            var requestPage = new RepayRequestPage(this.Client);
+
+            requestPage.setSecurityCode("888");
+            requestPage.SubmitButtonClick();
+
+            var repayProcessingPage = new RepayProcessingPage(this.Client);
+
+            var declinedPage = repayProcessingPage.WaitFor<RepayOverduePaymentFailedPage>() as RepayOverduePaymentFailedPage;
+
+            Assert.IsFalse(declinedPage.IsPaymentFailedAmountNotPresent());
+        }
     }
 }

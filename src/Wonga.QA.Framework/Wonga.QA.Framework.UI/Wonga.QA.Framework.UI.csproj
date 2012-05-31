@@ -89,6 +89,7 @@
     <Compile Include="Mappings\Ui\Pages\Common\BusinessSummaryPage.cs" />
     <Compile Include="Mappings\Content\Pages\TopupProcessingPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayProcessingPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\RepayDuePaymentFailedPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\MySummaryPageMobile.cs" />
     <Compile Include="Mappings\Content\Pages\TimeoutTestPage.cs" />
     <Compile Include="Mappings\Content\Pages\ExtensionAgreementPage.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="Mappings\Ui\Pages\Common\BlogPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\EasypaymentNumberPrintPage.cs" />
     <Compile Include="Ui\Pages\Common\BusinessSummaryPage.cs" />
+    <Compile Include="Ui\Pages\Common\RepayDuePaymentFailedPage.cs" />
     <Compile Include="Ui\Pages\Common\MySummaryPageMobile.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayDueFullpaySuccessPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayEarlyFullpaySuccessPage.cs" />
@@ -141,7 +143,6 @@
     <Compile Include="Mappings\Content\Pages\RepayDuePaymentFailedPage.cs" />
     <Compile Include="Mappings\Content\Pages\RepayEarlyPaymentFailedPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayOverduePaymentFailedPage.cs" />
-    <Compile Include="Mappings\Ui\Pages\Common\RepayDuePaymentFailedPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\FAQPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayRequestPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ExtensionRequestPage.cs" />
@@ -249,7 +250,6 @@
     <Compile Include="Ui\Pages\Common\RepayDuePartpaySuccessPage.cs" />
     <Compile Include="Ui\Pages\Common\RepayEarlyPartpaySuccessPage.cs" />
     <Compile Include="Ui\Pages\Common\RepayOverduePaymentFailedPage.cs" />
-    <Compile Include="Ui\Pages\Common\RepayDuePaymentFailedPage.cs" />
     <Compile Include="Ui\Pages\Common\RepayEarlyPaymentFailedPage.cs" />
     <Compile Include="Ui\Pages\Common\RepayProcessingPage.cs" />
     <Compile Include="Ui\Pages\Common\HomePageMobile.cs" />

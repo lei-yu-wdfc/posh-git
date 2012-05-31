@@ -138,6 +138,5 @@ namespace Wonga.QA.Tests.Ui
          * TBD 6: it seems no matter which Employment type we simulate, we still can open the Declined page. Is that correct? How can we ensure that the Declined page opens only for appropriate conditions?
          * TBD 7: for which Emplyment statuses do we expect a declined loan?
          */
-
     }
 }

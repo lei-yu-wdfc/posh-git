@@ -446,16 +446,26 @@
   <RepayEarlyPaymentFailedPage>
     <Header>#content-area .wonga-box-top-right h2</Header>
     <ContentArea>#content-area .wonga-box-top-right</ContentArea>
+    <RepayRetry>#content-area #repay-retry</RepayRetry>
+    <AddCard>#content-area #add-card</AddCard>
+    <TotalNewRepayable>#content-area #repay-new-repayable</TotalNewRepayable>
+    <RepayPromiseDate>#content-area #repay-promise-date</RepayPromiseDate>
   </RepayEarlyPaymentFailedPage>
   
   <RepayDuePaymentFailedPage>
     <Header>#content-area .wonga-box-top-right h2</Header>
     <ContentArea>#content-area .wonga-box-top-right</ContentArea>
+    <RepayRetry>#content-area #repay-retry</RepayRetry>
+    <AddCard>#content-area #add-card</AddCard>
+    <RepayNewRepayable>#content-area #repay-new-repayable</RepayNewRepayable>
   </RepayDuePaymentFailedPage>
 
   <RepayOverduePaymentFailedPage>
     <Header>#content-area .wonga-box-top-right h2</Header>
     <ContentArea>#content-area .wonga-box-top-right</ContentArea>
+    <RepayRetry>#content-area #repay-retry</RepayRetry>
+    <AddCard>#content-area #add-card</AddCard>
+    <TotalNewRepayable>#content-area #total-new-repayable</TotalNewRepayable>
   </RepayOverduePaymentFailedPage>
   
   <RepayEarlyPartpaySuccessPage>

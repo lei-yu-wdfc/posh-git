@@ -9,5 +9,8 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
     {
         public string Header { get; set; }
         public string ContentArea { get; set; }
+        public string TotalNewRepayable { get; set; }
+        public string RepayRetry { get; set; }
+        public string AddCard { get; set; }
     }
 }
