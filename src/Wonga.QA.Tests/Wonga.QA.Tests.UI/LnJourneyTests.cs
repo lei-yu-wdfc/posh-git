@@ -285,7 +285,8 @@ namespace Wonga.QA.Tests.Ui
                 case AUT.Ca:
                     var journeyCa = JourneyFactory.GetLnJourney(Client.Home());
                     var pageCa = journeyCa.ApplyForLoan(200, 25)
-                                   .SetName(name, surname).CurrentPage as ApplyPage;
+                                   //.SetName(name, surname)
+                                   .CurrentPage as ApplyPage;
                     pageCa.SetNewMobilePhone = phone;
                     pageCa.ResendPinClick();
                     var smsCa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(phone.Replace("077", "177")));
