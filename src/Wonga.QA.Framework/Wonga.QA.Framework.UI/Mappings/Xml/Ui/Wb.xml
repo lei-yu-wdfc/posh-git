@@ -240,5 +240,13 @@
   <ApplyPage>
     <Submit>#edit-submit</Submit>
   </ApplyPage>
-  
+
+  <HelpElement>
+    <ContactUs>div.control-bar-panel .mod</ContactUs>
+  </HelpElement>
+
+  <ContactElement>
+    <ContactTitle>#contact</ContactTitle>
+    <FormId>#fancybox-content</FormId>    
+  </ContactElement>
 </UiMap>
