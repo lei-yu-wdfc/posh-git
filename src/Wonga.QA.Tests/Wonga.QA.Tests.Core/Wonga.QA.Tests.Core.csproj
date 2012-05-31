@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AUTAttribute.cs" />
+    <Compile Include="SUTAttribute.cs" />
     <Compile Include="FeatureSwitchAttribute.cs" />
     <Compile Include="JIRAAttribute.cs" />
     <Compile Include="MbUnitConfig.cs" />
