@@ -398,9 +398,9 @@ namespace Wonga.QA.Tests.Ui
             personalDetailsPage.EmploymentDetails.SalaryPaidToBank = true;
             Assert.IsTrue(personalDetailsPage.IsSuccessTickOccured(UiMap.Get.EmploymentDetailsSection.SalaryPaidToBank, UiMap.Get.EmploymentDetailsSection.SalaryPaidToBankErrorForm));
             personalDetailsPage.EmploymentDetails.UniversityType = "panstwowa";
-            Assert.IsTrue(Do.Until(()=>personalDetailsPage.IsSuccessTickOccured(UiMap.Get.EmploymentDetailsSection.UniversityType, UiMap.Get.EmploymentDetailsSection.UniversityTypeErrorForm)));
+            Assert.IsTrue(Do.Until(() => personalDetailsPage.IsSuccessTickOccured(UiMap.Get.EmploymentDetailsSection.UniversityType, UiMap.Get.EmploymentDetailsSection.UniversityTypeErrorForm)));
             personalDetailsPage.EmploymentDetails.UniversityCity = "Opole";
-            Assert.IsTrue(Do.Until(()=>personalDetailsPage.IsSuccessTickOccured(UiMap.Get.EmploymentDetailsSection.UniversityCity, UiMap.Get.EmploymentDetailsSection.UniversityCityErrorForm)));
+            Assert.IsTrue(Do.Until(() => personalDetailsPage.IsSuccessTickOccured(UiMap.Get.EmploymentDetailsSection.UniversityCity, UiMap.Get.EmploymentDetailsSection.UniversityCityErrorForm)));
             personalDetailsPage.EmploymentDetails.YearsInUniversity = "2";
             Assert.IsTrue(personalDetailsPage.IsSuccessTickOccured(UiMap.Get.EmploymentDetailsSection.YearsInUniversity, UiMap.Get.EmploymentDetailsSection.YearsInUniversityErrorForm));
             personalDetailsPage.EmploymentDetails.EmploymentStatus = "Umowa o prace na czas nieokreslony";
@@ -1802,46 +1802,24 @@ namespace Wonga.QA.Tests.Ui
             Console.WriteLine("Manually check that that loan agreement and SECCI emails are sent for user={0}", email);
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-204"), Pending("work in progress")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-204")]
         public void WhenUserAcceptsTheAgreementThenHeGotEmail()
         {
-            var email = Get.RandomEmail();
-            switch (Config.AUT)
-            {
-                case AUT.Ca:
-                    var journeyCa = JourneyFactory.GetL0Journey(Client.Home());
-                    var processingPageCa = journeyCa.ApplyForLoan(200, 10)
-                                         .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
-                                         .FillAddressDetails()
-                                         .FillAccountDetails()
-                                         .FillBankDetails()
-                                         .CurrentPage as ProcessingPage;
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder
+                  .New()
+                  .WithEmailAddress(email)
+                  .Build();
+            Application application = ApplicationBuilder
+                .New(customer)
+                .Build();
 
-                    var acceptedPageCa = processingPageCa.WaitFor<AcceptedPage>() as AcceptedPage;
-                    acceptedPageCa.SignConfirmCaL0(DateTime.Now.ToString("d MMM yyyy"), journeyCa.FirstName, journeyCa.LastName);
-                    var dealDoneCa = acceptedPageCa.Submit() as DealDonePage;
-                    var mySummaryCa = dealDoneCa.ContinueToMyAccount();
-                    break;
-
-                case AUT.Za:
-                    var journeyZa = JourneyFactory.GetL0Journey(Client.Home());
-                    var processingPageZa = journeyZa.ApplyForLoan(200, 10)
-                                         .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
-                                         .FillAddressDetails()
-                                         .FillAccountDetails()
-                                         .FillBankDetails()
-                                         .CurrentPage as ProcessingPage;
-
-                    var acceptedPage = processingPageZa.WaitFor<AcceptedPage>() as AcceptedPage;
-                    acceptedPage.SignAgreementConfirm();
-                    acceptedPage.SignDirectDebitConfirm();
-                    var dealDoneZa = acceptedPage.Submit() as DealDonePage;
-                    var mySummaryZa = dealDoneZa.ContinueToMyAccount();
-                    break;
-            }
-            var mail = Do.Until(() => Drive.Data.QaData.Db.Emails.FindByEmailAddress(email));
-            var mailTemplate = Do.Until(() => Drive.Data.QaData.Db.EmailToken.FindAllBy(EmailId: mail.EmailId, Key: "Html_body"));
-            Console.WriteLine(mailTemplate.Count);
+            var mail = Do.Until(() => Drive.Data.QaData.Db.Email.FindAllByEmailAddress(email)).FirstOrDefault();
+            Console.WriteLine(mail.EmailId);
+            var mailTemplate = Do.Until(() => Drive.Data.QaData.Db.EmailToken.FindBy(EmailId: mail.EmailId, Key: "Loan_Agreement"));
+            Console.WriteLine(mailTemplate.Value.ToString());
+            Assert.IsNotNull(mailTemplate);
+            Assert.IsTrue(mailTemplate.value.ToString().Contains("You promise to pay and will make one repayment of"));
         }
     }
 }
