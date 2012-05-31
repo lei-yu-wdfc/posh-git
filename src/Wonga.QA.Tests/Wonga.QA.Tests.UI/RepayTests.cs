@@ -429,14 +429,10 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk), JIRA("UK-1833")]
         public void RepayEarlyDecline()
         {
-            //build L0 loan
             string email = Get.RandomEmail();
-            //DateTime todayDate = DateTime.Now;
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
-
-            //const int offsetDays = 15;
                       
             var loginPage = Client.Login();
             var myAccountPage = loginPage.LoginAs(email);
@@ -445,10 +441,6 @@ namespace Wonga.QA.Tests.Ui
             mySummaryPage.RepayButtonClick();
             var requestPage = new RepayRequestPage(this.Client);
 
-            //Runs assertions internally
-            //requestPage.IsRepayRequestPageSliderReturningCorrectValuesOnChange(application.Id.ToString());
-
-            //Branch point - Add Cv2 for each path and proceed
             requestPage.setSecurityCode("888");
             requestPage.SubmitButtonClick();
 
@@ -457,16 +449,15 @@ namespace Wonga.QA.Tests.Ui
             var declinedPage = repayProcessingPage.WaitFor<RepayEarlyPaymentFailedPage>() as RepayEarlyPaymentFailedPage;
 
             Assert.IsFalse(declinedPage.IsPaymentFailedAmountNotPresent());
-            //Assert.IsFalse(declinedPage.IsPaymentFailedDateNotPresent());
+            Assert.IsFalse(declinedPage.IsPaymentFailedDateNotPresent());
         }
 
 
         [Test, AUT(AUT.Uk), JIRA("UK-1833")]
-        public void RepayDueDateDecline()
+        public void RepayDueDecline()
         {
             //build L0 loan
             string email = Get.RandomEmail();
-            //DateTime todayDate = DateTime.Now;
             var daysShift = 9;
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(daysShift).Build();
@@ -481,7 +472,6 @@ namespace Wonga.QA.Tests.Ui
             mySummaryPage.RepayButtonClick();
             var requestPage = new RepayRequestPage(this.Client);
 
-            //Branch point - Add Cv2 for each path and proceed
             requestPage.setSecurityCode("888");
             requestPage.SubmitButtonClick();
 
@@ -490,7 +480,38 @@ namespace Wonga.QA.Tests.Ui
             var declinedPage = repayProcessingPage.WaitFor<RepayDuePaymentFailedPage>() as RepayDuePaymentFailedPage;
 
             Assert.IsFalse(declinedPage.IsPaymentFailedAmountNotPresent());
-            //Assert.IsFalse(declinedPage.IsPaymentFailedDateNotPresent());
+            Assert.IsFalse(declinedPage.IsPaymentFailedDateNotPresent());
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-1833")]
+        public void RepayOverdueDecline()
+        {
+            //build L0 loan
+            string email = Get.RandomEmail();
+            //DateTime todayDate = DateTime.Now;
+            var loanTerm = 7;
+            var daysShift = 15;
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(loanTerm).Build();
+
+            TimeSpan daysShiftSpan = TimeSpan.FromDays((Double)daysShift);
+            ApplicationOperations.RewindApplicationDates(application, daysShiftSpan);
+
+            var loginPage = Client.Login();
+            var myAccountPage = loginPage.LoginAs(email);
+            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+
+            mySummaryPage.RepayButtonClick();
+            var requestPage = new RepayRequestPage(this.Client);
+
+            requestPage.setSecurityCode("888");
+            requestPage.SubmitButtonClick();
+
+            var repayProcessingPage = new RepayProcessingPage(this.Client);
+
+            var declinedPage = repayProcessingPage.WaitFor<RepayOverduePaymentFailedPage>() as RepayOverduePaymentFailedPage;
+
+            Assert.IsFalse(declinedPage.IsPaymentFailedAmountNotPresent());
         }
     }
 }
