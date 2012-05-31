@@ -102,7 +102,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         private void WaitForSuccessPopup()
         {
-            Do.Until(
+            Do.With.Timeout(2).Until(
                 () =>
                 Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.PopupSuccessTitle)).Displayed);
         }
