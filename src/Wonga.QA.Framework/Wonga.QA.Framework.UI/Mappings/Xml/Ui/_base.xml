@@ -497,5 +497,10 @@
     <Header>#content-area .wonga-box-top-right h2</Header>
     <ContentArea>#content-area .wonga-box-top-right</ContentArea>
   </RepayOverdueFullpaySuccessPage>
+
+  <RepayErrorPage>
+    <Header>#content-area .wonga-box-top-right h2</Header>
+    <ContentArea>#content-area .wonga-box-top-right</ContentArea>
+  </RepayErrorPage>
   
 </UiMap>

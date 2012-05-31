@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentMap>
   <YourDetails>Your Details</YourDetails>
    <RepayEarlyPaymentFailedPage>
@@ -88,6 +88,70 @@
      <MoneyIn>Money in</MoneyIn>
      <MoneyOut>Money out </MoneyOut>
     </PrepaidBalanceBlock>
+  <TopupProcessingPage>
+    <HeaderText>Processing</HeaderText>
+    <WaitMessage>We are processing your application, please be patient. If the page doesn't reload click here.</WaitMessage>
+  </TopupProcessingPage>
+
+  <ExtensionProcessingPage>
+    <HeaderText>Processing</HeaderText>
+    <WaitMessage>We are processing your application, please be patient. If the page doesn't reload click here.</WaitMessage>
+  </ExtensionProcessingPage>
+
+  <RepayProcessingPage>
+    <HeaderText>Processing</HeaderText>
+    <WaitMessage>We are processing your payment, please be patient. If the page doesn't reload click here.</WaitMessage>
+  </RepayProcessingPage>
+  
+  <RepayErrorPage>
+    <HeaderText>Ouch! We're very sorry, but it appears as if our system is having problems</HeaderText>
+  </RepayErrorPage>
+  
+  <ExtensionAgreementPage>
+    <CreditInformation>PRE-CONTRACT CREDIT INFORMATION</CreditInformation>
+    <PrintThisPage>Print this page</PrintThisPage>
+    <ReadThis>Please read this document carefully and print it off for your records</ReadThis>
+  </ExtensionAgreementPage>
+
+  <L0DeclinedPage>
+    <HeaderText>Unfortunately we can’t approve your application</HeaderText>
+  </L0DeclinedPage>
+
+  <TimeoutTestPage>
+    <HeaderText>Timeout Test</HeaderText>
+  </TimeoutTestPage>
+
+	<AccountDetailsSection>
+		<PasswordMismatchWarning>Passwords must match</PasswordMismatchWarning>
+		<PasswordInvalidFormatWarning>Your password must be 8 or more characters and must include a capital letter and a number.</PasswordInvalidFormatWarning>
+		<PasswordEqualsEmailWarning>Password must not contain user name.</PasswordEqualsEmailWarning>
+	</AccountDetailsSection>
+
+	<HelpElement>
+		<SelectQuestion>Please select a question...</SelectQuestion>
+	</HelpElement>
+
+	<AboutUsPage>
+		<WeDifferent>We're different</WeDifferent>
+		<WeFast>We're fast</WeFast>
+		<WeResponsible>We're responsible</WeResponsible>
+		<WongaMoments>Wonga moments</WongaMoments>
+	</AboutUsPage>
+
+	<AddressDetailsPage>
+		<AddresPeriodLess4Month>Less than 4 month</AddresPeriodLess4Month>
+		<PostcodeError>Sorry, that is not a valid postcode.</PostcodeError>
+	</AddressDetailsPage>
+
+	<TopupDealDonePage>
+		<SuccessMessage>Success! Your request for some extra credit has been approved.</SuccessMessage>
+	</TopupDealDonePage>
+
+	<ExtensionErrorPage>
+		<OuchMessage>Ouch! We're very sorry</OuchMessage>
+		<WeSorryMessage>We're sorry</WeSorryMessage>
+	</ExtensionErrorPage>
+
   <TopupProcessingPage>
     <HeaderText>Processing</HeaderText>
     <WaitMessage>We are processing your application, please be patient. If the page doesn't reload click here.</WaitMessage>

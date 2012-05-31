@@ -86,6 +86,7 @@ namespace Wonga.QA.Framework.UI
         public ExtensionProcessingPage ExtensionProcessingPage { get; set; }
         public RepayProcessingPage RepayProcessingPage { get; set; }
         public TopupProcessingPage TopupProcessingPage { get; set; }
+        public RepayErrorPage RepayErrorPage { get; set; }
 #endregion
     }
 }
