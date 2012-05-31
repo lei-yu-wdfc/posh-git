@@ -30,6 +30,7 @@ namespace Wonga.QA.Tests.Meta
                 ApplicationBuilder.New(_customer, _organisation) :
                 ApplicationBuilder.New(_customer);
             Assert.DoesNotThrow(() => builder.Build());
+            Assert.IsTrue(builder.GetDueDateBalance() != 0, "DueDateBalance sould not be 0");
             //builder.Build();//debug only
         }
     }
