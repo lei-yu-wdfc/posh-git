@@ -54,7 +54,7 @@ namespace Wonga.QA.Tests.Api
             ApplicationBuilder.New(cust).Build();
         }
 
-        [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
+        [Test, AUT(AUT.Ca, AUT.Uk)]
         public void ApiLnJourneyDeclined()
         {
             Customer cust = CustomerBuilder.New().Build();
