@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
+using System.Xml.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
@@ -45,7 +46,7 @@ namespace Wonga.QA.Tests.Payments.Command
 			var customer = CustomerBuilder.New().Build();
 			var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
-			var command = new SavePayURequestZaCommand
+			var command = new Wonga.QA.Framework.Api.SavePayURequestZaCommand
 			{
 				ApplicationId = app.Id,
 				 MerchantReferenceNumber = merchantReferenceNumber,
@@ -74,7 +75,7 @@ namespace Wonga.QA.Tests.Payments.Command
 			var customer = CustomerBuilder.New().Build();
 			var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
-			var saveRequestcommand = new SavePayURequestZaCommand
+			var saveRequestcommand = new Wonga.QA.Framework.Api.SavePayURequestZaCommand
 			{
 				ApplicationId = app.Id,
 				MerchantReferenceNumber = merchantReferenceNumber,
@@ -86,12 +87,12 @@ namespace Wonga.QA.Tests.Payments.Command
 
 			var incomingPartnerPayment = Do.Until(() => _incomingPartnerPaymentsDB.FindAll(_incomingPartnerPaymentsDB.PaymentReference == merchantReferenceNumber.ToString()).FirstOrDefault());
 
-			var saveResponsecommand = new SavePayUResponseZaCommand
+			var saveResponsecommand = new Wonga.QA.Framework.Api.SavePayUResponseZaCommand
 			{
 				ApplicationId = app.Id,
 				MerchantReferenceNumber = merchantReferenceNumber,
 				TransactionAmount = transactionAmount,
-				RawRequestResponse = "RawRequestResponseData",
+				RawRequestResponse = "RawRequestResponseData", 
 			};
 
 			//Act
@@ -106,6 +107,6 @@ namespace Wonga.QA.Tests.Payments.Command
 			Assert.IsNotNull(incomingPartnerPaymentResponses);
 			Assert.AreEqual("RawRequestResponseData", incomingPartnerPaymentResponses.RawRequestResponse);
 			Assert.IsNotNull(incomingPartnerPayment);
-		}		
+		}
 	}
 }
