@@ -28,13 +28,13 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         private readonly ReadOnlyCollection<IWebElement> _salaryPaidToBank;
         private readonly IWebElement _universityType;
         private readonly IWebElement _universityCity;
-        //private readonly IWebElement _universityName;
+        private readonly IWebElement _universityName;
         private readonly IWebElement _yearsInUniversity;
         
-        //public string  UniversityName
-        //{
-        //    set {_universityName.SelectOption(value); }
-        //}
+        public string  UniversityName
+        {
+            set {_universityName.SelectOption(value); }
+        }
        public string UniversityType
         {
             set {_universityType.SelectOption(value); }
@@ -168,8 +168,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
                         Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.UniversityType));
                     _universityCity = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.UniversityCity));
                     _yearsInUniversity = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.YearsInUniversity));
-                    //_universityName =
-                       // Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.UniversityName));
+                    _universityName =
+                        Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.UniversityName));
                     break;
                     default:
                         _employmentPosition = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.EmploymentPosition));
@@ -177,7 +177,21 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
 
             }
         }
-        private bool CanEnterLettersToWorkPhoneField(string text)
+
+        public bool AllUniversitiesExists(List<string> list)
+        {
+            int i= 0;
+             bool temp = true;
+            while (temp && i<list.Count)
+            {
+                temp = _universityName.CanSelectOption(list[i]);
+                i++;
+            }
+            return temp;
+
+        }
+        
+        public bool CanEnterLettersToWorkPhoneField(string text)
         {
             return _workPhone.VerifyTextEntering(text);
         }
