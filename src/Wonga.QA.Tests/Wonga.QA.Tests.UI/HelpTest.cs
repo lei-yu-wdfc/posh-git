@@ -104,5 +104,14 @@ namespace Wonga.QA.Tests.Ui
             var faq = Client.Faq();
             Assert.IsTrue(faq.IsLinkCorrect(UiMap.Get.FAQPage.CouncilForDebtCollectorsLink, ContentMap.Get.FAQPageLinks.CouncilForDebtCollectorsLink));
         }
+
+        [Test, AUT(AUT.Wb), JIRA("QA-291")]
+        public void ContactPageMustContainOnlyDetailsForWongaBuisness()
+        {
+            var page = Client.Home();
+            page.Help.HelpTriggerClick();
+            page.Help.ContactUsClick();
+            Assert.IsTrue(page.Contact.CheckWbEmailsOnPopup());
+        }
     }
 }
