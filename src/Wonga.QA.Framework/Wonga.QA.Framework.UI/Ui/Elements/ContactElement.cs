@@ -14,6 +14,7 @@ namespace Wonga.QA.Framework.UI.Elements
         private IWebElement _contactTitle;
         private IWebElement _popup;
         private ReadOnlyCollection<IWebElement> _hrefs;
+         
 
         public ContactElement(BasePage page)
             : base(page)
@@ -34,20 +35,17 @@ namespace Wonga.QA.Framework.UI.Elements
             }
         }
 
-        public bool CheckWbEmailsOnPopup()
+        public List<string> GetLinksTextFromPopup()
         {
-            var local = true;
+             List<String> _mails = new List<string>();
             _popup = Do.Until(()=>Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.ContactElement.FormId)));
             _hrefs =  _popup.FindElements(By.CssSelector("a"));
+
             foreach (var href in _hrefs)
             {
-                if (!href.Text.Contains("@wongabusiness.com"))
-                {
-                    Console.WriteLine(href.Text);
-                    local = false;
-                }
+             _mails.Add(href.Text);   
             }
-            return local;
+            return _mails;
         }
     }
 }

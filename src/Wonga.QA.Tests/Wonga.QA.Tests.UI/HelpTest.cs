@@ -111,7 +111,11 @@ namespace Wonga.QA.Tests.Ui
             var page = Client.Home();
             page.Help.HelpTriggerClick();
             page.Help.ContactUsClick();
-            Assert.IsTrue(page.Contact.CheckWbEmailsOnPopup());
+            List<string> wbEmails = page.Contact.GetLinksTextFromPopup();
+            foreach (string email in wbEmails)
+            {
+                Assert.IsTrue(email.Contains("@wongabusiness.com"));
+            }
         }
     }
 }
