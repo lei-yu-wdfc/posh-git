@@ -1802,7 +1802,7 @@ namespace Wonga.QA.Tests.Ui
             Console.WriteLine("Manually check that that loan agreement and SECCI emails are sent for user={0}", email);
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-204"), Pending("work in progress")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-204")]
         public void WhenUserAcceptsTheAgreementThenHeGotEmail()
         {
             string email = Get.RandomEmail();

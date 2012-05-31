@@ -299,7 +299,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-205"), Pending("work in progress")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-205")]
         public void CheckEmailsWhenLoanTakenOutAsLNCustomer()
         {
             string email = Get.RandomEmail();
