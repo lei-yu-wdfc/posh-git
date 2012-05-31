@@ -177,6 +177,7 @@
     <Compile Include="Requests\GetPaymentCardIsValidQuery.cs" />
     <Compile Include="Requests\GetPaymentCardsQuery.cs" />
     <Compile Include="Requests\GetPaymentCardTypesQuery.cs" />
+    <Compile Include="Requests\GetPayURequestParametersZaQuery.cs" />
     <Compile Include="Requests\GetPersonalPromoCodeQuery.cs" />
     <Compile Include="Requests\GetPreApprovedDirectDebitFormCaQuery.cs" />
     <Compile Include="Requests\GetPrePaidPinResetCodeQuery.cs" />
@@ -229,6 +230,8 @@
     <Compile Include="Requests\SaveOrganisationDetailsCommand.cs" />
     <Compile Include="Requests\SavePasswordRecoveryDetailsCommand.cs" />
     <Compile Include="Requests\SavePaymentCardBillingAddressCommand.cs" />
+    <Compile Include="Requests\SavePayURequestZaCommand.cs" />
+    <Compile Include="Requests\SavePayUResponseZaCommand.cs" />
     <Compile Include="Requests\SaveSocialDetailsCommand.cs" />
     <Compile Include="Requests\SaveTrackingDataCommand.cs" />
     <Compile Include="Requests\SaveServerSideTrackingDeviceCommand.cs" />
