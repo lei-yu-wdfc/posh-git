@@ -288,12 +288,8 @@ namespace Wonga.QA.Tests.Ui
             var daysShift = 7;
 
             //time-shift loan so it's due today
-            var applicationsTab = Drive.Data.Payments.Db.Applications;
-            dynamic applicationEntity = applicationsTab.FindAll(applicationsTab.ExternalId == application.Id).Single();
-            var riskApplicationsTab = Drive.Data.Risk.Db.RiskApplications;
-            dynamic riskApplicationEntity = riskApplicationsTab.FindAll(riskApplicationsTab.ApplicationId == application.Id).Single(); 
             TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
-            ApplicationOperations.RewindApplicationDates(applicationEntity, riskApplicationEntity, daysShiftSpan);
+            ApplicationOperations.RewindApplicationDates(application, daysShiftSpan);
 
             var loginPage = Client.Login();
             var myAccountPage = loginPage.LoginAs(email);
@@ -324,12 +320,8 @@ namespace Wonga.QA.Tests.Ui
             var daysShift = 7;
 
             //time-shift loan so it's due today
-            var applicationsTab = Drive.Data.Payments.Db.Applications;
-            dynamic applicationEntity = applicationsTab.FindAll(applicationsTab.ExternalId == application.Id).Single();
-            var riskApplicationsTab = Drive.Data.Risk.Db.RiskApplications;
-            dynamic riskApplicationEntity = riskApplicationsTab.FindAll(riskApplicationsTab.ApplicationId == application.Id).Single();
             TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
-            ApplicationOperations.RewindApplicationDates(applicationEntity, riskApplicationEntity, daysShiftSpan);
+            ApplicationOperations.RewindApplicationDates(application, daysShiftSpan);
 
             var loginPage = Client.Login();
             var myAccountPage = loginPage.LoginAs(email);
@@ -362,13 +354,9 @@ namespace Wonga.QA.Tests.Ui
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
             var daysShift = 15;
 
-            //time-shift loan so it's due today
-            var applicationsTab = Drive.Data.Payments.Db.Applications;
-            dynamic applicationEntity = applicationsTab.FindAll(applicationsTab.ExternalId == application.Id).Single();
-            var riskApplicationsTab = Drive.Data.Risk.Db.RiskApplications;
-            dynamic riskApplicationEntity = riskApplicationsTab.FindAll(riskApplicationsTab.ApplicationId == application.Id).Single(); 
+            //time-shift loan so it's in arrears
             TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
-            ApplicationOperations.RewindApplicationDates(applicationEntity, riskApplicationEntity, daysShiftSpan);
+            ApplicationOperations.RewindApplicationDates(application, daysShiftSpan);
 
             var loginPage = Client.Login();
             var myAccountPage = loginPage.LoginAs(email);
@@ -398,13 +386,9 @@ namespace Wonga.QA.Tests.Ui
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
             var daysShift = 15;
 
-            //time-shift loan so it's due today
-            var applicationsTab = Drive.Data.Payments.Db.Applications;
-            dynamic applicationEntity = applicationsTab.FindAll(applicationsTab.ExternalId == application.Id).Single();
-            var riskApplicationsTab = Drive.Data.Risk.Db.RiskApplications;
-            dynamic riskApplicationEntity = riskApplicationsTab.FindAll(riskApplicationsTab.ApplicationId == application.Id).Single();
+            //time-shift loan so it's in arrears
             TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
-            ApplicationOperations.RewindApplicationDates(applicationEntity, riskApplicationEntity, daysShiftSpan);
+            ApplicationOperations.RewindApplicationDates(application, daysShiftSpan);
 
             var loginPage = Client.Login();
             var myAccountPage = loginPage.LoginAs(email);
@@ -513,5 +497,36 @@ namespace Wonga.QA.Tests.Ui
 
             Assert.IsFalse(declinedPage.IsPaymentFailedAmountNotPresent());
         }
+
+
+        [Test, AUT(AUT.Uk), JIRA("UK-1827"), Pending("In development")]
+        public void RepayError()
+        {
+            //build L0 loan
+            string email = Get.RandomEmail();
+            DateTime todayDate = DateTime.Now;
+
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
+
+            var loginPage = Client.Login();
+            var myAccountPage = loginPage.LoginAs(email);
+            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+
+            mySummaryPage.RepayButtonClick();
+            var requestPage = new RepayRequestPage(this.Client);
+
+            //Set partial payment amount, test for correct values at same time
+            requestPage.IsRepayRequestPageSliderReturningCorrectValuesOnChange(application.Id.ToString(), "100");
+
+            //Branch point - Add Cv2 for each path and proceed
+            requestPage.setSecurityCode("999");
+            requestPage.SubmitButtonClick();
+
+            var repayProcessingPage = new RepayProcessingPage(this.Client);
+
+            var paymentErrorPage = repayProcessingPage.WaitFor<RepayErrorPage>() as RepayErrorPage;
+        }
+        
     }
 }

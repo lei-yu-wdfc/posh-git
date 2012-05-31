@@ -15,8 +15,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public RepayProcessingPage(UiClient client) : base(client)
         {
-            Assert.That(Headers, Has.Item(Wonga.QA.Framework.UI.ContentMap.Get.ExtensionProcessingPage.HeaderText));
-            _staticLink = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionProcessingPage.ProcessingStaticLink));
+            Assert.That(Headers, Has.Item(Wonga.QA.Framework.UI.ContentMap.Get.RepayProcessingPage.HeaderText));
+            _staticLink = Content.FindElement(By.CssSelector(UiMap.Get.RepayProcessingPage.ProcessingStaticLink));
         }
 
         public IRepayPaymentPage WaitFor<T>() where T : IRepayPaymentPage
@@ -48,6 +48,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
             if (typeof(T) == typeof(RepayOverduePaymentFailedPage))
                 return Do.With.Timeout(1).Until(() => new RepayOverduePaymentFailedPage(Client));
+
+            if (typeof(T) == typeof(RepayErrorPage))
+                return Do.With.Timeout(1).Until(() => new RepayErrorPage(Client));
 
             throw new NotImplementedException();
         }
