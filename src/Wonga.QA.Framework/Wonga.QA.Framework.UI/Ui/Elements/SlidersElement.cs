@@ -147,9 +147,8 @@ namespace Wonga.QA.Framework.UI.Elements
                 case AUT.Wb:
                 case AUT.Za:
                 case AUT.Uk:
-                    return new ApplyPage(Page.Client);
                 case AUT.Ca:
-                    return null; //bad code
+                    return new ApplyPage(Page.Client);
                 default:
                     throw new NotImplementedException();
 
