@@ -30,7 +30,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
                 {
                     Console.WriteLine("What it`s wrong?");
                 }
-                if (_resendPinMessege.Text.Equals(ContentMap.Get.MobilePinVerificationSection.ResendPinMessage1) || _resendPinMessege.Text.Equals(ContentMap.Get.MobilePinVerificationSection.ResendPinMessage2))
+                if (_resendPinMessege.Text.Equals(ContentMap.Get.MobilePinVerificationSection.ResendPinMessage1) || _resendPinMessege.Text.Equals(ContentMap.Get.MobilePinVerificationSection.ResendPinMessage2) || _resendPinMessege.Text.Equals(ContentMap.Get.MobilePinVerificationSection.ResendPinMessage3))
                 {
                     return true;
                 }
