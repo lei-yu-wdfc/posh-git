@@ -15,6 +15,7 @@ namespace Wonga.QA.Tests.Meta
     public class LnJourneyTests : UiTest
     {
         [Test, AUT(AUT.Uk), JIRA("UK-1533")]
+        [Pending("Disabled and to be replaced with not-UI checks of major values e.g. TotalToRepay, etc.")]
         public void L0LnJourneyTest()
         {
             var loginPage = Client.Login();
@@ -48,6 +49,7 @@ namespace Wonga.QA.Tests.Meta
         }
 
         [Test, AUT(AUT.Uk)]
+        [Pending("Disabled and to be replaced with not-UI checks of major values e.g. TotalToRepay, etc.")]
         public void CustomerApplicationBuildersWork()
         {
             var loginPage = Client.Login();
