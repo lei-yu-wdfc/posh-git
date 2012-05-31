@@ -84,6 +84,7 @@
 	<Compile Include="Enums\Prepaid\PrepaidCardType.cs" />
 	<Compile Include="Enums\Prepaid\PrepaidCardStatuses.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerName.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />

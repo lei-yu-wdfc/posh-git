@@ -77,5 +77,6 @@ namespace Wonga.QA.Framework.Data
         public MarketingDatabase Marketing { get { return _marketing.Value; } }
         public PrepaidCardDatabase PrepaidCard { get { return _prepaidCard.Value; } }
         public PpsDatabase Pps { get { return _pps.Value; } }
+        public string NameOfServer { get { return Config.Db.ServerName; } }
     }
 }

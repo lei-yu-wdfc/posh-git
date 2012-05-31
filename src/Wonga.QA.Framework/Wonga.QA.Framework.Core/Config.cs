@@ -440,9 +440,15 @@ namespace Wonga.QA.Framework.Core
             public String OpsSagas { get; set; }
             public String QaData { get; set; }
 
+            // Returns the server running against
+            public String ServerName { get; set; }
+
             public DbConfig(String server)
             {
                 Func<String, String> builder = catalog => new SqlConnectionStringBuilder { DataSource = server, InitialCatalog = catalog, IntegratedSecurity = true }.ConnectionString;
+
+                // Set the server
+                ServerName = server;
 
                 Accounting = builder("Accounting");
                 Ops = builder("Ops");
@@ -463,7 +469,7 @@ namespace Wonga.QA.Framework.Core
                 Experian = builder("Experian");
                 ExperianBulk = builder("ExperianBulk");
                 FileStorage = builder("FileStorage");
-                Hpi = builder("Hds");
+                Hds = builder("Hds");
                 Hpi = builder("Hpi");
                 IpLookup = builder("IpLookup");
                 QaData = builder("QaData");
