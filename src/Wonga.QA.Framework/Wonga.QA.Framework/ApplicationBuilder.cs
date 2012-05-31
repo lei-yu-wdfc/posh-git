@@ -348,13 +348,5 @@ namespace Wonga.QA.Framework
 		{
 			return DateHelper.GetNumberOfDaysUntilStartOfLoanForCa();
 		}
-
-        public Decimal GetDueDateBalance()
-        {
-            var query = Config.AUT == AUT.Za ? (ApiRequest)
-                new GetFixedTermLoanApplicationZaQuery { ApplicationId = Id } :
-                new GetFixedTermLoanApplicationQuery { ApplicationId = Id };
-            return Convert.ToDecimal(Drive.Api.Queries.Post(query).Values["BalanceNextDueDate"].Single());
-        }
     }
 }
