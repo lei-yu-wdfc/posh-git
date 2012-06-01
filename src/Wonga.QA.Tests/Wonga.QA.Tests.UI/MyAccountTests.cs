@@ -791,5 +791,20 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual("", homePhoneDB);
         }
 
+        [Test, AUT(AUT.Za), JIRA("QA-304")]
+        public void CustomerShouldBeAbleToStartLoanRepaymentBeforeDueDate()
+        {
+            var _applications = Drive.Data.Payments.Db.Applications;
+            var _scheduledPayments = Drive.Data.Payments.Db.ScheduledPayments;
+
+            var customer = CustomerBuilder.New().Build();
+            var application = ApplicationBuilder.New(customer).Build();
+
+            var loginPage = Client.Login();
+            var myAccountPage = loginPage.LoginAs(customer.Email);
+
+            var repaymentOptionsPage = myAccountPage.RepayClick();
+        }
+
     }
 }
