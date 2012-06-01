@@ -18,11 +18,16 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         private readonly IWebElement _employmentPosition;
         private readonly IWebElement _timeWithEmployerYears;
         private readonly IWebElement _timeWithEmployerMonths;
+        private readonly IWebElement _selfEmployedmonthlyInome;
         private readonly IWebElement _monthlyIncome;
         private readonly IWebElement _nextPaydayDate;
+        private readonly IWebElement _selfNextPaydayDate;
         private readonly IWebElement _nextPaydayDateDay;
         private readonly IWebElement _nextPaydayDateMonth;
         private readonly IWebElement _nextPaydayDateYear;
+        private readonly IWebElement _selfNextPaydayDateDay;
+        private readonly IWebElement _selfNextPaydayDateMonth;
+        private readonly IWebElement _selfNextPaydayDateYear;
         private readonly IWebElement _workPhone;
         private readonly IWebElement _incomeFrequency;
         private readonly ReadOnlyCollection<IWebElement> _salaryPaidToBank;
@@ -57,7 +62,11 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
 
         public string IncomeFrequency
         {
-            set{_incomeFrequency.SelectOption(value);}
+            set
+            {
+                Do.Until(() => _incomeFrequency.Displayed);
+                _incomeFrequency.SelectOption(value);
+            }
         }
 
         public bool SalaryPaidToBank
@@ -74,9 +83,21 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
 
         public string MonthlyIncome
         {
-            set{ _monthlyIncome.SendValue(value);}
+            set
+            {
+                Do.Until(() => _monthlyIncome.Displayed);
+                _monthlyIncome.SendValue(value);
+            }
         }
 
+        public string SelfEmployedMonthlyIncome
+        {
+            set
+            {
+                _selfEmployedmonthlyInome.SendValue(value);
+            }
+        }
+        
         public string EmployerName
         {
             set{_employerName.SendValue(value);}
@@ -129,6 +150,28 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             }
         }
 
+        public string SelfNextPayDate
+        {
+            set
+            {
+                switch (Config.AUT)
+                {
+                    case AUT.Uk:
+                    case AUT.Za:
+                    case AUT.Pl:
+                        var date = value.Split('/');
+                        _selfNextPaydayDateDay.SelectOption(date[0]);
+                        _selfNextPaydayDateMonth.SelectOption(date[1]);
+                        _selfNextPaydayDateYear.SelectOption(date[2]);
+                        break;
+                    default:
+                        _selfNextPaydayDate.SendValue(value);
+                        break;
+                }
+
+            }
+        }
+
         public EmploymentDetailsSection(BasePage page) : base(UiMap.Get.EmploymentDetailsSection.Fieldset, page)
         {
             _employmentStatus = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.EmploymentStatus));
@@ -137,6 +180,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             _timeWithEmployerYears = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.TimeWithEmployerYears));
             _timeWithEmployerMonths = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.TimeWithEmployerMonths));
             _monthlyIncome = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.MonthlyIncome));
+            _selfEmployedmonthlyInome = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.SelfEmployedMonthlyIncome));
+            
             _salaryPaidToBank = Section.FindElements(By.CssSelector(UiMap.Get.EmploymentDetailsSection.SalaryPaidToBank));
             _incomeFrequency = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.IncomeFrequency));
             switch (Config.AUT)
@@ -147,10 +192,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
                     _nextPaydayDateDay = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.NextPaydayDateDay));
                     _nextPaydayDateMonth = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.NextPaydayDateMonth));
                     _nextPaydayDateYear = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.NextPaydayDateYear));
+                    _selfNextPaydayDateDay = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.SelfNextPaydayDateDay));
+                    _selfNextPaydayDateMonth = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.SelfNextPaydayDateMonth));
+                    _selfNextPaydayDateYear = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.SelfNextPaydayDateYear));
                     break;
                 case (AUT.Ca):
                     _employmentPosition = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.EmploymentPosition));
                     _nextPaydayDate = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.NextPaydayDate));
+                    _selfNextPaydayDate = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.SelfNextPaydayDate));
                     break;
                 case (AUT.Uk):
                     _employmentPosition = Section.FindElement(By.CssSelector(UiMap.Get.EmploymentDetailsSection.EmploymentPosition));

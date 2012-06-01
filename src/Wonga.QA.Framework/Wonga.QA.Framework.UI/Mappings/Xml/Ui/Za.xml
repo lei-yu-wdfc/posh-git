@@ -29,6 +29,9 @@
     <NextPaydayDateDay>#edit-next-payday-day</NextPaydayDateDay>
     <NextPaydayDateMonth>#edit-next-payday-month</NextPaydayDateMonth>
     <NextPaydayDateYear>#edit-next-payday-year</NextPaydayDateYear>
+    <SelfNextPaydayDateDay>#edit-next-income-due-day</SelfNextPaydayDateDay>
+    <SelfNextPaydayDateMonth>#edit-next-income-due-month</SelfNextPaydayDateMonth>
+    <SelfNextPaydayDateYear>#edit-next-income-due-year</SelfNextPaydayDateYear>
   </EmploymentDetailsSection>
 
   <PersonalDetailsPage>
