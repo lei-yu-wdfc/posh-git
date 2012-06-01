@@ -13,7 +13,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.BankGateway
 {
-	[Parallelizable(TestScope.All)]
+	[Pending("Fixed in release branch")]
 	class AccountHolderVerificationTests
 	{
 		private const RiskMask TestMask = RiskMask.TESTBankAccountIsValid;
@@ -31,14 +31,14 @@ namespace Wonga.QA.Tests.BankGateway
 			Drive.Db.SetServiceConfigurations(_testModesToSetup);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2061")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2061"), Pending("Fixed in release branch")]
 		public void AccountHolderVerificationFeatureSwitchTurnedOn()
 		{
 		    var featureSwitchOn = Boolean.Parse(Drive.Db.GetServiceConfiguration("FeatureSwitch.ZA.UseHyphenAHVWebService").Value);
 		    Assert.IsTrue(featureSwitchOn);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2061")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2061"), Pending("Fixed in release branch")]
 		public void AccountHolderVerificationRequestForSingleApplication()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
@@ -50,7 +50,7 @@ namespace Wonga.QA.Tests.BankGateway
 			Assert.IsTrue(requestUsedWebService);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2061")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2061"), Pending("Fixed in release branch")]
 		[Ignore("Feature not turned on in live")]
 		public void AccountHolderVerificationWhenBankAccountChanged()
 		{
