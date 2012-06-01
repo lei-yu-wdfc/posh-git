@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="AboutUsTest.cs" />
     <Compile Include="BehaviourAndAdvertTracking.cs" />
+    <Compile Include="ClickTest.cs" />
     <Compile Include="TimeoutTest.cs" />
     <Compile Include="ExtensionAgreementTest.cs" />
     <Compile Include="RepaymentTest.cs" />
