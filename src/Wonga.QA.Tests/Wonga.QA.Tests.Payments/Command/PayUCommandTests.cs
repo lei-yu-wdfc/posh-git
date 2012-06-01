@@ -17,7 +17,7 @@ using System.Threading;
 
 namespace Wonga.QA.Tests.Payments.Command
 {
-    [TestFixture, Parallelizable(TestScope.All)]
+	[TestFixture, Parallelizable(TestScope.All)]
 	public class PayUCommandTests
 	{
 		private dynamic _incomingPartnerPaymentResponsesDB = Drive.Data.Payments.Db.IncomingPartnerPaymentResponses;
@@ -27,13 +27,13 @@ namespace Wonga.QA.Tests.Payments.Command
 		[FixtureSetUp]
 		public void FixtureSetUp()
 		{
-			
+
 		}
 
 		[FixtureTearDown]
 		public void FixtureTearDown()
 		{
-			
+
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-2571")]
@@ -47,17 +47,16 @@ namespace Wonga.QA.Tests.Payments.Command
 			var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
 			var command = new Wonga.QA.Framework.Api.SavePayURequestZaCommand
->>>>>>> AT for PayU ZA-2570 and ZA-2571
 			{
 				ApplicationId = app.Id,
-				 MerchantReferenceNumber = merchantReferenceNumber,
-				 TransactionAmount = transactionAmount,
-				 RequestedOn = DateTime.Now,
+				MerchantReferenceNumber = merchantReferenceNumber,
+				TransactionAmount = transactionAmount,
+				RequestedOn = DateTime.Now,
 			};
 
 			//Act
 			Drive.Api.Commands.Post(command);
-			
+
 			var incomingPartnerPayment = Do.Until(() => _incomingPartnerPaymentsDB.FindAll(_incomingPartnerPaymentsDB.PaymentReference == merchantReferenceNumber.ToString()).FirstOrDefault());
 			var application = _applicationDB.FindByExternalId(app.Id);
 
@@ -77,7 +76,6 @@ namespace Wonga.QA.Tests.Payments.Command
 			var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
 			var saveRequestcommand = new Wonga.QA.Framework.Api.SavePayURequestZaCommand
->>>>>>> AT for PayU ZA-2570 and ZA-2571
 			{
 				ApplicationId = app.Id,
 				MerchantReferenceNumber = merchantReferenceNumber,
@@ -90,16 +88,11 @@ namespace Wonga.QA.Tests.Payments.Command
 			var incomingPartnerPayment = Do.Until(() => _incomingPartnerPaymentsDB.FindAll(_incomingPartnerPaymentsDB.PaymentReference == merchantReferenceNumber.ToString()).FirstOrDefault());
 
 			var saveResponsecommand = new Wonga.QA.Framework.Api.SavePayUResponseZaCommand
-
-
-
->>>>>>> AT for PayU ZA-2570 and ZA-2571
 			{
 				ApplicationId = app.Id,
 				MerchantReferenceNumber = merchantReferenceNumber,
 				TransactionAmount = transactionAmount,
-				RawRequestResponse = "RawRequestResponseData", 
->>>>>>> AT for PayU ZA-2570 and ZA-2571
+				RawRequestResponse = "RawRequestResponseData",
 			};
 
 			//Act
