@@ -10,6 +10,21 @@ namespace Wonga.QA.Tests.Payments
     [Parallelizable(TestScope.All)]
     public class SchedulePaymentSagaTests
     {
+        private bool _originalUseLoanDurationSagaValue;
+
+        [FixtureSetUp]
+        public void FixtureSetup()
+        {
+            _originalUseLoanDurationSagaValue = Drive.Data.Ops.GetServiceConfiguration<bool>("Payments.FeatureSwitches.UseLoanDurationSaga");
+            Drive.Data.Ops.SetServiceConfiguration<bool>("Payments.FeatureSwitches.UseLoanDurationSaga", false);
+        }
+
+        [FixtureTearDown]
+        public void FixtureTeardown()
+        {
+            Drive.Data.Ops.SetServiceConfiguration<bool>("Payments.FeatureSwitches.UseLoanDurationSaga", _originalUseLoanDurationSagaValue);
+        }
+        
         [Test]
         [AUT(AUT.Uk), JIRA("UK-876")]
         public void SubmitApplication_CreatesSagaEntity()
