@@ -17,7 +17,7 @@ using System.Threading;
 namespace Wonga.QA.Tests.Payments.Command
 {
 	[TestFixture, Parallelizable(TestScope.All)]
-	public class PayUQueryTest
+	public class IncomingPartnerPaymentQueryTest
 	{
 		[FixtureSetUp]
 		public void FixtureSetUp()
@@ -32,10 +32,10 @@ namespace Wonga.QA.Tests.Payments.Command
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-2570")]
-		public void PayURequest_Expect_Success()
+		public void GetIncomingPartnerPaymentRequestParameters_Expect_Success()
 		{
 			//Arrange
-			var query = new GetPayURequestParametersZaQuery();
+			var query = new GetIncomingPartnerPaymentRequestParametersZaQuery();
 
 			//Act
 			var response = Drive.Api.Queries.Post(query);
