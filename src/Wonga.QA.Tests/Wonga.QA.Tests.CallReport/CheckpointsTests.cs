@@ -25,11 +25,11 @@ namespace Wonga.QA.Tests.CallReport
         * ******************************************************************************************************/
 
         #region Main Applicant
-        
+
         /* Main Appplicant Is Alive L0  */
 
-        [Test, AUT(AUT.Wb,AUT.Uk)]
-        [JIRA("SME-575","UK-853"), Description("CallReport -> This test creates a loan for the unknown customer that is alive and with no consumer bureau data, then checks the risk checkpoint")]
+        [Test, AUT(AUT.Wb, AUT.Uk)]
+        [JIRA("SME-575", "UK-853"), Description("CallReport -> This test creates a loan for the unknown customer that is alive and with no consumer bureau data, then checks the risk checkpoint")]
         public void TestCallReportUnknownMainApplicant_LoanIsApproved()
         {
             const String forename = "unknown";
@@ -140,7 +140,7 @@ namespace Wonga.QA.Tests.CallReport
 
         /* Main Applicant CIFAS check L0 */
 
-        [Test, AUT(AUT.Wb,AUT.Uk)]
+        [Test, AUT(AUT.Wb, AUT.Uk)]
         [JIRA("SME-584", "UK-852"), Description("CallReport -> This test creates a loan for a customer that is not CIFAS flagged, then checks the risk checkpoint")]
         public void TestCallReportMainApplicantIsNotCifasFlagged_LoanIsApproved()
         {
@@ -161,7 +161,7 @@ namespace Wonga.QA.Tests.CallReport
 
         }
 
-        [Test, AUT(AUT.Wb,AUT.Uk)]
+        [Test, AUT(AUT.Wb, AUT.Uk)]
         [JIRA("SME-584", "UK-852"), Description("CallReport -> This test creates a loan for a customer that IS CIFAS flagged, then checks the risk checkpoint")]
         public void TestCallReportMainApplicantIsCifasFlagged_LoanIsDeclined()
         {
@@ -229,10 +229,10 @@ namespace Wonga.QA.Tests.CallReport
                                                                      RiskCheckpointStatus.Failed,
                                                                      RiskVerificationDefinitions.CreditBureauCifasFraudCheckVerification);
         }
-         
+
         /* Main Applicant Data is Available - L0 */
 
-        [Test, AUT(AUT.Wb,AUT.Uk), JIRA("UK-851")]
+        [Test, AUT(AUT.Wb, AUT.Uk), JIRA("UK-851")]
         [Description("Callreport -> This test creates a loan and checks if the main applicant has data available")]
         public void TestCallReportMainApplicantDataIsAvailable_LoanIsApproved()
         {
@@ -324,7 +324,7 @@ namespace Wonga.QA.Tests.CallReport
 
         /* Main Applicant is Insolvent L0 */
 
-        [Test, AUT(AUT.Wb,AUT.Uk)]
+        [Test, AUT(AUT.Wb, AUT.Uk)]
         [JIRA("SME-638", "UK-854"), Description("CallReport -> This test creates a loan for the solvent customer, then checks the risk checkpoint")]
         public void TestCallReportMainApplicantIsSolvent_LoanIsApproved()
         {
@@ -344,7 +344,7 @@ namespace Wonga.QA.Tests.CallReport
                                                                      RiskVerificationDefinitions.CreditBureauCustomerIsSolventVerification);
         }
 
-        [Test, AUT(AUT.Wb,AUT.Uk)]
+        [Test, AUT(AUT.Wb, AUT.Uk)]
         [JIRA("SME-638", "UK-854"), Description("CallReport -> This test creates a loan for the insolvent customer, then checks the risk checkpoint")]
         public void TestCallReportMainApplicantIsInsolvent_LoanIsDeclined()
         {
@@ -503,12 +503,16 @@ namespace Wonga.QA.Tests.CallReport
 
         }
 
+        private const RiskMask TestMask = RiskMask.TESTCallValidatePaymentCardIsValid;
+
+       
+
         #endregion
 
-        #region Guarantor SME Specific 
+        #region Guarantor SME Specific
 
         /* Guarantor is Alive */
-        
+
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-1147"), Description("CallReport -> This test creates a loan for the unknown guarantor that is alive, then checks the risk checkpoint")]
         public void TestCallReportUnknownGuarantor_LoanIsApproved()
@@ -719,76 +723,76 @@ namespace Wonga.QA.Tests.CallReport
                                                                      RiskVerificationDefinitions.CreditBureauCustomerIsSolventVerification);
         }
 
-		/* Guarantor DOB is correct */
+        /* Guarantor DOB is correct */
 
-		[Test, AUT(AUT.Wb), JIRA("SME-1138")]
-		[Description("Callreport -> This test creates a loan and checks if the guarantors entered the correct DOB")]
-		public void TestCallReportGuarantorDateOfBirthIsCorrect_LoanIsApproved()
-		{
-			const String forename = "kathleen";
-			const String surname = "bridson";
-			var dateOfBirth = new Date(new DateTime(1992, 1, 24), DateFormat.Date);
-			
-			var guarantorList = new List<CustomerBuilder>
+        [Test, AUT(AUT.Wb), JIRA("SME-1138")]
+        [Description("Callreport -> This test creates a loan and checks if the guarantors entered the correct DOB")]
+        public void TestCallReportGuarantorDateOfBirthIsCorrect_LoanIsApproved()
+        {
+            const String forename = "kathleen";
+            const String surname = "bridson";
+            var dateOfBirth = new Date(new DateTime(1992, 1, 24), DateFormat.Date);
+
+            var guarantorList = new List<CustomerBuilder>
                                     {
                                         CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTCustomerDateOfBirthIsCorrectSME).WithDateOfBirth(dateOfBirth),
                                     };
-			var mainApplicant = CustomerBuilder.New().Build();
-			var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted, guarantorList);
+            var mainApplicant = CustomerBuilder.New().Build();
+            var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted, guarantorList);
 
-			var guarantorWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
-			VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorWorkflows[0],
-																	 RiskCheckpointDefinitionEnum.DateOfBirthIsCorrect,
-																	 RiskCheckpointStatus.Verified,
-																	 RiskVerificationDefinitions.DateOfBirthIsCorrectVerification);
-		}
+            var guarantorWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.DateOfBirthIsCorrect,
+                                                                     RiskCheckpointStatus.Verified,
+                                                                     RiskVerificationDefinitions.DateOfBirthIsCorrectVerification);
+        }
 
-		[Test, AUT(AUT.Wb), JIRA("SME-1138")]
-		[Description("Callreport -> This test creates a loan and checks if the guarantors entered the correct DOB")]
-		public void TestCallReportGuarantorDateOfBirthNotProvided_LoanIsApproved()
-		{
-			const String forename = "unknown";
-			const String surname = "customer";
+        [Test, AUT(AUT.Wb), JIRA("SME-1138")]
+        [Description("Callreport -> This test creates a loan and checks if the guarantors entered the correct DOB")]
+        public void TestCallReportGuarantorDateOfBirthNotProvided_LoanIsApproved()
+        {
+            const String forename = "unknown";
+            const String surname = "customer";
 
-			var dateOfBirth = new Date(new DateTime(1973, 5, 11), DateFormat.Date);
+            var dateOfBirth = new Date(new DateTime(1973, 5, 11), DateFormat.Date);
 
-			var guarantorList = new List<CustomerBuilder>
+            var guarantorList = new List<CustomerBuilder>
                                     {
                                         CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTCustomerDateOfBirthIsCorrectSME).WithDateOfBirth(dateOfBirth),
                                     };
-			var mainApplicant = CustomerBuilder.New().Build();
-			var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted, guarantorList);
+            var mainApplicant = CustomerBuilder.New().Build();
+            var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted, guarantorList);
 
-			var guarantorWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
-			VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorWorkflows[0],
-																	 RiskCheckpointDefinitionEnum.DateOfBirthIsCorrect,
-																	 RiskCheckpointStatus.Verified,
-																	 RiskVerificationDefinitions.DateOfBirthIsCorrectVerification);
-		}
+            var guarantorWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.DateOfBirthIsCorrect,
+                                                                     RiskCheckpointStatus.Verified,
+                                                                     RiskVerificationDefinitions.DateOfBirthIsCorrectVerification);
+        }
 
-		[Test, AUT(AUT.Wb), JIRA("SME-1138")]
-		[Description("Callreport -> This test creates a loan and checks if the guarantors entered the correct DOB")]
-		public void TestCallReportGuarantorDateOfBirthIsInCorrect_LoanIsDeclined()
-		{
-			const String forename = "kathleen";
-			const String surname = "bridson";
-			var dateOfBirth = new Date(new DateTime(1990, 1, 24), DateFormat.Date);
+        [Test, AUT(AUT.Wb), JIRA("SME-1138")]
+        [Description("Callreport -> This test creates a loan and checks if the guarantors entered the correct DOB")]
+        public void TestCallReportGuarantorDateOfBirthIsInCorrect_LoanIsDeclined()
+        {
+            const String forename = "kathleen";
+            const String surname = "bridson";
+            var dateOfBirth = new Date(new DateTime(1990, 1, 24), DateFormat.Date);
 
-			var guarantorList = new List<CustomerBuilder>
+            var guarantorList = new List<CustomerBuilder>
                                     {
                                         CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTCustomerDateOfBirthIsCorrectSME).WithDateOfBirth(dateOfBirth),
                                     };
-			var mainApplicant = CustomerBuilder.New().Build();
-			var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.PreAccepted, guarantorList);
-			
-			Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
+            var mainApplicant = CustomerBuilder.New().Build();
+            var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.PreAccepted, guarantorList);
 
-			var guarantorWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Failed, 1);
-			VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorWorkflows[0],
-																	 RiskCheckpointDefinitionEnum.DateOfBirthIsCorrect,
-																	 RiskCheckpointStatus.Failed,
-																	 RiskVerificationDefinitions.DateOfBirthIsCorrectVerification);
-		}
+            Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
+
+            var guarantorWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Failed, 1);
+            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorWorkflows[0],
+                                                                     RiskCheckpointDefinitionEnum.DateOfBirthIsCorrect,
+                                                                     RiskCheckpointStatus.Failed,
+                                                                     RiskVerificationDefinitions.DateOfBirthIsCorrectVerification);
+        }
 
         #endregion
 
