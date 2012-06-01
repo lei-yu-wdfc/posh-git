@@ -21,6 +21,7 @@
   <EmploymentDetailsSection>
     <EmployerName>#edit-employer-name</EmployerName>
     <NextPaydayDate>#edit-next-payday-ca-datepicker-popup-0</NextPaydayDate>
+    <SelfNextPaydayDate>#edit-next-income-due-ca-datepicker-popup-0</SelfNextPaydayDate>
   </EmploymentDetailsSection>
 
 

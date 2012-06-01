@@ -15,10 +15,15 @@ namespace Wonga.QA.Framework.UI.Mappings.Sections
         public String TimeWithEmployerYears { get; set; }
         public String TimeWithEmployerMonths { get; set; }
         public String MonthlyIncome { get; set; }
+        public String SelfEmployedMonthlyIncome { get; set; }
         public String NextPaydayDate { get; set; }
+        public String SelfNextPaydayDate { get; set; }
         public String NextPaydayDateDay { get; set; }
         public String NextPaydayDateMonth { get; set; }
         public String NextPaydayDateYear { get; set; }
+        public String SelfNextPaydayDateDay { get; set; }
+        public String SelfNextPaydayDateMonth { get; set; }
+        public String SelfNextPaydayDateYear { get; set; }
         public String WorkPhone { get; set; }
         public String SalaryPaidToBank { get; set; }
         public String IncomeFrequency { get; set; }
