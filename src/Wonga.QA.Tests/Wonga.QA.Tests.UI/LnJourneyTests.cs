@@ -246,7 +246,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-199"), Pending("ZA-2510")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-199")]
         public void LoggedCustomerWithoutLoanAppliesNewLoanChangesMobilePhoneAndClicksResendPinItShouldBeResent()
         {
             string email = Get.RandomEmail();
@@ -274,13 +274,17 @@ namespace Wonga.QA.Tests.Ui
                     var pageZA = journeyZa.ApplyForLoan(200, 20).CurrentPage as ApplyPage;
                     pageZA.SetNewMobilePhone = phone;
                     pageZA.ResendPinClick();
+                   Thread.Sleep(5000);
                     var smsZa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(phone.Replace("077", "2777")));
+                    Assert.AreEqual(2, smsZa.Count());
+                    Console.WriteLine(smsZa.Count());
                     foreach (var sms in smsZa)
                     {
-                        Console.WriteLine(sms.MessageText + "/" + sms.CreatedOn);
+                        Console.WriteLine(sms.MessageText + " / " + sms.CreatedOn);
                         Assert.IsTrue(sms.MessageText.Contains("You will need it to complete your application back at Wonga.com."));
                     }
-                    // Assert.AreEqual(2, smsZa.Count());
+                    
+                    Console.WriteLine(smsZa.Count());
                     break;
                 case AUT.Ca:
                     var journeyCa = JourneyFactory.GetLnJourney(Client.Home());
@@ -292,10 +296,10 @@ namespace Wonga.QA.Tests.Ui
                     var smsCa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(phone.Replace("077", "177")));
                     foreach (var sms in smsCa)
                     {
-                        Console.WriteLine(sms.MessageText + "/" + sms.CreatedOn);
+                        Console.WriteLine(sms.MessageText + " / " + sms.CreatedOn);
                         Assert.IsTrue(sms.MessageText.Contains("You will need it to complete your application back at Wonga.ca."));
                     }
-                    Assert.AreEqual(2, smsCa.Count());
+                    Assert.AreEqual(1, smsCa.Count());
                     break;
             }
         }
