@@ -22,6 +22,12 @@ namespace Wonga.QA.Tests.CallValidate
 
         /* Main applicant payment card is valid */
 
+
+        public void x ()
+        {
+            
+        }
+
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-136")]
         public void TestCallValidateMainApplicantPaymentCardIsValid_LoanIsApproved()
