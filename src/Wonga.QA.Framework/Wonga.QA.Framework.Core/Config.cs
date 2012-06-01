@@ -265,6 +265,7 @@ namespace Wonga.QA.Framework.Core
             public KeyValuePair<String, String> Uru { get; set; }
             public KeyValuePair<String, String> WongaPay { get; set; }
 			public KeyValuePair<String, String> EasyPay { get; set; }
+			public KeyValuePair<String, String> PayU { get; set; }
 
 
             public SvcConfig(String server) : this(server, server) { }
@@ -309,6 +310,7 @@ namespace Wonga.QA.Framework.Core
                 Uru = new KeyValuePair<String, String>("Wonga.URU.Handlers", component);
                 WongaPay = new KeyValuePair<String, String>("Wonga.WongaPay.Handlers", component);
 				EasyPay = new KeyValuePair<String, String>("Wonga.BankGateway.EasyPay.Handlers", component);
+				PayU = new KeyValuePair<String, String>("Wonga.PayU.Handlers", component);
 			}
         }
 
@@ -350,6 +352,7 @@ namespace Wonga.QA.Framework.Core
             public String Uru { get; set; }
             public String WongaPay { get; set; }
 			public String EasyPay { get; set; }
+			public String PayU { get; set; }
 
             public MsmqConfig(String server) : this(server, server) { }
 
@@ -393,6 +396,7 @@ namespace Wonga.QA.Framework.Core
                 Uru = String.Format(format, component, "urucomponent");
                 WongaPay = String.Format(format, component, "wongapaytc");
 				EasyPay = String.Format(format, component, "bankgatewayeasypaytc");
+				PayU = String.Format(format, component, "payucomponent");
             }
         }
 
