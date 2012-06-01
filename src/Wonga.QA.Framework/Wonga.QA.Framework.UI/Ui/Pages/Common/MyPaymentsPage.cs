@@ -76,9 +76,16 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _popupAccountNumber.SendKeys(accountNumber);
             _popupLengthOfTime.SelectOption(lenghtOfTime);
             _popupAddBankAccountButton.Click();
-            Do.While(() => Client.Driver.FindElement(By.CssSelector("#bank")).Displayed);
-            Console.WriteLine("popup 1 is closed");
             
+            
+        }
+
+        public bool WaitBankAccountPopupClose()
+        {
+            var element = Client.Driver.FindElement(By.CssSelector("#fancybox-content #wonga-my-account-edit-bank-form h1"));
+            Do.While(() => element.Displayed);
+            Console.WriteLine("popup bank account is closed");
+            return true;
         }
 
         public bool IsInvalidBankAccountCauseWarning()

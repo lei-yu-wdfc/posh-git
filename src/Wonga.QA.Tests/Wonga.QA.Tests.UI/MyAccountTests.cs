@@ -129,6 +129,7 @@ namespace Wonga.QA.Tests.Ui
             {
                 payment.AddBankAccountButtonClick();
                 payment.AddBankAccount("Capitec", "Current", accountNumber, "2 to 3 years");
+                payment.WaitBankAccountPopupClose();
                 payment.ClickCloseButton();
 
                 payment = Client.Payments();
@@ -717,6 +718,7 @@ namespace Wonga.QA.Tests.Ui
             Do.Until(firstMyPaymentsPage.IsAddBankAccountButtonExists);
             firstMyPaymentsPage.AddBankAccountButtonClick();
             firstMyPaymentsPage.AddBankAccount("Capitec", "Current", accountNumber, "2 to 3 years");
+            firstMyPaymentsPage.WaitBankAccountPopupClose();
             firstMyPaymentsPage.ClickCloseButton();
             var newMyPaymentsPage = Client.Payments();
 
