@@ -17,7 +17,9 @@ namespace Wonga.QA.Tests.Marketing
 		private const string ErrorMarketingEmailIsEmpty = "Marketing_Email_Is_Empty";
 		private const string ErrorOpsRequestXmlInvalid = "Ops_RequestXmlInvalid";
 		private const string ErrorMarketingEmailHasInvalidFormat = "Marketing_Email_Has_Invalid_Format";
-		private const string ErrorMarketingEmailAlreadyExists = "Marketing_Email_Already_Exists";private static readonly dynamic _marketingDb = Drive.Data.Marketing.Db;
+		private const string ErrorMarketingEmailAlreadyExists = "Marketing_Email_Already_Exists";
+		
+		private static readonly dynamic _marketingDb = Drive.Data.Marketing.Db;
 
 		[Test, AUT(AUT.Ca), JIRA("CA-2266")]
 		public void RegisterPrePaidCardEmailCommandShouldSaveEmailInDatabase()
@@ -33,7 +35,7 @@ namespace Wonga.QA.Tests.Marketing
 
 			var registeredEmail = Do.Until(() => _marketingDb.RegisteredPrePaidCardEmails.FindByEmail(newEmail));
 
-			Assert.IsNull(registeredEmail);
+			Assert.AreEqual(newEmail, registeredEmail.Email);
 		}
 
 		[Test, AUT(AUT.Ca), JIRA("CA-2266")]
