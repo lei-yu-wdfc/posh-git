@@ -93,6 +93,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     ProvinceSection = new ProvinceSection(this);
                     break;
                 case (AUT.Uk):
+                    EmploymentDetails = new EmploymentDetailsSection(this);
+                    break;
                 case (AUT.Pl):
                     _bikVeryfication = _form.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.CheckBikVerification));
                     EmploymentDetails = new EmploymentDetailsSection(this);

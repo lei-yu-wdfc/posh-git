@@ -206,7 +206,7 @@
     <Salary>#target_salary</Salary>
   </PrepaidTopupChoiceElement>
   
-<PrepaidCardMenuElement>
+  <PrepaidCardMenuElement>
     <Summary>.menu-mlid-9440 a</Summary>
     <Transaction>.menu-mlid-9442</Transaction>
     <TopUp>.menu-mlid-9441 a</TopUp>
@@ -215,4 +215,9 @@
     <Rewards>.menu-mlid-9439 a</Rewards>
     <ForgottenPin>.menu-mlid-9438</ForgottenPin>
   </PrepaidCardMenuElement>
+
+  <AccountDetailsPage>
+    <FormId>.wonga-apply-lzero-form</FormId>
+  </AccountDetailsPage>
+  
 </UiMap>
