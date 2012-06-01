@@ -383,13 +383,13 @@ namespace Wonga.QA.Tests.Bi
                 return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.ManagementReview;
             });
 
-            //var remove = new CsR()
-            //                 {
-            //                     AccountId = application.AccountId,
-            //                     ApplicationId = application.Id,
-            //                     CaseId = caseGuid,
-            //                 };
-            //Drive.Cs.Commands.Post(remove);
+            var remove = new CsRemoveManagementReviewCommand()
+                             {
+                                 AccountId = application.AccountId,
+                                 ApplicationId = application.Id,
+                                 CaseId = caseGuid,
+                             };
+            Drive.Cs.Commands.Post(remove);
             Do.Until(() =>
             {
                 var app = sales.GetApplicationById(application.Id);
