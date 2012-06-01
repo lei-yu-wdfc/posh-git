@@ -60,7 +60,7 @@
     <Compile Include="CustomRemoteWebDriver.cs" />
     <Compile Include="Journey\CaL0Journey.cs" />
     <Compile Include="Journey\WbLnJourney.cs" />
-     <Compile Include="Journey\PlL0Journey.cs" />    
+    <Compile Include="Journey\PlL0Journey.cs" />
     <Compile Include="Journey\ZaMobileL0Journey.cs" />
     <Compile Include="Journey\IL0ConsumerJourney.cs" />
     <Compile Include="Journey\ILnConsumerJourney.cs" />
@@ -83,6 +83,7 @@
     <Compile Include="Mappings\Content\Links\FAQPageLinks.cs" />
     <Compile Include="Mappings\Content\Pages\AboutUsPage.cs" />
     <Compile Include="Mappings\Content\Pages\RepayErrorPage.cs" />
+    <Compile Include="Mappings\Content\Pages\RepaymentOptionsPage.cs" />
     <Compile Include="Mappings\Content\Pages\RepayProcessingPage.cs" />
     <Compile Include="Mappings\Content\Pages\ExtensionProcessingPage.cs" />
     <Compile Include="Mappings\Content\Pages\TopupDealDonePage.cs" />
@@ -407,4 +408,3 @@
   </Target>
   -->
 </Project>
-

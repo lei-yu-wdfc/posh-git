@@ -64,4 +64,8 @@
 		<OuchMessage>Ouch! We're very sorry</OuchMessage>
 		<WeSorryMessage>We're sorry</WeSorryMessage>
 	</ExtensionErrorPage>
+
+  <RepaymentOptionsPage>
+    <HeaderText>My repayment options</HeaderText>
+  </RepaymentOptionsPage>
 	</ContentMap>
