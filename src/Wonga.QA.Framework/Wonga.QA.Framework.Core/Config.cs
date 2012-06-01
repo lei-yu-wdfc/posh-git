@@ -46,7 +46,7 @@ namespace Wonga.QA.Framework.Core
             Ui.Browser = GetValue<UiConfig.BrowserType>("FireFox", "QAFBrowser");
             Ui.BrowserVersion = GetValue<string>("", "QAFBrowserVersion");
             Ui.RemoteMode = GetValue<Boolean>(false, "QAFUiRemoteMode");
-            string uiDomain = Ui.RemoteMode ? "wongatest.com" : "wonga.com";
+            string uiDomain = Ui.RemoteMode ? "wonga.com" : "wonga.com";
 
             Email = new EmailConfig() { QA = new EmailConfig.EmailAddressConfig() { Host = "imap.gmail.com", Username = "qa.wonga.com@gmail.com", Password = "Allw0nga", Port = 993, IsSsl = true } };
             switch (SUT)

@@ -8,5 +8,6 @@ namespace Wonga.QA.Tests.Core
     public static class TestCategories
     {
         public const string Smoke = "Smoke";
+        public const string Core = "Core";
     }
 }
