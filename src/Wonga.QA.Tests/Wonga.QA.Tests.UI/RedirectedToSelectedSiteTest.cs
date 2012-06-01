@@ -46,14 +46,18 @@ namespace Wonga.QA.Tests.Ui
             {
                 case (AUT.Za):
                     page.InternationalElements.InternationalPanelZaClick();
+                    Console.WriteLine(page.Url+"//1");
                     break;
                 case (AUT.Uk):
                     page.InternationalElements.InternationalPanelUkClick();
+                    Console.WriteLine(page.Url + "//2");
                     break;
                 case (AUT.Ca):
                     page.InternationalElements.InternationalPanelCaClick();
+                    Console.WriteLine(page.Url + "//3");
                     break;
             }
+            Console.WriteLine(page.Url + "//0");
             Assert.IsTrue(page.Url.Contains(domain));
         }
     }
