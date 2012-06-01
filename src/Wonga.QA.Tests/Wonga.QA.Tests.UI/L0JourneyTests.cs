@@ -1547,5 +1547,41 @@ namespace Wonga.QA.Tests.Ui
                                  .CurrentPage as MySummaryPage;
 
         }
+
+        [Test, AUT(AUT.Za), JIRA("QA-247")]
+        [Row(100, 37)]
+        [Row(100, 31)]
+        [Row(131, 34)]
+        [Row(153, 37)]
+        public void VerifyThatInduplumNeverBrokenAndTotalToRepayIsSmalestThenTwoLoanAmount(int _loanAmount, int _duration)
+        {
+            int controlSum = _loanAmount*2; 
+            double totalToRepay;
+
+            var HomePage = Client.Home();
+
+            HomePage.Sliders.HowMuch = _loanAmount.ToString();
+            HomePage.Sliders.HowLong = _duration.ToString();
+
+            totalToRepay = Convert.ToDouble(HomePage.Sliders.GetTotalToRepay.Remove(0, 1));
+            Assert.IsTrue(totalToRepay<=controlSum);
+
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var personalDetails = journey.ApplyForLoan(_loanAmount, _duration).CurrentPage as PersonalDetailsPage;
+
+            totalToRepay = Convert.ToDouble(personalDetails.GetTotalToRepay.Remove(0, 1));
+            Assert.IsTrue(totalToRepay <= controlSum);
+
+            var SummaryPage = journey.FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                    .FillAddressDetails()
+                                    .FillAccountDetails()
+                                    .FillBankDetails()
+                                    .WaitForAcceptedPage()
+                                    .IgnoreAcceptingLoanAndReturnToHomePageAndLogin()
+                                    .CurrentPage as MySummaryPage;
+
+            totalToRepay = Convert.ToDouble(SummaryPage.GetTotalToRepay.Remove(0, 1));
+            Assert.IsTrue(totalToRepay <= controlSum);
+        }
     }
 }
