@@ -8,7 +8,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[TestFixture, Parallelizable(TestScope.All), Pending("Transunion TC delayed response")]
+	[TestFixture, Parallelizable(TestScope.All)]
 	class CheckpointCreditBureauDataIsAvailable
 	{
         private const RiskMask TestMask = RiskMask.TESTCreditBureauDataIsAvailable;
@@ -18,7 +18,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		private Date _dateOfBirth = new Date(new DateTime(1957,12,19));
 		private string _nationalNumber = "5712190106083";
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1910"), Pending("Transunion TC delayed response")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1910")]
 		public void DataAvailableIsAccepted()
 		{
 			var customer =
