@@ -20,6 +20,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         
         public RepaymentOptionsPage(UiClient client) : base(client)
         {
+            Assert.That(Headers, Has.Item(ContentMap.Get.RepaymentOptionsPage.HeaderText));
             _repaymentOptionsContainer = Content.FindElement(By.CssSelector(UiMap.Get.RepaymentOptionsPage.RepaymentOptionsContainer));
             _easypayNumber = _repaymentOptionsContainer.FindElement(By.CssSelector(UiMap.Get.RepaymentOptionsPage.EasypayNumber));
             _easypayPrintButton = _repaymentOptionsContainer.FindElement(By.CssSelector(UiMap.Get.RepaymentOptionsPage.EasypayPrintButton));

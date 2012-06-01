@@ -22,7 +22,7 @@ namespace Wonga.QA.Tests.Ui
     [Parallelizable(TestScope.All)]
     class BehaviourAndAdvertTracking : UiTest
     {
-        [Test, AUT(AUT.Za), JIRA("ZA-2115"), MultipleAsserts]
+        [Test, AUT(AUT.Za), JIRA("ZA-2115", "QA-301"), MultipleAsserts]
         public void L0VerifyDoubleclickTagInsertedInPage()
         {
             ////////////////////////////////////////////////////////////////
