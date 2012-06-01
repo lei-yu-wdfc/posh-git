@@ -134,14 +134,10 @@ namespace Wonga.QA.Tests.Ui
 
                 payment = Client.Payments();
                 int whileCount = 0;
-                while (accountNumber.Remove(0, 3) != payment.DefaultAccountNumber)
+                while (accountNumber.Remove(0, 3) != payment.DefaultAccountNumber && whileCount < 50)
                 {
                     whileCount++;
                     payment = Client.Payments();
-                    if (whileCount > 50)
-                    {
-                        break;
-                    }
                 }
                 Console.WriteLine(whileCount);
                 Assert.AreEqual(accountNumber.Remove(0, 3), payment.DefaultAccountNumber);
@@ -687,7 +683,7 @@ namespace Wonga.QA.Tests.Ui
             myPersonalDetailsPage.Submit();
 
             var addresses = Drive.Data.Comms.Db.Addresses;
-            
+
             Do.Until(() => addresses.FindByAccountId(customer.Id).Town != oldTown);
             var currentAddress = addresses.FindByAccountId(customer.Id);
             //Check changes in DB
