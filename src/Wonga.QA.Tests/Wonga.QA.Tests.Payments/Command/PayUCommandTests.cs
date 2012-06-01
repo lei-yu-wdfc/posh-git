@@ -1,19 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Xml;
-using System.Xml.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
-using Wonga.QA.Framework.Api.Exceptions;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Db.Ops;
-using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
-using System.Threading;
 
 namespace Wonga.QA.Tests.Payments.Command
 {
