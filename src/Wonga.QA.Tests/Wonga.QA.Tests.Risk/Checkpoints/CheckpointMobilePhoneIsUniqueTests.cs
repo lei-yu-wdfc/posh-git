@@ -62,7 +62,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
         }
 
 		[Test]
-        [JIRA("UK-1563"), Description("Scenario 2: Accepted")]
+        [JIRA("UK-1563"), AUT(AUT.Uk), Description("Scenario 2: Accepted")]
 		public void L0_MobilePhoneIsUniqueSecondPhoneIsNotValidated_LoanIsAccepted()
 		{
             var phone = GetMobilePhone();
