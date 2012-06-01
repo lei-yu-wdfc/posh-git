@@ -327,5 +327,45 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsNotNull(mailTemplate);
             Assert.IsTrue(mailTemplate.value.ToString().Contains("You promise to pay and will make one repayment of"));
         }
+
+        [Test, AUT(AUT.Za), Category(TestCategories.Smoke)]
+        public void LnVerifyUrlsAreCorrect()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            string name = Get.GetName();
+            string surname = Get.RandomString(10);
+            Customer customer = CustomerBuilder
+                .New()
+                .WithEmailAddress(email)
+                .WithForename(name)
+                .WithSurname(surname)
+                .Build();
+            Application application = ApplicationBuilder
+                .New(customer)
+                .Build();
+
+            application.RepayOnDueDate();
+
+            loginPage.LoginAs(email);
+
+            var journey = JourneyFactory.GetLnJourney(Client.Home());
+            var applyPage = journey.ApplyForLoan(200, 10)
+                .SetName(name, surname).CurrentPage as ApplyPage;
+            // Check the URL here is /apply-member
+            Assert.Contains(Client.Driver.Url, "apply-member", "The apply page URL is not /apply-member.");
+
+            journey.CurrentPage = applyPage.Submit() as ProcessingPage;
+            // Check the URL here is /processing-member
+            Assert.Contains(Client.Driver.Url, "processing-member", "The processing page URL is not /processing-member.");
+
+            journey.WaitForAcceptedPage();
+            // Check the URL here is /apply-accept-member
+            Assert.Contains(Client.Driver.Url, "apply-accept-member", "The accept page URL is not /apply-accept-member.");
+
+            journey.FillAcceptedPage();
+            // Check the URL here is /deal-done-member
+            Assert.Contains(Client.Driver.Url, "deal-done-member", "The deal done page URL is not /deal-done-member.");
+        }
     }
 }
