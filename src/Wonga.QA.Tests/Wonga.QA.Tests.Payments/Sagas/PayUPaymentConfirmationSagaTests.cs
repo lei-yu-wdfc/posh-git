@@ -35,19 +35,19 @@ namespace Wonga.QA.Tests.Payments.Sagas
                            {
                                ApplicationId = _appId,
                                PaymentReference = Guid.NewGuid().ToString(),
-                               TransactionAmount = 20M,
+                               TransactionAmount = 20.56M,
                                PartnerType = 0,
                                RequestedOn = DateTime.UtcNow
                            };
             var paymentDb = Drive.Data.Payments.Db;
             _paymentId = paymentDb.IncomingPartnerPayments.Insert(_payment).Id;
 
-            var paymentResponse = new
+/*            var paymentResponse = new
                                       {
                                           PaymentId = _paymentId,
                                           CreatedOn = DateTime.UtcNow
                                       };
-            paymentDb.IncomingPartnerPaymentResponses.Insert(paymentResponse);
+            paymentDb.IncomingPartnerPaymentResponses.Insert(paymentResponse);*/
         }
 
         [Test]
