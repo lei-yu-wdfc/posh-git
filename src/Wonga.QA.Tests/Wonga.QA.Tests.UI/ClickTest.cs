@@ -9,6 +9,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Ui
 {
+    [TestFixture, Parallelizable(TestScope.All)]
     class ClickTest : UiTest
     {
 
