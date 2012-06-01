@@ -792,7 +792,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
         [Test, AUT(AUT.Za), JIRA("QA-304")]
-        public void CustomerShouldBeAbleToStartLoanRepaymentBeforeDueDate()
+        public void CustomerClicksOnRepayButtonBeforeDueDate()
         {
             var _applications = Drive.Data.Payments.Db.Applications;
             var _scheduledPayments = Drive.Data.Payments.Db.ScheduledPayments;
@@ -800,11 +800,14 @@ namespace Wonga.QA.Tests.Ui
             var customer = CustomerBuilder.New().Build();
             var application = ApplicationBuilder.New(customer).Build();
 
+            var appId = _applications.FindByExternalId(application.Id).ApplicationId;
+            var naedo = _scheduledPayments.FindByApplicationId(appId);
+            Assert.IsNull(naedo);
+
             var loginPage = Client.Login();
             var myAccountPage = loginPage.LoginAs(customer.Email);
 
             var repaymentOptionsPage = myAccountPage.RepayClick();
         }
-
     }
 }
