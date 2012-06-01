@@ -217,6 +217,7 @@
     <TimeWithEmployerMonths>#edit-employment-time-months</TimeWithEmployerMonths>
     <TimeWiyhEmployerMonthsErrorForm>#edit-employment-time-months-wrapper div div</TimeWiyhEmployerMonthsErrorForm>
     <MonthlyIncome>#edit-monthly-income</MonthlyIncome>
+    <SelfEmployedMonthlyIncome>#edit-household-income</SelfEmployedMonthlyIncome>
     <NextPaydayDate>#edit-next-payday-datepicker-popup-0</NextPaydayDate>
     <NextPayDateErrorForm>#edit-next-payday-wrapper .form-error div</NextPayDateErrorForm>
     <WorkPhone>#edit-work-phone</WorkPhone>
@@ -225,6 +226,7 @@
     <IncomeFrequencyErrorForm>#edit-income-frequency-wrapper div div</IncomeFrequencyErrorForm>
     <SalaryPaidToBank>input[type="radio"][name="salary_to_bank"]</SalaryPaidToBank>
     <SalaryPaidToBankErrorForm>#wonga-conditionally-hidden-salary-to-bank .form-error div</SalaryPaidToBankErrorForm>
+    <SelfEmploymentPayDayDate></SelfEmploymentPayDayDate>
   </EmploymentDetailsSection>
 
   <AccountDetailsPage>
