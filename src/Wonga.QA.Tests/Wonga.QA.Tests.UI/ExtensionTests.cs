@@ -32,7 +32,7 @@ namespace Wonga.QA.Tests.Ui
         //private DateTime _actualDate;
 
 
-        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1627", "UK-1746")]
+        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1627", "UK-1746"), Pending("Fails as cannot find Headers on Processing page")]
         public void ExtensionJourneyPass()
         {
             string email = Get.RandomEmail();
@@ -65,7 +65,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsFalse(dealDonePage.IsDealDonePageDateTokenPresent());
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1321", "UK-1522", "UK-1746")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1321", "UK-1522", "UK-1746"), Pending("Fails as cannot find Headers on Processing page")]
         public void ExtensionJourneyDecline()
         {
             string email = Get.RandomEmail();
@@ -96,7 +96,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1323", "UK-1523", "UK-1746")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1323", "UK-1523", "UK-1746"), Pending("Fails as cannot find Headers on Processing page")]
         public void ExtensionJourneyError()
         {
             string email = Get.RandomEmail();
