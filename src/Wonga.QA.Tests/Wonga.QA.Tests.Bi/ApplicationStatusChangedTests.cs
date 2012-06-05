@@ -88,40 +88,40 @@ namespace Wonga.QA.Tests.Bi
 
 
 
-        [Test]
-        [AUT(AUT.Uk), JIRA("UK-925")]
-        [Description("Verifies that when a live application is moved to complaint status salesforce is informed and a suppression record is created")]
-        [Parallelizable]
-        public void ApplicationInBankruptcy_SubmitsBankruptStatus_ToSalesforce()
-        {
-            // create live application
-            int appInternalId;
-            var application = CreateLiveApplication(out appInternalId);
+		//[Test]
+		//[AUT(AUT.Uk), JIRA("UK-925")]
+		//[Description("Verifies that when a live application is moved to complaint status salesforce is informed and a suppression record is created")]
+		//[Parallelizable]
+		//public void ApplicationInBankruptcy_SubmitsBankruptStatus_ToSalesforce()
+		//{
+		//    // create live application
+		//    int appInternalId;
+		//    var application = CreateLiveApplication(out appInternalId);
 
-            // report bankruptcy
-            var cmd = new CsReportBankruptcyCommand()  
-            {
-                AccountId = application.AccountId,
-                ApplicationId = application.Id,
-                CaseId = Guid.NewGuid()
-            };
-            Drive.Cs.Commands.Post(cmd);
+		//    // report bankruptcy
+		//    var cmd = new CsReportBankruptcyCommand()  
+		//    {
+		//        AccountId = application.AccountId,
+		//        ApplicationId = application.Id,
+		//        CaseId = Guid.NewGuid()
+		//    };
+		//    Drive.Cs.Commands.Post(cmd);
 
-            // wait until sales force moves to bankrupt
-            Do.Until(() =>
-            {
-                var app = sales.GetApplicationById(application.Id);
-                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Bankrupt;
-            });
+		//    // wait until sales force moves to bankrupt
+		//    Do.Until(() =>
+		//    {
+		//        var app = sales.GetApplicationById(application.Id);
+		//        return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Bankrupt;
+		//    });
 
 
-            // wait until suppression record is created in comms and payments
-            Do.Until(() => paymentsSuppressionsRepo.FindAll(
-                paymentsSuppressionsRepo.ApplicationId == appInternalId  && paymentsSuppressionsRepo.BankruptcySuppression == 1).Single());
-            Do.Until(() => commsSuppressionsRepo.FindAll(
-                            commsSuppressionsRepo.AccountId == application.AccountId && commsSuppressionsRepo.Bankruptcy == 1).Single());
+		//    // wait until suppression record is created in comms and payments
+		//    Do.Until(() => paymentsSuppressionsRepo.FindAll(
+		//        paymentsSuppressionsRepo.ApplicationId == appInternalId  && paymentsSuppressionsRepo.BankruptcySuppression == 1).Single());
+		//    Do.Until(() => commsSuppressionsRepo.FindAll(
+		//                    commsSuppressionsRepo.AccountId == application.AccountId && commsSuppressionsRepo.Bankruptcy == 1).Single());
 
-        }
+		//}
 
         [Test]
         [AUT(AUT.Uk), JIRA("UK-925")]
