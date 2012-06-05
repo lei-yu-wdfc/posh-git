@@ -14,6 +14,7 @@ using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Enums;
 using Wonga.QA.Tests.Payments.Helpers;
 using Wonga.QA.Tests.Payments.Helpers.Ca;
+using IncomeFrequencyEnum = Wonga.QA.Framework.Api.IncomeFrequencyEnum;
 
 namespace Wonga.QA.Tests.Payments
 {
@@ -95,9 +96,6 @@ namespace Wonga.QA.Tests.Payments
                 (CalculateFunctionsCa.CalculateExpectedArrearsInterestAmountAppliedCa(
                     (principle + interest), numOfDaysToNextPayDateForRepresentmentOne));
 
-            Assert.IsTrue(GetNumberOfRepresentmentsSent(application.Id) == "0");
-            Assert.IsTrue(GetNextRepresentmentDate(application.Id) == nextPayDateForRepresentmentOne.ToString());
-
             ScotiaResponseBuilder.New().
                 ForBankAccountNumber(customer.BankAccountNumber).
                 Reject();
@@ -132,7 +130,7 @@ namespace Wonga.QA.Tests.Payments
             const decimal principle = 100;
             const decimal interest = 10;
             const decimal defaultCharge = 20;
-            var customer = CustomerBuilder.New().Build();
+            var customer = CustomerBuilder.New().WithIncomeFrequency(IncomeFrequencyEnum.BiWeekly).Build();
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
 
             var nextPayDateForRepresentmentOne = CalculateNextPayDateFunctionsCa.CalculateNextPayDate(DateTime.Today, Convert.ToDateTime(customer.GetNextPayDate()),
@@ -146,29 +144,17 @@ namespace Wonga.QA.Tests.Payments
                 (CalculateFunctionsCa.CalculateExpectedArrearsInterestAmountAppliedCa(
                     (principle + interest), numOfDaysToNextPayDateForRepresentmentOne));
 
-            Assert.IsTrue(GetNumberOfRepresentmentsSent(application.Id) == "0");
-            Assert.IsTrue(GetNextRepresentmentDate(application.Id) == nextPayDateForRepresentmentOne.ToString());
-
             TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
 
             Do.Until(() => (int)_bgTrans.GetCount(_bgTrans.ApplicationId == application.Id &&
                                                    _bgTrans.TransactionStatus ==
                                                    (int)BankGatewayTransactionStatus.Paid) == 2);
 
-            var transactionForRepresentmentOne = _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
-                                            _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Paid).
-                               OrderByTransactionIdDescending().First();
-
             var amountToBeCollectedForRepresentmentOne =
                 (decimal)(((double)(arrearsInterestForRepresentmentOne + principle + interest + defaultCharge)) * percentageToBeCollectedForRepresentmentOne);
 
             var amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces =
                 Decimal.Round(amountToBeCollectedForRepresentmentOne, 2, MidpointRounding.AwayFromZero);
-
-            Assert.IsTrue(transactionForRepresentmentOne.Amount == amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces);
-            Assert.IsTrue(Convert.ToDecimal(CurrentRepresentmentAmount(application.Id)) == amountToBeCollectedForRepresentmentOne);
-            Assert.IsTrue(GetNumberOfRepresentmentsSent(application.Id) == "1");
-            Assert.IsTrue(VerifyPaymentFunctions.VerifyDirectBankPaymentOfAmount(application.Id, -amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces));
 
             var currentDateForRepresentmentTwo = Convert.ToDateTime(customer.GetNextPayDate());
 
@@ -231,29 +217,17 @@ namespace Wonga.QA.Tests.Payments
                 (CalculateFunctionsCa.CalculateExpectedArrearsInterestAmountAppliedCa(
                     (principle + interest), numOfDaysToNextPayDateForRepresentmentOne));
 
-            Assert.IsTrue(GetNumberOfRepresentmentsSent(application.Id) == "0");
-            Assert.IsTrue(GetNextRepresentmentDate(application.Id) == nextPayDateForRepresentmentOne.ToString());
-
             TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
 
             Do.Until(() => (int)_bgTrans.GetCount(_bgTrans.ApplicationId == application.Id &&
                                                    _bgTrans.TransactionStatus ==
                                                    (int)BankGatewayTransactionStatus.Paid) == 2);
 
-            var transactionForRepresentmentOne = _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
-                                            _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Paid).
-                               OrderByTransactionIdDescending().First();
-
             var amountToBeCollectedForRepresentmentOne =
                 (decimal)(((double)(arrearsInterestForRepresentmentOne + principle + interest + defaultCharge)) * percentageToBeCollectedForRepresentmentOne);
 
             var amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces =
                 Decimal.Round(amountToBeCollectedForRepresentmentOne, 2, MidpointRounding.AwayFromZero);
-
-            Assert.IsTrue(transactionForRepresentmentOne.Amount == amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces);
-            Assert.IsTrue(Convert.ToDecimal(CurrentRepresentmentAmount(application.Id)) == amountToBeCollectedForRepresentmentOne);
-            Assert.IsTrue(GetNumberOfRepresentmentsSent(application.Id) == "1");
-            Assert.IsTrue(VerifyPaymentFunctions.VerifyDirectBankPaymentOfAmount(application.Id, -amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces));
 
             var currentDateForRepresentmentTwo = Convert.ToDateTime(customer.GetNextPayDate());
 
@@ -319,29 +293,17 @@ namespace Wonga.QA.Tests.Payments
                 (CalculateFunctionsCa.CalculateExpectedArrearsInterestAmountAppliedCa(
                     (principle + interest), numOfDaysToNextPayDateForRepresentmentOne));
 
-            Assert.IsTrue(GetNumberOfRepresentmentsSent(application.Id) == "0");
-            Assert.IsTrue(GetNextRepresentmentDate(application.Id) == nextPayDateForRepresentmentOne.ToString());
-
             TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
 
             Do.Until(() => (int)_bgTrans.GetCount(_bgTrans.ApplicationId == application.Id &&
                                                    _bgTrans.TransactionStatus ==
                                                    (int)BankGatewayTransactionStatus.Paid) == 2);
 
-            var transactionForRepresentmentOne = _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
-                                            _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Paid).
-                               OrderByTransactionIdDescending().First();
-
             var amountToBeCollectedForRepresentmentOne =
                 (decimal)(((double)(arrearsInterestForRepresentmentOne + principle + interest + defaultCharge)) * percentageToBeCollectedForRepresentmentOne);
 
             var amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces =
                 Decimal.Round(amountToBeCollectedForRepresentmentOne, 2, MidpointRounding.AwayFromZero);
-
-            Assert.IsTrue(transactionForRepresentmentOne.Amount == amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces);
-            Assert.IsTrue(Convert.ToDecimal(CurrentRepresentmentAmount(application.Id)) == amountToBeCollectedForRepresentmentOne);
-            Assert.IsTrue(GetNumberOfRepresentmentsSent(application.Id) == "1");
-            Assert.IsTrue(VerifyPaymentFunctions.VerifyDirectBankPaymentOfAmount(application.Id, -amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces));
 
             var currentDateForRepresentmentTwo = Convert.ToDateTime(customer.GetNextPayDate());
 
@@ -357,10 +319,6 @@ namespace Wonga.QA.Tests.Payments
                                        _bgTrans.TransactionStatus ==
                                        (int)BankGatewayTransactionStatus.Paid) == 3);
 
-            var transactionForRepresentmentTwo = _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
-                                _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Paid).
-                   OrderByTransactionIdDescending().First();
-
             var principleBalanceAfterRepresentmentOne = principle - amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces;
 
             var arrearsInterestForRepresentmentTwo =
@@ -373,11 +331,6 @@ namespace Wonga.QA.Tests.Payments
 
             var amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces =
                 Decimal.Round(amountToBeCollectedForRepresentmentTwo, 2, MidpointRounding.AwayFromZero);
-
-            Assert.IsTrue(transactionForRepresentmentTwo.Amount == amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces);
-            Assert.IsTrue(Convert.ToDecimal(CurrentRepresentmentAmount(application.Id)) == amountToBeCollectedForRepresentmentTwo);
-            Assert.IsTrue(GetNumberOfRepresentmentsSent(application.Id) == "2");
-            Assert.IsTrue(VerifyPaymentFunctions.VerifyDirectBankPaymentOfAmount(application.Id, -amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces));
 
             var currentDateForRepresentmentThree = Convert.ToDateTime(nextPayDateForRepresentmentTwo);
 
@@ -438,29 +391,17 @@ namespace Wonga.QA.Tests.Payments
                 (CalculateFunctionsCa.CalculateExpectedArrearsInterestAmountAppliedCa(
                     (principle + interest), numOfDaysToNextPayDateForRepresentmentOne));
 
-            Assert.IsTrue(GetNumberOfRepresentmentsSent(application.Id) == "0");
-            Assert.IsTrue(GetNextRepresentmentDate(application.Id) == nextPayDateForRepresentmentOne.ToString());
-
             TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
 
             Do.Until(() => (int)_bgTrans.GetCount(_bgTrans.ApplicationId == application.Id &&
                                                    _bgTrans.TransactionStatus ==
                                                    (int)BankGatewayTransactionStatus.Paid) == 2);
 
-            var transactionForRepresentmentOne = _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
-                                            _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Paid).
-                               OrderByTransactionIdDescending().First();
-
             var amountToBeCollectedForRepresentmentOne =
                 (decimal)(((double)(arrearsInterestForRepresentmentOne + principle + interest + defaultCharge)) * percentageToBeCollectedForRepresentmentOne);
 
             var amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces =
                 Decimal.Round(amountToBeCollectedForRepresentmentOne, 2, MidpointRounding.AwayFromZero);
-
-            Assert.IsTrue(transactionForRepresentmentOne.Amount == amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces);
-            Assert.IsTrue(Convert.ToDecimal(CurrentRepresentmentAmount(application.Id)) == amountToBeCollectedForRepresentmentOne);
-            Assert.IsTrue(GetNumberOfRepresentmentsSent(application.Id) == "1");
-            Assert.IsTrue(VerifyPaymentFunctions.VerifyDirectBankPaymentOfAmount(application.Id, -amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces));
 
             var currentDateForRepresentmentTwo = Convert.ToDateTime(customer.GetNextPayDate());
 
@@ -476,10 +417,6 @@ namespace Wonga.QA.Tests.Payments
                                        _bgTrans.TransactionStatus ==
                                        (int)BankGatewayTransactionStatus.Paid) == 3);
 
-            var transactionForRepresentmentTwo = _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
-                                _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Paid).
-                   OrderByTransactionIdDescending().First();
-
             var principleBalanceAfterRepresentmentOne = principle - amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces;
 
             var arrearsInterestForRepresentmentTwo =
@@ -492,11 +429,6 @@ namespace Wonga.QA.Tests.Payments
 
             var amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces =
                 Decimal.Round(amountToBeCollectedForRepresentmentTwo, 2, MidpointRounding.AwayFromZero);
-
-            Assert.IsTrue(transactionForRepresentmentTwo.Amount == amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces);
-            Assert.IsTrue(Convert.ToDecimal(CurrentRepresentmentAmount(application.Id)) == amountToBeCollectedForRepresentmentTwo);
-            Assert.IsTrue(GetNumberOfRepresentmentsSent(application.Id) == "2");
-            Assert.IsTrue(VerifyPaymentFunctions.VerifyDirectBankPaymentOfAmount(application.Id, -amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces));
 
             var currentDateForRepresentmentThree = Convert.ToDateTime(nextPayDateForRepresentmentTwo);
 
