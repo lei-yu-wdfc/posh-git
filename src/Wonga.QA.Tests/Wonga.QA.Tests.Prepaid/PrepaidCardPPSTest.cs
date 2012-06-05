@@ -50,31 +50,31 @@ namespace Wonga.QA.Tests.Prepaid
             Assert.Throws<Exception>(() => CheckOnAddingRecordsToPrepaidCard(_invalidCustomer.Value.Id, (int)PrepaidCardTypes.Premium));
         }
 
-        [Test, AUT(AUT.Uk), JIRA("PP-79")]
-        public void CustomerShouldSendRequestForResetPINCode()
-        {
+        //[Test, AUT(AUT.Uk), JIRA("PP-79")]
+        //public void CustomerShouldSendRequestForResetPINCode()
+        //{
 
-            var validRequestForStandardCard = new GetPrePaidPinResetCodeQuery();
-            var invalidRequest = new GetPrePaidPinResetCodeQuery();
-            var validRequestForPremiumCard = new GetPrePaidPinResetCodeQuery();
+        //    var validRequestForStandardCard = new GetPrePaidPinResetCodeQuery();
+        //    var invalidRequest = new GetPrePaidPinResetCodeQuery();
+        //    var validRequestForPremiumCard = new GetPrePaidPinResetCodeQuery();
 
-            validRequestForStandardCard.CustomerExternalId = _eligibleCustomerForStandardCard.Value.Id;
-            invalidRequest.CustomerExternalId = _invalidCustomer.Value.Id;
-            validRequestForPremiumCard.CustomerExternalId = _eligibleCustomerForPremiumCard.Value.Id;
+        //    validRequestForStandardCard.CustomerExternalId = _eligibleCustomerForStandardCard.Value.Id;
+        //    invalidRequest.CustomerExternalId = _invalidCustomer.Value.Id;
+        //    validRequestForPremiumCard.CustomerExternalId = _eligibleCustomerForPremiumCard.Value.Id;
 
-            UpdatePrepaidCardStatus(_eligibleCustomerForStandardCard.Value.Id,(int) PrepaidCardStatuses.Activated);
-            UpdatePrepaidCardStatus(_eligibleCustomerForPremiumCard.Value.Id,(int) PrepaidCardStatuses.Activated);
+        //    UpdatePrepaidCardStatus(_eligibleCustomerForStandardCard.Value.Id,(int) PrepaidCardStatuses.Activated);
+        //    UpdatePrepaidCardStatus(_eligibleCustomerForPremiumCard.Value.Id,(int) PrepaidCardStatuses.Activated);
 
-            var successResponseForStandard = Drive.Api.Queries.Post(validRequestForStandardCard);
-            var successResponseForPremium = Drive.Api.Queries.Post(validRequestForPremiumCard);
+        //    var successResponseForStandard = Drive.Api.Queries.Post(validRequestForStandardCard);
+        //    var successResponseForPremium = Drive.Api.Queries.Post(validRequestForPremiumCard);
 
-            UpdatePrepaidCardStatus(_eligibleCustomerForStandardCard.Value.Id, (int) PrepaidCardStatuses.Created);
-            UpdatePrepaidCardStatus(_eligibleCustomerForPremiumCard.Value.Id, (int) PrepaidCardStatuses.Created);
+        //    UpdatePrepaidCardStatus(_eligibleCustomerForStandardCard.Value.Id, (int) PrepaidCardStatuses.Created);
+        //    UpdatePrepaidCardStatus(_eligibleCustomerForPremiumCard.Value.Id, (int) PrepaidCardStatuses.Created);
 
-            Assert.Throws<ValidatorException>(() => Drive.Api.Queries.Post(invalidRequest));
-            Assert.IsNotNull(successResponseForStandard.Values["ResetCode"]);
-            Assert.IsNotNull(successResponseForPremium.Values["ResetCode"]);
-        }
+        //    Assert.Throws<ValidatorException>(() => Drive.Api.Queries.Post(invalidRequest));
+        //    Assert.IsNotNull(successResponseForStandard.Values["ResetCode"]);
+        //    Assert.IsNotNull(successResponseForPremium.Values["ResetCode"]);
+        //}
 
         [Test, AUT(AUT.Uk), JIRA("PP-11")]
         public void CustomerShouldReceiveEmailWhenApplyPrepaidCard()
