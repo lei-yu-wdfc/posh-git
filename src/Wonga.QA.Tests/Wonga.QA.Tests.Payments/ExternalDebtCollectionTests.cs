@@ -199,21 +199,6 @@ namespace Wonga.QA.Tests.Payments
 			Do.Until( () => Drive.Db.Payments.DebtCollections.Single(a => a.ApplicationEntity.ExternalId == application.Id && !a.MovedToAgency));
 		}
 
-		private static bool BankGatwayTakePaymentResponseIsMocked()
-		{
-			return BankGatwayInTestMode() || IsCaTestWithScotiaMocked();
-		}
-
-		private static bool BankGatwayInTestMode()
-		{
-			return Drive.Data.Ops.GetServiceConfiguration<bool>("BankGateway.IsTestMode");
-		}
-
-		private static bool IsCaTestWithScotiaMocked()
-		{
-			return Config.AUT == AUT.Ca && Drive.Data.Ops.GetServiceConfiguration<bool>("Mocks.ScotiaEnabled");
-		}
-
 		private static void RepayLoanInArrears(Application application)
 		{
 			WaitForArrearsSaga(application.Id, 1);
