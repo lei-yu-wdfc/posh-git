@@ -24,7 +24,8 @@ namespace Wonga.QA.Tests.Bi
         private ServiceConfigurationEntity sfUrl; 
         private Salesforce sales;
         private dynamic applicationRepo = Drive.Data.Payments.Db.Applications;
-        private dynamic suppressionsRepo = Drive.Data.Comms.Db.Suppressions;
+        private dynamic commsSuppressionsRepo = Drive.Data.Comms.Db.Suppressions;
+        private dynamic paymentsSuppressionsRepo = Drive.Data.Payments.Db.PaymentCollectionSuppressions;
 
         [SetUp]
         public void SetUp()
@@ -45,65 +46,21 @@ namespace Wonga.QA.Tests.Bi
         [Parallelizable]
         public void FundsTransferred_SubmitsApplicactionStatusLive_ToSalesforce()
         {
-            Customer customer = CustomerBuilder.New().Build();
-            Do.Until(customer.GetBankAccount);
-            Do.Until(customer.GetPaymentCard);
-            const decimal loanAmount = 222.22m;
-            Application application = ApplicationBuilder.New(customer)
-                                                        .WithLoanAmount(loanAmount)
-                                                        .Build();
+            // create live application and confirm that salesforce is told that its Live
+            int appInternalId = 0;
+            CreateLiveApplication(out appInternalId);
 
-            //force the application to move to live by sending the IFundsTransferredEvent.
-            Drive.Msmq.Payments.Send(new IFundsTransferredEvent { AccountId = application.AccountId, 
-                                                                  ApplicationId = application.Id, 
-                                                                  TransactionId = Guid.NewGuid() });
-
-            //wait for the payment to customer to be sent out
-            Do.Until(() => applicationRepo.FindAll(applicationRepo.ExternalId == application.Id &&
-                                                   applicationRepo.Transaction.ApplicationId == applicationRepo.Id &&
-                                                   applicationRepo.Amount == loanAmount && applicationRepo.Type == "CashAdvance"));
-
-            Do.Until(() =>{ var app = sales.GetApplicationById(application.Id);
-                            return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live; });
-
-            // wait until suppression record is created
-            Do.Until(() =>suppressionsRepo.FindAll(
-                            suppressionsRepo.AccountId == application.AccountId && suppressionsRepo.ApplicationId == application.Id));
         }
 
         [Test]
         [AUT(AUT.Uk), JIRA("UK-925")]
         [Description("Verifies that when a live application is moved to complaint status salesforce is informed and a suppression record is created")]
         [Parallelizable]
-        public void ApplicationWithComplaint_SubmitsComplaintStatus_ToSalesforce()
+        public void ApplicationInComplaint_SubmitsComplaintStatus_ToSalesforce()
         {
-            Customer customer = CustomerBuilder.New().Build();
-            Do.Until(customer.GetBankAccount);
-            Do.Until(customer.GetPaymentCard);
-            const decimal loanAmount = 222.22m;
-            Application application = ApplicationBuilder.New(customer)
-                                                        .WithLoanAmount(loanAmount)
-                                                        .Build();
-
-            //force the application to move to live by sending the IFundsTransferredEvent.
-            Drive.Msmq.Payments.Send(new IFundsTransferredEvent
-            {
-                AccountId = application.AccountId,
-                ApplicationId = application.Id,
-                TransactionId = Guid.NewGuid()
-            });
-
-            //wait for the payment to customer to be sent out
-            Do.Until(() => applicationRepo.FindAll(applicationRepo.ExternalId == application.Id &&
-                                                   applicationRepo.Transaction.ApplicationId == applicationRepo.Id &&
-                                                   applicationRepo.Amount == loanAmount && applicationRepo.Type == "CashAdvance"));
-
-            Do.Until(() =>
-            {
-                var app = sales.GetApplicationById(application.Id);
-                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live;
-            });
-
+            // create live application
+            int appInternalId;
+            var application=CreateLiveApplication(out appInternalId);
 
             // Make a complaint
             var cmd = new CsReportComplaintCommand()
@@ -118,48 +75,98 @@ namespace Wonga.QA.Tests.Bi
             Do.Until(() =>
             {
                 var app = sales.GetApplicationById(application.Id);
-                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Complaint;
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Salesforce.ApplicationStatus.Complaint;
             });
 
 
             // wait until suppression record is created
-            Do.Until(() => suppressionsRepo.FindAll(
-                            suppressionsRepo.AccountId == application.AccountId && suppressionsRepo.ApplicationId == application.Id));
+            Do.Until(() => commsSuppressionsRepo.FindAll(
+                            commsSuppressionsRepo.AccountId == application.AccountId && commsSuppressionsRepo.Complaint==1).Single());
+            Do.Until(() => paymentsSuppressionsRepo.FindAll(
+                paymentsSuppressionsRepo.ApplicationId == appInternalId && paymentsSuppressionsRepo.ComplaintSuppression == 1).Single());
+        }
+
+
+
+        [Test]
+        [AUT(AUT.Uk), JIRA("UK-925")]
+        [Description("Verifies that when a live application is moved to complaint status salesforce is informed and a suppression record is created")]
+        [Parallelizable]
+        public void ApplicationInBankruptcy_SubmitsBankruptStatus_ToSalesforce()
+        {
+            // create live application
+            int appInternalId;
+            var application = CreateLiveApplication(out appInternalId);
+
+            // report bankruptcy
+            var cmd = new CsReportBankruptcyCommand()  
+            {
+                AccountId = application.AccountId,
+                ApplicationId = application.Id,
+                CaseId = Guid.NewGuid()
+            };
+            Drive.Cs.Commands.Post(cmd);
+
+            // wait until sales force moves to bankrupt
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Bankrupt;
+            });
+
+
+            // wait until suppression record is created in comms and payments
+            Do.Until(() => paymentsSuppressionsRepo.FindAll(
+                paymentsSuppressionsRepo.ApplicationId == appInternalId  && paymentsSuppressionsRepo.BankruptcySuppression == 1).Single());
+            Do.Until(() => commsSuppressionsRepo.FindAll(
+                            commsSuppressionsRepo.AccountId == application.AccountId && commsSuppressionsRepo.Bankruptcy == 1).Single());
+
+        }
+
+        [Test]
+        [AUT(AUT.Uk), JIRA("UK-925")]
+        [Description("Verifies that when a live application is moved to complaint status salesforce is informed and a suppression record is created")]
+        [Parallelizable]
+        public void ApplicationInHardship_SubmitsHardshipStatus_ToSalesforce()
+        {
+            // create live application
+            int appInternalId;
+            var application = CreateLiveApplication(out appInternalId);
+
+            // report hardship
+            var cmd = new CsReportHardshipCommand()
+            {
+                AccountId = application.AccountId,
+                ApplicationId = application.Id,
+                CaseId = Guid.NewGuid()
+            };
+            Drive.Cs.Commands.Post(cmd);
+
+            // wait until sales force moves to hardship
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Hardship;
+            });
+
+
+            // wait until suppression record is created in comms and payments
+            Do.Until(() => paymentsSuppressionsRepo.FindAll(
+                paymentsSuppressionsRepo.ApplicationId == appInternalId && paymentsSuppressionsRepo.HardshipSuppression == 1).Single());
+            Do.Until(() => commsSuppressionsRepo.FindAll(
+                            commsSuppressionsRepo.AccountId == application.AccountId && commsSuppressionsRepo.Hardship == 1).Single());
+
         }
 
         [Test]
         [AUT(AUT.Uk), JIRA("UK-1816")]
         [Description("Verifies that when a live application is moved to management review status salesforce is informed and a suppression record is created")]
         [Parallelizable]
-        public void ApplicationWithManagementReview_SubmitsManagementReviewStatus_ToSalesforce()
+        public void ApplicationInManagementReview_SubmitsManagementReviewStatus_ToSalesforce()
         {
-            Customer customer = CustomerBuilder.New().Build();
-            Do.Until(customer.GetBankAccount);
-            Do.Until(customer.GetPaymentCard);
-            const decimal loanAmount = 222.22m;
-            Application application = ApplicationBuilder.New(customer)
-                                                        .WithLoanAmount(loanAmount)
-                                                        .Build();
-
-            //force the application to move to live by sending the IFundsTransferredEvent.
-            Drive.Msmq.Payments.Send(new IFundsTransferredEvent
-            {
-                AccountId = application.AccountId,
-                ApplicationId = application.Id,
-                TransactionId = Guid.NewGuid()
-            });
-
-            //wait for the payment to customer to be sent out
-            Do.Until(() => applicationRepo.FindAll(applicationRepo.ExternalId == application.Id &&
-                                                   applicationRepo.Transaction.ApplicationId == applicationRepo.Id &&
-                                                   applicationRepo.Amount == loanAmount && applicationRepo.Type == "CashAdvance"));
-
-            Do.Until(() =>
-            {
-                var app = sales.GetApplicationById(application.Id);
-                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live;
-            });
-
+            // create live application
+            int appInternalId;
+            var application = CreateLiveApplication(out appInternalId);
 
             // Make a complaint
             var cmd = new CsReportManagementReviewCommand()
@@ -170,17 +177,14 @@ namespace Wonga.QA.Tests.Bi
             };
             Drive.Cs.Commands.Post(cmd);
 
-            // wait until sales force moves to complaint
+            // wait until sales force moves to management review
             Do.Until(() =>
             {
                 var app = sales.GetApplicationById(application.Id);
-                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.ManagementReview;
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Salesforce.ApplicationStatus.ManagementReview;
             });
 
 
-            // wait until suppression record is created
-            Do.Until(() => suppressionsRepo.FindAll(
-                            suppressionsRepo.AccountId == application.AccountId && suppressionsRepo.ApplicationId == application.Id));
         }
 
 
@@ -215,6 +219,44 @@ namespace Wonga.QA.Tests.Bi
                           select s;
 
             return matched.Count() == statuses.Count();
+        }
+
+        /// <summary>
+        /// create a live application and confirm that salesforce knows its live
+        /// </summary>
+        /// <returns></returns>
+        private Application CreateLiveApplication(out int appInternalId)
+        {
+            Customer customer = CustomerBuilder.New().Build();
+            Do.Until(customer.GetBankAccount);
+            Do.Until(customer.GetPaymentCard);
+            const decimal loanAmount = 222.22m;
+            Application application = ApplicationBuilder.New(customer)
+                .WithLoanAmount(loanAmount)
+                .Build();
+
+            //force the application to move to live by sending the IFundsTransferredEvent.
+            Drive.Msmq.Payments.Send(new IFundsTransferredEvent
+            {
+                AccountId = application.AccountId,
+                ApplicationId = application.Id,
+                TransactionId = Guid.NewGuid()
+            });
+
+            //wait for the payment to customer to be sent out
+            Do.Until(() => applicationRepo.FindAll(applicationRepo.ExternalId == application.Id &&
+                                                   applicationRepo.Transaction.ApplicationId == applicationRepo.Id &&
+                                                   applicationRepo.Amount == loanAmount && applicationRepo.Type == "CashAdvance"));
+
+            appInternalId = applicationRepo.FindAll(applicationRepo.ExternalID == application.Id).Single().ApplicationId;
+
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null &&
+                       app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live;
+            });
+            return application;
         }
 
         
