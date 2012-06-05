@@ -683,7 +683,7 @@ namespace Wonga.QA.Tests.Ui
             myPersonalDetailsPage.Submit();
 
             var addresses = Drive.Data.Comms.Db.Addresses;
-
+            
             Do.Until(() => addresses.FindByAccountId(customer.Id).Town != oldTown);
             var currentAddress = addresses.FindByAccountId(customer.Id);
             //Check changes in DB
