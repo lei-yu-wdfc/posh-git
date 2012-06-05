@@ -141,7 +141,9 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				var application2 = ApplicationBuilder.New(customer2).WithIovationBlackBox(iovationBlackBox2).Build();
 				var score2 = GetReputationPredictionScore(application2);
 
-				Assert.LessThan(score2, score1);
+				//if in a post area where most of the apps are in arrears the final result will be the same as one more 
+				//application in arrears will not make a difference
+				Assert.LessThanOrEqualTo(score2, score1);
 			}
 
 			finally
@@ -377,7 +379,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			switch (Config.AUT)
 			{
 				case AUT.Ca:
-					return 610;
+					return 400;
 
 				case AUT.Za:
 					return 200;
