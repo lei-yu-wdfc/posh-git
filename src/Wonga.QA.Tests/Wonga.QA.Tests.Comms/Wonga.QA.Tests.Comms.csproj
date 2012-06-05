@@ -54,6 +54,7 @@
     <Compile Include="OrganisationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CustomerTests.cs" />
+    <Compile Include="Sms\A1SmsTests.cs" />
     <Compile Include="Sms\ExtensionSmsTests.cs" />
     <Compile Include="Sms\LiveLoanSmsTests.cs" />
   </ItemGroup>
