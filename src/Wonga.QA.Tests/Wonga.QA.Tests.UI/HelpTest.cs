@@ -23,7 +23,7 @@ namespace Wonga.QA.Tests.Ui
     public class HelpTest : UiTest
     {
 
-        [Test, AUT(AUT.Za, AUT.Ca, AUT.Wb), JIRA("QA-164, QA-254"), Pending("FE bug, button in top of page are broken, ZA-2490, CA-2234")]
+        [Test, AUT(AUT.Za, AUT.Ca, AUT.Wb), JIRA("QA-164, QA-254")]
         public void SelectingAHelpQuestionTakesMeToFAQPageWithCorrectQuestionSelected()
         {
             var page = Client.Home();
