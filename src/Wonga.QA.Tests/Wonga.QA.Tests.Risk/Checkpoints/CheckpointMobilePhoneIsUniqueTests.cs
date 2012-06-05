@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using MbUnit.Framework;
+﻿using MbUnit.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
@@ -15,50 +14,21 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		private static readonly string _phoneNumber = Get.GetMobilePhone();
 
 		[Test]
-		[JIRA("UK-1563"), Description("Scenario 1: Accepted")]
+		[JIRA("UK-1563")]
 		public void L0_MobilePhoneIsUnique_LoanIsAccepted()
 		{
 			_customer = CreateCustomerWithVerifiedMobileNumber(_phoneNumber);
 			ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 		}
 
-        [Test]
-        [JIRA("UK-1563"), Description("Scenario 1, Scenario 2: Declined")]
-        public void L0_MobilePhoneIsNotUnique_LoanIsDeclined()
-        {
-            var phone = GetMobilePhone();
-            try
-            {
-                //Create previous customer record
-                Customer customer1 = CreateCustomerWithVerifiedMobileNumber(phone);
-                ApplicationBuilder.New(customer1).Build();
-
-                //Create and check new customer
-                Customer customer = CreateCustomerWithVerifiedMobileNumber(phone);
-                ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
-            }
-            finally
-            {
-                CleanPhone(phone);
-            }
-        }
-
-		[Test]
-        [JIRA("UK-1563"), AUT(AUT.Uk), Description("Scenario 2: Accepted")]
-		public void L0_MobilePhoneIsUniqueSecondPhoneIsNotValidated_LoanIsAccepted()
+		[Test, DependsOn("L0_MobilePhoneIsUnique_LoanIsAccepted")]
+		[JIRA("UK-1563")]
+		public void L0_MobilePhoneIsNotUnique_LoanIsDeclined()
 		{
 			//Create and check new customer
 			Customer customer = CreateCustomerWithVerifiedMobileNumber(_phoneNumber);
 			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
-
-        private static Customer CreateCustomerWithoutVerifiedMobileNumber(string phoneNumber)
-        {
-            CustomerBuilder customerBuilder = CustomerBuilder.New().WithMobileNumber(phoneNumber).WithEmployer(TestMask);
-            Customer customer = customerBuilder.Build();
-
-            return customer;
-        }
 
 		private static Customer CreateCustomerWithVerifiedMobileNumber(string phoneNumber)
 		{
@@ -71,12 +41,11 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Assert.IsNotNull(mobileVerificationEntity.Pin);
 
 			//Force the mobile phone number to be verified successfully..
-		    var command = new CompleteMobilePhoneVerificationCommand
-		                      {
-		                          Pin = mobileVerificationEntity.Pin,
-		                          VerificationId = mobileVerificationEntity.VerificationId
-		                      };
-		    VerifyCustomersMobileNumber(command);
+			Assert.DoesNotThrow(() => Drive.Api.Commands.Post(new CompleteMobilePhoneVerificationCommand
+			{
+				Pin = mobileVerificationEntity.Pin,
+				VerificationId = mobileVerificationEntity.VerificationId
+			}));
 
 			return customer;
 		}
