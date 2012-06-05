@@ -1849,11 +1849,9 @@ namespace Wonga.QA.Tests.Ui
                                     .FillAccountDetails()
                                     .FillBankDetails()
                                     .WaitForAcceptedPage()
-                                    .IgnoreAcceptingLoanAndReturnToHomePageAndLogin()
-                                    .CurrentPage as MySummaryPage;
-
-
-
+                                    .CurrentPage as AcceptedPage;
+            totalToRepay = Convert.ToDouble(SummaryPage.GetTotalToRepay.Remove(0, 1));
+            Assert.IsTrue(totalToRepay <= controlSum);
         }
 
         [Test, AUT(AUT.Ca), JIRA("QA-303")] // AUT Za removed beacuse of ZA-2630 bug

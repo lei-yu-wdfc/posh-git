@@ -7,10 +7,10 @@
 		<PopupAccountNumber>#edit-account-number-za</PopupAccountNumber>
 		<PopupLengthOfTime>#edit-bank-period</PopupLengthOfTime>
 		<PopupAddBankAccountButton>#edit-submit</PopupAddBankAccountButton>
-		<PopupExeption>#wonga-my-account-edit-bank-form div:first-child ul li</PopupExeption>
+		<PopupExeption>#wonga-my-account-edit-bank-form .messages.error ul li</PopupExeption>
 		<AccountNumber>.info.bank-account.bank-account-primary tbody tr:first-child + tr + tr + tr td b span</AccountNumber>
 		<PopupBankAccountException>#edit-account-number-za-wrapper div.form-error div.invalid </PopupBankAccountException>
-    <PopupSuccessTitle>h1#success</PopupSuccessTitle>
+    <PopupSuccessTitle>#success</PopupSuccessTitle><!--#success-->
 	</MyPaymentsPage>
 	
   <ContactingYouSection>
@@ -155,6 +155,7 @@
   </AboutUsPage>
 
   <MySummaryPage>
+   <TotalToRepay>#wonga-slider-loan-summary span.loan-total</TotalToRepay>
 	 <PromisedRepayAmount>#content-area p span</PromisedRepayAmount>
 	 <PromisedRepayDate>#content-area p strong em</PromisedRepayDate>
     <ViewLoanDetailsButton>#cloud a.mod.details</ViewLoanDetailsButton>
