@@ -12,8 +12,7 @@ using CreateFixedTermLoanExtensionCommand = Wonga.QA.Framework.Api.CreateFixedTe
 
 namespace Wonga.QA.Tests.Comms.Email
 {
-
-	[TestFixture, Parallelizable(TestScope.All), AUT(AUT.Uk)]
+    [TestFixture, AUT(AUT.Uk), Parallelizable(TestScope.All)]
     public class ExtensionLoanEmailTests
     {
         private LoanExtensionEntity _extension;
@@ -57,7 +56,7 @@ namespace Wonga.QA.Tests.Comms.Email
 
             Guid extensionId = _extension.ExternalId;
 
-			Do.With.Interval(1).Until(() => _applications.Single(_applications.ApplicationId == _extension.ApplicationId));
+            Do.With.Interval(1).Until(() => _applications.Single(_applications.ApplicationId == _extension.ApplicationId));
 
             Assert.DoesNotThrow(() => Do.Until(() => Drive.Data.Comms.Db.ExtensionDocuments.FindAllBy(ExtensionId: extensionId, DocumentType: 3))
                 , "ExtensionDocument not found for extension Id: {0} and docuemnt type: Loan extension agreement", extensionId);
@@ -82,33 +81,33 @@ namespace Wonga.QA.Tests.Comms.Email
 
         }
 
-		[Test, AUT(AUT.Uk), JIRA("UK-1332")]
-		public void EmailExtensionCancelledTest()
-		{
-			var extensionId = _extension.ExternalId;
+        [Test, AUT(AUT.Uk), JIRA("UK-1332")]
+        public void EmailExtensionCancelledTest()
+        {
+            var extensionId = _extension.ExternalId;
 
-			Do.With.Interval(1).Until(() => _applications.Single(_applications.ApplicationId == _extension.ApplicationId));
+            Do.With.Interval(1).Until(() => _applications.Single(_applications.ApplicationId == _extension.ApplicationId));
 
-			Drive.Msmq.Comms.Send(new IExtensionCancelledEvent
-			                      	{
-										AccountId = _accountId,
-			                      		ApplicationId = _applicationId,
-										ExtensionId = extensionId,
-										CreatedOn = DateTime.UtcNow
-			                      	});
+            Drive.Msmq.Comms.Send(new IExtensionCancelledEvent
+                                    {
+                                        AccountId = _accountId,
+                                        ApplicationId = _applicationId,
+                                        ExtensionId = extensionId,
+                                        CreatedOn = DateTime.UtcNow
+                                    });
 
-			Assert.DoesNotThrow(() =>
-			                    Do.Until(
-			                    	() =>
-			                    	(bool)
-									(Drive.Data.OpsSagas.Db.ExtensionCancelledEmailData.FindByExtensionId(extensionId) == null))
-			                    , "Email Extension Agreement Saga has not completed: {0}", extensionId
-				);
-		}
+            Assert.DoesNotThrow(() =>
+                                Do.Until(
+                                    () =>
+                                    (bool)
+                                    (Drive.Data.OpsSagas.Db.ExtensionCancelledEmailData.FindByExtensionId(extensionId) == null))
+                                , "Email Extension Agreement Saga has not completed: {0}", extensionId
+                );
+        }
 
         private LoanExtensionEntity CreateLoanAndExtend()
         {
-            const decimal trustRating = 400.00M;
+           const decimal trustRating = 400.00M;
             _accountId = Guid.NewGuid();
             var bankAccountId = Guid.NewGuid();
             var paymentCardId = Guid.NewGuid();
@@ -118,14 +117,16 @@ namespace Wonga.QA.Tests.Comms.Email
             var setupData = new AccountSummarySetupFunctions();
             var clientId = Guid.NewGuid();
 
-			CreateCommsData(clientId, _accountId);
+            CreateCommsData(clientId, _accountId);
 
-			setupData.Scenario03Setup(_applicationId, paymentCardId, bankAccountId, _accountId, trustRating);
+            setupData.Scenario03Setup(_applicationId, paymentCardId, bankAccountId, _accountId, trustRating);
 
-            var app = Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(x => x.ExternalId == _applicationId));
+            var applicationTab = Drive.Data.Payments.Db.Applications;
+            var app = Do.With.Interval(1).Until(() => applicationTab.FindAll(applicationTab.ExternalId == _applicationId).Single());
+            var fixedTermLoanAppTab = Drive.Data.Payments.Db.FixedTermLoanApplications;
             var fixedTermApp =
                 Do.With.Interval(1).Until(
-                    () => Drive.Db.Payments.FixedTermLoanApplications.Single(x => x.ApplicationId == app.ApplicationId));
+                    () => fixedTermLoanAppTab.FindAll(fixedTermLoanAppTab.ApplicationId == app.ApplicationId).Single());
 
             Drive.Api.Commands.Post(new AddPaymentCardCommand
             {
@@ -142,24 +143,27 @@ namespace Wonga.QA.Tests.Comms.Email
                 IsPrimary = true,
             });
 
+            var paymentCardsBaseTab = Drive.Data.Payments.Db.PaymentCardsBase;
             Do.With.Interval(1).Until(
-                () => Drive.Db.Payments.PaymentCardsBases.Single(x => x.ExternalId == paymentCardId && x.AuthorizedOn != null));
+                () => paymentCardsBaseTab.FindAll(paymentCardsBaseTab.ExternalId == paymentCardId && paymentCardsBaseTab.AuthorizedOn != null).Single());
 
             Drive.Api.Commands.Post(new CreateFixedTermLoanExtensionCommand
             {
                 ApplicationId = _applicationId,
-                ExtendDate = new Date(fixedTermApp.NextDueDate.Value.AddDays(2), DateFormat.Date),
+                ExtendDate = new Date(fixedTermApp.NextDueDate.Date.AddDays(2), DateFormat.Date),
                 ExtensionId = extensionId,
                 PartPaymentAmount = 20M,
                 PaymentCardCv2 = "000",
                 PaymentCardId = paymentCardId
             });
 
+            var loanExtTab = Drive.Data.Payments.Db.LoanExtensions;
             var loanExtension =
                 Do.With.Interval(1).Until(
                     () =>
-                    Drive.Db.Payments.LoanExtensions.Single(x => x.ExternalId == extensionId && x.ApplicationId == app.ApplicationId
-                        && x.PartPaymentTakenOn != null));
+                    loanExtTab.FindAll(loanExtTab.ExternalId == extensionId &&
+                                       loanExtTab.ApplicationId == app.ApplicationId &&
+                                       loanExtTab.PartPaymentTakenOn != null).Single());
 
             Assert.IsNotNull(loanExtension, "A loan extension should be created");
 
@@ -168,24 +172,31 @@ namespace Wonga.QA.Tests.Comms.Email
 
         private static void CreateCommsData(Guid clientId, Guid accountId)
         {
+            const string homePhone = "02071111111";
             Drive.Msmq.Comms.Send(new
                                       SaveCustomerDetailsCommand
             {
                 AccountId = accountId,
                 ClientId = clientId,
                 CreatedOn = DateTime.UtcNow,
-                DateOfBirth = new DateTime(1956, 10, 17),
+                DateOfBirth = Get.GetDoB(),
                 Email = Get.RandomEmail(),
-                Forename = string.Format("Joe_{0}", DateTime.UtcNow.Ticks),
+                Forename = Get.GetName(),
                 Gender = GenderEnum.Male,
-                HomePhone = string.Format("02{0}", DateTime.UtcNow.Ticks.ToString().Substring(0, 8)),
-                MiddleName = "X",
+                HomePhone = homePhone,
+                MiddleName = Get.GetMiddleName(),
                 MobilePhone = Get.GetMobilePhone(),//string.Format("07{0}", DateTime.UtcNow.Ticks.ToString().Substring(0, 8)),
-                Surname = string.Format("Doe{0}", DateTime.UtcNow.Ticks),
+                Surname = Get.GetName(),
                 Title = TitleEnum.Dr,
-                WorkPhone = "02078889999"
+                WorkPhone = homePhone,
             });
             Drive.Msmq.Comms.Send(new IAccountCreatedEvent { AccountId = accountId });
+
+
+            Assert.DoesNotThrow(() =>
+                                Do.With.Interval(1).Until(() => Drive.Data.Comms.Db.CustomerDetails.FindByAccountId(accountId))
+                                , "CustomerDetails was not created."
+                );
 
 
             Drive.Msmq.Comms.Send(new
@@ -204,6 +215,11 @@ namespace Wonga.QA.Tests.Comms.Email
                 Street = "Church Road",
                 District = "East",
             });
+
+            Assert.DoesNotThrow(() =>
+                                Do.With.Interval(1).Until(() => Drive.Data.Comms.Db.Addresses.FindByAccountId(accountId))
+                                , "Address was not created."
+                );
         }
     }
 }

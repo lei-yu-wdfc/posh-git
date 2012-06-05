@@ -29,7 +29,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public AcceptedPage Next()
         {
-            _next.Click();
+            _next.Submit();
             return new AcceptedPage(Client);
         }
         public string GetLoanAmount()

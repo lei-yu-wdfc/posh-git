@@ -7,7 +7,7 @@
 		<PopupAccountNumber>#edit-account-number-za</PopupAccountNumber>
 		<PopupLengthOfTime>#edit-bank-period</PopupLengthOfTime>
 		<PopupAddBankAccountButton>#edit-submit</PopupAddBankAccountButton>
-		<PopupExeption>#wonga-my-account-edit-bank-form div:first-child ul li</PopupExeption>
+		<PopupExeption>#wonga-my-account-edit-bank-form .messages.error ul li</PopupExeption>
 		<AccountNumber>.info.bank-account.bank-account-primary tbody tr:first-child + tr + tr + tr td b span</AccountNumber>
 		<PopupBankAccountException>#edit-account-number-za-wrapper div.form-error div.invalid </PopupBankAccountException>
     <PopupSuccessTitle>#success</PopupSuccessTitle><!--#success-->
@@ -21,7 +21,8 @@
   <MobilePinVerificationSection>
     <Pin>#edit-pin-za</Pin>
 	<ResendPin>.resend-pin.mod</ResendPin>
-	<ResendPinMessage>#fancybox-content div</ResendPinMessage>  
+	<ResendPinMessage>#fancybox-content div div p</ResendPinMessage>
+	<ResendPinPopupClose>#fancybox-close</ResendPinPopupClose>	
   </MobilePinVerificationSection>
   
   <EmploymentDetailsSection>
@@ -29,12 +30,13 @@
     <NextPaydayDateDay>#edit-next-payday-day</NextPaydayDateDay>
     <NextPaydayDateMonth>#edit-next-payday-month</NextPaydayDateMonth>
     <NextPaydayDateYear>#edit-next-payday-year</NextPaydayDateYear>
+    <SelfNextPaydayDateDay>#edit-next-income-due-day</SelfNextPaydayDateDay>
+    <SelfNextPaydayDateMonth>#edit-next-income-due-month</SelfNextPaydayDateMonth>
+    <SelfNextPaydayDateYear>#edit-next-income-due-year</SelfNextPaydayDateYear>
   </EmploymentDetailsSection>
 
   <PersonalDetailsPage>
     <FormId>#lzero-personal-form .form-inner</FormId>
-    <GenderWarning>.//*[@id='details']/div[2]/div/div[3]/div</GenderWarning>
-	  <DateOfBirthWarning>.//*[@id='edit-date-of-birth-wrapper']/div[3]/div</DateOfBirthWarning>
     <MarriedInCommunityProperty>input[type="radio"][name="married"]</MarriedInCommunityProperty>
   </PersonalDetailsPage>
   
@@ -153,6 +155,7 @@
   </AboutUsPage>
 
   <MySummaryPage>
+   <TotalToRepay>#wonga-slider-loan-summary span.loan-total</TotalToRepay>
 	 <PromisedRepayAmount>#content-area p span</PromisedRepayAmount>
 	 <PromisedRepayDate>#content-area p strong em</PromisedRepayDate>
     <ViewLoanDetailsButton>#cloud a.mod.details</ViewLoanDetailsButton>
@@ -160,6 +163,7 @@
    <PopupForm>#fancybox-content</PopupForm>
    <PopupMySummaryTitle>h1#my-summary</PopupMySummaryTitle>
    <PopupSummaryDetailsTable>table#summary-details</PopupSummaryDetailsTable>
+   <RepayButton>#cloud ul a.repay</RepayButton>
   </MySummaryPage>
 
   <HomePage>
@@ -184,11 +188,28 @@
     <PopupCloseButton>#edit-submit[value='Close']</PopupCloseButton>
     <BankAccount>#edit-bank-account-masked</BankAccount>
 	<ResendPin>#pin-hold a</ResendPin>
+	<ResendPinPopupClose>#fancybox-close</ResendPinPopupClose>
+	<ResendPinPopupText>#fancybox-content div</ResendPinPopupText>
   </ApplyPage>
 
   <FAQPage>
     <CouncilForDebtCollectorsLink>a[title='Council for Debt Collectors']</CouncilForDebtCollectorsLink>
   </FAQPage>
 
+  <RepaymentOptionsPage>
+    <RepaymentOptionsContainer>.repayment-options</RepaymentOptionsContainer>
+    <EasypayNumber>div.easypay-number-container span.easypay-number</EasypayNumber>
+    <EasypayPrintButton>div.easypay-website-link a</EasypayPrintButton>
+  </RepaymentOptionsPage>
+
+  <EasypaymentNumberPrintPage>
+    <YourEasyPayNumber>#easypaynumber_container #easypaynumber</YourEasyPayNumber>
+  </EasypaymentNumberPrintPage>
+
+  <MySummaryPageMobile>
+    <MySummaryButton>.menu-block-0 .menu li:first-child>a</MySummaryButton>
+    <MyPersonalDetailsButton>.menu-block-0 .menu li:first-child + li>a</MyPersonalDetailsButton>
+    <MyPaymentDetailsButton>.menu-block-0 .menu li:first-child + li + li>a</MyPaymentDetailsButton>    
+  </MySummaryPageMobile>
   
 </UiMap>

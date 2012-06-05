@@ -54,6 +54,16 @@ namespace Wonga.QA.Framework.UI.Elements
             }
         }
 
+        public IWebElement LoanAmount
+        {
+            get { return _loanAmount; }
+        }
+
+        public IWebElement LoanDuration
+        {
+            get { return _loanDuration; }
+        }
+
         public String HowMuch
         {
             get { return _loanAmount.GetValue(); }
@@ -122,7 +132,7 @@ namespace Wonga.QA.Framework.UI.Elements
             _submit.Click();
             if (Config.AUT == AUT.Wb)
                 return new EligibilityQuestionsPage(Page.Client);
-            if (Config.AUT == AUT.Uk || Config.AUT == AUT.Za || Config.AUT == AUT.Ca)
+            if (Config.AUT == AUT.Uk || Config.AUT == AUT.Za || Config.AUT == AUT.Ca || Config.AUT == AUT.Pl)
                 return new PersonalDetailsPage(Page.Client);
             return null;
         }
@@ -133,11 +143,12 @@ namespace Wonga.QA.Framework.UI.Elements
             _submit.Click();
             switch (Config.AUT)
             {
+
+                case AUT.Wb:
                 case AUT.Za:
                 case AUT.Uk:
-                    return new ApplyPage(Page.Client);
                 case AUT.Ca:
-                    return null; //bad code
+                    return new ApplyPage(Page.Client);
                 default:
                     throw new NotImplementedException();
 

@@ -9,6 +9,7 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.BankGateway;
 using Wonga.QA.Framework.Db.Ops;
+using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Db.QaData;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
@@ -122,11 +123,9 @@ namespace Wonga.QA.Tests.BankGateway
 			_incomingBankGatewayFileTable.Insert(incomingBankGatewayFile);
 
 			//Assert
-			var transaction = Do.With.Timeout(20).Until(() => Drive.Db.Payments.Transactions.Single(r => r.Amount == -40M && 
-																										 r.ApplicationId == app.ApplicationId));
+			var transaction = Do.Until(() => Drive.Data.Payments.Db.Transactions.FindByApplicationIdAndAmount(ApplicationId: app.ApplicationId, Amount: -40M));
 			Assert.AreEqual("Payment from EasyPay", transaction.Reference);
 			Assert.AreEqual("DirectBankPayment", transaction.Type);
-
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-2394"), Pending("ZA-2565")]
@@ -153,10 +152,7 @@ namespace Wonga.QA.Tests.BankGateway
 			//Act
 			_incomingBankGatewayFileTable.Insert(incomingBankGatewayFile);
 
-			app =  Do.With.Timeout(20).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id && a.ClosedOn != null));
-
-			Assert.IsNotNull(app);
-
+			Do.Until(() => application.IsClosed);
 		}
 
 		private string CreateEasypayTestFile(DateTime valueDate, int fileSequence, decimal repayAmount, decimal fees, string repaymentNumber, string accountNumber)

@@ -62,7 +62,7 @@ namespace Wonga.QA.Tests.Comms
         {
             var accountId = Guid.NewGuid();
             var verificationId = Guid.NewGuid();
-            const string mobilePhoneNumber = "07712345678";
+            string mobilePhoneNumber = Get.GetMobilePhone();
             var commsDb = Drive.Db.Comms;
             var newEntity = new CustomerDetailEntity
             {
@@ -119,7 +119,7 @@ namespace Wonga.QA.Tests.Comms
         {
             var accountId = Guid.NewGuid();
             var verificationId = Guid.NewGuid();
-            const string mobilePhoneNumber = "07712345678";
+            string mobilePhoneNumber = Get.GetMobilePhone();
             var commsDb = Drive.Db.Comms;
             var newEntity = new CustomerDetailEntity
             {

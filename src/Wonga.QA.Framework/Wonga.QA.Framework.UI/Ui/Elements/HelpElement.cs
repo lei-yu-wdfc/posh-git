@@ -28,12 +28,13 @@ namespace Wonga.QA.Framework.UI.Elements
             {
                 case AUT.Za:
                 case AUT.Ca:
+                case AUT.Pl:
                     _troubleshooting =
                     Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.HelpElement.TroubleshootingQuestions));
                     _jargonBuster = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.HelpElement.JargonBuster));
                     break;
             }
-            _helpTrigger = Page.Client.Driver.FindElement(By.Id(UiMap.Get.HelpElement.HelpTrigger));
+            _helpTrigger = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.HelpElement.HelpTrigger));
             _listQuestions = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.HelpElement.HelplistQuestions));
 
         }
@@ -46,7 +47,7 @@ namespace Wonga.QA.Framework.UI.Elements
         public List<string> GetListQuestions()
         {
             List<string> questions = _listQuestions.FindElements(By.TagName("option")).Select(option => option.Text.Trim(' ')).ToList();
-            questions.Remove("Please select a question...");
+            questions.Remove(ContentMap.Get.HelpElement.SelectQuestion);
             return questions;
         }
         public FAQPage SelectQuestion(string question)
@@ -58,7 +59,7 @@ namespace Wonga.QA.Framework.UI.Elements
         public List<string> GetTroubleshootingQuestions()
         {
             List<string> questions = _troubleshooting.FindElements(By.TagName("option")).Select(option => option.Text.Trim(' ')).ToList();
-            questions.Remove("Please select a question...");
+            questions.Remove(ContentMap.Get.HelpElement.SelectQuestion);
             return questions;
         }
         public FAQPage SelectTroubleshootingQuestion(string question)

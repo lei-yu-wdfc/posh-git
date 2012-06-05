@@ -47,7 +47,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
              switch(Config.AUT)
             {
                 case(AUT.Wb):
-                    _form = Content.FindEitherElement(By.CssSelector(UiMap.Get.AcceptedPage.FormId), By.CssSelector("#wonga-loan-approve-form"));
+                    _form = Content.FindElement(By.CssSelector(UiMap.Get.AcceptedPage.FormId));
                     _acceptBusinessLoanLink = _form.FindElement(By.CssSelector(UiMap.Get.AcceptedPage.AcceptBusinessLoan));
                     _acceptGuarantorLoanLink = _form.FindElement(By.CssSelector(UiMap.Get.AcceptedPage.AcceptGuarantorLoan));
                     _loanAmount = _form.FindElement(By.CssSelector(UiMap.Get.AcceptedPage.LoanAmount));
@@ -226,10 +226,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public IApplyPage Submit()
         {
-            _form.FindElement(By.CssSelector(UiMap.Get.AcceptedPage.SubmitButton)).Submit();
+            _form.FindElement(By.CssSelector(UiMap.Get.AcceptedPage.SubmitButton)).Click();
             if (Config.AUT.Equals(AUT.Wb))
                 return new ReferPage(Client);
-            return new DealDonePage(Client);
+            return Do.With.Timeout(2).Until(() => new DealDonePage(Client));
         }
 
         public bool IsAgreementFormDisplayed()

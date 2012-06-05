@@ -19,6 +19,7 @@ using Wonga.QA.Framework.UI.UiElements.Pages;
 
 namespace Wonga.QA.Tests.Ui
 {
+    [Parallelizable(TestScope.All)]
     public class HelpTest : UiTest
     {
 
@@ -84,12 +85,13 @@ namespace Wonga.QA.Tests.Ui
                 Assert.IsTrue(jargonBasterPage.Url.Contains("#" + element.Text.ToLower()));
             }
         }
-
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-167"), Pending("FE bug, button in top of page are broken, ZA-2490, CA-2234")]
+        
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-167")]
         public void ClickOnContactUsCauseContactInformationDisplayedOnPage()
         {
             var page = Client.Home();
             page.Help.HelpTriggerClick();
+            Thread.Sleep(1000); //wait for ajax load help submenu
             page.Help.ContactUsClick();
             Thread.Sleep(5000); //wait for ajax load the popup
             Assert.IsTrue(page.Contact.IsContactPopupPresent());
@@ -101,6 +103,19 @@ namespace Wonga.QA.Tests.Ui
         {
             var faq = Client.Faq();
             Assert.IsTrue(faq.IsLinkCorrect(UiMap.Get.FAQPage.CouncilForDebtCollectorsLink, ContentMap.Get.FAQPageLinks.CouncilForDebtCollectorsLink));
+        }
+
+        [Test, AUT(AUT.Wb), JIRA("QA-291")]
+        public void ContactPageMustContainOnlyDetailsForWongaBuisness()
+        {
+            var page = Client.Home();
+            page.Help.HelpTriggerClick();
+            page.Help.ContactUsClick();
+            List<string> wbEmails = page.Contact.GetLinksTextFromPopup();
+            foreach (string email in wbEmails)
+            {
+                Assert.IsTrue(email.Contains("@wongabusiness.com"));
+            }
         }
     }
 }

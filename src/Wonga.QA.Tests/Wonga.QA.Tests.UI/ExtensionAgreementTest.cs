@@ -23,17 +23,19 @@ using System.ComponentModel;
 
 namespace Wonga.QA.Tests.Ui
 {
+    [Parallelizable(TestScope.All)]
     class ExtensionAgreementTest : UiTest
     {
-        [Test, AUT(AUT.Uk), JIRA("UK-971"), Pending("Fails due to bug UK-2114")]
+        [Test, AUT(AUT.Uk), JIRA("UK-971"), Pending("Fails due to bug UK-2293"), MultipleAsserts]
         public void ExtensionAgreementPageTest()
         {
             string email = Get.RandomEmail();
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            var extensionDays = 7;
-            var sExtensionDays = extensionDays.ToString();
-            var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(extensionDays).Build();
+            const int loanAmount = 150;
+            const int extensionDays = 7;
+            const int loanTerm = 7;
+            var application = ApplicationBuilder.New(customer).WithLoanAmount(loanAmount).WithLoanTerm(loanTerm).Build();
 
             var loginPage = Client.Login();
             var myAccountPage = loginPage.LoginAs(email);
@@ -42,14 +44,16 @@ namespace Wonga.QA.Tests.Ui
 
             mySummaryPage.ChangePromiseDateButtonClick();
             var requestPage = new ExtensionRequestPage(this.Client);
-            requestPage.SetExtendDays(sExtensionDays);
+            requestPage.SetExtendDays(extensionDays.ToString("#"));
 
             // Set expected values
             var expectedRepaymentDate = Convert.ToDateTime(requestPage.RepaymentDate.Replace("st", "").Replace("nd", "").Replace("rd","").Replace("th", "")).ToString("dd/MM/yyyy");
             var expectedExtendedLoanTerm = application.LoanTerm + extensionDays;
             var expectedTotalToRepay = requestPage.TotalToRepay;
             var expectedLoanAmount = application.LoanAmount;
-            var expectedRepresentativeAPR = "3784%";
+            var termDivisor = Convert.ToDouble(String.Format("{0:0.00000000}", 365d / Convert.ToDouble(expectedExtendedLoanTerm)));
+            var loanDevisor = Convert.ToDouble(expectedTotalToRepay.Trim('£'))/Convert.ToDouble(expectedLoanAmount);
+            var expectedRepresentativeApr = (Math.Pow(loanDevisor, termDivisor) - 1).ToString("0%"); 
             
             requestPage.setSecurityCode("123");
             requestPage.SubmitButtonClick();
@@ -67,10 +71,10 @@ namespace Wonga.QA.Tests.Ui
             Assert.Contains(agreementPage.secci.Text, expectedRepaymentDate);
             Assert.Contains(agreementPage.secci.Text, expectedLoanAmount.ToString("#"));
             Assert.Contains(agreementPage.secci.Text, expectedTotalToRepay);
-            Assert.Contains(agreementPage.secci.Text, expectedRepresentativeAPR);
+            Assert.Contains(agreementPage.secci.Text, expectedRepresentativeApr);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-971"), Pending("UK-2121")]
+        [Test, AUT(AUT.Uk), JIRA("UK-971"), Pending("Fails due to bug UK-2293"), MultipleAsserts]
         [Row (2, 100, 1, 7)]
         public void ExtensionAgreementPageNDaysAfterLoanTest(int loanTerm, int loanAmount, int daysAfterLoan, int daysToExtend)
         {
@@ -104,7 +108,9 @@ namespace Wonga.QA.Tests.Ui
             var expectedRepaymentDate = Convert.ToDateTime(requestPage.RepaymentDate.Replace("st", "").Replace("nd", "").Replace("rd", "").Replace("th", "")).ToString("dd/MM/yyyy");
             var expectedTotalToRepay = requestPage.TotalToRepay;
             var expectedLoanAmount = application.LoanAmount;
-            var expectedRepresentativeAPR = "3784%";
+            var termDivisor = Convert.ToDouble(String.Format("{0:0.00000000}", 365d / Convert.ToDouble(expectedExtendedLoanTerm)));
+            var loanDevisor = Convert.ToDouble(expectedTotalToRepay.Trim('£')) / Convert.ToDouble(expectedLoanAmount);
+            var expectedRepresentativeApr = (Math.Pow(loanDevisor, termDivisor) - 1).ToString("0%"); 
 
             requestPage.setSecurityCode("123");
             requestPage.SubmitButtonClick();
@@ -118,7 +124,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.Contains(agreementPage.secci.Text, expectedRepaymentDate);
             Assert.Contains(agreementPage.secci.Text, expectedLoanAmount.ToString("#"));
             Assert.Contains(agreementPage.secci.Text, expectedTotalToRepay);
-            Assert.Contains(agreementPage.secci.Text, expectedRepresentativeAPR);
+            Assert.Contains(agreementPage.secci.Text, expectedRepresentativeApr);
         }
     }
 }

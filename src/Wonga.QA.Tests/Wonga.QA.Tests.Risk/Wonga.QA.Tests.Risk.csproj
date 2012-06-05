@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Checkpoints\CheckpointAccountNumberApplicationsAcceptableTests.cs" />
+    <Compile Include="Checkpoints\CheckpointApplicationElementNotOnCsBlacklist.cs" />
     <Compile Include="Checkpoints\CheckpointGeneralManualVerificationAccepted.cs" />
     <Compile Include="Checkpoints\CheckpointGuarantorNameMatchMainApplicant.cs" />
     <Compile Include="Checkpoints\CheckpointMobilePhoneIsUniqueTests.cs" />
@@ -92,6 +93,10 @@
     </Reference>
     <Reference Include="Wonga.QA.Framework.Db">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Db.dll</HintPath>
+    </Reference>
+    <Reference Include="Wonga.QA.Framework.Mocks, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\Wonga.QA.Framework.Mocks.dll</HintPath>
     </Reference>
     <Reference Include="Wonga.QA.Framework.Msmq">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Msmq.dll</HintPath>

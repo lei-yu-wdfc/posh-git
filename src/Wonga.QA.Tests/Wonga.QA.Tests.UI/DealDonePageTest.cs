@@ -15,6 +15,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Ui
 {
+    [Parallelizable(TestScope.All)]
     class DealDonePageTest : UiTest
     {
         private int _amountMax;

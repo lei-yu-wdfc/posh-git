@@ -53,5 +53,53 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
                 return Do.With.Timeout(2).Until(() => new HomePage(Client));
             throw new NotImplementedException();
         }
+
+        public bool IsWarningOccurred(string elementSelector,string warningSelector)
+        {
+            IWebElement element = this.Client.Driver.FindElement(By.CssSelector(elementSelector));
+            element.LostFocus();
+            try
+            {
+              IWebElement  errorElement =
+                           this.Client.Driver.FindElement(By.CssSelector(warningSelector));
+                string firstNameErrorFormClass = errorElement.GetAttribute("class");
+                if (firstNameErrorFormClass.Equals("invalid"))
+                {
+                    return true;
+                }
+            }
+            catch (NoSuchElementException)
+            {
+                Console.WriteLine("Can't find error form");
+                return false;
+            }
+            return false;
+        }
+ 	 	
+
+ 	 	
+        public bool IsSuccessTickOccured(string elementSelector, string warningSelector)
+        {
+            IWebElement element = this.Client.Driver.FindElement(By.CssSelector(elementSelector));
+            element.LostFocus();
+            try
+            {
+                IWebElement errorElement =
+                             this.Client.Driver.FindElement(By.CssSelector(warningSelector));
+
+                string firstNameErrorFormClass = errorElement.GetAttribute("class");
+
+                if (firstNameErrorFormClass.Equals("invalid success"))
+                {
+                    return true;
+                }
+            }
+            catch (NoSuchElementException)
+            {
+                Console.WriteLine("Can't find error form");
+                return false;
+            }
+            return false;
+        }
     }
 }

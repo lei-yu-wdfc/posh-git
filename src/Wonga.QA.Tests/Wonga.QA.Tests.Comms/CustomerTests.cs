@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -16,8 +17,8 @@ namespace Wonga.QA.Tests.Comms
     [Parallelizable(TestScope.All)]
     public class CustomerTests
     {
-        [Test,AUT(AUT.Wb)]
-        [JIRA("SME-561"),Description("This test verifies the save customer address command by verifying its response and verifying that the record has been created in the repository")]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
+        [JIRA("SME-561"), Description("This test verifies the save customer address command by verifying its response and verifying that the record has been created in the repository")]
         public void TestAddressOverridesCorrectlySaved()
         {
             var customer = CustomerBuilder.New()
@@ -30,8 +31,9 @@ namespace Wonga.QA.Tests.Comms
                  .WithStreetInAddress("MyStreet")
                  .WithTownInAddress("MyTown").Build();
 
-            var addressEntity = Do.With.Timeout(2).Until(() => Drive.Db.Comms.Addresses.Single(a => a.AccountId == customer.Id));
-            Assert.AreEqual(addressEntity.Street, "MyStreet","These values should be equal");
+            var addressTab = Drive.Data.Comms.Db.Addresses;
+            var addressEntity = Do.With.Timeout(2).Until(() => addressTab.FindAll(addressTab.AccountId == customer.Id).Single());
+            Assert.AreEqual(addressEntity.Street, "MyStreet", "These values should be equal");
             Assert.AreEqual(addressEntity.County, "MyCounty", "These values should be equal");
             Assert.AreEqual(addressEntity.District, "MyDistrict", "These values should be equal");
             Assert.AreEqual(addressEntity.Flat, "MyFlat", "These values should be equal");
@@ -40,8 +42,8 @@ namespace Wonga.QA.Tests.Comms
             Assert.AreEqual(addressEntity.Town, "MyTown", "These values should be equal");
         }
 
-        [Test,AUT(AUT.Wb)]
-        [JIRA("SME-561"),Description("This test verifies update customer address command by issuing a command and verifying its successful response and that the record in the repository has been changed")]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
+        [JIRA("SME-561"), Description("This test verifies update customer address command by issuing a command and verifying its successful response and that the record in the repository has been changed")]
         public void TestUpdateCustomerAddressCommand()
         {
             var customer = CustomerBuilder.New()
@@ -54,7 +56,8 @@ namespace Wonga.QA.Tests.Comms
                  .WithStreetInAddress("MyStreet")
                  .WithTownInAddress("MyTown").Build();
 
-            var addressEntity = Do.Until(() => Drive.Db.Comms.Addresses.Single(a => a.AccountId == customer.Id));
+            var addressTab = Drive.Data.Comms.Db.Addresses;
+            var addressEntity = Do.With.Timeout(2).Until(() => addressTab.FindAll(addressTab.AccountId == customer.Id).Single());
             var externalId = addressEntity.ExternalId;
             var message = new UpdateCustomerAddressUkCommand()
                               {
@@ -75,7 +78,7 @@ namespace Wonga.QA.Tests.Comms
 
             Drive.Api.Commands.Post(message);
 
-            addressEntity = Do.Until(() => Drive.Db.Comms.Addresses.Single(a => a.Flat == message.Flat.ToString() && a.ExternalId == externalId));
+            addressEntity = Do.Until(() => addressTab.FindAll(addressTab.Flat == message.Flat.ToString() && addressTab.ExternalId == externalId).Single());
             Assert.AreEqual(addressEntity.AccountId, message.AccountId, "These values should be equal");
             Assert.AreEqual(addressEntity.ExternalId, message.AddressId, "These values should be equal");
             Assert.AreEqual(addressEntity.Flat, message.Flat, "These values should be equal");
@@ -88,8 +91,8 @@ namespace Wonga.QA.Tests.Comms
             Assert.AreEqual(addressEntity.PostCode, message.Postcode, "These values should be equal");
         }
 
-        [Test,AUT(AUT.Wb)]
-        [JIRA("SME-561"),Description("This test verifies get current address query by creating a new customer address, issuing a query and comparing the response to repository record")]
+        [Test, AUT(AUT.Wb)]
+        [JIRA("SME-561"), Description("This test verifies get current address query by creating a new customer address, issuing a query and comparing the response to repository record")]
         public void TestGetCurrentAddressQuery()
         {
             var customer = CustomerBuilder.New()
@@ -102,15 +105,16 @@ namespace Wonga.QA.Tests.Comms
                  .WithStreetInAddress("MyStreet")
                  .WithTownInAddress("MyTown").Build();
 
-            var addressEntity = Do.With.Timeout(2).Until(() =>( Drive.Db.Comms.Addresses.Single(a => a.AccountId == customer.Id)));
+            var addressTab = Drive.Data.Comms.Db.Addresses;
+            var addressEntity = Do.With.Timeout(2).Until(() => addressTab.FindAll(addressTab.AccountId == customer.Id).Single());
             var query = new GetCurrentAddressQuery { AccountId = addressEntity.AccountId };
             var response = Drive.Api.Queries.Post(query);
             var specificFlatName = response.Values["Flat"].Single();
             Assert.AreEqual(addressEntity.Flat, specificFlatName, "These values should be equal");
         }
 
-        [Test,AUT(AUT.Wb)]
-        [JIRA("SME-565"),Description("This test obtains address descriptors for all UK postcode variants and validates their content")]
+        [Test, AUT(AUT.Wb)]
+        [JIRA("SME-565"), Description("This test obtains address descriptors for all UK postcode variants and validates their content")]
         public void TestGetAddressByDescriptionId()
         {
             //var postCodes = new[] {"W1A 1HQ", "M1 1AA", "B33 8TH", "CR2 6XH", "DN55 1PT", "EC1A 1BB"};
@@ -123,7 +127,7 @@ namespace Wonga.QA.Tests.Comms
                 var responseDescriptionIdList = response.Values["Id"].ToList();
                 var responseDescriptorDescriptionList = response.Values["Description"].ToList();
 
-                Assert.IsNotEmpty(responseDescriptionIdList,"This collection should not be empty");
+                Assert.IsNotEmpty(responseDescriptionIdList, "This collection should not be empty");
                 Assert.IsNotEmpty(responseDescriptorDescriptionList, "This collection should not be empty");
 
                 foreach (var descriptionId in responseDescriptionIdList)
@@ -134,8 +138,8 @@ namespace Wonga.QA.Tests.Comms
             }
         }
 
-        [Test,AUT(AUT.Wb)]
-        [JIRA("SME-565"),Description("This test obtains address descriptors for all UK postcode variants")]
+        [Test, AUT(AUT.Wb)]
+        [JIRA("SME-565"), Description("This test obtains address descriptors for all UK postcode variants")]
         public void TestGetAddressDescriptorsByPostCode()
         {
             //var postCodes = new[] {"W1A 1HQ", "M1 1AA", "B33 8TH", "CR2 6XH", "DN55 1PT", "EC1A 1BB"};
@@ -154,8 +158,8 @@ namespace Wonga.QA.Tests.Comms
             }
         }
 
-        [Test,AUT(AUT.Wb)]
-        [JIRA("SME-561"),Description("This test verifies Save customer personal and phone details by issuing and API call, verifying its response and locating the expected record in the DB")]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
+        [JIRA("SME-561"), Description("This test verifies Save customer personal and phone details by issuing and API call, verifying its response and locating the expected record in the DB")]
         public void TestSaveCustomerDetailsCommand()
         {
             var accountId = Guid.NewGuid();
@@ -172,7 +176,9 @@ namespace Wonga.QA.Tests.Comms
                                   WorkPhone = "0217450510"
                               };
             Drive.Api.Commands.Post(message);
-            var detailsEntity = Do.Until(() => Drive.Db.Comms.CustomerDetails.Single(p => p.AccountId == accountId));
+
+            var customerDetailsTab = Drive.Data.Comms.Db.CustomerDetails;
+            var detailsEntity = Do.Until(() => customerDetailsTab.FindAll(customerDetailsTab.AccountId == accountId).Single());
 
             Assert.IsNotNull(detailsEntity);
             Assert.AreEqual(message.Forename, detailsEntity.Forename, "These values should be equal");
@@ -181,8 +187,8 @@ namespace Wonga.QA.Tests.Comms
             Assert.AreEqual(message.WorkPhone, detailsEntity.WorkPhone, "These values should be equal");
         }
 
-        [Test,AUT(AUT.Wb)]
-        [JIRA("SME-561"),Description("This negative test validates the scenario of saving personal and phone details of customer that is recognized, this test validates error code fron error response returned by the API call")]
+        [Test, AUT(AUT.Wb)]
+        [JIRA("SME-561"), Description("This negative test validates the scenario of saving personal and phone details of customer that is recognized, this test validates error code fron error response returned by the API call")]
         [Ignore("I cannot reproduce what this test needs. I will review later")]
         public void TestSaveCustomerDetailsCommand_DuplicateCustomer()
         {
@@ -210,8 +216,8 @@ namespace Wonga.QA.Tests.Comms
             var x = response.GetErrors();
         }
 
-        [Test,AUT(AUT.Wb)]
-        [JIRA("SME-561"),Description("This test verifies minimum age validation by attempting to submit underage and verifies expected failure response")]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
+        [JIRA("SME-561"), Description("This test verifies minimum age validation by attempting to submit underage and verifies expected failure response")]
         public void TestSaveCustomerDetailsCommand_Underage()
         {
             var accountId = Guid.NewGuid();
@@ -232,27 +238,26 @@ namespace Wonga.QA.Tests.Comms
             Assert.AreEqual(error.Errors.ToList()[0], "Comms_Age_BelowMinuimumAge", "These values should be equal");
         }
 
-        [Test,AUT(AUT.Wb)]
-        [JIRA("SME-561"),Description("This test verifies GetCustomerDetails query by creating new customer details record, issuing the query, verifying its response and comparing the data it returns to repository record")]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
+        [JIRA("SME-561"), Description("This test verifies GetCustomerDetails query by creating new customer details record, issuing the query, verifying its response and comparing the data it returns to repository record")]
         public void TestGetCustomerDetailsQuery()
         {
             var accountId = Guid.NewGuid();
-            var commsDb = Drive.Db.Comms;
-            var newEntity = new CustomerDetailEntity
-                                 {
-                                     AccountId = accountId,
-                                     Gender = 2,
-                                     DateOfBirth = Get.GetDoB(),
-                                     Email = Get.RandomEmail(),
-                                     Forename = Get.RandomString(8),
-                                     Surname = Get.RandomString(8),
-                                     MiddleName = Get.RandomString(8),
-                                     HomePhone = "0217050520",
-                                     WorkPhone = "0217450510"
-                                 };
+            var commsDb = Drive.Data.Comms.Db.CustomerDetails;
 
-            commsDb.CustomerDetails.InsertOnSubmit(newEntity);
-            commsDb.SubmitChanges();
+            dynamic newEntity = new ExpandoObject();
+            newEntity.AccountId = accountId;
+            newEntity.newGender = 2;
+            newEntity.DateOfBirth = Get.GetDoB();
+            newEntity.Email = Get.RandomEmail();
+            newEntity.Forename = Get.RandomString(8);
+            newEntity.Surname = Get.RandomString(8);
+            newEntity.MiddleName = Get.RandomString(8);
+            newEntity.HomePhone = "0217050520";
+            newEntity.WorkPhone = "0217450510";
+            newEntity.HasAccount = 0;
+
+            commsDb.Insert(newEntity);
 
             var response = Drive.Api.Queries.Post(new GetCustomerDetailsQuery()
                                                         {
@@ -262,8 +267,8 @@ namespace Wonga.QA.Tests.Comms
             Assert.AreEqual(response.Values["Email"].Single(), newEntity.Email, "These values should be equal");
         }
 
-        [Test,AUT(AUT.Wb)]
-        [JIRA("SME-561"),Description("This test verifies the SaveContactPreferences command by issuing it, checking its response and verifying that the repository record has been created and compare the data in the repository to expected values")]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
+        [JIRA("SME-561"), Description("This test verifies the SaveContactPreferences command by issuing it, checking its response and verifying that the repository record has been created and compare the data in the repository to expected values")]
         public void TestSaveContactPreferencesCommand()
         {
             var accountId = Guid.NewGuid();
@@ -273,14 +278,15 @@ namespace Wonga.QA.Tests.Comms
                                   AcceptMarketingContact = true
                               };
             Drive.Api.Commands.Post(message);
-            var contactPreferenceEntity = Do.Until(() => Drive.Db.Comms.ContactPreferences.SingleOrDefault(p => p.AccountId == accountId));
+            var contactPreferencesTab = Drive.Data.Comms.Db.ContactPreferences;
+            var contactPreferenceEntity = Do.Until(() => contactPreferencesTab.FindAll(contactPreferencesTab.AccountId == accountId).SingleOrDefault());
             Assert.IsNotNull(contactPreferenceEntity);
             Assert.AreEqual(contactPreferenceEntity.AccountId, message.AccountId, "These values should be equal");
             Assert.AreEqual(contactPreferenceEntity.AcceptMarketingContact, message.AcceptMarketingContact, "These values should be equal");
         }
 
-        [Test,AUT(AUT.Wb)]
-        [JIRA("SME-561"),Description("This test verifies the GetContactPreferences query by saving customer contact preferences and then retrieving them via the query and verifying its response")]
+        [Test, AUT(AUT.Wb)]
+        [JIRA("SME-561"), Description("This test verifies the GetContactPreferences query by saving customer contact preferences and then retrieving them via the query and verifying its response")]
         public void TestGetContactPreferencesQuery()
         {
             var accountId = Guid.NewGuid();
@@ -290,7 +296,8 @@ namespace Wonga.QA.Tests.Comms
                                       AcceptMarketingContact = true
                                   };
             Drive.Api.Commands.Post(message);
-            var saveContactPreferencesEntity = Do.Until(() => Drive.Db.Comms.ContactPreferences.SingleOrDefault(p => p.AccountId == accountId));
+            var contactPreferencesTab = Drive.Data.Comms.Db.ContactPreferences;
+            var saveContactPreferencesEntity = Do.Until(() => contactPreferencesTab.FindAll(contactPreferencesTab.AccountId == accountId).SingleOrDefault());
             Assert.IsNotNull(saveContactPreferencesEntity);
 
             var response = Drive.Api.Queries.Post(new GetContactPreferencesQuery()
@@ -301,28 +308,27 @@ namespace Wonga.QA.Tests.Comms
             Assert.AreEqual<Boolean>(bool.Parse(response.Values["AcceptMarketingContact"].Single()), saveContactPreferencesEntity.AcceptMarketingContact, "These values should be equal");
         }
 
-        [Test,AUT(AUT.Wb)]
-        [JIRA("SME-561"),Description("This test verifies Password reset email command to random email by issuing the command and checking its response")]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
+        [JIRA("SME-561"), Description("This test verifies Password reset email command to random email by issuing the command and checking its response")]
         public void TestSendPasswordResetEmailCommand()
         {
             var accountId = Guid.NewGuid();
             var emailAddress = Get.RandomEmail();
-            var commsDb = Drive.Db.Comms;
-            var newEntity = new CustomerDetailEntity
-            {
-                AccountId = accountId,
-                Gender = 2,
-                DateOfBirth = Get.GetDoB(),
-                Email = emailAddress,
-                Forename = Get.RandomString(8),
-                Surname = Get.RandomString(8),
-                MiddleName = Get.RandomString(8),
-                HomePhone = "0217050520",
-                WorkPhone = "0217450510"
-            };
+            var commsDb = Drive.Data.Comms.Db.CustomerDetails;
+            dynamic newEntity = new ExpandoObject();
 
-            commsDb.CustomerDetails.InsertOnSubmit(newEntity);
-            commsDb.SubmitChanges();
+            newEntity.AccountId = accountId;
+            newEntity.Gender = 2;
+            newEntity.DateOfBirth = Get.GetDoB();
+            newEntity.Email = emailAddress;
+            newEntity.Forename = Get.RandomString(8);
+            newEntity.Surname = Get.RandomString(8);
+            newEntity.MiddleName = Get.RandomString(8);
+            newEntity.HomePhone = "0217050520";
+            newEntity.WorkPhone = "0217450510";
+            newEntity.HasAccount = 0;
+
+            commsDb.Insert(newEntity);
 
             Assert.DoesNotThrow(() => Drive.Api.Commands.Post(new SendPasswordResetEmailCommand()
                                                                    {
@@ -332,27 +338,26 @@ namespace Wonga.QA.Tests.Comms
                                                                    }));
         }
 
-        [Test,AUT(AUT.Wb)]
-        [JIRA("SME-561"),Description("This test updates home phone details of the customer and checks that the repository record has been correctly updated")]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
+        [JIRA("SME-561"), Description("This test updates home phone details of the customer and checks that the repository record has been correctly updated")]
         public void TestUpdateHomePhoneCommand()
         {
             var accountId = Guid.NewGuid();
-            var commsDb = Drive.Db.Comms;
-            var newEntity = new CustomerDetailEntity
-            {
-                AccountId = accountId,
-                Gender = 2,
-                DateOfBirth = Get.GetDoB(),
-                Email = Get.RandomEmail(),
-                Forename = Get.RandomString(8),
-                Surname = Get.RandomString(8),
-                MiddleName = Get.RandomString(8),
-                HomePhone = "0217050520",
-                WorkPhone = "0217450510"
-            };
+            var commsDb = Drive.Data.Comms.Db.CustomerDetails;
+            dynamic newEntity = new ExpandoObject();
 
-            commsDb.CustomerDetails.InsertOnSubmit(newEntity);
-            commsDb.SubmitChanges();
+            newEntity.AccountId = accountId;
+            newEntity.Gender = 2;
+            newEntity.DateOfBirth = Get.GetDoB();
+            newEntity.Email = Get.RandomEmail();
+            newEntity.Forename = Get.RandomString(8);
+            newEntity.Surname = Get.RandomString(8);
+            newEntity.MiddleName = Get.RandomString(8);
+            newEntity.HomePhone = "0217050520";
+            newEntity.WorkPhone = "0217450510";
+            newEntity.HasAccount = 0;
+
+            commsDb.Insert(newEntity);
 
             var updateHomePhoneMessage = new UpdateHomePhoneUkCommand()
                                              {
@@ -360,33 +365,33 @@ namespace Wonga.QA.Tests.Comms
                                                  HomePhone = "02071111111"
                                              };
             Drive.Api.Commands.Post(updateHomePhoneMessage);
-            var detailsEntity = Do.Until(() => Drive.Db.Comms.CustomerDetails.SingleOrDefault(p => p.AccountId == accountId && p.HomePhone == updateHomePhoneMessage.HomePhone.ToString()));
+            var detailsEntity = Do.Until(() => commsDb.FindAll(commsDb.AccountId == accountId && commsDb.HomePhone == updateHomePhoneMessage.HomePhone.ToString()).SingleOrDefault());
             Assert.IsNotNull(detailsEntity);
             Assert.AreEqual(updateHomePhoneMessage.HomePhone, detailsEntity.HomePhone, "These values should be equal");
         }
 
-        [Test,AUT(AUT.Wb)]
-        [JIRA("SME-561"),Description("This test verifies email verification command by issuing it and checking its response")]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
+        [JIRA("SME-561"), Description("This test verifies email verification command by issuing it and checking its response")]
         public void TestSendVerificationEmailCommand()
         {
             var accountId = Guid.NewGuid();
-            var commsDb = Drive.Db.Comms;
-            var newEntity = new CustomerDetailEntity
-            {
-                AccountId = accountId,
-                Gender = 2,
-                DateOfBirth = Get.GetDoB(),
-                Email = Get.RandomEmail(),
-                Forename = Get.RandomString(8),
-                Surname = Get.RandomString(8),
-                MiddleName = Get.RandomString(8),
-                HomePhone = "0217050520",
-                WorkPhone = "0217450510"
-            };
+            var commsDb = Drive.Data.Comms.Db.CustomerDetails;
+            dynamic newEntity = new ExpandoObject();
 
-            commsDb.CustomerDetails.InsertOnSubmit(newEntity);
-            commsDb.SubmitChanges();
-            var detailsEntity = Do.Until(() => Drive.Db.Comms.CustomerDetails.SingleOrDefault(p => p.AccountId == accountId));
+            newEntity.AccountId = accountId;
+            newEntity.Gender = 2;
+            newEntity.DateOfBirth = Get.GetDoB();
+            newEntity.Email = Get.RandomEmail();
+            newEntity.Forename = Get.RandomString(8);
+            newEntity.Surname = Get.RandomString(8);
+            newEntity.MiddleName = Get.RandomString(8);
+            newEntity.HomePhone = "0217050520";
+            newEntity.WorkPhone = "0217450510";
+            newEntity.HasAccount = 0;
+
+            commsDb.Insert(newEntity);
+
+            var detailsEntity = Do.Until(() => commsDb.FindAll(commsDb.AccountId == accountId).SingleOrDefault());
             Assert.IsNotNull(detailsEntity);
 
             Assert.DoesNotThrow(() => Drive.Api.Commands.Post(new SendVerificationEmailCommand()
@@ -397,28 +402,27 @@ namespace Wonga.QA.Tests.Comms
                                                         }));
         }
 
-        [Test,AUT(AUT.Wb)]
-        [JIRA("SME-561"),Description("This test verifies completion of email verification process by issuing the CompleteEmailVerification command and checking its response")]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
+        [JIRA("SME-561"), Description("This test verifies completion of email verification process by issuing the CompleteEmailVerification command and checking its response")]
         public void TestCompleteEmailVerificationCommand()
         {
             var accountId = Guid.NewGuid();
-            var commsDb = Drive.Db.Comms;
-            var newEntity = new CustomerDetailEntity
-            {
-                AccountId = accountId,
-                Gender = 2,
-                DateOfBirth = Get.GetDoB(),
-                Email = Get.RandomEmail(),
-                Forename = Get.RandomString(8),
-                Surname = Get.RandomString(8),
-                MiddleName = Get.RandomString(8),
-                HomePhone = "0217050520",
-                WorkPhone = "0217450510"
-            };
+            var commsDb = Drive.Data.Comms.Db.CustomerDetails;
+            dynamic newEntity = new ExpandoObject();
 
-            commsDb.CustomerDetails.InsertOnSubmit(newEntity);
-            commsDb.SubmitChanges();
-            var detailsEntity = Do.Until(() => Drive.Db.Comms.CustomerDetails.SingleOrDefault(p => p.AccountId == accountId));
+            newEntity.AccountId = accountId;
+            newEntity.Gender = 2;
+            newEntity.DateOfBirth = Get.GetDoB();
+            newEntity.Email = Get.RandomEmail();
+            newEntity.Forename = Get.RandomString(8);
+            newEntity.Surname = Get.RandomString(8);
+            newEntity.MiddleName = Get.RandomString(8);
+            newEntity.HomePhone = "0217050520";
+            newEntity.WorkPhone = "0217450510";
+            newEntity.HasAccount = 0;
+
+            commsDb.Insert(newEntity);
+            var detailsEntity = Do.Until(() => commsDb.FindAll(commsDb.AccountId == accountId).SingleOrDefault());
             Assert.IsNotNull(detailsEntity);
             Assert.DoesNotThrow(() => Drive.Api.Commands.Post(new SendVerificationEmailCommand()
             {
@@ -427,9 +431,11 @@ namespace Wonga.QA.Tests.Comms
                 UriFragment = "api_test"
             }));
 
-            var emailVerificationEntity = Do.Until(() => Drive.Db.Comms.EmailVerifications.SingleOrDefault(p => p.AccountId == accountId));
+            var emailVerificationsTab = Drive.Data.Comms.Db.EmailVerification;
 
-            Assert.DoesNotThrow(()=> Drive.Api.Commands.Post(new CompleteEmailVerificationCommand()
+            var emailVerificationEntity = Do.Until(() => emailVerificationsTab.FindAll(emailVerificationsTab.AccountId == accountId).SingleOrDefault());
+
+            Assert.DoesNotThrow(() => Drive.Api.Commands.Post(new CompleteEmailVerificationCommand()
                                                                   {
                                                                       AccountId = accountId,
                                                                       ChangeId = emailVerificationEntity.ChangeId
@@ -494,7 +500,7 @@ namespace Wonga.QA.Tests.Comms
                 .WithSurname(surname)
                 .WithDateOfBirth(dob)
                 .Build();
-            
+
             CustomerBuilder.New()
                 .WithForename("Bert")
                 .WithSurname(surname)
@@ -531,7 +537,7 @@ namespace Wonga.QA.Tests.Comms
         public void CreateTwoCustomersSameEmail()
         {
             String email = Get.RandomEmail();
-            
+
             CustomerBuilder.New()
                 .WithEmailAddress(email)
                 .Build();

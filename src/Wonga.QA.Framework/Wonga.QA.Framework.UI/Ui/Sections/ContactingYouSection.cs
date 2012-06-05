@@ -55,6 +55,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
                         _mobilePhone.SendValue(value);
                         break;
                     case (AUT.Uk):
+                    case (AUT.Pl):
                         _mobilePhone.SendValue(value);
                         break;
                 }
@@ -66,9 +67,18 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
 
         public ContactingYouSection(BasePage page) : base(UiMap.Get.ContactingYouSection.Fieldset, page)
         {
+            switch (Config.AUT)
+            {
+                case (AUT.Za):
+                case (AUT.Wb):
+                case (AUT.Ca):
+                case (AUT.Uk): 
+                _homePhone = Section.FindElement(By.CssSelector(UiMap.Get.ContactingYouSection.HomePhone));
+                    break;
+            }
             _email = Section.FindElement(By.CssSelector(UiMap.Get.ContactingYouSection.Email));
             _emailConfirm = Section.FindElement(By.CssSelector(UiMap.Get.ContactingYouSection.EmailConfirm));
-            _homePhone = Section.FindElement(By.CssSelector(UiMap.Get.ContactingYouSection.HomePhone));
+           
             _mobilePhone = Section.FindElement(By.CssSelector(UiMap.Get.ContactingYouSection.MobilePhone));
 
             switch (Config.AUT)
@@ -80,6 +90,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
                     _mobilePhoneP3 = Section.FindElement(By.CssSelector(UiMap.Get.ContactingYouSection.MobilePhoneP3));
                     break;
             }
+            
+        }
+
+        public bool CanEnterLettersToMobilePhoneField(string text)
+        {
+            return _mobilePhone.VerifyTextEntering(text);
         }
     }
 }

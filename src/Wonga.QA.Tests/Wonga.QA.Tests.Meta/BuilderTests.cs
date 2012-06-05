@@ -5,7 +5,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Meta
 {
-    [Parallelizable(TestScope.All)]
+    [TestFixture, Parallelizable(TestScope.All), DependsOn(typeof(ColdStartTests))]
     public class BuilderTests
     {
         private Customer _customer;
@@ -29,7 +29,9 @@ namespace Wonga.QA.Tests.Meta
             ApplicationBuilder builder = Config.AUT == AUT.Wb ?
                 ApplicationBuilder.New(_customer, _organisation) :
                 ApplicationBuilder.New(_customer);
-            Assert.DoesNotThrow(() => builder.Build());
+            Application application = builder.Build();
+            if ((Config.AUT == AUT.Uk) || (Config.AUT == AUT.Ca) || (Config.AUT == AUT.Za))
+                Assert.IsTrue(application.GetDueDateBalance() != 0, "DueDateBalance sould not be 0");
             //builder.Build();//debug only
         }
     }

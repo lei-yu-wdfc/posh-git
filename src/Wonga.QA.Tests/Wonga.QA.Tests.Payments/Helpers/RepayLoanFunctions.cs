@@ -11,8 +11,13 @@ namespace Wonga.QA.Tests.Payments.Helpers
 {
     public class RepayLoanFunctions
     {
+        const string PaymentCardType = "Visa";
+        private const string PaymentCardNumber = "4444333322221111";
+
         public void RepayEarlyOnLoanStartDate(Guid appId, Guid paymentCardId, Guid bankAccountId, Guid accountId, decimal trustRating, int dueInDays = 5)
         {
+            
+
             // Create Account so that time zone can be looked up
             Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
 
@@ -20,7 +25,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId, dueInDays);
 
             Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
-            Thread.Sleep(250);
+            Thread.Sleep(500);
             Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
@@ -33,7 +38,6 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 .Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 2);
 
         }
-
 
         private void CreateFixedTermLoanApplication(Guid appId, Guid accountId, Guid bankAccountId, Guid paymentCardId, int dueInDays)
         {
@@ -62,20 +66,30 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 CreatedOn = DateTime.UtcNow
             });
 
+            Drive.Msmq.Payments.Send(new AddPaymentCardCommand  ()
+            {
+                PaymentCardId = paymentCardId,
+                AccountId = accountId,
+                CardType = PaymentCardType,
+                CreatedOn = DateTime.UtcNow,
+                ExpiryDateXml = DateTime.Now.AddYears(1).ToString("yyyy-MM"),
+                HolderName = "Mickey Mouse",
+                Number = PaymentCardNumber,
+                IsCreditCard = false,
+                IsPrimary = true
+            });
+
             Thread.Sleep(500);
             Drive.Msmq.Payments.Send(new IBankAccountValidatedEvent()
             {
                 BankAccountId = bankAccountId,
                 IsValid = true
             });
+
+            // Authorize Payment Card
+            Drive.Data.Payments.Db.PaymentCardsBase.UpdateByExternalId(ExternalId: paymentCardId, AuthorizedOn: DateTime.UtcNow);
+            
         }
 
-        //private void CheckExtendMinSetting()
-        //{
-        //    // Check Loan Extension is Enabled
-        //    var cfg1 = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.ExtendLoanMinDays");
-        //    if (cfg1.Value != "1")
-        //        throw new Exception("Unable to run test, ExtendLoanMinDays must be set to 1 in service configuration");
-        //}
     }
 }

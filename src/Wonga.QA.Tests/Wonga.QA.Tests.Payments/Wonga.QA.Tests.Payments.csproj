@@ -35,6 +35,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AccruedInterestSuspensionTests.cs" />
     <Compile Include="AddBankAccountTests.cs" />
     <Compile Include="AddBusinessBankAccountTests.cs" />
     <Compile Include="BusinessRemoveFromArrearsTests.cs" />
@@ -47,18 +48,24 @@
     <Compile Include="Command\DcaCommandTests.cs" />
     <Compile Include="Command\DeletePersonalPaymentCardCsApiCommandTests.cs" />
     <Compile Include="Command\GenerateRepaymentNumberTest.cs" />
+    <Compile Include="Command\IncomingPartnerPaymentCommandTests.cs" />
     <Compile Include="Command\SavePaymentCardBillingAddress.cs" />
     <Compile Include="Command\SetAccountPaymentMethodCommandCaTests.cs" />
+    <Compile Include="Command\TakePaymentManualCsCommandTests.cs" />
+    <Compile Include="ExternalDebtCollectionOnFailedRepresentmentTests.cs" />
     <Compile Include="CsapiCreateTransactionTest.cs" />
     <Compile Include="EarlyRepaymentTests.cs" />
     <Compile Include="EasyPayTests.cs" />
+    <Compile Include="Enums\PaymentFrequency.cs" />
     <Compile Include="ExternalDebtCollectionTests.cs" />
     <Compile Include="GetApplicationAprTest.cs" />
     <Compile Include="GetAvailabelCreditTest.cs" />
     <Compile Include="GetInstallmentQuoteTest.cs" />
     <Compile Include="GetRepaymentDetailsTest.cs" />
     <Compile Include="Helpers\AccountSummarySetupFunctions.cs" />
+    <Compile Include="Helpers\Ca\CalculateNextPayDateFunctionsCa.cs" />
     <Compile Include="Helpers\ExtendLoanFunctions.cs" />
+    <Compile Include="Helpers\FeatureSwitchConstants.cs" />
     <Compile Include="Helpers\RepayLoanFunctions.cs" />
     <Compile Include="Helpers\VerifyPaymentFunctions.cs" />
     <Compile Include="InArrearsNoticeTests.cs" />
@@ -66,6 +73,8 @@
     <Compile Include="LoanCalculations\BusinessLoanCalculationTests.cs" />
     <Compile Include="MoveApplicationToDcaTests.cs" />
     <Compile Include="NaedoRetryTests.cs" />
+    <Compile Include="PadRepresentmentOptimization.cs" />
+    <Compile Include="PaymentsCollectionSuppression\FraudPaymentsCollectionSuppressionTests.cs" />
     <Compile Include="Queries\CsGetLoanExtensionPaymentStatusQueryTests.cs" />
     <Compile Include="Queries\GetBusinessApplicationSummaryCsapiQuery.cs" />
     <Compile Include="Queries\CsGetCardPaymentStatusQueryTests.cs" />
@@ -78,6 +87,7 @@
     <Compile Include="Queries\GetRepayLoanQuoteQueryTests.cs" />
     <Compile Include="Queries\GetTransactionsCsapiQuery.cs" />
     <Compile Include="Queries\GetValidTransactionTypesQueryTest.cs" />
+    <Compile Include="Queries\IncomingPartnerPaymentQueryTest.cs" />
     <Compile Include="RepayViaOnlineBillPaymentTests.cs" />
     <Compile Include="CreateApplicationTests.cs" />
     <Compile Include="Enums\PaymentTransactionType.cs" />
@@ -107,6 +117,8 @@
     <Compile Include="RepaymentTests.cs" />
     <Compile Include="RiskBasedPricingTests.cs" />
     <Compile Include="Sagas\LoanDueNotificationSagaTests.cs" />
+    <Compile Include="Sagas\PayUPaymentConfirmationSagaTests.cs" />
+    <Compile Include="Sagas\LoanDurationSagaTests.cs" />
     <Compile Include="Sagas\SchedulePaymentSagaTests.cs" />
     <Compile Include="ServiceFeesTests.cs" />
     <Compile Include="UpdateLoanTermTests.cs" />

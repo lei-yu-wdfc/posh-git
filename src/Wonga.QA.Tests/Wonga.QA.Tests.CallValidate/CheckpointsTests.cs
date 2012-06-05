@@ -22,6 +22,34 @@ namespace Wonga.QA.Tests.CallValidate
 
         /* Main applicant payment card is valid */
 
+        //TODO : Merge these tests
+
+        [Test, AUT(AUT.Uk), JIRA("UK-869")]
+        public void L0Applicant_WhenPaymentCardNotValidated_LoanIsDeclined()
+        {
+            var customer = CustomerBuilder
+                .New()
+                .WithPaymentCardNumber(Int64.Parse("9999888877776666"))
+                .WithEmployer(RiskMask.TESTCallValidatePaymentCardIsValid)
+                .Build();
+
+            ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-869")]
+        public void L0Applicant_WhenPaymentCardValidated_LoanIsApproved()
+        {
+            var customer = CustomerBuilder
+                .New()
+                .WithPaymentCardNumber(Int64.Parse("1111222233334444"))
+                .WithEmployer(RiskMask.TESTCallValidatePaymentCardIsValid)
+                .Build();
+
+            ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+        }
+
+
+
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-136")]
         public void TestCallValidateMainApplicantPaymentCardIsValid_LoanIsApproved()

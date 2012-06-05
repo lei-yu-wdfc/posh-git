@@ -1,4 +1,5 @@
-﻿using MbUnit.Framework;
+﻿using System;
+using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
@@ -58,8 +59,7 @@ namespace Wonga.QA.Tests.Api
         {
             Customer cust = CustomerBuilder.New().Build();
             ApplicationBuilder.New(cust).Build().RepayOnDueDate();
-
-            Drive.Db.UpdateEmployerName(cust.Id, "Wonga");
+            CustomerOperations.UpdateEmployerNameInRisk(cust.Id,"Wonga");
             ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
         }
 

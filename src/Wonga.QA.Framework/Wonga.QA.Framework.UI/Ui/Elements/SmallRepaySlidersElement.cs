@@ -23,7 +23,7 @@ namespace Wonga.QA.Framework.UI.Elements
         {
             _form = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.SmallRepaySlidersElement.FormId));
             _repayAmount = _form.FindElement(By.CssSelector(UiMap.Get.SmallRepaySlidersElement.RepayAmount));
-            _remainderAmount = _form.FindElement(By.CssSelector(UiMap.Get.SmallRepaySlidersElement.RemainderAmount));           
+            _remainderAmount = _form.FindElement(By.CssSelector(UiMap.Get.SmallRepaySlidersElement.RemainderAmount));
         }
 
         public String HowMuch

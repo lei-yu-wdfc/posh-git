@@ -315,7 +315,7 @@ namespace Wonga.QA.Tests.Payments
 
 			loanExtension.Refresh();
 
-            Do.With.Interval(1).Until(() => Drive.Db.Payments.LoanExtensions.Single(x => x.ExternalId == extensionId && x.ApplicationId == app.ApplicationId && x.SignedOn != null ));
+            loanExtension = Do.With.Interval(1).Until(() => Drive.Db.Payments.LoanExtensions.Single(x => x.ExternalId == extensionId && x.ApplicationId == app.ApplicationId && x.SignedOn != null ));
 
             Assert.IsNotNull(loanExtension.SignedOn, "Loan Extension should be signed");
 		}

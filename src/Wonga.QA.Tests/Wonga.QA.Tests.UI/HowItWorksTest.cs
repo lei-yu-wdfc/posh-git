@@ -16,6 +16,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Ui
 {
+    [Parallelizable(TestScope.All)]
     class HowItWorksTest : UiTest
     {
         [Test, AUT(AUT.Wb), JIRA("QA-252")]

@@ -76,6 +76,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _popupAccountNumber.SendKeys(accountNumber);
             _popupLengthOfTime.SelectOption(lenghtOfTime);
             _popupAddBankAccountButton.Click();
+            Console.WriteLine("popup 1 is closed");
             
             
         }
@@ -123,6 +124,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             try
             {
                 _popupExeption = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.PopupExeption));
+                Console.WriteLine(_popupExeption.Text);
                 return true;
             }
             catch (Exception)

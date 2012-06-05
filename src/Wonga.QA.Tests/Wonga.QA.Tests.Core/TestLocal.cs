@@ -17,6 +17,7 @@ namespace Wonga.QA.Tests.Core
         {
             get
             {
+<<<<<<< HEAD
                 string testKey = null;
                 lock(_lock)
                 {
@@ -32,6 +33,30 @@ namespace Wonga.QA.Tests.Core
         }
 
         public TestLocal(Func<T> function)
+=======
+                lock(_lock)
+                {
+                    if (!_dict.ContainsKey(GetTestId()) && _function != null)
+                        _dict[GetTestId()] = _function();
+                    return _dict.ContainsKey(GetTestId()) ? _dict[GetTestId()] : default(T);
+                }
+            }
+            set
+            {
+                lock(_lock)
+                {
+                    _dict[GetTestId()] = value;
+                }
+            }
+        }
+
+        private string GetTestId()
+        {
+            return TestContext.CurrentContext.TestStep.Id;
+        }
+
+        public TestLocal(Func<T> function = null)
+>>>>>>> master
         {
             _function = function;
         }

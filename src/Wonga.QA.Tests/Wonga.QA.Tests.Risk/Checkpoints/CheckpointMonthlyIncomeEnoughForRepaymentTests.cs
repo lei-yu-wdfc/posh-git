@@ -14,7 +14,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	class CheckpointMonthlyIncomeEnoughForRepaymentTests
 	{
         private const RiskMask TestMask = RiskMask.TESTMonthlyIncomeEnoughForRepayment;
-		private static readonly decimal NetMonthlyIncome = GetDefaultCreditLimit()*4;
+		private static readonly decimal NetMonthlyIncome = GetDefaultCreditLimit();
 
 		[Test, AUT(AUT.Uk, AUT.Za), JIRA("SME-866","UK-866"), Description("Scenario 1: Accepted")]
 		public void CheckpointMonthlyIncomeEnoughForRepaymentAccept()
