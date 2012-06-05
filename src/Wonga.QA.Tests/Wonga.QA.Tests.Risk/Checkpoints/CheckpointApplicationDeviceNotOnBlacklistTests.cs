@@ -153,11 +153,15 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             }
         }
 
-        [Test, AUT(AUT.Ca, AUT.Uk, AUT.Wb), JIRA("UK-1567")]
+        [Test, AUT(AUT.Ca, AUT.Uk, AUT.Wb), JIRA("CA-1735","UK-1567")]
         public void L0_CheckpointApplicationGetsIovationReviewWithNoManualVerification_LoanIsDeclined()
         {
             var isManualVerificationEnabled =
                     Drive.Data.Ops.GetServiceConfiguration<bool>(IsManualVerificationEnabledKey);
+
+			var isIovationReviewAccepted =
+				Drive.Data.Ops.GetServiceConfiguration<bool>(IsIovationReviewAcceptedKey);
+				
             try
             {
                 var customerBuilder = CustomerBuilder.New();
@@ -167,7 +171,8 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
                                    ? customerBuilder.WithMiddleName(RiskMask.TESTApplicationDeviceNotOnBlacklist).Build()
                                    : customerBuilder.WithEmployer(RiskMask.TESTDeviceNotOnBlacklist).Build();
 
-                Drive.Data.Ops.SetServiceConfiguration<bool>(IsManualVerificationEnabledKey, false);
+                Drive.Data.Ops.SetServiceConfiguration<bool>(IsManualVerificationEnabledKey, true);
+				Drive.Data.Ops.SetServiceConfiguration<bool>(IsIovationReviewAcceptedKey, false);
 
                 if (Config.AUT == AUT.Wb)
                 {
@@ -183,13 +188,10 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
                 Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
                 Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.HardwareBlacklistCheck));
             }
-            catch (Exception)
-            {
-                throw;
-            }
             finally
             {
                 Drive.Data.Ops.SetServiceConfiguration(IsManualVerificationEnabledKey, isManualVerificationEnabled);
+            	Drive.Data.Ops.SetServiceConfiguration(IsIovationReviewAcceptedKey, isIovationReviewAccepted);
             }
         }
 
