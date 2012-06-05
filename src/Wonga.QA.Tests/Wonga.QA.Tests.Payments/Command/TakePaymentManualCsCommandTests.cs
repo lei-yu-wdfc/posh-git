@@ -6,9 +6,8 @@ using Wonga.QA.Framework.Api.Exceptions;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Cs;
 using Wonga.QA.Tests.Core;
-using PaymentTransactionEnum = Wonga.QA.Framework.Api.PaymentTransactionEnum;
-using PaymentTransactionScopeEnum = Wonga.QA.Framework.Api.PaymentTransactionScopeEnum;
 using SavePaymentCardBillingAddressCommand = Wonga.QA.Framework.Api.SavePaymentCardBillingAddressCommand;
+using Wonga.QA.Framework.Msmq;
 
 namespace Wonga.QA.Tests.Payments.Command
 {
