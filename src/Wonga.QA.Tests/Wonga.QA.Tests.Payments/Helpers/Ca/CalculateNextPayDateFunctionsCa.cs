@@ -45,21 +45,31 @@ namespace Wonga.QA.Tests.Payments.Helpers.Ca
 
         private static DateTime GetNextDayOfMonth(DateTime previousNextPayDay, DateTime date)
         {
-            int payDay = previousNextPayDay.Day;
-            int lastDayOfMonth = GetFirstDayOfNextMonth(date).AddDays(-1).Day;
-            var payDateOfThisMonth = new DateTime(date.Year, date.Month, Math.Min(payDay, lastDayOfMonth));
+            if (previousNextPayDay > date)
+                return GetPreviousWorkingIfGivenPaydateIsNonWorkingDay(previousNextPayDay, previousNextPayDay);
 
-            return payDateOfThisMonth < date ? payDateOfThisMonth.AddMonths(1) : payDateOfThisMonth;
+            var nextPayDate = previousNextPayDay.AddMonths(1);
+
+            var stepBackPayDate = GetPreviousWorkingIfGivenPaydateIsNonWorkingDay(previousNextPayDay, nextPayDate);
+
+            return stepBackPayDate < date ? GetNextDayOfWeek(previousNextPayDay, date.AddDays(1)) : stepBackPayDate;
         }
 
         private static DateTime GetNextBiMonthly(DateTime previousNextPayDay, DateTime today)
         {
             if (previousNextPayDay > today)
-                return previousNextPayDay;
+                return GetPreviousWorkingIfGivenPaydateIsNonWorkingDay(previousNextPayDay, previousNextPayDay);
+              
+            var nextPayDay = new DateTime();
 
-            var nextPayDay = today.Day <= 15
-                                 ? new DateTime(today.Year, today.Month, 15)
-                                 : GetFirstDayOfNextMonth(today).AddDays(-1);
+            if(today.Day < 15)
+            {
+                nextPayDay = new DateTime(today.Year, today.Month, 15);
+            }
+            else
+            {
+                nextPayDay = GetFirstDayOfNextMonth(today).AddDays(-1);
+            }
 
             var stepBackPayDay = GetPreviousWorkingIfGivenPaydateIsNonWorkingDay(previousNextPayDay, nextPayDay);
 
@@ -69,13 +79,11 @@ namespace Wonga.QA.Tests.Payments.Helpers.Ca
         private static DateTime GetNextDayOfWeek(DateTime previousNextPayDate, DateTime today)
         {
             if (previousNextPayDate > today)
-                return previousNextPayDate;
+                return GetPreviousWorkingIfGivenPaydateIsNonWorkingDay(previousNextPayDate, previousNextPayDate);
 
-            while (today.DayOfWeek != previousNextPayDate.DayOfWeek)
-            {
-                today = today.AddDays(1);
-            }
-            var stepBackPayDate = GetPreviousWorkingIfGivenPaydateIsNonWorkingDay(previousNextPayDate, today);
+            var nextPayDate = previousNextPayDate.AddDays(7);
+
+            var stepBackPayDate = GetPreviousWorkingIfGivenPaydateIsNonWorkingDay(previousNextPayDate, nextPayDate);
 
             return stepBackPayDate < today ? GetNextDayOfWeek(previousNextPayDate, today.AddDays(1)) : stepBackPayDate;
         }
@@ -83,20 +91,26 @@ namespace Wonga.QA.Tests.Payments.Helpers.Ca
         private static DateTime GetNextBiWeeklyDate(DateTime previousNextPayDate, DateTime today)
         {
             if (previousNextPayDate > today)
-                return previousNextPayDate;
+                return GetPreviousWorkingIfGivenPaydateIsNonWorkingDay(previousNextPayDate, previousNextPayDate);
 
-            const int biWeeklyPeriod = 14;
+            var nextPayDate = previousNextPayDate.AddDays(14);
 
-            DateTime nextPayDate = previousNextPayDate;
+            var stepBackDate = GetPreviousWorkingIfGivenPaydateIsNonWorkingDay(previousNextPayDate, nextPayDate);
 
-            while (nextPayDate < DateTime.Today)
-            {
-                nextPayDate = nextPayDate.AddDays(biWeeklyPeriod);
-            }
+            return stepBackDate < today ? GetNextDayOfWeek(previousNextPayDate, today.AddDays(1)) : stepBackDate;
 
-            nextPayDate = GetPreviousWorkingIfGivenPaydateIsNonWorkingDay(previousNextPayDate, nextPayDate);
+            //const int biWeeklyPeriod = 14;
 
-            return nextPayDate < today ? GetNextBiWeeklyDate(previousNextPayDate, today.AddDays(1)) : nextPayDate;
+            //DateTime nextPayDate = previousNextPayDate;
+
+            //while (nextPayDate < DateTime.Today)
+            //{
+            //    nextPayDate = nextPayDate.AddDays(biWeeklyPeriod);
+            //}
+
+            //nextPayDate = GetPreviousWorkingIfGivenPaydateIsNonWorkingDay(previousNextPayDate, nextPayDate);
+
+            //return nextPayDate < today ? GetNextBiWeeklyDate(previousNextPayDate, today.AddDays(1)) : nextPayDate;
         }
 
         private static DateTime GetPreviousWorkingIfGivenPaydateIsNonWorkingDay(DateTime lastKnownPayDate, DateTime nextPayDate)
