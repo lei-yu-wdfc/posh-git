@@ -198,15 +198,14 @@ namespace Wonga.QA.Tests.Payments.Command
 			var transaction = Do.Until(() => _transactionsDB.FindAll(_transactionsDB.ApplicationId == application.ApplicationId &&
 																	_transactionsDB.Reference == merchantReferenceNumber.ToString() &&
 																	_transactionsDB.Type == PaymentTransactionType.DirectBankPayment.ToString() &&
-																	_transactionsDB.Amount == (-1) * transactionAmount))
-																	.FirstOrDefault();
+																	_transactionsDB.Amount == (-1) * transactionAmount)
+																	.Single());
 
 			Assert.IsNotNull(incomingPartnerPayment != null);
 			Assert.IsNotNull(incomingPartnerPaymentResponses != null);
 			Assert.IsNotNull(transaction);
 		}
 
-		[Explicit]
 		[Test, AUT(AUT.Za), JIRA("ZA-2571")]
 		public void SaveIncomingPartnerPaymentRequest_WaitForTimeOut_Expect_DirectBankPaymentTransactionsCreated()
 		{
@@ -228,7 +227,7 @@ namespace Wonga.QA.Tests.Payments.Command
 			//Act
 			Drive.Api.Commands.Post(command);
 
-			var sagaEntity = Do.Until(() => _payUProcessRequestResponseSagaEntityDB.FindAll(_payUProcessRequestResponseSagaEntityDB.PaymentReference == merchantReferenceNumber)).FirstOrDefault();
+			var sagaEntity = Do.Until(() => _payUProcessRequestResponseSagaEntityDB.FindAll(_payUProcessRequestResponseSagaEntityDB.PaymentReference == merchantReferenceNumber).Single());
 
 			//Timeout Immediately 
 			Drive.Msmq.Payments.Send(new TimeoutMessage { Expires = DateTime.UtcNow, SagaId = sagaEntity.Id });
@@ -237,8 +236,8 @@ namespace Wonga.QA.Tests.Payments.Command
 			var transaction = Do.Until(() => _transactionsDB.FindAll(_transactionsDB.ApplicationId == application.ApplicationId &&
 																	_transactionsDB.Reference == merchantReferenceNumber.ToString() &&
 																	_transactionsDB.Type == PaymentTransactionType.DirectBankPayment.ToString() &&
-																	_transactionsDB.Amount == (-1) * transactionAmount))
-																	.FirstOrDefault();
+																	_transactionsDB.Amount == (-1) * transactionAmount)
+																	.Single());
 
 			Assert.IsNotNull(transaction);
 		}
