@@ -17,7 +17,7 @@ public class MbUnitConfig
         switch(Config.AUT)
         {
             case(AUT.Ca):
-                TestAssemblyExecutionParameters.DegreeOfParallelism = Environment.ProcessorCount;
+                TestAssemblyExecutionParameters.DegreeOfParallelism = 1;
                 break;
             case (AUT.Wb):
                 TestAssemblyExecutionParameters.DegreeOfParallelism = 1;
