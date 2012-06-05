@@ -418,8 +418,8 @@ namespace Wonga.QA.Tests.CallReport
 
         /* Main applicant DOB is correct */
 
-        [Test, AUT(AUT.Wb)]
-        [JIRA("SME-644"), Description("CallReport -> This test creates a loan for a customer with the correct date of birth, then checks the risk checkpoint")]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
+        [JIRA("SME-644", "UKRISK-71"), Description("CallReport -> This test creates a loan for a customer with the correct date of birth, then checks the risk checkpoint")]
         public void TestCallReportMainApplicantDateOfBirthIsCorrect_LoanIsApproved()
         {
             const String forename = "unknown";
@@ -446,8 +446,8 @@ namespace Wonga.QA.Tests.CallReport
                                                                      RiskVerificationDefinitions.DateOfBirthIsCorrectVerification);
         }
 
-        [Test, AUT(AUT.Wb)]
-        [JIRA("SME-644"), Description("CallReport -> This test creates a loan for a customer with the incorrect date of birth, then checks the risk checkpoint")]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
+        [JIRA("SME-644", "UKRISK-71"), Description("CallReport -> This test creates a loan for a customer with the incorrect date of birth, then checks the risk checkpoint")]
         public void TestCallReportMainApplicantDateOfBirthIsIncorrect_LoanIsDeclined()
         {
             const String forename = "kathleen";
@@ -474,8 +474,8 @@ namespace Wonga.QA.Tests.CallReport
 
         }
 
-        [Test, AUT(AUT.Wb)]
-        [JIRA("SME-644"), Description("CallReport -> This test creates a loan for a customer with the not provided date of birth, then checks the risk checkpoint")]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
+        [JIRA("SME-644", "UKRISK-71"), Description("CallReport -> This test creates a loan for a customer with the not provided date of birth, then checks the risk checkpoint")]
         public void TestCallReportMainApplicantDateOfBirthNotProvided_LoanIsApproved()
         {
             const String forename = "unknown";
@@ -492,7 +492,7 @@ namespace Wonga.QA.Tests.CallReport
                                                      RiskMask.TESTCustomerDateOfBirthIsCorrect);
             ScrubNames(mainApplicantBuilder);
             var mainApplicant = mainApplicantBuilder.Build();
-            var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Declined);
+            var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
 
@@ -502,10 +502,6 @@ namespace Wonga.QA.Tests.CallReport
                                                                      RiskVerificationDefinitions.DateOfBirthIsCorrectVerification);
 
         }
-
-        private const RiskMask TestMask = RiskMask.TESTCallValidatePaymentCardIsValid;
-
-       
 
         #endregion
 
