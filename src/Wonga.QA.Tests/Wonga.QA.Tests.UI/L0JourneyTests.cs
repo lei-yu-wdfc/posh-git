@@ -1821,10 +1821,10 @@ namespace Wonga.QA.Tests.Ui
         }
 
         [Test, AUT(AUT.Za), JIRA("QA-247")]
-       //[Row(100, 37)]
-       //[Row(100, 31)]
-       [Row(131, 34)]
-       //[Row(153, 37)]
+        [Row(100, 37)]
+        [Row(100, 31)]
+        [Row(131, 34)]
+        [Row(153, 37)]
         public void VerifyThatInduplumNeverBrokenAndTotalToRepayIsSmalestThenTwoLoanAmount(int _loanAmount, int _duration)
         {
             int controlSum = _loanAmount * 2;
