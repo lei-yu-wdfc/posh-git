@@ -2,7 +2,6 @@
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
-using Wonga.QA.Framework.Api.Enums;
 using Wonga.QA.Framework.Api.Exceptions;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Data;
@@ -23,7 +22,7 @@ namespace Wonga.QA.Tests.Prepaid
         private static readonly String STANDARD_CARD_TEMPLATE_NAME = "34327";
         private static readonly String PREMIUM_CARD_TEMPLATE_NAME = "34328";
 
-        private static readonly String TRANSCATIONS_AVALIBLE_CUSTOMER = "1010000162";
+        //private static readonly String TRANSCATIONS_AVALIBLE_CUSTOMER = "1010000162";
 		
         private static readonly dynamic _prepaidCardDb = Drive.Data.PrepaidCard.Db;
         private static readonly dynamic _qaDataDb = Drive.Data.QaData.Db;
@@ -117,7 +116,7 @@ namespace Wonga.QA.Tests.Prepaid
 
         }
 
-        [Test,AUT(AUT.Uk),JIRA("PP-215")]
+       /* [Test,AUT(AUT.Uk),JIRA("PP-215")]
         public void CustomerShouldGetTransactionListFromPPS()
         {
             String oldSerialNumber = GetSerialNumber(_eligibleCustomerForStandardCard.Value.Id);
@@ -149,7 +148,7 @@ namespace Wonga.QA.Tests.Prepaid
             Assert.IsFalse(responseForPremiumCard.Values.Contains("Transaction"));
             Assert.Throws<ValidatorException>(() => Drive.Api.Queries.Post(invalidRequestForNonExistingAccount));
             Assert.Throws<ValidatorException>(() => Drive.Api.Queries.Post(invalidRequest));
-        }
+        }*/
 
         [TearDown]
         public void Rollback()
