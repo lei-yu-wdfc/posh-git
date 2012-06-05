@@ -186,6 +186,8 @@
     <PopupCloseButton>#edit-submit[value='Close']</PopupCloseButton>
     <BankAccount>#edit-bank-account-masked</BankAccount>
 	<ResendPin>#pin-hold a</ResendPin>
+	<ResendPinPopupClose>#fancybox-close</ResendPinPopupClose>
+	<ResendPinPopupText>#fancybox-content div</ResendPinPopupText>
   </ApplyPage>
 
   <FAQPage>

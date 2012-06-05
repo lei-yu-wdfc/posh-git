@@ -152,6 +152,7 @@
   </TabsElement>
 
   <ApplicationSection>
+	<EditPin>#edit-mobile-pin-ca</EditPin>
     <FormId>#wonga-apply-ln-form</FormId>
 	<ChangeMobileButton>#loan-application .form-markup-wrapper a</ChangeMobileButton>
   </ApplicationSection>
@@ -161,6 +162,8 @@
 		<PopupSaveButton>#edit-submit[value='Save']</PopupSaveButton>
 		<PopupCloseButton>#edit-submit[value='Close']</PopupCloseButton>
 		<ResendPin>#repin div:first-child+div a</ResendPin>
+		<ResendPinPopupClose>#fancybox-close</ResendPinPopupClose>
+		<ResendPinPopupText>#fancybox-content div</ResendPinPopupText>
 	</ApplyPage>
 
   <MyPersonalDetailsPage>

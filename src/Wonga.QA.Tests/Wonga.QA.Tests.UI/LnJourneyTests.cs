@@ -233,7 +233,7 @@ namespace Wonga.QA.Tests.Ui
                 .FillCardDetails()
                 .WaitForAcceptedPage()
                 .FillAcceptedPage();
-            
+
             var customer =
                 new Customer(
                     Guid.Parse(
@@ -283,10 +283,10 @@ namespace Wonga.QA.Tests.Ui
                     var pageZA = journeyZa.ApplyForLoan(200, 20).CurrentPage as ApplyPage;
                     pageZA.SetNewMobilePhone = phone;
                     pageZA.ResendPinClick();
-                   Thread.Sleep(5000);
+                    Thread.Sleep(5000);
                     var smsZa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(phone.Replace("077", "2777")));
-                        Do.Until(
-                            () => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(phone.Replace("077", "2777")));
+                    Do.Until(
+                        () => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(phone.Replace("077", "2777")));
                     Assert.AreEqual(2, smsZa.Count());
                     Console.WriteLine(smsZa.Count());
                     foreach (var sms in smsZa)
@@ -295,13 +295,13 @@ namespace Wonga.QA.Tests.Ui
                         Assert.IsTrue(
                             sms.MessageText.Contains("You will need it to complete your application back at Wonga.com."));
                     }
-                    
+
                     Console.WriteLine(smsZa.Count());
                     break;
                 case AUT.Ca:
                     var journeyCa = JourneyFactory.GetLnJourney(Client.Home());
                     var pageCa = journeyCa.ApplyForLoan(200, 25)
-                                   //.SetName(name, surname)
+                        //.SetName(name, surname)
                                    .CurrentPage as ApplyPage;
                     pageCa.SetNewMobilePhone = phone;
                     pageCa.ResendPinClick();
@@ -340,7 +340,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(mailTemplate.value.ToString().Contains("You promise to pay and will make one repayment of"));
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-302"), Pending("work in progres")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-302")]
         public void LoggedCustomerWithoutLoanAppliesNewLoanChangesMobilePhoneAndClicksResendPinAndGoFarther()
         {
             string email = Get.RandomEmail();
@@ -361,12 +361,16 @@ namespace Wonga.QA.Tests.Ui
             string phone = "077009" + Get.RandomLong(1000, 9999).ToString();
             var loginPage = Client.Login();
             loginPage.LoginAs(email);
-
-            var journeyZa = JourneyFactory.GetLnJourney(Client.Home());
-            var pageZA = journeyZa.ApplyForLoan(200, 20).CurrentPage as ApplyPage;
-            pageZA.SetNewMobilePhone = phone;
-            pageZA.ResendPinClick();
-            
+        
+            var journey = JourneyFactory.GetLnJourney(Client.Home());
+            var applyPage = journey.ApplyForLoan(200, 20).CurrentPage as ApplyPage;
+            applyPage.SetNewMobilePhone = phone;
+            applyPage.ResendPinClick();
+            Thread.Sleep(2000);
+            applyPage.CloseResendPinPopup();
+            applyPage.ApplicationSection.SetPin = "0000";
+            journey.CurrentPage = applyPage.Submit();
+            var mySummary = journey.WaitForAcceptedPage() as AcceptedPage;
 
 
         }
