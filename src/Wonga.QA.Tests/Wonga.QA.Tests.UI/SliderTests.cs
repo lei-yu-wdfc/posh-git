@@ -131,7 +131,8 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-282"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-282"), Pending("Waiting for implementation of new sliders")]
+        //[Category(TestCategories.Smoke)] - return when test is enabled
         public void ChooseLoanAmountAndDurationViaPlusMinusButtons()
         {
             var homePage = Client.Home();
@@ -196,7 +197,8 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-150"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-150"), Pending("Waiting for new sliders")]
+        // Category(TestCategories.Smoke) - return when test is enabled
         public void CustomerTypesValidValuesIntoAmountAndDurationFields()
         {
             var termCustomerEnter = Get.RandomInt(_termMin, _termMax);
@@ -524,7 +526,7 @@ namespace Wonga.QA.Tests.Ui
             
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-283"), Pending("CA code appearing in ZA - Michael Nowicki to fix"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-283"), Pending("CA code appearing in ZA - Michael Nowicki to fix")]
         public void CustomerTryToChooseLoanAountAndDurationBiggerThanMaxAndTakeLoan()
         {
             var serviceConfigurations = Drive.Data.Ops.Db.ServiceConfigurations;
