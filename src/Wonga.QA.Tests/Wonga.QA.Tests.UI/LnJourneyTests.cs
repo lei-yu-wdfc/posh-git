@@ -316,30 +316,6 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-205")]
-        public void CheckEmailsWhenLoanTakenOutAsLNCustomer()
-        {
-            string email = Get.RandomEmail();
-            Customer customer = CustomerBuilder
-                .New()
-                .WithEmailAddress(email)
-                .Build();
-            Application application1 = ApplicationBuilder
-                .New(customer)
-                .Build();
-            application1.RepayOnDueDate();
-            Application application2 = ApplicationBuilder
-                .New(customer)
-                .Build();
-
-            var mail = Do.Until(() => Drive.Data.QaData.Db.Email.FindAllByEmailAddress(email)).FirstOrDefault();
-            Console.WriteLine(mail.EmailId);
-            var mailTemplate = Do.Until(() => Drive.Data.QaData.Db.EmailToken.FindBy(EmailId: mail.EmailId, Key: "Loan_Agreement"));
-            Console.WriteLine(mailTemplate.Value.ToString());
-            Assert.IsNotNull(mailTemplate);
-            Assert.IsTrue(mailTemplate.value.ToString().Contains("You promise to pay and will make one repayment of"));
-        }
-
         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-302")]
         public void LoggedCustomerWithoutLoanAppliesNewLoanChangesMobilePhoneAndClicksResendPinAndGoFarther()
         {
