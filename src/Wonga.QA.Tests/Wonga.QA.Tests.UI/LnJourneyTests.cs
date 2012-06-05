@@ -16,7 +16,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Ui
 {
     [TestFixture, Parallelizable(TestScope.All)]
-    class LnJourneyTests : UiTest
+    internal class LnJourneyTests : UiTest
     {
         [Test, AUT(AUT.Za), JIRA("QA-196"), Pending("ZA-2510"), Category(TestCategories.Smoke)]
         public void LnCustomerTakesNewLoanAndChangesTheMobilePhoneThenChangesShouldBeReflected()
@@ -42,7 +42,7 @@ namespace Wonga.QA.Tests.Ui
 
             var journey = JourneyFactory.GetLnJourney(homePage);
             var applyPage = journey.ApplyForLoan(200, 10)
-                .SetName(name, surname).CurrentPage as ApplyPage;
+                                .SetName(name, surname).CurrentPage as ApplyPage;
             applyPage.SetNewMobilePhone = "0111111111";
             applyPage.ApplicationSection.SetPin = "0000";
             journey.CurrentPage = applyPage.Submit() as ProcessingPage;
@@ -190,7 +190,11 @@ namespace Wonga.QA.Tests.Ui
                 .WaitForAcceptedPage()
                 .FillAcceptedPage();
 
-            var customer = new Customer(Guid.Parse(Drive.Api.Queries.Post(new GetAccountQuery { Login = email, Password = Get.GetPassword() }).Values["AccountId"].Single()));
+            var customer =
+                new Customer(
+                    Guid.Parse(
+                        Drive.Api.Queries.Post(new GetAccountQuery { Login = email, Password = Get.GetPassword() }).Values
+                            ["AccountId"].Single()));
             var application = customer.GetApplication();
 
             var mobileNumber = customer.GetCustomerMobileNumber();
@@ -208,7 +212,8 @@ namespace Wonga.QA.Tests.Ui
 
             Assert.IsTrue(applyPage.IsMobilePhonePopupCancelButtonEnabled(), "Cancel button is not enabled");
             Assert.IsTrue(applyPage.IsMobilePhonePopupSaveButtonEnabled(), "Save button is not disabled");
-            Assert.IsTrue(applyPage.IsPhoneNumberNotChangedMessageVisible(), "Message that mobile phone number has not changed is not dispalyed");
+            Assert.IsTrue(applyPage.IsPhoneNumberNotChangedMessageVisible(),
+                          "Message that mobile phone number has not changed is not dispalyed");
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-1533")]
@@ -228,8 +233,12 @@ namespace Wonga.QA.Tests.Ui
                 .FillCardDetails()
                 .WaitForAcceptedPage()
                 .FillAcceptedPage();
-            
-            var customer = new Customer(Guid.Parse(Drive.Api.Queries.Post(new GetAccountQuery { Login = email, Password = Get.GetPassword() }).Values["AccountId"].Single()));
+
+            var customer =
+                new Customer(
+                    Guid.Parse(
+                        Drive.Api.Queries.Post(new GetAccountQuery { Login = email, Password = Get.GetPassword() }).Values
+                            ["AccountId"].Single()));
             var application = customer.GetApplication();
 
             // Repay
@@ -254,12 +263,12 @@ namespace Wonga.QA.Tests.Ui
             string surname = Get.RandomString(3, 10);
             string oldphone = "077009" + Get.RandomLong(1000, 9999).ToString();
             Customer customer = CustomerBuilder
-                 .New()
-                 .WithForename(name)
-                 .WithSurname(surname)
-                 .WithEmailAddress(email)
-                 .WithMobileNumber(oldphone)
-                 .Build();
+                .New()
+                .WithForename(name)
+                .WithSurname(surname)
+                .WithEmailAddress(email)
+                .WithMobileNumber(oldphone)
+                .Build();
             Application application = ApplicationBuilder
                 .New(customer)
                 .Build();
@@ -274,18 +283,26 @@ namespace Wonga.QA.Tests.Ui
                     var pageZA = journeyZa.ApplyForLoan(200, 20).CurrentPage as ApplyPage;
                     pageZA.SetNewMobilePhone = phone;
                     pageZA.ResendPinClick();
-                    var smsZa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(phone.Replace("077","2777")));
+                    Thread.Sleep(5000);
+                    var smsZa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(phone.Replace("077", "2777")));
+                    Do.Until(
+                        () => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(phone.Replace("077", "2777")));
+                    Assert.AreEqual(2, smsZa.Count());
+                    Console.WriteLine(smsZa.Count());
                     foreach (var sms in smsZa)
                     {
                         Console.WriteLine(sms.MessageText + " / " + sms.CreatedOn);
-                        Assert.IsTrue(sms.MessageText.Contains("You will need it to complete your application back at Wonga.com."));
+                        Assert.IsTrue(
+                            sms.MessageText.Contains("You will need it to complete your application back at Wonga.com."));
                     }
-                   // Assert.AreEqual(2, smsZa.Count());
+
+                    Console.WriteLine(smsZa.Count());
                     break;
                 case AUT.Ca:
                     var journeyCa = JourneyFactory.GetLnJourney(Client.Home());
                     var pageCa = journeyCa.ApplyForLoan(200, 25)
-                                   .SetName(name, surname).CurrentPage as ApplyPage;
+                        //.SetName(name, surname)
+                                   .CurrentPage as ApplyPage;
                     pageCa.SetNewMobilePhone = phone;
                     pageCa.ResendPinClick();
                     var smsCa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(phone.Replace("077", "177")));
@@ -321,6 +338,41 @@ namespace Wonga.QA.Tests.Ui
             Console.WriteLine(mailTemplate.Value.ToString());
             Assert.IsNotNull(mailTemplate);
             Assert.IsTrue(mailTemplate.value.ToString().Contains("You promise to pay and will make one repayment of"));
+        }
+
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-302")]
+        public void LoggedCustomerWithoutLoanAppliesNewLoanChangesMobilePhoneAndClicksResendPinAndGoFarther()
+        {
+            string email = Get.RandomEmail();
+            string name = Get.RandomString(3, 10);
+            string surname = Get.RandomString(3, 10);
+            string oldphone = "077009" + Get.RandomLong(1000, 9999).ToString();
+            Customer customer = CustomerBuilder
+                .New()
+                .WithForename(name)
+                .WithSurname(surname)
+                .WithEmailAddress(email)
+                .WithMobileNumber(oldphone)
+                .Build();
+            Application application = ApplicationBuilder
+                .New(customer)
+                .Build();
+            application.RepayOnDueDate();
+            string phone = "077009" + Get.RandomLong(1000, 9999).ToString();
+            var loginPage = Client.Login();
+            loginPage.LoginAs(email);
+        
+            var journey = JourneyFactory.GetLnJourney(Client.Home());
+            var applyPage = journey.ApplyForLoan(200, 20).CurrentPage as ApplyPage;
+            applyPage.SetNewMobilePhone = phone;
+            applyPage.ResendPinClick();
+            Thread.Sleep(2000);
+            applyPage.CloseResendPinPopup();
+            applyPage.ApplicationSection.SetPin = "0000";
+            journey.CurrentPage = applyPage.Submit();
+            var mySummary = journey.WaitForAcceptedPage() as AcceptedPage;
+
+
         }
 
         [Test, AUT(AUT.Za), Category(TestCategories.Smoke)]

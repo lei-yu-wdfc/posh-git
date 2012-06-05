@@ -99,5 +99,17 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             Client.Driver.FindElement(By.CssSelector(UiMap.Get.ApplyPage.ResendPin)).Click();
         }
+
+        public String GetResendPinPopupText()
+        {
+            return Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.ApplyPage.ResendPinPopupText)).Text);
+        }
+
+        public void CloseResendPinPopup()
+        {
+            IWebElement close = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.ApplyPage.ResendPinPopupClose)));
+            close.Click();
+        }
+
     }
 }
