@@ -90,6 +90,8 @@
     <Compile Include="Mappings\Content\Sections\ApplicationSection.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\BusinessSummaryPage.cs" />
     <Compile Include="Mappings\Content\Pages\TopupProcessingPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\DebitOrderPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\DebitOrderSuccessPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayErrorPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayProcessingPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayDuePaymentFailedPage.cs" />
@@ -132,6 +134,8 @@
     <Compile Include="Mappings\Ui\Pages\Common\BlogPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\EasypaymentNumberPrintPage.cs" />
     <Compile Include="Ui\Pages\Common\BusinessSummaryPage.cs" />
+    <Compile Include="Ui\Pages\Common\DebitOrderPage.cs" />
+    <Compile Include="Ui\Pages\Common\DebitOrderSuccessPage.cs" />
     <Compile Include="Ui\Pages\Common\RepayDuePaymentFailedPage.cs" />
     <Compile Include="Ui\Pages\Common\RepayErrorPage.cs" />
     <Compile Include="Ui\Pages\Common\MySummaryPageMobile.cs" />

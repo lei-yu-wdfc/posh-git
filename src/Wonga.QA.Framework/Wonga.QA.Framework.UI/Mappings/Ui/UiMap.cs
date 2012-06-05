@@ -45,6 +45,7 @@ using TabsElement = Wonga.QA.Framework.UI.Mappings.Elements.TabsElement;
 using TopupDealDonePage = Wonga.QA.Framework.UI.Mappings.Pages.TopupDealDonePage;
 using ExtensionErrorPage = Wonga.QA.Framework.UI.Mappings.Pages.ExtensionErrorPage;
 using RepayErrorPage = Wonga.QA.Framework.UI.Mappings.Pages.RepayErrorPage;
+using DebitOrderPage = Wonga.QA.Framework.UI.Mappings.Pages.DebitOrderPage;
 
 
 
@@ -179,6 +180,8 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual MySummaryPageMobile MySummaryPageMobile { get; set; }
         public virtual BusinessSummaryPage BusinessSummaryPage { get; set; }
         public virtual RepayErrorPage RepayErrorPage { get; set; }
+        public virtual DebitOrderPage DebitOrderPage { get; set; }
+        public virtual DebitOrderSuccessPage DebitOrderSuccessPage { get; set; }
         #endregion
 
         #region SalesForcePages

@@ -164,6 +164,7 @@
    <PopupMySummaryTitle>h1#my-summary</PopupMySummaryTitle>
    <PopupSummaryDetailsTable>table#summary-details</PopupSummaryDetailsTable>
    <RepayButton>#cloud ul a.repay</RepayButton>
+    <StatusText>div#content-area p</StatusText>
   </MySummaryPage>
 
   <HomePage>
@@ -200,6 +201,7 @@
     <RepaymentOptionsContainer>.repayment-options</RepaymentOptionsContainer>
     <EasypayNumber>div.easypay-number-container span.easypay-number</EasypayNumber>
     <EasypayPrintButton>div.easypay-website-link a</EasypayPrintButton>
+    <DebitOrderButton>div.repayment-option-manual a</DebitOrderButton>
   </RepaymentOptionsPage>
 
   <EasypaymentNumberPrintPage>
@@ -211,5 +213,13 @@
     <MyPersonalDetailsButton>.menu-block-0 .menu li:first-child + li>a</MyPersonalDetailsButton>
     <MyPaymentDetailsButton>.menu-block-0 .menu li:first-child + li + li>a</MyPaymentDetailsButton>    
   </MySummaryPageMobile>
+
+  <DebitOrderPage>
+    <SubmitButton>#edit-submit</SubmitButton>
+  </DebitOrderPage>
+
+  <DebitOrderSuccessPage>
+    <BackToYourAccountButton>div#content a</BackToYourAccountButton>
+  </DebitOrderSuccessPage>
   
 </UiMap>

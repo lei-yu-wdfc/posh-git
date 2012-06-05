@@ -830,5 +830,28 @@ namespace Wonga.QA.Tests.Ui
             var tagCloud = myAccountPage.GetTagCloud;
             Assert.AreEqual("", tagCloud);
         }
+
+        [Test, AUT(AUT.Za), JIRA("QA-307")]
+        public void CustomerSetsUpDebitOrder()
+        {
+            var _applications = Drive.Data.Payments.Db.Applications;
+            var _scheduledPayments = Drive.Data.Payments.Db.ScheduledPayments;
+
+            var customer = CustomerBuilder.New().Build();
+            var application = ApplicationBuilder.New(customer).Build();
+
+            var appId = _applications.FindByExternalId(application.Id).ApplicationId;
+            var naedo = _scheduledPayments.FindByApplicationId(appId);
+            Assert.IsNull(naedo);
+
+            var loginPage = Client.Login();
+            var myAccountPage = loginPage.LoginAs(customer.Email);
+
+            var repaymentOptionsPage = myAccountPage.RepayClick();
+            var debitOrderPage = repaymentOptionsPage.DebitOrderButtonClick();
+            var debitOrderSuccessPage = debitOrderPage.Submit();
+            var updatedMyAccountPage = debitOrderSuccessPage.BackToYourAccountButtonClick();
+            Assert.IsTrue(updatedMyAccountPage.GetStatusText.Contains("Thank you for taking these steps to repay your Wonga loan"));
+        }
     }
 }
