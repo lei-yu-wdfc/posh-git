@@ -8,7 +8,7 @@ using Wonga.QA.Tests.Payments.Helpers;
 
 namespace Wonga.QA.Tests.Payments
 {
-    [Parallelizable(TestScope.All)]
+    [AUT(AUT.Ca), Parallelizable(TestScope.Descendants)]
     public class ExternalDebtCollectionOnFailedRepresentmentTests
     {
     	private const string FeatureSwitchKey = "FeatureSwitch.MoveLoanToDcaOnFailedRepresentment";
