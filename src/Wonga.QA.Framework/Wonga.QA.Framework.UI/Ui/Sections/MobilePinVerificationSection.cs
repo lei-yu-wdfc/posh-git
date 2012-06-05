@@ -20,6 +20,19 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             _resendPin = Section.FindElement(By.CssSelector(UiMap.Get.MobilePinVerificationSection.ResendPin));
         }
         public String Pin { set { _pin.SendValue(value); } }
+
+        public void ResendPinClick()
+        {
+            _resendPin.Click();
+        }
+
+        public void CloseResendPinPopup()
+        {
+            IWebElement popup =
+                Do.Until(() => Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.MobilePinVerificationSection.ResendPinPopupClose)));
+            popup.Click();
+        }
+
         public bool ResendPinClickAndCheck()
         {
             _resendPin.Click();
@@ -33,7 +46,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
                 else
                 {
                     Console.WriteLine("Text wrong");
-                    Console.WriteLine("Current text: "+_resendPinMessege.Text);
+                    Console.WriteLine("Current text: " + _resendPinMessege.Text);
                     return false;
                 }
             }
