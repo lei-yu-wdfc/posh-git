@@ -18,6 +18,7 @@ namespace Wonga.QA.Tests.Bi
     public class AccountTests
     {
         [Test]
+        [AUT(AUT.Uk)]
         [JIRA("DI-603")]
         [Description("This will create an account, some transactions and then request accrued interest to be calculated")]
         public void ApplyAccountDetailsStoredInBiTable()
@@ -31,7 +32,7 @@ namespace Wonga.QA.Tests.Bi
             var customer = CustomerBuilder.New().Build();
 
             // Now check the database, wait up to 30 seconds for the Account record to appear
-            var account = Do.Until(() => Drive.Db.Comms.CustomerDetails.Where(x => x.AccountId == customer.Id).Single());
+            var account = Do.Until(() => Drive.Data.Comms.Db.comms.CustomerDetails.FindBy(AccountId: customer.Id));
 
             // Check that the customer exists
             Assert.IsNotNull(customer);
@@ -39,7 +40,7 @@ namespace Wonga.QA.Tests.Bi
             // Now add the application for the customer
             var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
-            var appl = Do.Until(() => Drive.Db.Payments.Applications.Where(x => x.AccountId == customer.Id).Single());
+            var appl = Do.Until(() => Drive.Data.Payments.Db.payments.Applications.FindBy(AccountId: customer.Id));
 
             customer.UpdateSurname("InterestTesting");
 
@@ -88,9 +89,7 @@ namespace Wonga.QA.Tests.Bi
             // To get that we need to join the Payments.Applications table ExternalId to 
             // to BI.Application ApplicationNKey
 
-            var bi_appl = Do.Until(() => Drive.Db.Bi.Applications.Where(x => x.ApplicationNKey == appl.ExternalId).Single());
-
-            //                                       ApplicationId = bi_appl.ApplicationSKey
+            var bi_appl = Do.Until(() => Drive.Data.Bi.Db.bi.Application.FindBy(ApplicationNKey: appl.ExternalId));
 
             Drive.Msmq.Bi.Send(new CalcAccruedInterestCommand
             {

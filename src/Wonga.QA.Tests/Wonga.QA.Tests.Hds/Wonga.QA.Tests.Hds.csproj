@@ -8,8 +8,8 @@
     <ProjectGuid>{0021FA4B-F42F-4FFD-BE90-FF7F5B8FD420}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Wonga.QA.Tests.Comms</RootNamespace>
-    <AssemblyName>Wonga.QA.Tests.Comms</AssemblyName>
+    <RootNamespace>Wonga.QA.Tests.Hds</RootNamespace>
+    <AssemblyName>Wonga.QA.Tests.Hds</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\Wonga.QA.Tests\</SolutionDir>

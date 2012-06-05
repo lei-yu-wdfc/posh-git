@@ -18,6 +18,7 @@ namespace Wonga.QA.Tests.Hds
     {
 
         [Test]
+        [AUT(AUT.Uk)]
         public void FirstTest()
         {
 
@@ -42,29 +43,37 @@ namespace Wonga.QA.Tests.Hds
             //}
 
             //// Test against HDS
-            var test1 = Do.Until(() => Drive.Data.Hds.Db.payment.Applications.FindBy(ApplicationId: 1));
 
-            Console.WriteLine("Test");
+            try
+            {
+                var test1 = Do.Until(() => Drive.Data.Hds.Db.payment.Applications.FindBy(ApplicationId: 1));
+                Assert.IsNull(test1);
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine("Exception " + e.Message);
+            }
+
         }
   
         
         [Test, AUT(AUT.Uk), JIRA("Unknown", "This is a prototype test")]
         public void FirstRealProtypeTest_DontCallMethodsThisName()
         {
-            Trace.WriteLine("Testing");
+            //Trace.WriteLine("Testing");
 
-            Trace.WriteLine(Drive.Data.NameOfServer);
+            //Trace.WriteLine(Drive.Data.NameOfServer);
             
-            var appl = Drive.Data.Payments.Db.payment.Applications.Insert(ExternalId: Get.GetId(),
-                   AccountId: Get.GetId(), ProductId: 1, Currency: 710, BankAccountGuid: Get.GetId(),
-                   PaymentCardGuid: Get.GetId(), ApplicationDate: DateTime.Now,
-                  CreatedOn: DateTime.Now
-            );
+            //var appl = Drive.Data.Payments.Db.payment.Applications.Insert(ExternalId: Get.GetId(),
+            //       AccountId: Get.GetId(), ProductId: 1, Currency: 710, BankAccountGuid: Get.GetId(),
+            //       PaymentCardGuid: Get.GetId(), ApplicationDate: DateTime.Now,
+            //      CreatedOn: DateTime.Now
+            //);
 
-            // Check its added
-            var recordInPayments = Do.Until(() => Drive.Data.Payments.Db.payment.Applications.FindBy(ApplicationId: appl.ApplicationId));
+            //// Check its added
+            //var recordInPayments = Do.Until(() => Drive.Data.Payments.Db.payment.Applications.FindBy(ApplicationId: appl.ApplicationId));
 
-            DateTime? me = Jobs.GetJobLastRunDateTime(Drive.Data.NameOfServer, "cdc.BI_Capture");
+            //DateTime? me = Jobs.GetJobLastRunDateTime(Drive.Data.NameOfServer, "cdc.BI_Capture");
 
         }
     }

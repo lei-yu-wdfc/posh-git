@@ -2,23 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Data.SqlClient;
 using Microsoft.SqlServer.Management.Smo;
 using Microsoft.SqlServer.Management.Smo.Agent;
 using System.Threading;
 
-
-namespace Wonga.QA.Framework.SMO
+namespace Wonga.QA.Framework.Data
 {
     /// <summary>
     /// This class will be used for working with SQL Server Agent jobs
     /// </summary>
-    public class Jobs
+    public class SQLServerAgentJobs
     {
+
         public static bool Execute(string jobName)
         {
 
-            Server srv = new Server(Drive.Data.NameOfServer);
+            Server srv = new Server(new DataDriver().NameOfServer);
             Job jb = new Job(srv.JobServer, jobName);
  
             if (jb.IsEnabled == true)
@@ -46,7 +45,7 @@ namespace Wonga.QA.Framework.SMO
             try
             {
                 //DateTime? lastRun = null;
-                Server srv = new Server(Drive.Data.NameOfServer);
+                Server srv = new Server(new DataDriver().NameOfServer);
 
                 JobServer sqlServerAgent = srv.JobServer;
                 Job specificJob = sqlServerAgent.Jobs[jobName];
@@ -68,7 +67,7 @@ namespace Wonga.QA.Framework.SMO
         /// <returns>The SMO/Agent Job Execution status</returns>
         public Microsoft.SqlServer.Management.Smo.Agent.JobExecutionStatus CheckJobStatus(string jobName)
         {
-            Server srv = new Server(Drive.Data.NameOfServer);
+            Server srv = new Server(new DataDriver().NameOfServer);
 
             JobServer sqlServerAgent = srv.JobServer;
             Job specificJob = sqlServerAgent.Jobs[jobName];
@@ -80,7 +79,7 @@ namespace Wonga.QA.Framework.SMO
         public static bool CheckIfJobRunAfter(string jobName, DateTime checkStartTime)
         {
 
-            Server srv = new Server(Drive.Data.NameOfServer);
+            Server srv = new Server(new DataDriver().NameOfServer);
 
             return true;
 
@@ -89,7 +88,7 @@ namespace Wonga.QA.Framework.SMO
         public static void DisableJob(string jobName)
         {
 
-            Server srv = new Server(Drive.Data.NameOfServer);
+            Server srv = new Server(new DataDriver().NameOfServer);
             Job jb = new Job(srv.JobServer, jobName);
 
             jb.IsEnabled = false;
@@ -99,7 +98,7 @@ namespace Wonga.QA.Framework.SMO
         public static void EnableJob(string serverName, string jobName)
         {
 
-            Server srv = new Server(serverName);
+            Server srv = new Server(new DataDriver().NameOfServer);
             Job jb = new Job(srv.JobServer, jobName);
 
             jb.IsEnabled = true;
