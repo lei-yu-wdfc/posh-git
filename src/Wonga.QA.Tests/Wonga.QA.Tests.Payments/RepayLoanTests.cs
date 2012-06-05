@@ -16,7 +16,7 @@ using RepayLoanViaBankCommand = Wonga.QA.Framework.Api.RepayLoanViaBankCommand;
 
 namespace Wonga.QA.Tests.Payments
 {
-	[TestFixture, Pending("ZA-2565")]
+	[TestFixture, Parallelizable(TestScope.Self), Pending("ZA-2565")]
     public class RepayLoanTests
     {
         private Guid _accountId;
