@@ -21,6 +21,7 @@
   <EmploymentDetailsSection>
     <EmployerName>#edit-employer-name</EmployerName>
     <NextPaydayDate>#edit-next-payday-ca-datepicker-popup-0</NextPaydayDate>
+    <SelfNextPaydayDate>#edit-next-income-due-ca-datepicker-popup-0</SelfNextPaydayDate>
   </EmploymentDetailsSection>
 
 
@@ -79,7 +80,8 @@
   <MobilePinVerificationSection>
     <Pin>#edit-pin-ca</Pin>
 	<ResendPin>.resend-pin.mod</ResendPin>
-	<ResendPinMessage>#fancybox-content div div p</ResendPinMessage>
+	<ResendPinMessage>#fancybox-content div</ResendPinMessage>
+	<ResendPinPopupClose>#fancybox-close</ResendPinPopupClose>	
   </MobilePinVerificationSection>
 
   <AcceptedPage>
@@ -151,6 +153,7 @@
   </TabsElement>
 
   <ApplicationSection>
+	<EditPin>#edit-mobile-pin-ca</EditPin>
     <FormId>#wonga-apply-ln-form</FormId>
 	<ChangeMobileButton>#loan-application .form-markup-wrapper a</ChangeMobileButton>
   </ApplicationSection>
@@ -160,6 +163,8 @@
 		<PopupSaveButton>#edit-submit[value='Save']</PopupSaveButton>
 		<PopupCloseButton>#edit-submit[value='Close']</PopupCloseButton>
 		<ResendPin>#repin div:first-child+div a</ResendPin>
+		<ResendPinPopupClose>#fancybox-close</ResendPinPopupClose>
+		<ResendPinPopupText>#fancybox-content div</ResendPinPopupText>
 	</ApplyPage>
 
   <MyPersonalDetailsPage>

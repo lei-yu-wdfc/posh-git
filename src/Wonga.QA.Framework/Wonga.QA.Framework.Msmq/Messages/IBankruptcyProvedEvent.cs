@@ -1,0 +1,14 @@
+using System;
+using System.Collections.Generic;
+using System.Xml.Serialization;
+
+namespace Wonga.QA.Framework.Msmq
+{
+    /// <summary> Wonga.Payments.PublicMessages.IBankruptcyProved </summary>
+    [XmlRoot("IBankruptcyProved", Namespace = "Wonga.Payments.PublicMessages", DataType = "Wonga.Payments.PublicMessages.IPaymentsEvent")]
+    public partial class IBankruptcyProvedEvent : MsmqMessage<IBankruptcyProvedEvent>
+    {
+        public Guid AccountId { get; set; }
+        public DateTime CreatedOn { get; set; }
+    }
+}

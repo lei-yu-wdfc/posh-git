@@ -13,6 +13,8 @@ using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Framework.Mocks;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Framework.Db.Risk;
+using PaymentTransactionEnum = Wonga.QA.Framework.Msmq.PaymentTransactionEnum;
+using PaymentTransactionScopeEnum = Wonga.QA.Framework.Msmq.PaymentTransactionScopeEnum;
 
 namespace Wonga.QA.Framework
 {
@@ -180,13 +182,25 @@ namespace Wonga.QA.Framework
 		public void MakeDueToday(ApplicationEntity application)
 		{
 			RewindAppDates(application);
-            LoanDueDateNotificationSagaEntity ldd = Drive.Db.OpsSagas.LoanDueDateNotificationSagaEntities.Single(s => s.ApplicationId == Id);
-            Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ldd.Id });
-            Do.With.While(ldd.Refresh);
 
-			FixedTermLoanSagaEntity ftl = Drive.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
-			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
-			Do.With.While(ftl.Refresh);
+            if (Drive.Data.Ops.GetServiceConfiguration<bool>("Payments.FeatureSwitches.UseLoanDurationSaga") == false)
+            {
+                LoanDueDateNotificationSagaEntity ldd = Drive.Db.OpsSagas.LoanDueDateNotificationSagaEntities.Single(s => s.ApplicationId == Id);
+                Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ldd.Id });
+                Do.With.While(ldd.Refresh);
+
+                FixedTermLoanSagaEntity ftl = Drive.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
+                Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
+                Do.With.While(ftl.Refresh);
+            }
+            else
+            {
+                //We should timeout the LoanDurationSaga...
+                dynamic loanDurationSagaEntities = Drive.Data.OpsSagas.Db.LoanDurationSagaEntity;
+                var loanDurationSaga = loanDurationSagaEntities.FindAllByAccountGuid(AccountGuid: application.AccountId).FirstOrDefault();
+
+                Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = loanDurationSaga.Id });
+            }
 		}
 
 		public virtual Application PutApplicationIntoArrears(uint daysInArrears)
@@ -207,6 +221,13 @@ namespace Wonga.QA.Framework
 
 			return this;
 		}
+
+        public virtual Application PutApplicationFurtherIntoArrears(uint daysInArrears)
+        {
+            Drive.Db.Rewind(Id, (int)daysInArrears);
+
+            return this;
+        }
 
 		public virtual Application PutApplicationIntoArrears()
 		{

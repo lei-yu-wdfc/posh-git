@@ -20,6 +20,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public ContactingYouSection ContactingYou { get; set; }
         public ProvinceSection ProvinceSection { get; set; }
         public Boolean PrivacyPolicy { set { _privacy.Toggle(value); } }
+        public Boolean BikVerification { set { _bikVeryfication.Toggle(value); } }
+        public Boolean MarketingAcceptance { set { _marketingAcceptance.Toggle(value); } }
+
         public Object CanContact
         {
             set
@@ -37,6 +40,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                 _marriedInCommunityProperty.SelectLabel(value);
             }
         }
+        private readonly IWebElement _bikVeryfication;
+        private readonly IWebElement _marketingAcceptance;
         private readonly IWebElement _form;
         private readonly IWebElement _slidersForm;
         private readonly ReadOnlyCollection<IWebElement> _marriedInCommunityProperty;
@@ -74,6 +79,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _contact = _form.FindElements(By.CssSelector(UiMap.Get.PersonalDetailsPage.CheckCanContact));
             _next = _form.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.NextButton));
 
+
+
+
             YourName = new YourNameSection(this);
             YourDetails = new YourDetailsSection(this);
             ContactingYou = new ContactingYouSection(this);
@@ -86,6 +94,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     break;
                 case (AUT.Uk):
                     EmploymentDetails = new EmploymentDetailsSection(this);
+                    break;
+                case (AUT.Pl):
+                    _bikVeryfication = _form.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.CheckBikVerification));
+                    EmploymentDetails = new EmploymentDetailsSection(this);
+                    _marketingAcceptance =
+             _form.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.CheckMarketingAcceptance));
                     break;
                 case (AUT.Za):
                     EmploymentDetails = new EmploymentDetailsSection(this);
@@ -189,45 +203,6 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             return hrefs;
         }
 
-        public bool IsGenderDoesntMutchIdNumber()
-        {
-            switch (Config.AUT)
-            {
-                case AUT.Za:
-                    var message = Do.Until(() => Client.Driver.FindElement(By.XPath(UiMap.Get.PersonalDetailsPage.GenderWarning)));
-                    Console.WriteLine(message.Text);
-                    
-                    if (message.Text == "Oops! This doesn't match your ID number.")
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                default:
-                    throw new NotImplementedException();
-            }
-        }
 
-        public bool IsDOBDoesntMutchIdNumber()
-        {
-            switch (Config.AUT)
-            {
-                case AUT.Za:
-                    var message = Do.Until(() => Client.Driver.FindElement(By.XPath(UiMap.Get.PersonalDetailsPage.DateOfBirthWarning)));
-                    Console.WriteLine(message.Text);
-                    if (message.Text == "Oops! This doesn't match your ID number.")
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                default:
-                    throw new NotImplementedException();
-            }
-        }
     }
 }

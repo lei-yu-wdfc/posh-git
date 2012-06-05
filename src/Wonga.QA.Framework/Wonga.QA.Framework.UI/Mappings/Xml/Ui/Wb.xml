@@ -224,4 +224,29 @@
     <Frame>#wonga_welcome_popup_floating_blob</Frame>
     <Close>.close-btn</Close>
   </HomePageWelcomePopup>
+
+  <BusinessSummaryPage>
+    <BusinessSummary>.menu-level-2 .menu li:first-child>a</BusinessSummary>
+    <AccountDetails>.menu-level-2 .menu li:first-child + li>a</AccountDetails>
+    <YourDetails>.menu-level-2 .menu li:first-child + li + li>a</YourDetails>    
+  </BusinessSummaryPage>
+
+  <ApplicationSection>
+    <FormId>#ln</FormId>
+    <BusinessLoanApplicationDetails>#ln>legend</BusinessLoanApplicationDetails>
+    <AdditionalDirectorsOrPartners>#ln-details>tbody>tr>th:first-child</AdditionalDirectorsOrPartners>
+  </ApplicationSection>
+
+  <ApplyPage>
+    <Submit>#edit-submit</Submit>
+  </ApplyPage>
+
+  <HelpElement>
+    <ContactUs>div.control-bar-panel .mod</ContactUs>
+  </HelpElement>
+
+  <ContactElement>
+    <ContactTitle>#contact</ContactTitle>
+    <FormId>#fancybox-content</FormId>    
+  </ContactElement>
 </UiMap>

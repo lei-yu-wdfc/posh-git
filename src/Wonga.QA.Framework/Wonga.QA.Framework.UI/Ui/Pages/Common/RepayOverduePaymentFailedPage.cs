@@ -10,12 +10,17 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
     {
         private IWebElement _header;
         private IWebElement _bodyContent;
+        private IWebElement _totalNewRepayable;
+        private IWebElement _repayRetry;
+        private IWebElement _addCard;
         
         public RepayOverduePaymentFailedPage(UiClient client) : base(client)
         {
-            Assert.That(Headers, Has.Item(Wonga.QA.Framework.UI.ContentMap.Get.RepayOverduePaymentFailedPage.HeaderText));
             _header = Content.FindElement(By.CssSelector(UiMap.Get.RepayOverduePaymentFailedPage.Header));
             _bodyContent = Content.FindElement(By.CssSelector(UiMap.Get.RepayOverduePaymentFailedPage.ContentArea));
+            _totalNewRepayable = Content.FindElement(By.CssSelector(UiMap.Get.RepayOverduePaymentFailedPage.TotalNewRepayable));
+            _repayRetry = Content.FindElement(By.CssSelector(UiMap.Get.RepayOverduePaymentFailedPage.RepayRetry));
+            _addCard = Content.FindElement(By.CssSelector(UiMap.Get.RepayOverduePaymentFailedPage.AddCard));
         }
 
         public bool IsPaymentFailedAmountNotPresent()

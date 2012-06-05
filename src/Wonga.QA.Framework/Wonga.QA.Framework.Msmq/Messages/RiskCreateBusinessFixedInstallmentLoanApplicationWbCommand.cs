@@ -15,9 +15,11 @@ namespace Wonga.QA.Framework.Msmq
         public Guid MainApplicantPaymentCardId { get; set; }
         public Guid MainApplicantBankAccountId { get; set; }
         public CurrencyCodeIso4217Enum Currency { get; set; }
+        public Int32 Term { get; set; }
         public Decimal LoanAmount { get; set; }
         public Guid ApplicationId { get; set; }
         public DateTime CreatedOn { get; set; }
         public Guid? ClientId { get; set; }
+        public DateTime ApplicationDate { get; set; }
     }
 }

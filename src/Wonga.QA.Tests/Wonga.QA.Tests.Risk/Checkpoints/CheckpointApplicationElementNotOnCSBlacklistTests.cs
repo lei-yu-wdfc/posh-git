@@ -8,6 +8,7 @@ using Wonga.QA.Framework.Data.Enums.Risk;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
+using System;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
@@ -64,6 +65,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			{
 				//don't use mask so that the workflow builder is run!
 				var customer = CustomerBuilder.New().WithEmployer("Wonga").Build();
+            CustomerOperations.UpdateEmployerNameInRisk(customer.Id, TestMask.ToString());
 
 				ApplicationBuilder.New(customer).WithoutExpectedDecision().Build();
 
@@ -81,6 +83,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		public void GivenExistingCustomer_WhenDoNotRelendFlagIsConfigured_ThenCheckApplicationWorkflowContainsCheckpoint(bool useDoNotRelend)
 		{
 			bool currentValue = Drive.Data.Ops.SetServiceConfiguration(UseDoNotRelendFlagKey, useDoNotRelend);
+            CustomerOperations.UpdateEmployerNameInRisk(customer.Id, TestMask.ToString());
 
 			try
 			{

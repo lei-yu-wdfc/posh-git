@@ -14,6 +14,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public SlidersElement Sliders { get; set; }
         public TabsElement Tabs { get; set; }
         public TopupSlidersElement TopupSliders { get; set; }
+
+        public IWebElement RepayButton;
         
         public MySummaryPage(UiClient client) : base(client)
         {
@@ -113,7 +115,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public void RepayButtonClick()
         {
-            Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.RepayButton)).Click();
+            RepayButton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.RepayButton)); 
+            RepayButton.Click();
         }
 
         public void ChangePromiseDateButtonClick()
@@ -220,9 +223,16 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             get { return Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.MaxAvailableCredit)).Text; }
         }
 
-        public void IsPrepaidCardButtonExist()
+        public void ShowPrepaidCardButton()
         {
             Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyAccountNavigationSection.MyPrepaidCardPageDetails));                 
+        }
+
+        public RepaymentOptionsPage RepayClick()
+        {
+            RepayButton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.RepayButton)); 
+            RepayButton.Click();
+            return new RepaymentOptionsPage(Client);
         }
 
     }

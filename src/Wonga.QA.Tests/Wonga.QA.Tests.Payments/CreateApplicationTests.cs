@@ -29,9 +29,8 @@ namespace Wonga.QA.Tests.Payments
                                              Currency = "ZAR"
                                          });
            var app = Do.Until(() => Drive.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationEntity.ExternalId == appId));
-
-			var expectedPromiseDate = promisedDate.GetNextWorkingDay();
-            Assert.AreEqual(expectedPromiseDate, app.NextDueDate);
+        	
+            Assert.AreEqual(promisedDate.GetNextWorkingDay(), app.NextDueDate);
         }
 
         private DateTime FindPromiseDateOfExpectedDayOfWeek(DayOfWeek expectedDayOfWeek)

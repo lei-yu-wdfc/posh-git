@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading;
 using Gallio.Framework;
@@ -24,7 +25,7 @@ using SubmitionPage = Wonga.QA.Framework.UI.UiElements.Pages.SubmitionPage;
 
 namespace Wonga.QA.Framework.UI
 {
-    public class UiClient : IDisposable
+    public class UiClient : IDisposable 
     {
         private IWebDriver _iWebDriver;
         public IWebDriver Driver
@@ -129,6 +130,12 @@ namespace Wonga.QA.Framework.UI
             return new LoginPage(this);
         }
 
+        public LoginPage LoginPrepaidAdmin()
+        {
+            Driver.Navigate().GoToUrl(Config.Ui.Home + "/login");
+            return new LoginPage(this);
+        }
+
         public MyPaymentsPage Payments()
         {
             Driver.Navigate().GoToUrl(Config.Ui.Home + "/my-account/details");
@@ -175,6 +182,13 @@ namespace Wonga.QA.Framework.UI
             return new FAQPage(this);
         }
 
+        public PrepaidCardPage PrepaidCardPage()
+        {
+            Driver.Navigate().GoToUrl(Config.Ui.Home + "my-account/prepaid/");
+            Driver.Url = Config.Ui.Home + "my-account/prepaid/";
+            return new PrepaidCardPage(this);
+        }
+
         public Image Screen()
         {
             if (!(Driver is ITakesScreenshot))
@@ -191,7 +205,22 @@ namespace Wonga.QA.Framework.UI
 
         public void Dispose()
         {
-            Do.Until(() => { Driver.Quit(); return true; });
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            Do.Until(() =>
+                         {
+                             Driver.Quit();
+                             return true;
+                         });
+        }
+
+        ~UiClient()
+        {
+            Dispose(false);
         }
 
         public SalesForceLoginPage SalesForceStart()

@@ -44,5 +44,6 @@ namespace Wonga.QA.Framework.Msmq
         FeeReversal = 40,
         BatchedDcaReceipt = 41,
         BatchedDmcReceipt = 42,
+        LoanExtensionCardPayment = 43,
     }
 }

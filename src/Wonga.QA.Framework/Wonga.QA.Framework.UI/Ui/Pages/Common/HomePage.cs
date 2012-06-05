@@ -1,4 +1,5 @@
-﻿using MbUnit.Framework;
+﻿using System;
+using MbUnit.Framework;
 using NHamcrest.Core;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
@@ -35,6 +36,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
                     Tabs = new TabsElement(this);
                     break;
                 case (AUT.Za):
+                case (AUT.Pl):
                     Contact = new ContactElement(this);
                     Help = new HelpElement(this);
                     InternationalElements = new InternationalElement(this);
@@ -42,9 +44,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
                     Tabs = new TabsElement(this);
                     break;
                 case (AUT.Wb):
-                Help = new HelpElement(this);
+                    Help = new HelpElement(this);
                     Tabs= new TabsElement(this);
                     Login = new LoginElement(this);
+                    Contact = new ContactElement(this);
                     break;
 
             }
@@ -80,9 +83,15 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
 
         public void CloseWbWelcomePopup()
         {
-            if (Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePageWelcomePopup.Frame)).Displayed)
-                Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePageWelcomePopup.Close)).Click();    
-               
+            try
+            {
+                var wbWelcomePopUp = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePageWelcomePopup.Frame));
+                if(wbWelcomePopUp.Displayed)
+                    Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePageWelcomePopup.Close)).Click(); 
+
+            }
+            catch (NoSuchElementException)
+            {}
         }
 
     }

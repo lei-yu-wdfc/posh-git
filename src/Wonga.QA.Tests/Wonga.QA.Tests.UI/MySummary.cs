@@ -12,6 +12,7 @@ using System.Threading;
 
 namespace Wonga.QA.Tests.Ui
 {
+    [Parallelizable(TestScope.All)]
     class MySummary : UiTest
     {
 

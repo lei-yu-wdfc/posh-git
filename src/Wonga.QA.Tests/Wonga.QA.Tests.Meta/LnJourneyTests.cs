@@ -15,6 +15,7 @@ namespace Wonga.QA.Tests.Meta
     public class LnJourneyTests : UiTest
     {
         [Test, AUT(AUT.Uk), JIRA("UK-1533")]
+        [Pending("Disabled and to be replaced with not-UI checks of major values e.g. TotalToRepay, etc.")]
         public void L0LnJourneyTest()
         {
             var loginPage = Client.Login();
@@ -45,6 +46,24 @@ namespace Wonga.QA.Tests.Meta
                            .FillAcceptedPage()
                            .GoToMySummaryPage()
                            .CurrentPage as MySummaryPage;
+        }
+
+        [Test, AUT(AUT.Uk)]
+        [Pending("Disabled and to be replaced with not-UI checks of major values e.g. TotalToRepay, etc.")]
+        public void CustomerApplicationBuildersWork()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            var loanAmount = 100;
+
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer).WithLoanAmount(loanAmount).WithLoanTerm(3).Build();
+
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            // Check the actual text
+            string actualTotalToRepay = mySummaryPage.GetTotalToRepay;
+            Assert.IsTrue(actualTotalToRepay != "£0.00", "TotalToRepay should not be £0.");
         }
     }
 }

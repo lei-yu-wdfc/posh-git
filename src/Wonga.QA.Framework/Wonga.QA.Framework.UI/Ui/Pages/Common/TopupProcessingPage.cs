@@ -11,9 +11,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
     public class TopupProcessingPage : BasePage
     {
+        private IWebElement _staticLink;
+
         public TopupProcessingPage(UiClient client) : base(client)
         {
-            
+            Assert.That(Headers, Has.Item(Wonga.QA.Framework.UI.ContentMap.Get.ExtensionProcessingPage.HeaderText));
+            _staticLink = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionProcessingPage.ProcessingStaticLink));
         }
 
         public TopupAgreementPage WaitForAgreementPage(UiClient client)

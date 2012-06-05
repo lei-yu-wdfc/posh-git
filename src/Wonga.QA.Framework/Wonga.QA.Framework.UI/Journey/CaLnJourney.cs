@@ -27,16 +27,16 @@ namespace Wonga.QA.Framework.UI
             LastName = surname;
             return this;
         }
-      
+
         public ILnConsumerJourney ApplyForLoan(int amount, int duration)
         {
             var homePage = CurrentPage as HomePage;
             homePage.Sliders.HowMuch = amount.ToString();
             homePage.Sliders.HowLong = duration.ToString();
-            homePage.Sliders.ApplyLn();
-            homePage.PopupSetProvince = "British Columbia";
+            CurrentPage = homePage.Sliders.ApplyLn() as ApplyPage;
+            // homePage.PopupSetProvince = "British Columbia";
 
-            CurrentPage = homePage.PopupClickThisIsMyProvince() as ApplyPage;
+           // CurrentPage = homePage.PopupClickThisIsMyProvince() as ApplyPage;
             return this;
         }
 

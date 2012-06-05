@@ -165,7 +165,7 @@ namespace Wonga.QA.Tests.Payments
 			{
 				now = fixedTermLoanApplication.NextDueDate.Value;
 				SetPaymentsUtcNow(now);
-				
+
 				Do.Until(() => Drive.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(a => a.ApplicationGuid == application.Id));
 			}
 
@@ -287,7 +287,7 @@ namespace Wonga.QA.Tests.Payments
 
 			int trackingDays = 0;
 
-			if (Drive.Db.GetPreviousWorkingDay(new Date(dateTrackingBegins.AddDays(-1))).DateTime.Day <= TrackingDayThreshold)
+			if (Drive.Db.GetPreviousWorkingDay(new Date(dateTrackingBegins.AddDays(-1))).DateTime.Day <= TrackingDayThreshold || attempt == 0)
 				trackingDays = 3;
 			else
 				trackingDays = (DateTime.DaysInMonth(dateTrackingBegins.Year, dateTrackingBegins.Month)) - dateTrackingBegins.Day + 3; //3 = actionDate + til 2nd of month 

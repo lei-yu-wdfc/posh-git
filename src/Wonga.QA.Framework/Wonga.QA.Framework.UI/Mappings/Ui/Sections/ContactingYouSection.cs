@@ -19,5 +19,8 @@ namespace Wonga.QA.Framework.UI.Mappings.Sections
         public String MobilePhoneP3 { get; set; }
         public String Email { get; set; }
         public String EmailConfirm { get; set; }
+        public String EmailErrorForm { get; set; }
+        public String EmailConfirmErrorForm { get; set; }
+        public String MobilePhoneErrorForm { get; set; }
     }
 }

@@ -28,6 +28,7 @@ namespace Wonga.QA.Framework.Core
         public static EmailConfig Email { get; set; }
         public static PayLaterConfig PayLaterUi { get; set; }
         public static PayLaterConfig PayLaterApi { get; set; }
+        public static PrepaidAdminConfig PrepaidAdminUI { get; set; }
         public static CommonApiConfig CommonApi { get; set; }
         
 
@@ -45,20 +46,21 @@ namespace Wonga.QA.Framework.Core
             Ui.Browser = GetValue<UiConfig.BrowserType>("FireFox", "QAFBrowser");
             Ui.BrowserVersion = GetValue<string>("", "QAFBrowserVersion");
             Ui.RemoteMode = GetValue<Boolean>(false, "QAFUiRemoteMode");
-            string uiDomain = Ui.RemoteMode ? "wongatest.com" : "wonga.com";
+            string uiDomain = Ui.RemoteMode ? "wonga.com" : "wonga.com";
 
             Email = new EmailConfig() { QA = new EmailConfig.EmailAddressConfig() { Host = "imap.gmail.com", Username = "qa.wonga.com@gmail.com", Password = "Allw0nga", Port = 993, IsSsl = true } };
             switch (SUT)
             {
                 case SUT.Dev:
-                    Api = new ApiConfig("localhost");
+                    Api = new ApiConfig("localhost/API");
                     CommonApi = new CommonApiConfig("localhost/IVRWebApi");
                     Cs = new CsConfig("localhost/CSAPI");
                     Svc = new SvcConfig(".");
                     Msmq = new MsmqConfig(".");
                     Db = new DbConfig(".");
-                    Ui.SetUri("localhost");
-                    Admin = new AdminConfig("localhost/admin");					
+                    Ui.SetUri("dev.wonga.com");
+                    Admin = new AdminConfig("localhost/admin");
+                    PrepaidAdminUI = new PrepaidAdminConfig();
                     SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.wip", "Allw0nga");
                     SalesforceApi =
                         AUT == AUT.Ca ? new SalesforceApiConfig("v3integration@wonga.com.int") :
@@ -263,6 +265,7 @@ namespace Wonga.QA.Framework.Core
             public KeyValuePair<String, String> Uru { get; set; }
             public KeyValuePair<String, String> WongaPay { get; set; }
 			public KeyValuePair<String, String> EasyPay { get; set; }
+			public KeyValuePair<String, String> PayU { get; set; }
 
 
             public SvcConfig(String server) : this(server, server) { }
@@ -307,6 +310,7 @@ namespace Wonga.QA.Framework.Core
                 Uru = new KeyValuePair<String, String>("Wonga.URU.Handlers", component);
                 WongaPay = new KeyValuePair<String, String>("Wonga.WongaPay.Handlers", component);
 				EasyPay = new KeyValuePair<String, String>("Wonga.BankGateway.EasyPay.Handlers", component);
+				PayU = new KeyValuePair<String, String>("Wonga.PayU.Handlers", component);
 			}
         }
 
@@ -348,6 +352,7 @@ namespace Wonga.QA.Framework.Core
             public String Uru { get; set; }
             public String WongaPay { get; set; }
 			public String EasyPay { get; set; }
+			public String PayU { get; set; }
 
             public MsmqConfig(String server) : this(server, server) { }
 
@@ -391,6 +396,7 @@ namespace Wonga.QA.Framework.Core
                 Uru = String.Format(format, component, "urucomponent");
                 WongaPay = String.Format(format, component, "wongapaytc");
 				EasyPay = String.Format(format, component, "bankgatewayeasypaytc");
+				PayU = String.Format(format, component, "payucomponent");
             }
         }
 
@@ -424,6 +430,8 @@ namespace Wonga.QA.Framework.Core
             public String Uru { get; set; }
             public String WongaPay { get; set; }
             public String Marketing { get; set; }
+            public String PrepaidCard { get; set; }
+            public String Pps { get; set; }
 
             public String OpsLogs { get; set; }
             public String OpsSagas { get; set; }
@@ -463,6 +471,8 @@ namespace Wonga.QA.Framework.Core
                 Uru = builder("Uru");
                 WongaPay = builder("WongaPay");
                 Marketing = builder("Marketing");
+                PrepaidCard = builder("PrepaidCard");
+                Pps = builder("Pps");
             }
         }
 
@@ -521,6 +531,20 @@ namespace Wonga.QA.Framework.Core
             public AdminConfig(String host)
             {
                 Home = new UriBuilder {Host = host}.Uri;
+            }
+        }
+
+        public class PrepaidAdminConfig
+        {
+            public Uri Home { get; set; }
+            public String User { get; private set; }
+            public String Pwd { get; private set; }
+
+            public PrepaidAdminConfig()
+            {
+                Home = new Uri(Ui.Url + "admin/settings/wonga_prepaid");
+                this.User = "root";
+                this.Pwd = "root";
             }
         }
 
@@ -606,7 +630,16 @@ namespace Wonga.QA.Framework.Core
             }
         }
 
-        public class CommonApiConfig        {            public Uri Commands { get; set; }            public CommonApiConfig(String host)            {                Uri uri = new UriBuilder { Host = host }.Uri;                Commands = new Uri(uri, "commands");            }        }    }
+        public class CommonApiConfig
+        {
+            public Uri Commands { get; set; }
+            public CommonApiConfig(String host)
+            {
+                Uri uri = new UriBuilder { Host = host }.Uri;
+                Commands = new Uri(uri, "commands");
+            }
+        }
+    }
 
     public static class Connections
     {

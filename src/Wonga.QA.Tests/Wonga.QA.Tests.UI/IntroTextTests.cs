@@ -21,6 +21,7 @@ using CreateScheduledPaymentRequestCommand = Wonga.QA.Framework.Msmq.CreateSched
 
 namespace Wonga.QA.Tests.Ui
 {
+    [Parallelizable(TestScope.All)]
     public class IntroTextTests: UiTest
     {
         Dictionary<int, string> introTexts = new Dictionary<int, string> 
@@ -443,11 +444,10 @@ namespace Wonga.QA.Tests.Ui
 
             // Rewind application dates
             if (daysShift != 0)
-            {
-                ApplicationEntity applicationEntity = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
-                RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == application.Id);
+            { 
                 TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
-                Drive.Db.RewindApplicationDates(applicationEntity, riskApplication, daysShiftSpan);               
+
+                ApplicationOperations.RewindApplicationDates(application,daysShiftSpan);
             }
 
             var expectedDueDateBalance = 0.00M;
@@ -513,6 +513,5 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId));
             Assert.AreEqual(expectedIntroText, actuallntroText);
         }
-
     }
 }

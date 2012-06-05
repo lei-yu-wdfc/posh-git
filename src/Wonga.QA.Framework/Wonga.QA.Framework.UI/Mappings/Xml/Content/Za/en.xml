@@ -24,12 +24,48 @@
 		<ResendPinMessage1>Your pin has now been resent to your phone. You should receive it within a few minutes.</ResendPinMessage1>
 		<ResendPinMessage2>We have resent your PIN.</ResendPinMessage2>
     <ResendPinMessage3>Thanks, we have re-sent your PIN. If you still don't receive your PIN, please contact our customer services team on the number displayed on our contact us page for assistance.</ResendPinMessage3>
-  </MobilePinVerificationSection>
+	</MobilePinVerificationSection>
+	
   <AddressDetailsPage>
+	<AddresPeriodLess4Month>Less than 4 month</AddresPeriodLess4Month>
     <PostcodeError>Sorry, that is not a valid postcode.</PostcodeError>
   </AddressDetailsPage>
 
 	<MyPaymentsPage>
 		<InvalidBankAccountWarning>Please enter a valid bank account number</InvalidBankAccountWarning>
 	</MyPaymentsPage>
+
+	<YourDetailsSection>
+		<IdNumberWarning>Oops! This doesn't match your ID number.</IdNumberWarning>
+	</YourDetailsSection>
+
+	<AccountDetailsSection>
+		<PasswordMismatchWarning>Passwords must match</PasswordMismatchWarning>
+		<PasswordInvalidFormatWarning>Your password must be 8 or more characters and must include a capital letter and a number.</PasswordInvalidFormatWarning>
+		<PasswordEqualsEmailWarning>Password must not contain user name.</PasswordEqualsEmailWarning>
+	</AccountDetailsSection>
+
+	<HelpElement>
+		<SelectQuestion>Please select a question...</SelectQuestion>
+	</HelpElement>
+
+	<AboutUsPage>
+		<WeDifferent>We're different</WeDifferent>
+		<WeFast>We're fast</WeFast>
+		<WeResponsible>We're responsible</WeResponsible>
+		<WongaMoments>Wonga moments</WongaMoments>
+	</AboutUsPage>
+
+	<TopupDealDonePage>
+		<SuccessMessage>Success! Your request for some extra credit has been approved.</SuccessMessage>
+	</TopupDealDonePage>
+
+	<ExtensionErrorPage>
+		<OuchMessage>Ouch! We're very sorry</OuchMessage>
+		<WeSorryMessage>We're sorry</WeSorryMessage>
+	</ExtensionErrorPage>
+
+  <RepaymentOptionsPage>
+    <HeaderText>My repayment options</HeaderText>
+  </RepaymentOptionsPage>
 	</ContentMap>

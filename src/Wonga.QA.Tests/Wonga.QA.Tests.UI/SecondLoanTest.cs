@@ -21,6 +21,7 @@ using Wonga.QA.Framework.UI.UiElements.Pages;
 
 namespace Wonga.QA.Tests.Ui
 {
+    [Parallelizable(TestScope.All)]
     class SecondLoanTest : UiTest
     {
         [Test, AUT(AUT.Za), JIRA("QA-195"), Category(TestCategories.Smoke)] // add AUT.Ca when .RepayOnDueDate() will be work

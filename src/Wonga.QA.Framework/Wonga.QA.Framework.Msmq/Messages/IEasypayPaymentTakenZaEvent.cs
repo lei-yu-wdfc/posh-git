@@ -12,5 +12,6 @@ namespace Wonga.QA.Framework.Msmq
         public String RepaymentNumber { get; set; }
         public Decimal TransactionAmount { get; set; }
         public DateTime ValueDate { get; set; }
+        public Int32 AcknowledgeId { get; set; }
     }
 }

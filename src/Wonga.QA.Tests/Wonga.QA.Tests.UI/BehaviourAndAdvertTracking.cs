@@ -19,9 +19,10 @@ using Wonga.QA.Framework.UI.UiElements.Pages;
 
 namespace Wonga.QA.Tests.Ui
 {
+    [Parallelizable(TestScope.All)]
     class BehaviourAndAdvertTracking : UiTest
     {
-        [Test, AUT(AUT.Za), JIRA("ZA-2115"), Pending("Broken")]
+        [Test, AUT(AUT.Za), JIRA("ZA-2115", "QA-301"), MultipleAsserts]
         public void L0VerifyDoubleclickTagInsertedInPage()
         {
             ////////////////////////////////////////////////////////////////
@@ -35,8 +36,6 @@ namespace Wonga.QA.Tests.Ui
             doubleClickTokensList.Add(new KeyValuePair<string, string>("src", "3567941"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("cat", "za_ho244"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("type", "homepage"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("u1", "1"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("u2", "1"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "<front>"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "home"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "homepages/*"));
@@ -45,7 +44,9 @@ namespace Wonga.QA.Tests.Ui
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "995820"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
             SourceContains(doubleClickTokensList);
-
+            SourceContains("u1: [");
+            SourceDoesNotContain("u1: []");
+            SourceContains("u2: [");
             // Check that the page contains the wonga_doubleclick module v1.0 signature:
             Assert.IsTrue(page.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
 
@@ -66,14 +67,13 @@ namespace Wonga.QA.Tests.Ui
             doubleClickTokensList.Add(new KeyValuePair<string, string>("src", "3567941"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("cat", "za_l0571"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("type", "za_l0"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("u2", "1"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "apply-details"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("group_name", "ZA_L0"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_L0_PersonalDetails"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "995827"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
             SourceContains(doubleClickTokensList);
-
+            SourceContains("u2: [");
             // Check that we don't have an empty u1 value (e.g. "u1: []"):
             doubleClickTokensBlackList.Clear();
             doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
@@ -90,13 +90,13 @@ namespace Wonga.QA.Tests.Ui
             doubleClickTokensList.Add(new KeyValuePair<string, string>("src", "3567941"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("cat", "za_l0642"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("type", "za_l0"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("u2", "1"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "apply-address"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("group_name", "ZA_L0"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_L0_Address"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "995828"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
             SourceContains(doubleClickTokensList);
+            SourceContains("u2: [");
 
             // Check that we don't have an empty u1 value (e.g. "u1: []"):
             doubleClickTokensBlackList.Clear();
@@ -114,14 +114,13 @@ namespace Wonga.QA.Tests.Ui
             doubleClickTokensList.Add(new KeyValuePair<string, string>("src", "3567941"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("cat", "za_l0281"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("type", "za_l0"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("u2", "1"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "apply-account"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("group_name", "ZA_L0"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_L0_Account"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "995832"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
             SourceContains(doubleClickTokensList);
-
+            SourceContains("u2: [");
             // Check that we don't have an empty u1 value (e.g. "u1: []"):
             doubleClickTokensBlackList.Clear();
             doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
@@ -138,13 +137,13 @@ namespace Wonga.QA.Tests.Ui
             doubleClickTokensList.Add(new KeyValuePair<string, string>("src", "3567941"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("cat", "za_l0346"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("type", "za_l0"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("u2", "1"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "apply-bank"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("group_name", "ZA_L0"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_L0_Bank"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "996615"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
             SourceContains(doubleClickTokensList);
+            
 
             // Check that we don't have an empty u1 value (e.g. "u1: []"):
             doubleClickTokensBlackList.Clear();
@@ -162,14 +161,13 @@ namespace Wonga.QA.Tests.Ui
             doubleClickTokensList.Add(new KeyValuePair<string, string>("src", "3567941"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("cat", "za_l0882"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("type", "za_l0"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("u2", "1"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "processing"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("group_name", "ZA_L0"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_L0_Processing"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "996616"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
             SourceContains( doubleClickTokensList);
-
+            SourceContains("u2: [");
             // Check that we don't have an empty u1 value (e.g. "u1: []"):
             doubleClickTokensBlackList.Clear();
             doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
@@ -186,14 +184,13 @@ namespace Wonga.QA.Tests.Ui
             doubleClickTokensList.Add(new KeyValuePair<string, string>("src", "3567941"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("cat", "za_l0817"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("type", "za_l0"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("u2", "1"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "apply-accept"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("group_name", "ZA_L0"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_L0_Accept"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "996618"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
             SourceContains(doubleClickTokensList);
-
+            SourceContains("u2: [");
             // Check that we don't have an empty u1 value (e.g. "u1: []"):
             doubleClickTokensBlackList.Clear();
             doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
@@ -210,14 +207,13 @@ namespace Wonga.QA.Tests.Ui
             doubleClickTokensList.Add(new KeyValuePair<string, string>("src", "3567941"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("cat", "za_l0643"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("type", "za_l0_s"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("u2", "1"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "deal-done"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("group_name", "ZA_L0_Sale"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_L0_DealDone"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "996620"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
             SourceContains(doubleClickTokensList);
-
+            SourceContains("u2: [");
             // Check that we don't have an empty u1 value (e.g. "u1: []"):
             doubleClickTokensBlackList.Clear();
             doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
@@ -234,14 +230,13 @@ namespace Wonga.QA.Tests.Ui
             doubleClickTokensList.Add(new KeyValuePair<string, string>("src", "3567941"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("cat", "za_ln060"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("type", "za_ln"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("u2", "1"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "my-account"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("group_name", "ZA_Ln"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_Ln_MyAccount"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "996622"));
             doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
             SourceContains(doubleClickTokensList);
-
+            SourceContains("u2: [");
             // Check that we don't have an empty u1 value (e.g. "u1: []"):
             doubleClickTokensBlackList.Clear();
             doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));

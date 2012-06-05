@@ -6,6 +6,7 @@ using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Svc;
+using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Meta
 {
@@ -49,7 +50,7 @@ namespace Wonga.QA.Tests.Meta
         [Test, Factory("Endpoints")]
         public void EndpointIsWarmedUpAndSchemaIsValid(ApiEndpoint endpoint)
         {
-            Do.Until(() =>
+            Do.With.Timeout(5).Until(() =>
             {
                 try
                 {
@@ -78,7 +79,7 @@ namespace Wonga.QA.Tests.Meta
             Assert.IsTrue(service.IsRunning());
         }
 
-        [Test, DependsOn("EndpointIsWarmedUpAndSchemaIsValid"), Pending("Until FE deployment is fixed")]
+        [Test, DependsOn("EndpointIsWarmedUpAndSchemaIsValid"), SUT(SUT.WIP, SUT.RC, SUT.WIPRelease, SUT.RCRelease, SUT.UAT, SUT.Live)]
         public void HomePageCanBeLoaded()
         {
             Assert.Contains(new WebClient().DownloadString(Config.Ui.Home), "Wonga");

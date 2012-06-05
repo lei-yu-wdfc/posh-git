@@ -31,17 +31,17 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         public bool IsPasswordMismatchWarningOccured()
         {
             var passwordWarning = Section.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.PasswordConfirmErrorForm));
-            return passwordWarning.Text.Equals("Passwords must match");
+            return passwordWarning.Text.Equals(ContentMap.Get.AccountDetailsSection.PasswordMismatchWarning);
         }
         public bool IsPasswordInvalidFormatWarningOccured()
         {
             var passwordWarning = Section.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.PasswordErrorForm));
-            return passwordWarning.Text.Equals("Your password must be 8 or more characters and must include a capital letter and a number.");
+            return passwordWarning.Text.Equals(ContentMap.Get.AccountDetailsSection.PasswordInvalidFormatWarning);
         }
         public bool IsPasswordEqualsEmailWarningOccured()
         {
             var passwordWarning = Section.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.PasswordErrorForm));
-            return passwordWarning.Text.Equals("Password must not contain user name.");
+            return passwordWarning.Text.Equals(ContentMap.Get.AccountDetailsSection.PasswordEqualsEmailWarning);
        }
     }
 }

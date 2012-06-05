@@ -59,6 +59,8 @@
   <ItemGroup>
     <Compile Include="CustomRemoteWebDriver.cs" />
     <Compile Include="Journey\CaL0Journey.cs" />
+    <Compile Include="Journey\WbLnJourney.cs" />
+    <Compile Include="Journey\PlL0Journey.cs" />
     <Compile Include="Journey\ZaMobileL0Journey.cs" />
     <Compile Include="Journey\IL0ConsumerJourney.cs" />
     <Compile Include="Journey\ILnConsumerJourney.cs" />
@@ -69,12 +71,30 @@
     <Compile Include="Journey\ZaL0Journey.cs" />
     <Compile Include="Journey\CaLnJourney.cs" />
     <Compile Include="Journey\ZaLnJourney.cs" />
+    <Compile Include="Journey\ZaMobileLnJourney.cs" />
     <Compile Include="Mappings\Content\ContentMap.cs" />
     <Compile Include="Mappings\Content\Agreements\LoanAgreement.cs" />
+    <Compile Include="Mappings\Content\Elements\HelpElement.cs" />
     <Compile Include="Mappings\Content\Elements\TabsElementMobile.cs" />
-    <Compile Include="Mappings\Content\ErrorsMessages\AddressDetailsPage.cs" />
+    <Compile Include="Mappings\Content\Elements\Prepaid\PrepaidBalanceBlock.cs" />
+    <Compile Include="Mappings\Content\ErrorsMessages\ExtensionErrorPage.cs" />
+    <Compile Include="Mappings\Content\Pages\AddressDetailsPage.cs" />
     <Compile Include="Mappings\Content\ErrorsMessages\MobilePinVerificationSection.cs" />
     <Compile Include="Mappings\Content\Links\FAQPageLinks.cs" />
+    <Compile Include="Mappings\Content\Pages\AboutUsPage.cs" />
+    <Compile Include="Mappings\Content\Pages\RepayErrorPage.cs" />
+    <Compile Include="Mappings\Content\Pages\RepaymentOptionsPage.cs" />
+    <Compile Include="Mappings\Content\Pages\RepayProcessingPage.cs" />
+    <Compile Include="Mappings\Content\Pages\ExtensionProcessingPage.cs" />
+    <Compile Include="Mappings\Content\Pages\TopupDealDonePage.cs" />
+    <Compile Include="Mappings\Content\Sections\ApplicationSection.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\BusinessSummaryPage.cs" />
+    <Compile Include="Mappings\Content\Pages\TopupProcessingPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\RepayErrorPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\RepayProcessingPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\RepayDuePaymentFailedPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\MySummaryPageMobile.cs" />
+    <Compile Include="Mappings\Content\Pages\TimeoutTestPage.cs" />
     <Compile Include="Mappings\Content\Pages\ExtensionAgreementPage.cs" />
     <Compile Include="Mappings\Content\Pages\L0DeclinedPage.cs" />
     <Compile Include="Mappings\Content\Pages\MyPaymentsPage.cs" />
@@ -85,6 +105,8 @@
     <Compile Include="Mappings\Content\Pages\RepayEarlyPartpaySuccessPage.cs" />
     <Compile Include="Mappings\Content\Pages\RepayOverdueFullpaySuccessPage.cs" />
     <Compile Include="Mappings\Content\Pages\RepayOverduePartpaySuccessPage.cs" />
+    <Compile Include="Mappings\Content\Sections\AccountDetailsSection.cs" />
+    <Compile Include="Mappings\Content\Sections\YourDetailsSection.cs" />
     <Compile Include="Mappings\Ui\Elements\ChangeMyAddressElement.cs" />
     <Compile Include="Mappings\Ui\Elements\HomePageWelcomePopup.cs" />
     <Compile Include="Mappings\Ui\Elements\TabsElementMobile.cs" />
@@ -96,6 +118,9 @@
     <Compile Include="Mappings\Ui\Elements\SurveyElement.cs" />
     <Compile Include="Mappings\Ui\Elements\TabsElement.cs" />
     <Compile Include="Mappings\Ui\Elements\TopupSlidersElement.cs" />
+    <Compile Include="Mappings\Ui\Elements\Prepaid\ChooseCardTypeMenuElement.cs" />
+    <Compile Include="Mappings\Ui\Elements\Prepaid\PrepaidCardMenuElement.cs" />
+    <Compile Include="Mappings\Ui\Elements\Prepaid\PrepaidTopupChoiceElement.cs" />
     <Compile Include="Mappings\Ui\Pages\Admin\AccountingPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Admin\AddCardPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Admin\AddFilePage.cs" />
@@ -105,10 +130,15 @@
     <Compile Include="Mappings\Ui\Pages\Common\ApplyPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ApplyTermsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\BlogPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\EasypaymentNumberPrintPage.cs" />
+    <Compile Include="Ui\Pages\Common\BusinessSummaryPage.cs" />
+    <Compile Include="Ui\Pages\Common\RepayDuePaymentFailedPage.cs" />
+    <Compile Include="Ui\Pages\Common\RepayErrorPage.cs" />
+    <Compile Include="Ui\Pages\Common\MySummaryPageMobile.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayDueFullpaySuccessPage.cs" />
-    <Compile Include="Mappings\Ui\Pages\Common\RepayDuePaymentFailedPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayEarlyFullpaySuccessPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayEarlyPaymentFailedPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\RepaymentOptionsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayOverdueFullpaySuccessPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayOverduePartpaySuccessPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayDuePartpaySuccessPage.cs" />
@@ -116,8 +146,8 @@
     <Compile Include="Mappings\Content\Pages\RepayOverduePaymentFailedPage.cs" />
     <Compile Include="Mappings\Content\Pages\RepayDuePaymentFailedPage.cs" />
     <Compile Include="Mappings\Content\Pages\RepayEarlyPaymentFailedPage.cs" />
-    <Compile Include="Mappings\Ui\Pages\Common\FAQPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayOverduePaymentFailedPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\FAQPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayRequestPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ExtensionRequestPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\ExtensionAgreementPage.cs" />
@@ -141,6 +171,7 @@
     <Compile Include="Mappings\Ui\Pages\PayLater\PayLaterLoginPage.cs" />
     <Compile Include="Mappings\Ui\Pages\PayLater\PayLaterThanksForm.cs" />
     <Compile Include="Mappings\Ui\Pages\PayLater\SubmitionPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Prepaid\PrepaidAdminPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Prepaid\PrepaidCardPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Prepaid\PrepaidRegisterDetailsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceCustomerDetailPage.cs" />
@@ -189,6 +220,7 @@
     <Compile Include="Ui\Elements\BaseElement.cs" />
     <Compile Include="Ui\Elements\ChangeMyAddressElement.cs" />
     <Compile Include="Ui\Elements\HomePageWelcomePopup.cs" />
+    <Compile Include="Ui\Elements\Prepaid\PrepaidTopupChoiceElements.cs" />
     <Compile Include="Ui\Elements\TabsElementMobile.cs" />
     <Compile Include="Ui\Elements\ContactElement.cs" />
     <Compile Include="Ui\Elements\SmallRepaySlidersElement.cs" />
@@ -212,6 +244,9 @@
     <Compile Include="Ui\Pages\Common\ApplyPage.cs" />
     <Compile Include="Ui\Pages\Common\ApplyTermsPage.cs" />
     <Compile Include="Ui\Pages\Common\BlogPage.cs" />
+    <Compile Include="Ui\Pages\Common\TimeoutTestPage.cs" />
+    <Compile Include="Ui\Pages\Common\EasypaymentNumberPrintPage.cs" />
+    <Compile Include="Ui\Pages\Common\RepaymentOptionsPage.cs" />
     <Compile Include="Ui\Pages\Common\RepayOverdueFullpaySuccessPage.cs" />
     <Compile Include="Ui\Pages\Common\RepayDueFullpaySuccessPage.cs" />
     <Compile Include="Ui\Pages\Common\RepayEarlyFullpaySuccessPage.cs" />
@@ -219,7 +254,6 @@
     <Compile Include="Ui\Pages\Common\RepayDuePartpaySuccessPage.cs" />
     <Compile Include="Ui\Pages\Common\RepayEarlyPartpaySuccessPage.cs" />
     <Compile Include="Ui\Pages\Common\RepayOverduePaymentFailedPage.cs" />
-    <Compile Include="Ui\Pages\Common\RepayDuePaymentFailedPage.cs" />
     <Compile Include="Ui\Pages\Common\RepayEarlyPaymentFailedPage.cs" />
     <Compile Include="Ui\Pages\Common\RepayProcessingPage.cs" />
     <Compile Include="Ui\Pages\Common\HomePageMobile.cs" />
@@ -238,6 +272,9 @@
     <Compile Include="Ui\Pages\Common\HowItWorksPage.cs" />
     <Compile Include="Ui\Pages\Common\JargonBusterPage.cs" />
     <Compile Include="Ui\Pages\Common\LoginPage.cs" />
+    <Compile Include="Ui\Elements\Prepaid\ChooseCardTypeMenuElement.cs" />
+    <Compile Include="Ui\Elements\Prepaid\PrepaidBalanceBlock.cs" />
+    <Compile Include="Ui\Elements\Prepaid\PrepaidCardMenuElement.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\MyPaymentsPage.cs" />
     <Compile Include="Ui\Pages\Common\MyPaymentsPage.cs" />
     <Compile Include="Ui\Pages\Common\MyPersonalDetailsPage.cs" />
@@ -251,6 +288,7 @@
     <Compile Include="Ui\Pages\Interfaces\IRepayPaymentPage.cs" />
     <Compile Include="Ui\Pages\Interfaces\IExtensionPaymentPage.cs" />
     <Compile Include="Ui\Pages\Interfaces\ITopupDecisionPage.cs" />
+    <Compile Include="Ui\Pages\Prepaid\PrepaidAdminPage.cs" />
     <Compile Include="Ui\Pages\Prepaid\PrepaidCardPage.cs" />
     <Compile Include="Ui\Pages\Prepaid\PrepaidRegisterDetailsPage.cs" />
     <Compile Include="Ui\Pages\PayLater\PayLaterLoginPage.cs" />
@@ -355,7 +393,11 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Mappings\Xml\Ui\Pl.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\..\..\lib\nuget\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

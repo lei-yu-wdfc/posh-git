@@ -19,6 +19,7 @@ using Wonga.QA.Framework.UI;
 
 namespace Wonga.QA.Tests.Ui
 {
+    [Parallelizable(TestScope.All)]
     class MyAccountTests : UiTest
     {
         [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-218"), Category(TestCategories.Smoke)]
@@ -134,14 +135,10 @@ namespace Wonga.QA.Tests.Ui
 
                 payment = Client.Payments();
                 int whileCount = 0;
-                while (accountNumber.Remove(0, 3) != payment.DefaultAccountNumber)
+                while (accountNumber.Remove(0, 3) != payment.DefaultAccountNumber && whileCount < 50)
                 {
                     whileCount++;
                     payment = Client.Payments();
-                    if (whileCount > 50)
-                    {
-                        break;
-                    }
                 }
                 Console.WriteLine(whileCount);
                 Assert.AreEqual(accountNumber.Remove(0, 3), payment.DefaultAccountNumber);
@@ -547,7 +544,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-215"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-215")] //Removed from smoke because of selenium problem with new sliders
         public void MyAccountPostcodeMustBeTheSameAsUserEntered()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -788,5 +785,44 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual("", homePhoneDB);
         }
 
+        [Test, AUT(AUT.Za), JIRA("QA-304")]
+        public void CustomerClicksOnRepayButtonBeforeDueDate()
+        {
+            var _applications = Drive.Data.Payments.Db.Applications;
+            var _scheduledPayments = Drive.Data.Payments.Db.ScheduledPayments;
+
+            var customer = CustomerBuilder.New().Build();
+            var application = ApplicationBuilder.New(customer).Build();
+
+            var appId = _applications.FindByExternalId(application.Id).ApplicationId;
+            var naedo = _scheduledPayments.FindByApplicationId(appId);
+            Assert.IsNull(naedo);
+
+            var loginPage = Client.Login();
+            var myAccountPage = loginPage.LoginAs(customer.Email);
+
+            var repaymentOptionsPage = myAccountPage.RepayClick();
+        }
+
+        [Test, AUT(AUT.Za), JIRA("QA-306")]
+        public void ThereIsNoRepayButtonWhenNAEDOTrackingInPlace()
+        {
+            var _applications = Drive.Data.Payments.Db.Applications;
+            var _scheduledPayments = Drive.Data.Payments.Db.ScheduledPayments;
+
+            var customer = CustomerBuilder.New().Build();
+            var application = ApplicationBuilder.New(customer).Build();
+            application.PutApplicationIntoArrears(2);
+
+            var appId = _applications.FindByExternalId(application.Id).ApplicationId;
+            var naedo = _scheduledPayments.FindByApplicationId(appId);
+            Assert.IsNotNull(naedo);
+
+            var loginPage = Client.Login();
+            var myAccountPage = loginPage.LoginAs(customer.Email);
+
+            var tagCloud = myAccountPage.GetTagCloud;
+            Assert.AreEqual("", tagCloud);
+        }
     }
 }

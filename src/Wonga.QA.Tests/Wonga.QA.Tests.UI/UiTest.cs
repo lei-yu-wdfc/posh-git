@@ -61,13 +61,18 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(Client.Driver.PageSource.Contains(token));
         }
 
+        public void SourceDoesNotContain(string token)
+        {
+            Assert.IsFalse(Client.Driver.PageSource.Contains(token));
+        }
+
         public void SourceContains(List<KeyValuePair<string, string>> list)
         {
             foreach (var pair in list)
             {
                 try
                 {
-                    Assert.IsTrue(Client.Driver.PageSource.Contains(String.Format("{0}: {1}", pair.Key, pair.Value)));
+                    Assert.IsTrue(Client.Driver.PageSource.Contains(String.Format("{0}: [{1}]", pair.Key, pair.Value)));
                 }
                 catch (AssertionException exception)
                 {
@@ -82,7 +87,7 @@ namespace Wonga.QA.Tests.Ui
             {
                 try
                 {
-                    Assert.IsFalse(Client.Driver.PageSource.Contains(String.Format("{0}: {1}", pair.Key, pair.Value)));
+                    Assert.IsFalse(Client.Driver.PageSource.Contains(String.Format("{0}: [{1}]", pair.Key, pair.Value)));
                 }
                 catch (AssertionException exception)
                 {

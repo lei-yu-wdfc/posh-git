@@ -446,6 +446,8 @@ namespace Wonga.QA.Framework
                             r.EmployerName = _employerName;
                         	r.NetMonthlyIncome = _netMonthlyIncome;
                         	r.Status = _employerStatus;
+                            if (!string.IsNullOrEmpty(_nextPayDate.ToString()))
+                            r.NextPayDate = _nextPayDate;
                         }),
                         VerifyMobilePhoneCaCommand.New(r =>
                         {

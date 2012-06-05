@@ -15,6 +15,8 @@ using CreateFixedTermLoanApplicationCommand = Wonga.QA.Framework.Msmq.CreateFixe
 using CreateScheduledPaymentRequestCommand = Wonga.QA.Framework.Msmq.CreateScheduledPaymentRequestCommand;
 using CreateRepaymentArrangementCommand = Wonga.QA.Framework.Msmq.CreateRepaymentArrangementCommand;
 using PaymentFrequencyEnum = Wonga.QA.Framework.Msmq.PaymentFrequencyEnum;
+using PaymentTransactionEnum = Wonga.QA.Framework.Msmq.PaymentTransactionEnum;
+using PaymentTransactionScopeEnum = Wonga.QA.Framework.Msmq.PaymentTransactionScopeEnum;
 using SignApplicationCommand = Wonga.QA.Framework.Msmq.SignApplicationCommand;
 
 

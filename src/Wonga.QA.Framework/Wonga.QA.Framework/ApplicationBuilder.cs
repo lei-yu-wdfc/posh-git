@@ -169,6 +169,14 @@ namespace Wonga.QA.Framework
                         	r.LoanAmount = LoanAmount;
                         	r.PromiseDate = PromiseDate;
                         }),
+						RiskCreateFixedTermLoanApplicationCommand.New(r =>
+						{
+							r.ApplicationId = Id;
+                            r.AccountId = Customer.Id;
+                            r.BankAccountId = Customer.GetBankAccount();
+                        	r.LoanAmount = LoanAmount;
+                        	r.PromiseDate = PromiseDate;
+						}),
                         VerifyFixedTermLoanCommand.New(r=>
                         {
                             r.AccountId = Customer.Id; 
@@ -191,6 +199,14 @@ namespace Wonga.QA.Framework
                             r.LoanAmount = LoanAmount;
                         	r.PromiseDate = PromiseDate;
                         }),
+						RiskCreateFixedTermLoanApplicationCommand.New(r =>
+						{
+							r.ApplicationId = Id;
+                            r.AccountId = Customer.Id;
+                            r.BankAccountId = Customer.GetBankAccount();
+                        	r.LoanAmount = LoanAmount;
+                        	r.PromiseDate = PromiseDate;
+						}),
                         VerifyFixedTermLoanCommand.New(r=>
                         {
                             r.AccountId = Customer.Id; 
@@ -209,6 +225,14 @@ namespace Wonga.QA.Framework
                         	r.LoanAmount = LoanAmount;
                         	r.PromiseDate = PromiseDate;
                         }),
+						RiskCreateFixedTermLoanApplicationCommand.New(r =>
+						{
+							r.ApplicationId = Id;
+                            r.AccountId = Customer.Id;
+                            r.BankAccountId = Customer.GetBankAccount();
+                        	r.LoanAmount = LoanAmount;
+                        	r.PromiseDate = PromiseDate;
+						}),
                         VerifyFixedTermLoanCommand.New(r=>
                         {
                             r.AccountId = Customer.Id; 
