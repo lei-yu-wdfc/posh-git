@@ -809,5 +809,26 @@ namespace Wonga.QA.Tests.Ui
 
             var repaymentOptionsPage = myAccountPage.RepayClick();
         }
+
+        [Test, AUT(AUT.Za), JIRA("QA-306")]
+        public void ThereIsNoRepayButtonWhenNAEDOTrackingInPlace()
+        {
+            var _applications = Drive.Data.Payments.Db.Applications;
+            var _scheduledPayments = Drive.Data.Payments.Db.ScheduledPayments;
+
+            var customer = CustomerBuilder.New().Build();
+            var application = ApplicationBuilder.New(customer).Build();
+            application.PutApplicationIntoArrears(2);
+
+            var appId = _applications.FindByExternalId(application.Id).ApplicationId;
+            var naedo = _scheduledPayments.FindByApplicationId(appId);
+            Assert.IsNotNull(naedo);
+
+            var loginPage = Client.Login();
+            var myAccountPage = loginPage.LoginAs(customer.Email);
+
+            var tagCloud = myAccountPage.GetTagCloud;
+            Assert.AreEqual("", tagCloud);
+        }
     }
 }
