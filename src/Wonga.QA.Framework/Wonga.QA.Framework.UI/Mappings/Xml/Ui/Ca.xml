@@ -81,6 +81,7 @@
     <Pin>#edit-pin-ca</Pin>
 	<ResendPin>.resend-pin.mod</ResendPin>
 	<ResendPinMessage>#fancybox-content div</ResendPinMessage>
+	<ResendPinPopupClose>#fancybox-close</ResendPinPopupClose>	
   </MobilePinVerificationSection>
 
   <AcceptedPage>

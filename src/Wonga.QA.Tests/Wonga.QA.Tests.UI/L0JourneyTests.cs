@@ -1859,8 +1859,8 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Ca), JIRA("QA-303")] // AUT Za removed beacuse of ZA-2630 bug
         public void L0ShouldPossibleToCompleteAnL0WithSelfEmployedStatus()
         {
-           // string FirstName = Get.RandomString(3, 10);
-           // string LastName = Get.RandomString(3, 10);
+            // string FirstName = Get.RandomString(3, 10);
+            // string LastName = Get.RandomString(3, 10);
             string Email = Get.RandomEmail();
             DateTime DateOfBirth = new DateTime(1957, 10, 30);
 
@@ -1943,10 +1943,45 @@ namespace Wonga.QA.Tests.Ui
                     break;
                 #endregion
 
-               
+
             }
 
 
+        }
+
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-302")]
+        public void CustomerOnBankDetailsPageClicksOnResendPinLinkAndGoFarther()
+        {
+            // string telephone = "077009" + Get.RandomLong(1000, 9999).ToString();
+            switch (Config.AUT)
+            {
+                #region Ca
+                case AUT.Ca:
+                    var journeyCa = JourneyFactory.GetL0Journey(Client.Home());
+                    var myBankAccountCa = journeyCa.ApplyForLoan(200, 10)
+                        .FillPersonalDetails()
+                        .FillAddressDetails().FillAccountDetails().CurrentPage as PersonalBankAccountPage;
+                    myBankAccountCa.PinVerificationSection.ResendPinClick();
+                    Thread.Sleep(2000);
+                    myBankAccountCa.PinVerificationSection.CloseResendPinPopup();
+                    var pageCa = journeyCa.FillBankDetails()
+                        .CurrentPage as ProcessingPage;
+                    break;
+                #endregion
+                #region Za
+                case AUT.Za:
+                    var journeyZa = JourneyFactory.GetL0Journey(Client.Home());
+                    var myBankAccountZa = journeyZa.ApplyForLoan(200, 10)
+                        .FillPersonalDetails()
+                        .FillAddressDetails().FillAccountDetails().CurrentPage as PersonalBankAccountPage;
+                    myBankAccountZa.PinVerificationSection.ResendPinClick();
+                    Thread.Sleep(2000);
+                    myBankAccountZa.PinVerificationSection.CloseResendPinPopup();
+                    var pageZa = journeyZa.FillBankDetails()
+                        .CurrentPage as ProcessingPage;
+                    break;
+                #endregion
+            }
         }
     }
 }

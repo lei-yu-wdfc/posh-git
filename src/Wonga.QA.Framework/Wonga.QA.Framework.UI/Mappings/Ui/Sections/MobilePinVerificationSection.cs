@@ -14,5 +14,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Sections
         public String Pin { get; set; }
         public String ResendPin { get; set; }
         public String ResendPinMessage { get; set; }
+        public String ResendPinPopupClose { get; set; }
     }
 }
