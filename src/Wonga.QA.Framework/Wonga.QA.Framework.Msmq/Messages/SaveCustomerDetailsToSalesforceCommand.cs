@@ -14,9 +14,12 @@ namespace Wonga.QA.Framework.Msmq
         public String Forename { get; set; }
         public String Surname { get; set; }
         public String MiddleName { get; set; }
+        public GenderEnum Gender { get; set; }
         public String HomePhone { get; set; }
         public String MobilePhone { get; set; }
         public String WorkPhone { get; set; }
         public String Email { get; set; }
+        public String NationalNumber { get; set; }
+        public String PrefferedLanguage { get; set; }
     }
 }
