@@ -55,7 +55,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-165"), Pending("FE bug, button in top of page are broken, ZA-2490, CA-2234")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-165"), Category(TestCategories.Smoke)]
         public void SelectingATroubleshootingQuestionTakesMeToPageWithCorrectQuestionSelected()
         {
             var page = Client.Home();
@@ -86,7 +86,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
         
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-167")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-167"), Category(TestCategories.Smoke)]
         public void ClickOnContactUsCauseContactInformationDisplayedOnPage()
         {
             var page = Client.Home();
