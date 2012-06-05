@@ -137,7 +137,7 @@ namespace Wonga.QA.Tests.Payments.Sagas
             var msg = new ConfirmIncomingPaymentCommand() { PaymentId = _paymentId };
             Drive.Msmq.Payments.Send(msg);
             
-            var saga = Do.Until(() => Drive.Data.OpsSagas.Db.PayUPaymentConfirmationSagaEntity.FindByPaymentId(_paymentId));
+            var saga = Do.With.Timeout(20).Until(() => Drive.Data.OpsSagas.Db.PayUPaymentConfirmationSagaEntity.FindByPaymentId(_paymentId));
 
             var timeOutMessage = new TimeoutMessage()
             {
