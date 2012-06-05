@@ -849,8 +849,6 @@
     <Compile Include="Messages\SaveOrganisationDetailsCommand.cs" />
     <Compile Include="Messages\SavePasswordRecoveryDetailsCommand.cs" />
     <Compile Include="Messages\SavePaymentCardBillingAddressCommand.cs" />
-    <Compile Include="Messages\SavePayURequestZaCommand.cs" />
-    <Compile Include="Messages\SavePayUResponseZaCommand.cs" />
     <Compile Include="Messages\SavePlainEmailFileCompleteZaCommand.cs" />
     <Compile Include="Messages\SavePlainEmailFileZaCommand.cs" />
     <Compile Include="Messages\SaveServerSideInitialTrackingDataCommand.cs" />
