@@ -115,14 +115,6 @@ namespace Wonga.QA.Tests.Payments.Helpers
             int appId = Drive.Db.Payments.Applications.Single(a => a.ExternalId == applicationGuid).ApplicationId;
 
             Do.With.Timeout(3).Interval(10).Until(() => Drive.Db.Payments.Transactions.Single(a => a.ApplicationId == appId & a.Type == PaymentTransactionType.DirectBankPayment.ToString() & a.Amount == amount));
-
-            TestLog.DebugTrace.WriteLine("ActualDirectBankPaymentAmount => ExpectedDirectBankPayment {0} => {1}\n",
-                                         Drive.Db.Payments.Transactions.Single(
-                                             a =>
-                                             a.ApplicationId == appId &
-                                             a.Type == PaymentTransactionType.DirectBankPayment.ToString() &
-                                             a.Amount == amount).Amount, amount);
-
             return true;
         }
 

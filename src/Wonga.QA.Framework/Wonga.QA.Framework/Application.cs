@@ -212,6 +212,13 @@ namespace Wonga.QA.Framework
 			return this;
 		}
 
+        public virtual Application PutApplicationFurtherIntoArrears(uint daysInArrears)
+        {
+            Drive.Db.Rewind(Id, (int)daysInArrears);
+
+            return this;
+        }
+
 		public virtual Application PutApplicationIntoArrears()
 		{
 			ApplicationEntity application = Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id);
