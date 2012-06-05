@@ -14,6 +14,8 @@ namespace Wonga.QA.Tests.Payments.Helpers
 {
     public static class VerifyPaymentFunctions
     {
+		private const string MultipleRepresentmentsInArrearsKeyName = "FeatureSwitch.MultipleRepresentmentsInArrears";
+
         public static bool VerifyFixedTermLoanOfferQueryRates(List<VariableInterestRateDetailEntity> actualVariableRates, List<VariableInterestRateDetailEntity> expectedVariableRates)
         {
             if (actualVariableRates.Count != expectedVariableRates.Count)
@@ -75,6 +77,14 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
         public static bool VerifyApplicationInArrears(Guid applicationGuid)
         {
+			if (Drive.Data.Ops.GetServiceConfiguration<bool>(MultipleRepresentmentsInArrearsKeyName))
+			{
+				return
+					Do.With.Timeout(2).Interval(10).Until(
+						() =>
+						Drive.Data.OpsSagas.Db.MultipleRepresentmentsInArrearsSagaEntity.FindByApplicationId(ApplicationId: applicationGuid)) != null;
+			}
+
             return
                 Do.With.Timeout(2).Interval(10).Until(
                     () => Drive.Db.OpsSagas.PaymentsInArrearsSagaEntities.Single(s => s.ApplicationId == applicationGuid)) != null;
