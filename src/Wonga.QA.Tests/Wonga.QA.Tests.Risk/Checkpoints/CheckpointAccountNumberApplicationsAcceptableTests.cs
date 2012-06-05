@@ -32,7 +32,6 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			AssertCheckpointAndVerificationExecution();
 		}
 
-
 		[Test, AUT(AUT.Za), JIRA("ZA-2228"), DependsOn("L0_NumberOfApplicationsBelowThresholdAccepted")]
 		public void Ln_NumberOfApplicationsBelowThresholdAccepted()
 		{
@@ -40,43 +39,6 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Application lnApplication = ApplicationBuilder.New(customer).Build();
 
 			AssertCheckpointAndVerificationExecution(lnApplication);
-		}
-
-		[Test, AUT(AUT.Za), JIRA("ZA-2228"), Timeout(0), Parallelizable]
-		public void Ln_NumberOfApplicationDailyOverThresholdDeclined()
-		{
-			var customerLn = CustomerBuilder.New().WithEmployer(RiskMask.TESTEmployedMask).WithEmployerStatus("Unemployed").Build();
-
-			for (int i = 0; i < DailyThreshold; i++)
-			{
-				ApplicationBuilder.New(customerLn).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
-			}
-
-			customerLn.UpdateEmployer(TestMask.ToString());
-
-			Application lnApplication = ApplicationBuilder.New(customerLn).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
-
-			AssertApplicationDeclinedWithCorrectCheckPointAndVerification(lnApplication);
-		}
-
-		[Test, AUT(AUT.Za), JIRA("ZA-2228"), Timeout(0), Parallelizable]
-		public void Ln_NumberOfApplicationMonthlyOverThresholdDeclined()
-		{
-			//make one app per day up until the monthly threshold so that the daily limit is not exceeded
-			var customerLn = CustomerBuilder.New().WithEmployer(RiskMask.TESTEmployedMask).WithEmployerStatus("Unemployed").Build();
-
-			for (int i = 0; i < ThirtyDayThreshold; i++)
-			{
-				var dailyApplication = ApplicationBuilder.New(customerLn).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
-				dailyApplication.RewindApplicationDatesForDays(ThirtyDayThreshold - i);
-			}
-
-			customerLn.UpdateEmployer(TestMask.ToString());
-
-			Application lnApplication = ApplicationBuilder.New(customerLn).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
-
-			AssertApplicationDeclinedWithCorrectCheckPointAndVerification(lnApplication);
-
 		}
 
 		#region feature switch
