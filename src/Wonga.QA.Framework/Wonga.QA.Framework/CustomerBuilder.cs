@@ -46,6 +46,7 @@ namespace Wonga.QA.Framework
         private String _institutionNumber;
         private int _numberOfDependants;
         private String _bankCode;
+        private IncomeFrequencyEnum _incomeFrequency;
 
         private String _branchNumber;
 
@@ -328,6 +329,12 @@ namespace Wonga.QA.Framework
             return this;
         }
 
+        public CustomerBuilder WithIncomeFrequency(IncomeFrequencyEnum incomeFrequency)
+        {
+            _incomeFrequency = incomeFrequency;
+            return this;
+        }
+
         public Customer Build()
         {
             _nextPayDate.DateFormat = DateFormat.Date;
@@ -448,6 +455,8 @@ namespace Wonga.QA.Framework
                         	r.Status = _employerStatus;
                             if (!string.IsNullOrEmpty(_nextPayDate.ToString()))
                             r.NextPayDate = _nextPayDate;
+                            if (!string.IsNullOrEmpty(_incomeFrequency.ToString()))
+                                r.IncomeFrequency = _incomeFrequency;
                         }),
                         VerifyMobilePhoneCaCommand.New(r =>
                         {
