@@ -96,16 +96,17 @@ namespace Wonga.QA.Tests.Payments.Sagas
 
                 [Test]
                 [AUT(AUT.Uk)]
-                public void PaymentIsTakenForTheLoanAndBalanceClearedAndNotActive()
+                [JIRA("UK-2310/UK-2009")]
+                public void PaymentIsTakenForTheLoan()
                 {
                     // Using <= because at the time of writing there is a bug in the accrued interest calculator
 
                     Do.With.Timeout(2).Interval(10).Until(() => _application.GetBalance() <= 0m);
 
-                    Do.With.Timeout(2).Interval(10).Until(() => null != _transactions.Find(_transactions.ApplicationId == _applicationId && 
-                                                                                           _transactions.Amount <= -_balanceToday &&
-                                                                                           _transactions.Scope == PaymentTransactionScopeEnum.Credit &&
-                                                                                           _transactions.Type == "CardPayment").SingleOrDefault()); 
+                    Do.With.Timeout(2).Interval(10).Until(() => null != _transactions.FindAll(_transactions.ApplicationId == _applicationId && 
+                                                                                              _transactions.Amount <= -_balanceToday && // <= because of bug with balance calculation...
+                                                                                              _transactions.Scope == (byte)PaymentTransactionScopeEnum.Credit &&
+                                                                                              _transactions.Type == "CardPayment").FirstOrDefault()); 
                 }
             }
         }
