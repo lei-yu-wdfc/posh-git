@@ -851,7 +851,7 @@ namespace Wonga.QA.Tests.Ui
             var debitOrderPage = repaymentOptionsPage.DebitOrderButtonClick();
             var debitOrderSuccessPage = debitOrderPage.Submit();
             var updatedMyAccountPage = debitOrderSuccessPage.BackToYourAccountButtonClick();
-            Assert.IsTrue(updatedMyAccountPage.GetStatusText.Contains("Thank you for taking these steps to repay your Wonga loan"));
+            Assert.IsTrue(updatedMyAccountPage.GetStatusText.Contains(ContentMap.Get.MySummaryPage.DebitOrderSuccesText));
         }
     }
 }
