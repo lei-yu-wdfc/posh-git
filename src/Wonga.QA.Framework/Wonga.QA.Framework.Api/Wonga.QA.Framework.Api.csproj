@@ -47,6 +47,7 @@
     <Compile Include="Defaults\AddPrimaryOrganisationDirectorCommand.cs" />
     <Compile Include="Defaults\AddSecondaryOrganisationDirectorCommand.cs" />
     <Compile Include="Defaults\CreateBusinessFixedInstallmentLoanApplicationWbUkCommand.cs" />
+    <Compile Include="Defaults\RiskCreateFixedTermLoanApplicationCommand.cs" />
     <Compile Include="Defaults\SaveCustomerAddressUkCommand.cs" />
     <Compile Include="Defaults\SaveCustomerDetailsUkCommand.cs" />
     <Compile Include="Defaults\SaveEmploymentDetailsUkCommand.cs" />
@@ -80,11 +81,6 @@
     <Compile Include="Exceptions\NoDefaultException.cs" />
     <Compile Include="Exceptions\SchemaException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Requests\GetIncomingPartnerPaymentRequestParametersZaQuery.cs" />
-    <Compile Include="Requests\GetPrepaidAvailableAccountBalanceQuery.cs" />
-    <Compile Include="Requests\RegisterPrePaidCardEmailCommand.cs" />
-    <Compile Include="Requests\SaveIncomingPartnerPaymentRequestZaCommand.cs" />
-    <Compile Include="Requests\SaveIncomingPartnerPaymentResponseZaCommand.cs" />
     <Compile Include="Temp\ApplicationDecisionStatusEnum.cs" />
     <Compile Include="Temp\RiskMask.cs" />
     <Compile Include="Requests\AddBankAccountCaCommand.cs" />
@@ -159,6 +155,7 @@
     <Compile Include="Requests\GetFixedTermLoanTopupOfferQuery.cs" />
     <Compile Include="Requests\GetFullDeclineAdviceQuery.cs" />
     <Compile Include="Requests\GetGuarantorAgreementWbUkQuery.cs" />
+    <Compile Include="Requests\GetIncomingPartnerPaymentRequestParametersZaQuery.cs" />
     <Compile Include="Requests\GetInstallmentQuoteUkQuery.cs" />
     <Compile Include="Requests\GetInstitutionBranchCodeIsValidCaQuery.cs" />
     <Compile Include="Requests\GetLoanAgreementQuery.cs" />
@@ -185,7 +182,6 @@
     <Compile Include="Requests\GetPersonalPromoCodeQuery.cs" />
     <Compile Include="Requests\GetPreApprovedDirectDebitFormCaQuery.cs" />
     <Compile Include="Requests\GetPromoCodeParametersQuery.cs" />
-    <Compile Include="Requests\GetPrepaidCardTransactionsQuery.cs" />
     <Compile Include="Requests\GetRepayLoanCalculationQuery.cs" />
     <Compile Include="Requests\GetRepayLoanParametersQuery.cs" />
     <Compile Include="Requests\GetRepayLoanPaymentStatusUkQuery.cs" />
@@ -202,6 +198,7 @@
     <Compile Include="Requests\GetUnsignedApplicationsForAccountWbUkQuery.cs" />
     <Compile Include="Requests\GetUserLocationQuery.cs" />
     <Compile Include="Requests\InsertMissingCustomerDetailsZaCommand.cs" />
+    <Compile Include="Requests\RegisterPrePaidCardEmailCommand.cs" />
     <Compile Include="Requests\RepayLoanViaBankCommand.cs" />
     <Compile Include="Requests\RepayLoanViaCardCommand.cs" />
     <Compile Include="Requests\ResendMobilePhonePinCommand.cs" />
@@ -230,14 +227,15 @@
     <Compile Include="Requests\SaveEmploymentDetailsUkCommand.cs" />
     <Compile Include="Requests\SaveEmploymentDetailsZaCommand.cs" />
     <Compile Include="Requests\SaveExtensionReminderPreferencesCommand.cs" />
+    <Compile Include="Requests\SaveIncomingPartnerPaymentRequestZaCommand.cs" />
+    <Compile Include="Requests\SaveIncomingPartnerPaymentResponseZaCommand.cs" />
     <Compile Include="Requests\SaveOrganisationDetailsCommand.cs" />
     <Compile Include="Requests\SavePasswordRecoveryDetailsCommand.cs" />
     <Compile Include="Requests\SavePaymentCardBillingAddressCommand.cs" />
-    <Compile Include="Requests\SaveSocialDetailsCommand.cs" />
-    <Compile Include="Requests\SaveTrackingDataCommand.cs" />
-    <Compile Include="Requests\SaveServerSideTrackingDeviceCommand.cs" />
-    <Compile Include="Requests\SaveServerSidePageTrackingDataCommand.cs" />
     <Compile Include="Requests\SaveServerSideInitialTrackingDataCommand.cs" />
+    <Compile Include="Requests\SaveServerSidePageTrackingDataCommand.cs" />
+    <Compile Include="Requests\SaveServerSideTrackingDeviceCommand.cs" />
+    <Compile Include="Requests\SaveSocialDetailsCommand.cs" />
     <Compile Include="Requests\SendExtensionWindowOpenedReminderCommand.cs" />
     <Compile Include="Requests\SendPasswordResetEmailCommand.cs" />
     <Compile Include="Requests\SendVerificationEmailCommand.cs" />
@@ -283,6 +281,7 @@
     <Compile Include="Enums\EmploymentPositionEnum.cs" />
     <Compile Include="Enums\EmploymentStatusEnum.cs" />
     <Compile Include="Enums\ExtensionReminderEnum.cs" />
+    <Compile Include="Enums\FundsTransferMethodEnum.cs" />
     <Compile Include="Enums\GenderEnum.cs" />
     <Compile Include="Enums\IncomeFrequencyEnum.cs" />
     <Compile Include="Enums\LanguageZaEnum.cs" />
@@ -294,7 +293,6 @@
     <Compile Include="Enums\ProvinceEnum.cs" />
     <Compile Include="Enums\SliderPositionEnum.cs" />
     <Compile Include="Enums\TitleEnum.cs" />
-    <Compile Include="Enums\FundsTransferEnum.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />

@@ -2,7 +2,6 @@
 using System.Globalization;
 using MbUnit.Framework;
 using Wonga.QA.Framework.Api;
-using Wonga.QA.Framework.Api.Enums;
 using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework
@@ -152,11 +151,11 @@ namespace Wonga.QA.Framework
 
             if (isPrepaidFunds.Equals(true))
             {
-                request.TransferMethod = FundsTransferEnum.SendToPrepaidCard;
+                request.TransferMethod = FundsTransferMethodEnum.SendToPrepaidCard;
             }
             else
             {
-                request.TransferMethod = FundsTransferEnum.DefaultAutomaticallyChosen;
+                request.TransferMethod = FundsTransferMethodEnum.DefaultAutomaticallyChosen;
             }
 
             Drive.Api.Commands.Post(request);

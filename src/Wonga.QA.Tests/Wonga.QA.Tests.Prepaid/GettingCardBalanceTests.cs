@@ -11,6 +11,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Prepaid
 {
+/*
     [TestFixture, Parallelizable(TestScope.All)]
     public class GettingCardBalanceTests
     {
@@ -81,4 +82,5 @@ namespace Wonga.QA.Tests.Prepaid
             Assert.AreNotEqual(firstTimeRecordsCount, secondTimeRecordsCount);
         }
     }
+*/
 }
