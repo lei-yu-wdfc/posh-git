@@ -40,13 +40,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         public String HomeLanguage { set { _homeLanguage.SelectOption(value); } }
         public String MaritalStatus { set { _maritalStatus.SelectOption(value); } }
         public String NumberOfDependants { set { _dependants.SelectOption(value); } }
-        public String PeselNumber  { set {_peselNumber.SendValue(value);} }
+        public String PeselNumber { set { _peselNumber.SendValue(value); } }
         public String MotherMaidenName { set { _motherMaidenName.SendValue(value); } }
         public String EducationLevel { set { _educationLevel.SelectOption(value); } }
         public String VehicleOwner { set { _vehicleOwner.SelectOption(value); } }
- 	 	public String AllegroLogin { set { _allegroLogin.SendValue(value); } }
+        public String AllegroLogin { set { _allegroLogin.SendValue(value); } }
 
-        public YourDetailsSection(BasePage page) : base(UiMap.Get.YourDetailsSection.Fieldset, page)
+        public YourDetailsSection(BasePage page)
+            : base(UiMap.Get.YourDetailsSection.Fieldset, page)
         {
             switch (Config.AUT)
             {
@@ -61,7 +62,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
                 case (AUT.Wb):
                     _dependants = Section.FindElement(By.CssSelector(UiMap.Get.YourDetailsSection.Dependants));
                     break;
-                case(AUT.Uk):
+                case (AUT.Uk):
                     _dependants = Section.FindElement(By.CssSelector(UiMap.Get.YourDetailsSection.Dependants));
                     break;
                 case (AUT.Pl):
@@ -98,9 +99,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             {
                 case AUT.Za:
                     var messages = Do.Until(() => Section.FindElements(By.CssSelector(UiMap.Get.YourDetailsSection.Warning)));
-                    Console.WriteLine(messages[1].Text);
+                    Console.WriteLine(messages[2].Text);
 
-                    if (messages[1].Text.Equals(ContentMap.Get.YourDetailsSection.IdNumberWarning))
+                    if (messages[2].Text.Equals(ContentMap.Get.YourDetailsSection.IdNumberWarning))
                     {
                         return true;
                     }
@@ -119,8 +120,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
             {
                 case AUT.Za:
                     var messages = Do.Until(() => Section.FindElements(By.CssSelector(UiMap.Get.YourDetailsSection.Warning)));
-                    Console.WriteLine(messages[2].Text);
-                    if (messages[2].Text.Equals(ContentMap.Get.YourDetailsSection.IdNumberWarning))
+                    Console.WriteLine(messages[3].Text);
+                    if (messages[3].Text.Equals(ContentMap.Get.YourDetailsSection.IdNumberWarning))
                     {
                         return true;
                     }

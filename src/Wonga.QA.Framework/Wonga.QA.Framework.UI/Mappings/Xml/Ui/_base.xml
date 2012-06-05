@@ -268,7 +268,7 @@
 
   <MySummaryPage>
     <Title>#my-summary</Title>
-    <TotalToRepay>div.summary-box-content span.blue-text</TotalToRepay>
+    <TotalToRepay>#wonga-slider-loan-summary span.loan-total</TotalToRepay>
     <RepaymentDate>div.summary-box-content i</RepaymentDate>
     <PromisedRepayAmount>#content-area p span</PromisedRepayAmount>
     <PromisedRepayDate>#content-area p strong em</PromisedRepayDate>
