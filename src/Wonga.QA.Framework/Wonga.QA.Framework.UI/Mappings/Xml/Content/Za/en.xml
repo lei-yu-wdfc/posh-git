@@ -68,4 +68,8 @@
   <RepaymentOptionsPage>
     <HeaderText>My repayment options</HeaderText>
   </RepaymentOptionsPage>
+
+  <MySummaryPage>
+    <DebitOrderSuccesText>Thank you for taking these steps to repay your Wonga loan</DebitOrderSuccesText>
+  </MySummaryPage>
 	</ContentMap>

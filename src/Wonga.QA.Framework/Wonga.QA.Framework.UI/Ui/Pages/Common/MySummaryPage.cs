@@ -235,5 +235,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             return new RepaymentOptionsPage(Client);
         }
 
+        public string GetStatusText
+        {
+            get { return Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.StatusText)).Text; }
+        }
+
     }
 }

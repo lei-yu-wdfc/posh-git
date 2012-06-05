@@ -32,5 +32,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String IntroText { get; set; }
         public String StatusMessage { get; set; }
         public String MaxAvailableCredit { get; set; }
+        public String StatusText { get; set; }
     }
 }
