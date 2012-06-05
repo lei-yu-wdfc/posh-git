@@ -440,8 +440,8 @@ namespace Wonga.QA.Tests.Experian
 
         /* Main applicant DOB check */
 
-        [Test, AUT(AUT.Wb)]
-        [JIRA("SME-644"), Description("Experian -> This test creates a loan for a customer with the correct date of birth, then checks the risk checkpoint")]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
+        [JIRA("SME-644", "UKRISK-71"), Description("Experian -> This test creates a loan for a customer with the correct date of birth, then checks the risk checkpoint")]
         public void TestExperianMainApplicantDateOfBirthIsCorrect_LoanIsApproved()
         {
             const String forename = "kathleen";
@@ -468,9 +468,8 @@ namespace Wonga.QA.Tests.Experian
                                                                      RiskVerificationDefinitions.DateOfBirthIsCorrectVerification);
         }
 
-        [Test, AUT(AUT.Wb)]
-        [JIRA("SME-644"), Description("Experian -> This test creates a loan for a customer with the incorrect date of birth, then checks the risk checkpoint")]
-        [Pending("Experian still not working")]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
+        [JIRA("SME-644", "UKRISK-71"), Description("Experian -> This test creates a loan for a customer with the incorrect date of birth, then checks the risk checkpoint")]
         public void TestExperianMainApplicantDateOfBirthIsIncorrect_LoanIsDeclined()
         {
             const String forename = "kathleen";
@@ -497,8 +496,8 @@ namespace Wonga.QA.Tests.Experian
                                                                      RiskVerificationDefinitions.DateOfBirthIsCorrectVerification);
         }
 
-        [Test, AUT(AUT.Wb)]
-        [JIRA("SME-644"), Description("Experian -> This test creates a loan for a customer with the not provided date of birth, then checks the risk checkpoint")]
+        [Test, AUT(AUT.Wb,AUT.Uk)]
+        [JIRA("SME-644", "UKRISK-71"), Description("Experian -> This test creates a loan for a customer with the not provided date of birth, then checks the risk checkpoint")]
         public void TestExperianMainApplicantDateOfBirthIsNotProvided_LoanIsApproved()
         {
             const String forename = "john";
