@@ -9,7 +9,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Api
 {
-	[Parallelizable(TestScope.All), Pending("ZA-2565")]
+	[Parallelizable(TestScope.All)]
     public class ApiJourneys //We test this functionality everywhere!
 	{
         [Test, AUT(AUT.Wb)]
@@ -36,14 +36,14 @@ namespace Wonga.QA.Tests.Api
             ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
         }
 
-		[Test, AUT(AUT.Ca, AUT.Uk), Pending("ZA-2565")]
+		[Test, AUT(AUT.Ca, AUT.Uk)]
         public void L0JourneyDeclined()
         {
             Customer cust = CustomerBuilder.New().WithEmployer("Wonga").Build();
             ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
         }
 
-		[Test, AUT(AUT.Ca, AUT.Uk), Pending("ZA-2565")]
+		[Test, AUT(AUT.Ca, AUT.Uk)]
         public void LnJourneyAccepted()
         {
             Customer cust = CustomerBuilder.New().Build();
@@ -54,7 +54,7 @@ namespace Wonga.QA.Tests.Api
             ApplicationBuilder.New(cust).Build();
         }
 
-		[Test, AUT(AUT.Ca, AUT.Uk), Pending("ZA-2565")]
+		[Test, AUT(AUT.Ca, AUT.Uk)]
         public void LnJourneyDeclined()
         {
             Customer cust = CustomerBuilder.New().Build();
@@ -63,7 +63,7 @@ namespace Wonga.QA.Tests.Api
             ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
         }
 
-		[Test, AUT(AUT.Ca, AUT.Uk), Pending("ZA-2565")]
+		[Test, AUT(AUT.Ca, AUT.Uk)]
 		public void RepayingOnDueDateClosesApplication()
 		{
 			var customer = CustomerBuilder.New().Build();
