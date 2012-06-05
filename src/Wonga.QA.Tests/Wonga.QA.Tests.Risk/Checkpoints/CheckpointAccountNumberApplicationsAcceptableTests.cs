@@ -12,7 +12,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[TestFixture]
+	[TestFixture, Parallelizable(TestScope.All)]
 	public class CheckpointAccountNumberApplicationsAcceptableTests
 	{
 		private const RiskMask TestMask = RiskMask.TESTAccountNumberApplicationsAcceptable;
