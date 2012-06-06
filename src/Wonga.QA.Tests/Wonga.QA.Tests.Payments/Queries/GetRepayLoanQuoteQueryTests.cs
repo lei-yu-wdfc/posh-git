@@ -115,6 +115,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             
             Assert.AreEqual(amount, quote.Min);
             Assert.AreEqual(amount, quote.Max);
+            Assert.IsEmpty(quote.Remainders);
         }
 
         private Decimal[] Boundaries()
