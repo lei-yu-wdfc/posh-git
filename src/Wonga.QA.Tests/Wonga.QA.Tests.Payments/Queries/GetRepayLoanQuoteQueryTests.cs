@@ -29,8 +29,9 @@ namespace Wonga.QA.Tests.Payments.Queries
         {
             var product = Drive.Data.Payments.Db.Products.FindByName("WongaFixedLoan");
             var limit = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Risk.DefaultCreditLimit");
+            var minRepayAmount = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Payments.RepayLoanMinAmount");
 
-            _amin = product.AmountMin;
+            _amin = Decimal.Parse(minRepayAmount.Value);
             _amax = Decimal.Parse(limit.Value);
             _tmin = (Int32)product.TermMin;
             _tmax = (Int32)product.TermMax;
@@ -88,7 +89,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.Throws<ValidatorException>(() => Drive.Api.Queries.Post(new GetRepayLoanQuoteUkQuery { ApplicationId = application.Id }));
         }
 
-        [Pending("UK-1827")]
+        [Pending("UKWEB-305")]
         [Test, Explicit, Factory("Boundaries")]
         public void GetRepayLoanQuoteBoundary(Decimal amount)
         {
@@ -114,7 +115,6 @@ namespace Wonga.QA.Tests.Payments.Queries
             
             Assert.AreEqual(amount, quote.Min);
             Assert.AreEqual(amount, quote.Max);
-            Assert.IsEmpty(quote.Remainders);
         }
 
         private Decimal[] Boundaries()
