@@ -102,7 +102,7 @@
     <TotalFees>span.loan-fees</TotalFees>
     <TotalToRepay>span.loan-total</TotalToRepay>
     <RepaymentDate>span.repayment-date</RepaymentDate>
-    <AmountMinusButton>#wonga-amount-slider-wrapper button.slider-minus</AmountMinusButton>
+    <!--<AmountMinusButton>#wonga-amount-slider-wrapper button.slider-minus</AmountMinusButton>-->
     <AmountPlusButton>#wonga-amount-slider-wrapper button.slider-plus</AmountPlusButton>
     <DurationMinusButton>#wonga-duration-slider-wrapper button.slider-minus</DurationMinusButton>
     <DurationPlusButton>#wonga-duration-slider-wrapper button.slider-plus</DurationPlusButton>

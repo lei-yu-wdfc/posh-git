@@ -160,6 +160,7 @@ namespace Wonga.QA.Tests.Ui
             var firstTotalToRepayValue = personalDetailsPage.GetTotalToRepay;
             personalDetailsPage.HowMuch = "195";
             personalDetailsPage.HowLong = "5";
+            Client.Driver.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.LoanAmount)).LostFocus();
             string totalToRepayAtPersonalDetails = personalDetailsPage.GetTotalToRepay;
             string repaymentDateAtPersonalDetails = personalDetailsPage.GetRepaymentDate;
 

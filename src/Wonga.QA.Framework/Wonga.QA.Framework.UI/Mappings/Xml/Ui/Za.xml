@@ -1,18 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <UiMap>
-	<MyPaymentsPage>
-		<InvalidBankAccountWarning>#edit-account-number-za-wrapper .form-error .invalid</InvalidBankAccountWarning>
-		<PopupBankName>#edit-bank-name</PopupBankName>
-		<PopupBankAccountType>#edit-bank-account-type</PopupBankAccountType>
-		<PopupAccountNumber>#edit-account-number-za</PopupAccountNumber>
-		<PopupLengthOfTime>#edit-bank-period</PopupLengthOfTime>
-		<PopupAddBankAccountButton>#edit-submit</PopupAddBankAccountButton>
-		<PopupExeption>#wonga-my-account-edit-bank-form .messages.error ul li</PopupExeption>
-		<AccountNumber>.info.bank-account.bank-account-primary tbody tr:first-child + tr + tr + tr td b span</AccountNumber>
-		<PopupBankAccountException>#edit-account-number-za-wrapper div.form-error div.invalid </PopupBankAccountException>
-    <PopupSuccessTitle>#success</PopupSuccessTitle><!--#success-->
-	</MyPaymentsPage>
-	
+  <MyPaymentsPage>
+    <InvalidBankAccountWarning>#edit-account-number-za-wrapper .form-error .invalid</InvalidBankAccountWarning>
+    <PopupBankName>#edit-bank-name</PopupBankName>
+    <PopupBankAccountType>#edit-bank-account-type</PopupBankAccountType>
+    <PopupAccountNumber>#edit-account-number-za</PopupAccountNumber>
+    <PopupLengthOfTime>#edit-bank-period</PopupLengthOfTime>
+    <PopupAddBankAccountButton>#edit-submit</PopupAddBankAccountButton>
+    <PopupExeption>#wonga-my-account-edit-bank-form .messages.error ul li</PopupExeption>
+    <AccountNumber>.info.bank-account.bank-account-primary tbody tr:first-child + tr + tr + tr td b span</AccountNumber>
+    <PopupBankAccountException>#edit-account-number-za-wrapper div.form-error div.invalid </PopupBankAccountException>
+    <PopupSuccessTitle>#success</PopupSuccessTitle>
+    <!--#success-->
+  </MyPaymentsPage>
+
   <ContactingYouSection>
     <HomePhone>#edit-home-phone-za</HomePhone>
     <MobilePhone>#edit-mobile-phone-za</MobilePhone>
@@ -20,11 +21,11 @@
 
   <MobilePinVerificationSection>
     <Pin>#edit-pin-za</Pin>
-	<ResendPin>.resend-pin.mod</ResendPin>
-	<ResendPinMessage>#fancybox-content div div p</ResendPinMessage>
-	<ResendPinPopupClose>#fancybox-close</ResendPinPopupClose>	
+    <ResendPin>.resend-pin.mod</ResendPin>
+    <ResendPinMessage>#fancybox-content div div p</ResendPinMessage>
+    <ResendPinPopupClose>#fancybox-close</ResendPinPopupClose>
   </MobilePinVerificationSection>
-  
+
   <EmploymentDetailsSection>
     <WorkPhone>#edit-work-phone-za</WorkPhone>
     <NextPaydayDateDay>#edit-next-payday-day</NextPaydayDateDay>
@@ -39,11 +40,11 @@
     <FormId>#lzero-personal-form .form-inner</FormId>
     <MarriedInCommunityProperty>input[type="radio"][name="married"]</MarriedInCommunityProperty>
   </PersonalDetailsPage>
-  
+
   <PersonalBankAccountDetailsPage>
     <FormId>.wonga-apply-lzero-form</FormId>
   </PersonalBankAccountDetailsPage>
-  
+
   <AccountDetailsPage>
     <FormId>.wonga-apply-lzero-form</FormId>
     <NextButton>#edit-submit</NextButton>
@@ -51,14 +52,14 @@
 
   <AccountDetailsSection>
     <Fieldset>#lzero-account-setup-form</Fieldset>
-	  <PasswordErrorForm>#edit-password-wrapper .form-error .invalid</PasswordErrorForm>
+    <PasswordErrorForm>#edit-password-wrapper .form-error .invalid</PasswordErrorForm>
     <PasswordConfirmErrorForm>#edit-password-confirm-wrapper .form-error .invalid</PasswordConfirmErrorForm>
   </AccountDetailsSection>
 
   <DealDonePage>
     <HeaderText>Your application has been accepted, you’re almost there!</HeaderText>
   </DealDonePage>
-  
+
   <AddressDetailsPage>
     <FormId>#lzero-address-form .form-inner</FormId>
     <District>#edit-district-za</District>
@@ -86,7 +87,7 @@
     <NameInLoanAgreement>#agreementscroll div:first-child+div table tr td:first-child+td+td+td</NameInLoanAgreement>
     <NameInDirectDebit>#directdebitcroll div:first-child p</NameInDirectDebit>
   </AcceptedPage>
-  
+
   <BankAccountSection>
     <Fieldset>#bank-1</Fieldset>
     <AccountNumber>#edit-account-number-za</AccountNumber>
@@ -114,7 +115,7 @@
     <EditPhoneHome>input#edit-home-phone-za</EditPhoneHome>
     <EditPhoneMobile>input#edit-mobile-phone-za</EditPhoneMobile>
     <EditPhonePin>input#edit-mobile-pin</EditPhonePin>
-	<EditPhoneErrorMessage>.messages.error ul li</EditPhoneErrorMessage>
+    <EditPhoneErrorMessage>.messages.error ul li</EditPhoneErrorMessage>
     <EditPasswordHeader>h1#change-your-password</EditPasswordHeader>
     <EditPasswordCurrent>input#edit-current-password</EditPasswordCurrent>
     <EditPasswordNew>input#edit-password</EditPasswordNew>
@@ -138,7 +139,7 @@
     <Postcode>#edit-postcode-za</Postcode>
     <PostcodeErrorForm>#edit-postcode-za-wrapper div.form-error div.invalid</PostcodeErrorForm>
   </ChangeMyAddressElement>
-  
+
   <AboutUsPage>
     <OurCustomers>#block-wonga-6 div div ul li:first-child + li a</OurCustomers>
     <ResponsibleLending>#block-wonga-6 div div ul li:first-child + li + li a</ResponsibleLending>
@@ -155,15 +156,15 @@
   </AboutUsPage>
 
   <MySummaryPage>
-   <TotalToRepay>#wonga-slider-loan-summary span.loan-total</TotalToRepay>
-	 <PromisedRepayAmount>#content-area p span</PromisedRepayAmount>
-	 <PromisedRepayDate>#content-area p strong em</PromisedRepayDate>
+    <TotalToRepay>#wonga-slider-loan-summary span.loan-total</TotalToRepay>
+    <PromisedRepayAmount>#content-area p span</PromisedRepayAmount>
+    <PromisedRepayDate>#content-area p strong em</PromisedRepayDate>
     <ViewLoanDetailsButton>#cloud a.mod.details</ViewLoanDetailsButton>
     <!-- Loan details popup-->
-   <PopupForm>#fancybox-content</PopupForm>
-   <PopupMySummaryTitle>h1#my-summary</PopupMySummaryTitle>
-   <PopupSummaryDetailsTable>table#summary-details</PopupSummaryDetailsTable>
-   <RepayButton>#cloud ul a.repay</RepayButton>
+    <PopupForm>#fancybox-content</PopupForm>
+    <PopupMySummaryTitle>h1#my-summary</PopupMySummaryTitle>
+    <PopupSummaryDetailsTable>table#summary-details</PopupSummaryDetailsTable>
+    <RepayButton>#cloud ul a.repay</RepayButton>
     <StatusText>div#content-area p</StatusText>
   </MySummaryPage>
 
@@ -180,7 +181,7 @@
   <ApplicationSection>
     <FormId>#wonga-apply-ln-form</FormId>
     <EditPin>#edit-mobile-pin</EditPin>
-    <ChangeMobileButton>#add-mobile-ln</ChangeMobileButton>  
+    <ChangeMobileButton>#add-mobile-ln</ChangeMobileButton>
   </ApplicationSection>
 
   <ApplyPage>
@@ -188,9 +189,9 @@
     <PopupSaveButton>#edit-submit[value='Save']</PopupSaveButton>
     <PopupCloseButton>#edit-submit[value='Close']</PopupCloseButton>
     <BankAccount>#edit-bank-account-masked</BankAccount>
-	<ResendPin>#pin-hold a</ResendPin>
-	<ResendPinPopupClose>#fancybox-close</ResendPinPopupClose>
-	<ResendPinPopupText>#fancybox-content div</ResendPinPopupText>
+    <ResendPin>#pin-hold a</ResendPin>
+    <ResendPinPopupClose>#fancybox-close</ResendPinPopupClose>
+    <ResendPinPopupText>#fancybox-content div</ResendPinPopupText>
   </ApplyPage>
 
   <FAQPage>
@@ -211,7 +212,7 @@
   <MySummaryPageMobile>
     <MySummaryButton>.menu-block-0 .menu li:first-child>a</MySummaryButton>
     <MyPersonalDetailsButton>.menu-block-0 .menu li:first-child + li>a</MyPersonalDetailsButton>
-    <MyPaymentDetailsButton>.menu-block-0 .menu li:first-child + li + li>a</MyPaymentDetailsButton>    
+    <MyPaymentDetailsButton>.menu-block-0 .menu li:first-child + li + li>a</MyPaymentDetailsButton>
   </MySummaryPageMobile>
 
   <DebitOrderPage>
