@@ -1,5 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <UiMap>
+	<LoginPage>
+		<ForgotPassword>#wonga-login-form div a</ForgotPassword>
+	</LoginPage>
+	
   <MyPaymentsPage>
     <InvalidBankAccountWarning>#edit-account-number-za-wrapper .form-error .invalid</InvalidBankAccountWarning>
     <PopupBankName>#edit-bank-name</PopupBankName>
@@ -156,7 +160,7 @@
   </AboutUsPage>
 
   <MySummaryPage>
-    <TotalToRepay>#wonga-slider-loan-summary span.loan-total</TotalToRepay>
+   <TotalToRepay>#promise_balance_today</TotalToRepay>
     <PromisedRepayAmount>#content-area p span</PromisedRepayAmount>
     <PromisedRepayDate>#content-area p strong em</PromisedRepayDate>
     <ViewLoanDetailsButton>#cloud a.mod.details</ViewLoanDetailsButton>
