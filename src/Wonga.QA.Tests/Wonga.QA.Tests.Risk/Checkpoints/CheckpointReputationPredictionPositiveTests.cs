@@ -121,7 +121,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Do.Until(() => Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(l0Application.Id).AccountRank == 1);
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889"), Parallelizable]
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889")]
 		public void CheckpointReputationPredictionPositivePostCodeWithHighArrearsRateLowersScore()
 		{
 			string postcode = GetPostcode();
@@ -133,6 +133,10 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 			try
 			{
+				//using the default value is not good enough to get a good score 
+				//because there can be many applications in arrears which lower the result considerably
+				SetReputationScoreCutoff(100);
+			
 				var application1 = ApplicationBuilder.New(customer1).WithIovationBlackBox(iovationBlackBox1).Build();
 				var score1 = GetReputationPredictionScore(application1);
 
@@ -142,7 +146,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				var score2 = GetReputationPredictionScore(application2);
 
 				//if in a post area where most of the apps are in arrears the final result will be the same as one more 
-				//application in arrears will not make a difference
+				//application in arrears will not make a difference on the final scrore result
 				Assert.LessThanOrEqualTo(score2, score1);
 			}
 
@@ -150,6 +154,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			{
 				DeleteIovationMockIfCustomType(iovationBlackBox1);
 				DeleteIovationMockIfCustomType(iovationBlackBox2);
+				ResetReputationScoreCutoff();
 			}
 		}
 
@@ -379,7 +384,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			switch (Config.AUT)
 			{
 				case AUT.Ca:
-					return 400;
+					return 595;
 
 				case AUT.Za:
 					return 200;
