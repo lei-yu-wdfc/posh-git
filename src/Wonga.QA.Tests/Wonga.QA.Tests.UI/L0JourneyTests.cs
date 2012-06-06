@@ -1772,7 +1772,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-969"), MultipleAsserts, Pending("Test is in development. Also waiting for functionality implementation.")]
+        [Test, AUT(AUT.Uk), JIRA("UK-969", "UKWEB-250"), MultipleAsserts, Pending("Test is in development. Also waiting for functionality implementation.")]
         public void L0PreAgreementPartonAccountSetupPageTest()
         {
             var loginPage = Client.Login();
