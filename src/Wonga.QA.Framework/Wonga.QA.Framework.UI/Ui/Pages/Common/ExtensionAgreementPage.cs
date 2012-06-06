@@ -1,4 +1,5 @@
 ﻿using System;
+using MbUnit.Framework;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
@@ -60,7 +61,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             {
                 secciHeader = Client.Driver.FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.SecciHeader));
                 secciPrint = Client.Driver.FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.SecciPrint));
-                secci = Client.Driver.FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.SecciContent));
+                
+                Assert.IsTrue(secciPrint.Text.Contains(ContentMap.Get.ExtensionAgreementPage.PrintThisPage));
+                Assert.IsTrue(secciHeader.Text.Contains(ContentMap.Get.ExtensionAgreementPage.ReadThis));
+
+                var frameName = Client.Driver.FindElement(By.CssSelector("#fancybox-frame")).GetAttribute("name");
+                secci = Client.Driver.SwitchTo().Frame(frameName).FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.SecciContent));
             }
             catch (NoSuchElementException)
             {

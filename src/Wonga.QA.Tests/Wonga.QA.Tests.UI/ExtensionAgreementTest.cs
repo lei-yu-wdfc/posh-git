@@ -57,16 +57,13 @@ namespace Wonga.QA.Tests.Ui
             
             requestPage.setSecurityCode("123");
             requestPage.SubmitButtonClick();
-
+            
             var extensionProcessingPage = new ExtensionProcessingPage(this.Client);
             var agreementPage = extensionProcessingPage.WaitFor<ExtensionAgreementPage>() as ExtensionAgreementPage;
 
             agreementPage.ClickExtensionSecciLink();
         
             Assert.IsTrue(agreementPage.secci.Text.Contains(ContentMap.Get.ExtensionAgreementPage.CreditInformation));
-            Assert.IsTrue(agreementPage.secciPrint.Text.Contains(ContentMap.Get.ExtensionAgreementPage.PrintThisPage));
-            Assert.IsTrue(agreementPage.secciHeader.Text.Contains(ContentMap.Get.ExtensionAgreementPage.ReadThis));
-          
             Assert.Contains(agreementPage.secci.Text, expectedExtendedLoanTerm.ToString("#"));
             Assert.Contains(agreementPage.secci.Text, expectedRepaymentDate);
             Assert.Contains(agreementPage.secci.Text, expectedLoanAmount.ToString("#"));
