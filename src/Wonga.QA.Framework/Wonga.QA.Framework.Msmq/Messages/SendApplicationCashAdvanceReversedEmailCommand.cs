@@ -9,6 +9,7 @@ namespace Wonga.QA.Framework.Msmq
     public partial class SendApplicationCashAdvanceReversedEmailCommand : MsmqMessage<SendApplicationCashAdvanceReversedEmailCommand>
     {
         public String Email { get; set; }
+        public Guid ApplicationId { get; set; }
         public Guid SagaId { get; set; }
     }
 }

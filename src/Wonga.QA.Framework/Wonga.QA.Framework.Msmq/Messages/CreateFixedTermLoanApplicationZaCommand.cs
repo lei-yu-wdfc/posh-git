@@ -4,11 +4,10 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Msmq
 {
-    /// <summary> Wonga.Payments.Ca.CreateFixedTermLoanApplication </summary>
-    [XmlRoot("CreateFixedTermLoanApplication", Namespace = "Wonga.Payments.Ca", DataType = "")]
-    public partial class CreateFixedTermLoanApplicationCaCommand : MsmqMessage<CreateFixedTermLoanApplicationCaCommand>
+    /// <summary> Wonga.Payments.Za.CreateFixedTermLoanApplication </summary>
+    [XmlRoot("CreateFixedTermLoanApplication", Namespace = "Wonga.Payments.Za", DataType = "")]
+    public partial class CreateFixedTermLoanApplicationZaCommand : MsmqMessage<CreateFixedTermLoanApplicationZaCommand>
     {
-        public LoanProvinceEnum Province { get; set; }
         public Guid AccountId { get; set; }
         public Guid? ApplicationId { get; set; }
         public Guid? PaymentCardId { get; set; }

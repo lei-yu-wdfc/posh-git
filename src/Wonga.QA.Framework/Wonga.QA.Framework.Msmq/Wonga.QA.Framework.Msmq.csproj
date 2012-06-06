@@ -218,8 +218,10 @@
     <Compile Include="Messages\CreateExperianBulkFileCommand.cs" />
     <Compile Include="Messages\CreateExtendedRepaymentArrangementCommand.cs" />
     <Compile Include="Messages\CreateExtensionDocumentCommand.cs" />
+    <Compile Include="Messages\CreateFixedTermLoanApplicationBaseCommand.cs" />
     <Compile Include="Messages\CreateFixedTermLoanApplicationCaCommand.cs" />
-    <Compile Include="Messages\CreateFixedTermLoanApplicationCommand.cs" />
+    <Compile Include="Messages\CreateFixedTermLoanApplicationUkCommand.cs" />
+    <Compile Include="Messages\CreateFixedTermLoanApplicationZaCommand.cs" />
     <Compile Include="Messages\CreateFixedTermLoanExtensionCommand.cs" />
     <Compile Include="Messages\CreateFixedTermLoanTopupCommand.cs" />
     <Compile Include="Messages\CreateLoanAgreementCancellationNoticeCaCommand.cs" />
@@ -711,6 +713,8 @@
     <Compile Include="Messages\IWantToCreateAndStorePaymentNotificationSmsResponseEvent.cs" />
     <Compile Include="Messages\IWantToCreateAndStoreRepaymentRequestSetUpEmailEvent.cs" />
     <Compile Include="Messages\IWantToCreateAndStoreRepaymentRequestSetUpEmailResponseEvent.cs" />
+    <Compile Include="Messages\IWantToCreateAndStoreScheduledPingFailedDocumentEvent.cs" />
+    <Compile Include="Messages\IWantToCreateAndStoreScheduledPingFailedDocumentResponseEvent.cs" />
     <Compile Include="Messages\IWantToCreatePayLaterApplicationAgreementEvent.cs" />
     <Compile Include="Messages\IWantToCreatePayLaterApplicationAgreementResponseEvent.cs" />
     <Compile Include="Messages\IWantToCreatePayLaterApplicationAgreementResponseUkEvent.cs" />
@@ -743,8 +747,12 @@
     <Compile Include="Messages\IWantToSendNoOpenApplicationForEasyPayNumberReceivedNotificationZaEvent.cs" />
     <Compile Include="Messages\IWantToSendPayLaterApplicationConfirmationEmailResponseUkEvent.cs" />
     <Compile Include="Messages\IWantToSendPayLaterApplicationConfirmationEmailUkEvent.cs" />
+    <Compile Include="Messages\IWantToSendPaymentConfirmationEmailEvent.cs" />
+    <Compile Include="Messages\IWantToSendPaymentConfirmationEmailResponseEvent.cs" />
     <Compile Include="Messages\IWantToSendRepaymentRequestSetUpEmailEvent.cs" />
     <Compile Include="Messages\IWantToSendRepaymentRequestSetUpEmailResponseEvent.cs" />
+    <Compile Include="Messages\IWantToSendScheduledPingFailedEmailEvent.cs" />
+    <Compile Include="Messages\IWantToSendScheduledPingFailedEmailResponseEvent.cs" />
     <Compile Include="Messages\IWantToSendSmsEvent.cs" />
     <Compile Include="Messages\IWantToSendSmsResponseEvent.cs" />
     <Compile Include="Messages\IWantToSendSuccessfulCardCreationEmailResponseUkEvent.cs" />
@@ -870,7 +878,6 @@
     <Compile Include="Messages\SaveSuppressionCommand.cs" />
     <Compile Include="Messages\SchedulePaymentCommand.cs" />
     <Compile Include="Messages\ScheduleServiceFeeCommand.cs" />
-    <Compile Include="Messages\SendA1SmsZaCommand.cs" />
     <Compile Include="Messages\SendAcceptedEmailCommand.cs" />
     <Compile Include="Messages\SendAddressUpdatedEmailCommand.cs" />
     <Compile Include="Messages\SendApplicationAbandonedEmailCommand.cs" />
@@ -945,7 +952,6 @@
     <Compile Include="Messages\SendSecondPaymentFailedEmailWbUkCommand.cs" />
     <Compile Include="Messages\SendSimpleSmsCommand.cs" />
     <Compile Include="Messages\SendSmsCommsSmsCommand.cs" />
-    <Compile Include="Messages\SendSmsCommsZaCommand.cs" />
     <Compile Include="Messages\SendSmsResponseCommand.cs" />
     <Compile Include="Messages\SendSmsSmsCommand.cs" />
     <Compile Include="Messages\SendSmsTextToAccountCommand.cs" />
@@ -1105,6 +1111,7 @@
     <Compile Include="Enums\IncomeFrequencyEnum.cs" />
     <Compile Include="Enums\IovationAdviceEnum.cs" />
     <Compile Include="Enums\LanguageEnum.cs" />
+    <Compile Include="Enums\LoanProvinceEnum.cs" />
     <Compile Include="Enums\MaritalStatusEnum.cs" />
     <Compile Include="Enums\MsTimeZoneEnum.cs" />
     <Compile Include="Enums\OccupancyStatusEnum.cs" />
