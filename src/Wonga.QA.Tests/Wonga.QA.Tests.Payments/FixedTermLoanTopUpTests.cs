@@ -542,7 +542,7 @@ namespace Wonga.QA.Tests.Payments
             var application = Guid.NewGuid();
             var topup = Guid.NewGuid();
 
-            Drive.Api.Commands.Post(CreateFixedTermLoanApplicationCommand.New(c =>
+            Drive.Api.Commands.Post(CreateFixedTermLoanApplicationUkCommand.New(c =>
             {
                 c.AccountId = customer.Id;
                 c.ApplicationId = application;

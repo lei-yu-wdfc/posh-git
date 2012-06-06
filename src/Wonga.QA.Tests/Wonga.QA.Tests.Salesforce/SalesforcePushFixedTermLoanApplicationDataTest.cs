@@ -10,7 +10,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Salesforce
 {
-    [TestFixture, Parallelizable(TestScope.All), Ignore("SF tests are failing because message congestion in SF TC queue, explicit until fixed")]
+    [TestFixture, Parallelizable(TestScope.All)]
 	public class SalesforcePushFixedTermLoanApplicationDataTest : SalesforceTestBase
 	{
 		[Test]
@@ -40,15 +40,15 @@ namespace Wonga.QA.Tests.Salesforce
             db.Salesforce.SubmitChanges();
 
             var app = ApplicationBuilder.New(customer).Build();
-            var saga = Do.Until(() => db.OpsSagas.SaveFixedTermLoanApplicationEntities.Single(se => se.AccountId == customer.Id));
+            Do.Until(() => db.OpsSagas.SaveFixedTermLoanApplicationEntities.Single(se => se.AccountId == customer.Id));
 
-            db.Salesforce.SalesforceAccounts.InsertOnSubmit(new SalesforceAccountEntity()
+            db.Salesforce.SalesforceAccounts.InsertOnSubmit(new SalesforceAccountEntity
                                                                 {
                                                                     AccountId = customer.Id,
                                                                     SalesforceId = salesForceAccount.SalesforceId,
                                                                 });
             db.Salesforce.SubmitChanges();
-            Drive.Msmq.Salesforce.Send(new SaveCustomerDetailsToSalesforceZaCommand
+            Drive.Msmq.Salesforce.Send(new SaveCustomerDetailsToSalesforceCommand
                                            {
                                                AccountId = customer.Id
                                            });
@@ -70,15 +70,15 @@ namespace Wonga.QA.Tests.Salesforce
 			db.Salesforce.SubmitChanges();
 
 			var app = ApplicationBuilder.New(customer).Build();
-			var saga = Do.Until(() => db.OpsSagas.SaveFixedTermLoanApplicationEntities.Single(se => se.AccountId == customer.Id));
+			Do.Until(() => db.OpsSagas.SaveFixedTermLoanApplicationEntities.Single(se => se.AccountId == customer.Id));
 
-			db.Salesforce.SalesforceAccounts.InsertOnSubmit(new SalesforceAccountEntity()
+			db.Salesforce.SalesforceAccounts.InsertOnSubmit(new SalesforceAccountEntity
 			{
 				AccountId = customer.Id,
 				SalesforceId = salesForceAccount.SalesforceId,
 			});
 			db.Salesforce.SubmitChanges();
-			Drive.Msmq.Salesforce.Send(new SaveCustomerDetailsToSalesforceCaCommand
+			Drive.Msmq.Salesforce.Send(new SaveCustomerDetailsToSalesforceCommand
 			{
 				AccountId = customer.Id
 			});

@@ -8,6 +8,7 @@ namespace Wonga.QA.Framework.Msmq
     [XmlRoot("IFixedTermApplicationAddedInternal", Namespace = "Wonga.Payments.InternalMessages.Messages", DataType = "Wonga.Payments.PublicMessages.IFixedTermApplicationAdded,Wonga.Payments.PublicMessages.IApplicationAdded,Wonga.Payments.PublicMessages.IPaymentsEvent")]
     public partial class IFixedTermApplicationAddedInternalEvent : MsmqMessage<IFixedTermApplicationAddedInternalEvent>
     {
+        public DateTime PromiseDate { get; set; }
         public DateTime ApplicationDate { get; set; }
         public String ApplicationReference { get; set; }
         public Guid AccountId { get; set; }
