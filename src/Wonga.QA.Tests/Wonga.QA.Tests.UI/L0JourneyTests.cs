@@ -1979,5 +1979,53 @@ namespace Wonga.QA.Tests.Ui
                 #endregion
             }
         }
+
+        [Test, AUT(AUT.Za), JIRA("QA-308")]
+        public void ShouldPossibleToCompleteAnL0WithRetiredStatus()
+        {
+            string Email = Get.RandomEmail();
+            DateTime DateOfBirth = new DateTime(1957, 10, 30);
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var personalDetailsPage = journey.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
+            string employerName = Get.EnumToString(RiskMask.TESTEmployedMask);
+
+            string NationalId = Get.GetNationalNumber(DateOfBirth, true);
+            personalDetailsPage.YourName.FirstName = journey.FirstName;
+            personalDetailsPage.YourName.MiddleName = "TESTNoCheck";
+            personalDetailsPage.YourName.LastName = journey.LastName;
+            personalDetailsPage.YourName.Title = "Mr";
+            personalDetailsPage.YourDetails.Number = NationalId.ToString();
+            personalDetailsPage.YourDetails.DateOfBirth = DateOfBirth.ToString("d/MMM/yyyy");
+            personalDetailsPage.YourDetails.Gender = "Female";
+            personalDetailsPage.YourDetails.HomeStatus = "Owner Occupier";
+            personalDetailsPage.YourDetails.HomeLanguage = "English";
+            personalDetailsPage.YourDetails.NumberOfDependants = "0";
+            personalDetailsPage.YourDetails.MaritalStatus = "Single";
+            personalDetailsPage.EmploymentDetails.EmploymentStatus = "Retired";
+            personalDetailsPage.EmploymentDetails.SelfEmployedMonthlyIncome = "3000";
+            personalDetailsPage.ContactingYou.HomePhoneNumber = "0123456789";
+            personalDetailsPage.ContactingYou.CellPhoneNumber = "0123456789";
+            personalDetailsPage.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d/MMM/yyyy");
+            personalDetailsPage.EmploymentDetails.IncomeFrequency = "Monthly";
+            personalDetailsPage.ContactingYou.CellPhoneNumber = Get.GetMobilePhone();
+            personalDetailsPage.ContactingYou.EmailAddress = Email;
+            personalDetailsPage.ContactingYou.ConfirmEmailAddress = Email;
+            personalDetailsPage.PrivacyPolicy = true;
+            personalDetailsPage.CanContact = "Yes";
+            personalDetailsPage.MarriedInCommunityProperty =
+                "I am not married in community of property (I am single, married with antenuptial contract, divorced etc.)";
+
+            journey.CurrentPage = personalDetailsPage.Submit() as AddressDetailsPage;
+            var processingPageZa = journey.FillAddressDetails()
+                      .FillAccountDetails()
+                      .FillBankDetails()
+                      .CurrentPage as ProcessingPage;
+            var acceptedPageZa = processingPageZa.WaitFor<AcceptedPage>() as AcceptedPage;
+            acceptedPageZa.SignAgreementConfirm();
+            acceptedPageZa.SignDirectDebitConfirm();
+            var dealDoneZa = acceptedPageZa.Submit();
+
+        }
+
     }
 }
