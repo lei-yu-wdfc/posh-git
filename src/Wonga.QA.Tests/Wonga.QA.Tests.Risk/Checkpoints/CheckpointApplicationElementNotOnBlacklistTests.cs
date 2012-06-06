@@ -14,7 +14,6 @@ using Wonga.QA.Framework.Db;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-    [AUT(AUT.Za, AUT.Wb, AUT.Uk)]
     [Parallelizable(TestScope.All)]
     class CheckpointApplicationElementNotOnBlacklistTests
     {
@@ -124,31 +123,9 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
         }
 
-        [Test, AUT(AUT.Za, AUT.Uk)]
-        [JIRA("UK-847")]
-        public void ApplicationElementIsOnBlackList_BankAccount_LoanIsDeclined()
-        {
-            var bankAccountNumber = Get.GetBankAccountNumber();
-            var customer =
-                CustomerBuilder.New().WithEmployer(_testMask).WithBankAccountNumber(bankAccountNumber).Build();
-            var blacklistEntity = new BlackListEntity
-                                      {BankAccount = bankAccountNumber.ToString(), ExternalId = Guid.NewGuid()};
-            Drive.Db.Blacklist.BlackLists.InsertOnSubmit(blacklistEntity);
-            blacklistEntity.Submit();
-
-            var application =
-                ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
-            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
-            Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
-            Assert.Contains(
-                Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId,
-                                                                             RiskCheckpointStatus.Failed),
-                Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicationDataBlacklistCheck));
-        }
-
-        [Test, AUT(AUT.Za, AUT.Uk)]
-        [JIRA("UK-847")]
-        public void ApplicationElementIsOnBlackList_Surname_LoanIsDeclined()
+        [Test, AUT(AUT.Uk)]
+        [JIRA("UK-847"), Description("Scenario 1: Name on BlackList: Declined")]
+        public void ApplicationElementIsOnBlackList_ApplicantName_LoanIsDeclined()
         {
             var blacklistSurname = Get.RandomString(10);
             var db = Drive.Db;
@@ -161,6 +138,199 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicationDataBlacklistCheck));
         }
 
+        [Test, AUT(AUT.Za, AUT.Uk)]
+        [JIRA("UK-847"), Description("Scenario 1: Name on BlackList: Accepted")]
+        public void ApplicationElementIsOnBlackList_ApplicantName_LoanIsApproved()
+        {
+            var blacklistSurname = Get.RandomString(10);
+            var db = Drive.Data.Blacklist.Db.Blacklist;
+            db.DeleteAllByLastName(blacklistSurname);
+
+            var customer = CustomerBuilder.New().WithSurname(blacklistSurname).WithEmployer(_testMask).Build();
+            var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
+            Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
+            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicationDataBlacklistCheck));
+        }
+
+        [Test, AUT(AUT.Uk)]
+        [JIRA("UK-847"), Description("Scenario 2: Email on BlackList: Declined")]
+        public void ApplicationElementIsOnBlackList_Email_LoanIsDeclined()
+        {
+            var blacklistEmail = Get.GetEmail();
+            var db = Drive.Data.Blacklist.Db.Blacklist;
+            
+            db.Insert(new BlackListEntity()
+                          {
+                              ExternalId = Guid.NewGuid(),
+                              Email = blacklistEmail
+                          });
+
+            var customer = CustomerBuilder.New().WithEmailAddress(blacklistEmail).WithEmployer(_testMask).Build();
+            var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
+            Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
+            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicationDataBlacklistCheck));
+        }
+
+        [Test, AUT(AUT.Za, AUT.Uk)]
+        [JIRA("UK-847"), Description("Scenario 2: Email on BlackList: Accepted")]
+        public void ApplicationElementIsOnBlackList_Email_LoanIsApproved()
+        {
+            var blacklistEmail = Get.GetEmail();
+            var db = Drive.Data.Blacklist.Db.Blacklist;
+            db.DeleteAllByEmail(blacklistEmail);
+
+            var customer = CustomerBuilder.New().WithEmailAddress(blacklistEmail).WithEmployer(_testMask).Build();
+            var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
+            Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
+            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicationDataBlacklistCheck));
+        }
+
+        [Test, AUT(AUT.Uk)]
+        [JIRA("UK-847"), Description("Scenario 3: HomePhone on BlackList: Declined")]
+        public void ApplicationElementIsOnBlackList_HomePhone_LoanIsDeclined()
+        {
+            var blacklistPhone = Get.GetPhone();
+            var db = Drive.Data.Blacklist.Db.Blacklist;
+
+            db.Insert(new BlackListEntity()
+            {
+                ExternalId = Guid.NewGuid(),
+                HomePhone = blacklistPhone
+            });
+
+            var customer = CustomerBuilder.New().WithPhoneNumber(blacklistPhone).WithEmployer(_testMask).Build();
+            var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
+            Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
+            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicationDataBlacklistCheck));
+        }
+
+        [Test, AUT(AUT.Za, AUT.Uk)]
+        [JIRA("UK-847"), Description("Scenario 3: HomePhone on BlackList: Accepted")]
+        public void ApplicationElementIsOnBlackList_HomePhone_LoanIsApproved()
+        {
+            var blacklistPhone = Get.GetPhone();
+            var db = Drive.Data.Blacklist.Db.Blacklist;
+            db.DeleteAllByHomePhone(blacklistPhone);
+
+            var customer = CustomerBuilder.New().WithPhoneNumber(blacklistPhone).WithEmployer(_testMask).Build();
+            var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
+            Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
+            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicationDataBlacklistCheck));
+        }
+
+        [Test, AUT(AUT.Uk)]
+        [JIRA("UK-847"), Description("Scenario 4: MobilePhone on BlackList: Declined")]
+        public void ApplicationElementIsOnBlackList_UKMobilePhone_LoanIsDeclined()
+        {
+            var blacklistPhone = Get.GetMobilePhone();
+            var db = Drive.Data.Blacklist.Db.Blacklist;
+
+            db.Insert(new BlackListEntity()
+            {
+                ExternalId = Guid.NewGuid(),
+                MobilePhone = blacklistPhone
+            });
+
+            var customer = CustomerBuilder.New().WithMobileNumber(blacklistPhone).WithEmployer(_testMask).Build();
+            var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
+            Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
+            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicationDataBlacklistCheck));
+        }
+
+        [Test, AUT(AUT.Za, AUT.Uk)]
+        [JIRA("UK-847"), Description("Scenario 4: MobilePhone on BlackList: Accepted")]
+        public void ApplicationElementIsOnBlackList_MobilePhone_LoanIsApproved()
+        {
+            var blacklistPhone = Get.GetMobilePhone();
+            var db = Drive.Data.Blacklist.Db.Blacklist;
+            db.DeleteAllByMobilePhone(blacklistPhone);
+
+            var customer = CustomerBuilder.New().WithMobileNumber(blacklistPhone).WithEmployer(_testMask).Build();
+            var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
+            Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
+            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicationDataBlacklistCheck));
+        }
+
+        [Test, AUT(AUT.Za, AUT.Uk)]
+        [JIRA("UK-847"), Description("Scenario 5: BankAccount on BlackList: Declined")]
+        public void ApplicationElementIsOnBlackList_BankAccount_LoanIsDeclined()
+        {
+            var bankAccountNumber = Get.GetBankAccountNumber();
+            var db = Drive.Data.Blacklist.Db.Blacklist;
+
+            db.Insert(new BlackListEntity()
+            {
+                ExternalId = Guid.NewGuid(),
+                BankAccount = bankAccountNumber
+            });
+
+            var customer = CustomerBuilder.New().WithEmployer(_testMask).WithBankAccountNumber(bankAccountNumber).Build();
+            var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
+            Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
+            Assert.Contains(
+                Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId,
+                                                                             RiskCheckpointStatus.Failed),
+                Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicationDataBlacklistCheck));
+        }
+
+        [Test, AUT(AUT.Za, AUT.Uk)]
+        [JIRA("UK-847"), Description("Scenario 5: BankAccount on BlackList: Accepted")]
+        public void ApplicationElementIsOnBlackList_BankAccount_LoanIsApproved()
+        {
+            var bankAccountNumber = Get.GetBankAccountNumber();
+            var db = Drive.Data.Blacklist.Db.Blacklist;
+            db.DeleteAllByBankAccount(bankAccountNumber);
+
+            var customer = CustomerBuilder.New().WithEmployer(_testMask).WithBankAccountNumber(bankAccountNumber).Build();
+            var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
+            Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
+            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed),
+                            Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicationDataBlacklistCheck));
+        }
+
+        [Test, AUT(AUT.Uk)]
+        [JIRA("UK-847"), Description("Scenario 6: Card on EmployerName: Declined")]
+        public void ApplicationElementIsOnBlackList_Card_LoanIsDeclined()
+        {
+            var blacklistEmployerName = Get.GetEmployerName();
+            var db = Drive.Data.Blacklist.Db.Blacklist;
+
+            db.Insert(new BlackListEntity()
+            {
+                ExternalId = Guid.NewGuid(),
+                EmployerName = blacklistEmployerName
+            });
+
+            var customer = CustomerBuilder.New().WithMobileNumber(blacklistEmployerName).WithEmployer(_testMask).Build();
+            var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
+            Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
+            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicationDataBlacklistCheck));
+        }
+
+        [Test, AUT(AUT.Za, AUT.Uk)]
+        [JIRA("UK-847"), Description("Scenario 6: Card on EmployerName: Accepted")]
+        public void ApplicationElementIsOnBlackList_Card_LoanIsApproved()
+        {
+            var blacklistEmployerName = Get.GetEmployerName();
+            var db = Drive.Data.Blacklist.Db.Blacklist;
+            db.DeleteAllByEmployerName(blacklistEmployerName);
+
+            var customer = CustomerBuilder.New().WithMobileNumber(blacklistEmployerName).WithEmployer(_testMask).Build();
+            var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+            var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
+            Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
+            Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicationDataBlacklistCheck));
+        }
         #region SME specific
 
         [Test, AUT(AUT.Wb)]
