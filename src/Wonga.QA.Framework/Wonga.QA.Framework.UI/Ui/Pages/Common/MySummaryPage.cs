@@ -115,8 +115,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public void RepayButtonClick()
         {
-            RepayButton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.RepayButton)); 
+            RepayButton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.RepayButton));
             RepayButton.Click();
+        }
+
+        public void ManualRepaymentButtonClick()
+        {
+            IWebElement ManualRepaymentButton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.RepaymentOptionsPage.ManualRepaymentButton));
+            ManualRepaymentButton.Click();
         }
 
         public void ChangePromiseDateButtonClick()

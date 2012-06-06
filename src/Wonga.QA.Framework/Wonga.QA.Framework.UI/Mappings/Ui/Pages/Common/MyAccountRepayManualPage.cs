@@ -14,5 +14,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public string BankAccountMasked { get; set; }
         public string PleaseReadMeRepaymentAmount { get; set; }
         public string BankAccountMaskedLabelRepaymentAmount { get; set; }
+        public string Captcha { get; set; }
+        public string Submit { get; set; }
     }
 }

@@ -188,21 +188,57 @@
     <CouncilForDebtCollectorsLink>a[title='Council for Debt Collectors']</CouncilForDebtCollectorsLink>
   </FAQPage>
 
+  <!--  This is the list of repayment options a customer with an active loan sees when they
+        click the "Repay" link in their My Account summary page, or navigate to
+        /my-account/summary/repay -->
   <RepaymentOptionsPage>
     <RepaymentOptionsContainer>.repayment-options</RepaymentOptionsContainer>
+    <TotalRepayableOnPromiseDate>span.total_repayable_on_promise_date</TotalRepayableOnPromiseDate>
+    <BalanceToday>span.balance_today</BalanceToday>
+    <PromiseDate>span.promise_date</PromiseDate>
+    <!--  EasyPayNumberLink is the link you activate when you click on the EasyPay number
+          itself on the repayment options page -->
+    <EasyPayNumberLink>div.easypay-number-container a.easypay-number-and-print-icon</EasyPayNumberLink>
+    <!--  EasyPayNumber is the actual EasyPay number, which is in a span (normally inside
+          the EasyPayNumberLink, but it doesn't _have_ to be, so this selector is intentionally
+          flexible) -->
     <EasypayNumber>div.easypay-number-container span.easypay-number</EasypayNumber>
+    <!--  EasypayPrintButton is the main call-to-action Wonga button - this is shown when
+          we aren't supporting online payments through the EasyPay website (if we are, we
+          instead show a link button which takes customer to the EasyPay website) -->
     <EasypayPrintButton>div.easypay-website-link a</EasypayPrintButton>
+    <!--  EasyPayLogo is contained inside a link to the print page -->
+    <EasyPayLogo>div.easypay-logo a img.easypay-logo</EasyPayLogo>
+    <!--  EasyPayLogoLink is a link to the print page -->
+    <EasyPayLogoLink>div.easypay-logo a</EasyPayLogoLink> 
+    <!--  ManualRepaymentButton is the main call-to-action for the manual NAEDO repayment
+          method -->
     <ManualRepaymentButton>div.repayment-option-manual a.button</ManualRepaymentButton>
   </RepaymentOptionsPage>
 
   <MyAccountRepayManualPage>
+    <!-- This is the repayment date in hoomin-readable format, e.g. Friday 1st June 2012 (disabled) -->
     <RepaymentDate>#edit-repayment-date-friendly</RepaymentDate>
+    <!-- This is how much will be due on the repayment date, e.g. 1601.19 (disabled) -->
     <AmountDueOnDueDate>#edit-amount-due-on-due-date</AmountDueOnDueDate>
+    <!-- This is the amount that the customer will repay - the only editable field - must be a number,
+         and must be between 5.00 and the AmountDueOnDueDate -->
     <RepaymentAmount>#edit-repayment-amount</RepaymentAmount>
+    <!-- This is the difference of AmountDueOnDueDate minus RepaymentAmount -->
     <RemainderToRepay>#edit-remainder-to-repay</RemainderToRepay>
+    <!-- This is the bank account number for the account from which payment will be taken. Only the
+         last 4 digits will be shown - others will be replaced with the "*" symbol -->
     <BankAccountMasked>#edit-bank-account-masked</BankAccountMasked>
+    <!-- This is the repayment amount, updated via JS, which forms part of the yellow "Please read me" 
+         Wonga box -->
     <PleaseReadMeRepaymentAmount>#please_read_me_repayment_amount</PleaseReadMeRepaymentAmount>
+    <!-- This is the repayment amount, updated via JS, which is shown in the label next to the masked
+         bank account number field -->
     <BankAccountMaskedLabelRepaymentAmount>#bank_account_masked_label_repayment_amount</BankAccountMaskedLabelRepaymentAmount>
+    <!-- This is the CAPTCHA input field - the user must complete this field to be able to complete
+         repayment -->
+    <Captcha>#edit-captcha-response</Captcha>
+    <Submit>#edit-submit</Submit>
   </MyAccountRepayManualPage>
   
   <EasypaymentNumberPrintPage>

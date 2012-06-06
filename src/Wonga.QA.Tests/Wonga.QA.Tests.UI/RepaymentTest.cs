@@ -22,12 +22,30 @@ namespace Wonga.QA.Tests.Ui
 {
     public class RepaymentTest : UiTest
     {
-        [Test, AUT(AUT.Za)]
+        [Test, AUT(AUT.Za), Pending("Incomplete. Sad times.")]
         public void ZaManualNaedoRepayment()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
 
+            // Take a loan for 20 days, accept it and go to the Summary page:
+            var summaryPage = journey.ApplyForLoan(200, 20)
+                                  .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                  .FillAddressDetails()
+                                  .FillBankDetails()
+                                  .WaitForAcceptedPage()
+                                  .FillAcceptedPage()
+                                  .GoToMySummaryPage()
+                                  .CurrentPage as MySummaryPage;
+            
+            // Click the "repay" link in My Account:
+            var repaymentOptionsPage = summaryPage.RepayClick();
+
+            // Note the balance today:
+            //var balanceToday = repaymentOptionsPage.BalanceToday();
+
+            //var manualRepayPage = repayPage.ManualRepaymentButtonClick();
         }
+
         [Test, AUT(AUT.Za), Pending("Code not yet on rc.za.wonga.com as of 24/05/12")]
         public void ZaEasyPayRepayment()
         {
