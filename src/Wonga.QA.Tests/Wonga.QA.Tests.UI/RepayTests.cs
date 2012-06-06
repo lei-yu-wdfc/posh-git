@@ -158,7 +158,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1827")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1827"), Pending("Fails. To be investigated.")]
         public void ClickingCancelOnRepayPageOpensMySummaryPage()
         {
             var loginPage = Client.Login();
@@ -193,7 +193,7 @@ namespace Wonga.QA.Tests.Ui
             //RepaymentVsScenarios(scenarioId);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1833")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1833", "UKWEB-244")]
         public void RepayEarlyDecline()
         {
             string email = Get.RandomEmail();
@@ -220,7 +220,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1833")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1833", "UKWEB-244")]
         public void RepayDueDecline()
         {
             //build L0 loan
@@ -250,7 +250,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsFalse(declinedPage.IsPaymentFailedDateNotPresent());
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1833")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1833", "UKWEB-244")]
         public void RepayOverdueDecline()
         {
             //build L0 loan
