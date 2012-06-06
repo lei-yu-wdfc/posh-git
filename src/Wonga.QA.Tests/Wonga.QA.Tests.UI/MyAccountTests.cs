@@ -67,7 +67,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.Throws<AssertionFailureException>(() => { var processingPage = bankDetailsPage2.Next(); });
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-202"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-202"), Pending("Pop-ups problem on TC")]
         public void LNJourneyInvalidAccountNumberShouldCauseWarningMessageOnNextPage()
         {
             var loginPage = Client.Login();
@@ -112,7 +112,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-201"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-201"), Pending("Pop-ups problem on TC")]
         public void WhenLoggedCustomerWithoutLiveLoanAddsNewBankAccountItShouldBecomePrimary()
         {
             string accountNumber = "1234567";
@@ -637,7 +637,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(myPersonalDetails.DontChangePhone());
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-217"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-217"), Pending("Pop-ups problem on TC")]
         public void CustomerChangesAddressWithNotValidDataThenWarningMessageShouldOccur()
         {
             var loginPage = Client.Login();
@@ -695,7 +695,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-219"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-219"), Pending("Pop-ups problem on TC")]
         public void CustomerShouldBeAbleToAddBankAccount()
         {
             var accountPreferences = Drive.Data.Payments.Db.AccountPreferences;

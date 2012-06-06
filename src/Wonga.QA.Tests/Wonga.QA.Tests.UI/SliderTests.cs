@@ -490,7 +490,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-152"), Category(TestCategories.Smoke), MultipleAsserts]
+        [Test, AUT(AUT.Ca), JIRA("QA-152"), Category(TestCategories.Smoke), MultipleAsserts] //AUT.Za removed until new sliders will be applied
         public void CustomerTriesEnterSomeRubbishDataToFieldsThenAmountsShouldntBeChanged()
         {
             var page = Client.Home();
