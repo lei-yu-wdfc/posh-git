@@ -283,7 +283,7 @@ namespace Wonga.QA.Tests.Ui
             myPersonalDetailsPage.WaitForSuccessPopup();
             myPersonalDetailsPage.Submit();
 
-            Do.Until(() => Drive.Db.Comms.CustomerDetails.Single(c => c.Email == email).MobilePhone != "0212571908");
+            Do.Until(() => Drive.Db.Comms.CustomerDetails.Single(c => c.Email == email).MobilePhone == "0213456789");
             var mobilePhone = Drive.Db.Comms.CustomerDetails.FirstOrDefault(c => c.Email == email).MobilePhone;
 
             Assert.AreEqual("0213456789", myPersonalDetailsPage.GetMobilePhone);
