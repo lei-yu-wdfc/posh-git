@@ -47,6 +47,8 @@
     <Compile Include="Defaults\AddPrimaryOrganisationDirectorCommand.cs" />
     <Compile Include="Defaults\AddSecondaryOrganisationDirectorCommand.cs" />
     <Compile Include="Defaults\CreateBusinessFixedInstallmentLoanApplicationWbUkCommand.cs" />
+    <Compile Include="Defaults\CreateFixedTermLoanApplicationCaCommand.cs" />
+    <Compile Include="Defaults\CreateFixedTermLoanApplicationUkCommand.cs" />
     <Compile Include="Defaults\RiskCreateFixedTermLoanApplicationCommand.cs" />
     <Compile Include="Defaults\SaveCustomerAddressUkCommand.cs" />
     <Compile Include="Defaults\SaveCustomerDetailsUkCommand.cs" />
@@ -59,7 +61,7 @@
     <Compile Include="Defaults\SaveEmploymentDetailsCaCommand.cs" />
     <Compile Include="Defaults\SaveCustomerAddressCaCommand.cs" />
     <Compile Include="Defaults\SaveCustomerDetailsCaCommand.cs" />
-    <Compile Include="Defaults\CreateFixedTermLoanApplicationCommand.cs" />
+    <Compile Include="Defaults\CreateFixedTermLoanApplicationZaCommand.cs" />
     <Compile Include="Defaults\SubmitApplicationBehaviourCommand.cs" />
     <Compile Include="Defaults\SubmitClientWatermarkCommand.cs" />
     <Compile Include="Defaults\VerifyFixedTermLoanCommand.cs" />
@@ -99,7 +101,9 @@
     <Compile Include="Requests\CompleteMobilePhoneVerificationCommand.cs" />
     <Compile Include="Requests\CreateAccountCommand.cs" />
     <Compile Include="Requests\CreateBusinessFixedInstallmentLoanApplicationWbUkCommand.cs" />
-    <Compile Include="Requests\CreateFixedTermLoanApplicationCommand.cs" />
+    <Compile Include="Requests\CreateFixedTermLoanApplicationCaCommand.cs" />
+    <Compile Include="Requests\CreateFixedTermLoanApplicationUkCommand.cs" />
+    <Compile Include="Requests\CreateFixedTermLoanApplicationZaCommand.cs" />
     <Compile Include="Requests\CreateFixedTermLoanExtensionCommand.cs" />
     <Compile Include="Requests\CreateFixedTermLoanTopupCommand.cs" />
     <Compile Include="Requests\CreatePaylaterApplicationUkCommand.cs" />
@@ -117,6 +121,7 @@
     <Compile Include="Requests\GetAddressByDescriptorIdUkQuery.cs" />
     <Compile Include="Requests\GetAddressDescriptorsByPostCodeUkQuery.cs" />
     <Compile Include="Requests\GetApplicationAprUkQuery.cs" />
+    <Compile Include="Requests\GetApplicationDecisionDummyQuery.cs" />
     <Compile Include="Requests\GetApplicationDecisionQuery.cs" />
     <Compile Include="Requests\GetApplicationTransactionsQuery.cs" />
     <Compile Include="Requests\GetAvailableCreditUkQuery.cs" />
@@ -285,6 +290,7 @@
     <Compile Include="Enums\GenderEnum.cs" />
     <Compile Include="Enums\IncomeFrequencyEnum.cs" />
     <Compile Include="Enums\LanguageZaEnum.cs" />
+    <Compile Include="Enums\LoanProvinceEnum.cs" />
     <Compile Include="Enums\MaritalStatusEnum.cs" />
     <Compile Include="Enums\OccupancyStatusEnum.cs" />
     <Compile Include="Enums\PasswordResetKeyComplexityEnum.cs" />

@@ -11,7 +11,6 @@ using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
 using AddBankAccountUkCommand = Wonga.QA.Framework.Msmq.AddBankAccountUkCommand;
-using CreateFixedTermLoanApplicationCommand = Wonga.QA.Framework.Msmq.CreateFixedTermLoanApplicationCommand;
 using CreateScheduledPaymentRequestCommand = Wonga.QA.Framework.Msmq.CreateScheduledPaymentRequestCommand;
 using CreateRepaymentArrangementCommand = Wonga.QA.Framework.Msmq.CreateRepaymentArrangementCommand;
 using PaymentFrequencyEnum = Wonga.QA.Framework.Msmq.PaymentFrequencyEnum;
@@ -377,21 +376,6 @@ namespace Wonga.QA.Tests.Payments.Queries
 
         #region "Helpers"
 
-            private void CreateFixedTermLoanApplication(Guid appId, Guid accountId, Guid bankAccountId, Guid paymentCardId, int dueInDays = 10)
-            {
-                Drive.Msmq.Payments.Send(new CreateFixedTermLoanApplicationCommand()
-                {
-                    ApplicationId = appId,
-                    AccountId = accountId,
-                    PromiseDate = DateTime.UtcNow.AddDays(dueInDays),
-                    BankAccountId = bankAccountId,
-                    PaymentCardId = paymentCardId,
-                    LoanAmount = 100.0M,
-                    Currency = CurrencyCodeIso4217Enum.GBP,
-                    CreatedOn = DateTime.UtcNow
-                });
-            }
-
             private Guid CreateLoanAdvanceTransaction(Guid appId)
             {
                 var trnGuid1 = Guid.NewGuid();
@@ -467,7 +451,6 @@ namespace Wonga.QA.Tests.Payments.Queries
                 });
                 return trnGuid1;
             }
-
-#endregion
+		#endregion
     }
 }

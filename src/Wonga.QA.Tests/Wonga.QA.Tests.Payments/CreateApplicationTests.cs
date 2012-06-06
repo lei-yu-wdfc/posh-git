@@ -19,7 +19,7 @@ namespace Wonga.QA.Tests.Payments
             Guid appId = Guid.NewGuid();
             var customer = CustomerBuilder.New().Build();
             var promisedDate = FindPromiseDateOfExpectedDayOfWeek(DayOfWeek.Saturday);
-            Drive.Api.Commands.Post(new CreateFixedTermLoanApplicationCommand()
+            Drive.Api.Commands.Post(new CreateFixedTermLoanApplicationZaCommand()
                                          {
                                              ApplicationId = appId,
                                              AccountId = customer.Id,

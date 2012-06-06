@@ -9,7 +9,7 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Ops;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
-using CreateFixedTermLoanApplicationCommand = Wonga.QA.Framework.Api.CreateFixedTermLoanApplicationCommand;
+using CreateFixedTermLoanApplicationCommand = Wonga.QA.Framework.Api.CreateFixedTermLoanApplicationZaCommand;
 using PaymentTransactionEnum = Wonga.QA.Framework.Msmq.PaymentTransactionEnum;
 using SignApplicationCommand = Wonga.QA.Framework.Api.SignApplicationCommand;
 

@@ -7,6 +7,16 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Data.Enums.Risk;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Helpers;
+using Wonga.QA.Framework.Msmq;
+using CreateFixedTermLoanApplicationUkCommand = Wonga.QA.Framework.Api.CreateFixedTermLoanApplicationUkCommand;
+using CreateFixedTermLoanApplicationCaCommand = Wonga.QA.Framework.Api.CreateFixedTermLoanApplicationCaCommand;
+using CreateFixedTermLoanApplicationZaCommand = Wonga.QA.Framework.Api.CreateFixedTermLoanApplicationZaCommand;
+using RiskCreateFixedTermLoanApplicationCommand = Wonga.QA.Framework.Api.RiskCreateFixedTermLoanApplicationCommand;
+using SignApplicationCommand = Wonga.QA.Framework.Api.SignApplicationCommand;
+using SubmitApplicationBehaviourCommand = Wonga.QA.Framework.Api.SubmitApplicationBehaviourCommand;
+using SubmitClientWatermarkCommand = Wonga.QA.Framework.Api.SubmitClientWatermarkCommand;
+using SubmitUidAnswersCommand = Wonga.QA.Framework.Api.SubmitUidAnswersCommand;
+using VerifyFixedTermLoanCommand = Wonga.QA.Framework.Api.VerifyFixedTermLoanCommand;
 
 namespace Wonga.QA.Framework
 {
@@ -160,7 +170,7 @@ namespace Wonga.QA.Framework
                     //wait for the card to be ready
                     Do.Until(Customer.GetPaymentCard);
                     requests.AddRange(new ApiRequest[]{
-                        CreateFixedTermLoanApplicationCommand.New(r =>
+                        CreateFixedTermLoanApplicationUkCommand.New(r =>
                         {
                             r.ApplicationId = Id;
                             r.AccountId = Customer.Id;
@@ -191,7 +201,7 @@ namespace Wonga.QA.Framework
                     _setPromiseDateAndLoanTerm();
 
                     requests.AddRange(new ApiRequest[]{
-                        CreateFixedTermLoanApplicationCommand.New(r =>
+                        CreateFixedTermLoanApplicationCaCommand.New(r =>
                         {
                             r.ApplicationId = Id;
                             r.AccountId = Customer.Id;
@@ -215,9 +225,9 @@ namespace Wonga.QA.Framework
                     });
                     break;
 
-                default:
+                case AUT.Za:
                     requests.AddRange(new ApiRequest[]{
-                        CreateFixedTermLoanApplicationCommand.New(r =>
+                        CreateFixedTermLoanApplicationZaCommand.New(r =>
                         {
                             r.ApplicationId = Id;
                             r.AccountId = Customer.Id;
@@ -240,6 +250,9 @@ namespace Wonga.QA.Framework
                         })
                     });
                     break;
+
+				default:
+					throw new NotImplementedException();
             }
 
             Drive.Api.Commands.Post(requests);
