@@ -1854,17 +1854,13 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(totalToRepay <= controlSum);
         }
 
-        [Test, AUT(AUT.Ca), JIRA("QA-303")] // AUT Za removed beacuse of ZA-2630 bug
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-303")]
         public void L0ShouldPossibleToCompleteAnL0WithSelfEmployedStatus()
         {
-            // string FirstName = Get.RandomString(3, 10);
-            // string LastName = Get.RandomString(3, 10);
             string Email = Get.RandomEmail();
             DateTime DateOfBirth = new DateTime(1957, 10, 30);
-
             var journey = JourneyFactory.GetL0Journey(Client.Home());
             var personalDetailsPage = journey.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
-            // string employerName = Get.EnumToString(RiskMask.TESTEmployedMask);
 
             switch (Config.AUT)
             {
@@ -1872,6 +1868,7 @@ namespace Wonga.QA.Tests.Ui
                 case AUT.Za:
                     string NationalId = Get.GetNationalNumber(DateOfBirth, true);
                     personalDetailsPage.YourName.FirstName = journey.FirstName;
+                    personalDetailsPage.YourName.MiddleName = "TESTNoCheck";
                     personalDetailsPage.YourName.LastName = journey.LastName;
                     personalDetailsPage.YourName.Title = "Mr";
                     personalDetailsPage.YourDetails.Number = NationalId.ToString();
