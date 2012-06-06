@@ -240,7 +240,6 @@ namespace Wonga.QA.Framework
             var ldd = _loanDueDateNotifiSagaEntityTab.FindAll(_loanDueDateNotifiSagaEntityTab.ApplicationId == Id).Single();
             if (Drive.Data.Ops.GetServiceConfiguration<bool>("Payments.FeatureSwitches.UseLoanDurationSaga") == false)
             {
-                LoanDueDateNotificationSagaEntity ldd = Drive.Db.OpsSagas.LoanDueDateNotificationSagaEntities.Single(s => s.ApplicationId == Id);
                 Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ldd.Id });
             _loanDueDateNotifiSagaEntityTab.Update(ldd);
 

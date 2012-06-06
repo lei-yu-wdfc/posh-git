@@ -19,7 +19,10 @@ using EmploymentStatusEnum = Wonga.QA.Framework.Api.EmploymentStatusEnum;
 
 namespace Wonga.QA.Tests.Ui
 {
+<<<<<<< HEAD
     [Parallelizable(TestScope.All)]
+=======
+>>>>>>> 7ba9855cf63bf3e4642ef7a2762c210abbd11d39
     public class TagCloudTests : UiTest
     {
         Dictionary<int, string> tagCloudTexts = new Dictionary<int, string> 
