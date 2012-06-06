@@ -513,5 +513,21 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId));
             Assert.AreEqual(expectedIntroText, actuallntroText);
         }
+        [Test]
+        public void TestApplication()
+        {
+            Customer customer = CustomerBuilder.New().WithEmailAddress(Get.RandomEmail()).Build();
+            Application application = ApplicationBuilder.New(customer).Build();
+
+            var test = application.AccountId;
+            var cus = application.GetCustomer();
+
+
+            //decimal amt = 20;
+            //application.RepayEarly(amt, 2);
+            application.PutApplicationIntoArrears(2);
+            
+            bool value = application.IsClosed;
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Data;
 using Wonga.QA.Framework.Db.Extensions;
@@ -72,7 +73,7 @@ namespace Wonga.QA.Framework
             Drive.Data.Risk.Db.RiskApplications.Update(riskApp);
         }
 
-        public static void RewindApplicationDates(dynamic application, TimeSpan span)
+        public static void RewindApplicationDates(Application application, TimeSpan span)
         {
             var paymentsAppsTab = Drive.Data.Payments.Db.Applications;
             dynamic applicationEntity =
@@ -82,6 +83,66 @@ namespace Wonga.QA.Framework
             dynamic riskApplication = riskAppTab.FindAll(riskAppTab.ApplicationId == application.Id).Single();
 
             ApplicationOperations.RewindApplicationDates(applicationEntity, riskApplication, span);
+        }
+
+        public static void Rewind(Guid applicationId, int absoluteDays)
+        {
+            var appTab = Drive.Data.Payments.Db.Applications;
+            var fixTermLoanAppTab = Drive.Data.Payments.Db.FixedTermLoanApplications;
+
+            // Rewinds a Loans Dates
+            var application = appTab.FindAll(appTab.ExternalId == applicationId).Single();
+            var fixTermLoanAppTabRow =
+                fixTermLoanAppTab.FindAll(fixTermLoanAppTab.ApplicationId == application.ApplicationId).Single();
+
+            if (fixTermLoanAppTabRow.NextDueDate == null)
+            {
+                throw new Exception("Rewind: FixedTermLoanApplication.NextDueDate is null");
+            }
+
+            var riskAppTab = Drive.Data.Risk.Db.RiskApplications;
+            dynamic riskApplication = riskAppTab.FindAll(riskAppTab.ApplicationId == applicationId).Single();
+
+            var duration = new TimeSpan(absoluteDays, 0, 0, 0);
+
+            RewindApplicationDates(application, riskApplication,duration);
+        }
+
+        public static void UpdateNextDueDate(dynamic fixedApp, TimeSpan span)
+        {
+            var dt = DateTime.UtcNow;
+            var fixedTermLoanAppTab = Drive.Data.Payments.Db.FixedTermLoanApplications;
+
+            try
+            {
+                fixedApp.NextDueDate = (dt += span);
+                fixedTermLoanAppTab.Update(fixedApp);
+            }
+            catch (Exception)
+            {
+                // Retry in case of deadlocks
+                Thread.Sleep(1000);
+                fixedApp.NextDueDate = (dt += span);
+                fixedTermLoanAppTab.Update(fixedApp);
+            }
+        }
+
+        public static void MoveAcceptedOnDate(dynamic app, TimeSpan span)
+        {
+            var appTab = Drive.Data.Payments.Db.Applications;
+
+            try
+            {
+                app.AcceptedOn += span;
+                appTab.Update(app);
+            }
+            catch (Exception)
+            {
+                // Retry in case of deadlocks
+                Thread.Sleep(1000);
+                app.AcceptedOn += span;
+                appTab.Update(app);
+            }
         }
     }
 }
