@@ -56,7 +56,7 @@ namespace Wonga.QA.Tests.Ui
                     page.InternationalElements.InternationalPanelCaClick();
                     break;
             }
-            Do.With.Interval(2).While(() => url == page.Url);
+            Do.With.Interval(2).While(() => url == page.Url + "/#");
             Console.WriteLine(page.Url + "\n" + domain + "\n");
             Assert.IsTrue(page.Url.Contains(domain));
         }
