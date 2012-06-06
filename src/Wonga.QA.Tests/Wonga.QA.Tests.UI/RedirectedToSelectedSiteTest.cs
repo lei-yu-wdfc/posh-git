@@ -42,6 +42,7 @@ namespace Wonga.QA.Tests.Ui
         private void NavigateToRegionAndTest(AUT aut, string domain)
         {
             var page = Client.Home();
+            string url = page.Url;
             page.InternationalElements.InternationalTriggerClick();
             switch (aut)
             {
@@ -55,6 +56,8 @@ namespace Wonga.QA.Tests.Ui
                     page.InternationalElements.InternationalPanelCaClick();
                     break;
             }
+            Do.With.Interval(2).While(() => url == page.Url);
+            Console.WriteLine(page.Url + "\n" + domain + "\n");
             Assert.IsTrue(page.Url.Contains(domain));
         }
     }

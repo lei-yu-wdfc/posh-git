@@ -335,7 +335,7 @@ namespace Wonga.QA.Tests.Ui
             switch (Config.AUT)
             {
                 case (AUT.Za):
-                    date = DateTime.Now.AddDays(-arrearsdays);
+                    date = DateTime.Now.AddDays(-arrearsdays-2);
                     email = Get.RandomEmail();
                     customer = CustomerBuilder.New().WithEmailAddress(email).Build();
                     application = ApplicationBuilder.New(customer)
