@@ -9,7 +9,7 @@ namespace Wonga.QA.Tests.Ui
     [Parallelizable(TestScope.All)]
     class TimeoutTest : UiTest
     {
-        [Test, AUT(AUT.Uk), JIRA("UK-794")]
+        [Test, AUT(AUT.Uk), JIRA("UK-794", "UKWEB-238")]
         public void AutologoutRedirectTest()
         {
             string email = Get.RandomEmail();

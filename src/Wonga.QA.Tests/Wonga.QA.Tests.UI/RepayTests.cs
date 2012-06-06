@@ -161,6 +161,8 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk), JIRA("UK-1827")]
         public void ClickingCancelOnRepayPageOpensMySummaryPage()
         {
+            var loginPage = Client.Login();
+
             // Build L0 loan
             string email = Get.RandomEmail();
             DateTime todayDate = DateTime.Now;
@@ -168,7 +170,6 @@ namespace Wonga.QA.Tests.Ui
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
 
-            var loginPage = Client.Login();
             var myAccountPage = loginPage.LoginAs(email);
             var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
 

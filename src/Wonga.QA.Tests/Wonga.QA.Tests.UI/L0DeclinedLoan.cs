@@ -82,8 +82,8 @@ namespace Wonga.QA.Tests.Ui
             declinedPage.LookForHeaderLinks();
         }
 
- 
-        [Test, AUT(AUT.Uk), JIRA("UK-438", "UK-1823")]
+
+        [Test, AUT(AUT.Uk), JIRA("UK-438", "UK-1823", "UKWEB-253")]
         public void L0DeclinedForEmployedPartTimeTest()
         {
             var journeyL0 = JourneyFactory.GetL0Journey(Client.Home());
