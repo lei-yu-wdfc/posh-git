@@ -134,6 +134,12 @@ namespace Wonga.QA.Framework
             return customerDetailsRow.Forename + " " + customerDetailsRow.Surname;
         }
 
+        public string GetCustomerForename()
+        {
+            var customerDetailsRow = Drive.Db.Comms.CustomerDetails.Single(cd => cd.AccountId == Id);
+        	return customerDetailsRow.Forename;
+        }
+
         public void ScrubCcin()
         {
             var db = new DbDriver();
