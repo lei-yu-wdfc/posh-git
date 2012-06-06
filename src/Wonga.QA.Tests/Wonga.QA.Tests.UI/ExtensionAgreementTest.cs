@@ -26,7 +26,7 @@ namespace Wonga.QA.Tests.Ui
     [Parallelizable(TestScope.All)]
     class ExtensionAgreementTest : UiTest
     {
-        [Test, AUT(AUT.Uk), JIRA("UK-971"), Pending("Fails due to bug UK-2293"), MultipleAsserts]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-243", "UKWEB-294"), MultipleAsserts]
         public void ExtensionAgreementPageTest()
         {
             string email = Get.RandomEmail();
@@ -53,7 +53,7 @@ namespace Wonga.QA.Tests.Ui
             var expectedLoanAmount = application.LoanAmount;
             var termDivisor = Convert.ToDouble(String.Format("{0:0.00000000}", 365d / Convert.ToDouble(expectedExtendedLoanTerm)));
             var loanDevisor = Convert.ToDouble(expectedTotalToRepay.Trim('£'))/Convert.ToDouble(expectedLoanAmount);
-            var expectedRepresentativeApr = (Math.Pow(loanDevisor, termDivisor) - 1).ToString("0%"); 
+            var expectedRepresentativeApr = Math.Ceiling((Math.Pow(loanDevisor, termDivisor) - 1) * 100).ToString("#") + "%"; 
             
             requestPage.setSecurityCode("123");
             requestPage.SubmitButtonClick();
@@ -73,8 +73,8 @@ namespace Wonga.QA.Tests.Ui
             Assert.Contains(agreementPage.secci.Text, expectedTotalToRepay);
             Assert.Contains(agreementPage.secci.Text, expectedRepresentativeApr);
         }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-971"), Pending("Fails due to bug UK-2293"), MultipleAsserts]
+        
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-243", "UKWEB-294"), MultipleAsserts]
         [Row (2, 100, 1, 7)]
         public void ExtensionAgreementPageNDaysAfterLoanTest(int loanTerm, int loanAmount, int daysAfterLoan, int daysToExtend)
         {
@@ -110,7 +110,7 @@ namespace Wonga.QA.Tests.Ui
             var expectedLoanAmount = application.LoanAmount;
             var termDivisor = Convert.ToDouble(String.Format("{0:0.00000000}", 365d / Convert.ToDouble(expectedExtendedLoanTerm)));
             var loanDevisor = Convert.ToDouble(expectedTotalToRepay.Trim('£')) / Convert.ToDouble(expectedLoanAmount);
-            var expectedRepresentativeApr = (Math.Pow(loanDevisor, termDivisor) - 1).ToString("0%"); 
+            var expectedRepresentativeApr = Math.Ceiling((Math.Pow(loanDevisor, termDivisor) - 1) * 100).ToString("#") + "%"; 
 
             requestPage.setSecurityCode("123");
             requestPage.SubmitButtonClick();
