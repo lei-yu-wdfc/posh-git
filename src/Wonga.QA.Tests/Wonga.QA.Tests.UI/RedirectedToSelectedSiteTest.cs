@@ -42,23 +42,22 @@ namespace Wonga.QA.Tests.Ui
         private void NavigateToRegionAndTest(AUT aut, string domain)
         {
             var page = Client.Home();
+            string url = page.Url;
             page.InternationalElements.InternationalTriggerClick();
             switch (aut)
             {
                 case (AUT.Za):
                     page.InternationalElements.InternationalPanelZaClick();
-                    Console.WriteLine(page.Url+"//1");
                     break;
                 case (AUT.Uk):
                     page.InternationalElements.InternationalPanelUkClick();
-                    Console.WriteLine(page.Url + "//2");
                     break;
                 case (AUT.Ca):
                     page.InternationalElements.InternationalPanelCaClick();
-                    Console.WriteLine(page.Url + "//3");
                     break;
             }
-            Console.WriteLine(page.Url + "//0");
+            Do.With.Interval(2).While(() => url == page.Url);
+            Console.WriteLine(page.Url + "\n" + domain + "\n");
             Assert.IsTrue(page.Url.Contains(domain));
         }
     }
