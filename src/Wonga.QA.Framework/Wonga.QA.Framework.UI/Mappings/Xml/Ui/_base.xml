@@ -359,12 +359,12 @@
   </ExtensionPaymentFailedPage>
 
   <ExtensionAgreementPage>
-    <ExtensionAgreementAcceptButton>#edit-accept</ExtensionAgreementAcceptButton>
-    <ExtensionAgreementscroll>#agreementscroll</ExtensionAgreementscroll>
+    <ExtensionAgreementAcceptButton>div #edit-accept</ExtensionAgreementAcceptButton>
+    <ExtensionAgreementscroll>div #agreementscroll</ExtensionAgreementscroll>
     <ExtensionSecciButton>#extension_secci_link</ExtensionSecciButton>
-    <ExtensionExplanationButton>#extension_ae_link</ExtensionExplanationButton>
-    <SecciHeader>.secci-intro</SecciHeader>
-    <SecciPrint>#secci-print-link a</SecciPrint>
+    <ExtensionExplanationButton>div #extension_explanation_link</ExtensionExplanationButton>
+    <SecciHeader>div .secci-intro</SecciHeader>
+    <SecciPrint>div #secci-print-link a</SecciPrint>
     <SecciContent>.secci</SecciContent>
   </ExtensionAgreementPage>
 
