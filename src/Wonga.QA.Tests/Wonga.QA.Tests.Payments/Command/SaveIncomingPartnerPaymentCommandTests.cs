@@ -19,7 +19,7 @@ using Wonga.QA.Tests.Payments.Enums;
 namespace Wonga.QA.Tests.Payments.Command
 {
     [TestFixture, Parallelizable(TestScope.All)]
-	public class IncomingPartnerPaymentCommandTests
+	public class SaveIncomingPartnerPaymentCommandTests
     {
     	private dynamic _payUProcessRequestResponseSagaEntityDB = Drive.Data.OpsSagas.Db.PayUProcessRequestResponseSagaEntity;
 		private dynamic _transactionsDB = Drive.Data.Payments.Db.Transactions;
