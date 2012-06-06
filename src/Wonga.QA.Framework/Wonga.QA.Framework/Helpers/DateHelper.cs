@@ -32,6 +32,13 @@ namespace Wonga.QA.Framework.Helpers
 			return date;
 		}
 
+        public static DateTime GetPromiseDateForLoanTermForCa(int loanTerm)
+        {
+            int daysTillStart = GetNumberOfDaysUntilStartOfLoanForCa();
+
+            return DateTime.Now.Date.AddDays(loanTerm + daysTillStart);
+        }
+
 		private static List<CalendarDateEntity> GetBankHolidays(DateTime startOfRange, DateTime endOfRange)
 		{
 			return
