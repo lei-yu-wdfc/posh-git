@@ -182,6 +182,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual RepayErrorPage RepayErrorPage { get; set; }
         public virtual DebitOrderPage DebitOrderPage { get; set; }
         public virtual DebitOrderSuccessPage DebitOrderSuccessPage { get; set; }
+        public virtual MyAccountRepayManualPage MyAccountRepayManualPage { get; set; }
         #endregion
 
         #region SalesForcePages

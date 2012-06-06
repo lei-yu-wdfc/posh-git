@@ -367,28 +367,23 @@ namespace Wonga.QA.Tests.Ui
             Application application = ApplicationBuilder
                 .New(customer)
                 .Build();
-
             application.RepayOnDueDate();
-
-            loginPage.LoginAs(email);
-
-            var journey = JourneyFactory.GetLnJourney(Client.Home());
+            var mySummaryPageAfterLogin = loginPage.LoginAs(email);
+            var homePage = Client.Home();
+            var journey = JourneyFactory.GetLnJourney(homePage);
             var applyPage = journey.ApplyForLoan(200, 10)
                 .SetName(name, surname).CurrentPage as ApplyPage;
             // Check the URL here is /apply-member
-            Assert.Contains(Client.Driver.Url, "apply-member", "The apply page URL is not /apply-member.");
-
+            Assert.Contains(Client.Driver.Url, "/apply-member?", "The apply page URL does not contain '/apply-member?'");
             journey.CurrentPage = applyPage.Submit() as ProcessingPage;
             // Check the URL here is /processing-member
-            Assert.Contains(Client.Driver.Url, "processing-member", "The processing page URL is not /processing-member.");
-
-            journey.WaitForAcceptedPage();
+            Assert.EndsWith(Client.Driver.Url, "/processing-member", "The processing page URL is not /processing-member.");
+            var mySummaryPage = journey.WaitForAcceptedPage();
             // Check the URL here is /apply-accept-member
-            Assert.Contains(Client.Driver.Url, "apply-accept-member", "The accept page URL is not /apply-accept-member.");
-
-            journey.FillAcceptedPage();
+            Assert.EndsWith(Client.Driver.Url, "/apply-accept-member", "The accept page URL is not /apply-accept-member.");
+            var dealDonePage = journey.FillAcceptedPage();
             // Check the URL here is /deal-done-member
-            Assert.Contains(Client.Driver.Url, "deal-done-member", "The deal done page URL is not /deal-done-member.");
+            Assert.EndsWith(Client.Driver.Url, "/deal-done-member", "The deal done page URL is not /deal-done-member.");
         }
 
     }
