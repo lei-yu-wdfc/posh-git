@@ -56,16 +56,10 @@ namespace Wonga.QA.Tests.Payments.Sagas
         {
             var msg = new ConfirmIncomingPaymentCommand() {PaymentId = _paymentId};
             Drive.Msmq.Payments.Send(msg);
-            //Check saga is created. and payment record is updated with ConfirmedOn date
-            var sagasDb = Drive.Data.OpsSagas.Db;
-            var saga = Do.Until(() => sagasDb.PayUPaymentConfirmationSagaEntity.FindByPaymentId(_paymentId));
-            Assert.IsNotNull(saga);
-            Assert.AreEqual(_payment.PaymentReference, saga.PaymentReference);
-            Assert.AreEqual(_payment.TransactionAmount, saga.Amount);
 
             var paymentDb = Drive.Data.Payments.Db;
-            var payment = paymentDb.IncomingPartnerPayments.FindById(_paymentId);
-            Assert.AreEqual(DateTime.UtcNow.Date, payment.ConfirmedOn.Date);
+            var confirmedOnDate = Do.Until(() => paymentDb.IncomingPartnerPayments.FindById(_paymentId).ConfirmedOn);
+            Assert.AreEqual(DateTime.UtcNow.Date, confirmedOnDate.Date);
         }
 
         [Test]
@@ -74,19 +68,6 @@ namespace Wonga.QA.Tests.Payments.Sagas
         {
             var msg = new ConfirmIncomingPaymentCommand() { PaymentId = _paymentId };
             Drive.Msmq.Payments.Send(msg);
-
-            var responseEvent = new IWantToVerifyPayUTransactionResponseZaEvent()
-                      {
-                          DateProcessed = DateTime.UtcNow,
-                          PaymentId = _paymentId,
-                          PaymentReferenceNumber = _payment.PaymentReference,
-                          RawResponse = "SafeShopEncoded",
-                          Result = PayUTransactionResultEnum.Successful
-                      };
-            Drive.Msmq.Payments.Send(responseEvent);
-
-            //Asset response is saved. payment is updated for SuccessOn date. Transaction is created. Saga is completed.
-            Assert.AreEqual(responseEvent.RawResponse, GetRawResponse());
 
             var paymentDb = Drive.Data.Payments.Db;
             var successOn = Do.Until(() => paymentDb.IncomingPartnerPayments.FindById(_paymentId).SuccessOn);
@@ -130,7 +111,7 @@ namespace Wonga.QA.Tests.Payments.Sagas
             Assert.IsNull(saga);            
         }
 
-        [Test]
+        [Test, Explicit]
         [AUT(AUT.Za), JIRA("ZA-2572")]
         public void TimeoutSagaTest()
         {
