@@ -69,7 +69,7 @@ namespace Wonga.QA.Tests.Payments
                 Decimal.Round(amountToBeCollectedForRepresentmentOne, 2, MidpointRounding.AwayFromZero);
 
             Assert.IsTrue(transactionForRepresentmentOne.Amount == amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces);
-            Assert.IsTrue(Convert.ToDecimal(CurrentRepresentmentAmount(application.Id)) == amountToBeCollectedForRepresentmentOne);
+            Assert.IsTrue(CurrentRepresentmentAmount(application.Id) == amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces);
             Assert.IsTrue(GetNumberOfRepresentmentsSent(application.Id) == "1");
             Assert.IsTrue(VerifyPaymentFunctions.VerifyDirectBankPaymentOfAmount(application.Id, -amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces));
         }
@@ -188,7 +188,7 @@ namespace Wonga.QA.Tests.Payments
                 Decimal.Round(amountToBeCollectedForRepresentmentTwo, 2, MidpointRounding.AwayFromZero);
 
             Assert.IsTrue(transactionForRepresentmentTwo.Amount == amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces);
-            Assert.IsTrue(Convert.ToDecimal(CurrentRepresentmentAmount(application.Id)) == amountToBeCollectedForRepresentmentTwo);
+            Assert.IsTrue(CurrentRepresentmentAmount(application.Id) == amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces);
             Assert.IsTrue(GetNumberOfRepresentmentsSent(application.Id) == "2");
             Assert.IsTrue(VerifyPaymentFunctions.VerifyDirectBankPaymentOfAmount(application.Id, -amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces));
 
@@ -363,6 +363,7 @@ namespace Wonga.QA.Tests.Payments
                         Decimal.Round(amountToBeCollectedForRepresentmentThree, 2, MidpointRounding.AwayFromZero);
 
             Assert.IsTrue(transactionForRepresentmentThree.Amount == amountToBeCollectedForRepresentmentThreeRoundedToTwoDecimalPlaces);
+            Assert.IsTrue(CurrentRepresentmentAmount(application.Id) == amountToBeCollectedForRepresentmentThreeRoundedToTwoDecimalPlaces);
             Assert.IsTrue(VerifyPaymentFunctions.VerifyDirectBankPaymentOfAmount(application.Id, -amountToBeCollectedForRepresentmentThreeRoundedToTwoDecimalPlaces));
             Assert.IsTrue(Do.With.Timeout(1).Until(() => application.IsClosed));
             //TODO: add assert to ensure the saga is no longer exists in the db...
@@ -510,10 +511,10 @@ namespace Wonga.QA.Tests.Payments
             return multipleRepresentmentSaga.NextRepresentmentDate.ToString();
         }
 
-        private String CurrentRepresentmentAmount(Guid applicationGuid)
+        private Decimal CurrentRepresentmentAmount(Guid applicationGuid)
         {
             var multipleRepresentmentSaga = Do.Until(() => _opsSagasMultipleRepresentmentsInArrearsSagaEntity.FindByApplicationId(applicationGuid));
-            return multipleRepresentmentSaga.LastRepresentmentAmount.ToString();
+            return Math.Round(Convert.ToDecimal(multipleRepresentmentSaga.LastRepresentmentAmount), 2, MidpointRounding.AwayFromZero);
         }
 
         private void TimeoutInArrearsNoticeSaga(Guid applicationGuid, int numberOfDaysInArrears)
