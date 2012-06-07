@@ -129,5 +129,37 @@ namespace Wonga.QA.Tests.Mig.UI
             //Test my account summary page
             Assert.IsTrue(this.Client.Driver.Url.Contains("my-account"));
         }
+
+        [Test, AUT(AUT.Uk), Pending("in development, test environments still not ready")]
+        public void RepayDueFull()
+        {
+            //build L0 loan
+            //string email = Get.RandomEmail();
+            DateTime todayDate = DateTime.Now;
+
+            //var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            //var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
+            var daysShift = 7;
+
+            //time-shift loan so it's due today
+            TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
+            ApplicationOperations.RewindApplicationDates(application, daysShiftSpan);
+
+            var loginPage = Client.Login();
+            var myAccountPage = loginPage.LoginAs(email);
+            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+
+            mySummaryPage.RepayButtonClick();
+            var requestPage = new RepayRequestPage(this.Client);
+
+            //Branch point - Add Cv2 for each path and proceed
+            requestPage.setSecurityCode("123");
+            requestPage.SubmitButtonClick();
+
+            var repayProcessingPage = new RepayProcessingPage(this.Client);
+
+            var paymentTakenPage = repayProcessingPage.WaitFor<RepayDueFullpaySuccessPage>() as RepayDueFullpaySuccessPage;
+
+        }
     }
 }
