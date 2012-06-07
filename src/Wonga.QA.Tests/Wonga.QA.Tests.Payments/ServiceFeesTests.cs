@@ -12,16 +12,25 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments
 {
-	[TestFixture, Pending("ZA-2565")]
+	[TestFixture, Parallelizable(TestScope.Descendants)]
 	public class ServiceFeesTests
 	{
 		private const string NowServiceConfigKey =
 			"Wonga.Payments.Validators.Za.CreateFixedTermLoanApplicationValidator.DateTime.UtcNow";
 
+		private Application _application;
+
 		[FixtureSetUp]
 		public void FixtureSetUp()
 		{
 			SetUtcNow(NowServiceConfigKey, new DateTime(2012, 03, 15, 13, 14, 15));
+
+			Customer customer = CustomerBuilder.New().Build();
+			_application =
+				ApplicationBuilder.New(customer)
+					.WithLoanAmount(100m)
+					.WithLoanTerm(40)
+					.Build();
 		}
 
 		[FixtureTearDown]
@@ -33,14 +42,14 @@ namespace Wonga.QA.Tests.Payments
 			db.Ops.SubmitChanges();
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1969"), Parallelizable, Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1969")]
 		public void AllServiceFeesArePostedUpfrontOnApplication()
 		{
-			Customer customer = CustomerBuilder.New().Build();
-			Application application = ApplicationBuilder.New(customer).WithLoanTerm(10).Build();
+			//Customer customer = CustomerBuilder.New().Build();
+			//Application application = ApplicationBuilder.New(customer).WithLoanTerm(10).Build();
 			PaymentsDatabase paymentsDatabase = Drive.Db.Payments;
 
-			var applicationEntity = paymentsDatabase.Applications.Single(a => a.ExternalId == application.Id);
+			var applicationEntity = paymentsDatabase.Applications.Single(a => a.ExternalId == _application.Id);
 			var serviceFees =
 				paymentsDatabase.Transactions
 					.Where(t =>
@@ -65,36 +74,36 @@ namespace Wonga.QA.Tests.Payments
 			    cashAdvance.PostedOn.AddDays(90), serviceFees[3].PostedOn, TimeSpan.FromMinutes(10));
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1969", "ZA-2193"), Parallelizable, Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1969", "ZA-2193")]
 		public void SmallLoanHasPositiveBalanceAfterApplication()
 		{
-			Customer customer = CustomerBuilder.New().Build();
-			Application application =
-				ApplicationBuilder.New(customer)
-					.WithLoanAmount(100m)
-					.WithLoanTerm(10)
-					.Build();
+			//Customer customer = CustomerBuilder.New().Build();
+			//Application application =
+			//    ApplicationBuilder.New(customer)
+			//        .WithLoanAmount(100m)
+			//        .WithLoanTerm(10)
+			//        .Build();
 
 			var query =
-				new GetFixedTermLoanApplicationZaQuery {ApplicationId = application.Id};
+				new GetFixedTermLoanApplicationZaQuery {ApplicationId = _application.Id};
 			var response = Drive.Api.Queries.Post(query);
 
 			Assert.AreEqual("174.10", response.Values["BalanceToday"].Single());
-			Assert.AreEqual("74.10", response.Values["Fees"].Single());
+			Assert.AreEqual("92.27", response.Values["Fees"].Single());
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1969", "ZA-2193"), Parallelizable, Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1969", "ZA-2193")]
 		public void DueAmountObeysInDuplumRule()
 		{
-			Customer customer = CustomerBuilder.New().Build();
-			Application application =
-				ApplicationBuilder.New(customer)
-					.WithLoanAmount(100m)
-					.WithLoanTerm(40)
-					.Build();
+			//Customer customer = CustomerBuilder.New().Build();
+			//Application application =
+			//    ApplicationBuilder.New(customer)
+			//        .WithLoanAmount(100m)
+			//        .WithLoanTerm(40)
+			//        .Build();
 
 			var query =
-				new GetFixedTermLoanApplicationZaQuery {ApplicationId = application.Id};
+				new GetFixedTermLoanApplicationZaQuery {ApplicationId = _application.Id};
 			var response = Drive.Api.Queries.Post(query);
 
 			Assert.AreEqual("200.00", response.Values["BalanceNextDueDate"].Single());
