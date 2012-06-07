@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <UiMap>
 	<LoginPage>
 		<ForgotPassword>#wonga-login-form div a</ForgotPassword>
@@ -221,6 +221,10 @@
           we aren't supporting online payments through the EasyPay website (if we are, we
           instead show a link button which takes customer to the EasyPay website) -->
     <EasypayPrintButton>div.easypay-website-link a</EasypayPrintButton>
+    <!--  HowToUseEasyPayLink displays a modal popup with information -->
+    <HowToUseEasyPayLink>a.easypay-how-to-use-link</HowToUseEasyPayLink>
+    <!--  HowToUseEasyPayPopupTitle - pretty self-explanatory, hopefully...! -->
+    <HowToUseEasyPayPopupTitle>h1#repay-your-wonga.com-loan-with-easypay</HowToUseEasyPayPopupTitle>
     <DebitOrderButton>div.repayment-option-manual a</DebitOrderButton>
     <!--  EasyPayLogo is contained inside a link to the print page -->
     <EasyPayLogo>div.easypay-logo a img.easypay-logo</EasyPayLogo>
@@ -290,5 +294,5 @@
     <DurationMinusButton>.wonga-duration-slider-wrapper .sliderminus</DurationMinusButton>
     <DurationPlusButton>.wonga-duration-slider-wrapper .sliderplus</DurationPlusButton>
   </SlidersElement>
-  
+
 </UiMap>
