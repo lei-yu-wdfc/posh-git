@@ -32,15 +32,6 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			AssertCheckpointAndVerificationExecution();
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2228"), DependsOn("L0_NumberOfApplicationsBelowThresholdAccepted")]
-		public void Ln_NumberOfApplicationsBelowThresholdAccepted()
-		{
-			application.RepayOnDueDate();
-			Application lnApplication = ApplicationBuilder.New(customer).Build();
-
-			AssertCheckpointAndVerificationExecution(lnApplication);
-		}
-
 		#region feature switch
 
 		[Test, AUT(AUT.Ca), JIRA("CA-2309")]
