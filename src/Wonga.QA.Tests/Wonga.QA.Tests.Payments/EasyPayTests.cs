@@ -44,7 +44,7 @@ namespace Wonga.QA.Tests.Payments
 			Assert.AreEqual("Payment from EasyPay", transactionReference);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2395")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2395"), DependsOn("RepayUsingEasyPayPartialRepaymentBeforeDueDateDoesntCloseApplication")]
 		public void RepayUsingEasyPayFullRepaymentBeforeDueDateClosesApplication()
 		{
 			var balance = _application.GetBalanceToday();
