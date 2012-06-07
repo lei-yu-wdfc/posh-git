@@ -737,7 +737,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za),Pending("fixed"), JIRA("QA-279")]//Category(TestCategories.Smoke),
+        [Test, AUT(AUT.Za),Pending("fixing"), JIRA("QA-279")]//Category(TestCategories.Smoke),
         public void LNCustomerChangesMobilePhoneNumberToTheSameOneButUsingSeparators()
         {
             var loginPage = Client.Login();
