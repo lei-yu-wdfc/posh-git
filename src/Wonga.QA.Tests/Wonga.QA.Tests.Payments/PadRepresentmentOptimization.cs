@@ -363,7 +363,6 @@ namespace Wonga.QA.Tests.Payments
                         Decimal.Round(amountToBeCollectedForRepresentmentThree, 2, MidpointRounding.AwayFromZero);
 
             Assert.IsTrue(transactionForRepresentmentThree.Amount == amountToBeCollectedForRepresentmentThreeRoundedToTwoDecimalPlaces);
-            Assert.IsTrue(CurrentRepresentmentAmount(application.Id) == amountToBeCollectedForRepresentmentThreeRoundedToTwoDecimalPlaces);
             Assert.IsTrue(VerifyPaymentFunctions.VerifyDirectBankPaymentOfAmount(application.Id, -amountToBeCollectedForRepresentmentThreeRoundedToTwoDecimalPlaces));
             Assert.IsTrue(Do.With.Timeout(1).Until(() => application.IsClosed));
             //TODO: add assert to ensure the saga is no longer exists in the db...
