@@ -157,7 +157,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             try
             {
                 _postCodeErrorForm =
-                           _form.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.PostcodeErrorForm));
+                           Client.Driver.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.PostcodeErrorForm));
                 string postCodeErrorFormClass = _postCodeErrorForm.GetAttribute("class");
 
                 if (postCodeErrorFormClass.Contains("invalid"))
