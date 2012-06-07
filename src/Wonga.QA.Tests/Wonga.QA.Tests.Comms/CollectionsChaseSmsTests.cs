@@ -105,7 +105,7 @@ namespace Wonga.QA.Tests.Comms
 			VerifySmsIsSentAfterDaysInArrears(40, A7Text);
 		}
 
-		[Test, JIRA("ZA-1676"), AUT(AUT.Za)]
+		[Test, JIRA("ZA-1676"), AUT(AUT.Za), Pending("ZA-2565")]
 		public void WhenInHardshipSmsIsNotSent()
 		{
 			VerifyA2SentA3SuppressedA4Sent(
@@ -113,7 +113,7 @@ namespace Wonga.QA.Tests.Comms
 				a => AccountPreferences.UpdateByAccountId(AccountId: a.AccountId, IsHardship: false));
 		}
 
-		[Test, JIRA("ZA-1676"), AUT(AUT.Za)]
+		[Test, JIRA("ZA-1676"), AUT(AUT.Za), Pending("ZA-2565")]
 		public void WhenInDisputeSmsIsNotSent()
 		{
 			VerifyA2SentA3SuppressedA4Sent(

@@ -6,14 +6,14 @@ using Wonga.QA.Framework;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[TestFixture, Parallelizable(TestScope.All)]
+	[TestFixture, Parallelizable(TestScope.All), Pending("ZA-2565")]
 	public class CheckpointMobilePhoneIsUniqueTests
 	{
 		private const RiskMask TestMask = RiskMask.TESTMobilePhoneIsUnique;
 		private Customer _customer;
 		private static readonly string _phoneNumber = Get.GetMobilePhone();
 
-		[Test]
+		[Test, Pending("ZA-2565")]
 		[JIRA("UK-1563")]
 		public void L0_MobilePhoneIsUnique_LoanIsAccepted()
 		{
@@ -21,7 +21,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 		}
 
-		[Test, DependsOn("L0_MobilePhoneIsUnique_LoanIsAccepted")]
+		[Test, DependsOn("L0_MobilePhoneIsUnique_LoanIsAccepted"), Pending("ZA-2565")]
 		[JIRA("UK-1563")]
 		public void L0_MobilePhoneIsNotUnique_LoanIsDeclined()
 		{

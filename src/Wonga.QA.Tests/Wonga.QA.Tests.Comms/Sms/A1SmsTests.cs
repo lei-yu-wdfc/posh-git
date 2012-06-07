@@ -30,7 +30,7 @@ namespace Wonga.QA.Tests.Comms.Sms
 			AssertSmsIsSent(GetFormattedMobilePhoneNumber(customer), _smsText, utcNow);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("WIN-886", "WIN-1127")]
+		[Test, AUT(AUT.Za), JIRA("WIN-886", "WIN-1127"), Pending("ZA-2565")]
 		public void DoesNotSendSmsWhenApplicationIsClosed()
 		{
 			Customer customer = CustomerBuilder.New().Build();
