@@ -30,7 +30,7 @@ namespace Wonga.QA.Tests.Comms.Sms
 			AssertSmsIsSent(GetFormattedMobilePhoneNumber(customer), _smsText, utcNow);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("WIN-886", "WIN-1127"), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("WIN-886", "WIN-1127"), Explicit]
 		public void DoesNotSendSmsWhenApplicationIsClosed()
 		{
 			Customer customer = CustomerBuilder.New().Build();
@@ -44,6 +44,8 @@ namespace Wonga.QA.Tests.Comms.Sms
 
 			AssertSmsIsNotSent(GetFormattedMobilePhoneNumber(customer), _smsText, utcNow);
 		}
+
+		#region Helpers
 
 		private static void TimeoutScheduleSaga(Application application)
 		{
@@ -84,5 +86,7 @@ namespace Wonga.QA.Tests.Comms.Sms
 			                                                     && _smsTable.MessageText == text
 			                                                     && _smsTable.CreatedOn > createdAfter))));
 		}
+
+		#endregion
 	}
 }

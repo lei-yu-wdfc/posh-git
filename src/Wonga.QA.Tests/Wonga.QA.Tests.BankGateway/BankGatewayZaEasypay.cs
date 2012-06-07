@@ -19,9 +19,10 @@ namespace Wonga.QA.Tests.BankGateway
 	[TestFixture, AUT(AUT.Za), Parallelizable(TestScope.All)]
 	public class BankGatewayZaEasypay
 	{
+		private Application _application;
+
 		private const string TEST_FILE1 = "easy5390.001";
 		private const string TEST_FILE2 = "easy5390.002";
-		private const string TEST_FILE3 = "easy5390.003";
 		private const string TEST_GATEWAY = "Easypay";
 
 		private dynamic _filesTable = Drive.Data.BankGateway.Db.Files;
@@ -42,15 +43,15 @@ namespace Wonga.QA.Tests.BankGateway
 			_filesTable.DeleteAll(_filesTable.FileName == TEST_FILE2);
 			_acknowledgesTable.DeleteAll(_acknowledgesTable.FileName == TEST_FILE2);
 
-			_filesTable.DeleteAll(_filesTable.FileName == TEST_FILE3);
-			_acknowledgesTable.DeleteAll(_acknowledgesTable.FileName == TEST_FILE3);
-
 			//Make test run faster with min polling interval
 			var bankIntegration = _bankIntegrationsTable.FindByDescription(BANK_INT_DESC);
 			_pollingInterval = bankIntegration.PollingInterval;
 			bankIntegration.PollingInterval = 10;
 
 			_bankIntegrationsTable.Update(bankIntegration);
+
+			var customer = CustomerBuilder.New().Build();
+			_application = ApplicationBuilder.New(customer).Build();
 		}
 
 		[FixtureTearDown]
@@ -63,22 +64,16 @@ namespace Wonga.QA.Tests.BankGateway
 			_bankIntegrationsTable.Update(bankIntegration);			
 		}
 
-		[SetUp]
-		public void SetUp()
+		[Test, AUT(AUT.Za), JIRA("ZA-2394"), Parallelizable(TestScope.All)]
+		public void PartialRepaymentCreatesTransaction()
 		{
-		}
+			var app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == _application.Id);
 
-		[TearDown]
-		public void TearDown()
-		{
-		}
-
-		[Test, AUT(AUT.Za), JIRA("ZA-2394")]
-		public void ProcessEasypayFile_WillCreate_Acknowledgements()
-		{
-			//Arrange	
+			dynamic repaymentAccount = Drive.Data.Payments.Db.RepaymentAccount;
+			var ra = Do.Until(() => repaymentAccount.FindAll(repaymentAccount.AccountId == _application.GetCustomer().Id)
+													.FirstOrDefault());
 			int fileSequence = 1;
-			string repayNumber = "953901098645686240";
+			string repayNumber = ra.RepaymentNumber;
 			string fileContent = CreateEasypayTestFile(DateTime.Now, fileSequence, 40.00M, 5.38m, repayNumber, "12345");
 
 			dynamic incomingBankGatewayFile = new ExpandoObject();
@@ -87,6 +82,20 @@ namespace Wonga.QA.Tests.BankGateway
 			incomingBankGatewayFile.Gateway = TEST_GATEWAY;
 			//Act
 			_incomingBankGatewayFileTable.Insert(incomingBankGatewayFile);
+
+			//Assert
+			var transaction = Do.Until(() => Drive.Data.Payments.Db.Transactions.FindByApplicationIdAndAmount(ApplicationId: app.ApplicationId, Amount: -40M));
+			Assert.AreEqual("Payment from EasyPay", transaction.Reference);
+			Assert.AreEqual("DirectBankPayment", transaction.Type);
+		}
+
+		[Test, AUT(AUT.Za), JIRA("ZA-2394"), Parallelizable(TestScope.All), DependsOn("PartialRepaymentCreatesTransaction")]
+		public void ProcessingFileCreatesAcknowledgements()
+		{
+			dynamic repaymentAccount = Drive.Data.Payments.Db.RepaymentAccount;
+			var ra = Do.Until(() => repaymentAccount.FindAll(repaymentAccount.AccountId == _application.GetCustomer().Id)
+										.FirstOrDefault());
+			string repayNumber = ra.RepaymentNumber;
 
 			//Assert
 			var acknowledgedfile = Do.With.Timeout(20).Until(() => _filesTable.FindAll(_filesTable.FileName == TEST_FILE1).FirstOrDefault());
@@ -99,21 +108,19 @@ namespace Wonga.QA.Tests.BankGateway
 			Assert.AreEqual(repayNumber, acknowledgeTransaction[0].IncomingReference);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2394")]
-		public void ProcessEasypayFile_PartialRepayment_WillCreate_DirectBankPaymentTransaction()
+		[Test, AUT(AUT.Za), JIRA("ZA-2394"), DependsOn("PartialRepaymentCreatesTransaction"), Parallelizable(TestScope.All)]
+		public void FullRepaymentClosesLoan()
 		{
-			//Arrange
-			var customer = CustomerBuilder.New().Build();
-			var application = ApplicationBuilder.New(customer).Build();
-
-			var app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
+			var app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == _application.Id);
+			var balance = _application.GetBalanceToday();
 
 			dynamic repaymentAccount = Drive.Data.Payments.Db.RepaymentAccount;
-			var ra = Do.Until(() => repaymentAccount.FindAll(repaymentAccount.AccountId == customer.Id)
+			var ra = Do.Until(() => repaymentAccount.FindAll(repaymentAccount.AccountId == _application.GetCustomer().Id)
 													.FirstOrDefault());
+
 			int fileSequence = 2;
 			string repayNumber = ra.RepaymentNumber;
-			string fileContent = CreateEasypayTestFile(DateTime.Now, fileSequence, 40.00M, 5.38m, repayNumber, "12345");
+			string fileContent = CreateEasypayTestFile(DateTime.Now, fileSequence, balance, 5.38m, repayNumber, "12345");
 
 			dynamic incomingBankGatewayFile = new ExpandoObject();
 			incomingBankGatewayFile.FileData = new ASCIIEncoding().GetBytes(fileContent);
@@ -122,37 +129,7 @@ namespace Wonga.QA.Tests.BankGateway
 			//Act
 			_incomingBankGatewayFileTable.Insert(incomingBankGatewayFile);
 
-			//Assert
-			var transaction = Do.Until(() => Drive.Data.Payments.Db.Transactions.FindByApplicationIdAndAmount(ApplicationId: app.ApplicationId, Amount: -40M));
-			Assert.AreEqual("Payment from EasyPay", transaction.Reference);
-			Assert.AreEqual("DirectBankPayment", transaction.Type);
-		}
-
-		[Test, AUT(AUT.Za), JIRA("ZA-2394")]
-		public void ProcessEasypayFile_RepayFullAmount_WillCreate_DirectBankPaymentTransaction_AND_CloseApplication()
-		{
-			//Arrange
-			var customer = CustomerBuilder.New().Build();
-			var application = ApplicationBuilder.New(customer).Build();
-
-			var app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
-
-			dynamic repaymentAccount = Drive.Data.Payments.Db.RepaymentAccount;
-			var ra = Do.Until(() => repaymentAccount.FindAll(repaymentAccount.AccountId == customer.Id)
-													.FirstOrDefault());
-
-			int fileSequence = 3;
-			string repayNumber = ra.RepaymentNumber;
-			string fileContent = CreateEasypayTestFile(DateTime.Now, fileSequence, 642.50M, 5.38m, repayNumber, "12345");
-
-			dynamic incomingBankGatewayFile = new ExpandoObject();
-			incomingBankGatewayFile.FileData = new ASCIIEncoding().GetBytes(fileContent);
-			incomingBankGatewayFile.FileName = TEST_FILE3;
-			incomingBankGatewayFile.Gateway = TEST_GATEWAY;
-			//Act
-			_incomingBankGatewayFileTable.Insert(incomingBankGatewayFile);
-
-			Do.Until(() => application.IsClosed);
+			Do.Until(() => _application.IsClosed);
 		}
 
 		private string CreateEasypayTestFile(DateTime valueDate, int fileSequence, decimal repayAmount, decimal fees, string repaymentNumber, string accountNumber)
