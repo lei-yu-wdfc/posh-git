@@ -363,7 +363,7 @@ namespace Wonga.QA.Tests.Ui
             //TODO: Check that Interest Saved calculation is correct
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247"), Pending("In development")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1827", "UKWEB-248")]
         public void RepayEarlyPart()
         {
             // Build L0 loan
