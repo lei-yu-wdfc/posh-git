@@ -391,6 +391,15 @@ namespace Wonga.QA.Framework
                                                     		if (!string.IsNullOrEmpty(_bankAccountNumber))
                                                             r.AccountNumber = _bankAccountNumber;
                                                     	}),
+						RiskAddBankAccountZaCommand.New(r =>
+                                                    	{
+                                                    		r.AccountId = _id;
+                                                    		r.BankAccountId = _bankAccountId;
+                                                    		if (!string.IsNullOrEmpty(_bankAccountNumber))
+                                                    		{
+                                                    			r.AccountNumber = _bankAccountNumber;
+                                                    		}
+                                                    	}),
                         SaveEmploymentDetailsZaCommand.New(r =>
                         {
                             r.AccountId = _id;
@@ -447,6 +456,15 @@ namespace Wonga.QA.Framework
                                                     	    r.InstitutionNumber = _institutionNumber;
 
                                                     	}),
+						RiskAddBankAccountCaCommand.New(r =>
+                                                    	{
+                                                    		r.AccountId = _id;
+                                                    		r.BankAccountId = _bankAccountId;
+                                                    		if (!string.IsNullOrEmpty(_bankAccountNumber))
+                                                    		{
+                                                    			r.AccountNumber = _bankAccountNumber;
+                                                    		}
+                                                    	}),
                         SaveEmploymentDetailsCaCommand.New(r =>
                         {
                             r.AccountId = _id;
@@ -498,13 +516,23 @@ namespace Wonga.QA.Framework
                                                     		r.AccountId = _id;
                                                     	    r.BankAccountId = _bankAccountId;
                                                             if (!string.IsNullOrEmpty(_bankAccountNumber))
-                     		{
+                     										{
                                                     			r.AccountNumber = _bankAccountNumber;
                                                     		}
 
                                                             if (!string.IsNullOrEmpty(_bankCode))
                                                                 r.BankCode = _bankCode;
                                                     	}),
+						RiskAddBankAccountUkCommand.New(r =>
+                                                    	{
+                                                    		r.AccountId = _id;
+                                                    		r.BankAccountId = _bankAccountId;
+                                                    		if (!string.IsNullOrEmpty(_bankAccountNumber))
+                                                    		{
+                                                    			r.AccountNumber = _bankAccountNumber;
+                                                    		}
+                                                    	}),
+
                         AddPaymentCardCommand.New(r =>
 						                              {
 						                                  r.AccountId = _id;
@@ -555,6 +583,16 @@ namespace Wonga.QA.Framework
 						                            		}
 
 						                            	}),
+						RiskAddBankAccountUkCommand.New(r =>
+                                                    	{
+                                                    		r.AccountId = _id;
+                                                    		r.BankAccountId = _bankAccountId;
+                                                    		if (!string.IsNullOrEmpty(_bankAccountNumber))
+                                                    		{
+                                                    			r.AccountNumber = _bankAccountNumber;
+                                                    		}
+                                                    	}),
+
 						AddPaymentCardCommand.New(r =>
 						                              {
 						                                  r.AccountId = _id;

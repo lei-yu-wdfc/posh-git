@@ -49,6 +49,9 @@
     <Compile Include="Defaults\CreateBusinessFixedInstallmentLoanApplicationWbUkCommand.cs" />
     <Compile Include="Defaults\CreateFixedTermLoanApplicationCaCommand.cs" />
     <Compile Include="Defaults\CreateFixedTermLoanApplicationUkCommand.cs" />
+    <Compile Include="Defaults\RiskAddBankAccountCaCommand.cs" />
+    <Compile Include="Defaults\RiskAddBankAccountUkCommand.cs" />
+    <Compile Include="Defaults\RiskAddBankAccountZaCommand.cs" />
     <Compile Include="Defaults\RiskCreateFixedTermLoanApplicationCommand.cs" />
     <Compile Include="Defaults\SaveCustomerAddressUkCommand.cs" />
     <Compile Include="Defaults\SaveCustomerDetailsUkCommand.cs" />
@@ -209,6 +212,9 @@
     <Compile Include="Requests\ResendMobilePhonePinCommand.cs" />
     <Compile Include="Requests\ResendSmsPinUkCommand.cs" />
     <Compile Include="Requests\ResetPasswordCommand.cs" />
+    <Compile Include="Requests\RiskAddBankAccountCaCommand.cs" />
+    <Compile Include="Requests\RiskAddBankAccountUkCommand.cs" />
+    <Compile Include="Requests\RiskAddBankAccountZaCommand.cs" />
     <Compile Include="Requests\RiskCreateBusinessFixedInstallmentLoanApplicationWbCommand.cs" />
     <Compile Include="Requests\RiskCreateFixedTermLoanApplicationCommand.cs" />
     <Compile Include="Requests\RiskSaveCustomerAddressCaCommand.cs" />
