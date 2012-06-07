@@ -21,14 +21,12 @@ namespace Wonga.QA.Tests.Payments.Command
 	public class DcaCommandTests
 	{
 		private const string BankGatewayIsTestModeKey = "BankGateway.IsTestMode";
-		private const string FeatureSwitchMoveLoanToDca = "FeatureSwitch.MoveLoanToDca";
 		private bool _bankGatewayIsTestMode;
         
 	    private dynamic _debtCollections = Drive.Data.Payments.Db.DebtCollection;
 	    private dynamic _fixedTermLoanSagas = Drive.Data.OpsSagas.Db.FixedTermLoanSagaEntity;
 	    private dynamic _externalDebtCollectionSagas = Drive.Data.OpsSagas.Db.ExternalDebtCollectionSagaEntity;
 	    private dynamic _schedulePaymentSagas = Drive.Data.OpsSagas.Db.ScheduledPaymentSagaEntity;
-		private const int delay = 15000;
         
 		[FixtureSetUp]
 		public void FixtureSetUp()

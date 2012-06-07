@@ -11,7 +11,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments
 {
-	[TestFixture, AUT(AUT.Za), Parallelizable(TestScope.All), Pending("ZA-2565")]
+	[TestFixture, AUT(AUT.Za), Parallelizable(TestScope.All)]
 	public class EasyPayTests
 	{
 		private readonly dynamic _repaymentAccountsTable = Drive.Data.Payments.Db.RepaymentAccount;
