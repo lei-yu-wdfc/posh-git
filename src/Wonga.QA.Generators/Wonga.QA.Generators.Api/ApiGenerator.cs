@@ -34,7 +34,7 @@ namespace Wonga.QA.Generators.Api
 
             foreach (FileInfo file in Origin.GetSchemas().Where(f => !f.IsCs()))
             {
-                Console.WriteLine(file.Name);
+				Console.WriteLine(file.FullName);
 
                 XmlSchema schema = file.GetSchema();
 
