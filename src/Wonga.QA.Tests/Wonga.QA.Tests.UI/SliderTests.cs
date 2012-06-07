@@ -495,34 +495,72 @@ namespace Wonga.QA.Tests.Ui
         public void CustomerTriesEnterSomeRubbishDataToFieldsThenAmountsShouldntBeChanged()
         {
             var page = Client.Home();
+            switch (Config.AUT)
+            {
+                case(AUT.Ca):
+                    #region enter an empty string
+                    page.Sliders.LoanAmount.Clear();
+                    page.Sliders.LoanDuration.Clear();
+                    Assert.AreEqual(_amountDefault.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
+                    Assert.AreEqual(_termDefault.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
+                    #endregion
 
-            #region enter an empty string
-            page.Sliders.LoanAmount.Clear();
-            page.Sliders.LoanDuration.Clear();
-            Assert.AreEqual(_amountDefault.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
-            Assert.AreEqual(_termDefault.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
-            #endregion
+                    #region enter negative values
+                    page.Sliders.HowMuch = "-200";
+                    page.Sliders.HowLong = "-10";
+                    Assert.AreEqual("200".ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
+                    Assert.AreEqual("10".ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
+                    #endregion
 
-            #region enter negative values
-            page.Sliders.HowMuch = "-200";
-            page.Sliders.HowLong = "-10";
-            Assert.AreEqual("200".ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
-            Assert.AreEqual("10".ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
-            #endregion
+                    #region enter mixed data
+                    page.Sliders.HowMuch = "kjh2-dsf0sdf0";
+                    page.Sliders.HowLong = "dfg1dfg-0df";
+                    Assert.AreEqual("200".ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
+                    Assert.AreEqual("10".ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
+                    #endregion
 
-            #region enter mixed data
-            page.Sliders.HowMuch = "kjh2-dsf0sdf0";
-            page.Sliders.HowLong = "dfg1dfg-0df";
-            Assert.AreEqual("200".ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
-            Assert.AreEqual("10".ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
-            #endregion
+                    #region enter bigger than max possible values
+                    page.Sliders.HowMuch = "5000";
+                    page.Sliders.HowLong = "1000";
+                    Assert.AreEqual(_amountMax.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
+                    Assert.AreEqual(_termMax.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
+                    #endregion
+                    break;
+                
+                case (AUT.Za):
+                    #region enter an empty string
+                    page.Sliders.LoanAmount.Clear();
+                    page.Sliders.LoanDuration.Clear();
+                    Assert.AreEqual(_amountMin.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
+                    Do.Until(() => page.Sliders.HowLong!=String.Empty);
+                    Assert.AreEqual(_termMin.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
+                    #endregion
 
-            #region enter bigger than max possible values
-            page.Sliders.HowMuch = "5000";
-            page.Sliders.HowLong = "1000";
-            Assert.AreEqual(_amountMax.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
-            Assert.AreEqual(_termMax.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
-            #endregion
+                    #region enter negative values
+                    page.Sliders.HowMuch = "-200";
+                    page.Sliders.HowLong = "-10";
+                    Assert.AreEqual("200".ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
+                    Assert.AreEqual("10".ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
+                    #endregion
+
+                    #region enter mixed data
+                    page.Sliders.HowMuch = "kjh2-dsf0sdf0";
+                    page.Sliders.HowLong = "dfg1dfg-0df";
+                    Assert.AreEqual("200".ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
+                    Assert.AreEqual("10".ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
+                    #endregion
+
+                    #region enter bigger than max possible values
+                    page.Sliders.HowMuch = "5000";
+                    page.Sliders.HowLong = "1000";
+                    Assert.AreEqual(_amountMax.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
+                    Assert.AreEqual(_termMax.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
+                    #endregion
+
+                    break;
+            }
+
+            
             
             
         }
