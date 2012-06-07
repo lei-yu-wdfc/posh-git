@@ -7,7 +7,6 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Data.Enums.Risk;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Helpers;
-using Wonga.QA.Framework.Msmq;
 using CreateFixedTermLoanApplicationUkCommand = Wonga.QA.Framework.Api.CreateFixedTermLoanApplicationUkCommand;
 using CreateFixedTermLoanApplicationCaCommand = Wonga.QA.Framework.Api.CreateFixedTermLoanApplicationCaCommand;
 using CreateFixedTermLoanApplicationZaCommand = Wonga.QA.Framework.Api.CreateFixedTermLoanApplicationZaCommand;
@@ -26,10 +25,10 @@ namespace Wonga.QA.Framework
         protected Customer Customer;
         protected decimal LoanAmount;
         protected Date PromiseDate;
-        protected ApplicationDecisionStatus ? Decision = ApplicationDecisionStatus.Accepted;
+        protected ApplicationDecisionStatus? Decision = ApplicationDecisionStatus.Accepted;
         protected int LoanTerm;
         //protected IovationMockResponse IovationBlackBox;
-    	protected string IovationBlackBox;
+        protected string IovationBlackBox;
         protected Dictionary<int, List<bool>> EidSessionInteraction = new Dictionary<int, List<bool>>();
 
         //WB specific members
@@ -40,7 +39,7 @@ namespace Wonga.QA.Framework
         protected Action _setPromiseDateAndLoanTerm;
         private Func<int> _getDaysUntilStartOfLoan;
 
-        #region Private Members 
+        #region Private Members
 
         private int GetLoanTermFromPromiseDate()
         {
@@ -114,10 +113,10 @@ namespace Wonga.QA.Framework
         private static String ParseAnswerToXmlString(int questionNumber, int answerNumber)
         {
             return
-                 @"<UidQuestionAnswer>
+                @"<UidQuestionAnswer>
                             <QuestionId>" + questionNumber + "</QuestionId>" +
-                             "<AnswerId>" + answerNumber + "</AnswerId>" +
-                         "</UidQuestionAnswer> ";
+                "<AnswerId>" + answerNumber + "</AnswerId>" +
+                "</UidQuestionAnswer> ";
         }
 
         #endregion
@@ -129,10 +128,10 @@ namespace Wonga.QA.Framework
             IovationBlackBox = IovationMockResponse.Unknown.ToString();
 
             _setPromiseDateAndLoanTerm = () =>
-                                  {
-                                      PromiseDate = Get.GetPromiseDate();
-                                      LoanTerm = GetLoanTermFromPromiseDate();
-                                  };
+            {
+                PromiseDate = Get.GetPromiseDate();
+                LoanTerm = GetLoanTermFromPromiseDate();
+            };
 
             _getDaysUntilStartOfLoan = GetDaysUntilStartOfLoan;
         }
@@ -141,13 +140,14 @@ namespace Wonga.QA.Framework
         {
             return new ApplicationBuilder { Customer = mainApplicant };
         }
+
         public static ApplicationBuilder New(Customer mainApplicant, Organisation company)
         {
             return new BusinessApplicationBuilder(mainApplicant, company);
         }
+
         public virtual Application Build()
         {
-
             if (Config.AUT == AUT.Wb)
             {
                 throw new NotImplementedException(
@@ -160,7 +160,11 @@ namespace Wonga.QA.Framework
             var requests = new List<ApiRequest>
             {
                 SubmitApplicationBehaviourCommand.New(r => r.ApplicationId = Id),
-                SubmitClientWatermarkCommand.New(r => { r.ApplicationId=Id; r.AccountId = Customer.Id; r.BlackboxData = IovationBlackBox.ToString();
+                SubmitClientWatermarkCommand.New(r =>
+                {
+                    r.ApplicationId = Id;
+                    r.AccountId = Customer.Id;
+                    r.BlackboxData = IovationBlackBox.ToString();
                 })
             };
 
@@ -168,28 +172,30 @@ namespace Wonga.QA.Framework
             {
                 case AUT.Uk:
                     //wait for the card to be ready
-                    Do.Until(Customer.GetPaymentCard);
-                    requests.AddRange(new ApiRequest[]{
+                    var card = Do.Until(Customer.GetPaymentCard);
+                    requests.AddRange(new ApiRequest[]
+                    {
                         CreateFixedTermLoanApplicationUkCommand.New(r =>
                         {
                             r.ApplicationId = Id;
                             r.AccountId = Customer.Id;
                             r.BankAccountId = Customer.GetBankAccount();
-                            r.PaymentCardId = Customer.GetPaymentCard();
-                        	r.LoanAmount = LoanAmount;
-                        	r.PromiseDate = PromiseDate;
+                            r.PaymentCardId = card;
+                            r.LoanAmount = LoanAmount;
+                            r.PromiseDate = PromiseDate;
                         }),
-						RiskCreateFixedTermLoanApplicationCommand.New(r =>
-						{
-							r.ApplicationId = Id;
+                        RiskCreateFixedTermLoanApplicationCommand.New(r =>
+                        {
+                            r.ApplicationId = Id;
                             r.AccountId = Customer.Id;
                             r.BankAccountId = Customer.GetBankAccount();
-                        	r.LoanAmount = LoanAmount;
-                        	r.PromiseDate = PromiseDate;
-						}),
-                        VerifyFixedTermLoanCommand.New(r=>
+                            r.LoanAmount = LoanAmount;
+                            r.PromiseDate = PromiseDate;
+                            r.PaymentCardId = card;
+                        }),
+                        VerifyFixedTermLoanCommand.New(r =>
                         {
-                            r.AccountId = Customer.Id; 
+                            r.AccountId = Customer.Id;
                             r.ApplicationId = Id;
                         })
                     });
@@ -197,62 +203,64 @@ namespace Wonga.QA.Framework
 
                 case AUT.Ca:
                     // Start of Loan is different for CA
-					_getDaysUntilStartOfLoan = GetDaysUntilStartOfLoanForCa;
+                    _getDaysUntilStartOfLoan = GetDaysUntilStartOfLoanForCa;
                     _setPromiseDateAndLoanTerm();
 
-                    requests.AddRange(new ApiRequest[]{
+                    requests.AddRange(new ApiRequest[]
+                    {
                         CreateFixedTermLoanApplicationCaCommand.New(r =>
                         {
                             r.ApplicationId = Id;
                             r.AccountId = Customer.Id;
                             r.BankAccountId = Customer.GetBankAccount();
                             r.LoanAmount = LoanAmount;
-                        	r.PromiseDate = PromiseDate;
+                            r.PromiseDate = PromiseDate;
                         }),
-						RiskCreateFixedTermLoanApplicationCommand.New(r =>
-						{
-							r.ApplicationId = Id;
+                        RiskCreateFixedTermLoanApplicationCommand.New(r =>
+                        {
+                            r.ApplicationId = Id;
                             r.AccountId = Customer.Id;
                             r.BankAccountId = Customer.GetBankAccount();
-                        	r.LoanAmount = LoanAmount;
-                        	r.PromiseDate = PromiseDate;
-						}),
-                        VerifyFixedTermLoanCommand.New(r=>
+                            r.LoanAmount = LoanAmount;
+                            r.PromiseDate = PromiseDate;
+                        }),
+                        VerifyFixedTermLoanCommand.New(r =>
                         {
-                            r.AccountId = Customer.Id; 
+                            r.AccountId = Customer.Id;
                             r.ApplicationId = Id;
                         })
                     });
                     break;
 
                 case AUT.Za:
-                    requests.AddRange(new ApiRequest[]{
+                    requests.AddRange(new ApiRequest[]
+                    {
                         CreateFixedTermLoanApplicationZaCommand.New(r =>
                         {
                             r.ApplicationId = Id;
                             r.AccountId = Customer.Id;
                             r.BankAccountId = Customer.GetBankAccount();
-                        	r.LoanAmount = LoanAmount;
-                        	r.PromiseDate = PromiseDate;
+                            r.LoanAmount = LoanAmount;
+                            r.PromiseDate = PromiseDate;
                         }),
-						RiskCreateFixedTermLoanApplicationCommand.New(r =>
-						{
-							r.ApplicationId = Id;
+                        RiskCreateFixedTermLoanApplicationCommand.New(r =>
+                        {
+                            r.ApplicationId = Id;
                             r.AccountId = Customer.Id;
                             r.BankAccountId = Customer.GetBankAccount();
-                        	r.LoanAmount = LoanAmount;
-                        	r.PromiseDate = PromiseDate;
-						}),
-                        VerifyFixedTermLoanCommand.New(r=>
+                            r.LoanAmount = LoanAmount;
+                            r.PromiseDate = PromiseDate;
+                        }),
+                        VerifyFixedTermLoanCommand.New(r =>
                         {
-                            r.AccountId = Customer.Id; 
+                            r.AccountId = Customer.Id;
                             r.ApplicationId = Id;
                         })
                     });
                     break;
 
-				default:
-					throw new NotImplementedException();
+                default:
+                    throw new NotImplementedException();
             }
 
             Drive.Api.Commands.Post(requests);
@@ -265,10 +273,10 @@ namespace Wonga.QA.Framework
                         Do.Until(
                             () =>
                             (ApplicationDecisionStatus)
-                            Enum.Parse(typeof(ApplicationDecisionStatus),
-                                        Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = Id }).
-                                            Values
-                                            ["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Pending);
+                            Enum.Parse(typeof (ApplicationDecisionStatus),
+                                       Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = Id }).
+                                           Values
+                                           ["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Pending);
 
                         Do.Until(() => Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = Id }).Values["SequenceId"].SingleOrDefault() == keyValuePair.Key.ToString());
 
@@ -287,37 +295,36 @@ namespace Wonga.QA.Framework
 
             ApiResponse response = null;
             Do.With.Timeout(3).Until(() => (ApplicationDecisionStatus)
-                Enum.Parse(typeof(ApplicationDecisionStatus), (response = Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = Id })).Values["ApplicationDecisionStatus"].Single()) == Decision 
-				|| Decision == null);
+                                           Enum.Parse(typeof (ApplicationDecisionStatus), (response = Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = Id })).Values["ApplicationDecisionStatus"].Single()) == Decision
+                                           || Decision == null);
 
-        	switch (Decision)
-        	{
-				case null:
-        			Do.With.Timeout(TimeSpan.FromSeconds(20)).Until(() => Drive.Db.GetCheckpointDefinitionsForApplication(Id).Count() > 0);
-					Do.With.Timeout(TimeSpan.FromSeconds(20)).Until(() => Drive.Db.GetVerificationDefinitionsForApplication(Id).Count() > 0);
-					return new Application(Id);
+            switch (Decision)
+            {
+                case null:
+                    Do.With.Timeout(TimeSpan.FromSeconds(20)).Until(() => Drive.Db.GetCheckpointDefinitionsForApplication(Id).Count() > 0);
+                    Do.With.Timeout(TimeSpan.FromSeconds(20)).Until(() => Drive.Db.GetVerificationDefinitionsForApplication(Id).Count() > 0);
+                    return new Application(Id);
 
-				case ApplicationDecisionStatus.Pending:
-					return new Application(Id);
+                case ApplicationDecisionStatus.Pending:
+                    return new Application(Id);
 
-				case ApplicationDecisionStatus.Declined:
-				   return new Application(Id, GetFailedCheckpointFromApplicationDecisionResponse(response));
+                case ApplicationDecisionStatus.Declined:
+                    return new Application(Id, GetFailedCheckpointFromApplicationDecisionResponse(response));
             }
 
             Drive.Api.Commands.Post(new SignApplicationCommand { AccountId = Customer.Id, ApplicationId = Id });
 
 
-
             ApiRequest summary = Config.AUT == AUT.Za
                                      ? new GetAccountSummaryZaQuery { AccountId = Customer.Id }
-                                     : (ApiRequest)new GetAccountSummaryQuery { AccountId = Customer.Id };
+                                     : (ApiRequest) new GetAccountSummaryQuery { AccountId = Customer.Id };
 
 
             Do.Until(() => Drive.Api.Queries.Post(summary).Values["HasCurrentLoan"].Single() == "true");
 
             Do.With.Timeout(TimeSpan.FromSeconds(10)).Watch(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).Transactions.Count);
 
-            return new Application { Id = Id, BankAccountId = Customer.BankAccountId, LoanAmount = LoanAmount, LoanTerm = LoanTerm, BankAccountNumber = Customer.BankAccountNumber};
+            return new Application { Id = Id, BankAccountId = Customer.BankAccountId, LoanAmount = LoanAmount, LoanTerm = LoanTerm, BankAccountNumber = Customer.BankAccountNumber };
         }
 
         #region Public Helper "With" Methods
@@ -362,28 +369,28 @@ namespace Wonga.QA.Framework
             return this;
         }
 
-		public ApplicationBuilder WithoutExpectedDecision()
-		{
-			Decision = null;
-			return this;
-		}
+        public ApplicationBuilder WithoutExpectedDecision()
+        {
+            Decision = null;
+            return this;
+        }
 
         public ApplicationBuilder WithIovationBlackBox(IovationMockResponse iovationBlackBox)
         {
-        	return WithIovationBlackBox(iovationBlackBox.ToString());
+            return WithIovationBlackBox(iovationBlackBox.ToString());
         }
 
-		public ApplicationBuilder WithIovationBlackBox(string iovationBlackBox)
-		{
-			IovationBlackBox = iovationBlackBox;
-			return this;
-		}
-        
+        public ApplicationBuilder WithIovationBlackBox(string iovationBlackBox)
+        {
+            IovationBlackBox = iovationBlackBox;
+            return this;
+        }
+
         #endregion
 
-		private int GetDaysUntilStartOfLoanForCa()
-		{
-			return DateHelper.GetNumberOfDaysUntilStartOfLoanForCa();
-		}
+        private int GetDaysUntilStartOfLoanForCa()
+        {
+            return DateHelper.GetNumberOfDaysUntilStartOfLoanForCa();
+        }
     }
 }
