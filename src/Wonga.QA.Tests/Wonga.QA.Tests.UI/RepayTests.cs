@@ -428,15 +428,17 @@ namespace Wonga.QA.Tests.Ui
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
             var daysShift = 7;
 
+            ApiResponse response = Drive.Api.Queries.Post(new GetFixedTermLoanApplicationQuery { ApplicationId = application.Id });
+
+            var dueDate = Convert.ToDateTime(response.Values["NextDueDate"].Single());
+            var sDueDate = Date.GetOrdinalDate(dueDate, "d MMM yyyy");
+            var oldDueDateBalance = Convert.ToDecimal(response.Values["BalanceNextDueDate"].Single());
+
             //time-shift loan so it's due today
             TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
             ApplicationOperations.RewindApplicationDates(application, daysShiftSpan);
 
-            var loginPage = Client.Login();
-            var myAccountPage = loginPage.LoginAs(email);
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
-
-            mySummaryPage.RepayButtonClick();
+            Client.Login().LoginAs(email).RepayButtonClick();
             var requestPage = new RepayRequestPage(this.Client);
 
             //Branch point - Add Cv2 for each path and proceed
@@ -446,6 +448,22 @@ namespace Wonga.QA.Tests.Ui
             var repayProcessingPage = new RepayProcessingPage(this.Client);
 
             var paymentTakenPage = repayProcessingPage.WaitFor<RepayDueFullpaySuccessPage>() as RepayDueFullpaySuccessPage;
+
+            // Post payment values
+            ApiResponse summaryResponse = Drive.Api.Queries.Post(new GetAccountSummaryQuery { AccountId = customer.Id });
+            var newDueDateAmount = summaryResponse.Values["CurrentLoanRepaymentAmountOnDueDate"].Single();
+            var newDueDateAmountDecimal = decimal.Parse(newDueDateAmount);
+            var interestSaved = oldDueDateBalance - newDueDateAmountDecimal - repayAmount;
+            string sInterestSaved = String.Format("{0:0.00}", interestSaved);
+            string sNewDueDateAmount = String.Format("{0:0.00}", newDueDateAmount);
+
+            // Get the content from the Payment Taken Page
+            string paymentTakenText = paymentTakenPage.ContentArea();
+
+            Assert.IsTrue(paymentTakenText.Contains(sNewDueDateAmount), "New Due Date Amount is wrong.");
+            Assert.IsTrue(paymentTakenText.Contains(sInterestSaved), "Interest Saved is wrong.");
+            Assert.IsTrue(paymentTakenText.Contains(sDueDate), "Due Date is wrong.");
+            Assert.IsTrue(paymentTakenText.Contains(String.Format("{0:0.00}", repayAmount)), "Repay Amount is wrong.");
 
         }
 

@@ -1,4 +1,5 @@
-﻿using NHamcrest.Core;
+﻿using System;
+using NHamcrest.Core;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.UI.Mappings;
 using MbUnit.Framework;

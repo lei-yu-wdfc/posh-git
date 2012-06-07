@@ -43,6 +43,5 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             return _bodyContent.Text;
         }
-
     }
 }

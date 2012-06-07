@@ -262,7 +262,6 @@
     <Compile Include="Ui\Pages\Common\RepayEarlyPartpaySuccessPage.cs" />
     <Compile Include="Ui\Pages\Common\RepayOverduePaymentFailedPage.cs" />
     <Compile Include="Ui\Pages\Common\RepayEarlyPaymentFailedPage.cs" />
-    <Compile Include="Ui\Pages\Common\RepayProcessingPage.cs" />
     <Compile Include="Ui\Pages\Common\HomePageMobile.cs" />
     <Compile Include="Ui\Pages\Common\RepayRequestPage.cs" />
     <Compile Include="Ui\Pages\Common\ExtensionRequestPage.cs" />

@@ -35,6 +35,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             bool tokenResult = Content.Driver().PageSource.Contains("[repay-agreement-date]");
             return tokenResult;
         }
-
+        public String ContentArea()
+        {
+            return _bodyContent.Text;
+        }
     }
 }
