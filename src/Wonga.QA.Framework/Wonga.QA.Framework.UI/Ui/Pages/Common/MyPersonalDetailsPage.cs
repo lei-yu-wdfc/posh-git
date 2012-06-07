@@ -205,7 +205,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public bool CommunicationClick()
         {
             _communication.Click();
-            Thread.Sleep(1000);
+            Thread.Sleep(10000);
             _communicationPrefs = Client.Driver.FindElements(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.CommunicationPrefs));
             return true;
         }

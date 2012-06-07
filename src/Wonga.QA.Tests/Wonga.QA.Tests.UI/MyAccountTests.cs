@@ -163,7 +163,7 @@ namespace Wonga.QA.Tests.Ui
 
             var myPersonalDetailsPage = mySummaryPage.Navigation.MyPersonalDetailsButtonClick();
             myPersonalDetailsPage.CommunicationClick();
-            Thread.Sleep(10000);
+            
             switch (myPersonalDetailsPage.GetCommunicationText)
             {
 
