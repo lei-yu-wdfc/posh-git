@@ -56,6 +56,11 @@ namespace Wonga.QA.Tests.Ui
             Application application = ApplicationBuilder.New(customer).Build();
             var summaryPage = loginPage.LoginAs(email);
             var repayPage = summaryPage.RepayClick();
+
+            // Open the "How to use easypay" modal popup and check the title is correct - ZA-2587:
+            repayPage.HowToUseEasyPayLinkClick();
+            Assert.AreEqual("Repay your wonga.com loan with EasyPay", UiMap.Get.RepaymentOptionsPage.HowToUseEasyPayPopupTitle);
+
             var expectedeasypayno = repayPage.EasypayNumber;
             var popUpPrintPage = repayPage.EasyPayPrintButtonClick();
             var actualString = Do.Until(() => popUpPrintPage.FindElement(By.CssSelector(UiMap.Get.EasypaymentNumberPrintPage.YourEasyPayNumber)).Text);
