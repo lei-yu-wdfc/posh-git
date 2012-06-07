@@ -9,10 +9,10 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Salesforce
 {
-	[TestFixture, AUT(AUT.Za), Parallelizable(TestScope.All), Pending("ZA-2565")]
+	[TestFixture, AUT(AUT.Za), Parallelizable(TestScope.All)]
 	public class EasyPayNumberInSalesforceTests : SalesforceTestBase
 	{
-		[Test, AUT(AUT.Za), JIRA("ZA-2537"), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2537")]
 		public void EasyPayNumberIsPushedToSalesforceAfterAccountCreation()
 		{
 			Customer customer = CustomerBuilder.New().Build();
