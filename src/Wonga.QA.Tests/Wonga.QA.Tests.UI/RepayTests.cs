@@ -535,7 +535,45 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsFalse(paymentTakenPage.IsRepayOverduePartpaySuccessPageAmountTokenNotPresent());
   
 
-        }      
+        }
 
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-247"), Pending("In development")]
+        public void RepayEarlyLessThanMinPayment()
+        {
+            //build L0 loan
+            string email = Get.RandomEmail();
+            DateTime todayDate = DateTime.Now;
+
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
+
+            var loginPage = Client.Login();
+            var myAccountPage = loginPage.LoginAs(email);
+            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+
+            mySummaryPage.RepayButtonClick();
+            var requestPage = new RepayRequestPage(this.Client);
+
+            //Set partial payment amount, test for correct values at same time
+            requestPage.IsRepayRequestPageSliderReturningCorrectValuesOnChange(application.Id.ToString(), "154");
+
+            //Branch point - Add Cv2 for each path and proceed
+            requestPage.setSecurityCode("123");
+            requestPage.SubmitButtonClick();
+
+            var repayProcessingPage = new RepayProcessingPage(this.Client);
+
+            var paymentTakenPage = repayProcessingPage.WaitFor<RepayEarlyPartpaySuccessPage>() as RepayEarlyPartpaySuccessPage;
+
+            Assert.IsFalse(paymentTakenPage.IsRepayEarlyPartpaySuccessPageAmountTokenNotPresent());
+            Assert.IsFalse(paymentTakenPage.IsRepayEarlyPartpaySuccessPageDateTokenNotPresent());
+
+            paymentTakenPage.Client.Driver.Navigate().GoToUrl(Config.Ui.Home + "my-account/repay");
+            var requestPage2 = new RepayRequestPage(this.Client);
+            requestPage2.WantToRepayBox = "0";
+            Assert.AreEqual(Decimal.Parse(requestPage2.OweToday.Remove(0, 1)), Decimal.Parse(requestPage2.WantToRepayBox));
+            requestPage2.WantToRepayBox = "5.65";
+            Assert.AreEqual(Decimal.Parse(requestPage2.OweToday.Remove(0, 1)), Decimal.Parse(requestPage2.WantToRepayBox));
+        }
     }
 }

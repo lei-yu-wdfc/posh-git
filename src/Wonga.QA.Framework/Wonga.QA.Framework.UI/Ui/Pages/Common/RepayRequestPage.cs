@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Linq;
 using MbUnit.Framework;
 using OpenQA.Selenium;
@@ -38,7 +39,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _loanPeriodClarification = Content.FindElement(By.CssSelector(UiMap.Get.RepayRequestPage.RepayRequestPageLoanPeriodClarification));   
         }
 
-        public bool IsTopupRequestPageInformativeBoxDisplayed()
+        public bool IsRepayRequestPageInformativeBoxDisplayed()
         {
             _informativeBox = Client.Driver.FindElement(By.CssSelector(UiMap.Get.RepayRequestPage.RepayRequestPageInformativeBox));
             return _informativeBox.Displayed;
@@ -86,7 +87,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public String WantToRepayBox
         {
             get { return _repayAmount.GetValue();  }
-            set { _repayAmount.SendValue(value); }
+            set { _repayAmount.SendValue(value); Thread.Sleep(2000); }
         }
 
         public String RemainderAmount
