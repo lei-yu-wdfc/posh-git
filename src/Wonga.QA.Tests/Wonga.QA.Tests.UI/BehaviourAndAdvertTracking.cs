@@ -1,4 +1,4 @@
-﻿using OpenQA.Selenium;
+using OpenQA.Selenium;
 using System.Diagnostics;
 using System;
 using System.Collections.Generic;
@@ -23,7 +23,7 @@ namespace Wonga.QA.Tests.Ui
     class BehaviourAndAdvertTracking : UiTest
     {
         [Test, AUT(AUT.Za), JIRA("ZA-2115", "QA-301"), MultipleAsserts]
-        public void L0VerifyDoubleclickTagInsertedInPage()
+        public void L0VerifyDoubleclickTagsActiveOnL0Journey()
         {
             ////////////////////////////////////////////////////////////////
             var doubleClickTokensList = new List<KeyValuePair<string, string>>();
@@ -31,6 +31,14 @@ namespace Wonga.QA.Tests.Ui
 
             // Load the homepage:
             var page = Client.Home();
+
+            // Look for the opening and closing DC comments:
+            Assert.IsTrue(page.Client.Source().Contains("Start of DoubleClick Floodlight Tag: Please do not remove."), "Could not find 'Start of DoubleClick Floodlight Tag: Please do not remove.' - please verify DC tags are being rendered correctly.");
+            Assert.IsTrue(page.Client.Source().Contains("End of DoubleClick Floodlight Tag: Please do not remove"), "Could not find 'End of DoubleClick Floodlight Tag: Please do not remove' - please verify DC tags are being rendered correctly.");
+
+            // Check for Google Ad Services code:
+            Assert.IsTrue(page.Client.Source().Contains("<!-- Google Code for Conversion Pages -->"));
+            Assert.IsTrue(page.Client.Source().Contains("https://www.googleadservices.com/pagead/conversion/1017715892/?value=0&label=RSVMCNSNnQIQtLmk5QM&guid=ON&script=0"));
 
             // Check that the page contains the correct doubleclick HTML comment identifiers for this AUT:
             doubleClickTokensList.Add(new KeyValuePair<string, string>("src", "3567941"));
@@ -47,6 +55,16 @@ namespace Wonga.QA.Tests.Ui
             SourceContains("u1: [");
             SourceDoesNotContain("u1: []");
             SourceContains("u2: [");
+
+            // Check that the Google Analytics urchin is present on the homepage:
+            Assert.IsTrue(page.Client.Source().Contains("UA-4700273-21"), "Couldn't find GA urchin ID 'UA-4700273-21' - verify that Google Analytics tag is being rendered correctly.");
+            Assert.IsTrue(page.Client.Source().Contains("google-analytics.com/ga.js"), "Couldn't find 'google-analytics.com/ga.js' - verify that Google Analytics tag is being rendered correctly.");
+            
+            // Check that the wonga mobile tools module is doing its thing:
+            Assert.IsTrue(page.Client.Source().Contains("[desktop]"), "[desktop] (device type detection from wonga_mobile module) not found in page source: verify that the wonga_mobile module is enabled.");
+            Assert.IsFalse(page.Client.Source().Contains("[DeviceType]"), "[DeviceType] found in page source: verify that the wonga_mobile module is enabled.");
+            Assert.IsFalse(page.Client.Source().Contains("[DeviceGroup]"), "[DeviceType] found in page source: verify that the wonga_mobile module is enabled.");
+
             // Check that the page contains the wonga_doubleclick module v1.0 signature:
             Assert.IsTrue(page.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
 
@@ -80,7 +98,7 @@ namespace Wonga.QA.Tests.Ui
             SourceDoesNotContain(doubleClickTokensBlackList);
 
             // Go to the second page:
-            var addressDetailsPage = journey.FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask)).CurrentPage as AddressDetailsPage;
+            var addressDetailsPage = journey.FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask)).CurrentPage as AddressDetailsPage;
 
             // Check that the page contains the wonga_doubleclick module v1.0 signature:
             Assert.IsTrue(addressDetailsPage.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
