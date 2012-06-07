@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -52,15 +52,20 @@ namespace Wonga.QA.Tests.Ui
         {
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
-            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            Application application = ApplicationBuilder.New(customer).Build();
-            var summaryPage = loginPage.LoginAs(email);
+            string name = Get.GetName();
+            string surname = Get.RandomString(10);
+            Customer customer = CustomerBuilder
+                .New()
+                .WithEmailAddress(email)
+                .WithForename(name)
+                .WithSurname(surname)
+                .Build();
             Application application = ApplicationBuilder
-
-            // Open the "How to use easypay" modal popup and check the title is correct - ZA-2587:
-            repayPage.HowToUseEasyPayLinkClick();
-            Assert.AreEqual("Repay your wonga.com loan with EasyPay", UiMap.Get.RepaymentOptionsPage.HowToUseEasyPayPopupTitle);
-
+                .New(customer)
+                .Build();
+            var mySummaryPage = loginPage.LoginAs(email);
+            var repayPage = mySummaryPage.RepayClick();
+            //Thread.Sleep(20000);
 
             // Open the "How to use easypay" modal popup and check the title is correct - ZA-2587:
             var easyPayHowToUsePopup = repayPage.HowToUseEasyPayLinkClick;
@@ -68,6 +73,11 @@ namespace Wonga.QA.Tests.Ui
             // Wait until the popup opens:
             Do.Until(() => Client.Driver.FindElement(By.CssSelector("#fancybox-content")).Displayed);
 
+            // Check the popup title:
+            Assert.AreEqual("Repay your wonga.com loan with EasyPay", Client.Driver.FindElement(By.CssSelector("h1#repay-your-wonga.com-loan-with-easypay")).Text);
+
+            // Close the popup:
+            Client.Driver.FindElement(By.CssSelector("#fancybox-close")).Click();
             // Check the popup title:
             Assert.AreEqual("Repay your wonga.com loan with EasyPay", Client.Driver.FindElement(By.CssSelector("h1#repay-your-wonga.com-loan-with-easypay")).Text);
 
