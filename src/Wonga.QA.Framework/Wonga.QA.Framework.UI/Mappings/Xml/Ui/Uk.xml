@@ -218,6 +218,9 @@
 
   <AccountDetailsPage>
     <FormId>.wonga-apply-lzero-form</FormId>
+    <SecciLink>a#secci_link.doc_link</SecciLink>
+    <TermAndConditionsLink>a#conditions_link.doc_link</TermAndConditionsLink>
+    <ExplanationLink>a#explanation_link.doc_link</ExplanationLink>
   </AccountDetailsPage>
   
 </UiMap>

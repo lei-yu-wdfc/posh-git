@@ -1782,20 +1782,26 @@ namespace Wonga.QA.Tests.Ui
 
             // L0 journey
             var journeyL0 = JourneyFactory.GetL0Journey(Client.Home());
-            var accountSetupPage = journeyL0.ApplyForLoan(200, 10)
+            journeyL0.ApplyForLoan(200, 10)
                 .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
-                .FillAddressDetails() as AccountDetailsPage;
+                .FillAddressDetails();
+
+            var accountSetupPage = new AccountDetailsPage(this.Client);
 
             Assert.IsTrue(accountSetupPage.IsSecciLinkVisible());
             Assert.IsTrue(accountSetupPage.IsTermsAndConditionsLinkVisible());
             Assert.IsTrue(accountSetupPage.IsExplanationLinkVisible());
 
+            //Check SECCI popup window
             accountSetupPage.ClickSecciLink();
-            // TBD: check header and values
+            // TBD: check header and values and close the pop-up
+            Assert.Contains(accountSetupPage.SecciPopupWindowContent(), "150");
+            // end of TBD: check header and values and close the pop-up
+
             accountSetupPage.ClickTermsAndConditionsLink();
-            // TBD: check header and values
+            // TBD: check header and values and close the pop-up
             accountSetupPage.ClickExplanationLink();
-            // TBD: check header and values
+            // TBD: check header and values and close the pop-up
 
             // Manually check that loan agreement and SECCI emails are sent
             Console.WriteLine("Manually check that that loan agreement and SECCI emails are sent for user={0}", email);
