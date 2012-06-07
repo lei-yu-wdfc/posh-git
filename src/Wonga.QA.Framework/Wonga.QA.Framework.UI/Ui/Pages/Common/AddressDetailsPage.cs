@@ -165,9 +165,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     return true;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                Console.WriteLine("Can't find error form");
+                Console.WriteLine("Can't find error form"+"\n\n");
+                Console.WriteLine(e.Message);
                 return false;
             }
             return false;
