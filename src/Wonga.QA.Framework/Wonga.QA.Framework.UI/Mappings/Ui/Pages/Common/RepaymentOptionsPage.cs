@@ -11,6 +11,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public string BalanceToday { get; set; }
         public string EasypayNumber { get; set; }
         public string HowToUseEasyPayLink { get; set; }
+        public string HowToUseEasyPayPopupTitle { get; set; }
         public string EasypayPrintButton { get; set; }
         public string DebitOrderButton { get; set; }
         public string ManualRepaymentButton { get; set; }

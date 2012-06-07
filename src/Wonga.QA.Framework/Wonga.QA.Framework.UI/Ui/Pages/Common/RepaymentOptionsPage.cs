@@ -18,6 +18,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private readonly IWebElement _easypayNumber;
         private readonly IWebElement _easypayPrintButton;
         private readonly IWebElement _howToUseEasyPayLink;
+        private readonly IWebElement _howToUseEasyPayPopupTitle;
         private readonly IWebElement _debitOrderButton;
         private readonly IWebElement _manualRepaymentButton;
         
@@ -30,6 +31,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _easypayPrintButton = _repaymentOptionsContainer.FindElement(By.CssSelector(UiMap.Get.RepaymentOptionsPage.EasypayPrintButton));
             _howToUseEasyPayLink =
                 _repaymentOptionsContainer.FindElement(By.CssSelector(UiMap.Get.RepaymentOptionsPage.HowToUseEasyPayLink));
+            _howToUseEasyPayPopupTitle =
+                _repaymentOptionsContainer.FindElement(
+                    By.CssSelector(UiMap.Get.RepaymentOptionsPage.HowToUseEasyPayPopupTitle));
             _debitOrderButton =
                 _repaymentOptionsContainer.FindElement(By.CssSelector(UiMap.Get.RepaymentOptionsPage.DebitOrderButton));
             _manualRepaymentButton = _repaymentOptionsContainer.FindElement(By.CssSelector(UiMap.Get.RepaymentOptionsPage.ManualRepaymentButton));
@@ -53,13 +57,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             return printWindow;
         }
 
-        public String HowToUseEasyPayLinkClick
+        public String HowToUseEasyPayPopupTitle
         {
-            get
-            {
-                _howToUseEasyPayLink.Click();
-                return null;
-            }
+            get { return _howToUseEasyPayPopupTitle.Text; }
+        }
+
+        public void HowToUseEasyPayLinkClick()
+        {
+            _howToUseEasyPayLink.Click();
         }
 
         public DebitOrderPage DebitOrderButtonClick()
