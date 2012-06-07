@@ -15,8 +15,7 @@ namespace Wonga.QA.Tests.Payments
 	[TestFixture, Parallelizable(TestScope.Descendants)]
 	public class ServiceFeesTests
 	{
-		private const string NowServiceConfigKey =
-			"Wonga.Payments.Validators.Za.CreateFixedTermLoanApplicationValidator.DateTime.UtcNow";
+		private const string NowServiceConfigKey = "Wonga.Payments.Validators.Za.CreateFixedTermLoanApplicationValidator.DateTime.UtcNow";
 
 		private Application _application;
 
@@ -45,8 +44,6 @@ namespace Wonga.QA.Tests.Payments
 		[Test, AUT(AUT.Za), JIRA("ZA-1969")]
 		public void AllServiceFeesArePostedUpfrontOnApplication()
 		{
-			//Customer customer = CustomerBuilder.New().Build();
-			//Application application = ApplicationBuilder.New(customer).WithLoanTerm(10).Build();
 			PaymentsDatabase paymentsDatabase = Drive.Db.Payments;
 
 			var applicationEntity = paymentsDatabase.Applications.Single(a => a.ExternalId == _application.Id);
@@ -77,13 +74,6 @@ namespace Wonga.QA.Tests.Payments
 		[Test, AUT(AUT.Za), JIRA("ZA-1969", "ZA-2193")]
 		public void SmallLoanHasPositiveBalanceAfterApplication()
 		{
-			//Customer customer = CustomerBuilder.New().Build();
-			//Application application =
-			//    ApplicationBuilder.New(customer)
-			//        .WithLoanAmount(100m)
-			//        .WithLoanTerm(10)
-			//        .Build();
-
 			var query =
 				new GetFixedTermLoanApplicationZaQuery {ApplicationId = _application.Id};
 			var response = Drive.Api.Queries.Post(query);
@@ -95,21 +85,11 @@ namespace Wonga.QA.Tests.Payments
 		[Test, AUT(AUT.Za), JIRA("ZA-1969", "ZA-2193")]
 		public void DueAmountObeysInDuplumRule()
 		{
-			//Customer customer = CustomerBuilder.New().Build();
-			//Application application =
-			//    ApplicationBuilder.New(customer)
-			//        .WithLoanAmount(100m)
-			//        .WithLoanTerm(40)
-			//        .Build();
-
 			var query =
 				new GetFixedTermLoanApplicationZaQuery {ApplicationId = _application.Id};
 			var response = Drive.Api.Queries.Post(query);
 
 			Assert.AreEqual("200.00", response.Values["BalanceNextDueDate"].Single());
-
-			//17.1 + 57 + 18.17
-			//18.17 calculated as follow: 57 - (getBal -loanCap)
 			Assert.AreEqual("92.27", response.Values["Fees"].Single()); 
 		}
 
