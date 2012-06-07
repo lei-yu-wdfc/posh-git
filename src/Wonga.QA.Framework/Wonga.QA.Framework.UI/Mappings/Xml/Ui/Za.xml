@@ -300,4 +300,24 @@
     <DurationPlusButton>.wonga-duration-slider-wrapper .sliderplus</DurationPlusButton>
   </SlidersElement>
   
+  <PersonalDetailsPage>
+    <FormId>#wonga-apply-lzero-form</FormId>
+    <SlidersFormId>#wonga-alterable-loan-details-fieldset</SlidersFormId>
+    <CheckPrivacyPolicy>#edit-privacy</CheckPrivacyPolicy>
+    <PrivatePolicyErrorForm>#edit-privacy-wrapper div div</PrivatePolicyErrorForm>
+    <CheckCanContact>input[type="radio"][name="update_option"]</CheckCanContact>
+    <NextButton>#edit-submit</NextButton>
+    <SliderToggler>#slider-toggler</SliderToggler>
+    <TotalToRepay>span.loan-total</TotalToRepay>
+    <RepaymentDate>span.repayment-date</RepaymentDate>
+    <TotalAmount>span.loan-amount</TotalAmount>
+    <TotalFees>span.loan-fees</TotalFees>
+    <LoanAmount>#edit-loan-amount</LoanAmount>
+    <LoanDuration>#edit-loan-duration</LoanDuration>
+    <AmountMinusButton>.wonga-amount-slider-wrapper .sliderminus</AmountMinusButton>
+    <AmountPlusButton>.wonga-amount-slider-wrapper .sliderplus</AmountPlusButton>
+    <DurationMinusButton>.wonga-duration-slider-wrapper .sliderminus</DurationMinusButton>
+    <DurationPlusButton>.wonga-duration-slider-wrapper .sliderplus</DurationPlusButton>
+  </PersonalDetailsPage>
+  
 </UiMap>
