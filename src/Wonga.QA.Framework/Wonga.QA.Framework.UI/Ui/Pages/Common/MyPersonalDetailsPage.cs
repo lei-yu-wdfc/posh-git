@@ -150,6 +150,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _editPhoneMobile = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.EditPhoneMobile)));
             _submitButton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.SubmitButton));
 
+            _editPhoneMobile.Click();
             _editPhoneMobile.Clear();
             _editPhoneMobile.SendKeys(mobilePhone);
 
