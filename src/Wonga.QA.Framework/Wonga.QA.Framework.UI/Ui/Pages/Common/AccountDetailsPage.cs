@@ -61,5 +61,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             Content.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.ExplanationLink)).Click();
         }
 
+        public String SecciPopupWindowContent()
+        {
+            var frameName = Client.Driver.FindElement(By.CssSelector("#fancybox-frame")).GetAttribute("name");
+            var secci = Client.Driver.SwitchTo().Frame(frameName).FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.SecciContent));
+            return secci.Text;
+        }
+
     }
 }
