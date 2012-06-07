@@ -37,7 +37,7 @@ namespace Wonga.QA.Framework
         private String _town;
         private String _county;
         private Guid _bankAccountId;
-        private String _phoneNumber;
+        private String _homePhoneNumber;
         private String _mobileNumber;
     	private String _bankAccountNumber;
         private Int64 _paymentCardNumber;
@@ -77,7 +77,7 @@ namespace Wonga.QA.Framework
             _province = ProvinceEnum.ON;
             _houseNumber = Get.RandomInt(1, 100).ToString(CultureInfo.InvariantCulture);
             _houseName = Get.RandomString(8);
-            _phoneNumber = Get.GetPhone();
+            _homePhoneNumber = Get.GetPhone();
             _street = Get.RandomString(15);
             _flat = Get.RandomString(4);
             _district = Get.RandomString(15);
@@ -267,7 +267,7 @@ namespace Wonga.QA.Framework
 
         public CustomerBuilder WithPhoneNumber(String phoneNumber)
         {
-            _phoneNumber = phoneNumber;
+            _homePhoneNumber = phoneNumber;
             return this;
         }
 
@@ -419,7 +419,7 @@ namespace Wonga.QA.Framework
                             r.Email = _email;
                             r.DateOfBirth = _dateOfBirth;
                             r.NationalNumber = _nationalNumber;
-                            r.HomePhone = _phoneNumber;
+                            r.HomePhone = _homePhoneNumber;
                             r.Gender = _gender;
                         }),                       
                         SaveCustomerAddressCaCommand.New(r => {
@@ -479,6 +479,7 @@ namespace Wonga.QA.Framework
                                                                  r.Forename = _foreName;
                                                                  r.DateOfBirth = _dateOfBirth;
                                                                  r.Email = _email;
+                                                                 r.HomePhone = _homePhoneNumber;
                                                                  r.Gender = _gender;
                                                              }),
                         SaveCustomerAddressUkCommand.New(r=>
