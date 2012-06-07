@@ -27,6 +27,18 @@ namespace Wonga.QA.Framework
 		public string FailedCheckpoint { get; private set; }
         public string BankAccountNumber { get; set; }
 
+	    private readonly dynamic _applicationsTab = Drive.Data.Payments.Db.Applications;
+	    private readonly dynamic _customerDetailsTab = Drive.Data.Comms.Db.CustomerDetails;
+	    private readonly dynamic _accountPreferencesTab = Drive.Data.Payments.Db.AccountPreferences;
+	    private readonly dynamic _scheduledPaymentSagaEntityTab = Drive.Data.OpsSagas.Db.ScheduledPaymentSagaEntity;
+	    private readonly dynamic _fixedTermLoanAppTab = Drive.Data.Payments.Db.FixedTermLoanApplications;
+	    private readonly dynamic _riskAppTab = Drive.Data.Risk.Db.RiskApplications;
+        private readonly dynamic _transactionsTab = Drive.Data.Payments.Db.Transactions;
+	    private readonly dynamic _loanDueDateNotifiSagaEntityTab = Drive.Data.OpsSagas.Db.LoanDueDateNotificationSagaEntity;
+	    private readonly dynamic _fixedTermLoanSagaEntityTab = Drive.Data.OpsSagas.Db.FixedTermLoanSagaEntity;
+
+        private static readonly dynamic ServiceConfigTab = Drive.Data.Ops.Db.ServiceConfigurations;
+
 	    public Application()
 		{
 		}
@@ -44,12 +56,12 @@ namespace Wonga.QA.Framework
 
 		public bool IsClosed
 		{
-			get { return Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).ClosedOn.HasValue; }
+			get { return _applicationsTab.FindAll(_applicationsTab.ExternalId == Id).Single().ClosedOn == null ? false : true; }
 		}
 
 		public Guid AccountId
 		{
-			get { return Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).AccountId; }
+            get { return _applicationsTab.FindAll(_applicationsTab.ExternalId == Id).Single().AccountId; }
 		}
 
 		public Customer GetCustomer()
@@ -57,14 +69,14 @@ namespace Wonga.QA.Framework
 			//avoid going to the DB twice
 			Guid currentAccountId = AccountId;
 			return new Customer(
-				Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).AccountId,
-				Drive.Db.Comms.CustomerDetails.Single(cd => cd.AccountId == currentAccountId).Email,
-				Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == currentAccountId).BankAccountsBaseEntity.ExternalId);
+                _applicationsTab.FindAll(_applicationsTab.ExternalId == Id).Single().AccountId,
+                _customerDetailsTab.FindAll(_customerDetailsTab.AccountId == currentAccountId).Single().Email,
+                _accountPreferencesTab.FindAll(_accountPreferencesTab.AccountId == currentAccountId).Single().BankAccountsBase.ExternalId);
 		}
 
 		public Application RepayOnDueDate()
 		{
-			ApplicationEntity application = Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id);
+            var application = _applicationsTab.FindAll(_applicationsTab.ExternalId == Id).Single();
 
 			MakeDueToday(application);
 			
@@ -72,7 +84,7 @@ namespace Wonga.QA.Framework
 		    {
                 var utcNow = DateTime.UtcNow;
 
-                ScheduledPaymentSagaEntity sp = Do.Until(() => Drive.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationGuid == Id));
+                ScheduledPaymentSagaEntity sp = Do.Until(() => _scheduledPaymentSagaEntityTab.FindAll(_scheduledPaymentSagaEntityTab.ApplicationGuid == Id).Single());
                 Drive.Msmq.Payments.Send(new PaymentTakenCommand { SagaId = sp.Id, ValueDate = utcNow, CreatedOn = utcNow, ApplicationId = Id, TransactionAmount = GetBalance() });
                 Do.While(sp.Refresh);
 		    }
@@ -81,7 +93,7 @@ namespace Wonga.QA.Framework
 
 			TimeoutCloseApplicationSaga(transaction);
 
-		    Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).ClosedOn);
+            Do.Until(() => _applicationsTab.FindAll(_applicationsTab.ExternalId == Id).Single().ClosedOn);
 
 			return this;
 		}
@@ -93,30 +105,73 @@ namespace Wonga.QA.Framework
 
         private static bool BankGatwayInTestMode()
         {
-            ServiceConfigurationEntity testmode = Drive.Db.Ops.ServiceConfigurations.SingleOrDefault(e => e.Key == "BankGateway.IsTestMode");
+            var testmode = ServiceConfigTab.FindAll(ServiceConfigTab.Key == "BankGateway.IsTestMode").SingleOrDefault();
 
             return testmode != null && Boolean.Parse(testmode.Value);
         }
 
         private static bool IsCaTestWithScotiaMocked()
         {
-            ServiceConfigurationEntity caScotiaMocksEnabled = Drive.Db.Ops.ServiceConfigurations.SingleOrDefault(e => e.Key == "Mocks.ScotiaEnabled");
+            var caScotiaMocksEnabled = ServiceConfigTab.FindAll(ServiceConfigTab.Key == "Mocks.ScotiaEnabled").SingleOrDefault();
 
             return caScotiaMocksEnabled != null && (Config.AUT == AUT.Ca && Boolean.Parse(caScotiaMocksEnabled.Value));
         }
 
 	    private static void TimeoutCloseApplicationSaga(TransactionEntity transaction)
 	    {
+	        var closeAppSagaEntityTab = Drive.Data.OpsSagas.Db.CloseApplicationSagaEntity;
 	        CloseApplicationSagaEntity ca =
 	            Do.Until(
-	                () => Drive.Db.OpsSagas.CloseApplicationSagaEntities.Single(s => s.TransactionId == transaction.ExternalId));
+                    () => closeAppSagaEntityTab.FindAll(closeAppSagaEntityTab.TransactionId == transaction.ExternalId).Single());
 	        Drive.Msmq.Payments.Send(new TimeoutMessage {SagaId = ca.Id});
 	        Do.While(ca.Refresh);
 	    }
 
 	    private TransactionEntity WaitForDirectBankPaymentCreditTransaction()
-	    {
-	        return Do.Until(() => Drive.Db.Payments.Applications.Single(
+        {
+            #region:find a way to fix this
+            /*
+	        var appId = _applicationsTab.FindAll(_applicationsTab.ExternalId == Id);
+
+            var transId = _transactionsTab.FindAll(_transactionsTab.ExternalId == appId.ExternalId);
+
+
+	        transId.FindAll(_transactionsTab.Scope == (int) PaymentTransactionScopeEnum.Credit &&
+	                        _transactionsTab.Type ==
+	                        Get.EnumToString(Config.AUT == AUT.Uk
+	                                             ? PaymentTransactionEnum.CardPayment
+	                                             : PaymentTransactionEnum.DirectBankPayment).Single());
+	        
+                
+                
+                
+	          
+
+            var check2 = _transactionsTab.Type == Get.EnumToString(
+                Config.AUT == AUT.Uk
+                    ? PaymentTransactionEnum.CardPayment
+                    : PaymentTransactionEnum.DirectBankPayment);
+
+	        var test2 =
+	            Do.Until(
+	                () =>
+	                _transactionsTab.FindAll(_transactionsTab.ExternalId == appId.ExternalId &&
+	                                         _transactionsTab.Scope == (int) PaymentTransactionScopeEnum.Credit && check2).
+	                    Single());
+	        
+	        
+
+	        return Do.Until(() => _transactionsTab.FindAll(
+	            _transactionsTab.ExternalId == Id &&
+	            _transactionsTab.Scope == (int) PaymentTransactionScopeEnum.Credit &&
+	            _transactionsTab.Type == Get.EnumToString(
+	                Config.AUT == AUT.Uk
+	                    ? PaymentTransactionEnum.CardPayment
+	                    : PaymentTransactionEnum.DirectBankPayment)).Single());
+
+*/
+            #endregion
+            return Do.Until(() => Drive.Db.Payments.Applications.Single(
 	            a => a.ExternalId == Id).Transactions.Single(
 	                t =>
 	                (PaymentTransactionScopeEnum) t.Scope == PaymentTransactionScopeEnum.Credit && t.Type == Get.EnumToString(
@@ -125,7 +180,7 @@ namespace Wonga.QA.Framework
 
 	    public Application MakeDueToday()
 		{
-			ApplicationEntity application = Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id);
+            var application = _applicationsTab.FindAll(_applicationsTab.ExternalId == Id).Single();
 
 			MakeDueToday(application);
 
@@ -134,64 +189,63 @@ namespace Wonga.QA.Framework
 
         public Application UpdateNextDueDate(int days)
         {
-            ApplicationEntity application = Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id);
-            FixedTermLoanApplicationEntity fixedApp = Drive.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationId == application.ApplicationId);
+            var application = _applicationsTab.FindAll(_applicationsTab.ExternalId == Id).Single();
+            var fixedApp = _fixedTermLoanAppTab.FindAll(_fixedTermLoanAppTab.ApplicationId == application.ApplicationId).Single();
 
             var span = new TimeSpan(days, 0, 0, 0);
-            Drive.Db.UpdateNextDueDate(fixedApp, span);
+            ApplicationOperations.UpdateNextDueDate(fixedApp, span);
 
             return this;
         }
 
         public Application UpdateAcceptedOnDate(int days)
         {
-            ApplicationEntity application = Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id);
+            var application = _applicationsTab.FindAll(_applicationsTab.ExternalId == Id).Single();
 
             var span = new TimeSpan(days, 0, 0, 0);
-            Drive.Db.MoveAcceptedOnDate(application, span);
+            ApplicationOperations.MoveAcceptedOnDate(application, span);
             return this;
         }
         
 		public Application RewindApplicationDates(TimeSpan rewindSpan)
 		{
-			ApplicationEntity application = Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id);
+            var application = _applicationsTab.FindAll(_applicationsTab.ExternalId == Id).Single();
 
-			RewindAppDates(application, rewindSpan);
+            RewindAppDates(application, rewindSpan);
 
 			return this;
 		}
+
+        private void RewindAppDates(dynamic application, TimeSpan rewindSpan)
+        {
+            var riskApplication = _riskAppTab.FindAll(_riskAppTab.ApplicationId == Id).Single();
+
+            ApplicationOperations.RewindApplicationDates(application, riskApplication, rewindSpan);
+        }
 		
 		public Application RewindApplicationDatesForDays(int days)
 		{
 			return RewindApplicationDates(TimeSpan.FromDays(days));
 		}
 
-		private void RewindAppDates(ApplicationEntity application, TimeSpan rewindSpan)
-		{
-			RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == Id);
-
-			Drive.Db.RewindApplicationDates(application, riskApplication, rewindSpan);
-		}
-
-        private void RewindAppDates(ApplicationEntity application)
+        private void RewindAppDates(dynamic application)
         {
-            TimeSpan span = application.FixedTermLoanApplicationEntity.NextDueDate.Value - DateTime.Today;
-        	RewindAppDates(application, span);
+            TimeSpan span = _fixedTermLoanAppTab.FindByApplicationId(application.ApplicationId).NextDueDate - DateTime.Today;
+            RewindAppDates(application, span);
         }
 
-		public void MakeDueToday(ApplicationEntity application)
+		public void MakeDueToday(dynamic application)
 		{
 			RewindAppDates(application);
-
+            var ldd = _loanDueDateNotifiSagaEntityTab.FindAll(_loanDueDateNotifiSagaEntityTab.ApplicationId == Id).Single();
             if (Drive.Data.Ops.GetServiceConfiguration<bool>("Payments.FeatureSwitches.UseLoanDurationSaga") == false)
             {
-                LoanDueDateNotificationSagaEntity ldd = Drive.Db.OpsSagas.LoanDueDateNotificationSagaEntities.Single(s => s.ApplicationId == Id);
                 Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ldd.Id });
-                Do.With.While(ldd.Refresh);
+            _loanDueDateNotifiSagaEntityTab.Update(ldd);
 
-                FixedTermLoanSagaEntity ftl = Drive.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
+            var ftl = _fixedTermLoanSagaEntityTab.FindAll(_fixedTermLoanSagaEntityTab.ApplicationGuid == Id).Single();
                 Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
-                Do.With.While(ftl.Refresh);
+            _fixedTermLoanSagaEntityTab.Update(ftl);
             }
             else
             {
@@ -207,7 +261,7 @@ namespace Wonga.QA.Framework
 		{
 			PutApplicationIntoArrears();
 
-			Drive.Db.Rewind(Id, (int)daysInArrears);
+			ApplicationOperations.Rewind(Id, (int)daysInArrears);
 
 			return this;
 		}

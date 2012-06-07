@@ -19,6 +19,7 @@ using EmploymentStatusEnum = Wonga.QA.Framework.Api.EmploymentStatusEnum;
 
 namespace Wonga.QA.Tests.Ui
 {
+
     [Parallelizable(TestScope.All)]
     public class TagCloudTests : UiTest
     {
@@ -381,10 +382,8 @@ namespace Wonga.QA.Tests.Ui
             // Rewind application dates
             if (daysShift != 0)
             {
-                ApplicationEntity applicationEntity = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
-                RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == application.Id);
                 TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
-                Drive.Db.RewindApplicationDates(applicationEntity, riskApplication, daysShiftSpan);
+                ApplicationOperations.RewindApplicationDates(application, daysShiftSpan);
             }
 
             if (scenarioId == 8) application = application.RepayOnDueDate(); // Repay a loan
