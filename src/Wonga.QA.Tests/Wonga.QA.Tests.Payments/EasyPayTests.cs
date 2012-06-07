@@ -11,12 +11,12 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments
 {
-	[TestFixture, AUT(AUT.Za), Parallelizable(TestScope.All)]
+	[TestFixture, AUT(AUT.Za), Parallelizable(TestScope.All), Pending("ZA-2565")]
 	public class EasyPayTests
 	{
 		private readonly dynamic _repaymentAccountsTable = Drive.Data.Payments.Db.RepaymentAccount;
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2395")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2395"), Pending("ZA-2565")]
 		public void RepayUsingEasyPayWillCreateTransactionWhenPaymentReceived()
 		{
 			var customer = CustomerBuilder.New().Build();
@@ -31,7 +31,7 @@ namespace Wonga.QA.Tests.Payments
 			Assert.AreEqual("Payment from EasyPay", transactionReference);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2395")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2395"), Pending("ZA-2565")]
 		public void RepayUsingEasyPayFullRepaymentBeforeDueDateClosesApplication()
 		{
 			var customer = CustomerBuilder.New().Build();
@@ -44,7 +44,7 @@ namespace Wonga.QA.Tests.Payments
 			Do.With.Timeout(1).Until(() => application.IsClosed);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2395"), ExpectedException(typeof(DoException))]
+		[Test, AUT(AUT.Za), JIRA("ZA-2395"), ExpectedException(typeof(DoException)), Pending("ZA-2565")]
 		public void RepayUsingEasyPayPartialRepaymentBeforeDueDateDoesntCloseApplication()
 		{
 			var customer = CustomerBuilder.New().Build();

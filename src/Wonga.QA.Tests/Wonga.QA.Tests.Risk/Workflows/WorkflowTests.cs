@@ -12,7 +12,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Workflows
 {
-	[TestFixture, Parallelizable(TestScope.All), Pending("ZA-2565")]
+	[TestFixture, Parallelizable(TestScope.All), Pending]
 	public partial class WorkflowTests
 	{
 		[FixtureSetUp]
@@ -39,7 +39,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 			}
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), Pending("Pedro is working on a refactor")]
+		[Test, AUT(AUT.Za, AUT.Ca), Pending]
 		public void WorkflowL0SingleWorkflowUsed()
 		{
 			var customer = CustomerBuilder.New().WithEmployer("Wonga").Build();

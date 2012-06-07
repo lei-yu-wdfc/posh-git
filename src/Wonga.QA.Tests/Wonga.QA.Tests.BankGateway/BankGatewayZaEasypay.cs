@@ -16,7 +16,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.BankGateway
 {
-	[TestFixture, AUT(AUT.Za), Parallelizable(TestScope.All), Pending("ZA-2565")]
+	[TestFixture, AUT(AUT.Za), Parallelizable(TestScope.All)]
 	public class BankGatewayZaEasypay
 	{
 		private const string TEST_FILE1 = "easy5390.001";
@@ -73,7 +73,7 @@ namespace Wonga.QA.Tests.BankGateway
 		{
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2394"), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2394")]
 		public void ProcessEasypayFile_WillCreate_Acknowledgements()
 		{
 			//Arrange	
@@ -99,7 +99,7 @@ namespace Wonga.QA.Tests.BankGateway
 			Assert.AreEqual(repayNumber, acknowledgeTransaction[0].IncomingReference);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2394"), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2394")]
 		public void ProcessEasypayFile_PartialRepayment_WillCreate_DirectBankPaymentTransaction()
 		{
 			//Arrange
@@ -128,7 +128,7 @@ namespace Wonga.QA.Tests.BankGateway
 			Assert.AreEqual("DirectBankPayment", transaction.Type);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2394"), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2394")]
 		public void ProcessEasypayFile_RepayFullAmount_WillCreate_DirectBankPaymentTransaction_AND_CloseApplication()
 		{
 			//Arrange

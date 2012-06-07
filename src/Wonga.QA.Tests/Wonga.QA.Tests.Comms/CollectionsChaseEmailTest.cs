@@ -43,43 +43,43 @@ namespace Wonga.QA.Tests.Comms
 			ConfigurationFunctions.SetBankGatewayTestMode(_bankGatewayTestModeOriginal);
 		}
 
-		[Test, JIRA("QA-206")]
+		[Test, AUT(AUT.Za), JIRA("QA-206")]
 		public void A2EmailIsSent()
 		{
 			VerifyEmailIsSentAfterDaysInArrears(0, TemplateA2);
 		}
 
-		[Test, JIRA("QA-206"), DependsOn("A2EmailIsSent")]
+		[Test, AUT(AUT.Za), JIRA("QA-206"), DependsOn("A2EmailIsSent")]
 		public void A3EmailIsSent()
 		{
 			VerifyEmailIsSentAfterDaysInArrears(3, TemplateA3);
 		}
 
-		[Test, JIRA("QA-206"), DependsOn("A3EmailIsSent")]
+		[Test, AUT(AUT.Za), JIRA("QA-206"), DependsOn("A3EmailIsSent")]
 		public void A4EmailIsSent()
 		{
 			VerifyEmailIsSentAfterDaysInArrears(15, TemplateA4);
 		}
 
-		[Test, JIRA("QA-206"), DependsOn("A4EmailIsSent")]
+		[Test, AUT(AUT.Za), JIRA("QA-206"), DependsOn("A4EmailIsSent")]
 		public void A5EmailIsSent()
 		{
 			VerifyEmailIsSentAfterDaysInArrears(20, TemplateA5);
 		}
 
-		[Test, JIRA("QA-206"), DependsOn("A5EmailIsSent")]
+		[Test, AUT(AUT.Za), JIRA("QA-206"), DependsOn("A5EmailIsSent")]
 		public void A6EmailIsSent()
 		{
 			VerifyEmailIsSentAfterDaysInArrears(30, TemplateA6);
 		}
 
-		[Test, JIRA("QA-206"), DependsOn("A6EmailIsSent")]
+		[Test, AUT(AUT.Za), JIRA("QA-206"), DependsOn("A6EmailIsSent")]
 		public void A7EmailIsSent()
 		{
 			VerifyEmailIsSentAfterDaysInArrears(40, TemplateA7);
 		}
 
-		[Test, JIRA("QA-206"), DependsOn("A7EmailIsSent")]
+		[Test, AUT(AUT.Za), JIRA("QA-206"), DependsOn("A7EmailIsSent")]
 		public void A8EmailIsSent()
 		{
 			VerifyEmailIsSentAfterDaysInArrears(45, TemplateA8);

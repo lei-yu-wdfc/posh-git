@@ -10,6 +10,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Sms
 {
+	[TestFixture, Parallelizable(TestScope.Descendants)]
 	public class ClickatellIntegrationTests
 	{
 		private readonly dynamic _smsMessages = Drive.Data.Sms.Db.SmsMessages;
@@ -32,7 +33,7 @@ namespace Wonga.QA.Tests.Sms
 				_smsMockEnabled);
 		}
 
-		[Test, JIRA("ZA-2414"), AUT(AUT.Za), Pending("ZA-2565")]
+		[Test, JIRA("ZA-2414"), AUT(AUT.Za)]
 		public void ClickatellIntegrationIsWorkingForZa()
 		{
 			const string phoneNumber = "27999900001";

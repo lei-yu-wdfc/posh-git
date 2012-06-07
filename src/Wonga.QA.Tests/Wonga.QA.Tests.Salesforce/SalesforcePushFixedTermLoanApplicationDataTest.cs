@@ -26,7 +26,7 @@ namespace Wonga.QA.Tests.Salesforce
 			Do.With.Timeout(TimeSpan.FromSeconds(5)).Until(() => Salesforce.ApplicationExists(app.Id));
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2459"), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2459"), Ignore]
         public void PushTest_AccountCreateLaterThanApplicationMessage()
         {
             Customer customer = CustomerBuilder.New().Build();

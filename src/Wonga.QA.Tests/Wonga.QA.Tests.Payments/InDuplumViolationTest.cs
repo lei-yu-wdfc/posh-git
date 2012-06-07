@@ -20,7 +20,7 @@ namespace Wonga.QA.Tests.Payments
 		private dynamic _applications = Drive.Data.Payments.Db.Applications;
 		private Customer _customer;
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2201")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2201"), Pending("ZA-2565")]
 		public void Close_InDuplumViolation_Application_Creates_CompensatingTransaction()
 		{
 			_customer = CustomerBuilder.New().Build();
@@ -78,14 +78,14 @@ namespace Wonga.QA.Tests.Payments
 			Assert.AreEqual(-124.1m ,compensatingTransaction.Amount);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2360"), DependsOn("Close_InDuplumViolation_Application_Creates_CompensatingTransaction")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2360"), DependsOn("Close_InDuplumViolation_Application_Creates_CompensatingTransaction"), Pending("ZA-2565")]
 		public void Close_InDuplumViolation_Application_BalanceShouldBeZero()
 		{
 			Do.Until(() => decimal.Parse(GetLoanAgreements(_customer).Values["TodaysBalance"].SingleOrDefault()) == 0);
 			Do.Until(() => decimal.Parse(GetLoanAgreements(_customer).Values["FinalBalance"].SingleOrDefault()) == 0);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2201")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2201"), Pending("ZA-2565")]
 		public void Close_NonInDuplumViolation_Application_DoesNotCreate_CompensatingTransaction()
 		{
 			var customer = CustomerBuilder.New().Build();
