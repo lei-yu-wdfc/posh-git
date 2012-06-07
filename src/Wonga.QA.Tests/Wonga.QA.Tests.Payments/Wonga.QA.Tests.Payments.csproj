@@ -48,7 +48,6 @@
     <Compile Include="Command\DcaCommandTests.cs" />
     <Compile Include="Command\DeletePersonalPaymentCardCsApiCommandTests.cs" />
     <Compile Include="Command\GenerateRepaymentNumberTest.cs" />
-    <Compile Include="Command\SaveIncomingPartnerPaymentCommandTests.cs" />
     <Compile Include="Command\SavePaymentCardBillingAddress.cs" />
     <Compile Include="Command\SetAccountPaymentMethodCommandCaTests.cs" />
     <Compile Include="Command\TakePaymentManualCsCommandTests.cs" />
@@ -117,7 +116,7 @@
     <Compile Include="RepaymentTests.cs" />
     <Compile Include="RiskBasedPricingTests.cs" />
     <Compile Include="Sagas\LoanDueNotificationSagaTests.cs" />
-    <Compile Include="Sagas\PayUTests.cs" />
+    <Compile Include="PayUTests.cs" />
     <Compile Include="Sagas\LoanDurationSagaTests.cs" />
     <Compile Include="Sagas\SchedulePaymentSagaTests.cs" />
     <Compile Include="ServiceFeesTests.cs" />
