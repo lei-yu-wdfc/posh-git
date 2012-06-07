@@ -56,11 +56,11 @@ namespace Wonga.QA.Tests.Ui
             Application application = ApplicationBuilder.New(customer).Build();
             var summaryPage = loginPage.LoginAs(email);
             Application application = ApplicationBuilder
-                .New(customer)
-                .Build();
-            var mySummaryPage = loginPage.LoginAs(email);
-            var repayPage = mySummaryPage.RepayClick();
-            //Thread.Sleep(20000);
+
+            // Open the "How to use easypay" modal popup and check the title is correct - ZA-2587:
+            repayPage.HowToUseEasyPayLinkClick();
+            Assert.AreEqual("Repay your wonga.com loan with EasyPay", UiMap.Get.RepaymentOptionsPage.HowToUseEasyPayPopupTitle);
+
 
             // Open the "How to use easypay" modal popup and check the title is correct - ZA-2587:
             var easyPayHowToUsePopup = repayPage.HowToUseEasyPayLinkClick;
