@@ -17,6 +17,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private readonly IWebElement _balanceToday;
         private readonly IWebElement _easypayNumber;
         private readonly IWebElement _easypayPrintButton;
+        private readonly IWebElement _howToUseEasyPayLink;
         private readonly IWebElement _debitOrderButton;
         private readonly IWebElement _manualRepaymentButton;
         
@@ -27,6 +28,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _balanceToday = Content.FindElement(By.CssSelector(UiMap.Get.RepaymentOptionsPage.BalanceToday));
             _easypayNumber = _repaymentOptionsContainer.FindElement(By.CssSelector(UiMap.Get.RepaymentOptionsPage.EasypayNumber));
             _easypayPrintButton = _repaymentOptionsContainer.FindElement(By.CssSelector(UiMap.Get.RepaymentOptionsPage.EasypayPrintButton));
+            _howToUseEasyPayLink =
+                _repaymentOptionsContainer.FindElement(By.CssSelector(UiMap.Get.RepaymentOptionsPage.HowToUseEasyPayLink));
             _debitOrderButton =
                 _repaymentOptionsContainer.FindElement(By.CssSelector(UiMap.Get.RepaymentOptionsPage.DebitOrderButton));
             _manualRepaymentButton = _repaymentOptionsContainer.FindElement(By.CssSelector(UiMap.Get.RepaymentOptionsPage.ManualRepaymentButton));
@@ -48,6 +51,15 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             Do.Until(() => Client.Driver.WindowHandles.Count.Equals(2));
             var printWindow = Client.Driver.SwitchTo().Window(Client.Driver.WindowHandles[1]);
             return printWindow;
+        }
+
+        public String HowToUseEasyPayLinkClick
+        {
+            get
+            {
+                _howToUseEasyPayLink.Click();
+                return null;
+            }
         }
 
         public DebitOrderPage DebitOrderButtonClick()
