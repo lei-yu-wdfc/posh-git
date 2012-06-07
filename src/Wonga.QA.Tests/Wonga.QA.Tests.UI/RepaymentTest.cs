@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -47,7 +47,7 @@ namespace Wonga.QA.Tests.Ui
             //var manualRepayPage = repayPage.ManualRepaymentButtonClick();
         }
 
-        [Test, AUT(AUT.Za)]
+        [Test, AUT(AUT.Za), Pending("Fancybox is a piece of **** :)")]
         public void ZaEasyPayRepayment()
         {
             var loginPage = Client.Login();
