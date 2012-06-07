@@ -248,6 +248,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-1567")]
+        [Ignore("AFAIK The review will trigger manual verification")]
         public void Ln_CheckpointApplicationGetsIovationReview_LoanIsAccepted()
         {
             var customer = CustomerBuilder.New().WithEmployer(RiskMask.TESTDeviceNotOnBlacklist).Build();

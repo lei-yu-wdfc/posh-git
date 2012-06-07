@@ -219,23 +219,5 @@ namespace Wonga.QA.Tests.Risk.RiskApiTests
 
 		}
 
-        [Test, AUT(AUT.Uk)]
-        public void GivenL0Applicant_WhenIsUnderAged_ThenIsDeclined()
-        {
-            _builderConfig = new ApplicationBuilderConfig(ApplicationDecisionStatus.Declined);
-            CustomerBuilder builder = CustomerBuilder.New()
-                .WithEmployer(RiskMask.TESTApplicantIsNotMinor)
-                .WithDateOfBirth(new Date(DateTime.Now.AddYears(-18), DateFormat.Date));
-            L0ApplicationWithSingleCheckPointAndSingleVerification(
-                builder, RiskCheckpointDefinitionEnum.ApplicantIsNotMinor,
-                "ApplicantIsNotMinorVerification");
-        }
-
-        [Test, AUT(AUT.Uk)]
-        public void GivenL0Applicant_WhenCustomerIsNotMinor_ThenIsAccepted()
-        {
-            _builderConfig = new ApplicationBuilderConfig();
-            L0ApplicationWithSingleCheckPointAndSingleVerification(RiskCheckpointDefinitionEnum.ApplicantIsNotMinor, "ApplicantIsNotMinorVerification");
-        }
 	}
 }
