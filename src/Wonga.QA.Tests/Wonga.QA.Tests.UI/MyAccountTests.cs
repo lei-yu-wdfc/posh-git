@@ -677,6 +677,7 @@ namespace Wonga.QA.Tests.Ui
             myPersonalDetailsPage.ChangeMyAddressElement.District = newDistrict;
             myPersonalDetailsPage.ChangeMyAddressElement.Town = newTown;
             myPersonalDetailsPage.ChangeMyAddressElement.AddressPeriod = "2 to 3 years";
+            Thread.Sleep(2000);
 
             myPersonalDetailsPage.Submit();
             myPersonalDetailsPage.WaitForSuccessPopup();

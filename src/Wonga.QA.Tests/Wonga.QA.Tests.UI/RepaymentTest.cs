@@ -47,19 +47,14 @@ namespace Wonga.QA.Tests.Ui
             //var manualRepayPage = repayPage.ManualRepaymentButtonClick();
         }
 
-        [Test, AUT(AUT.Za), Pending("Code not yet on rc.za.wonga.com as of 24/05/12")]
+        [Test, AUT(AUT.Za)]
         public void ZaEasyPayRepayment()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var summaryPage = journey.ApplyForLoan(200, 10)
-                              .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
-                              .FillAddressDetails()
-                              .FillAccountDetails()
-                              .FillBankDetails()
-                              .WaitForAcceptedPage()
-                              .FillAcceptedPage()
-                              .GoToMySummaryPage()
-                              .CurrentPage as MySummaryPage;
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer).Build();
+            var summaryPage = loginPage.LoginAs(email);
             var repayPage = summaryPage.RepayClick();
             var expectedeasypayno = repayPage.EasypayNumber;
             var popUpPrintPage = repayPage.EasyPayPrintButtonClick();
