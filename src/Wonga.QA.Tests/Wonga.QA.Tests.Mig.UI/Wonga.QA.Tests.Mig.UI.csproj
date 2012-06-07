@@ -43,7 +43,9 @@
     <Reference Include="Wonga.QA.Framework">
       <HintPath>..\..\..\bin\Wonga.QA.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="Wonga.QA.Framework.Api, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Wonga.QA.Framework.Api, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\bin\Wonga.QA.Framework.Api.dll</HintPath>
+    </Reference>
     <Reference Include="Wonga.QA.Framework.Core">
       <HintPath>..\..\..\bin\Wonga.QA.Framework.Core.dll</HintPath>
     </Reference>

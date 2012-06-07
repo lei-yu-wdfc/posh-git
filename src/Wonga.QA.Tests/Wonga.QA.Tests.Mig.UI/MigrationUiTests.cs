@@ -161,5 +161,172 @@ namespace Wonga.QA.Tests.Mig.UI
             var paymentTakenPage = repayProcessingPage.WaitFor<RepayDueFullpaySuccessPage>() as RepayDueFullpaySuccessPage;
 
         }
+
+        [Test, AUT(AUT.Uk), Pending("in development, test environments still not ready")]
+        public void RepayDuePart()
+        {
+            //build L0 loan
+            //string email = Get.RandomEmail();
+            DateTime todayDate = DateTime.Now;
+
+            //var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            //var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
+            var daysShift = 7;
+
+            //time-shift loan so it's due today
+            TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
+            ApplicationOperations.RewindApplicationDates(application, daysShiftSpan);
+
+            var loginPage = Client.Login();
+            var myAccountPage = loginPage.LoginAs(email);
+            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+
+            mySummaryPage.RepayButtonClick();
+            var requestPage = new RepayRequestPage(this.Client);
+
+            //Set partial payment amount, test for correct values at same time
+            requestPage.IsRepayRequestPageSliderReturningCorrectValuesOnChange(application.Id.ToString(), "100");
+
+            //Branch point - Add Cv2 for each path and proceed
+            requestPage.setSecurityCode("123");
+            requestPage.SubmitButtonClick();
+
+            var repayProcessingPage = new RepayProcessingPage(this.Client);
+
+            var paymentTakenPage = repayProcessingPage.WaitFor<RepayDuePartpaySuccessPage>() as RepayDuePartpaySuccessPage;
+            Assert.IsFalse(paymentTakenPage.IsRepayDuePartpaySuccessPageAmountTokenNotPresent());
+
+
+        }
+
+        [Test, AUT(AUT.Uk), Pending("in development, test environments still not ready")]
+        public void RepayEarlyFull()
+        {
+            //build L0 loan
+            //string email = Get.RandomEmail();
+            DateTime todayDate = DateTime.Now;
+
+            //var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            //var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
+
+            var loginPage = Client.Login();
+            var myAccountPage = loginPage.LoginAs(email);
+            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+            //var originalRepay = mySummaryPage.GetTotalToRepay();
+            mySummaryPage.RepayButtonClick();
+            var requestPage = new RepayRequestPage(this.Client);
+
+            //Branch point - Add Cv2 for each path and proceed
+            requestPage.setSecurityCode("123");
+            requestPage.SubmitButtonClick();
+
+            var repayProcessingPage = new RepayProcessingPage(this.Client);
+
+            var paymentTakenPage = repayProcessingPage.WaitFor<RepayEarlyFullpaySuccessPage>() as RepayEarlyFullpaySuccessPage;
+
+            Assert.IsFalse(paymentTakenPage.IsRepayEarlyFullpaySuccessPageAmountTokenNotPresent());
+            Assert.IsFalse(paymentTakenPage.IsRepayEarlyFullpaySuccessPageDateTokenNotPresent());
+            //TODO: Check that Interest Saved calculation is correct
+        }
+
+        [Test, AUT(AUT.Uk), Pending("in development, test environments still not ready")]
+        public void RepayEarlyPart()
+        {
+            //build L0 loan
+            //string email = Get.RandomEmail();
+            DateTime todayDate = DateTime.Now;
+
+            //var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            //var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
+
+            var loginPage = Client.Login();
+            var myAccountPage = loginPage.LoginAs(email);
+            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+
+            mySummaryPage.RepayButtonClick();
+            var requestPage = new RepayRequestPage(this.Client);
+
+            //Set partial payment amount, test for correct values at same time
+            requestPage.IsRepayRequestPageSliderReturningCorrectValuesOnChange(application.Id.ToString(), "100");
+
+            //Branch point - Add Cv2 for each path and proceed
+            requestPage.setSecurityCode("123");
+            requestPage.SubmitButtonClick();
+
+            var repayProcessingPage = new RepayProcessingPage(this.Client);
+
+            var paymentTakenPage = repayProcessingPage.WaitFor<RepayEarlyPartpaySuccessPage>() as RepayEarlyPartpaySuccessPage;
+
+            Assert.IsFalse(paymentTakenPage.IsRepayEarlyPartpaySuccessPageAmountTokenNotPresent());
+            Assert.IsFalse(paymentTakenPage.IsRepayEarlyPartpaySuccessPageDateTokenNotPresent());
+        }
+
+        [Test, AUT(AUT.Uk), Pending("in development, test environments still not ready")]
+        public void RepayOverdueFull()
+        {
+            //build L0 loan
+            //string email = Get.RandomEmail();
+            DateTime todayDate = DateTime.Now;
+
+            //var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            //var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
+            var daysShift = 15;
+
+            //time-shift loan so it's in arrears
+            TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
+            ApplicationOperations.RewindApplicationDates(application, daysShiftSpan);
+
+            var loginPage = Client.Login();
+            var myAccountPage = loginPage.LoginAs(email);
+            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+
+            mySummaryPage.RepayButtonClick();
+            var requestPage = new RepayRequestPage(this.Client);
+
+            //Branch point - Add Cv2 for each path and proceed
+            requestPage.setSecurityCode("123");
+            requestPage.SubmitButtonClick();
+
+            var repayProcessingPage = new RepayProcessingPage(this.Client);
+
+            var paymentTakenPage = repayProcessingPage.WaitFor<RepayOverduePartpaySuccessPage>() as RepayOverduePartpaySuccessPage;
+            Assert.IsFalse(paymentTakenPage.IsRepayOverduePartpaySuccessPageAmountTokenNotPresent());
+        }
+
+        [Test, AUT(AUT.Uk), Pending("in development, test environments still not ready")]
+        public void RepayOverduePart()
+        {
+            //build L0 loan
+            //string email = Get.RandomEmail();
+            DateTime todayDate = DateTime.Now;
+
+            //var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            //var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
+            var daysShift = 15;
+
+            //time-shift loan so it's in arrears
+            TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
+            ApplicationOperations.RewindApplicationDates(application, daysShiftSpan);
+
+            var loginPage = Client.Login();
+            var myAccountPage = loginPage.LoginAs(email);
+            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+
+            mySummaryPage.RepayButtonClick();
+            var requestPage = new RepayRequestPage(this.Client);
+
+            //Set partial payment amount, test for correct values at same time
+            requestPage.IsRepayRequestPageSliderReturningCorrectValuesOnChange(application.Id.ToString(), "100");
+
+            //Branch point - Add Cv2 for each path and proceed
+            requestPage.setSecurityCode("123");
+            requestPage.SubmitButtonClick();
+
+            var repayProcessingPage = new RepayProcessingPage(this.Client);
+
+            var paymentTakenPage = repayProcessingPage.WaitFor<RepayOverduePartpaySuccessPage>() as RepayOverduePartpaySuccessPage;
+            Assert.IsFalse(paymentTakenPage.IsRepayOverduePartpaySuccessPageAmountTokenNotPresent());
+        }      
+
     }
 }
