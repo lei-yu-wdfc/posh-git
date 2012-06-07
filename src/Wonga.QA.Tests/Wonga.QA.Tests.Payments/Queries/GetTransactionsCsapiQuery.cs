@@ -16,6 +16,7 @@ namespace Wonga.QA.Tests.Payments.Queries
     public class GetTransactionsCsapiQuery
     {
         private dynamic _transactions = Drive.Data.Payments.Db.Transactions;
+
 		[Test, AUT(AUT.Za), JIRA("ZA-2227"), Pending("ZA-2565")]
 		public void GetTransactions_ShouldOnlyShowServiceFeeTransactionsPostedTillPostingDate()
 		{
@@ -58,7 +59,6 @@ namespace Wonga.QA.Tests.Payments.Queries
 			//Assert
 			Assert.AreEqual(1, retrievedTransactionTypes[PaymentTransactionType.ServiceFee]);
 		}
-
 
         [Test, AUT(AUT.Wb), JIRA("SME-375")]
         public void PaymentsShouldReturnAllTransactionsWhenThereAreTransactionsForAGivenApplication()
