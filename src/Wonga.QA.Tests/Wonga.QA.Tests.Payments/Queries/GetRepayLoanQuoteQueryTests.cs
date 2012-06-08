@@ -167,5 +167,39 @@ namespace Wonga.QA.Tests.Payments.Queries
             // Check array
             Assert.AreEqual(110.41M, decimal.Parse(response.Values["Amount"].ToArray()[0]));
         }
+
+        [Test]
+        public void RepayWhenInArrears()
+        {
+            const int dueInDays = 10;
+            var promiseDate = new Date(DateTime.UtcNow.AddDays(dueInDays));
+            var accountId = Guid.NewGuid();
+            var bankAccountId = Guid.NewGuid();
+            var paymentCardId = Guid.NewGuid();
+            var appId = Guid.NewGuid();
+            const decimal trustRating = 400.00M;
+
+            var setupData = new RepayLoanFunctions();
+            setupData.RepayEarlyOnLoanStartDate(appId, paymentCardId, bankAccountId, accountId, trustRating, dueInDays);
+
+            // Rewind dates
+            var app = new Application(appId);
+            app.UpdateAcceptedOnDate(-10);
+            app.MoveTransactionDates(-10);
+            app.UpdateNextDueDate(-1);
+
+            //Call Api Query
+            var response = Drive.Api.Queries.Post(new GetRepayLoanQuoteUkQuery() { ApplicationId = appId });
+            var minRepayAmount = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.RepayLoanMinAmount").Value;
+
+            Assert.AreEqual(appId.ToString(), response.Values["ApplicationId"].Single(), "ApplicationId incorrect");
+            Assert.AreEqual(minRepayAmount, response.Values["SliderMinAmount"].Single(), "SliderMinAmount incorrect");
+            Assert.AreEqual("115.91", response.Values["SliderMaxAmount"].Single(), "SliderMaxAmount incorrect");
+            Assert.AreEqual("-1", response.Values["DaysToDueDate"].Single(), "DaysToDueDate incorrect");
+
+            // Check array
+            Assert.AreEqual(110.91m, decimal.Parse(response.Values["Amount"].ToArray()[0]),"RemainderToRepay Array Element: Amount");
+
+        }
     }
 }
