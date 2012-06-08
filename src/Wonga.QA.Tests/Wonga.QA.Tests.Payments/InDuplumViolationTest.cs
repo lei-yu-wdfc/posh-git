@@ -62,7 +62,8 @@ namespace Wonga.QA.Tests.Payments
 			//Therefore delay is necessay
 			Do.Until(() => app.IsClosed == false);
 
-			var compensatingTransaction = Do.Until(() => _transactions.FindAll(	_transactions.ApplicationId == loanApp.ApplicationId &&
+			//Can take up to 2 mins for transaction to be created
+			var compensatingTransaction = Do.With.Timeout(2).Until(() => _transactions.FindAll(	_transactions.ApplicationId == loanApp.ApplicationId &&
 																				_transactions.Type == PaymentTransactionEnum.WriteOff.ToString())
 																				.FirstOrDefault());
 
