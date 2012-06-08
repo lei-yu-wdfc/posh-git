@@ -47,19 +47,13 @@ namespace Wonga.QA.Tests.Ui
             //var manualRepayPage = repayPage.ManualRepaymentButtonClick();
         }
 
-        [Test, AUT(AUT.Za), Pending("Fancybox is a piece of **** :)")]
+        [Test, AUT(AUT.Za)]
         public void ZaEasyPayRepayment()
         {
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
-            string name = Get.GetName();
-            string surname = Get.RandomString(10);
-            Customer customer = CustomerBuilder
-                .New()
-                .WithEmailAddress(email)
-                .WithForename(name)
-                .WithSurname(surname)
-                .Build();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            var summaryPage = loginPage.LoginAs(email);
             Application application = ApplicationBuilder
                 .New(customer)
                 .Build();
@@ -73,6 +67,11 @@ namespace Wonga.QA.Tests.Ui
             // Wait until the popup opens:
             Do.Until(() => Client.Driver.FindElement(By.CssSelector("#fancybox-content")).Displayed);
 
+            // Check the popup title:
+            Assert.AreEqual("Repay your wonga.com loan with EasyPay", Client.Driver.FindElement(By.CssSelector("h1#repay-your-wonga.com-loan-with-easypay")).Text);
+
+            // Close the popup:
+            Client.Driver.FindElement(By.CssSelector("#fancybox-close")).Click();
             // Check the popup title:
             Assert.AreEqual("Repay your wonga.com loan with EasyPay", Client.Driver.FindElement(By.CssSelector("h1#repay-your-wonga.com-loan-with-easypay")).Text);
 

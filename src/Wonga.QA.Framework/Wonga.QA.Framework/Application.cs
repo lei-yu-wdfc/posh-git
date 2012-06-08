@@ -36,6 +36,10 @@ namespace Wonga.QA.Framework
         private readonly dynamic _transactionsTab = Drive.Data.Payments.Db.Transactions;
 	    private readonly dynamic _loanDueDateNotifiSagaEntityTab = Drive.Data.OpsSagas.Db.LoanDueDateNotificationSagaEntity;
 	    private readonly dynamic _fixedTermLoanSagaEntityTab = Drive.Data.OpsSagas.Db.FixedTermLoanSagaEntity;
+	    private readonly dynamic _scheduledPostAccruedInterestSagaEntityTab = Drive.Data.OpsSagas.Db.ScheduledPostAccruedInterestSagaEntity;
+	    private readonly dynamic _arrearsTab = Drive.Data.Payments.Db.Arrears;
+	    private readonly dynamic _serviceConfigTab = Drive.Data.Ops.Db.ServiceConfigurations;
+        private readonly dynamic _repaymentArrangementsTab = Drive.Data.Payments.Db.RepaymentArrangements;
 
         private static readonly dynamic ServiceConfigTab = Drive.Data.Ops.Db.ServiceConfigurations;
 
@@ -268,29 +272,32 @@ namespace Wonga.QA.Framework
 
         public virtual Application PutApplicationFurtherIntoArrears(uint daysInArrears)
         {
-            Drive.Db.Rewind(Id, (int)daysInArrears);
+            ApplicationOperations.Rewind(Id, (int)daysInArrears);
 
             return this;
         }
 
 		public virtual Application PutApplicationIntoArrears()
 		{
-			ApplicationEntity application = Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id);
-			DateTime dueDate = application.FixedTermLoanApplicationEntity.NextDueDate ??
-							  application.FixedTermLoanApplicationEntity.PromiseDate;
-			RiskApplicationEntity riskApplication = Drive.Db.Risk.RiskApplications.Single(r => r.ApplicationId == Id);
+            var application = _applicationsTab.FindAll(_applicationsTab.ExternalId == Id).Single();
+		    var fixTermLoanApp =
+		        _fixedTermLoanAppTab.FindAll(_fixedTermLoanAppTab.ApplicationId == application.ApplicationId).Single();
+
+		    DateTime dueDate = fixTermLoanApp.NextDueDate ?? fixTermLoanApp.PromiseDate;
+
+            var riskApplication = _riskAppTab.FindAll(_riskAppTab.ApplicationId == Id).Single();
 
 			TimeSpan span = dueDate - DateTime.Today;
 
-			Drive.Db.RewindApplicationDates(application, riskApplication, span);
+			ApplicationOperations.RewindApplicationDates(application, riskApplication, span);
 
             if (Config.AUT == AUT.Ca || Config.AUT == AUT.Za)
             {
-                ScheduledPostAccruedInterestSagaEntity entity = Drive.Db.OpsSagas.ScheduledPostAccruedInterestSagaEntities.Single(a => a.ApplicationGuid == Id);
+                var entity = _scheduledPostAccruedInterestSagaEntityTab.FindAll(_scheduledPostAccruedInterestSagaEntityTab.ApplicationGuid == Id).Single();
                 Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = entity.Id });
             }
 
-            ServiceConfigurationEntity caScotiaMocksEnabled = Drive.Db.Ops.ServiceConfigurations.SingleOrDefault(e => e.Key == "Mocks.ScotiaEnabled");
+            var caScotiaMocksEnabled = _serviceConfigTab.FindAll(_serviceConfigTab.Key == "Mocks.ScotiaEnabled").SingleOrDefault();
 
             if (Config.AUT == AUT.Ca && Boolean.Parse(caScotiaMocksEnabled.Value))
             {
@@ -299,20 +306,20 @@ namespace Wonga.QA.Framework
                                 Reject();
             }
 
-		    FixedTermLoanSagaEntity ftl = Drive.Db.OpsSagas.FixedTermLoanSagaEntities.Single(s => s.ApplicationGuid == Id);
-			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
-			Do.While(ftl.Refresh);
+            var ftl = _fixedTermLoanSagaEntityTab.FindAll(_fixedTermLoanSagaEntityTab.ApplicationGuid == Id).Single();
+            Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
+            _fixedTermLoanSagaEntityTab.Update(ftl);
 
             if (Config.AUT != AUT.Ca || (Config.AUT == AUT.Ca && !Boolean.Parse(caScotiaMocksEnabled.Value)))
             {
-                ScheduledPaymentSagaEntity sp = Do.Until(() => Drive.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationGuid == Id));
+                var sp = Do.Until(() => _scheduledPaymentSagaEntityTab.FindAll(_scheduledPaymentSagaEntityTab.ApplicationGuid == Id).Single());
                 Drive.Msmq.Payments.Send(Config.AUT == AUT.Uk ? new TakePaymentFailedCommand { SagaId = sp.Id, CreatedOn = DateTime.UtcNow, ValueDate = DateTime.UtcNow, PaymentCardId = this.GetCustomer().GetPaymentCard() } :
                                                                 new TakePaymentFailedCommand { SagaId = sp.Id, CreatedOn = DateTime.UtcNow, ValueDate = DateTime.UtcNow });
 
                 Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = sp.Id }); 
             }
 
-			Do.Until(() => Drive.Db.Payments.Arrears.Single(s => s.ApplicationId == application.ApplicationId));
+            Do.Until(() => _arrearsTab.FindAll(_arrearsTab.ApplicationId == application.ApplicationId).Single());
 
 			return this;
 		}
@@ -328,17 +335,27 @@ namespace Wonga.QA.Framework
 			};
 			Drive.Api.Commands.Post(cmd);
 
-			var dbApplication = Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id);
-			Do.Until(() => Drive.Db.Payments.RepaymentArrangements.Single(x => x.ApplicationId == dbApplication.ApplicationId));
+            var dbApplication = _applicationsTab.FindAll(_applicationsTab.ExternalId == Id).Single();
+            Do.Until(() => _repaymentArrangementsTab.FindAll(_repaymentArrangementsTab.ApplicationId == dbApplication.ApplicationId).Single());
 
 			return this;
 		}
 
 		public Decimal GetBalance()
 		{
-			return
-				new DbDriver().Payments.Applications.Single(a => a.ExternalId == Id).Transactions.Where(
-					a => a.Scope != (decimal)PaymentTransactionScopeEnum.Other).Sum(a => a.Amount);
+		    var appId = _applicationsTab.FindAll(_applicationsTab.ExternalId == Id).Single();
+		    var transactions = _transactionsTab.FindAll(_transactionsTab.ApplicationId == appId.ApplicationId);
+		    decimal total = 0;
+
+		    foreach (var amount in transactions)
+		    {
+                if (amount.Scope != (decimal)PaymentTransactionScopeEnum.Other)
+		        {
+                    total += amount.Amount;    
+		        }
+		    }
+
+		    return total;
 		}
 
         public Decimal GetDueDateBalance()

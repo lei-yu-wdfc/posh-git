@@ -1,4 +1,4 @@
-﻿﻿using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using Gallio.Framework.Assertions;
@@ -332,7 +332,7 @@ namespace Wonga.QA.Tests.Ui
             //Runs assertions internally
             requestPage.IsRepayRequestPageSliderReturningCorrectValuesOnChange(application.Id.ToString(), "50");
         }
-
+        
         [Test, AUT(AUT.Uk), JIRA("UKWEB-247"), Pending("In development")]
         public void RepayEarlyFull()
         {
@@ -363,7 +363,7 @@ namespace Wonga.QA.Tests.Ui
             //TODO: Check that Interest Saved calculation is correct
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1827", "UKWEB-248")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-247"), Pending("In development")]
         public void RepayEarlyPart()
         {
             // Build L0 loan

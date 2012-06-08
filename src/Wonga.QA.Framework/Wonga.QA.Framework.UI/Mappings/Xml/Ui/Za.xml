@@ -299,5 +299,5 @@
     <DurationMinusButton>.wonga-duration-slider-wrapper .sliderminus</DurationMinusButton>
     <DurationPlusButton>.wonga-duration-slider-wrapper .sliderplus</DurationPlusButton>
   </SlidersElement>
-
+  
 </UiMap>
