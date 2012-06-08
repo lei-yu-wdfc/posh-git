@@ -601,6 +601,24 @@ namespace Wonga.QA.Tests.Ui
             }
             var dealDone = acceptedPage.Submit();
         }
+        [Test, AUT(AUT.Wb), JIRA("QA-292")]  
+        public void ChooseLoanAmountAndDurationViaSlidersMotion()
+        {
+            var homePage = Client.Home();
+            homePage.Sliders.MoveAmountSlider = Get.RandomInt(_amountMin, _amountMax);
+            homePage.Sliders.MoveDurationSlider = Get.RandomInt(_termMin, _termMax);
+
+            try
+            {
+                var totalToRepay = homePage.Sliders.GetTotalToRepay;
+                Console.WriteLine(totalToRepay);
+            }
+            catch
+            {
+                
+            }
+            homePage.Sliders.Apply();
+        }
 
         #region Helpers
 
