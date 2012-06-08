@@ -52,6 +52,7 @@
     <Compile Include="Command\SavePaymentCardBillingAddress.cs" />
     <Compile Include="Command\SetAccountPaymentMethodCommandCaTests.cs" />
     <Compile Include="Command\TakePaymentManualCsCommandTests.cs" />
+    <Compile Include="DelayBeforeApplicationClosedInMinutes.cs" />
     <Compile Include="ExternalDebtCollectionOnFailedRepresentmentTests.cs" />
     <Compile Include="CsapiCreateTransactionTest.cs" />
     <Compile Include="EarlyRepaymentTests.cs" />
