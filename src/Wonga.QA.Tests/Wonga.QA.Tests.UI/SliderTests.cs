@@ -24,7 +24,7 @@ namespace Wonga.QA.Tests.Ui
     /// </summary>
     /// 
     [Parallelizable(TestScope.All)]
-    internal class SliderTests : UiTest
+    class SliderTests : UiTest
     {
         private int _amountMax;
         private int _amountMin;
