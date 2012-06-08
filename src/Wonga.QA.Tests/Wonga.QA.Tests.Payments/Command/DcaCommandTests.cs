@@ -41,7 +41,7 @@ namespace Wonga.QA.Tests.Payments.Command
 			Drive.Data.Ops.SetServiceConfiguration(BankGatewayIsTestModeKey, _bankGatewayIsTestMode);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2147")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2147"), Pending("ZA-2565")]
 		public void FlagApplicationToDca_ShouldMoveApplicationToDCA()
 		{
 			//Arrange
@@ -51,7 +51,7 @@ namespace Wonga.QA.Tests.Payments.Command
 			FlagDca(app.Id);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2147")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2147"), Pending("ZA-2565")]
 		[ExpectedException(typeof(ValidatorException), "Payments_FlagToDca_ApplicationDoesNotExist")]
 		public void FlagApplicationToDca_ForNonExistingApplication_ExpectValidationException()
 		{
