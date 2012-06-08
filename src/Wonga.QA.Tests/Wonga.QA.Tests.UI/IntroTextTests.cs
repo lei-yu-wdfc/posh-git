@@ -633,9 +633,9 @@ namespace Wonga.QA.Tests.Ui
             var cus = application.GetCustomer();
 
 
-            //decimal amt = 20;
-            //application.RepayEarly(amt, 2);
-            application.GetBalance();
+            decimal amt = 20;
+            application.RepayEarly(amt, 2);
+            //application.RepayEarly()
 
             bool value = application.IsClosed;
         }
