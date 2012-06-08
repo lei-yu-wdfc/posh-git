@@ -376,7 +376,7 @@ namespace Wonga.QA.Framework
 
 		public Application RepayEarly(decimal amount, int dayOfLoanToMakeRepayment)
 		{
-            Drive.Db.RewindToDayOfLoanTerm(Id, dayOfLoanToMakeRepayment);
+            ApplicationOperations.RewindToDayOfLoanTerm(Id, dayOfLoanToMakeRepayment);
 
 			Guid repaymentRequestId = Guid.NewGuid();
 

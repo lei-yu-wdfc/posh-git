@@ -144,5 +144,72 @@ namespace Wonga.QA.Framework
                 appTab.Update(app);
             }
         }
+
+        public static void RewindToDayOfLoanTerm(Guid applicationId, int dayOfLoanTerm)
+        {
+            var daysToRewind = GetAbsoluteDaysToRewind(dayOfLoanTerm);
+
+            Rewind(applicationId, daysToRewind);
+        }
+
+        public static int GetAbsoluteDaysToRewind(int dayOfLoanToMakeRepayment)
+        {
+            int daysUntilStartOfLoan = GetNumberOfDaysUntilStartOfLoan();
+
+            int daysToRewind = daysUntilStartOfLoan + dayOfLoanToMakeRepayment - 1;
+            return daysToRewind;
+        }
+
+        public static int GetNumberOfDaysUntilStartOfLoan(DateTime? loanCreatedOn = null)
+        {
+            switch (Config.AUT)
+            {
+                case AUT.Ca:
+                    {
+                        if (!loanCreatedOn.HasValue)
+                            loanCreatedOn = DateTime.Now;
+
+                        // In CA loans start the day after the loan is created
+                        DateTime firstDayOfLoan = GetNextWorkingDay(new Date(loanCreatedOn.Value.AddDays(1)));
+
+                        return (int)(firstDayOfLoan.Subtract(loanCreatedOn.Value)).TotalDays;
+                    }
+                default:
+                    {
+                        return 0;
+                    }
+            }
+        }
+
+        public static Date GetNextWorkingDay(Date date)
+        {
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    {
+                        if (date.DateTime.DayOfWeek == DayOfWeek.Sunday) date.DateTime = date.DateTime.AddDays(1);
+                        while (IsHoliday(date)) date.DateTime = date.DateTime.AddDays(1);
+                        return date;
+                    }
+
+                default:
+                    {
+                        if (date.DateTime.DayOfWeek == DayOfWeek.Saturday) date.DateTime = date.DateTime.AddDays(2);
+                        if (date.DateTime.DayOfWeek == DayOfWeek.Sunday) date.DateTime = date.DateTime.AddDays(1);
+                        while (IsHoliday(date)) date.DateTime = date.DateTime.AddDays(1);
+                        return date;
+                    }
+            }
+        }
+
+        public static bool IsHoliday(Date date)
+        {
+            // can't seem to also include IsBankHoliday column... works fine without it checked with the dates in the CalendarDates Table
+            var calendarDatesTab = Drive.Data.Payments.Db.CalendarDates;
+            return calendarDatesTab.FindAll(calendarDatesTab.Date == date).Any();
+            
+            
+            //new DbDriver().Payments.CalendarDates.Any(a => a.IsBankHoliday && a.Date == date);
+        }
     }
 }
