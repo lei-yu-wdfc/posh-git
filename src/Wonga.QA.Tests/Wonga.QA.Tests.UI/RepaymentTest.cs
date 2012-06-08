@@ -53,7 +53,6 @@ namespace Wonga.QA.Tests.Ui
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            Application application = ApplicationBuilder.New(customer).Build();
             var summaryPage = loginPage.LoginAs(email);
             Application application = ApplicationBuilder
                 .New(customer)

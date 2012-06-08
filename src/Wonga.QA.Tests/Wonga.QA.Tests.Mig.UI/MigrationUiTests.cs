@@ -18,6 +18,12 @@ namespace Wonga.QA.Tests.Mig.UI
         private int _amountMin;
         //private string _repaymentDate;
         private ApiResponse _response;
+
+        public MigrationUiTests(ApiResponse response)
+        {
+            _response = response;
+        }
+
         //private DateTime _actualDate;
 
         [Test, AUT(AUT.Za), Pending("in development, test environments still not ready")]
