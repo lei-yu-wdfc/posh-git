@@ -17,13 +17,14 @@ namespace Wonga.QA.Tests.Payments
 		private readonly dynamic _repaymentAccountsTable = Drive.Data.Payments.Db.RepaymentAccount;
 		private Application _application;
 		private string _easyPayNumber;
+		private const decimal LoanAmount = 500;
 		private const decimal PartialRepayAmount = 10;
 
 		[FixtureSetUp]
 		public void FixtureSetUp()
 		{
 			var customer = CustomerBuilder.New().Build();
-			_application = ApplicationBuilder.New(customer).Build();
+			_application = ApplicationBuilder.New(customer).WithLoanAmount(LoanAmount).Build();
 			_easyPayNumber = GetEasyPayNumber(customer);
 		}
 
@@ -47,6 +48,7 @@ namespace Wonga.QA.Tests.Payments
 		[Test, AUT(AUT.Za), JIRA("ZA-2395"), DependsOn("RepayUsingEasyPayPartialRepaymentBeforeDueDateDoesntCloseApplication")]
 		public void RepayUsingEasyPayFullRepaymentBeforeDueDateClosesApplication()
 		{
+			Do.Until(() => _application.GetBalance() > LoanAmount); //Race condition where loan amount can equal balance
 			var balance = _application.GetBalanceToday();
 			RepayWithEasyPay(_easyPayNumber, null, DateTime.UtcNow.Date, balance);
 
