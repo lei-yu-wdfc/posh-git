@@ -5,6 +5,7 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Msmq;
+using Wonga.QA.Framework.ThirdParties;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
 using AddPaymentCardCommand = Wonga.QA.Framework.Api.AddPaymentCardCommand;
@@ -16,32 +17,41 @@ namespace Wonga.QA.Tests.Comms.Email
     public class CancelExtensionLoanEmailTests
     {
         private LoanExtensionEntity _extension;
-        private readonly dynamic _applications = Drive.Data.Payments.Db.Applications;
+        private readonly Guid _clientId = Guid.NewGuid();
         private Guid _accountId;
         private Guid _applicationId;
+        private Salesforce _salesForce;
 
         public CancelExtensionLoanEmailTests()
         {
+            _salesForce = Drive.ThirdParties.Salesforce;
+
+            var sfUsername = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == "Salesforce.UserName");
+            var sfPassword = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == "Salesforce.Password");
+            var sfUrl = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == "Salesforce.Url");
+
+            _salesForce.SalesforceUsername = sfUsername.Value;
+            _salesForce.SalesforcePassword = sfPassword.Value;
+            _salesForce.SalesforceUrl = sfUrl.Value;
+
             _extension = CreateLoanAndExtend(); //run once for all tests.
+
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1281")]
-        [Row(2, "Extension Secci")]
-        [Row(3, "Extension Agreement")]
-        [Row(20, "Extension AE Document")]
-        public void CreateLoanExtensionDocumentsTest(int documentType)
+        [Test]
+        [AUT(AUT.Uk)]
+        public void CreateLoanExtensionDocumentsTest()
         {
             //At this point the loan has been extended.. now cancel it.
             Drive.Msmq.Payments.Send(new CancelExtensionCommand { AccountId = _accountId, 
                                                                   ApplicationId = _applicationId, 
                                                                   ExtensionId = _extension.ExternalId });
-
+            
             //We should see salesforce activity recording a cancellation message.
-            //dynamic salesforce = null;
+            var sfContactId = Do.Until(() => (string)Drive.Data.Salesforce.Db.SalesforceAccounts.FindByAccountId(_accountId).SalesforceId);
 
-            //Assert.DoesNotThrow(() => salesforce = Do.Until(() => Drive.Data.Salesforce.Db.Find(ExtensionId: extensionId, DocumentType: documentType))
-            //    , "ExtensionDocument not found for extension Id: {0} and docuemnt type:{1}", extensionId, documentType);
-
+            Assert.DoesNotThrow(() => Do.Until(() => _salesForce.GetTask(sfContactId, "WhatId", "Email", "Loan extension cancelled.") != null),
+                                "Extension Cancellation activity not found in salesforce for application id: {0} extension Id: {1}", _applicationId, _extension.ExternalId);
         }
 
         private LoanExtensionEntity CreateLoanAndExtend()
@@ -54,9 +64,9 @@ namespace Wonga.QA.Tests.Comms.Email
             var extensionId = Guid.NewGuid();
 
             var setupData = new AccountSummarySetupFunctions();
-            var clientId = Guid.NewGuid();
+            
 
-            CreateCommsData(clientId, _accountId);
+            CreateCommsData(_clientId, _accountId);
 
             setupData.Scenario03Setup(_applicationId, paymentCardId, bankAccountId, _accountId, trustRating);
 
