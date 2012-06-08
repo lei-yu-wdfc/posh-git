@@ -5,6 +5,7 @@ using System.Text;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db.OpsSagasCa;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.BankGateway.Enums;
 using Wonga.QA.Tests.Core;
@@ -14,7 +15,9 @@ namespace Wonga.QA.Tests.Payments
     public class DelayBeforeApplicationClosedInMinutes
     {
         private readonly dynamic _bgTrans = Drive.Data.BankGateway.Db.Transactions;
-        private readonly dynamic _opsSagasTakeBankPaymentInternalSagaEntity = Drive.Data.OpsSagas.Db.TakeBankPaymentInternalSagaEntity;
+
+        private readonly dynamic _opsSagasTakeBankPaymentInternalSagaEntity =
+            Drive.Db.OpsSagasCa.TakeBankPaymentInternalSagaEntities;
 
         [FixtureSetUp]
         public void FixtureSetUp()
@@ -45,8 +48,12 @@ namespace Wonga.QA.Tests.Payments
 
             application.PutApplicationFurtherIntoArrears(3);
 
-            var batchSaga = Do.Until(() => _opsSagasTakeBankPaymentInternalSagaEntity.FindByApplicationId(application.Id));
-            Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = batchSaga.Id });
+            TakeBankPaymentInternalSagaEntity takeBankPaymentInternalSaga = Do.Until(() => Drive.Db.OpsSagasCa.TakeBankPaymentInternalSagaEntities.Single(r => r.ApplicationId == application.Id));
+
+            takeBankPaymentInternalSaga.PaymentTakenOnDate -= new TimeSpan(3, 0, 0, 0);
+            takeBankPaymentInternalSaga.Submit(true);
+
+            Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = takeBankPaymentInternalSaga.Id });
 
             Do.Until(() => application.IsClosed);
         }
