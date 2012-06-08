@@ -131,6 +131,13 @@
     <PopupErrorMessage>#fancybox-content div.messages.error ul li:first-child</PopupErrorMessage>
   </MyPersonalDetailsPage>
 
+  <PersonalDetailsPage>
+    <AmountMinusButton>.wonga-amount-slider-wrapper .sliderminus</AmountMinusButton>
+    <AmountPlusButton>.wonga-amount-slider-wrapper .sliderplus</AmountPlusButton>
+    <DurationMinusButton>.wonga-duration-slider-wrapper .sliderminus</DurationMinusButton>
+    <DurationPlusButton>.wonga-duration-slider-wrapper .sliderplus</DurationPlusButton>
+  </PersonalDetailsPage>
+  
   <ChangeMyAddressElement>
     <Title>#change-my-address</Title>
     <Flat>#edit-flat-za</Flat>
