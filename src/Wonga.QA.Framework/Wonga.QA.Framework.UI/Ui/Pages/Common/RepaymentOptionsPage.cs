@@ -53,13 +53,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             return printWindow;
         }
 
-        public String HowToUseEasyPayLinkClick
+        public IWebElement HowToUseEasyPayLink
         {
-            get
-            {
-                _howToUseEasyPayLink.Click();
-                return null;
-            }
+            get { return _howToUseEasyPayLink; }
         }
 
         public DebitOrderPage DebitOrderButtonClick()

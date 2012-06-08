@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using MbUnit.Framework;
 using NHamcrest.Core;
 using OpenQA.Selenium;
@@ -38,6 +39,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public IApplyPage ContinueToMyAccount()
         {
+            Thread.Sleep(2000);
             _continueButton.Click();
             return Do.Until(() => new MySummaryPage(Client));
         }
