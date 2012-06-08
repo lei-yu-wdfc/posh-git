@@ -127,13 +127,6 @@
     <PopupErrorMessage>#fancybox-content div.messages.error ul li:first-child</PopupErrorMessage>
   </MyPersonalDetailsPage>
 
-  <PersonalDetailsPage>
-    <AmountMinusButton>.wonga-amount-slider-wrapper .sliderminus</AmountMinusButton>
-    <AmountPlusButton>.wonga-amount-slider-wrapper .sliderplus</AmountPlusButton>
-    <DurationMinusButton>.wonga-duration-slider-wrapper .sliderminus</DurationMinusButton>
-    <DurationPlusButton>.wonga-duration-slider-wrapper .sliderplus</DurationPlusButton>
-  </PersonalDetailsPage>
-  
   <ChangeMyAddressElement>
     <Title>#change-my-address</Title>
     <Flat>#edit-flat-za</Flat>
@@ -218,23 +211,5 @@
     <MyPersonalDetailsButton>.menu-block-0 .menu li:first-child + li>a</MyPersonalDetailsButton>
     <MyPaymentDetailsButton>.menu-block-0 .menu li:first-child + li + li>a</MyPaymentDetailsButton>    
   </MySummaryPageMobile>
-  
-
-  <SlidersElement>
-    <FormId>#wonga-sliders-form</FormId>
-    <AmountSlider>.wonga-amount-slider-wrapper .sliderbit</AmountSlider>
-    <DurationSlider>.wonga-duration-slider-wrapper .sliderbit</DurationSlider>
-    <LoanAmount>#edit-loan-amount</LoanAmount>
-    <LoanDuration>#edit-loan-duration</LoanDuration>
-    <SubmitButton>#edit-submit</SubmitButton>
-    <TotalAmount>span.loan-amount</TotalAmount>
-    <TotalFees>span.loan-fees</TotalFees>
-    <TotalToRepay>span.loan-total</TotalToRepay>
-    <RepaymentDate>span.repayment-date</RepaymentDate>
-    <AmountMinusButton>.wonga-amount-slider-wrapper .sliderminus</AmountMinusButton>
-    <AmountPlusButton>.wonga-amount-slider-wrapper .sliderplus</AmountPlusButton>
-    <DurationMinusButton>.wonga-duration-slider-wrapper .sliderminus</DurationMinusButton>
-    <DurationPlusButton>.wonga-duration-slider-wrapper .sliderplus</DurationPlusButton>
-  </SlidersElement>
   
 </UiMap>
