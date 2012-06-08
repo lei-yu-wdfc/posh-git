@@ -23,7 +23,7 @@ public class MbUnitConfig
                 TestAssemblyExecutionParameters.DegreeOfParallelism = 1;
                 break;
 			case (AUT.Za):
-				TestAssemblyExecutionParameters.DegreeOfParallelism = 4;
+				TestAssemblyExecutionParameters.DegreeOfParallelism = 6;
         		break;
             default:
                 TestAssemblyExecutionParameters.DegreeOfParallelism = Environment.ProcessorCount;
