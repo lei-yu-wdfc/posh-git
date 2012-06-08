@@ -18,5 +18,10 @@ namespace Wonga.QA.Framework.Core
                 action(t);
             return list;
         }
+
+		public static string ToPaymentCardDate(this DateTime value)
+		{
+			return value.ToString("yyyy-MM");
+		}
     }
 }
