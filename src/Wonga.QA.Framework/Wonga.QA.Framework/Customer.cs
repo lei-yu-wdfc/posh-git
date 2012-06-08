@@ -70,16 +70,27 @@ namespace Wonga.QA.Framework
         {
             AddPaymentCardCommand cmd = AddPaymentCardCommand.New(r =>
             {
-                r.AccountId = this.Id;
+                r.AccountId = Id;
                 r.Number = cardNumber;
                 r.IsPrimary = isPrimary;
                 r.SecurityCode = securityCode;
-                r.ExpiryDate = expiryDate.ToString("yyyy-MM");
+				r.ExpiryDate = expiryDate.ToPaymentCardDate();
                 r.CardType = cardType;
             });
             Drive.Api.Commands.Post(cmd);
+
+        	RiskAddPaymentCardCommand riskCommand = RiskAddPaymentCardCommand.New(r =>
+        	                                                                      	{
+        	                                                                      		r.AccountId = Id;
+        	                                                                      		r.Number = cardNumber;
+        	                                                                      		r.SecurityCode = securityCode;
+																						r.ExpiryDate = expiryDate.ToPaymentCardDate();
+        	                                                                      		r.CardType = cardType;
+        	                                                                      	});
+			Drive.Api.Commands.Post(riskCommand);
+
             Do.Until(() => Drive.Db.Payments.PersonalPaymentCards
-                         .Single(c => c.AccountId == this.Id
+                         .Single(c => c.AccountId == Id
                                       && c.PaymentCardsBaseEntity.Type == cardType
                                       && c.PaymentCardsBaseEntity.MaskedNumber == cardNumber.MaskedCardNumber()));
         }

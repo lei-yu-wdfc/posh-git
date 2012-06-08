@@ -539,6 +539,11 @@ namespace Wonga.QA.Framework
 						                                  r.AccountId = _id;
 						                                  r.Number = _paymentCardNumber;
 						                              }),
+						RiskAddPaymentCardCommand.New(r =>
+						                              {
+						                                  r.AccountId = _id;
+						                                  r.Number = _paymentCardNumber;
+						                              }),
                         VerifyMobilePhoneUkCommand.New(r=>
                                                            {
                                                                r.AccountId = _id;
@@ -600,7 +605,16 @@ namespace Wonga.QA.Framework
 						                                  r.Number = _paymentCardNumber;
 						                                  r.HolderName = String.Format("{0} {1}", _foreName, _surname);
                                                           r.IsPrimary = true;
-						                                  r.ExpiryDate = DateTime.Today.AddYears(2).ToString(@"yyyy-MM");
+						                                  r.ExpiryDate = DateTime.Today.AddYears(2).ToPaymentCardDate();
+						                                  r.SecurityCode = _paymentCardSecurityCode;
+						                                  r.CardType = _paymentCardType;
+						                              }),
+						RiskAddPaymentCardCommand.New(r =>
+						                              {
+						                                  r.AccountId = _id;
+						                                  r.Number = _paymentCardNumber;
+						                                  r.HolderName = String.Format("{0} {1}", _foreName, _surname);
+														  r.ExpiryDate = DateTime.Today.AddYears(2).ToPaymentCardDate();
 						                                  r.SecurityCode = _paymentCardSecurityCode;
 						                                  r.CardType = _paymentCardType;
 						                              }),
