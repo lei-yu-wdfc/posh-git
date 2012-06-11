@@ -66,4 +66,9 @@
 		<MsBuild Condition="'$(Files)'==''" Projects="$(MSBuildProjectFullPath)" Targets="Test" Properties="Files=Meta" />
 		<CallTarget Targets="Test" />
 	</Target>
+	
+	<Target Name="Sandbox">
+		<CallTarget Targets="Config;Build;PreGenerateSerializers" />
+		<MsBuild Projects="$(MSBuildProjectFullPath)" Targets="Test" Properties="Files=Ui;TestFilter=Category:Sandbox" />
+	</Target>
 </Project>
