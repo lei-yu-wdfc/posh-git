@@ -3,9 +3,9 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Api
 {
-    /// <summary> Wonga.Risk.Commands.Pl.RiskSaveCustomerAddress </summary>
+    /// <summary> Wonga.Risk.Commands.Za.RiskSaveCustomerAddress </summary>
     [XmlRoot("RiskSaveCustomerAddress")]
-    public partial class RiskSaveCustomerAddressCommand : ApiRequest<RiskSaveCustomerAddressCommand>
+    public partial class RiskSaveCustomerAddressZaCommand : ApiRequest<RiskSaveCustomerAddressZaCommand>
     {
         public Object AddressId { get; set; }
         public Object AccountId { get; set; }
@@ -18,6 +18,5 @@ namespace Wonga.QA.Framework.Api
         public Object County { get; set; }
         public Object Postcode { get; set; }
         public Object CountryCode { get; set; }
-        public Object Province { get; set; }
     }
 }

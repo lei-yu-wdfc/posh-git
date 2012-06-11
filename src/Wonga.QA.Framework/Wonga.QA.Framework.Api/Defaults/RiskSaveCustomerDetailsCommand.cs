@@ -18,10 +18,6 @@ namespace Wonga.QA.Framework.Api
 			Gender = Get.RandomEnum<GenderEnum>();
 			HomePhone = "0210000000";
 			WorkPhone = "0210000000";
-			MobilePhone = "0210000000";
-
-			if ((GenderEnum)Gender != GenderEnum.Female)
-				MaidenName = null;
 		}
 	}
 }
