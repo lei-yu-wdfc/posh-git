@@ -46,7 +46,7 @@ namespace Wonga.QA.Tests.Payments
                                                    _bgTrans.TransactionStatus ==
                                                    (int)BankGatewayTransactionStatus.Paid) == 2);
 
-            application.PutApplicationFurtherIntoArrears(3);
+            application.RewindApplicationFurther(3);
 
             TakeBankPaymentInternalSagaEntity takeBankPaymentInternalSaga = Do.Until(() => Drive.Db.OpsSagasCa.TakeBankPaymentInternalSagaEntities.Single(r => r.ApplicationId == application.Id));
 

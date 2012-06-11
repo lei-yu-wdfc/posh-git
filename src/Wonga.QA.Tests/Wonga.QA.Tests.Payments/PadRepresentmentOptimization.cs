@@ -163,7 +163,7 @@ namespace Wonga.QA.Tests.Payments
             var numOfDaysToNextPayDateForRepresentmentTwo = (int)nextPayDateForRepresentmentTwo.Subtract(currentDateForRepresentmentTwo).TotalDays;
 
             TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentTwo);
-            application.PutApplicationFurtherIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentTwo);
+            application.RewindApplicationFurther((uint)numOfDaysToNextPayDateForRepresentmentTwo);
             TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
 
             Do.Until(() => (int)_bgTrans.GetCount(_bgTrans.ApplicationId == application.Id &&
@@ -236,7 +236,7 @@ namespace Wonga.QA.Tests.Payments
             var numOfDaysToNextPayDateForRepresentmentTwo = (int)nextPayDateForRepresentmentTwo.Subtract(currentDateForRepresentmentTwo).TotalDays;
 
             TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentTwo);
-            application.PutApplicationFurtherIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentTwo);
+            application.RewindApplicationFurther((uint)numOfDaysToNextPayDateForRepresentmentTwo);
 
             ScotiaResponseBuilder.New().
                 ForBankAccountNumber(customer.BankAccountNumber).
@@ -312,7 +312,7 @@ namespace Wonga.QA.Tests.Payments
             var numOfDaysToNextPayDateForRepresentmentTwo = (int)nextPayDateForRepresentmentTwo.Subtract(currentDateForRepresentmentTwo).TotalDays;
 
             TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentTwo);
-            application.PutApplicationFurtherIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentTwo);
+            application.RewindApplicationFurther((uint)numOfDaysToNextPayDateForRepresentmentTwo);
             TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
 
             Do.Until(() => (int)_bgTrans.GetCount(_bgTrans.ApplicationId == application.Id &&
@@ -339,7 +339,7 @@ namespace Wonga.QA.Tests.Payments
             var numOfDaysToNextPayDateForRepresentmentThree = (int)nextPayDateForRepresentmentThree.Subtract(currentDateForRepresentmentThree).TotalDays;
 
             TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentThree);
-            application.PutApplicationFurtherIntoArrears((uint) numOfDaysToNextPayDateForRepresentmentThree);
+            application.RewindApplicationFurther((uint) numOfDaysToNextPayDateForRepresentmentThree);
             TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
 
             Do.Until(() => (int)_bgTrans.GetCount(_bgTrans.ApplicationId == application.Id &&
@@ -410,7 +410,7 @@ namespace Wonga.QA.Tests.Payments
             var numOfDaysToNextPayDateForRepresentmentTwo = (int)nextPayDateForRepresentmentTwo.Subtract(currentDateForRepresentmentTwo).TotalDays;
 
             TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentTwo);
-            application.PutApplicationFurtherIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentTwo);
+            application.RewindApplicationFurther((uint)numOfDaysToNextPayDateForRepresentmentTwo);
             TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
 
             Do.Until(() => (int)_bgTrans.GetCount(_bgTrans.ApplicationId == application.Id &&
@@ -437,7 +437,7 @@ namespace Wonga.QA.Tests.Payments
             var numOfDaysToNextPayDateForRepresentmentThree = (int)nextPayDateForRepresentmentThree.Subtract(currentDateForRepresentmentThree).TotalDays;
 
             TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentThree);
-            application.PutApplicationFurtherIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentThree);
+            application.RewindApplicationFurther((uint)numOfDaysToNextPayDateForRepresentmentThree);
 
             ScotiaResponseBuilder.New().
                 ForBankAccountNumber(customer.BankAccountNumber).
