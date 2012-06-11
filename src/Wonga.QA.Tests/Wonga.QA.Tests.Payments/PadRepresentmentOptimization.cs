@@ -203,7 +203,7 @@ namespace Wonga.QA.Tests.Payments
             const decimal principle = 100;
             const decimal interest = 10;
             const decimal defaultCharge = 20;
-            var customer = CustomerBuilder.New().Build();
+            var customer = CustomerBuilder.New().WithIncomeFrequency(IncomeFrequencyEnum.BiWeekly).Build();
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
 
             var nextPayDateForRepresentmentOne = CalculateNextPayDateFunctionsCa.CalculateNextPayDate(DateTime.Today, Convert.ToDateTime(customer.GetNextPayDate()),
@@ -279,7 +279,7 @@ namespace Wonga.QA.Tests.Payments
             const decimal principle = 100;
             const decimal interest = 10;
             const decimal defaultCharge = 20;
-            var customer = CustomerBuilder.New().Build();
+            var customer = CustomerBuilder.New().WithIncomeFrequency(IncomeFrequencyEnum.BiWeekly).Build();
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
 
             var nextPayDateForRepresentmentOne = CalculateNextPayDateFunctionsCa.CalculateNextPayDate(DateTime.Today, Convert.ToDateTime(customer.GetNextPayDate()),
@@ -377,7 +377,7 @@ namespace Wonga.QA.Tests.Payments
             const decimal principle = 100;
             const decimal interest = 10;
             const decimal defaultCharge = 20;
-            var customer = CustomerBuilder.New().Build();
+            var customer = CustomerBuilder.New().WithIncomeFrequency(IncomeFrequencyEnum.BiWeekly).Build();
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
 
             var nextPayDateForRepresentmentOne = CalculateNextPayDateFunctionsCa.CalculateNextPayDate(DateTime.Today, Convert.ToDateTime(customer.GetNextPayDate()),
