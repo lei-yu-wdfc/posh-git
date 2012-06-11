@@ -47,33 +47,25 @@ namespace Wonga.QA.Tests.Ui
             //var manualRepayPage = repayPage.ManualRepaymentButtonClick();
         }
 
-        [Test, AUT(AUT.Za)]
+        [Test, AUT(AUT.Za), Pending("Fancybox is a piece of **** :)")]
         public void ZaEasyPayRepayment()
         {
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            var summaryPage = loginPage.LoginAs(email);
-            Application application = ApplicationBuilder
-                .New(customer)
-                .Build();
+            ApplicationBuilder.New(customer).Build();
             var mySummaryPage = loginPage.LoginAs(email);
             var repayPage = mySummaryPage.RepayClick();
-            //Thread.Sleep(20000);
-
+           
             // Open the "How to use easypay" modal popup and check the title is correct - ZA-2587:
-            var easyPayHowToUsePopup = repayPage.HowToUseEasyPayLinkClick;
+            repayPage.HowToUseEasyPayLink.Click();
 
             // Wait until the popup opens:
-            Do.Until(() => Client.Driver.FindElement(By.CssSelector("#fancybox-content")).Displayed);
+            var popUp = Client.Driver.FindElement(By.CssSelector("div#fancybox-content"));
+            Do.Until(() => popUp.Displayed);
 
-            // Check the popup title:
-            Assert.AreEqual("Repay your wonga.com loan with EasyPay", Client.Driver.FindElement(By.CssSelector("h1#repay-your-wonga.com-loan-with-easypay")).Text);
-
-            // Close the popup:
-            Client.Driver.FindElement(By.CssSelector("#fancybox-close")).Click();
-            // Check the popup title:
-            Assert.AreEqual("Repay your wonga.com loan with EasyPay", Client.Driver.FindElement(By.CssSelector("h1#repay-your-wonga.com-loan-with-easypay")).Text);
+            var text = popUp.Text;
+            Assert.IsTrue(text.Contains("Repay your wonga.com loan with EasyPay"));
 
             // Close the popup:
             Client.Driver.FindElement(By.CssSelector("#fancybox-close")).Click();
