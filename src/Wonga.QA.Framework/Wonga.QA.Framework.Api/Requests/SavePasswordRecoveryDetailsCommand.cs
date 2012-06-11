@@ -10,5 +10,6 @@ namespace Wonga.QA.Framework.Api
         public Object AccountId { get; set; }
         public Object SecretQuestion { get; set; }
         public Object SecretAnswer { get; set; }
+        public Object MotherMaidenName { get; set; }
     }
 }

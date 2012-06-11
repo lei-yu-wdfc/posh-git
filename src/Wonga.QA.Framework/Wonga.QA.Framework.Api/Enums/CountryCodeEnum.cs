@@ -7,5 +7,6 @@ namespace Wonga.QA.Framework.Api
         UK,
         US,
         ZA,
+        PL,
     }
 }

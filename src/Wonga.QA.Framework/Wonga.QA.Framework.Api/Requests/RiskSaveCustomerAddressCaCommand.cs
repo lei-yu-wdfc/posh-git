@@ -3,9 +3,9 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Api
 {
-    /// <summary> Wonga.Risk.Commands.Pl.RiskSaveCustomerAddress </summary>
+    /// <summary> Wonga.Risk.Commands.Ca.RiskSaveCustomerAddress </summary>
     [XmlRoot("RiskSaveCustomerAddress")]
-    public partial class RiskSaveCustomerAddressCommand : ApiRequest<RiskSaveCustomerAddressCommand>
+    public partial class RiskSaveCustomerAddressCaCommand : ApiRequest<RiskSaveCustomerAddressCaCommand>
     {
         public Object AddressId { get; set; }
         public Object AccountId { get; set; }
