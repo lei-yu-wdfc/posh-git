@@ -66,7 +66,7 @@ namespace Wonga.QA.Framework.SMO
         /// <param name="serverName">Name of the server to connect to</param>
         /// <param name="jobName">Name of the job to check the status of</param>
         /// <returns>The SMO/Agent Job Execution status</returns>
-        public Microsoft.SqlServer.Management.Smo.Agent.JobExecutionStatus CheckJobStatus(string jobName)
+        public static Microsoft.SqlServer.Management.Smo.Agent.JobExecutionStatus CheckJobStatus(string jobName)
         {
             Server srv = new Server(Drive.Data.NameOfServer);
 
@@ -77,6 +77,29 @@ namespace Wonga.QA.Framework.SMO
 
         }
 
+        /// <summary>
+        /// Check if the job is enabled
+        /// </summary>
+        /// <param name="jobName">Enter the job name</param>
+        /// <returns></returns>
+        public static bool CheckIsJobEnabled(string jobName)
+        {
+
+            Server srv = new Server(Drive.Data.NameOfServer);
+
+            JobServer sqlServerAgent = srv.JobServer;
+            Job specificJob = sqlServerAgent.Jobs[jobName];
+
+            return specificJob.IsEnabled;
+
+        }
+
+        /// <summary>
+        /// Check to see if a SQL Server agent job has run after a specific time
+        /// </summary>
+        /// <param name="jobName">The name of the job to check</param>
+        /// <param name="checkStartTime">The time</param>
+        /// <returns></returns>
         public static bool CheckIfJobRunAfter(string jobName, DateTime checkStartTime)
         {
 
@@ -86,6 +109,10 @@ namespace Wonga.QA.Framework.SMO
 
         }
 
+        /// <summary>
+        /// Disable a particular job
+        /// </summary>
+        /// <param name="jobName">The name of the job to disable</param>
         public static void DisableJob(string jobName)
         {
 
@@ -96,20 +123,31 @@ namespace Wonga.QA.Framework.SMO
 
         }
 
-        public static void EnableJob(string serverName, string jobName)
+        /// <summary>
+        /// Enable a particular job
+        /// </summary>
+        /// <param name="jobName">The name of the job to enable</param>
+        public static void EnableJob(string jobName)
         {
 
-            Server srv = new Server(serverName);
+            Server srv = new Server(Drive.Data.NameOfServer);
             Job jb = new Job(srv.JobServer, jobName);
 
             jb.IsEnabled = true;
 
         }
 
-        public static bool WaitUntilJobRun(string serverName, string jobName, DateTime checkStartTime)
+        /// <summary>
+        /// Wait until a job has specifically run. This is a "wait" 
+        /// So one example would be get the time, the check Wait until it has run after that time
+        /// </summary>
+        /// <param name="jobName">The name of the job to check</param>
+        /// <param name="checkStartTime">Input a date time to check for after a job has run</param>
+        /// <returns></returns>
+        public static bool WaitUntilJobRun(string jobName, DateTime checkStartTime)
         {
 
-            Server srv = new Server(serverName);
+            Server srv = new Server(Drive.Data.NameOfServer);
             Job jb = new Job(srv.JobServer, jobName);
 
             if (jb.LastRunDate > checkStartTime)

@@ -29,7 +29,7 @@ namespace Wonga.QA.Tests.Bi
 
             // If nothing in Payments.Applications, check the Payment.Handler service is running
             // If it wont start, then purge the messages...
-            var customer = CustomerBuilder.New().Build();
+            Customer customer = CustomerBuilder.New().Build();
 
             // Now check the database, wait up to 30 seconds for the Account record to appear
             var account = Do.Until(() => Drive.Data.Comms.Db.comms.CustomerDetails.FindBy(AccountId: customer.Id));
@@ -38,7 +38,7 @@ namespace Wonga.QA.Tests.Bi
             Assert.IsNotNull(customer);
 
             // Now add the application for the customer
-            var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+            Application application = ApplicationBuilder.New(customer).WithLoanTerm(12).Build();
 
             var appl = Do.Until(() => Drive.Data.Payments.Db.payments.Applications.FindBy(AccountId: customer.Id));
 

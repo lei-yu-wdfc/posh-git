@@ -10,6 +10,9 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Framework.SMO;
+using Wonga.QA.Framework.Data;
+using Microsoft.SqlServer.Management.Smo.Agent;
+using Simple.Data;
 
 namespace Wonga.QA.Tests.Hds
 {
@@ -19,59 +22,50 @@ namespace Wonga.QA.Tests.Hds
 
         [Test]
         [AUT(AUT.Uk)]
-        public void FirstTest()
+        public void SMOTest_CheckJobStatus()
         {
+            Microsoft.SqlServer.Management.Smo.Agent.JobExecutionStatus jobStatus = Jobs.CheckJobStatus("CDCStagingLoad");
 
-            // the best way to access a table looking for a row or multiple rows where ApplicationId = 1
-            // var test2 = Do.Until(() => Drive.Data.Payments.Db.payment.Applications.FindBy(ApplicationId: 1));
+            Trace.WriteLine("Job status is " + jobStatus.ToString());
 
-            // call a stored procedure waiting 100 ms for it to run.
-            // var test3 = Do.With.Timeout(100).Until(() => Drive.Data.Payments.Db.usp_HDSLoadPaymentArrears());
+            bool jobEnabled = Jobs.CheckIsJobEnabled("CDCStagingLoad");
 
-            // Calling a stored procedure where the results are returned in test4. 
-            // the results are held in a dynamic variable test4
-            //var test4 = Do.Until(() => Drive.Data.Payments.Db.payment.rdTestPayment());
-
-            //// The return value
-            //Console.WriteLine(test4.ReturnValue.ToString());
-
-            //// Loop around each row
-            //foreach (var v in test4)
-            //{
-            //    // Test1 is the name of a column
-            //    Console.WriteLine(v.Test1.ToString());
-            //}
-
-            //// Test against HDS
-
-            try
-            {
-                var test1 = Do.Until(() => Drive.Data.Hds.Db.payment.Applications.FindBy(ApplicationId: 1));
-                Assert.IsNull(test1);
-            }
-            catch (Exception e)
-            {
-                Trace.WriteLine("Exception " + e.Message);
-            }
-
+            Trace.WriteLine("Job is " + (jobEnabled == true ? "enabled" : "disabled"));
         }
-  
-        
-        [Test, AUT(AUT.Uk), JIRA("Unknown", "This is a prototype test")]
+
+
+        [Test]
+        [AUT(AUT.Uk)]
+        [JIRA("DI-689")]
+        [Description("Used as a prototype test for HDS database testing")]
         public void FirstRealProtypeTest_DontCallMethodsThisName()
         {
-            //Trace.WriteLine("Testing");
+            Trace.WriteLine("Testing");
 
-            //Trace.WriteLine(Drive.Data.NameOfServer);
-            
-            //var appl = Drive.Data.Payments.Db.payment.Applications.Insert(ExternalId: Get.GetId(),
-            //       AccountId: Get.GetId(), ProductId: 1, Currency: 710, BankAccountGuid: Get.GetId(),
-            //       PaymentCardGuid: Get.GetId(), ApplicationDate: DateTime.Now,
-            //      CreatedOn: DateTime.Now
-            //);
+            Trace.WriteLine("Name of server connecting to is " + Drive.Data.NameOfServer);
 
-            //// Check its added
-            //var recordInPayments = Do.Until(() => Drive.Data.Payments.Db.payment.Applications.FindBy(ApplicationId: appl.ApplicationId));
+            var appl = Drive.Data.Payments.Db.payment.Applications.Insert(ExternalId: Get.GetId(),
+                   AccountId: Get.GetId(), ProductId: 1, Currency: 710, BankAccountGuid: Get.GetId(),
+                   PaymentCardGuid: Get.GetId(), ApplicationDate: DateTime.Now,
+                  CreatedOn: DateTime.Now
+            );
+
+            var appl2 = appl;
+
+            SimpleRecord appl3 = appl2;
+
+            Trace.WriteLine(appl3.ElementAt(0).Value);
+            IDictionary<string,object> colNames = appl3;
+
+            foreach (var colName in colNames)
+            {
+                Trace.WriteLine(colName.ToString());
+            }
+
+            string testRes = (appl == appl2).ToString();
+            Trace.WriteLine(testRes);
+            // Check its added
+            var recordInPayments = Do.Until(() => Drive.Data.Payments.Db.payment.Applications.FindBy(ApplicationId: appl.ApplicationId));
 
             //DateTime? me = Jobs.GetJobLastRunDateTime(Drive.Data.NameOfServer, "cdc.BI_Capture");
 
