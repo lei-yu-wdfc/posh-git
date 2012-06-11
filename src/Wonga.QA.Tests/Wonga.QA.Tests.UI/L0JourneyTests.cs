@@ -1814,10 +1814,9 @@ namespace Wonga.QA.Tests.Ui
 
             var mail = Do.Until(() => Drive.Data.QaData.Db.Email.FindAllByEmailAddress(email)).FirstOrDefault();
             Console.WriteLine(mail.EmailId);
-            var mailTemplate = Do.Until(() => Drive.Data.QaData.Db.EmailToken.FindBy(EmailId: mail.EmailId, Key: "Loan_Agreement"));
+            var mailTemplate = Do.Until(() => Drive.Data.QaData.Db.EmailToken.FindBy(EmailId: mail.EmailId, Key: "Agreement_body"));
             Console.WriteLine(mailTemplate.Value.ToString());
             Assert.IsNotNull(mailTemplate);
-            Assert.IsTrue(mailTemplate.value.ToString().Contains("You promise to pay and will make one repayment of"));
         }
 
         [Test, AUT(AUT.Za), JIRA("QA-247")]
