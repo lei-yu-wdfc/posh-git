@@ -372,18 +372,42 @@ namespace Wonga.QA.Framework
                         	r.Gender = _gender;
                         	r.MaidenName = _gender == GenderEnum.Female ? _maidenName : null;
                         }),
+						RiskSaveCustomerDetailsCommand.New(r =>
+						{
+                            r.AccountId = _id;
+                        	r.Forename = _foreName;
+                            r.MiddleName = _middleName;
+                        	r.Surname = _surname;
+                            r.Email = _email;
+                        	r.DateOfBirth = _dateOfBirth;
+                        	r.Gender = _gender;
+                        	r.MaidenName = _gender == GenderEnum.Female ? _maidenName : null;
+						}),
                         SaveCustomerAddressZaCommand.New(r =>
-                                                             {
-                                                                 r.AccountId = _id;
-                                                                 r.HouseNumber = _houseNumber;
-                                                                 r.HouseName = _houseName;
-                                                                 r.Postcode = _postcode;
-                                                                 r.Street = _street;
-                                                                 r.Flat = _flat;
-                                                                 r.District = _district;
-                                                                 r.Town = _town;
-                                                                 r.County = _county;
-                                                             } ),
+                        {
+                            r.AccountId = _id;
+                            r.HouseNumber = _houseNumber;
+                            r.HouseName = _houseName;
+                            r.Postcode = _postcode;
+                            r.Street = _street;
+                            r.Flat = _flat;
+                            r.District = _district;
+                            r.Town = _town;
+                            r.County = _county;
+                        } ),
+						RiskSaveCustomerAddressCommand.New(r =>
+						{
+							r.AccountId = _id;
+                            r.HouseNumber = _houseNumber;
+                            r.HouseName = _houseName;
+                            r.Postcode = _postcode;
+                            r.Street = _street;
+                            r.Flat = _flat;
+                            r.District = _district;
+                            r.Town = _town;
+                            r.County = _county;
+							r.SubRegion = _province;
+						}),
                         AddBankAccountZaCommand.New(r =>
                                                     	{
                                                     		r.AccountId = _id;
@@ -430,7 +454,18 @@ namespace Wonga.QA.Framework
                             r.NationalNumber = _nationalNumber;
                             r.HomePhone = _homePhoneNumber;
                             r.Gender = _gender;
-                        }),                       
+                        }),              
+         				RiskSaveCustomerDetailsCommand.New(r =>
+						{
+                            r.AccountId = _id;
+                        	r.Forename = _foreName;
+                            r.MiddleName = _middleName;
+                        	r.Surname = _surname;
+                            r.Email = _email;
+                        	r.DateOfBirth = _dateOfBirth;
+                        	r.Gender = _gender;
+                        	r.MaidenName = _gender == GenderEnum.Female ? _maidenName : null;
+						}),
                         SaveCustomerAddressCaCommand.New(r => {
                                                                  r.AccountId = _id;
                                                                  r.HouseNumber = _houseNumber;
@@ -443,6 +478,19 @@ namespace Wonga.QA.Framework
                                                                  r.County = _county;
 																 r.Province = _province;
                         } ),
+						RiskSaveCustomerAddressCommand.New(r =>
+						{
+							r.AccountId = _id;
+                            r.HouseNumber = _houseNumber;
+                            r.HouseName = _houseName;
+                            r.Postcode = _postcode;
+                            r.Street = _street;
+                            r.Flat = _flat;
+                            r.District = _district;
+                            r.Town = _town;
+                            r.County = _county;
+							r.SubRegion = _province;
+						}),
                         AddBankAccountCaCommand.New(r =>
                                                     	{
                                                     		r.AccountId = _id;
@@ -500,6 +548,17 @@ namespace Wonga.QA.Framework
                                                                  r.HomePhone = _homePhoneNumber;
                                                                  r.Gender = _gender;
                                                              }),
+						RiskSaveCustomerDetailsCommand.New(r =>
+						{
+                            r.AccountId = _id;
+                        	r.Forename = _foreName;
+                            r.MiddleName = _middleName;
+                        	r.Surname = _surname;
+                            r.Email = _email;
+                        	r.DateOfBirth = _dateOfBirth;
+                        	r.Gender = _gender;
+                        	r.MaidenName = _gender == GenderEnum.Female ? _maidenName : null;
+						}),
                         SaveCustomerAddressUkCommand.New(r=>
                                                              {
                                                                  r.AccountId = _id;
@@ -512,6 +571,19 @@ namespace Wonga.QA.Framework
                                                                  r.Town = _town;
                                                                  r.County = _county;
                                                              }),
+						RiskSaveCustomerAddressCommand.New(r =>
+						{
+							r.AccountId = _id;
+                            r.HouseNumber = _houseNumber;
+                            r.HouseName = _houseName;
+                            r.Postcode = _postcode;
+                            r.Street = _street;
+                            r.Flat = _flat;
+                            r.District = _district;
+                            r.Town = _town;
+                            r.County = _county;
+							r.SubRegion = _province;
+						}),
                         AddBankAccountUkCommand.New(r=>
                                                     	{
                                                     		r.AccountId = _id;
@@ -567,6 +639,17 @@ namespace Wonga.QA.Framework
 						                                         r.Email = _email;
 						                                         r.DateOfBirth = _dateOfBirth;
 						                                     }),
+						RiskSaveCustomerDetailsCommand.New(r =>
+						{
+                            r.AccountId = _id;
+                        	r.Forename = _foreName;
+                            r.MiddleName = _middleName;
+                        	r.Surname = _surname;
+                            r.Email = _email;
+                        	r.DateOfBirth = _dateOfBirth;
+                        	r.Gender = _gender;
+                        	r.MaidenName = _gender == GenderEnum.Female ? _maidenName : null;
+						}),
 					    SaveCustomerAddressUkCommand.New(r =>
 					                                         {
 					                                             r.AccountId = _id;
@@ -579,6 +662,19 @@ namespace Wonga.QA.Framework
                                                                  r.Town = _town;
                                                                  r.County = _county;
 					                                         }),
+						RiskSaveCustomerAddressCommand.New(r =>
+						{
+							r.AccountId = _id;
+                            r.HouseNumber = _houseNumber;
+                            r.HouseName = _houseName;
+                            r.Postcode = _postcode;
+                            r.Street = _street;
+                            r.Flat = _flat;
+                            r.District = _district;
+                            r.Town = _town;
+                            r.County = _county;
+							r.SubRegion = _province;
+						}),
 						AddBankAccountUkCommand.New(r =>
 						                            	{
 						                            		r.AccountId = _id;

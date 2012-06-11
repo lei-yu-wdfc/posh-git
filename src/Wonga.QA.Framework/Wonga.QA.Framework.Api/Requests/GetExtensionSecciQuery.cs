@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Api
 {
-    /// <summary> Wonga.Comms.Queries.GetExtensionSecci </summary>
+    /// <summary> Wonga.FileStorage.Queries.GetExtensionSecci </summary>
     [XmlRoot("GetExtensionSecci")]
     public partial class GetExtensionSecciQuery : ApiRequest<GetExtensionSecciQuery>
     {
