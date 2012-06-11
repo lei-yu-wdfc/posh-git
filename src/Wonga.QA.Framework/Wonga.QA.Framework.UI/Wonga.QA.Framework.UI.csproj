@@ -251,6 +251,7 @@
     <Compile Include="Ui\Pages\Common\ApplyPage.cs" />
     <Compile Include="Ui\Pages\Common\ApplyTermsPage.cs" />
     <Compile Include="Ui\Pages\Common\BlogPage.cs" />
+    <Compile Include="Ui\Pages\Common\RepayProcessingPage.cs" />
     <Compile Include="Ui\Pages\Common\TimeoutTestPage.cs" />
     <Compile Include="Ui\Pages\Common\EasypaymentNumberPrintPage.cs" />
     <Compile Include="Ui\Pages\Common\RepaymentOptionsPage.cs" />

@@ -11,7 +11,8 @@ using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.Elements;
-using Wonga.QA.Tests.Core;
+using Wonga.QA.Framework.UI.UiElements.Pages.Common;
+﻿using Wonga.QA.Tests.Core;
 using System.Linq;
 using System;
 using Wonga.QA.Framework.Db;
@@ -340,20 +341,24 @@ namespace Wonga.QA.Tests.Ui
         {
             //build L0 loan
             string email = Get.RandomEmail();
-            DateTime todayDate = DateTime.Now;
+            const decimal repayAmount = 100.00m;
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
 
-            var loginPage = Client.Login();
-            var myAccountPage = loginPage.LoginAs(email);
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
-            //var originalRepay = mySummaryPage.GetTotalToRepay();
-            mySummaryPage.RepayButtonClick();
-            var requestPage = new RepayRequestPage(this.Client);
+            ApiResponse response = Drive.Api.Queries.Post(new GetFixedTermLoanApplicationQuery { ApplicationId = application.Id });
+            var dueDate = Convert.ToDateTime(response.Values["NextDueDate"].Single());
+            var sDueDate = Date.GetOrdinalDate(dueDate, "d MMM yyyy");
+            var oldDueDateBalance = Convert.ToDecimal(response.Values["BalanceNextDueDate"].Single());
 
+<<<<<<< HEAD
             Assert.IsNotEmpty(requestPage.RepayCard);
 
+=======
+            Client.Login().LoginAs(email).RepayButtonClick();
+            var requestPage = new RepayRequestPage(this.Client);
+            
+>>>>>>> UK Repay tests incremental work
             //Branch point - Add Cv2 for each path and proceed
             requestPage.setSecurityCode("123");
             requestPage.SubmitButtonClick();
@@ -365,6 +370,22 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsFalse(paymentTakenPage.IsRepayEarlyFullpaySuccessPageAmountTokenNotPresent());
             Assert.IsFalse(paymentTakenPage.IsRepayEarlyFullpaySuccessPageDateTokenNotPresent());
             //TODO: Check that Interest Saved calculation is correct
+
+            // Post payment values
+            ApiResponse summaryResponse = Drive.Api.Queries.Post(new GetAccountSummaryQuery { AccountId = customer.Id });
+            var newDueDateAmount = summaryResponse.Values["CurrentLoanRepaymentAmountOnDueDate"].Single();
+            var newDueDateAmountDecimal = decimal.Parse(newDueDateAmount);
+            var interestSaved = oldDueDateBalance - newDueDateAmountDecimal - repayAmount;
+            string sInterestSaved = String.Format("{0:0.00}", interestSaved);
+            string sNewDueDateAmount = String.Format("{0:0.00}", newDueDateAmount);
+
+            // Get the content from the Payment Taken Page
+            string paymentTakenText = paymentTakenPage.ContentArea();
+
+            Assert.IsTrue(paymentTakenText.Contains(sNewDueDateAmount), "New Due Date Amount is wrong.");
+            Assert.IsTrue(paymentTakenText.Contains(sInterestSaved), "Interest Saved is wrong.");
+            Assert.IsTrue(paymentTakenText.Contains(sDueDate), "Due Date is wrong.");
+            Assert.IsTrue(paymentTakenText.Contains(String.Format("{0:0.00}", repayAmount)), "Repay Amount is wrong.");
         }
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-247")]
@@ -378,7 +399,6 @@ namespace Wonga.QA.Tests.Ui
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
 
             ApiResponse response = Drive.Api.Queries.Post(new GetFixedTermLoanApplicationQuery { ApplicationId = application.Id });
-
             var dueDate = Convert.ToDateTime(response.Values["NextDueDate"].Single());
             var sDueDate = Date.GetOrdinalDate(dueDate, "d MMM yyyy");
             var oldDueDateBalance = Convert.ToDecimal(response.Values["BalanceNextDueDate"].Single());
@@ -422,21 +442,20 @@ namespace Wonga.QA.Tests.Ui
         {
             //build L0 loan
             string email = Get.RandomEmail();
-            DateTime todayDate = DateTime.Now;
+            const decimal repayAmount = 100.00m;
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
             var daysShift = 7;
 
-            ApiResponse response = Drive.Api.Queries.Post(new GetFixedTermLoanApplicationQuery { ApplicationId = application.Id });
-
-            var dueDate = Convert.ToDateTime(response.Values["NextDueDate"].Single());
-            var sDueDate = Date.GetOrdinalDate(dueDate, "d MMM yyyy");
-            var oldDueDateBalance = Convert.ToDecimal(response.Values["BalanceNextDueDate"].Single());
-
             //time-shift loan so it's due today
             TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
             ApplicationOperations.RewindApplicationDates(application, daysShiftSpan);
+
+            ApiResponse response = Drive.Api.Queries.Post(new GetFixedTermLoanApplicationQuery { ApplicationId = application.Id });
+            var dueDate = Convert.ToDateTime(response.Values["NextDueDate"].Single());
+            var sDueDate = Date.GetOrdinalDate(dueDate, "d MMM yyyy");
+            var oldDueDateBalance = Convert.ToDecimal(response.Values["BalanceNextDueDate"].Single());
 
             Client.Login().LoginAs(email).RepayButtonClick();
             var requestPage = new RepayRequestPage(this.Client);
@@ -472,7 +491,7 @@ namespace Wonga.QA.Tests.Ui
         {
             //build L0 loan
             string email = Get.RandomEmail();
-            DateTime todayDate = DateTime.Now;
+            const decimal repayAmount = 100.00m;
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
@@ -482,11 +501,12 @@ namespace Wonga.QA.Tests.Ui
             TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
             ApplicationOperations.RewindApplicationDates(application, daysShiftSpan);
 
-            var loginPage = Client.Login();
-            var myAccountPage = loginPage.LoginAs(email);
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+            ApiResponse response = Drive.Api.Queries.Post(new GetFixedTermLoanApplicationQuery { ApplicationId = application.Id });
+            var dueDate = Convert.ToDateTime(response.Values["NextDueDate"].Single());
+            var sDueDate = Date.GetOrdinalDate(dueDate, "d MMM yyyy");
+            var oldDueDateBalance = Convert.ToDecimal(response.Values["BalanceNextDueDate"].Single());
 
-            mySummaryPage.RepayButtonClick();
+            Client.Login().LoginAs(email).RepayButtonClick();
             var requestPage = new RepayRequestPage(this.Client);
 
             //Set partial payment amount, test for correct values at same time
@@ -500,7 +520,22 @@ namespace Wonga.QA.Tests.Ui
 
             var paymentTakenPage = repayProcessingPage.WaitFor<RepayDuePartpaySuccessPage>() as RepayDuePartpaySuccessPage;
             Assert.IsFalse(paymentTakenPage.IsRepayDuePartpaySuccessPageAmountTokenNotPresent());
-            
+
+            // Post payment values
+            ApiResponse summaryResponse = Drive.Api.Queries.Post(new GetAccountSummaryQuery { AccountId = customer.Id });
+            var newDueDateAmount = summaryResponse.Values["CurrentLoanRepaymentAmountOnDueDate"].Single();
+            var newDueDateAmountDecimal = decimal.Parse(newDueDateAmount);
+            var interestSaved = oldDueDateBalance - newDueDateAmountDecimal - repayAmount;
+            string sInterestSaved = String.Format("{0:0.00}", interestSaved);
+            string sNewDueDateAmount = String.Format("{0:0.00}", newDueDateAmount);
+
+            // Get the content from the Payment Taken Page
+            string paymentTakenText = paymentTakenPage.ContentArea();
+
+            Assert.IsTrue(paymentTakenText.Contains(sNewDueDateAmount), "New Due Date Amount is wrong.");
+            Assert.IsTrue(paymentTakenText.Contains(sInterestSaved), "Interest Saved is wrong.");
+            Assert.IsTrue(paymentTakenText.Contains(sDueDate), "Due Date is wrong.");
+            Assert.IsTrue(paymentTakenText.Contains(String.Format("{0:0.00}", repayAmount)), "Repay Amount is wrong.");
 
         }
 
@@ -509,7 +544,7 @@ namespace Wonga.QA.Tests.Ui
         {
             //build L0 loan
             string email = Get.RandomEmail();
-            DateTime todayDate = DateTime.Now;
+            const decimal repayAmount = 100.00m;
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
@@ -529,7 +564,7 @@ namespace Wonga.QA.Tests.Ui
             var myAccountPage = loginPage.LoginAs(email);
             var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
 
-            mySummaryPage.RepayButtonClick();
+            Client.Login().LoginAs(email).RepayButtonClick();
             var requestPage = new RepayRequestPage(this.Client);
 
             //Branch point - Add Cv2 for each path and proceed
@@ -541,6 +576,22 @@ namespace Wonga.QA.Tests.Ui
             var paymentTakenPage = repayProcessingPage.WaitFor<RepayOverduePartpaySuccessPage>() as RepayOverduePartpaySuccessPage;
             Assert.IsFalse(paymentTakenPage.IsRepayOverduePartpaySuccessPageAmountTokenNotPresent());
 
+            // Post payment values
+            ApiResponse summaryResponse = Drive.Api.Queries.Post(new GetAccountSummaryQuery { AccountId = customer.Id });
+            var newDueDateAmount = summaryResponse.Values["CurrentLoanRepaymentAmountOnDueDate"].Single();
+            var newDueDateAmountDecimal = decimal.Parse(newDueDateAmount);
+            var interestSaved = oldDueDateBalance - newDueDateAmountDecimal - repayAmount;
+            string sInterestSaved = String.Format("{0:0.00}", interestSaved);
+            string sNewDueDateAmount = String.Format("{0:0.00}", newDueDateAmount);
+
+            // Get the content from the Payment Taken Page
+            string paymentTakenText = paymentTakenPage.ContentArea();
+
+            Assert.IsTrue(paymentTakenText.Contains(sNewDueDateAmount), "New Due Date Amount is wrong.");
+            Assert.IsTrue(paymentTakenText.Contains(sInterestSaved), "Interest Saved is wrong.");
+            Assert.IsTrue(paymentTakenText.Contains(sDueDate), "Due Date is wrong.");
+            Assert.IsTrue(paymentTakenText.Contains(String.Format("{0:0.00}", repayAmount)), "Repay Amount is wrong.");
+
         }
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-247"), Pending("Fails")]
@@ -548,7 +599,7 @@ namespace Wonga.QA.Tests.Ui
         {
             //build L0 loan
             string email = Get.RandomEmail();
-            DateTime todayDate = DateTime.Now;
+            const decimal repayAmount = 100.00m;
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
@@ -564,11 +615,12 @@ namespace Wonga.QA.Tests.Ui
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = application.Id, RepaymentRequestId = requestId1, });
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = application.Id, RepaymentRequestId = requestId2, });
 
-            var loginPage = Client.Login();
-            var myAccountPage = loginPage.LoginAs(email);
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+            ApiResponse response = Drive.Api.Queries.Post(new GetFixedTermLoanApplicationQuery { ApplicationId = application.Id });
+            var dueDate = Convert.ToDateTime(response.Values["NextDueDate"].Single());
+            var sDueDate = Date.GetOrdinalDate(dueDate, "d MMM yyyy");
+            var oldDueDateBalance = Convert.ToDecimal(response.Values["BalanceNextDueDate"].Single());
 
-            mySummaryPage.RepayButtonClick();
+            Client.Login().LoginAs(email).RepayButtonClick();
             var requestPage = new RepayRequestPage(this.Client);
 
             //Set partial payment amount, test for correct values at same time
@@ -582,8 +634,23 @@ namespace Wonga.QA.Tests.Ui
 
             var paymentTakenPage = repayProcessingPage.WaitFor<RepayOverduePartpaySuccessPage>() as RepayOverduePartpaySuccessPage;
             Assert.IsFalse(paymentTakenPage.IsRepayOverduePartpaySuccessPageAmountTokenNotPresent());
-  
 
+            // Post payment values
+            ApiResponse summaryResponse = Drive.Api.Queries.Post(new GetAccountSummaryQuery { AccountId = customer.Id });
+            var newDueDateAmount = summaryResponse.Values["CurrentLoanRepaymentAmountOnDueDate"].Single();
+            var newDueDateAmountDecimal = decimal.Parse(newDueDateAmount);
+            var interestSaved = oldDueDateBalance - newDueDateAmountDecimal - repayAmount;
+            string sInterestSaved = String.Format("{0:0.00}", interestSaved);
+            string sNewDueDateAmount = String.Format("{0:0.00}", newDueDateAmount);
+
+            // Get the content from the Payment Taken Page
+            string paymentTakenText = paymentTakenPage.ContentArea();
+
+            Assert.IsTrue(paymentTakenText.Contains(sNewDueDateAmount), "New Due Date Amount is wrong.");
+            Assert.IsTrue(paymentTakenText.Contains(sInterestSaved), "Interest Saved is wrong.");
+            Assert.IsTrue(paymentTakenText.Contains(sDueDate), "Due Date is wrong.");
+            Assert.IsTrue(paymentTakenText.Contains(String.Format("{0:0.00}", repayAmount)), "Repay Amount is wrong.");
+  
         }
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-247")]
@@ -591,7 +658,6 @@ namespace Wonga.QA.Tests.Ui
         {
             //build L0 loan
             string email = Get.RandomEmail();
-            DateTime todayDate = DateTime.Now;
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
