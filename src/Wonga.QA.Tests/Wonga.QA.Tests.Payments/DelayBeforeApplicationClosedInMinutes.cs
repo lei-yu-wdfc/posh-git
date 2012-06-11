@@ -31,7 +31,7 @@ namespace Wonga.QA.Tests.Payments
             Drive.Data.Ops.SetServiceConfiguration("Payments.DelayBeforeApplicationClosedInMinutes", 0);
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-2350")]
+        [Test, AUT(AUT.Ca), JIRA("CA-2372")]
         public void WhenDelayBeforeApplicationClosedInMinutesTimePeriodEndsThenLoanShouldClose()
         {
             var customer = CustomerBuilder.New().Build();
