@@ -38,7 +38,7 @@ GOTO MENU
 
 :2
 	SET /P AUT=Enter AUT (E.g. Uk, Za, Ca, Wb, Pl): 
-	SET /P SUT=Enter SUT (E.g. Dev, WIP, RC): 
+	SET /P SUT=Enter SUT (E.g. Dev, WIP, UAT, RC, WIPRelease, RCRelease, Live): 
 	SETX AUT %AUT% > NUL
 	SETX SUT %SUT% > NUL
 GOTO MENU
