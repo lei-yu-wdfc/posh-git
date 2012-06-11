@@ -11,7 +11,5 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String ExplanationLink { get; set; }
         public String PopupContentFrame { get; set; }
         public String PopupClose { get; set; }
-        public String LoanConditionsTitle { get; set; }
-        public String WrittenExplanationTitle { get; set; }
     }
 }
