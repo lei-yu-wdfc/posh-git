@@ -277,6 +277,13 @@ namespace Wonga.QA.Framework
             return this;
         }
 
+        public virtual Application PutApplicationFurtherIntoArrears(uint daysInArrears)
+        {
+            Drive.Db.Rewind(Id, (int)daysInArrears);
+
+            return this;
+        }
+
 		public virtual Application PutApplicationIntoArrears()
 		{
             var application = _applicationsTab.FindAll(_applicationsTab.ExternalId == Id).Single();

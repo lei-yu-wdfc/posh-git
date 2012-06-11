@@ -157,7 +157,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             try
             {
                 _postCodeErrorForm =
-                           Client.Driver.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.PostcodeErrorForm));
+                           Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.PostcodeErrorForm)));
                 string postCodeErrorFormClass = _postCodeErrorForm.GetAttribute("class");
 
                 if (postCodeErrorFormClass.Contains("invalid"))
@@ -165,9 +165,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     return true;
                 }
             }
-            catch (NoSuchElementException)
+            catch (Exception e)
             {
-                Console.WriteLine("Can't find error form");
+                Console.WriteLine("Can't find error form"+"\n\n");
+                Console.WriteLine(e.Message);
                 return false;
             }
             return false;
