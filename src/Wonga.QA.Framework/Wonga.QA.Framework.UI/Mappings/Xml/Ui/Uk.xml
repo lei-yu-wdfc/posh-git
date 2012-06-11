@@ -240,8 +240,6 @@
     <ExplanationLink>a#explanation_link.doc_link</ExplanationLink>
     <PopupContentFrame>#fancybox-frame</PopupContentFrame>
     <PopupClose>#fancybox-close</PopupClose>
-    <LoanConditionsTitle>.wonga.com-loan-conditions</LoanConditionsTitle>
-    <WrittenExplanationTitle>#important-information-about-your-loan.title</WrittenExplanationTitle>
   </AccountDetailsPage>
   
 </UiMap>
