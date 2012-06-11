@@ -1792,16 +1792,22 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(accountSetupPage.IsTermsAndConditionsLinkVisible());
             Assert.IsTrue(accountSetupPage.IsExplanationLinkVisible());
 
+            //string baseWindowHdl = Client.Driver.CurrentWindowHandle;
+
             //Check SECCI popup window
             accountSetupPage.ClickSecciLink();
             // TBD: check header and values and close the pop-up
-            Assert.Contains(accountSetupPage.SecciPopupWindowContent(), "150");
+            //Assert.Contains(accountSetupPage.SecciPopupWindowContent(), "150");
             // end of TBD: check header and values and close the pop-up
+            accountSetupPage.ClosePopupWindow();
 
             accountSetupPage.ClickTermsAndConditionsLink();
-            // TBD: check header and values and close the pop-up
+            Assert.Contains(accountSetupPage.LoanConditionsTitle(), "Wonga.com Loan Conditions");
+            accountSetupPage.ClosePopupWindow();
+
             accountSetupPage.ClickExplanationLink();
-            // TBD: check header and values and close the pop-up
+            Assert.Contains(accountSetupPage.WrittenExplanationTitle(), "Important information about your loan");
+            accountSetupPage.ClosePopupWindow();
 
             // Manually check that loan agreement and SECCI emails are sent
             Console.WriteLine("Manually check that that loan agreement and SECCI emails are sent for user={0}", email);

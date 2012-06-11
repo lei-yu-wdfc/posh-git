@@ -238,6 +238,10 @@
     <SecciLink>a#secci_link.doc_link</SecciLink>
     <TermAndConditionsLink>a#conditions_link.doc_link</TermAndConditionsLink>
     <ExplanationLink>a#explanation_link.doc_link</ExplanationLink>
+    <PopupContentFrame>#fancybox-frame</PopupContentFrame>
+    <PopupClose>#fancybox-close</PopupClose>
+    <LoanConditionsTitle>.wonga.com-loan-conditions</LoanConditionsTitle>
+    <WrittenExplanationTitle>#important-information-about-your-loan.title</WrittenExplanationTitle>
   </AccountDetailsPage>
   
 </UiMap>
