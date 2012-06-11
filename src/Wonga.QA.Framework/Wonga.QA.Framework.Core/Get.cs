@@ -102,7 +102,19 @@ namespace Wonga.QA.Framework.Core
 
         public static String GetPhone()
         {
-            return "021" + _random.Next(1000000, 9999999).ToString(CultureInfo.InvariantCulture);
+
+        	string prefix = null;
+        	switch (Config.AUT)
+        	{
+        		case AUT.Uk:
+        		case AUT.Wb:
+        			prefix = "0287";
+        			break;
+        		default:
+        			prefix = "021";
+        			break;
+        	}
+			return prefix + _random.Next(1000000, 9999999).ToString(CultureInfo.InvariantCulture);
         }
 
         public static string GetMobilePhone()

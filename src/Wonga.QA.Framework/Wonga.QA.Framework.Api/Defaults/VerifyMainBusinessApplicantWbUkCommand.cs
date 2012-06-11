@@ -2,7 +2,7 @@
 
 namespace Wonga.QA.Framework.Api
 {
-    public partial class VerifyMainBusinessApplicantWbCommand
+    public partial class VerifyMainBusinessApplicantWbUkCommand
     {
         public override void Default()
         {

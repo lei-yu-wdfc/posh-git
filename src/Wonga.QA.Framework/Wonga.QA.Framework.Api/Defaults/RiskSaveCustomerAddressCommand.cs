@@ -17,7 +17,20 @@ namespace Wonga.QA.Framework.Api
 			Postcode = "0300";
 			Street = "Street";
 			Town = "City";
-			SubRegion = "Sub";
+		}
+	}
+
+	public partial class RiskSaveCustomerAddressUkCommand
+	{
+		public override void Default()
+		{
+			AccountId = Get.GetId();
+			AddressId = Get.GetId();
+			County = Get.RandomString(10);
+			HouseNumber = Get.RandomInt(1, 1000);
+			Postcode = "SW6 6PN";
+			Street = "Street";
+			Town = "Town";
 		}
 	}
 }
