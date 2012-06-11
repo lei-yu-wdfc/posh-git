@@ -151,7 +151,7 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn("RC8", Proxy)) : Throw<DbConfig>();
                     Ui.SetUri(String.Format("rc.{0}.{1}", AUT, uiDomain));
                     Admin = new AdminConfig(String.Format("rc.admin.{0}.{1}", AUT, uiDomain));
-                    SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.rc", "Allw0nga");
+                    SalesforceUi.SetLoginDetails("petr.tarasenko@wonga.com.rc", "362RadioLocation");
                     SalesforceApi = new SalesforceApiConfig("v3integration@wonga.com.rc");
                     break;
                 case SUT.RCRelease:
