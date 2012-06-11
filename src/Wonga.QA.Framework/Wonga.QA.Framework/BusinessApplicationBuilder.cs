@@ -97,7 +97,7 @@ namespace Wonga.QA.Framework
 
             /* STEP 4
              * I verify the main applicant */
-            Drive.Api.Commands.Post(VerifyMainBusinessApplicantWbCommand.New(r =>
+            Drive.Api.Commands.Post(VerifyMainBusinessApplicantWbUkCommand.New(r =>
                                                                                   {
                                                                                       r.AccountId = Customer.Id;
                                                                                       r.ApplicationId = Id;
