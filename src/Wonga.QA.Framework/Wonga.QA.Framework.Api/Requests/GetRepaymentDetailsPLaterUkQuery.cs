@@ -5,7 +5,7 @@ namespace Wonga.QA.Framework.Api
 {
     /// <summary> Wonga.Payments.Queries.PLater.Uk.GetRepaymentDetails </summary>
     [XmlRoot("GetRepaymentDetails")]
-    public partial class GetRepaymentDetailsUkQuery : ApiRequest<GetRepaymentDetailsUkQuery>
+    public partial class GetRepaymentDetailsPLaterUkQuery : ApiRequest<GetRepaymentDetailsPLaterUkQuery>
     {
         public Object ApplicationId { get; set; }
     }

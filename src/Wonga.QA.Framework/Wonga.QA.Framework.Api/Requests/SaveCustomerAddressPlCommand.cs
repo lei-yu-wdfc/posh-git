@@ -5,7 +5,7 @@ namespace Wonga.QA.Framework.Api
 {
     /// <summary> Wonga.Comms.Commands.Pl.SaveCustomerAddress </summary>
     [XmlRoot("SaveCustomerAddress")]
-    public partial class SaveCustomerAddressCommand : ApiRequest<SaveCustomerAddressCommand>
+    public partial class SaveCustomerAddressPlCommand : ApiRequest<SaveCustomerAddressPlCommand>
     {
         public Object AddressId { get; set; }
         public Object AccountId { get; set; }

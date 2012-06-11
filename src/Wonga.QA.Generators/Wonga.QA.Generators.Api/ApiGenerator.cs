@@ -18,6 +18,7 @@ namespace Wonga.QA.Generators.Api
     {
         public static void Main(String[] args)
         {
+            string[] ignore_list = new string[] { "EducationalLevelsPlEnum", "IncomeFrequencyPlEnum", "EmploymentStatusPlEnum", "OfUniversityPlEnum", "EmploymentIndustryPlEnum" };
             if (args.Any())
                 Config.Origin = args.Single();
 
@@ -100,7 +101,8 @@ namespace Wonga.QA.Generators.Api
                     {
                         String name = type.GetName().ToEnum().ToCamel();
                         String[] values = Enum.GetNames(type).Select(e => type.GetField(e).GetEnum()).Distinct().ToArray();
-
+                        if (ignore_list.Contains(name))
+                            continue;
                         if (enums.ContainsKey(name))
                             if (enums[name].SequenceEqual(values))
                                 continue;
@@ -135,5 +137,6 @@ namespace Wonga.QA.Generators.Api
             Repo.Inject(bin.Enums, "Enums", Config.Api.Project);
 
         }
+
     }
 }

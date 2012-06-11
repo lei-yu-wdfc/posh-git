@@ -5,7 +5,7 @@ namespace Wonga.QA.Framework.Api
 {
     /// <summary> Wonga.Payments.Commands.Pl.AddBankAccount </summary>
     [XmlRoot("AddBankAccount")]
-    public partial class AddBankAccountCommand : ApiRequest<AddBankAccountCommand>
+    public partial class AddBankAccountPlCommand : ApiRequest<AddBankAccountPlCommand>
     {
         public Object AccountId { get; set; }
         public Object BankAccountId { get; set; }

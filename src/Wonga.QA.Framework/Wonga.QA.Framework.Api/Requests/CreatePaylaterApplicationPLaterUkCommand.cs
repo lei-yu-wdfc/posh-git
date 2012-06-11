@@ -5,7 +5,7 @@ namespace Wonga.QA.Framework.Api
 {
     /// <summary> Wonga.Payments.Commands.PLater.Uk.CreatePaylaterApplication </summary>
     [XmlRoot("CreatePaylaterApplication")]
-    public partial class CreatePaylaterApplicationUkCommand : ApiRequest<CreatePaylaterApplicationUkCommand>
+    public partial class CreatePaylaterApplicationPLaterUkCommand : ApiRequest<CreatePaylaterApplicationPLaterUkCommand>
     {
         public Object AccountId { get; set; }
         public Object ApplicationId { get; set; }

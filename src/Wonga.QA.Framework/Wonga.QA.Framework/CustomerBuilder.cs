@@ -350,7 +350,6 @@ namespace Wonga.QA.Framework
                                                      r.AccountId = _id;
                                                      r.Dependants = _numberOfDependants;
                                                  }),
-                SavePasswordRecoveryDetailsCommand.New(r => r.AccountId = _id),
                 SaveContactPreferencesCommand.New(r => r.AccountId = _id),
             };
 
@@ -360,6 +359,7 @@ namespace Wonga.QA.Framework
                 case AUT.Za:
                     requests.AddRange(new ApiRequest[]
                     {
+                        SavePasswordRecoveryDetailsZaCommand.New(r => r.AccountId = _id),
                         SaveCustomerDetailsZaCommand.New(r =>
                         {
                             r.AccountId = _id;
@@ -442,6 +442,7 @@ namespace Wonga.QA.Framework
                 case AUT.Ca:
                     requests.AddRange(new ApiRequest[]
                     {
+                        SavePasswordRecoveryDetailsCaCommand.New(r => r.AccountId = _id),
                         SaveCustomerDetailsCaCommand.New(r => 
                         { 
                             r.AccountId = _id;
@@ -628,6 +629,7 @@ namespace Wonga.QA.Framework
                 case AUT.Uk:
                     requests.AddRange(new ApiRequest[]
 					{
+                        SavePasswordRecoveryDetailsUkCommand.New(r => r.AccountId = _id),
 						SaveCustomerDetailsUkCommand.New(r=>
 						                                     {
 						                                         r.AccountId = _id;
@@ -637,7 +639,7 @@ namespace Wonga.QA.Framework
 						                                         r.Email = _email;
 						                                         r.DateOfBirth = _dateOfBirth;
 						                                     }),
-						RiskSaveCustomerDetailsCommand.New(r =>
+						RiskSaveCustomerDetailsUkCommand.New(r =>
 						{
                                      r.AccountId = _id;
 						             r.Forename = _foreName;
