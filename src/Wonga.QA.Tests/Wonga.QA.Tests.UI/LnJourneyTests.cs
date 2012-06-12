@@ -316,7 +316,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-302")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-302"), Pending("Uses sleep()!")]
         public void LoggedCustomerWithoutLoanAppliesNewLoanChangesMobilePhoneAndClicksResendPinAndGoFarther()
         {
             string email = Get.RandomEmail();
