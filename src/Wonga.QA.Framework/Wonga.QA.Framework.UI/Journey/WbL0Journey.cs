@@ -208,15 +208,18 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public WbL0Journey EnterBusinessBankAccountDetails()
+        public WbL0Journey EnterBusinessBankAccountDetails(string accountNumber = null, string bankPeriod = null, bool submit = true)
         {
             var businessBankAccountPage = CurrentPage as BusinessBankAccountPage;
             businessBankAccountPage.BankAccountSection.BankName = "Bank of Scotland Business Banking";
             Do.Until(() => businessBankAccountPage.BankAccountSection.SortCode = "93-86-11");
-            businessBankAccountPage.BankAccountSection.AccountNumber = "07806039";
+            businessBankAccountPage.BankAccountSection.AccountNumber = accountNumber ?? "07806039";
             Thread.Sleep(2000);
-            businessBankAccountPage.BankAccountSection.BankPeriod = "2 to 3 years";
-            CurrentPage = businessBankAccountPage.Next();
+            businessBankAccountPage.BankAccountSection.BankPeriod = bankPeriod ?? "2 to 3 years";
+            if (submit)
+            {
+                CurrentPage = businessBankAccountPage.Next();
+            }
             return this;
         }
 
