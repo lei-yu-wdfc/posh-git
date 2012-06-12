@@ -114,15 +114,18 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public WbL0Journey EnterAdditionalAddressDetails()
+        public WbL0Journey EnterAdditionalAddressDetails(string posteCode = null, string addressPeriod = null, bool submit = true)
         {
             var addressDetailsPage2NdEntry = CurrentPage as AddressDetailsPage;
-            addressDetailsPage2NdEntry.PostCode = "SW6 6PN";
+            addressDetailsPage2NdEntry.PostCode = posteCode ?? "SW6 6PN";
             addressDetailsPage2NdEntry.LookupByPostCode();
             addressDetailsPage2NdEntry.GetAddressesDropDown();
             Do.Until(() => addressDetailsPage2NdEntry.SelectedAddress = "101 Harbord Street, LONDON SW6 6PN");
-            Do.Until(() => addressDetailsPage2NdEntry.AddressPeriod = "2 to 3 years");
-            CurrentPage = addressDetailsPage2NdEntry.Next() as AccountDetailsPage;
+            Do.Until(() => addressDetailsPage2NdEntry.AddressPeriod = addressPeriod ?? "2 to 3 years");
+            if (submit)
+            {
+                CurrentPage = addressDetailsPage2NdEntry.Next() as AccountDetailsPage;
+            }
             return this;
         }
 
