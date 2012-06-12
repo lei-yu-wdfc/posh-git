@@ -44,7 +44,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-189"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-189"), SmokeTest]
         public void L0JourneyInvalidPINShouldCauseWarningMessageOnNextPage()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -74,7 +74,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-177")] //AUT.Ca removed because of sliders changing, Category(TestCategories.Smoke)
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-177"), SmokeTest] //AUT.Ca removed because of sliders changing
         public void ChangeLoanAmountAndDurationOnPersonalDetailsViaPlusMinusOptions()
         {
             //CA is out due to new wonga sliders being implemented on homepage only 
@@ -148,7 +148,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-176")] //AUT.Ca removed because of sliders changing, Category(TestCategories.Smoke)
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-176"), SmokeTest] //AUT.Ca removed because of sliders changing
         public void ChangeLoanAmountAndDurationOnPersonalDetailsViaTypingToTheFields()
         {
             //CA is out due to new wonga sliders being implemented on homepage only 
@@ -501,7 +501,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-183"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-183"), SmokeTest]
         public void EnterDifferentPasswordsAtAccountDetailsPageShouldCauseWarningMessage()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -532,7 +532,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-190")]//, Category(TestCategories.Smoke)
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-190"), SmokeTest]
         public void L0JourneyDataOnAcceptedPageShouldBeCorrect()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -824,7 +824,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-186"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-186"), SmokeTest]
         public void InvalidFormatPasswordShouldCauseWarningMessageAndValidPasswordShouldDissmissWarning()
         {
             switch (Config.AUT)
@@ -1006,7 +1006,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Wb), JIRA("QA-258"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Wb), JIRA("QA-258"), SmokeTest]
         public void TheWongaBusinessPolicyHaveNoReferenceToZaCaUk()
         {
             string ca = "wonga.ca";
@@ -1026,7 +1026,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-184"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-184"), SmokeTest]
         public void CustomerEntersPasswordThatEqualToTheEmailAddressWarningMessageShouldDisplayed()
         {
             var email = Get.RandomEmail();
@@ -1386,7 +1386,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-179")]//, Category(TestCategories.Smoke)
+        [Test, AUT(AUT.Za), JIRA("QA-179"), SmokeTest]
         public void L0JourneyCustomerIdNumberShouldBeAlignedWithDOBAndGender()
         {
             var email = Get.RandomEmail();
@@ -1495,7 +1495,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za), Category(TestCategories.Smoke), JIRA("QA-277")]
+        [Test, AUT(AUT.Za), SmokeTest, JIRA("QA-277")]
         public void L0JourneyInvalidPostcodeShouldCauseWarningMessageValidPostcodeShouldDimissWarning()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -1541,7 +1541,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-276")]//, Category(TestCategories.Smoke)
+        [Test, AUT(AUT.Za), SmokeTest, JIRA("QA-276")]
         public void CustomerUsesExistingIdNumberShouldBeAbleToProceed()
         {
             var customer = Do.Until(() => Drive.Data.Comms.Db.CustomerDetails.FindAllByGender(2).FirstOrDefault());
@@ -1728,7 +1728,7 @@ namespace Wonga.QA.Tests.Ui
                     break;
             }
         }
-        [Test, AUT(AUT.Wb), JIRA("QA-287"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Wb), JIRA("QA-287"), SmokeTest]
         public void WbL0JourneyShouldNotBeAbleToProceedWithoutAcceptingAllEligibilityQuestions()
         {
             int getRandomNumber = Get.RandomInt(0, 7);

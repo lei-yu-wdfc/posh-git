@@ -32,7 +32,7 @@ namespace Wonga.QA.Tests.Ui
             var dealDone = acceptedPage.Submit();
         }
 
-       [Test, AUT(AUT.Ca), Category(TestCategories.Smoke)]
+       [Test, AUT(AUT.Ca), SmokeTest]
         public void CaAcceptedLoan()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home()); 
