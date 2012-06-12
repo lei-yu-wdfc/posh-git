@@ -18,7 +18,7 @@ namespace Wonga.QA.Generators.Api
     {
         public static void Main(String[] args)
         {
-            string[] ignore_list = new string[] { "EducationalLevelsPlEnum", "IncomeFrequencyPlEnum", "EmploymentStatusPlEnum", "OfUniversityPlEnum", "EmploymentIndustryPlEnum" };
+            string[] ignore_list = new string[] { };
             if (args.Any())
                 Config.Origin = args.Single();
 
@@ -114,6 +114,7 @@ namespace Wonga.QA.Generators.Api
 
                         StringBuilder builder = new StringBuilder().AppendFormatLine(new[]
                         {
+                            "using System.ComponentModel;",
                             "namespace {0}",
                             "{{",
                             "    public enum {1}",
@@ -121,7 +122,10 @@ namespace Wonga.QA.Generators.Api
                         }, Config.Api.Project, name);
 
                         foreach (String value in values)
-                            builder.AppendFormatLine("        {0},", value);
+                        {
+                            builder.AppendFormatLine("        [Description(\"{0}\")]", value);
+                            builder.AppendFormatLine("        {0},", value.GetNormalTypeName());
+                        }
 
                         builder.AppendLine("    }").AppendLine("}");
 
@@ -137,6 +141,5 @@ namespace Wonga.QA.Generators.Api
             Repo.Inject(bin.Enums, "Enums", Config.Api.Project);
 
         }
-
     }
 }
