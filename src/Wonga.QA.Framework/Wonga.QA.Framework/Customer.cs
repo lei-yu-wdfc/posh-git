@@ -97,7 +97,15 @@ namespace Wonga.QA.Framework
 
         public Guid GetPaymentCard()
         {
-            return Drive.Data.Payments.Db.AccountPreferences.FindAllByAccountId(Id).Single().PaymentCardsBase.ExternalId;
+            //1 - Wait for the AccountPreferences
+            //2 - Wait for the PrimaryPaymentCardId to be inserted
+            //3 - Return the corresponding PaymentCardsBase.ExternalId
+            //4 - If anyone finds a better way to do this tell me ( Alex P )
+
+            Int32? primaryPaymentCardId = null;
+            Do.With.Timeout(2).Message("The AccountPreferences has not been created yet").Until(() => ((Drive.Data.Payments.Db.AccountPreferences.FindAllByAccountId(Id).SingleOrDefault()) != null));
+            Do.With.Timeout(2).Message("The PrimaryPaymentCardId has not been updated yet").Until(() => ((primaryPaymentCardId = Drive.Data.Payments.Db.AccountPreferences.FindAllByAccountId(Id).SingleOrDefault().PrimaryPaymentCardId) != null));
+            return Drive.Data.Payments.Db.PaymentCardsBase.FindAllByPaymentCardId(primaryPaymentCardId).Single().ExternalId;
         }
 
         public void UpdateForename(String forename)

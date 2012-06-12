@@ -172,7 +172,7 @@ namespace Wonga.QA.Framework
             {
                 case AUT.Uk:
                     //wait for the card to be ready
-                    var card = Do.Until(Customer.GetPaymentCard);
+                    var card = Customer.GetPaymentCard();
                     requests.AddRange(new ApiRequest[]
                     {
                         CreateFixedTermLoanApplicationUkCommand.New(r =>
@@ -292,6 +292,9 @@ namespace Wonga.QA.Framework
                     }
                     break;
             }
+
+            //Need to wait for risk app to be created - this will solve the RISK_APPLICATION_NOT_FOUND . SingleOrDefault != null DOES NOT WORK
+            Do.With.Timeout(2).Message("The RiskApplication entity was not created").Until(() => Drive.Data.Risk.Db.RiskApplications.FindAllBy(ApplicationId: Id).Count() > 0);
 
             ApiResponse response = null;
             Do.With.Timeout(3).Until(() => (ApplicationDecisionStatus)
