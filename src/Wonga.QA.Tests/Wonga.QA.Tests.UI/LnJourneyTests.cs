@@ -18,7 +18,7 @@ namespace Wonga.QA.Tests.Ui
     [TestFixture, Parallelizable(TestScope.All)]
     class LnJourneyTests : UiTest
     {
-        [Test, AUT(AUT.Za), JIRA("QA-196"), Pending("ZA-2510"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-196"), Pending("ZA-2510"), SmokeTest]
         public void LnCustomerTakesNewLoanAndChangesTheMobilePhoneThenChangesShouldBeReflected()
         {
             var loginPage = Client.Login();
@@ -323,7 +323,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(mailTemplate.value.ToString().Contains("You promise to pay and will make one repayment of"));
         }
 
-        [Test, AUT(AUT.Za), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za, AUT.Ca, AUT.Uk), SmokeTest]
         public void LnVerifyUrlsAreCorrect()
         {
             var loginPage = Client.Login();

@@ -36,12 +36,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AUTAttribute.cs" />
+    <Compile Include="Categories\CoreTestAttribute.cs" />
+    <Compile Include="Categories\SandboxAttribute.cs" />
+    <Compile Include="Categories\SmokeTestAttribute.cs" />
     <Compile Include="SUTAttribute.cs" />
     <Compile Include="FeatureSwitchAttribute.cs" />
     <Compile Include="JIRAAttribute.cs" />
     <Compile Include="MbUnitConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestCategories.cs" />
+    <Compile Include="Categories\TestCategories.cs" />
     <Compile Include="TestLocal.cs" />
     <Compile Include="TestLayer.cs" />
   </ItemGroup>

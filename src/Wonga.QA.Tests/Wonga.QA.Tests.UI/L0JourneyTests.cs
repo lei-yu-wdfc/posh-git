@@ -44,7 +44,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-189"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-189"), SmokeTest]
         public void L0JourneyInvalidPINShouldCauseWarningMessageOnNextPage()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -74,7 +74,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-177"), Category(TestCategories.Smoke)] //AUT.Ca removed because of sliders changing
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-177"), SmokeTest] //AUT.Ca removed because of sliders changing
         public void ChangeLoanAmountAndDurationOnPersonalDetailsViaPlusMinusOptions()
         {
             //CA is out due to new wonga sliders being implemented on homepage only 
@@ -148,7 +148,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-176"), Category(TestCategories.Smoke)] //AUT.Ca removed because of sliders changing
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-176"), SmokeTest] //AUT.Ca removed because of sliders changing
         public void ChangeLoanAmountAndDurationOnPersonalDetailsViaTypingToTheFields()
         {
             //CA is out due to new wonga sliders being implemented on homepage only 
@@ -160,6 +160,7 @@ namespace Wonga.QA.Tests.Ui
             var firstTotalToRepayValue = personalDetailsPage.GetTotalToRepay;
             personalDetailsPage.HowMuch = "195";
             personalDetailsPage.HowLong = "5";
+            Client.Driver.FindElement(By.CssSelector(UiMap.Get.PersonalDetailsPage.LoanAmount)).LostFocus();
             string totalToRepayAtPersonalDetails = personalDetailsPage.GetTotalToRepay;
             string repaymentDateAtPersonalDetails = personalDetailsPage.GetRepaymentDate;
 
@@ -501,7 +502,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-183"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-183"), SmokeTest]
         public void EnterDifferentPasswordsAtAccountDetailsPageShouldCauseWarningMessage()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -532,7 +533,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-190"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-190"), SmokeTest]
         public void L0JourneyDataOnAcceptedPageShouldBeCorrect()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -824,7 +825,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-186"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-186"), SmokeTest]
         public void InvalidFormatPasswordShouldCauseWarningMessageAndValidPasswordShouldDissmissWarning()
         {
             switch (Config.AUT)
@@ -1006,7 +1007,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Wb), JIRA("QA-258"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Wb), JIRA("QA-258"), SmokeTest]
         public void TheWongaBusinessPolicyHaveNoReferenceToZaCaUk()
         {
             string ca = "wonga.ca";
@@ -1026,7 +1027,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-184"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-184"), SmokeTest]
         public void CustomerEntersPasswordThatEqualToTheEmailAddressWarningMessageShouldDisplayed()
         {
             var email = Get.RandomEmail();
@@ -1386,7 +1387,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-179"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-179"), SmokeTest]
         public void L0JourneyCustomerIdNumberShouldBeAlignedWithDOBAndGender()
         {
             var email = Get.RandomEmail();
@@ -1495,7 +1496,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za), Category(TestCategories.Smoke), JIRA("QA-277")]
+        [Test, AUT(AUT.Za), SmokeTest, JIRA("QA-277")]
         public void L0JourneyInvalidPostcodeShouldCauseWarningMessageValidPostcodeShouldDimissWarning()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -1541,7 +1542,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za), Category(TestCategories.Smoke), JIRA("QA-276")]
+        [Test, AUT(AUT.Za), SmokeTest, JIRA("QA-276")]
         public void CustomerUsesExistingIdNumberShouldBeAbleToProceed()
         {
             var customer = Do.Until(() => Drive.Data.Comms.Db.CustomerDetails.FindAllByGender(2).FirstOrDefault());
@@ -1728,7 +1729,7 @@ namespace Wonga.QA.Tests.Ui
                     break;
             }
         }
-        [Test, AUT(AUT.Wb), JIRA("QA-287"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Wb), JIRA("QA-287"), SmokeTest]
         public void WbL0JourneyShouldNotBeAbleToProceedWithoutAcceptingAllEligibilityQuestions()
         {
             int getRandomNumber = Get.RandomInt(0, 7);
@@ -1747,7 +1748,7 @@ namespace Wonga.QA.Tests.Ui
             eligibilityQuestionsPage.CheckTurnover = checkBox[5];
             eligibilityQuestionsPage.CheckVat = checkBox[6];
             eligibilityQuestionsPage.CheckDebitCard = checkBox[7];
-
+7a5c00057241d4d31086a875841c40654e44bbf6
             var URLbefore = Client.Driver.Url;
             eligibilityQuestionsPage.ClickNextButton();
             Thread.Sleep(2000);
@@ -1772,7 +1773,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-969"), MultipleAsserts, Pending("Test is in development. Also waiting for functionality implementation.")]
+        [Test, AUT(AUT.Uk), JIRA("UK-969", "UKWEB-250"), MultipleAsserts, Pending("Test is in development. Also waiting for functionality implementation.")]
         public void L0PreAgreementPartonAccountSetupPageTest()
         {
             var loginPage = Client.Login();
@@ -1785,16 +1786,23 @@ namespace Wonga.QA.Tests.Ui
                 .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
                 .FillAddressDetails() as AccountDetailsPage;
 
+            var accountSetupPage = new AccountDetailsPage(this.Client);
+
             Assert.IsTrue(accountSetupPage.IsSecciLinkVisible());
             Assert.IsTrue(accountSetupPage.IsTermsAndConditionsLinkVisible());
             Assert.IsTrue(accountSetupPage.IsExplanationLinkVisible());
 
             accountSetupPage.ClickSecciLink();
-            // TBD: check header and values
-            accountSetupPage.ClickTermsAndConditionsLink();
-            // TBD: check header and values
-            accountSetupPage.ClickExplanationLink();
-            // TBD: check header and values
+            // TBD: check header and values and close the pop-up
+            //Assert.Contains(accountSetupPage.SecciPopupWindowContent(), "150");
+            // end of TBD: check header and values and close the pop-up
+            accountSetupPage.ClosePopupWindow();
+
+            Assert.Contains(accountSetupPage.GetTermsAndConditionsTitle(), "Wonga.com Loan Conditions");
+            accountSetupPage.ClosePopupWindow();
+
+            Assert.Contains(accountSetupPage.GetExplanationTitle(), "Important information about your loan");
+            accountSetupPage.ClosePopupWindow();
 
             // Manually check that loan agreement and SECCI emails are sent
             Console.WriteLine("Manually check that that loan agreement and SECCI emails are sent for user={0}", email);
@@ -1840,7 +1848,6 @@ namespace Wonga.QA.Tests.Ui
 
             var journey = JourneyFactory.GetL0Journey(Client.Home());
             var personalDetails = journey.ApplyForLoan(_loanAmount, _duration).CurrentPage as PersonalDetailsPage;
-
             totalToRepay = Convert.ToDouble(personalDetails.GetTotalToRepay.Remove(0, 1));
             Assert.IsTrue(totalToRepay <= controlSum);
 
@@ -1849,24 +1856,19 @@ namespace Wonga.QA.Tests.Ui
                                     .FillAccountDetails()
                                     .FillBankDetails()
                                     .WaitForAcceptedPage()
-                                    .IgnoreAcceptingLoanAndReturnToHomePageAndLogin()
-                                    .CurrentPage as MySummaryPage;
-
-
-
+                                    .CurrentPage as AcceptedPage;
+            totalToRepay = Convert.ToDouble(SummaryPage.GetTotalToRepay.Remove(0, 1));
+            Assert.IsTrue(totalToRepay <= controlSum);
         }
 
         [Test, AUT(AUT.Ca), JIRA("QA-303")] // AUT Za removed beacuse of ZA-2630 bug
         public void L0ShouldPossibleToCompleteAnL0WithSelfEmployedStatus()
         {
-           // string FirstName = Get.RandomString(3, 10);
-           // string LastName = Get.RandomString(3, 10);
             string Email = Get.RandomEmail();
             DateTime DateOfBirth = new DateTime(1957, 10, 30);
 
             var journey = JourneyFactory.GetL0Journey(Client.Home());
             var personalDetailsPage = journey.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
-            // string employerName = Get.EnumToString(RiskMask.TESTEmployedMask);
 
             switch (Config.AUT)
             {
@@ -1948,5 +1950,88 @@ namespace Wonga.QA.Tests.Ui
 
 
         }
+
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-302")]
+        public void CustomerOnBankDetailsPageClicksOnResendPinLinkAndGoFarther()
+        {
+            // string telephone = "077009" + Get.RandomLong(1000, 9999).ToString();
+            switch (Config.AUT)
+            {
+                #region Ca
+                case AUT.Ca:
+                    var journeyCa = JourneyFactory.GetL0Journey(Client.Home());
+                    var myBankAccountCa = journeyCa.ApplyForLoan(200, 10)
+                        .FillPersonalDetails()
+                        .FillAddressDetails().FillAccountDetails().CurrentPage as PersonalBankAccountPage;
+                    myBankAccountCa.PinVerificationSection.ResendPinClick();
+                    Thread.Sleep(2000);
+                    myBankAccountCa.PinVerificationSection.CloseResendPinPopup();
+                    var pageCa = journeyCa.FillBankDetails()
+                        .CurrentPage as ProcessingPage;
+                    break;
+                #endregion
+                #region Za
+                case AUT.Za:
+                    var journeyZa = JourneyFactory.GetL0Journey(Client.Home());
+                    var myBankAccountZa = journeyZa.ApplyForLoan(200, 10)
+                        .FillPersonalDetails()
+                        .FillAddressDetails().FillAccountDetails().CurrentPage as PersonalBankAccountPage;
+                    myBankAccountZa.PinVerificationSection.ResendPinClick();
+                    Thread.Sleep(2000);
+                    myBankAccountZa.PinVerificationSection.CloseResendPinPopup();
+                    var pageZa = journeyZa.FillBankDetails()
+                        .CurrentPage as ProcessingPage;
+                    break;
+                #endregion
+            }
+        }
+
+        [Test, AUT(AUT.Za), JIRA("QA-308")]
+        public void ShouldPossibleToCompleteAnL0WithRetiredStatus()
+        {
+            string Email = Get.RandomEmail();
+            DateTime DateOfBirth = new DateTime(1957, 10, 30);
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var personalDetailsPage = journey.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
+            string employerName = Get.EnumToString(RiskMask.TESTEmployedMask);
+
+            string NationalId = Get.GetNationalNumber(DateOfBirth, true);
+            personalDetailsPage.YourName.FirstName = journey.FirstName;
+            personalDetailsPage.YourName.MiddleName = "TESTNoCheck";
+            personalDetailsPage.YourName.LastName = journey.LastName;
+            personalDetailsPage.YourName.Title = "Mr";
+            personalDetailsPage.YourDetails.Number = NationalId.ToString();
+            personalDetailsPage.YourDetails.DateOfBirth = DateOfBirth.ToString("d/MMM/yyyy");
+            personalDetailsPage.YourDetails.Gender = "Female";
+            personalDetailsPage.YourDetails.HomeStatus = "Owner Occupier";
+            personalDetailsPage.YourDetails.HomeLanguage = "English";
+            personalDetailsPage.YourDetails.NumberOfDependants = "0";
+            personalDetailsPage.YourDetails.MaritalStatus = "Single";
+            personalDetailsPage.EmploymentDetails.EmploymentStatus = "Retired";
+            personalDetailsPage.EmploymentDetails.SelfEmployedMonthlyIncome = "3000";
+            personalDetailsPage.ContactingYou.HomePhoneNumber = "0123456789";
+            personalDetailsPage.ContactingYou.CellPhoneNumber = "0123456789";
+            personalDetailsPage.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d/MMM/yyyy");
+            personalDetailsPage.EmploymentDetails.IncomeFrequency = "Monthly";
+            personalDetailsPage.ContactingYou.CellPhoneNumber = Get.GetMobilePhone();
+            personalDetailsPage.ContactingYou.EmailAddress = Email;
+            personalDetailsPage.ContactingYou.ConfirmEmailAddress = Email;
+            personalDetailsPage.PrivacyPolicy = true;
+            personalDetailsPage.CanContact = "Yes";
+            personalDetailsPage.MarriedInCommunityProperty =
+                "I am not married in community of property (I am single, married with antenuptial contract, divorced etc.)";
+
+            journey.CurrentPage = personalDetailsPage.Submit() as AddressDetailsPage;
+            var processingPageZa = journey.FillAddressDetails()
+                      .FillAccountDetails()
+                      .FillBankDetails()
+                      .CurrentPage as ProcessingPage;
+            var acceptedPageZa = processingPageZa.WaitFor<AcceptedPage>() as AcceptedPage;
+            acceptedPageZa.SignAgreementConfirm();
+            acceptedPageZa.SignDirectDebitConfirm();
+            var dealDoneZa = acceptedPageZa.Submit();
+
+        }
+
     }
 }
