@@ -133,7 +133,10 @@ namespace Wonga.QA.Framework.Core
                     {
                         return "07700900" + RandomLong(100, 999);
                     }
-
+                case AUT.Pl:
+                    {
+                        return "2799990000" + RandomLong(1, 9);
+                    }
                 default:
                     {
                         return "07700900" + RandomLong(100, 999);

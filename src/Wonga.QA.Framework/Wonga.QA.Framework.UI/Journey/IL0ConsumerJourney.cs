@@ -19,12 +19,11 @@ namespace Wonga.QA.Framework.UI
         BasePage CurrentPage { get; set; }
         
         IL0ConsumerJourney ApplyForLoan(int amount, int duration);
-        IL0ConsumerJourney FillPersonalDetails(string employerNameMask = null);
-        IL0ConsumerJourney FillPersonalDetailsWithEmail(string employerNameMask = null, string email = null);
-        IL0ConsumerJourney FillAddressDetails();
-        IL0ConsumerJourney FillAccountDetails();
-        IL0ConsumerJourney FillBankDetails();
-        IL0ConsumerJourney FillCardDetails();
+        IL0ConsumerJourney FillPersonalDetails(string middleNameMask = null, string employerNameMask = null, string email = null, string mobilePhone = null, bool submit = true);
+        IL0ConsumerJourney FillAddressDetails(string postcode = null, string addresPeriod = null, bool submit = true);
+        IL0ConsumerJourney FillAccountDetails(string password = null, bool submit = true);
+        IL0ConsumerJourney FillBankDetails(string accountNumber = null, string bankPeriod = null, string pin = null, bool submit = true);
+        IL0ConsumerJourney FillCardDetails(string cardNumber = null, string cardSecurity = null, string cardType = null, string expiryDate = null, string startDate = null, string pin = null, bool submit = true);
         IL0ConsumerJourney WaitForAcceptedPage();
         IL0ConsumerJourney WaitForDeclinedPage();
         IL0ConsumerJourney FillAcceptedPage();

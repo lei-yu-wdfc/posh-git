@@ -616,7 +616,7 @@ namespace Wonga.QA.Tests.Ui
             Thread.Sleep(1000);
             Assert.AreEqual(defaultTermLimit.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
             journey.CurrentPage = page.Sliders.Apply() as PersonalDetailsPage;
-            var processingPage = journey.FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+            var processingPage = journey.FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
                                      .FillAddressDetails()
                                      .FillAccountDetails()
                                      .FillBankDetails()

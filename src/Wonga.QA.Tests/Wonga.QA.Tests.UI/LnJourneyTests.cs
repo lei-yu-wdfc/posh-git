@@ -182,7 +182,7 @@ namespace Wonga.QA.Tests.Ui
             // L0 journey
             var journeyL0 = JourneyFactory.GetL0Journey(Client.Home());
             var mySummary = journeyL0.ApplyForLoan(200, 10)
-                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
                 .FillAddressDetails()
                 .FillAccountDetails()
                 .FillBankDetails()
@@ -226,7 +226,7 @@ namespace Wonga.QA.Tests.Ui
             // L0 journey
             var journeyL0 = JourneyFactory.GetL0Journey(Client.Home());
             var mySummary = journeyL0.ApplyForLoan(200, 10)
-                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
                 .FillAddressDetails()
                 .FillAccountDetails()
                 .FillBankDetails()
@@ -337,7 +337,7 @@ namespace Wonga.QA.Tests.Ui
             string phone = "077009" + Get.RandomLong(1000, 9999).ToString();
             var loginPage = Client.Login();
             loginPage.LoginAs(email);
-        
+
             var journey = JourneyFactory.GetLnJourney(Client.Home());
             var applyPage = journey.ApplyForLoan(200, 20).CurrentPage as ApplyPage;
             applyPage.SetNewMobilePhone = phone;
