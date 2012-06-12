@@ -58,7 +58,7 @@ namespace Wonga.QA.Tests.Ui
 
             var journey = JourneyFactory.GetL0Journey(Client.Home());          
             var aPage = journey.ApplyForLoan(loanAmount, days)
-                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
                 .FillAddressDetails()
                 .FillAccountDetails();
  
@@ -89,6 +89,7 @@ namespace Wonga.QA.Tests.Ui
             setupData.Scenario01Setup(accountId, applicationId, trustRating);
 
             var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+                Drive.Api.Queries.Post(new GetAccountOptionsUkQuery {AccountId = accountId, TrustRating = trustRating});
             Assert.AreEqual(1, int.Parse(response.Values["ScenarioId"].Single()));
 
             var loginPage = Client.Login();
@@ -176,6 +177,7 @@ namespace Wonga.QA.Tests.Ui
             setupData.Scenario09Setup(requestId2, requestId1, accountId, paymentCardId, appId, bankAccountId);
 
             var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+                Drive.Api.Queries.Post(new GetAccountOptionsUkQuery {AccountId = accountId, TrustRating = trustRating});
             Assert.AreEqual(9, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
 
             // Login and open my summary page
@@ -213,6 +215,7 @@ namespace Wonga.QA.Tests.Ui
             setupData.Scenario10Setup(requestId1, requestId2, appId, bankAccountId, accountId, paymentCardId);
 
             var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+                Drive.Api.Queries.Post(new GetAccountOptionsUkQuery {AccountId = accountId, TrustRating = trustRating});
             Assert.AreEqual(scenarioId, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
 
             // Login and open my summary page
@@ -283,6 +286,7 @@ namespace Wonga.QA.Tests.Ui
             setupData.Scenario14Setup(requestId1, requestId2, applicationId, accountId, appId, paymentCardId, bankAccountId);
 
             var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+                Drive.Api.Queries.Post(new GetAccountOptionsUkQuery {AccountId = accountId, TrustRating = trustRating});
             Assert.AreEqual(scenarioId, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
 
             // Login and open my summary page
@@ -317,6 +321,7 @@ namespace Wonga.QA.Tests.Ui
             setupData.Scenario15Setup(requestId1, requestId2, applicationId, accountId, appId, paymentCardId, bankAccountId);
 
             var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
+                Drive.Api.Queries.Post(new GetAccountOptionsUkQuery {AccountId = accountId, TrustRating = trustRating});
             Assert.AreEqual(15, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
 
             // Login and open my summary page
@@ -373,7 +378,7 @@ namespace Wonga.QA.Tests.Ui
 
             var journey = JourneyFactory.GetL0Journey(Client.Home());
             var aPage = journey.ApplyForLoan(loanAmount, days)
-                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
                 .FillAddressDetails()
                 .FillAccountDetails()
                 .FillBankDetails();
@@ -406,7 +411,7 @@ namespace Wonga.QA.Tests.Ui
 
             var journey = JourneyFactory.GetL0Journey(Client.Home());
             var aPage = journey.ApplyForLoan(loanAmount, days)
-                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
                 .FillAddressDetails()
                 .FillAccountDetails()
                 .FillBankDetails()
@@ -459,12 +464,19 @@ namespace Wonga.QA.Tests.Ui
                 //GetFixedTermLoanOfferResponse
                 var PromoCodeId = Drive.Api.Queries.Post(new GetFixedTermLoanApplicationQuery { ApplicationId = application.Id }).Values["PromoCodeId"].Single();
                 expectedAmountMax = Drive.Api.Queries.Post(new GetFixedTermLoanOfferUkQuery { AccountId = customer.Id, PromoCodeId = PromoCodeId }).Values["AmountMax"].Single();
+                        ["PromoCodeId"].Single();
+                expectedAmountMax =
+                    Drive.Api.Queries.Post(new GetFixedTermLoanOfferUkQuery
+                                               {AccountId = customer.Id, PromoCodeId = PromoCodeId}).Values["AmountMax"]
+                        .Single();
                 application = application.RepayOnDueDate(); // Repay a loan
             }
 
             if (scenarioId == 20)
             {
                 expectedAmountMax = Drive.Api.Queries.Post(new GetAccountSummaryQuery{AccountId = customer.Id}).Values["AvailableCredit"].Single();
+                    Drive.Api.Queries.Post(new GetAccountSummaryQuery {AccountId = customer.Id}).Values[
+                        "AvailableCredit"].Single();
                 expectedAmountMax = String.Format("{0:0.00}", Convert.ToDecimal(expectedAmountMax));
             }
 
@@ -486,7 +498,8 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId));
 
             // Check the actual text
-            string expectedIntroText = introTexts[scenarioId].Replace("{first name}", customer.GetCustomerFullName().Split(' ')[0]);
+            string expectedIntroText = introTexts[scenarioId].Replace("{first name}",
+                                                                      customer.GetCustomerFullName().Split(' ')[0]);
 
             var response = Drive.Api.Queries.Post(new GetFixedTermLoanApplicationQuery { ApplicationId = application.Id });
             var expectedAvailableCredit = Convert.ToDecimal(response.Values["AvailableCredit"].Single());

@@ -30,7 +30,7 @@ namespace Wonga.QA.Tests.Ui
 
             // Take a loan for 20 days, accept it and go to the Summary page:
             var summaryPage = journey.ApplyForLoan(200, 20)
-                                  .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                  .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
                                   .FillAddressDetails()
                                   .FillBankDetails()
                                   .WaitForAcceptedPage()

@@ -56,7 +56,7 @@ namespace Wonga.QA.Tests.Ui
 
             var journey = JourneyFactory.GetL0Journey(Client.Home());
             var aPage = journey.ApplyForLoan(loanAmount, days)
-                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
                 .FillAddressDetails()
                 .FillAccountDetails();
 
@@ -65,7 +65,7 @@ namespace Wonga.QA.Tests.Ui
 
             Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
         }
-        
+
         [Test, AUT(AUT.Uk), JIRA("UK-795")]
         public void TagCloudScenario1B()
         // Ln journey
@@ -114,7 +114,7 @@ namespace Wonga.QA.Tests.Ui
         public void TagCloudScenario08() { TagCloud(8, 10); }
 
         [Test, AUT(AUT.Uk), JIRA("UK-785")]
-        public void TagCloudScenario09() 
+        public void TagCloudScenario09()
         {
             const int scenarioId = 9;
             string email = Get.RandomEmail();
@@ -145,10 +145,10 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(expectedTagCloudText, actualTagCloudText);
 
             ChangeWantToRepayBox(customer, customer.GetApplication());
-        } 
+        }
 
         [Test, AUT(AUT.Uk), JIRA("UK-785")]
-        public void TagCloudScenario10() 
+        public void TagCloudScenario10()
         {
             const int scenarioId = 10;
             string email = Get.RandomEmail();
@@ -179,7 +179,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(expectedTagCloudText, actualTagCloudText);
 
             ChangeWantToRepayBox(customer, customer.GetApplication());
-        } 
+        }
 
         [Test, AUT(AUT.Uk), JIRA("UK-785")]
         public void TagCloudScenario11() { TagCloud(11, 14); }
@@ -297,14 +297,14 @@ namespace Wonga.QA.Tests.Ui
 
             var journey = JourneyFactory.GetL0Journey(Client.Home());
             var aPage = journey.ApplyForLoan(loanAmount, days)
-                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
                 .FillAddressDetails()
                 .FillAccountDetails()
                 .FillBankDetails();
 
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
-            
+
             Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId));
             Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
         }
@@ -320,7 +320,7 @@ namespace Wonga.QA.Tests.Ui
 
             var journey = JourneyFactory.GetL0Journey(Client.Home());
             var aPage = journey.ApplyForLoan(loanAmount, days)
-                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
                 .FillAddressDetails()
                 .FillAccountDetails()
                 .FillBankDetails()
@@ -328,13 +328,13 @@ namespace Wonga.QA.Tests.Ui
 
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
-            
+
             Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId));
             Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-785"), Pending("Waiting for implementation of agreement cancellation process.")]
-        public void TagCloudScenario19() { TagCloud(19, 0); } 
+        public void TagCloudScenario19() { TagCloud(19, 0); }
 
         [Test, AUT(AUT.Uk), JIRA("UK-785")]
         public void TagCloudScenario20() { TagCloud(20, 1); }
@@ -350,14 +350,14 @@ namespace Wonga.QA.Tests.Ui
 
             var journey = JourneyFactory.GetL0Journey(Client.Home());
             var aPage = journey.ApplyForLoan(loanAmount, days)
-                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
                 .FillAddressDetails()
                 .FillAccountDetails()
                 .FillBankDetails();
 
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
-            
+
             Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId));
             Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
         }
@@ -412,19 +412,19 @@ namespace Wonga.QA.Tests.Ui
 
             Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId));
             Assert.AreEqual(expectedTagCloudText, actualTagCloudText);
-            
+
             if (actualTagCloudText.IndexOf("Repay") > 0)
             {
                 ChangeWantToRepayBox(customer, application);
             }
         }
 
-        
+
         private void ChangeWantToRepayBox(Customer customer, Application application)
         {
 
             var AmountToRepayMinimum = 5;
-            
+
             string email = customer.Email;
             DateTime todayDate = DateTime.Now;
 

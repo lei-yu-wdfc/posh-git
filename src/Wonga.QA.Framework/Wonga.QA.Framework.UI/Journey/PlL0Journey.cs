@@ -17,6 +17,7 @@ namespace Wonga.QA.Framework.UI.Journey
         public string NationalId { get; set; } //not used yet
         public DateTime DateOfBirth { get; set; } //Not used yet
         public BasePage CurrentPage { get; set; }
+        public String Email { get; set; }
 
         public PlL0Journey(BasePage homePage)
         {
@@ -24,7 +25,7 @@ namespace Wonga.QA.Framework.UI.Journey
             FirstName = Get.GetName();
             LastName = Get.RandomString(10);
             MotherMaidenName = Get.RandomString(10);
-
+            Email = Get.RandomEmail();
         }
         public IL0ConsumerJourney ApplyForLoan(int amount, int duration)
         {
@@ -36,13 +37,13 @@ namespace Wonga.QA.Framework.UI.Journey
         }
 
 
-        public IL0ConsumerJourney FillPersonalDetails(string employerNameMask = null)
+        public IL0ConsumerJourney FillPersonalDetails(string middleNameMask = null, string employerNameMask = null, string email = null)
         {
-            var email = Get.RandomEmail();
             string employerName = employerNameMask ?? Get.GetMiddleName();
+            string middleName = middleNameMask ?? Get.GetMiddleName();
             var personalDetailsPage = CurrentPage as PersonalDetailsPage;
             personalDetailsPage.YourName.FirstName = FirstName;
-            personalDetailsPage.YourName.MiddleName = "";
+            personalDetailsPage.YourName.MiddleName = middleName;
             personalDetailsPage.YourName.LastName = LastName;
             personalDetailsPage.YourDetails.PeselNumber = "78081130217";
             personalDetailsPage.YourDetails.Number = "AHP765835";
@@ -65,8 +66,8 @@ namespace Wonga.QA.Framework.UI.Journey
             personalDetailsPage.EmploymentDetails.WorkPhone = "02087111222";
             personalDetailsPage.ContactingYou.CellPhoneNumber = "077071sdgf11222";
 
-            personalDetailsPage.ContactingYou.EmailAddress = email;
-            personalDetailsPage.ContactingYou.ConfirmEmailAddress = email;
+            personalDetailsPage.ContactingYou.EmailAddress = email ?? Email;
+            personalDetailsPage.ContactingYou.ConfirmEmailAddress = email ?? Email;
             personalDetailsPage.PrivacyPolicy = true;
             personalDetailsPage.BikVerification = true;
             personalDetailsPage.MarketingAcceptance = true;

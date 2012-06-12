@@ -40,7 +40,7 @@ namespace Wonga.QA.Tests.Ui
         {
             var journey1 = JourneyFactory.GetL0Journey(Client.Home());
             var bankDetailsPage1 = journey1.ApplyForLoan(200, 10)
-                                      .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                      .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
                                       .FillAddressDetails()
                                       .FillAccountDetails()
                                       .CurrentPage as PersonalBankAccountPage;
@@ -54,7 +54,7 @@ namespace Wonga.QA.Tests.Ui
 
             var journey2 = JourneyFactory.GetL0Journey(Client.Home());
             var bankDetailsPage2 = journey2.ApplyForLoan(200, 10)
-                                      .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                      .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
                                       .FillAddressDetails()
                                       .FillAccountDetails()
                                       .CurrentPage as PersonalBankAccountPage;
@@ -556,7 +556,7 @@ namespace Wonga.QA.Tests.Ui
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
             var addressPage = journey.ApplyForLoan(200, 10)
-                                         .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                         .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
                                          .CurrentPage as AddressDetailsPage;
             string postcode;
             switch (Config.AUT)

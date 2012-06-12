@@ -80,7 +80,7 @@ namespace Wonga.QA.Tests.Ui
             SourceDoesNotContain(doubleClickTokensBlackList);
 
             // Go to the second page:
-            var addressDetailsPage = journey.FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask)).CurrentPage as AddressDetailsPage;
+            var addressDetailsPage = journey.FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask)).CurrentPage as AddressDetailsPage;
 
             // Check that the page contains the wonga_doubleclick module v1.0 signature:
             Assert.IsTrue(addressDetailsPage.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));

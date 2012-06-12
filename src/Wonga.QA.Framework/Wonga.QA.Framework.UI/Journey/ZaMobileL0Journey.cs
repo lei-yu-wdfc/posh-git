@@ -36,11 +36,13 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public IL0ConsumerJourney FillPersonalDetails(string employerNameMask = null)
+        public IL0ConsumerJourney FillPersonalDetails(string middleNameMask = null, string employerNameMask = null, string email = null)
         {
             string employerName = employerNameMask ?? Get.GetMiddleName();
+            string middleName = middleNameMask ?? Get.GetMiddleName();
             var personalDetailsPage = CurrentPage as PersonalDetailsPage;
             personalDetailsPage.YourName.FirstName = FirstName;
+            personalDetailsPage.YourName.MiddleName = middleName;
             personalDetailsPage.YourName.LastName = LastName;
             personalDetailsPage.YourName.Title = "Mr";
             personalDetailsPage.YourDetails.Number = NationalId.ToString();//"5710300020087";
@@ -62,8 +64,8 @@ namespace Wonga.QA.Framework.UI.Journey
             personalDetailsPage.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d/MMM/yyyy");
             personalDetailsPage.EmploymentDetails.IncomeFrequency = "Monthly";
             personalDetailsPage.ContactingYou.CellPhoneNumber = Get.GetMobilePhone();
-            personalDetailsPage.ContactingYou.EmailAddress = Email;
-            personalDetailsPage.ContactingYou.ConfirmEmailAddress = Email;
+            personalDetailsPage.ContactingYou.EmailAddress = email ?? Email;
+            personalDetailsPage.ContactingYou.ConfirmEmailAddress = email ?? Email;
             personalDetailsPage.PrivacyPolicy = true;
             personalDetailsPage.CanContact = "Yes";
             personalDetailsPage.MarriedInCommunityProperty =

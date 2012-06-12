@@ -13,16 +13,17 @@ namespace Wonga.QA.Framework.UI
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-		public string NationalId { get; set; } //not used yet
-		public DateTime DateOfBirth { get; set; } //Not used yet
+        public string NationalId { get; set; } //not used yet
+        public DateTime DateOfBirth { get; set; } //Not used yet
         public BasePage CurrentPage { get; set; }
-		
+        public String Email { get; set; }
 
         public UkL0Journey(BasePage homePage)
         {
             CurrentPage = homePage as HomePage;
             FirstName = Get.GetName();
             LastName = Get.RandomString(10);
+            Email = Get.RandomEmail();
         }
         public IL0ConsumerJourney ApplyForLoan(int amount, int duration)
         {
@@ -33,13 +34,13 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public IL0ConsumerJourney FillPersonalDetails(string employerNameMask = null)
+        public IL0ConsumerJourney FillPersonalDetails(string middleNameMask = null, string employerNameMask = null, string email = null)
         {
-            var email = Get.RandomEmail();
             string employerName = employerNameMask ?? Get.GetMiddleName();
+            string middleName = middleNameMask ?? Get.GetMiddleName();
             var personalDetailsPage = CurrentPage as PersonalDetailsPage;
             personalDetailsPage.YourName.FirstName = FirstName;
-            personalDetailsPage.YourName.MiddleName = "";
+            personalDetailsPage.YourName.MiddleName = middleName;
             personalDetailsPage.YourName.LastName = LastName;
             personalDetailsPage.YourName.Title = "Mr";
             personalDetailsPage.YourDetails.DateOfBirth = "1/Jan/1980";
@@ -59,8 +60,8 @@ namespace Wonga.QA.Framework.UI
             personalDetailsPage.EmploymentDetails.IncomeFrequency = "Monthly";
             personalDetailsPage.EmploymentDetails.WorkPhone = "02087111222";
             personalDetailsPage.ContactingYou.CellPhoneNumber = "07700900000";
-            personalDetailsPage.ContactingYou.EmailAddress = email;
-            personalDetailsPage.ContactingYou.ConfirmEmailAddress = email;
+            personalDetailsPage.ContactingYou.EmailAddress = email ?? Email;
+            personalDetailsPage.ContactingYou.ConfirmEmailAddress = email ?? Email;
             personalDetailsPage.PrivacyPolicy = true;
             personalDetailsPage.CanContact = "Yes";
             CurrentPage = personalDetailsPage.Submit() as AddressDetailsPage;

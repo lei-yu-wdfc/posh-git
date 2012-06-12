@@ -12,17 +12,18 @@ namespace Wonga.QA.Framework.UI
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-		public string NationalId { get; set; } //Not used yet
-    	public DateTime DateOfBirth { get; set; } //not used yet
-
+        public string NationalId { get; set; } //Not used yet
+        public DateTime DateOfBirth { get; set; } //not used yet
+        public String Email { get; set; }
         public BasePage CurrentPage { get; set; }
-		
 
-         public CaL0Journey(BasePage homePage)
+
+        public CaL0Journey(BasePage homePage)
         {
             CurrentPage = homePage as HomePage;
             FirstName = Get.GetName();
             LastName = Get.RandomString(10);
+            Email = Get.RandomEmail();
         }
         public IL0ConsumerJourney ApplyForLoan(int amount, int duration)
         {
@@ -33,16 +34,16 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public IL0ConsumerJourney FillPersonalDetails(string employerNameMask = null)
+        public IL0ConsumerJourney FillPersonalDetails(string middleNameMask = null, string employerNameMask = null, string email = null)
         {
-            var email = Get.RandomEmail();
             string employerName = employerNameMask ?? Get.GetMiddleName();
+            string middleName = middleNameMask ?? Get.GetMiddleName();
             var personalDetailsPage = CurrentPage as PersonalDetailsPage;
             personalDetailsPage.ProvinceSection.Province = "British Columbia";
             Do.Until(() => personalDetailsPage.ProvinceSection.ClosePopup());
 
             personalDetailsPage.YourName.FirstName = FirstName;
-            personalDetailsPage.YourName.MiddleName = Get.GetMiddleName();
+            personalDetailsPage.YourName.MiddleName = middleName;
             personalDetailsPage.YourName.LastName = LastName;
             personalDetailsPage.YourName.Title = "Mr";
             personalDetailsPage.YourDetails.Number = "123213126";
@@ -61,8 +62,8 @@ namespace Wonga.QA.Framework.UI
             personalDetailsPage.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("dd MMM yyyy");
             personalDetailsPage.EmploymentDetails.IncomeFrequency = "Monthly";
             personalDetailsPage.ContactingYou.CellPhoneNumber = "9876543210";
-            personalDetailsPage.ContactingYou.EmailAddress = email;
-            personalDetailsPage.ContactingYou.ConfirmEmailAddress = email;
+            personalDetailsPage.ContactingYou.EmailAddress = email ?? Email;
+            personalDetailsPage.ContactingYou.ConfirmEmailAddress = email ?? Email;
             personalDetailsPage.PrivacyPolicy = true;
             personalDetailsPage.CanContact = true;
             CurrentPage = personalDetailsPage.Submit() as AddressDetailsPage;

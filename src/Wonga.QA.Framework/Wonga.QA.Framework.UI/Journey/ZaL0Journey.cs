@@ -12,8 +12,8 @@ namespace Wonga.QA.Framework.UI
     {
         public String FirstName { get; set; }
         public String LastName { get; set; }
-		public String NationalId { get; set; }
-		public DateTime DateOfBirth { get; set; }
+        public String NationalId { get; set; }
+        public DateTime DateOfBirth { get; set; }
         public BasePage CurrentPage { get; set; }
         public String Email { get; set; }
 
@@ -22,8 +22,8 @@ namespace Wonga.QA.Framework.UI
             CurrentPage = homePage as HomePage;
             FirstName = Get.GetName();
             LastName = Get.RandomString(10);
-        	DateOfBirth = new DateTime(1957, 10, 30);
-        	NationalId = Get.GetNationalNumber(DateOfBirth, true);
+            DateOfBirth = new DateTime(1957, 10, 30);
+            NationalId = Get.GetNationalNumber(DateOfBirth, true);
             Email = Get.RandomEmail();
         }
         public IL0ConsumerJourney ApplyForLoan(int amount, int duration)
@@ -35,15 +35,17 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public IL0ConsumerJourney FillPersonalDetails(string employerNameMask = null)
+        public IL0ConsumerJourney FillPersonalDetails(string middleNameMask = null, string employerNameMask = null, string email = null)
         {
             string employerName = employerNameMask ?? Get.GetMiddleName();
+            string middleName = middleNameMask ?? Get.GetMiddleName();
             var personalDetailsPage = CurrentPage as PersonalDetailsPage;
             personalDetailsPage.YourName.FirstName = FirstName;
+            personalDetailsPage.YourName.MiddleName = middleName;
             personalDetailsPage.YourName.LastName = LastName;
             personalDetailsPage.YourName.Title = "Mr";
-        	personalDetailsPage.YourDetails.Number = NationalId.ToString();//"5710300020087";
-        	personalDetailsPage.YourDetails.DateOfBirth = DateOfBirth.ToString("d/MMM/yyyy");
+            personalDetailsPage.YourDetails.Number = NationalId.ToString();//"5710300020087";
+            personalDetailsPage.YourDetails.DateOfBirth = DateOfBirth.ToString("d/MMM/yyyy");
             personalDetailsPage.YourDetails.Gender = "Female";
             personalDetailsPage.YourDetails.HomeStatus = "Owner Occupier";
             personalDetailsPage.YourDetails.HomeLanguage = "English";
@@ -60,9 +62,9 @@ namespace Wonga.QA.Framework.UI
             personalDetailsPage.EmploymentDetails.SalaryPaidToBank = true;
             personalDetailsPage.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d/MMM/yyyy");
             personalDetailsPage.EmploymentDetails.IncomeFrequency = "Monthly";
-        	personalDetailsPage.ContactingYou.CellPhoneNumber = Get.GetMobilePhone();
-            personalDetailsPage.ContactingYou.EmailAddress = Email;
-            personalDetailsPage.ContactingYou.ConfirmEmailAddress = Email;
+            personalDetailsPage.ContactingYou.CellPhoneNumber = Get.GetMobilePhone();
+            personalDetailsPage.ContactingYou.EmailAddress = email ?? Email;
+            personalDetailsPage.ContactingYou.ConfirmEmailAddress = email ?? Email;
             personalDetailsPage.PrivacyPolicy = true;
             personalDetailsPage.CanContact = "Yes";
             personalDetailsPage.MarriedInCommunityProperty =
@@ -176,7 +178,7 @@ namespace Wonga.QA.Framework.UI
             CurrentPage = dealDonePage.ContinueToMyAccount() as MySummaryPage;
             return this;
         }
-        
+
         public IL0ConsumerJourney IgnoreAcceptingLoanAndReturnToHomePageAndLogin()
         {
             var acceptedPage = CurrentPage as AcceptedPage;
