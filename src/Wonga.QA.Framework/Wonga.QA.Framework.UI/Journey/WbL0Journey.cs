@@ -191,17 +191,20 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public WbL0Journey AddAdditionalDirector()
+        public WbL0Journey AddAdditionalDirector(string firstName = null, string lastName = null, string email = null, bool submit = true)
         {
             var additionalDirectorsPage = CurrentPage as AdditionalDirectorsPage;
             var addAdditionalDirectorPage = additionalDirectorsPage.AddAditionalDirector();
             var additionalDirectorEmail = String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
             addAdditionalDirectorPage.Title = "Mr";
-            addAdditionalDirectorPage.FirstName = Get.RandomString(3, 15);
-            addAdditionalDirectorPage.LastName = Get.RandomString(3, 15);
-            addAdditionalDirectorPage.EmailAddress = additionalDirectorEmail;
-            addAdditionalDirectorPage.ConfirmEmailAddress = additionalDirectorEmail;
-            CurrentPage = addAdditionalDirectorPage.Done();
+            addAdditionalDirectorPage.FirstName = firstName ?? Get.RandomString(3, 15);
+            addAdditionalDirectorPage.LastName = lastName ?? Get.RandomString(3, 15);
+            addAdditionalDirectorPage.EmailAddress = email ?? additionalDirectorEmail;
+            addAdditionalDirectorPage.ConfirmEmailAddress = email ?? additionalDirectorEmail;
+            if (submit)
+            {
+                CurrentPage = addAdditionalDirectorPage.Done();
+            }
             return this;
         }
 
