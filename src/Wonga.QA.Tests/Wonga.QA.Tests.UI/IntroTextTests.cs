@@ -464,7 +464,6 @@ namespace Wonga.QA.Tests.Ui
                 //GetFixedTermLoanOfferResponse
                 var PromoCodeId = Drive.Api.Queries.Post(new GetFixedTermLoanApplicationQuery { ApplicationId = application.Id }).Values["PromoCodeId"].Single();
                 expectedAmountMax = Drive.Api.Queries.Post(new GetFixedTermLoanOfferUkQuery { AccountId = customer.Id, PromoCodeId = PromoCodeId }).Values["AmountMax"].Single();
-                        ["PromoCodeId"].Single();
                 expectedAmountMax =
                     Drive.Api.Queries.Post(new GetFixedTermLoanOfferUkQuery
                                                {AccountId = customer.Id, PromoCodeId = PromoCodeId}).Values["AmountMax"]
