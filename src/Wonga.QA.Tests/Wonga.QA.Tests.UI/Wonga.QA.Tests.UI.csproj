@@ -39,6 +39,8 @@
     <Compile Include="BehaviourAndAdvertTracking.cs" />
     <Compile Include="EnabledModulesTests.cs" />
     <Compile Include="ClickTest.cs" />
+    <Compile Include="Facebook\FacebookTests.cs" />
+    <Compile Include="Facebook\L0JourneyTests.cs" />
     <Compile Include="TimeoutTest.cs" />
     <Compile Include="ExtensionAgreementTest.cs" />
     <Compile Include="RepaymentTest.cs" />
