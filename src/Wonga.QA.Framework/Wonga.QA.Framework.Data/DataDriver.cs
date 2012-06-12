@@ -24,6 +24,7 @@ namespace Wonga.QA.Framework.Data
         private Lazy<CallReportDatabase> _callReport = new Lazy<CallReportDatabase>(() => new CallReportDatabase(Config.Db.CallReport));
         private Lazy<CallValidateDatabase> _callValidate = new Lazy<CallValidateDatabase>(() => new CallValidateDatabase(Config.Db.CallValidate));
         private Lazy<CardPaymentDatabase> _cardPayment = new Lazy<CardPaymentDatabase>(() => new CardPaymentDatabase(Config.Db.CardPayment));
+        private Lazy<CdcDatabase> _cdc = new Lazy<CdcDatabase>(() => new CdcDatabase(Config.Db.Cdc));
         private Lazy<ColdStorageDatabase> _coldStorage = new Lazy<ColdStorageDatabase>(() => new ColdStorageDatabase(Config.Db.ColdStorage));
         private Lazy<ContactManagementDatabase> _contactManagement = new Lazy<ContactManagementDatabase>(() => new ContactManagementDatabase(Config.Db.ContactManagement));
         private Lazy<ExperianDatabase> _experian = new Lazy<ExperianDatabase>(() => new ExperianDatabase(Config.Db.Experian));
@@ -58,6 +59,7 @@ namespace Wonga.QA.Framework.Data
         public CallReportDatabase CallReport { get { return _callReport.Value; } }
         public CallValidateDatabase CallValidate { get { return _callValidate.Value; } }
         public CardPaymentDatabase CardPayment { get { return _cardPayment.Value; } }
+        public CdcDatabase Cdc { get { return _cdc.Value; } }
         public ColdStorageDatabase ColdStorage { get { return _coldStorage.Value; } }
         public ContactManagementDatabase ContactManagement { get { return _contactManagement.Value; } }
         public ExperianDatabase Experian { get { return _experian.Value; } }

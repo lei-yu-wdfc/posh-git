@@ -9,7 +9,6 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
-using Wonga.QA.Framework.SMO;
 using Wonga.QA.Framework.Data;
 using Microsoft.SqlServer.Management.Smo.Agent;
 using Simple.Data;
@@ -22,25 +21,25 @@ namespace Wonga.QA.Tests.Hds
 
         [Test]
         [AUT(AUT.Uk)]
-        public void SMOTest_CheckJobStatus()
-        {
-            Microsoft.SqlServer.Management.Smo.Agent.JobExecutionStatus jobStatus = Jobs.CheckJobStatus("CDCStagingLoad");
-
-            Trace.WriteLine("Job status is " + jobStatus.ToString());
-
-            bool jobEnabled = Jobs.CheckIsJobEnabled("CDCStagingLoad");
-
-            Trace.WriteLine("Job is " + (jobEnabled == true ? "enabled" : "disabled"));
-        }
-
-
-        [Test]
-        [AUT(AUT.Uk)]
         [JIRA("DI-689")]
-        [Description("Used as a prototype test for HDS database testing")]
+        [Description("Used as a prototype test for CDC/HDS database testing")]
         public void FirstRealProtypeTest_DontCallMethodsThisName()
         {
             Trace.WriteLine("Testing");
+            bool paymentsCaptureEnabled = true;
+            bool hdsPaymentsEnabled = true;
+
+            Trace.WriteLine("Check jobs enabled");
+            if (SQLServerAgentJobs.CheckIsJobEnabled("UK_CDCStagingLoadPayments") == false)
+            {
+                paymentsCaptureEnabled = false;
+                SQLServerAgentJobs.EnableJob("UK_CDCStagingLoadPayments");
+            }
+            if (SQLServerAgentJobs.CheckIsJobEnabled("DataInsight - UK_WongaHDSpaymentsLoad") == false)
+            {
+                hdsPaymentsEnabled = false;
+                SQLServerAgentJobs.EnableJob("DataInsight - UK_WongaHDSpaymentsLoad");
+            }
 
             Trace.WriteLine("Name of server connecting to is " + Drive.Data.NameOfServer);
 
@@ -50,26 +49,42 @@ namespace Wonga.QA.Tests.Hds
                   CreatedOn: DateTime.Now
             );
 
-            var appl2 = appl;
+            // Find the last run time of the base table to CDC job
+            DateTime? lastRunTime = SQLServerAgentJobs.GetJobLastRunDateTime("UK_CDCStagingLoadPayments");
 
-            SimpleRecord appl3 = appl2;
+            SQLServerAgentJobs.WaitUntilJobRun("UK_CDCStagingLoadPayments", lastRunTime ?? DateTime.Now);
 
-            Trace.WriteLine(appl3.ElementAt(0).Value);
-            IDictionary<string,object> colNames = appl3;
+            // Check its added in to CDC
+            var recordInCDC = Do.Until(() => Drive.Data.Cdc.Db.Payment.Applications.FindBy(ExternalId: appl.ExternalId));
 
-            foreach (var colName in colNames)
+            // Check its added in to HDS
+            var recordInHDS = Do.Until(() => Drive.Data.Hds.Db.payment.Applications.FindBy(ExternalId: recordInCDC.ExternalId));
+
+            if (hdsPaymentsEnabled == false)
             {
-                Trace.WriteLine(colName.ToString());
+                SQLServerAgentJobs.DisableJob("DataInsight - UK_WongaHDSpaymentsLoad");                
             }
 
-            string testRes = (appl == appl2).ToString();
-            Trace.WriteLine(testRes);
-            // Check its added
-            var recordInPayments = Do.Until(() => Drive.Data.Payments.Db.payment.Applications.FindBy(ApplicationId: appl.ApplicationId));
-
-            //DateTime? me = Jobs.GetJobLastRunDateTime(Drive.Data.NameOfServer, "cdc.BI_Capture");
-
+            if (paymentsCaptureEnabled == false)
+            {
+                SQLServerAgentJobs.DisableJob("cdc.Payments_capture");
+            }
         }
     }
 }
 
+
+//var appl2 = appl;
+
+//SimpleRecord appl3 = appl2;
+
+//Trace.WriteLine(appl3.ElementAt(0).Value);
+//IDictionary<string,object> colNames = appl3;
+
+//foreach (var colName in colNames)
+//{
+//    Trace.WriteLine(colName.ToString());
+//}
+
+//string testRes = (appl == appl2).ToString();
+//Trace.WriteLine(testRes);

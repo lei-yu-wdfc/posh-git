@@ -79,10 +79,6 @@
     <Reference Include="Wonga.QA.Framework.Msmq">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Msmq.dll</HintPath>
     </Reference>
-    <Reference Include="Wonga.QA.Framework.SMO, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Wonga.QA.Framework\Wonga.QA.Framework.SMO\bin\Debug\Wonga.QA.Framework.SMO.dll</HintPath>
-    </Reference>
     <Reference Include="Wonga.QA.Framework.ThirdParties">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.ThirdParties.dll</HintPath>
     </Reference>

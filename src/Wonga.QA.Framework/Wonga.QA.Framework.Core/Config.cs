@@ -417,6 +417,7 @@ namespace Wonga.QA.Framework.Core
             public String CallReport { get; set; }
             public String CallValidate { get; set; }
             public String CardPayment { get; set; }
+            public String Cdc { get; set; }
             public String ColdStorage { get; set; }
             public String ContactManagement { get; set; }
             public String Experian { get; set; }
@@ -464,12 +465,13 @@ namespace Wonga.QA.Framework.Core
                 CallReport = builder("CallReport");
                 CallValidate = builder("CallValidate");
                 CardPayment = builder("CardPayment");
+                Cdc = builder("UK_CDCStaging");
                 ColdStorage = builder("ColdStorage");
                 ContactManagement = builder("ContactManagement");
                 Experian = builder("Experian");
                 ExperianBulk = builder("ExperianBulk");
                 FileStorage = builder("FileStorage");
-                Hds = builder("Hds");
+                Hds = builder("UK_WongaHDS");
                 Hpi = builder("Hpi");
                 IpLookup = builder("IpLookup");
                 QaData = builder("QaData");
