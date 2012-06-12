@@ -73,35 +73,37 @@ namespace Wonga.QA.Framework.UI.Journey
             if (submit)
             {
                 CurrentPage = personalDetailsPage.Submit() as AddressDetailsPage;
-                return this;
             }
-            else
-            {
-                return this;
-            }
+            return this;
         }
 
-        public IL0ConsumerJourney FillAddressDetails()
+        public IL0ConsumerJourney FillAddressDetails(string postcode = null, string addresPeriod = null, bool submit = true)
         {
             var addressPage = CurrentPage as AddressDetailsPage;
             addressPage.HouseNumber = "25";
             addressPage.Street = "high road";
             addressPage.Town = "Kuku";
             addressPage.County = "Province";
-            addressPage.PostCode = Get.GetPostcode();
-            addressPage.AddressPeriod = "2 to 3 years";
-            CurrentPage = addressPage.Next() as AccountDetailsPage;
+            addressPage.PostCode = postcode ?? Get.GetPostcode();
+            addressPage.AddressPeriod = addresPeriod ?? "2 to 3 years";
+            if (submit)
+            {
+                CurrentPage = addressPage.Next() as AccountDetailsPage;
+            }
             return this;
         }
 
-        public IL0ConsumerJourney FillAccountDetails()
+        public IL0ConsumerJourney FillAccountDetails(string password = null, bool submit = true)
         {
             var accountDetailsPage = CurrentPage as AccountDetailsPage;
-            accountDetailsPage.AccountDetailsSection.Password = Get.GetPassword();
-            accountDetailsPage.AccountDetailsSection.PasswordConfirm = Get.GetPassword();
+            accountDetailsPage.AccountDetailsSection.Password = password ?? Get.GetPassword();
+            accountDetailsPage.AccountDetailsSection.PasswordConfirm = password ?? Get.GetPassword();
             accountDetailsPage.AccountDetailsSection.SecretQuestion = "Secret question";
             accountDetailsPage.AccountDetailsSection.SecretAnswer = "Secret answer";
-            CurrentPage = accountDetailsPage.Next();
+            if (submit)
+            {
+                CurrentPage = accountDetailsPage.Next();
+            }
             return this;
         }
 

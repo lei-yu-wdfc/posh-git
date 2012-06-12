@@ -67,35 +67,37 @@ namespace Wonga.QA.Framework.UI
             if (submit)
             {
                 CurrentPage = personalDetailsPage.Submit() as AddressDetailsPage;
-                return this;
             }
-            else
-            {
-                return this;
-            }
+            return this;
         }
 
-        public IL0ConsumerJourney FillAddressDetails()
+        public IL0ConsumerJourney FillAddressDetails(string postcode = null, string addresPeriod = null, bool submit = true)
         {
             var addressPage = CurrentPage as AddressDetailsPage;
-            addressPage.PostCodeLookup = "SW6 6PN";
+            addressPage.PostCodeLookup = postcode ?? "SW6 6PN";
             addressPage.LookupByPostCode();
             addressPage.GetAddressesDropDown();
             Do.Until(() => addressPage.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN");
             Do.Until(() => addressPage.HouseNumber = "666");
-            addressPage.AddressPeriod = "3 to 4 years";
-            CurrentPage = addressPage.Next();
+            addressPage.AddressPeriod = addresPeriod ?? "3 to 4 years";
+            if (submit)
+            {
+                CurrentPage = addressPage.Next();
+            }
             return this;
         }
 
-        public IL0ConsumerJourney FillAccountDetails()
+        public IL0ConsumerJourney FillAccountDetails(string password = null, bool submit = true)
         {
             var accountDetailsPage = CurrentPage as AccountDetailsPage;
-            accountDetailsPage.AccountDetailsSection.Password = Get.GetPassword();
-            accountDetailsPage.AccountDetailsSection.PasswordConfirm = Get.GetPassword();
+            accountDetailsPage.AccountDetailsSection.Password = password ?? Get.GetPassword();
+            accountDetailsPage.AccountDetailsSection.PasswordConfirm = password ?? Get.GetPassword();
             accountDetailsPage.AccountDetailsSection.SecretQuestion = "Secret question'-.";
             accountDetailsPage.AccountDetailsSection.SecretAnswer = "Secret answer";
-            CurrentPage = accountDetailsPage.Next() as PersonalBankAccountPage;
+            if (submit)
+            {
+                CurrentPage = accountDetailsPage.Next() as PersonalBankAccountPage;
+            }
             return this;
         }
 

@@ -69,34 +69,33 @@ namespace Wonga.QA.Framework.UI
             if (submit)
             {
                 CurrentPage = personalDetailsPage.Submit() as AddressDetailsPage;
-                return this;
             }
-            else
-            {
-                return this;
-            }
+            return this;
         }
 
-        public IL0ConsumerJourney FillAddressDetails()
+        public IL0ConsumerJourney FillAddressDetails(string postcode = null, string addresPeriod = null, bool submit = true)
         {
             var addressPage = CurrentPage as AddressDetailsPage;
             addressPage.HouseNumber = "1403";
             addressPage.Street = "Edward";
             addressPage.Town = "Hearst";
-            addressPage.PostCode = "V4F3A9";
-            addressPage.AddressPeriod = "2 to 3 years";
+            addressPage.PostCode = postcode ?? "V4F3A9";
+            addressPage.AddressPeriod = addresPeriod ?? "2 to 3 years";
             addressPage.PostOfficeBox = "C12345";
             return this;
         }
 
-        public IL0ConsumerJourney FillAccountDetails()
+        public IL0ConsumerJourney FillAccountDetails(string password = null, bool submit = true)
         {
             var addressPage = CurrentPage as AddressDetailsPage;
-            addressPage.AccountDetailsSection.Password = Get.GetPassword();
-            addressPage.AccountDetailsSection.PasswordConfirm = Get.GetPassword();
+            addressPage.AccountDetailsSection.Password = password ?? Get.GetPassword();
+            addressPage.AccountDetailsSection.PasswordConfirm = password ?? Get.GetPassword();
             addressPage.AccountDetailsSection.SecretQuestion = "Secret question'-.";
             addressPage.AccountDetailsSection.SecretAnswer = "Secret answer";
-            CurrentPage = addressPage.Next() as PersonalBankAccountPage;
+            if (submit)
+            {
+                CurrentPage = addressPage.Next() as PersonalBankAccountPage;
+            }
             return this;
         }
 
