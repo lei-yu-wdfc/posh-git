@@ -54,13 +54,12 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public WbL0Journey FillPersonalDetails(String middleNameMask = null)
+        public WbL0Journey FillPersonalDetails(string middleNameMask = null,string email = null, string phoneNumber = null, bool submit = true)
         {
-            var middleName = middleNameMask ?? Get.RandomString(3, 15); 
             var personalDetailsPage = CurrentPage as PersonalDetailsPage;
 
             personalDetailsPage.YourName.FirstName = FirstName;
-            personalDetailsPage.YourName.MiddleName = middleName;
+            personalDetailsPage.YourName.MiddleName =  middleNameMask ?? Get.RandomString(3, 15);
             personalDetailsPage.YourName.LastName = LastName;
             personalDetailsPage.YourName.Title = "Mr";
 
@@ -71,41 +70,46 @@ namespace Wonga.QA.Framework.UI.Journey
             personalDetailsPage.YourDetails.NumberOfDependants = "0";
 
             personalDetailsPage.ContactingYou.HomePhoneNumber = "02071111234";
-            personalDetailsPage.ContactingYou.CellPhoneNumber = "07700900000";
-            personalDetailsPage.ContactingYou.EmailAddress = EmailAddress;
-            personalDetailsPage.ContactingYou.ConfirmEmailAddress = EmailAddress;
+            personalDetailsPage.ContactingYou.CellPhoneNumber = phoneNumber ?? Get.GetMobilePhone();
+            personalDetailsPage.ContactingYou.EmailAddress = email ?? EmailAddress;
+            personalDetailsPage.ContactingYou.ConfirmEmailAddress = email ?? EmailAddress;
 
             personalDetailsPage.CanContact = "No";
             personalDetailsPage.PrivacyPolicy = true;
-            CurrentPage = personalDetailsPage.Submit() as AddressDetailsPage;
+            if (submit)
+            {
+                CurrentPage = personalDetailsPage.Submit() as AddressDetailsPage;
+            }
             return this;
         }
 
-        public WbL0Journey FillAddressDetails(String addressPeriod)
+        public WbL0Journey FillAddressDetails(string posteCode = null, string addressPeriod = null, bool submit = true)
         {
             var addressDetailsPage = CurrentPage as AddressDetailsPage;
-            addressDetailsPage.PostCode = "SW6 6PN";
+            addressDetailsPage.PostCode = posteCode ?? "SW6 6PN";
             addressDetailsPage.LookupByPostCode();
             addressDetailsPage.GetAddressesDropDown();
             Do.Until(() => addressDetailsPage.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN");
-            Do.Until(() => addressDetailsPage.AddressPeriod = addressPeriod);
+            Do.Until(() => addressDetailsPage.AddressPeriod = addressPeriod ?? "3 to 4 years");
             addressDetailsPage.HouseNumber = "1";
             addressDetailsPage.District = "Central";
             addressDetailsPage.County = "South Wales";
-            
-            switch(addressPeriod)
+            if (submit)
             {
-                case ("Less than 4 months"):
-                case ("Between 4 months and 2 years"):
-                    CurrentPage = addressDetailsPage.NextAddressLessThan2() as AddressDetailsPage;
-                    break;
-                case ("2 to 3 years"):
-                case ("3 to 4 years"):
-                case ("More than 4 years"):
-                    CurrentPage = addressDetailsPage.Next() as AccountDetailsPage;
-                    break;
-                default:
-                    throw new NotImplementedException();
+                switch (addressPeriod)
+                {
+                    case ("Less than 4 months"):
+                    case ("Between 4 months and 2 years"):
+                        CurrentPage = addressDetailsPage.NextAddressLessThan2() as AddressDetailsPage;
+                        break;
+                    case ("2 to 3 years"):
+                    case ("3 to 4 years"):
+                    case ("More than 4 years"):
+                        CurrentPage = addressDetailsPage.Next() as AccountDetailsPage;
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
             }
             return this;
         }
