@@ -22,7 +22,7 @@ namespace Wonga.QA.Tests.Ui
     [Parallelizable(TestScope.All)]
     class MyAccountTests : UiTest
     {
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-218"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-218"), SmokeTest]
         public void CustomerWithLiveLoanShouldNotBeAbleToAddBankAccount()
         {
             var loginPage = Client.Login();
@@ -35,7 +35,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsFalse(myPaymentDetailsPage.IsAddBankAccountButtonExists());
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-203"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-203"), SmokeTest]
         public void L0JourneyInvalidAccountNumberShouldCauseWarningMessageOnNextPage()
         {
             var journey1 = JourneyFactory.GetL0Journey(Client.Home());
@@ -67,7 +67,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.Throws<AssertionFailureException>(() => { var processingPage = bankDetailsPage2.Next(); });
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-202"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-202"), SmokeTest]
         public void LNJourneyInvalidAccountNumberShouldCauseWarningMessageOnNextPage()
         {
             var loginPage = Client.Login();
@@ -112,7 +112,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-201"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-201"), SmokeTest]
         public void WhenLoggedCustomerWithoutLiveLoanAddsNewBankAccountItShouldBecomePrimary()
         {
             string accountNumber = "1234567";
@@ -148,7 +148,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-214"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-214"), SmokeTest]
         public void CustomerOnMyPersonalDetailsShouldBeAbleToChangeCommunicationPrefs()
         {
 
@@ -271,7 +271,7 @@ namespace Wonga.QA.Tests.Ui
             //TODO check SF
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-212"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-212"), SmokeTest]
         public void CustomerShouldBeAbleToChangeMobileNumber()
         {
             var loginPage = Client.Login();
@@ -298,7 +298,7 @@ namespace Wonga.QA.Tests.Ui
             //TODO check SF
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-211"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-211"), SmokeTest]
         public void ChangingPhoneNumberWithWrongPinShouldCauseWarningMessage()
         {
             var loginPage = Client.Login();
@@ -319,7 +319,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-193"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-193"), SmokeTest]
         public void ArrearsCustomerCheckDataOnMySummaryAndSF()
         {
             int loanTerm = 10;
@@ -447,7 +447,7 @@ namespace Wonga.QA.Tests.Ui
             // need to add check data in SF whan it well be ready for this
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-187"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-187"), SmokeTest]
         public void CustomerEntersInvalidBankAccountWarningMessageShouldBeDisplayed()
         {
             var accounts = new List<string> { "dfgsfgfgsdf", "123 342", "123f445", "+135-6887" };
@@ -611,7 +611,7 @@ namespace Wonga.QA.Tests.Ui
             var mySummaryPage = loginPage.LoginAs(email);
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-208"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-208"), SmokeTest]
         public void LoanOlderThanThreeDaysThenViewLoanDetailsLinkShouldBeDisplayedAndCorrect()
         {
 
@@ -629,7 +629,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(mySummaryPage.IsPopupContainsSummaryDetailsTable());
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-213"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-213"), SmokeTest]
         public void CustomerUpdatesPhoneNumbersAndDoesntMakeChangesShouldSeeMessageOnTopWindow()
         {
             var loginPage = Client.Login();
@@ -644,7 +644,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(myPersonalDetails.DontChangePhone());
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-217"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-217"), SmokeTest]
         public void CustomerChangesAddressWithNotValidDataThenWarningMessageShouldOccur()
         {
             var loginPage = Client.Login();
@@ -703,7 +703,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-219"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-219"), SmokeTest]
         public void CustomerShouldBeAbleToAddBankAccount()
         {
             var accountPreferences = Drive.Data.Payments.Db.AccountPreferences;
@@ -744,7 +744,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), Category(TestCategories.Smoke), JIRA("QA-279")]
+        [Test, AUT(AUT.Za), SmokeTest, JIRA("QA-279")]
         public void LNCustomerChangesMobilePhoneNumberToTheSameOneButUsingSeparators()
         {
             var loginPage = Client.Login();
@@ -764,7 +764,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-210"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-210"), SmokeTest]
         public void CustomerChangeTelephonFieldsCheckHomePhone()
         {
             var loginPage = Client.Login();

@@ -23,7 +23,7 @@ namespace Wonga.QA.Tests.Ui
     public class HelpTest : UiTest
     {
 
-        [Test, AUT(AUT.Za, AUT.Ca, AUT.Wb), JIRA("QA-164, QA-254"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za, AUT.Ca, AUT.Wb), JIRA("QA-164, QA-254"), SmokeTest]
         public void SelectingAHelpQuestionTakesMeToFAQPageWithCorrectQuestionSelected()
         {
             var page = Client.Home();
@@ -56,7 +56,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-165"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-165"), SmokeTest]
         public void SelectingATroubleshootingQuestionTakesMeToPageWithCorrectQuestionSelected()
         {
             var page = Client.Home();
@@ -73,7 +73,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-166"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-166"), SmokeTest]
         public void JargonBusterLinkShouldNavigateThroughPageByClickingDifferentLettersFromAlphabet()
         {
             var page = Client.Home();
@@ -87,7 +87,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-167"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-167"), SmokeTest]
         public void ClickOnContactUsCauseContactInformationDisplayedOnPage()
         {
             var page = Client.Home();
