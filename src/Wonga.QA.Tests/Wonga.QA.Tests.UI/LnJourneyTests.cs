@@ -18,7 +18,7 @@ namespace Wonga.QA.Tests.Ui
     [TestFixture, Parallelizable(TestScope.All)]
     internal class LnJourneyTests : UiTest
     {
-        [Test, AUT(AUT.Za), JIRA("QA-196"), Pending("ZA-2510"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-196"), Category(TestCategories.Smoke)]//Pending("ZA-2510")
         public void LnCustomerTakesNewLoanAndChangesTheMobilePhoneThenChangesShouldBeReflected()
         {
             var loginPage = Client.Login();
@@ -59,7 +59,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual("0111111111", mobileFromDb);
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-198"), Pending()]
+        [Test, AUT(AUT.Za), JIRA("QA-198")]
         public void LnCustomerChangesMobilePhoneAndEntersInvalidPinShouldNotBeAbleToTakeLoan()
         {
             var loginPage = Client.Login();

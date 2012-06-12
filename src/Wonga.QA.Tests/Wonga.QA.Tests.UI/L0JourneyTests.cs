@@ -23,7 +23,7 @@ namespace Wonga.QA.Tests.Ui
     [Parallelizable(TestScope.All)]
     class L0JourneyTests : UiTest
     {
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-180"), Pending("Wierd problem")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-180")]//Pending("Wierd problem")
         public void L0JourneyInvalidPostcodeShouldCauseWarningMessage()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -1579,7 +1579,7 @@ namespace Wonga.QA.Tests.Ui
             addressPage.Next();
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-172"), Pending("CA code appearing in ZA - Michael Nowicki to fix")]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-172")]
         public void L0JourneyCustomerMakeALoanCheckOneLastStepPageValidDataDisplayed()
         {
             int _amountMax;
@@ -1757,7 +1757,7 @@ namespace Wonga.QA.Tests.Ui
             //Assert.IsTrue(e.Message.Contains("was Box must be ticked to proceed"));
         }
 
-        [Test, AUT(AUT.Za), Pending("Test is yet to be complete. Author: Ben Ifie")]
+        [Test, AUT(AUT.Za)]//Pending("Test is yet to be complete. Author: Ben Ifie")
         public void L0DropOff()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());

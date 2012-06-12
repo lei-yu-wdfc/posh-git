@@ -208,7 +208,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-216"), Pending]
+        [Test, AUT(AUT.Za), JIRA("QA-216")]
         public void CustomerShouldBeAbleToChangePassword()
         {
             var loginPage = Client.Login();
@@ -737,7 +737,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za),Pending("fixing"), JIRA("QA-279")]//Category(TestCategories.Smoke),
+        [Test, AUT(AUT.Za), Category(TestCategories.Smoke), JIRA("QA-279")]
         public void LNCustomerChangesMobilePhoneNumberToTheSameOneButUsingSeparators()
         {
             var loginPage = Client.Login();
