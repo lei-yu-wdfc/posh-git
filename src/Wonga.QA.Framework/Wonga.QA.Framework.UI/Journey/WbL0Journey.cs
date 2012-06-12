@@ -39,7 +39,7 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public WbL0Journey AnswerEligibilityQuestions(bool activeCompany = true, bool director = true, bool guarantee = true, bool onlineAccess = true, bool resident = true, bool turnover = true, bool vat = true, bool debitCard = true, bool submit = true)
+        public WbL0Journey AnswerEligibilityQuestions(bool activeCompany = true, bool director = true, bool guarantee = true, bool resident = true, bool debitCard = true, bool submit = true)
         {
             var eligibilityQuestionsPage = CurrentPage as EligibilityQuestionsPage;
             eligibilityQuestionsPage.CheckActiveCompany = activeCompany;
