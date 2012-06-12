@@ -47,13 +47,14 @@ namespace Wonga.QA.Tests.Ui
             //var manualRepayPage = repayPage.ManualRepaymentButtonClick();
         }
 
-        [Test, AUT(AUT.Za), Pending("Fancybox is a piece of **** :)")]
+        [Test, AUT(AUT.Za), Pending("Test is incomplete")]
         public void ZaEasyPayRepayment()
         {
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            ApplicationBuilder.New(customer).Build();
+            var app = ApplicationBuilder.New(customer).Build();
+            app.RepayOnDueDate();
             var mySummaryPage = loginPage.LoginAs(email);
             var repayPage = mySummaryPage.RepayClick();
            
