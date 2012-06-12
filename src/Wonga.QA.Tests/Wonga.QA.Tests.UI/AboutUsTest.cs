@@ -18,33 +18,15 @@ namespace Wonga.QA.Tests.Ui
     [Parallelizable(TestScope.All)]
     class AboutUsTest : UiTest
     {
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-169"), SmokeTest]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-169"), Category(TestCategories.Smoke)]
         public void CustomerOnAboutUsPageShouldBeAbleChooseEveryLink()
-        {
-            string news = "wonga.com/blog";
-            string ourCustomers = "wonga.com/our-customers";
-            string responsibleLending = "wonga.com/our-commitment-responsible-lending";
-            string whyUseUs = "wonga.com/why-use-us";
-            const string ca = "ca.";
-            const string za = "za.";
-
-            switch (Config.AUT)
-            {
-                case (AUT.Ca):
-                    news = ca + news;
-                    ourCustomers = ca + ourCustomers;
-                    responsibleLending = ca + responsibleLending;
-                    whyUseUs = ca + whyUseUs;
-                    break;
-                case (AUT.Za):
-                    news = za + news;
-                    ourCustomers = za + ourCustomers;
-                    responsibleLending = za + responsibleLending;
-                    whyUseUs = za + whyUseUs;
-                    break;
-            }
-
-
+{
+            string homestr = Config.Ui.Home.ToString().Replace("http", "https");
+            string news = homestr + "blog";
+            string ourCustomers = homestr + "our-customers";
+            string responsibleLending = homestr + "our-commitment-responsible-lending";
+            string whyUseUs = homestr + "why-use-us";
+          
             var aboutpage = Client.About();
             Assert.IsTrue(aboutpage.WereFastClickAndCheck());
             Assert.IsTrue(aboutpage.WereDifferentClickAndCheck());
