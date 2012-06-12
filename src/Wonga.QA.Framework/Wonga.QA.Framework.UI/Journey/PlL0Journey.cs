@@ -122,19 +122,21 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public IL0ConsumerJourney FillCardDetails()
+        public IL0ConsumerJourney FillCardDetails(string cardNumber = null, string cardSecurity = null, string cardType = null, string expiryDate = null, string startDate = null, string pin = null, bool submit = true)
         {
             var personalDebitCardPage = CurrentPage as PersonalDebitCardPage;
 
             personalDebitCardPage.DebitCardSection.CardName = FirstName;
-            personalDebitCardPage.DebitCardSection.CardNumber = "4444333322221111";
-            personalDebitCardPage.DebitCardSection.CardSecurity = "666";
-            personalDebitCardPage.DebitCardSection.CardType = "Visa Debit";
-            personalDebitCardPage.DebitCardSection.ExpiryDate = "Jan/2015";
-            personalDebitCardPage.DebitCardSection.StartDate = "Jan/2007";
-            personalDebitCardPage.MobilePinVerification.Pin = "0000";
-            CurrentPage = personalDebitCardPage.Next() as ProcessingPage;
-
+            personalDebitCardPage.DebitCardSection.CardNumber = cardNumber ??"4444333322221111";
+            personalDebitCardPage.DebitCardSection.CardSecurity = cardSecurity ?? "666";
+            personalDebitCardPage.DebitCardSection.CardType = cardType ?? "Visa Debit";
+            personalDebitCardPage.DebitCardSection.ExpiryDate = expiryDate ?? "Jan/2015";
+            personalDebitCardPage.DebitCardSection.StartDate = startDate ?? "Jan/2007";
+            personalDebitCardPage.MobilePinVerification.Pin = pin ?? "0000";
+            if (submit)
+            {
+                CurrentPage = personalDebitCardPage.Next() as ProcessingPage;
+            }
             return this;
         }
 

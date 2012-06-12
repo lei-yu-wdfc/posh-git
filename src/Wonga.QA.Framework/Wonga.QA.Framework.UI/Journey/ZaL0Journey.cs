@@ -121,7 +121,7 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public IL0ConsumerJourney FillCardDetails()
+        public IL0ConsumerJourney FillCardDetails(string cardNumber = null, string cardSecurity = null, string cardType = null, string expiryDate = null, string startDate = null, string pin = null, bool submit = true)
         {
             throw new NotImplementedException();
         }
