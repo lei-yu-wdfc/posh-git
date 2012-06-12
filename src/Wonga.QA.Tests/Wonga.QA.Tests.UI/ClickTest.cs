@@ -22,7 +22,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("CA-2326"), Pending("Nowicki - fixed it")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("CA-2326"), Ignore("Feature turned off for this release")]
         public void VerifyIsClickParamsSet()
         {
             var homePage = Client.Home();
