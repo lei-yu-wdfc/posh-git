@@ -45,10 +45,7 @@ namespace Wonga.QA.Framework.UI.Journey
             eligibilityQuestionsPage.CheckActiveCompany = true;
             eligibilityQuestionsPage.CheckDirector = true;
             eligibilityQuestionsPage.CheckGuarantee = true;
-            eligibilityQuestionsPage.CheckOnlineAccess = true;
             eligibilityQuestionsPage.CheckResident = true;
-            eligibilityQuestionsPage.CheckTurnover = true;
-            eligibilityQuestionsPage.CheckVat = true;
             eligibilityQuestionsPage.CheckDebitCard = true;
             CurrentPage = eligibilityQuestionsPage.Submit();
             return this;

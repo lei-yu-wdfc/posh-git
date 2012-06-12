@@ -13,9 +13,6 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
         private readonly IWebElement _resident;
         private readonly IWebElement _director;
         private readonly IWebElement _activeCompany;
-        private readonly IWebElement _turnover;
-        private readonly IWebElement _vat;
-        private readonly IWebElement _onlineAccess;
         private readonly IWebElement _guarantee;
         private readonly IWebElement _debitCard;
         private readonly IWebElement _next;
@@ -23,9 +20,6 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
         public Boolean CheckResident { set { _resident.Toggle(value); } }
         public Boolean CheckDirector { set { _director.Toggle(value); } }
         public Boolean CheckActiveCompany { set { _activeCompany.Toggle(value); } }
-        public Boolean CheckTurnover { set { _turnover.Toggle(value); } }
-        public Boolean CheckVat { set { _vat.Toggle(value); } }
-        public Boolean CheckOnlineAccess { set { _onlineAccess.Toggle(value); } }
         public Boolean CheckGuarantee
         {
             get { return _guarantee.Selected; }
@@ -41,9 +35,6 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
             _director = _form.FindElement(By.CssSelector(UiMap.Get.EligibilityQuestionsPage.CheckDirector));
             _resident = _form.FindElement(By.CssSelector(UiMap.Get.EligibilityQuestionsPage.CheckResident));
             _activeCompany = _form.FindElement(By.CssSelector(UiMap.Get.EligibilityQuestionsPage.CheckActiveCompany));
-            _turnover = _form.FindElement(By.CssSelector(UiMap.Get.EligibilityQuestionsPage.CheckTurnover));
-            _vat = _form.FindElement(By.CssSelector(UiMap.Get.EligibilityQuestionsPage.CheckVat));
-            _onlineAccess = _form.FindElement(By.CssSelector(UiMap.Get.EligibilityQuestionsPage.CheckOnlineAccess));
             _guarantee = _form.FindElement(By.CssSelector(UiMap.Get.EligibilityQuestionsPage.CheckGuarantee));
             _debitCard = _form.FindElement(By.CssSelector(UiMap.Get.EligibilityQuestionsPage.CheckDebitCard));
             _next = _form.FindElement(By.CssSelector(UiMap.Get.EligibilityQuestionsPage.NextButton));

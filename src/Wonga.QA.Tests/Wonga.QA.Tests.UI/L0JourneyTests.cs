@@ -1743,10 +1743,7 @@ namespace Wonga.QA.Tests.Ui
             eligibilityQuestionsPage.CheckActiveCompany = checkBox[0];
             eligibilityQuestionsPage.CheckDirector = checkBox[1];
             eligibilityQuestionsPage.CheckGuarantee = checkBox[2];
-            eligibilityQuestionsPage.CheckOnlineAccess = checkBox[3];
             eligibilityQuestionsPage.CheckResident = checkBox[4];
-            eligibilityQuestionsPage.CheckTurnover = checkBox[5];
-            eligibilityQuestionsPage.CheckVat = checkBox[6];
             eligibilityQuestionsPage.CheckDebitCard = checkBox[7];
 
             var URLbefore = Client.Driver.Url;
