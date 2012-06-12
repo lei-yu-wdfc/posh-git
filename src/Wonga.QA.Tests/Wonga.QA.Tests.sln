@@ -82,6 +82,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Prepaid", "Wonga.QA.Tests.Prepaid\Wonga.QA.Tests.Prepaid.csproj", "{8F318EC1-E001-4CF2-A89A-A2B0C94E1D98}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.PayU", "Wonga.QA.Tests.PayU\Wonga.QA.Tests.PayU.csproj", "{C92F5379-5FBC-4E18-963B-1E20FCB5D6E5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Hds", "Wonga.QA.Tests.Hds\Wonga.QA.Tests.Hds.csproj", "{0021FA4B-F42F-4FFD-BE90-FF7F5B8FD420}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Mig.UI", "Wonga.QA.Tests.Mig.UI\Wonga.QA.Tests.Mig.UI.csproj", "{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}"
 EndProject
@@ -494,6 +495,16 @@ Global
 		{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}.Release|x86.ActiveCfg = Release|Any CPU
+		{0021FA4B-F42F-4FFD-BE90-FF7F5B8FD420}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0021FA4B-F42F-4FFD-BE90-FF7F5B8FD420}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0021FA4B-F42F-4FFD-BE90-FF7F5B8FD420}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{0021FA4B-F42F-4FFD-BE90-FF7F5B8FD420}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{0021FA4B-F42F-4FFD-BE90-FF7F5B8FD420}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0021FA4B-F42F-4FFD-BE90-FF7F5B8FD420}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0021FA4B-F42F-4FFD-BE90-FF7F5B8FD420}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0021FA4B-F42F-4FFD-BE90-FF7F5B8FD420}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{0021FA4B-F42F-4FFD-BE90-FF7F5B8FD420}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{0021FA4B-F42F-4FFD-BE90-FF7F5B8FD420}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
