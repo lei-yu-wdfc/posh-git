@@ -129,27 +129,32 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public WbL0Journey FillAccountDetails()
+        public WbL0Journey FillAccountDetails(string password = null, bool submit = true)
         {
-            var password = Get.GetPassword();
             var accountDetailsPage = CurrentPage as AccountDetailsPage;
-            accountDetailsPage.AccountDetailsSection.Password = password;
-            accountDetailsPage.AccountDetailsSection.PasswordConfirm = password;
+            accountDetailsPage.AccountDetailsSection.Password = password ?? Get.GetPassword();
+            accountDetailsPage.AccountDetailsSection.PasswordConfirm = password ?? Get.GetPassword();
             accountDetailsPage.AccountDetailsSection.SecretQuestion = "How deep the rabbit hole goes?";
             accountDetailsPage.AccountDetailsSection.SecretAnswer = "Very";
-            CurrentPage = accountDetailsPage.Next();
+            if (submit)
+            {
+                CurrentPage = accountDetailsPage.Next();
+            }
             return this;
         }
 
-        public WbL0Journey FillBankDetails()
+        public WbL0Journey FillBankDetails(string accountNumber = null, string bankPeriod = null, bool submit = true)
         {
             var personalBankAccountPage = CurrentPage as PersonalBankAccountPage;
             personalBankAccountPage.BankAccountSection.BankName = "AIB";
             personalBankAccountPage.BankAccountSection.SortCode = "13-40-20";
-            personalBankAccountPage.BankAccountSection.AccountNumber = "63849203";
-            personalBankAccountPage.BankAccountSection.BankPeriod = "More than 4 years";
+            personalBankAccountPage.BankAccountSection.AccountNumber = accountNumber ?? "63849203";
+            personalBankAccountPage.BankAccountSection.BankPeriod = bankPeriod ?? "More than 4 years";
             Thread.Sleep(3000);
-            CurrentPage = personalBankAccountPage.Next() as PersonalDebitCardPage;
+            if (submit)
+            {
+                CurrentPage = personalBankAccountPage.Next() as PersonalDebitCardPage;
+            }
             return this;
         }
 
