@@ -223,25 +223,27 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public WbL0Journey EnterBusinessDebitCardDetails()
+        public WbL0Journey EnterBusinessDebitCardDetails(string cardNumber = null, string cardSecurity = null, string cardType = null, string expiryDate = null, string startDate = null, string postCode = null, bool submit = true)
         {
             var businessPaymentCardPage = CurrentPage as BusinessDebitCardPage;
             businessPaymentCardPage.DebitCardSection.CardName = FirstName;
-            businessPaymentCardPage.DebitCardSection.CardNumber = "4444333322221111";
-            businessPaymentCardPage.DebitCardSection.CardSecurity = "666";
-            businessPaymentCardPage.DebitCardSection.CardType = "Visa Debit";
-            businessPaymentCardPage.DebitCardSection.ExpiryDate = "Jan/2015";
-            businessPaymentCardPage.DebitCardSection.StartDate = "Jan/2007";
+            businessPaymentCardPage.DebitCardSection.CardNumber = cardNumber ?? "4444333322221111";
+            businessPaymentCardPage.DebitCardSection.CardSecurity = cardSecurity ?? "666";
+            businessPaymentCardPage.DebitCardSection.CardType = cardType ?? "Visa Debit";
+            businessPaymentCardPage.DebitCardSection.ExpiryDate = expiryDate ?? "Jan/2015";
+            businessPaymentCardPage.DebitCardSection.StartDate = startDate ?? "Jan/2007";
 
-            businessPaymentCardPage.AddressDetailsSection.PostCode = "SW6 6PN";
+            businessPaymentCardPage.AddressDetailsSection.PostCode = postCode ?? "SW6 6PN";
             businessPaymentCardPage.AddressDetailsSection.LookupByPostCode();
             businessPaymentCardPage.AddressDetailsSection.GetAddressesDropDown();
             Do.Until(() => businessPaymentCardPage.AddressDetailsSection.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN");
             Do.Until(() => businessPaymentCardPage.AddressDetailsSection.FlatNumber = "15");
             businessPaymentCardPage.AddressDetailsSection.District = "London";
             businessPaymentCardPage.AddressDetailsSection.County = "Camden";
-
-            CurrentPage = businessPaymentCardPage.Next();
+            if (submit)
+            {
+                CurrentPage = businessPaymentCardPage.Next();
+            }
             return this;
 
         }
