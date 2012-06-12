@@ -20,6 +20,7 @@ namespace Wonga.QA.Tests.Bi
         [Test]
         [AUT(AUT.Uk)]
         [JIRA("DI-603")]
+        [Explicit]
         [Description("This will create an account, some transactions and then request accrued interest to be calculated")]
         public void ApplyAccountDetailsStoredInBiTable()
         {
