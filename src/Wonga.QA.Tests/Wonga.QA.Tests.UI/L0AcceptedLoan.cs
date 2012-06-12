@@ -54,8 +54,8 @@ namespace Wonga.QA.Tests.Ui
            var journey = JourneyFactory.GetL0JourneyWB(Client.Home());
            var homePage = journey.ApplyForLoan(5500, 30)
                .AnswerEligibilityQuestions()
-               .FillPersonalDetails(MiddleNameMask)
-               .FillAddressDetails("More than 4 years")
+               .FillPersonalDetails(middleNameMask: MiddleNameMask)
+               .FillAddressDetails(addressPeriod: "More than 4 years")
                .FillAccountDetails()
                .FillBankDetails()
                .FillCardDetails()
@@ -75,8 +75,8 @@ namespace Wonga.QA.Tests.Ui
            var journey = JourneyFactory.GetL0JourneyWB(Client.Home());
            var homePage = journey.ApplyForLoan(5500, 30)
                .AnswerEligibilityQuestions()
-               .FillPersonalDetails(MiddleNameMask)
-               .FillAddressDetails("2 to 3 years")
+               .FillPersonalDetails(middleNameMask: MiddleNameMask)
+               .FillAddressDetails(addressPeriod: "2 to 3 years")
                .FillAccountDetails()
                .FillBankDetails()
                .FillCardDetails()
@@ -96,8 +96,8 @@ namespace Wonga.QA.Tests.Ui
            var journey = JourneyFactory.GetL0JourneyWB(Client.Home());
            var homePage = journey.ApplyForLoan(5500, 30)
                .AnswerEligibilityQuestions()
-               .FillPersonalDetails(MiddleNameMask)
-               .FillAddressDetails("3 to 4 years")
+               .FillPersonalDetails(middleNameMask: MiddleNameMask)
+               .FillAddressDetails(addressPeriod: "3 to 4 years")
                .FillAccountDetails()
                .FillBankDetails()
                .FillCardDetails()
@@ -118,8 +118,8 @@ namespace Wonga.QA.Tests.Ui
            var journey = JourneyFactory.GetL0JourneyWB(Client.Home());
            var homePage = journey.ApplyForLoan(5500, 30)
                .AnswerEligibilityQuestions()
-               .FillPersonalDetails(MiddleNameMask)
-               .FillAddressDetails("Between 4 months and 2 years")
+               .FillPersonalDetails(middleNameMask: MiddleNameMask)
+               .FillAddressDetails( addressPeriod: "Between 4 months and 2 years")
                .EnterAdditionalAddressDetails()
                .FillAccountDetails()
                .FillBankDetails()

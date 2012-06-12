@@ -29,7 +29,7 @@ namespace Wonga.QA.Tests.Ui
             journey.ApplyForLoan(5500, 30)
                 .AnswerEligibilityQuestions()
                 .FillPersonalDetails()
-                .FillAddressDetails("More than 4 years")
+                .FillAddressDetails(addressPeriod: "More than 4 years")
                 .FillAccountDetails()
                 .FillBankDetails()
                 .FillCardDetails()
