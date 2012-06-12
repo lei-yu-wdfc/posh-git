@@ -98,6 +98,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public void ClosePopupWindow()
         {
+            Thread.Sleep(1000);
             Client.Driver.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.PopupClose)).Click();
         }
 
