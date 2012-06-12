@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Databases\AccountingDatabase.cs" />
+    <Compile Include="Databases\CdcDatabase.cs" />
     <Compile Include="Databases\ContactManagement.cs" />
     <Compile Include="Databases\CommsDatabase.cs" />
     <Compile Include="Databases\BiDatabase.cs" />
@@ -46,6 +47,7 @@
     <Compile Include="Databases\CardPaymentDatabase.cs" />
     <Compile Include="Databases\ColdStorageDatabase.cs" />
     <Compile Include="Databases\BiCustomerManagementDatabase.cs" />
+    <Compile Include="Databases\HdsDatabase.cs" />
     <Compile Include="Databases\SchedulerDatabase.cs" />
     <Compile Include="Databases\WongaPayDatabase.cs" />
     <Compile Include="Databases\UruDatabase.cs" />
@@ -65,7 +67,7 @@
     <Compile Include="Databases\PaymentsDatabase.cs" />
     <Compile Include="Databases\MarketingDatabase.cs" />
     <Compile Include="Databases\PrepaidCardDatabase.cs" />
-    <Compile Include="Databases\PpsDatabase.cs" />    
+    <Compile Include="Databases\PpsDatabase.cs" />
     <Compile Include="Databases\QAFDatabase.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -80,12 +82,36 @@
     <Compile Include="Enums\Risk\RiskWorkflowStatusEnum.cs" />
     <Compile Include="Enums\Risk\RiskWorkflowTypesEnum.cs" />
     <Compile Include="Enums\Risk\SliderPositionTypeEnum.cs" />
-	<Compile Include="Enums\Prepaid\PrepaidCardType.cs" />
-	<Compile Include="Enums\Prepaid\PrepaidCardStatuses.cs" />
+    <Compile Include="Enums\Prepaid\PrepaidCardType.cs" />
+    <Compile Include="Enums\Prepaid\PrepaidCardStatuses.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SQLServerAgentJobs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\SMO\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Management.Sdk.Sfc, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\SMO\Microsoft.SqlServer.Management.Sdk.Sfc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.ServiceBrokerEnum, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\SMO\Microsoft.SqlServer.ServiceBrokerEnum.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Smo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\SMO\Microsoft.SqlServer.Smo.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.SqlEnum, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\SMO\Microsoft.SqlServer.SqlEnum.dll</HintPath>
+    </Reference>
     <Reference Include="Simple.Data">
       <HintPath>..\..\..\lib\nuget\packages\Simple.Data.Core.0.16.0.0\lib\net40\Simple.Data.dll</HintPath>
     </Reference>
