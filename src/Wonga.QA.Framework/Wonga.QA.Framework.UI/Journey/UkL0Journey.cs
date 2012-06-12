@@ -69,40 +69,6 @@ namespace Wonga.QA.Framework.UI
 
         }
 
-        public IL0ConsumerJourney FillPersonalDetailsWithEmail(string employerNameMask = null, string email = null)
-        {
-            //var email = Get.RandomEmail();
-            string employerName = employerNameMask ?? Get.GetMiddleName();
-            var personalDetailsPage = CurrentPage as PersonalDetailsPage;
-            personalDetailsPage.YourName.FirstName = FirstName;
-            personalDetailsPage.YourName.MiddleName = "";
-            personalDetailsPage.YourName.LastName = LastName;
-            personalDetailsPage.YourName.Title = "Mr";
-            personalDetailsPage.YourDetails.DateOfBirth = "1/Jan/1980";
-            personalDetailsPage.YourDetails.Gender = "Male";
-            personalDetailsPage.YourDetails.HomeStatus = "Tenant Furnished";
-            personalDetailsPage.YourDetails.MaritalStatus = "Single";
-            personalDetailsPage.YourDetails.NumberOfDependants = "0";
-            personalDetailsPage.EmploymentDetails.EmploymentStatus = "Employed Full Time";
-            personalDetailsPage.EmploymentDetails.MonthlyIncome = "1000";
-            personalDetailsPage.EmploymentDetails.EmployerName = employerName;
-            personalDetailsPage.EmploymentDetails.EmployerIndustry = "Finance";
-            personalDetailsPage.EmploymentDetails.EmploymentPosition = "Engineering";
-            personalDetailsPage.EmploymentDetails.TimeWithEmployerYears = "1";
-            personalDetailsPage.EmploymentDetails.TimeWithEmployerMonths = "0";
-            personalDetailsPage.EmploymentDetails.SalaryPaidToBank = true;
-            personalDetailsPage.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d/MMM/yyyy");
-            personalDetailsPage.EmploymentDetails.IncomeFrequency = "Monthly";
-            personalDetailsPage.EmploymentDetails.WorkPhone = "02087111222";
-            personalDetailsPage.ContactingYou.CellPhoneNumber = "07700900000";
-            personalDetailsPage.ContactingYou.EmailAddress = email;
-            personalDetailsPage.ContactingYou.ConfirmEmailAddress = email;
-            personalDetailsPage.PrivacyPolicy = true;
-            personalDetailsPage.CanContact = "Yes";
-            CurrentPage = personalDetailsPage.Submit() as AddressDetailsPage;
-            return this;
-
-        }
         public IL0ConsumerJourney FillAddressDetails()
         {
             var addressPage = CurrentPage as AddressDetailsPage;

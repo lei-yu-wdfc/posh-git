@@ -74,11 +74,6 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public IL0ConsumerJourney FillPersonalDetailsWithEmail(string employerNameMask = null, string email = null)
-        {
-            throw new NotImplementedException();
-        }
-
         public IL0ConsumerJourney FillAddressDetails()
         {
             var addressPage = CurrentPage as AddressDetailsPage;

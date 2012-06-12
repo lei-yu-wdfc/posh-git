@@ -20,7 +20,6 @@ namespace Wonga.QA.Framework.UI
         
         IL0ConsumerJourney ApplyForLoan(int amount, int duration);
         IL0ConsumerJourney FillPersonalDetails(string middleNameMask = null, string employerNameMask = null, string email = null);
-        IL0ConsumerJourney FillPersonalDetailsWithEmail(string employerNameMask = null, string email = null);
         IL0ConsumerJourney FillAddressDetails();
         IL0ConsumerJourney FillAccountDetails();
         IL0ConsumerJourney FillBankDetails();
