@@ -46,7 +46,8 @@
     <Compile Include="Defaults\AddPaymentCardCommand.cs" />
     <Compile Include="Defaults\AddPrimaryOrganisationDirectorCommand.cs" />
     <Compile Include="Defaults\AddSecondaryOrganisationDirectorCommand.cs" />
-    <Compile Include="Defaults\RiskSaveCustomerAddressUkCommand.cs" />
+    <Compile Include="Defaults\RiskSaveCustomerAddressCommand.cs" />
+    <Compile Include="Defaults\RiskSaveCustomerDetailsCommand.cs" />
     <Compile Include="Defaults\SavePasswordRecoveryDetailsUkCommand.cs" />
     <Compile Include="Defaults\SavePasswordRecoveryDetailsZaCommand.cs" />
     <Compile Include="Defaults\SavePasswordRecoveryDetailsCaCommand.cs" />
@@ -58,11 +59,6 @@
     <Compile Include="Defaults\RiskAddBankAccountZaCommand.cs" />
     <Compile Include="Defaults\RiskAddPaymentCardCommand.cs" />
     <Compile Include="Defaults\RiskCreateFixedTermLoanApplicationCommand.cs" />
-    <Compile Include="Defaults\RiskSaveCustomerAddressCaCommand.cs" />
-    <Compile Include="Defaults\RiskSaveCustomerAddressZaCommand.cs" />
-    <Compile Include="Defaults\RiskSaveCustomerDetailsCaCommand.cs" />
-    <Compile Include="Defaults\RiskSaveCustomerDetailsUkCommand.cs" />
-    <Compile Include="Defaults\RiskSaveCustomerDetailsZaCommand.cs" />
     <Compile Include="Defaults\SaveCustomerAddressUkCommand.cs" />
     <Compile Include="Defaults\SaveCustomerDetailsUkCommand.cs" />
     <Compile Include="Defaults\SaveEmploymentDetailsUkCommand.cs" />
@@ -230,14 +226,8 @@
     <Compile Include="Requests\RiskAddPaymentCardCommand.cs" />
     <Compile Include="Requests\RiskCreateBusinessFixedInstallmentLoanApplicationWbUkCommand.cs" />
     <Compile Include="Requests\RiskCreateFixedTermLoanApplicationCommand.cs" />
-    <Compile Include="Requests\RiskSaveCustomerAddressCaCommand.cs" />
-    <Compile Include="Requests\RiskSaveCustomerAddressPlCommand.cs" />
-    <Compile Include="Requests\RiskSaveCustomerAddressUkCommand.cs" />
-    <Compile Include="Requests\RiskSaveCustomerAddressZaCommand.cs" />
-    <Compile Include="Requests\RiskSaveCustomerDetailsCaCommand.cs" />
-    <Compile Include="Requests\RiskSaveCustomerDetailsPlCommand.cs" />
-    <Compile Include="Requests\RiskSaveCustomerDetailsUkCommand.cs" />
-    <Compile Include="Requests\RiskSaveCustomerDetailsZaCommand.cs" />
+    <Compile Include="Requests\RiskSaveCustomerAddressCommand.cs" />
+    <Compile Include="Requests\RiskSaveCustomerDetailsCommand.cs" />
     <Compile Include="Requests\SampleCommand.cs" />
     <Compile Include="Requests\SampleQuery.cs" />
     <Compile Include="Requests\SaveContactPreferencesCommand.cs" />
@@ -252,7 +242,6 @@
     <Compile Include="Requests\SaveCustomerLeadCaCommand.cs" />
     <Compile Include="Requests\SaveCustomerLeadZaCommand.cs" />
     <Compile Include="Requests\SaveEmploymentDetailsCaCommand.cs" />
-    <Compile Include="Requests\SaveEmploymentDetailsPlCommand.cs" />
     <Compile Include="Requests\SaveEmploymentDetailsUkCommand.cs" />
     <Compile Include="Requests\SaveEmploymentDetailsZaCommand.cs" />
     <Compile Include="Requests\SaveExtensionReminderPreferencesCommand.cs" />

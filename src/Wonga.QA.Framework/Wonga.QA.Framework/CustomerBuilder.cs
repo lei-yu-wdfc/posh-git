@@ -372,7 +372,7 @@ namespace Wonga.QA.Framework
                         	r.Gender = _gender;
                         	r.MaidenName = _gender == GenderEnum.Female ? _maidenName : null;
                         }),
-						RiskSaveCustomerDetailsZaCommand.New(r =>
+						RiskSaveCustomerDetailsCommand.New(r =>
 						{
                             r.AccountId = _id;
                         	r.Forename = _foreName;
@@ -395,7 +395,7 @@ namespace Wonga.QA.Framework
                             r.Town = _town;
                             r.County = _county;
                         } ),
-						RiskSaveCustomerAddressZaCommand.New(r =>
+						RiskSaveCustomerAddressCommand.New(r =>
 						{
 							r.AccountId = _id;
                             r.HouseNumber = _houseNumber;
@@ -455,7 +455,7 @@ namespace Wonga.QA.Framework
                             r.HomePhone = _homePhoneNumber;
                             r.Gender = _gender;
                         }),              
-         				RiskSaveCustomerDetailsCaCommand.New(r =>
+         				RiskSaveCustomerDetailsCommand.New(r =>
 						{
 							r.AccountId = _id;
 							r.Forename = _foreName;
@@ -478,7 +478,7 @@ namespace Wonga.QA.Framework
                                                                  r.County = _county;
 																 r.Province = _province;
                         } ),
-						RiskSaveCustomerAddressCaCommand.New(r =>
+						RiskSaveCustomerAddressCommand.New(r =>
 						{
 																r.AccountId = _id;
                                                                  r.HouseNumber = _houseNumber;
@@ -489,7 +489,7 @@ namespace Wonga.QA.Framework
                                                                  r.District = _district;
                                                                  r.Town = _town;
                                                                  r.County = _county;
-																 r.Province = _province;
+																 r.SubRegion = _province;
 						}),
                         AddBankAccountCaCommand.New(r =>
                                                     	{
@@ -548,7 +548,7 @@ namespace Wonga.QA.Framework
                                                                  r.HomePhone = _homePhoneNumber;
                                                                  r.Gender = _gender;
                                                              }),
-						RiskSaveCustomerDetailsUkCommand.New(r =>
+						RiskSaveCustomerDetailsCommand.New(r =>
 						{
 																r.AccountId = _id; 
                                                                  r.MiddleName = _middleName;
@@ -571,7 +571,7 @@ namespace Wonga.QA.Framework
                                                                  r.Town = _town;
                                                                  r.County = _county;
                                                              }),
-						RiskSaveCustomerAddressUkCommand.New(r =>
+						RiskSaveCustomerAddressCommand.New(r =>
 						{
 						      r.AccountId = _id;
                                                                  r.HouseNumber = _houseNumber;
@@ -639,7 +639,7 @@ namespace Wonga.QA.Framework
 						                                         r.Email = _email;
 						                                         r.DateOfBirth = _dateOfBirth;
 						                                     }),
-						RiskSaveCustomerDetailsUkCommand.New(r =>
+						RiskSaveCustomerDetailsCommand.New(r =>
 						{
                                      r.AccountId = _id;
 						             r.Forename = _foreName;
@@ -660,7 +660,7 @@ namespace Wonga.QA.Framework
                                                                  r.Town = _town;
                                                                  r.County = _county;
 					                                         }),
-						RiskSaveCustomerAddressUkCommand.New(r =>
+						RiskSaveCustomerAddressCommand.New(r =>
 						{
 							                r.AccountId = _id;
                                                                  r.HouseNumber = _houseNumber;
