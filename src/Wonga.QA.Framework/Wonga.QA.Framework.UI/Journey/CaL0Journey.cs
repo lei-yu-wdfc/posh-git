@@ -99,15 +99,18 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public IL0ConsumerJourney FillBankDetails()
+        public IL0ConsumerJourney FillBankDetails(string accountNumber = null, string bankPeriod = null, string pin = null, bool submit = true)
         {
             var bankDetailsPage = CurrentPage as PersonalBankAccountPage;
             bankDetailsPage.BankAccountSection.BankName = "Bank of Montreal";
             bankDetailsPage.BankAccountSection.BranchNumber = "00011";
-            bankDetailsPage.BankAccountSection.AccountNumber = "3023423";
-            bankDetailsPage.BankAccountSection.BankPeriod = "More than 4 years";
-            bankDetailsPage.PinVerificationSection.Pin = "0000";
-            CurrentPage = bankDetailsPage.Next() as ProcessingPage;
+            bankDetailsPage.BankAccountSection.AccountNumber = accountNumber ?? "3023423";
+            bankDetailsPage.BankAccountSection.BankPeriod = bankPeriod ?? "More than 4 years";
+            bankDetailsPage.PinVerificationSection.Pin = pin ?? "0000";
+            if (submit)
+            {
+                CurrentPage = bankDetailsPage.Next() as ProcessingPage;
+            }
             return this;
         }
 

@@ -108,14 +108,17 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public IL0ConsumerJourney FillBankDetails()
+        public IL0ConsumerJourney FillBankDetails(string accountNumber = null, string bankPeriod = null, string pin = null, bool submit = true)
         {
             var bankDetailsPage = CurrentPage as PersonalBankAccountPage;
             bankDetailsPage.BankAccountSection.BankName = "AIB";
             bankDetailsPage.BankAccountSection.SortCode = "13-40-20";
-            bankDetailsPage.BankAccountSection.AccountNumber = "63849203";
-            bankDetailsPage.BankAccountSection.BankPeriod = "3 to 4 years";
-            CurrentPage = bankDetailsPage.Next();
+            bankDetailsPage.BankAccountSection.AccountNumber = accountNumber ?? "63849203";
+            bankDetailsPage.BankAccountSection.BankPeriod = bankPeriod ?? "3 to 4 years";
+            if (submit)
+            {
+                CurrentPage = bankDetailsPage.Next();
+            }
             return this;
         }
 
