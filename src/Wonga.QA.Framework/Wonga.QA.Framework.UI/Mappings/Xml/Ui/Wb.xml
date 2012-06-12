@@ -11,9 +11,6 @@
     <CheckDirector>#edit-director</CheckDirector>
     <CheckResident>#edit-resident</CheckResident>
     <CheckActiveCompany>#edit-active-company</CheckActiveCompany>
-    <CheckTurnover>#edit-turnover</CheckTurnover>
-    <CheckVat>#edit-vat</CheckVat>
-    <CheckOnlineAccess>#edit-online-access</CheckOnlineAccess>
     <CheckGuarantee>#edit-guarantee</CheckGuarantee>
     <NextButton>#edit-submit</NextButton>
     <CheckDebitCard>#edit-debit-card</CheckDebitCard>
