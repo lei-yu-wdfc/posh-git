@@ -1257,14 +1257,10 @@ namespace Wonga.QA.Tests.Ui
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
             var addressPage = journey.ApplyForLoan(200, 10)
-                                 .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask)).CurrentPage as AddressDetailsPage;
-            addressPage.HouseNumber = "1403";
-            addressPage.Street = "Edward";
-            addressPage.Town = "Hearst";
-            addressPage.PostCode = "V4F3A9";
-            addressPage.PostOfficeBox = "C12345";
-            addressPage.AddressPeriod = "Less than 4 months";
-
+                                 .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
+                                 .FillAddressDetails(addresPeriod: "Less than 4 months", submit: false)
+                                 .CurrentPage as AddressDetailsPage;
+            
             addressPage.PreviousAddresDetails.FlatNumber = "4";
             addressPage.PreviousAddresDetails.Street = "Edward";
             addressPage.PreviousAddresDetails.Town = "Hearst";
