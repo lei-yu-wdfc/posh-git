@@ -43,13 +43,8 @@ namespace Wonga.QA.Tests.Ui
                                       .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
                                       .FillAddressDetails()
                                       .FillAccountDetails()
+                                      .FillBankDetails(accountNumber: "7434567", submit: false)
                                       .CurrentPage as PersonalBankAccountPage;
-
-            bankDetailsPage1.BankAccountSection.BankName = "Capitec";
-            bankDetailsPage1.BankAccountSection.BankAccountType = "Current";
-            bankDetailsPage1.BankAccountSection.AccountNumber = "7434567";
-            bankDetailsPage1.BankAccountSection.BankPeriod = "2 to 3 years";
-            bankDetailsPage1.PinVerificationSection.Pin = "0000";
             Assert.Throws<AssertionFailureException>(() => { var processingPage = bankDetailsPage1.Next(); });
 
             var journey2 = JourneyFactory.GetL0Journey(Client.Home());
@@ -57,13 +52,8 @@ namespace Wonga.QA.Tests.Ui
                                       .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
                                       .FillAddressDetails()
                                       .FillAccountDetails()
+                                      .FillBankDetails(accountNumber: "7534567", submit: false)
                                       .CurrentPage as PersonalBankAccountPage;
-
-            bankDetailsPage2.BankAccountSection.BankName = "Capitec";
-            bankDetailsPage2.BankAccountSection.BankAccountType = "Current";
-            bankDetailsPage2.BankAccountSection.AccountNumber = "7534567";
-            bankDetailsPage2.BankAccountSection.BankPeriod = "2 to 3 years";
-            bankDetailsPage2.PinVerificationSection.Pin = "0000";
             Assert.Throws<AssertionFailureException>(() => { var processingPage = bankDetailsPage2.Next(); });
         }
 
@@ -554,44 +544,28 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-215")] //Removed from smoke because of selenium problem with new sliders
         public void MyAccountPostcodeMustBeTheSameAsUserEntered()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var addressPage = journey.ApplyForLoan(200, 10)
-                                         .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
-                                         .CurrentPage as AddressDetailsPage;
             string postcode;
             switch (Config.AUT)
             {
                 case AUT.Za:
                     postcode = Get.GetPostcode();
-                    addressPage.HouseNumber = "25";
-                    addressPage.Street = "high road";
-                    addressPage.Town = "Kuku";
-                    addressPage.County = "Province";
-                    addressPage.PostCode = postcode;
-                    addressPage.AddressPeriod = "2 to 3 years";
-                    journey.CurrentPage = addressPage.Next() as AccountDetailsPage;
                     break;
-
                 case AUT.Ca:
                     postcode = "V4F3A9";
-                    addressPage.HouseNumber = "1403";
-                    addressPage.Street = "Edward";
-                    addressPage.Town = "Hearst";
-                    addressPage.PostCode = postcode;
-                    addressPage.AddressPeriod = "2 to 3 years";
-                    addressPage.PostOfficeBox = "C12345";
                     break;
-
                 default:
                     throw new NotImplementedException();
-
             }
-            var mySummaryPage = journey.FillAccountDetails()
-                                    .FillBankDetails()
-                                    .WaitForAcceptedPage()
-                                    .FillAcceptedPage()
-                                    .GoToMySummaryPage()
-                                    .CurrentPage as MySummaryPage;
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var mySummaryPage = journey.ApplyForLoan(200, 10)
+                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
+                .FillAddressDetails(postcode: postcode)
+                .FillAccountDetails()
+                .FillBankDetails()
+                .WaitForAcceptedPage()
+                .FillAcceptedPage()
+                .GoToMySummaryPage()
+                .CurrentPage as MySummaryPage;
             var myPersonalDetailsPage = mySummaryPage.Navigation.MyPersonalDetailsButtonClick();
 
             Assert.AreEqual(postcode, myPersonalDetailsPage.GetPostcode);
@@ -684,7 +658,7 @@ namespace Wonga.QA.Tests.Ui
             myPersonalDetailsPage.Submit();
 
             var addresses = Drive.Data.Comms.Db.Addresses;
-            
+
             Do.Until(() => addresses.FindByAccountId(customer.Id).Town != oldTown);
             var currentAddress = addresses.FindByAccountId(customer.Id);
             //Check changes in DB

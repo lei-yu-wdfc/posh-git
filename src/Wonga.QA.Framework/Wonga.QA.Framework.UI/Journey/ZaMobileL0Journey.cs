@@ -14,6 +14,7 @@ namespace Wonga.QA.Framework.UI.Journey
         public String LastName { get; set; }
         public String NationalId { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public String Gender { get; set; }
         public BasePage CurrentPage { get; set; }
         public String Email { get; set; }
 
@@ -23,6 +24,7 @@ namespace Wonga.QA.Framework.UI.Journey
             FirstName = Get.GetName();
             LastName = Get.RandomString(10);
             DateOfBirth = new DateTime(1957, 10, 30);
+            Gender = "Female";
             NationalId = Get.GetNationalNumber(DateOfBirth, true);
             Email = Get.RandomEmail();
         }
@@ -36,18 +38,18 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public IL0ConsumerJourney FillPersonalDetails(string middleNameMask = null, string employerNameMask = null, string email = null, string mobilePhone = null, bool submit = true)
+        public IL0ConsumerJourney FillPersonalDetails(string firstName = null, string lastName = null, string middleNameMask = null, string employerNameMask = null, string email = null, string mobilePhone = null, bool submit = true)
         {
             string employerName = employerNameMask ?? Get.GetMiddleName();
             string middleName = middleNameMask ?? Get.GetMiddleName();
             var personalDetailsPage = CurrentPage as PersonalDetailsPage;
-            personalDetailsPage.YourName.FirstName = FirstName;
+            personalDetailsPage.YourName.FirstName = firstName ?? FirstName;
             personalDetailsPage.YourName.MiddleName = middleName;
-            personalDetailsPage.YourName.LastName = LastName;
+            personalDetailsPage.YourName.LastName = lastName ?? LastName;
             personalDetailsPage.YourName.Title = "Mr";
             personalDetailsPage.YourDetails.Number = NationalId.ToString();//"5710300020087";
             personalDetailsPage.YourDetails.DateOfBirth = DateOfBirth.ToString("d/MMM/yyyy");
-            personalDetailsPage.YourDetails.Gender = "Female";
+            personalDetailsPage.YourDetails.Gender = Gender;
             personalDetailsPage.YourDetails.HomeStatus = "Owner Occupier";
             personalDetailsPage.YourDetails.HomeLanguage = "English";
             personalDetailsPage.YourDetails.NumberOfDependants = "0";
