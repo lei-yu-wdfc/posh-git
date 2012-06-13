@@ -52,24 +52,7 @@ namespace Wonga.QA.Tests.Ui
                                       .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
                                       .FillAddressDetails()
                                       .FillAccountDetails()
-                                      .CurrentPage as PersonalBankAccountPage;
-
-            switch (Config.AUT)
-            {
-                case AUT.Za:
-                    bankDetailsPage.BankAccountSection.BankName = "Capitec";
-                    bankDetailsPage.BankAccountSection.BankAccountType = "Current";
-                    bankDetailsPage.BankAccountSection.AccountNumber = "1234567";
-                    bankDetailsPage.BankAccountSection.BankPeriod = "2 to 3 years";
-                    break;
-                case AUT.Ca:
-                    bankDetailsPage.BankAccountSection.BankName = "Bank of Montreal";
-                    bankDetailsPage.BankAccountSection.BranchNumber = "00011";
-                    bankDetailsPage.BankAccountSection.AccountNumber = "3023423";
-                    bankDetailsPage.BankAccountSection.BankPeriod = "More than 4 years";
-                    break;
-            }
-            bankDetailsPage.PinVerificationSection.Pin = "9999";
+                                      .FillBankDetails(pin: "9999", submit: false).CurrentPage as PersonalBankAccountPage;
             Assert.Throws<AssertionFailureException>(() => { var processingPage = bankDetailsPage.Next(); });
 
         }
