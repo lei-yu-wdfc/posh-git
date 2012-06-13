@@ -54,13 +54,13 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public WbL0Journey FillPersonalDetails(string middleNameMask = null, string email = null, string mobilePhone = null, bool submit = true)
+        public WbL0Journey FillPersonalDetails(string firstName = null, string lastName = null, string middleNameMask = null, string email = null, string mobilePhone = null, bool submit = true)
         {
             var personalDetailsPage = CurrentPage as PersonalDetailsPage;
 
-            personalDetailsPage.YourName.FirstName = FirstName;
+            personalDetailsPage.YourName.FirstName = firstName ?? FirstName;
             personalDetailsPage.YourName.MiddleName =  middleNameMask ?? Get.RandomString(3, 15);
-            personalDetailsPage.YourName.LastName = LastName;
+            personalDetailsPage.YourName.LastName = lastName ?? LastName;
             personalDetailsPage.YourName.Title = "Mr";
 
             personalDetailsPage.YourDetails.Gender = "Female";

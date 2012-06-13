@@ -37,14 +37,14 @@ namespace Wonga.QA.Framework.UI.Journey
         }
 
 
-        public IL0ConsumerJourney FillPersonalDetails(string middleNameMask = null, string employerNameMask = null, string email = null, string mobilePhone = null, bool submit = true)
+        public IL0ConsumerJourney FillPersonalDetails(string firstName = null, string lastName = null, string middleNameMask = null, string employerNameMask = null, string email = null, string mobilePhone = null, bool submit = true)
         {
             string employerName = employerNameMask ?? Get.GetMiddleName();
             string middleName = middleNameMask ?? Get.GetMiddleName();
             var personalDetailsPage = CurrentPage as PersonalDetailsPage;
-            personalDetailsPage.YourName.FirstName = FirstName;
+            personalDetailsPage.YourName.FirstName = firstName ?? FirstName;
             personalDetailsPage.YourName.MiddleName = middleName;
-            personalDetailsPage.YourName.LastName = LastName;
+            personalDetailsPage.YourName.LastName = lastName ?? LastName;
             personalDetailsPage.YourDetails.PeselNumber = "78081130217";
             personalDetailsPage.YourDetails.Number = "AHP765835";
 

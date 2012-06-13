@@ -34,7 +34,7 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public IL0ConsumerJourney FillPersonalDetails(string middleNameMask = null, string employerNameMask = null, string email = null, string mobilePhone = null, bool submit = true)
+        public IL0ConsumerJourney FillPersonalDetails(string firstName = null, string lastName = null, string middleNameMask = null, string employerNameMask = null, string email = null, string mobilePhone = null, bool submit = true)
         {
             string employerName = employerNameMask ?? Get.GetMiddleName();
             string middleName = middleNameMask ?? Get.GetMiddleName();
@@ -42,9 +42,9 @@ namespace Wonga.QA.Framework.UI
             personalDetailsPage.ProvinceSection.Province = "British Columbia";
             Do.Until(() => personalDetailsPage.ProvinceSection.ClosePopup());
 
-            personalDetailsPage.YourName.FirstName = FirstName;
+            personalDetailsPage.YourName.FirstName = firstName ?? FirstName;
             personalDetailsPage.YourName.MiddleName = middleName;
-            personalDetailsPage.YourName.LastName = LastName;
+            personalDetailsPage.YourName.LastName = firstName ?? LastName;
             personalDetailsPage.YourName.Title = "Mr";
             personalDetailsPage.YourDetails.Number = "123213126";
             personalDetailsPage.YourDetails.DateOfBirth = "1/Jan/1980";
