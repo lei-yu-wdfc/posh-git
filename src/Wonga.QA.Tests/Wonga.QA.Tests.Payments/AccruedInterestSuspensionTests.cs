@@ -7,7 +7,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments
 {
-    [TestFixture, AUT(AUT.Uk), Parallelizable(TestScope.All)]
+    [TestFixture, AUT(AUT.Uk), Parallelizable(TestScope.Self)]
     public class AccruedInterestSuspensionTests
     {
         private const string InArrearsMaxInterestDaysKey = "Payments.InArrearsMaxInterestDays";
@@ -32,7 +32,7 @@ namespace Wonga.QA.Tests.Payments
         [Test]
         public void GoingIntoArrears_Creates_SuspendInterestTransaction_InTheFuture()
         {
-            _application.PutApplicationIntoArrears();
+            _application.PutApplicationIntoArrears(60);
             dynamic suspendTransaction = null;
             string offset = _serviceConfigDb.FindBy(Key: InArrearsMaxInterestDaysKey).Value.ToString();
             int intOffset = Int32.Parse(offset);
