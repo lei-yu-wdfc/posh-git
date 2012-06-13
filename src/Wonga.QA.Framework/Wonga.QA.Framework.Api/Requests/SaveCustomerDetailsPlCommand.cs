@@ -18,10 +18,8 @@ namespace Wonga.QA.Framework.Api
         public Object WorkPhone { get; set; }
         public Object Email { get; set; }
         public Object PeselNumber { get; set; }
-        public Object DocumentId { get; set; }
-        public Object EducationalLevel { get; set; }
+        public Object IdentificationDocumentId { get; set; }
         public Object MobilePhone { get; set; }
-        public Object VehicleOwner { get; set; }
         public Object Facebook { get; set; }
         public Object Allegro { get; set; }
         public Object MarketingSource { get; set; }
