@@ -53,8 +53,7 @@ namespace Wonga.QA.Tests.Ui
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            var app = ApplicationBuilder.New(customer).Build();
-            app.RepayOnDueDate();
+            ApplicationBuilder.New(customer).Build();
             var mySummaryPage = loginPage.LoginAs(email);
             var repayPage = mySummaryPage.RepayClick();
            
