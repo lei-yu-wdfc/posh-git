@@ -1049,42 +1049,20 @@ namespace Wonga.QA.Tests.Ui
             var email = String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
             var additionalDirectorEmail = String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
             var journey = JourneyFactory.GetL0JourneyWB(Client.Home());
-            var personalDetailsPage = journey.ApplyForLoan(5500, 30)
-             .AnswerEligibilityQuestions().CurrentPage as PersonalDetailsPage;
-            personalDetailsPage.YourName.FirstName = Get.GetName();
-            personalDetailsPage.YourName.MiddleName = "TESTNoCheck";
-            personalDetailsPage.YourName.LastName = Get.RandomString(10);
-            personalDetailsPage.YourName.Title = "Mr";
-            personalDetailsPage.YourDetails.Gender = "Female";
-            personalDetailsPage.YourDetails.DateOfBirth = "1/Jan/1990";
-            personalDetailsPage.YourDetails.HomeStatus = "Tenant Furnished";
-            personalDetailsPage.YourDetails.MaritalStatus = "Single";
-            personalDetailsPage.YourDetails.NumberOfDependants = "0";
-            personalDetailsPage.ContactingYou.HomePhoneNumber = "02071111234";
-            personalDetailsPage.ContactingYou.CellPhoneNumber = "07700900000";
-            personalDetailsPage.ContactingYou.EmailAddress = email;
-            personalDetailsPage.ContactingYou.ConfirmEmailAddress = email;
-            personalDetailsPage.CanContact = "No";
-            personalDetailsPage.PrivacyPolicy = true;
-            journey.CurrentPage = personalDetailsPage.Submit() as AddressDetailsPage;
-            var additionalDirectorsPage = journey.FillAddressDetails(addressPeriod: "More than 4 years")
+            var homePage = journey.ApplyForLoan(5500, 30)
+             .AnswerEligibilityQuestions()
+             .FillPersonalDetails(middleNameMask: "TESTNoCheck", email: email)
+             .FillAddressDetails(addressPeriod: "More than 4 years")
              .FillAccountDetails()
              .FillBankDetails()
              .FillCardDetails()
-             .EnterBusinessDetails().CurrentPage as AdditionalDirectorsPage;
-            var addAdditionalDirectorPage = additionalDirectorsPage.AddAditionalDirector();
-            addAdditionalDirectorPage.Title = "Mr";
-            addAdditionalDirectorPage.FirstName = Get.RandomString(3, 15);
-            addAdditionalDirectorPage.LastName = Get.RandomString(3, 15);
-            addAdditionalDirectorPage.EmailAddress = additionalDirectorEmail;
-            addAdditionalDirectorPage.ConfirmEmailAddress = additionalDirectorEmail;
-            journey.CurrentPage = addAdditionalDirectorPage.Done() as BusinessBankAccountPage;
-            var homePage = journey.EnterBusinessBankAccountDetails()
-               .EnterBusinessDebitCardDetails()
-               .WaitForApplyTermsPage()
-               .ApplyTerms()
-               .FillAcceptedPage()
-               .GoHomePage();
+             .EnterBusinessDetails()
+             .AddAdditionalDirector(email: additionalDirectorEmail)
+             .EnterBusinessBankAccountDetails()
+             .WaitForApplyTermsPage()
+             .ApplyTerms()
+             .FillAcceptedPage()
+             .GoHomePage();
             var myPayments = Client.Payments();
             var mySummary = myPayments.Navigation.MySummaryButtonClick();
             Assert.IsTrue(mySummary.GetMyAccountStatus().Contains(ContentMap.Get.MySummaryPage.AccountStatusMessage));
