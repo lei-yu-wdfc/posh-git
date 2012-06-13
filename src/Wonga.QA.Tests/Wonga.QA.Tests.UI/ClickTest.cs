@@ -13,7 +13,7 @@ namespace Wonga.QA.Tests.Ui
     class ClickTest : UiTest
     {
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("CA-2326")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("CA-2326"), SmokeTest]
         public void VerifyIsClickCodeLoaded()
         {
             var homePage = Client.Home();
