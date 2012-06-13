@@ -9,7 +9,7 @@ namespace Wonga.QA.Tests.Ui
     [Parallelizable(TestScope.All)]
     class LoginTest : UiTest
     {
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-160"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-160")]//, Category(TestCategories.Smoke)
         public void LogInShouldBeRedirectedToMySummaryPage()
         {
             var homePage = Client.Home();

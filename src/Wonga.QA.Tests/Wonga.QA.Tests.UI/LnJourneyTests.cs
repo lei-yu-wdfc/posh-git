@@ -351,7 +351,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za)]//, Category(TestCategories.Smoke)
         public void LnVerifyUrlsAreCorrect()
         {
             var loginPage = Client.Login();
