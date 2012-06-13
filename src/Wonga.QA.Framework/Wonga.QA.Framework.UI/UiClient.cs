@@ -258,14 +258,14 @@ namespace Wonga.QA.Framework.UI
             BrowserCapabilities.Add(new BrowserCapability(){BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.XP, Version = "3.0"});
             BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.XP, Version = "3.5" });
             BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.XP, Version = "3.6" });
-            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.Vista, Version = "4" });
-            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.Vista, Version = "5" });
-            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.Vista, Version = "6" });
-            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.Vista, Version = "7" });
-            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.Vista, Version = "8" });
-            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.Vista, Version = "9" });
-            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.Vista, Version = "10" });
-            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.Vista, Version = "11" });
+            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.XP, Version = "4" });
+            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.XP, Version = "5" });
+            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.XP, Version = "6" });
+            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.XP, Version = "7" });
+            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.XP, Version = "8" }); //ben changed from vista to xp
+            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.XP, Version = "9" });
+            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.XP, Version = "10" });
+            BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.XP, Version = "11" });
 
             //IE
             BrowserCapabilities.Add(new BrowserCapability() { BrowserType = Config.UiConfig.BrowserType.InternetExplorer, Platform = PlatformType.XP, Version = "6" });
