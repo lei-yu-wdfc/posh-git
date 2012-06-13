@@ -33,7 +33,8 @@ IF ERRORLEVEL 1 GOTO 1
 GOTO EOF
 
 :1
-	CD %Root% && FOR /R %%0 IN (*.sln) DO %MSBuild% %%0 /v:m || PAUSE
+	:CD %Root% && FOR /R %%0 IN (*.sln) DO %MSBuild% %%0 /v:m || PAUSE
+	%MsBuild% %Run%\Wonga.QA.Tests.build /t:Build || PAUSE
 GOTO MENU
 
 :2
