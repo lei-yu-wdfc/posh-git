@@ -24,7 +24,7 @@ namespace Wonga.QA.Tests.Ui
     [Parallelizable(TestScope.All)]
     class SecondLoanTest : UiTest
     {
-        [Test, AUT(AUT.Za), JIRA("QA-195"), Pending("There is mismatchig between loan amount and value displayed on mySummaryPage")] // add AUT.Ca when .RepayOnDueDate() will be work
+        [Test, AUT(AUT.Za), JIRA("QA-195"), SmokeTest] // add AUT.Ca when .RepayOnDueDate() will be work
         public void InformationAboutSecondLoanShouldBeDisplayed()
         {
             string actualRepaymentDate;
