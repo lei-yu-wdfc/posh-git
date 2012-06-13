@@ -1256,7 +1256,7 @@ namespace Wonga.QA.Tests.Ui
                                  .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
                                  .FillAddressDetails(addresPeriod: "Less than 4 months", submit: false)
                                  .CurrentPage as AddressDetailsPage;
-            
+
             addressPage.PreviousAddresDetails.FlatNumber = "4";
             addressPage.PreviousAddresDetails.Street = "Edward";
             addressPage.PreviousAddresDetails.Town = "Hearst";
@@ -1417,19 +1417,14 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Wb), JIRA("QA-287"), SmokeTest]
         public void WbL0JourneyShouldNotBeAbleToProceedWithoutAcceptingAllEligibilityQuestions()
         {
-            int getRandomNumber = Get.RandomInt(0, 7);
-            bool[] checkBox = new bool[8] { true, true, true, true, true, true, true, true };
+            int getRandomNumber = Get.RandomInt(0, 4);
+            bool[] checkBox = new bool[5] { true, true, true, true, true };
             checkBox[getRandomNumber] = false;
 
             var journeyWb = JourneyFactory.GetL0JourneyWB(Client.Home());
             var eligibilityQuestionsPage = journeyWb.ApplyForLoan(100, 20)
-                                                   .CurrentPage as EligibilityQuestionsPage;
-
-            eligibilityQuestionsPage.CheckActiveCompany = checkBox[0];
-            eligibilityQuestionsPage.CheckDirector = checkBox[1];
-            eligibilityQuestionsPage.CheckGuarantee = checkBox[2];
-            eligibilityQuestionsPage.CheckResident = checkBox[4];
-            eligibilityQuestionsPage.CheckDebitCard = checkBox[7];
+                .AnswerEligibilityQuestions(checkBox[0], checkBox[1], checkBox[2], checkBox[3], checkBox[4], submit: false)
+                .CurrentPage as EligibilityQuestionsPage;
 
             var URLbefore = Client.Driver.Url;
             eligibilityQuestionsPage.ClickNextButton();
