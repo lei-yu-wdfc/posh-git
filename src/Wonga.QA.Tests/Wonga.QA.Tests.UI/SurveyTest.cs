@@ -29,7 +29,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsFalse(page.Survey.IsVisible);
         }
 
-        [Test, AUT(AUT.Ca),JIRA("CA-1826")]
+        [Test, AUT(AUT.Ca), JIRA("CA-1826"), Category(TestCategories.Smoke)]
         public void IsSurveyVisibleAfter15SecondsOnHomePage()
         {
             var page = Client.Home();

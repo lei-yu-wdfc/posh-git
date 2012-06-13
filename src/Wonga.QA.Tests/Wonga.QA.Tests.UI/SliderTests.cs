@@ -40,7 +40,6 @@ namespace Wonga.QA.Tests.Ui
         private const int MinimumMaxLoanTerm = 30;
 
 
-        [SetUp, JIRA("QA-149")]
         public void GetInitialValues()
         {
             ApiRequest request;
@@ -86,7 +85,7 @@ namespace Wonga.QA.Tests.Ui
 
 
         //Pending("Wierd selenium problem") fixed in ZA =>  once new sliders been enabled!
-        [Test, AUT(AUT.Ca), JIRA("QA-149")]
+        [Test, AUT(AUT.Ca), JIRA("QA-149"), Pending("Wierd selenium problem")]
         public void ChooseLoanAmountAndDurationViaSlidersMotion()
         {
             var homePage = Client.Home();
@@ -206,6 +205,7 @@ namespace Wonga.QA.Tests.Ui
         // SmokeTest - return when test is enabled
         public void CustomerTypesValidValuesIntoAmountAndDurationFields()
         {
+            this.GetInitialValues();
             var termCustomerEnter = Get.RandomInt(_termMin, _termMax);
             var amountCustomerEnter = Get.RandomInt(_amountMin, _amountMax);
 
@@ -254,7 +254,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-156", "QA-238", "QA-295"), SmokeTest]
         public void DefaultAmountSliderValueShouldBeCorrectL0()
         {
-
+            this.GetInitialValues();
             var page = Client.Home();
             switch (Config.AUT)
             {
@@ -277,6 +277,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-156", "QA-238", "QA-295")]
         public void DefaultAmountSliderValueShouldBeCorrectLn()
         {
+            this.GetInitialValues();
             string email = Get.RandomEmail();
             if (Config.AUT.Equals(AUT.Wb))
             {
@@ -508,9 +509,11 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-152"), SmokeTest, MultipleAsserts]
         public void CustomerTriesEnterSomeRubbishDataToFieldsThenAmountsShouldntBeChanged()
         {
+            this.GetInitialValues();
             var page = Client.Home();
             switch (Config.AUT)
             {
+
                 case (AUT.Ca):
 
                     #region enter an empty string
@@ -640,6 +643,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Wb), JIRA("QA-292"), Pending("Sliders need fix")]
         public void ChooseLoanAmountAndDurationViaSlidersMotionWb()
         {
+            this.GetInitialValues();
             var homePage = Client.Home();
             homePage.Sliders.MoveAmountSlider = Get.RandomInt(_amountMin, _amountMax);
             homePage.Sliders.MoveDurationSlider = Get.RandomInt(_termMin, _termMax);
