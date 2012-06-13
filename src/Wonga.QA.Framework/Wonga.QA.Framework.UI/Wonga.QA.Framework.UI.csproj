@@ -82,6 +82,7 @@
     <Compile Include="Mappings\Content\ErrorsMessages\MobilePinVerificationSection.cs" />
     <Compile Include="Mappings\Content\Links\FAQPageLinks.cs" />
     <Compile Include="Mappings\Content\Pages\AboutUsPage.cs" />
+    <Compile Include="Mappings\Content\Pages\AccountSetupPage.cs" />
     <Compile Include="Mappings\Content\Pages\RepayErrorPage.cs" />
     <Compile Include="Mappings\Content\Pages\RepaymentOptionsPage.cs" />
     <Compile Include="Mappings\Content\Pages\RepayProcessingPage.cs" />
