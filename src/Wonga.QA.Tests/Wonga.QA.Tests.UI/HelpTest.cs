@@ -23,7 +23,7 @@ namespace Wonga.QA.Tests.Ui
     public class HelpTest : UiTest
     {
 
-        [Test, AUT(AUT.Za, AUT.Ca, AUT.Wb), JIRA("QA-164, QA-254"), Pending("FE bug, button in top of page are broken, ZA-2490, CA-2234")]
+        [Test, AUT(AUT.Za, AUT.Ca, AUT.Wb), JIRA("QA-164, QA-254"), SmokeTest]
         public void SelectingAHelpQuestionTakesMeToFAQPageWithCorrectQuestionSelected()
         {
             var page = Client.Home();
@@ -43,7 +43,7 @@ namespace Wonga.QA.Tests.Ui
                     }
                     break;
                 case AUT.Wb:
-                    var listQuestionsWb = new List<string> { "How does Wonga Business work?", "What do I need to apply for a Wonga Business loan?", "How much cash can my business borrow?", "How much does a Wonga loan cost?", "Does Wonga require a credit check?", "What if the business or I have bad credit?", "What personal information does Wonga need?", "Can my business get a loan if it has no assets?", "Does my business need a bank account?", "Do I need a bank account?", "Do I need to give a reason why the business wants to borrow the money on the application?", "Is Wonga Business a member of any financial bodies?", "Is Wonga Business right for my business?", "What if the business is already in debt?", "How long will it take for the business to get the loan?", "How long before I have to repay a loan in full?", "How do I repay a loan?", "What happens if the business does not repay the loan?", "How do bank holidays and weekends affect the service?", "What if I have a complaint?", "The business still has not received the cash", "I can’t login", "I can’t remember my password", "I haven’t received my email during application", "I haven't received my PIN via text message", "I can’t find my house or business address", "My business loan application has been ‘referred’ – what’s happening?", "My business has had loans before but its just been rejected" };
+                    var listQuestionsWb = new List<string> { "How does Wonga Business work?", "What do I need to apply for a Wonga Business loan?", "How much cash can my business borrow?", "How much does a Wonga loan cost?", "Does Wonga require a credit check?", "What if the business or I have bad credit?", "What personal information does Wonga need?", "Can my business get a loan if it has no assets?", "Does my business need a bank account?", "Do I need a bank account?", "Do I need to give a reason why the business wants to borrow the money on the application?", "Is Wonga a member of any financial bodies?", "Is Wonga right for my business?", "What if the business is already in debt?", "How long will it take for the business to get the loan?", "How long before I have to repay a loan in full?", "How do I repay a loan?", "What happens if the business does not repay the loan?", "How do bank holidays and weekends affect the service?", "What if I have a complaint?", "The business still has not received the cash", "I can’t login", "I can’t remember my password", "I haven’t received my email during application", "I haven't received my PIN via text message", "I can’t find my house or business address", "My business loan application has been ‘referred’ – what’s happening?", "My business has had loans before but I’ve just been rejected" };
                     Assert.AreEqual(listQuestionsWb.Count, listQuestions.Count);
                     listQuestions.Sort();
                     listQuestionsWb.Sort();
@@ -55,7 +55,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-165"), Pending("FE bug, button in top of page are broken, ZA-2490, CA-2234")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-165"), SmokeTest]
         public void SelectingATroubleshootingQuestionTakesMeToPageWithCorrectQuestionSelected()
         {
             var page = Client.Home();
@@ -72,7 +72,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-166"), Pending("FE bug, button in top of page are broken, ZA-2490, CA-2234")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-166"), SmokeTest]
         public void JargonBusterLinkShouldNavigateThroughPageByClickingDifferentLettersFromAlphabet()
         {
             var page = Client.Home();
@@ -86,7 +86,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
         
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-167")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-167"), SmokeTest]
         public void ClickOnContactUsCauseContactInformationDisplayedOnPage()
         {
             var page = Client.Home();

@@ -16,7 +16,7 @@ namespace Wonga.QA.Tests.Ui
     [Parallelizable(TestScope.All)]
     class LogoutTest : UiTest
     {
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-161"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-161"), SmokeTest]
         public void LogOutShouldBeRedirectedToHomePage()
         {
             var loginPage = Client.Login();
