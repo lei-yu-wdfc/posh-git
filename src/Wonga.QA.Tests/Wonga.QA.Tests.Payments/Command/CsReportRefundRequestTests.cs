@@ -5,15 +5,18 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Cs;
 using Wonga.QA.Framework.Db.Ops;
 using Wonga.QA.Framework.ThirdParties;
+using Wonga.QA.Tests.Core;
 
 
 namespace Wonga.QA.Tests.Payments.Command
 {
     [TestFixture]
     [Parallelizable(TestScope.All)]
+    [AUT(AUT.Uk)]
     public class CsReportRefundRequestTests
     {
         [Test]
+        [AUT(AUT.Uk)]
         public void ReportRefundCommand_Changes_SalesforceApplicationStatus_To_Refund()
         {
             Guid caseId = Guid.NewGuid();
