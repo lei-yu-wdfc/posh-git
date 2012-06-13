@@ -206,6 +206,11 @@ namespace Wonga.QA.Framework.Core
             return new Date(DateTime.UtcNow.AddDays(10), DateFormat.Date);
         }
 
+		public static DateTime GetApplicationDate()
+		{
+			return DateTime.Now;
+		}
+
         public static string GetBankAccountNumber()
         {
             switch (Config.AUT)
