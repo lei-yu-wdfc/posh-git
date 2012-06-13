@@ -1200,13 +1200,8 @@ namespace Wonga.QA.Tests.Ui
             var journey = JourneyFactory.GetL0Journey(Client.Home());
             var addressPage = journey.ApplyForLoan(200, 10)
                                       .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
+                                      .FillAddressDetails(postcode: "12.5", submit: false)
                                       .CurrentPage as AddressDetailsPage;
-            addressPage.PostCode = "12.5";
-            addressPage.HouseNumber = "25";
-            addressPage.Street = "high road";
-            addressPage.Town = "Kuku";
-            addressPage.County = "Province";
-            addressPage.AddressPeriod = "2 to 3 years";
             try
             {
                 addressPage = addressPage.NextClick();
