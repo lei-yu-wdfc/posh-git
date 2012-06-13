@@ -81,5 +81,27 @@ namespace Wonga.QA.Tests.Ui
             salesForceSearchResultPage.GoToCustomerDetailsPage();
             //Check Balance at today and balance at today should be Principal+Fee (+Interest if Loan was taken more than 3 days ago)
         }
+
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-222")]
+        public void CustomerGetsAcceptedDecisionDontClickAcceptButtonApplicationStatusInSF()
+        {
+            string email = Get.RandomEmail();
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var mySummary = journey.ApplyForLoan(200, 10)
+                                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
+                                .FillAddressDetails()
+                                .FillAccountDetails()
+                                .FillBankDetails()
+                                .WaitForAcceptedPage().CurrentPage as AcceptedPage;
+            Thread.Sleep(10000);
+            var salesForceStartPage = Client.SalesForceStart();
+            var salesForceHome = salesForceStartPage.LoginAs(Config.SalesforceUi.Username, Config.SalesforceUi.Password);
+            var salesForceSearchResultPage = salesForceHome.FindCustomerByMail(email);
+            Thread.Sleep(2000);
+            Assert.IsTrue(salesForceSearchResultPage.IsCustomerFind());
+            var customerDetailPage = salesForceSearchResultPage.GoToCustomerDetailsPage();
+
+
+        }
     }
 }

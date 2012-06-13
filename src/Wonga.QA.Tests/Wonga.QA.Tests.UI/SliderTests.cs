@@ -70,7 +70,7 @@ namespace Wonga.QA.Tests.Ui
             _termDefault = Int32.Parse(_response.Values["TermDefault"].Single(), CultureInfo.InvariantCulture);
         }
 
-        [Test, AUT(AUT.Ca)]
+        [Test, AUT(AUT.Ca), SmokeTest]
         public void VariableInterestisCalculatedCorrectly()
         {
             var homePage = Client.Home();
