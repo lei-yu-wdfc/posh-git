@@ -14,6 +14,7 @@ namespace Wonga.QA.Framework.UI.Journey
         public String LastName { get; set; }
         public String NationalId { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public String Gender { get; set; }
         public BasePage CurrentPage { get; set; }
         public String Email { get; set; }
 
@@ -23,6 +24,7 @@ namespace Wonga.QA.Framework.UI.Journey
             FirstName = Get.GetName();
             LastName = Get.RandomString(10);
             DateOfBirth = new DateTime(1957, 10, 30);
+            Gender = "Female";
             NationalId = Get.GetNationalNumber(DateOfBirth, true);
             Email = Get.RandomEmail();
         }
@@ -47,7 +49,7 @@ namespace Wonga.QA.Framework.UI.Journey
             personalDetailsPage.YourName.Title = "Mr";
             personalDetailsPage.YourDetails.Number = NationalId.ToString();//"5710300020087";
             personalDetailsPage.YourDetails.DateOfBirth = DateOfBirth.ToString("d/MMM/yyyy");
-            personalDetailsPage.YourDetails.Gender = "Female";
+            personalDetailsPage.YourDetails.Gender = Gender;
             personalDetailsPage.YourDetails.HomeStatus = "Owner Occupier";
             personalDetailsPage.YourDetails.HomeLanguage = "English";
             personalDetailsPage.YourDetails.NumberOfDependants = "0";
