@@ -23,7 +23,7 @@ namespace Wonga.QA.Tests.Ui
     [Parallelizable(TestScope.All)]
     class L0JourneyTests : UiTest
     {
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-180"), Pending("Wierd problem")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-180")]//Pending("Wierd problem")
         public void L0JourneyInvalidPostcodeShouldCauseWarningMessage()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -74,7 +74,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-177"), Category(TestCategories.Smoke)] //AUT.Ca removed because of sliders changing
+        [Test, AUT(AUT.Za), JIRA("QA-177")] //AUT.Ca removed because of sliders changing, Category(TestCategories.Smoke)
         public void ChangeLoanAmountAndDurationOnPersonalDetailsViaPlusMinusOptions()
         {
             //CA is out due to new wonga sliders being implemented on homepage only 
@@ -148,7 +148,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-176"), Category(TestCategories.Smoke)] //AUT.Ca removed because of sliders changing
+        [Test, AUT(AUT.Za), JIRA("QA-176")] //AUT.Ca removed because of sliders changing, Category(TestCategories.Smoke)
         public void ChangeLoanAmountAndDurationOnPersonalDetailsViaTypingToTheFields()
         {
             //CA is out due to new wonga sliders being implemented on homepage only 
@@ -532,7 +532,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-190"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-190")]//, Category(TestCategories.Smoke)
         public void L0JourneyDataOnAcceptedPageShouldBeCorrect()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -649,7 +649,7 @@ namespace Wonga.QA.Tests.Ui
                 .FillAcceptedPage().CurrentPage as DealDonePage;
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-170")] //Removed from smoke because of the problem with sliders update
+        [Test, AUT(AUT.Za), JIRA("QA-170"), Category(TestCategories.Smoke)] //Removed from smoke because of the problem with sliders update
         public void CustomerOnHowItWorksPageShouldBeAbleUseSlidersProperly()
         {
             //CA is out due to new wonga sliders being implemented on homepage only 
@@ -1386,7 +1386,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-179"), Category(TestCategories.Smoke)]
+        [Test, AUT(AUT.Za), JIRA("QA-179")]//, Category(TestCategories.Smoke)
         public void L0JourneyCustomerIdNumberShouldBeAlignedWithDOBAndGender()
         {
             var email = Get.RandomEmail();
@@ -1541,7 +1541,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za), Category(TestCategories.Smoke), JIRA("QA-276")]
+        [Test, AUT(AUT.Za), JIRA("QA-276")]//, Category(TestCategories.Smoke)
         public void CustomerUsesExistingIdNumberShouldBeAbleToProceed()
         {
             var customer = Do.Until(() => Drive.Data.Comms.Db.CustomerDetails.FindAllByGender(2).FirstOrDefault());
@@ -1579,7 +1579,7 @@ namespace Wonga.QA.Tests.Ui
             addressPage.Next();
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-172"), Pending("CA code appearing in ZA - Michael Nowicki to fix")]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-172")]
         public void L0JourneyCustomerMakeALoanCheckOneLastStepPageValidDataDisplayed()
         {
             int _amountMax;
@@ -1757,7 +1757,7 @@ namespace Wonga.QA.Tests.Ui
             //Assert.IsTrue(e.Message.Contains("was Box must be ticked to proceed"));
         }
 
-        [Test, AUT(AUT.Za), Pending("Test is yet to be complete. Author: Ben Ifie")]
+        [Test, AUT(AUT.Za)]//Pending("Test is yet to be complete. Author: Ben Ifie")
         public void L0DropOff()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());

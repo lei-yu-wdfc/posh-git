@@ -256,7 +256,7 @@ namespace Wonga.QA.Tests.Ui
             Client.Driver.Navigate().GoToUrl(Config.Ui.Home + "my-account");
 
             // Check that the page contains the wonga_doubleclick module v1.0 signature:
-            Assert.IsTrue(page.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
+            Assert.IsTrue(page.Client.Source().Contains("wonga_doubleclick-v6.x-1.0-"));
 
             // Check that the page contains the correct doubleclick HTML comment identifiers for this AUT:
             SourceContains(DcTagsMyAccountPage);

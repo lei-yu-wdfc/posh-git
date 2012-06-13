@@ -86,7 +86,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
         
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-167")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-167"), Category(TestCategories.Smoke)]
         public void ClickOnContactUsCauseContactInformationDisplayedOnPage()
         {
             var page = Client.Home();
