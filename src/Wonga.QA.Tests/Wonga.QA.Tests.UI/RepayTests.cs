@@ -16,6 +16,8 @@ using System.Linq;
 using System;
 using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
+using CreateScheduledPaymentRequestCommand = Wonga.QA.Framework.Msmq.CreateScheduledPaymentRequestCommand;
+
 
 namespace Wonga.QA.Tests.Ui
 {
@@ -497,6 +499,12 @@ namespace Wonga.QA.Tests.Ui
             TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
             ApplicationOperations.RewindApplicationDates(application, daysShiftSpan);
 
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            // Send command to create scheduled payment request
+            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = application.Id, RepaymentRequestId = requestId1, });
+            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = application.Id, RepaymentRequestId = requestId2, });
+
             var loginPage = Client.Login();
             var myAccountPage = loginPage.LoginAs(email);
             var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
@@ -529,6 +537,12 @@ namespace Wonga.QA.Tests.Ui
             //time-shift loan so it's in arrears
             TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
             ApplicationOperations.RewindApplicationDates(application, daysShiftSpan);
+            
+            var requestId1 = Guid.NewGuid();
+            var requestId2 = Guid.NewGuid();
+            // Send command to create scheduled payment request
+            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = application.Id, RepaymentRequestId = requestId1, });
+            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = application.Id, RepaymentRequestId = requestId2, });
 
             var loginPage = Client.Login();
             var myAccountPage = loginPage.LoginAs(email);
