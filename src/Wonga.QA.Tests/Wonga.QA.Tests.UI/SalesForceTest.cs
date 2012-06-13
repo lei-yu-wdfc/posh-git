@@ -7,6 +7,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.Mappings;
 using Wonga.QA.Framework.UI.UiElements;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
@@ -88,7 +89,7 @@ namespace Wonga.QA.Tests.Ui
             string email = Get.RandomEmail();
             var journey = JourneyFactory.GetL0Journey(Client.Home());
             var mySummary = journey.ApplyForLoan(200, 10)
-                                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
+                                .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
                                 .FillAddressDetails()
                                 .FillAccountDetails()
                                 .FillBankDetails()

@@ -649,7 +649,7 @@ namespace Wonga.QA.Tests.Ui
                 .FillAcceptedPage().CurrentPage as DealDonePage;
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-170"), Category(TestCategories.Smoke)] //Removed from smoke because of the problem with sliders update
+        [Test, AUT(AUT.Za), JIRA("QA-170"), SmokeTest] //Removed from smoke because of the problem with sliders update
         public void CustomerOnHowItWorksPageShouldBeAbleUseSlidersProperly()
         {
             //CA is out due to new wonga sliders being implemented on homepage only 
