@@ -54,7 +54,7 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public WbL0Journey FillPersonalDetails(string middleNameMask = null,string email = null, string phoneNumber = null, bool submit = true)
+        public WbL0Journey FillPersonalDetails(string middleNameMask = null, string email = null, string mobilePhone = null, bool submit = true)
         {
             var personalDetailsPage = CurrentPage as PersonalDetailsPage;
 
@@ -70,7 +70,7 @@ namespace Wonga.QA.Framework.UI.Journey
             personalDetailsPage.YourDetails.NumberOfDependants = "0";
 
             personalDetailsPage.ContactingYou.HomePhoneNumber = "02071111234";
-            personalDetailsPage.ContactingYou.CellPhoneNumber = phoneNumber ?? Get.GetMobilePhone();
+            personalDetailsPage.ContactingYou.CellPhoneNumber = mobilePhone ?? Get.GetMobilePhone();
             personalDetailsPage.ContactingYou.EmailAddress = email ?? EmailAddress;
             personalDetailsPage.ContactingYou.ConfirmEmailAddress = email ?? EmailAddress;
 
