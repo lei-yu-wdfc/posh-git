@@ -988,6 +988,7 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Wb), JIRA("QA-256")]
         public void EnsureCustomerCanAddGuarantorsToL0()
         {
+            var additionalDirectorEmail = String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
             var firstName = Get.RandomString(3, 15);
             var lastName = Get.RandomString(3, 15);
             var journey = JourneyFactory.GetL0JourneyWB(Client.Home());
@@ -998,15 +999,10 @@ namespace Wonga.QA.Tests.Ui
              .FillAccountDetails()
              .FillBankDetails()
              .FillCardDetails()
-             .EnterBusinessDetails().CurrentPage as AdditionalDirectorsPage;
+             .EnterBusinessDetails()
+             .AddAdditionalDirector(firstName: firstName, lastName: lastName, email: additionalDirectorEmail, submit: false)
+             .CurrentPage as AdditionalDirectorsPage;
             var addAdditionalDirectorPage = additionalDirectorsPage.AddAditionalDirector();
-            var additionalDirectorEmail = String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
-            addAdditionalDirectorPage.Title = "Mr";
-            addAdditionalDirectorPage.FirstName = firstName;
-            addAdditionalDirectorPage.LastName = lastName;
-            addAdditionalDirectorPage.EmailAddress = additionalDirectorEmail;
-            addAdditionalDirectorPage.ConfirmEmailAddress = additionalDirectorEmail;
-            addAdditionalDirectorPage = additionalDirectorsPage.AddAditionalDirector();
             string directors = additionalDirectorsPage.GetDirectors();
             Assert.IsTrue(directors.Contains(firstName + " " + lastName));
         }
