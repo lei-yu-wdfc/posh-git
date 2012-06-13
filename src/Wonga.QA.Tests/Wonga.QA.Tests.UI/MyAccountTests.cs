@@ -43,13 +43,8 @@ namespace Wonga.QA.Tests.Ui
                                       .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
                                       .FillAddressDetails()
                                       .FillAccountDetails()
+                                      .FillBankDetails(accountNumber: "7434567", submit: false)
                                       .CurrentPage as PersonalBankAccountPage;
-
-            bankDetailsPage1.BankAccountSection.BankName = "Capitec";
-            bankDetailsPage1.BankAccountSection.BankAccountType = "Current";
-            bankDetailsPage1.BankAccountSection.AccountNumber = "7434567";
-            bankDetailsPage1.BankAccountSection.BankPeriod = "2 to 3 years";
-            bankDetailsPage1.PinVerificationSection.Pin = "0000";
             Assert.Throws<AssertionFailureException>(() => { var processingPage = bankDetailsPage1.Next(); });
 
             var journey2 = JourneyFactory.GetL0Journey(Client.Home());
@@ -57,13 +52,8 @@ namespace Wonga.QA.Tests.Ui
                                       .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
                                       .FillAddressDetails()
                                       .FillAccountDetails()
+                                      .FillBankDetails(accountNumber: "7534567", submit: false)
                                       .CurrentPage as PersonalBankAccountPage;
-
-            bankDetailsPage2.BankAccountSection.BankName = "Capitec";
-            bankDetailsPage2.BankAccountSection.BankAccountType = "Current";
-            bankDetailsPage2.BankAccountSection.AccountNumber = "7534567";
-            bankDetailsPage2.BankAccountSection.BankPeriod = "2 to 3 years";
-            bankDetailsPage2.PinVerificationSection.Pin = "0000";
             Assert.Throws<AssertionFailureException>(() => { var processingPage = bankDetailsPage2.Next(); });
         }
 
