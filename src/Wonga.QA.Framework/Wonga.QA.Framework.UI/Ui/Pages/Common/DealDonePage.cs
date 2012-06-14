@@ -40,7 +40,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             if (Config.AUT != AUT.Uk)
                 _continueButton.Click();
             else
-                Client.Driver.FindElement(By.CssSelector(".wonga-box-top-right a")).Click();
+                Client.Driver.FindElement(By.CssSelector(UiMap.Get.DealDonePage.GoToMyAccount)).Click();
                 
             return Do.Until(() => new MySummaryPage(Client));
         }

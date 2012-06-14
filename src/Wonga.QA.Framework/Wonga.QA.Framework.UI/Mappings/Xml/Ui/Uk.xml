@@ -40,6 +40,7 @@
 
   <DealDonePage>
     <HeaderText>Your application has been accepted</HeaderText>
+    <GoToMyAccount>.wonga-box-top-right a</GoToMyAccount>
   </DealDonePage>
 
   <TopupDealDonePage>
