@@ -21,7 +21,7 @@ using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework.Mobile
 {
-    public class MobileUiClient
+    public class MobileUiClient : IDisposable
     {
         private IWebDriver _iWebDriver;
         public IWebDriver Driver
@@ -29,7 +29,7 @@ namespace Wonga.QA.Framework.Mobile
             get { return _iWebDriver; }
         }
 
-         public IList<BrowserCapability> BrowserCapabilities;
+        public IList<BrowserCapability> BrowserCapabilities;
 
         public MobileUiClient()
         {
@@ -69,7 +69,7 @@ namespace Wonga.QA.Framework.Mobile
                 case (Config.UiConfig.BrowserType.Android):
                     capabilities = DesiredCapabilities.Android();
                     break;
-                
+
                 default:
                     throw new ArgumentException("Please select a QAFBrowser environment variable.");
             }
@@ -87,9 +87,43 @@ namespace Wonga.QA.Framework.Mobile
             return capabilities;
         }
 
+        public Image Screen()
+        {
+            if (!(Driver is ITakesScreenshot))
+                return null;
+            var screenshot = ((ITakesScreenshot)Driver).GetScreenshot();
+            var stream = new MemoryStream(screenshot.AsByteArray);
+            return Image.FromStream(stream);
+        }
+
+        public String Source()
+        {
+            return Driver.PageSource;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            Do.Until(() =>
+                         {
+                             Driver.Quit();
+                             return true;
+                         });
+        }
+
+        ~MobileUiClient()
+        {
+            Dispose(false);
+        }
+
         private void InitializeBrowserCapabilities()
         {
-           
+
         }
 
         public BrowserCapability GetBrowserCapability()
