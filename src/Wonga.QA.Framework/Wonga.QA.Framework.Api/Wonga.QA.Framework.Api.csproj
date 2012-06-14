@@ -242,6 +242,7 @@
     <Compile Include="Requests\SaveCustomerLeadCaCommand.cs" />
     <Compile Include="Requests\SaveCustomerLeadZaCommand.cs" />
     <Compile Include="Requests\SaveEmploymentDetailsCaCommand.cs" />
+    <Compile Include="Requests\SaveEmploymentDetailsPlCommand.cs" />
     <Compile Include="Requests\SaveEmploymentDetailsUkCommand.cs" />
     <Compile Include="Requests\SaveEmploymentDetailsZaCommand.cs" />
     <Compile Include="Requests\SaveExtensionReminderPreferencesCommand.cs" />
@@ -296,7 +297,6 @@
     <Compile Include="Enums\CountryCodeEnum.cs" />
     <Compile Include="Enums\CurrencyCodeEnum.cs" />
     <Compile Include="Enums\DeclineAdviceKeyEnum.cs" />
-    <Compile Include="Enums\EducationalLevelsPlEnum.cs" />
     <Compile Include="Enums\EmploymentIndustryEnum.cs" />
     <Compile Include="Enums\EmploymentIndustryPlEnum.cs" />
     <Compile Include="Enums\EmploymentPositionCaEnum.cs" />
