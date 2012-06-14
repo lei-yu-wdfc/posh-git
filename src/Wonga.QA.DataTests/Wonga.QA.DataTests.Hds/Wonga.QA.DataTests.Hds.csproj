@@ -8,11 +8,11 @@
     <ProjectGuid>{0021FA4B-F42F-4FFD-BE90-FF7F5B8FD420}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Wonga.QA.Tests.Hds</RootNamespace>
-    <AssemblyName>Wonga.QA.Tests.Hds</AssemblyName>
+    <RootNamespace>Wonga.QA.DataTests.Hds</RootNamespace>
+    <AssemblyName>Wonga.QA.DataTests.Hds</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\Wonga.QA.Tests\</SolutionDir>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\Wonga.QA.DataTests\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -85,16 +85,10 @@
     <Reference Include="Wonga.QA.Framework.Svc">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Svc.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Wonga.QA.Tests.Core\Wonga.QA.Tests.Core.csproj">
-      <Project>{7243F3C0-71B0-4679-960A-687052AFFDAD}</Project>
-      <Name>Wonga.QA.Tests.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Wonga.QA.Tests.Payments\Wonga.QA.Tests.Payments.csproj">
-      <Project>{FD73C73F-E2AE-4610-9A64-C024144F0A51}</Project>
-      <Name>Wonga.QA.Tests.Payments</Name>
-    </ProjectReference>
+    <Reference Include="Wonga.QA.Tests.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\Wonga.QA.Tests.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
