@@ -29,21 +29,13 @@ namespace Wonga.QA.Framework.Mobile
             get { return _iWebDriver; }
         }
 
-        public IList<BrowserCapability> BrowserCapabilities;
-
         public MobileUiClient()
         {
-            InitializeBrowserCapabilities();
             _iWebDriver = GetWebDriver();
-            if (Driver is CustomRemoteWebDriver)
-                TestContext.CurrentContext.AddMetadata("JobURL", string.Format("https://saucelabs.com/jobs/{0}", ((CustomRemoteWebDriver)Driver).GetSessionId()));
         }
 
         private IWebDriver GetWebDriver()
         {
-            var capabilities = GetDesiredCapabilities();
-            if (Config.Ui.RemoteMode)
-                return new CustomRemoteWebDriver(Config.Ui.RemoteUri, capabilities);
             switch (Config.Ui.Browser)
             {
                 case (Config.UiConfig.BrowserType.FirefoxMobile):
@@ -56,36 +48,7 @@ namespace Wonga.QA.Framework.Mobile
                     throw new ArgumentException("Please select a Browser Type via the QAFBrowser environment variable");
             }
         }
-
-        private DesiredCapabilities GetDesiredCapabilities()
-        {
-            BrowserCapability browserCapability = GetBrowserCapability();
-            DesiredCapabilities capabilities;
-            switch (Config.Ui.Browser)
-            {
-                case (Config.UiConfig.BrowserType.FirefoxMobile):
-                    capabilities = DesiredCapabilities.Firefox();
-                    break;
-                case (Config.UiConfig.BrowserType.Android):
-                    capabilities = DesiredCapabilities.Android();
-                    break;
-
-                default:
-                    throw new ArgumentException("Please select a QAFBrowser environment variable.");
-            }
-            capabilities.SetCapability(CapabilityType.Version, Config.Ui.BrowserVersion);
-            capabilities.SetCapability(CapabilityType.Platform, new Platform(browserCapability.Platform));
-            capabilities.SetCapability("name", TestContext.CurrentContext.Test.Name);
-            capabilities.SetCapability("username", Config.Ui.RemoteUsername);
-            capabilities.SetCapability("accessKey", Config.Ui.RemoteApiKey);
-            var tags = new List<String> { Config.SUT.ToString(), Config.AUT.ToString() };
-            capabilities.SetCapability("tags", tags);
-            capabilities.SetCapability("public", true);
-            capabilities.SetCapability("idle-timeout", 60);
-            capabilities.SetCapability("sauce-advisor", false);
-            capabilities.SetCapability("record-screenshots", false);
-            return capabilities;
-        }
+        
 
         public Image Screen()
         {
@@ -120,26 +83,6 @@ namespace Wonga.QA.Framework.Mobile
         {
             Dispose(false);
         }
-
-        private void InitializeBrowserCapabilities()
-        {
-
-        }
-
-        public BrowserCapability GetBrowserCapability()
-        {
-            if (!Config.Ui.RemoteMode)
-                return new BrowserCapability { BrowserType = Config.UiConfig.BrowserType.Firefox, Platform = PlatformType.XP, Version = null };
-            return
-                BrowserCapabilities.Single(x => x.BrowserType == Config.Ui.Browser &&
-                                                (Config.Ui.BrowserVersion == x.Version || Config.Ui.Browser == Config.UiConfig.BrowserType.Chrome));
-        }
-    }
-
-    public class BrowserCapability
-    {
-        public Config.UiConfig.BrowserType BrowserType { get; set; }
-        public string Version { get; set; }
-        public PlatformType Platform { get; set; }
+        
     }
 }
