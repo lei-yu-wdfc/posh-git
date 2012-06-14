@@ -101,7 +101,7 @@ namespace Wonga.QA.Tests.Payments
 			                         		AccountId = app.AccountId,
 			                         		PaymentCardId = app.PaymentCardGuid,
 			                         		CardType = "Other",
-                                            Number = "4111111111111111",
+                                            Number = "1111111111111111",
 			                         		HolderName = "Test Holder",
 			                         		StartDate = DateTime.Today.AddYears(-1).ToDate(DateFormat.YearMonth),
 			                         		ExpiryDate = DateTime.Today.AddMonths(6).ToDate(DateFormat.YearMonth),
