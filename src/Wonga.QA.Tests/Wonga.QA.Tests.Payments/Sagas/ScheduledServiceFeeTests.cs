@@ -78,7 +78,7 @@ namespace Wonga.QA.Tests.Payments.Sagas
             AssertServiceFeePostedOn30thDay(postedOnDates, sagaId, applicationId);
 
             //saga is completed after 90 days.
-            Assert.IsNull(Drive.Data.OpsSagas.Db.ApplicationSagaEntity.FindByApplicationId(applicationId));
+            Do.Until(() => Drive.Data.OpsSagas.Db.ApplicationSagaEntity.FindByApplicationId(applicationId) == null);
         }
 
         [Test]
@@ -176,9 +176,42 @@ namespace Wonga.QA.Tests.Payments.Sagas
             AssertForServiceFees(postedOnDates, _applicationIntId);
         }
 
+        [Test]
+        [Parallelizable]
+        [AUT(AUT.Za), JIRA("ZA-2659")]
         public void ServiceFeeIsRetroPostedAfterRepaymentArrangementIsCanceled()
         {
-            
+            var postedOnDates = new List<DateTime>();
+            var customer = CustomerBuilder.New().Build();
+            var application = ApplicationBuilder.New(customer)
+                .WithLoanTerm(35)
+                .WithExpectedDecision(ApplicationDecisionStatus.Accepted)
+                .Build();
+
+            _applicationId = application.Id;
+            int applicationId = GetApplicationId(application.Id);
+            _applicationIntId = applicationId;
+            AssertForServiceFees(postedOnDates, applicationId);
+
+            application.PutApplicationIntoArrears(5);
+            var signOnDate = Drive.Data.Payments.Db.Applications.FindByExternalId(application.Id).SignedOn;
+            postedOnDates.Add(signOnDate);
+            application.CreateRepaymentArrangement();
+
+            var sagaId = Drive.Data.OpsSagas.Db.ApplicationSagaEntity.FindByApplicationId(applicationId).Id;
+
+            AssertServiceFeesOnDate(postedOnDates, sagaId, applicationId, DateTime.UtcNow);
+
+            Drive.Msmq.Payments.Send(new IRepaymentArrangementCancelledEvent()
+            {
+                ApplicationId = _applicationId
+            });
+            postedOnDates = new List<DateTime>()
+                                    {
+                                        Drive.Data.Payments.Db.Applications.FindByExternalId(_applicationId).SignedOn,
+                                        DateTime.UtcNow
+                                    };
+            AssertForServiceFees(postedOnDates, _applicationIntId);
         }
 
         [Test]
