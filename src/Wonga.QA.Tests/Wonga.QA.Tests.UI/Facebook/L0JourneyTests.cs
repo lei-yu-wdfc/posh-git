@@ -119,7 +119,7 @@ namespace Wonga.QA.Tests.Ui.Facebook
             }
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-969", "UKWEB-250"), MultipleAsserts, Pending("Test is in development. Also waiting for functionality implementation.")]
+        [Test, AUT(AUT.Uk), JIRA("UK-969", "UKWEB-250"), MultipleAsserts, Pending("UKWEB-903 defect")]
         public void L0PreAgreementPartonAccountSetupPageTest()
         {
             var loginPage = Client.Login();
@@ -143,7 +143,7 @@ namespace Wonga.QA.Tests.Ui.Facebook
             //Check SECCI popup window
             accountSetupPage.ClickSecciLink();
             // TBD: check header and values and close the pop-up
-            //Assert.Contains(accountSetupPage.SecciPopupWindowContent(), "150");
+            Assert.Contains(accountSetupPage.SecciPopupWindowContent(), "150");
             // end of TBD: check header and values and close the pop-up
             accountSetupPage.ClosePopupWindow();
 

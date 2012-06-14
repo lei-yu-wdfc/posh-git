@@ -352,6 +352,8 @@ namespace Wonga.QA.Tests.Ui
             mySummaryPage.RepayButtonClick();
             var requestPage = new RepayRequestPage(this.Client);
 
+            Assert.IsNotEmpty(requestPage.RepayCard);
+
             //Branch point - Add Cv2 for each path and proceed
             requestPage.setSecurityCode("123");
             requestPage.SubmitButtonClick();

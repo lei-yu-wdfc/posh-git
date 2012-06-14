@@ -1485,11 +1485,8 @@ namespace Wonga.QA.Tests.Ui
             Thread.Sleep(1000);
 
             accountSetupPage.ClickSecciLink();
-            //Assert.Contains(accountSetupPage.SecciPopupWindowContent(), "150");
+            Assert.Contains(accountSetupPage.SecciPopupWindowContent(), "200");
             accountSetupPage.ClosePopupWindow();
-
-            // Manually check that loan agreement and SECCI emails are sent
-            Console.WriteLine("Manually check that that loan agreement and SECCI emails are sent for user={0}", email);
         }
 
         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-204")]

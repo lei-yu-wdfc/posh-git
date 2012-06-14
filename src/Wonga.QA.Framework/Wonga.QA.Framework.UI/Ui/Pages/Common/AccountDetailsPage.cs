@@ -91,9 +91,15 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public String SecciPopupWindowContent()
         {
+            string currentWindowHdl = Client.Driver.CurrentWindowHandle;
+
             var frameName = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.PopupContentFrame)).GetAttribute("name");
             var secci = Client.Driver.SwitchTo().Frame(frameName).FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.SecciContent));
-            return secci.Text;
+            var secci_text = secci.Text;
+            
+            Client.Driver.SwitchTo().Window(currentWindowHdl);
+
+            return secci_text;
         }
 
         public void ClosePopupWindow()
