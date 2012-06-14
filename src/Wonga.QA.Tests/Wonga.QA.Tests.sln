@@ -83,7 +83,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Prepaid", "W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.PayU", "Wonga.QA.Tests.PayU\Wonga.QA.Tests.PayU.csproj", "{C92F5379-5FBC-4E18-963B-1E20FCB5D6E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Mig.UI", "Wonga.QA.Tests.Mig.UI\Wonga.QA.Tests.Mig.UI.csproj", "{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Migration", "Wonga.QA.Tests.Mig.UI\Wonga.QA.Tests.Migration.csproj", "{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
