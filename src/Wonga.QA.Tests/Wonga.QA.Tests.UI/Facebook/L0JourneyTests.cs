@@ -147,10 +147,10 @@ namespace Wonga.QA.Tests.Ui.Facebook
             // end of TBD: check header and values and close the pop-up
             accountSetupPage.ClosePopupWindow();
 
-            Assert.Contains(accountSetupPage.GetTermsAndConditionsTitle(), "Wonga.com Loan Conditions");
+            Assert.Contains(accountSetupPage.GetTermsAndConditionsTitle(), ContentMap.Get.AccountSetupPage.LoanConditionText);
             accountSetupPage.ClosePopupWindow();
 
-            Assert.Contains(accountSetupPage.GetExplanationTitle(), "Important information about your loan");
+            Assert.Contains(accountSetupPage.GetExplanationTitle(), ContentMap.Get.AccountSetupPage.ImportantInformationText);
             accountSetupPage.ClosePopupWindow();
 
             // Manually check that loan agreement and SECCI emails are sent
