@@ -48,7 +48,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public IWebDriver EasyPayPrintButtonClick()
         {
             _easypayPrintButton.Click();
-            Do.Until(() => Client.Driver.WindowHandles.Count.Equals(2));
+            if(!Client.Driver.WindowHandles.Count.Equals(2))
+                Thread.Sleep(2000);
+                _easypayPrintButton.Click();
+            Assert.IsTrue(Client.Driver.WindowHandles.Count.Equals(2));
             var printWindow = Client.Driver.SwitchTo().Window(Client.Driver.WindowHandles[1]);
             return printWindow;
         }

@@ -64,8 +64,12 @@ namespace Wonga.QA.Tests.Ui
             var popUp = Client.Driver.FindElement(By.CssSelector("div#fancybox-content"));
             Do.Until(() => popUp.Displayed);
 
-            var text = popUp.Text;
-            Assert.IsTrue(text.Contains("Repay your wonga.com loan with EasyPay"));
+            var text = popUp.FindElement(By.Id("repay-your-wonga.com-loan-with-easypay")).Text;
+
+            Assert.AreEqual(text, "Repay your wonga.com loan with EasyPay");
+
+            //var text = popUp.Text;
+            //Assert.IsTrue(text.Contains("Repay your wonga.com loan with EasyPay"));
 
             // Close the popup:
             Client.Driver.FindElement(By.CssSelector("#fancybox-close")).Click();
