@@ -129,7 +129,8 @@ namespace Wonga.QA.Tests.Ui.Facebook
             // L0 journey
             var journeyL0 = JourneyFactory.GetL0Journey(Client.Home());
             journeyL0.ApplyForLoan(200, 10)
-                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                //Fix this.
+                //.FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
                 .FillAddressDetails();
 
             var accountSetupPage = new AccountDetailsPage(this.Client);
