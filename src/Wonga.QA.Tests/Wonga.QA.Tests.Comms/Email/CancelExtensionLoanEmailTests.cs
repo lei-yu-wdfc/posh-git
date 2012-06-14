@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
@@ -26,9 +25,9 @@ namespace Wonga.QA.Tests.Comms.Email
         {
             _salesForce = Drive.ThirdParties.Salesforce;
 
-            var sfUsername = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == "Salesforce.UserName");
-            var sfPassword = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == "Salesforce.Password");
-            var sfUrl = Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == "Salesforce.Url");
+            var sfUsername = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Salesforce.UserName");
+            var sfPassword = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Salesforce.Password");
+            var sfUrl = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Salesforce.Url");
 
             _salesForce.SalesforceUsername = sfUsername.Value;
             _salesForce.SalesforcePassword = sfPassword.Value;
