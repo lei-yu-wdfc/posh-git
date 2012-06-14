@@ -12,7 +12,6 @@ using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Framework.UI.Mappings;
-using Wonga.QA.Framework.UI.Mappings.Content.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Framework.UI.UiElements.Pages.Wb;
@@ -134,7 +133,6 @@ namespace Wonga.QA.Tests.Ui.Facebook
                 .FillAddressDetails();
 
             var accountSetupPage = new AccountDetailsPage(this.Client);
-            var accountSetupPage2 = new AccountSetupPage();
 
             Assert.IsTrue(accountSetupPage.IsSecciLinkVisible());
             Assert.IsTrue(accountSetupPage.IsTermsAndConditionsLinkVisible());
@@ -149,10 +147,10 @@ namespace Wonga.QA.Tests.Ui.Facebook
             // end of TBD: check header and values and close the pop-up
             accountSetupPage.ClosePopupWindow();
 
-            Assert.Contains(accountSetupPage.GetTermsAndConditionsTitle(), accountSetupPage2.LoanConditionText);
+            Assert.Contains(accountSetupPage.GetTermsAndConditionsTitle(), "Wonga.com Loan Conditions");
             accountSetupPage.ClosePopupWindow();
 
-            Assert.Contains(accountSetupPage.GetExplanationTitle(), accountSetupPage2.ImportantInformationText);
+            Assert.Contains(accountSetupPage.GetExplanationTitle(), "Important information about your loan");
             accountSetupPage.ClosePopupWindow();
 
             // Manually check that loan agreement and SECCI emails are sent

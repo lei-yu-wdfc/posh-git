@@ -166,10 +166,5 @@
     <HeaderText>Processing</HeaderText>
     <WaitMessage>We are processing your payment, please be patient. If the page doesn't reload click here.</WaitMessage>
   </RepayProcessingPage>
-
-  <AccountSetupPage>
-    <LoanConditionText>Wonga.com Loan Conditions</LoanConditionText>
-    <ImportantInformationText>Important information about your loan</ImportantInformationText>
-  </AccountSetupPage>
-
+  
 </ContentMap>
