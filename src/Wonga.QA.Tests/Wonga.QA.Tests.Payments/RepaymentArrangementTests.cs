@@ -101,7 +101,7 @@ namespace Wonga.QA.Tests.Payments
 			                         		AccountId = app.AccountId,
 			                         		PaymentCardId = app.PaymentCardGuid,
 			                         		CardType = "Other",
-			                         		Number = "1111111111111111",
+                                            Number = "4111111111111111",
 			                         		HolderName = "Test Holder",
 			                         		StartDate = DateTime.Today.AddYears(-1).ToDate(DateFormat.YearMonth),
 			                         		ExpiryDate = DateTime.Today.AddMonths(6).ToDate(DateFormat.YearMonth),
@@ -131,7 +131,8 @@ namespace Wonga.QA.Tests.Payments
 			                          		RepaymentDetailId = firstRepaymentArrangementDetail.RepaymentArrangementDetailId
 			                          	});
 			
-			var scheduledPayment = Do.Until(() => Drive.Db.Payments.ScheduledPayments.Single(x => x.ApplicationId == app.ApplicationId));
+			var scheduledPayment = Do.Until(() => Drive.Db.Payments.ScheduledPayments.Single(x => x.ApplicationId == app.ApplicationId &&
+                                                                                                  x.Amount == firstRepaymentArrangementDetail.Amount));
 			Assert.IsFalse(scheduledPayment.Success.Value);
 		}
 

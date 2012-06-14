@@ -50,6 +50,7 @@
     <Compile Include="Email\PaymentConfirmationEmailUkTests.cs" />
     <Compile Include="Email\PaymentFailureEmails.cs" />
     <Compile Include="Email\PaymentReminderEmailTests.cs" />
+    <Compile Include="Email\RepaymentArrangementEmailTests.cs" />
     <Compile Include="Email\RepaymentRequestEmailTests.cs" />
     <Compile Include="Helpers\ConfigurationFunctions.cs" />
     <Compile Include="LoanAgreementDocumentTests.cs" />
