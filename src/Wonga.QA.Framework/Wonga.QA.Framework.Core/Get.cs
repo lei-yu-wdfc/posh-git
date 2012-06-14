@@ -248,8 +248,13 @@ namespace Wonga.QA.Framework.Core
             switch (Config.AUT)
             {
                 case AUT.Uk:
+                case AUT.Pl:
                     {
                         return "SW6 6PN";  
+                    }
+                    case AUT.Ca:
+                    {
+                        return "V4F3A9";
                     }
                 default:
                     {

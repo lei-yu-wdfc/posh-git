@@ -20,12 +20,22 @@ namespace Wonga.QA.Framework.UI
         private String _nationalId;
         private DateTime _dateOfBirth;
         private GenderEnum _gender;
-        public BasePage CurrentPage { get; set; }
 
+        private String _postCode;
+        private String _addresPeriod;
+
+        private String _password;
+
+        private String _accountNumber;
+        private String _bankPeriod;
+        private String _pin;
+
+        public BasePage CurrentPage { get; set; }
 
         public ZaL0Journey(BasePage homePage)
         {
             CurrentPage = homePage as HomePage;
+
             _firstName = Get.GetName();
             _lastName = Get.RandomString(10);
             _middleName = Get.RandomString(10);
@@ -35,6 +45,17 @@ namespace Wonga.QA.Framework.UI
             _dateOfBirth = new DateTime(1957, 10, 30);
             _gender = GenderEnum.Female;
             _nationalId = Get.GetNationalNumber(_dateOfBirth, _gender == GenderEnum.Female);
+
+            _postCode = Get.GetPostcode();
+            _addresPeriod = "2 to 3 years";
+
+            _password = Get.GetPassword();
+
+            _accountNumber = "1234567";
+            _bankPeriod = "2 to 3 years";
+            _pin = "0000";
+
+            
         }
         public IL0ConsumerJourney ApplyForLoan(int amount, int duration)
         {
@@ -84,15 +105,15 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public IL0ConsumerJourney FillAddressDetails(string postcode = null, string addresPeriod = null, bool submit = true)
+        public IL0ConsumerJourney FillAddressDetails(bool submit = true)
         {
             var addressPage = CurrentPage as AddressDetailsPage;
             addressPage.HouseNumber = "25";
             addressPage.Street = "high road";
             addressPage.Town = "Kuku";
             addressPage.County = "Province";
-            addressPage.PostCode = postcode ?? Get.GetPostcode();
-            addressPage.AddressPeriod = addresPeriod ?? "2 to 3 years";
+            addressPage.PostCode = _postCode;
+            addressPage.AddressPeriod = _addresPeriod;
             if (submit)
             {
                 CurrentPage = addressPage.Next() as AccountDetailsPage;
@@ -100,11 +121,11 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public IL0ConsumerJourney FillAccountDetails(string password = null, bool submit = true)
+        public IL0ConsumerJourney FillAccountDetails(bool submit = true)
         {
             var accountDetailsPage = CurrentPage as AccountDetailsPage;
-            accountDetailsPage.AccountDetailsSection.Password = password ?? Get.GetPassword();
-            accountDetailsPage.AccountDetailsSection.PasswordConfirm = password ?? Get.GetPassword();
+            accountDetailsPage.AccountDetailsSection.Password = _password;
+            accountDetailsPage.AccountDetailsSection.PasswordConfirm = _password;
             accountDetailsPage.AccountDetailsSection.SecretQuestion = "Secret question'-.";
             accountDetailsPage.AccountDetailsSection.SecretAnswer = "Secret answer";
             if (submit)
@@ -114,14 +135,14 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public IL0ConsumerJourney FillBankDetails(string accountNumber = null, string bankPeriod = null, string pin = null, bool submit = true)
+        public IL0ConsumerJourney FillBankDetails(bool submit = true)
         {
             var bankDetailsPage = CurrentPage as PersonalBankAccountPage;
             bankDetailsPage.BankAccountSection.BankName = "Capitec";
             bankDetailsPage.BankAccountSection.BankAccountType = "Current";
-            bankDetailsPage.BankAccountSection.AccountNumber = accountNumber ?? "1234567";
-            bankDetailsPage.BankAccountSection.BankPeriod = bankPeriod ?? "2 to 3 years";
-            bankDetailsPage.PinVerificationSection.Pin = pin ?? "0000";
+            bankDetailsPage.BankAccountSection.AccountNumber = _accountNumber;
+            bankDetailsPage.BankAccountSection.BankPeriod = _bankPeriod;
+            bankDetailsPage.PinVerificationSection.Pin = _pin;
             if (submit)
             {
                 CurrentPage = bankDetailsPage.Next() as ProcessingPage;
@@ -129,7 +150,7 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public IL0ConsumerJourney FillCardDetails(string cardNumber = null, string cardSecurity = null, string cardType = null, string expiryDate = null, string startDate = null, string pin = null, bool submit = true)
+        public IL0ConsumerJourney FillCardDetails(bool submit = true)
         {
             throw new NotImplementedException();
         }
@@ -210,6 +231,7 @@ namespace Wonga.QA.Framework.UI
             _mobilePhone = mobilePhone;
             return this;
         }
+
         public IL0ConsumerJourney WithGender(GenderEnum gender)
         {
             _gender = gender;
@@ -226,6 +248,71 @@ namespace Wonga.QA.Framework.UI
         {
             _nationalId = nationalId;
             return this;
+        }
+
+        public IL0ConsumerJourney WithMotherMaidenName(string motherMaidenName)
+        {
+            throw new NotImplementedException(message: "Don't use on Za");
+        }
+
+        public IL0ConsumerJourney WithPosteCode(string postCode)
+        {
+            _postCode = postCode;
+            return this;
+        }
+
+        public IL0ConsumerJourney WithAddresPeriod(string addresPeriod)
+        {
+            _addresPeriod = addresPeriod;
+            return this;
+        }
+
+        public IL0ConsumerJourney WithPassword(string password)
+        {
+            _password = password;
+            return this;
+        }
+
+        public IL0ConsumerJourney WithAccountNumber(string accountNumber)
+        {
+            _accountNumber = accountNumber;
+            return this;
+        }
+
+        public IL0ConsumerJourney WithBankPeriod(string bankPeriod)
+        {
+            _bankPeriod = bankPeriod;
+            return this;
+        }
+
+        public IL0ConsumerJourney WithPin(string pin)
+        {
+            _pin = pin;
+            return this;
+        }
+
+        public IL0ConsumerJourney WithCardNumber(string cardNumber)
+        {
+            throw new NotImplementedException(message: "Don't use on Za");
+        }
+        public IL0ConsumerJourney WithCardSecurity(string cardSecurity)
+        {
+            throw new NotImplementedException(message: "Don't use on Za");
+        }
+
+        public IL0ConsumerJourney WithCardType(string cardType)
+        {
+            throw new NotImplementedException(message: "Don't use on Za");
+        }
+
+        public IL0ConsumerJourney WithExpiryDate(string expiryDate)
+        {
+            throw new NotImplementedException(message: "Don't use on Za");
+        }
+
+        public IL0ConsumerJourney WithStartDate(string startDate)
+        {
+            throw new NotImplementedException(message: "Don't use on Za");
         }
 
         #endregion

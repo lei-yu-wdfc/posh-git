@@ -12,19 +12,14 @@ namespace Wonga.QA.Framework.UI
 
     public interface IL0ConsumerJourney
     {
-      // String FirstName { get; set; }
-      // String LastName { get; set; }
-        String NationalId { get; set; }
-        DateTime DateOfBirth { get; set; }
-
         BasePage CurrentPage { get; set; }
 
         IL0ConsumerJourney ApplyForLoan(int amount, int duration);
         IL0ConsumerJourney FillPersonalDetails(bool submit = true);
-        IL0ConsumerJourney FillAddressDetails(string postcode = null, string addresPeriod = null, bool submit = true);
-        IL0ConsumerJourney FillAccountDetails(string password = null, bool submit = true);
-        IL0ConsumerJourney FillBankDetails(string accountNumber = null, string bankPeriod = null, string pin = null, bool submit = true);
-        IL0ConsumerJourney FillCardDetails(string cardNumber = null, string cardSecurity = null, string cardType = null, string expiryDate = null, string startDate = null, string pin = null, bool submit = true);
+        IL0ConsumerJourney FillAddressDetails(bool submit = true);
+        IL0ConsumerJourney FillAccountDetails(bool submit = true);
+        IL0ConsumerJourney FillBankDetails(bool submit = true);
+        IL0ConsumerJourney FillCardDetails(bool submit = true);
         IL0ConsumerJourney WaitForAcceptedPage();
         IL0ConsumerJourney WaitForDeclinedPage();
         IL0ConsumerJourney FillAcceptedPage();
@@ -33,7 +28,7 @@ namespace Wonga.QA.Framework.UI
 
         #region Builder
 
-        IL0ConsumerJourney WithSubmit(bool submit);
+        //IL0ConsumerJourney WithSubmit(bool submit);
 
         IL0ConsumerJourney WithFirstName(string firstName);
         IL0ConsumerJourney WithLastName(string lastName);
@@ -44,6 +39,22 @@ namespace Wonga.QA.Framework.UI
         IL0ConsumerJourney WithGender(GenderEnum gender);
         IL0ConsumerJourney WithDateOfBirth(DateTime dateOfBirth);
         IL0ConsumerJourney WithNationalId(string nationalId);
+        IL0ConsumerJourney WithMotherMaidenName(string motherMaidenName);
+
+        IL0ConsumerJourney WithPosteCode(string postCode);
+        IL0ConsumerJourney WithAddresPeriod(string addresPeriod);
+
+        IL0ConsumerJourney WithPassword(string password);
+
+        IL0ConsumerJourney WithAccountNumber(string accountNumber);
+        IL0ConsumerJourney WithBankPeriod(string bankPeriod);
+        IL0ConsumerJourney WithPin(string pin);
+
+        IL0ConsumerJourney WithCardNumber(string cardNumber);
+        IL0ConsumerJourney WithCardSecurity(string cardSecurity);
+        IL0ConsumerJourney WithCardType(string cardType);
+        IL0ConsumerJourney WithExpiryDate(string expiryDate);
+        IL0ConsumerJourney WithStartDate(string startDate);
 
         #endregion
     }
