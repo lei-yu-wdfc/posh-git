@@ -5,6 +5,7 @@
 		<Framework>Wonga.QA.Framework</Framework>
 		<Tests>Wonga.QA.Tests</Tests>
 		<ServiceTests>Wonga.QA.ServiceTests</ServiceTests>
+		<DataTests>Wonga.QA.DataTests</DataTests>
 	</PropertyGroup>
 	
 	<PropertyGroup>
@@ -24,6 +25,7 @@
 			<Projects Include="$(Src)\$(Framework)\$(Framework).sln" />
 			<Projects Include="$(Src)\$(Tests)\$(Tests).sln" />
 			<Projects Include="$(Src)\$(ServiceTests)\$(ServiceTests).sln" />
+			<Projects Include="$(Src)\$(DataTests)\$(DataTests).sln" />
 		</ItemGroup>
 		<MSBuild Projects="@(Projects)" StopOnFirstFailure="true"/>
 	</Target>
@@ -39,8 +41,6 @@
 			<Exclude Include="$(Bin)\$(Tests).Ui.dll" />
 			<Exclude Include="$(Bin)\$(Tests).Ui.Mobile.dll" />
 			<Exclude Include="$(Bin)\$(Tests).Ui.Admin.dll" />
-			<Exclude Include="$(Bin)\$(Tests).Hds.dll" />
-			<Exclude Include="$(Bin)\$(Tests).Bi.dll" />
 			<Command Include='"$(MSBuildProgramFiles32)\Microsoft\ILMerge\ILMerge.exe"' />
 			<Command Include="/targetplatform:v4,$(MSBuildToolsPath)" />
 			<Command Include="/out:$(Bin)\$(Tests).dll" />
