@@ -88,6 +88,7 @@ namespace Wonga.QA.Framework.UI
         public TopupProcessingPage TopupProcessingPage { get; set; }
         public RepayErrorPage RepayErrorPage { get; set; }
         public RepaymentOptionsPage RepaymentOptionsPage { get; set; }
+        public AccountSetupPage AccountSetupPage { get; set; }
 #endregion
     }
 }
