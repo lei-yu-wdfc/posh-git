@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
@@ -10,23 +11,30 @@ namespace Wonga.QA.Framework.UI
 {
     class ZaL0Journey : IL0ConsumerJourney
     {
-        public String FirstName { get; set; }
-        public String LastName { get; set; }
-        public String NationalId { get; set; }
-        public DateTime DateOfBirth { get; set; }
-        public String Gender { get; set; }
+        private String _firstName;
+        private String _lastName;
+        private String _middleName;
+        private String _email;
+        private String _employerName;
+        private String _mobilePhone;
+        private String _nationalId;
+        private DateTime _dateOfBirth;
+        private GenderEnum _gender;
         public BasePage CurrentPage { get; set; }
-        public String Email { get; set; }
+
 
         public ZaL0Journey(BasePage homePage)
         {
             CurrentPage = homePage as HomePage;
-            FirstName = Get.GetName();
-            LastName = Get.RandomString(10);
-            DateOfBirth = new DateTime(1957, 10, 30);
-            Gender = "Female";
-            NationalId = Get.GetNationalNumber(DateOfBirth, true);
-            Email = Get.RandomEmail();
+            _firstName = Get.GetName();
+            _lastName = Get.RandomString(10);
+            _middleName = Get.RandomString(10);
+            _employerName = Get.RandomString(10);
+            _email = Get.RandomEmail();
+            _mobilePhone = Get.GetMobilePhone();
+            _dateOfBirth = new DateTime(1957, 10, 30);
+            _gender = GenderEnum.Female;
+            _nationalId = Get.GetNationalNumber(_dateOfBirth, _gender == GenderEnum.Female);
         }
         public IL0ConsumerJourney ApplyForLoan(int amount, int duration)
         {
@@ -37,25 +45,23 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public IL0ConsumerJourney FillPersonalDetails(string firstName = null, string lastName = null, string middleNameMask = null, string gender = null, string employerNameMask = null, string email = null, string mobilePhone = null, bool submit = true)
+        public IL0ConsumerJourney FillPersonalDetails(bool submit = true)
         {
-            string employerName = employerNameMask ?? Get.GetMiddleName();
-            string middleName = middleNameMask ?? Get.GetMiddleName();
             var personalDetailsPage = CurrentPage as PersonalDetailsPage;
-            personalDetailsPage.YourName.FirstName = firstName ?? FirstName;
-            personalDetailsPage.YourName.MiddleName = middleName;
-            personalDetailsPage.YourName.LastName = lastName ?? LastName;
+            personalDetailsPage.YourName.FirstName = _firstName;
+            personalDetailsPage.YourName.MiddleName = _middleName;
+            personalDetailsPage.YourName.LastName = _lastName;
             personalDetailsPage.YourName.Title = "Mr";
-            personalDetailsPage.YourDetails.Number = NationalId.ToString();//"5710300020087";
-            personalDetailsPage.YourDetails.DateOfBirth = DateOfBirth.ToString("d/MMM/yyyy");
-            personalDetailsPage.YourDetails.Gender = gender ?? Gender;
+            personalDetailsPage.YourDetails.Number = _nationalId.ToString();//"5710300020087";
+            personalDetailsPage.YourDetails.DateOfBirth = _dateOfBirth.ToString("d/MMM/yyyy");
+            personalDetailsPage.YourDetails.Gender = _gender.ToString();
             personalDetailsPage.YourDetails.HomeStatus = "Owner Occupier";
             personalDetailsPage.YourDetails.HomeLanguage = "English";
             personalDetailsPage.YourDetails.NumberOfDependants = "0";
             personalDetailsPage.YourDetails.MaritalStatus = "Single";
             personalDetailsPage.EmploymentDetails.EmploymentStatus = "Employed Full Time";
             personalDetailsPage.EmploymentDetails.MonthlyIncome = "3000";
-            personalDetailsPage.EmploymentDetails.EmployerName = employerName;
+            personalDetailsPage.EmploymentDetails.EmployerName = _employerName;
             personalDetailsPage.EmploymentDetails.EmployerIndustry = "Accountancy";
             personalDetailsPage.EmploymentDetails.EmploymentPosition = "Administration";
             personalDetailsPage.EmploymentDetails.TimeWithEmployerYears = "9";
@@ -64,9 +70,9 @@ namespace Wonga.QA.Framework.UI
             personalDetailsPage.EmploymentDetails.SalaryPaidToBank = true;
             personalDetailsPage.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d/MMM/yyyy");
             personalDetailsPage.EmploymentDetails.IncomeFrequency = "Monthly";
-            personalDetailsPage.ContactingYou.CellPhoneNumber = mobilePhone ?? Get.GetMobilePhone();
-            personalDetailsPage.ContactingYou.EmailAddress = email ?? Email;
-            personalDetailsPage.ContactingYou.ConfirmEmailAddress = email ?? Email;
+            personalDetailsPage.ContactingYou.CellPhoneNumber = _mobilePhone;
+            personalDetailsPage.ContactingYou.EmailAddress = _email;
+            personalDetailsPage.ContactingYou.ConfirmEmailAddress = _email;
             personalDetailsPage.PrivacyPolicy = true;
             personalDetailsPage.CanContact = "Yes";
             personalDetailsPage.MarriedInCommunityProperty =
@@ -162,10 +168,66 @@ namespace Wonga.QA.Framework.UI
             var acceptedPage = CurrentPage as AcceptedPage;
             acceptedPage.Client.Driver.Navigate().GoToUrl(Config.Ui.Home);
             var homePage = acceptedPage.WaitForPage<HomePage>() as HomePage;
-            CurrentPage = homePage.Login.LoginAs(Email, Get.GetPassword());
+            CurrentPage = homePage.Login.LoginAs(_email, Get.GetPassword());
 
             return this;
         }
 
+
+        #region Builder
+        public IL0ConsumerJourney WithFirstName(string firstName)
+        {
+            _firstName = firstName;
+            return this;
+        }
+
+        public IL0ConsumerJourney WithLastName(string lastName)
+        {
+            _lastName = lastName;
+            return this;
+        }
+
+        public IL0ConsumerJourney WithMiddleName(string middleName)
+        {
+            _middleName = middleName;
+            return this;
+        }
+
+        public IL0ConsumerJourney WithEmployerName(string employerName)
+        {
+            _employerName = employerName;
+            return this;
+        }
+
+        public IL0ConsumerJourney WithEmail(string email)
+        {
+            _email = email;
+            return this;
+        }
+
+        public IL0ConsumerJourney WithMobilePhone(string mobilePhone)
+        {
+            _mobilePhone = mobilePhone;
+            return this;
+        }
+        public IL0ConsumerJourney WithGender(GenderEnum gender)
+        {
+            _gender = gender;
+            return this;
+        }
+
+        public IL0ConsumerJourney WithDateOfBirth(DateTime dateOfBirth)
+        {
+            _dateOfBirth = dateOfBirth;
+            return this;
+        }
+
+        public IL0ConsumerJourney WithNationalId(string nationalId)
+        {
+            _nationalId = nationalId;
+            return this;
+        }
+
+        #endregion
     }
 }

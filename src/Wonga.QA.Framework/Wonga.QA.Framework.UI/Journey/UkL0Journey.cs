@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
@@ -166,5 +167,61 @@ namespace Wonga.QA.Framework.UI
         {
             throw new NotImplementedException();
         }
+
+        #region Builder
+        public IL0ConsumerJourney WithFirstName(string firstName)
+        {
+            _firstName = firstName;
+            return this;
+        }
+
+        public IL0ConsumerJourney WithLastName(string lastName)
+        {
+            _lastName = lastName;
+            return this;
+        }
+
+        public IL0ConsumerJourney WithMiddleName(string middleName)
+        {
+            _middleName = middleName;
+            return this;
+        }
+
+        public IL0ConsumerJourney WithEmployerName(string employerName)
+        {
+            _employerName = employerName;
+            return this;
+        }
+
+        public IL0ConsumerJourney WithEmail(string email)
+        {
+            _email = email;
+            return this;
+        }
+
+        public IL0ConsumerJourney WithMobilePhone(string mobilePhone)
+        {
+            _mobilePhone = mobilePhone;
+            return this;
+        }
+        public IL0ConsumerJourney WithGender(GenderEnum gender)
+        {
+            _gender = gender;
+            return this;
+        }
+
+        public IL0ConsumerJourney WithDateOfBirth(DateTime dateOfBirth)
+        {
+            _dateOfBirth = dateOfBirth;
+            return this;
+        }
+
+        public IL0ConsumerJourney WithNationalId(string nationalId)
+        {
+            _nationalId = nationalId;
+            return this;
+        }
+
+        #endregion
     }
 }

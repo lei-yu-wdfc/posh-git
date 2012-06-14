@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
@@ -10,21 +11,22 @@ namespace Wonga.QA.Framework.UI
 {
     class CaL0Journey : IL0ConsumerJourney
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string NationalId { get; set; } //Not used yet
-        public string Gender { get; set; } /// needed for migation testing
-        public DateTime DateOfBirth { get; set; } //not used yet
-        public String Email { get; set; }
+        private String _firstName;
+        private String _lastName;
+        private String _middleName;
+        private String _employerName;
+        private String _mobilePhone;
         public BasePage CurrentPage { get; set; }
-
 
         public CaL0Journey(BasePage homePage)
         {
             CurrentPage = homePage as HomePage;
-            FirstName = Get.GetName();
-            LastName = Get.RandomString(10);
-            Email = Get.RandomEmail();
+            _firstName = Get.GetName();
+            _lastName = Get.RandomString(10);
+            _middleName = Get.RandomString(10);
+            _employerName = Get.RandomString(10);
+            _email = Get.RandomEmail();
+            _mobilePhone = Get.GetMobilePhone();
         }
         public IL0ConsumerJourney ApplyForLoan(int amount, int duration)
         {
@@ -35,7 +37,7 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public IL0ConsumerJourney FillPersonalDetails(string firstName = null, string lastName = null, string middleNameMask = null, string gender = null, string employerNameMask = null, string email = null, string mobilePhone = null, bool submit = true)
+        public IL0ConsumerJourney FillPersonalDetails(bool submit = true)
         {
             string employerName = employerNameMask ?? Get.GetMiddleName();
             string middleName = middleNameMask ?? Get.GetMiddleName();
@@ -154,5 +156,61 @@ namespace Wonga.QA.Framework.UI
         {
             throw new NotImplementedException();
         }
+
+        #region Builder
+        public IL0ConsumerJourney WithFirstName(string firstName)
+        {
+            _firstName = firstName;
+            return this;
+        }
+
+        public IL0ConsumerJourney WithLastName(string lastName)
+        {
+            _lastName = lastName;
+            return this;
+        }
+
+        public IL0ConsumerJourney WithMiddleName(string middleName)
+        {
+            _middleName = middleName;
+            return this;
+        }
+
+        public IL0ConsumerJourney WithEmployerName(string employerName)
+        {
+            _employerName = employerName;
+            return this;
+        }
+
+        public IL0ConsumerJourney WithEmail(string email)
+        {
+            _email = email;
+            return this;
+        }
+
+        public IL0ConsumerJourney WithMobilePhone(string mobilePhone)
+        {
+            _mobilePhone = mobilePhone;
+            return this;
+        }
+        public IL0ConsumerJourney WithGender(GenderEnum gender)
+        {
+            _gender = gender;
+            return this;
+        }
+
+        public IL0ConsumerJourney WithDateOfBirth(DateTime dateOfBirth)
+        {
+            _dateOfBirth = dateOfBirth;
+            return this;
+        }
+
+        public IL0ConsumerJourney WithNationalId(string nationalId)
+        {
+            _nationalId = nationalId;
+            return this;
+        }
+
+        #endregion
     }
 }
