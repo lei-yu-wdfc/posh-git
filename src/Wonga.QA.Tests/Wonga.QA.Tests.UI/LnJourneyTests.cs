@@ -232,7 +232,9 @@ namespace Wonga.QA.Tests.Ui
                 .FillBankDetails()
                 .FillCardDetails()
                 .WaitForAcceptedPage()
-                .FillAcceptedPage();
+                .FillAcceptedPage()
+                .GoToMySummaryPage()
+                .CurrentPage as MySummaryPage;
 
             var customer =
                 new Customer(
