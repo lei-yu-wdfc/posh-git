@@ -9,8 +9,7 @@ using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Ui;
 
-
-namespace Wonga.QA.Tests.Mig.UI
+namespace Wonga.QA.Tests.Migration
 {
     class MigrationUiTests: UiTest
     {

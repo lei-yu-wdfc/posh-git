@@ -37,7 +37,7 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public IL0ConsumerJourney FillPersonalDetails(string firstName = null, string lastName = null, string middleNameMask = null, string employerNameMask = null, string email = null, string mobilePhone = null, bool submit = true)
+        public IL0ConsumerJourney FillPersonalDetails(string firstName = null, string lastName = null, string middleNameMask = null, string gender = null, string employerNameMask = null, string email = null, string mobilePhone = null, bool submit = true)
         {
             string employerName = employerNameMask ?? Get.GetMiddleName();
             string middleName = middleNameMask ?? Get.GetMiddleName();
@@ -48,7 +48,7 @@ namespace Wonga.QA.Framework.UI
             personalDetailsPage.YourName.Title = "Mr";
             personalDetailsPage.YourDetails.Number = NationalId.ToString();//"5710300020087";
             personalDetailsPage.YourDetails.DateOfBirth = DateOfBirth.ToString("d/MMM/yyyy");
-            personalDetailsPage.YourDetails.Gender = Gender;
+            personalDetailsPage.YourDetails.Gender = gender ?? Gender;
             personalDetailsPage.YourDetails.HomeStatus = "Owner Occupier";
             personalDetailsPage.YourDetails.HomeLanguage = "English";
             personalDetailsPage.YourDetails.NumberOfDependants = "0";

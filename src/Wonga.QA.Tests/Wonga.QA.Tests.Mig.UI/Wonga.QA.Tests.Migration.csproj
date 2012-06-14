@@ -8,8 +8,8 @@
     <ProjectGuid>{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Wonga.QA.Tests.Mig.UI</RootNamespace>
-    <AssemblyName>Wonga.QA.Tests.Mig.UI</AssemblyName>
+    <RootNamespace>Wonga.QA.Tests.Migration</RootNamespace>
+    <AssemblyName>Wonga.QA.Tests.Migration</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -60,7 +60,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MigrationGenderTests.cs" />
     <Compile Include="MigrationUiTests.cs" />
+    <Compile Include="MigrationLoginTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

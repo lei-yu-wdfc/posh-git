@@ -13,6 +13,7 @@ namespace Wonga.QA.Framework.UI
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string Gender { get; set; } /// needed for migation testing
         public string NationalId { get; set; } //not used yet
         public DateTime DateOfBirth { get; set; } //Not used yet
         public BasePage CurrentPage { get; set; }
@@ -34,7 +35,7 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public IL0ConsumerJourney FillPersonalDetails(string firstName = null, string lastName = null, string middleNameMask = null, string employerNameMask = null, string email = null, string mobilePhone = null, bool submit = true)
+        public IL0ConsumerJourney FillPersonalDetails(string firstName = null, string lastName = null, string middleNameMask = null, string gender = null, string employerNameMask = null, string email = null, string mobilePhone = null, bool submit = true)
         {
             string employerName = employerNameMask ?? Get.GetMiddleName();
             string middleName = middleNameMask ?? Get.GetMiddleName();
@@ -44,7 +45,7 @@ namespace Wonga.QA.Framework.UI
             personalDetailsPage.YourName.LastName =  lastName ?? LastName;
             personalDetailsPage.YourName.Title = "Mr";
             personalDetailsPage.YourDetails.DateOfBirth = "1/Jan/1980";
-            personalDetailsPage.YourDetails.Gender = "Male";
+            personalDetailsPage.YourDetails.Gender = gender ?? "Male";
             personalDetailsPage.YourDetails.HomeStatus = "Tenant Furnished";
             personalDetailsPage.YourDetails.MaritalStatus = "Single";
             personalDetailsPage.YourDetails.NumberOfDependants = "0";

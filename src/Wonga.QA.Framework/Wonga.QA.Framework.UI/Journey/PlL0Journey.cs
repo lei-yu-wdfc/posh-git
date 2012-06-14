@@ -14,6 +14,7 @@ namespace Wonga.QA.Framework.UI.Journey
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MotherMaidenName { get; set; }
+        public string Gender { get; set; } /// needed for migation testing
         public string NationalId { get; set; } //not used yet
         public DateTime DateOfBirth { get; set; } //Not used yet
         public BasePage CurrentPage { get; set; }
@@ -37,7 +38,7 @@ namespace Wonga.QA.Framework.UI.Journey
         }
 
 
-        public IL0ConsumerJourney FillPersonalDetails(string firstName = null, string lastName = null, string middleNameMask = null, string employerNameMask = null, string email = null, string mobilePhone = null, bool submit = true)
+        public IL0ConsumerJourney FillPersonalDetails(string firstName = null, string lastName = null, string middleNameMask = null, string gender = null, string employerNameMask = null, string email = null, string mobilePhone = null, bool submit = true)
         {
             string employerName = employerNameMask ?? Get.GetMiddleName();
             string middleName = middleNameMask ?? Get.GetMiddleName();
