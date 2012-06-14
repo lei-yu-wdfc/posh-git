@@ -110,5 +110,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             get { return _loanPeriodClarification.Displayed; }
         }
 
+        public string RepayCard
+        {
+            get { return _card.Text; }
+        }
     }
 }
