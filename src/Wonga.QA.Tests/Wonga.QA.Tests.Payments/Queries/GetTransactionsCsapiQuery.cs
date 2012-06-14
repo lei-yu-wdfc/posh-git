@@ -12,10 +12,11 @@ using Wonga.QA.Tests.Payments.Enums;
 
 namespace Wonga.QA.Tests.Payments.Queries
 {
-    [TestFixture, Parallelizable(TestScope.All)]
-    public class GetTransactionsCsapiQuery
-    {
-        private dynamic _transactions = Drive.Data.Payments.Db.Transactions;
+	[TestFixture, Parallelizable(TestScope.All)]
+	public class GetTransactionsCsapiQuery
+	{
+		private dynamic _transactions = Drive.Data.Payments.Db.Transactions;
+
 		[Test, AUT(AUT.Za), JIRA("ZA-2227")]
 		public void GetTransactions_ShouldOnlyShowServiceFeeTransactionsPostedTillPostingDate()
 		{
@@ -59,45 +60,44 @@ namespace Wonga.QA.Tests.Payments.Queries
 			Assert.AreEqual(1, retrievedTransactionTypes[PaymentTransactionType.ServiceFee]);
 		}
 
+		[Test, AUT(AUT.Wb), JIRA("SME-375")]
+		public void PaymentsShouldReturnAllTransactionsWhenThereAreTransactionsForAGivenApplication()
+		{
+			var customer = CustomerBuilder.New().Build();
+			var organisation = OrganisationBuilder.New(customer).Build();
+			var app = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
-        [Test, AUT(AUT.Wb), JIRA("SME-375")]
-        public void PaymentsShouldReturnAllTransactionsWhenThereAreTransactionsForAGivenApplication()
-        {
-            var customer = CustomerBuilder.New().Build();
-            var organisation = OrganisationBuilder.New(customer).Build();
-            var app = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+			Do.Until(() => Drive.Db.Payments.Transactions.Count(t => t.ApplicationEntity.ExternalId == app.Id));
 
-            Do.Until(() => Drive.Db.Payments.Transactions.Count(t => t.ApplicationEntity.ExternalId == app.Id));
+			var query = new Framework.Cs.GetTransactionsQuery
+			{
+				ApplicationGuid = app.Id
+			};
 
-            var query = new Framework.Cs.GetTransactionsQuery
-                            {
-                                ApplicationGuid = app.Id
-                            };
+			var response = Drive.Cs.Queries.Post(query);
 
-            var response = Drive.Cs.Queries.Post(query);
+			Assert.IsNotNull(response);
+			Assert.Contains(response.Values["Type"], "Fee");
+			Assert.Contains(response.Values["Type"], "CashAdvance");
+			Assert.Contains(response.Values["Type"], "Interest");
+		}
 
-            Assert.IsNotNull(response);
-            Assert.Contains(response.Values["Type"], "Fee");
-            Assert.Contains(response.Values["Type"], "CashAdvance");
-            Assert.Contains(response.Values["Type"], "Interest");
-        }
+		[Test, AUT(AUT.Wb), JIRA("SME-375")]
+		public void PaymentsShouldReturnNoTransactionsWhenThereAreNoTransactionsForAGivenApplication()
+		{
+			var customer = CustomerBuilder.New().WithMiddleName("FailingName").Build();
+			var organisation = OrganisationBuilder.New(customer).Build();
+			var app = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 
-        [Test, AUT(AUT.Wb), JIRA("SME-375")]
-        public void PaymentsShouldReturnNoTransactionsWhenThereAreNoTransactionsForAGivenApplication()
-        {
-            var customer = CustomerBuilder.New().WithMiddleName("FailingName").Build();
-            var organisation = OrganisationBuilder.New(customer).Build();
-            var app = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+			var query = new Framework.Cs.GetTransactionsQuery
+			{
+				ApplicationGuid = app.Id
+			};
 
-            var query = new Framework.Cs.GetTransactionsQuery
-            {
-                ApplicationGuid = app.Id
-            };
+			var response = Drive.Cs.Queries.Post(query);
 
-            var response = Drive.Cs.Queries.Post(query);
-
-            Assert.IsNotNull(response);
-            Assert.AreEqual(0, response.Root.Descendants().Count(d => d.Name.LocalName == "Transaction"));
-        }
-    }
+			Assert.IsNotNull(response);
+			Assert.AreEqual(0, response.Root.Descendants().Count(d => d.Name.LocalName == "Transaction"));
+		}
+	}
 }

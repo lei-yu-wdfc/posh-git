@@ -13,7 +13,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	[Parallelizable(TestScope.All), AUT(AUT.Za, AUT.Ca)]
 	class CheckpointApplicationElementNotOnCSBlacklistTests
 	{
-        private const RiskMask TestMask = RiskMask.TESTApplicationElementNotOnCSBlacklist;
+		private const RiskMask TestMask = RiskMask.TESTApplicationElementNotOnCSBlacklist;
 
 		[Test, AUT(AUT.Za, AUT.Ca), JIRA("CA-1974")]
 		public void L0_CheckpointApplicationElementNotOnCSBlacklist_Accept()
@@ -31,10 +31,10 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
 
-			Drive.Msmq.Risk.Send(new RegisterDoNotRelendCommand{AccountId =  customer.Id, DoNotRelend =  true});
+			Drive.Msmq.Risk.Send(new RegisterDoNotRelendCommand { AccountId = customer.Id, DoNotRelend = true });
 			Do.Until(() => Drive.Data.Risk.Db.RiskAccounts.FindByAccountId(customer.Id).DoNotRelend);
 
-            ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
 
 		[Test, AUT(AUT.Ca), JIRA("CA-1974")]
@@ -44,7 +44,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 			var l0Application = ApplicationBuilder.New(customer).Build();
 			l0Application.RepayOnDueDate();
-            CustomerOperations.UpdateEmployerNameInRisk(customer.Id, TestMask.ToString());
+			CustomerOperations.UpdateEmployerNameInRisk(customer.Id, TestMask.ToString());
 
 			ApplicationBuilder.New(customer).Build();
 		}
@@ -55,7 +55,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			var customer = CustomerBuilder.New().WithEmployer(RiskMask.TESTNoCheck).Build();
 			var l0Application = ApplicationBuilder.New(customer).Build();
 			l0Application.RepayOnDueDate();
-            CustomerOperations.UpdateEmployerNameInRisk(customer.Id, TestMask.ToString());
+			CustomerOperations.UpdateEmployerNameInRisk(customer.Id, TestMask.ToString());
 
 			Drive.Msmq.Risk.Send(new RegisterDoNotRelendCommand { AccountId = customer.Id, DoNotRelend = true });
 			Do.Until(() => Drive.Data.Risk.Db.RiskAccounts.FindByAccountId(customer.Id).DoNotRelend);

@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -15,47 +15,47 @@ namespace Wonga.QA.Tests.Payments
 	public class EasyPayTests
 	{
 		private readonly dynamic _repaymentAccountsTable = Drive.Data.Payments.Db.RepaymentAccount;
+		private Application _application;
+		private string _easyPayNumber;
+		private const decimal LoanAmount = 500;
+		private const decimal PartialRepayAmount = 10;
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2395")]
-		public void RepayUsingEasyPayWillCreateTransactionWhenPaymentReceived()
+		[FixtureSetUp]
+		public void FixtureSetUp()
 		{
 			var customer = CustomerBuilder.New().Build();
-			var application = ApplicationBuilder.New(customer).Build();
+			_application = ApplicationBuilder.New(customer).WithLoanAmount(LoanAmount).Build();
+			_easyPayNumber = GetEasyPayNumber(customer);
+		}
 
-			string easyPayNumber = GetEasyPayNumber(customer);
-			RepayWithEasyPay(easyPayNumber, null, DateTime.UtcNow.Date, 10M);
+		[Test, AUT(AUT.Za), JIRA("ZA-2395"), ExpectedException(typeof(DoException))]
+		public void RepayUsingEasyPayPartialRepaymentBeforeDueDateDoesntCloseApplication()
+		{
+			RepayWithEasyPay(_easyPayNumber, null, DateTime.UtcNow.Date, PartialRepayAmount);
 
-			var paymentsAppId = (int)(Drive.Data.Payments.Db.Applications.FindByExternalId(application.Id)).ApplicationId;
-			var transactionReference = (string)(Do.Until(() => Drive.Data.Payments.Db.Transactions.FindByAmountAndApplicationId(-10M, paymentsAppId))).Reference;
+			Do.With.Timeout(new TimeSpan(0, 0, 0, 10)).Until(() => _application.IsClosed);
+		}
+
+		[Test, AUT(AUT.Za), JIRA("ZA-2395"), DependsOn("RepayUsingEasyPayPartialRepaymentBeforeDueDateDoesntCloseApplication")]
+		public void RepayUsingEasyPayWillCreateTransactionWhenPaymentReceived()
+		{
+			var paymentsAppId = (int)(Drive.Data.Payments.Db.Applications.FindByExternalId(_application.Id)).ApplicationId;
+			var transactionReference = (string)(Do.Until(() => Drive.Data.Payments.Db.Transactions.FindByAmountAndApplicationId(-PartialRepayAmount, paymentsAppId))).Reference;
 
 			Assert.AreEqual("Payment from EasyPay", transactionReference);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2395")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2395"), DependsOn("RepayUsingEasyPayPartialRepaymentBeforeDueDateDoesntCloseApplication")]
 		public void RepayUsingEasyPayFullRepaymentBeforeDueDateClosesApplication()
 		{
-			var customer = CustomerBuilder.New().Build();
-			var application = ApplicationBuilder.New(customer).Build();
+			Do.Until(() => _application.GetBalance() > LoanAmount); //Race condition where loan amount can equal balance
+			var balance = _application.GetBalanceToday();
+			RepayWithEasyPay(_easyPayNumber, null, DateTime.UtcNow.Date, balance);
 
-			var balance = application.GetBalanceToday();
-			string easyPayNumber = GetEasyPayNumber(customer);
-			RepayWithEasyPay(easyPayNumber, null, DateTime.UtcNow.Date, balance);
-
-			Do.With.Timeout(1).Until(() => application.IsClosed);
+			Do.With.Until(() => _application.IsClosed);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2395") , ExpectedException(typeof(DoException))]
-		public void RepayUsingEasyPayPartialRepaymentBeforeDueDateDoesntCloseApplication()
-		{
-			var customer = CustomerBuilder.New().Build();
-			var application = ApplicationBuilder.New(customer).Build();
 
-			var balance = application.GetBalanceToday();
-			string easyPayNumber = GetEasyPayNumber(customer);
-			RepayWithEasyPay(easyPayNumber, null, DateTime.UtcNow.Date, balance / 2);
-
-			Do.With.Timeout(new TimeSpan(0, 0, 0, 10)).Until(() => application.IsClosed);
-		}
 
 		#region Helpers
 
@@ -71,13 +71,13 @@ namespace Wonga.QA.Tests.Payments
 		private static void RepayWithEasyPay(string easyPayNumber, string rawContent, DateTime actionDate, decimal amount)
 		{
 			Drive.Msmq.EasyPay.Send(new PaymentResponseDetailRecordZaCommand
-			                        	{
-			                        		ActionDate = actionDate,
-			                        		Amount = amount,
-			                        		RepaymentNumber = easyPayNumber,
-			                        		Filename = "TestFile",
-			                        		RawContent = rawContent
-			                        	});
+			{
+				ActionDate = actionDate,
+				Amount = amount,
+				RepaymentNumber = easyPayNumber,
+				Filename = "TestFile",
+				RawContent = rawContent
+			});
 		}
 
 		#endregion

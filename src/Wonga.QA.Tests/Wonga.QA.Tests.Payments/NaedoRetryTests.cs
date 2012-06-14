@@ -46,27 +46,27 @@ namespace Wonga.QA.Tests.Payments
 			ConfigurationFunctions.SetBankGatewayTestMode(true);
 
 			paymentsQueue.Send(new ProcessScheduledPaymentCommand
-			                   	{
-			                   		ApplicationId = applicationEntity.ApplicationId,
-			                   		CollectAmount = amount/2,
-			                   		CollectDate = DateTime.Now,
-			                   		IsRetry = false,
-			                   		TrackingDays = 7
-			                   	});
+			{
+				ApplicationId = applicationEntity.ApplicationId,
+				CollectAmount = amount / 2,
+				CollectDate = DateTime.Now,
+				IsRetry = false,
+				TrackingDays = 7
+			});
 
 			Do.Until(() =>
-			         paymentsDatabase.Transactions
-			         	.Count(t => t.ApplicationId == applicationEntity.ApplicationId &&
-			         	            t.Type == "DirectBankPayment") >= 2);
+					 paymentsDatabase.Transactions
+						.Count(t => t.ApplicationId == applicationEntity.ApplicationId &&
+									t.Type == "DirectBankPayment") >= 2);
 
 			var ddTransactions = paymentsDatabase.Transactions
 				.Where(t => t.ApplicationId == applicationEntity.ApplicationId &&
-				            t.Type == "DirectBankPayment")
+							t.Type == "DirectBankPayment")
 				.OrderBy(t => t.CreatedOn)
 				.ToList();
 
-			Assert.AreEqual(-amount/2, ddTransactions[0].Amount);
-			Assert.GreaterThan(-amount/2, ddTransactions[1].Amount);
+			Assert.AreEqual(-amount / 2, ddTransactions[0].Amount);
+			Assert.GreaterThan(-amount / 2, ddTransactions[1].Amount);
 		}
 	}
 }

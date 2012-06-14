@@ -8,18 +8,18 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[Parallelizable(TestScope.All)]
+	[TestFixture, Parallelizable(TestScope.All)]
 	class CheckpointCreditBureauDataIsAvailable
 	{
-        private const RiskMask TestMask = RiskMask.TESTCreditBureauDataIsAvailable;
+		private const RiskMask TestMask = RiskMask.TESTCreditBureauDataIsAvailable;
 
 		private string _forename = "ANITHA";
 		private string _surname = "ESSACK";
-		private Date _dateOfBirth = new Date(new DateTime(1957,12,19));
+		private Date _dateOfBirth = new Date(new DateTime(1957, 12, 19));
 		private string _nationalNumber = "5712190106083";
 
 		[Test, AUT(AUT.Za), JIRA("ZA-1910")]
-		public void CheckpointCreditBureauDataIsAvailableAccepted()
+		public void DataAvailableIsAccepted()
 		{
 			var customer =
 				CustomerBuilder.New()
@@ -30,8 +30,8 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.WithNationalNumber(_nationalNumber)
 				.Build();
 
-			var application = ApplicationBuilder.New(customer).Build();
+			ApplicationBuilder.New(customer).Build();
 		}
-		
+
 	}
 }
