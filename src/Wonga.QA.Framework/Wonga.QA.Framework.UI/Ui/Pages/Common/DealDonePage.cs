@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using MbUnit.Framework;
 using NHamcrest.Core;
@@ -40,7 +37,11 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public IApplyPage ContinueToMyAccount()
         {
             Thread.Sleep(2000);
-            _continueButton.Click();
+            if (Config.AUT != AUT.Uk)
+                _continueButton.Click();
+            else
+                Client.Driver.FindElement(By.CssSelector(".wonga-box-top-right a")).Click();
+                
             return Do.Until(() => new MySummaryPage(Client));
         }
 
