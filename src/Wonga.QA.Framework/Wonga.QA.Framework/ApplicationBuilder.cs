@@ -215,6 +215,7 @@ namespace Wonga.QA.Framework
                             r.BankAccountId = Customer.GetBankAccount();
                             r.LoanAmount = LoanAmount;
                             r.PromiseDate = PromiseDate;
+                            r.Province = Customer.Province;
                         }),
                         RiskCreateFixedTermLoanApplicationCommand.New(r =>
                         {

@@ -765,7 +765,7 @@ namespace Wonga.QA.Framework
                     break;
             }
 
-            return new Customer(_id, _email, _bankAccountId, _bankAccountNumber);
+            return new Customer(_id, _email, _bankAccountId, _bankAccountNumber){Province = _province};
         }
 
         public void ScrubForename(String forename)
