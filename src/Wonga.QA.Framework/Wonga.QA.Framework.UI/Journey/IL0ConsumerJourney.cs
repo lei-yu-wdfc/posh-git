@@ -14,21 +14,28 @@ namespace Wonga.QA.Framework.UI
     {
         BasePage CurrentPage { get; set; }
 
-        IL0ConsumerJourney ApplyForLoan(int amount, int duration);
+        // IL0ConsumerJourney Teleport<T>();
+
+        IL0ConsumerJourney ApplyForLoan(bool submit);
         IL0ConsumerJourney FillPersonalDetails(bool submit = true);
         IL0ConsumerJourney FillAddressDetails(bool submit = true);
         IL0ConsumerJourney FillAccountDetails(bool submit = true);
         IL0ConsumerJourney FillBankDetails(bool submit = true);
         IL0ConsumerJourney FillCardDetails(bool submit = true);
-        IL0ConsumerJourney WaitForAcceptedPage();
-        IL0ConsumerJourney WaitForDeclinedPage();
-        IL0ConsumerJourney FillAcceptedPage();
-        IL0ConsumerJourney GoToMySummaryPage();
-        IL0ConsumerJourney IgnoreAcceptingLoanAndReturnToHomePageAndLogin();
+        IL0ConsumerJourney WaitForAcceptedPage(bool submit = true);
+        IL0ConsumerJourney WaitForDeclinedPage(bool submit = true);
+        IL0ConsumerJourney FillAcceptedPage(bool submit = true);
+        IL0ConsumerJourney GoToMySummaryPage(bool submit = true);
+        IL0ConsumerJourney IgnoreAcceptingLoanAndReturnToHomePageAndLogin(bool submit = true);
+
 
         #region Builder
 
-        //IL0ConsumerJourney WithSubmit(bool submit);
+        IL0ConsumerJourney FillAndStop();
+        IL0ConsumerJourney WithDeclineDecision();
+
+        IL0ConsumerJourney WithAmount(int amount);
+        IL0ConsumerJourney WithDuration(int duration);
 
         IL0ConsumerJourney WithFirstName(string firstName);
         IL0ConsumerJourney WithLastName(string lastName);

@@ -5,43 +5,23 @@ using System.Text;
 using System.Threading;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.UI.Journey;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 
 namespace Wonga.QA.Framework.UI
 {
-    class UkL0Journey : IL0ConsumerJourney
+    class UkL0Journey : BaseL0Journey, IL0ConsumerJourney
     {
-
-        private String _firstName;
-        private String _lastName;
-        private String _middleName;
-        private String _email;
-        private String _employerName;
-        private String _mobilePhone;
-        private DateTime _dateOfBirth;
-        private GenderEnum _gender;
-
-        private String _postCode;
-        private String _addresPeriod;
-
-        private String _password;
-
-        private String _accountNumber;
-        private String _bankPeriod;
-        private String _pin;
-
-        private String _cardNumber;
-        private String _cardSecurity;
-        private String _cardType;
-        private String _expiryDate;
-        private String _startDate;
-
-        public BasePage CurrentPage { get; set; }
-
         public UkL0Journey(BasePage homePage)
         {
             CurrentPage = homePage as HomePage;
+
+            _submit = true;
+
+            _amount = 100;
+            _duration = 20;
+
             _firstName = Get.GetName();
             _lastName = Get.RandomString(10);
             _middleName = Get.RandomString(10);
@@ -65,17 +45,28 @@ namespace Wonga.QA.Framework.UI
             _cardType = "Visa Debit";
             _expiryDate = "Jan/2015";
             _startDate = "Jan/2007";
+
+            journey.Add(typeof(HomePage), ApplyForLoan);
+            journey.Add(typeof(PersonalDetailsPage), FillPersonalDetails);
+            journey.Add(typeof(AddressDetailsPage), FillAddressDetails);
+            journey.Add(typeof(AccountDetailsPage), FillAccountDetails);
+            journey.Add(typeof(PersonalBankAccountPage), FillBankDetails);
+            journey.Add(typeof(PersonalDebitCardPage), FillCardDetails);
+            journey.Add(typeof(ProcessingPage), WaitForAcceptedPage);
+            journey.Add(typeof(AcceptedPage), FillAcceptedPage);
+            journey.Add(typeof(DealDonePage), GoToMySummaryPage);
         }
-        public IL0ConsumerJourney ApplyForLoan(int amount, int duration)
+
+        public override IL0ConsumerJourney ApplyForLoan(bool submit = true)
         {
             var homePage = CurrentPage as HomePage;
-            homePage.Sliders.HowMuch = amount.ToString();
-            homePage.Sliders.HowLong = duration.ToString();
+            homePage.Sliders.HowMuch = _amount.ToString();
+            homePage.Sliders.HowLong = _duration.ToString();
             CurrentPage = homePage.Sliders.Apply() as PersonalDetailsPage;
             return this;
         }
 
-        public IL0ConsumerJourney FillPersonalDetails(bool submit = true)
+        public override IL0ConsumerJourney FillPersonalDetails(bool submit = true)
         {
             var personalDetailsPage = CurrentPage as PersonalDetailsPage;
             personalDetailsPage.YourName.FirstName = _firstName;
@@ -110,7 +101,7 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public IL0ConsumerJourney FillAddressDetails(bool submit = true)
+        public override IL0ConsumerJourney FillAddressDetails(bool submit = true)
         {
             var addressPage = CurrentPage as AddressDetailsPage;
             addressPage.PostCodeLookup = _postCode;
@@ -126,7 +117,7 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public IL0ConsumerJourney FillAccountDetails(bool submit = true)
+        public override IL0ConsumerJourney FillAccountDetails(bool submit = true)
         {
             var accountDetailsPage = CurrentPage as AccountDetailsPage;
             accountDetailsPage.AccountDetailsSection.Password = _password;
@@ -140,7 +131,7 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public IL0ConsumerJourney FillBankDetails(bool submit = true)
+        public override IL0ConsumerJourney FillBankDetails(bool submit = true)
         {
             var bankDetailsPage = CurrentPage as PersonalBankAccountPage;
             bankDetailsPage.BankAccountSection.BankName = "AIB";
@@ -154,7 +145,7 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public IL0ConsumerJourney FillCardDetails(bool submit = true)
+        public override IL0ConsumerJourney FillCardDetails(bool submit = true)
         {
             var personalDebitCardPage = CurrentPage as PersonalDebitCardPage;
 
@@ -172,163 +163,64 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public IL0ConsumerJourney WaitForAcceptedPage()
+        public override IL0ConsumerJourney WaitForAcceptedPage(bool submit = true)
         {
             var processingPage = CurrentPage as ProcessingPage;
             CurrentPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
             return this;
         }
 
-        public IL0ConsumerJourney WaitForDeclinedPage()
+        public override IL0ConsumerJourney WaitForDeclinedPage(bool submit = true)
         {
             var processingPage = CurrentPage as ProcessingPage;
             CurrentPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
             return this;
         }
 
-        public IL0ConsumerJourney FillAcceptedPage()
+        public override IL0ConsumerJourney FillAcceptedPage(bool submit = true)
         {
             var acceptedPage = CurrentPage as AcceptedPage;
             CurrentPage = acceptedPage.Submit() as DealDonePage;
             return this;
         }
 
-        public IL0ConsumerJourney GoToMySummaryPage()
+        public override IL0ConsumerJourney GoToMySummaryPage(bool submit = true)
         {
             var dealDonePage = CurrentPage as DealDonePage;
             CurrentPage = dealDonePage.ContinueToMyAccount() as MySummaryPage;
             return this;
         }
 
-        public IL0ConsumerJourney IgnoreAcceptingLoanAndReturnToHomePageAndLogin()
-        {
-            throw new NotImplementedException();
-        }
-
         #region Builder
-        public IL0ConsumerJourney WithFirstName(string firstName)
-        {
-            _firstName = firstName;
-            return this;
-        }
 
-        public IL0ConsumerJourney WithLastName(string lastName)
-        {
-            _lastName = lastName;
-            return this;
-        }
-
-        public IL0ConsumerJourney WithMiddleName(string middleName)
-        {
-            _middleName = middleName;
-            return this;
-        }
-
-        public IL0ConsumerJourney WithEmployerName(string employerName)
-        {
-            _employerName = employerName;
-            return this;
-        }
-
-        public IL0ConsumerJourney WithEmail(string email)
-        {
-            _email = email;
-            return this;
-        }
-
-        public IL0ConsumerJourney WithMobilePhone(string mobilePhone)
-        {
-            _mobilePhone = mobilePhone;
-            return this;
-        }
-
-        public IL0ConsumerJourney WithGender(GenderEnum gender)
-        {
-            _gender = gender;
-            return this;
-        }
-
-        public IL0ConsumerJourney WithDateOfBirth(DateTime dateOfBirth)
-        {
-            _dateOfBirth = dateOfBirth;
-            return this;
-        }
-
-        public IL0ConsumerJourney WithNationalId(string nationalId)
-        {
-            throw new NotImplementedException(message: "Don't used on Uk");
-        }
-
-        public IL0ConsumerJourney WithMotherMaidenName(string motherMaidenName)
-        {
-            throw new NotImplementedException(message: "Don't use on Uk");
-        }
-
-        public IL0ConsumerJourney WithPosteCode(string postCode)
-        {
-            _postCode = postCode;
-            return this;
-        }
-
-        public IL0ConsumerJourney WithAddresPeriod(string addresPeriod)
-        {
-            _addresPeriod = addresPeriod;
-            return this;
-        }
-
-        public IL0ConsumerJourney WithPassword(string password)
-        {
-            _password = password;
-            return this;
-        }
-
-        public IL0ConsumerJourney WithAccountNumber(string accountNumber)
-        {
-            _accountNumber = accountNumber;
-            return this;
-        }
-
-        public IL0ConsumerJourney WithBankPeriod(string bankPeriod)
-        {
-            _bankPeriod = bankPeriod;
-            return this;
-        }
-
-        public IL0ConsumerJourney WithPin(string pin)
-        {
-            _pin = pin;
-            return this;
-        }
-
-        public IL0ConsumerJourney WithCardNumber(string cardNumber)
+        public override IL0ConsumerJourney WithCardNumber(string cardNumber)
         {
             _cardNumber = cardNumber;
             return this;
         }
-        public IL0ConsumerJourney WithCardSecurity(string cardSecurity)
+        public override IL0ConsumerJourney WithCardSecurity(string cardSecurity)
         {
             _cardSecurity = cardSecurity;
             return this;
         }
 
-        public IL0ConsumerJourney WithCardType(string cardType)
+        public override IL0ConsumerJourney WithCardType(string cardType)
         {
             _cardType = cardType;
             return this;
         }
 
-        public IL0ConsumerJourney WithExpiryDate(string expiryDate)
+        public override IL0ConsumerJourney WithExpiryDate(string expiryDate)
         {
             _expiryDate = expiryDate;
             return this;
         }
 
-        public IL0ConsumerJourney WithStartDate(string startDate)
+        public override IL0ConsumerJourney WithStartDate(string startDate)
         {
             _startDate = startDate;
             return this;
         }
-
         #endregion
     }
 }
