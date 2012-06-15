@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UiMapMobile>
+
+  <SlidersElementMobile>
+    <FormId>#wonga-sliders-form</FormId>
+    <AmountSlider>.wonga-amount-slider-wrapper .sliderbit</AmountSlider>
+    <DurationSlider>.wonga-duration-slider-wrapper .sliderbit</DurationSlider>
+    <LoanAmount>#edit-loan-amount</LoanAmount>
+    <LoanDuration>#edit-loan-duration</LoanDuration>
+    <SubmitButton>#edit-submit</SubmitButton>
+    <TotalAmount>span.loan-amount</TotalAmount>
+    <TotalFees>span.loan-fees</TotalFees>
+    <TotalToRepay>span.loan-total</TotalToRepay>
+    <RepaymentDate>span.repayment-date</RepaymentDate>
+    <AmountMinusButton>.wonga-amount-slider-wrapper .sliderminus</AmountMinusButton>
+    <AmountPlusButton>.wonga-amount-slider-wrapper .sliderplus</AmountPlusButton>
+    <DurationMinusButton>.wonga-duration-slider-wrapper .sliderminus</DurationMinusButton>
+    <DurationPlusButton>.wonga-duration-slider-wrapper .sliderplus</DurationPlusButton>
+  </SlidersElementMobile>
+
+  <TabsElementMobile>
+    <TabsForm>#navigation #scroller .links</TabsForm>
+  </TabsElementMobile>
+	  
+</UiMapMobile>

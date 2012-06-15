@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentMapMobile>
+  
+  <TabsElementMobile>
+    <Login>login</Login>
+    <ApplyNow>apply now</ApplyNow>
+    <HowItWorks>how it works</HowItWorks>
+    <AboutUs>about us</AboutUs>
+    <Advice>advice</Advice>
+    <MyAccount>my account</MyAccount>
+    <News>news</News>
+    <Help>help</Help>
+    <ContactUs>contact us</ContactUs>
+  </TabsElementMobile>  
+  
+	</ContentMapMobile>
