@@ -523,20 +523,9 @@ namespace Wonga.QA.Framework
                             r.NextPayDate = _nextPayDate;
                             if (!string.IsNullOrEmpty(_incomeFrequency.ToString()))
                                 r.IncomeFrequency = _incomeFrequency;
-                        }),
-                        VerifyMobilePhoneCaCommand.New(r =>
-                        {
-                            r.AccountId = _id;
-                            r.VerificationId = _verification;
-                            r.MobilePhone = _mobileNumber;	
-                        }),
-                        CompleteMobilePhoneVerificationCommand.New(r=> r.VerificationId = _verification),
-						RiskAddMobilePhoneCaCommand.New( r=>
-						{
-							r.AccountId = _id;
-							r.MobilePhone = _mobileNumber;
                         })
 					});
+					requests.AddRange(GetPhoneCommandsPreAccountCreation());
                     break;
 
                 case AUT.Wb:
@@ -619,21 +608,9 @@ namespace Wonga.QA.Framework
 						                              {
 						                                  r.AccountId = _id;
 						                                  r.Number = _paymentCardNumber;
-						                              }),
-                        VerifyMobilePhoneUkCommand.New(r=>
-                                                           {
-                                                               r.AccountId = _id;
-                                                               r.Forename = _foreName;
-                                                               r.VerificationId = _verification;
-                                                               r.MobilePhone = _mobileNumber;
-                                                           }),
-                        CompleteMobilePhoneVerificationCommand.New(r=> r.VerificationId = _verification),
-						RiskAddMobilePhoneUkCommand.New( r=>
-						{
-							r.AccountId = _id;
-							r.MobilePhone = _mobileNumber;
-                        })
+						                              })
                     });
+					requests.AddRange(GetPhoneCommandsPreAccountCreation());
                     break;
 
                 case AUT.Uk:
@@ -727,19 +704,9 @@ namespace Wonga.QA.Framework
 							r.EmployerName = _employerName;
 						    r.Status = _employerStatus;
 						    r.NetMonthlyIncome = _netMonthlyIncome;
-						}),
-						VerifyMobilePhoneUkCommand.New(r =>
-						{
-						    r.AccountId = _id;
-						    r.VerificationId = _verification;
-                            r.MobilePhone = _mobileNumber;
-						}),
-						RiskAddMobilePhoneUkCommand.New( r=>
-						{
-							r.AccountId = _id;
-							r.MobilePhone = _mobileNumber;
-                        })
+						})
 					});
+					requests.AddRange(GetPhoneCommandsPreAccountCreation());
                     break;
 
                 default:
@@ -769,22 +736,7 @@ namespace Wonga.QA.Framework
                 case AUT.Za:
                     {
                         var mobilePhoneVerification = Do.Until(() => Drive.Db.Comms.MobilePhoneVerifications.Single(a => a.AccountId == _id));
-
-                    	var mobilePhoneCommands = new List<ApiRequest>()
-                    	                                {
-                    	                                    new CompleteMobilePhoneVerificationCommand
-                    	                                       	{
-                    	                                       		Pin = mobilePhoneVerification.Pin,
-                    	                                       		VerificationId = mobilePhoneVerification.VerificationId
-                    	                                       	},
-                    	                                    new RiskAddMobilePhoneZaCommand
-                    	                                       	{
-                    	                                       		AccountId = _id,
-                    	                                       		MobilePhone = _mobileNumber
-                    	                                       	}
-                    	                                };
-
-                        Drive.Api.Commands.Post(mobilePhoneCommands);
+						Drive.Api.Commands.Post(GetPhoneCommandsPostAccountCreation(mobilePhoneVerification.Pin));
 						Do.With.Timeout(2).Until(() => Drive.Db.Comms.CustomerDetails.Single(a => a.AccountId == _id).MobilePhone);
                     }
                     break;
@@ -814,6 +766,138 @@ namespace Wonga.QA.Framework
             }
             db.Comms.SubmitChanges();
         }
+
+
+		private IEnumerable<ApiRequest> GetPhoneCommandsPostAccountCreation(string pin)
+		{
+			switch (Config.AUT)
+			{
+
+				case AUT.Ca:
+				case AUT.Wb:
+				case AUT.Uk:
+					throw new NotSupportedException(string.Format("{0} does not verify phone after account creation", Config.AUT));
+
+				case AUT.Za:
+
+					return GetZaPhoneCommandsPostAccountCreation(pin);
+
+				default:
+
+					throw new NotImplementedException(string.Format("Not Implemented for {0}", Config.AUT));
+			}
+		}
+
+		private IEnumerable<ApiRequest> GetPhoneCommandsPreAccountCreation()
+		{
+			switch (Config.AUT)
+			{
+
+				case AUT.Ca:
+					return _mobileNumber != null ? GetCaMobilePhoneCommandsPreAccountCreation() : GetCaHomePhoneCommandsPreAccountCreation();
+
+				case AUT.Wb:
+					return GetWbMobilePhoneCommandsPreAccountCreation();
+
+				case AUT.Uk:
+					return GetUkMobilePhoneCommandsPreAccountCreation();
+
+				case AUT.Za:
+
+					throw new NotSupportedException("ZA does mobile phone verification at a later stage");
+
+				default:
+
+					throw new NotImplementedException(string.Format("Not Implemented for {0}", Config.AUT));
+			}
+		}
+
+		private IEnumerable<ApiRequest> GetUkMobilePhoneCommandsPreAccountCreation()
+		{
+			yield return VerifyMobilePhoneUkCommand.New(r =>
+			{
+				r.AccountId = _id;
+				r.VerificationId = _verification;
+				r.MobilePhone = _mobileNumber;
+			});
+			yield return CompleteMobilePhoneVerificationCommand.New(r => r.VerificationId = _verification);
+
+			yield return RiskAddMobilePhoneUkCommand.New(r =>
+			{
+				r.AccountId = _id;
+				r.MobilePhone = _mobileNumber;
+			});
+		}
+
+		private IEnumerable<ApiRequest> GetWbMobilePhoneCommandsPreAccountCreation()
+		{
+			yield return VerifyMobilePhoneUkCommand.New(r =>
+			{
+				r.AccountId = _id;
+				r.Forename = _foreName;
+				r.VerificationId = _verification;
+				r.MobilePhone = _mobileNumber;
+			});
+
+			yield return CompleteMobilePhoneVerificationCommand.New(r => r.VerificationId = _verification);
+
+			yield return RiskAddMobilePhoneUkCommand.New(r =>
+			{
+				r.AccountId = _id;
+				r.MobilePhone = _mobileNumber;
+			});
+		}
+
+		private IEnumerable<ApiRequest> GetCaMobilePhoneCommandsPreAccountCreation()
+		{
+			yield return VerifyMobilePhoneCaCommand.New(r =>
+			{
+				r.AccountId = _id;
+				r.VerificationId = _verification;
+				r.MobilePhone = _mobileNumber;
+			});
+
+			yield return CompleteMobilePhoneVerificationCommand.New(r => r.VerificationId = _verification);
+
+			yield return RiskAddMobilePhoneCaCommand.New(r =>
+			{
+				r.AccountId = _id;
+				r.MobilePhone = _mobileNumber;
+			});
+		}
+
+		private IEnumerable<ApiRequest> GetCaHomePhoneCommandsPreAccountCreation()
+		{
+			yield return VerifyHomePhoneCaCommand.New(r =>
+			{
+				r.AccountId = _id;
+				r.VerificationId = _verification;
+				r.HomePhone = _homePhoneNumber;
+			});
+
+			yield return CompleteHomePhoneVerificationCaCommand.New(r => r.VerificationId = _verification);
+
+			yield return RiskAddHomePhoneCaCommand.New(r =>
+			{
+				r.AccountId = _id;
+				r.HomePhone = _homePhoneNumber;
+			});
+		}
+		
+		private IEnumerable<ApiRequest> GetZaPhoneCommandsPostAccountCreation(string pin)
+		{
+			yield return new CompleteMobilePhoneVerificationCommand
+			             	{
+			             		Pin = pin,
+			             		VerificationId = _verification
+			             	};
+
+			yield return new RiskAddMobilePhoneZaCommand
+			             	{
+			             		AccountId = _id,
+			             		MobilePhone = _mobileNumber
+			             	};
+		}
         
     }
 }

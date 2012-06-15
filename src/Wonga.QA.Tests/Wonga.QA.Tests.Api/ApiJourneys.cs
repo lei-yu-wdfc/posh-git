@@ -36,12 +36,26 @@ namespace Wonga.QA.Tests.Api
             ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Accepted).WithLoanAmount(200).Build();
         }
 
+		[Test, AUT(AUT.Ca)]
+		public void ApiNoMobilePhoneL0JourneyAccepted()
+		{
+			Customer cust = CustomerBuilder.New().WithMobileNumber(null).Build();
+			ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Accepted).WithLoanAmount(200).Build();
+		}
+
         [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
         public void ApiL0JourneyDeclined()
         {
             Customer cust = CustomerBuilder.New().WithEmployer("Wonga").Build();
             ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
         }
+
+		[Test, AUT(AUT.Ca)]
+		public void ApiNoMobilePhoneL0JourneyDeclined()
+		{
+			Customer cust = CustomerBuilder.New().WithEmployer("Wonga").WithMobileNumber(null).Build();
+			ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+		}
 
         [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
         public void ApiLnJourneyAccepted()
@@ -54,6 +68,17 @@ namespace Wonga.QA.Tests.Api
             ApplicationBuilder.New(cust).Build();
         }
 
+		[Test, AUT(AUT.Ca)]
+		public void ApiNoMobilePhoneLnJourneyAccepted()
+		{
+			Customer cust = CustomerBuilder.New().WithMobileNumber(null).Build();
+			var applicationL0 = ApplicationBuilder.New(cust).Build();
+
+			applicationL0.RepayOnDueDate();
+
+			ApplicationBuilder.New(cust).Build();
+		}
+
         [Test, AUT(AUT.Ca, AUT.Uk)]
         public void ApiLnJourneyDeclined()
         {
@@ -62,6 +87,15 @@ namespace Wonga.QA.Tests.Api
             CustomerOperations.UpdateEmployerNameInRisk(cust.Id,"Wonga");
             ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
         }
+
+		[Test, AUT(AUT.Ca)]
+		public void ApiNoMobilePhoneLnJourneyDeclined()
+		{
+			Customer cust = CustomerBuilder.New().WithMobileNumber(null).Build();
+			ApplicationBuilder.New(cust).Build().RepayOnDueDate();
+			CustomerOperations.UpdateEmployerNameInRisk(cust.Id, "Wonga");
+			ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+		}
 
 		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
 		public void ApiRepayingOnDueDateClosesApplication()
