@@ -18,7 +18,7 @@ namespace Wonga.QA.Tests.Meta
 			Drive.Data.Ops.SetServiceConfiguration("BankGateway.Scotiabank.FileTransferTimes", string.Empty);
 			Drive.Data.Ops.SetServiceConfiguration("BankGateway.Bmo.FileTransferTimes", string.Empty);
 			Drive.Data.Ops.SetServiceConfiguration("BankGateway.Rbc.FileTransferTimes", string.Empty);
-
+            Drive.Data.Ops.SetServiceConfiguration("BankGateway.IsTestMode", false);
 			Drive.Data.Ops.SetServiceConfiguration("Payments.DelayBeforeApplicationClosedInMinutes", "0");
 		}
 	}
