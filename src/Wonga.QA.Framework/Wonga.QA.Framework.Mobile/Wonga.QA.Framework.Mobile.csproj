@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Journey\IL0MobileConsumerJourney.cs" />
+    <Compile Include="Journey\JourneyFactory.cs" />
     <Compile Include="Journey\ZaMobileL0Journey.cs" />
     <Compile Include="Mappings\Content\ContentMapMobile.cs" />
     <Compile Include="Mappings\Content\Elements\TabsElementMobile.cs" />

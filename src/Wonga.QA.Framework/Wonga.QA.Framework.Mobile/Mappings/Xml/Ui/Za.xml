@@ -21,5 +21,37 @@
   <TabsElementMobile>
     <TabsForm>#navigation #scroller .links</TabsForm>
   </TabsElementMobile>
+
+  <AddressDetailsPageMobile>
+    <FormId>#lzero-address-form .form-inner</FormId>
+    <District>#edit-district-za</District>
+    <HouseNumber>#edit-house-number-za</HouseNumber>
+    <Town>#edit-town-za</Town>
+    <County>#edit-county-za</County>
+    <AddressPeriod>#edit-address-period-za</AddressPeriod>
+    <Street>#edit-street-za</Street>
+    <Postcode>#edit-postcode-za</Postcode>
+    <PostcodeErrorForm>#edit-postcode-za-wrapper div.form-error div.invalid</PostcodeErrorForm>
+    <CountyErrorForm>#edit-county-za-wrapper div.invalid</CountyErrorForm>
+    <TownErrorForm>#edit-town-za-wrapper div.invalid</TownErrorForm>
+    <StreetErrorForm>#edit-street-za-wrapper div.invalid</StreetErrorForm>
+    <HouseNumberErrorForm>#edit-house-number-za-wrapper div.invalid</HouseNumberErrorForm>
+    <AddressPeriodErrorForm>#edit-address-period-za-wrapper div.invalid</AddressPeriodErrorForm>
+  </AddressDetailsPageMobile>
+
+  <AccountDetailsPageMobile>
+    <FormId>.wonga-apply-lzero-form</FormId>
+    <NextButton>#edit-submit</NextButton>
+  </AccountDetailsPageMobile>
+
+  <PersonalBankAccountPage>
+    <FormId>#lzero-bank-form</FormId>
+    <NextButton>#edit-submit</NextButton>
+  </PersonalBankAccountPage>
+
+  <BankAccountSection>
+    <Fieldset>#bank-1</Fieldset>
+    <AccountNumber>#edit-account-number-za</AccountNumber>
+  </BankAccountSection>
 	  
 </UiMapMobile>

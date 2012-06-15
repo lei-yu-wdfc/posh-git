@@ -127,7 +127,7 @@ namespace Wonga.QA.Framework.UI.Mappings
 
         #region CommonPages
 
-        public virtual PersonalBankAccountDetailsPage PersonalBankAccountPage { get; set; }
+        public virtual PersonalBankAccountPage PersonalBankAccountPage { get; set; }
         public virtual PersonalDebitCardPage PersonalDebitCardDetailsPage { get; set; }
         public virtual AcceptedPage AcceptedPage { get; set; }
         public virtual ApplyPage ApplyPage { get; set; }
