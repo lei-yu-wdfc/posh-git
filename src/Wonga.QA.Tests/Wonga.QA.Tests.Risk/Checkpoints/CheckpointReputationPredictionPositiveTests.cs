@@ -27,13 +27,13 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		{
 			get { return GetReputationScoreCutoff(); }
 		}
-		
+
 		//private const double ReputationScoreCutoff = 200; //TODO Hardcoded in Risk for now
 		private static string[] _factorNames;
 
 		private const string DeviceAliasMockString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <IovationDataOutput xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.datacontract.org/2004/07/Wonga.Iovation\">    <AccountId>{0}</AccountId>    <Details xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">      <d2p1:KeyValueOfstringstring>        <d2p1:Key>device.alias</d2p1:Key>        <d2p1:Value>{1}</d2p1:Value>      </d2p1:KeyValueOfstringstring>      <d2p1:KeyValueOfstringstring>        <d2p1:Key>device.firstseen</d2p1:Key>        <d2p1:Value>2010-06-01 14:43:21</d2p1:Value>      </d2p1:KeyValueOfstringstring>    </Details>    <Reason>It's ok</Reason>    <Result>Allow</Result>    <TrackingNumber>0123456798</TrackingNumber>  </IovationDataOutput>  ";
 
-		private Application l0Application;
+		private Application _application;
 
 		[FixtureSetUp]
 		public void FixtureSetUp()
@@ -78,9 +78,9 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 			try
 			{
-				l0Application = ApplicationBuilder.New(customer).WithIovationBlackBox(iovationBlackBox).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+				_application = ApplicationBuilder.New(customer).WithIovationBlackBox(iovationBlackBox).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
-				var actualScore = GetReputationPredictionScore(l0Application);
+				var actualScore = GetReputationPredictionScore(_application);
 				Assert.GreaterThan(actualScore, ReputationScoreCutoff);
 			}
 
@@ -103,22 +103,22 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Assert.LessThan(actualScore, ReputationScoreCutoff);
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889"), DependsOn("CheckpointReputationPredictionPositiveAccept")]
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889"), DependsOn("CheckpointReputationPredictionPositiveAccept"),]
 		public void CheckpointReputationPredictionPositiveCorrectFactorsUsed()
 		{
-			var actualFactorNames = GetFactorNamesUsed(l0Application);
+			var actualFactorNames = GetFactorNamesUsed(_application);
 			Assert.AreElementsEqualIgnoringOrder(_factorNames, actualFactorNames);
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889"), DependsOn("CheckpointReputationPredictionPositiveAccept")]
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889"), DependsOn("CheckpointReputationPredictionPositiveAccept"),]
 		public void CheckpointReputationPredictionPositiveTablesUpdateWhenAccountRankIncreases()
 		{
-			var prevAccountRank = (int)Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(l0Application.Id).AccountRank;
+			var prevAccountRank = (int)Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(_application.Id).AccountRank;
 			Assert.AreEqual(0, prevAccountRank);
 
-			l0Application.RepayOnDueDate();
+			_application.RepayOnDueDate();
 
-			Do.Until(() => Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(l0Application.Id).AccountRank == 1);
+			Do.Until(() => Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(_application.Id).AccountRank == 1);
 		}
 
 		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889")]
@@ -133,10 +133,6 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 			try
 			{
-				//using the default value is not good enough to get a good score 
-				//because there can be many applications in arrears which lower the result considerably
-				SetReputationScoreCutoff(100);
-			
 				var application1 = ApplicationBuilder.New(customer1).WithIovationBlackBox(iovationBlackBox1).Build();
 				var score1 = GetReputationPredictionScore(application1);
 
@@ -145,20 +141,17 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				var application2 = ApplicationBuilder.New(customer2).WithIovationBlackBox(iovationBlackBox2).Build();
 				var score2 = GetReputationPredictionScore(application2);
 
-				//if in a post area where most of the apps are in arrears the final result will be the same as one more 
-				//application in arrears will not make a difference on the final scrore result
-				Assert.LessThanOrEqualTo(score2, score1);
+				Assert.LessThan(score2, score1);
 			}
 
 			finally
 			{
 				DeleteIovationMockIfCustomType(iovationBlackBox1);
 				DeleteIovationMockIfCustomType(iovationBlackBox2);
-				ResetReputationScoreCutoff();
 			}
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889"), Parallelizable]
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889")]
 		public void CheckpointReputationPredictionPositiveTablesUpdateWhenInArrears()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(GetPostcode()).Build();
@@ -167,14 +160,14 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			try
 			{
 				var application = ApplicationBuilder.New(customer).WithIovationBlackBox(iovationBlackBox).Build();
-				
-				var prevInArrears = (bool) Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(application.Id).InArrears;
+
+				var prevInArrears = (bool)Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(application.Id).InArrears;
 				Assert.IsNotNull(prevInArrears);
-				Assert.IsFalse((bool) prevInArrears);
+				Assert.IsFalse((bool)prevInArrears);
 
 				application.PutApplicationIntoArrears();
 
-				Do.Until(() => (bool) Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(application.Id).InArrears);
+				Do.Until(() => (bool)Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(application.Id).InArrears);
 			}
 
 			finally
@@ -216,7 +209,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.ForBlackBox(IovationMockResponse.AllowUniqueDevice)
 				.UseDeviceAlias(uniqueAlias)
 				.OnResponseBasedOn(IovationMockResponse.Allow);
-				
+
 			var customer = CustomerBuilder.New()
 				.WithEmployer(TestMask)
 				.WithPostcodeInAddress(GetPostcode())
@@ -348,7 +341,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		{
 			string type = string.Empty;
 
-			switch(Config.AUT)
+			switch (Config.AUT)
 			{
 				case AUT.Ca:
 					//in CA score is only calculated if the device already exists in the DB
@@ -357,7 +350,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 				case AUT.Za:
 					type = customer.Id.ToString();
-					
+
 					var response = String.Format(DeviceAliasMockString, customer.Id, Get.RandomLong(1000000000, 9999999999).ToString());
 					Drive.Data.QaData.Db.IovationDataOutput.Insert(Type: type, Response: response, WaitTimeInSeconds: 0);
 					break;
@@ -365,7 +358,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				default:
 					throw new NotImplementedException();
 			}
-			
+
 			return type;
 		}
 
@@ -373,7 +366,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		{
 			//just clean up the iovation response if it is not one of the predefined values
 			IovationMockResponse response;
-			if(!IovationMockResponse.TryParse(type, out response))
+			if (!IovationMockResponse.TryParse(type, out response))
 			{
 				Drive.Data.QaData.Db.IovationDataOutput.DeleteByType(type);
 			}
@@ -384,7 +377,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			switch (Config.AUT)
 			{
 				case AUT.Ca:
-					return 595;
+					return 610;
 
 				case AUT.Za:
 					return 200;
