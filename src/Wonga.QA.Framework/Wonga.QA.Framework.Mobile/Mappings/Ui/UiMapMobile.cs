@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Mobile.Mappings.Pages;
+using Wonga.QA.Framework.Mobile.Mappings.Sections;
 using Wonga.QA.Framework.Mobile.Mappings.Ui.Elements;
 using Wonga.QA.Framework.Mobile.Mappings.Xml;
 
@@ -39,6 +41,20 @@ namespace Wonga.QA.Framework.Mobile.Mappings.Ui
         #region Elements
         public virtual SlidersElement SlidersElement { get; set; }
         public virtual TabsElementMobile TabsElementMobile { get; set; }
+        #endregion
+
+        #region Pages
+
+        public virtual AddressDetailsPage AddressDetailsPage { get; set; }
+        public virtual PersonalDetailsPage PersonalDetailsPage { get; set; }
+        #endregion
+
+        #region Sections
+
+        public virtual ContactingYouSection ContactingYouSection { get; set; }
+        public virtual EmploymentDetailsSection EmploymentDetailsSection { get; set; }
+        public virtual YourDetailsSection YourDetailsSection { get; set; }
+        public virtual YourNameSection YourNameSection { get; set; }
         #endregion
     }
 }
