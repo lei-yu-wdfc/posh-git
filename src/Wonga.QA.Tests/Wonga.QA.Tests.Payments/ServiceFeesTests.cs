@@ -32,38 +32,6 @@ namespace Wonga.QA.Tests.Payments
 			db.Ops.SubmitChanges();
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1969"), Parallelizable]
-		public void AllServiceFeesArePostedUpfrontOnApplication()
-		{
-			Customer customer = CustomerBuilder.New().Build();
-			Application application = ApplicationBuilder.New(customer).WithLoanTerm(10).Build();
-			PaymentsDatabase paymentsDatabase = Drive.Db.Payments;
-
-			var applicationEntity = paymentsDatabase.Applications.Single(a => a.ExternalId == application.Id);
-			var serviceFees =
-				paymentsDatabase.Transactions
-					.Where(t =>
-					       t.ApplicationId == applicationEntity.ApplicationId &&
-					       t.Type == "ServiceFee")
-					.OrderBy(t => t.PostedOn)
-					.ToList();
-			var cashAdvance =
-				paymentsDatabase.Transactions
-					.Single(t =>
-					       t.ApplicationId == applicationEntity.ApplicationId &&
-					       t.Type == "CashAdvance");
-
-			Assert.AreEqual(4, serviceFees.Count);
-			Assert.AreApproximatelyEqual(
-				cashAdvance.PostedOn, serviceFees[0].PostedOn, TimeSpan.FromMinutes(10));
-			Assert.AreApproximatelyEqual(
-			    cashAdvance.PostedOn.AddDays(30), serviceFees[1].PostedOn, TimeSpan.FromMinutes(10));
-			Assert.AreApproximatelyEqual(
-			    cashAdvance.PostedOn.AddDays(60), serviceFees[2].PostedOn, TimeSpan.FromMinutes(10));
-			Assert.AreApproximatelyEqual(
-			    cashAdvance.PostedOn.AddDays(90), serviceFees[3].PostedOn, TimeSpan.FromMinutes(10));
-		}
-
 		[Test, AUT(AUT.Za), JIRA("ZA-1969", "ZA-2193"), Parallelizable]
 		public void SmallLoanHasPositiveBalanceAfterApplication()
 		{
