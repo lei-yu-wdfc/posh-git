@@ -528,10 +528,15 @@ namespace Wonga.QA.Framework
                         {
                             r.AccountId = _id;
                             r.VerificationId = _verification;
-                            r.MobilePhone = _mobileNumber;
+                            r.MobilePhone = _mobileNumber;	
                         }),
-                        CompleteMobilePhoneVerificationCommand.New(r=> r.VerificationId = _verification)
-                        });
+                        CompleteMobilePhoneVerificationCommand.New(r=> r.VerificationId = _verification),
+						RiskAddMobilePhoneCaCommand.New( r=>
+						{
+							r.AccountId = _id;
+							r.MobilePhone = _mobileNumber;
+                        })
+					});
                     break;
 
                 case AUT.Wb:
@@ -622,7 +627,12 @@ namespace Wonga.QA.Framework
                                                                r.VerificationId = _verification;
                                                                r.MobilePhone = _mobileNumber;
                                                            }),
-                        CompleteMobilePhoneVerificationCommand.New(r=> r.VerificationId = _verification)
+                        CompleteMobilePhoneVerificationCommand.New(r=> r.VerificationId = _verification),
+						RiskAddMobilePhoneUkCommand.New( r=>
+						{
+							r.AccountId = _id;
+							r.MobilePhone = _mobileNumber;
+                        })
                     });
                     break;
 
@@ -723,7 +733,12 @@ namespace Wonga.QA.Framework
 						    r.AccountId = _id;
 						    r.VerificationId = _verification;
                             r.MobilePhone = _mobileNumber;
-						})
+						}),
+						RiskAddMobilePhoneUkCommand.New( r=>
+						{
+							r.AccountId = _id;
+							r.MobilePhone = _mobileNumber;
+                        })
 					});
                     break;
 
@@ -755,12 +770,22 @@ namespace Wonga.QA.Framework
                     {
                         var mobilePhoneVerification = Do.Until(() => Drive.Db.Comms.MobilePhoneVerifications.Single(a => a.AccountId == _id));
 
-                        Drive.Api.Commands.Post(new CompleteMobilePhoneVerificationCommand
-                                                    {
-                                                        Pin = mobilePhoneVerification.Pin,
-                                                        VerificationId = mobilePhoneVerification.VerificationId
-                                                    });
-                        Do.With.Timeout(2).Until(() => Drive.Db.Comms.CustomerDetails.Single(a => a.AccountId == _id).MobilePhone);
+                    	var mobilePhoneCommands = new List<ApiRequest>()
+                    	                                {
+                    	                                    new CompleteMobilePhoneVerificationCommand
+                    	                                       	{
+                    	                                       		Pin = mobilePhoneVerification.Pin,
+                    	                                       		VerificationId = mobilePhoneVerification.VerificationId
+                    	                                       	},
+                    	                                    new RiskAddMobilePhoneZaCommand
+                    	                                       	{
+                    	                                       		AccountId = _id,
+                    	                                       		MobilePhone = _mobileNumber
+                    	                                       	}
+                    	                                };
+
+                        Drive.Api.Commands.Post(mobilePhoneCommands);
+						Do.With.Timeout(2).Until(() => Drive.Db.Comms.CustomerDetails.Single(a => a.AccountId == _id).MobilePhone);
                     }
                     break;
             }
