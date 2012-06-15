@@ -46,6 +46,7 @@
     <Compile Include="Defaults\AddPaymentCardCommand.cs" />
     <Compile Include="Defaults\AddPrimaryOrganisationDirectorCommand.cs" />
     <Compile Include="Defaults\AddSecondaryOrganisationDirectorCommand.cs" />
+    <Compile Include="Defaults\CompleteHomePhoneVerificationCaCommand.cs" />
     <Compile Include="Defaults\RiskAddHomePhonePlCommand.cs" />
     <Compile Include="Defaults\RiskAddHomePhoneUkCommand.cs" />
     <Compile Include="Defaults\RiskAddHomePhoneZaCommand.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Defaults\SaveOrganisationDetailsCommand.cs" />
     <Compile Include="Defaults\SubmitNumberOfGuarantorsCommand.cs" />
     <Compile Include="Defaults\UpdateLoanTermWbUkCommand.cs" />
+    <Compile Include="Defaults\VerifyHomePhoneCaCommand.cs" />
     <Compile Include="Defaults\VerifyMainBusinessApplicantWbUkCommand.cs" />
     <Compile Include="Defaults\VerifyMobilePhoneCaCommand.cs" />
     <Compile Include="Defaults\SaveEmploymentDetailsCaCommand.cs" />
