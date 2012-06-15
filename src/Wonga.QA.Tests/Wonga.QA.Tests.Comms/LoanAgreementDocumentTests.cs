@@ -28,18 +28,26 @@ namespace Wonga.QA.Tests.Comms
 
             public class WhenTheySignALoanApplication : GivenACustomerFromAlberta
             {
+                private Application _application;
+
                 [SetUp]
                 public override void SetUp()
                 {
                     base.SetUp();
 
-                    ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).WithLoanAmount(200).Build();
+                    _application = ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).WithLoanAmount(200).Build();
                 }
 
                 [Test]
                 public void ThenTheCustomerIsEmailedTheLoanAgreementsDocuments()
                 {
                     AssertDocumentsEmailed(_customer);
+                }
+
+                [Test]
+                public void ThenGetLoanAgreementQueryWillRetriveTheDocuments()
+                {
+                    Do.Until(() => Drive.Api.Queries.Post(new GetLoanAgreementQuery { ApplicationId = _application.Id}));
                 }
             }
         }
@@ -56,18 +64,26 @@ namespace Wonga.QA.Tests.Comms
 
             public class WhenTheySignALoanApplication : GivenACustomerFromBritishColumbia
             {
+                private Application _application;
+
                 [SetUp]
                 public override void SetUp()
                 {
                     base.SetUp();
 
-                    ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).WithLoanAmount(200).Build();
+                    _application = ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).WithLoanAmount(200).Build();
                 }
 
                 [Test]
                 public void ThenTheCustomerIsEmailedTheLoanAgreementsDocuments()
                 {
                     AssertDocumentsEmailed(_customer);
+                }
+
+                [Test]
+                public void ThenGetLoanAgreementQueryWillRetriveTheDocuments()
+                {
+                    Do.Until(() => Drive.Api.Queries.Post(new GetLoanAgreementQuery { ApplicationId = _application.Id }));
                 }
             }
         }
@@ -84,18 +100,26 @@ namespace Wonga.QA.Tests.Comms
 
             public class WhenTheySignALoanApplication : GivenACustomerFromOntario
             {
+                private Application _application;
+
                 [SetUp]
                 public override void SetUp()
                 {
                     base.SetUp();
 
-                    ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).WithLoanAmount(200).Build();
+                    _application = ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).WithLoanAmount(200).Build();
                 }
 
                 [Test]
                 public void ThenTheCustomerIsEmailedTheLoanAgreementsDocuments()
                 {
                     AssertDocumentsEmailed(_customer);
+                }
+
+                [Test]
+                public void ThenGetLoanAgreementQueryWillRetriveTheDocuments()
+                {
+                    Do.Until(() => Drive.Api.Queries.Post(new GetLoanAgreementQuery { ApplicationId = _application.Id }));
                 }
             }
         }
