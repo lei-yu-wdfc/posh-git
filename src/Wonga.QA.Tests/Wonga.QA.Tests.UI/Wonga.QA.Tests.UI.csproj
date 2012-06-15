@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="AboutUsTest.cs" />
     <Compile Include="BehaviourAndAdvertTracking.cs" />
+    <Compile Include="Region\Ca\Journey\L0LoanCa.cs" />
     <Compile Include="EnabledModulesTests.cs" />
     <Compile Include="ClickTest.cs" />
     <Compile Include="Facebook\FacebookTests.cs" />
@@ -74,7 +75,10 @@
     <Compile Include="TopupSliderTests.cs" />
     <Compile Include="L0DeclinedLoan.cs" />
     <Compile Include="UiTest.cs" />
+    <Compile Include="Region\Uk\Journey\L0LoanUk.cs" />
     <Compile Include="WbLnJourneyTests.cs" />
+    <Compile Include="Region\Wb\Journey\L0LoanWb.cs" />
+    <Compile Include="Region\Za\Journey\L0LoanZa.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
@@ -125,6 +129,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Region\Ca\MyAccounts\" />
+    <Folder Include="Region\Ca\Payment\" />
+    <Folder Include="Region\Uk\MyAccounts\" />
+    <Folder Include="Region\Uk\Payment\" />
+    <Folder Include="Region\Wb\MyAccounts\" />
+    <Folder Include="Region\Wb\Payment\" />
+    <Folder Include="Region\Za\MyAccounts\" />
+    <Folder Include="Region\Za\Payment\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\..\..\lib\nuget\.nuget\nuget.targets" />
