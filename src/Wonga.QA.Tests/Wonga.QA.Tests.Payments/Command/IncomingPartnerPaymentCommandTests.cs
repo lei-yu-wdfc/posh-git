@@ -42,7 +42,7 @@ namespace Wonga.QA.Tests.Payments.Command
 		[Test, AUT(AUT.Za), JIRA("ZA-2571")]
 		public void SaveIncomingPartnerPaymentRequest_Expect_IncomingPartnerPaymentCreated()
 		{
-			Guid merchantReferenceNumber = Guid.NewGuid();
+			string merchantReferenceNumber = Guid.NewGuid().ToString();
 			Decimal transactionAmount = 1000;
 
 			//Arrange
@@ -60,7 +60,7 @@ namespace Wonga.QA.Tests.Payments.Command
 			//Act
 			Drive.Api.Commands.Post(command);
 			
-			var incomingPartnerPayment = Do.Until(() => _incomingPartnerPaymentsDB.FindAll(_incomingPartnerPaymentsDB.PaymentReference == merchantReferenceNumber.ToString()).FirstOrDefault());
+			var incomingPartnerPayment = Do.Until(() => _incomingPartnerPaymentsDB.FindAll(_incomingPartnerPaymentsDB.PaymentReference == merchantReferenceNumber).FirstOrDefault());
 			var application = _applicationDB.FindByExternalId(app.Id);
 
 			//Assert
@@ -71,7 +71,7 @@ namespace Wonga.QA.Tests.Payments.Command
 		[Test, AUT(AUT.Za), JIRA("ZA-2571")]
 		public void SaveIncomingPartnerPaymentResponse_Expect_IncomingPartnerPaymentResponseCreated()
 		{
-			Guid merchantReferenceNumber = Guid.NewGuid();
+			string merchantReferenceNumber = Guid.NewGuid().ToString();
 			Decimal transactionAmount = 1000;
 
 			//Arrange
@@ -88,7 +88,7 @@ namespace Wonga.QA.Tests.Payments.Command
 
 			Drive.Api.Commands.Post(saveRequestcommand);
 
-			var incomingPartnerPayment = Do.Until(() => _incomingPartnerPaymentsDB.FindAll(_incomingPartnerPaymentsDB.PaymentReference == merchantReferenceNumber.ToString()).FirstOrDefault());
+			var incomingPartnerPayment = Do.Until(() => _incomingPartnerPaymentsDB.FindAll(_incomingPartnerPaymentsDB.PaymentReference == merchantReferenceNumber).FirstOrDefault());
 
 			var saveResponsecommand = new Wonga.QA.Framework.Api.SaveIncomingPartnerPaymentResponseZaCommand
 			{
@@ -102,7 +102,7 @@ namespace Wonga.QA.Tests.Payments.Command
 
 			var incomingPartnerPaymentResponses = Do.Until(() => _incomingPartnerPaymentResponsesDB.FindAll(_incomingPartnerPaymentResponsesDB.PaymentId == incomingPartnerPayment.id).FirstOrDefault());
 
-			incomingPartnerPayment = Do.Until(() => _incomingPartnerPaymentsDB.FindAll(_incomingPartnerPaymentsDB.PaymentReference == merchantReferenceNumber.ToString() &&
+			incomingPartnerPayment = Do.Until(() => _incomingPartnerPaymentsDB.FindAll(_incomingPartnerPaymentsDB.PaymentReference == merchantReferenceNumber &&
 																						_incomingPartnerPaymentsDB.SuccessOn != null).FirstOrDefault());
 
 			//Assert
@@ -115,7 +115,7 @@ namespace Wonga.QA.Tests.Payments.Command
 		public void SaveIncomingPartnerPaymentResponse_Expect_ConfirmationSuccess()
 		{
 			//Arrange
-			Guid merchantReferenceNumber = Guid.NewGuid();
+			string merchantReferenceNumber = Guid.NewGuid().ToString();
 			Decimal transactionAmount = 1000;
 
 			var customer = CustomerBuilder.New().Build();
@@ -131,7 +131,7 @@ namespace Wonga.QA.Tests.Payments.Command
 
 			Drive.Api.Commands.Post(saveRequestcommand);
 
-			var incomingPartnerPayment = Do.Until(() => _incomingPartnerPaymentsDB.FindAll(_incomingPartnerPaymentsDB.PaymentReference == merchantReferenceNumber.ToString()).FirstOrDefault());
+			var incomingPartnerPayment = Do.Until(() => _incomingPartnerPaymentsDB.FindAll(_incomingPartnerPaymentsDB.PaymentReference == merchantReferenceNumber).FirstOrDefault());
 
 			var saveResponsecommand = new Wonga.QA.Framework.Api.SaveIncomingPartnerPaymentResponseZaCommand
 			{
@@ -145,7 +145,7 @@ namespace Wonga.QA.Tests.Payments.Command
 
 
 
-			incomingPartnerPayment = Do.Until(() => _incomingPartnerPaymentsDB.FindAll(_incomingPartnerPaymentsDB.PaymentReference == merchantReferenceNumber.ToString() &&
+			incomingPartnerPayment = Do.Until(() => _incomingPartnerPaymentsDB.FindAll(_incomingPartnerPaymentsDB.PaymentReference == merchantReferenceNumber &&
 																						_incomingPartnerPaymentsDB.ConfirmedOn != null &&
 																						_incomingPartnerPaymentsDB.SuccessOn != null)
 																						.FirstOrDefault());
@@ -162,7 +162,7 @@ namespace Wonga.QA.Tests.Payments.Command
 		[Test, AUT(AUT.Za), JIRA("ZA-2571, ZA-2572, ZA-2523")]
 		public void SaveIncomingPartnerPaymentResponse_Expect_DirectBankPaymentTransactionsCreated()
 		{
-			Guid merchantReferenceNumber = Guid.NewGuid();
+			string merchantReferenceNumber = Guid.NewGuid().ToString();
 			Decimal transactionAmount = 1000;
 
 			//Arrange
@@ -179,7 +179,7 @@ namespace Wonga.QA.Tests.Payments.Command
 
 			Drive.Api.Commands.Post(saveRequestcommand);
 
-			var incomingPartnerPayment = Do.Until(() => _incomingPartnerPaymentsDB.FindAll(_incomingPartnerPaymentsDB.PaymentReference == merchantReferenceNumber.ToString()).FirstOrDefault());
+			var incomingPartnerPayment = Do.Until(() => _incomingPartnerPaymentsDB.FindAll(_incomingPartnerPaymentsDB.PaymentReference == merchantReferenceNumber).FirstOrDefault());
 
 			var saveResponsecommand = new Wonga.QA.Framework.Api.SaveIncomingPartnerPaymentResponseZaCommand
 			{
@@ -196,7 +196,7 @@ namespace Wonga.QA.Tests.Payments.Command
 
 			var application = _applicationDB.FindByExternalId(app.Id);
 			var transaction = Do.Until(() => _transactionsDB.FindAll(_transactionsDB.ApplicationId == application.ApplicationId &&
-																	_transactionsDB.Reference == merchantReferenceNumber.ToString() &&
+																	_transactionsDB.Reference == merchantReferenceNumber &&
 																	_transactionsDB.Type == PaymentTransactionType.DirectBankPayment.ToString() &&
 																	_transactionsDB.Amount == (-1) * transactionAmount)
 																	.Single());
@@ -210,7 +210,7 @@ namespace Wonga.QA.Tests.Payments.Command
 		public void SaveIncomingPartnerPaymentRequest_WaitForTimeOut_Expect_DirectBankPaymentTransactionsCreated()
 		{
 			//Arrange
-			Guid merchantReferenceNumber = Guid.NewGuid();
+			string merchantReferenceNumber = Guid.NewGuid().ToString();
 			Decimal transactionAmount = 1000;
 
 			var customer = CustomerBuilder.New().Build();
@@ -234,7 +234,7 @@ namespace Wonga.QA.Tests.Payments.Command
 
 			var application = _applicationDB.FindByExternalId(app.Id);
 			var transaction = Do.Until(() => _transactionsDB.FindAll(_transactionsDB.ApplicationId == application.ApplicationId &&
-																	_transactionsDB.Reference == merchantReferenceNumber.ToString() &&
+																	_transactionsDB.Reference == merchantReferenceNumber &&
 																	_transactionsDB.Type == PaymentTransactionType.DirectBankPayment.ToString() &&
 																	_transactionsDB.Amount == (-1) * transactionAmount)
 																	.Single());
