@@ -14,7 +14,7 @@ namespace Wonga.QA.Framework.UI
     {
         BasePage CurrentPage { get; set; }
 
-        // IL0ConsumerJourney Teleport<T>();
+        BasePage Teleport<T>();
 
         IL0ConsumerJourney ApplyForLoan(bool submit);
         IL0ConsumerJourney FillPersonalDetails(bool submit = true);
