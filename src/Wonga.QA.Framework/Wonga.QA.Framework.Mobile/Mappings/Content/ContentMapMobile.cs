@@ -43,5 +43,6 @@ namespace Wonga.QA.Framework.Mobile.Mappings.Content
         }
 
         public virtual TabsElementMobile TabsElementMobile { get; set; }
+        public virtual YourDetailsSection YourDetailsSection { get; set; }
     }
 }
