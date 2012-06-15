@@ -11,11 +11,10 @@ using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.Elements;
-using Wonga.QA.Tests.Core;
+using Wonga.QA.Framework.UI.UiElements.Pages.Common;
+﻿using Wonga.QA.Tests.Core;
 using System.Linq;
 using System;
-using Wonga.QA.Framework.Db;
-using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using CreateScheduledPaymentRequestCommand = Wonga.QA.Framework.Msmq.CreateScheduledPaymentRequestCommand;
 
 
@@ -195,7 +194,7 @@ namespace Wonga.QA.Tests.Ui
             //RepaymentVsScenarios(scenarioId);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1833", "UKWEB-244")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1833", "UKWEB-244"), Pending("In development")]
         public void RepayEarlyDecline()
         {
             string email = Get.RandomEmail();
@@ -217,12 +216,42 @@ namespace Wonga.QA.Tests.Ui
 
             var declinedPage = repayProcessingPage.WaitFor<RepayEarlyPaymentFailedPage>() as RepayEarlyPaymentFailedPage;
 
+            // Post payment values
+            ApiResponse response = Drive.Api.Queries.Post(new GetAccountSummaryQuery { AccountId = customer.Id });
+            var dueDateAmount = response.Values["CurrentLoanRepaymentAmountOnDueDate"].Single();
+
+            string sDueDateAmount = String.Format("£{0:0.00}", dueDateAmount);
+            var dueDate = Convert.ToDateTime(response.Values["CurrentLoanDueDate"].Single());
+            var sDueDate = Date.GetOrdinalDate(dueDate, "d MMM yyyy");
+
+            var declineText = declinedPage.ContentArea;
+            var testTitle = "Sorry we couldn't collect your payment";
+            var testMessage = String.Format("This means we will still need to collect {0} on {1}.", sDueDateAmount, sDueDate);
+
             Assert.IsFalse(declinedPage.IsPaymentFailedAmountNotPresent());
             Assert.IsFalse(declinedPage.IsPaymentFailedDateNotPresent());
+            Assert.IsTrue(declinedPage.Header.Contains(testTitle), "Header is incorrect.");
+            Assert.IsTrue(declineText.Contains(testMessage), "Content area text is incorrect.");
+
+            //Verify that the links work 
+            declinedPage.RepayRetryClick();
+
+            //This verifies the retry repay page link
+            requestPage = new RepayRequestPage(this.Client);
+
+            requestPage.setSecurityCode("888");
+            requestPage.SubmitButtonClick();
+
+            repayProcessingPage = new RepayProcessingPage(this.Client);
+            declinedPage = repayProcessingPage.WaitFor<RepayEarlyPaymentFailedPage>() as RepayEarlyPaymentFailedPage;
+
+            declinedPage.AddCardClick();
+            //This verifies page is add card page - currently the my personal details page
+            var myDetailsPage = new MyPersonalDetailsPage(this.Client);
         }
 
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1833", "UKWEB-244")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1833", "UKWEB-244"), Pending("In development")]
         public void RepayDueDecline()
         {
             //build L0 loan
@@ -248,11 +277,38 @@ namespace Wonga.QA.Tests.Ui
 
             var declinedPage = repayProcessingPage.WaitFor<RepayDuePaymentFailedPage>() as RepayDuePaymentFailedPage;
 
+            // Post payment values
+            ApiResponse summaryResponse = Drive.Api.Queries.Post(new GetAccountSummaryQuery { AccountId = customer.Id });
+            var newDueDateAmount = summaryResponse.Values["CurrentLoanAmountDueToday"].Single();
+
+            string sNewDueDateAmount = String.Format("£{0:0.00}", newDueDateAmount);
+            var declineText = declinedPage.ContentArea;
+
+            var testTitle = "We tried unsuccessfully to collect your payment";
+            var testMessage = String.Format("Unfortunately your payment was declined by your bank. This means you still owe {0} which is due today", sNewDueDateAmount);
+
             Assert.IsFalse(declinedPage.IsPaymentFailedAmountNotPresent());
-            Assert.IsFalse(declinedPage.IsPaymentFailedDateNotPresent());
+            Assert.IsTrue(declinedPage.Header.Contains(testTitle), "Header is incorrect.");
+            Assert.IsTrue(declineText.Contains(testMessage), "Content area text is incorrect.");
+
+            //Verify that the links work 
+            declinedPage.RepayRetryClick();
+
+            //This verifies the retry repay page link
+            requestPage = new RepayRequestPage(this.Client);
+
+            requestPage.setSecurityCode("888");
+            requestPage.SubmitButtonClick();
+
+            repayProcessingPage = new RepayProcessingPage(this.Client);
+            declinedPage = repayProcessingPage.WaitFor<RepayDuePaymentFailedPage>() as RepayDuePaymentFailedPage;
+
+            declinedPage.AddCardClick();
+            //This verifies page is add card page - currently the my personal details page
+            var myDetailsPage = new MyPersonalDetailsPage(this.Client);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1833", "UKWEB-244")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1833", "UKWEB-244"), Pending("In development")]
         public void RepayOverdueDecline()
         {
             //build L0 loan
@@ -266,11 +322,7 @@ namespace Wonga.QA.Tests.Ui
             TimeSpan daysShiftSpan = TimeSpan.FromDays((Double)daysShift);
             ApplicationOperations.RewindApplicationDates(application, daysShiftSpan);
 
-            var loginPage = Client.Login();
-            var myAccountPage = loginPage.LoginAs(email);
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
-
-            mySummaryPage.RepayButtonClick();
+            Client.Login().LoginAs(email).RepayButtonClick();
             var requestPage = new RepayRequestPage(this.Client);
 
             requestPage.setSecurityCode("888");
@@ -280,7 +332,39 @@ namespace Wonga.QA.Tests.Ui
 
             var declinedPage = repayProcessingPage.WaitFor<RepayOverduePaymentFailedPage>() as RepayOverduePaymentFailedPage;
 
+            // Post payment values
+            ApiResponse summaryResponse = Drive.Api.Queries.Post(new GetAccountSummaryQuery { AccountId = customer.Id });
+            var newDueDateAmount = summaryResponse.Values["CurrentLoanRepaymentAmountOnDueDate"].Single();
+            var newDueDateAmountDecimal = decimal.Parse(newDueDateAmount);
+
+            string sNewDueDateAmount = String.Format("£{0:0.00}", newDueDateAmount);
+
+            // Get the content from the Payment Taken Page
+            string declineText = declinedPage.ContentArea;
+
+            var testTitle = "We tried unsuccessfully to collect your payment";
+            var testMessage = "We urge you to read the suggestions below and try again as soon as possible, to avoid further interest being charged.";
+            
             Assert.IsFalse(declinedPage.IsPaymentFailedAmountNotPresent());
+            Assert.IsTrue(declinedPage.Header.Contains(testTitle), "Header is incorrect.");
+            Assert.IsTrue(declineText.Contains(testMessage), "Content area text is incorrect.");
+
+            //Verify that the links work 
+            declinedPage.RepayRetryClick();
+
+            //This verifies the retry repay page link
+            requestPage = new RepayRequestPage(this.Client);
+            
+            requestPage.setSecurityCode("888");
+            requestPage.SubmitButtonClick();
+
+            repayProcessingPage = new RepayProcessingPage(this.Client);
+            declinedPage = repayProcessingPage.WaitFor<RepayOverduePaymentFailedPage>() as RepayOverduePaymentFailedPage;
+
+            declinedPage.AddCardClick();
+            //This verifies page is add card page - currently the my personal details page
+            var myDetailsPage = new MyPersonalDetailsPage (this.Client);
+            
         }
 
 
@@ -309,7 +393,6 @@ namespace Wonga.QA.Tests.Ui
             requestPage.SubmitButtonClick();
 
             var repayProcessingPage = new RepayProcessingPage(this.Client);
-
             var paymentErrorPage = repayProcessingPage.WaitFor<RepayErrorPage>() as RepayErrorPage;
         }
         
@@ -334,24 +417,19 @@ namespace Wonga.QA.Tests.Ui
             //Runs assertions internally
             requestPage.IsRepayRequestPageSliderReturningCorrectValuesOnChange(application.Id.ToString(), "50");
         }
-        
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247")]
+
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248"), Pending("In development")]
         public void RepayEarlyFull()
         {
             //build L0 loan
             string email = Get.RandomEmail();
-            DateTime todayDate = DateTime.Now;
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
 
-            var loginPage = Client.Login();
-            var myAccountPage = loginPage.LoginAs(email);
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
-            //var originalRepay = mySummaryPage.GetTotalToRepay();
-            mySummaryPage.RepayButtonClick();
+            Client.Login().LoginAs(email).RepayButtonClick();
             var requestPage = new RepayRequestPage(this.Client);
-
+            
             Assert.IsNotEmpty(requestPage.RepayCard);
 
             //Branch point - Add Cv2 for each path and proceed
@@ -364,10 +442,18 @@ namespace Wonga.QA.Tests.Ui
 
             Assert.IsFalse(paymentTakenPage.IsRepayEarlyFullpaySuccessPageAmountTokenNotPresent());
             Assert.IsFalse(paymentTakenPage.IsRepayEarlyFullpaySuccessPageDateTokenNotPresent());
-            //TODO: Check that Interest Saved calculation is correct
+   
+            // Get the content from the Payment Taken Page
+            string paymentTakenText = paymentTakenPage.ContentArea();
+
+            var testTitle = "Success! Your balance has been settled in full";
+            var testMessage = "Thanks and nice work for repaying early";
+
+            Assert.IsTrue(paymentTakenPage.Headers.Contains(testTitle), "Header is incorrect.");
+            Assert.IsTrue(paymentTakenText.Contains(testMessage), "Content area text is incorrect.");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248"), Pending("In development")]
         public void RepayEarlyPart()
         {
             // Build L0 loan
@@ -378,7 +464,6 @@ namespace Wonga.QA.Tests.Ui
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
 
             ApiResponse response = Drive.Api.Queries.Post(new GetFixedTermLoanApplicationQuery { ApplicationId = application.Id });
-
             var dueDate = Convert.ToDateTime(response.Values["NextDueDate"].Single());
             var sDueDate = Date.GetOrdinalDate(dueDate, "d MMM yyyy");
             var oldDueDateBalance = Convert.ToDecimal(response.Values["BalanceNextDueDate"].Single());
@@ -417,12 +502,11 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(paymentTakenText.Contains(String.Format("{0:0.00}", repayAmount)), "Repay Amount is wrong.");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248"), Pending("In development")]
         public void RepayDueFull()
         {
             //build L0 loan
             string email = Get.RandomEmail();
-            DateTime todayDate = DateTime.Now;
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
@@ -432,11 +516,7 @@ namespace Wonga.QA.Tests.Ui
             TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
             ApplicationOperations.RewindApplicationDates(application, daysShiftSpan);
 
-            var loginPage = Client.Login();
-            var myAccountPage = loginPage.LoginAs(email);
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
-
-            mySummaryPage.RepayButtonClick();
+            Client.Login().LoginAs(email).RepayButtonClick();
             var requestPage = new RepayRequestPage(this.Client);
 
             //Branch point - Add Cv2 for each path and proceed
@@ -444,17 +524,23 @@ namespace Wonga.QA.Tests.Ui
             requestPage.SubmitButtonClick();
 
             var repayProcessingPage = new RepayProcessingPage(this.Client);
-
             var paymentTakenPage = repayProcessingPage.WaitFor<RepayDueFullpaySuccessPage>() as RepayDueFullpaySuccessPage;
 
+            // Get the content from the Payment Taken Page
+            string paymentTakenText = paymentTakenPage.ContentArea();
+
+            var testTitle = "Success! Your balance has been settled in full";
+            var testMessage = "Thanks for keeping your promise. We value your custom and hope we can help again in the future.";
+
+            Assert.IsTrue(paymentTakenPage.Headers.Contains(testTitle), "Header is incorrect.");
+            Assert.IsTrue(paymentTakenText.Contains(testMessage), "Content area text is incorrect.");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248"), Pending("In development")]
         public void RepayDuePart()
         {
             //build L0 loan
             string email = Get.RandomEmail();
-            DateTime todayDate = DateTime.Now;
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
@@ -464,11 +550,7 @@ namespace Wonga.QA.Tests.Ui
             TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
             ApplicationOperations.RewindApplicationDates(application, daysShiftSpan);
 
-            var loginPage = Client.Login();
-            var myAccountPage = loginPage.LoginAs(email);
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
-
-            mySummaryPage.RepayButtonClick();
+            Client.Login().LoginAs(email).RepayButtonClick();
             var requestPage = new RepayRequestPage(this.Client);
 
             //Set partial payment amount, test for correct values at same time
@@ -482,16 +564,28 @@ namespace Wonga.QA.Tests.Ui
 
             var paymentTakenPage = repayProcessingPage.WaitFor<RepayDuePartpaySuccessPage>() as RepayDuePartpaySuccessPage;
             Assert.IsFalse(paymentTakenPage.IsRepayDuePartpaySuccessPageAmountTokenNotPresent());
-            
 
+            // Post payment values
+            ApiResponse summaryResponse = Drive.Api.Queries.Post(new GetAccountSummaryQuery { AccountId = customer.Id });
+            var newDueDateAmount = summaryResponse.Values["CurrentLoanRepaymentAmountOnDueDate"].Single();
+            string sNewDueDateAmount = String.Format("{0:0.00}", newDueDateAmount);
+
+            // Get the content from the Payment Taken Page
+            string paymentTakenText = paymentTakenPage.ContentArea();
+            var testTitle = "Success! Your partial payment has gone through";
+            var testMessage = "Please repay this remaining balance without delay to avoid incurring further costs, which is the last thing we want to happen";
+
+            Assert.IsTrue(paymentTakenPage.Headers.Contains(testTitle), "Message title is incorrect.");
+            Assert.IsTrue(paymentTakenText.Contains(testMessage), "Content area text is incorrect.");
+            Assert.IsTrue(paymentTakenText.Contains(sNewDueDateAmount), "New Total Repayable is incorrect.");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247")]
+
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248"), Pending("In development")]
         public void RepayOverdueFull()
         {
             //build L0 loan
             string email = Get.RandomEmail();
-            DateTime todayDate = DateTime.Now;
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
@@ -507,11 +601,7 @@ namespace Wonga.QA.Tests.Ui
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = application.Id, RepaymentRequestId = requestId1, });
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = application.Id, RepaymentRequestId = requestId2, });
 
-            var loginPage = Client.Login();
-            var myAccountPage = loginPage.LoginAs(email);
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
-
-            mySummaryPage.RepayButtonClick();
+            Client.Login().LoginAs(email).RepayButtonClick();
             var requestPage = new RepayRequestPage(this.Client);
 
             //Branch point - Add Cv2 for each path and proceed
@@ -523,14 +613,21 @@ namespace Wonga.QA.Tests.Ui
             var paymentTakenPage = repayProcessingPage.WaitFor<RepayOverduePartpaySuccessPage>() as RepayOverduePartpaySuccessPage;
             Assert.IsFalse(paymentTakenPage.IsRepayOverduePartpaySuccessPageAmountTokenNotPresent());
 
+            // Get the content from the Payment Taken Page
+            string paymentTakenText = paymentTakenPage.ContentArea();
+            //Thank you for resolving  this situation. We can’t promise your Wonga trust rating won’t have been affected, but we may consider helping you again in the future.
+            var testTitle = "Success! Your balance has been settled in full";
+            var testMessage = "Thank you for resolving  this situation. We can’t promise your Wonga trust rating won’t have been affected, but we may consider helping you again in the future.";
+
+            Assert.IsTrue(paymentTakenPage.Headers.Contains(testTitle), "Header is incorrect.");
+            Assert.IsTrue(paymentTakenText.Contains(testMessage), "Content area text is incorrect.");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247"), Pending("Fails")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248"), Pending("In development")]
         public void RepayOverduePart()
         {
             //build L0 loan
             string email = Get.RandomEmail();
-            DateTime todayDate = DateTime.Now;
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
@@ -546,15 +643,11 @@ namespace Wonga.QA.Tests.Ui
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = application.Id, RepaymentRequestId = requestId1, });
             Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = application.Id, RepaymentRequestId = requestId2, });
 
-            var loginPage = Client.Login();
-            var myAccountPage = loginPage.LoginAs(email);
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
-
-            mySummaryPage.RepayButtonClick();
+            Client.Login().LoginAs(email).RepayButtonClick();
             var requestPage = new RepayRequestPage(this.Client);
 
             //Set partial payment amount, test for correct values at same time
-            requestPage.IsRepayRequestPageSliderReturningCorrectValuesOnChange(application.Id.ToString(), "100");
+            requestPage.IsRepayRequestPageSliderReturningCorrectOverDueValuesOnChange(application.Id.ToString(), "100");
 
             //Branch point - Add Cv2 for each path and proceed
             requestPage.setSecurityCode("123");
@@ -564,8 +657,21 @@ namespace Wonga.QA.Tests.Ui
 
             var paymentTakenPage = repayProcessingPage.WaitFor<RepayOverduePartpaySuccessPage>() as RepayOverduePartpaySuccessPage;
             Assert.IsFalse(paymentTakenPage.IsRepayOverduePartpaySuccessPageAmountTokenNotPresent());
-  
 
+            // Post payment values
+            ApiResponse summaryResponse = Drive.Api.Queries.Post(new GetAccountSummaryQuery { AccountId = customer.Id });
+            var newDueDateAmount = summaryResponse.Values["CurrentLoanAmountDueToday"].Single();
+            string sNewDueDateAmount = String.Format("{0:0.00}", newDueDateAmount);
+
+            // Get the content from the Payment Taken Page
+            string paymentTakenText = paymentTakenPage.ContentArea();
+
+            var testTitle = "Success! Your partial payment has gone through";
+            var testMessage = "Thanks for making a part-payment on your overdue balance. It’s a step in the right direction.";
+
+            Assert.IsTrue(paymentTakenPage.Headers.Contains(testTitle), "Header is incorrect.");
+            Assert.IsTrue(paymentTakenText.Contains(testMessage), "Content area text is incorrect.");
+            Assert.IsTrue(paymentTakenText.Contains(sNewDueDateAmount), "New Total Repayable is wrong.");   
         }
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-247")]
@@ -573,7 +679,6 @@ namespace Wonga.QA.Tests.Ui
         {
             //build L0 loan
             string email = Get.RandomEmail();
-            DateTime todayDate = DateTime.Now;
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
