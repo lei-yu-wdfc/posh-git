@@ -19,24 +19,7 @@ namespace Wonga.QA.Tests.Payments
     [Parallelizable(TestScope.All)]
     public class ExternalDebtCollectionTests
     {
-        private static bool _bankGatewayIsinTestMode;
-
     	private const string MultipleRepresentmentsInArrearsKeyName = "FeatureSwitch.MultipleRepresentmentsInArrears";
-    	private const string BankGatewayInTestModeKeyName = "BankGateway.IsTestMode";
-
-        [FixtureSetUp]
-        public static void FixtureSetUp()
-        {
-            _bankGatewayIsinTestMode = ConfigurationFunctions.GetBankGatewayTestMode();
-
-            ConfigurationFunctions.SetBankGatewayTestMode(false);
-        }
-
-        [FixtureTearDown]
-        public static void FixtureTearDown()
-        {
-            ConfigurationFunctions.SetBankGatewayTestMode(_bankGatewayIsinTestMode);
-        }
 
     	[Test, AUT(AUT.Ca), JIRA("CA-913")]
 		public void When31DaysPassedAndArrearsCollectionSucceededThenShouldNotMoveApplicationToDca()
@@ -47,12 +30,6 @@ namespace Wonga.QA.Tests.Payments
 			application.PutApplicationIntoArrears();
 
 			RepayLoanInArrears(application);
-
-			if (Drive.Data.Ops.GetServiceConfiguration<bool>(BankGatewayInTestModeKeyName))
-			{
-				var transaction = WaitForCreditTransaction(application);
-				TimeoutCloseApplicationSaga(transaction);
-			}
 
     		// Validate that external debt collection finished
 			Do.Until(() => Drive.Db.OpsSagasCa.ExternalDebtCollectionSagaEntities.SingleOrDefault(e => e.ApplicationId == application.Id) == null);
