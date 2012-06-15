@@ -194,7 +194,7 @@ namespace Wonga.QA.Tests.Ui
             //RepaymentVsScenarios(scenarioId);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1833", "UKWEB-244"), Pending("In development")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1833", "UKWEB-244")]
         public void RepayEarlyDecline()
         {
             string email = Get.RandomEmail();
@@ -251,7 +251,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1833", "UKWEB-244"), Pending("In development")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1833", "UKWEB-244")]
         public void RepayDueDecline()
         {
             //build L0 loan
@@ -308,7 +308,7 @@ namespace Wonga.QA.Tests.Ui
             var myDetailsPage = new MyPersonalDetailsPage(this.Client);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1833", "UKWEB-244"), Pending("In development")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1833", "UKWEB-244")]
         public void RepayOverdueDecline()
         {
             //build L0 loan
@@ -418,7 +418,7 @@ namespace Wonga.QA.Tests.Ui
             requestPage.IsRepayRequestPageSliderReturningCorrectValuesOnChange(application.Id.ToString(), "50");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248"), Pending("In development")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248")]
         public void RepayEarlyFull()
         {
             //build L0 loan
@@ -453,7 +453,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(paymentTakenText.Contains(testMessage), "Content area text is incorrect.");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248"), Pending("In development")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248")]
         public void RepayEarlyPart()
         {
             // Build L0 loan
@@ -502,7 +502,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(paymentTakenText.Contains(String.Format("{0:0.00}", repayAmount)), "Repay Amount is wrong.");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248"), Pending("In development")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248")]
         public void RepayDueFull()
         {
             //build L0 loan
@@ -536,7 +536,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(paymentTakenText.Contains(testMessage), "Content area text is incorrect.");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248"), Pending("In development")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248")]
         public void RepayDuePart()
         {
             //build L0 loan
@@ -581,7 +581,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248"), Pending("In development")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248")]
         public void RepayOverdueFull()
         {
             //build L0 loan
@@ -623,7 +623,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(paymentTakenText.Contains(testMessage), "Content area text is incorrect.");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248"), Pending("In development")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248")]
         public void RepayOverduePart()
         {
             //build L0 loan
@@ -669,7 +669,7 @@ namespace Wonga.QA.Tests.Ui
             var testTitle = "Success! Your partial payment has gone through";
             var testMessage = "Thanks for making a part-payment on your overdue balance. It’s a step in the right direction.";
 
-            Assert.IsTrue(paymentTakenPage.Headers.Contains(testTitle), "Header is incorrect.");
+            Assert.IsTrue(paymentTakenPage.Headers[0].Contains(testTitle), "Header is incorrect.");
             Assert.IsTrue(paymentTakenText.Contains(testMessage), "Content area text is incorrect.");
             Assert.IsTrue(paymentTakenText.Contains(sNewDueDateAmount), "New Total Repayable is wrong.");   
         }
