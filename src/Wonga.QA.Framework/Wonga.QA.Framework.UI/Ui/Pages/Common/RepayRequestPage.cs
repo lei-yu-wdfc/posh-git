@@ -71,7 +71,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             var remainderAmount = _response.Values["TotalRepayableOnDueDate"].Single();
             
             //check the output matches the returned values for repayRequestAmount
-            Assert.AreEqual(Decimal.Parse(Sliders.GetRemainderTotal.Remove(0, 1)), Decimal.Parse(remainderAmount));
+            Assert.AreEqual(Decimal.Parse(remainderAmount), Decimal.Parse(Sliders.GetRemainderTotal.Remove(0, 1)));
         }
 
         public void CancelButtonClick()
