@@ -18,6 +18,7 @@ namespace Wonga.QA.Framework
         public String MiddleName { get; set; }
         public Int64 CardNumber { get; set; }
         public string BankAccountNumber { get; set; }
+        public ProvinceEnum Province { get; set; }
 
         public Customer(Guid id)
         {
