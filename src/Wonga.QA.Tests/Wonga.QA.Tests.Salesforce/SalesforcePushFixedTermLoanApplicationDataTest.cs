@@ -10,11 +10,11 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Salesforce
 {
-    [TestFixture, Parallelizable(TestScope.All)]
+    [TestFixture, Parallelizable(TestScope.All), Ignore("SF interaction is too slow. It takes up to several minutes until an application/account becomes available in SF.")]
 	public class SalesforcePushFixedTermLoanApplicationDataTest : SalesforceTestBase
 	{
 		[Test]
-        [AUT(AUT.Uk), JIRA("UK-808"), Ignore("SF tests are failing because message congestion in SF TC queue, explicit until fixed")]
+        [AUT(AUT.Uk), JIRA("UK-808")]
 		[Description("Verify that the application data has been pushed to SF")]
 		public void FixedTermLoanApplicationDataPushedToSalesforce()
 		{
