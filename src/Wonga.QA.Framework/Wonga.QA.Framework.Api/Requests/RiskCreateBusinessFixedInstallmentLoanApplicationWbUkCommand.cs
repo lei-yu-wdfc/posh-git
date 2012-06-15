@@ -16,5 +16,6 @@ namespace Wonga.QA.Framework.Api
         public Object MainApplicantBankAccountId { get; set; }
         public Object Currency { get; set; }
         public Object LoanAmount { get; set; }
+        public Object ApplicationDate { get; set; }
     }
 }

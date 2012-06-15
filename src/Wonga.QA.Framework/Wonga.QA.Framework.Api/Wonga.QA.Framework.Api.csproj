@@ -223,6 +223,14 @@
     <Compile Include="Requests\RiskAddBankAccountCaCommand.cs" />
     <Compile Include="Requests\RiskAddBankAccountUkCommand.cs" />
     <Compile Include="Requests\RiskAddBankAccountZaCommand.cs" />
+    <Compile Include="Requests\RiskAddHomePhoneCaCommand.cs" />
+    <Compile Include="Requests\RiskAddHomePhonePlCommand.cs" />
+    <Compile Include="Requests\RiskAddHomePhoneUkCommand.cs" />
+    <Compile Include="Requests\RiskAddHomePhoneZaCommand.cs" />
+    <Compile Include="Requests\RiskAddMobilePhoneCaCommand.cs" />
+    <Compile Include="Requests\RiskAddMobilePhonePlCommand.cs" />
+    <Compile Include="Requests\RiskAddMobilePhoneUkCommand.cs" />
+    <Compile Include="Requests\RiskAddMobilePhoneZaCommand.cs" />
     <Compile Include="Requests\RiskAddPaymentCardCommand.cs" />
     <Compile Include="Requests\RiskCreateBusinessFixedInstallmentLoanApplicationWbUkCommand.cs" />
     <Compile Include="Requests\RiskCreateFixedTermLoanApplicationCommand.cs" />
