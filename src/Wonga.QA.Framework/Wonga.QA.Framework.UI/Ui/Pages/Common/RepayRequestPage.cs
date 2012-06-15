@@ -71,7 +71,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             var remainderAmount = _response.Values["TotalRepayableOnDueDate"].Single();
             
             //check the output matches the returned values for repayRequestAmount
-            Assert.AreEqual(Decimal.Parse(remainderAmount), Decimal.Parse(Sliders.GetRemainderTotal.Remove(0, 1)));
+            Assert.AreEqual(remainderAmount, Sliders.GetRemainderTotal.Remove(0, 1));
         }
 
         public void IsRepayRequestPageSliderReturningCorrectOverDueValuesOnChange(string applicationId, string repayRequestAmount)
@@ -93,7 +93,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             var sliderRemainder = Sliders.GetRemainderTotal.Remove(0, 1);
             var remainderAmount = Decimal.Parse(_response.Values["SliderMaxAmount"].Single()) - Decimal.Parse(repayRequestAmount);
 
-            Assert.AreEqual(Decimal.Parse(remainderAmount), Decimal.Parse(Sliders.GetRemainderTotal.Remove(0, 1)));
+            Assert.AreEqual(remainderAmount, Decimal.Parse(Sliders.GetRemainderTotal.Remove(0, 1)));
         }
 
         public void CancelButtonClick()
