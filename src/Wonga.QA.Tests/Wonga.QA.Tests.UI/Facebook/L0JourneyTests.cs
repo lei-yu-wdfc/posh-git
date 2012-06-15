@@ -23,7 +23,7 @@ namespace Wonga.QA.Tests.Ui.Facebook
     [Parallelizable(TestScope.All)]
     class L0JourneyTests : UiTest
     {
-        [Test, AUT(AUT.Uk)]
+        [Test, AUT(AUT.Uk), Pending("Waiting on Facebook Environment Setup - AUT.UkFb")]
         public void L0Journey()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
@@ -37,89 +37,7 @@ namespace Wonga.QA.Tests.Ui.Facebook
                 .FillAcceptedPage().CurrentPage as DealDonePage;
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk), JIRA("QA-181"), Pending("ZA-2512")]
-        public void L0JourneyCustomerOnCurrentAddressPageDoesNotEnterSomeRequiredFieldsWarningMessageDisplayed()
-        {
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var addressDetailsPage = journey.ApplyForLoan(200, 10)
-                                      .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
-                                      .CurrentPage as AddressDetailsPage;
-
-            switch (Config.AUT)
-            {
-                #region case Za
-                case AUT.Za:
-                    addressDetailsPage.HouseNumber = "25";
-                    addressDetailsPage.Street = "high road";
-                    addressDetailsPage.Town = "Kuku";
-                    addressDetailsPage.County = "Province";
-                    addressDetailsPage.AddressPeriod = "2 to 3 years";
-                    Assert.IsTrue(addressDetailsPage.IsPostcodeWarningOccurred());
-                    addressDetailsPage.PostCode = Get.GetPostcode();
-                    addressDetailsPage.HouseNumber = "";
-                    Assert.IsTrue(addressDetailsPage.IsHouseNumberWarningOccurred());
-                    addressDetailsPage.HouseNumber = "25";
-                    addressDetailsPage.Street = "";
-                    Assert.IsTrue(addressDetailsPage.IsStreetWarningOccurred());
-                    addressDetailsPage.Street = "high road";
-                    addressDetailsPage.Town = "";
-                    Assert.IsTrue(addressDetailsPage.IsTownWarningOccurred());
-                    addressDetailsPage.Town = "Kuku";
-                    addressDetailsPage.County = "";
-                    Assert.IsTrue(addressDetailsPage.IsCountyWarningOccurred());
-                    addressDetailsPage.County = "Province";
-                    addressDetailsPage.AddressPeriod = "--- Please select ---";
-                    Assert.IsTrue(addressDetailsPage.IsAddressPeriodWarningOccurred());
-                    break;
-                #endregion
-                #region case Ca
-                case AUT.Ca:
-                    addressDetailsPage.Street = "Edward";
-                    addressDetailsPage.Town = "Hearst";
-                    addressDetailsPage.PostCode = "V4F3A9";
-                    addressDetailsPage.AddressPeriod = "2 to 3 years";
-                    Assert.IsTrue(addressDetailsPage.IsHouseNumberWarningOccurred());
-                    addressDetailsPage.HouseNumber = "1403";
-                    addressDetailsPage.Street = "";
-                    Assert.IsTrue(addressDetailsPage.IsStreetWarningOccurred());
-                    addressDetailsPage.Street = "Edward";
-                    addressDetailsPage.Town = "";
-                    Assert.IsTrue(addressDetailsPage.IsTownWarningOccurred());
-                    addressDetailsPage.Town = "Hearst";
-                    addressDetailsPage.PostCode = "";
-                    Assert.IsTrue(addressDetailsPage.IsPostcodeWarningOccurred());
-                    addressDetailsPage.PostCode = "V4F3A9";
-                    addressDetailsPage.AddressPeriod = "--- Please select ---";
-                    Assert.IsTrue(addressDetailsPage.IsAddressPeriodWarningOccurred());
-                    break;
-                #endregion
-                #region case Uk
-                case AUT.Uk:
-                    addressDetailsPage.PostCodeLookup = "SW6 6PN";
-                    addressDetailsPage.LookupByPostCode();
-                    addressDetailsPage.GetAddressesDropDown();
-                    Do.Until(() => addressDetailsPage.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN");
-                    Do.Until(() => addressDetailsPage.HouseNumber = "93");
-                    Assert.IsTrue(addressDetailsPage.IsAddressPeriodWarningOccurred());
-                    addressDetailsPage.AddressPeriod = "3 to 4 years";
-                    addressDetailsPage.HouseNumber = "";
-                    Assert.IsTrue(addressDetailsPage.IsHouseNumberWarningOccurred());
-                    addressDetailsPage.HouseNumber = "93";
-                    addressDetailsPage.Street = "";
-                    Assert.IsTrue(addressDetailsPage.IsStreetWarningOccurred());
-                    addressDetailsPage.Street = "Harbord Street";
-                    addressDetailsPage.Town = "";
-                    Assert.IsTrue(addressDetailsPage.IsTownWarningOccurred());
-                    addressDetailsPage.Town = "LONDON";
-                    addressDetailsPage.PostcodeInForm = "";
-                    Assert.IsTrue(addressDetailsPage.IsPostcodeWarningOccurred());
-                    break;
-                #endregion
-
-            }
-        }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-969", "UKWEB-250"), MultipleAsserts, Pending("UKWEB-903 defect")]
+        [Test, AUT(AUT.Uk), JIRA("UK-969", "UKWEB-250"), MultipleAsserts, Pending("Waiting on Facebook Environment Setup - AUT.UkFb")]
         public void L0PreAgreementPartonAccountSetupPageTest()
         {
             var loginPage = Client.Login();
