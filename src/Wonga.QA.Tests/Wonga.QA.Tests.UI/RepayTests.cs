@@ -284,7 +284,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247"), Pending("In development")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-247")]
         public void RepayError()
         {
             //build L0 loan
@@ -314,7 +314,7 @@ namespace Wonga.QA.Tests.Ui
         }
         
           
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247"), Pending ("In development")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-247")]
         public void MovingRepaySliderRemainingAmountShouldBeCorrect()
         {
             //build L0 loan
@@ -335,7 +335,7 @@ namespace Wonga.QA.Tests.Ui
             requestPage.IsRepayRequestPageSliderReturningCorrectValuesOnChange(application.Id.ToString(), "50");
         }
         
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247"), Pending("In development")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-247")]
         public void RepayEarlyFull()
         {
             //build L0 loan
@@ -367,7 +367,7 @@ namespace Wonga.QA.Tests.Ui
             //TODO: Check that Interest Saved calculation is correct
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247"), Pending("In development")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-247")]
         public void RepayEarlyPart()
         {
             // Build L0 loan
@@ -417,7 +417,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(paymentTakenText.Contains(String.Format("{0:0.00}", repayAmount)), "Repay Amount is wrong.");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247"), Pending("In development")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-247")]
         public void RepayDueFull()
         {
             //build L0 loan
@@ -449,7 +449,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247"), Pending("In development")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-247")]
         public void RepayDuePart()
         {
             //build L0 loan
@@ -486,7 +486,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247"), Pending("In development")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-247")]
         public void RepayOverdueFull()
         {
             //build L0 loan
@@ -525,7 +525,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247"), Pending("In development")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-247"), Pending("Fails")]
         public void RepayOverduePart()
         {
             //build L0 loan
@@ -568,7 +568,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247"), Pending("In development")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-247")]
         public void RepayEarlyLessThanMinPayment()
         {
             //build L0 loan
