@@ -13,7 +13,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
     [TestFixture]
-    [Parallelizable(TestScope.All), AUT(AUT.Uk,AUT.Ca)]
+    [Parallelizable(TestScope.All), AUT(AUT.Uk,AUT.Za)]
     public class CheckpointCustomerIsEmployedTests
     {
         private const RiskMask TestMask = RiskMask.TESTCustomerIsEmployed;
