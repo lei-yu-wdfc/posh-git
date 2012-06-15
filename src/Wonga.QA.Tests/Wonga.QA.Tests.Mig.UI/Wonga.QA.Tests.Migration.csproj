@@ -35,11 +35,7 @@
     <Reference Include="MbUnit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
     <Reference Include="WebDriver">
       <HintPath>..\..\..\bin\WebDriver.dll</HintPath>
     </Reference>
@@ -54,6 +50,18 @@
     </Reference>
     <Reference Include="Wonga.QA.Framework.Data">
       <HintPath>..\..\..\bin\Wonga.QA.Framework.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Wonga.QA.Framework.Db, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Wonga.QA.Framework\Wonga.QA.Framework.Db\obj\Debug\Wonga.QA.Framework.Db.dll</HintPath>
+    </Reference>
+    <Reference Include="Wonga.QA.Framework.Msmq, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Wonga.QA.Framework\Wonga.QA.Framework.Msmq\obj\Debug\Wonga.QA.Framework.Msmq.dll</HintPath>
+    </Reference>
+    <Reference Include="Wonga.QA.Framework.Svc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Wonga.QA.Framework\Wonga.QA.Framework.Svc\obj\Debug\Wonga.QA.Framework.Svc.dll</HintPath>
     </Reference>
     <Reference Include="Wonga.QA.Framework.Ui">
       <HintPath>..\..\..\bin\Wonga.QA.Framework.Ui.dll</HintPath>

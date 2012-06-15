@@ -1,5 +1,7 @@
 ﻿using MbUnit.Framework;
+using Wonga.QA.Framework;
 using Wonga.QA.Tests.Ui;
+using Wonga.QA.Framework.Data;
 
 namespace Wonga.QA.Tests.Migration
 {
@@ -20,6 +22,9 @@ namespace Wonga.QA.Tests.Migration
         // Migrated V2 customer tries to log in into V3 successfully.
         public void MigratedV2CustomerLogsInToV3Test()
         {
+            //var test = v2db;
+            var accountsTab = Drive.Data.Ops.Db.Accounts;
+            
             Client.Login().LoginAs("claire_coe@lycos.co.uk", "kieran14");
             // Likely we don't need to assert here because if mySummary object is not created successfully, an excption will be thrown
         }
