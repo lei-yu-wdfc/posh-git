@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
@@ -13,10 +13,10 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	[Parallelizable(TestScope.All)]
 	class CheckpointMonthlyIncomeEnoughForRepaymentTests
 	{
-		private const RiskMask TestMask = RiskMask.TESTMonthlyIncomeEnoughForRepayment;
+        private const RiskMask TestMask = RiskMask.TESTMonthlyIncomeEnoughForRepayment;
 		private static readonly decimal NetMonthlyIncome = GetDefaultCreditLimit();
 
-		[Test, AUT(AUT.Uk, AUT.Za), JIRA("SME-866", "UK-866"), Description("Scenario 1: Accepted")]
+		[Test, AUT(AUT.Za, AUT.Uk), JIRA("UK-866"), Description("Scenario 1: Accepted")]
 		public void CheckpointMonthlyIncomeEnoughForRepaymentAccept()
 		{
 			var customer = CustomerBuilder.New()
@@ -24,22 +24,22 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.WithNetMonthlyIncome(NetMonthlyIncome)
 				.Build();
 
-			ApplicationBuilder.New(customer)
+			var application = ApplicationBuilder.New(customer)
 				.WithLoanAmount(GetLoanThresholdForCustomer(customer) - 1)
 				.Build();
 		}
 
-		[Test, AUT(AUT.Uk, AUT.Za), JIRA("SME-866", "UK-866"), Description("Scenario 1: Declined")]
+        [Test, AUT(AUT.Za, AUT.Uk), JIRA("UK-866"), Description("Scenario 1: Declined")]
 		public void CheckpointMonthlyIncomeEnoughForRepaymentDecline()
 		{
 			var customer = CustomerBuilder.New()
-				.WithEmployer(TestMask)
+                .WithEmployer(TestMask)
 				.WithNetMonthlyIncome(NetMonthlyIncome)
-				.Build();
+                .Build();
 
 			ApplicationBuilder.New(customer)
 				.WithLoanAmount(GetLoanThresholdForCustomer(customer) + 1)
-				.WithExpectedDecision(ApplicationDecisionStatus.Declined)
+                .WithExpectedDecision(ApplicationDecisionStatus.Declined)
 				.Build();
 		}
 
@@ -57,10 +57,10 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			return Decimal.Parse(Drive.Db.GetServiceConfiguration("Risk.AllowedIncomeLimitPercent").Value);
 		}
 
-		private static decimal GetDefaultCreditLimit()
-		{
-			return Decimal.Parse(Drive.Db.GetServiceConfiguration("Risk.DefaultCreditLimit").Value);
-		}
+        private static decimal GetDefaultCreditLimit()
+        {
+            return Decimal.Parse(Drive.Db.GetServiceConfiguration("Risk.DefaultCreditLimit").Value);
+        }
 
 		#endregion
 	}

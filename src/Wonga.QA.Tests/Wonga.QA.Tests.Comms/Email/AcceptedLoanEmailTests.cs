@@ -37,5 +37,12 @@ namespace Wonga.QA.Tests.Comms.Email
 
 			Assert.AreEqual("18432", email.TemplateName );
 		}
+
+		[Test, AUT(AUT.Za), JIRA("QA-204"), DependsOn("AgreementEmailSentAfterApplicationAccepted"), Pending]
+		public void PaymentConfirmationEmailSentAfterCustomerIsFunded()
+		{
+			//Need to timeout saga manually
+			var sagaId = Drive.Data.OpsSagas.Db.HyphenBatchCashOutEntity.FindAll().Last();
+		}
 	}
 }

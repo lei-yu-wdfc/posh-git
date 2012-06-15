@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Linq;
 using Gallio.Framework;
 using MbUnit.Framework;
@@ -13,7 +13,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments
 {
-	[TestFixture, AUT(AUT.Za), Pending("ZA-2565")]
+	[TestFixture, AUT(AUT.Za)]
 	class CollectionsTests
 	{
 		private const int TrackingDayThreshold = 19;
@@ -51,7 +51,7 @@ namespace Wonga.QA.Tests.Payments
 			db.Ops.SubmitChanges();
 		}
 
-		[Test, AUT(AUT.Za), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za)]
 		public void CollectionsNaedoEntireWorkflowTest()
 		{
 			const int term = 25;
@@ -85,7 +85,7 @@ namespace Wonga.QA.Tests.Payments
 			FailNaedoCollection(application, 3);
 		}
 
-		[Test, AUT(AUT.Za), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za)]
 		public void CollectionsNaedoFullPaymentAfterTrackingEndsClosesLoanTest()
 		{
 			const int term = 25;
@@ -104,8 +104,6 @@ namespace Wonga.QA.Tests.Payments
 				.WithPromiseDate(promiseDate)
 				.Build();
 
-			application.PutApplicationIntoArrears();
-
 			AttemptNaedoCollection(application, 0);
 			FailNaedoCollection(application, 0);
 
@@ -116,7 +114,7 @@ namespace Wonga.QA.Tests.Payments
 			Do.Until(() => Drive.Db.OpsSagas.PendingScheduledPaymentSagaEntities.Any(a => a.ApplicationGuid == application.Id) == false);
 		}
 
-		[Test, AUT(AUT.Za), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za)]
 		public void CollectionsNaedoPartialPaymentAfterTrackingEndsContinuesTrackingTest()
 		{
 			const int term = 25;
@@ -134,8 +132,6 @@ namespace Wonga.QA.Tests.Payments
 				.WithLoanAmount(loanAmount)
 				.WithPromiseDate(promiseDate)
 				.Build();
-
-			application.PutApplicationIntoArrears();
 
 			AttemptNaedoCollection(application, 0);
 			FailNaedoCollection(application, 0);

@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using MbUnit.Framework;
@@ -10,19 +10,16 @@ using Wonga.QA.Tests.Payments.Helpers;
 
 namespace Wonga.QA.Tests.Payments
 {
-	[TestFixture, AUT(AUT.Za, AUT.Uk, AUT.Ca), Parallelizable(TestScope.Descendants)]
+	[AUT(AUT.Za, AUT.Uk, AUT.Ca)]
 	public class InArrearsNoticeTests
 	{
 		private bool _bankGatewayTestModeOriginal;
-		private Application _application;
 
 		[FixtureSetUp]
 		public void FixtureSetup()
 		{
 			_bankGatewayTestModeOriginal = ConfigurationFunctions.GetBankGatewayTestMode();
 			ConfigurationFunctions.SetBankGatewayTestMode(false);
-
-			_application = ArrangeApplication();
 		}
 
 		[FixtureTearDown]
@@ -31,27 +28,36 @@ namespace Wonga.QA.Tests.Payments
 			ConfigurationFunctions.SetBankGatewayTestMode(_bankGatewayTestModeOriginal);
 		}
 
-		[Test, JIRA("ZA-1676")]
+		[Test, JIRA("ZA-1676"), Parallelizable]
 		public void ApplicationInArrearsSagaCreatedTest()
 		{
+			Application application = ArrangeApplication();
+
 			//check if saga created.
 			var saga =
-				Do.Until(() => Drive.Db.OpsSagas.InArrearsNoticeSagaEntities.Single(e => e.AccountId == _application.AccountId));
+				Do.Until(() => Drive.Db.OpsSagas.InArrearsNoticeSagaEntities.Single(e => e.AccountId == application.AccountId));
 			Assert.AreEqual(0, saga.DaysInArrears);
 		}
 
-		[Test, JIRA("ZA-1676"), DependsOn("ApplicationInArrearsSagaCreatedTest")]
+		[Test, JIRA("ZA-1676"), Parallelizable]
 		public void ApplicationClosedSagaCompleteTest()
 		{
+			Application application = ArrangeApplication();
+
+			//check if saga created.
+			var saga =
+				Do.Until(() => Drive.Db.OpsSagas.InArrearsNoticeSagaEntities.Single(e => e.AccountId == application.AccountId));
+			Assert.AreEqual(0, saga.DaysInArrears);
+
 			//staff message for application is closed.
 			Drive.Msmq.Payments.Send(new IApplicationClosedEvent
-			{
-				ApplicationId = _application.Id,
-				AccountId = _application.AccountId,
-				ClosedOn = DateTime.UtcNow,
-				CreatedOn = DateTime.UtcNow
-			});
-			Do.Until(() => !Drive.Db.OpsSagas.InArrearsNoticeSagaEntities.Any(e => e.AccountId == _application.AccountId));
+			                         	{
+			                         		ApplicationId = application.Id,
+			                         		AccountId = application.AccountId,
+			                         		ClosedOn = DateTime.UtcNow,
+			                         		CreatedOn = DateTime.UtcNow
+			                         	});
+			Do.Until(() => !Drive.Db.OpsSagas.InArrearsNoticeSagaEntities.Any(e => e.AccountId == application.AccountId));
 		}
 
 		private static Application ArrangeApplication()

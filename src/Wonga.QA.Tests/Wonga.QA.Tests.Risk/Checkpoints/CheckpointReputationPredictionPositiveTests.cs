@@ -27,13 +27,13 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		{
 			get { return GetReputationScoreCutoff(); }
 		}
-
+		
 		//private const double ReputationScoreCutoff = 200; //TODO Hardcoded in Risk for now
 		private static string[] _factorNames;
 
 		private const string DeviceAliasMockString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <IovationDataOutput xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.datacontract.org/2004/07/Wonga.Iovation\">    <AccountId>{0}</AccountId>    <Details xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">      <d2p1:KeyValueOfstringstring>        <d2p1:Key>device.alias</d2p1:Key>        <d2p1:Value>{1}</d2p1:Value>      </d2p1:KeyValueOfstringstring>      <d2p1:KeyValueOfstringstring>        <d2p1:Key>device.firstseen</d2p1:Key>        <d2p1:Value>2010-06-01 14:43:21</d2p1:Value>      </d2p1:KeyValueOfstringstring>    </Details>    <Reason>It's ok</Reason>    <Result>Allow</Result>    <TrackingNumber>0123456798</TrackingNumber>  </IovationDataOutput>  ";
 
-		private Application _application;
+		private Application l0Application;
 
 		[FixtureSetUp]
 		public void FixtureSetUp()
@@ -78,9 +78,9 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 			try
 			{
-				_application = ApplicationBuilder.New(customer).WithIovationBlackBox(iovationBlackBox).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+				l0Application = ApplicationBuilder.New(customer).WithIovationBlackBox(iovationBlackBox).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
-				var actualScore = GetReputationPredictionScore(_application);
+				var actualScore = GetReputationPredictionScore(l0Application);
 				Assert.GreaterThan(actualScore, ReputationScoreCutoff);
 			}
 
@@ -103,22 +103,22 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Assert.LessThan(actualScore, ReputationScoreCutoff);
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889"), DependsOn("CheckpointReputationPredictionPositiveAccept"),]
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889"), DependsOn("CheckpointReputationPredictionPositiveAccept")]
 		public void CheckpointReputationPredictionPositiveCorrectFactorsUsed()
 		{
-			var actualFactorNames = GetFactorNamesUsed(_application);
+			var actualFactorNames = GetFactorNamesUsed(l0Application);
 			Assert.AreElementsEqualIgnoringOrder(_factorNames, actualFactorNames);
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889"), DependsOn("CheckpointReputationPredictionPositiveAccept"),]
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889"), DependsOn("CheckpointReputationPredictionPositiveAccept")]
 		public void CheckpointReputationPredictionPositiveTablesUpdateWhenAccountRankIncreases()
 		{
-			var prevAccountRank = (int)Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(_application.Id).AccountRank;
+			var prevAccountRank = (int)Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(l0Application.Id).AccountRank;
 			Assert.AreEqual(0, prevAccountRank);
 
-			_application.RepayOnDueDate();
+			l0Application.RepayOnDueDate();
 
-			Do.Until(() => Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(_application.Id).AccountRank == 1);
+			Do.Until(() => Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(l0Application.Id).AccountRank == 1);
 		}
 
 		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889")]
@@ -158,7 +158,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			}
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889")]
+		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889"), Parallelizable]
 		public void CheckpointReputationPredictionPositiveTablesUpdateWhenInArrears()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(GetPostcode()).Build();
@@ -167,14 +167,14 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			try
 			{
 				var application = ApplicationBuilder.New(customer).WithIovationBlackBox(iovationBlackBox).Build();
-
-				var prevInArrears = (bool)Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(application.Id).InArrears;
+				
+				var prevInArrears = (bool) Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(application.Id).InArrears;
 				Assert.IsNotNull(prevInArrears);
-				Assert.IsFalse((bool)prevInArrears);
+				Assert.IsFalse((bool) prevInArrears);
 
 				application.PutApplicationIntoArrears();
 
-				Do.Until(() => (bool)Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(application.Id).InArrears);
+				Do.Until(() => (bool) Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(application.Id).InArrears);
 			}
 
 			finally
@@ -216,7 +216,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.ForBlackBox(IovationMockResponse.AllowUniqueDevice)
 				.UseDeviceAlias(uniqueAlias)
 				.OnResponseBasedOn(IovationMockResponse.Allow);
-
+				
 			var customer = CustomerBuilder.New()
 				.WithEmployer(TestMask)
 				.WithPostcodeInAddress(GetPostcode())
@@ -348,7 +348,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		{
 			string type = string.Empty;
 
-			switch (Config.AUT)
+			switch(Config.AUT)
 			{
 				case AUT.Ca:
 					//in CA score is only calculated if the device already exists in the DB
@@ -357,7 +357,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 				case AUT.Za:
 					type = customer.Id.ToString();
-
+					
 					var response = String.Format(DeviceAliasMockString, customer.Id, Get.RandomLong(1000000000, 9999999999).ToString());
 					Drive.Data.QaData.Db.IovationDataOutput.Insert(Type: type, Response: response, WaitTimeInSeconds: 0);
 					break;
@@ -365,7 +365,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				default:
 					throw new NotImplementedException();
 			}
-
+			
 			return type;
 		}
 
@@ -373,7 +373,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		{
 			//just clean up the iovation response if it is not one of the predefined values
 			IovationMockResponse response;
-			if (!IovationMockResponse.TryParse(type, out response))
+			if(!IovationMockResponse.TryParse(type, out response))
 			{
 				Drive.Data.QaData.Db.IovationDataOutput.DeleteByType(type);
 			}

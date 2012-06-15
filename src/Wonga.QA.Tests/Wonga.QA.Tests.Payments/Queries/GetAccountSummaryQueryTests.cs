@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.ComponentModel;
 using System.Linq;
 using MbUnit.Framework;
@@ -21,7 +21,7 @@ namespace Wonga.QA.Tests.Payments
 			Do.Until(customer.GetPaymentCard);
 			ApplicationBuilder.New(customer).Build();
 
-			var response = Drive.Api.Queries.Post(new GetAccountSummaryQuery { AccountId = customer.Id });
+			var response = Drive.Api.Queries.Post(new GetAccountSummaryQuery {AccountId = customer.Id});
 			//£100 loan for 10 days.
 			Assert.AreEqual(115.91M, decimal.Parse(response.Values["CurrentLoanRepaymentAmountOnDueDate"].Single()));
 			Assert.AreEqual(DateTime.Today.AddDays(10), DateTime.Parse(response.Values["CurrentLoanDueDate"].Single()));
@@ -34,27 +34,27 @@ namespace Wonga.QA.Tests.Payments
 			ApplicationBuilder.New(customer).Build();
 
 			var response = Drive.Api.Queries.Post(new GetAccountSummaryQuery { AccountId = customer.Id });
-
+			
 			Assert.IsNull(response.Values["CashoutPaymentMethod"].Single());
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1972")]
-		public void GetAccountSummary_return_EasyPayNumber()
-		{
-			Customer customer = CustomerBuilder.New().WithMiddleName(RiskMask.TESTNoCheck).Build();
-			ApplicationBuilder.New(customer).Build();
+        [Test, AUT(AUT.Za), JIRA("ZA-1972")]
+        public void GetAccountSummary_return_EasyPayNumber()
+        {
+            Customer customer = CustomerBuilder.New().WithMiddleName(RiskMask.TESTNoCheck).Build();
+            ApplicationBuilder.New(customer).Build();
 
-			//Assert
-			dynamic repaymentAccount = Drive.Data.Payments.Db.RepaymentAccount;
-			var ra = Do.Until(() => repaymentAccount.FindAll(repaymentAccount.AccountId == customer.Id)
-													.FirstOrDefault());
-			Assert.IsNotNull(ra);
-			Assert.IsNotNull(ra.RepaymentNumber);
+            //Assert
+            dynamic repaymentAccount = Drive.Data.Payments.Db.RepaymentAccount;
+            var ra = Do.Until(() => repaymentAccount.FindAll(repaymentAccount.AccountId == customer.Id)
+                                                    .FirstOrDefault());
+            Assert.IsNotNull(ra);
+            Assert.IsNotNull(ra.RepaymentNumber);
 
-			var response = Drive.Api.Queries.Post(new GetAccountSummaryZaQuery() { AccountId = customer.Id });
+            var response = Drive.Api.Queries.Post(new GetAccountSummaryZaQuery() { AccountId = customer.Id });
 
-			Assert.IsNotNull(response.Values["EasyPayNumber"].Single());
-		}
+            Assert.IsNotNull(response.Values["EasyPayNumber"].Single());
+        }
 
 		[Test, AUT(AUT.Ca), JIRA("CA-1951")]
 		[Row(PaymentMethodEnum.BankAccount)]
@@ -78,6 +78,6 @@ namespace Wonga.QA.Tests.Payments
 			//DB payment method starts in 1
 			Drive.Data.Payments.Db.AccountPreferences.UpdateByAccountId(AccountId: accountId, CashoutPaymentMethodId: (int)(paymentMethod) + 1);
 		}
-
+		
 	}
 }

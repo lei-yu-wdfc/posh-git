@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -11,7 +11,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Comms
 {
-	[TestFixture, Parallelizable(TestScope.Descendants)] //Can be only on level 3 because it changes configuration
+    [TestFixture, Parallelizable(TestScope.Descendants)] //Can be only on level 3 because it changes configuration
 	public class CollectionsChaseSmsTests
 	{
 		#region constants
@@ -47,20 +47,11 @@ namespace Wonga.QA.Tests.Comms
 		private static readonly dynamic SmsMessages = Drive.Data.Sms.Db.SmsMessages;
 		private static readonly dynamic InArrearsNoticeSagaEntities = Drive.Data.OpsSagas.Db.InArrearsNoticeSagaEntity;
 
-		private Application _application;
-		private string _formattedPhoneNumber;
-
 		[FixtureSetUp]
 		public void FixtureSetup()
 		{
 			_bankGatewayTestModeOriginal = ConfigurationFunctions.GetBankGatewayTestMode();
 			ConfigurationFunctions.SetBankGatewayTestMode(false);
-
-			var phoneNumberChunk = GetPhoneNumberChunk();
-			_formattedPhoneNumber = GetFormattedPhoneNumber(phoneNumberChunk);
-
-			var customer = CustomerBuilder.New().WithMobileNumber(string.Format("0{0}", phoneNumberChunk)).Build();
-			_application = ApplicationBuilder.New(customer).Build();
 		}
 
 		[FixtureTearDown]
@@ -75,37 +66,37 @@ namespace Wonga.QA.Tests.Comms
 			VerifySmsIsSentAfterDaysInArrears(0, A2Text);
 		}
 
-		[Test, JIRA("ZA-1676"), AUT(AUT.Za), DependsOn("A2SmsIsSentTest")]
+		[Test, JIRA("ZA-1676"), AUT(AUT.Za)]
 		public void A3SmsIsSentTest()
 		{
 			VerifySmsIsSentAfterDaysInArrears(5, A3Text);
 		}
 
-		[Test, JIRA("ZA-1676"), AUT(AUT.Za), DependsOn("A3SmsIsSentTest")]
+		[Test, JIRA("ZA-1676"), AUT(AUT.Za)]
 		public void A4SmsIsSentTest()
 		{
 			VerifySmsIsSentAfterDaysInArrears(15, A4Text);
 		}
 
-		[Test, JIRA("ZA-2233", "ZA-1676"), AUT(AUT.Za), DependsOn("A4SmsIsSentTest")]
+		[Test, JIRA("ZA-2233", "ZA-1676"), AUT(AUT.Za)]
 		public void A5SmsIsSentTest()
 		{
 			VerifySmsIsSentAfterDaysInArrears(20, A5Text);
 		}
 
-		[Test, JIRA("ZA-2233", "ZA-1676"), AUT(AUT.Za), DependsOn("A5SmsIsSentTest")]
+		[Test, JIRA("ZA-2233", "ZA-1676"), AUT(AUT.Za)]
 		public void A6SmsIsSentTest()
 		{
 			VerifySmsIsSentAfterDaysInArrears(30, A6Text);
 		}
 
-		[Test, JIRA("ZA-2233", "ZA-1676"), AUT(AUT.Za), DependsOn("A6SmsIsSentTest")]
+		[Test, JIRA("ZA-2233", "ZA-1676"), AUT(AUT.Za)]
 		public void A7SmsIsSentTest()
 		{
 			VerifySmsIsSentAfterDaysInArrears(40, A7Text);
 		}
 
-		[Test, JIRA("ZA-1676"), AUT(AUT.Za), Explicit]
+		[Test, JIRA("ZA-1676"), AUT(AUT.Za)]
 		public void WhenInHardshipSmsIsNotSent()
 		{
 			VerifyA2SentA3SuppressedA4Sent(
@@ -113,7 +104,7 @@ namespace Wonga.QA.Tests.Comms
 				a => AccountPreferences.UpdateByAccountId(AccountId: a.AccountId, IsHardship: false));
 		}
 
-		[Test, JIRA("ZA-1676"), AUT(AUT.Za), Explicit]
+		[Test, JIRA("ZA-1676"), AUT(AUT.Za)]
 		public void WhenInDisputeSmsIsNotSent()
 		{
 			VerifyA2SentA3SuppressedA4Sent(
@@ -123,14 +114,16 @@ namespace Wonga.QA.Tests.Comms
 
 		#region helpers
 
-		private void VerifySmsIsSentAfterDaysInArrears(uint daysInArrears, string smsText)
+		private static void VerifySmsIsSentAfterDaysInArrears(int daysInArrears, string smsText)
 		{
 			DateTime atTheBeginningOfThisTest = DateTime.Now;
+			string phoneNumberChunk = GetPhoneNumberChunk();
+			string formattedPhoneNumber = GetFormattedPhoneNumber(phoneNumberChunk);
+			Application application = ArrangeApplicationInArrears(phoneNumberChunk);
 
-			_application.PutApplicationIntoArrears(daysInArrears);
-			TimeoutNotificationSagaForDays(_application, daysInArrears);
+			TimeoutNotificationSagaForDays(application, daysInArrears);
 
-			AssertSmsIsSent(_formattedPhoneNumber, smsText, atTheBeginningOfThisTest);
+			AssertSmsIsSent(formattedPhoneNumber, smsText, atTheBeginningOfThisTest);
 		}
 
 		private static void VerifyA2SentA3SuppressedA4Sent(
@@ -185,16 +178,16 @@ namespace Wonga.QA.Tests.Comms
 			return ApplicationBuilder.New(customer).Build().PutApplicationIntoArrears(20);
 		}
 
-		private static void TimeoutNotificationSagaForDays(Application application, uint days)
+		private static void TimeoutNotificationSagaForDays(Application application, int days)
 		{
 			var saga =
 				Do.Until(() =>
-						 InArrearsNoticeSagaEntities.FindByAccountId(application.AccountId));
+				         InArrearsNoticeSagaEntities.FindByAccountId(application.AccountId));
 			Assert.IsNotNull(saga);
 
 			for (int i = 0; i < days - saga.DaysInArrears; i++)
 			{
-				Drive.Msmq.Payments.Send(new TimeoutMessage { Expires = DateTime.UtcNow, SagaId = saga.Id });
+				Drive.Msmq.Payments.Send(new TimeoutMessage {Expires = DateTime.UtcNow, SagaId = saga.Id});
 			}
 			Assert.IsNotNull(Do.Until(
 				() =>
@@ -205,25 +198,25 @@ namespace Wonga.QA.Tests.Comms
 		{
 			Assert.IsNotNull(
 				Do.Until(() =>
-						 SmsMessages.Find(
-							SmsMessages.CreatedOn >= createdAfter &&
-							SmsMessages.MobilePhoneNumber == formattedPhoneNumber &&
-							SmsMessages.MessageText == text)));
+				         SmsMessages.Find(
+				         	SmsMessages.CreatedOn >= createdAfter &&
+				         	SmsMessages.MobilePhoneNumber == formattedPhoneNumber &&
+				         	SmsMessages.MessageText == text)));
 		}
 
 		private static void AssertSmsIsNotSent(string formattedPhoneNumber, string text, DateTime createdAfter)
 		{
 			Assert.IsTrue(
 				Do.Watch(() =>
-						 (bool)(
-									SmsMessages.Find(
-										SmsMessages.CreatedOn >= createdAfter &&
-										SmsMessages.MobilePhoneNumber == formattedPhoneNumber &&
-										SmsMessages.MessageText == text &&
-										(SmsMessages.Status != 3 ||
-										 SmsMessages.ErrorMessage != null || // TODO: error message is set to null by mistake in sms
-										 SmsMessages.ServiceMsgId != null))
-									== null)));
+				         (bool) (
+				                	SmsMessages.Find(
+				                		SmsMessages.CreatedOn >= createdAfter &&
+				                		SmsMessages.MobilePhoneNumber == formattedPhoneNumber &&
+				                		SmsMessages.MessageText == text &&
+				                		(SmsMessages.Status != 3 ||
+				                		 SmsMessages.ErrorMessage != null || // TODO: error message is set to null by mistake in sms
+				                		 SmsMessages.ServiceMsgId != null))
+				                	== null)));
 		}
 
 		#endregion

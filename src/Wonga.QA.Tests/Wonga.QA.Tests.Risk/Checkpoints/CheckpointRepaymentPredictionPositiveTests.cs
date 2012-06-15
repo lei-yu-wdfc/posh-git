@@ -25,7 +25,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		private string _surname;
 		private Date _dateOfBirth;
 		private string _nationalNumber;
-
+		
 		#region ScorecardNames
 
 		private string _expectedScorecardNameL0;
@@ -127,7 +127,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		public void CheckpointRepaymentPredictionPositiveL0Decline()
 		{
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
-			var application = ApplicationBuilder.New(customer).WithLoanTerm(30).WithLoanAmount(2000).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanTerm(30).WithLoanAmount(2000).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 
 			var repaymentPredictionScore = GetRepaymentPredictionScore(application);
 			Assert.LessThan(repaymentPredictionScore, ScoreCutoffNewUsers);
@@ -199,7 +199,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		private double GetRepaymentPredictionScore(Application application)
 		{
 			var riskWorkflowId = (int)Do.Until(() => Drive.Data.Risk.Db.RiskWorkflows.FindByApplicationId(application.Id)).RiskWorkflowId;
-			var score = (double)Do.Until(() => Drive.Data.Risk.Db.RiskDecisionData.FindByRiskWorkflowId(riskWorkflowId).ValueDouble);
+			var score = (double)Do.Until(() =>Drive.Data.Risk.Db.RiskDecisionData.FindByRiskWorkflowId(riskWorkflowId).ValueDouble);
 
 			return score;
 		}
