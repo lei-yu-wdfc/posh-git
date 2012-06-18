@@ -26,7 +26,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
             {
               case AUT.Za:
               //case AUT.Ca:
-                  Assert.That(Headers, Has.Item(UiMapMobile.Get.DeclinedPage.HeaderText));
+                  Assert.That(Headers, Has.Item(ContentMapMobile.Get.DeclinedPageMobile.HeaderText));
                   break;
               default:
                     throw new NotImplementedException();

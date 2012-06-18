@@ -63,6 +63,8 @@
     <Compile Include="Mappings\Content\ContentMapMobile.cs" />
     <Compile Include="Mappings\Content\Elements\HelpElement.cs" />
     <Compile Include="Mappings\Content\Elements\TabsElementMobile.cs" />
+    <Compile Include="Mappings\Content\Pages\DealDonePage.cs" />
+    <Compile Include="Mappings\Content\Pages\DeclinedPageMobile.cs" />
     <Compile Include="Mappings\Content\Sections\AccountDetailsSection.cs" />
     <Compile Include="Mappings\Content\Sections\MobilePinVerificationSection.cs" />
     <Compile Include="Mappings\Content\Sections\YourDetailsSection.cs" />
@@ -88,7 +90,7 @@
     <Compile Include="Mappings\Ui\Pages\MySummaryPageMobile.cs" />
     <Compile Include="Mappings\Ui\Pages\PersonalBankAccountPageMobile.cs" />
     <Compile Include="Mappings\Ui\Pages\PersonalDetailsPageMobile.cs" />
-    <Compile Include="Mappings\Ui\Pages\ProcessingPageMobile.cs" />
+    <Compile Include="Ui\Pages\ProcessingPageMobile.cs" />
     <Compile Include="Mappings\Ui\Sections\BankAccountSection.cs" />
     <Compile Include="Mappings\Ui\Sections\ContactingYouSection.cs" />
     <Compile Include="Mappings\Ui\Sections\EmploymentDetailsSection.cs" />

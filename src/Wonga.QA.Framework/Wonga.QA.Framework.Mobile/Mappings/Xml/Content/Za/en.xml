@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentMapMobile>
-  
+
   <TabsElementMobile>
     <Login>login</Login>
     <ApplyNow>apply now</ApplyNow>
@@ -11,6 +11,14 @@
     <News>news</News>
     <Help>help</Help>
     <ContactUs>contact us</ContactUs>
-  </TabsElementMobile>  
+  </TabsElementMobile>
+
+  <DealDonePage>
+    <HeaderText>Your application has been accepted, you’re almost there!</HeaderText>
+  </DealDonePage>
   
-	</ContentMapMobile>
+  <DeclinedPage>
+    <HeaderText>Application declined</HeaderText>
+  </DeclinedPage>
+
+</ContentMapMobile>

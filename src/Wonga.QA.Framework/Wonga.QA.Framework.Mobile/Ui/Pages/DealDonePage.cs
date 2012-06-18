@@ -7,6 +7,7 @@ using MbUnit.Framework;
 using NHamcrest.Core;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Mobile.Mappings.Content;
 using Wonga.QA.Framework.Mobile.Mappings.Ui;
 
 namespace Wonga.QA.Framework.Mobile.Ui.Pages
@@ -20,7 +21,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
         public DealDonePage(MobileUiClient client)
             : base(client)
         {
-            Assert.That(Headers, Has.Item(UiMapMobile.Get.DealDonePage.HeaderText));
+            Assert.That(Headers, Has.Item(ContentMapMobile.Get.DealDonePage.HeaderText));
             _continueButton = Content.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.DealDonePage.ContinueButtonLink)) ??
                               Content.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.DealDonePage.ContinueButton));
         }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Mobile.Mappings.Content.Elements;
+using Wonga.QA.Framework.Mobile.Mappings.Content.Pages;
 using Wonga.QA.Framework.Mobile.Mappings.Content.Sections;
 using Wonga.QA.Framework.Mobile.Mappings.Xml;
 
@@ -48,5 +49,12 @@ namespace Wonga.QA.Framework.Mobile.Mappings.Content
         public virtual MobilePinVerificationSection MobilePinVerificationSection { get; set; }
         public virtual HelpElement HelpElement { get; set; }
         public virtual AccountDetailsSection AccountDetailsSection { get; set; }
+
+        #region Pages 
+
+        public virtual DealDonePage DealDonePage { get; set; }
+        public virtual DeclinedPageMobile DeclinedPageMobile { get; set; }
+
+        #endregion
     }
 }
