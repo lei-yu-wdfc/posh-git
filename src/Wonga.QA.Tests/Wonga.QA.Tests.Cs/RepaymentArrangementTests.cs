@@ -51,7 +51,7 @@ namespace Wonga.QA.Tests.Cs
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-1864")]
-		public void RepyamentPlanNotAllowedWhenInDisputeTest()
+		public void RepaymentPlanNotAllowedWhenInDisputeTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
 			Application application = ApplicationBuilder.New(customer).Build().PutIntoArrears(35);
