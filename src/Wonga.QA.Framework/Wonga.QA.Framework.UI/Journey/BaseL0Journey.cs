@@ -104,7 +104,7 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public IL0ConsumerJourney WithDeclineDecision()
+        public virtual IL0ConsumerJourney WithDeclineDecision()
         {
             journey.Remove(typeof(ProcessingPage));
             journey.Remove(typeof(AcceptedPage));
