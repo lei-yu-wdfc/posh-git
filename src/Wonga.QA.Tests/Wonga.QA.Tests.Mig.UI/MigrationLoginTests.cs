@@ -23,9 +23,9 @@ namespace Wonga.QA.Tests.Migration
         public void MigratedV2CustomerLogsInToV3Test()
         {
             //var test = v2db;
-            var accountsTab = Drive.Data.Ops.Db.Accounts;
-            
-            Client.Login().LoginAs("claire_coe@lycos.co.uk", "kieran14");
+            //var accountsTab = Drive.Data.Ops.Db.Accounts;
+
+            Client.Login().LoginAs("qa.wonga.com+QB-WK-158-d540d574-0c66-4f42-b02a-aec5a9d2bde4@gmail.com","Passw0rd");
             // Likely we don't need to assert here because if mySummary object is not created successfully, an excption will be thrown
         }
 
