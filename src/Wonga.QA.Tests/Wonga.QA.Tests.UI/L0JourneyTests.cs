@@ -749,10 +749,11 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Wb), JIRA("QA-181")]
         public void L0JourneyCustomerOnCurrentAddressPageDoesNotEnterSomeRequiredFieldsWarningMessageDisplayedWb()
         {
-            var journeyWb = JourneyFactory.GetL0JourneyWB(Client.Home());
-            var addressDetailsPage = journeyWb.ApplyForLoan(5500, 30)
+            var journeyWb = JourneyFactory.GetL0Journey(Client.Home())
+                .WithMiddleName("TESTNoCheck");
+            var addressDetailsPage = journeyWb.ApplyForLoan()
                 .AnswerEligibilityQuestions()
-                .FillPersonalDetails(middleNameMask: "TESTNoCheck").CurrentPage as AddressDetailsPage;
+                .FillPersonalDetails().CurrentPage as AddressDetailsPage;
             addressDetailsPage.PostCode = "SW6 6PN";
             addressDetailsPage.LookupByPostCode();
             addressDetailsPage.GetAddressesDropDown();
@@ -855,11 +856,13 @@ namespace Wonga.QA.Tests.Ui
                     Assert.IsFalse(myAccountZa.AccountDetailsSection.IsPasswordInvalidFormatWarningOccured());
                     break;
                 case AUT.Wb:
-                    var journeyWb = JourneyFactory.GetL0JourneyWB(Client.Home());
-                    var accountDetailsPage = journeyWb.ApplyForLoan(5500, 30)
+                    var journeyWb = JourneyFactory.GetL0Journey(Client.Home())
+                        .WithMiddleName("TESTNoCheck")
+                        .WithAddresPeriod("2 to 3 years");
+                    var accountDetailsPage = journeyWb.ApplyForLoan()
                         .AnswerEligibilityQuestions()
-                        .FillPersonalDetails(middleNameMask: "TESTNoCheck")
-                        .FillAddressDetails(addressPeriod: "2 to 3 years").CurrentPage as AccountDetailsPage;
+                        .FillPersonalDetails()
+                        .FillAddressDetails().CurrentPage as AccountDetailsPage;
                     accountDetailsPage.AccountDetailsSection.Password = "sdfsdfs";
                     Thread.Sleep(1000);
                     Assert.IsTrue(accountDetailsPage.AccountDetailsSection.IsPasswordInvalidFormatWarningOccured());
@@ -915,12 +918,13 @@ namespace Wonga.QA.Tests.Ui
                 #region Wb
                 case AUT.Wb:
                     var emailWb = Get.RandomEmail();
-                    var journeyWb = JourneyFactory.GetL0JourneyWB(Client.Home());
-                    var debitCardPage = journeyWb.ApplyForLoan(5500, 30)
+                    var journeyWb = JourneyFactory.GetL0Journey(Client.Home())
+                        .WithMobilePhone(ukMobileTelephone)
+                        .WithAddresPeriod("Between 4 months and 2 years");
+                    var debitCardPage = journeyWb.ApplyForLoan()
                     .AnswerEligibilityQuestions()
-                    .FillPersonalDetails(mobilePhone: ukMobileTelephone)
-                    .FillAddressDetails(addressPeriod: "Between 4 months and 2 years")
-                    .EnterAdditionalAddressDetails()
+                    .FillPersonalDetails()
+                    .FillAddressDetails()
                     .FillAccountDetails()
                     .FillBankDetails().CurrentPage as PersonalDebitCardPage;
                     Assert.IsTrue(debitCardPage.MobilePinVerification.ResendPinClickAndCheck());
@@ -945,8 +949,8 @@ namespace Wonga.QA.Tests.Ui
             string ca = "wonga.ca";
             string za = "wonga.co.za";
             string uk = "wonga.com";
-            var journey = JourneyFactory.GetL0JourneyWB(Client.Home());
-            var personaltDetailsPage = journey.ApplyForLoan(5500, 30)
+            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var personaltDetailsPage = journey.ApplyForLoan()
                                          .AnswerEligibilityQuestions().CurrentPage as PersonalDetailsPage;
             personaltDetailsPage.PrivacyPolicyClick();
             List<string> hrefs = personaltDetailsPage.GetHrefsOfLinksOnPrivacyPopup();
@@ -967,11 +971,13 @@ namespace Wonga.QA.Tests.Ui
             {
                 #region Wb
                 case AUT.Wb:
-                    var journeyWb = JourneyFactory.GetL0JourneyWB(Client.Home());
-                    var accountDetailsPageWb = journeyWb.ApplyForLoan(5500, 30)
+                    var journeyWb = JourneyFactory.GetL0Journey(Client.Home())
+                        .WithEmail(email)
+                        .WithAddresPeriod("2 to 3 years");
+                    var accountDetailsPageWb = journeyWb.ApplyForLoan()
                     .AnswerEligibilityQuestions()
-                    .FillPersonalDetails(email: email)
-                    .FillAddressDetails(addressPeriod: "2 to 3 years").CurrentPage as AccountDetailsPage;
+                    .FillPersonalDetails()
+                    .FillAddressDetails().CurrentPage as AccountDetailsPage;
                     //accountDetailsPageWb.AccountDetailsSection.Password = "bla"; // wierd string
                     accountDetailsPageWb.AccountDetailsSection.Password = email;
                     Do.Until(accountDetailsPageWb.AccountDetailsSection.IsPasswordEqualsEmailWarningOccured);
@@ -1014,17 +1020,22 @@ namespace Wonga.QA.Tests.Ui
             var additionalDirectorEmail = String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
             var firstName = Get.RandomString(3, 15);
             var lastName = Get.RandomString(3, 15);
-            var journey = JourneyFactory.GetL0JourneyWB(Client.Home());
-            var additionalDirectorsPage = journey.ApplyForLoan(5500, 30)
-             .AnswerEligibilityQuestions()
-             .FillPersonalDetails(middleNameMask: "TESTNoCheck")
-             .FillAddressDetails(addressPeriod: "More than 4 years")
-             .FillAccountDetails()
-             .FillBankDetails()
-             .FillCardDetails()
-             .EnterBusinessDetails()
-             .AddAdditionalDirector(firstName: firstName, lastName: lastName, email: additionalDirectorEmail, submit: false)
-             .CurrentPage as AdditionalDirectorsPage;
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithMiddleName("TESTNoCheck")
+                .WithAddresPeriod("More than 4 years")
+                .WithAdditionalDirectorName(firstName)
+                .WithAdditionalDirectorSurName(lastName)
+                .WithAdditionalDirectorEmail(additionalDirectorEmail);
+            var additionalDirectorsPage = journey.ApplyForLoan()
+                .AnswerEligibilityQuestions()
+                .FillPersonalDetails()
+                .FillAddressDetails()
+                .FillAccountDetails()
+                .FillBankDetails()
+                .FillCardDetails()
+                .EnterBusinessDetails()
+                .AddAdditionalDirector(submit: false)
+                .CurrentPage as AdditionalDirectorsPage;
             var addAdditionalDirectorPage = additionalDirectorsPage.AddAditionalDirector();
             string directors = additionalDirectorsPage.GetDirectors();
             Assert.IsTrue(directors.Contains(firstName + " " + lastName));
@@ -1035,16 +1046,20 @@ namespace Wonga.QA.Tests.Ui
         {
             var email = String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
             var additionalDirectorEmail = String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
-            var journey = JourneyFactory.GetL0JourneyWB(Client.Home());
-            var homePage = journey.ApplyForLoan(5500, 30)
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithMiddleName("TESTNoCheck")
+                .WithEmail(email)
+                .WithAddresPeriod("More than 4 years")
+                .WithAdditionalDirectorEmail(additionalDirectorEmail);
+            var homePage = journey.ApplyForLoan()
              .AnswerEligibilityQuestions()
-             .FillPersonalDetails(middleNameMask: "TESTNoCheck", email: email)
-             .FillAddressDetails(addressPeriod: "More than 4 years")
+             .FillPersonalDetails()
+             .FillAddressDetails()
              .FillAccountDetails()
              .FillBankDetails()
              .FillCardDetails()
              .EnterBusinessDetails()
-             .AddAdditionalDirector(email: additionalDirectorEmail)
+             .AddAdditionalDirector()
              .EnterBusinessBankAccountDetails()
              .WaitForApplyTermsPage()
              .ApplyTerms()
@@ -1067,16 +1082,20 @@ namespace Wonga.QA.Tests.Ui
         {
             var email = String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
             var additionalDirectorEmail = String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
-            var journey = JourneyFactory.GetL0JourneyWB(Client.Home());
-            var homePage = journey.ApplyForLoan(5500, 30)
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithMiddleName("TESTNoCheck")
+                .WithEmail(email)
+                .WithAddresPeriod("More than 4 years")
+                .WithAdditionalDirectorEmail(additionalDirectorEmail);
+            var homePage = journey.ApplyForLoan()
              .AnswerEligibilityQuestions()
-             .FillPersonalDetails(middleNameMask: "TESTNoCheck", email: email)
-             .FillAddressDetails(addressPeriod: "More than 4 years")
+             .FillPersonalDetails()
+             .FillAddressDetails()
              .FillAccountDetails()
              .FillBankDetails()
              .FillCardDetails()
              .EnterBusinessDetails()
-             .AddAdditionalDirector(email: additionalDirectorEmail)
+             .AddAdditionalDirector()
              .EnterBusinessBankAccountDetails()
              .WaitForApplyTermsPage()
              .ApplyTerms()
@@ -1130,9 +1149,12 @@ namespace Wonga.QA.Tests.Ui
                 #endregion
                 #region Wb
                 case AUT.Wb:
-                    var journeyWb = JourneyFactory.GetL0JourneyWB(Client.Home());
-                    var personalDetailsPageWb = journeyWb.ApplyForLoan(5500, 30)
-                    .AnswerEligibilityQuestions().FillPersonalDetails(firstName: name, lastName: surname, email: email, submit: false).CurrentPage as PersonalDetailsPage;
+                    var journeyWb = JourneyFactory.GetL0Journey(Client.Home())
+                        .WithFirstName(name)
+                        .WithLastName(surname)
+                        .WithEmail(email);
+                    var personalDetailsPageWb = journeyWb.ApplyForLoan()
+                    .AnswerEligibilityQuestions().FillPersonalDetails(submit: false).CurrentPage as PersonalDetailsPage;
                     personalDetailsPageWb.ClickSubmit();
                     var loginPageWb = new LoginPage(Client);
                     Assert.IsTrue(loginPageWb.Url.Contains("/login"));
@@ -1348,11 +1370,14 @@ namespace Wonga.QA.Tests.Ui
             {
                 case AUT.Wb:
                     const String middleNameMask = "TESTNoCheck";
-                    var journeyWb = JourneyFactory.GetL0JourneyWB(Client.Home());
-                    var applyTermsPage = journeyWb.ApplyForLoan(amountOfLoan, termsOfLoan)
+                    var journeyWb = JourneyFactory.GetL0Journey(Client.Home())
+                        .WithAmount(amountOfLoan).WithDuration(termsOfLoan)
+                        .WithMiddleName(middleNameMask)
+                        .WithAddresPeriod("More than 4 years");
+                    var applyTermsPage = journeyWb.ApplyForLoan()
                                              .AnswerEligibilityQuestions()
-                                             .FillPersonalDetails(middleNameMask: middleNameMask)
-                                             .FillAddressDetails(addressPeriod: "More than 4 years")
+                                             .FillPersonalDetails()
+                                             .FillAddressDetails()
                                              .FillAccountDetails()
                                              .FillBankDetails()
                                              .FillCardDetails()
@@ -1461,9 +1486,10 @@ namespace Wonga.QA.Tests.Ui
             bool[] checkBox = new bool[5] { true, true, true, true, true };
             checkBox[getRandomNumber] = false;
 
-            var journeyWb = JourneyFactory.GetL0JourneyWB(Client.Home());
-            var eligibilityQuestionsPage = journeyWb.ApplyForLoan(100, 20)
-                .AnswerEligibilityQuestions(checkBox[0], checkBox[1], checkBox[2], checkBox[3], checkBox[4], submit: false)
+            var journeyWb = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEligibilityQuestions(checkBox[0], checkBox[1], checkBox[2], checkBox[3], checkBox[4]);
+            var eligibilityQuestionsPage = journeyWb.ApplyForLoan()
+                .AnswerEligibilityQuestions(submit: false)
                 .CurrentPage as EligibilityQuestionsPage;
 
             var URLbefore = Client.Driver.Url;

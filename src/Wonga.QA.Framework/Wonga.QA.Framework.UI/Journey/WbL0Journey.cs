@@ -35,8 +35,8 @@ namespace Wonga.QA.Framework.UI.Journey
 
             _submit = true;
 
-            _amount = 100;
-            _duration = 20;
+            _amount = 5500;
+            _duration = 30;
 
             _activeCompany = true;
             _director = true;
@@ -316,12 +316,12 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        //   public IL0ConsumerJourney UpdateLoanDuration(bool submit = true)
-        //   {
-        //       var applyTermsPage = CurrentPage as ApplyTermsPage;
-        //       applyTermsPage.EditDurationOfLoan("15");
-        //       return this;
-        //   }
+        public override IL0ConsumerJourney UpdateLoanDuration(bool submit = true)
+        {
+            var applyTermsPage = CurrentPage as ApplyTermsPage;
+            applyTermsPage.EditDurationOfLoan("15");
+            return this;
+        }
 
         public override IL0ConsumerJourney ApplyTerms(bool submit = true)
         {
@@ -419,7 +419,7 @@ namespace Wonga.QA.Framework.UI.Journey
             _additionalDirectorEmail = additionalDirectorEmail;
             return this;
         }
-        
+
         public override IL0ConsumerJourney WithBusinessBankAccount(string businessBankAccount)
         {
             _businessBankAccount = businessBankAccount;

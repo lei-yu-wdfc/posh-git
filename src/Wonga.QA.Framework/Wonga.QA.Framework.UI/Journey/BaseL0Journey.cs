@@ -139,6 +139,11 @@ namespace Wonga.QA.Framework.UI.Journey
             throw new NotImplementedException(message: "Used only on Wb");
         }
 
+        public virtual IL0ConsumerJourney UpdateLoanDuration(bool submit = true)
+        {
+            throw new NotImplementedException(message: "Used only on Wb");
+        }
+
         #region Builder
 
         public virtual IL0ConsumerJourney FillAndStop()
@@ -351,6 +356,7 @@ namespace Wonga.QA.Framework.UI.Journey
         {
             throw new NotImplementedException(message: "Used only on Wb");
         }
+
 
         #endregion
     }

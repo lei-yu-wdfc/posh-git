@@ -25,11 +25,12 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Wb)]
         public void WbDeclinedLoan()
         {
-            var journey = JourneyFactory.GetL0JourneyWB(Client.Home());
-            journey.ApplyForLoan(5500, 30)
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithAddresPeriod("More than 4 years");
+            journey.ApplyForLoan()
                 .AnswerEligibilityQuestions()
                 .FillPersonalDetails()
-                .FillAddressDetails(addressPeriod: "More than 4 years")
+                .FillAddressDetails()
                 .FillAccountDetails()
                 .FillBankDetails()
                 .FillCardDetails()

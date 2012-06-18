@@ -37,6 +37,7 @@ namespace Wonga.QA.Framework.UI
         IL0ConsumerJourney WaitForApplyTermsPage(bool submit = true);
         IL0ConsumerJourney ApplyTerms(bool submit = true);
         IL0ConsumerJourney GoHomePage(bool submit = true);
+        IL0ConsumerJourney UpdateLoanDuration(bool submit = true);
 
         #region Builder
 
@@ -86,6 +87,7 @@ namespace Wonga.QA.Framework.UI
         IL0ConsumerJourney WithBusinessDebitCardType(string businessDebitCardType);
         IL0ConsumerJourney WithBusinessDebitCardExpiryDate(string businessDebitExpiryDate);
         IL0ConsumerJourney WithBusinessDebitCardStartDate(string businessDebitStartDate);
+
 
         #endregion
     }
