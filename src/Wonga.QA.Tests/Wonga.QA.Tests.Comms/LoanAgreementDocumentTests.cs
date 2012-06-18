@@ -45,9 +45,15 @@ namespace Wonga.QA.Tests.Comms
                 }
 
                 [Test]
-                public void ThenGetLoanAgreementQueryWillRetriveTheDocuments()
+                public void ThenALoanAgreementIsCreated()
                 {
                     Do.Until(() => Drive.Api.Queries.Post(new GetLoanAgreementQuery { ApplicationId = _application.Id}));
+                }
+
+                [Test]
+                public void ThenAPreAuthorisedDebitFormIsCreated()
+                {
+                    Do.Until(() => Drive.Api.Queries.Post(new GetPreApprovedDirectDebitFormCaQuery { ApplicationId = _application.Id }));
                 }
             }
         }
@@ -81,9 +87,15 @@ namespace Wonga.QA.Tests.Comms
                 }
 
                 [Test]
-                public void ThenGetLoanAgreementQueryWillRetriveTheDocuments()
+                public void ThenALoanAgreementIsCreated()
                 {
                     Do.Until(() => Drive.Api.Queries.Post(new GetLoanAgreementQuery { ApplicationId = _application.Id }));
+                }
+
+                [Test]
+                public void ThenAPreAuthorisedDebitFormIsCreated()
+                {
+                    Do.Until(() => Drive.Api.Queries.Post(new GetPreApprovedDirectDebitFormCaQuery { ApplicationId = _application.Id }));
                 }
             }
         }
@@ -117,9 +129,15 @@ namespace Wonga.QA.Tests.Comms
                 }
 
                 [Test]
-                public void ThenGetLoanAgreementQueryWillRetriveTheDocuments()
+                public void ThenALoanAgreementIsCreated()
                 {
                     Do.Until(() => Drive.Api.Queries.Post(new GetLoanAgreementQuery { ApplicationId = _application.Id }));
+                }
+
+                [Test]
+                public void ThenAPreAuthorisedDebitFormIsCreated()
+                {
+                    Do.Until(() => Drive.Api.Queries.Post(new GetPreApprovedDirectDebitFormCaQuery { ApplicationId = _application.Id }));
                 }
             }
         }
