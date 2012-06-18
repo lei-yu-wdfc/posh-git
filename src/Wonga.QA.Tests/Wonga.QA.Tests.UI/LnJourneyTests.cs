@@ -353,13 +353,15 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca, AUT.Uk), SmokeTest, Pending("Fail")]
+        [Test, AUT(AUT.Za, AUT.Ca, AUT.Uk), SmokeTest, MultipleAsserts, Pending("Waiting for UKWEB-212")]
         public void LnVerifyUrlsAreCorrect()
         {
             var loginPage = Client.Login();
+
             string email = Get.RandomEmail();
             string name = Get.GetName();
             string surname = Get.RandomString(10);
+
             Customer customer = CustomerBuilder
                 .New()
                 .WithEmailAddress(email)
@@ -369,21 +371,27 @@ namespace Wonga.QA.Tests.Ui
             Application application = ApplicationBuilder
                 .New(customer)
                 .Build();
+
             application.RepayOnDueDate();
-            var mySummaryPageAfterLogin = loginPage.LoginAs(email);
-            var homePage = Client.Home();
-            var journey = JourneyFactory.GetLnJourney(homePage);
-            var applyPage = journey.ApplyForLoan(200, 10)
-                .SetName(name, surname).CurrentPage as ApplyPage;
+
+            //var mySummaryPageAfterLogin = loginPage.LoginAs(email);
+            loginPage.LoginAs(email);
+
+            var journey = JourneyFactory.GetLnJourney(Client.Home());
+            var applyPage = journey.ApplyForLoan(200, 10);
+
             // Check the URL here is /apply-member
             Assert.Contains(Client.Driver.Url, "/apply-member?", "The apply page URL does not contain '/apply-member?'");
-            journey.CurrentPage = applyPage.Submit() as ProcessingPage;
+
+            applyPage.FillApplicationDetails();
             // Check the URL here is /processing-member
             Assert.EndsWith(Client.Driver.Url, "/processing-member", "The processing page URL is not /processing-member.");
-            var mySummaryPage = journey.WaitForAcceptedPage();
+
+            journey.WaitForAcceptedPage();
             // Check the URL here is /apply-accept-member
             Assert.EndsWith(Client.Driver.Url, "/apply-accept-member", "The accept page URL is not /apply-accept-member.");
-            var dealDonePage = journey.FillAcceptedPage();
+
+            journey.FillAcceptedPage();
             // Check the URL here is /deal-done-member
             Assert.EndsWith(Client.Driver.Url, "/deal-done-member", "The deal done page URL is not /deal-done-member.");
         }
