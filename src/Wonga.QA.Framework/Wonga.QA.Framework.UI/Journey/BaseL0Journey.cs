@@ -21,6 +21,7 @@ namespace Wonga.QA.Framework.UI.Journey
         protected String _firstName;
         protected String _lastName;
         protected String _middleName;
+        protected String _title;
         protected String _motherMaidenName;
         protected String _email;
         protected String _employerName;
@@ -30,7 +31,7 @@ namespace Wonga.QA.Framework.UI.Journey
         protected GenderEnum _gender;
 
         protected String _postCode;
-        protected String _addresPeriod;
+        protected String _addressPeriod;
 
         protected String _password;
 
@@ -96,6 +97,48 @@ namespace Wonga.QA.Framework.UI.Journey
             throw new NotImplementedException();
         }
 
+        public virtual IL0ConsumerJourney AnswerEligibilityQuestions(bool submit = true)
+        {
+            throw new NotImplementedException(message: "Used only on Wb");
+        }
+        public virtual IL0ConsumerJourney EnterBusinessDetails(bool submit = true)
+        {
+            throw new NotImplementedException(message: "Used only on Wb");
+        }
+       public virtual IL0ConsumerJourney DeclineAddAdditionalDirector(bool submit = true)
+       {
+           throw new NotImplementedException(message: "Used only on Wb");
+       }
+
+        public virtual IL0ConsumerJourney AddAdditionalDirector(bool submit = true)
+        {
+            throw new NotImplementedException(message: "Used only on Wb");
+        }
+
+        public virtual IL0ConsumerJourney EnterBusinessBankAccountDetails(bool submit = true)
+        {
+            throw new NotImplementedException(message: "Used only on Wb");
+        }
+
+        public virtual IL0ConsumerJourney EnterBusinessDebitCardDetails(bool submit = true)
+        {
+            throw new NotImplementedException(message: "Used only on Wb");
+        }
+        public virtual IL0ConsumerJourney WaitForApplyTermsPage(bool submit = true)
+        {
+            throw new NotImplementedException(message: "Used only on Wb");
+        }
+
+        public virtual IL0ConsumerJourney ApplyTerms(bool submit = true)
+        {
+            throw new NotImplementedException(message: "Used only on Wb");
+        }
+
+        public virtual IL0ConsumerJourney GoHomePage(bool submit = true)
+        {
+            throw new NotImplementedException(message: "Used only on Wb");
+        }
+
         #region Builder
 
         public virtual IL0ConsumerJourney FillAndStop()
@@ -140,6 +183,12 @@ namespace Wonga.QA.Framework.UI.Journey
         public virtual IL0ConsumerJourney WithMiddleName(string middleName)
         {
             _middleName = middleName;
+            return this;
+        }
+
+        public virtual IL0ConsumerJourney WithTitle(string title)
+        {
+            _title = title;
             return this;
         }
 
@@ -191,7 +240,7 @@ namespace Wonga.QA.Framework.UI.Journey
 
         public virtual IL0ConsumerJourney WithAddresPeriod(string addresPeriod)
         {
-            _addresPeriod = addresPeriod;
+            _addressPeriod = addresPeriod;
             return this;
         }
 
@@ -241,6 +290,66 @@ namespace Wonga.QA.Framework.UI.Journey
         public virtual IL0ConsumerJourney WithStartDate(string startDate)
         {
             throw new NotImplementedException(message: "Used only on Pl and Uk");
+        }
+
+        public virtual IL0ConsumerJourney WithAutAdditionalDirrector()
+        {
+            throw new NotImplementedException(message: "Used only on Wb");
+        }
+
+        public virtual IL0ConsumerJourney WithEligibilityQuestions(bool activeCompany = true, bool director = true, bool guarantee = true, bool resident = true, bool debitCard = true)
+        {
+            throw new NotImplementedException(message: "Used only on Wb");
+        }
+
+        public virtual IL0ConsumerJourney WithAdditionalDirectorName(string additionalDirectorName)
+        {
+            throw new NotImplementedException(message: "Used only on Wb"); throw new NotImplementedException(message: "Used only on Wb");
+        }
+
+        public virtual IL0ConsumerJourney WithAdditionalDirectorSurName(string additionalDirectorSurName)
+        {
+            throw new NotImplementedException(message: "Used only on Wb");
+        }
+
+        public virtual IL0ConsumerJourney WithAdditionalDirectorEmail(string additionalDirectorEmail)
+        {
+            throw new NotImplementedException(message: "Used only on Wb");
+        }
+
+        public virtual IL0ConsumerJourney WithBusinessBankAccount(string businessBankAccount)
+        {
+            throw new NotImplementedException(message: "Used only on Wb");
+        }
+
+        public virtual IL0ConsumerJourney WithBusinessBankPeriod(string businessBankPeriod)
+        {
+            throw new NotImplementedException(message: "Used only on Wb");
+        }
+
+        public virtual IL0ConsumerJourney WithBusinessDebitCardNumber(string businessDebitCardNumber)
+        {
+            throw new NotImplementedException(message: "Used only on Wb");
+        }
+
+        public virtual IL0ConsumerJourney WithBusinessDebitCardSecurity(string businessDebitCardSecurity)
+        {
+            throw new NotImplementedException(message: "Used only on Wb");
+        }
+
+        public virtual IL0ConsumerJourney WithBusinessDebitCardType(string businessDebitCardType)
+        {
+            throw new NotImplementedException(message: "Used only on Wb");
+        }
+
+        public virtual IL0ConsumerJourney WithBusinessDebitCardExpiryDate(string businessDebitExpiryDate)
+        {
+            throw new NotImplementedException(message: "Used only on Wb");
+        }
+
+        public virtual IL0ConsumerJourney WithBusinessDebitCardStartDate(string businessDebitStartDate)
+        {
+            throw new NotImplementedException(message: "Used only on Wb");
         }
 
         #endregion

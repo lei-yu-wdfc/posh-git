@@ -23,6 +23,7 @@ namespace Wonga.QA.Framework.UI.Journey
             _firstName = Get.GetName();
             _lastName = Get.RandomString(10);
             _middleName = Get.RandomString(10);
+            _title = "Mr";
             _employerName = Get.RandomString(10);
             _email = Get.RandomEmail();
             _mobilePhone = Get.GetMobilePhone();
@@ -31,7 +32,7 @@ namespace Wonga.QA.Framework.UI.Journey
             _nationalId = Get.GetNationalNumber(_dateOfBirth, _gender == GenderEnum.Female);
 
             _postCode = Get.GetPostcode();
-            _addresPeriod = "2 to 3 years";
+            _addressPeriod = "2 to 3 years";
 
             _password = Get.GetPassword();
 
@@ -64,7 +65,7 @@ namespace Wonga.QA.Framework.UI.Journey
             personalDetailsPage.YourName.FirstName = _firstName;
             personalDetailsPage.YourName.MiddleName = _middleName;
             personalDetailsPage.YourName.LastName = _lastName;
-            personalDetailsPage.YourName.Title = "Mr";
+            personalDetailsPage.YourName.Title = _title;
             personalDetailsPage.YourDetails.Number = _nationalId.ToString();//"5710300020087";
             personalDetailsPage.YourDetails.DateOfBirth = _dateOfBirth.ToString("d/MMM/yyyy");
             personalDetailsPage.YourDetails.Gender = _gender.ToString();
@@ -105,7 +106,7 @@ namespace Wonga.QA.Framework.UI.Journey
             addressPage.Town = "Kuku";
             addressPage.County = "Province";
             addressPage.PostCode = _postCode;
-            addressPage.AddressPeriod = _addresPeriod;
+            addressPage.AddressPeriod = _addressPeriod;
             if (submit)
             {
                 CurrentPage = addressPage.Next() as AccountDetailsPage;

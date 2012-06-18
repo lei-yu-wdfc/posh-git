@@ -30,7 +30,7 @@ namespace Wonga.QA.Framework.UI.Journey
             _mobilePhone = Get.GetMobilePhone();
 
             _postCode = Get.GetPostcode();
-            _addresPeriod = "3 to 4 years";
+            _addressPeriod = "3 to 4 years";
 
             _password = Get.GetPassword();
 
@@ -110,7 +110,7 @@ namespace Wonga.QA.Framework.UI.Journey
             addressPage.GetAddressesDropDown();
             Do.Until(() => addressPage.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN");
             Do.Until(() => addressPage.HouseNumber = "666");
-            addressPage.AddressPeriod = _addresPeriod;
+            addressPage.AddressPeriod = _addressPeriod;
             if (submit)
             {
                 CurrentPage = addressPage.Next();
@@ -194,7 +194,12 @@ namespace Wonga.QA.Framework.UI.Journey
 
         #region Builder
 
-        public new IL0ConsumerJourney WithGender(GenderEnum gender)
+        public override IL0ConsumerJourney WithTitle(string title)
+        {
+            throw new NotImplementedException(message: "Don't used on Pl");
+        }
+
+        public override IL0ConsumerJourney WithGender(GenderEnum gender)
         {
             throw new NotImplementedException(message: "Don't used on Pl");
         }

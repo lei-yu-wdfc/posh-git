@@ -25,6 +25,7 @@ namespace Wonga.QA.Framework.UI
             _firstName = Get.GetName();
             _lastName = Get.RandomString(10);
             _middleName = Get.RandomString(10);
+            _title = "Mr";
             _employerName = Get.RandomString(10);
             _email = Get.RandomEmail();
             _mobilePhone = Get.GetMobilePhone();
@@ -32,7 +33,7 @@ namespace Wonga.QA.Framework.UI
             _gender = GenderEnum.Male;
 
             _postCode = Get.GetPostcode();
-            _addresPeriod = "3 to 4 years";
+            _addressPeriod = "3 to 4 years";
 
             _password = Get.GetPassword();
 
@@ -72,7 +73,7 @@ namespace Wonga.QA.Framework.UI
             personalDetailsPage.YourName.FirstName = _firstName;
             personalDetailsPage.YourName.MiddleName = _middleName;
             personalDetailsPage.YourName.LastName = _lastName;
-            personalDetailsPage.YourName.Title = "Mr";
+            personalDetailsPage.YourName.Title = _title;
             personalDetailsPage.YourDetails.DateOfBirth = _dateOfBirth.ToString("d/MMM/yyyy");
             personalDetailsPage.YourDetails.Gender = _gender.ToString();
             personalDetailsPage.YourDetails.HomeStatus = "Tenant Furnished";
@@ -109,7 +110,7 @@ namespace Wonga.QA.Framework.UI
             addressPage.GetAddressesDropDown();
             Do.Until(() => addressPage.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN");
             Do.Until(() => addressPage.HouseNumber = "666");
-            addressPage.AddressPeriod = _addresPeriod;
+            addressPage.AddressPeriod = _addressPeriod;
             if (submit)
             {
                 CurrentPage = addressPage.Next();

@@ -28,6 +28,15 @@ namespace Wonga.QA.Framework.UI
         IL0ConsumerJourney GoToMySummaryPage(bool submit = true);
         IL0ConsumerJourney IgnoreAcceptingLoanAndReturnToHomePageAndLogin(bool submit = true);
 
+        IL0ConsumerJourney AnswerEligibilityQuestions(bool submit = true);
+        IL0ConsumerJourney EnterBusinessDetails(bool submit = true);
+        IL0ConsumerJourney DeclineAddAdditionalDirector(bool submit = true);
+        IL0ConsumerJourney AddAdditionalDirector(bool submit = true);
+        IL0ConsumerJourney EnterBusinessBankAccountDetails(bool submit = true);
+        IL0ConsumerJourney EnterBusinessDebitCardDetails(bool submit = true);
+        IL0ConsumerJourney WaitForApplyTermsPage(bool submit = true);
+        IL0ConsumerJourney ApplyTerms(bool submit = true);
+        IL0ConsumerJourney GoHomePage(bool submit = true);
 
         #region Builder
 
@@ -40,6 +49,7 @@ namespace Wonga.QA.Framework.UI
         IL0ConsumerJourney WithFirstName(string firstName);
         IL0ConsumerJourney WithLastName(string lastName);
         IL0ConsumerJourney WithMiddleName(string middleName);
+        IL0ConsumerJourney WithTitle(string title);
         IL0ConsumerJourney WithEmployerName(string employerName);
         IL0ConsumerJourney WithEmail(string email);
         IL0ConsumerJourney WithMobilePhone(string mobilePhone);
@@ -62,6 +72,20 @@ namespace Wonga.QA.Framework.UI
         IL0ConsumerJourney WithCardType(string cardType);
         IL0ConsumerJourney WithExpiryDate(string expiryDate);
         IL0ConsumerJourney WithStartDate(string startDate);
+
+
+        IL0ConsumerJourney WithAutAdditionalDirrector();
+        IL0ConsumerJourney WithEligibilityQuestions(bool activeCompany = true, bool director = true, bool guarantee = true, bool resident = true, bool debitCard = true);
+        IL0ConsumerJourney WithAdditionalDirectorName(string additionalDirectorName);
+        IL0ConsumerJourney WithAdditionalDirectorSurName(string additionalDirectorSurName);
+        IL0ConsumerJourney WithAdditionalDirectorEmail(string additionalDirectorEmail);
+        IL0ConsumerJourney WithBusinessBankAccount(string businessBankAccount);
+        IL0ConsumerJourney WithBusinessBankPeriod(string businessBankPeriod);
+        IL0ConsumerJourney WithBusinessDebitCardNumber(string businessDebitCardNumber);
+        IL0ConsumerJourney WithBusinessDebitCardSecurity(string businessDebitCardSecurity);
+        IL0ConsumerJourney WithBusinessDebitCardType(string businessDebitCardType);
+        IL0ConsumerJourney WithBusinessDebitCardExpiryDate(string businessDebitExpiryDate);
+        IL0ConsumerJourney WithBusinessDebitCardStartDate(string businessDebitStartDate);
 
         #endregion
     }

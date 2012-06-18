@@ -249,6 +249,7 @@ namespace Wonga.QA.Framework.Core
             {
                 case AUT.Uk:
                 case AUT.Pl:
+                case AUT.Wb:
                     {
                         return "SW6 6PN";  
                     }
