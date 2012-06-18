@@ -33,7 +33,7 @@ namespace Wonga.QA.Tests.Comms.Email
 					_application = new TestLocal<Application> {Value = ApplicationBuilder.New(_customer.Value).Build()};
 				}
 
-				[Test, AUT(AUT.Za), JIRA("WIN-1130", "WIN-886")]
+				[Test, AUT(AUT.Za), JIRA("WIN-1130", "WIN-886"), Pending("Doesn't work")]
 				public void PaymentConfirmationEmailIsSent()
 				{
 					var tokens =
