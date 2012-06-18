@@ -220,6 +220,13 @@ namespace Wonga.QA.Framework
 			return this;
 		}
 
+		public virtual Application RewindApplicationFurther(uint daysInArrears)
+		{
+			Drive.Db.Rewind(Id, (int)daysInArrears);
+
+			return this;
+		}
+
         private void RewindAppDates(dynamic application, TimeSpan rewindSpan)
         {
             var riskApplication = _riskAppTab.FindAll(_riskAppTab.ApplicationId == Id).Single();
@@ -261,30 +268,29 @@ namespace Wonga.QA.Framework
             }
 		}
 
-		public virtual Application PutApplicationIntoArrears(uint daysInArrears)
-		{
-			PutApplicationIntoArrears();
 
-			ApplicationOperations.Rewind(Id, (int)daysInArrears);
+		#region Arrears
+
+		public virtual Application PutIntoArrears(uint daysInArrears)
+		{
+			var totalDays = daysInArrears;
+
+			if (!IsInArrears())
+			{
+				PutIntoArrears();
+			}
+
+			else
+			{
+				totalDays = totalDays - GetDaysInArrears();
+			}
+
+			Drive.Db.Rewind(Id, (int)totalDays);
 
 			return this;
 		}
 
-        public virtual Application PutApplicationFurtherIntoArrears(uint daysInArrears)
-        {
-            ApplicationOperations.Rewind(Id, (int)daysInArrears);
-
-            return this;
-        }
-
-        public virtual Application RewindApplicationFurther(uint daysInArrears)
-        {
-            Drive.Db.Rewind(Id, (int)daysInArrears);
-
-            return this;
-        }
-
-		public virtual Application PutApplicationIntoArrears()
+		public virtual Application PutIntoArrears()
 		{
             var application = _applicationsTab.FindAll(_applicationsTab.ExternalId == Id).Single();
 		    var fixTermLoanApp =
@@ -330,6 +336,28 @@ namespace Wonga.QA.Framework
 
 			return this;
 		}
+
+		public virtual bool IsInArrears()
+		{
+			var appId = ((ApplicationEntity)Drive.Data.Payments.Db.Applications.FindByExternalId(Id)).ApplicationId;
+			return (Drive.Data.Payments.Db.Arrears.FindByApplicationId(appId)) != null;
+		}
+
+		public uint GetDaysInArrears()
+		{
+			if (IsInArrears() == false)
+			{
+				return 0;
+			}
+
+			var appId = ((ApplicationEntity)Drive.Data.Payments.Db.Applications.FindByExternalId(Id)).ApplicationId;
+			var arrearDate = (DateTime)(Drive.Data.Payments.Db.Arrears.FindByApplicationId(appId)).CreatedOn;
+
+			return (uint)(DateTime.Today - arrearDate).Days;
+		}
+
+		#endregion
+
 
 		public Application CreateRepaymentArrangement()
 		{

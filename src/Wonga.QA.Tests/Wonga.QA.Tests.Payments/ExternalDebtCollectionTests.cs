@@ -27,7 +27,7 @@ namespace Wonga.QA.Tests.Payments
 			var customer = CustomerBuilder.New().Build();
 			var application = ApplicationBuilder.New(customer).Build();
 
-			application.PutApplicationIntoArrears();
+			application.PutIntoArrears();
 
 			RepayLoanInArrears(application);
 
@@ -44,7 +44,7 @@ namespace Wonga.QA.Tests.Payments
 			var customer = CustomerBuilder.New().Build();
 			var application = ApplicationBuilder.New(customer).Build();
 
-			application.PutApplicationIntoArrears();
+			application.PutIntoArrears();
 
 			// Trigger 31 days timeout of debt collection agency
 			var debtCollectionSaga = Do.Until( () => Drive.Db.OpsSagasCa.ExternalDebtCollectionSagaEntities.SingleOrDefault(e => e.ApplicationId == application.Id));
@@ -60,7 +60,7 @@ namespace Wonga.QA.Tests.Payments
             var customer = CustomerBuilder.New().Build();
             var application = ApplicationBuilder.New(customer).Build();
 
-            application.PutApplicationIntoArrears();
+            application.PutIntoArrears();
 
             application.MoveToDebtCollectionAgency();
 
@@ -73,7 +73,7 @@ namespace Wonga.QA.Tests.Payments
             var customer = CustomerBuilder.New().Build();
             var application = ApplicationBuilder.New(customer).Build();
 
-            application.PutApplicationIntoArrears();
+            application.PutIntoArrears();
 
             application.MoveToDebtCollectionAgency();
 
@@ -386,7 +386,7 @@ namespace Wonga.QA.Tests.Payments
             var customer = CustomerBuilder.New().Build();
             var application = ApplicationBuilder.New(customer).Build();
 
-            application.PutApplicationIntoArrears();
+            application.PutIntoArrears();
 
             application.MoveToDebtCollectionAgency();
 

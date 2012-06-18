@@ -25,7 +25,7 @@ namespace Wonga.QA.Tests.Payments
 			Do.Until(customer.GetPaymentCard);
 			Application application = ApplicationBuilder.New(customer).Build();
 			
-			application.PutApplicationIntoArrears();
+			application.PutIntoArrears();
 
 			Drive.Msmq.Payments.Send(new CreateExtendedRepaymentArrangementCommand
 			                          	{
@@ -54,7 +54,7 @@ namespace Wonga.QA.Tests.Payments
 			Do.Until(customer.GetPaymentCard);
 			Application application = ApplicationBuilder.New(customer).Build();
 
-			application.PutApplicationIntoArrears(4);
+			application.PutIntoArrears(4);
 
 			var cmd = new CreateRepaymentArrangementCommand()
 			           	{
@@ -81,7 +81,7 @@ namespace Wonga.QA.Tests.Payments
 			Do.Until(customer.GetPaymentCard);
 			Application application = ApplicationBuilder.New(customer).Build();
 
-			application.PutApplicationIntoArrears(4);
+			application.PutIntoArrears(4);
 
 			application.CreateRepaymentArrangement();
 

@@ -335,7 +335,7 @@ namespace Wonga.QA.Tests.Payments
             var l0Application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
             var applicationId = l0Application.Id;
 
-            l0Application.PutApplicationIntoArrears();
+            l0Application.PutIntoArrears();
 
             Assert.IsTrue(VerifyPaymentFunctions.VerifyApplicationInArrears(applicationId));
         }
@@ -372,7 +372,7 @@ namespace Wonga.QA.Tests.Payments
             var l0Application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
             var applicationId = l0Application.Id;
 
-            l0Application.PutApplicationIntoArrears();
+            l0Application.PutIntoArrears();
 
             Do.With.Timeout(1).Until(() => VerifyPaymentFunctions.VerifyApplicationInArrears(applicationId));
 
@@ -393,7 +393,7 @@ namespace Wonga.QA.Tests.Payments
             var l0Application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
             var applicationId = l0Application.Id;
 
-            l0Application.PutApplicationIntoArrears();
+            l0Application.PutIntoArrears();
 
             Do.With.Timeout(1).Until(() => VerifyPaymentFunctions.VerifyApplicationInArrears(applicationId));
 
@@ -411,7 +411,7 @@ namespace Wonga.QA.Tests.Payments
         //    var l0Application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
         //    var applicationId = l0Application.Id;
 
-        //    l0Application.PutApplicationIntoArrears(daysOverdue);
+        //    l0Application.PutIntoArrears(daysOverdue);
 
         //    Do.With().Timeout(1).Until(() => VerifyPaymentFunctions.VerifyApplicationInArrears(applicationId));
 
@@ -437,7 +437,7 @@ namespace Wonga.QA.Tests.Payments
         //    var l0Application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
         //    var applicationId = l0Application.Id;
 
-        //    l0Application.PutApplicationIntoArrears(daysOverdue);
+        //    l0Application.PutIntoArrears(daysOverdue);
 
         //    Do.With().Timeout(1).Until(() => VerifyPaymentFunctions.VerifyApplicationInArrears(applicationId));
 
@@ -470,7 +470,7 @@ namespace Wonga.QA.Tests.Payments
         //    var l0Application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
         //    var applicationId = l0Application.Id;
 
-        //    l0Application.PutApplicationIntoArrears(daysOverdue);
+        //    l0Application.PutIntoArrears(daysOverdue);
 
         //    Do.With().Timeout(1).Until(() => VerifyPaymentFunctions.VerifyApplicationInArrears(applicationId));
 
@@ -538,7 +538,7 @@ namespace Wonga.QA.Tests.Payments
             var l0Application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
             var applicationId = l0Application.Id;
 
-            l0Application.PutApplicationIntoArrears(daysOverdue);
+            l0Application.PutIntoArrears(daysOverdue);
 
             Do.With.Timeout(1).Until(() => VerifyPaymentFunctions.VerifyApplicationInArrears(applicationId));
 
@@ -555,7 +555,7 @@ namespace Wonga.QA.Tests.Payments
         //    var l0Application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
         //    var applicationId = l0Application.Id;
 
-        //    l0Application.PutApplicationIntoArrears(daysOverdue);
+        //    l0Application.PutIntoArrears(daysOverdue);
 
         //    Do.With().Timeout(1).Until(() => VerifyPaymentFunctions.VerifyApplicationInArrears(applicationId));
 

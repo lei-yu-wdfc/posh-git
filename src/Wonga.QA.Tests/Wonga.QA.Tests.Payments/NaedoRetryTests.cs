@@ -40,7 +40,7 @@ namespace Wonga.QA.Tests.Payments
 			MsmqQueue paymentsQueue = Drive.Msmq.Payments;
 			var applicationEntity = paymentsDatabase.Applications.Single(a => a.ExternalId == application.Id);
 
-			application.PutApplicationIntoArrears(20);
+			application.PutIntoArrears(20);
 
 			Do.Until(() => paymentsDatabase.Arrears.Single(s => s.ApplicationId == applicationEntity.ApplicationId));
 			ConfigurationFunctions.SetBankGatewayTestMode(true);

@@ -301,7 +301,7 @@ namespace Wonga.QA.Tests.Payments
         {
             var customer = CustomerBuilder.New().Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(_loan).Build();
-            application.PutApplicationIntoArrears();
+            application.PutIntoArrears();
 
             Assert.Throws<ValidatorException>(() => Drive.Api.Commands.Post(new CreateFixedTermLoanTopupCommand
             {

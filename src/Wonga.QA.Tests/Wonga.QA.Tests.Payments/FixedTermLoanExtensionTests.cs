@@ -106,7 +106,7 @@ namespace Wonga.QA.Tests.Payments
 				ftApp = Drive.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationEntity.ExternalId == app.Id);
 
 				if (inArrears)
-					app.PutApplicationIntoArrears();
+					app.PutIntoArrears();
 			}
 
 
