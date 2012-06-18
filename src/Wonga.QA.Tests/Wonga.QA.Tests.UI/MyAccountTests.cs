@@ -38,21 +38,25 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Za), JIRA("QA-203"), SmokeTest]
         public void L0JourneyInvalidAccountNumberShouldCauseWarningMessageOnNextPage()
         {
-            var journey1 = JourneyFactory.GetL0Journey(Client.Home());
-            var bankDetailsPage1 = journey1.ApplyForLoan(200, 10)
-                                      .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
+            var journey1 = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
+                .WithAccountNumber("7434567");
+            var bankDetailsPage1 = journey1.ApplyForLoan()
+                                      .FillPersonalDetails()
                                       .FillAddressDetails()
                                       .FillAccountDetails()
-                                      .FillBankDetails(accountNumber: "7434567", submit: false)
+                                      .FillBankDetails(submit: false)
                                       .CurrentPage as PersonalBankAccountPage;
             Assert.Throws<AssertionFailureException>(() => { var processingPage = bankDetailsPage1.Next(); });
 
-            var journey2 = JourneyFactory.GetL0Journey(Client.Home());
-            var bankDetailsPage2 = journey2.ApplyForLoan(200, 10)
-                                      .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
+            var journey2 = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
+                .WithAccountNumber("7534567");
+            var bankDetailsPage2 = journey2.ApplyForLoan()
+                                      .FillPersonalDetails()
                                       .FillAddressDetails()
                                       .FillAccountDetails()
-                                      .FillBankDetails(accountNumber: "7534567", submit: false)
+                                      .FillBankDetails(submit: false)
                                       .CurrentPage as PersonalBankAccountPage;
             Assert.Throws<AssertionFailureException>(() => { var processingPage = bankDetailsPage2.Next(); });
         }
@@ -556,10 +560,12 @@ namespace Wonga.QA.Tests.Ui
                 default:
                     throw new NotImplementedException();
             }
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var mySummaryPage = journey.ApplyForLoan(200, 10)
-                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
-                .FillAddressDetails(postcode: postcode)
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
+                .WithPosteCode(postcode);
+            var mySummaryPage = journey.ApplyForLoan()
+                .FillPersonalDetails()
+                .FillAddressDetails()
                 .FillAccountDetails()
                 .FillBankDetails()
                 .WaitForAcceptedPage()

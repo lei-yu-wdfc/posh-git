@@ -18,30 +18,28 @@ namespace Wonga.QA.Tests.Ui
        [Test, AUT(AUT.Ca), SmokeTest]
         public void CaAcceptedLoan()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.Home()); 
-            var processingPage = journey.ApplyForLoan(200, 10)
-                                 .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)); 
+            var mySummary = journey.ApplyForLoan()
+                                 .FillPersonalDetails()
                                  .FillAddressDetails()
                                  .FillAccountDetails()
                                  .FillBankDetails()
-                                 .CurrentPage as ProcessingPage;
-
-            var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
-            acceptedPage.SignConfirmCaL0(DateTime.Now.ToString("d MMM yyyy"), journey.FirstName, journey.LastName);
-            var dealDone = acceptedPage.Submit();
+                                 .WaitForAcceptedPage()
+                                 .FillAcceptedPage()
+                                 .GoToMySummaryPage();
         }
 
        [Test, AUT(AUT.Ca)]
        public void CaDeclinedLoan()
        {
            var journey = JourneyFactory.GetL0Journey(Client.Home());
-           var processingPage = journey.ApplyForLoan(200, 10)
+           var processingPage = journey.ApplyForLoan()
                                     .FillPersonalDetails()
                                     .FillAddressDetails()
                                     .FillAccountDetails()
                                     .FillBankDetails()
-                                    .CurrentPage as ProcessingPage;
-           var declinedPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
+                                    .WaitForDeclinedPage();
        }
 
     }

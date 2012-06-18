@@ -26,11 +26,12 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Za), Pending("Incomplete. Sad times.")]
         public void ZaManualNaedoRepayment()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
 
             // Take a loan for 20 days, accept it and go to the Summary page:
-            var summaryPage = journey.ApplyForLoan(200, 20)
-                                  .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
+            var summaryPage = journey.ApplyForLoan()
+                                  .FillPersonalDetails()
                                   .FillAddressDetails()
                                   .FillBankDetails()
                                   .WaitForAcceptedPage()

@@ -17,10 +17,11 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk)]
         public void UkAcceptedLoan()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
 
-            var acceptedPage = journey.ApplyForLoan(200, 10)
-                                     .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
+            var acceptedPage = journey.ApplyForLoan()
+                                     .FillPersonalDetails()
                                      .FillAddressDetails()
                                      .FillAccountDetails()
                                      .FillBankDetails()
@@ -32,10 +33,11 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk), JIRA("UK-730")]
         public void CheckLoanAgreement()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
 
-            var acceptedPage = journey.ApplyForLoan(200, 10)
-                                     .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
+            var acceptedPage = journey.ApplyForLoan()
+                                     .FillPersonalDetails()
                                      .FillAddressDetails()
                                      .FillAccountDetails()
                                      .FillBankDetails()
@@ -55,10 +57,12 @@ namespace Wonga.QA.Tests.Ui
             string paymentAmount = 115.91M.ToString("#.00");
             DateTime paymentDate = DateTime.Now.AddDays(days);
 
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
+                .WithAmount(loanAmount).WithDuration(days);
 
-            var dealDonePage = journey.ApplyForLoan(loanAmount, days)
-                                   .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
+            var dealDonePage = journey.ApplyForLoan()
+                                   .FillPersonalDetails()
                                    .FillAddressDetails()
                                    .FillAccountDetails()
                                    .FillBankDetails()
@@ -76,9 +80,11 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk), JIRA("UK-438", "UK-1823", "UKWEB-253")]
         public void L0DeclinedForEmployedPartTimeTest()
         {
-            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home());
-            var processingPage = journeyL0.ApplyForLoan(400, 30)
-                .FillPersonalDetails(employerNameMask: Get.EnumToString(Framework.Msmq.EmploymentStatusEnum.EmployedPartTime))
+            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
+                .WithAmount(400).WithDuration(30);
+            var processingPage = journeyL0.ApplyForLoan()
+                .FillPersonalDetails()
                 .FillAddressDetails()
                 .FillAccountDetails()
                 .FillBankDetails()
@@ -96,9 +102,11 @@ namespace Wonga.QA.Tests.Ui
         {
             string email = Get.RandomEmail();
 
-            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home());
-            var processingPage = journeyL0.ApplyForLoan(400, 30)
-                .FillPersonalDetails(employerNameMask: Get.EnumToString(employmentStatus), email: email)
+            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email)
+                .WithAmount(400).WithDuration(30);
+            var processingPage = journeyL0.ApplyForLoan()
+                .FillPersonalDetails()
                 .FillAddressDetails()
                 .FillAccountDetails()
                 .FillBankDetails()

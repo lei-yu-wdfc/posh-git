@@ -44,7 +44,7 @@ namespace Wonga.QA.Tests.Ui
         public void ZaDeclinedLoan()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var processingPage = journey.ApplyForLoan(200, 10)
+            var processingPage = journey.ApplyForLoan()
                                      .FillPersonalDetails()
                                      .FillAddressDetails()
                                      .FillAccountDetails()
@@ -58,7 +58,7 @@ namespace Wonga.QA.Tests.Ui
         public void CaDeclinedLoan()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var processingPage = journey.ApplyForLoan(200, 10)
+            var processingPage = journey.ApplyForLoan()
                                      .FillPersonalDetails()
                                      .FillAddressDetails()
                                      .FillAccountDetails()
@@ -71,7 +71,7 @@ namespace Wonga.QA.Tests.Ui
         public void ZaDeclinedPageContainsHeaderLinks()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var processingPage = journey.ApplyForLoan(200, 10)
+            var processingPage = journey.ApplyForLoan()
                                      .FillPersonalDetails()
                                      .FillAddressDetails()
                                      .FillAccountDetails()
@@ -86,9 +86,11 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk), JIRA("UK-438", "UK-1823", "UKWEB-253")]
         public void L0DeclinedForEmployedPartTimeTest()
         {
-            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home());
-            var processingPage = journeyL0.ApplyForLoan(400, 30)
-                .FillPersonalDetails(employerNameMask: Get.EnumToString(EmploymentStatusEnum.EmployedPartTime))
+            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(EmploymentStatusEnum.EmployedPartTime))
+                .WithAmount(400).WithDuration(30);
+            var processingPage = journeyL0.ApplyForLoan()
+                .FillPersonalDetails()
                 .FillAddressDetails()
                 .FillAccountDetails()
                 .FillBankDetails()
@@ -106,9 +108,11 @@ namespace Wonga.QA.Tests.Ui
         {
             string email = Get.RandomEmail();
 
-            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home());
-            var processingPage = journeyL0.ApplyForLoan(400, 30)
-                .FillPersonalDetails(employerNameMask: Get.EnumToString(employmentStatus), email: email)
+            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email)
+                .WithAmount(400).WithDuration(30);
+            var processingPage = journeyL0.ApplyForLoan()
+                .FillPersonalDetails()
                 .FillAddressDetails()
                 .FillAccountDetails()
                 .FillBankDetails()

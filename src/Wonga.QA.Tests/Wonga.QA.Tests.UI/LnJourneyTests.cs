@@ -180,9 +180,10 @@ namespace Wonga.QA.Tests.Ui
             Console.WriteLine("email={0}", email);
 
             // L0 journey
-            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home());
-            var mySummary = journeyL0.ApplyForLoan(200, 10)
-                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
+            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email);
+            var mySummary = journeyL0.ApplyForLoan()
+                .FillPersonalDetails()
                 .FillAddressDetails()
                 .FillAccountDetails()
                 .FillBankDetails()
@@ -224,9 +225,10 @@ namespace Wonga.QA.Tests.Ui
             Console.WriteLine("email={0}", email);
 
             // L0 journey
-            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home());
-            var mySummary = journeyL0.ApplyForLoan(200, 10)
-                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
+            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email);
+            var mySummary = journeyL0.ApplyForLoan()
+                .FillPersonalDetails()
                 .FillAddressDetails()
                 .FillAccountDetails()
                 .FillBankDetails()

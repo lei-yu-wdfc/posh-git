@@ -14,9 +14,10 @@ namespace Wonga.QA.Tests.Ui.Mobile
         [Test, AUT(AUT.Za), Pending("Shouldn't run as part of Backend Tests")]
         public void ZaAcceptedLoanMobile()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.MobileHome());
-            var acceptedPage = journey.ApplyForLoan(200, 10)
-                                 .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
+            var journey = JourneyFactory.GetL0Journey(Client.MobileHome())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
+            var acceptedPage = journey.ApplyForLoan()
+                                 .FillPersonalDetails()
                                  .FillAddressDetails()
                                  .FillAccountDetails()
                                  .FillBankDetails()
@@ -30,9 +31,10 @@ namespace Wonga.QA.Tests.Ui.Mobile
         [Test, AUT(AUT.Za), Pending("Shouldn't run as part of Backend Tests")]
         public void ZaAcceptedLoanMobileDropOff()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.MobileHome());
-            var acceptedPage = journey.ApplyForLoan(200, 10)
-                                 .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
+            var journey = JourneyFactory.GetL0Journey(Client.MobileHome())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
+            var acceptedPage = journey.ApplyForLoan()
+                                 .FillPersonalDetails()
                                  .FillAddressDetails()
                                  .FillAccountDetails()
                                  .FillBankDetails()
@@ -46,7 +48,7 @@ namespace Wonga.QA.Tests.Ui.Mobile
         public void ZaDeclinedLoanMobile()
         {
             var journey = JourneyFactory.GetL0Journey(Client.MobileHome());
-            var declinedPage = journey.ApplyForLoan(200, 10)
+            var declinedPage = journey.ApplyForLoan()
                                  .FillPersonalDetails()
                                  .FillAddressDetails()
                                  .FillAccountDetails()

@@ -51,14 +51,19 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk), JIRA("UK-788", "UK-1614"), Pending("The variant of scenario 1 is being implemented.")]
         public void IntroTextScenario1A()
         {
+            string firstName = Get.RandomString(3, 10);
             const int loanAmount = 100;
             const int days = 10;
             string email = Get.RandomEmail();
             Console.WriteLine("email:{0}", email);
 
-            var journey = JourneyFactory.GetL0Journey(Client.Home());          
-            var aPage = journey.ApplyForLoan(loanAmount, days)
-                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
+                .WithFirstName(firstName)
+                .WithEmail(email)
+                .WithAmount(loanAmount).WithDuration(days);
+            var aPage = journey.ApplyForLoan()
+                .FillPersonalDetails()
                 .FillAddressDetails()
                 .FillAccountDetails();
  
@@ -68,7 +73,7 @@ namespace Wonga.QA.Tests.Ui
             // Check the actual text
             string actuallntroText = mySummaryPage.GetIntroText;
             string expectedIntroText = introTexts[1];
-            expectedIntroText = expectedIntroText.Replace("{first name}", journey.FirstName).Replace("{500}", "400.00");
+            expectedIntroText = expectedIntroText.Replace("{first name}", firstName).Replace("{500}", "400.00");
             Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(1));
             Assert.AreEqual(expectedIntroText, actuallntroText);
         }
@@ -370,15 +375,19 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk), JIRA("UK-788")]
         public void IntroTextScenario17()
         {
+            string firstName = Get.RandomString(3, 10);
             var scenarioId = 17;
             const int loanAmount = 100;
             const int days = 10;
             string email = Get.RandomEmail();
             Console.WriteLine("email:{0}", email);
 
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var aPage = journey.ApplyForLoan(loanAmount, days)
-                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
+                .WithFirstName(firstName).WithEmail(email)
+                .WithAmount(loanAmount).WithDuration(days);
+            var aPage = journey.ApplyForLoan()
+                .FillPersonalDetails()
                 .FillAddressDetails()
                 .FillAccountDetails()
                 .FillBankDetails();
@@ -389,7 +398,7 @@ namespace Wonga.QA.Tests.Ui
             // Check the actual text
             string actuallntroText = mySummaryPage.GetIntroText;
             string expectedIntroText = introTexts[17];
-            expectedIntroText = expectedIntroText.Replace("{first name}", journey.FirstName);
+            expectedIntroText = expectedIntroText.Replace("{first name}", firstName);
             Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId));
             Assert.AreEqual(expectedIntroText, actuallntroText);
         }
@@ -403,15 +412,19 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk), JIRA("UK-788")]
         public void IntroTextScenario21()
         {
+            string firstName = Get.RandomString(3, 10);
             var scenarioId = 21;
             const int loanAmount = 100;
             const int days = 10;
             string email = Get.RandomEmail();
             Console.WriteLine("email:{0}", email);
 
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var aPage = journey.ApplyForLoan(loanAmount, days)
-                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
+                .WithFirstName(firstName).WithEmail(email)
+                .WithAmount(loanAmount).WithDuration(days);
+            var aPage = journey.ApplyForLoan()
+                .FillPersonalDetails()
                 .FillAddressDetails()
                 .FillAccountDetails()
                 .FillBankDetails()
@@ -423,7 +436,7 @@ namespace Wonga.QA.Tests.Ui
             // Check the actual text
             string actuallntroText = mySummaryPage.GetIntroText;
             string expectedIntroText = introTexts[21];
-            expectedIntroText = expectedIntroText.Replace("{first name}", journey.FirstName);
+            expectedIntroText = expectedIntroText.Replace("{first name}", firstName);
             Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId));
             Assert.AreEqual(expectedIntroText, actuallntroText);
         }

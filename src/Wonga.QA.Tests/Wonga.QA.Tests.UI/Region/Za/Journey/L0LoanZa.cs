@@ -18,9 +18,10 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Za)]
         public void ZaAcceptedLoan()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.Home()); 
-            var processingPage = journey.ApplyForLoan(200, 10)
-                                 .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)); 
+            var processingPage = journey.ApplyForLoan()
+                                 .FillPersonalDetails()
                                  .FillAddressDetails()
                                  .FillAccountDetails()
                                  .FillBankDetails()
@@ -36,7 +37,7 @@ namespace Wonga.QA.Tests.Ui
         public void ZaDeclinedLoan()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var processingPage = journey.ApplyForLoan(200, 10)
+            var processingPage = journey.ApplyForLoan()
                                      .FillPersonalDetails()
                                      .FillAddressDetails()
                                      .FillAccountDetails()
@@ -50,7 +51,7 @@ namespace Wonga.QA.Tests.Ui
         public void ZaDeclinedPageContainsHeaderLinks()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var processingPage = journey.ApplyForLoan(200, 10)
+            var processingPage = journey.ApplyForLoan()
                                      .FillPersonalDetails()
                                      .FillAddressDetails()
                                      .FillAccountDetails()

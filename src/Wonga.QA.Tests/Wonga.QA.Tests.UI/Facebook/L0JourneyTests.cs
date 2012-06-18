@@ -26,9 +26,10 @@ namespace Wonga.QA.Tests.Ui.Facebook
         [Test, AUT(AUT.Uk), Pending("Waiting on Facebook Environment Setup - AUT.UkFb")]
         public void L0Journey()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var mySummary = journey.ApplyForLoan(200, 10)
-                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
+            var mySummary = journey.ApplyForLoan()
+                .FillPersonalDetails()
                 .FillAddressDetails()
                 .FillAccountDetails()
                 .FillBankDetails()
@@ -45,9 +46,10 @@ namespace Wonga.QA.Tests.Ui.Facebook
             Console.WriteLine("email={0}", email);
 
             // L0 journey
-            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home());
-            journeyL0.ApplyForLoan(200, 10)
-                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
+            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email);
+            journeyL0.ApplyForLoan()
+                .FillPersonalDetails()
                 .FillAddressDetails();
 
             var accountSetupPage = new AccountDetailsPage(this.Client);

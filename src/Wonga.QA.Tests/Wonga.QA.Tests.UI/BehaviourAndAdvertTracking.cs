@@ -72,10 +72,11 @@ namespace Wonga.QA.Tests.Ui
             // Application pages
 
             // Create a journey:
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
 
             // Go to the first page:
-            var personalDetailsPage = journey.ApplyForLoan(200, 10).CurrentPage as PersonalDetailsPage;
+            var personalDetailsPage = journey.ApplyForLoan().CurrentPage as PersonalDetailsPage;
 
             // Check that the page contains the wonga_doubleclick module v1.0 signature:
             Assert.IsTrue(personalDetailsPage.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
@@ -98,7 +99,7 @@ namespace Wonga.QA.Tests.Ui
             SourceDoesNotContain(doubleClickTokensBlackList);
 
             // Go to the second page:
-            var addressDetailsPage = journey.FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask)).CurrentPage as AddressDetailsPage;
+            var addressDetailsPage = journey.FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask)).CurrentPage as AddressDetailsPage;
 
             // Check that the page contains the wonga_doubleclick module v1.0 signature:
             Assert.IsTrue(addressDetailsPage.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));

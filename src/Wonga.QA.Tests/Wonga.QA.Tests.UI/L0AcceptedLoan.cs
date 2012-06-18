@@ -18,9 +18,9 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Za)]
         public void ZaAcceptedLoan()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.Home()); 
-            var processingPage = journey.ApplyForLoan(200, 10)
-                                 .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
+            var journey = JourneyFactory.GetL0Journey(Client.Home()).WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)); 
+            var processingPage = journey.ApplyForLoan()
+                                 .FillPersonalDetails()
                                  .FillAddressDetails()
                                  .FillAccountDetails()
                                  .FillBankDetails()
@@ -35,17 +35,14 @@ namespace Wonga.QA.Tests.Ui
        [Test, AUT(AUT.Ca), SmokeTest]
         public void CaAcceptedLoan()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.Home()); 
-            var processingPage = journey.ApplyForLoan(200, 10)
-                                 .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
-                                 .FillAddressDetails()
-                                 .FillAccountDetails()
-                                 .FillBankDetails()
-                                 .CurrentPage as ProcessingPage;
-
-            var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
-            acceptedPage.SignConfirmCaL0(DateTime.Now.ToString("d MMM yyyy"), journey.FirstName, journey.LastName);
-            var dealDone = acceptedPage.Submit();
+            var journey = JourneyFactory.GetL0Journey(Client.Home()).WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
+            var mySummary = journey.ApplyForLoan()
+               .FillPersonalDetails()
+               .FillAddressDetails()
+               .FillBankDetails()
+               .WaitForAcceptedPage()
+               .FillAcceptedPage()
+               .GoToMySummaryPage();
         }
 
        [Test, AUT(AUT.Wb)]
@@ -138,10 +135,10 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk)]
         public void UkAcceptedLoan()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var journey = JourneyFactory.GetL0Journey(Client.Home()).WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
 
-            var acceptedPage = journey.ApplyForLoan(200, 10)
-                                     .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
+            var acceptedPage = journey.ApplyForLoan()
+                                     .FillPersonalDetails()
                                      .FillAddressDetails()
                                      .FillAccountDetails()
                                      .FillBankDetails()
@@ -153,10 +150,10 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Uk), JIRA("UK-730")]
         public void CheckLoanAgreement()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var journey = JourneyFactory.GetL0Journey(Client.Home()).WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
 
-            var acceptedPage = journey.ApplyForLoan(200, 10)
-                                     .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
+            var acceptedPage = journey.ApplyForLoan()
+                                     .FillPersonalDetails()
                                      .FillAddressDetails()
                                      .FillAccountDetails()
                                      .FillBankDetails()
@@ -176,10 +173,12 @@ namespace Wonga.QA.Tests.Ui
             string paymentAmount = 115.91M.ToString("#.00");
             DateTime paymentDate = DateTime.Now.AddDays(days);
 
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
+                .WithAmount(loanAmount).WithDuration(days);
 
-            var dealDonePage = journey.ApplyForLoan(loanAmount, days)
-                                   .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
+            var dealDonePage = journey.ApplyForLoan()
+                                   .FillPersonalDetails()
                                    .FillAddressDetails()
                                    .FillAccountDetails()
                                    .FillBankDetails()
@@ -192,6 +191,13 @@ namespace Wonga.QA.Tests.Ui
             // Check text on the Deal Done page is displayed correctly
             expectedDealDoneText = expectedDealDoneText.Replace("{repay date}", Date.GetOrdinalDate(paymentDate, "dddd d MMM yyyy")).Replace("{repay amount}", paymentAmount);
             Assert.AreEqual(expectedDealDoneText, actualDealDoneText);
+        }
+
+        [Test, AUT(AUT.Za,AUT.Ca, AUT.Uk)]
+        public void TeleportTest()
+        {
+            var journey = JourneyFactory.GetL0Journey(Client.Home()).FillAndStop();
+            var mySummary = journey.Teleport<PersonalDetailsPage>();
         }
     }
 }

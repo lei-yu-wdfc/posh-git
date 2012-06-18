@@ -20,8 +20,8 @@ namespace Wonga.QA.Framework.UI
 
             _submit = true;
 
-            _amount = 100;
-            _duration = 20;
+            _amount = 200;
+            _duration = 10;
 
             _firstName = Get.GetName();
             _lastName = Get.RandomString(10);
