@@ -133,6 +133,7 @@
   <ItemGroup>
     <Folder Include="Region\Ca\MyAccounts\" />
     <Folder Include="Region\Ca\Payment\" />
+    <Folder Include="Region\Facebook\" />
     <Folder Include="Region\Uk\MyAccounts\" />
     <Folder Include="Region\Uk\Payment\" />
     <Folder Include="Region\Wb\MyAccounts\" />
