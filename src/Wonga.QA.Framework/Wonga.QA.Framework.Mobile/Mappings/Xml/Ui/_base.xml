@@ -1,5 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <UiMap>
+  <FAQElement>
+    <SelectQuestion>#faqQuestions option[selected="selected"]</SelectQuestion>
+    <AnswerQuestion>#containerAnswer h2</AnswerQuestion>
+  </FAQElement>
 
-  
+  <HelpElement>
+    <HelpTrigger>#help-trigger</HelpTrigger>
+    <HelplistQuestions>#listQuestions</HelplistQuestions>
+    <TroubleshootingQuestions>div#help-panel div.control-bar-panel div.panel:first-child + div.panel >#listQuestions</TroubleshootingQuestions>
+    <JargonBuster>#help-panel div div:first-child + div + div p:first-child a</JargonBuster>
+    <ContactUs>#help-panel div div + div + div p + p a</ContactUs>
+  </HelpElement>
+
+  <InternationalElement>
+    <InternationalTrigger>#international-trigger</InternationalTrigger>
+    <InternationalPanelZa>.en-ZA.first a</InternationalPanelZa>
+    <InternationalPanelCa>.en-CA.first a</InternationalPanelCa>
+    <InternationalPanelUk>.en-UK.last a</InternationalPanelUk>
+  </InternationalElement>
+
+  <LoginElement>
+    <LoginTrigger>#login-trigger</LoginTrigger>
+    <FormId>#wonga-login-form</FormId>
+    <Email>#edit-name</Email>
+    <Password>#edit-pass</Password>
+    <LoginButton>#edit-login</LoginButton>
+    <LogoutTrigger>#logout-trigger</LogoutTrigger>
+  </LoginElement>
+
+  <SlidersElement>
+    <FormId>#wonga-sliders-form</FormId>
+    <AmountSlider>#wonga-amount-slider a</AmountSlider>
+    <DurationSlider>#wonga-duration-slider a</DurationSlider>
+    <LoanAmount>#edit-loan-amount</LoanAmount>
+    <LoanDuration>#edit-loan-duration</LoanDuration>
+    <SubmitButton>#edit-submit</SubmitButton>
+    <TotalAmount>span.loan-amount</TotalAmount>
+    <TotalFees>span.loan-fees</TotalFees>
+    <TotalToRepay>span.loan-total</TotalToRepay>
+    <RepaymentDate>span.repayment-date</RepaymentDate>
+    <AmountMinusButton>#wonga-amount-slider-wrapper button.slider-minus</AmountMinusButton>
+    <AmountPlusButton>#wonga-amount-slider-wrapper button.slider-plus</AmountPlusButton>
+    <DurationMinusButton>#wonga-duration-slider-wrapper button.slider-minus</DurationMinusButton>
+    <DurationPlusButton>#wonga-duration-slider-wrapper button.slider-plus</DurationPlusButton>
+  </SlidersElement>
 </UiMap>
