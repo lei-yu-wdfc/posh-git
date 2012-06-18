@@ -31,7 +31,7 @@ namespace Wonga.QA.Tests.Ui.Mobile
             Assert.GreaterThan(Convert.ToInt32(durationAfterSliderIncrease), Convert.ToInt32(homepage.Sliders.HowLong));
         }
 
-        [Test, AUT(AUT.Za)]7
+        [Test, AUT(AUT.Za)]
         public void SlideAmountSlidersUntilMaximumValueIsReached()
         {
             var homepage = Client.MobileHome();
