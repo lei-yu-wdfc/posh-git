@@ -20,6 +20,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	{
 		private RiskMask _testMask;
 		private const string InternationalCodeZa = "+27";
+		private dynamic BlacklistTable = Drive.Data.Blacklist.Db.BlackList;
 
 		[FixtureSetUp]
 		public void FixtureSetUp()
@@ -115,11 +116,8 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.WithBankAccountNumber(Get.GetBankAccountNumber())
 				.WithMobileNumber(mobilePhoneNumber).Build();
 
-			var formattedMobilePhoneNumber = InternationalCodeZa + mobilePhoneNumber.Remove(0, 1);
-
-			var blacklistEntity = new BlackListEntity { MobilePhone = formattedMobilePhoneNumber, ExternalId = Guid.NewGuid() };
-			Drive.Db.Blacklist.BlackLists.InsertOnSubmit(blacklistEntity);
-			blacklistEntity.Submit();
+			var formattedMobilePhoneNumber = GetInternationalFormattedPhoneNumber(mobilePhoneNumber);
+			BlacklistMobilePhoneNumber(formattedMobilePhoneNumber);
 
 			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
@@ -129,20 +127,11 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		public void ApplicationElementIsOnBlackList_BankAccount_LoanIsDeclined()
 		{
 			var bankAccountNumber = Get.GetBankAccountNumber();
-			var customer =
-				CustomerBuilder.New().WithEmployer(_testMask).WithBankAccountNumber(bankAccountNumber).Build();
-			var blacklistEntity = new BlackListEntity { BankAccount = bankAccountNumber.ToString(), ExternalId = Guid.NewGuid() };
-			Drive.Db.Blacklist.BlackLists.InsertOnSubmit(blacklistEntity);
-			blacklistEntity.Submit();
+			var customer = CustomerBuilder.New().WithEmployer(_testMask).WithBankAccountNumber(bankAccountNumber).Build();
 
-			var application =
-				ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
-			var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
-			Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
-			Assert.Contains(
-				Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId,
-																			 RiskCheckpointStatus.Failed),
-				Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicationDataBlacklistCheck));
+			BlacklistBankAccountNumber(bankAccountNumber);
+
+			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
 
 		[Test, AUT(AUT.Za, AUT.Uk)]
@@ -252,6 +241,32 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(guarantorRiskWorkflow[0].WorkflowId, RiskCheckpointStatus.Failed), Get.EnumToString(RiskCheckpointDefinitionEnum.ApplicationDataBlacklistCheck));
 		}
 
+		#endregion
+
+		#region Helpers
+		
+		private void BlacklistBankAccountNumber(string bankAccountNumber)
+		{
+			BlacklistTable.Insert(BankAccount: bankAccountNumber, ExternalId: Guid.NewGuid());
+		}
+
+		private void BlacklistMobilePhoneNumber(string mobilePhoneNumber)
+		{
+			BlacklistTable.Insert(MobilePhone: mobilePhoneNumber, ExternalId: Guid.NewGuid());
+		}
+
+		private string GetInternationalFormattedPhoneNumber(string mobilePhoneNumber)
+		{
+			if (IsInternationalFormatPhoneNumber(mobilePhoneNumber)) return mobilePhoneNumber;
+
+			return InternationalCodeZa + mobilePhoneNumber.Remove(0, 1);
+		}
+
+		private bool IsInternationalFormatPhoneNumber(string mobilePhoneNumber)
+		{
+			return mobilePhoneNumber[0] == '+';
+		}
+		
 		#endregion
 	}
 }
