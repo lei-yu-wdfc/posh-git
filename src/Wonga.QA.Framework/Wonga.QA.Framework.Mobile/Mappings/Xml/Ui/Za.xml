@@ -77,5 +77,82 @@
     <HowItWorks>li:first-child + li>a</HowItWorks>
     <AboutUs>li:first-child + li + li>a</AboutUs>
   </TabsElement>
-	  
+
+  <AcceptedPageMobile>
+    <TotalToRepay>span.blue-text</TotalToRepay>
+    <RepaymentDate>em</RepaymentDate>
+    <DetailsTable>div#agreementscroll div:first-child + div + div table tbody</DetailsTable>
+    <LoanAmount>tr:first-child>td:first-child + td</LoanAmount>
+    <PaymentDueDate>tr:first-child + tr + tr + tr + tr + tr>td:first-child + td </PaymentDueDate>
+    <TotalToPayOnPaymentDate>tr:first-child + tr + tr + tr + tr + tr + tr + tr + tr + tr + tr>td:first-child + td</TotalToPayOnPaymentDate>
+    <NameInLoanAgreement>#agreementscroll div:first-child+div table tr td:first-child+td+td+td</NameInLoanAgreement>
+    <NameInDirectDebit>#directdebitcroll div:first-child p</NameInDirectDebit>
+  </AcceptedPageMobile>
+
+  <AddressDetailsPageMobile>
+    <FormId>#lzero-address-form .form-inner</FormId>
+    <District>#edit-district-za</District>
+    <HouseNumber>#edit-house-number-za</HouseNumber>
+    <Town>#edit-town-za</Town>
+    <County>#edit-county-za</County>
+    <AddressPeriod>#edit-address-period-za</AddressPeriod>
+    <Street>#edit-street-za</Street>
+    <Postcode>#edit-postcode-za</Postcode>
+    <PostcodeErrorForm>#edit-postcode-za-wrapper div.form-error div.invalid</PostcodeErrorForm>
+    <CountyErrorForm>#edit-county-za-wrapper div.invalid</CountyErrorForm>
+    <TownErrorForm>#edit-town-za-wrapper div.invalid</TownErrorForm>
+    <StreetErrorForm>#edit-street-za-wrapper div.invalid</StreetErrorForm>
+    <HouseNumberErrorForm>#edit-house-number-za-wrapper div.invalid</HouseNumberErrorForm>
+    <AddressPeriodErrorForm>#edit-address-period-za-wrapper div.invalid</AddressPeriodErrorForm>
+  </AddressDetailsPageMobile>
+  
+  <MySummaryPageMobile>
+    <MySummaryButton>.menu-block-0 .menu li:first-child>a</MySummaryButton>
+    <MyPersonalDetailsButton>.menu-block-0 .menu li:first-child + li>a</MyPersonalDetailsButton>
+    <MyPaymentDetailsButton>.menu-block-0 .menu li:first-child + li + li>a</MyPaymentDetailsButton>
+  </MySummaryPageMobile>
+
+  <PersonalBankAccountPageMobile>
+    <FormId>.wonga-apply-lzero-form</FormId>
+  </PersonalBankAccountPageMobile>
+
+  <PersonalDetailsPageMobile>
+    <AmountMinusButton>.wonga-amount-slider-wrapper .sliderminus</AmountMinusButton>
+    <AmountPlusButton>.wonga-amount-slider-wrapper .sliderplus</AmountPlusButton>
+    <DurationMinusButton>.wonga-duration-slider-wrapper .sliderminus</DurationMinusButton>
+    <DurationPlusButton>.wonga-duration-slider-wrapper .sliderplus</DurationPlusButton>
+  </PersonalDetailsPageMobile>
+  
+  <AccountDetailsSection>
+    <Fieldset>#lzero-account-setup-form</Fieldset>
+    <PasswordErrorForm>#edit-password-wrapper .form-error .invalid</PasswordErrorForm>
+    <PasswordConfirmErrorForm>#edit-password-confirm-wrapper .form-error .invalid</PasswordConfirmErrorForm>
+  </AccountDetailsSection>
+
+  <BankAccountSection>
+    <Fieldset>#bank-1</Fieldset>
+    <AccountNumber>#edit-account-number-za</AccountNumber>
+  </BankAccountSection>
+
+  <ContactingYouSection>
+    <HomePhone>#edit-home-phone-za</HomePhone>
+    <MobilePhone>#edit-mobile-phone-za</MobilePhone>
+  </ContactingYouSection>
+
+  <EmploymentDetailsSection>
+    <WorkPhone>#edit-work-phone-za</WorkPhone>
+    <NextPaydayDateDay>#edit-next-payday-day</NextPaydayDateDay>
+    <NextPaydayDateMonth>#edit-next-payday-month</NextPaydayDateMonth>
+    <NextPaydayDateYear>#edit-next-payday-year</NextPaydayDateYear>
+    <SelfNextPaydayDateDay>#edit-next-income-due-day</SelfNextPaydayDateDay>
+    <SelfNextPaydayDateMonth>#edit-next-income-due-month</SelfNextPaydayDateMonth>
+    <SelfNextPaydayDateYear>#edit-next-income-due-year</SelfNextPaydayDateYear>
+  </EmploymentDetailsSection>
+
+  <MobilePinVerificationSection>
+    <Pin>#edit-pin-za</Pin>
+    <ResendPin>.resend-pin.mod</ResendPin>
+    <ResendPinMessage>#fancybox-content div</ResendPinMessage>
+    <ResendPinPopupClose>#fancybox-close</ResendPinPopupClose>
+  </MobilePinVerificationSection>
 </UiMapMobile>
