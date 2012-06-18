@@ -20,7 +20,6 @@ namespace Wonga.QA.Tests.BankGateway
 
 		private readonly Dictionary<string, string> _testModesToSetup = new Dictionary<string, string>
 		                                                              	{
-		                                                              		{"BankGateway.IsTestMode", "false"},
 		                                                              		{"BankGateway.IsAccountVerificationTestMode", "false"},
 		                                                              		{"Mocks.HyphenAHVWebServiceEnabled", "true"}
 		                                                              	};
@@ -28,6 +27,9 @@ namespace Wonga.QA.Tests.BankGateway
 		[FixtureSetUp]
 		public void FixtureSetUp()
 		{
+			if (Drive.Data.Ops.GetServiceConfiguration<bool>("BankGateway.IsTestMode"))
+				Assert.Inconclusive("Bankgateway is in test mode");
+
 			Drive.Db.SetServiceConfigurations(_testModesToSetup);
 		}
 

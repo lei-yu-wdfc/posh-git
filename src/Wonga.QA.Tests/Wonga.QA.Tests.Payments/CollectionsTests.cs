@@ -22,18 +22,11 @@ namespace Wonga.QA.Tests.Payments
 		private const int InArrearsMaxDays = 90; //Hardcoded in payments
 		private readonly int[] NaedoTrackingDays = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 14, 21, 32 }; //Hardcoded in payments
 
-		private readonly string PrevBankGatewayTestMode = Drive.Db.GetServiceConfiguration("BankGateway.IsTestMode").Value;
-
 		[FixtureSetUp]
 		public void FixtureSetUp()
 		{
-			Drive.Db.SetServiceConfiguration("BankGateway.IsTestMode", "false");
-		}
-
-		[FixtureTearDown]
-		public void FixtureTearDown()
-		{
-			Drive.Db.SetServiceConfiguration("BankGateway.IsTestMode", PrevBankGatewayTestMode);
+			if (Drive.Data.Ops.GetServiceConfiguration<bool>("BankGateway.IsTestMode"))
+				Assert.Inconclusive("Bankgateway is in test mode");
 		}
 
 		[SetUp]

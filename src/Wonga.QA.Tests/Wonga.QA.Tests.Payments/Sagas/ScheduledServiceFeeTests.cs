@@ -26,31 +26,27 @@ namespace Wonga.QA.Tests.Payments.Sagas
         private const string Key_RepaymentArrangementEnabled =
             "Payments.RepaymentArrangementEnabled";
 
-        private const string Key_Bg_TestMode = "BankGateway.IsTestMode";
-
         private bool _repaymentArrangementEnabled;
-        private bool _isBankGateInTestMode;
         private Guid _applicationId;
         private int _applicationIntId;
 
-        [FixtureSetUp]
-        public void FixtureSetup()
-        {
-            Drive.Data.Ops.SetServiceConfiguration(Key_UtcNow, "2012/06/16");
+		[FixtureSetUp]
+		public void FixtureSetup()
+		{
+			if (Drive.Data.Ops.GetServiceConfiguration<bool>("BankGateway.IsTestMode"))
+				Assert.Inconclusive("Bankgateway is in test mode");
 
-            _repaymentArrangementEnabled = Drive.Data.Ops.GetServiceConfiguration<bool>(Key_RepaymentArrangementEnabled);
-            Drive.Data.Ops.SetServiceConfiguration(Key_RepaymentArrangementEnabled, "true");
+			Drive.Data.Ops.SetServiceConfiguration(Key_UtcNow, "2012/06/16");
 
-            _isBankGateInTestMode = Drive.Data.Ops.GetServiceConfiguration<bool>(Key_Bg_TestMode);
-            Drive.Data.Ops.SetServiceConfiguration(Key_Bg_TestMode, "false");
-        }
+			_repaymentArrangementEnabled = Drive.Data.Ops.GetServiceConfiguration<bool>(Key_RepaymentArrangementEnabled);
+			Drive.Data.Ops.SetServiceConfiguration(Key_RepaymentArrangementEnabled, "true");
+		}
 
-        [FixtureTearDown]
+    	[FixtureTearDown]
         public void FixtureTeardown()
         {
             Drive.Data.Ops.Db.ServiceConfigurations.Delete(Key: Key_UtcNow);
             Drive.Data.Ops.SetServiceConfiguration(Key_RepaymentArrangementEnabled, _repaymentArrangementEnabled);
-            Drive.Data.Ops.SetServiceConfiguration(Key_Bg_TestMode, _isBankGateInTestMode);
         }
 
         [Test]

@@ -19,10 +19,6 @@ namespace Wonga.QA.Tests.Payments.Command
 	[TestFixture, Parallelizable(TestScope.All)]
 	public class DcaCommandTests
 	{
-		private const string BankGatewayIsTestModeKey = "BankGateway.IsTestMode";
-		private const string FeatureSwitchMoveLoanToDca = "FeatureSwitch.MoveLoanToDca";
-		private bool _bankGatewayIsTestMode;
-        
 	    private dynamic _debtCollections = Drive.Data.Payments.Db.DebtCollection;
 	    private dynamic _fixedTermLoanSagas = Drive.Data.OpsSagas.Db.FixedTermLoanSagaEntity;
 	    private dynamic _externalDebtCollectionSagas = Drive.Data.OpsSagas.Db.ExternalDebtCollectionSagaEntity;
@@ -32,13 +28,8 @@ namespace Wonga.QA.Tests.Payments.Command
 		[FixtureSetUp]
 		public void FixtureSetUp()
 		{
-			_bankGatewayIsTestMode = Drive.Data.Ops.SetServiceConfiguration(BankGatewayIsTestModeKey, false);
-		}
-
-		[FixtureTearDown]
-		public void FixtureTearDown()
-		{
-			Drive.Data.Ops.SetServiceConfiguration(BankGatewayIsTestModeKey, _bankGatewayIsTestMode);
+			if (Drive.Data.Ops.GetServiceConfiguration<bool>("BankGateway.IsTestMode"))
+				Assert.Inconclusive("Bankgateway is in test mode");
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-2147")]
