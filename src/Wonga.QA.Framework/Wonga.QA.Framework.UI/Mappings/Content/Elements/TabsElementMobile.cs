@@ -13,5 +13,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Content.Elements
         public String News { get; set; }
         public String Help { get; set; }
         public String ContactUs { get; set; }
+        public String Educate { get; set; }
     }
 }
