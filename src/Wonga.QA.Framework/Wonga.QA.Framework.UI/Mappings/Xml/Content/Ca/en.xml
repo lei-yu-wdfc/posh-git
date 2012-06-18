@@ -38,4 +38,16 @@
 		<OuchMessage>Ouch! We're very sorry</OuchMessage>
 		<WeSorryMessage>We're sorry</WeSorryMessage>
 	</ExtensionErrorPage>
+
+  <TabsElementMobile>
+    <Login>login</Login>
+    <ApplyNow>apply now</ApplyNow>
+    <HowItWorks>how it works</HowItWorks>
+    <AboutUs>about us</AboutUs>
+    <Educate>educate</Educate>
+    <MyAccount>my account</MyAccount>
+    <News>news</News>
+    <Help>help</Help>
+    <ContactUs>contact us</ContactUs>
+  </TabsElementMobile>
 </ContentMap>

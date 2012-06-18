@@ -19,6 +19,7 @@ namespace Wonga.QA.Framework.UI.Elements
         private readonly IWebElement _howItWorks;
         private readonly IWebElement _aboutUs;
         private readonly IWebElement _advice;
+        private readonly IWebElement _educate;
         private readonly IWebElement _myAccount;
         private readonly IWebElement _news;
         private readonly IWebElement _help;
@@ -32,11 +33,19 @@ namespace Wonga.QA.Framework.UI.Elements
             _applyNow = _form.FindElement(By.LinkText(ContentMap.Get.TabsElementMobile.ApplyNow));
             _howItWorks = _form.FindElement(By.LinkText(ContentMap.Get.TabsElementMobile.HowItWorks));
             _aboutUs = _form.FindElement(By.LinkText(ContentMap.Get.TabsElementMobile.AboutUs));
-            _advice = _form.FindElement(By.LinkText(ContentMap.Get.TabsElementMobile.Advice));
             _myAccount = _form.FindElement(By.LinkText(ContentMap.Get.TabsElementMobile.MyAccount));
             _news = _form.FindElement(By.LinkText(ContentMap.Get.TabsElementMobile.News));
             _help = _form.FindElement(By.LinkText(ContentMap.Get.TabsElementMobile.Help));
             _contactUs = _form.FindElement(By.LinkText(ContentMap.Get.TabsElementMobile.ContactUs));
+            switch (Config.AUT)
+            {
+                case(AUT.Ca):
+                    _educate = _form.FindElement(By.LinkText(ContentMap.Get.TabsElementMobile.Educate));
+                    break;
+                case(AUT.Za):
+                    _advice = _form.FindElement(By.LinkText(ContentMap.Get.TabsElementMobile.Advice));
+                    break;
+            }
         }
 
     }
