@@ -194,7 +194,7 @@ namespace Wonga.QA.Tests.Ui
             //RepaymentVsScenarios(scenarioId);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1833", "UKWEB-244"), Pending("UKWEB-912 Defect: Incorrect text on the Repay Decline page"), MultipleAsserts]
+        [Test, AUT(AUT.Uk), JIRA("UK-1833", "UKWEB-244", "UKWEB-912"), MultipleAsserts]
         public void RepayEarlyDecline()
         {
             string email = Get.RandomEmail();
@@ -226,12 +226,13 @@ namespace Wonga.QA.Tests.Ui
 
             var declineText = declinedPage.ContentArea;
             var testTitle = "Sorry we couldn't collect your payment";
-            var testMessage = String.Format("This means we will still need to collect {0} on {1}.", sDueDateAmount, sDueDate);
+            var testMessage = String.Format("This means we will still need to collect {0}", sDueDateAmount);
 
             Assert.IsFalse(declinedPage.IsPaymentFailedAmountNotPresent());
             Assert.IsFalse(declinedPage.IsPaymentFailedDateNotPresent());
             Assert.IsTrue(declinedPage.Header.Contains(testTitle), "Header is incorrect.");
             Assert.IsTrue(declineText.Contains(testMessage), "Content area text is incorrect.");
+            Assert.IsTrue(declineText.Contains(sDueDate), "NextDueDate is incorrect");
 
             //Verify that the links work 
             declinedPage.RepayRetryClick();
@@ -395,7 +396,7 @@ namespace Wonga.QA.Tests.Ui
             var repayProcessingPage = new RepayProcessingPage(this.Client);
             var paymentErrorPage = repayProcessingPage.WaitFor<RepayErrorPage>() as RepayErrorPage;
         }
-
+        
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-247"), MultipleAsserts]
         public void MovingRepaySliderRemainingAmountShouldBeCorrect()
@@ -453,7 +454,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(paymentTakenText.Contains(testMessage), "Content area text is incorrect.");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248"), Pending("UKWEB-913 Defect: A token instead of value is displayed on the Repay Success page"), MultipleAsserts]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248", "UKWEB-913"), MultipleAsserts]
         public void RepayEarlyPart()
         {
             // Build L0 loan
