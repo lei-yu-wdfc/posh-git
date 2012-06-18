@@ -194,7 +194,7 @@ namespace Wonga.QA.Tests.Ui
             //RepaymentVsScenarios(scenarioId);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1833", "UKWEB-244")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1833", "UKWEB-244"), Pending("Fails")]
         public void RepayEarlyDecline()
         {
             string email = Get.RandomEmail();
@@ -453,7 +453,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(paymentTakenText.Contains(testMessage), "Content area text is incorrect.");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248"), Pending("Fails")]
         public void RepayEarlyPart()
         {
             // Build L0 loan

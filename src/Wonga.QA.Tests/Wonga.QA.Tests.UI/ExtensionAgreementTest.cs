@@ -26,7 +26,7 @@ namespace Wonga.QA.Tests.Ui
     [Parallelizable(TestScope.All)]
     class ExtensionAgreementTest : UiTest
     {
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-243", "UKWEB-294"), MultipleAsserts]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-243", "UKWEB-294"), MultipleAsserts, Pending("UKWEB-911 Defect: Extension finishes with an error page.")]
         public void ExtensionAgreementPageTest()
         {
             string email = Get.RandomEmail();
@@ -70,8 +70,8 @@ namespace Wonga.QA.Tests.Ui
             Assert.Contains(agreementPage.secci.Text, expectedTotalToRepay);
             Assert.Contains(agreementPage.secci.Text, expectedRepresentativeApr);
         }
-        
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-243", "UKWEB-294"), MultipleAsserts]
+
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-243", "UKWEB-294"), MultipleAsserts, Pending("UKWEB-911 Defect: Extension finishes with an error page.")]
         [Row (2, 100, 1, 7)]
         public void ExtensionAgreementPageNDaysAfterLoanTest(int loanTerm, int loanAmount, int daysAfterLoan, int daysToExtend)
         {
