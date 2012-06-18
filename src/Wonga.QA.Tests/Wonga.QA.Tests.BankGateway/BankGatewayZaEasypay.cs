@@ -63,16 +63,6 @@ namespace Wonga.QA.Tests.BankGateway
 			_bankIntegrationsTable.Update(bankIntegration);			
 		}
 
-		[SetUp]
-		public void SetUp()
-		{
-		}
-
-		[TearDown]
-		public void TearDown()
-		{
-		}
-
 		[Test, AUT(AUT.Za), JIRA("ZA-2394")]
 		public void ProcessEasypayFile_WillCreate_Acknowledgements()
 		{
