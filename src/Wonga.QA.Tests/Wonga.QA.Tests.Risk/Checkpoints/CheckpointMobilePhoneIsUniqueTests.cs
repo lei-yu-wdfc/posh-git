@@ -15,7 +15,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		public string GetMobilePhone()
 		{
             var phone = Get.GetMobilePhone();
-			Drive.Data.Risk.Db.RiskAccountMobilePhones.Delete(MobilePhone: phone);
+			Drive.Data.Risk.Db.RiskAccountMobilePhones.Delete(MobilePhone: phone); //Dodgy
             return phone; 
         }
 
@@ -25,7 +25,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
         }
 
 		[Test]
-		[JIRA("UK-1563"), Description("Scenario 1: Accepted")]
+		[JIRA("UK-1563"), AUT(AUT.Uk), Description("Scenario 1: Accepted")]
 		public void L0_MobilePhoneIsUnique_LoanIsAccepted()
 		{
             var phone = GetMobilePhone();
@@ -41,7 +41,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		}
 
         [Test]
-        [JIRA("UK-1563"), Description("Scenario 1, Scenario 2: Declined")]
+		[JIRA("UK-1563"), AUT(AUT.Uk), Description("Scenario 1, Scenario 2: Declined")]
         public void L0_MobilePhoneIsNotUnique_LoanIsDeclined()
         {
             var phone = GetMobilePhone();
