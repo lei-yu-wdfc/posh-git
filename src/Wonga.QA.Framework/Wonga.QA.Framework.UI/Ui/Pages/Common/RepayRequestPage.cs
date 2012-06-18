@@ -99,7 +99,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public void CancelButtonClick()
         {
             _cancelButton.Click();
-            var mySummaryPage = new MySummaryPage();
+            var mySummaryPage = new MySummaryPage(this.Client);
 
         }
 
