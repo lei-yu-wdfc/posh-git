@@ -23,7 +23,7 @@ namespace Wonga.QA.Framework
             this.OrganisationId = organisationId;
         }
 
-        public override Application PutApplicationIntoArrears()
+        public override Application PutIntoArrears()
         {
             // Try to collect the weekly amount twice and check that we've created a default charge transaction
             MorningCollectionAttempt(null,false,false);
@@ -148,7 +148,7 @@ namespace Wonga.QA.Framework
             }
         }
 
-        public bool IsInArrears()
+        public override bool IsInArrears()
         {
             var accountId = Do.Until(() => Drive.Db.Payments.AccountsApplications.Single(a => a.ApplicationEntity.ExternalId == Id).AccountId);
             var response = Drive.Api.Queries.Post(new GetBusinessAccountSummaryWbUkQuery

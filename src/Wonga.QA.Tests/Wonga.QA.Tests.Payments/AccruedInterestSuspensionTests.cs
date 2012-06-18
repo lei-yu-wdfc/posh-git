@@ -32,7 +32,7 @@ namespace Wonga.QA.Tests.Payments
         [Test]
         public void GoingIntoArrears_Creates_SuspendInterestTransaction_InTheFuture()
         {
-            _application.PutApplicationIntoArrears(60);
+            _application.PutIntoArrears(60);
             dynamic suspendTransaction = null;
             string offset = _serviceConfigDb.FindBy(Key: InArrearsMaxInterestDaysKey).Value.ToString();
             int intOffset = Int32.Parse(offset);

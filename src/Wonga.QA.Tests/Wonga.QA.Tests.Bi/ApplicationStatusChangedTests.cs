@@ -206,7 +206,7 @@ namespace Wonga.QA.Tests.Bi
                 return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Complaint;
             });
 
-            application.PutApplicationIntoArrears(2);
+            application.PutIntoArrears(2);
 
             // wait until sales force moves to complaint
             Do.Until(() =>

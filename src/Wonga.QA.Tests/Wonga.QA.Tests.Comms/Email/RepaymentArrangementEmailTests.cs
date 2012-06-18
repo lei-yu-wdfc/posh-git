@@ -18,7 +18,7 @@ namespace Wonga.QA.Tests.Comms.Email
             Do.Until(customer.GetPaymentCard);
             Application application = ApplicationBuilder.New(customer).Build();
 
-            application.PutApplicationIntoArrears(4);
+            application.PutIntoArrears(4);
 
             application.CreateRepaymentArrangement();
 

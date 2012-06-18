@@ -57,7 +57,7 @@ namespace Wonga.QA.Tests.Payments
             InitApplication(out paymentPlan, out application);
 
             decimal extraPaymentAmount = paymentPlan.RegularAmount * 2M;
-            application.PutApplicationIntoArrears();
+            application.PutIntoArrears();
 
             application.CreateExtraPayment(extraPaymentAmount);
             var newPaymentPlan = application.GetPaymentPlan();
@@ -82,7 +82,7 @@ namespace Wonga.QA.Tests.Payments
             InitApplication(out paymentPlan, out application);
 
             decimal extraPaymentAmount = paymentPlan.RegularAmount / 2M;
-            application.PutApplicationIntoArrears();
+            application.PutIntoArrears();
 
             application.CreateExtraPayment(extraPaymentAmount);
             var newPaymentPlan = application.GetPaymentPlan();
@@ -105,7 +105,7 @@ namespace Wonga.QA.Tests.Payments
             InitApplication(out paymentPlan, out application);
 
             decimal extraPaymentAmount = paymentPlan.RegularAmount;
-            application.PutApplicationIntoArrears();
+            application.PutIntoArrears();
 
             application.CreateExtraPayment(extraPaymentAmount);
             var newPaymentPlan = application.GetPaymentPlan();
@@ -129,7 +129,7 @@ namespace Wonga.QA.Tests.Payments
 
             // arrears + default charges
             decimal extraPaymentAmount = paymentPlan.RegularAmount + 10;
-            application.PutApplicationIntoArrears();
+            application.PutIntoArrears();
 
             application.CreateExtraPayment(extraPaymentAmount);
             var newPaymentPlan = application.GetPaymentPlan();

@@ -35,7 +35,7 @@ namespace Wonga.QA.Tests.Cs
             Customer customer = CustomerBuilder.New().Build();
             Application application = ApplicationBuilder.New(customer).Build();
 
-            application.PutApplicationIntoArrears(20);
+            application.PutIntoArrears(20);
 
             var response = Drive.Cs.Queries.Post(new GetScheduledPaymentsQuery
                                 {

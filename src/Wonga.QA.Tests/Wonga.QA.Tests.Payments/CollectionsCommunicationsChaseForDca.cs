@@ -40,7 +40,7 @@ namespace Wonga.QA.Tests.Payments
             var application = ApplicationBuilder.New(customer).WithLoanTerm(10).Build();
             var customerForename = customerBuilder.Forename;
 
-            application.PutApplicationIntoArrears();
+            application.PutIntoArrears();
 
             var emailTokens = GetEmailTokens(customer, SendCollectionsReminderA2Email);
 
@@ -61,7 +61,7 @@ namespace Wonga.QA.Tests.Payments
             var application = ApplicationBuilder.New(customer).WithLoanTerm(10).Build();
             var customerForename = customerBuilder.Forename;
 
-            application.PutApplicationIntoArrears(numberOfDaysInArrears);
+            application.PutIntoArrears(numberOfDaysInArrears);
 
             TimeoutInArrearsNoticeSaga(application, numberOfDaysInArrears);
 
@@ -84,7 +84,7 @@ namespace Wonga.QA.Tests.Payments
             var application = ApplicationBuilder.New(customer).WithLoanTerm(10).Build();
             var customerForename = customerBuilder.Forename;
 
-            application.PutApplicationIntoArrears(numberOfDaysInArrears);
+            application.PutIntoArrears(numberOfDaysInArrears);
 
             TimeoutInArrearsNoticeSaga(application, numberOfDaysInArrears);
 
@@ -107,7 +107,7 @@ namespace Wonga.QA.Tests.Payments
             var application = ApplicationBuilder.New(customer).WithLoanTerm(10).Build();
             var customerForename = customerBuilder.Forename;
 
-            application.PutApplicationIntoArrears(numberOfDaysInArrears);
+            application.PutIntoArrears(numberOfDaysInArrears);
 
             TimeoutInArrearsNoticeSaga(application, numberOfDaysInArrears);
 
@@ -130,7 +130,7 @@ namespace Wonga.QA.Tests.Payments
             var application = ApplicationBuilder.New(customer).WithLoanTerm(10).Build();
             var customerForename = customerBuilder.Forename;
 
-            application.PutApplicationIntoArrears(numberOfDaysInArrears);
+            application.PutIntoArrears(numberOfDaysInArrears);
 
             TimeoutInArrearsNoticeSaga(application, numberOfDaysInArrears);
 
@@ -151,7 +151,7 @@ namespace Wonga.QA.Tests.Payments
             var customer = customerBuilder.Build();
             var application = ApplicationBuilder.New(customer).WithLoanTerm(10).Build();
 
-            application.PutApplicationIntoArrears(numberOfDaysInArrears);
+            application.PutIntoArrears(numberOfDaysInArrears);
 
             TimeoutInArrearsNoticeSaga(application, numberOfDaysInArrears);
 
@@ -167,7 +167,7 @@ namespace Wonga.QA.Tests.Payments
             var application = ApplicationBuilder.New(customer).WithLoanTerm(10).Build();
             var customerForename = customerBuilder.Forename;
 
-            application.PutApplicationIntoArrears();
+            application.PutIntoArrears();
 
             var emailTokens = GetEmailTokens(customer, SendCollectionsReminderA2Email);
 

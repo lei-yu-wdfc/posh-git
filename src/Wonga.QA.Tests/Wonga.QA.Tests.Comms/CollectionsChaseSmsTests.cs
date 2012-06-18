@@ -60,7 +60,7 @@ namespace Wonga.QA.Tests.Comms
 			_formattedPhoneNumber = GetFormattedPhoneNumber(phoneNumberChunk);
 
 			var customer = CustomerBuilder.New().WithMobileNumber(string.Format("0{0}", phoneNumberChunk)).Build();
-			_application = ApplicationBuilder.New(customer).Build();
+			_application = ApplicationBuilder.New(customer).Build().PutIntoArrears();
 		}
 
 		[FixtureTearDown]
@@ -127,7 +127,7 @@ namespace Wonga.QA.Tests.Comms
 		{
 			DateTime atTheBeginningOfThisTest = DateTime.Now;
 
-			_application.PutApplicationIntoArrears(daysInArrears);
+			//_application.PutIntoArrears(daysInArrears);
 			TimeoutNotificationSagaForDays(_application, daysInArrears);
 
 			AssertSmsIsSent(_formattedPhoneNumber, smsText, atTheBeginningOfThisTest);
@@ -182,7 +182,7 @@ namespace Wonga.QA.Tests.Comms
 				.WithMobileNumber(string.Format("0{0}", phoneNumberChunk))
 				.Build();
 			Do.Until(customer.GetBankAccount);
-			return ApplicationBuilder.New(customer).Build().PutApplicationIntoArrears(20);
+			return ApplicationBuilder.New(customer).Build().PutIntoArrears(20);
 		}
 
 		private static void TimeoutNotificationSagaForDays(Application application, uint days)

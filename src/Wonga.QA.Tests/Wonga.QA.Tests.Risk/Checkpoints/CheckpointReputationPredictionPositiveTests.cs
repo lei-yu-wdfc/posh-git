@@ -136,7 +136,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				var application1 = ApplicationBuilder.New(customer1).WithIovationBlackBox(iovationBlackBox1).Build();
 				var score1 = GetReputationPredictionScore(application1);
 
-				application1.PutApplicationIntoArrears();
+				application1.PutIntoArrears();
 
 				var application2 = ApplicationBuilder.New(customer2).WithIovationBlackBox(iovationBlackBox2).Build();
 				var score2 = GetReputationPredictionScore(application2);
@@ -165,7 +165,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				Assert.IsNotNull(prevInArrears);
 				Assert.IsFalse((bool)prevInArrears);
 
-				application.PutApplicationIntoArrears();
+				application.PutIntoArrears();
 
 				Do.Until(() => (bool)Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(application.Id).InArrears);
 			}

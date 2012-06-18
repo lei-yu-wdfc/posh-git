@@ -42,7 +42,7 @@ namespace Wonga.QA.Tests.Payments
                                                                                         (PaymentFrequency)(Convert.ToInt32(customer.GetIncomeFrequency())));
             var numOfDaysToNextPayDateForRepresentmentOne = (int)nextPayDateForRepresentmentOne.Subtract(DateTime.Today).TotalDays;
 
-            application.PutApplicationIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
+            application.PutIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
             TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
 
             var arrearsInterestForRepresentmentOne =
@@ -89,7 +89,7 @@ namespace Wonga.QA.Tests.Payments
                                                                                         (PaymentFrequency)(Convert.ToInt32(customer.GetIncomeFrequency())));
             var numOfDaysToNextPayDateForRepresentmentOne = (int)nextPayDateForRepresentmentOne.Subtract(DateTime.Today).TotalDays;
 
-            application.PutApplicationIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
+            application.PutIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
             TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
 
             var arrearsInterestForRepresentmentOne =
@@ -137,7 +137,7 @@ namespace Wonga.QA.Tests.Payments
                                                                                         (PaymentFrequency)(Convert.ToInt32(customer.GetIncomeFrequency())));
             var numOfDaysToNextPayDateForRepresentmentOne = (int)nextPayDateForRepresentmentOne.Subtract(DateTime.Today).TotalDays;
 
-            application.PutApplicationIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
+            application.PutIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
             TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
 
             var arrearsInterestForRepresentmentOne =
@@ -210,7 +210,7 @@ namespace Wonga.QA.Tests.Payments
                                                                                         (PaymentFrequency)(Convert.ToInt32(customer.GetIncomeFrequency())));
             var numOfDaysToNextPayDateForRepresentmentOne = (int)nextPayDateForRepresentmentOne.Subtract(DateTime.Today).TotalDays;
 
-            application.PutApplicationIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
+            application.PutIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
             TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
 
             var arrearsInterestForRepresentmentOne =
@@ -286,7 +286,7 @@ namespace Wonga.QA.Tests.Payments
                                                                                         (PaymentFrequency)(Convert.ToInt32(customer.GetIncomeFrequency())));
             var numOfDaysToNextPayDateForRepresentmentOne = (int)nextPayDateForRepresentmentOne.Subtract(DateTime.Today).TotalDays;
 
-            application.PutApplicationIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
+            application.PutIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
             TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
 
             var arrearsInterestForRepresentmentOne =
@@ -384,7 +384,7 @@ namespace Wonga.QA.Tests.Payments
                                                                                         (PaymentFrequency)(Convert.ToInt32(customer.GetIncomeFrequency())));
             var numOfDaysToNextPayDateForRepresentmentOne = (int)nextPayDateForRepresentmentOne.Subtract(DateTime.Today).TotalDays;
 
-            application.PutApplicationIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
+            application.PutIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
             TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
 
             var arrearsInterestForRepresentmentOne =
@@ -476,7 +476,7 @@ namespace Wonga.QA.Tests.Payments
             var customer = CustomerBuilder.New().Build();
             var application = ApplicationBuilder.New(customer).Build();
 
-            application.PutApplicationIntoArrears();
+            application.PutIntoArrears();
 
             Do.Until(() => _opsSagasMultipleRepresentmentsInArrearsSagaEntity.FindByApplicationId(application.Id));
         }
@@ -487,7 +487,7 @@ namespace Wonga.QA.Tests.Payments
             var customer = CustomerBuilder.New().Build();
             var application = ApplicationBuilder.New(customer).Build();
 
-            application.PutApplicationIntoArrears();
+            application.PutIntoArrears();
 
             Do.Until(() => _opsSagasPaymentsInArrears.FindByApplicationId(application.Id));
         }

@@ -122,7 +122,7 @@ namespace Wonga.QA.Tests.Payments.Sagas
             _applicationIntId = applicationId;
             AssertForServiceFees(postedOnDates, applicationId);
 
-            application.PutApplicationIntoArrears(5);
+            application.PutIntoArrears(5);
             var signOnDate = Drive.Data.Payments.Db.Applications.FindByExternalId(application.Id).SignedOn;
             postedOnDates.Add(signOnDate);
             application.CreateRepaymentArrangement();
@@ -193,7 +193,7 @@ namespace Wonga.QA.Tests.Payments.Sagas
             _applicationIntId = applicationId;
             AssertForServiceFees(postedOnDates, applicationId);
 
-            application.PutApplicationIntoArrears(5);
+            application.PutIntoArrears(5);
             var signOnDate = Drive.Data.Payments.Db.Applications.FindByExternalId(application.Id).SignedOn;
             postedOnDates.Add(signOnDate);
             application.CreateRepaymentArrangement();

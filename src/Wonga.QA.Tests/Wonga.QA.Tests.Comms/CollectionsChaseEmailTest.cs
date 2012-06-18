@@ -89,7 +89,7 @@ namespace Wonga.QA.Tests.Comms
 
 		private void VerifyEmailIsSentAfterDaysInArrears(uint daysInArrears, int template)
 		{
-			_application.PutApplicationIntoArrears(daysInArrears);
+			_application.PutIntoArrears(daysInArrears);
 
 			if (daysInArrears > 0) //Saga is created after first email sent
 				TimeoutCollectionsChaseSagaForDays(_application, daysInArrears);

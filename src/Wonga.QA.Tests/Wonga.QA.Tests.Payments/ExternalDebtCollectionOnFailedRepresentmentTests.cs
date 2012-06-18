@@ -33,7 +33,7 @@ namespace Wonga.QA.Tests.Payments
 			var customer = CustomerBuilder.New().Build();
 			var application = ApplicationBuilder.New(customer).Build();
 
-			application.PutApplicationIntoArrears();
+			application.PutIntoArrears();
 
 			// Validate that external debt collection finished
 			Do.Until(() => _externalDebtCollectionSaga.FindByApplicationId(application.Id));
@@ -58,7 +58,7 @@ namespace Wonga.QA.Tests.Payments
 			var customer = CustomerBuilder.New().Build();
 			var application = ApplicationBuilder.New(customer).Build();
 
-			application.PutApplicationIntoArrears();
+			application.PutIntoArrears();
 
 			Drive.Msmq.Payments.Send(new IRepresentmentFailedEvent
 			                         	{
@@ -90,7 +90,7 @@ namespace Wonga.QA.Tests.Payments
                                                                                         (PaymentFrequency)(Convert.ToInt32(customer.GetIncomeFrequency())));
             var numOfDaysToNextPayDateForRepresentmentOne = (int)nextPayDateForRepresentmentOne.Subtract(DateTime.Today).TotalDays;
 
-            application.PutApplicationIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
+            application.PutIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
             TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
 
             TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
@@ -129,7 +129,7 @@ namespace Wonga.QA.Tests.Payments
                                                                                         (PaymentFrequency)(Convert.ToInt32(customer.GetIncomeFrequency())));
             var numOfDaysToNextPayDateForRepresentmentOne = (int)nextPayDateForRepresentmentOne.Subtract(DateTime.Today).TotalDays;
 
-            application.PutApplicationIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
+            application.PutIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
             TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
             RewindExternalDebtCollectionOnFailedRepresentmentSagaEntity(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
 
@@ -170,7 +170,7 @@ namespace Wonga.QA.Tests.Payments
                                                                                         (PaymentFrequency)(Convert.ToInt32(customer.GetIncomeFrequency())));
             var numOfDaysToNextPayDateForRepresentmentOne = (int)nextPayDateForRepresentmentOne.Subtract(DateTime.Today).TotalDays;
 
-            application.PutApplicationIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
+            application.PutIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
             TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
             RewindExternalDebtCollectionOnFailedRepresentmentSagaEntity(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
 
@@ -212,7 +212,7 @@ namespace Wonga.QA.Tests.Payments
                                                                                         (PaymentFrequency)(Convert.ToInt32(customer.GetIncomeFrequency())));
             var numOfDaysToNextPayDateForRepresentmentOne = (int)nextPayDateForRepresentmentOne.Subtract(DateTime.Today).TotalDays;
 
-            application.PutApplicationIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
+            application.PutIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
             TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
             RewindExternalDebtCollectionOnFailedRepresentmentSagaEntity(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
 
@@ -258,7 +258,7 @@ namespace Wonga.QA.Tests.Payments
                                                                                         (PaymentFrequency)(Convert.ToInt32(customer.GetIncomeFrequency())));
             var numOfDaysToNextPayDateForRepresentmentOne = (int)nextPayDateForRepresentmentOne.Subtract(DateTime.Today).TotalDays;
 
-            application.PutApplicationIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
+            application.PutIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
             TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
             RewindExternalDebtCollectionOnFailedRepresentmentSagaEntity(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
 

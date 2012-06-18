@@ -330,7 +330,7 @@ namespace Wonga.QA.Tests.Ui
                     customer = CustomerBuilder.New().WithEmailAddress(email).Build();
                     application = ApplicationBuilder.New(customer)
                         .Build();
-                    application.PutApplicationIntoArrears(arrearsdays);
+                    application.PutIntoArrears(arrearsdays);
                     loginPage = Client.Login();
                     mySummaryPage = loginPage.LoginAs(email);
                     #region DateFormat
@@ -367,7 +367,7 @@ namespace Wonga.QA.Tests.Ui
                     customer = CustomerBuilder.New().WithEmailAddress(email).Build();
                     application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm)
                         .Build();
-                    application.PutApplicationIntoArrears(arrearsdays);
+                    application.PutIntoArrears(arrearsdays);
                     loginPage = Client.Login();
                     mySummaryPage = loginPage.LoginAs(email);
                     #region DateFormat
@@ -793,7 +793,7 @@ namespace Wonga.QA.Tests.Ui
 
             var customer = CustomerBuilder.New().Build();
             var application = ApplicationBuilder.New(customer).Build();
-            application.PutApplicationIntoArrears(2);
+            application.PutIntoArrears(2);
 
             var appId = _applications.FindByExternalId(application.Id).ApplicationId;
             var naedo = _scheduledPayments.FindByApplicationId(appId);
