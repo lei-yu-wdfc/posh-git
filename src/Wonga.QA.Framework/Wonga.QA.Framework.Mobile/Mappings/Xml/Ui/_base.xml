@@ -132,4 +132,95 @@
     <DurationPlusButton>#wonga-duration-slider-wrapper button.slider-plus</DurationPlusButton>
   </PersonalDetailsPageMobile>
 
+
+  <AccountDetailsSection>
+    <Fieldset>#account-setup-1</Fieldset>
+    <Password>#edit-password</Password>
+    <PasswordConfirm>#edit-password-confirm</PasswordConfirm>
+    <PasswordErrorForm>div#edit-password-confirm-wrapper div.invalid</PasswordErrorForm>
+    <SecretQuestion>#edit-secret-question</SecretQuestion>
+    <SecretAnswer>#edit-secret-answer</SecretAnswer>
+  </AccountDetailsSection>
+
+  <BankAccountSection>
+    <Fieldset>#bank-1</Fieldset>
+    <BankName>#edit-bank-name</BankName>
+    <BranchNumber>#edit-branch-number</BranchNumber>
+    <BankAccountType>#edit-bank-account-type</BankAccountType>
+    <SortCodePart1>#edit-sort-code-part1</SortCodePart1>
+    <SortCodePart2>#edit-sort-code-part2</SortCodePart2>
+    <SortCodePart3>#edit-sort-code-part3</SortCodePart3>
+    <AccountNumber>#edit-account-number</AccountNumber>
+    <BankPeriod>#edit-bank-period</BankPeriod>
+    <InstitutionNumber>#edit-institution-number</InstitutionNumber>
+  </BankAccountSection>
+
+  <ContactingYouSection>
+    <Fieldset>fieldset[id="contact"]</Fieldset>
+    <Email>#edit-email</Email>
+    <EmailErrorForm>#edit-email-wrapper div div</EmailErrorForm>
+    <EmailConfirm>#edit-email-confirm</EmailConfirm>
+    <EmailConfirmErrorForm>#edit-email-confirm-wrapper div div</EmailConfirmErrorForm>
+    <HomePhone>#edit-home-phone</HomePhone>
+    <MobilePhoneErrorForm>#edit-mobile-phone-wrapper div div</MobilePhoneErrorForm>
+    <MobilePhone>#edit-mobile-phone</MobilePhone>
+  </ContactingYouSection>
+
+  <EmploymentDetailsSection>
+    <Fieldset>fieldset#employment</Fieldset>
+    <EmploymentStatus>#edit-employment-status</EmploymentStatus>
+    <EmploymentStatusErrorForm>#edit-employment-status-wrapper div div</EmploymentStatusErrorForm>
+    <EmployerIndustry>#edit-employer-industry</EmployerIndustry>
+    <EmployerIndustryErrorForm>#edit-employer-industry-wrapper div div</EmployerIndustryErrorForm>
+    <EmployerName>#edit-employer-name</EmployerName>
+    <EmployerNameErrorForm>#edit-employer-name-wrapper div div</EmployerNameErrorForm>
+    <EmploymentPosition>#edit-employment-position</EmploymentPosition>
+    <TimeWithEmployerYears>#edit-employment-time-years</TimeWithEmployerYears>
+    <TimeWithEmployerYearsErrorForm>#edit-employment-time-years-wrapper div div</TimeWithEmployerYearsErrorForm>
+    <TimeWithEmployerMonths>#edit-employment-time-months</TimeWithEmployerMonths>
+    <TimeWiyhEmployerMonthsErrorForm>#edit-employment-time-months-wrapper div div</TimeWiyhEmployerMonthsErrorForm>
+    <MonthlyIncome>#edit-monthly-income</MonthlyIncome>
+    <SelfEmployedMonthlyIncome>#edit-household-income</SelfEmployedMonthlyIncome>
+    <NextPaydayDate>#edit-next-payday-datepicker-popup-0</NextPaydayDate>
+    <NextPayDateErrorForm>#edit-next-payday-wrapper .form-error div</NextPayDateErrorForm>
+    <WorkPhone>#edit-work-phone</WorkPhone>
+    <WorkPhoneErrorForm>#edit-work-phone-wrapper div div</WorkPhoneErrorForm>
+    <IncomeFrequency>#edit-income-frequency</IncomeFrequency>
+    <IncomeFrequencyErrorForm>#edit-income-frequency-wrapper div div</IncomeFrequencyErrorForm>
+    <SalaryPaidToBank>input[type="radio"][name="salary_to_bank"]</SalaryPaidToBank>
+    <SalaryPaidToBankErrorForm>#wonga-conditionally-hidden-salary-to-bank .form-error div</SalaryPaidToBankErrorForm>
+    <SelfEmploymentPayDayDate></SelfEmploymentPayDayDate>
+  </EmploymentDetailsSection>
+
+  <MobilePinVerificationSection>
+    <Fieldset>#pin-verification</Fieldset>
+    <Pin>#edit-pin</Pin>
+  </MobilePinVerificationSection>
+
+  <YourDetailsSection>
+    <IdNumber>#edit-id-number</IdNumber>
+    <Fieldset>fieldset[id="details"]</Fieldset>
+    <Dependants>#edit-dependants</Dependants>
+    <DependantsErrorForm>#edit-dependants-wrapper div div</DependantsErrorForm>
+    <Gender>input[type="radio"][name="gender"]</Gender>
+    <DateOfBirthDay>#edit-date-of-birth-day</DateOfBirthDay>
+    <DateOfBirthMonth>#edit-date-of-birth-month</DateOfBirthMonth>
+    <DateOfBirthYear>#edit-date-of-birth-year</DateOfBirthYear>
+    <HomeStatus>#edit-home-status</HomeStatus>
+    <MaritalStatus>#edit-marital-status</MaritalStatus>
+    <MartialStatusErrorForm>#edit-marital-status-wrapper div div</MartialStatusErrorForm>
+    <HomeLanguage>#edit-home-language</HomeLanguage>
+    <Warning>.invalid</Warning>
+  </YourDetailsSection>
+
+  <YourNameSection>
+    <Fieldset>fieldset[id="name"]</Fieldset>
+    <Title>#edit-title</Title>
+    <FirstName>#edit-first-name</FirstName>
+    <FirstNameErrorForm>#edit-first-name-wrapper div div</FirstNameErrorForm>
+    <MiddleName>#edit-middle-name</MiddleName>
+    <MiddleNameErrorForm>#edit-middle-name-wrapper div div</MiddleNameErrorForm>
+    <LastName>#edit-last-name</LastName>
+    <LastNameErrorForm>#edit-last-name-wrapper div div</LastNameErrorForm>
+  </YourNameSection>
 </UiMap>

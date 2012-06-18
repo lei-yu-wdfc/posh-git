@@ -122,4 +122,37 @@
     <DurationMinusButton>.wonga-duration-slider-wrapper .sliderminus</DurationMinusButton>
     <DurationPlusButton>.wonga-duration-slider-wrapper .sliderplus</DurationPlusButton>
   </PersonalDetailsPageMobile>
+  
+  <AccountDetailsSection>
+    <Fieldset>#lzero-account-setup-form</Fieldset>
+    <PasswordErrorForm>#edit-password-wrapper .form-error .invalid</PasswordErrorForm>
+    <PasswordConfirmErrorForm>#edit-password-confirm-wrapper .form-error .invalid</PasswordConfirmErrorForm>
+  </AccountDetailsSection>
+
+  <BankAccountSection>
+    <Fieldset>#bank-1</Fieldset>
+    <AccountNumber>#edit-account-number-za</AccountNumber>
+  </BankAccountSection>
+
+  <ContactingYouSection>
+    <HomePhone>#edit-home-phone-za</HomePhone>
+    <MobilePhone>#edit-mobile-phone-za</MobilePhone>
+  </ContactingYouSection>
+
+  <EmploymentDetailsSection>
+    <WorkPhone>#edit-work-phone-za</WorkPhone>
+    <NextPaydayDateDay>#edit-next-payday-day</NextPaydayDateDay>
+    <NextPaydayDateMonth>#edit-next-payday-month</NextPaydayDateMonth>
+    <NextPaydayDateYear>#edit-next-payday-year</NextPaydayDateYear>
+    <SelfNextPaydayDateDay>#edit-next-income-due-day</SelfNextPaydayDateDay>
+    <SelfNextPaydayDateMonth>#edit-next-income-due-month</SelfNextPaydayDateMonth>
+    <SelfNextPaydayDateYear>#edit-next-income-due-year</SelfNextPaydayDateYear>
+  </EmploymentDetailsSection>
+
+  <MobilePinVerificationSection>
+    <Pin>#edit-pin-za</Pin>
+    <ResendPin>.resend-pin.mod</ResendPin>
+    <ResendPinMessage>#fancybox-content div</ResendPinMessage>
+    <ResendPinPopupClose>#fancybox-close</ResendPinPopupClose>
+  </MobilePinVerificationSection>
 </UiMapMobile>
