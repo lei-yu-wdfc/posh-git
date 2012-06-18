@@ -159,7 +159,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247"), Pending("Fails. To be investigated."), MultipleAsserts]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-247"), MultipleAsserts]
         public void ClickingCancelOnRepayPageOpensMySummaryPage()
         {
             var loginPage = Client.Login();
