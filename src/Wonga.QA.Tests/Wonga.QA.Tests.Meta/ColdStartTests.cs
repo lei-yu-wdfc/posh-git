@@ -10,7 +10,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Meta
 {
-    [Parallelizable(TestScope.All)]
+    [Parallelizable(TestScope.All), CoreTest]
     public class ColdStartTests
     {
         private ApiEndpoint[] Endpoints()

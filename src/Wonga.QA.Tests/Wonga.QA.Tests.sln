@@ -72,6 +72,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Meta", "Wonga.QA.Tests.Meta\Wonga.QA.Tests.Meta.csproj", "{185518CE-AEEE-416A-AA17-C8F04F3E4BCD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Ui.Admin", "Wonga.QA.Tests.Ui.Admin\Wonga.QA.Tests.Ui.Admin.csproj", "{B9FDE3ED-0FEE-400A-87EB-3A3C7AC8F01D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B29A97EF-5107-476B-A27A-688028CAAF54} = {B29A97EF-5107-476B-A27A-688028CAAF54}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Ivr", "Wonga.QA.Tests.Ivr\Wonga.QA.Tests.Ivr.csproj", "{AFF890BC-240F-4D73-B9B2-2D65801F149A}"
 EndProject
