@@ -35,10 +35,10 @@
     <PostOfficeBox>#edit-pobox-ca</PostOfficeBox>
   </AddressDetailsPage>
 
-  <PersonalBankAccountDetailsPage>
+  <PersonalBankAccountPage>
     <FormId>#lzero-bank-form</FormId>
     <NextButton>#edit-submit</NextButton>
-  </PersonalBankAccountDetailsPage>
+  </PersonalBankAccountPage>
 
   <DealDonePage>
     <HeaderText>Your application has been approved</HeaderText>

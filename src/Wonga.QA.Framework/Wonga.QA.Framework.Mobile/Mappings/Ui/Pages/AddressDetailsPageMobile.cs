@@ -2,7 +2,7 @@
 
 namespace Wonga.QA.Framework.Mobile.Mappings.Pages
 {
-    public sealed class AddressDetailsPage
+    public sealed class AddressDetailsPageMobile
     {
         public String FormId { get; set; }
         public String Postcode { get; set; }

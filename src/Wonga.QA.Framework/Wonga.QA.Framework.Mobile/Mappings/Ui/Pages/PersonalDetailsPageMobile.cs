@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Wonga.QA.Framework.Mobile.Mappings.Pages
 {
-    public class PersonalDetailsPage
+    public class PersonalDetailsPageMobile
     {
         public String FormId { get; set; }
         public String SlidersFormId { get; set; }

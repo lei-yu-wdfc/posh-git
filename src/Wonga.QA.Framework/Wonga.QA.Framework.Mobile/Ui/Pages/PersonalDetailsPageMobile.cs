@@ -9,7 +9,7 @@ using Wonga.QA.Framework.Mobile.Ui.Sections;
 
 namespace Wonga.QA.Framework.Mobile.Ui.Pages
 {
-    public class PersonalDetailsPage : BasePageMobile, IApplyPage
+    public class PersonalDetailsPageMobile : BasePageMobile, IApplyPage
     {
         public YourNameSection YourName { get; set; }
         public EmploymentDetailsSection EmploymentDetails { get; set; }
@@ -59,7 +59,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
         private IWebElement _durationPlusButton;
 
 
-        public PersonalDetailsPage(MobileUiClient client)
+        public PersonalDetailsPageMobile(MobileUiClient client)
             : base(client)
         {
             _form = Content.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPage.FormId));
@@ -169,11 +169,11 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
             _durationPlusButton.Click();
         }
 
-        //public IApplyPage Submit()
-        //{
-        //    _next.Click();
-        //    return new AddressDetailsPage(Client);
-        //}
+        public IApplyPage Submit()
+        {
+            _next.Click();
+            return new AddressDetailsPageMobile(Client);
+        }
 
         public void ClickSubmit()
         {

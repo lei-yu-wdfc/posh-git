@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Mobile.Mappings.Elements;
 using Wonga.QA.Framework.Mobile.Mappings.Pages;
 using Wonga.QA.Framework.Mobile.Mappings.Sections;
 using Wonga.QA.Framework.Mobile.Mappings.Ui.Elements;
+using Wonga.QA.Framework.Mobile.Mappings.Ui.Pages;
+using Wonga.QA.Framework.Mobile.Mappings.Ui.Sections;
 using Wonga.QA.Framework.Mobile.Mappings.Xml;
 
 namespace Wonga.QA.Framework.Mobile.Mappings.Ui
@@ -41,12 +44,25 @@ namespace Wonga.QA.Framework.Mobile.Mappings.Ui
         #region Elements
         public virtual SlidersElement SlidersElement { get; set; }
         public virtual TabsElementMobile TabsElementMobile { get; set; }
+        public virtual InternationalElement InternationalElement { get; set; }
+        public virtual LoginElement LoginElement { get; set; }
+        public virtual HelpElement HelpElement { get; set; }
+        public virtual FAQElement FAQElement { get; set; }
+        public virtual TabsElement TabsElement { get; set; }
         #endregion
 
         #region Pages
 
-        public virtual AddressDetailsPage AddressDetailsPage { get; set; }
-        public virtual PersonalDetailsPage PersonalDetailsPage { get; set; }
+        public virtual AddressDetailsPageMobile AddressDetailsPage { get; set; }
+        public virtual PersonalDetailsPageMobile PersonalDetailsPage { get; set; }
+        public virtual AccountDetailsPageMobile AccountDetailsPageMobile { get; set; }
+        public virtual ExtensionAgreementPageMobile ExtensionAgreementPageMobile { get; set; }
+        public virtual PersonalBankAccountPageMobile PersonalBankAccountPageMobile { get; set; }
+        public virtual AcceptedPageMobile AcceptedPage { get; set; }
+        public virtual ApplyTermsPageMobile ApplyTermsPage { get; set; }
+        public virtual DealDonePage DealDonePage { get; set; }
+        public virtual MySummaryPageMobile MySummaryPage { get; set; }
+        public virtual DeclinedPageMobile DeclinedPage { get; set; }
         #endregion
 
         #region Sections
@@ -55,6 +71,9 @@ namespace Wonga.QA.Framework.Mobile.Mappings.Ui
         public virtual EmploymentDetailsSection EmploymentDetailsSection { get; set; }
         public virtual YourDetailsSection YourDetailsSection { get; set; }
         public virtual YourNameSection YourNameSection { get; set; }
+        public virtual BankAccountSection BankAccountSection { get; set; }
+        public virtual MobilePinVerificationSection MobilePinVerificationSection { get; set; }
+        public virtual AccountDetailsSection AccountDetailsSection { get; set; }
         #endregion
     }
 }

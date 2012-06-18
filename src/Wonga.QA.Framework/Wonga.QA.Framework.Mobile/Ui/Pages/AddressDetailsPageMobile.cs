@@ -7,7 +7,7 @@ using Wonga.QA.Framework.Mobile.Mappings.Ui;
 
 namespace Wonga.QA.Framework.Mobile.Ui.Pages
 {
-    public class AddressDetailsPage : BasePageMobile, IApplyPage
+    public class AddressDetailsPageMobile : BasePageMobile, IApplyPage
     {
        // public AccountDetailsSection AccountDetailsSection { get; set; }
         private readonly IWebElement _postCode;
@@ -58,7 +58,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
         }
         //public String PostOfficeBox { set { _postOfficeBox.SendValue(value); } }
 
-        public AddressDetailsPage(MobileUiClient client)
+        public AddressDetailsPageMobile(MobileUiClient client)
             : base(client)
         {
 
@@ -120,30 +120,29 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
             _addressOptions = _form.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.AddressOptions));
         }
 
-        //TODO Uncomment this method when AccountDetailsPage will be ready
-        //public BasePageMobile Next() 
-        //{
-        //    _next.Click();
-        //    switch (Config.AUT)
-        //    {
-        //        //case (AUT.Ca):
-        //        //    return new PersonalBankAccountPage(Client);
-        //        default:
-        //            return new AccountDetailsPage(Client);
-
-        //    }
-        //}
-
-        public AddressDetailsPage NextClick()
+        public BasePageMobile Next()
         {
             _next.Click();
-            return new AddressDetailsPage(Client);
+            switch (Config.AUT)
+            {
+                //case (AUT.Ca):
+                //    return new PersonalBankAccountPage(Client);
+                default:
+                    return new AccountDetailsPageMobile(Client);
+
+            }
+        }
+
+        public AddressDetailsPageMobile NextClick()
+        {
+            _next.Click();
+            return new AddressDetailsPageMobile(Client);
         }
 
         public BasePageMobile NextAddressLessThan2()
         {
             _next.Click();
-            return new AddressDetailsPage(Client);
+            return new AddressDetailsPageMobile(Client);
 
         }
         public bool IsPostcodeWarningOccurred()

@@ -45,9 +45,9 @@
     <MarriedInCommunityProperty>input[type="radio"][name="married"]</MarriedInCommunityProperty>
   </PersonalDetailsPage>
 
-  <PersonalBankAccountDetailsPage>
+  <PersonalBankAccountPage>
     <FormId>.wonga-apply-lzero-form</FormId>
-  </PersonalBankAccountDetailsPage>
+  </PersonalBankAccountPage>
 
   <AccountDetailsPage>
     <FormId>.wonga-apply-lzero-form</FormId>

@@ -69,9 +69,9 @@
     <PasswordConfirmErrorForm>#edit-password-confirm-wrapper .form-error .invalid</PasswordConfirmErrorForm>
   </AccountDetailsSection>
 
-  <PersonalBankAccountDetailsPage>
+  <PersonalBankAccountPage>
     <FormId>#lzero-bank-form</FormId>
-  </PersonalBankAccountDetailsPage>
+  </PersonalBankAccountPage>
 
 
   <BankAccountSection>
