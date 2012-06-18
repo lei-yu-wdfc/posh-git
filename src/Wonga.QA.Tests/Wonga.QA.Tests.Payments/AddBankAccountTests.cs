@@ -173,7 +173,7 @@ namespace Wonga.QA.Tests.Payments
 		/// And the account should be marked as primary
 		/// And the payment card screen should be displayed 
 		/// </scenario>
-		[Test, AUT(AUT.Wb, AUT.Uk), JIRA("SME-571", "SME-195")]
+		[Test, AUT(AUT.Wb, AUT.Uk), JIRA("SME-571", "SME-195"),CoreTest]
 		public void AddPrimaryBankAccountSuccessfully()
 		{
 			var accountId = Guid.NewGuid();
