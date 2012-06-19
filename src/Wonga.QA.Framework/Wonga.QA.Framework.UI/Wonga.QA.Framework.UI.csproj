@@ -62,7 +62,6 @@
     <Compile Include="Journey\CaL0Journey.cs" />
     <Compile Include="Journey\WbLnJourney.cs" />
     <Compile Include="Journey\PlL0Journey.cs" />
-    <Compile Include="Journey\ZaMobileL0Journey.cs" />
     <Compile Include="Journey\ILnConsumerJourney.cs" />
     <Compile Include="Journey\JourneyFactory.cs" />
     <Compile Include="Journey\UkL0Journey.cs" />
@@ -71,7 +70,6 @@
     <Compile Include="Journey\ZaL0Journey.cs" />
     <Compile Include="Journey\CaLnJourney.cs" />
     <Compile Include="Journey\ZaLnJourney.cs" />
-    <Compile Include="Journey\ZaMobileLnJourney.cs" />
     <Compile Include="Mappings\Content\ContentMap.cs" />
     <Compile Include="Mappings\Content\Agreements\LoanAgreement.cs" />
     <Compile Include="Mappings\Content\Elements\HelpElement.cs" />
