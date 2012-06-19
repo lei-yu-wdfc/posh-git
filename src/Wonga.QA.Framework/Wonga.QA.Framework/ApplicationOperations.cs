@@ -47,15 +47,7 @@ namespace Wonga.QA.Framework
             Drive.Data.Payments.Db.Applications.Update(application);
             Drive.Data.Payments.Db.FixedTermLoanApplications.Update(fixedTermLoanApplication);
 
-            var transactionsTab = Drive.Data.Payments.Db.Transactions;
-            var transactions = transactionsTab.FindAllByApplicationId(application.ApplicationId);
-
-            foreach(var transaction in transactions)
-            {
-                transaction.CreatedOn -= span;
-                transaction.PostedOn -= span;
-                transactionsTab.Update(transaction);
-            }
+            MoveApplicationTransactionDates(application, span);
 
             var arrearEntity = Drive.Data.Payments.Db.Arrears.FindByApplicationId(application.ApplicationId);
 
@@ -210,6 +202,19 @@ namespace Wonga.QA.Framework
             
             
             //new DbDriver().Payments.CalendarDates.Any(a => a.IsBankHoliday && a.Date == date);
+        }
+
+        public static void MoveApplicationTransactionDates(dynamic application, TimeSpan span)
+        {
+            var transactionsTab = Drive.Data.Payments.Db.Transactions;
+            var transactions = transactionsTab.FindAllByApplicationId(application.ApplicationId);
+
+            foreach (var transaction in transactions)
+            {
+                transaction.CreatedOn -= span;
+                transaction.PostedOn -= span;
+                transactionsTab.Update(transaction);
+            }
         }
     }
 }
