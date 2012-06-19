@@ -12,7 +12,7 @@ using Wonga.QA.Tests.Risk.Checkpoints;
 
 namespace Wonga.QA.Tests.Risk.Workflows
 {
-	[Parallelizable(TestScope.All)]
+	[Parallelizable(TestScope.All), CoreTest]
 	public class WorkflowCheckpointsTests
 	{
 
