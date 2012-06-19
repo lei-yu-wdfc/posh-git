@@ -15,7 +15,7 @@ namespace Wonga.QA.Tests.Ui.Mobile
         [Test, AUT(AUT.Ca), JIRA("MBL-77"), Pending("Not deployed on Rc")]
         public void MenuTest()
         {
-            var homepage = Client.MobileHome();
+            //var homepage = Client.MobileHome();
         }
     }
 }
