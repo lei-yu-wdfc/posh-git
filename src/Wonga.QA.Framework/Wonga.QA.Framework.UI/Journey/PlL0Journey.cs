@@ -10,7 +10,7 @@ using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 
 namespace Wonga.QA.Framework.UI.Journey
 {
-    class PlL0Journey : BaseL0Journey, IL0ConsumerJourney
+    class PlL0Journey : BaseL0Journey
     {
         public PlL0Journey(BasePage homePage)
         {
@@ -55,7 +55,7 @@ namespace Wonga.QA.Framework.UI.Journey
             journey.Add(typeof(DealDonePage), GoToMySummaryPage);
         }
 
-        public override IL0ConsumerJourney ApplyForLoan(bool submit = true)
+        protected override BaseL0Journey ApplyForLoan(bool submit = true)
         {
             var homePage = CurrentPage as HomePage;
             homePage.Sliders.HowMuch = _amount.ToString();
@@ -64,8 +64,7 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-
-        public override IL0ConsumerJourney FillPersonalDetails(bool submit = true)
+        protected override BaseL0Journey FillPersonalDetails(bool submit = true)
         {
             var personalDetailsPage = CurrentPage as PersonalDetailsPage;
             personalDetailsPage.YourName.FirstName = _firstName;
@@ -102,7 +101,7 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public override IL0ConsumerJourney FillAddressDetails(bool submit = true)
+        protected override BaseL0Journey FillAddressDetails(bool submit = true)
         {
             var addressPage = CurrentPage as AddressDetailsPage;
             addressPage.PostCodeLookup = _postCode;
@@ -118,7 +117,7 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public override IL0ConsumerJourney FillAccountDetails(bool submit = true)
+        protected override BaseL0Journey FillAccountDetails(bool submit = true)
         {
             var accountDetailsPage = CurrentPage as AccountDetailsPage;
             accountDetailsPage.AccountDetailsSection.Password = _password;
@@ -132,7 +131,7 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public override IL0ConsumerJourney FillBankDetails(bool submit = true)
+        protected override BaseL0Journey FillBankDetails(bool submit = true)
         {
             var bankDetailsPage = CurrentPage as PersonalBankAccountPage;
             bankDetailsPage.BankAccountSection.BankName = "AIB";
@@ -146,7 +145,7 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public override IL0ConsumerJourney FillCardDetails(bool submit = true)
+        protected override BaseL0Journey FillCardDetails(bool submit = true)
         {
             var personalDebitCardPage = CurrentPage as PersonalDebitCardPage;
 
@@ -164,28 +163,28 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public override IL0ConsumerJourney WaitForAcceptedPage(bool submit = true)
+        protected override BaseL0Journey WaitForAcceptedPage(bool submit = true)
         {
             var processingPage = CurrentPage as ProcessingPage;
             CurrentPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
             return this;
         }
 
-        public override IL0ConsumerJourney WaitForDeclinedPage(bool submit = true)
+        protected override BaseL0Journey WaitForDeclinedPage(bool submit = true)
         {
             var processingPage = CurrentPage as ProcessingPage;
             CurrentPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
             return this;
         }
 
-        public override IL0ConsumerJourney FillAcceptedPage(bool submit = true)
+        protected override BaseL0Journey FillAcceptedPage(bool submit = true)
         {
             var acceptedPage = CurrentPage as AcceptedPage;
             CurrentPage = acceptedPage.Submit() as DealDonePage;
             return this;
         }
 
-        public override IL0ConsumerJourney GoToMySummaryPage(bool submit = true)
+        protected override BaseL0Journey GoToMySummaryPage(bool submit = true)
         {
             var dealDonePage = CurrentPage as DealDonePage;
             CurrentPage = dealDonePage.ContinueToMyAccount() as MySummaryPage;
@@ -194,51 +193,51 @@ namespace Wonga.QA.Framework.UI.Journey
 
         #region Builder
 
-        public override IL0ConsumerJourney WithTitle(string title)
+        public override BaseL0Journey WithTitle(string title)
         {
             throw new NotImplementedException(message: "Don't used on Pl");
         }
 
-        public override IL0ConsumerJourney WithGender(GenderEnum gender)
+        public override BaseL0Journey WithGender(GenderEnum gender)
         {
             throw new NotImplementedException(message: "Don't used on Pl");
         }
 
-        public override IL0ConsumerJourney WithDateOfBirth(DateTime dateOfBirth)
+        public override BaseL0Journey WithDateOfBirth(DateTime dateOfBirth)
         {
             throw new NotImplementedException(message: "Don't used on Pl");
         }
 
-        public override IL0ConsumerJourney WithMotherMaidenName(string motherMaidenName)
+        public override BaseL0Journey WithMotherMaidenName(string motherMaidenName)
         {
             _motherMaidenName = motherMaidenName;
             return this;
         }
 
-        public override IL0ConsumerJourney WithCardNumber(string cardNumber)
+        public override BaseL0Journey WithCardNumber(string cardNumber)
         {
             _cardNumber = cardNumber;
             return this;
         }
-        public override IL0ConsumerJourney WithCardSecurity(string cardSecurity)
+        public override BaseL0Journey WithCardSecurity(string cardSecurity)
         {
             _cardSecurity = cardSecurity;
             return this;
         }
 
-        public override IL0ConsumerJourney WithCardType(string cardType)
+        public override BaseL0Journey WithCardType(string cardType)
         {
             _cardType = cardType;
             return this;
         }
 
-        public override IL0ConsumerJourney WithExpiryDate(string expiryDate)
+        public override BaseL0Journey WithExpiryDate(string expiryDate)
         {
             _expiryDate = expiryDate;
             return this;
         }
 
-        public override IL0ConsumerJourney WithStartDate(string startDate)
+        public override BaseL0Journey WithStartDate(string startDate)
         {
             _startDate = startDate;
             return this;

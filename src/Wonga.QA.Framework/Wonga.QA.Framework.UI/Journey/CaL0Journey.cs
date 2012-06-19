@@ -10,7 +10,7 @@ using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 
 namespace Wonga.QA.Framework.UI
 {
-    class CaL0Journey : BaseL0Journey, IL0ConsumerJourney
+    class CaL0Journey : BaseL0Journey
     {
         public CaL0Journey(BasePage homePage)
         {
@@ -49,7 +49,7 @@ namespace Wonga.QA.Framework.UI
             journey.Add(typeof(DealDonePage), GoToMySummaryPage);
         }
 
-        public override IL0ConsumerJourney ApplyForLoan(bool submit = true)
+        protected override BaseL0Journey ApplyForLoan(bool submit = true)
         {
             var homePage = CurrentPage as HomePage;
             homePage.Sliders.HowMuch = _amount.ToString();
@@ -58,7 +58,7 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public override IL0ConsumerJourney FillPersonalDetails(bool submit = true)
+        protected override BaseL0Journey FillPersonalDetails(bool submit = true)
         {
             var personalDetailsPage = CurrentPage as PersonalDetailsPage;
             personalDetailsPage.ProvinceSection.Province = "British Columbia";
@@ -95,7 +95,7 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public override IL0ConsumerJourney FillAddressDetails(bool submit = true)
+        protected override BaseL0Journey FillAddressDetails(bool submit = true)
         {
             var addressPage = CurrentPage as AddressDetailsPage;
             addressPage.HouseNumber = "1403";
@@ -116,12 +116,12 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public override IL0ConsumerJourney FillAccountDetails(bool submit = true)
+        protected override BaseL0Journey FillAccountDetails(bool submit = true)
         {
             throw new NotImplementedException(message: "There is no AccountDetailsPage on Ca");
         }
 
-        public override IL0ConsumerJourney FillBankDetails(bool submit = true)
+        protected override BaseL0Journey FillBankDetails(bool submit = true)
         {
             var bankDetailsPage = CurrentPage as PersonalBankAccountPage;
             bankDetailsPage.BankAccountSection.BankName = "Bank of Montreal";
@@ -136,26 +136,26 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public override IL0ConsumerJourney FillCardDetails(bool submit = true)
+        protected override BaseL0Journey FillCardDetails(bool submit = true)
         {
             throw new NotImplementedException();
         }
 
-        public override IL0ConsumerJourney WaitForAcceptedPage(bool submit = true)
+        protected override BaseL0Journey WaitForAcceptedPage(bool submit = true)
         {
             var processingPage = CurrentPage as ProcessingPage;
             CurrentPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
             return this;
         }
 
-        public override IL0ConsumerJourney WaitForDeclinedPage(bool submit = true)
+        protected override BaseL0Journey WaitForDeclinedPage(bool submit = true)
         {
             var processingPage = CurrentPage as ProcessingPage;
             CurrentPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
             return this;
         }
 
-        public override IL0ConsumerJourney FillAcceptedPage(bool submit = true)
+        protected override BaseL0Journey FillAcceptedPage(bool submit = true)
         {
             var acceptedPage = CurrentPage as AcceptedPage;
             string date = String.Format("{0:d MMM yyyy}", DateTime.Today);
@@ -164,7 +164,7 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public override IL0ConsumerJourney GoToMySummaryPage(bool submit = true)
+        protected override BaseL0Journey GoToMySummaryPage(bool submit = true)
         {
             var dealDonePage = CurrentPage as DealDonePage;
             CurrentPage = dealDonePage.ContinueToMyAccount() as MySummaryPage;

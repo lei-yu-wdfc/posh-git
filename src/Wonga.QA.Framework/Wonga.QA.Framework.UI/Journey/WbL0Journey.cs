@@ -11,7 +11,7 @@ using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 
 namespace Wonga.QA.Framework.UI.Journey
 {
-    class WbL0Journey : BaseL0Journey, IL0ConsumerJourney
+    class WbL0Journey : BaseL0Journey
     {
         private bool _activeCompany;
         private bool _director;
@@ -99,7 +99,7 @@ namespace Wonga.QA.Framework.UI.Journey
             journey.Add(typeof(ReferPage), GoHomePage);
         }
 
-        public override IL0ConsumerJourney ApplyForLoan(bool submit = true)
+        protected override BaseL0Journey ApplyForLoan(bool submit = true)
         {
             var homePage = CurrentPage as HomePage;
             homePage.CloseWbWelcomePopup();
@@ -109,7 +109,7 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public override IL0ConsumerJourney AnswerEligibilityQuestions(bool submit = true)
+        protected override BaseL0Journey AnswerEligibilityQuestions(bool submit = true)
         {
             var eligibilityQuestionsPage = CurrentPage as EligibilityQuestionsPage;
             eligibilityQuestionsPage.CheckActiveCompany = _activeCompany;
@@ -124,7 +124,7 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public override IL0ConsumerJourney FillPersonalDetails(bool submit = true)
+        protected override BaseL0Journey FillPersonalDetails(bool submit = true)
         {
             var personalDetailsPage = CurrentPage as PersonalDetailsPage;
 
@@ -153,7 +153,7 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public override IL0ConsumerJourney FillAddressDetails(bool submit = true)
+        protected override BaseL0Journey FillAddressDetails(bool submit = true)
         {
             var addressDetailsPage = CurrentPage as AddressDetailsPage;
             addressDetailsPage.PostCode = _postCode;
@@ -191,7 +191,7 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public override IL0ConsumerJourney FillAccountDetails(bool submit = true)
+        protected override BaseL0Journey FillAccountDetails(bool submit = true)
         {
             var accountDetailsPage = CurrentPage as AccountDetailsPage;
             accountDetailsPage.AccountDetailsSection.Password = _password;
@@ -205,7 +205,7 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public override IL0ConsumerJourney FillBankDetails(bool submit = true)
+        protected override BaseL0Journey FillBankDetails(bool submit = true)
         {
             var personalBankAccountPage = CurrentPage as PersonalBankAccountPage;
             personalBankAccountPage.BankAccountSection.BankName = "AIB";
@@ -220,7 +220,7 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public override IL0ConsumerJourney FillCardDetails(bool submit = true)
+        protected override BaseL0Journey FillCardDetails(bool submit = true)
         {
             var personalDebitCardPage = CurrentPage as PersonalDebitCardPage;
             personalDebitCardPage.DebitCardSection.CardName = _firstName;
@@ -237,7 +237,7 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public override IL0ConsumerJourney EnterBusinessDetails(bool submit = true)
+        protected override BaseL0Journey EnterBusinessDetails(bool submit = true)
         {
             var businessDetailsPage = CurrentPage as BusinessDetailsPage;
             businessDetailsPage.BusinessName = Get.RandomString(3, 15);
@@ -246,14 +246,14 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public override IL0ConsumerJourney DeclineAddAdditionalDirector(bool submit = true)
+        protected override BaseL0Journey DeclineAddAdditionalDirector(bool submit = true)
         {
             var additionalDirectorsPage = CurrentPage as AdditionalDirectorsPage;
             CurrentPage = additionalDirectorsPage.Next();
             return this;
         }
 
-        public override IL0ConsumerJourney AddAdditionalDirector(bool submit = true)
+        protected override BaseL0Journey AddAdditionalDirector(bool submit = true)
         {
             var additionalDirectorsPage = CurrentPage as AdditionalDirectorsPage;
             var addAdditionalDirectorPage = additionalDirectorsPage.AddAditionalDirector();
@@ -269,7 +269,7 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public override IL0ConsumerJourney EnterBusinessBankAccountDetails(bool submit = true)
+        protected override BaseL0Journey EnterBusinessBankAccountDetails(bool submit = true)
         {
             var businessBankAccountPage = CurrentPage as BusinessBankAccountPage;
             businessBankAccountPage.BankAccountSection.BankName = "Bank of Scotland Business Banking";
@@ -284,7 +284,7 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public override IL0ConsumerJourney EnterBusinessDebitCardDetails(bool submit = true)
+        protected override BaseL0Journey EnterBusinessDebitCardDetails(bool submit = true)
         {
             var businessPaymentCardPage = CurrentPage as BusinessDebitCardPage;
             businessPaymentCardPage.DebitCardSection.CardName = _firstName;
@@ -309,35 +309,35 @@ namespace Wonga.QA.Framework.UI.Journey
 
         }
 
-        public override IL0ConsumerJourney WaitForApplyTermsPage(bool submit = true)
+        protected override BaseL0Journey WaitForApplyTermsPage(bool submit = true)
         {
             var processingPage = CurrentPage as ProcessingPage;
             CurrentPage = processingPage.WaitFor<ApplyTermsPage>() as ApplyTermsPage;
             return this;
         }
 
-        public override IL0ConsumerJourney UpdateLoanDuration(bool submit = true)
+        public override BaseL0Journey UpdateLoanDuration(bool submit = true)
         {
             var applyTermsPage = CurrentPage as ApplyTermsPage;
             applyTermsPage.EditDurationOfLoan("15");
             return this;
         }
 
-        public override IL0ConsumerJourney ApplyTerms(bool submit = true)
+        protected override BaseL0Journey ApplyTerms(bool submit = true)
         {
             var applyTermsPage = CurrentPage as ApplyTermsPage;
             CurrentPage = applyTermsPage.Next();
             return this;
         }
 
-        public override IL0ConsumerJourney WaitForDeclinedPage(bool submit = true)
+        protected override BaseL0Journey WaitForDeclinedPage(bool submit = true)
         {
             var processingPage = CurrentPage as ProcessingPage;
             CurrentPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
             return this;
         }
 
-        public override IL0ConsumerJourney FillAcceptedPage(bool submit = true)
+        protected override BaseL0Journey FillAcceptedPage(bool submit = true)
         {
             var acceptedPage = CurrentPage as AcceptedPage;
             acceptedPage.SignTermsMainApplicant();
@@ -346,24 +346,25 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public override IL0ConsumerJourney GoHomePage(bool submit = true)
+        protected override BaseL0Journey GoHomePage(bool submit = true)
         {
             var referPage = CurrentPage as ReferPage;
             CurrentPage = referPage.GoHome();
             return this;
         }
 
-        public override IL0ConsumerJourney GoToMySummaryPage(bool submit = true)
+        protected override BaseL0Journey GoToMySummaryPage(bool submit = true)
         {
             throw new NotImplementedException();
         }
 
-        public override IL0ConsumerJourney WaitForAcceptedPage(bool submit = true)
+        protected override BaseL0Journey WaitForAcceptedPage(bool submit = true)
         {
             throw new NotImplementedException();
         }
 
-        public override IL0ConsumerJourney WithDeclineDecision()
+        #region Builder
+        public override BaseL0Journey WithDeclineDecision()
         {
             journey.Remove(typeof(ProcessingPage));
             journey.Remove(typeof(ApplyTermsPage));
@@ -373,7 +374,7 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public override IL0ConsumerJourney WithAutAdditionalDirrector()
+        public override BaseL0Journey WithAdditionalDirrector()
         {
             journey.Remove(typeof(AdditionalDirectorsPage));
             journey.Remove(typeof(BusinessBankAccountPage));
@@ -392,7 +393,7 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public override IL0ConsumerJourney WithEligibilityQuestions(bool activeCompany = true, bool director = true, bool guarantee = true, bool resident = true, bool debitCard = true)
+        public override BaseL0Journey WithEligibilityQuestions(bool activeCompany = true, bool director = true, bool guarantee = true, bool resident = true, bool debitCard = true)
         {
             _activeCompany = activeCompany;
             _director = director;
@@ -402,64 +403,65 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public override IL0ConsumerJourney WithAdditionalDirectorName(string additionalDirectorName)
+        public override BaseL0Journey WithAdditionalDirectorName(string additionalDirectorName)
         {
             _additionalDirectorName = additionalDirectorName;
             return this;
         }
 
-        public override IL0ConsumerJourney WithAdditionalDirectorSurName(string additionalDirectorSurName)
+        public override BaseL0Journey WithAdditionalDirectorSurName(string additionalDirectorSurName)
         {
             _additionalDirectorSurName = additionalDirectorSurName;
             return this;
         }
 
-        public override IL0ConsumerJourney WithAdditionalDirectorEmail(string additionalDirectorEmail)
+        public override BaseL0Journey WithAdditionalDirectorEmail(string additionalDirectorEmail)
         {
             _additionalDirectorEmail = additionalDirectorEmail;
             return this;
         }
 
-        public override IL0ConsumerJourney WithBusinessBankAccount(string businessBankAccount)
+        public override BaseL0Journey WithBusinessBankAccount(string businessBankAccount)
         {
             _businessBankAccount = businessBankAccount;
             return this;
         }
 
-        public override IL0ConsumerJourney WithBusinessBankPeriod(string businessBankPeriod)
+        public override BaseL0Journey WithBusinessBankPeriod(string businessBankPeriod)
         {
             _businessBankPeriod = businessBankPeriod;
             return this;
         }
 
-        public override IL0ConsumerJourney WithBusinessDebitCardNumber(string businessDebitCardNumber)
+        public override BaseL0Journey WithBusinessDebitCardNumber(string businessDebitCardNumber)
         {
             _businessDebitCardNumber = businessDebitCardNumber;
             return this;
         }
 
-        public override IL0ConsumerJourney WithBusinessDebitCardSecurity(string businessDebitCardSecurity)
+        public override BaseL0Journey WithBusinessDebitCardSecurity(string businessDebitCardSecurity)
         {
             _businessDebitCardSecurity = businessDebitCardSecurity;
             return this;
         }
 
-        public override IL0ConsumerJourney WithBusinessDebitCardType(string businessDebitCardType)
+        public override BaseL0Journey WithBusinessDebitCardType(string businessDebitCardType)
         {
             _businessDebitCardType = businessDebitCardType;
             return this;
         }
 
-        public override IL0ConsumerJourney WithBusinessDebitCardExpiryDate(string businessDebitExpiryDate)
+        public override BaseL0Journey WithBusinessDebitCardExpiryDate(string businessDebitExpiryDate)
         {
             _businessDebitExpiryDate = businessDebitExpiryDate;
             return this;
         }
 
-        public override IL0ConsumerJourney WithBusinessDebitCardStartDate(string businessDebitStartDate)
+        public override BaseL0Journey WithBusinessDebitCardStartDate(string businessDebitStartDate)
         {
             _businessDebitStartDate = businessDebitStartDate;
             return this;
         }
+        #endregion
     }
 }

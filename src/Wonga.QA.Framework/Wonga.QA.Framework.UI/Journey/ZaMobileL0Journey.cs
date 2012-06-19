@@ -9,7 +9,7 @@ using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 
 namespace Wonga.QA.Framework.UI.Journey
 {
-    class ZaMobileL0Journey : BaseL0Journey, IL0ConsumerJourney
+    class ZaMobileL0Journey : BaseL0Journey
     {
         public ZaMobileL0Journey(BasePage homePage)
         {
@@ -50,7 +50,7 @@ namespace Wonga.QA.Framework.UI.Journey
             journey.Add(typeof(DealDonePage), GoToMySummaryPage);
         }
 
-        public override IL0ConsumerJourney ApplyForLoan(bool submit = true)
+        protected override BaseL0Journey ApplyForLoan(bool submit = true)
         {
             var homePage = CurrentPage as HomePageMobile;
             homePage.Sliders.HowMuch = _amount.ToString();
@@ -59,7 +59,7 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public override IL0ConsumerJourney FillPersonalDetails(bool submit = true)
+        protected override BaseL0Journey FillPersonalDetails(bool submit = true)
         {
             var personalDetailsPage = CurrentPage as PersonalDetailsPage;
             personalDetailsPage.YourName.FirstName = _firstName;
@@ -98,7 +98,7 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public override IL0ConsumerJourney FillAddressDetails(bool submit = true)
+        protected override BaseL0Journey FillAddressDetails(bool submit = true)
         {
             var addressPage = CurrentPage as AddressDetailsPage;
             addressPage.HouseNumber = "25";
@@ -114,7 +114,7 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public override IL0ConsumerJourney FillAccountDetails(bool submit = true)
+        protected override BaseL0Journey FillAccountDetails(bool submit = true)
         {
             var accountDetailsPage = CurrentPage as AccountDetailsPage;
             accountDetailsPage.AccountDetailsSection.Password = _password;
@@ -128,7 +128,7 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public override IL0ConsumerJourney FillBankDetails(bool submit = true)
+        protected override BaseL0Journey FillBankDetails(bool submit = true)
         {
             var bankDetailsPage = CurrentPage as PersonalBankAccountPage;
             bankDetailsPage.BankAccountSection.BankName = "Capitec";
@@ -143,7 +143,7 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public override IL0ConsumerJourney WaitForAcceptedPage(bool submit = true)
+        protected override BaseL0Journey WaitForAcceptedPage(bool submit = true)
         {
             var processingPage = CurrentPage as ProcessingPage;
             CurrentPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
@@ -151,24 +151,24 @@ namespace Wonga.QA.Framework.UI.Journey
         }
 
 
-        public override IL0ConsumerJourney WaitForDeclinedPage(bool submit = true)
+        protected override BaseL0Journey WaitForDeclinedPage(bool submit = true)
         {
             var processingPage = CurrentPage as ProcessingPage;
             CurrentPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
             return this;
         }
 
-        public override IL0ConsumerJourney FillAcceptedPage(bool submit = true)
+        protected override BaseL0Journey FillAcceptedPage(bool submit = true)
         {
             throw new NotImplementedException();
         }
 
-        public override IL0ConsumerJourney GoToMySummaryPage(bool submit = true)
+        protected override BaseL0Journey GoToMySummaryPage(bool submit = true)
         {
             throw new NotImplementedException();
         }
 
-        public override IL0ConsumerJourney WithNationalId(string nationalId)
+        public override BaseL0Journey WithNationalId(string nationalId)
         {
             _nationalId = nationalId;
             return this;

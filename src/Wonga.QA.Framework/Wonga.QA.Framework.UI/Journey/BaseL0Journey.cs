@@ -9,9 +9,9 @@ using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 
 namespace Wonga.QA.Framework.UI.Journey
 {
-    abstract class BaseL0Journey : IL0ConsumerJourney
+    public abstract class BaseL0Journey
     {
-        protected Dictionary<Type, Func<bool, IL0ConsumerJourney>> journey = new Dictionary<Type, Func<bool, IL0ConsumerJourney>>();
+        protected Dictionary<Type, Func<bool, BaseL0Journey>> journey = new Dictionary<Type, Func<bool, BaseL0Journey>>();
 
         protected bool _submit;
 
@@ -53,7 +53,7 @@ namespace Wonga.QA.Framework.UI.Journey
             var currentIndex = CurrentPage == null ? 0 : journey.Keys.ToList().IndexOf(CurrentPage.GetType());
             for (int i = currentIndex; i < journey.Keys.Count; i++)
             {
-                if (CurrentPage.GetType() == pageType)
+                if (CurrentPage.GetType() == pageType && pageType != typeof(HomePage))
                 {
                     if (!_submit)
                     {
@@ -69,90 +69,90 @@ namespace Wonga.QA.Framework.UI.Journey
             return CurrentPage;
         }
 
-        public abstract IL0ConsumerJourney ApplyForLoan(bool submit = true);
+        protected abstract BaseL0Journey ApplyForLoan(bool submit = true);
 
-        public abstract IL0ConsumerJourney FillPersonalDetails(bool submit = true);
+        protected abstract BaseL0Journey FillPersonalDetails(bool submit = true);
 
-        public abstract IL0ConsumerJourney FillAddressDetails(bool submit = true);
+        protected abstract BaseL0Journey FillAddressDetails(bool submit = true);
 
-        public abstract IL0ConsumerJourney FillAccountDetails(bool submit = true);
+        protected abstract BaseL0Journey FillAccountDetails(bool submit = true);
 
-        public abstract IL0ConsumerJourney FillBankDetails(bool submit = true);
+        protected abstract BaseL0Journey FillBankDetails(bool submit = true);
 
-        public virtual IL0ConsumerJourney FillCardDetails(bool submit = true)
+        protected virtual BaseL0Journey FillCardDetails(bool submit = true)
         {
             throw new NotImplementedException();
         }
 
-        public abstract IL0ConsumerJourney WaitForAcceptedPage(bool submit = true);
+        protected abstract BaseL0Journey WaitForAcceptedPage(bool submit = true);
 
-        public abstract IL0ConsumerJourney WaitForDeclinedPage(bool submit = true);
+        protected abstract BaseL0Journey WaitForDeclinedPage(bool submit = true);
 
-        public abstract IL0ConsumerJourney FillAcceptedPage(bool submit = true);
+        protected abstract BaseL0Journey FillAcceptedPage(bool submit = true);
 
-        public abstract IL0ConsumerJourney GoToMySummaryPage(bool submit = true);
+        protected abstract BaseL0Journey GoToMySummaryPage(bool submit = true);
 
-        public virtual IL0ConsumerJourney IgnoreAcceptingLoanAndReturnToHomePageAndLogin(bool submit = true)
+        public virtual BaseL0Journey IgnoreAcceptingLoanAndReturnToHomePageAndLogin(bool submit = true)
         {
             throw new NotImplementedException();
         }
 
-        public virtual IL0ConsumerJourney AnswerEligibilityQuestions(bool submit = true)
+        protected virtual BaseL0Journey AnswerEligibilityQuestions(bool submit = true)
         {
             throw new NotImplementedException(message: "Used only on Wb");
         }
-        public virtual IL0ConsumerJourney EnterBusinessDetails(bool submit = true)
+        protected virtual BaseL0Journey EnterBusinessDetails(bool submit = true)
         {
             throw new NotImplementedException(message: "Used only on Wb");
         }
-       public virtual IL0ConsumerJourney DeclineAddAdditionalDirector(bool submit = true)
-       {
-           throw new NotImplementedException(message: "Used only on Wb");
-       }
-
-        public virtual IL0ConsumerJourney AddAdditionalDirector(bool submit = true)
+        protected virtual BaseL0Journey DeclineAddAdditionalDirector(bool submit = true)
         {
             throw new NotImplementedException(message: "Used only on Wb");
         }
 
-        public virtual IL0ConsumerJourney EnterBusinessBankAccountDetails(bool submit = true)
+        protected virtual BaseL0Journey AddAdditionalDirector(bool submit = true)
         {
             throw new NotImplementedException(message: "Used only on Wb");
         }
 
-        public virtual IL0ConsumerJourney EnterBusinessDebitCardDetails(bool submit = true)
-        {
-            throw new NotImplementedException(message: "Used only on Wb");
-        }
-        public virtual IL0ConsumerJourney WaitForApplyTermsPage(bool submit = true)
+        protected virtual BaseL0Journey EnterBusinessBankAccountDetails(bool submit = true)
         {
             throw new NotImplementedException(message: "Used only on Wb");
         }
 
-        public virtual IL0ConsumerJourney ApplyTerms(bool submit = true)
+        protected virtual BaseL0Journey EnterBusinessDebitCardDetails(bool submit = true)
+        {
+            throw new NotImplementedException(message: "Used only on Wb");
+        }
+        protected virtual BaseL0Journey WaitForApplyTermsPage(bool submit = true)
         {
             throw new NotImplementedException(message: "Used only on Wb");
         }
 
-        public virtual IL0ConsumerJourney GoHomePage(bool submit = true)
+        protected virtual BaseL0Journey ApplyTerms(bool submit = true)
         {
             throw new NotImplementedException(message: "Used only on Wb");
         }
 
-        public virtual IL0ConsumerJourney UpdateLoanDuration(bool submit = true)
+        protected virtual BaseL0Journey GoHomePage(bool submit = true)
+        {
+            throw new NotImplementedException(message: "Used only on Wb");
+        }
+
+        public virtual BaseL0Journey UpdateLoanDuration(bool submit = true)
         {
             throw new NotImplementedException(message: "Used only on Wb");
         }
 
         #region Builder
 
-        public virtual IL0ConsumerJourney FillAndStop()
+        public virtual BaseL0Journey FillAndStop()
         {
             _submit = false;
             return this;
         }
 
-        public virtual IL0ConsumerJourney WithDeclineDecision()
+        public virtual BaseL0Journey WithDeclineDecision()
         {
             journey.Remove(typeof(ProcessingPage));
             journey.Remove(typeof(AcceptedPage));
@@ -161,198 +161,198 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public virtual IL0ConsumerJourney WithAmount(int amount)
+        public virtual BaseL0Journey WithAmount(int amount)
         {
             _amount = amount;
             return this;
         }
 
-        public virtual IL0ConsumerJourney WithDuration(int duration)
+        public virtual BaseL0Journey WithDuration(int duration)
         {
             _duration = duration;
             return this;
         }
 
-        public virtual IL0ConsumerJourney WithFirstName(string firstName)
+        public virtual BaseL0Journey WithFirstName(string firstName)
         {
             _firstName = firstName;
             return this;
         }
 
-        public virtual IL0ConsumerJourney WithLastName(string lastName)
+        public virtual BaseL0Journey WithLastName(string lastName)
         {
             _lastName = lastName;
             return this;
         }
 
-        public virtual IL0ConsumerJourney WithMiddleName(string middleName)
+        public virtual BaseL0Journey WithMiddleName(string middleName)
         {
             _middleName = middleName;
             return this;
         }
 
-        public virtual IL0ConsumerJourney WithTitle(string title)
+        public virtual BaseL0Journey WithTitle(string title)
         {
             _title = title;
             return this;
         }
 
-        public virtual IL0ConsumerJourney WithEmployerName(string employerName)
+        public virtual BaseL0Journey WithEmployerName(string employerName)
         {
             _employerName = employerName;
             return this;
         }
 
-        public virtual IL0ConsumerJourney WithEmail(string email)
+        public virtual BaseL0Journey WithEmail(string email)
         {
             _email = email;
             return this;
         }
 
-        public virtual IL0ConsumerJourney WithMobilePhone(string mobilePhone)
+        public virtual BaseL0Journey WithMobilePhone(string mobilePhone)
         {
             _mobilePhone = mobilePhone;
             return this;
         }
 
-        public virtual IL0ConsumerJourney WithGender(GenderEnum gender)
+        public virtual BaseL0Journey WithGender(GenderEnum gender)
         {
             _gender = gender;
             return this;
         }
 
-        public virtual IL0ConsumerJourney WithDateOfBirth(DateTime dateOfBirth)
+        public virtual BaseL0Journey WithDateOfBirth(DateTime dateOfBirth)
         {
             _dateOfBirth = dateOfBirth;
             return this;
         }
 
-        public virtual IL0ConsumerJourney WithNationalId(string nationalId)
+        public virtual BaseL0Journey WithNationalId(string nationalId)
         {
             throw new NotImplementedException(message: "Used only on Za");
         }
 
-        public virtual IL0ConsumerJourney WithMotherMaidenName(string motherMaidenName)
+        public virtual BaseL0Journey WithMotherMaidenName(string motherMaidenName)
         {
             throw new NotImplementedException(message: "Used only on Pl");
         }
 
-        public virtual IL0ConsumerJourney WithPosteCode(string postCode)
+        public virtual BaseL0Journey WithPosteCode(string postCode)
         {
             _postCode = postCode;
             return this;
         }
 
-        public virtual IL0ConsumerJourney WithAddresPeriod(string addresPeriod)
+        public virtual BaseL0Journey WithAddresPeriod(string addresPeriod)
         {
             _addressPeriod = addresPeriod;
             return this;
         }
 
-        public virtual IL0ConsumerJourney WithPassword(string password)
+        public virtual BaseL0Journey WithPassword(string password)
         {
             _password = password;
             return this;
         }
 
-        public virtual IL0ConsumerJourney WithAccountNumber(string accountNumber)
+        public virtual BaseL0Journey WithAccountNumber(string accountNumber)
         {
             _accountNumber = accountNumber;
             return this;
         }
 
-        public virtual IL0ConsumerJourney WithBankPeriod(string bankPeriod)
+        public virtual BaseL0Journey WithBankPeriod(string bankPeriod)
         {
             _bankPeriod = bankPeriod;
             return this;
         }
 
-        public virtual IL0ConsumerJourney WithPin(string pin)
+        public virtual BaseL0Journey WithPin(string pin)
         {
             _pin = pin;
             return this;
         }
 
-        public virtual IL0ConsumerJourney WithCardNumber(string cardNumber)
+        public virtual BaseL0Journey WithCardNumber(string cardNumber)
         {
             throw new NotImplementedException(message: "Used only on Pl and Uk");
         }
-        public virtual IL0ConsumerJourney WithCardSecurity(string cardSecurity)
-        {
-            throw new NotImplementedException(message: "Used only on Pl and Uk");
-        }
-
-        public virtual IL0ConsumerJourney WithCardType(string cardType)
+        public virtual BaseL0Journey WithCardSecurity(string cardSecurity)
         {
             throw new NotImplementedException(message: "Used only on Pl and Uk");
         }
 
-        public virtual IL0ConsumerJourney WithExpiryDate(string expiryDate)
+        public virtual BaseL0Journey WithCardType(string cardType)
         {
             throw new NotImplementedException(message: "Used only on Pl and Uk");
         }
 
-        public virtual IL0ConsumerJourney WithStartDate(string startDate)
+        public virtual BaseL0Journey WithExpiryDate(string expiryDate)
         {
             throw new NotImplementedException(message: "Used only on Pl and Uk");
         }
 
-        public virtual IL0ConsumerJourney WithAutAdditionalDirrector()
+        public virtual BaseL0Journey WithStartDate(string startDate)
+        {
+            throw new NotImplementedException(message: "Used only on Pl and Uk");
+        }
+
+        public virtual BaseL0Journey WithAdditionalDirrector()
         {
             throw new NotImplementedException(message: "Used only on Wb");
         }
 
-        public virtual IL0ConsumerJourney WithEligibilityQuestions(bool activeCompany = true, bool director = true, bool guarantee = true, bool resident = true, bool debitCard = true)
+        public virtual BaseL0Journey WithEligibilityQuestions(bool activeCompany = true, bool director = true, bool guarantee = true, bool resident = true, bool debitCard = true)
         {
             throw new NotImplementedException(message: "Used only on Wb");
         }
 
-        public virtual IL0ConsumerJourney WithAdditionalDirectorName(string additionalDirectorName)
+        public virtual BaseL0Journey WithAdditionalDirectorName(string additionalDirectorName)
         {
             throw new NotImplementedException(message: "Used only on Wb"); throw new NotImplementedException(message: "Used only on Wb");
         }
 
-        public virtual IL0ConsumerJourney WithAdditionalDirectorSurName(string additionalDirectorSurName)
+        public virtual BaseL0Journey WithAdditionalDirectorSurName(string additionalDirectorSurName)
         {
             throw new NotImplementedException(message: "Used only on Wb");
         }
 
-        public virtual IL0ConsumerJourney WithAdditionalDirectorEmail(string additionalDirectorEmail)
+        public virtual BaseL0Journey WithAdditionalDirectorEmail(string additionalDirectorEmail)
         {
             throw new NotImplementedException(message: "Used only on Wb");
         }
 
-        public virtual IL0ConsumerJourney WithBusinessBankAccount(string businessBankAccount)
+        public virtual BaseL0Journey WithBusinessBankAccount(string businessBankAccount)
         {
             throw new NotImplementedException(message: "Used only on Wb");
         }
 
-        public virtual IL0ConsumerJourney WithBusinessBankPeriod(string businessBankPeriod)
+        public virtual BaseL0Journey WithBusinessBankPeriod(string businessBankPeriod)
         {
             throw new NotImplementedException(message: "Used only on Wb");
         }
 
-        public virtual IL0ConsumerJourney WithBusinessDebitCardNumber(string businessDebitCardNumber)
+        public virtual BaseL0Journey WithBusinessDebitCardNumber(string businessDebitCardNumber)
         {
             throw new NotImplementedException(message: "Used only on Wb");
         }
 
-        public virtual IL0ConsumerJourney WithBusinessDebitCardSecurity(string businessDebitCardSecurity)
+        public virtual BaseL0Journey WithBusinessDebitCardSecurity(string businessDebitCardSecurity)
         {
             throw new NotImplementedException(message: "Used only on Wb");
         }
 
-        public virtual IL0ConsumerJourney WithBusinessDebitCardType(string businessDebitCardType)
+        public virtual BaseL0Journey WithBusinessDebitCardType(string businessDebitCardType)
         {
             throw new NotImplementedException(message: "Used only on Wb");
         }
 
-        public virtual IL0ConsumerJourney WithBusinessDebitCardExpiryDate(string businessDebitExpiryDate)
+        public virtual BaseL0Journey WithBusinessDebitCardExpiryDate(string businessDebitExpiryDate)
         {
             throw new NotImplementedException(message: "Used only on Wb");
         }
 
-        public virtual IL0ConsumerJourney WithBusinessDebitCardStartDate(string businessDebitStartDate)
+        public virtual BaseL0Journey WithBusinessDebitCardStartDate(string businessDebitStartDate)
         {
             throw new NotImplementedException(message: "Used only on Wb");
         }
