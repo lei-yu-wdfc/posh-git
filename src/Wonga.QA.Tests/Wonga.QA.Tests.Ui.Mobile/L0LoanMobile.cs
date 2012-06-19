@@ -11,33 +11,33 @@ namespace Wonga.QA.Tests.Ui.Mobile
     [TestFixture]
     public class L0LoanMobile : UiMobileTest
     {
-        [Test, AUT(AUT.Za), Pending("Shouldn't run as part of Backend Tests")]
+        [Test, AUT(AUT.Za), Pending("Waiting for mobile journeys")]
         public void ZaAcceptedLoanMobile()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.MobileHome())
-                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
-            var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
-            acceptedPage.SignAgreementConfirm();
-            acceptedPage.SignDirectDebitConfirm();
-            var dealDone = acceptedPage.Submit();
+            //var journey = JourneyFactory.GetL0Journey(Client.MobileHome())
+            //    .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
+            //var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
+            //acceptedPage.SignAgreementConfirm();
+            //acceptedPage.SignDirectDebitConfirm();
+            //var dealDone = acceptedPage.Submit();
         }
 
-        [Test, AUT(AUT.Za), Pending("Shouldn't run as part of Backend Tests")]
+        [Test, AUT(AUT.Za), Pending("Waiting for mobile journeys")]
         public void ZaAcceptedLoanMobileDropOff()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.MobileHome())
-                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
-            var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
+            //var journey = JourneyFactory.GetL0Journey(Client.MobileHome())
+            //    .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
+            //var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
             //write drop off code
 
         }
 
-		[Test, AUT(AUT.Za), Pending("Shouldn't run as part of Backend Tests")]
+		[Test, AUT(AUT.Za), Pending("Waiting for mobile journeys")]
         public void ZaDeclinedLoanMobile()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.MobileHome())
-                .WithDeclineDecision();
-            var declinedPage = journey.Teleport<DeclinedPage>() as DeclinedPage;
+            //var journey = JourneyFactory.GetL0Journey(Client.MobileHome())
+            //    .WithDeclineDecision();
+            //var declinedPage = journey.Teleport<DeclinedPage>() as DeclinedPage;
 
         }
 
