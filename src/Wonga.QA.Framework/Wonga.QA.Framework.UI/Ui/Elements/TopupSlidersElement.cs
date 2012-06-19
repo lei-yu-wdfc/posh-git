@@ -36,7 +36,12 @@ namespace Wonga.QA.Framework.UI.Elements
         public String HowMuch
         {
             get { return _loanAmount.GetValue(); }
-            set { _loanAmount.SendValue(value); }
+            set
+            {
+                _loanAmount.EraseAll();
+                _loanAmount.SendValue(value);
+                _loanAmount.LostFocus();
+            }
         }
 
         public String GetTotalAmount

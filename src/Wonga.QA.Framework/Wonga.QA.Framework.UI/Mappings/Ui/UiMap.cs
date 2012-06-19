@@ -43,6 +43,7 @@ using SubmitionPage = Wonga.QA.Framework.UI.Mappings.Pages.PayLater.SubmitionPag
 using SurveyElement = Wonga.QA.Framework.UI.Mappings.Elements.SurveyElement;
 using TabsElement = Wonga.QA.Framework.UI.Mappings.Elements.TabsElement;
 using TopupDealDonePage = Wonga.QA.Framework.UI.Mappings.Pages.TopupDealDonePage;
+using TopupSlidersElement = Wonga.QA.Framework.UI.Mappings.Elements.TopupSlidersElement;
 using ExtensionErrorPage = Wonga.QA.Framework.UI.Mappings.Pages.ExtensionErrorPage;
 using RepayErrorPage = Wonga.QA.Framework.UI.Mappings.Pages.RepayErrorPage;
 using DebitOrderPage = Wonga.QA.Framework.UI.Mappings.Pages.DebitOrderPage;
