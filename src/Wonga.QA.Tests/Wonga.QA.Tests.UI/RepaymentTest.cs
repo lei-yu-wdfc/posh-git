@@ -30,14 +30,7 @@ namespace Wonga.QA.Tests.Ui
                 .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
 
             // Take a loan for 20 days, accept it and go to the Summary page:
-            var summaryPage = journey.ApplyForLoan()
-                                  .FillPersonalDetails()
-                                  .FillAddressDetails()
-                                  .FillBankDetails()
-                                  .WaitForAcceptedPage()
-                                  .FillAcceptedPage()
-                                  .GoToMySummaryPage()
-                                  .CurrentPage as MySummaryPage;
+            var summaryPage = journey.Teleport<MySummaryPage>() as MySummaryPage;
             
             // Click the "repay" link in My Account:
             var repaymentOptionsPage = summaryPage.RepayClick();

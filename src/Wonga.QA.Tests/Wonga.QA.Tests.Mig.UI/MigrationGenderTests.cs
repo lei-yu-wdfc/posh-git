@@ -14,13 +14,7 @@ namespace Wonga.QA.Tests.Migration
             var journey = JourneyFactory.GetL0Journey(Client.Home())
                 .WithGender(GenderEnum.Female);
 
-            var acceptedPage = journey.ApplyForLoan()
-                                     .FillPersonalDetails()
-                                     .FillAddressDetails()
-                                     .FillAccountDetails()
-                                     .FillBankDetails()
-                                     .FillCardDetails()
-                                     .WaitForAcceptedPage().CurrentPage as AcceptedPage;
+            var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
         }
     }
 }

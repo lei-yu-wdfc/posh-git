@@ -26,60 +26,25 @@ namespace Wonga.QA.Tests.Ui
         public void WbDeclinedLoan()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home())
-                .WithAddresPeriod("More than 4 years");
-            journey.ApplyForLoan()
-                .AnswerEligibilityQuestions()
-                .FillPersonalDetails()
-                .FillAddressDetails()
-                .FillAccountDetails()
-                .FillBankDetails()
-                .FillCardDetails()
-                .EnterBusinessDetails()
-                .DeclineAddAdditionalDirector()
-                .EnterBusinessBankAccountDetails()
-                .EnterBusinessDebitCardDetails()
-                .WaitForDeclinedPage();
+                .WithAddresPeriod("More than 4 years")
+                .WithDeclineDecision();
+            var declinePage = journey.Teleport<DeclinedPage>() as DeclinedPage;
         }
 
-        [Test, AUT(AUT.Za)]
-        public void ZaDeclinedLoan()
+        [Test, AUT(AUT.Za, AUT.Ca)]
+        public void DeclinedLoan()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var processingPage = journey.ApplyForLoan()
-                                     .FillPersonalDetails()
-                                     .FillAddressDetails()
-                                     .FillAccountDetails()
-                                     .FillBankDetails()
-                                     .CurrentPage as ProcessingPage;
-
-            var declinedPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
-        }
-
-        [Test, AUT(AUT.Ca)]
-        public void CaDeclinedLoan()
-        {
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var processingPage = journey.ApplyForLoan()
-                                     .FillPersonalDetails()
-                                     .FillAddressDetails()
-                                     .FillAccountDetails()
-                                     .FillBankDetails()
-                                     .CurrentPage as ProcessingPage;
-            var declinedPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithDeclineDecision();
+            var declinedPage = journey.Teleport<DeclinedPage>() as DeclinedPage;
         }
 
         [Test, AUT(AUT.Za), JIRA("QA-278"), Pending("ZA-2302")]
         public void ZaDeclinedPageContainsHeaderLinks()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var processingPage = journey.ApplyForLoan()
-                                     .FillPersonalDetails()
-                                     .FillAddressDetails()
-                                     .FillAccountDetails()
-                                     .FillBankDetails()
-                                     .CurrentPage as ProcessingPage;
-
-            var declinedPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithDeclineDecision();
+            var declinedPage = journey.Teleport<DeclinedPage>() as DeclinedPage;
             declinedPage.LookForHeaderLinks();
         }
 
@@ -89,16 +54,9 @@ namespace Wonga.QA.Tests.Ui
         {
             var journeyL0 = JourneyFactory.GetL0Journey(Client.Home())
                 .WithEmployerName(Get.EnumToString(EmploymentStatusEnum.EmployedPartTime))
-                .WithAmount(400).WithDuration(30);
-            var processingPage = journeyL0.ApplyForLoan()
-                .FillPersonalDetails()
-                .FillAddressDetails()
-                .FillAccountDetails()
-                .FillBankDetails()
-                .FillCardDetails()
-                .CurrentPage as ProcessingPage;
-
-            var declinedPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
+                .WithAmount(400).WithDuration(30)
+                .WithDeclineDecision();
+            var declinedPage = journeyL0.Teleport<DeclinedPage>() as DeclinedPage;
 
             Assert.IsTrue(declinedPage.DeclineAdviceExists());
         }
@@ -111,16 +69,9 @@ namespace Wonga.QA.Tests.Ui
 
             var journeyL0 = JourneyFactory.GetL0Journey(Client.Home())
                 .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email)
-                .WithAmount(400).WithDuration(30);
-            var processingPage = journeyL0.ApplyForLoan()
-                .FillPersonalDetails()
-                .FillAddressDetails()
-                .FillAccountDetails()
-                .FillBankDetails()
-                .FillCardDetails()
-                .CurrentPage as ProcessingPage;
-
-            var declinedPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
+                .WithAmount(400).WithDuration(30)
+                .WithDeclineDecision();
+            var declinedPage = journeyL0.Teleport<DeclinedPage>() as DeclinedPage;
 
             Assert.IsTrue(declinedPage.DeclineAdviceExists());
         }

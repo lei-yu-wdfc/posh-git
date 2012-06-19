@@ -62,17 +62,7 @@ namespace Wonga.QA.Tests.Ui
                 .WithEmployerName("TESTNoCheck")
                 .WithFirstName(_forename).WithLastName(_surname).WithDateOfBirth(_dateOfBirth).WithNationalId(_nationalId);
 
-			var processingPage = journey.ApplyForLoan()
-                                 .FillPersonalDetails()
-								 .FillAddressDetails()
-								 .FillAccountDetails()
-								 .FillBankDetails()
-								 .CurrentPage as ProcessingPage;
-
-			var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
-			acceptedPage.SignAgreementConfirm();
-			acceptedPage.SignDirectDebitConfirm();
-			var dealDone = acceptedPage.Submit();
+			var mySummary = journey.Teleport<MySummaryPage>();
 		}
 	}
 }

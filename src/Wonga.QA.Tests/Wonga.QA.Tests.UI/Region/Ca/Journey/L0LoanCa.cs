@@ -13,33 +13,20 @@ namespace Wonga.QA.Tests.Ui
     [Parallelizable(TestScope.All)]
     public class L0LoanCa : UiTest
     {
-        private const String MiddleNameMask = "TESTNoCheck";
-
-       [Test, AUT(AUT.Ca), SmokeTest]
+        [Test, AUT(AUT.Ca), SmokeTest]
         public void CaAcceptedLoan()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home())
                 .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)); 
-            var mySummary = journey.ApplyForLoan()
-                                 .FillPersonalDetails()
-                                 .FillAddressDetails()
-                                 .FillAccountDetails()
-                                 .FillBankDetails()
-                                 .WaitForAcceptedPage()
-                                 .FillAcceptedPage()
-                                 .GoToMySummaryPage();
+            var mySummary = journey.Teleport<MySummaryPage>() as MySummaryPage;
         }
 
        [Test, AUT(AUT.Ca)]
        public void CaDeclinedLoan()
        {
-           var journey = JourneyFactory.GetL0Journey(Client.Home());
-           var processingPage = journey.ApplyForLoan()
-                                    .FillPersonalDetails()
-                                    .FillAddressDetails()
-                                    .FillAccountDetails()
-                                    .FillBankDetails()
-                                    .WaitForDeclinedPage();
+           var journey = JourneyFactory.GetL0Journey(Client.Home())
+               .WithDeclineDecision();
+           var processingPage = journey.Teleport<DeclinedPage>() as DeclinedPage;
        }
 
     }

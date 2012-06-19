@@ -20,13 +20,7 @@ namespace Wonga.QA.Tests.Ui
             var journey = JourneyFactory.GetL0Journey(Client.Home())
                 .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
 
-            var acceptedPage = journey.ApplyForLoan()
-                                     .FillPersonalDetails()
-                                     .FillAddressDetails()
-                                     .FillAccountDetails()
-                                     .FillBankDetails()
-                                     .FillCardDetails()
-                                     .WaitForAcceptedPage().CurrentPage as AcceptedPage;
+            var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
 
         }
 
@@ -36,13 +30,7 @@ namespace Wonga.QA.Tests.Ui
             var journey = JourneyFactory.GetL0Journey(Client.Home())
                 .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
 
-            var acceptedPage = journey.ApplyForLoan()
-                                     .FillPersonalDetails()
-                                     .FillAddressDetails()
-                                     .FillAccountDetails()
-                                     .FillBankDetails()
-                                     .FillCardDetails()
-                                     .WaitForAcceptedPage().CurrentPage as AcceptedPage;
+            var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
 
             Assert.IsTrue(acceptedPage.IsAgreementFormDisplayed());
 
@@ -61,14 +49,7 @@ namespace Wonga.QA.Tests.Ui
                 .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
                 .WithAmount(loanAmount).WithDuration(days);
 
-            var dealDonePage = journey.ApplyForLoan()
-                                   .FillPersonalDetails()
-                                   .FillAddressDetails()
-                                   .FillAccountDetails()
-                                   .FillBankDetails()
-                                   .FillCardDetails()
-                                   .WaitForAcceptedPage()
-                                   .FillAcceptedPage().CurrentPage as DealDonePage;
+            var dealDonePage = journey.Teleport<DealDonePage>() as DealDonePage;
 
             string actualDealDoneText = dealDonePage.GetDealDonePageText;
 
@@ -82,16 +63,9 @@ namespace Wonga.QA.Tests.Ui
         {
             var journeyL0 = JourneyFactory.GetL0Journey(Client.Home())
                 .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
-                .WithAmount(400).WithDuration(30);
-            var processingPage = journeyL0.ApplyForLoan()
-                .FillPersonalDetails()
-                .FillAddressDetails()
-                .FillAccountDetails()
-                .FillBankDetails()
-                .FillCardDetails()
-                .CurrentPage as ProcessingPage;
-
-            var declinedPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
+                .WithAmount(400).WithDuration(30)
+                .WithDeclineDecision();
+            var declinedPage = journeyL0.Teleport<DeclinedPage>() as DeclinedPage;
 
             Assert.IsTrue(declinedPage.DeclineAdviceExists());
         }
@@ -105,15 +79,7 @@ namespace Wonga.QA.Tests.Ui
             var journeyL0 = JourneyFactory.GetL0Journey(Client.Home())
                 .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email)
                 .WithAmount(400).WithDuration(30);
-            var processingPage = journeyL0.ApplyForLoan()
-                .FillPersonalDetails()
-                .FillAddressDetails()
-                .FillAccountDetails()
-                .FillBankDetails()
-                .FillCardDetails()
-                .CurrentPage as ProcessingPage;
-
-            var declinedPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
+            var declinedPage = journeyL0.Teleport<DeclinedPage>() as DeclinedPage;
 
             Assert.IsTrue(declinedPage.DeclineAdviceExists());
         }

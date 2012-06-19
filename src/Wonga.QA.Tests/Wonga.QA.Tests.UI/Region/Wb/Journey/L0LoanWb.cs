@@ -3,6 +3,7 @@ using System.Threading;
 using MbUnit.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI;
+using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Framework.UI.UiElements.Pages.Wb;
 using Wonga.QA.Tests.Core;
@@ -21,21 +22,7 @@ namespace Wonga.QA.Tests.Ui
             var journey = JourneyFactory.GetL0Journey(Client.Home())
                 .WithMiddleName(MiddleNameMask)
                 .WithAddresPeriod("More than 4 years");
-            var homePage = journey.ApplyForLoan()
-               .AnswerEligibilityQuestions()
-               .FillPersonalDetails()
-               .FillAddressDetails()
-               .FillAccountDetails()
-               .FillBankDetails()
-               .FillCardDetails()
-               .EnterBusinessDetails()
-               .DeclineAddAdditionalDirector()
-               .EnterBusinessBankAccountDetails()
-               .EnterBusinessDebitCardDetails()
-               .WaitForApplyTermsPage()
-               .ApplyTerms()
-               .FillAcceptedPage()
-               .GoHomePage();
+            var homePage = journey.Teleport<HomePage>() as HomePage;
         }
 
        [Test, AUT(AUT.Wb)]
@@ -43,22 +30,9 @@ namespace Wonga.QA.Tests.Ui
        {
            var journey = JourneyFactory.GetL0Journey(Client.Home())
                .WithMiddleName(MiddleNameMask)
-                .WithAddresPeriod("2 to 3 years");
-           var homePage = journey.ApplyForLoan()
-               .AnswerEligibilityQuestions()
-               .FillPersonalDetails()
-               .FillAddressDetails()
-               .FillAccountDetails()
-               .FillBankDetails()
-               .FillCardDetails()
-               .EnterBusinessDetails()
-               .AddAdditionalDirector()
-               .EnterBusinessBankAccountDetails()
-               .EnterBusinessDebitCardDetails()
-               .WaitForApplyTermsPage()
-               .ApplyTerms()
-               .FillAcceptedPage()
-               .GoHomePage();
+                .WithAddresPeriod("2 to 3 years")
+                .WithAdditionalDirrector();
+           var homePage = journey.Teleport<HomePage>() as HomePage;
        }
 
        [Test, AUT(AUT.Wb)]
@@ -67,23 +41,11 @@ namespace Wonga.QA.Tests.Ui
            var journey = JourneyFactory.GetL0Journey(Client.Home())
                .WithMiddleName(MiddleNameMask)
                .WithAddresPeriod("3 to 4 years");
-           var homePage = journey.ApplyForLoan()
-               .AnswerEligibilityQuestions()
-               .FillPersonalDetails()
-               .FillAddressDetails()
-               .FillAccountDetails()
-               .FillBankDetails()
-               .FillCardDetails()
-               .EnterBusinessDetails()
-               .DeclineAddAdditionalDirector()
-               .EnterBusinessBankAccountDetails()
-               .EnterBusinessDebitCardDetails()
-               .WaitForApplyTermsPage()
-               .UpdateLoanDuration()
-               .ApplyTerms()
-               .FillAcceptedPage()
-               .GoHomePage();
-       }     
+           var applyTerms = journey.Teleport<ApplyTermsPage>() as ApplyTermsPage;
+           journey.UpdateLoanDuration();
+           var homePage = journey.Teleport<HomePage>() as HomePage;
+
+       }
 
        [Test, AUT(AUT.Wb)]
        public void WbAcceptedLoanAddressLessThan2Years()
@@ -91,21 +53,7 @@ namespace Wonga.QA.Tests.Ui
            var journey = JourneyFactory.GetL0Journey(Client.Home())
                .WithMiddleName(MiddleNameMask)
                .WithAddresPeriod("Between 4 months and 2 years");
-           var homePage = journey.ApplyForLoan()
-               .AnswerEligibilityQuestions()
-               .FillPersonalDetails()
-               .FillAddressDetails()
-               .FillAccountDetails()
-               .FillBankDetails()
-               .FillCardDetails()
-               .EnterBusinessDetails()
-               .DeclineAddAdditionalDirector()
-               .EnterBusinessBankAccountDetails()
-               .EnterBusinessDebitCardDetails()
-               .WaitForApplyTermsPage()
-               .ApplyTerms()
-               .FillAcceptedPage()
-               .GoHomePage();
+           var homePage = journey.Teleport<HomePage>() as HomePage;
            
        }
 
@@ -113,19 +61,9 @@ namespace Wonga.QA.Tests.Ui
        public void WbDeclinedLoan()
        {
            var journey = JourneyFactory.GetL0Journey(Client.Home())
-               .WithAddresPeriod("More than 4 years");
-           journey.ApplyForLoan()
-               .AnswerEligibilityQuestions()
-               .FillPersonalDetails()
-               .FillAddressDetails()
-               .FillAccountDetails()
-               .FillBankDetails()
-               .FillCardDetails()
-               .EnterBusinessDetails()
-               .DeclineAddAdditionalDirector()
-               .EnterBusinessBankAccountDetails()
-               .EnterBusinessDebitCardDetails()
-               .WaitForDeclinedPage();
+               .WithAddresPeriod("More than 4 years")
+               .WithDeclineDecision();
+          var declinedPage = journey.Teleport<DeclinedPage>() as DeclinedPage;
        }
 
     }

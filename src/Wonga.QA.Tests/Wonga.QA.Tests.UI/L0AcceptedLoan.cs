@@ -19,8 +19,8 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Za, AUT.Ca), SmokeTest]
         public void ZaAcceptedLoan()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.Home()).WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)); 
-            var processingPage = journey.Teleport<MySummary>();
+            var journey = JourneyFactory.GetL0Journey(Client.Home()).WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
+            var processingPage = journey.Teleport<MySummary>() as MySummaryPage;
         }
 
        [Test, AUT(AUT.Wb)]
@@ -29,7 +29,7 @@ namespace Wonga.QA.Tests.Ui
            var journey = JourneyFactory.GetL0Journey(Client.Home())
                .WithMiddleName(MiddleNameMask)
                .WithAddresPeriod("More than 4 years");
-           var homePage = journey.Teleport<HomePage>();
+           var homePage = journey.Teleport<HomePage>() as HomePage;
        }
 
        [Test, AUT(AUT.Wb)]
@@ -38,21 +38,7 @@ namespace Wonga.QA.Tests.Ui
            var journey = JourneyFactory.GetL0Journey(Client.Home())
                 .WithMiddleName(MiddleNameMask)
                .WithAddresPeriod("2 to 3 years");
-           var homePage = journey.ApplyForLoan()
-               .AnswerEligibilityQuestions()
-               .FillPersonalDetails()
-               .FillAddressDetails()
-               .FillAccountDetails()
-               .FillBankDetails()
-               .FillCardDetails()
-               .EnterBusinessDetails()
-               .AddAdditionalDirector()
-               .EnterBusinessBankAccountDetails()
-               .EnterBusinessDebitCardDetails()
-               .WaitForApplyTermsPage()
-               .ApplyTerms()
-               .FillAcceptedPage()
-               .GoHomePage();
+           var homePage = journey.Teleport<HomePage>() as HomePage;
        }
 
        [Test, AUT(AUT.Wb)]
@@ -61,22 +47,7 @@ namespace Wonga.QA.Tests.Ui
            var journey = JourneyFactory.GetL0Journey(Client.Home())
                .WithMiddleName(MiddleNameMask)
                .WithAddresPeriod("3 to 4 years");
-           var homePage = journey.ApplyForLoan()
-               .AnswerEligibilityQuestions()
-               .FillPersonalDetails()
-               .FillAddressDetails()
-               .FillAccountDetails()
-               .FillBankDetails()
-               .FillCardDetails()
-               .EnterBusinessDetails()
-               .DeclineAddAdditionalDirector()
-               .EnterBusinessBankAccountDetails()
-               .EnterBusinessDebitCardDetails()
-               .WaitForApplyTermsPage()
-               .UpdateLoanDuration()
-               .ApplyTerms()
-               .FillAcceptedPage()
-               .GoHomePage();
+           var homePage = journey.Teleport<HomePage>() as HomePage;
        }     
 
        [Test, AUT(AUT.Wb)]
@@ -85,21 +56,7 @@ namespace Wonga.QA.Tests.Ui
            var journey = JourneyFactory.GetL0Journey(Client.Home())
                .WithMiddleName(MiddleNameMask)
                .WithAddresPeriod("Between 4 months and 2 years");
-           var homePage = journey.ApplyForLoan()
-               .AnswerEligibilityQuestions()
-               .FillPersonalDetails()
-               .FillAddressDetails()
-               .FillAccountDetails()
-               .FillBankDetails()
-               .FillCardDetails()
-               .EnterBusinessDetails()
-               .DeclineAddAdditionalDirector()
-               .EnterBusinessBankAccountDetails()
-               .EnterBusinessDebitCardDetails()
-               .WaitForApplyTermsPage()
-               .ApplyTerms()
-               .FillAcceptedPage()
-               .GoHomePage();
+           var homePage = journey.Teleport<HomePage>() as HomePage;
 
        }
 
@@ -107,14 +64,7 @@ namespace Wonga.QA.Tests.Ui
         public void UkAcceptedLoan()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home()).WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
-
-            var acceptedPage = journey.ApplyForLoan()
-                                     .FillPersonalDetails()
-                                     .FillAddressDetails()
-                                     .FillAccountDetails()
-                                     .FillBankDetails()
-                                     .FillCardDetails()
-                                     .WaitForAcceptedPage().CurrentPage as AcceptedPage;
+            var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
 
         }
 
@@ -123,13 +73,7 @@ namespace Wonga.QA.Tests.Ui
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home()).WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
 
-            var acceptedPage = journey.ApplyForLoan()
-                                     .FillPersonalDetails()
-                                     .FillAddressDetails()
-                                     .FillAccountDetails()
-                                     .FillBankDetails()
-                                     .FillCardDetails()
-                                     .WaitForAcceptedPage().CurrentPage as AcceptedPage;
+            var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
 
             Assert.IsTrue(acceptedPage.IsAgreementFormDisplayed());
 
@@ -148,26 +92,13 @@ namespace Wonga.QA.Tests.Ui
                 .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
                 .WithAmount(loanAmount).WithDuration(days);
 
-            var dealDonePage = journey.ApplyForLoan()
-                                   .FillPersonalDetails()
-                                   .FillAddressDetails()
-                                   .FillAccountDetails()
-                                   .FillBankDetails()
-                                   .FillCardDetails()
-                                   .WaitForAcceptedPage()
-                                   .FillAcceptedPage().CurrentPage as DealDonePage;
+            var dealDonePage = journey.Teleport<DealDonePage>() as DealDonePage;
 
             string actualDealDoneText = dealDonePage.GetDealDonePageText;
 
             // Check text on the Deal Done page is displayed correctly
             expectedDealDoneText = expectedDealDoneText.Replace("{repay date}", Date.GetOrdinalDate(paymentDate, "dddd d MMM yyyy")).Replace("{repay amount}", paymentAmount);
             Assert.AreEqual(expectedDealDoneText, actualDealDoneText);
-        }
-
-        [Test, AUT(AUT.Za,AUT.Ca, AUT.Uk)]
-        public void TeleportTest()
-        {
-            var personalPage = JourneyFactory.GetL0Journey(Client.Home()).WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).Teleport<MySummaryPage>();
         }
     }
 }

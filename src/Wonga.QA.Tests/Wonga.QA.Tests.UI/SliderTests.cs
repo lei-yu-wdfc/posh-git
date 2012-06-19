@@ -623,12 +623,7 @@ namespace Wonga.QA.Tests.Ui
             Thread.Sleep(1000);
             Assert.AreEqual(defaultTermLimit.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
             journey.CurrentPage = page.Sliders.Apply() as PersonalDetailsPage;
-            var processingPage = journey.FillPersonalDetails()
-                                     .FillAddressDetails()
-                                     .FillAccountDetails()
-                                     .FillBankDetails()
-                                     .CurrentPage as ProcessingPage;
-            var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
+            var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
             switch (Config.AUT)
             {
                 case AUT.Ca:

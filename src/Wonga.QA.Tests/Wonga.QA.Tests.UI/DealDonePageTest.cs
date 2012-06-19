@@ -45,13 +45,7 @@ namespace Wonga.QA.Tests.Ui
                 .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
                 .WithAmount(randomAmount).WithDuration(randomDuration)
                 .WithFirstName(firstName).WithLastName(lastName);
-            var processingPage = journey.ApplyForLoan()
-                                 .FillPersonalDetails()
-                                 .FillAddressDetails()
-                                 .FillAccountDetails()
-                                 .FillBankDetails()
-                                 .CurrentPage as ProcessingPage;
-            var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
+            var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
             switch (Config.AUT)
             {
                 #region case Za

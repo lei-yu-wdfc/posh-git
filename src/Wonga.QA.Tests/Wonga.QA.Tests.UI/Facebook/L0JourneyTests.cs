@@ -28,14 +28,7 @@ namespace Wonga.QA.Tests.Ui.Facebook
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home())
                 .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
-            var mySummary = journey.ApplyForLoan()
-                .FillPersonalDetails()
-                .FillAddressDetails()
-                .FillAccountDetails()
-                .FillBankDetails()
-                .FillCardDetails()
-                .WaitForAcceptedPage()
-                .FillAcceptedPage().CurrentPage as DealDonePage;
+            var mySummary = journey.Teleport<DealDonePage>() as DealDonePage;
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-969", "UKWEB-250"), MultipleAsserts, Pending("Waiting on Facebook Environment Setup - AUT.UkFb")]
@@ -48,11 +41,7 @@ namespace Wonga.QA.Tests.Ui.Facebook
             // L0 journey
             var journeyL0 = JourneyFactory.GetL0Journey(Client.Home())
                 .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email);
-            journeyL0.ApplyForLoan()
-                .FillPersonalDetails()
-                .FillAddressDetails();
-
-            var accountSetupPage = new AccountDetailsPage(this.Client);
+           var accountSetupPage = journeyL0.Teleport<AccountDetailsPage>() as AccountDetailsPage;
 
             Assert.IsTrue(accountSetupPage.IsSecciLinkVisible());
             Assert.IsTrue(accountSetupPage.IsTermsAndConditionsLinkVisible());
