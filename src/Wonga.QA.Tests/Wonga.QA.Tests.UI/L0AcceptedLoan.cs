@@ -37,7 +37,8 @@ namespace Wonga.QA.Tests.Ui
        {
            var journey = JourneyFactory.GetL0Journey(Client.Home())
                 .WithMiddleName(MiddleNameMask)
-               .WithAddresPeriod("2 to 3 years");
+               .WithAddresPeriod("2 to 3 years")
+               .WithAdditionalDirrector();
            var homePage = journey.Teleport<HomePage>() as HomePage;
        }
 
