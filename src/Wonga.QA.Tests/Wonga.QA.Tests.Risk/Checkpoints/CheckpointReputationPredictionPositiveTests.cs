@@ -121,9 +121,10 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			Do.Until(() => Drive.Data.Risk.Db.RiskIovationPostcodes.FindByApplicationId(_application.Id).AccountRank == 1);
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), JIRA("ZA-1938", "CA-1889")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1938")]
 		public void CheckpointReputationPredictionPositivePostCodeWithHighArrearsRateLowersScore()
 		{
+			//this test does not make sense for CA as if the number of arrears in the post code is too high the app will be declined
 			string postcode = GetPostcode();
 			var customer1 = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(postcode).Build();
 			var customer2 = CustomerBuilder.New().WithEmployer(TestMask).WithPostcodeInAddress(postcode).Build();
@@ -133,10 +134,6 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 			try
 			{
-				//using the default value is not good enough to get a good score 
-				//because there can be many applications in arrears which lower the result considerably
-				//make sure both will be accepted
-				SetReputationScoreCutoff(0);
 				var application1 = ApplicationBuilder.New(customer1).WithIovationBlackBox(iovationBlackBox1).Build();
 				var score1 = GetReputationPredictionScore(application1);
 
@@ -145,8 +142,6 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				var application2 = ApplicationBuilder.New(customer2).WithIovationBlackBox(iovationBlackBox2).Build();
 				var score2 = GetReputationPredictionScore(application2);
 
-				//if in a post area where most of the apps are in arrears the final result will be the same as one more 
-				//application in arrears will not make a difference on the final scrore result
 				Assert.LessThanOrEqualTo(score2, score1);
 			}
 
@@ -154,8 +149,6 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			{
 				DeleteIovationMockIfCustomType(iovationBlackBox1);
 				DeleteIovationMockIfCustomType(iovationBlackBox2);
-				ResetReputationScoreCutoff();
-
 			}
 		}
 
