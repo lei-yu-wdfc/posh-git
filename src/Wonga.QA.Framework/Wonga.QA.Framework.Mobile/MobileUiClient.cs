@@ -17,6 +17,7 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Remote;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Mobile.Ui.Pages;
 
 
 namespace Wonga.QA.Framework.Mobile
@@ -42,11 +43,17 @@ namespace Wonga.QA.Framework.Mobile
                     var firefoxProfile = new FirefoxProfile();
                     firefoxProfile.SetPreference("network.http.accept.default", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8,text/vnd.wap.wml;q=0.6");
                     return new FirefoxDriver(firefoxProfile);
-                case (Config.UiConfig.BrowserType.InternetExplorer):
+                case (Config.UiConfig.BrowserType.Android):
                     return new AndroidDriver("http://127.0.0.1:8080/wd/hub"); //Default android selenium server address
                 default:
                     throw new ArgumentException("Please select a Browser Type via the QAFBrowser environment variable");
             }
+        }
+
+        public HomePageMobile MobileHome()
+        {
+            Driver.Navigate().GoToUrl(Config.Ui.Home);
+            return new HomePageMobile(this);
         }
         
 

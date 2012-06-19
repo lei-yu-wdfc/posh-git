@@ -12,22 +12,22 @@ namespace Wonga.QA.Tests.Ui.Mobile
         [Test, AUT(AUT.Za), Pending("Test not yet complete")]
         public void FullLnMobile()
         {
-            var loginPage = Client.Login();
-            string email = Get.RandomEmail();
-            Customer customer = CustomerBuilder.New()
-                                        .WithEmailAddress(email)
-                                        .Build();
-            Application application = ApplicationBuilder.New(customer).Build();
-            application.RepayOnDueDate();
-            loginPage.LoginAsMobile(email);
+            //var loginPage = Client.Login();
+            //string email = Get.RandomEmail();
+            //Customer customer = CustomerBuilder.New()
+            //                            .WithEmailAddress(email)
+            //                            .Build();
+            //Application application = ApplicationBuilder.New(customer).Build();
+            //application.RepayOnDueDate();
+            //loginPage.LoginAsMobile(email);
 
-            var journey = JourneyFactory.GetLnJourney(Client.MobileHome());
-            var page = journey.ApplyForLoan(200, 10)
-                           .FillApplicationDetails()
-                           .WaitForAcceptedPage()
-                           .FillAcceptedPage()
-                           .GoToMySummaryPage()
-                           .CurrentPage as MySummaryPage;
+            //var journey = JourneyFactory.GetLnJourney(Client.MobileHome());
+            //var page = journey.ApplyForLoan(200, 10)
+            //               .FillApplicationDetails()
+            //               .WaitForAcceptedPage()
+            //               .FillAcceptedPage()
+            //               .GoToMySummaryPage()
+            //               .CurrentPage as MySummaryPage;
         }
     }
 }
