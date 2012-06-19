@@ -4,7 +4,7 @@ using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
-using CreateFixedTermLoanApplicationCommand = Wonga.QA.Framework.Api.CreateFixedTermLoanApplicationCommand;
+using CreateFixedTermLoanApplicationCommand = Wonga.QA.Framework.Api.CreateFixedTermLoanApplicationZaCommand;
 using PaymentTransactionEnum = Wonga.QA.Framework.Msmq.PaymentTransactionEnum;
 using SignApplicationCommand = Wonga.QA.Framework.Api.SignApplicationCommand;
 
@@ -25,7 +25,7 @@ namespace Wonga.QA.Tests.Payments
 			var customer = CustomerBuilder.New().Build();
 			_application =
 				ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).WithLoanAmount(100).
-					Build().PutApplicationIntoArrears();
+					Build().PutIntoArrears();
 
 			//Force dca to timeout immmediately
 			var externalDebtCollectionSagaEntities = Do.Until(() => _externalDebtCollectionSagas.FindAllByApplicationId(_application.Id).Single());

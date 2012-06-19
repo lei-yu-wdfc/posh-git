@@ -63,7 +63,7 @@ namespace Wonga.QA.Tests.Payments
 			Do.Until(() => app.IsClosed == false);
 
 			//Can take up to 2 mins for transaction to be created
-			var compensatingTransaction = Do.With.Timeout(2).Until(() => _transactions.FindAll(	_transactions.ApplicationId == loanApp.ApplicationId &&
+			var compensatingTransaction = Do.With.Timeout(2).Until(() => _transactions.FindAll(_transactions.ApplicationId == loanApp.ApplicationId &&
 																				_transactions.Type == PaymentTransactionEnum.WriteOff.ToString())
 																				.FirstOrDefault());
 
@@ -76,7 +76,7 @@ namespace Wonga.QA.Tests.Payments
 			//Refund = 150
 			//LoanCap = 200
 			//Therefore TrackedAmount 124.1 = (150 + 174.1) - 200
-			Assert.AreEqual(-124.1m ,compensatingTransaction.Amount);
+			Assert.AreEqual(-124.1m, compensatingTransaction.Amount);
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-2360"), DependsOn("Close_InDuplumViolation_Application_Creates_CompensatingTransaction")]

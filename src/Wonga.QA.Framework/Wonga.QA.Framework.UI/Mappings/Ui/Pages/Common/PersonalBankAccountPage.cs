@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Wonga.QA.Framework.UI.Mappings.Pages
 {
-    public class PersonalBankAccountDetailsPage
+    public class PersonalBankAccountPage
     {
         public String FormId { get; set; }
         public String NextButton { get; set; }

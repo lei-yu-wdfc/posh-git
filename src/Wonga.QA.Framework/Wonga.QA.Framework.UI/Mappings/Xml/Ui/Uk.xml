@@ -40,6 +40,7 @@
 
   <DealDonePage>
     <HeaderText>Your application has been accepted</HeaderText>
+    <GoToMyAccount>.wonga-box-top-right a</GoToMyAccount>
   </DealDonePage>
 
   <TopupDealDonePage>
@@ -103,6 +104,23 @@
     <AmountMinusButton>#wonga-single-slider-wrapper button.slider-minus</AmountMinusButton>
     <AmountPlusButton>#wonga-single-slider-wrapper button.slider-plus</AmountPlusButton>
   </SmallTopupSlidersElement>
+
+  <SlidersElement>
+    <FormId>#wonga-sliders-form</FormId>
+    <AmountSlider>.wonga-amount-slider-wrapper .sliderbit</AmountSlider>
+    <DurationSlider>.wonga-duration-slider-wrapper .sliderbit</DurationSlider>
+    <LoanAmount>#edit-loan-amount</LoanAmount>
+    <LoanDuration>#edit-loan-duration</LoanDuration>
+    <SubmitButton>#edit-submit</SubmitButton>
+    <TotalAmount>span.loan-amount</TotalAmount>
+    <TotalFees>span.loan-fees</TotalFees>
+    <TotalToRepay>span.loan-total</TotalToRepay>
+    <RepaymentDate>span.repayment-date</RepaymentDate>
+    <AmountMinusButton>.wonga-amount-slider-wrapper .sliderminus</AmountMinusButton>
+    <AmountPlusButton>.wonga-amount-slider-wrapper .sliderplus</AmountPlusButton>
+    <DurationMinusButton>.wonga-duration-slider-wrapper .sliderminus</DurationMinusButton>
+    <DurationPlusButton>.wonga-duration-slider-wrapper .sliderplus</DurationPlusButton>
+  </SlidersElement>
 
   <ApplyPage>
     <EditMobileNumber>#edit-mobile-phone</EditMobileNumber>
@@ -218,6 +236,11 @@
 
   <AccountDetailsPage>
     <FormId>.wonga-apply-lzero-form</FormId>
+    <SecciLink>a#secci_link.doc_link</SecciLink>
+    <TermAndConditionsLink>a#conditions_link.doc_link</TermAndConditionsLink>
+    <ExplanationLink>a#explanation_link.doc_link</ExplanationLink>
+    <PopupContentFrame>#fancybox-frame</PopupContentFrame>
+    <PopupClose>#fancybox-close</PopupClose>
   </AccountDetailsPage>
   
 </UiMap>

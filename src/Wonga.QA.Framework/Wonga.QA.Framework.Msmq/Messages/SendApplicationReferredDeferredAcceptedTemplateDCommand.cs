@@ -12,6 +12,7 @@ namespace Wonga.QA.Framework.Msmq
         public String MaxLoan { get; set; }
         public String LoanAmount { get; set; }
         public String Email { get; set; }
+        public Guid ApplicationId { get; set; }
         public Guid SagaId { get; set; }
     }
 }

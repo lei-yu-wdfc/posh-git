@@ -39,29 +39,28 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public WbL0Journey AnswerEligibilityQuestions()
+        public WbL0Journey AnswerEligibilityQuestions(bool activeCompany = true, bool director = true, bool guarantee = true, bool resident = true, bool debitCard = true, bool submit = true)
         {
             var eligibilityQuestionsPage = CurrentPage as EligibilityQuestionsPage;
-            eligibilityQuestionsPage.CheckActiveCompany = true;
-            eligibilityQuestionsPage.CheckDirector = true;
-            eligibilityQuestionsPage.CheckGuarantee = true;
-            eligibilityQuestionsPage.CheckOnlineAccess = true;
-            eligibilityQuestionsPage.CheckResident = true;
-            eligibilityQuestionsPage.CheckTurnover = true;
-            eligibilityQuestionsPage.CheckVat = true;
-            eligibilityQuestionsPage.CheckDebitCard = true;
-            CurrentPage = eligibilityQuestionsPage.Submit();
+            eligibilityQuestionsPage.CheckActiveCompany = activeCompany;
+            eligibilityQuestionsPage.CheckDirector = director;
+            eligibilityQuestionsPage.CheckGuarantee = guarantee;
+            eligibilityQuestionsPage.CheckResident = resident;
+            eligibilityQuestionsPage.CheckDebitCard = debitCard;
+            if (submit)
+            {
+                CurrentPage = eligibilityQuestionsPage.Submit();
+            }
             return this;
         }
 
-        public WbL0Journey FillPersonalDetails(String middleNameMask = null)
+        public WbL0Journey FillPersonalDetails(string firstName = null, string lastName = null, string middleNameMask = null, string email = null, string mobilePhone = null, bool submit = true)
         {
-            var middleName = middleNameMask ?? Get.RandomString(3, 15); 
             var personalDetailsPage = CurrentPage as PersonalDetailsPage;
 
-            personalDetailsPage.YourName.FirstName = FirstName;
-            personalDetailsPage.YourName.MiddleName = middleName;
-            personalDetailsPage.YourName.LastName = LastName;
+            personalDetailsPage.YourName.FirstName = firstName ?? FirstName;
+            personalDetailsPage.YourName.MiddleName =  middleNameMask ?? Get.RandomString(3, 15);
+            personalDetailsPage.YourName.LastName = lastName ?? LastName;
             personalDetailsPage.YourName.Title = "Mr";
 
             personalDetailsPage.YourDetails.Gender = "Female";
@@ -71,92 +70,108 @@ namespace Wonga.QA.Framework.UI.Journey
             personalDetailsPage.YourDetails.NumberOfDependants = "0";
 
             personalDetailsPage.ContactingYou.HomePhoneNumber = "02071111234";
-            personalDetailsPage.ContactingYou.CellPhoneNumber = "07700900000";
-            personalDetailsPage.ContactingYou.EmailAddress = EmailAddress;
-            personalDetailsPage.ContactingYou.ConfirmEmailAddress = EmailAddress;
+            personalDetailsPage.ContactingYou.CellPhoneNumber = mobilePhone ?? Get.GetMobilePhone();
+            personalDetailsPage.ContactingYou.EmailAddress = email ?? EmailAddress;
+            personalDetailsPage.ContactingYou.ConfirmEmailAddress = email ?? EmailAddress;
 
             personalDetailsPage.CanContact = "No";
             personalDetailsPage.PrivacyPolicy = true;
-            CurrentPage = personalDetailsPage.Submit() as AddressDetailsPage;
-            return this;
-        }
-
-        public WbL0Journey FillAddressDetails(String addressPeriod)
-        {
-            var addressDetailsPage = CurrentPage as AddressDetailsPage;
-            addressDetailsPage.PostCode = "SW6 6PN";
-            addressDetailsPage.LookupByPostCode();
-            addressDetailsPage.GetAddressesDropDown();
-            Do.Until(() => addressDetailsPage.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN");
-            Do.Until(() => addressDetailsPage.AddressPeriod = addressPeriod);
-            addressDetailsPage.HouseNumber = "1";
-            addressDetailsPage.District = "Central";
-            addressDetailsPage.County = "South Wales";
-            
-            switch(addressPeriod)
+            if (submit)
             {
-                case ("Less than 4 months"):
-                case ("Between 4 months and 2 years"):
-                    CurrentPage = addressDetailsPage.NextAddressLessThan2() as AddressDetailsPage;
-                    break;
-                case ("2 to 3 years"):
-                case ("3 to 4 years"):
-                case ("More than 4 years"):
-                    CurrentPage = addressDetailsPage.Next() as AccountDetailsPage;
-                    break;
-                default:
-                    throw new NotImplementedException();
+                CurrentPage = personalDetailsPage.Submit() as AddressDetailsPage;
             }
             return this;
         }
 
-        public WbL0Journey EnterAdditionalAddressDetails()
+        public WbL0Journey FillAddressDetails(string posteCode = null, string addressPeriod = null, bool submit = true)
+        {
+            var addressDetailsPage = CurrentPage as AddressDetailsPage;
+            addressDetailsPage.PostCode = posteCode ?? "SW6 6PN";
+            addressDetailsPage.LookupByPostCode();
+            addressDetailsPage.GetAddressesDropDown();
+            Do.Until(() => addressDetailsPage.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN");
+            Do.Until(() => addressDetailsPage.AddressPeriod = addressPeriod ?? "3 to 4 years");
+            addressDetailsPage.HouseNumber = "1";
+            addressDetailsPage.District = "Central";
+            addressDetailsPage.County = "South Wales";
+            if (submit)
+            {
+                switch (addressPeriod)
+                {
+                    case ("Less than 4 months"):
+                    case ("Between 4 months and 2 years"):
+                        CurrentPage = addressDetailsPage.NextAddressLessThan2() as AddressDetailsPage;
+                        break;
+                    case ("2 to 3 years"):
+                    case ("3 to 4 years"):
+                    case ("More than 4 years"):
+                        CurrentPage = addressDetailsPage.Next() as AccountDetailsPage;
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+            return this;
+        }
+
+        public WbL0Journey EnterAdditionalAddressDetails(string posteCode = null, string addressPeriod = null, bool submit = true)
         {
             var addressDetailsPage2NdEntry = CurrentPage as AddressDetailsPage;
-            addressDetailsPage2NdEntry.PostCode = "SW6 6PN";
+            addressDetailsPage2NdEntry.PostCode = posteCode ?? "SW6 6PN";
             addressDetailsPage2NdEntry.LookupByPostCode();
             addressDetailsPage2NdEntry.GetAddressesDropDown();
             Do.Until(() => addressDetailsPage2NdEntry.SelectedAddress = "101 Harbord Street, LONDON SW6 6PN");
-            Do.Until(() => addressDetailsPage2NdEntry.AddressPeriod = "2 to 3 years");
-            CurrentPage = addressDetailsPage2NdEntry.Next() as AccountDetailsPage;
+            Do.Until(() => addressDetailsPage2NdEntry.AddressPeriod = addressPeriod ?? "2 to 3 years");
+            if (submit)
+            {
+                CurrentPage = addressDetailsPage2NdEntry.Next() as AccountDetailsPage;
+            }
             return this;
         }
 
-        public WbL0Journey FillAccountDetails()
+        public WbL0Journey FillAccountDetails(string password = null, bool submit = true)
         {
-            var password = Get.GetPassword();
             var accountDetailsPage = CurrentPage as AccountDetailsPage;
-            accountDetailsPage.AccountDetailsSection.Password = password;
-            accountDetailsPage.AccountDetailsSection.PasswordConfirm = password;
+            accountDetailsPage.AccountDetailsSection.Password = password ?? Get.GetPassword();
+            accountDetailsPage.AccountDetailsSection.PasswordConfirm = password ?? Get.GetPassword();
             accountDetailsPage.AccountDetailsSection.SecretQuestion = "How deep the rabbit hole goes?";
             accountDetailsPage.AccountDetailsSection.SecretAnswer = "Very";
-            CurrentPage = accountDetailsPage.Next();
+            if (submit)
+            {
+                CurrentPage = accountDetailsPage.Next();
+            }
             return this;
         }
 
-        public WbL0Journey FillBankDetails()
+        public WbL0Journey FillBankDetails(string accountNumber = null, string bankPeriod = null, bool submit = true)
         {
             var personalBankAccountPage = CurrentPage as PersonalBankAccountPage;
             personalBankAccountPage.BankAccountSection.BankName = "AIB";
             personalBankAccountPage.BankAccountSection.SortCode = "13-40-20";
-            personalBankAccountPage.BankAccountSection.AccountNumber = "63849203";
-            personalBankAccountPage.BankAccountSection.BankPeriod = "More than 4 years";
+            personalBankAccountPage.BankAccountSection.AccountNumber = accountNumber ?? "63849203";
+            personalBankAccountPage.BankAccountSection.BankPeriod = bankPeriod ?? "More than 4 years";
             Thread.Sleep(3000);
-            CurrentPage = personalBankAccountPage.Next() as PersonalDebitCardPage;
+            if (submit)
+            {
+                CurrentPage = personalBankAccountPage.Next() as PersonalDebitCardPage;
+            }
             return this;
         }
 
-        public WbL0Journey FillCardDetails()
+        public WbL0Journey FillCardDetails(string cardNumber = null, string cardSecurity = null, string cardType = null, string expiryDate = null, string startDate = null, string pin = null, bool submit = true)
         {
             var personalDebitCardPage = CurrentPage as PersonalDebitCardPage;
             personalDebitCardPage.DebitCardSection.CardName = FirstName;
-            personalDebitCardPage.DebitCardSection.CardNumber = "4444333322221111";
-            personalDebitCardPage.DebitCardSection.CardSecurity = "666";
-            personalDebitCardPage.DebitCardSection.CardType = "Visa Debit";
-            personalDebitCardPage.DebitCardSection.ExpiryDate = "Jan/2015";
-            personalDebitCardPage.DebitCardSection.StartDate = "Jan/2007";
-            personalDebitCardPage.MobilePinVerification.Pin = "0000";
-            CurrentPage = personalDebitCardPage.Next() as BusinessDetailsPage;
+            personalDebitCardPage.DebitCardSection.CardNumber = cardNumber ?? "4444333322221111";
+            personalDebitCardPage.DebitCardSection.CardSecurity = cardSecurity ?? "666";
+            personalDebitCardPage.DebitCardSection.CardType = cardType ?? "Visa Debit";
+            personalDebitCardPage.DebitCardSection.ExpiryDate = expiryDate ?? "Jan/2015";
+            personalDebitCardPage.DebitCardSection.StartDate = startDate ?? "Jan/2007";
+            personalDebitCardPage.MobilePinVerification.Pin = pin ?? "0000";
+            if (submit)
+            {
+                CurrentPage = personalDebitCardPage.Next() as BusinessDetailsPage;
+            }
             return this;
         }
 
@@ -176,51 +191,59 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public WbL0Journey AddAdditionalDirector()
+        public WbL0Journey AddAdditionalDirector(string firstName = null, string lastName = null, string email = null, bool submit = true)
         {
             var additionalDirectorsPage = CurrentPage as AdditionalDirectorsPage;
             var addAdditionalDirectorPage = additionalDirectorsPage.AddAditionalDirector();
             var additionalDirectorEmail = String.Format("qa.wonga.com+{0}@gmail.com", Guid.NewGuid());
             addAdditionalDirectorPage.Title = "Mr";
-            addAdditionalDirectorPage.FirstName = Get.RandomString(3, 15);
-            addAdditionalDirectorPage.LastName = Get.RandomString(3, 15);
-            addAdditionalDirectorPage.EmailAddress = additionalDirectorEmail;
-            addAdditionalDirectorPage.ConfirmEmailAddress = additionalDirectorEmail;
-            CurrentPage = addAdditionalDirectorPage.Done();
+            addAdditionalDirectorPage.FirstName = firstName ?? Get.RandomString(3, 15);
+            addAdditionalDirectorPage.LastName = lastName ?? Get.RandomString(3, 15);
+            addAdditionalDirectorPage.EmailAddress = email ?? additionalDirectorEmail;
+            addAdditionalDirectorPage.ConfirmEmailAddress = email ?? additionalDirectorEmail;
+            if (submit)
+            {
+                CurrentPage = addAdditionalDirectorPage.Done();
+            }
             return this;
         }
 
-        public WbL0Journey EnterBusinessBankAccountDetails()
+        public WbL0Journey EnterBusinessBankAccountDetails(string accountNumber = null, string bankPeriod = null, bool submit = true)
         {
             var businessBankAccountPage = CurrentPage as BusinessBankAccountPage;
             businessBankAccountPage.BankAccountSection.BankName = "Bank of Scotland Business Banking";
             Do.Until(() => businessBankAccountPage.BankAccountSection.SortCode = "93-86-11");
-            businessBankAccountPage.BankAccountSection.AccountNumber = "07806039";
+            businessBankAccountPage.BankAccountSection.AccountNumber = accountNumber ?? "07806039";
             Thread.Sleep(2000);
-            businessBankAccountPage.BankAccountSection.BankPeriod = "2 to 3 years";
-            CurrentPage = businessBankAccountPage.Next();
+            businessBankAccountPage.BankAccountSection.BankPeriod = bankPeriod ?? "2 to 3 years";
+            if (submit)
+            {
+                CurrentPage = businessBankAccountPage.Next();
+            }
             return this;
         }
 
-        public WbL0Journey EnterBusinessDebitCardDetails()
+        public WbL0Journey EnterBusinessDebitCardDetails(string cardNumber = null, string cardSecurity = null, string cardType = null, string expiryDate = null, string startDate = null, string postCode = null, bool submit = true)
         {
             var businessPaymentCardPage = CurrentPage as BusinessDebitCardPage;
             businessPaymentCardPage.DebitCardSection.CardName = FirstName;
-            businessPaymentCardPage.DebitCardSection.CardNumber = "4444333322221111";
-            businessPaymentCardPage.DebitCardSection.CardSecurity = "666";
-            businessPaymentCardPage.DebitCardSection.CardType = "Visa Debit";
-            businessPaymentCardPage.DebitCardSection.ExpiryDate = "Jan/2015";
-            businessPaymentCardPage.DebitCardSection.StartDate = "Jan/2007";
+            businessPaymentCardPage.DebitCardSection.CardNumber = cardNumber ?? "4444333322221111";
+            businessPaymentCardPage.DebitCardSection.CardSecurity = cardSecurity ?? "666";
+            businessPaymentCardPage.DebitCardSection.CardType = cardType ?? "Visa Debit";
+            businessPaymentCardPage.DebitCardSection.ExpiryDate = expiryDate ?? "Jan/2015";
+            businessPaymentCardPage.DebitCardSection.StartDate = startDate ?? "Jan/2007";
 
-            businessPaymentCardPage.AddressDetailsSection.PostCode = "SW6 6PN";
+            businessPaymentCardPage.AddressDetailsSection.PostCode = postCode ?? "SW6 6PN";
             businessPaymentCardPage.AddressDetailsSection.LookupByPostCode();
             businessPaymentCardPage.AddressDetailsSection.GetAddressesDropDown();
             Do.Until(() => businessPaymentCardPage.AddressDetailsSection.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN");
             Do.Until(() => businessPaymentCardPage.AddressDetailsSection.FlatNumber = "15");
             businessPaymentCardPage.AddressDetailsSection.District = "London";
             businessPaymentCardPage.AddressDetailsSection.County = "Camden";
-
-            CurrentPage = businessPaymentCardPage.Next();
+            if (submit)
+            {
+                CurrentPage = businessPaymentCardPage.Next();
+            }
             return this;
 
         }

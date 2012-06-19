@@ -24,11 +24,13 @@ namespace Wonga.QA.Framework.Data
         private Lazy<CallReportDatabase> _callReport = new Lazy<CallReportDatabase>(() => new CallReportDatabase(Config.Db.CallReport));
         private Lazy<CallValidateDatabase> _callValidate = new Lazy<CallValidateDatabase>(() => new CallValidateDatabase(Config.Db.CallValidate));
         private Lazy<CardPaymentDatabase> _cardPayment = new Lazy<CardPaymentDatabase>(() => new CardPaymentDatabase(Config.Db.CardPayment));
+        private Lazy<CdcDatabase> _cdc = new Lazy<CdcDatabase>(() => new CdcDatabase(Config.HDSDb.Cdc));
         private Lazy<ColdStorageDatabase> _coldStorage = new Lazy<ColdStorageDatabase>(() => new ColdStorageDatabase(Config.Db.ColdStorage));
         private Lazy<ContactManagementDatabase> _contactManagement = new Lazy<ContactManagementDatabase>(() => new ContactManagementDatabase(Config.Db.ContactManagement));
         private Lazy<ExperianDatabase> _experian = new Lazy<ExperianDatabase>(() => new ExperianDatabase(Config.Db.Experian));
         private Lazy<ExperianBulkDatabase> _experianBulk = new Lazy<ExperianBulkDatabase>(() => new ExperianBulkDatabase(Config.Db.ExperianBulk));
         private Lazy<FileStorageDatabase> _fileStorage = new Lazy<FileStorageDatabase>(() => new FileStorageDatabase(Config.Db.FileStorage));
+        private Lazy<HdsDatabase> _hds = new Lazy<HdsDatabase>(() => new HdsDatabase(Config.HDSDb.Hds));
         private Lazy<HpiDatabase> _hpi = new Lazy<HpiDatabase>(() => new HpiDatabase(Config.Db.Hpi));
         private Lazy<IpLookupDatabase> _ipLookup = new Lazy<IpLookupDatabase>(() => new IpLookupDatabase(Config.Db.IpLookup));
         private Lazy<QaDataDatabase> _qaData = new Lazy<QaDataDatabase>(() => new QaDataDatabase(Config.Db.QaData));
@@ -57,11 +59,13 @@ namespace Wonga.QA.Framework.Data
         public CallReportDatabase CallReport { get { return _callReport.Value; } }
         public CallValidateDatabase CallValidate { get { return _callValidate.Value; } }
         public CardPaymentDatabase CardPayment { get { return _cardPayment.Value; } }
+        public CdcDatabase Cdc { get { return _cdc.Value; } }
         public ColdStorageDatabase ColdStorage { get { return _coldStorage.Value; } }
         public ContactManagementDatabase ContactManagement { get { return _contactManagement.Value; } }
         public ExperianDatabase Experian { get { return _experian.Value; } }
         public ExperianBulkDatabase ExperianBulk { get { return _experianBulk.Value; } }
         public FileStorageDatabase FileStorage { get { return _fileStorage.Value; } }
+        public HdsDatabase Hds { get { return _hds.Value; } }
         public HpiDatabase Hpi { get { return _hpi.Value; } }
         public IpLookupDatabase IpLookup { get { return _ipLookup.Value; } }
         public QaDataDatabase QaData { get { return _qaData.Value; } }
@@ -75,5 +79,7 @@ namespace Wonga.QA.Framework.Data
         public MarketingDatabase Marketing { get { return _marketing.Value; } }
         public PrepaidCardDatabase PrepaidCard { get { return _prepaidCard.Value; } }
         public PpsDatabase Pps { get { return _pps.Value; } }
+        public string NameOfServer { get { return Config.Db.ServerName; } }
+        public string NameOfHdsServer { get { return Config.HDSDb.HdsServerName; } }
     }
 }

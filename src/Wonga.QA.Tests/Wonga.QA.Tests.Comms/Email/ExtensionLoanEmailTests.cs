@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
@@ -29,18 +29,18 @@ namespace Wonga.QA.Tests.Comms.Email
         [Test, AUT(AUT.Uk), JIRA("UK-1281")]
         [Row(2, "Extension Secci")]
         [Row(3, "Extension Agreement")]
-        [Row(20, "Extension AE Document")]
         public void CreateLoanExtensionDocumentsTest(int documentType)
         {
             Guid extensionId = _extension.ExternalId;
 
-            dynamic documents = null;
 
-            Assert.DoesNotThrow(() => documents = Do.Until(() =>
-                            Drive.Data.Comms.Db.ExtensionDocuments.FindAllBy(ExtensionId: extensionId, DocumentType: documentType)
+            Assert.DoesNotThrow(() => Do.Until(() =>
+                            Drive.Data.Comms.Db.ExtensionDocuments.FindBy(ExtensionId: extensionId, DocumentType: documentType)
                             )
                 , "ExtensionDocument not found for extension Id: {0} and docuemnt type:{1}", extensionId, documentType);
 
+
+            dynamic documents = Drive.Data.Comms.Db.ExtensionDocuments.FindAllBy(ExtensionId: extensionId, DocumentType: documentType);
 
             Assert.AreEqual(1, documents.ToList().Count, "Document exist exactly once:{0}", documentType);
 

@@ -34,29 +34,20 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Wb)]
         public void WbDeclinedLnLoan()
         {
-            var l0journey = JourneyFactory.GetL0JourneyWB(Client.Home());
-            var l0DeclinedPage = l0journey.ApplyForLoan(5500, 30)
-                                .AnswerEligibilityQuestions()
-                                .FillPersonalDetails()
-                                .FillAddressDetails("More than 4 years")
-                                .FillAccountDetails()
-                                .FillBankDetails()
-                                .FillCardDetails()
-                                .EnterBusinessDetails()
-                                .DeclineAddAdditionalDirector()
-                                .EnterBusinessBankAccountDetails()
-                                .EnterBusinessDebitCardDetails()
-                                .WaitForDeclinedPage()
-                                .CurrentPage as DeclinedPage;
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            var customer = CustomerBuilder.New().WithMiddleName("Middle").WithEmailAddress(email).Build();
+            var organization = OrganisationBuilder.New(customer).Build();
+            var applicationInfo =
+                ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatus.Declined).
+                    Build() as BusinessApplication;
 
-            string loginUrl = Client.Home().Url + "login";
-            l0DeclinedPage.Client.Driver.Navigate().GoToUrl(loginUrl);
-            var loginPage = Do.Until(() => new LoginPage(Client));
-            var summaryPage = loginPage.LoginAs(l0journey.EmailAddress);
+            loginPage.LoginAs(email);
+
             var lNjourney = JourneyFactory.GetLNJourneyWB(Client.Home());
             var declinedPage = lNjourney.ApplyForLoan(5000, 15)
-                                            .ApplyNow()
-                                            .WaitForDeclinedPage();
+                                           .ApplyNow()
+                                           .WaitForDeclinedPage();
         }
 
         public string CreateWbLnCustomer()
@@ -66,7 +57,7 @@ namespace Wonga.QA.Tests.Ui
             var organization = OrganisationBuilder.New(customer).Build();
             var applicationInfo =
                 ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatus.Accepted).
-                    Build() as BusinessApplication;
+                    Build() as BusinessApplication; 
             var paymentPlan = applicationInfo.GetPaymentPlan();
 
             var today = DateTime.UtcNow.Date;

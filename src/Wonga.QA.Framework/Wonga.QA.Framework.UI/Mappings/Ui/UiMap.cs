@@ -45,6 +45,7 @@ using TabsElement = Wonga.QA.Framework.UI.Mappings.Elements.TabsElement;
 using TopupDealDonePage = Wonga.QA.Framework.UI.Mappings.Pages.TopupDealDonePage;
 using ExtensionErrorPage = Wonga.QA.Framework.UI.Mappings.Pages.ExtensionErrorPage;
 using RepayErrorPage = Wonga.QA.Framework.UI.Mappings.Pages.RepayErrorPage;
+using DebitOrderPage = Wonga.QA.Framework.UI.Mappings.Pages.DebitOrderPage;
 
 
 
@@ -126,7 +127,7 @@ namespace Wonga.QA.Framework.UI.Mappings
 
         #region CommonPages
 
-        public virtual PersonalBankAccountDetailsPage PersonalBankAccountPage { get; set; }
+        public virtual PersonalBankAccountPage PersonalBankAccountPage { get; set; }
         public virtual PersonalDebitCardPage PersonalDebitCardDetailsPage { get; set; }
         public virtual AcceptedPage AcceptedPage { get; set; }
         public virtual ApplyPage ApplyPage { get; set; }
@@ -179,6 +180,9 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual MySummaryPageMobile MySummaryPageMobile { get; set; }
         public virtual BusinessSummaryPage BusinessSummaryPage { get; set; }
         public virtual RepayErrorPage RepayErrorPage { get; set; }
+        public virtual DebitOrderPage DebitOrderPage { get; set; }
+        public virtual DebitOrderSuccessPage DebitOrderSuccessPage { get; set; }
+        public virtual MyAccountRepayManualPage MyAccountRepayManualPage { get; set; }
         #endregion
 
         #region SalesForcePages

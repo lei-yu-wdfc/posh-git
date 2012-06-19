@@ -18,6 +18,7 @@ namespace Wonga.QA.Generators.Api
     {
         public static void Main(String[] args)
         {
+            string[] ignore_list = new string[] { };
             if (args.Any())
                 Config.Origin = args.Single();
 
@@ -34,7 +35,7 @@ namespace Wonga.QA.Generators.Api
 
             foreach (FileInfo file in Origin.GetSchemas().Where(f => !f.IsCs()))
             {
-                Console.WriteLine(file.Name);
+				Console.WriteLine(file.FullName);
 
                 XmlSchema schema = file.GetSchema();
 
@@ -100,7 +101,8 @@ namespace Wonga.QA.Generators.Api
                     {
                         String name = type.GetName().ToEnum().ToCamel();
                         String[] values = Enum.GetNames(type).Select(e => type.GetField(e).GetEnum()).Distinct().ToArray();
-
+                        if (ignore_list.Contains(name))
+                            continue;
                         if (enums.ContainsKey(name))
                             if (enums[name].SequenceEqual(values))
                                 continue;
@@ -112,6 +114,7 @@ namespace Wonga.QA.Generators.Api
 
                         StringBuilder builder = new StringBuilder().AppendFormatLine(new[]
                         {
+                            "using System.ComponentModel;",
                             "namespace {0}",
                             "{{",
                             "    public enum {1}",
@@ -119,7 +122,10 @@ namespace Wonga.QA.Generators.Api
                         }, Config.Api.Project, name);
 
                         foreach (String value in values)
-                            builder.AppendFormatLine("        {0},", value);
+                        {
+                            builder.AppendFormatLine("        [Description(\"{0}\")]", value);
+                            builder.AppendFormatLine("        {0},", value.GetNormalTypeName());
+                        }
 
                         builder.AppendLine("    }").AppendLine("}");
 

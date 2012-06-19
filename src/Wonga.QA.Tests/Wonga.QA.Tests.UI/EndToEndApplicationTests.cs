@@ -66,7 +66,7 @@ namespace Wonga.QA.Tests.Ui
 			journey.DateOfBirth = _dateOfBirth;
 			
 			var processingPage = journey.ApplyForLoan(200, 10)
-                                 .FillPersonalDetails("TESTNoCheck")
+                                 .FillPersonalDetails(employerNameMask: "TESTNoCheck")
 								 .FillAddressDetails()
 								 .FillAccountDetails()
 								 .FillBankDetails()

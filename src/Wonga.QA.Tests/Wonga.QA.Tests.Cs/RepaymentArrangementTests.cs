@@ -42,7 +42,7 @@ namespace Wonga.QA.Tests.Cs
 			Customer customer = CustomerBuilder.New().Build();
 			Application application = ApplicationBuilder.New(customer).Build();
 
-			application.PutApplicationIntoArrears(daysInArrears);
+			application.PutIntoArrears(daysInArrears);
 
 			var expectedPlanIsAllowed = !(daysInArrears < MinDaysInArrears || daysInArrears > MaxDaysInArrears);
 			var actualPlanIsAllowed = PlanIsAllowed(application);
@@ -51,10 +51,10 @@ namespace Wonga.QA.Tests.Cs
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending("ZA-2565")]
-		public void RepyamentPlanNotAllowedWhenInDisputeTest()
+		public void RepaymentPlanNotAllowedWhenInDisputeTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
-			Application application = ApplicationBuilder.New(customer).Build().PutApplicationIntoArrears(35);
+			Application application = ApplicationBuilder.New(customer).Build().PutIntoArrears(35);
 
 			Drive.Msmq.Payments.Send(new IDisputeStatusChangedEvent { AccountId = customer.Id, HasDispute = true });
 			Do.With.Timeout(2).Until(() => (bool)Drive.Data.Payments.Db.AccountPreferences.FindByAccountId(customer.Id).IsDispute == true);
@@ -67,7 +67,7 @@ namespace Wonga.QA.Tests.Cs
 		public void RepaymentPlanIsAllowedWhenPreviousPlanWasCancelledTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
-			Application application = ApplicationBuilder.New(customer).Build().PutApplicationIntoArrears(20);
+			Application application = ApplicationBuilder.New(customer).Build().PutIntoArrears(20);
 
 			CreatePlan(application, customer);
 			var repaymentArrangement = GetRepaymentArrangement(application);
@@ -81,7 +81,7 @@ namespace Wonga.QA.Tests.Cs
 		public void FailureToPayBreaksRepaymentArrangement()
 		{
 			Customer customer = CustomerBuilder.New().Build();
-			Application application = ApplicationBuilder.New(customer).Build().PutApplicationIntoArrears(20);
+			Application application = ApplicationBuilder.New(customer).Build().PutIntoArrears(20);
 
 			CreatePlan(application, customer);
 			FailToMakeRepayment(customer, application);
@@ -93,7 +93,7 @@ namespace Wonga.QA.Tests.Cs
 		public void RepaymentPlanNotAllowedWhenPreviousPlanWasBrokenTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
-			Application application = ApplicationBuilder.New(customer).Build().PutApplicationIntoArrears(20);
+			Application application = ApplicationBuilder.New(customer).Build().PutIntoArrears(20);
 
 			CreatePlan(application, customer);
 			FailToMakeRepayment(customer, application);
@@ -106,7 +106,7 @@ namespace Wonga.QA.Tests.Cs
 		public void RepaymentPlanNotAllowedWhenPlanAlreadyExistsTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
-			Application application = ApplicationBuilder.New(customer).Build().PutApplicationIntoArrears(20);
+			Application application = ApplicationBuilder.New(customer).Build().PutIntoArrears(20);
 
 			CreatePlan(application, customer);
 			GetRepaymentArrangement(application);
@@ -119,7 +119,7 @@ namespace Wonga.QA.Tests.Cs
 		public void CreateRepaymentPlanTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
-			Application application = ApplicationBuilder.New(customer).Build().PutApplicationIntoArrears(20);
+			Application application = ApplicationBuilder.New(customer).Build().PutIntoArrears(20);
 
 			CreatePlan(application, customer);
 
@@ -134,7 +134,7 @@ namespace Wonga.QA.Tests.Cs
 		public void RepayAllInstallmentsClosesPlanTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
-			Application application = ApplicationBuilder.New(customer).Build().PutApplicationIntoArrears(20);
+			Application application = ApplicationBuilder.New(customer).Build().PutIntoArrears(20);
 
 			CreatePlan(application, customer);
 			RepayAllInstallments(customer, application);
@@ -152,7 +152,7 @@ namespace Wonga.QA.Tests.Cs
 			Customer customer = CustomerBuilder.New().Build();
 			Application application = ApplicationBuilder.New(customer).Build();
 
-			application.PutApplicationIntoArrears(20);
+			application.PutIntoArrears(20);
 			CreatePlan(application, customer);
 
 			var response = Do.Until(() => Drive.Cs.Queries.Post(new GetRepaymentArrangementsQuery() { ApplicationId = application.Id }));
@@ -166,7 +166,7 @@ namespace Wonga.QA.Tests.Cs
 		{
 			Customer customer = CustomerBuilder.New().Build();
 			Application application = ApplicationBuilder.New(customer).Build();
-			application.PutApplicationIntoArrears(20);
+			application.PutIntoArrears(20);
 
 			var response = Drive.Cs.Queries.Post(new GetRepaymentArrangementParametersQuery() { AccountId = customer.Id });
 			Assert.IsNotNull(response);
@@ -178,7 +178,7 @@ namespace Wonga.QA.Tests.Cs
 		{
 			Customer customer = CustomerBuilder.New().Build();
 			Application application = ApplicationBuilder.New(customer).Build();
-			application.PutApplicationIntoArrears(20);
+			application.PutIntoArrears(20);
 
 			var response = Drive.Cs.Queries.Post(new GetRepaymentArrangementCalculationQuery
 			{
@@ -194,7 +194,7 @@ namespace Wonga.QA.Tests.Cs
 		public void CancelTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
-			Application application = ApplicationBuilder.New(customer).Build().PutApplicationIntoArrears(20);
+			Application application = ApplicationBuilder.New(customer).Build().PutIntoArrears(20);
 
 			CreatePlan(application, customer);
 			var repaymentArrangement = GetRepaymentArrangement(application);

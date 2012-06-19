@@ -245,7 +245,7 @@ namespace Wonga.QA.Tests.Payments
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
             var applicationId = application.Id;
 
-            application.PutApplicationIntoArrears(3);
+            application.PutIntoArrears(3);
 
             //create online bill payment file for customer.. date = loanCreated - 5 days...
             //insert file data to database table
@@ -278,7 +278,7 @@ namespace Wonga.QA.Tests.Payments
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
             var applicationId = application.Id;
 
-            application.PutApplicationIntoArrears(daysInArrears);
+            application.PutIntoArrears(daysInArrears);
 
             //create online bill payment file for customer.. date = loanCreated - 5 days...
             //insert file data to database table

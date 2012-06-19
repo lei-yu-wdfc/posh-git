@@ -86,6 +86,151 @@ namespace Wonga.QA.Tests.Bi
                 paymentsSuppressionsRepo.ApplicationId == appInternalId && paymentsSuppressionsRepo.ComplaintSuppression == 1).Single());
         }
 
+        [Test]
+        [AUT(AUT.Uk), JIRA("UK-925")]
+        [Description("Verifies that when a live application is moved to complaint status salesforce is informed and a suppression record is created")]
+        [Parallelizable]
+        public void RemoveComplaint_ForPreviouslyLiveApplication_Changes_SalesforceApplicationStatus_BackToLive()
+        {
+            Customer customer = CustomerBuilder.New().Build();
+            Do.Until(customer.GetBankAccount);
+            Do.Until(customer.GetPaymentCard);
+            const decimal loanAmount = 222.22m;
+            Application application = ApplicationBuilder.New(customer)
+                                                        .WithLoanAmount(loanAmount)
+                                                        .Build();
+
+            //force the application to move to live by sending the IFundsTransferredEvent.
+            Drive.Msmq.Payments.Send(new IFundsTransferredEvent
+            {
+                AccountId = application.AccountId,
+                ApplicationId = application.Id,
+                TransactionId = Guid.NewGuid()
+            });
+
+            //wait for the payment to customer to be sent out
+            Do.Until(() => applicationRepo.FindAll(applicationRepo.ExternalId == application.Id &&
+                                                   applicationRepo.Transaction.ApplicationId == applicationRepo.Id &&
+                                                   applicationRepo.Amount == loanAmount && applicationRepo.Type == "CashAdvance"));
+
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live;
+            });
+
+            var caseId = Guid.NewGuid();
+
+            // Make a complaint
+            var cmd = new CsReportComplaintCommand()
+            {
+                AccountId = application.AccountId,
+                ApplicationId = application.Id,
+                CaseId = caseId
+            };
+
+            Drive.Cs.Commands.Post(cmd);
+
+            // wait until sales force moves to complaint
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Complaint;
+            });
+
+            var removeComplaint = new CsRemoveComplaintCommand()
+                                      {
+                                          AccountId = application.AccountId,
+                                          ApplicationId = application.Id,
+                                          CaseId = caseId,
+                                      };
+            Drive.Cs.Commands.Post(removeComplaint);
+
+            // wait until sales force moves to complaint
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live;
+            });
+        }
+
+        [Test]
+        [AUT(AUT.Uk), JIRA("UK-925")]
+        [Description("Verifies that when a live application is moved to complaint status salesforce is informed and a suppression record is created")]
+        [Parallelizable]
+        public void RemoveComplaint_ForPreviouslyLiveApplication_ThatWentIntoArrears_Changes_SalesforceApplicationStatus_BackToInArrears()
+        {
+            Customer customer = CustomerBuilder.New().Build();
+            Do.Until(customer.GetBankAccount);
+            Do.Until(customer.GetPaymentCard);
+            const decimal loanAmount = 222.22m;
+            Application application = ApplicationBuilder.New(customer)
+                                                        .WithLoanAmount(loanAmount)
+                                                        .Build();
+
+            //force the application to move to live by sending the IFundsTransferredEvent.
+            Drive.Msmq.Payments.Send(new IFundsTransferredEvent
+            {
+                AccountId = application.AccountId,
+                ApplicationId = application.Id,
+                TransactionId = Guid.NewGuid()
+            });
+
+            //wait for the payment to customer to be sent out
+            Do.Until(() => applicationRepo.FindAll(applicationRepo.ExternalId == application.Id &&
+                                                   applicationRepo.Transaction.ApplicationId == applicationRepo.Id &&
+                                                   applicationRepo.Amount == loanAmount && applicationRepo.Type == "CashAdvance"));
+
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live;
+            });
+
+            var caseId = Guid.NewGuid();
+
+            // Make a complaint
+            var cmd = new CsReportComplaintCommand()
+            {
+                AccountId = application.AccountId,
+                ApplicationId = application.Id,
+                CaseId = caseId
+            };
+
+            Drive.Cs.Commands.Post(cmd);
+
+            // wait until sales force moves to complaint
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Complaint;
+            });
+
+            application.PutIntoArrears(2);
+
+            // wait until sales force moves to complaint
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Complaint;
+            });
+
+            var removeComplaint = new CsRemoveComplaintCommand()
+            {
+                AccountId = application.AccountId,
+                ApplicationId = application.Id,
+                CaseId = caseId,
+            };
+            Drive.Cs.Commands.Post(removeComplaint);
+
+            // wait until sales force moves to complaint
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.InArrears;
+            });
+        }
+
 
 
 		//[Test]
@@ -185,6 +330,71 @@ namespace Wonga.QA.Tests.Bi
             });
 
 
+        }
+
+        [Test]
+        [AUT(AUT.Uk), JIRA("UKOPS-138")]
+        [Description("Verifies that when a live application is moved to management review status salesforce is informed and a suppression record is created")]
+        [Parallelizable]
+        public void ApplicationWithManagementReview_WhenPreviousStateWasLive_GoesBackToLive_AfterRemoveManagementReview()
+        {
+            Customer customer = CustomerBuilder.New().Build();
+            Do.Until(customer.GetBankAccount);
+            Do.Until(customer.GetPaymentCard);
+            const decimal loanAmount = 222.22m;
+            Application application = ApplicationBuilder.New(customer)
+                                                        .WithLoanAmount(loanAmount)
+                                                        .Build();
+
+            //force the application to move to live by sending the IFundsTransferredEvent.
+            Drive.Msmq.Payments.Send(new IFundsTransferredEvent
+            {
+                AccountId = application.AccountId,
+                ApplicationId = application.Id,
+                TransactionId = Guid.NewGuid()
+            });
+
+            //wait for the payment to customer to be sent out
+            Do.Until(() => applicationRepo.FindAll(applicationRepo.ExternalId == application.Id &&
+                                                   applicationRepo.Transaction.ApplicationId == applicationRepo.Id &&
+                                                   applicationRepo.Amount == loanAmount && applicationRepo.Type == "CashAdvance"));
+
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live;
+            });
+
+            var caseGuid = Guid.NewGuid();
+
+            // Make a complaint
+            var cmd = new CsReportManagementReviewCommand()
+            {
+                AccountId = application.AccountId,
+                ApplicationId = application.Id,
+                CaseId = caseGuid
+            };
+            Drive.Cs.Commands.Post(cmd);
+
+            // wait until sales force moves to complaint
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.ManagementReview;
+            });
+
+            var remove = new CsRemoveManagementReviewCommand()
+                             {
+                                 AccountId = application.AccountId,
+                                 ApplicationId = application.Id,
+                                 CaseId = caseGuid,
+                             };
+            Drive.Cs.Commands.Post(remove);
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live;
+            });
         }
 
 

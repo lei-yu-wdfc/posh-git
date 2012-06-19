@@ -45,8 +45,8 @@ namespace Wonga.QA.Generators.Core
             Query = "Wonga.Api.IQuery";
 
             Roots = new[] { "src", "components" };
-            Products = new[] { "Wb" };
-            Regions = new[] { "Uk", "Za", "Ca" };
+            Products = new[] { "Wb", "PLater" };
+            Regions = new[] { "Uk", "Za", "Ca", "Pl" };
             Suffixes = new[] { "Command", "Query", "Event", "Message", "Csapi" };
 
             Api = new Framework { Project = String.Format("{0}.Api", Framework.Solution), Base = "ApiRequest", Folder = "Requests" };

@@ -59,6 +59,8 @@
     <Compile Include="Requests\CsGetLoanExtensionPaymentStatusQuery.cs" />
     <Compile Include="Requests\CsGetRepaymentArrangementAllowedQuery.cs" />
     <Compile Include="Requests\CsGetSocialDetailsQuery.cs" />
+    <Compile Include="Requests\CsRemoveComplaintCommand.cs" />
+    <Compile Include="Requests\CsRemoveManagementReviewCommand.cs" />
     <Compile Include="Requests\CsRepayWithExternalCardCommand.cs" />
     <Compile Include="Requests\CsRepayWithPaymentCardCommand.cs" />
     <Compile Include="Requests\CsReportComplaintCommand.cs" />

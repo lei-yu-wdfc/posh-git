@@ -2,18 +2,15 @@
 <UiMap>
   <!--PAGES SECTION-->
 
-    <HomePage>
-      <BusinessTitleText>Fast and flexible short term loans for your business</BusinessTitleText>
-    </HomePage>
-  
+  <HomePage>
+    <BusinessTitleText>Fast and flexible short term loans for your business</BusinessTitleText>
+  </HomePage>
+
   <EligibilityQuestionsPage>
     <FormId>#lzero-questions-form</FormId>
     <CheckDirector>#edit-director</CheckDirector>
     <CheckResident>#edit-resident</CheckResident>
     <CheckActiveCompany>#edit-active-company</CheckActiveCompany>
-    <CheckTurnover>#edit-turnover</CheckTurnover>
-    <CheckVat>#edit-vat</CheckVat>
-    <CheckOnlineAccess>#edit-online-access</CheckOnlineAccess>
     <CheckGuarantee>#edit-guarantee</CheckGuarantee>
     <NextButton>#edit-submit</NextButton>
     <CheckDebitCard>#edit-debit-card</CheckDebitCard>
@@ -24,8 +21,8 @@
     <CheckPrivacyPolicy>#edit-privacy</CheckPrivacyPolicy>
     <CheckCanContact>input[type="radio"][name="update_option"]</CheckCanContact>
     <NextButton>#edit-submit</NextButton>
-	<PrivacyPolicyLink>#edit-privacy-wrapper div:nth-child(1) label a</PrivacyPolicyLink>
-	<PrivacyPolicyPopup>#fancybox-content</PrivacyPolicyPopup>
+    <PrivacyPolicyLink>#edit-privacy-wrapper div:nth-child(1) label a</PrivacyPolicyLink>
+    <PrivacyPolicyPopup>#fancybox-content</PrivacyPolicyPopup>
   </PersonalDetailsPage>
 
   <AddressDetailsPage>
@@ -34,19 +31,19 @@
     <PostcodeValid>#edit-postcode-lookup-uk-wrapper .form-error</PostcodeValid>
     <AddressOptionsWrapper>#edit-address-options-wrapper</AddressOptionsWrapper>
     <Postcode>#edit-postcode-lookup-uk</Postcode>
-	<PostcodeInForm>#edit-postcode-uk</PostcodeInForm>
+    <PostcodeInForm>#edit-postcode-uk</PostcodeInForm>
     <District>#edit-district</District>
     <FlatNumber>#edit-flat</FlatNumber>
-	<HouseNumber>#edit-house-number</HouseNumber>  
-	<County>#edit-county</County>
+    <HouseNumber>#edit-house-number</HouseNumber>
+    <County>#edit-county</County>
     <AddressPeriod>#edit-address-period</AddressPeriod>
     <NextButton>#edit-submit</NextButton>
     <AddressOptions>#edit-address-options</AddressOptions>
-	<HouseNumberErrorForm>#edit-house-number-wrapper .form-error .invalid</HouseNumberErrorForm>
-	<PostcodeErrorForm>#edit-postcode-uk-wrapper div.form-error div.invalid</PostcodeErrorForm>
-	<TownErrorForm>#edit-town-wrapper div.invalid</TownErrorForm>
-	<StreetErrorForm>#edit-street-wrapper .form-error .invalid</StreetErrorForm>
-	<AddressPeriodErrorForm>#edit-address-period-wrapper div.invalid</AddressPeriodErrorForm>
+    <HouseNumberErrorForm>#edit-house-number-wrapper .form-error .invalid</HouseNumberErrorForm>
+    <PostcodeErrorForm>#edit-postcode-uk-wrapper div.form-error div.invalid</PostcodeErrorForm>
+    <TownErrorForm>#edit-town-wrapper div.invalid</TownErrorForm>
+    <StreetErrorForm>#edit-street-wrapper .form-error .invalid</StreetErrorForm>
+    <AddressPeriodErrorForm>#edit-address-period-wrapper div.invalid</AddressPeriodErrorForm>
   </AddressDetailsPage>
 
   <BusinessDetailsPage>
@@ -60,7 +57,7 @@
     <FormId>#lzero-directors-form</FormId>
     <DoneButton>#edit-submit</DoneButton>
     <AddAnotherDirector>#edit-add</AddAnotherDirector>
-	<Directors>.wonga-tip</Directors>
+    <Directors>.wonga-tip</Directors>
   </AdditionalDirectorsPage>
 
   <AddAditionalDirectorsPage>
@@ -116,7 +113,7 @@
   </ReferPage>
 
   <MySummaryPage>
-	<AccountStatusText>#content-area p</AccountStatusText>
+    <AccountStatusText>#content-area p</AccountStatusText>
     <Title>#business-summary</Title>
   </MySummaryPage>
 
@@ -166,31 +163,31 @@
     <MySummary>.leaf.first.menu-mlid-2872 a</MySummary>
     <AccountDetails>div#block-wonga-6 ul.menu>li:nth-child(2)>a</AccountDetails>
     <YourDetails>div#block-wonga-6 ul.menu>li:nth-child(3)>a</YourDetails>
-  
-</MyAccountNavigationSection>
 
-    <AboutUsPage>
-      <AboutUsText>.wonga-box-type-text div div</AboutUsText>
-      <WereDifferent>#quicktabs-tab-wonga-tabs-0</WereDifferent>
-      <WereDifferentText>#node-896 div p</WereDifferentText>
-      <WereFast>#quicktabs-tab-wonga-tabs-1</WereFast>
-      <WereFastText>#node-897 div p</WereFastText>
-      <WereResponsible>#quicktabs-tab-wonga-tabs-2</WereResponsible>
-      <WereResponsibleText>#node-899 div p</WereResponsibleText>
-    </AboutUsPage>
+  </MyAccountNavigationSection>
 
-    <HowItWorksPage>
-      <HowItWorksText>.wonga-box-type-text div div</HowItWorksText>
-      <Transparency>.wongaTabs ul li:nth-child(1) a</Transparency>
-      <TransparencyHeader>.panes div:nth-child(1) h2</TransparencyHeader>
-      <TransparencyText>.panes div:nth-child(1) p</TransparencyText>
-      <PersonalGuarantee>.wongaTabs ul li:nth-child(2) a</PersonalGuarantee>
-      <PersonalGuaranteeHeader>.panes div:nth-child(2) h2</PersonalGuaranteeHeader>
-      <PersonalGuaranteeText>.panes div:nth-child(2) p</PersonalGuaranteeText>
-      <FailureToStick>.wongaTabs ul li:nth-child(3) a</FailureToStick>
-      <FailureToStickHeader>.panes div:nth-child(3) h2</FailureToStickHeader>
-      <FailureToStickText>.panes div:nth-child(3)</FailureToStickText>
-    </HowItWorksPage>
+  <AboutUsPage>
+    <AboutUsText>.wonga-box-type-text div div</AboutUsText>
+    <WereDifferent>#quicktabs-tab-wonga-tabs-0</WereDifferent>
+    <WereDifferentText>#node-896 div p</WereDifferentText>
+    <WereFast>#quicktabs-tab-wonga-tabs-1</WereFast>
+    <WereFastText>#node-897 div p</WereFastText>
+    <WereResponsible>#quicktabs-tab-wonga-tabs-2</WereResponsible>
+    <WereResponsibleText>#node-899 div p</WereResponsibleText>
+  </AboutUsPage>
+
+  <HowItWorksPage>
+    <HowItWorksText>.wonga-box-type-text div div</HowItWorksText>
+    <Transparency>.wongaTabs ul li:nth-child(1) a</Transparency>
+    <TransparencyHeader>.panes div:nth-child(1) h2</TransparencyHeader>
+    <TransparencyText>.panes div:nth-child(1) p</TransparencyText>
+    <PersonalGuarantee>.wongaTabs ul li:nth-child(2) a</PersonalGuarantee>
+    <PersonalGuaranteeHeader>.panes div:nth-child(2) h2</PersonalGuaranteeHeader>
+    <PersonalGuaranteeText>.panes div:nth-child(2) p</PersonalGuaranteeText>
+    <FailureToStick>.wongaTabs ul li:nth-child(3) a</FailureToStick>
+    <FailureToStickHeader>.panes div:nth-child(3) h2</FailureToStickHeader>
+    <FailureToStickText>.panes div:nth-child(3)</FailureToStickText>
+  </HowItWorksPage>
 
   <AddressDetailsSection>
     <Fieldset>#lzero-business-card-form</Fieldset>
@@ -200,7 +197,7 @@
     <AddressOptionsWrapper>#edit-address-options-wrapper</AddressOptionsWrapper>
     <District>#edit-district</District>
     <FlatNumber>#edit-flat</FlatNumber>
-	<HouseNumber>#edit-house-number</HouseNumber>	
+    <HouseNumber>#edit-house-number</HouseNumber>
     <City>#edit-town</City>
     <Street>#edit-street</Street>
     <County>#edit-county</County>
@@ -208,17 +205,17 @@
   </AddressDetailsSection>
 
   <MobilePinVerificationSection>
-		<ResendPin>#edit-resend-pin</ResendPin>
-		<ResendPinMessage>.pin_resend</ResendPinMessage>
+    <ResendPin>#edit-resend-pin</ResendPin>
+    <ResendPinMessage>.pin_resend</ResendPinMessage>
   </MobilePinVerificationSection>
 
   <AccountDetailsSection>
-		<PasswordErrorForm>div#edit-password-wrapper div.invalid</PasswordErrorForm>		
+    <PasswordErrorForm>div#edit-password-wrapper div.invalid</PasswordErrorForm>
   </AccountDetailsSection>
 
-	<AccountDetailsPage>
-		<FormId>#account-setup-1</FormId>
-	</AccountDetailsPage>
+  <AccountDetailsPage>
+    <FormId>#account-setup-1</FormId>
+  </AccountDetailsPage>
 
   <HomePageWelcomePopup>
     <Frame>#wonga_welcome_popup_floating_blob</Frame>
@@ -228,7 +225,7 @@
   <BusinessSummaryPage>
     <BusinessSummary>.menu-level-2 .menu li:first-child>a</BusinessSummary>
     <AccountDetails>.menu-level-2 .menu li:first-child + li>a</AccountDetails>
-    <YourDetails>.menu-level-2 .menu li:first-child + li + li>a</YourDetails>    
+    <YourDetails>.menu-level-2 .menu li:first-child + li + li>a</YourDetails>
   </BusinessSummaryPage>
 
   <ApplicationSection>
@@ -247,6 +244,24 @@
 
   <ContactElement>
     <ContactTitle>#contact</ContactTitle>
-    <FormId>#fancybox-content</FormId>    
+    <FormId>#fancybox-content</FormId>
   </ContactElement>
+
+  <SlidersElement>
+    <FormId>#wonga-sliders-form</FormId>
+    <AmountSlider>.wonga-amount-slider-wrapper .sliderbit</AmountSlider>
+    <DurationSlider>.wonga-duration-slider-wrapper .sliderbit</DurationSlider>
+    <LoanAmount>#edit-loan-amount</LoanAmount>
+    <LoanDuration>#edit-loan-duration</LoanDuration>
+    <SubmitButton>#edit-submit</SubmitButton>
+    <TotalAmount>span.loan-amount</TotalAmount>
+    <TotalFees>span.loan-fees</TotalFees>
+    <TotalToRepay>span.loan-total</TotalToRepay>
+    <RepaymentDate>span.repayment-date</RepaymentDate>
+    <AmountMinusButton>.wonga-amount-slider-wrapper .sliderminus</AmountMinusButton>
+    <AmountPlusButton>.wonga-amount-slider-wrapper .sliderplus</AmountPlusButton>
+    <DurationMinusButton>.wonga-duration-slider-wrapper .sliderminus</DurationMinusButton>
+    <DurationPlusButton>.wonga-duration-slider-wrapper .sliderplus</DurationPlusButton>
+  </SlidersElement>  
+  
 </UiMap>

@@ -37,7 +37,7 @@ namespace Wonga.QA.Framework
         private String _town;
         private String _county;
         private Guid _bankAccountId;
-        private String _phoneNumber;
+        private String _homePhoneNumber;
         private String _mobileNumber;
     	private String _bankAccountNumber;
         private Int64 _paymentCardNumber;
@@ -46,6 +46,7 @@ namespace Wonga.QA.Framework
         private String _institutionNumber;
         private int _numberOfDependants;
         private String _bankCode;
+        private IncomeFrequencyEnum _incomeFrequency;
 
         private String _branchNumber;
 
@@ -76,7 +77,7 @@ namespace Wonga.QA.Framework
             _province = ProvinceEnum.ON;
             _houseNumber = Get.RandomInt(1, 100).ToString(CultureInfo.InvariantCulture);
             _houseName = Get.RandomString(8);
-            _phoneNumber = Get.GetPhone();
+            _homePhoneNumber = Get.GetPhone();
             _street = Get.RandomString(15);
             _flat = Get.RandomString(4);
             _district = Get.RandomString(15);
@@ -266,7 +267,7 @@ namespace Wonga.QA.Framework
 
         public CustomerBuilder WithPhoneNumber(String phoneNumber)
         {
-            _phoneNumber = phoneNumber;
+            _homePhoneNumber = phoneNumber;
             return this;
         }
 
@@ -328,6 +329,12 @@ namespace Wonga.QA.Framework
             return this;
         }
 
+        public CustomerBuilder WithIncomeFrequency(IncomeFrequencyEnum incomeFrequency)
+        {
+            _incomeFrequency = incomeFrequency;
+            return this;
+        }
+
         public Customer Build()
         {
             _nextPayDate.DateFormat = DateFormat.Date;
@@ -343,7 +350,6 @@ namespace Wonga.QA.Framework
                                                      r.AccountId = _id;
                                                      r.Dependants = _numberOfDependants;
                                                  }),
-                SavePasswordRecoveryDetailsCommand.New(r => r.AccountId = _id),
                 SaveContactPreferencesCommand.New(r => r.AccountId = _id),
             };
 
@@ -353,6 +359,7 @@ namespace Wonga.QA.Framework
                 case AUT.Za:
                     requests.AddRange(new ApiRequest[]
                     {
+                        SavePasswordRecoveryDetailsZaCommand.New(r => r.AccountId = _id),
                         SaveCustomerDetailsZaCommand.New(r =>
                         {
                             r.AccountId = _id;
@@ -365,24 +372,56 @@ namespace Wonga.QA.Framework
                         	r.Gender = _gender;
                         	r.MaidenName = _gender == GenderEnum.Female ? _maidenName : null;
                         }),
+						RiskSaveCustomerDetailsCommand.New(r =>
+						{
+                            r.AccountId = _id;
+                        	r.Forename = _foreName;
+                            r.MiddleName = _middleName;
+                        	r.Surname = _surname;
+                            r.Email = _email;
+                        	r.DateOfBirth = _dateOfBirth;
+                        	r.Gender = _gender;
+                        	r.MaidenName = _gender == GenderEnum.Female ? _maidenName : null;
+						}),
                         SaveCustomerAddressZaCommand.New(r =>
-                                                             {
-                                                                 r.AccountId = _id;
-                                                                 r.HouseNumber = _houseNumber;
-                                                                 r.HouseName = _houseName;
-                                                                 r.Postcode = _postcode;
-                                                                 r.Street = _street;
-                                                                 r.Flat = _flat;
-                                                                 r.District = _district;
-                                                                 r.Town = _town;
-                                                                 r.County = _county;
-                                                             } ),
+                        {
+                            r.AccountId = _id;
+                            r.HouseNumber = _houseNumber;
+                            r.HouseName = _houseName;
+                            r.Postcode = _postcode;
+                            r.Street = _street;
+                            r.Flat = _flat;
+                            r.District = _district;
+                            r.Town = _town;
+                            r.County = _county;
+                        } ),
+						RiskSaveCustomerAddressCommand.New(r =>
+						{
+							r.AccountId = _id;
+                            r.HouseNumber = _houseNumber;
+                            r.HouseName = _houseName;
+                            r.Postcode = _postcode;
+                            r.Street = _street;
+                            r.Flat = _flat;
+                            r.District = _district;
+                            r.Town = _town;
+                            r.County = _county;
+						}),
                         AddBankAccountZaCommand.New(r =>
                                                     	{
                                                     		r.AccountId = _id;
                                                     		r.BankAccountId = _bankAccountId;
                                                     		if (!string.IsNullOrEmpty(_bankAccountNumber))
                                                             r.AccountNumber = _bankAccountNumber;
+                                                    	}),
+						RiskAddBankAccountZaCommand.New(r =>
+                                                    	{
+                                                    		r.AccountId = _id;
+                                                    		r.BankAccountId = _bankAccountId;
+                                                    		if (!string.IsNullOrEmpty(_bankAccountNumber))
+                                                    		{
+                                                    			r.AccountNumber = _bankAccountNumber;
+                                                    		}
                                                     	}),
                         SaveEmploymentDetailsZaCommand.New(r =>
                         {
@@ -403,6 +442,7 @@ namespace Wonga.QA.Framework
                 case AUT.Ca:
                     requests.AddRange(new ApiRequest[]
                     {
+                        SavePasswordRecoveryDetailsCaCommand.New(r => r.AccountId = _id),
                         SaveCustomerDetailsCaCommand.New(r => 
                         { 
                             r.AccountId = _id;
@@ -412,9 +452,20 @@ namespace Wonga.QA.Framework
                             r.Email = _email;
                             r.DateOfBirth = _dateOfBirth;
                             r.NationalNumber = _nationalNumber;
-                            r.HomePhone = _phoneNumber;
+                            r.HomePhone = _homePhoneNumber;
                             r.Gender = _gender;
-                        }),                       
+                        }),              
+         				RiskSaveCustomerDetailsCommand.New(r =>
+						{
+							r.AccountId = _id;
+							r.Forename = _foreName;
+                            r.MiddleName = _middleName;
+                            r.Surname = _surname;
+                            r.Email = _email;
+                            r.DateOfBirth = _dateOfBirth;
+                            r.HomePhone = _homePhoneNumber;
+                            r.Gender = _gender;
+						}),
                         SaveCustomerAddressCaCommand.New(r => {
                                                                  r.AccountId = _id;
                                                                  r.HouseNumber = _houseNumber;
@@ -427,6 +478,19 @@ namespace Wonga.QA.Framework
                                                                  r.County = _county;
 																 r.Province = _province;
                         } ),
+						RiskSaveCustomerAddressCommand.New(r =>
+						{
+																r.AccountId = _id;
+                                                                 r.HouseNumber = _houseNumber;
+                                                                 r.HouseName = _houseName;
+                                                                 r.Postcode = _postcode;
+                                                                 r.Street = _street;
+                                                                 r.Flat = _flat;
+                                                                 r.District = _district;
+                                                                 r.Town = _town;
+                                                                 r.County = _county;
+																 r.SubRegion = _province;
+						}),
                         AddBankAccountCaCommand.New(r =>
                                                     	{
                                                     		r.AccountId = _id;
@@ -440,6 +504,15 @@ namespace Wonga.QA.Framework
                                                     	    r.InstitutionNumber = _institutionNumber;
 
                                                     	}),
+						RiskAddBankAccountCaCommand.New(r =>
+                                                    	{
+                                                    		r.AccountId = _id;
+                                                    		r.BankAccountId = _bankAccountId;
+                                                    		if (!string.IsNullOrEmpty(_bankAccountNumber))
+                                                    		{
+                                                    			r.AccountNumber = _bankAccountNumber;
+                                                    		}
+                                                    	}),
                         SaveEmploymentDetailsCaCommand.New(r =>
                         {
                             r.AccountId = _id;
@@ -448,15 +521,11 @@ namespace Wonga.QA.Framework
                         	r.Status = _employerStatus;
                             if (!string.IsNullOrEmpty(_nextPayDate.ToString()))
                             r.NextPayDate = _nextPayDate;
-                        }),
-                        VerifyMobilePhoneCaCommand.New(r =>
-                        {
-                            r.AccountId = _id;
-                            r.VerificationId = _verification;
-                            r.MobilePhone = _mobileNumber;
-                        }),
-                        CompleteMobilePhoneVerificationCommand.New(r=> r.VerificationId = _verification)
-                        });
+                            if (!string.IsNullOrEmpty(_incomeFrequency.ToString()))
+                                r.IncomeFrequency = _incomeFrequency;
+                        })
+					});
+					requests.AddRange(GetPhoneCommandsPreAccountCreation());
                     break;
 
                 case AUT.Wb:
@@ -470,8 +539,20 @@ namespace Wonga.QA.Framework
                                                                  r.Forename = _foreName;
                                                                  r.DateOfBirth = _dateOfBirth;
                                                                  r.Email = _email;
+                                                                 r.HomePhone = _homePhoneNumber;
                                                                  r.Gender = _gender;
                                                              }),
+						RiskSaveCustomerDetailsCommand.New(r =>
+						{
+																r.AccountId = _id; 
+                                                                 r.MiddleName = _middleName;
+                                                                 r.Surname = _surname;
+                                                                 r.Forename = _foreName;
+                                                                 r.DateOfBirth = _dateOfBirth;
+                                                                 r.Email = _email;
+                                                                 r.HomePhone = _homePhoneNumber;
+                                                                 r.Gender = _gender;
+						}),
                         SaveCustomerAddressUkCommand.New(r=>
                                                              {
                                                                  r.AccountId = _id;
@@ -484,37 +565,58 @@ namespace Wonga.QA.Framework
                                                                  r.Town = _town;
                                                                  r.County = _county;
                                                              }),
+						RiskSaveCustomerAddressCommand.New(r =>
+						{
+						      r.AccountId = _id;
+                                                                 r.HouseNumber = _houseNumber;
+                                                                 r.HouseName = _houseName;
+                                                                 r.Postcode = _postcode;
+                                                                 r.Street = _street;
+                                                                 r.Flat = _flat;
+                                                                 r.District = _district;
+                                                                 r.Town = _town;
+                                                                 r.County = _county;
+						}),
                         AddBankAccountUkCommand.New(r=>
                                                     	{
                                                     		r.AccountId = _id;
                                                     	    r.BankAccountId = _bankAccountId;
                                                             if (!string.IsNullOrEmpty(_bankAccountNumber))
-                     		{
+                     										{
                                                     			r.AccountNumber = _bankAccountNumber;
                                                     		}
 
                                                             if (!string.IsNullOrEmpty(_bankCode))
                                                                 r.BankCode = _bankCode;
                                                     	}),
+						RiskAddBankAccountUkCommand.New(r =>
+                                                    	{
+                                                    		r.AccountId = _id;
+                                                    		r.BankAccountId = _bankAccountId;
+                                                    		if (!string.IsNullOrEmpty(_bankAccountNumber))
+                                                    		{
+                                                    			r.AccountNumber = _bankAccountNumber;
+                                                    		}
+                                                    	}),
+
                         AddPaymentCardCommand.New(r =>
 						                              {
 						                                  r.AccountId = _id;
 						                                  r.Number = _paymentCardNumber;
 						                              }),
-                        VerifyMobilePhoneUkCommand.New(r=>
-                                                           {
-                                                               r.AccountId = _id;
-                                                               r.Forename = _foreName;
-                                                               r.VerificationId = _verification;
-                                                               r.MobilePhone = _mobileNumber;
-                                                           }),
-                        CompleteMobilePhoneVerificationCommand.New(r=> r.VerificationId = _verification)
+						RiskAddPaymentCardCommand.New(r =>
+						                              {
+						                                  r.AccountId = _id;
+						                                  r.Number = _paymentCardNumber;
+						                              })
                     });
+					requests.AddRange(GetPhoneCommandsPreAccountCreation());
                     break;
 
                 case AUT.Uk:
                     requests.AddRange(new ApiRequest[]
 					{
+                        SavePasswordRecoveryDetailsUkCommand.New(r => r.AccountId = _id),
 						SaveCustomerDetailsUkCommand.New(r=>
 						                                     {
 						                                         r.AccountId = _id;
@@ -524,6 +626,15 @@ namespace Wonga.QA.Framework
 						                                         r.Email = _email;
 						                                         r.DateOfBirth = _dateOfBirth;
 						                                     }),
+						RiskSaveCustomerDetailsCommand.New(r =>
+						{
+                                     r.AccountId = _id;
+						             r.Forename = _foreName;
+						             r.MiddleName = _middleName;
+						             r.Surname = _surname;
+						             r.Email = _email;
+						             r.DateOfBirth = _dateOfBirth;
+						}),
 					    SaveCustomerAddressUkCommand.New(r =>
 					                                         {
 					                                             r.AccountId = _id;
@@ -536,6 +647,18 @@ namespace Wonga.QA.Framework
                                                                  r.Town = _town;
                                                                  r.County = _county;
 					                                         }),
+						RiskSaveCustomerAddressCommand.New(r =>
+						{
+							                r.AccountId = _id;
+                                                                 r.HouseNumber = _houseNumber;
+                                                                 r.HouseName = _houseName;
+                                                                 r.Postcode = _postcode;
+                                                                 r.Street = _street;
+                                                                 r.Flat = _flat;
+                                                                 r.District = _district;
+                                                                 r.Town = _town;
+                                                                 r.County = _county;
+						}),
 						AddBankAccountUkCommand.New(r =>
 						                            	{
 						                            		r.AccountId = _id;
@@ -546,13 +669,32 @@ namespace Wonga.QA.Framework
 						                            		}
 
 						                            	}),
+						RiskAddBankAccountUkCommand.New(r =>
+                                                    	{
+                                                    		r.AccountId = _id;
+                                                    		r.BankAccountId = _bankAccountId;
+                                                    		if (!string.IsNullOrEmpty(_bankAccountNumber))
+                                                    		{
+                                                    			r.AccountNumber = _bankAccountNumber;
+                                                    		}
+                                                    	}),
+
 						AddPaymentCardCommand.New(r =>
 						                              {
 						                                  r.AccountId = _id;
 						                                  r.Number = _paymentCardNumber;
 						                                  r.HolderName = String.Format("{0} {1}", _foreName, _surname);
                                                           r.IsPrimary = true;
-						                                  r.ExpiryDate = DateTime.Today.AddYears(2).ToString(@"yyyy-MM");
+						                                  r.ExpiryDate = DateTime.Today.AddYears(2).ToPaymentCardDate();
+						                                  r.SecurityCode = _paymentCardSecurityCode;
+						                                  r.CardType = _paymentCardType;
+						                              }),
+						RiskAddPaymentCardCommand.New(r =>
+						                              {
+						                                  r.AccountId = _id;
+						                                  r.Number = _paymentCardNumber;
+						                                  r.HolderName = String.Format("{0} {1}", _foreName, _surname);
+														  r.ExpiryDate = DateTime.Today.AddYears(2).ToPaymentCardDate();
 						                                  r.SecurityCode = _paymentCardSecurityCode;
 						                                  r.CardType = _paymentCardType;
 						                              }),
@@ -562,14 +704,9 @@ namespace Wonga.QA.Framework
 							r.EmployerName = _employerName;
 						    r.Status = _employerStatus;
 						    r.NetMonthlyIncome = _netMonthlyIncome;
-						}),
-						VerifyMobilePhoneUkCommand.New(r =>
-						{
-						    r.AccountId = _id;
-						    r.VerificationId = _verification;
-                            r.MobilePhone = _mobileNumber;
 						})
 					});
+					requests.AddRange(GetPhoneCommandsPreAccountCreation());
                     break;
 
                 default:
@@ -599,18 +736,13 @@ namespace Wonga.QA.Framework
                 case AUT.Za:
                     {
                         var mobilePhoneVerification = Do.Until(() => Drive.Db.Comms.MobilePhoneVerifications.Single(a => a.AccountId == _id));
-
-                        Drive.Api.Commands.Post(new CompleteMobilePhoneVerificationCommand
-                                                    {
-                                                        Pin = mobilePhoneVerification.Pin,
-                                                        VerificationId = mobilePhoneVerification.VerificationId
-                                                    });
-                        Do.With.Timeout(2).Until(() => Drive.Db.Comms.CustomerDetails.Single(a => a.AccountId == _id).MobilePhone);
+						Drive.Api.Commands.Post(GetPhoneCommandsPostAccountCreation(mobilePhoneVerification.Pin));
+						Do.With.Timeout(2).Until(() => Drive.Db.Comms.CustomerDetails.Single(a => a.AccountId == _id).MobilePhone);
                     }
                     break;
             }
 
-            return new Customer(_id, _email, _bankAccountId, _bankAccountNumber);
+            return new Customer(_id, _email, _bankAccountId, _bankAccountNumber){Province = _province};
         }
 
         public void ScrubForename(String forename)
@@ -634,6 +766,138 @@ namespace Wonga.QA.Framework
             }
             db.Comms.SubmitChanges();
         }
+
+
+		private IEnumerable<ApiRequest> GetPhoneCommandsPostAccountCreation(string pin)
+		{
+			switch (Config.AUT)
+			{
+
+				case AUT.Ca:
+				case AUT.Wb:
+				case AUT.Uk:
+					throw new NotSupportedException(string.Format("{0} does not verify phone after account creation", Config.AUT));
+
+				case AUT.Za:
+
+					return GetZaPhoneCommandsPostAccountCreation(pin);
+
+				default:
+
+					throw new NotImplementedException(string.Format("Not Implemented for {0}", Config.AUT));
+			}
+		}
+
+		private IEnumerable<ApiRequest> GetPhoneCommandsPreAccountCreation()
+		{
+			switch (Config.AUT)
+			{
+
+				case AUT.Ca:
+					return _mobileNumber != null ? GetCaMobilePhoneCommandsPreAccountCreation() : GetCaHomePhoneCommandsPreAccountCreation();
+
+				case AUT.Wb:
+					return GetWbMobilePhoneCommandsPreAccountCreation();
+
+				case AUT.Uk:
+					return GetUkMobilePhoneCommandsPreAccountCreation();
+
+				case AUT.Za:
+
+					throw new NotSupportedException("ZA does mobile phone verification at a later stage");
+
+				default:
+
+					throw new NotImplementedException(string.Format("Not Implemented for {0}", Config.AUT));
+			}
+		}
+
+		private IEnumerable<ApiRequest> GetUkMobilePhoneCommandsPreAccountCreation()
+		{
+			yield return VerifyMobilePhoneUkCommand.New(r =>
+			{
+				r.AccountId = _id;
+				r.VerificationId = _verification;
+				r.MobilePhone = _mobileNumber;
+			});
+			yield return CompleteMobilePhoneVerificationCommand.New(r => r.VerificationId = _verification);
+
+			yield return RiskAddMobilePhoneUkCommand.New(r =>
+			{
+				r.AccountId = _id;
+				r.MobilePhone = _mobileNumber;
+			});
+		}
+
+		private IEnumerable<ApiRequest> GetWbMobilePhoneCommandsPreAccountCreation()
+		{
+			yield return VerifyMobilePhoneUkCommand.New(r =>
+			{
+				r.AccountId = _id;
+				r.Forename = _foreName;
+				r.VerificationId = _verification;
+				r.MobilePhone = _mobileNumber;
+			});
+
+			yield return CompleteMobilePhoneVerificationCommand.New(r => r.VerificationId = _verification);
+
+			yield return RiskAddMobilePhoneUkCommand.New(r =>
+			{
+				r.AccountId = _id;
+				r.MobilePhone = _mobileNumber;
+			});
+		}
+
+		private IEnumerable<ApiRequest> GetCaMobilePhoneCommandsPreAccountCreation()
+		{
+			yield return VerifyMobilePhoneCaCommand.New(r =>
+			{
+				r.AccountId = _id;
+				r.VerificationId = _verification;
+				r.MobilePhone = _mobileNumber;
+			});
+
+			yield return CompleteMobilePhoneVerificationCommand.New(r => r.VerificationId = _verification);
+
+			yield return RiskAddMobilePhoneCaCommand.New(r =>
+			{
+				r.AccountId = _id;
+				r.MobilePhone = _mobileNumber;
+			});
+		}
+
+		private IEnumerable<ApiRequest> GetCaHomePhoneCommandsPreAccountCreation()
+		{
+			yield return VerifyHomePhoneCaCommand.New(r =>
+			{
+				r.AccountId = _id;
+				r.VerificationId = _verification;
+				r.HomePhone = _homePhoneNumber;
+			});
+
+			yield return CompleteHomePhoneVerificationCaCommand.New(r => r.VerificationId = _verification);
+
+			yield return RiskAddHomePhoneCaCommand.New(r =>
+			{
+				r.AccountId = _id;
+				r.HomePhone = _homePhoneNumber;
+			});
+		}
+		
+		private IEnumerable<ApiRequest> GetZaPhoneCommandsPostAccountCreation(string pin)
+		{
+			yield return new CompleteMobilePhoneVerificationCommand
+			             	{
+			             		Pin = pin,
+			             		VerificationId = _verification
+			             	};
+
+			yield return new RiskAddMobilePhoneZaCommand
+			             	{
+			             		AccountId = _id,
+			             		MobilePhone = _mobileNumber
+			             	};
+		}
         
     }
 }

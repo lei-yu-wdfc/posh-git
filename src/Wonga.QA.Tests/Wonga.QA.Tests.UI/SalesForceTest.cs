@@ -89,7 +89,7 @@ namespace Wonga.QA.Tests.Ui
             string email = Get.RandomEmail();
             var journey = JourneyFactory.GetL0Journey(Client.Home());
             var mySummary = journey.ApplyForLoan(200, 10)
-                                .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
+                                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
                                 .FillAddressDetails()
                                 .FillAccountDetails()
                                 .FillBankDetails()

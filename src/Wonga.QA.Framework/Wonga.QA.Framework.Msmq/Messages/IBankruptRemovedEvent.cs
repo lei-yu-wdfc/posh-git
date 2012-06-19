@@ -9,6 +9,7 @@ namespace Wonga.QA.Framework.Msmq
     public partial class IBankruptRemovedEvent : MsmqMessage<IBankruptRemovedEvent>
     {
         public Guid AccountId { get; set; }
+        public Guid ApplicationId { get; set; }
         public DateTime CreatedOn { get; set; }
     }
 }

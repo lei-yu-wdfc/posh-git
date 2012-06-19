@@ -26,14 +26,18 @@
 
 
   <PersonalDetailsPage>
-      <FormId>#lzero-personal-form</FormId>
-      <CheckCanContact>#edit-contact-options</CheckCanContact>
+    <FormId>#lzero-personal-form</FormId>
+    <CheckCanContact>#edit-contact-options</CheckCanContact>
+    <AmountMinusButton>.wonga-amount-slider-wrapper .sliderminus</AmountMinusButton>
+    <AmountPlusButton>.wonga-amount-slider-wrapper .sliderplus</AmountPlusButton>
+    <DurationMinusButton>.wonga-duration-slider-wrapper .sliderminus</DurationMinusButton>
+    <DurationPlusButton>.wonga-duration-slider-wrapper .sliderplus</DurationPlusButton>
   </PersonalDetailsPage>
-  
+
   <DealDonePage>
     <HeaderText>Your application has been accepted</HeaderText>
   </DealDonePage>
-  
+
   <AddressDetailsPage>
     <FormId>#lzero-address-form</FormId>
     <Postcode>#edit-postcode-ca</Postcode>
@@ -47,27 +51,27 @@
     <TownErrorForm>#edit-town-ca-wrapper div.invalid</TownErrorForm>
     <StreetErrorForm>#edit-street-ca-wrapper div.invalid</StreetErrorForm>
     <HouseNumberErrorForm>#edit-street-number-ca-wrapper div.invalid</HouseNumberErrorForm>
-	<AddressPeriodErrorForm>#edit-address-period-ca-wrapper div.invalid</AddressPeriodErrorForm>	
+    <AddressPeriodErrorForm>#edit-address-period-ca-wrapper div.invalid</AddressPeriodErrorForm>
   </AddressDetailsPage>
 
-	<PreviousAddresDetailsSection>
-		<Fieldset>#previous-address</Fieldset>
-		<PostCode>#edit-postcode-previous-ca</PostCode>
-		<FlatNumber>#edit-street-number-previous-ca</FlatNumber>
-		<Province>#edit-province-previous</Province>
-		<Town>#edit-town-previous-ca</Town>
-		<Street>#edit-street-previous-ca</Street>
-	</PreviousAddresDetailsSection>
+  <PreviousAddresDetailsSection>
+    <Fieldset>#previous-address</Fieldset>
+    <PostCode>#edit-postcode-previous-ca</PostCode>
+    <FlatNumber>#edit-street-number-previous-ca</FlatNumber>
+    <Province>#edit-province-previous</Province>
+    <Town>#edit-town-previous-ca</Town>
+    <Street>#edit-street-previous-ca</Street>
+  </PreviousAddresDetailsSection>
 
   <AccountDetailsSection>
     <Fieldset>fieldset#account-setup</Fieldset>
-	<PasswordErrorForm>#edit-password-wrapper .form-error .invalid</PasswordErrorForm>
+    <PasswordErrorForm>#edit-password-wrapper .form-error .invalid</PasswordErrorForm>
     <PasswordConfirmErrorForm>#edit-password-confirm-wrapper .form-error .invalid</PasswordConfirmErrorForm>
   </AccountDetailsSection>
 
-  <PersonalBankAccountDetailsPage>
+  <PersonalBankAccountPage>
     <FormId>#lzero-bank-form</FormId>
-  </PersonalBankAccountDetailsPage>
+  </PersonalBankAccountPage>
 
 
   <BankAccountSection>
@@ -79,9 +83,9 @@
 
   <MobilePinVerificationSection>
     <Pin>#edit-pin-ca</Pin>
-	<ResendPin>.resend-pin.mod</ResendPin>
-	<ResendPinMessage>#fancybox-content div</ResendPinMessage>
-	<ResendPinPopupClose>#fancybox-close</ResendPinPopupClose>	
+    <ResendPin>.resend-pin.mod</ResendPin>
+    <ResendPinMessage>#fancybox-content div</ResendPinMessage>
+    <ResendPinPopupClose>#fancybox-close</ResendPinPopupClose>
   </MobilePinVerificationSection>
 
   <AcceptedPage>
@@ -131,13 +135,13 @@
     <WongaMomentsTitle>div.panes div:first-child+div+div+div h2</WongaMomentsTitle>
   </AboutUsPage>
 
-	<MySummaryPage>
-		<PromisedRepayAmount>#content-area p span</PromisedRepayAmount>
-		<PromisedRepayDate>#content-area p b em</PromisedRepayDate>
-		<RepayButton>#cloud ul li a</RepayButton>
-		<TotalToRepayAmountPopup>#fancybox-content div div b:first-child</TotalToRepayAmountPopup>
-		<PromisedRepayDatePopup>#fancybox-content div div b:last-child</PromisedRepayDatePopup>
-	</MySummaryPage>
+  <MySummaryPage>
+    <PromisedRepayAmount>#content-area p span</PromisedRepayAmount>
+    <PromisedRepayDate>#content-area p b em</PromisedRepayDate>
+    <RepayButton>#cloud ul li a</RepayButton>
+    <TotalToRepayAmountPopup>#fancybox-content div div b:first-child</TotalToRepayAmountPopup>
+    <PromisedRepayDatePopup>#fancybox-content div div b:last-child</PromisedRepayDatePopup>
+  </MySummaryPage>
 
   <HomePage>
     <Title>div#block-wonga-1 h2:first-child</Title>
@@ -153,19 +157,19 @@
   </TabsElement>
 
   <ApplicationSection>
-	<EditPin>#edit-mobile-pin-ca</EditPin>
+    <EditPin>#edit-mobile-pin-ca</EditPin>
     <FormId>#wonga-apply-ln-form</FormId>
-	<ChangeMobileButton>#loan-application .form-markup-wrapper a</ChangeMobileButton>
+    <ChangeMobileButton>#loan-application .form-markup-wrapper a</ChangeMobileButton>
   </ApplicationSection>
 
-	<ApplyPage>
-		<EditMobileNumber>#edit-new-mobile-number-ca</EditMobileNumber>
-		<PopupSaveButton>#edit-submit[value='Save']</PopupSaveButton>
-		<PopupCloseButton>#edit-submit[value='Close']</PopupCloseButton>
-		<ResendPin>#repin div:first-child+div a</ResendPin>
-		<ResendPinPopupClose>#fancybox-close</ResendPinPopupClose>
-		<ResendPinPopupText>#fancybox-content div</ResendPinPopupText>
-	</ApplyPage>
+  <ApplyPage>
+    <EditMobileNumber>#edit-new-mobile-number-ca</EditMobileNumber>
+    <PopupSaveButton>#edit-submit[value='Save']</PopupSaveButton>
+    <PopupCloseButton>#edit-submit[value='Close']</PopupCloseButton>
+    <ResendPin>#repin div:first-child+div a</ResendPin>
+    <ResendPinPopupClose>#fancybox-close</ResendPinPopupClose>
+    <ResendPinPopupText>#fancybox-content div</ResendPinPopupText>
+  </ApplyPage>
 
   <MyPersonalDetailsPage>
     <Postcode>table#profile tr#address tbody tr:first-child+tr+tr td</Postcode>
@@ -187,6 +191,6 @@
     <DurationMinusButton>.wonga-duration-slider-wrapper .sliderminus</DurationMinusButton>
     <DurationPlusButton>.wonga-duration-slider-wrapper .sliderplus</DurationPlusButton>
   </SlidersElement>
-  
-  
+
+
 </UiMap>

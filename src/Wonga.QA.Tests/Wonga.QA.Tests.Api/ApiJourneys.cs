@@ -36,15 +36,29 @@ namespace Wonga.QA.Tests.Api
             ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
         }
 
-		[Test, AUT(AUT.Ca, AUT.Uk)]
-        public void L0JourneyDeclined()
+		[Test, AUT(AUT.Ca)]
+		public void ApiNoMobilePhoneL0JourneyAccepted()
+		{
+			Customer cust = CustomerBuilder.New().WithMobileNumber(null).Build();
+			ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Accepted).WithLoanAmount(200).Build();
+		}
+
+        [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
+        public void ApiL0JourneyDeclined()
         {
             Customer cust = CustomerBuilder.New().WithEmployer("Wonga").Build();
             ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
         }
 
-		[Test, AUT(AUT.Ca, AUT.Uk)]
-        public void LnJourneyAccepted()
+		[Test, AUT(AUT.Ca)]
+		public void ApiNoMobilePhoneL0JourneyDeclined()
+		{
+			Customer cust = CustomerBuilder.New().WithEmployer("Wonga").WithMobileNumber(null).Build();
+			ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+		}
+
+        [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za), CoreTest]
+        public void ApiLnJourneyAccepted()
         {
             Customer cust = CustomerBuilder.New().Build();
             var applicationL0 = ApplicationBuilder.New(cust).Build();
@@ -54,8 +68,19 @@ namespace Wonga.QA.Tests.Api
             ApplicationBuilder.New(cust).Build();
         }
 
-		[Test, AUT(AUT.Ca, AUT.Uk)]
-        public void LnJourneyDeclined()
+		[Test, AUT(AUT.Ca)]
+		public void ApiNoMobilePhoneLnJourneyAccepted()
+		{
+			Customer cust = CustomerBuilder.New().WithMobileNumber(null).Build();
+			var applicationL0 = ApplicationBuilder.New(cust).Build();
+
+			applicationL0.RepayOnDueDate();
+
+			ApplicationBuilder.New(cust).Build();
+		}
+
+        [Test, AUT(AUT.Ca, AUT.Uk)]
+        public void ApiLnJourneyDeclined()
         {
             Customer cust = CustomerBuilder.New().Build();
             ApplicationBuilder.New(cust).Build().RepayOnDueDate();
@@ -63,8 +88,17 @@ namespace Wonga.QA.Tests.Api
             ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
         }
 
-		[Test, AUT(AUT.Ca, AUT.Uk)]
-		public void RepayingOnDueDateClosesApplication()
+		[Test, AUT(AUT.Ca)]
+		public void ApiNoMobilePhoneLnJourneyDeclined()
+		{
+			Customer cust = CustomerBuilder.New().WithMobileNumber(null).Build();
+			ApplicationBuilder.New(cust).Build().RepayOnDueDate();
+			CustomerOperations.UpdateEmployerNameInRisk(cust.Id, "Wonga");
+			ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+		}
+
+		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
+		public void ApiRepayingOnDueDateClosesApplication()
 		{
 			var customer = CustomerBuilder.New().Build();
 			var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();

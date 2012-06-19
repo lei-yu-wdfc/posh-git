@@ -61,7 +61,7 @@ namespace Wonga.QA.Tests.BankGateway
 			var bankIntegration = _bankIntegrationsTable.FindByDescription(BANK_INT_DESC);
 			bankIntegration.PollingInterval = _pollingInterval;
 
-			_bankIntegrationsTable.Update(bankIntegration);			
+			_bankIntegrationsTable.Update(bankIntegration);
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-2394"), Parallelizable(TestScope.All)]

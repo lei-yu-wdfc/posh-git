@@ -12,10 +12,13 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
     public class RepayProcessingPage : BasePage
     {
         private IWebElement _staticLink;
+        private IWebElement _processingTextContainer;
 
         public RepayProcessingPage(UiClient client) : base(client)
         {
-            Assert.That(Headers, Has.Item(Wonga.QA.Framework.UI.ContentMap.Get.RepayProcessingPage.HeaderText));
+            if (Config.AUT != AUT.Uk)
+                Assert.That(Headers, Has.Item(Wonga.QA.Framework.UI.ContentMap.Get.RepayProcessingPage.HeaderText));
+            _processingTextContainer = Content.FindElement(By.CssSelector(UiMap.Get.RepayProcessingPage.ProcessingTextContainer));
             _staticLink = Content.FindElement(By.CssSelector(UiMap.Get.RepayProcessingPage.ProcessingStaticLink));
         }
 

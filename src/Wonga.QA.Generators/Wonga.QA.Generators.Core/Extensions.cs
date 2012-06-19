@@ -193,6 +193,12 @@ namespace Wonga.QA.Generators.Core
             return String.Format("{0}Enum", String.Join(null, value.GetCamel().Except(new[] { "Type" })));
         }
 
+        public static String GetNormalTypeName(this String value)
+        {
+            var s = value.Replace(' ', '_').Where(x => Char.IsLetterOrDigit(x) || x == '_').ToArray();
+            return new String(s);
+        }
+
         public static String GetDeclaration(this Type type)
         {
             String name = typeof(Object).Name;

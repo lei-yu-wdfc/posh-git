@@ -14,6 +14,7 @@ namespace Wonga.QA.Framework.UI.Journey
         public String LastName { get; set; }
         public String NationalId { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public String Gender { get; set; }
         public BasePage CurrentPage { get; set; }
         public String Email { get; set; }
 
@@ -23,6 +24,7 @@ namespace Wonga.QA.Framework.UI.Journey
             FirstName = Get.GetName();
             LastName = Get.RandomString(10);
             DateOfBirth = new DateTime(1957, 10, 30);
+            Gender = "Female";
             NationalId = Get.GetNationalNumber(DateOfBirth, true);
             Email = Get.RandomEmail();
         }
@@ -36,16 +38,18 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public IL0ConsumerJourney FillPersonalDetails(string employerNameMask = null)
+        public IL0ConsumerJourney FillPersonalDetails(string firstName = null, string lastName = null, string middleNameMask = null, string gender = null, string employerNameMask = null, string email = null, string mobilePhone = null, bool submit = true)
         {
             string employerName = employerNameMask ?? Get.GetMiddleName();
+            string middleName = middleNameMask ?? Get.GetMiddleName();
             var personalDetailsPage = CurrentPage as PersonalDetailsPage;
-            personalDetailsPage.YourName.FirstName = FirstName;
-            personalDetailsPage.YourName.LastName = LastName;
+            personalDetailsPage.YourName.FirstName = firstName ?? FirstName;
+            personalDetailsPage.YourName.MiddleName = middleName;
+            personalDetailsPage.YourName.LastName = lastName ?? LastName;
             personalDetailsPage.YourName.Title = "Mr";
             personalDetailsPage.YourDetails.Number = NationalId.ToString();//"5710300020087";
             personalDetailsPage.YourDetails.DateOfBirth = DateOfBirth.ToString("d/MMM/yyyy");
-            personalDetailsPage.YourDetails.Gender = "Female";
+            personalDetailsPage.YourDetails.Gender = gender ?? Gender;
             personalDetailsPage.YourDetails.HomeStatus = "Owner Occupier";
             personalDetailsPage.YourDetails.HomeLanguage = "English";
             personalDetailsPage.YourDetails.NumberOfDependants = "0";
@@ -61,59 +65,66 @@ namespace Wonga.QA.Framework.UI.Journey
             personalDetailsPage.EmploymentDetails.SalaryPaidToBank = true;
             personalDetailsPage.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d/MMM/yyyy");
             personalDetailsPage.EmploymentDetails.IncomeFrequency = "Monthly";
-            personalDetailsPage.ContactingYou.CellPhoneNumber = Get.GetMobilePhone();
-            personalDetailsPage.ContactingYou.EmailAddress = Email;
-            personalDetailsPage.ContactingYou.ConfirmEmailAddress = Email;
+            personalDetailsPage.ContactingYou.CellPhoneNumber = mobilePhone ?? Get.GetMobilePhone();
+            personalDetailsPage.ContactingYou.EmailAddress = email ?? Email;
+            personalDetailsPage.ContactingYou.ConfirmEmailAddress = email ?? Email;
             personalDetailsPage.PrivacyPolicy = true;
             personalDetailsPage.CanContact = "Yes";
             personalDetailsPage.MarriedInCommunityProperty =
                 "I am not married in community of property (I am single, married with antenuptial contract, divorced etc.)";
-            CurrentPage = personalDetailsPage.Submit() as AddressDetailsPage;
+            if (submit)
+            {
+                CurrentPage = personalDetailsPage.Submit() as AddressDetailsPage;
+            }
             return this;
         }
 
-        public IL0ConsumerJourney FillPersonalDetailsWithEmail(string employerNameMask = null, string email = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IL0ConsumerJourney FillAddressDetails()
+        public IL0ConsumerJourney FillAddressDetails(string postcode = null, string addresPeriod = null, bool submit = true)
         {
             var addressPage = CurrentPage as AddressDetailsPage;
             addressPage.HouseNumber = "25";
             addressPage.Street = "high road";
             addressPage.Town = "Kuku";
             addressPage.County = "Province";
-            addressPage.PostCode = Get.GetPostcode();
-            addressPage.AddressPeriod = "2 to 3 years";
-            CurrentPage = addressPage.Next() as AccountDetailsPage;
+            addressPage.PostCode = postcode ?? Get.GetPostcode();
+            addressPage.AddressPeriod = addresPeriod ?? "2 to 3 years";
+            if (submit)
+            {
+                CurrentPage = addressPage.Next() as AccountDetailsPage;
+            }
             return this;
         }
 
-        public IL0ConsumerJourney FillAccountDetails()
+        public IL0ConsumerJourney FillAccountDetails(string password = null, bool submit = true)
         {
             var accountDetailsPage = CurrentPage as AccountDetailsPage;
-            accountDetailsPage.AccountDetailsSection.Password = Get.GetPassword();
-            accountDetailsPage.AccountDetailsSection.PasswordConfirm = Get.GetPassword();
+            accountDetailsPage.AccountDetailsSection.Password = password ?? Get.GetPassword();
+            accountDetailsPage.AccountDetailsSection.PasswordConfirm = password ?? Get.GetPassword();
             accountDetailsPage.AccountDetailsSection.SecretQuestion = "Secret question";
             accountDetailsPage.AccountDetailsSection.SecretAnswer = "Secret answer";
-            CurrentPage = accountDetailsPage.Next();
+            if (submit)
+            {
+                CurrentPage = accountDetailsPage.Next();
+            }
             return this;
         }
 
-        public IL0ConsumerJourney FillBankDetails()
+        public IL0ConsumerJourney FillBankDetails(string accountNumber = null, string bankPeriod = null, string pin = null, bool submit = true)
         {
             var bankDetailsPage = CurrentPage as PersonalBankAccountPage;
             bankDetailsPage.BankAccountSection.BankName = "Capitec";
             bankDetailsPage.BankAccountSection.BankAccountType = "Current";
-            bankDetailsPage.BankAccountSection.AccountNumber = "1234567";
-            bankDetailsPage.BankAccountSection.BankPeriod = "2 to 3 years";
-            bankDetailsPage.PinVerificationSection.Pin = "0000";
-            CurrentPage = bankDetailsPage.Next() as ProcessingPage;
+            bankDetailsPage.BankAccountSection.AccountNumber = accountNumber ?? "1234567";
+            bankDetailsPage.BankAccountSection.BankPeriod = bankPeriod ?? "2 to 3 years";
+            bankDetailsPage.PinVerificationSection.Pin = pin ?? "0000";
+            if (submit)
+            {
+                CurrentPage = bankDetailsPage.Next() as ProcessingPage;
+            }
             return this;
         }
 
-        public IL0ConsumerJourney FillCardDetails()
+        public IL0ConsumerJourney FillCardDetails(string cardNumber = null, string cardSecurity = null, string cardType = null, string expiryDate = null, string startDate = null, string pin = null, bool submit = true)
         {
             throw new NotImplementedException();
         }

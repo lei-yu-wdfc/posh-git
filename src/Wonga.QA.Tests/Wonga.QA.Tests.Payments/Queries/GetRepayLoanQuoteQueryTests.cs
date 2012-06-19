@@ -9,7 +9,7 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
-using CreateFixedTermLoanApplicationCommand = Wonga.QA.Framework.Api.CreateFixedTermLoanApplicationCommand;
+using CreateFixedTermLoanApplicationCommand = Wonga.QA.Framework.Api.CreateFixedTermLoanApplicationUkCommand;
 using PaymentTransactionEnum = Wonga.QA.Framework.Msmq.PaymentTransactionEnum;
 using PaymentTransactionScopeEnum = Wonga.QA.Framework.Msmq.PaymentTransactionScopeEnum;
 
@@ -29,8 +29,9 @@ namespace Wonga.QA.Tests.Payments.Queries
         {
             var product = Drive.Data.Payments.Db.Products.FindByName("WongaFixedLoan");
             var limit = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Risk.DefaultCreditLimit");
+            var minRepayAmount = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Payments.RepayLoanMinAmount");
 
-            _amin = product.AmountMin;
+            _amin = Decimal.Parse(minRepayAmount.Value);
             _amax = Decimal.Parse(limit.Value);
             _tmin = (Int32)product.TermMin;
             _tmax = (Int32)product.TermMax;
@@ -88,7 +89,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.Throws<ValidatorException>(() => Drive.Api.Queries.Post(new GetRepayLoanQuoteUkQuery { ApplicationId = application.Id }));
         }
 
-        [Pending("UK-1827")]
+        [Pending("UKWEB-305")]
         [Test, Explicit, Factory("Boundaries")]
         public void GetRepayLoanQuoteBoundary(Decimal amount)
         {
@@ -165,6 +166,40 @@ namespace Wonga.QA.Tests.Payments.Queries
 
             // Check array
             Assert.AreEqual(110.41M, decimal.Parse(response.Values["Amount"].ToArray()[0]));
+        }
+
+        [Test]
+        public void RepayWhenInArrears()
+        {
+            const int dueInDays = 10;
+            var promiseDate = new Date(DateTime.UtcNow.AddDays(dueInDays));
+            var accountId = Guid.NewGuid();
+            var bankAccountId = Guid.NewGuid();
+            var paymentCardId = Guid.NewGuid();
+            var appId = Guid.NewGuid();
+            const decimal trustRating = 400.00M;
+
+            var setupData = new RepayLoanFunctions();
+            setupData.RepayEarlyOnLoanStartDate(appId, paymentCardId, bankAccountId, accountId, trustRating, dueInDays);
+
+            // Rewind dates
+            var app = new Application(appId);
+            app.UpdateAcceptedOnDate(-10);
+            app.MoveTransactionDates(-10);
+            app.UpdateNextDueDate(-1);
+
+            //Call Api Query
+            var response = Drive.Api.Queries.Post(new GetRepayLoanQuoteUkQuery() { ApplicationId = appId });
+            var minRepayAmount = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.RepayLoanMinAmount").Value;
+
+            Assert.AreEqual(appId.ToString(), response.Values["ApplicationId"].Single(), "ApplicationId incorrect");
+            Assert.AreEqual(minRepayAmount, response.Values["SliderMinAmount"].Single(), "SliderMinAmount incorrect");
+            Assert.AreEqual("115.91", response.Values["SliderMaxAmount"].Single(), "SliderMaxAmount incorrect");
+            Assert.AreEqual("-1", response.Values["DaysToDueDate"].Single(), "DaysToDueDate incorrect");
+
+            // Check array
+            Assert.AreEqual(110.91m, decimal.Parse(response.Values["Amount"].ToArray()[0]),"RemainderToRepay Array Element: Amount");
+
         }
     }
 }

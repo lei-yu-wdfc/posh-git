@@ -5,7 +5,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Meta
 {
-    [TestFixture, Parallelizable(TestScope.All), DependsOn(typeof(ColdStartTests))]
+    [TestFixture, Parallelizable(TestScope.All), DependsOn(typeof(ColdStartTests)), CoreTest]
     public class BuilderTests
     {
         private Customer _customer;

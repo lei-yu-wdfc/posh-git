@@ -14,7 +14,6 @@ namespace Wonga.QA.Tests.Comms
 	[TestFixture, Parallelizable(TestScope.Descendants)] //Can be only on level 3 because it changes configuration
 	class CollectionsChaseEmailTest
 	{
-		private bool _bankGatewayTestModeOriginal;
 		private static readonly dynamic EmailTable = Drive.Data.QaData.Db.Email;
 
 		private Application _application;
@@ -30,17 +29,11 @@ namespace Wonga.QA.Tests.Comms
 		[FixtureSetUp]
 		public void FixtureSetup()
 		{
-			_bankGatewayTestModeOriginal = ConfigurationFunctions.GetBankGatewayTestMode();
-			ConfigurationFunctions.SetBankGatewayTestMode(false);
+			if (Drive.Data.Ops.GetServiceConfiguration<bool>("BankGateway.IsTestMode"))
+				Assert.Inconclusive("Bankgateway is in test mode");
 
 			var customer = CustomerBuilder.New().Build();
 			_application = ApplicationBuilder.New(customer).Build();
-		}
-
-		[FixtureTearDown]
-		public void FixtureTearDown()
-		{
-			ConfigurationFunctions.SetBankGatewayTestMode(_bankGatewayTestModeOriginal);
 		}
 
 		[Test, AUT(AUT.Za), JIRA("QA-206")]
@@ -89,9 +82,9 @@ namespace Wonga.QA.Tests.Comms
 
 		private void VerifyEmailIsSentAfterDaysInArrears(uint daysInArrears, int template)
 		{
-			_application.PutApplicationIntoArrears(daysInArrears);
+			_application.PutIntoArrears(daysInArrears);
 
-			if( daysInArrears > 0) //Saga is created after first email sent
+			if (daysInArrears > 0) //Saga is created after first email sent
 				TimeoutCollectionsChaseSagaForDays(_application, daysInArrears);
 
 			AssertEmailIsSent(_application.GetCustomer().Email, template);
@@ -99,10 +92,10 @@ namespace Wonga.QA.Tests.Comms
 
 		private void TimeoutCollectionsChaseSagaForDays(Application application, uint days)
 		{
-			var sagaId = (Guid) Do.Until(() => (Drive.Data.OpsSagas.Db.CollectionsChaseSagaEntity.FindByApplicationId(application.Id))).Id;
-			
+			var sagaId = (Guid)Do.Until(() => (Drive.Data.OpsSagas.Db.CollectionsChaseSagaEntity.FindByApplicationId(application.Id))).Id;
+
 			Drive.Data.OpsSagas.Db.CollectionsChaseSagaEntity.UpdateById(Id: sagaId, DueDate: DateTime.Today.AddDays(-days));
-			Drive.Msmq.Comms.Send(new TimeoutMessage{SagaId = sagaId});
+			Drive.Msmq.Comms.Send(new TimeoutMessage { SagaId = sagaId });
 		}
 
 		private void AssertEmailIsSent(string email, int template)

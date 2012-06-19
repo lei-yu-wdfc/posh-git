@@ -82,6 +82,7 @@
     <Compile Include="Mappings\Content\ErrorsMessages\MobilePinVerificationSection.cs" />
     <Compile Include="Mappings\Content\Links\FAQPageLinks.cs" />
     <Compile Include="Mappings\Content\Pages\AboutUsPage.cs" />
+    <Compile Include="Mappings\Content\Pages\AccountSetupPage.cs" />
     <Compile Include="Mappings\Content\Pages\RepayErrorPage.cs" />
     <Compile Include="Mappings\Content\Pages\RepaymentOptionsPage.cs" />
     <Compile Include="Mappings\Content\Pages\RepayProcessingPage.cs" />
@@ -90,9 +91,12 @@
     <Compile Include="Mappings\Content\Sections\ApplicationSection.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\BusinessSummaryPage.cs" />
     <Compile Include="Mappings\Content\Pages\TopupProcessingPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\DebitOrderPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\DebitOrderSuccessPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayErrorPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayProcessingPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayDuePaymentFailedPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\Common\MyAccountRepayManualPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\MySummaryPageMobile.cs" />
     <Compile Include="Mappings\Content\Pages\TimeoutTestPage.cs" />
     <Compile Include="Mappings\Content\Pages\ExtensionAgreementPage.cs" />
@@ -132,8 +136,11 @@
     <Compile Include="Mappings\Ui\Pages\Common\BlogPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\EasypaymentNumberPrintPage.cs" />
     <Compile Include="Ui\Pages\Common\BusinessSummaryPage.cs" />
+    <Compile Include="Ui\Pages\Common\DebitOrderPage.cs" />
+    <Compile Include="Ui\Pages\Common\DebitOrderSuccessPage.cs" />
     <Compile Include="Ui\Pages\Common\RepayDuePaymentFailedPage.cs" />
     <Compile Include="Ui\Pages\Common\RepayErrorPage.cs" />
+    <Compile Include="Ui\Pages\Common\MyAccountRepayManualPage.cs" />
     <Compile Include="Ui\Pages\Common\MySummaryPageMobile.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayDueFullpaySuccessPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\RepayEarlyFullpaySuccessPage.cs" />
@@ -244,6 +251,7 @@
     <Compile Include="Ui\Pages\Common\ApplyPage.cs" />
     <Compile Include="Ui\Pages\Common\ApplyTermsPage.cs" />
     <Compile Include="Ui\Pages\Common\BlogPage.cs" />
+    <Compile Include="Ui\Pages\Common\RepayProcessingPage.cs" />
     <Compile Include="Ui\Pages\Common\TimeoutTestPage.cs" />
     <Compile Include="Ui\Pages\Common\EasypaymentNumberPrintPage.cs" />
     <Compile Include="Ui\Pages\Common\RepaymentOptionsPage.cs" />
@@ -255,7 +263,6 @@
     <Compile Include="Ui\Pages\Common\RepayEarlyPartpaySuccessPage.cs" />
     <Compile Include="Ui\Pages\Common\RepayOverduePaymentFailedPage.cs" />
     <Compile Include="Ui\Pages\Common\RepayEarlyPaymentFailedPage.cs" />
-    <Compile Include="Ui\Pages\Common\RepayProcessingPage.cs" />
     <Compile Include="Ui\Pages\Common\HomePageMobile.cs" />
     <Compile Include="Ui\Pages\Common\RepayRequestPage.cs" />
     <Compile Include="Ui\Pages\Common\ExtensionRequestPage.cs" />

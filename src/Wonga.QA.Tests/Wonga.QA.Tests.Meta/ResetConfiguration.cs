@@ -12,13 +12,13 @@ namespace Wonga.QA.Tests.Meta
 	[TestFixture]
 	public class ResetConfiguration
 	{
-		[Test, AUT(AUT.Ca)]
+		[Test, AUT(AUT.Ca), CoreTest]
 		public void ResetConfigurationCa()
 		{
 			Drive.Data.Ops.SetServiceConfiguration("BankGateway.Scotiabank.FileTransferTimes", string.Empty);
 			Drive.Data.Ops.SetServiceConfiguration("BankGateway.Bmo.FileTransferTimes", string.Empty);
 			Drive.Data.Ops.SetServiceConfiguration("BankGateway.Rbc.FileTransferTimes", string.Empty);
-
+            Drive.Data.Ops.SetServiceConfiguration("BankGateway.IsTestMode", false);
 			Drive.Data.Ops.SetServiceConfiguration("Payments.DelayBeforeApplicationClosedInMinutes", "0");
 		}
 	}

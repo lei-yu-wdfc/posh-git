@@ -13,7 +13,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Wb
 {
     public class ReferPage : BasePage, IApplyPage
     {
-        private IWebElement _returnToHomepage;
+        private readonly IWebElement _returnToHomepage;
 
         public ReferPage(UiClient client)
             : base(client)
