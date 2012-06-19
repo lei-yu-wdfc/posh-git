@@ -5,6 +5,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Ui;
@@ -24,6 +25,27 @@ namespace Wonga.QA.Tests.Migration
         }
 
         //private DateTime _actualDate;
+        
+        [Test]
+        public void MigratedCustomerTakesLoanTest()
+        {
+            string email = GetMigratedEmail(); 
+
+            var customer = new Customer(Guid.Parse(Drive.Api.Queries.Post(new GetAccountQuery { Login = email, Password = Get.GetPassword() }).Values["AccountId"].Single()));
+            var application = customer.GetApplication();
+
+            // Log in asn an existing migrated V2 customer
+            Client.Login().LoginAs(email);
+
+            // Take a loan 
+            var journey = JourneyFactory.GetLnJourney(Client.Home());
+            var page = journey.ApplyForLoan(200, 10)
+                           .FillApplicationDetails()
+                           .WaitForAcceptedPage()
+                           .FillAcceptedPage()
+                           .GoToMySummaryPage()
+                           .CurrentPage as MySummaryPage;
+        }
 
         [Test, AUT(AUT.Za), Pending("in development, test environments still not ready")]
         public void MigExtensionJourneyPass()
