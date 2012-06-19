@@ -29,11 +29,8 @@ namespace Wonga.QA.Tests.Migration
         [Test]
         public void MigratedCustomerTakesLoanTest()
         {
-            string email = GetMigratedEmail(); 
-
-            var customer = new Customer(Guid.Parse(Drive.Api.Queries.Post(new GetAccountQuery { Login = email, Password = Get.GetPassword() }).Values["AccountId"].Single()));
-            var application = customer.GetApplication();
-
+            string email = GetMigratedEmail();
+            
             // Log in asn an existing migrated V2 customer
             Client.Login().LoginAs(email);
 
