@@ -166,10 +166,12 @@ namespace Wonga.QA.Framework.UI
             element.Click();
             element.SendKeys(Keys.End);
             int numberOfCharsToErase = element.GetValue().Length;
-            for (int i = 0; i < numberOfCharsToErase; i++)
+
+            do
             {
                 element.SendKeys(Keys.Backspace);
-            }
+                numberOfCharsToErase--;
+            } while (numberOfCharsToErase != 0);
         }
 
         public static void EraseFromEnd(this IWebElement element, int numberOfCharsToErase)
