@@ -11,7 +11,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Comms
 {
-	[TestFixture, Parallelizable(TestScope.Descendants)] //Can be only on level 3 because it changes configuration
+	[TestFixture, Parallelizable(TestScope.Descendants), CoreTest] //Can be only on level 3 because it changes configuration
 	public class CollectionsChaseSmsTests
 	{
 		#region constants
