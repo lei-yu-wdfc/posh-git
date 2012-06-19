@@ -43,8 +43,11 @@ namespace Wonga.QA.Tests.Bi
 
             var appl = Do.Until(() => Drive.Data.Payments.Db.payments.Applications.FindBy(AccountId: customer.Id));
 
+            application.UpdateAcceptedOnDate(-5);
+
             customer.UpdateSurname("InterestTesting");
 
+            DateTime today = DateTime.Now;
             Drive.Msmq.Payments.Send(new CreateTransactionCommand
             {
                 Amount = 100M,
@@ -52,7 +55,7 @@ namespace Wonga.QA.Tests.Bi
                 Currency = CurrencyCodeIso4217Enum.GBP,
                 ExternalId = Guid.NewGuid(),
                 ComponentTransactionId = Guid.Empty,
-                PostedOn = DateTime.Now,
+                PostedOn = today.AddDays(-3) ,
                 Scope = PaymentTransactionScopeEnum.Credit,
                 Source = PaymentTransactionSourceEnum.System,
                 Type = PaymentTransactionEnum.DirectBankPayment
@@ -65,7 +68,7 @@ namespace Wonga.QA.Tests.Bi
                 Currency = CurrencyCodeIso4217Enum.GBP,
                 ExternalId = Guid.NewGuid(),
                 ComponentTransactionId = Guid.Empty,
-                PostedOn = DateTime.Now,
+                PostedOn = today.AddDays(-3),
                 Scope = PaymentTransactionScopeEnum.Credit,
                 Source = PaymentTransactionSourceEnum.System,
                 Type = PaymentTransactionEnum.Cheque
@@ -77,14 +80,15 @@ namespace Wonga.QA.Tests.Bi
                 BankAccountNumber = "1231231",
                 BankCode = "12311",
                 BatchNumber = 1,
-                BatchSendTime = DateTime.Now,
-                CreatedOn = DateTime.Now,
+                BatchSendTime = today.AddDays(-2),
+                CreatedOn = today.AddDays(-2),
                 PaymentReference = 12313212,
-                EffectiveDate = DateTime.Now,
+                EffectiveDate = today.AddDays(-2),
                 SagaId = Guid.NewGuid(),
                 TransactionAmount = 123.75M,
-                ValueDate = DateTime.Now
+                ValueDate = today.AddDays(-2)
             });
+
 
             // We need to get the ApplicationSKey from BI.Application
             // To get that we need to join the Payments.Applications table ExternalId to 
@@ -94,7 +98,8 @@ namespace Wonga.QA.Tests.Bi
 
             Drive.Msmq.Bi.Send(new CalcAccruedInterestCommand
             {
-                ApplicationId = bi_appl.ApplicationSKey
+                ApplicationGuid = appl.ExternalId,
+                Timestamp = DateTime.Now
             }
             );
         }
