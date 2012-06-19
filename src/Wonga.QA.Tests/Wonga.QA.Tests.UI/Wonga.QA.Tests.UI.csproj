@@ -72,7 +72,7 @@
     <Compile Include="SliderTests.cs" />
     <Compile Include="SurveyTest.cs" />
     <Compile Include="TagCloudTests.cs" />
-    <Compile Include="TopupSliderTests.cs" />
+    <Compile Include="TopUpTests.cs" />
     <Compile Include="L0DeclinedLoan.cs" />
     <Compile Include="UiTest.cs" />
     <Compile Include="Region\Uk\Journey\L0LoanUk.cs" />
