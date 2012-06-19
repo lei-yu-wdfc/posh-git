@@ -9,6 +9,7 @@ using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Framework.UI;
+using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
 using Wonga.QA.Framework.Msmq;
@@ -51,11 +52,11 @@ namespace Wonga.QA.Tests.Ui
             string email = Get.RandomEmail();
             Console.WriteLine("email:{0}", email);
 
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var aPage = journey.ApplyForLoan(loanAmount, days)
-                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
-                .FillAddressDetails()
-                .FillAccountDetails();
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
+                .WithEmail(email)
+                .WithAmount(loanAmount).WithDuration(days);
+            var aPage = journey.Teleport<PersonalBankAccountPage>() as PersonalBankAccountPage;
 
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
@@ -300,12 +301,10 @@ namespace Wonga.QA.Tests.Ui
             string email = Get.RandomEmail();
             Console.WriteLine("email:{0}", email);
 
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var aPage = journey.ApplyForLoan(loanAmount, days)
-                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
-                .FillAddressDetails()
-                .FillAccountDetails()
-                .FillBankDetails();
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email)
+                .WithAmount(loanAmount).WithDuration(days);
+            var aPage = journey.Teleport<PersonalDebitCardPage>() as PersonalDebitCardPage;
                 
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
@@ -323,13 +322,10 @@ namespace Wonga.QA.Tests.Ui
             string email = Get.RandomEmail();
             Console.WriteLine("email:{0}", email);
 
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var aPage = journey.ApplyForLoan(loanAmount, days)
-                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
-                .FillAddressDetails()
-                .FillAccountDetails()
-                .FillBankDetails()
-                .FillCardDetails();
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email)
+                .WithAmount(loanAmount).WithDuration(days);
+            var aPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
             
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
@@ -354,14 +350,10 @@ namespace Wonga.QA.Tests.Ui
             string email = Get.RandomEmail();
             Console.WriteLine("email:{0}", email);
 
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var aPage = journey.ApplyForLoan(loanAmount, days)
-                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
-                .FillAddressDetails()
-                .FillAccountDetails()
-                .FillBankDetails()
-                .FillCardDetails()
-                .WaitForAcceptedPage();
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email)
+                .WithAmount(loanAmount).WithDuration(days);
+            var aPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
 
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);

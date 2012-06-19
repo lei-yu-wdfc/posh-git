@@ -3,6 +3,7 @@ using System.Threading;
 using MbUnit.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI;
+using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Framework.UI.UiElements.Pages.Wb;
 using Wonga.QA.Tests.Core;
@@ -15,153 +16,64 @@ namespace Wonga.QA.Tests.Ui
     {
         private const String MiddleNameMask = "TESTNoCheck";
 
-        [Test, AUT(AUT.Za)]
+        [Test, AUT(AUT.Za, AUT.Ca), SmokeTest]
         public void ZaAcceptedLoan()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.Home()); 
-            var processingPage = journey.ApplyForLoan(200, 10)
-                                 .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
-                                 .FillAddressDetails()
-                                 .FillAccountDetails()
-                                 .FillBankDetails()
-                                 .CurrentPage as ProcessingPage;
-
-            var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
-            acceptedPage.SignAgreementConfirm();
-            acceptedPage.SignDirectDebitConfirm();
-            var dealDone = acceptedPage.Submit();
-        }
-
-       [Test, AUT(AUT.Ca), SmokeTest]
-        public void CaAcceptedLoan()
-        {
-            var journey = JourneyFactory.GetL0Journey(Client.Home()); 
-            var processingPage = journey.ApplyForLoan(200, 10)
-                                 .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
-                                 .FillAddressDetails()
-                                 .FillAccountDetails()
-                                 .FillBankDetails()
-                                 .CurrentPage as ProcessingPage;
-
-            var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
-            acceptedPage.SignConfirmCaL0(DateTime.Now.ToString("d MMM yyyy"), journey.FirstName, journey.LastName);
-            var dealDone = acceptedPage.Submit();
+            var journey = JourneyFactory.GetL0Journey(Client.Home()).WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
+            var processingPage = journey.Teleport<MySummary>() as MySummaryPage;
         }
 
        [Test, AUT(AUT.Wb)]
        public void WbAcceptedLoan()
        {
-           var journey = JourneyFactory.GetL0JourneyWB(Client.Home());
-           var homePage = journey.ApplyForLoan(5500, 30)
-               .AnswerEligibilityQuestions()
-               .FillPersonalDetails(middleNameMask: MiddleNameMask)
-               .FillAddressDetails(addressPeriod: "More than 4 years")
-               .FillAccountDetails()
-               .FillBankDetails()
-               .FillCardDetails()
-               .EnterBusinessDetails()
-               .DeclineAddAdditionalDirector()
-               .EnterBusinessBankAccountDetails()
-               .EnterBusinessDebitCardDetails()
-               .WaitForApplyTermsPage()
-               .ApplyTerms()
-               .FillAcceptedPage()
-               .GoHomePage();
+           var journey = JourneyFactory.GetL0Journey(Client.Home())
+               .WithMiddleName(MiddleNameMask)
+               .WithAddresPeriod("More than 4 years");
+           var homePage = journey.Teleport<HomePage>() as HomePage;
        }
 
        [Test, AUT(AUT.Wb)]
        public void WbAcceptedLoanAddAdditionalDirector()
        {
-           var journey = JourneyFactory.GetL0JourneyWB(Client.Home());
-           var homePage = journey.ApplyForLoan(5500, 30)
-               .AnswerEligibilityQuestions()
-               .FillPersonalDetails(middleNameMask: MiddleNameMask)
-               .FillAddressDetails(addressPeriod: "2 to 3 years")
-               .FillAccountDetails()
-               .FillBankDetails()
-               .FillCardDetails()
-               .EnterBusinessDetails()
-               .AddAdditionalDirector()
-               .EnterBusinessBankAccountDetails()
-               .EnterBusinessDebitCardDetails()
-               .WaitForApplyTermsPage()
-               .ApplyTerms()
-               .FillAcceptedPage()
-               .GoHomePage();
+           var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithMiddleName(MiddleNameMask)
+               .WithAddresPeriod("2 to 3 years");
+           var homePage = journey.Teleport<HomePage>() as HomePage;
        }
 
        [Test, AUT(AUT.Wb)]
        public void WbAcceptedLoanUpdateLoanDurationOnApplyTermsPage()
        {
-           var journey = JourneyFactory.GetL0JourneyWB(Client.Home());
-           var homePage = journey.ApplyForLoan(5500, 30)
-               .AnswerEligibilityQuestions()
-               .FillPersonalDetails(middleNameMask: MiddleNameMask)
-               .FillAddressDetails(addressPeriod: "3 to 4 years")
-               .FillAccountDetails()
-               .FillBankDetails()
-               .FillCardDetails()
-               .EnterBusinessDetails()
-               .DeclineAddAdditionalDirector()
-               .EnterBusinessBankAccountDetails()
-               .EnterBusinessDebitCardDetails()
-               .WaitForApplyTermsPage()
-               .UpdateLoanDuration()
-               .ApplyTerms()
-               .FillAcceptedPage()
-               .GoHomePage();
+           var journey = JourneyFactory.GetL0Journey(Client.Home())
+               .WithMiddleName(MiddleNameMask)
+               .WithAddresPeriod("3 to 4 years");
+           var homePage = journey.Teleport<HomePage>() as HomePage;
        }     
 
        [Test, AUT(AUT.Wb)]
        public void WbAcceptedLoanAddressLessThan2Years()
        {
-           var journey = JourneyFactory.GetL0JourneyWB(Client.Home());
-           var homePage = journey.ApplyForLoan(5500, 30)
-               .AnswerEligibilityQuestions()
-               .FillPersonalDetails(middleNameMask: MiddleNameMask)
-               .FillAddressDetails( addressPeriod: "Between 4 months and 2 years")
-               .EnterAdditionalAddressDetails()
-               .FillAccountDetails()
-               .FillBankDetails()
-               .FillCardDetails()
-               .EnterBusinessDetails()
-               .DeclineAddAdditionalDirector()
-               .EnterBusinessBankAccountDetails()
-               .EnterBusinessDebitCardDetails()
-               .WaitForApplyTermsPage()
-               .ApplyTerms()
-               .FillAcceptedPage()
-               .GoHomePage();
+           var journey = JourneyFactory.GetL0Journey(Client.Home())
+               .WithMiddleName(MiddleNameMask)
+               .WithAddresPeriod("Between 4 months and 2 years");
+           var homePage = journey.Teleport<HomePage>() as HomePage;
 
        }
 
         [Test, AUT(AUT.Uk)]
         public void UkAcceptedLoan()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-
-            var acceptedPage = journey.ApplyForLoan(200, 10)
-                                     .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
-                                     .FillAddressDetails()
-                                     .FillAccountDetails()
-                                     .FillBankDetails()
-                                     .FillCardDetails()
-                                     .WaitForAcceptedPage().CurrentPage as AcceptedPage;
+            var journey = JourneyFactory.GetL0Journey(Client.Home()).WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
+            var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
 
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-730")]
         public void CheckLoanAgreement()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var journey = JourneyFactory.GetL0Journey(Client.Home()).WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
 
-            var acceptedPage = journey.ApplyForLoan(200, 10)
-                                     .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
-                                     .FillAddressDetails()
-                                     .FillAccountDetails()
-                                     .FillBankDetails()
-                                     .FillCardDetails()
-                                     .WaitForAcceptedPage().CurrentPage as AcceptedPage;
+            var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
 
             Assert.IsTrue(acceptedPage.IsAgreementFormDisplayed());
 
@@ -176,16 +88,11 @@ namespace Wonga.QA.Tests.Ui
             string paymentAmount = 115.91M.ToString("#.00");
             DateTime paymentDate = DateTime.Now.AddDays(days);
 
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
+                .WithAmount(loanAmount).WithDuration(days);
 
-            var dealDonePage = journey.ApplyForLoan(loanAmount, days)
-                                   .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
-                                   .FillAddressDetails()
-                                   .FillAccountDetails()
-                                   .FillBankDetails()
-                                   .FillCardDetails()
-                                   .WaitForAcceptedPage()
-                                   .FillAcceptedPage().CurrentPage as DealDonePage;
+            var dealDonePage = journey.Teleport<DealDonePage>() as DealDonePage;
 
             string actualDealDoneText = dealDonePage.GetDealDonePageText;
 

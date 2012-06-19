@@ -13,35 +13,20 @@ namespace Wonga.QA.Tests.Ui
     [Parallelizable(TestScope.All)]
     public class L0LoanCa : UiTest
     {
-        private const String MiddleNameMask = "TESTNoCheck";
-
-       [Test, AUT(AUT.Ca), SmokeTest]
+        [Test, AUT(AUT.Ca), SmokeTest]
         public void CaAcceptedLoan()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.Home()); 
-            var processingPage = journey.ApplyForLoan(200, 10)
-                                 .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
-                                 .FillAddressDetails()
-                                 .FillAccountDetails()
-                                 .FillBankDetails()
-                                 .CurrentPage as ProcessingPage;
-
-            var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
-            acceptedPage.SignConfirmCaL0(DateTime.Now.ToString("d MMM yyyy"), journey.FirstName, journey.LastName);
-            var dealDone = acceptedPage.Submit();
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)); 
+            var mySummary = journey.Teleport<MySummaryPage>() as MySummaryPage;
         }
 
        [Test, AUT(AUT.Ca)]
        public void CaDeclinedLoan()
        {
-           var journey = JourneyFactory.GetL0Journey(Client.Home());
-           var processingPage = journey.ApplyForLoan(200, 10)
-                                    .FillPersonalDetails()
-                                    .FillAddressDetails()
-                                    .FillAccountDetails()
-                                    .FillBankDetails()
-                                    .CurrentPage as ProcessingPage;
-           var declinedPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
+           var journey = JourneyFactory.GetL0Journey(Client.Home())
+               .WithDeclineDecision();
+           var processingPage = journey.Teleport<DeclinedPage>() as DeclinedPage;
        }
 
     }

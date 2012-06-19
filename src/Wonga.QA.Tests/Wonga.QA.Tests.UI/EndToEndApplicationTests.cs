@@ -58,24 +58,11 @@ namespace Wonga.QA.Tests.Ui
 		[Test, AUT(AUT.Za)]
 		public void EndToEndApplicationZaL0()
 		{
-			var journey = JourneyFactory.GetL0Journey(Client.Home());
+			var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName("TESTNoCheck")
+                .WithFirstName(_forename).WithLastName(_surname).WithDateOfBirth(_dateOfBirth).WithNationalId(_nationalId);
 
-			journey.FirstName = _forename;
-			journey.LastName = _surname;
-			journey.NationalId = _nationalId;
-			journey.DateOfBirth = _dateOfBirth;
-			
-			var processingPage = journey.ApplyForLoan(200, 10)
-                                 .FillPersonalDetails(employerNameMask: "TESTNoCheck")
-								 .FillAddressDetails()
-								 .FillAccountDetails()
-								 .FillBankDetails()
-								 .CurrentPage as ProcessingPage;
-
-			var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
-			acceptedPage.SignAgreementConfirm();
-			acceptedPage.SignDirectDebitConfirm();
-			var dealDone = acceptedPage.Submit();
+			var mySummary = journey.Teleport<MySummaryPage>();
 		}
 	}
 }

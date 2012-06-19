@@ -26,15 +26,9 @@ namespace Wonga.QA.Tests.Ui.Facebook
         [Test, AUT(AUT.Uk), Pending("Waiting on Facebook Environment Setup - AUT.UkFb")]
         public void L0Journey()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var mySummary = journey.ApplyForLoan(200, 10)
-                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
-                .FillAddressDetails()
-                .FillAccountDetails()
-                .FillBankDetails()
-                .FillCardDetails()
-                .WaitForAcceptedPage()
-                .FillAcceptedPage().CurrentPage as DealDonePage;
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
+            var mySummary = journey.Teleport<DealDonePage>() as DealDonePage;
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-969", "UKWEB-250"), MultipleAsserts, Pending("Waiting on Facebook Environment Setup - AUT.UkFb")]
@@ -45,12 +39,9 @@ namespace Wonga.QA.Tests.Ui.Facebook
             Console.WriteLine("email={0}", email);
 
             // L0 journey
-            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home());
-            journeyL0.ApplyForLoan(200, 10)
-                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
-                .FillAddressDetails();
-
-            var accountSetupPage = new AccountDetailsPage(this.Client);
+            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email);
+           var accountSetupPage = journeyL0.Teleport<AccountDetailsPage>() as AccountDetailsPage;
 
             Assert.IsTrue(accountSetupPage.IsSecciLinkVisible());
             Assert.IsTrue(accountSetupPage.IsTermsAndConditionsLinkVisible());

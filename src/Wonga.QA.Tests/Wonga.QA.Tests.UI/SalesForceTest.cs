@@ -87,13 +87,9 @@ namespace Wonga.QA.Tests.Ui
         public void CustomerGetsAcceptedDecisionDontClickAcceptButtonApplicationStatusInSF()
         {
             string email = Get.RandomEmail();
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var mySummary = journey.ApplyForLoan(200, 10)
-                                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
-                                .FillAddressDetails()
-                                .FillAccountDetails()
-                                .FillBankDetails()
-                                .WaitForAcceptedPage().CurrentPage as AcceptedPage;
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email);
+            var mySummary = journey.Teleport<AcceptedPage>() as AcceptedPage;
             Thread.Sleep(10000);
             var salesForceStartPage = Client.SalesForceStart();
             var salesForceHome = salesForceStartPage.LoginAs(Config.SalesforceUi.Username, Config.SalesforceUi.Password);

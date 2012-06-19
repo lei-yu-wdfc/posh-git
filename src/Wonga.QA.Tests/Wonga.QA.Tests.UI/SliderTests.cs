@@ -604,6 +604,8 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-283"), SmokeTest]
         public void CustomerTryToChooseLoanAountAndDurationBiggerThanMaxAndTakeLoan()
         {
+            string firstName = Get.RandomString(3, 10);
+            string lastName = Get.RandomString(3, 10);
             var serviceConfigurations = Drive.Data.Ops.Db.ServiceConfigurations;
             var defaultCreditLimit =
                 serviceConfigurations.Find(serviceConfigurations.Key.Like("Risk.DefaultCreditLimit")).Value;
@@ -611,7 +613,9 @@ namespace Wonga.QA.Tests.Ui
             var defaultTermLimit = GetExpectedMaxTermL0();
             int setTerm = defaultTermLimit + 10;
 
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
+                .WithFirstName(firstName).WithLastName(lastName);
             var page = journey.CurrentPage as HomePage;
             page.Sliders.HowMuch = setAmount.ToString();
             page.Sliders.HowLong = setTerm.ToString();
@@ -619,17 +623,11 @@ namespace Wonga.QA.Tests.Ui
             Thread.Sleep(1000);
             Assert.AreEqual(defaultTermLimit.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
             journey.CurrentPage = page.Sliders.Apply() as PersonalDetailsPage;
-            var processingPage = journey.FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
-                                     .FillAddressDetails()
-                                     .FillAccountDetails()
-                                     .FillBankDetails()
-                                     .CurrentPage as ProcessingPage;
-            var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
+            var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
             switch (Config.AUT)
             {
                 case AUT.Ca:
-                    acceptedPage.SignConfirmCaL0(DateTime.Now.ToString("d MMM yyyy"), journey.FirstName,
-                                                 journey.LastName);
+                    acceptedPage.SignConfirmCaL0(DateTime.Now.ToString("d MMM yyyy"), firstName, lastName);
                     break;
 
                 case AUT.Za:

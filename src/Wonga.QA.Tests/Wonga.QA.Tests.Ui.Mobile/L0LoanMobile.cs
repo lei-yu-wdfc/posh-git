@@ -14,14 +14,9 @@ namespace Wonga.QA.Tests.Ui.Mobile
         [Test, AUT(AUT.Za), Pending("Shouldn't run as part of Backend Tests")]
         public void ZaAcceptedLoanMobile()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.MobileHome());
-            var acceptedPage = journey.ApplyForLoan(200, 10)
-                                 .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
-                                 .FillAddressDetails()
-                                 .FillAccountDetails()
-                                 .FillBankDetails()
-                                 .WaitForAcceptedPage()
-                                 .CurrentPage as AcceptedPage;
+            var journey = JourneyFactory.GetL0Journey(Client.MobileHome())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
+            var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
             acceptedPage.SignAgreementConfirm();
             acceptedPage.SignDirectDebitConfirm();
             var dealDone = acceptedPage.Submit();
@@ -30,14 +25,9 @@ namespace Wonga.QA.Tests.Ui.Mobile
         [Test, AUT(AUT.Za), Pending("Shouldn't run as part of Backend Tests")]
         public void ZaAcceptedLoanMobileDropOff()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.MobileHome());
-            var acceptedPage = journey.ApplyForLoan(200, 10)
-                                 .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
-                                 .FillAddressDetails()
-                                 .FillAccountDetails()
-                                 .FillBankDetails()
-                                 .WaitForAcceptedPage()
-                                 .CurrentPage as AcceptedPage;
+            var journey = JourneyFactory.GetL0Journey(Client.MobileHome())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
+            var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
             //write drop off code
 
         }
@@ -45,14 +35,9 @@ namespace Wonga.QA.Tests.Ui.Mobile
 		[Test, AUT(AUT.Za), Pending("Shouldn't run as part of Backend Tests")]
         public void ZaDeclinedLoanMobile()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.MobileHome());
-            var declinedPage = journey.ApplyForLoan(200, 10)
-                                 .FillPersonalDetails()
-                                 .FillAddressDetails()
-                                 .FillAccountDetails()
-                                 .FillBankDetails()
-                                 .WaitForDeclinedPage()
-                                 .CurrentPage as DeclinedPage;
+            var journey = JourneyFactory.GetL0Journey(Client.MobileHome())
+                .WithDeclineDecision();
+            var declinedPage = journey.Teleport<DeclinedPage>() as DeclinedPage;
 
         }
 

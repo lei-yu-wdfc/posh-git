@@ -13,51 +13,28 @@ namespace Wonga.QA.Tests.Ui
     [Parallelizable(TestScope.All)]
     public class L0LoanZa : UiTest
     {
-        private const String MiddleNameMask = "TESTNoCheck";
-
         [Test, AUT(AUT.Za)]
         public void ZaAcceptedLoan()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.Home()); 
-            var processingPage = journey.ApplyForLoan(200, 10)
-                                 .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
-                                 .FillAddressDetails()
-                                 .FillAccountDetails()
-                                 .FillBankDetails()
-                                 .CurrentPage as ProcessingPage;
-
-            var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
-            acceptedPage.SignAgreementConfirm();
-            acceptedPage.SignDirectDebitConfirm();
-            var dealDone = acceptedPage.Submit();
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
+            var mySummary = journey.Teleport<MySummaryPage>() as MySummaryPage;
         }
 
         [Test, AUT(AUT.Za)]
         public void ZaDeclinedLoan()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var processingPage = journey.ApplyForLoan(200, 10)
-                                     .FillPersonalDetails()
-                                     .FillAddressDetails()
-                                     .FillAccountDetails()
-                                     .FillBankDetails()
-                                     .CurrentPage as ProcessingPage;
-
-            var declinedPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithDeclineDecision();
+            var declinedPage = journey.Teleport<DeclinedPage>() as DeclinedPage;
         }
 
         [Test, AUT(AUT.Za), JIRA("QA-278"), Pending("ZA-2302")]
         public void ZaDeclinedPageContainsHeaderLinks()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var processingPage = journey.ApplyForLoan(200, 10)
-                                     .FillPersonalDetails()
-                                     .FillAddressDetails()
-                                     .FillAccountDetails()
-                                     .FillBankDetails()
-                                     .CurrentPage as ProcessingPage;
-
-            var declinedPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithDeclineDecision();
+            var declinedPage = journey.Teleport<DeclinedPage>() as DeclinedPage;
             declinedPage.LookForHeaderLinks();
         }
        

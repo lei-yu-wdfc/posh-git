@@ -37,21 +37,20 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Za), JIRA("QA-192")]
         public void CorrectDataShouldBeDisplayedOnApplicationSuccessPage()
         {
+            string firstName = Get.RandomString(3, 10);
+            string lastName = Get.RandomString(3, 10);
             int randomAmount = _amountMin + (new Random()).Next(_amountMax - _amountMin);
             int randomDuration = _termMin + (new Random()).Next(_termMax - _termMin);
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var processingPage = journey.ApplyForLoan(randomAmount, randomDuration)
-                                 .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
-                                 .FillAddressDetails()
-                                 .FillAccountDetails()
-                                 .FillBankDetails()
-                                 .CurrentPage as ProcessingPage;
-            var acceptedPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
+                .WithAmount(randomAmount).WithDuration(randomDuration)
+                .WithFirstName(firstName).WithLastName(lastName);
+            var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
             switch (Config.AUT)
             {
                 #region case Za
                 case AUT.Za:
-                    string fullName = journey.FirstName + " " + journey.LastName;
+                    string fullName = firstName + " " + lastName;
                     Assert.AreEqual(fullName, acceptedPage.GetNameInLoanAgreement);
                     Assert.AreEqual(fullName, acceptedPage.GetNameInDirectDebit);
 
@@ -70,7 +69,7 @@ namespace Wonga.QA.Tests.Ui
                 #endregion
                 #region case Ca GetFixedTermLoanCalculationQuery don't work for Ca Wonga.QA.Framework.Api.Exceptions.ValidatorException: Could not process query
                 case AUT.Ca:
-                    acceptedPage.SignConfirmCaL0(DateTime.Now.ToString("d MMM yyyy"), journey.FirstName, journey.LastName);
+                    acceptedPage.SignConfirmCaL0(DateTime.Now.ToString("d MMM yyyy"), firstName, lastName);
                     var dealDoneCa = acceptedPage.Submit() as DealDonePage;
                     // Check data
                     DateTime _dateCa = DateTime.Parse(dealDoneCa.GetRepaymentDate());

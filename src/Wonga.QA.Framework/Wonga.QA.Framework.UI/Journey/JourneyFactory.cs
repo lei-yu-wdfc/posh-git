@@ -10,7 +10,7 @@ namespace Wonga.QA.Framework.UI
 {
     public static class JourneyFactory
     {
-        public static IL0ConsumerJourney GetL0Journey(BasePage homePage)
+        public static BaseL0Journey GetL0Journey(BasePage homePage)
         {
             switch (Config.AUT)
             {
@@ -24,6 +24,8 @@ namespace Wonga.QA.Framework.UI
                     return new UkL0Journey(homePage);
                 case AUT.Pl:
                     return new PlL0Journey(homePage);
+                case AUT.Wb:
+                    return new WbL0Journey(homePage);
                 default:
                     throw new NotImplementedException();
             }
@@ -45,10 +47,10 @@ namespace Wonga.QA.Framework.UI
             }
         }
 
-        public static WbL0Journey GetL0JourneyWB(BasePage homePage)
-        {
-            return new WbL0Journey(homePage);
-        }
+     //   public static WbL0Journey GetL0JourneyWB(BasePage homePage)
+     //   {
+     //       return new WbL0Journey(homePage);
+     //   }
 
         public static WbLnJourney GetLNJourneyWB(BasePage homePage)
         {

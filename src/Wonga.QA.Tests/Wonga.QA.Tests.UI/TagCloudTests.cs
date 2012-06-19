@@ -54,11 +54,10 @@ namespace Wonga.QA.Tests.Ui
             string email = Get.RandomEmail();
             Console.WriteLine("email:{0}", email);
 
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var aPage = journey.ApplyForLoan(loanAmount, days)
-                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
-                .FillAddressDetails()
-                .FillAccountDetails();
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email)
+                .WithAmount(loanAmount).WithDuration(days);
+            var aPage = journey.Teleport<PersonalBankAccountPage>() as PersonalBankAccountPage;
 
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
@@ -295,12 +294,10 @@ namespace Wonga.QA.Tests.Ui
             string email = Get.RandomEmail();
             Console.WriteLine("email:{0}", email);
 
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var aPage = journey.ApplyForLoan(loanAmount, days)
-                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
-                .FillAddressDetails()
-                .FillAccountDetails()
-                .FillBankDetails();
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email)
+                .WithAmount(loanAmount).WithDuration(days);
+            var aPage = journey.Teleport<PersonalDebitCardPage>() as PersonalDebitCardPage;
 
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
@@ -318,13 +315,10 @@ namespace Wonga.QA.Tests.Ui
             string email = Get.RandomEmail();
             Console.WriteLine("email:{0}", email);
 
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var aPage = journey.ApplyForLoan(loanAmount, days)
-                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
-                .FillAddressDetails()
-                .FillAccountDetails()
-                .FillBankDetails()
-                .FillCardDetails();
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email)
+                .WithAmount(loanAmount).WithDuration(days);
+            var aPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
 
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
@@ -348,12 +342,10 @@ namespace Wonga.QA.Tests.Ui
             string email = Get.RandomEmail();
             Console.WriteLine("email:{0}", email);
 
-            var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var aPage = journey.ApplyForLoan(loanAmount, days)
-                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
-                .FillAddressDetails()
-                .FillAccountDetails()
-                .FillBankDetails();
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email)
+                .WithAmount(loanAmount).WithDuration(days);
+            var aPage = journey.Teleport<PersonalDebitCardPage>() as PersonalDebitCardPage;
 
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
