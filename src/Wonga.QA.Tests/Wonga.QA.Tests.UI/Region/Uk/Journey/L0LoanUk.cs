@@ -15,7 +15,7 @@ namespace Wonga.QA.Tests.Ui
     public class L0LoanUk : UiTest
     {
         [Test, AUT(AUT.Uk)]
-        public void UkAcceptedLoan()
+        public void AcceptedLoan()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home())
                 .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
