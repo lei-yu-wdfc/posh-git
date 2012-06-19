@@ -97,7 +97,7 @@ namespace Wonga.QA.Tests.Payments
 				.WithPromiseDate(promiseDate)
 				.Build();
 
-			application.PutApplicationIntoArrears();
+			application.PutIntoArrears();
 
 			AttemptNaedoCollection(application, 0);
 			FailNaedoCollection(application, 0);
@@ -128,7 +128,7 @@ namespace Wonga.QA.Tests.Payments
 				.WithPromiseDate(promiseDate)
 				.Build();
 
-			application.PutApplicationIntoArrears();
+			application.PutIntoArrears();
 
 			AttemptNaedoCollection(application, 0);
 			FailNaedoCollection(application, 0);

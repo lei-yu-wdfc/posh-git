@@ -25,7 +25,7 @@ namespace Wonga.QA.Tests.Payments
 			var customer = CustomerBuilder.New().Build();
 			_application =
 				ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).WithLoanAmount(100).
-					Build().PutApplicationIntoArrears();
+					Build().PutIntoArrears();
 
 			//Force dca to timeout immmediately
 			var externalDebtCollectionSagaEntities = Do.Until(() => _externalDebtCollectionSagas.FindAllByApplicationId(_application.Id).Single());
