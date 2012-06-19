@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Api
 {
-    /// <summary> Wonga.Comms.Queries.Uk.GetAddressDescriptorsByPostCode </summary>
+    /// <summary> Wonga.Address.Queries.Uk.GetAddressDescriptorsByPostCode </summary>
     [XmlRoot("GetAddressDescriptorsByPostCode")]
     public partial class GetAddressDescriptorsByPostCodeUkQuery : ApiRequest<GetAddressDescriptorsByPostCodeUkQuery>
     {

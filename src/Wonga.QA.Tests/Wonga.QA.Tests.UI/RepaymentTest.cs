@@ -23,20 +23,57 @@ namespace Wonga.QA.Tests.Ui
     [Parallelizable(TestScope.All)]
     public class RepaymentTest : UiTest
     {
-        [Test, AUT(AUT.Za), Pending("Code not yet on rc.za.wonga.com as of 24/05/12")]
-        public void ZaEasyPayRepayment()
+        [Test, AUT(AUT.Za), Pending("Incomplete. Sad times.")]
+        public void ZaManualNaedoRepayment()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home());
-            var summaryPage = journey.ApplyForLoan(200, 10)
-                              .FillPersonalDetails(Get.EnumToString(RiskMask.TESTEmployedMask))
-                              .FillAddressDetails()
-                              .FillAccountDetails()
-                              .FillBankDetails()
-                              .WaitForAcceptedPage()
-                              .FillAcceptedPage()
-                              .GoToMySummaryPage()
-                              .CurrentPage as MySummaryPage;
-            var repayPage = summaryPage.RepayClick();
+
+            // Take a loan for 20 days, accept it and go to the Summary page:
+            var summaryPage = journey.ApplyForLoan(200, 20)
+                                  .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
+                                  .FillAddressDetails()
+                                  .FillBankDetails()
+                                  .WaitForAcceptedPage()
+                                  .FillAcceptedPage()
+                                  .GoToMySummaryPage()
+                                  .CurrentPage as MySummaryPage;
+            
+            // Click the "repay" link in My Account:
+            var repaymentOptionsPage = summaryPage.RepayClick();
+
+            // Note the balance today:
+            //var balanceToday = repaymentOptionsPage.BalanceToday();
+
+            //var manualRepayPage = repayPage.ManualRepaymentButtonClick();
+        }
+
+        [Test, AUT(AUT.Za), Pending("Test is incomplete")]
+        public void ZaEasyPayRepayment()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            ApplicationBuilder.New(customer).Build();
+            var mySummaryPage = loginPage.LoginAs(email);
+            var repayPage = mySummaryPage.RepayClick();
+           
+            // Open the "How to use easypay" modal popup and check the title is correct - ZA-2587:
+            repayPage.HowToUseEasyPayLink.Click();
+
+            // Wait until the popup opens:
+            var popUp = Client.Driver.FindElement(By.CssSelector("div#fancybox-content"));
+            Do.Until(() => popUp.Displayed);
+
+            var text = popUp.FindElement(By.Id("repay-your-wonga.com-loan-with-easypay")).Text;
+
+            Assert.AreEqual(text, "Repay your wonga.com loan with EasyPay");
+
+            //var text = popUp.Text;
+            //Assert.IsTrue(text.Contains("Repay your wonga.com loan with EasyPay"));
+
+            // Close the popup:
+            Client.Driver.FindElement(By.CssSelector("#fancybox-close")).Click();
+
             var expectedeasypayno = repayPage.EasypayNumber;
             var popUpPrintPage = repayPage.EasyPayPrintButtonClick();
             var actualString = Do.Until(() => popUpPrintPage.FindElement(By.CssSelector(UiMap.Get.EasypaymentNumberPrintPage.YourEasyPayNumber)).Text);

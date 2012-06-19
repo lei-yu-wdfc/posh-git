@@ -11,7 +11,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Comms
 {
-    [TestFixture, Parallelizable(TestScope.Descendants)] //Can be only on level 3 because it changes configuration
+	[TestFixture, Parallelizable(TestScope.Descendants)] //Can be only on level 3 because it changes configuration
 	public class CollectionsChaseSmsTests
 	{
 		#region constants
@@ -47,15 +47,15 @@ namespace Wonga.QA.Tests.Comms
 		private static readonly dynamic SmsMessages = Drive.Data.Sms.Db.SmsMessages;
 		private static readonly dynamic InArrearsNoticeSagaEntities = Drive.Data.OpsSagas.Db.InArrearsNoticeSagaEntity;
 
-    	private Application _application;
-    	private string _formattedPhoneNumber;
+		private Application _application;
+		private string _formattedPhoneNumber;
 
 		[FixtureSetUp]
 		public void FixtureSetup()
 		{
 			_bankGatewayTestModeOriginal = ConfigurationFunctions.GetBankGatewayTestMode();
 			ConfigurationFunctions.SetBankGatewayTestMode(false);
-			
+
 			var phoneNumberChunk = GetPhoneNumberChunk();
 			_formattedPhoneNumber = GetFormattedPhoneNumber(phoneNumberChunk);
 
@@ -127,7 +127,7 @@ namespace Wonga.QA.Tests.Comms
 		{
 			DateTime atTheBeginningOfThisTest = DateTime.Now;
 
-			_application.PutApplicationIntoArrears(daysInArrears);
+			_application.PutIntoArrears(daysInArrears);
 			TimeoutNotificationSagaForDays(_application, daysInArrears);
 
 			AssertSmsIsSent(_formattedPhoneNumber, smsText, atTheBeginningOfThisTest);
@@ -182,19 +182,19 @@ namespace Wonga.QA.Tests.Comms
 				.WithMobileNumber(string.Format("0{0}", phoneNumberChunk))
 				.Build();
 			Do.Until(customer.GetBankAccount);
-			return ApplicationBuilder.New(customer).Build().PutApplicationIntoArrears(20);
+			return ApplicationBuilder.New(customer).Build().PutIntoArrears(20);
 		}
 
 		private static void TimeoutNotificationSagaForDays(Application application, uint days)
 		{
 			var saga =
 				Do.Until(() =>
-				         InArrearsNoticeSagaEntities.FindByAccountId(application.AccountId));
+						 InArrearsNoticeSagaEntities.FindByAccountId(application.AccountId));
 			Assert.IsNotNull(saga);
 
 			for (int i = 0; i < days - saga.DaysInArrears; i++)
 			{
-				Drive.Msmq.Payments.Send(new TimeoutMessage {Expires = DateTime.UtcNow, SagaId = saga.Id});
+				Drive.Msmq.Payments.Send(new TimeoutMessage { Expires = DateTime.UtcNow, SagaId = saga.Id });
 			}
 			Assert.IsNotNull(Do.Until(
 				() =>
@@ -205,25 +205,25 @@ namespace Wonga.QA.Tests.Comms
 		{
 			Assert.IsNotNull(
 				Do.Until(() =>
-				         SmsMessages.Find(
-				         	SmsMessages.CreatedOn >= createdAfter &&
-				         	SmsMessages.MobilePhoneNumber == formattedPhoneNumber &&
-				         	SmsMessages.MessageText == text)));
+						 SmsMessages.Find(
+							SmsMessages.CreatedOn >= createdAfter &&
+							SmsMessages.MobilePhoneNumber == formattedPhoneNumber &&
+							SmsMessages.MessageText == text)));
 		}
 
 		private static void AssertSmsIsNotSent(string formattedPhoneNumber, string text, DateTime createdAfter)
 		{
 			Assert.IsTrue(
 				Do.Watch(() =>
-				         (bool) (
-				                	SmsMessages.Find(
-				                		SmsMessages.CreatedOn >= createdAfter &&
-				                		SmsMessages.MobilePhoneNumber == formattedPhoneNumber &&
-				                		SmsMessages.MessageText == text &&
-				                		(SmsMessages.Status != 3 ||
-				                		 SmsMessages.ErrorMessage != null || // TODO: error message is set to null by mistake in sms
-				                		 SmsMessages.ServiceMsgId != null))
-				                	== null)));
+						 (bool)(
+									SmsMessages.Find(
+										SmsMessages.CreatedOn >= createdAfter &&
+										SmsMessages.MobilePhoneNumber == formattedPhoneNumber &&
+										SmsMessages.MessageText == text &&
+										(SmsMessages.Status != 3 ||
+										 SmsMessages.ErrorMessage != null || // TODO: error message is set to null by mistake in sms
+										 SmsMessages.ServiceMsgId != null))
+									== null)));
 		}
 
 		#endregion

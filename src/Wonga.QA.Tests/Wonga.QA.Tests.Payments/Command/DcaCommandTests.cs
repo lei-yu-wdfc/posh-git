@@ -20,9 +20,6 @@ namespace Wonga.QA.Tests.Payments.Command
 	[TestFixture, Parallelizable(TestScope.Descendants)]
 	public class DcaCommandTests
 	{
-		private const string BankGatewayIsTestModeKey = "BankGateway.IsTestMode";
-		private bool _bankGatewayIsTestMode;
-        
 	    private dynamic _debtCollections = Drive.Data.Payments.Db.DebtCollection;
 	    private dynamic _fixedTermLoanSagas = Drive.Data.OpsSagas.Db.FixedTermLoanSagaEntity;
 	    private dynamic _externalDebtCollectionSagas = Drive.Data.OpsSagas.Db.ExternalDebtCollectionSagaEntity;
@@ -31,14 +28,8 @@ namespace Wonga.QA.Tests.Payments.Command
 		[FixtureSetUp]
 		public void FixtureSetUp()
 		{
-			_bankGatewayIsTestMode = Drive.Data.Ops.GetServiceConfiguration<bool>(BankGatewayIsTestModeKey);
-			Drive.Data.Ops.SetServiceConfiguration(BankGatewayIsTestModeKey, "false");
-		}
-
-		[FixtureTearDown]
-		public void FixtureTearDown()
-		{
-			Drive.Data.Ops.SetServiceConfiguration(BankGatewayIsTestModeKey, _bankGatewayIsTestMode);
+			if (Drive.Data.Ops.GetServiceConfiguration<bool>("BankGateway.IsTestMode"))
+				Assert.Inconclusive("Bankgateway is in test mode");
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-2147"), Pending("ZA-2565")]
@@ -101,8 +92,8 @@ namespace Wonga.QA.Tests.Payments.Command
 
 			//Wait for dca creation
 			Do.Until(() => _debtCollections.FindAll(_debtCollections.Applications.ExternalId == app.Id)
-			               	.OrderByDescending(_debtCollections.CreatedOn)
-			               	.FirstOrDefault());
+							.OrderByDescending(_debtCollections.CreatedOn)
+							.FirstOrDefault());
 
 			var revokeFromDcaCommand = new Framework.Cs.RevokeApplicationFromDcaCommand
 			{
@@ -114,9 +105,9 @@ namespace Wonga.QA.Tests.Payments.Command
 
 			//Thread.Sleep(delay);
 
-			Do.Until(() => (bool) (_debtCollections.FindAll(_debtCollections.Applications.ExternalId == app.Id)
-			                      	.OrderByDescending(_debtCollections.CreatedOn)
-			                      	.FirstOrDefault()).MovedToAgency == false);
+			Do.Until(() => (bool)(_debtCollections.FindAll(_debtCollections.Applications.ExternalId == app.Id)
+									.OrderByDescending(_debtCollections.CreatedOn)
+									.FirstOrDefault()).MovedToAgency == false);
 
 		}
 

@@ -15,8 +15,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public FAQPage(UiClient client)
             : base(client)
         {
-            //Faq = new FAQElement(this);
-
+            Faq = new FAQElement(this);
         }
 
         public bool IsLinkCorrect(String linkSelector, String href)

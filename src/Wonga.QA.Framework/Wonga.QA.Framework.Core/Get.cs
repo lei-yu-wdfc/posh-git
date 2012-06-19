@@ -102,7 +102,19 @@ namespace Wonga.QA.Framework.Core
 
         public static String GetPhone()
         {
-            return "021" + _random.Next(1000000, 9999999).ToString(CultureInfo.InvariantCulture);
+
+        	string prefix = null;
+        	switch (Config.AUT)
+        	{
+        		case AUT.Uk:
+        		case AUT.Wb:
+        			prefix = "0287";
+        			break;
+        		default:
+        			prefix = "021";
+        			break;
+        	}
+			return prefix + _random.Next(1000000, 9999999).ToString(CultureInfo.InvariantCulture);
         }
 
         public static string GetMobilePhone()
@@ -121,7 +133,10 @@ namespace Wonga.QA.Framework.Core
                     {
                         return "07700900" + RandomLong(100, 999);
                     }
-
+                case AUT.Pl:
+                    {
+                        return "2799990000" + RandomLong(1, 9);
+                    }
                 default:
                     {
                         return "07700900" + RandomLong(100, 999);
@@ -190,6 +205,11 @@ namespace Wonga.QA.Framework.Core
         {
             return new Date(DateTime.UtcNow.AddDays(10), DateFormat.Date);
         }
+
+		public static DateTime GetApplicationDate()
+		{
+			return DateTime.Now;
+		}
 
         public static string GetBankAccountNumber()
         {

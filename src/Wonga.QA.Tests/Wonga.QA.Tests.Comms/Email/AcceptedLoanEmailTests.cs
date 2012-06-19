@@ -9,22 +9,16 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Comms.Email
 {
-	[TestFixture, Parallelizable(TestScope.Descendants)]
+	[TestFixture, Parallelizable(TestScope.All)]
 	public class AcceptedLoanEmailTests
 	{
-		private static readonly bool BankGatewayIsTestMode = Drive.Data.Ops.GetServiceConfiguration<bool>("BankGateway.IsTestMode");
 		private Application _application;
 
 		[FixtureSetUp]
 		public void FixtureSetUp()
 		{
-			Drive.Data.Ops.SetServiceConfiguration("BankGateway.IsTestMode", false);
-		}
-
-		[FixtureTearDown]
-		public void FixtureTearDown()
-		{
-			Drive.Data.Ops.SetServiceConfiguration("BankGateway.IsTestMode", BankGatewayIsTestMode);
+			if(Drive.Data.Ops.GetServiceConfiguration<bool>("BankGateway.IsTestMode"))
+				Assert.Inconclusive("Bankgateway is in test mode");
 		}
 
 		[Test, AUT(AUT.Za), JIRA("QA-204"), Pending]

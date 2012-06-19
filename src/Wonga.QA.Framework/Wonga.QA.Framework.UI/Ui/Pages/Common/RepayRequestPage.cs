@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Linq;
 using MbUnit.Framework;
 using OpenQA.Selenium;
@@ -38,7 +39,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _loanPeriodClarification = Content.FindElement(By.CssSelector(UiMap.Get.RepayRequestPage.RepayRequestPageLoanPeriodClarification));   
         }
 
-        public bool IsTopupRequestPageInformativeBoxDisplayed()
+        public bool IsRepayRequestPageInformativeBoxDisplayed()
         {
             _informativeBox = Client.Driver.FindElement(By.CssSelector(UiMap.Get.RepayRequestPage.RepayRequestPageInformativeBox));
             return _informativeBox.Displayed;
@@ -70,12 +71,36 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             var remainderAmount = _response.Values["TotalRepayableOnDueDate"].Single();
             
             //check the output matches the returned values for repayRequestAmount
-            Assert.AreEqual(Decimal.Parse(Sliders.GetRemainderTotal.Remove(0, 1)), Decimal.Parse(remainderAmount));
+            Assert.AreEqual(remainderAmount, Sliders.GetRemainderTotal.Remove(0, 1));
+        }
+
+        public void IsRepayRequestPageSliderReturningCorrectOverDueValuesOnChange(string applicationId, string repayRequestAmount)
+        {
+            //const string repayRequestAmount = "50";
+            DateTime todayDate = DateTime.Now;
+            Sliders = new SmallRepaySlidersElement(this);
+            Sliders.HowMuch = repayRequestAmount;
+
+            //Expected values
+            var api = new ApiDriver();
+            //_response = api.Queries.Post(new GetRepayLoanCalculationQuery { ApplicationId = applicationId, RepayAmount = repayRequestAmount, RepayDate = todayDate });
+            _response = api.Queries.Post(new GetRepayLoanQuoteUkQuery { ApplicationId = applicationId });
+
+            var totalOwed = _response.Values["SliderMaxAmount"].Single();
+            var totalDec = Decimal.Parse(totalOwed);
+            Decimal repayRequestAmountDec = Decimal.Parse(repayRequestAmount);
+            //check the output matches the returned values for repayRequestAmount
+            var sliderRemainder = Sliders.GetRemainderTotal.Remove(0, 1);
+            var remainderAmount = Decimal.Parse(_response.Values["SliderMaxAmount"].Single()) - Decimal.Parse(repayRequestAmount);
+
+            Assert.AreEqual(remainderAmount, Decimal.Parse(Sliders.GetRemainderTotal.Remove(0, 1)));
         }
 
         public void CancelButtonClick()
         {
             _cancelButton.Click();
+            var mySummaryPage = new MySummaryPage(this.Client);
+
         }
 
         public String OweToday
@@ -86,7 +111,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public String WantToRepayBox
         {
             get { return _repayAmount.GetValue();  }
-            set { _repayAmount.SendValue(value); }
+            set { _repayAmount.SendValue(value); Thread.Sleep(2000); }
         }
 
         public String RemainderAmount
@@ -109,5 +134,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             get { return _loanPeriodClarification.Displayed; }
         }
 
+        public string RepayCard
+        {
+            get { return _card.Text; }
+        }
     }
 }

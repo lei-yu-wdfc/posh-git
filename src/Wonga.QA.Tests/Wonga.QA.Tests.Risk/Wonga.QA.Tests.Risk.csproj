@@ -43,6 +43,7 @@
     <Compile Include="Checkpoints\CheckpointSuspiciousActivity.cs" />
     <Compile Include="Checkpoints\CheckpointTooManyLoansAtAddressTest.cs" />
     <Compile Include="Checkpoints\CheckpointRepaymentPredictionPositiveTestsCa.cs" />
+    <Compile Include="CloseApplicationTests.cs" />
     <Compile Include="Checkpoints\CheckpointReputationPredictionPositiveTests.cs" />
     <Compile Include="EidTests.cs" />
     <Compile Include="Checkpoints\CheckpointApplicationElementNotOnBlacklistTests.cs" />

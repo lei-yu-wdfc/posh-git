@@ -59,6 +59,19 @@ namespace Wonga.QA.Framework
                             }
                             r.LoanAmount = LoanAmount;
                         }),
+				RiskCreateBusinessFixedInstallmentLoanApplicationWbUkCommand.New(r=>
+				                                                                    {
+				                                                                        r.OrganisationId = Company.Id;
+				            r.ApplicationId = Id;
+				            r.BusinessPaymentCardId = Company.GetPaymentCard();
+				            r.BusinessBankAccountId = Company.GetBankAccount();
+				            r.MainApplicantBankAccountId = Customer.GetBankAccount();
+				            r.MainApplicantPaymentCardId = Customer.GetPaymentCard();
+				            r.LoanAmount = LoanAmount;
+				            r.AccountId = Customer.Id;
+				            r.Currency = CurrencyCodeEnum.GBP;
+				            //r.ApplicationDate = Get.GetApplicationDate();  //This line is breaking the build
+				                                                                    })
             };
 
 
@@ -97,7 +110,7 @@ namespace Wonga.QA.Framework
 
             /* STEP 4
              * I verify the main applicant */
-            Drive.Api.Commands.Post(VerifyMainBusinessApplicantWbCommand.New(r =>
+            Drive.Api.Commands.Post(VerifyMainBusinessApplicantWbUkCommand.New(r =>
                                                                                   {
                                                                                       r.AccountId = Customer.Id;
                                                                                       r.ApplicationId = Id;

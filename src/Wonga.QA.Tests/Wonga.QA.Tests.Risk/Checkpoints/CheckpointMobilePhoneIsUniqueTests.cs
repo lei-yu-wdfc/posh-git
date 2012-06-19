@@ -13,17 +13,50 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		private Customer _customer;
 		private static readonly string _phoneNumber = Get.GetMobilePhone();
 
-		[Test, Pending("ZA-2565")]
-		[JIRA("UK-1563")]
+		public string GetMobilePhone()
+		{
+            var phone = Get.GetMobilePhone();
+			Drive.Data.Risk.Db.RiskAccountMobilePhones.Delete(MobilePhone: phone); //Dodgy
+            return phone; 
+        }
+
+        public void CleanPhone(string phone)
+        {
+            Drive.Data.Risk.Db.RiskAccountMobilePhones.Delete(MobilePhone: phone);
+        }
+
+		[Test]
+		[JIRA("UK-1563"), AUT(AUT.Uk), Description("Scenario 1: Accepted")]
 		public void L0_MobilePhoneIsUnique_LoanIsAccepted()
 		{
 			_customer = CreateCustomerWithVerifiedMobileNumber(_phoneNumber);
 			ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 		}
 
-		[Test, DependsOn("L0_MobilePhoneIsUnique_LoanIsAccepted"), Pending("ZA-2565")]
-		[JIRA("UK-1563")]
-		public void L0_MobilePhoneIsNotUnique_LoanIsDeclined()
+        [Test]
+		[JIRA("UK-1563"), AUT(AUT.Uk), Description("Scenario 1, Scenario 2: Declined")]
+        public void L0_MobilePhoneIsNotUnique_LoanIsDeclined()
+        {
+            var phone = GetMobilePhone();
+            try
+            {
+                //Create previous customer record
+                Customer customer1 = CreateCustomerWithVerifiedMobileNumber(phone);
+                ApplicationBuilder.New(customer1).Build();
+
+                //Create and check new customer
+                Customer customer = CreateCustomerWithVerifiedMobileNumber(phone);
+                ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+            }
+            finally
+            {
+                CleanPhone(phone);
+            }
+        }
+
+		[Test]
+        [JIRA("UK-1563"), AUT(AUT.Uk), Description("Scenario 2: Accepted")]
+		public void L0_MobilePhoneIsUniqueSecondPhoneIsNotValidated_LoanIsAccepted()
 		{
 			//Create and check new customer
 			Customer customer = CreateCustomerWithVerifiedMobileNumber(_phoneNumber);

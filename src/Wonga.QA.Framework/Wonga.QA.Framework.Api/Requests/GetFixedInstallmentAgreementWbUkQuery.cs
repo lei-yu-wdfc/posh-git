@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 
 namespace Wonga.QA.Framework.Api
 {
-    /// <summary> Wonga.Comms.Queries.Wb.Uk.GetFixedInstallmentAgreement </summary>
+    /// <summary> Wonga.FileStorage.Queries.Wb.Uk.GetFixedInstallmentAgreement </summary>
     [XmlRoot("GetFixedInstallmentAgreement")]
     public partial class GetFixedInstallmentAgreementWbUkQuery : ApiRequest<GetFixedInstallmentAgreementWbUkQuery>
     {

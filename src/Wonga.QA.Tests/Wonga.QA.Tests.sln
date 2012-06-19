@@ -72,6 +72,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Meta", "Wonga.QA.Tests.Meta\Wonga.QA.Tests.Meta.csproj", "{185518CE-AEEE-416A-AA17-C8F04F3E4BCD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Ui.Admin", "Wonga.QA.Tests.Ui.Admin\Wonga.QA.Tests.Ui.Admin.csproj", "{B9FDE3ED-0FEE-400A-87EB-3A3C7AC8F01D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B29A97EF-5107-476B-A27A-688028CAAF54} = {B29A97EF-5107-476B-A27A-688028CAAF54}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Ivr", "Wonga.QA.Tests.Ivr\Wonga.QA.Tests.Ivr.csproj", "{AFF890BC-240F-4D73-B9B2-2D65801F149A}"
 EndProject
@@ -82,6 +85,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Prepaid", "Wonga.QA.Tests.Prepaid\Wonga.QA.Tests.Prepaid.csproj", "{8F318EC1-E001-4CF2-A89A-A2B0C94E1D98}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.PayU", "Wonga.QA.Tests.PayU\Wonga.QA.Tests.PayU.csproj", "{C92F5379-5FBC-4E18-963B-1E20FCB5D6E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Migration", "Wonga.QA.Tests.Mig.UI\Wonga.QA.Tests.Migration.csproj", "{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -482,6 +487,16 @@ Global
 		{C92F5379-5FBC-4E18-963B-1E20FCB5D6E5}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{C92F5379-5FBC-4E18-963B-1E20FCB5D6E5}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C92F5379-5FBC-4E18-963B-1E20FCB5D6E5}.Release|x86.ActiveCfg = Release|Any CPU
+		{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

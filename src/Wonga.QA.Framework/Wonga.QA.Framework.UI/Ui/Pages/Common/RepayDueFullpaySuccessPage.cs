@@ -22,5 +22,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _header = Content.FindElement(By.CssSelector(UiMap.Get.RepayDueFullpaySuccessPage.Header));
             _bodyContent = Content.FindElement(By.CssSelector(UiMap.Get.RepayDueFullpaySuccessPage.ContentArea));
         }
+        public String ContentArea()
+        {
+            return _bodyContent.Text;
+        }
     }
 }

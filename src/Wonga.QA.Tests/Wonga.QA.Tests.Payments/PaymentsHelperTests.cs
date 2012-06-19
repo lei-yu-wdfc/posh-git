@@ -63,7 +63,7 @@ namespace Wonga.QA.Tests.Payments
             var customerBuilder = CustomerBuilder.New().WithProvinceInAddress(ProvinceEnum.ON);
             var customer = customerBuilder.Build();
             var application = ApplicationBuilder.New(customer).WithLoanTerm(10).Build();
-            application.PutApplicationIntoArrears(3);
+            application.PutIntoArrears(3);
         }
     }
 }

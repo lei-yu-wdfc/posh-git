@@ -29,7 +29,7 @@ namespace Wonga.QA.Tests.Ui
             journey.ApplyForLoan(5500, 30)
                 .AnswerEligibilityQuestions()
                 .FillPersonalDetails()
-                .FillAddressDetails("More than 4 years")
+                .FillAddressDetails(addressPeriod: "More than 4 years")
                 .FillAccountDetails()
                 .FillBankDetails()
                 .FillCardDetails()
@@ -82,13 +82,13 @@ namespace Wonga.QA.Tests.Ui
             declinedPage.LookForHeaderLinks();
         }
 
- 
-        [Test, AUT(AUT.Uk), JIRA("UK-438", "UK-1823")]
+
+        [Test, AUT(AUT.Uk), JIRA("UK-438", "UK-1823", "UKWEB-253")]
         public void L0DeclinedForEmployedPartTimeTest()
         {
             var journeyL0 = JourneyFactory.GetL0Journey(Client.Home());
             var processingPage = journeyL0.ApplyForLoan(400, 30)
-                .FillPersonalDetails(Get.EnumToString(EmploymentStatusEnum.EmployedPartTime))
+                .FillPersonalDetails(employerNameMask: Get.EnumToString(EmploymentStatusEnum.EmployedPartTime))
                 .FillAddressDetails()
                 .FillAccountDetails()
                 .FillBankDetails()
@@ -108,7 +108,7 @@ namespace Wonga.QA.Tests.Ui
 
             var journeyL0 = JourneyFactory.GetL0Journey(Client.Home());
             var processingPage = journeyL0.ApplyForLoan(400, 30)
-                .FillPersonalDetailsWithEmail(Get.EnumToString(employmentStatus), email)
+                .FillPersonalDetails(employerNameMask: Get.EnumToString(employmentStatus), email: email)
                 .FillAddressDetails()
                 .FillAccountDetails()
                 .FillBankDetails()

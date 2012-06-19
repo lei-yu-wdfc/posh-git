@@ -28,5 +28,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             bool tokenResult = Content.Driver().PageSource.Contains("[repay-new-repayable]");
             return amountResult | tokenResult;
         }
+        public String ContentArea()
+        {
+            return _bodyContent.Text;
+        }
     }
 }

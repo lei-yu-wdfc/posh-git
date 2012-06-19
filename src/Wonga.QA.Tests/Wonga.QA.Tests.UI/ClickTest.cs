@@ -13,7 +13,7 @@ namespace Wonga.QA.Tests.Ui
     class ClickTest : UiTest
     {
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("CA-2326"), Pending("Disabled")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("CA-2326"), SmokeTest]
         public void VerifyIsClickCodeLoaded()
         {
             var homePage = Client.Home();
@@ -22,7 +22,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-		[Test, AUT(AUT.Ca, AUT.Za), JIRA("CA-2326"), Pending("Disabled")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("CA-2326"), Ignore("Feature turned off for this release")]
         public void VerifyIsClickParamsSet()
         {
             var homePage = Client.Home();

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using MbUnit.Framework;
 using NHamcrest.Core;
 using OpenQA.Selenium;
@@ -38,7 +36,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public IApplyPage ContinueToMyAccount()
         {
-            _continueButton.Click();
+            Thread.Sleep(2000);
+            if (Config.AUT != AUT.Uk)
+                _continueButton.Click();
+            else
+                Client.Driver.FindElement(By.CssSelector(UiMap.Get.DealDonePage.GoToMyAccount)).Click();
+                
             return Do.Until(() => new MySummaryPage(Client));
         }
 

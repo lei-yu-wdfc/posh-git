@@ -193,7 +193,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Uk), JIRA("UK-427", "Uk-1862", "UK-2121"), MultipleAsserts, Pending("UK-2262")]
+        [Test, AUT(AUT.Uk), JIRA("UK-427", "Uk-1862", "UK-2121", "UKWEB-304"), MultipleAsserts, Pending("UK-2262, UKWEB-304")]
         [Row(1, 2, 1)]
         [Row(1, 7, 1)] // UK-2262
         [Row(10, 7, 6)] // UK-2262

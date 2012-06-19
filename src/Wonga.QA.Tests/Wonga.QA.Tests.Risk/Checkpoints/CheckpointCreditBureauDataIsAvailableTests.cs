@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
@@ -11,11 +11,11 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	[TestFixture, Parallelizable(TestScope.All)]
 	class CheckpointCreditBureauDataIsAvailable
 	{
-        private const RiskMask TestMask = RiskMask.TESTCreditBureauDataIsAvailable;
+		private const RiskMask TestMask = RiskMask.TESTCreditBureauDataIsAvailable;
 
 		private string _forename = "ANITHA";
 		private string _surname = "ESSACK";
-		private Date _dateOfBirth = new Date(new DateTime(1957,12,19));
+		private Date _dateOfBirth = new Date(new DateTime(1957, 12, 19));
 		private string _nationalNumber = "5712190106083";
 
 		[Test, AUT(AUT.Za), JIRA("ZA-1910")]
@@ -32,6 +32,5 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 			ApplicationBuilder.New(customer).Build();
 		}
-		
 	}
 }

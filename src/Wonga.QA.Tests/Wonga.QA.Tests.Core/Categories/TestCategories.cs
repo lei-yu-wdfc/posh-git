@@ -5,6 +5,10 @@ using System.Text;
 
 namespace Wonga.QA.Tests.Core
 {
+<<<<<<< HEAD
+=======
+    //Don't change this to public. If you need categories either create a new category attribute or use existing ones.
+>>>>>>> master
     internal static class TestCategories
     {
         public const string SmokeTest = "SmokeTest";

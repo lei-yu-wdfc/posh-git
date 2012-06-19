@@ -147,7 +147,7 @@ namespace Wonga.QA.Tests.Ui
                            .CurrentPage as MySummaryPage;
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1533", "UK-1902")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1533", "UK-1902", "UKWEB-914")]
         public void FullLnJourneyTest()
         {
             var loginPage = Client.Login();
@@ -182,7 +182,7 @@ namespace Wonga.QA.Tests.Ui
             // L0 journey
             var journeyL0 = JourneyFactory.GetL0Journey(Client.Home());
             var mySummary = journeyL0.ApplyForLoan(200, 10)
-                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
                 .FillAddressDetails()
                 .FillAccountDetails()
                 .FillBankDetails()
@@ -226,13 +226,15 @@ namespace Wonga.QA.Tests.Ui
             // L0 journey
             var journeyL0 = JourneyFactory.GetL0Journey(Client.Home());
             var mySummary = journeyL0.ApplyForLoan(200, 10)
-                .FillPersonalDetailsWithEmail(Get.EnumToString(RiskMask.TESTEmployedMask), email)
+                .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), email: email)
                 .FillAddressDetails()
                 .FillAccountDetails()
                 .FillBankDetails()
                 .FillCardDetails()
                 .WaitForAcceptedPage()
-                .FillAcceptedPage();
+                .FillAcceptedPage()
+                .GoToMySummaryPage()
+                .CurrentPage as MySummaryPage;
 
             var customer =
                 new Customer(
@@ -255,7 +257,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-199"), Pending("ZA-2510")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-199")]
         public void LoggedCustomerWithoutLoanAppliesNewLoanChangesMobilePhoneAndClicksResendPinItShouldBeResent()
         {
             string email = Get.RandomEmail();
@@ -337,7 +339,7 @@ namespace Wonga.QA.Tests.Ui
             string phone = "077009" + Get.RandomLong(1000, 9999).ToString();
             var loginPage = Client.Login();
             loginPage.LoginAs(email);
-        
+
             var journey = JourneyFactory.GetLnJourney(Client.Home());
             var applyPage = journey.ApplyForLoan(200, 20).CurrentPage as ApplyPage;
             applyPage.SetNewMobilePhone = phone;
@@ -355,9 +357,11 @@ namespace Wonga.QA.Tests.Ui
         public void LnVerifyUrlsAreCorrect()
         {
             var loginPage = Client.Login();
+
             string email = Get.RandomEmail();
             string name = Get.GetName();
             string surname = Get.RandomString(10);
+
             Customer customer = CustomerBuilder
                 .New()
                 .WithEmailAddress(email)
@@ -370,25 +374,26 @@ namespace Wonga.QA.Tests.Ui
 
             application.RepayOnDueDate();
 
+            //var mySummaryPageAfterLogin = loginPage.LoginAs(email);
             loginPage.LoginAs(email);
 
             var journey = JourneyFactory.GetLnJourney(Client.Home());
-            var applyPage = journey.ApplyForLoan(200, 10)
-                .SetName(name, surname).CurrentPage as ApplyPage;
-            // Check the URL here is /apply-member
-            Assert.Contains(Client.Driver.Url, "apply-member", "The apply page URL is not /apply-member.");
+            var applyPage = journey.ApplyForLoan(200, 10);
 
-            journey.CurrentPage = applyPage.Submit() as ProcessingPage;
+            // Check the URL here is /apply-member
+            Assert.Contains(Client.Driver.Url, "/apply-member?", "The apply page URL does not contain '/apply-member?'");
+
+            applyPage.FillApplicationDetails();
             // Check the URL here is /processing-member
-            Assert.Contains(Client.Driver.Url, "processing-member", "The processing page URL is not /processing-member.");
+            Assert.EndsWith(Client.Driver.Url, "/processing-member", "The processing page URL is not /processing-member.");
 
             journey.WaitForAcceptedPage();
             // Check the URL here is /apply-accept-member
-            Assert.Contains(Client.Driver.Url, "apply-accept-member", "The accept page URL is not /apply-accept-member.");
+            Assert.EndsWith(Client.Driver.Url, "/apply-accept-member", "The accept page URL is not /apply-accept-member.");
 
             journey.FillAcceptedPage();
             // Check the URL here is /deal-done-member
-            Assert.Contains(Client.Driver.Url, "deal-done-member", "The deal done page URL is not /deal-done-member.");
+            Assert.EndsWith(Client.Driver.Url, "/deal-done-member", "The deal done page URL is not /deal-done-member.");
         }
 
     }

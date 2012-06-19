@@ -95,7 +95,7 @@ namespace Wonga.QA.Tests.Comms
             Drive.Data.Payments.Db.PaymentCardsBase.UpdateByExternalId(ExternalId : customer.GetPaymentCard(), ExpiryDate : new DateTime(DateTime.Now.Year -1, 1, 31));
             
             //Put the application nto arrears.
-            loan.PutApplicationIntoArrears(days);
+            loan.PutIntoArrears(days);
 
             TimeoutNotificationSagaForDays(loan, days);
             
@@ -122,7 +122,7 @@ namespace Wonga.QA.Tests.Comms
         //    //Make sure the payment attempt fails by changing the expiry date of the card.
         //    Drive.Data.Payments.Db.PaymentCardsBase.UpdateByExternalId(ExternalId : cardId, ExpiryDate : new DateTime(DateTime.Now.Year -1, 1, 31));
 
-        //    application.PutApplicationIntoArrears(days);
+        //    application.PutIntoArrears(days);
 
         //    TimeoutNotificationSagaForDays(application, days);
 

@@ -18,6 +18,7 @@ namespace Wonga.QA.Framework
         public String MiddleName { get; set; }
         public Int64 CardNumber { get; set; }
         public string BankAccountNumber { get; set; }
+        public ProvinceEnum Province { get; set; }
 
         public Customer(Guid id)
         {
@@ -70,23 +71,42 @@ namespace Wonga.QA.Framework
         {
             AddPaymentCardCommand cmd = AddPaymentCardCommand.New(r =>
             {
-                r.AccountId = this.Id;
+                r.AccountId = Id;
                 r.Number = cardNumber;
                 r.IsPrimary = isPrimary;
                 r.SecurityCode = securityCode;
-                r.ExpiryDate = expiryDate.ToString("yyyy-MM");
+				r.ExpiryDate = expiryDate.ToPaymentCardDate();
                 r.CardType = cardType;
             });
             Drive.Api.Commands.Post(cmd);
+
+        	RiskAddPaymentCardCommand riskCommand = RiskAddPaymentCardCommand.New(r =>
+        	                                                                      	{
+        	                                                                      		r.AccountId = Id;
+        	                                                                      		r.Number = cardNumber;
+        	                                                                      		r.SecurityCode = securityCode;
+																						r.ExpiryDate = expiryDate.ToPaymentCardDate();
+        	                                                                      		r.CardType = cardType;
+        	                                                                      	});
+			Drive.Api.Commands.Post(riskCommand);
+
             Do.Until(() => Drive.Db.Payments.PersonalPaymentCards
-                         .Single(c => c.AccountId == this.Id
+                         .Single(c => c.AccountId == Id
                                       && c.PaymentCardsBaseEntity.Type == cardType
                                       && c.PaymentCardsBaseEntity.MaskedNumber == cardNumber.MaskedCardNumber()));
         }
 
         public Guid GetPaymentCard()
         {
-            return Drive.Data.Payments.Db.AccountPreferences.FindAllByAccountId(Id).Single().PaymentCardsBase.ExternalId;
+            //1 - Wait for the AccountPreferences
+            //2 - Wait for the PrimaryPaymentCardId to be inserted
+            //3 - Return the corresponding PaymentCardsBase.ExternalId
+            //4 - If anyone finds a better way to do this tell me ( Alex P )
+
+            Int32? primaryPaymentCardId = null;
+            Do.With.Timeout(2).Message("The AccountPreferences has not been created yet").Until(() => ((Drive.Data.Payments.Db.AccountPreferences.FindAllByAccountId(Id).SingleOrDefault()) != null));
+            Do.With.Timeout(2).Message("The PrimaryPaymentCardId has not been updated yet").Until(() => ((primaryPaymentCardId = Drive.Data.Payments.Db.AccountPreferences.FindAllByAccountId(Id).SingleOrDefault().PrimaryPaymentCardId) != null));
+            return Drive.Data.Payments.Db.PaymentCardsBase.FindAllByPaymentCardId(primaryPaymentCardId).Single().ExternalId;
         }
 
         public void UpdateForename(String forename)
@@ -132,6 +152,12 @@ namespace Wonga.QA.Framework
         {
             var customerDetailsRow = Drive.Db.Comms.CustomerDetails.Single(cd => cd.AccountId == Id);
             return customerDetailsRow.Forename + " " + customerDetailsRow.Surname;
+        }
+
+        public string GetCustomerForename()
+        {
+            var customerDetailsRow = Drive.Db.Comms.CustomerDetails.Single(cd => cd.AccountId == Id);
+        	return customerDetailsRow.Forename;
         }
 
         public void ScrubCcin()

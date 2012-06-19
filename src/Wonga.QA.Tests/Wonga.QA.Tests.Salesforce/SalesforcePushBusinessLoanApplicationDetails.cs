@@ -143,7 +143,7 @@ namespace Wonga.QA.Tests.Salesforce
 			var customer = CustomerBuilder.New().Build();
 			var organization = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organization)
-				.WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutApplicationIntoArrears();
+				.WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutIntoArrears();
 
 			var query = string.Format(GetApplicationWithUpdatedStatus, application.Id, (int)Framework.ThirdParties.Salesforce.BusinessLoanApplicationStatus.InArrears);
 
@@ -157,7 +157,7 @@ namespace Wonga.QA.Tests.Salesforce
 			var customer = CustomerBuilder.New().Build();
 			var organization = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organization)
-				.WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutApplicationIntoArrears() as BusinessApplication;
+				.WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutIntoArrears() as BusinessApplication;
 
 			var arrearsAmount = application.GetArrearsAmount();
 

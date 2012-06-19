@@ -39,5 +39,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             return tokenResult | tokenResult2;
         }
 
+        public String ContentArea()
+        {
+            return _bodyContent.Text;
+        }
     }
 }

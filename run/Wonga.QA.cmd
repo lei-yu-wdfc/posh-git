@@ -33,12 +33,13 @@ IF ERRORLEVEL 1 GOTO 1
 GOTO EOF
 
 :1
-	CD %Root% && FOR /R %%0 IN (*.sln) DO %MSBuild% %%0 /v:m || PAUSE
+	:CD %Root% && FOR /R %%0 IN (*.sln) DO %MSBuild% %%0 /v:m || PAUSE
+	%MsBuild% %Run%\Wonga.QA.Tests.build /t:Build || PAUSE
 GOTO MENU
 
 :2
 	SET /P AUT=Enter AUT (E.g. Uk, Za, Ca, Wb, Pl): 
-	SET /P SUT=Enter SUT (E.g. Dev, WIP, RC): 
+	SET /P SUT=Enter SUT (E.g. Dev, WIP, UAT, RC, WIPRelease, RCRelease, Live): 
 	SETX AUT %AUT% > NUL
 	SETX SUT %SUT% > NUL
 GOTO MENU

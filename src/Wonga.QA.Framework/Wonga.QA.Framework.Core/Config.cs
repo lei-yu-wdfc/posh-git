@@ -8,7 +8,7 @@ using Microsoft.Win32;
 namespace Wonga.QA.Framework.Core
 {
     public enum AUT { Uk, Za, Ca, Wb, Pl }
-    public enum SUT { Dev, WIP, UAT, RC, WIPRelease, RCRelease, Live }
+    public enum SUT { Dev, WIP, UAT, RC, WIPRelease, RCRelease, Live, WIPHDS }
 
     public static class Config
     {
@@ -21,6 +21,7 @@ namespace Wonga.QA.Framework.Core
         public static SvcConfig Svc { get; set; }
         public static MsmqConfig Msmq { get; set; }
         public static DbConfig Db { get; set; }
+        public static DbConfig HDSDb { get; set; }
         public static UiConfig Ui { get; set; }
         public static AdminConfig Admin { get; set; }
         public static SalesforceConfig SalesforceUi { get; set; }
@@ -58,6 +59,7 @@ namespace Wonga.QA.Framework.Core
                     Svc = new SvcConfig(".");
                     Msmq = new MsmqConfig(".");
                     Db = new DbConfig(".");
+                    HDSDb = new DbConfig(".","UK","");
                     Ui.SetUri("dev.wonga.com");
                     Admin = new AdminConfig("localhost/admin");
                     PrepaidAdminUI = new PrepaidAdminConfig();
@@ -84,6 +86,36 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("WIP4", Proxy)) :
                         AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("WIP6", Proxy)) :
                         AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn("WIP8", Proxy)) : Throw<DbConfig>();
+                    Ui.SetUri(String.Format("wip.{0}.{1}", AUT, uiDomain));
+                    Admin = new AdminConfig(String.Format("wip.admin.{0}.{1}", AUT, uiDomain));
+                    SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.wip", "Allw0nga");
+                    SalesforceApi =
+                        AUT == AUT.Ca ? new SalesforceApiConfig("v3integration@wonga.com.int") :
+                        new SalesforceApiConfig("v3integration@wonga.com.wip");
+                    break;
+                case SUT.WIPHDS:
+                    Api = new ApiConfig(String.Format("wip.api.{0}.wonga.com", AUT));
+                    Cs = new CsConfig(String.Format("wip.csapi.{0}.wonga.com", AUT));
+                    Svc =
+                        AUT == AUT.Uk ? new SvcConfig("WIP2") :
+                        AUT == AUT.Za ? new SvcConfig("WIP4") :
+                        AUT == AUT.Ca ? new SvcConfig("WIP6") :
+                        AUT == AUT.Wb ? new SvcConfig("WIP8") : Throw<SvcConfig>();
+                    Msmq =
+                        AUT == AUT.Uk ? new MsmqConfig("WIP2") :
+                        AUT == AUT.Za ? new MsmqConfig("WIP4") :
+                        AUT == AUT.Ca ? new MsmqConfig("WIP6") :
+                        AUT == AUT.Wb ? new MsmqConfig("WIP8") : Throw<MsmqConfig>();
+                    Db =
+                        AUT == AUT.Uk ? new DbConfig(Connections.GetDbConn(@"dev-disqlsrv01\dev3", Proxy)) :
+                        AUT == AUT.Za ? new DbConfig(Connections.GetDbConn(@"dev-disqlsrv01\dev3", Proxy)) :
+                        AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn(@"dev-disqlsrv01\dev3", Proxy)) :
+                        AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn(@"dev-disqlsrv01\dev3", Proxy)) : Throw<DbConfig>();
+                    HDSDb =
+                        AUT == AUT.Uk ? new DbConfig(Connections.GetDbConn(@"dev-disqlsrv01\dev2", Proxy),"UK","Wonga") :
+                        AUT == AUT.Za ? new DbConfig(Connections.GetDbConn(@"dev-disqlsrv01\dev2", Proxy), "Za", "Wonga") :
+                        AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn(@"dev-disqlsrv01\dev2", Proxy), "Ca", "Wonga") :
+                        AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn(@"dev-disqlsrv01\dev2", Proxy), "UK", "WB") : Throw<DbConfig>();
                     Ui.SetUri(String.Format("wip.{0}.{1}", AUT, uiDomain));
                     Admin = new AdminConfig(String.Format("wip.admin.{0}.{1}", AUT, uiDomain));
                     SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.wip", "Allw0nga");
@@ -250,6 +282,7 @@ namespace Wonga.QA.Framework.Core
             public KeyValuePair<String, String> ExperianBulk { get; set; }
             public KeyValuePair<String, String> FileStorage { get; set; }
             public KeyValuePair<String, String> Graydon { get; set; }
+            public KeyValuePair<String, String> Hds { get; set; }
             public KeyValuePair<String, String> Hpi { get; set; }
             public KeyValuePair<String, String> Hsbc { get; set; }
             public KeyValuePair<String, String> Hyphen { get; set; }
@@ -342,6 +375,7 @@ namespace Wonga.QA.Framework.Core
             public String ExperianBulk { get; set; }
             public String FileStorage { get; set; }
             public String Graydon { get; set; }
+            public String Hds { get; set; }
             public String Hpi { get; set; }
             public String Iovation { get; set; }
             public String Salesforce { get; set; }
@@ -415,11 +449,13 @@ namespace Wonga.QA.Framework.Core
             public String CallReport { get; set; }
             public String CallValidate { get; set; }
             public String CardPayment { get; set; }
+            public String Cdc { get; set; }
             public String ColdStorage { get; set; }
             public String ContactManagement { get; set; }
             public String Experian { get; set; }
             public String ExperianBulk { get; set; }
             public String FileStorage { get; set; }
+            public String Hds { get; set; }
             public String Hpi { get; set; }
             public String IpLookup { get; set; }
             public String Salesforce { get; set; }
@@ -437,9 +473,16 @@ namespace Wonga.QA.Framework.Core
             public String OpsSagas { get; set; }
             public String QaData { get; set; }
 
+            // Returns the server running against
+            public String ServerName { get; set; }
+            public String HdsServerName { get; set; }
+
             public DbConfig(String server)
             {
                 Func<String, String> builder = catalog => new SqlConnectionStringBuilder { DataSource = server, InitialCatalog = catalog, IntegratedSecurity = true }.ConnectionString;
+
+                // Set the server
+                ServerName = server;
 
                 Accounting = builder("Accounting");
                 Ops = builder("Ops");
@@ -474,6 +517,18 @@ namespace Wonga.QA.Framework.Core
                 PrepaidCard = builder("PrepaidCard");
                 Pps = builder("Pps");
             }
+
+
+            public DbConfig(String server, String region, String product)
+            {
+                Func<String, String> builder = catalog => new SqlConnectionStringBuilder { DataSource = server, InitialCatalog = catalog, IntegratedSecurity = true }.ConnectionString;
+
+                // Set the server
+                HdsServerName = server;
+
+                Cdc = builder(region + "_CDCStaging");
+                Hds = builder(region + "_" + product + "WongaHDS");
+            }
         }
 
         public class UiConfig
@@ -485,7 +540,8 @@ namespace Wonga.QA.Framework.Core
                 Safari,
                 Chrome,
                 Opera,
-                FirefoxMobile
+                FirefoxMobile,
+                Android
             }
 
             public string Url { get { return Home.AbsoluteUri; } }
@@ -656,6 +712,8 @@ namespace Wonga.QA.Framework.Core
             DbPortMappings.Add("WIP6", "8207");
             DbPortMappings.Add("UAT6", "8208");
             DbPortMappings.Add("RC6", "8209");
+
+            DbPortMappings.Add(@"dev-disqlsrv01\dev2", "1433");
         }
 
         public static string GetDbConn(string server, bool proxyMode)

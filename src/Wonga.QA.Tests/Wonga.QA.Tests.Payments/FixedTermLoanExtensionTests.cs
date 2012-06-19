@@ -106,7 +106,7 @@ namespace Wonga.QA.Tests.Payments
 				ftApp = Drive.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationEntity.ExternalId == app.Id);
 
 				if (inArrears)
-					app.PutApplicationIntoArrears();
+					app.PutIntoArrears();
 			}
 
 
@@ -257,7 +257,7 @@ namespace Wonga.QA.Tests.Payments
 			Assert.IsNotNull(loanExtension.PartPaymentFailedOn, "Loan extension payment should not be taken");
 		}
 
-		[Test, AUT(AUT.Uk), JIRA("Uk-971")]
+        [Test, AUT(AUT.Uk), JIRA("Uk-971", "UKWEB-243")]
 		public void SignFixedTermLoanExtensionTest()
 		{
 			const decimal trustRating = 400.00M;

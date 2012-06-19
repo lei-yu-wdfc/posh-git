@@ -33,6 +33,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             return new MySummaryPage(Client);
         }
 
+        public MySummaryPage LoginAs(string email, string password)
+        {
+            _username.SendKeys(email);
+            _password.SendKeys(password);
+            _buttonLogin.Click();
+            return new MySummaryPage(Client);
+        }
+
         public MySummaryPageMobile LoginAsMobile(string email)
         {
 

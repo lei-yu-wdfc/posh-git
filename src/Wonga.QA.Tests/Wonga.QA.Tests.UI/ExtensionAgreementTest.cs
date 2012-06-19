@@ -26,7 +26,7 @@ namespace Wonga.QA.Tests.Ui
     [Parallelizable(TestScope.All)]
     class ExtensionAgreementTest : UiTest
     {
-        [Test, AUT(AUT.Uk), JIRA("UK-971"), Pending("Fails due to bug UK-2293"), MultipleAsserts]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-243", "UKWEB-294"), MultipleAsserts, Pending("UKWEB-911 Defect: Extension finishes with an error page.")]
         public void ExtensionAgreementPageTest()
         {
             string email = Get.RandomEmail();
@@ -53,20 +53,17 @@ namespace Wonga.QA.Tests.Ui
             var expectedLoanAmount = application.LoanAmount;
             var termDivisor = Convert.ToDouble(String.Format("{0:0.00000000}", 365d / Convert.ToDouble(expectedExtendedLoanTerm)));
             var loanDevisor = Convert.ToDouble(expectedTotalToRepay.Trim('£'))/Convert.ToDouble(expectedLoanAmount);
-            var expectedRepresentativeApr = (Math.Pow(loanDevisor, termDivisor) - 1).ToString("0%"); 
+            var expectedRepresentativeApr = Math.Ceiling((Math.Pow(loanDevisor, termDivisor) - 1) * 100).ToString("#") + "%"; 
             
             requestPage.setSecurityCode("123");
             requestPage.SubmitButtonClick();
-
+            
             var extensionProcessingPage = new ExtensionProcessingPage(this.Client);
             var agreementPage = extensionProcessingPage.WaitFor<ExtensionAgreementPage>() as ExtensionAgreementPage;
 
             agreementPage.ClickExtensionSecciLink();
         
             Assert.IsTrue(agreementPage.secci.Text.Contains(ContentMap.Get.ExtensionAgreementPage.CreditInformation));
-            Assert.IsTrue(agreementPage.secciPrint.Text.Contains(ContentMap.Get.ExtensionAgreementPage.PrintThisPage));
-            Assert.IsTrue(agreementPage.secciHeader.Text.Contains(ContentMap.Get.ExtensionAgreementPage.ReadThis));
-          
             Assert.Contains(agreementPage.secci.Text, expectedExtendedLoanTerm.ToString("#"));
             Assert.Contains(agreementPage.secci.Text, expectedRepaymentDate);
             Assert.Contains(agreementPage.secci.Text, expectedLoanAmount.ToString("#"));
@@ -74,7 +71,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.Contains(agreementPage.secci.Text, expectedRepresentativeApr);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-971"), Pending("Fails due to bug UK-2293"), MultipleAsserts]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-243", "UKWEB-294"), MultipleAsserts, Pending("UKWEB-911 Defect: Extension finishes with an error page.")]
         [Row (2, 100, 1, 7)]
         public void ExtensionAgreementPageNDaysAfterLoanTest(int loanTerm, int loanAmount, int daysAfterLoan, int daysToExtend)
         {
@@ -110,7 +107,7 @@ namespace Wonga.QA.Tests.Ui
             var expectedLoanAmount = application.LoanAmount;
             var termDivisor = Convert.ToDouble(String.Format("{0:0.00000000}", 365d / Convert.ToDouble(expectedExtendedLoanTerm)));
             var loanDevisor = Convert.ToDouble(expectedTotalToRepay.Trim('£')) / Convert.ToDouble(expectedLoanAmount);
-            var expectedRepresentativeApr = (Math.Pow(loanDevisor, termDivisor) - 1).ToString("0%"); 
+            var expectedRepresentativeApr = Math.Ceiling((Math.Pow(loanDevisor, termDivisor) - 1) * 100).ToString("#") + "%"; 
 
             requestPage.setSecurityCode("123");
             requestPage.SubmitButtonClick();

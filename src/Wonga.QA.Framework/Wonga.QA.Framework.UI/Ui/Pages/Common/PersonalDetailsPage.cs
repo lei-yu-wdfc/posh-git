@@ -151,12 +151,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public String HowMuch
         {
             get { return _loanAmount.GetValue(); }
-            set { _loanAmount.SendValue(value); }
+            set { _loanAmount.Clear(); _loanAmount.SendValue(value); }
         }
         public String HowLong
         {
             get { return _loanDuration.GetValue(); }
-            set { _loanDuration.SendValue(value); }
+            set { _loanDuration.Clear();_loanDuration.SendValue(value); }
         }
         public void ClickAmountMinusButton()
         {

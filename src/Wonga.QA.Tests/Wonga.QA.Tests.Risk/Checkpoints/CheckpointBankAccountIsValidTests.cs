@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +15,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	[TestFixture, Parallelizable(TestScope.All)]
 	class CheckpointBankAccountIsValidTests
 	{
-        private const RiskMask TestMask = RiskMask.TESTBankAccountIsValid;
+		private const RiskMask TestMask = RiskMask.TESTBankAccountIsValid;
 
 		[Test, AUT(AUT.Za), JIRA("ZA-1910")]
 		public void CheckpointShouldReturnReadyToSignStatus()
@@ -23,7 +23,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			var bankAccountNumber = Get.GetBankAccountNumber().ToString();
 
 			var customer = CustomerBuilder.New().WithEmployer(TestMask).WithBankAccountNumber(bankAccountNumber).Build();
-            ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.ReadyToSign).Build();
+			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.ReadyToSign).Build();
 		}
 	}
 }

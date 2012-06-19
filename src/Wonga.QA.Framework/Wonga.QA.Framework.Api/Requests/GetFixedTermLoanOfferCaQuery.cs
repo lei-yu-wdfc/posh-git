@@ -9,5 +9,6 @@ namespace Wonga.QA.Framework.Api
     {
         public Object AccountId { get; set; }
         public Object PromoCodeId { get; set; }
+        public Object Province { get; set; }
     }
 }

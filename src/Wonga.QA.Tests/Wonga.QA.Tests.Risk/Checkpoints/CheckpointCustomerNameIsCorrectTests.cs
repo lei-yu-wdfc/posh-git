@@ -14,7 +14,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	[TestFixture, Parallelizable(TestScope.All)]
 	public class CheckpointCustomerNameIsCorrectTests
 	{
-        private const RiskMask TestMask = RiskMask.TESTCustomerNameIsCorrect;
+		private const RiskMask TestMask = RiskMask.TESTCustomerNameIsCorrect;
 
 		private string _surname;
 		private string _forename;
@@ -22,7 +22,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		private string _nationalNumber;
 		private Date _dateOfBirth;
 
-        [FixtureSetUp]
+		[FixtureSetUp]
 		public void FixtureSetUp()
 		{
 			switch (Config.AUT)
@@ -70,7 +70,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.WithNationalNumber(_nationalNumber)
 				.Build();
 
-            ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
 
 		[Test, AUT(AUT.Za)]
@@ -79,9 +79,9 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			string incorrectForename = Get.GetName();
 
 			//Must ensure that the first letter of incorrect surname doens't match the actual forename
-			while(incorrectForename.First() == _forename.First())
+			while (incorrectForename.First() == _forename.First())
 				incorrectForename = Get.GetName();
-		
+
 			var customer = CustomerBuilder.New()
 				.WithEmployer(TestMask)
 				.WithForename(incorrectForename)
@@ -91,7 +91,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.WithNationalNumber(_nationalNumber)
 				.Build();
 
-            ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
 
 		[Test, AUT(AUT.Za)]
@@ -106,7 +106,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.WithNationalNumber(Get.GetNationalNumber(_dateOfBirth, true))
 				.Build();
 
-            ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
 
 		[Test, AUT(AUT.Za)]
@@ -173,7 +173,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.WithNationalNumber(_nationalNumber)
 				.Build();
 
-            ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
 
 		[Test, AUT(AUT.Za)]
@@ -189,7 +189,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.WithNationalNumber(_nationalNumber)
 				.Build();
 
-            ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
 	}
 }

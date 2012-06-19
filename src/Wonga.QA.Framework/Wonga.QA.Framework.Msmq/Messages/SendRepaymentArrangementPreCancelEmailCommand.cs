@@ -13,6 +13,7 @@ namespace Wonga.QA.Framework.Msmq
         public DateTime RepaymentDueDate { get; set; }
         public DateTime GracePeriodDeadline { get; set; }
         public String Email { get; set; }
+        public Guid ApplicationId { get; set; }
         public Guid SagaId { get; set; }
     }
 }

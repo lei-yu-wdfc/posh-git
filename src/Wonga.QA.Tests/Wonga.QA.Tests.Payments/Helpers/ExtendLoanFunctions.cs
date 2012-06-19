@@ -57,7 +57,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 CreatedOn = DateTime.UtcNow
             });
 
-            Drive.Msmq.Payments.Send(new CreateFixedTermLoanApplicationCommand()
+            Drive.Msmq.Payments.Send(new CreateFixedTermLoanApplicationUkCommand()
             {
                 ApplicationId = appId,
                 AccountId = accountId,

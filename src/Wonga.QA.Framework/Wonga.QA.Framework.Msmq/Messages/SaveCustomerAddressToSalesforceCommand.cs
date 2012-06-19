@@ -21,5 +21,6 @@ namespace Wonga.QA.Framework.Msmq
         public CountryCodeEnum CountryCode { get; set; }
         public DateTime AtAddressFrom { get; set; }
         public DateTime? AtAddressTo { get; set; }
+        public String PoBox { get; set; }
     }
 }

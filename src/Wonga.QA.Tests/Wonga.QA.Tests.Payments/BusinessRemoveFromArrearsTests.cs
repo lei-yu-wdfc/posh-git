@@ -22,7 +22,7 @@ namespace Wonga.QA.Tests.Payments
 			var customer = CustomerBuilder.New().Build();
 			var organization = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organization)
-				.WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutApplicationIntoArrears() as BusinessApplication;
+				.WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutIntoArrears() as BusinessApplication;
 
 			var arrearsAmount = application.GetArrearsAmount();
 
@@ -52,7 +52,7 @@ namespace Wonga.QA.Tests.Payments
 			var customer = CustomerBuilder.New().Build();
 			var organization = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organization)
-				.WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutApplicationIntoArrears() as BusinessApplication;
+				.WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutIntoArrears() as BusinessApplication;
 
 			var arrearsAmount = application.GetArrearsAmount();
 
@@ -84,7 +84,7 @@ namespace Wonga.QA.Tests.Payments
 			var customer = CustomerBuilder.New().Build();
 			var organization = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organization)
-				.WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutApplicationIntoArrears() as BusinessApplication;
+				.WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutIntoArrears() as BusinessApplication;
 
 			var arrearsAmount = application.GetArrearsAmount();
 
@@ -116,7 +116,7 @@ namespace Wonga.QA.Tests.Payments
 			var customer = CustomerBuilder.New().Build();
 			var organization = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organization)
-				.WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutApplicationIntoArrears() as BusinessApplication;
+				.WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutIntoArrears() as BusinessApplication;
 
 			var arrearsAmount = application.GetArrearsAmount();
 

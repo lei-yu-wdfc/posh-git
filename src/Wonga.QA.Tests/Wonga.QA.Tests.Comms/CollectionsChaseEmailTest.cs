@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -89,9 +89,9 @@ namespace Wonga.QA.Tests.Comms
 
 		private void VerifyEmailIsSentAfterDaysInArrears(uint daysInArrears, int template)
 		{
-			_application.PutApplicationIntoArrears(daysInArrears);
+			_application.PutIntoArrears(daysInArrears);
 
-			if( daysInArrears > 0) //Saga is created after first email sent
+			if (daysInArrears > 0) //Saga is created after first email sent
 				TimeoutCollectionsChaseSagaForDays(_application, daysInArrears);
 
 			AssertEmailIsSent(_application.GetCustomer().Email, template);
@@ -103,6 +103,10 @@ namespace Wonga.QA.Tests.Comms
 			
 			Drive.Data.OpsSagas.Db.CollectionsChaseSagaEntity.UpdateById(Id: sagaId, DueDate: DateTime.Today.AddDays(-days));
 			Drive.Msmq.Comms.Send(new TimeoutMessage{SagaId = sagaId});
+		}
+
+			Drive.Data.OpsSagas.Db.CollectionsChaseSagaEntity.UpdateById(Id: sagaId, DueDate: DateTime.Today.AddDays(-days));
+			Drive.Msmq.Comms.Send(new TimeoutMessage { SagaId = sagaId });
 		}
 
 		private void AssertEmailIsSent(string email, int template)
