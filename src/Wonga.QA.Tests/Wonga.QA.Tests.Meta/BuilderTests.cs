@@ -17,22 +17,20 @@ namespace Wonga.QA.Tests.Meta
             Assert.DoesNotThrow(() => _customer = CustomerBuilder.New().Build());
         }
 
-        [Test, AUT(AUT.Wb), DependsOn("CustomerBuilderTest")]
-        public void OrganisationBuilderTest()
-        {
-            Assert.DoesNotThrow(() => _organisation = OrganisationBuilder.New(_customer).Build());
-        }
-
-        [Test, DependsOn("CustomerBuilderTest"), DependsOn("OrganisationBuilderTest")]
+        [Test, DependsOn("CustomerBuilderTest")]
         public void ApplicationBuilderTest()
         {
             ApplicationBuilder builder = Config.AUT == AUT.Wb ?
                 ApplicationBuilder.New(_customer, _organisation) :
                 ApplicationBuilder.New(_customer);
-            Application application = builder.Build();
-            if ((Config.AUT == AUT.Uk) || (Config.AUT == AUT.Ca) || (Config.AUT == AUT.Za))
-                Assert.IsTrue(application.GetDueDateBalance() != 0, "DueDateBalance sould not be 0");
-            //builder.Build();//debug only
+
+            builder.Build();
         }
+
+		[Test, AUT(AUT.Wb), DependsOn("CustomerBuilderTest")]
+		public void OrganisationBuilderTest()
+		{
+			Assert.DoesNotThrow(() => _organisation = OrganisationBuilder.New(_customer).Build());
+		}
     }
 }
