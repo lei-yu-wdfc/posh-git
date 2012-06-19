@@ -353,7 +353,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca, AUT.Uk), SmokeTest, MultipleAsserts, Pending("Waiting for UKWEB-212")]
+        [Test, AUT(AUT.Za, AUT.Ca, AUT.Uk), SmokeTest]
         public void LnVerifyUrlsAreCorrect()
         {
             var loginPage = Client.Login();

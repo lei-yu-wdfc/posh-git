@@ -57,7 +57,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-177"), SmokeTest] //AUT.Ca removed because of sliders changing
+        [Test, AUT(AUT.Za), JIRA("QA-177"), SmokeTest] //AUT.Ca removed because of sliders changing
         public void ChangeLoanAmountAndDurationOnPersonalDetailsViaPlusMinusOptions()
         {
             //CA is out due to new wonga sliders being implemented on homepage only 
@@ -131,7 +131,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-176"), SmokeTest] //AUT.Ca removed because of sliders changing
+        [Test, AUT(AUT.Za), JIRA("QA-176"), SmokeTest] //AUT.Ca removed because of sliders changing
         public void ChangeLoanAmountAndDurationOnPersonalDetailsViaTypingToTheFields()
         {
             //CA is out due to new wonga sliders being implemented on homepage only 
