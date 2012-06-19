@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using MbUnit.Framework;
@@ -18,6 +19,21 @@ namespace Wonga.QA.Tests.Payments.Queries
     {
         //private dynamic _transactions = Drive.Data.Payments.Db.Transactions;
 		private dynamic _applications = Drive.Data.Payments.Db.Applications;
+
+        [Test]
+        [AUT(AUT.Uk), JIRA("WIN-880")]
+        public void GetLoanAgreementQuery_ForActiveApplication_Returns_NonEmptyAgreement()
+        {
+            Customer customer = CustomerBuilder.New().Build();
+            var application = ApplicationBuilder.New(customer).Build();
+            var query = new GetLoanAgreementQuery()
+                            {
+                                ApplicationId = application.Id
+                            };
+            ApiResponse response = Drive.Api.Queries.Post(query);
+            string contentValue = response.Values["AgreementContent"].Single();
+            Assert.IsFalse(String.IsNullOrWhiteSpace(contentValue));
+        }
 
         [Test]
         [AUT(AUT.Uk), JIRA("UK-1197")]
