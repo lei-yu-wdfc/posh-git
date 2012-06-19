@@ -2,63 +2,80 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Mobile.Mappings.Ui.Pages;
+using Wonga.QA.Framework.Mobile.Journey;
 using Wonga.QA.Framework.Mobile.Ui.Pages;
-using PersonalBankAccountPageMobile = Wonga.QA.Framework.Mobile.Ui.Pages.PersonalBankAccountPageMobile;
-
 
 namespace Wonga.QA.Framework.Mobile.Journey
 {
-    class ZaMobileL0Journey : IL0MobileConsumerJourney
+    class ZaMobileL0Journey : BaseL0Journey
     {
-        public String FirstName { get; set; }
-        public String LastName { get; set; }
-        public String NationalId { get; set; }
-        public DateTime DateOfBirth { get; set; }
-        public String Gender { get; set; }
-        public BasePageMobile CurrentPage { get; set; }
-        public String Email { get; set; }
-
         public ZaMobileL0Journey(BasePageMobile homePage)
         {
             CurrentPage = homePage as HomePageMobile;
-            FirstName = Get.GetName();
-            LastName = Get.RandomString(10);
-            DateOfBirth = new DateTime(1957, 10, 30);
-            Gender = "Female";
-            NationalId = Get.GetNationalNumber(DateOfBirth, true);
-            Email = Get.RandomEmail();
+
+            _submit = true;
+
+            _amount = 100;
+            _duration = 20;
+
+            _firstName = Get.GetName();
+            _lastName = Get.RandomString(10);
+            _middleName = Get.RandomString(10);
+            _title = "Mr";
+            _employerName = Get.RandomString(10);
+            _email = Get.RandomEmail();
+            _mobilePhone = Get.GetMobilePhone();
+            _dateOfBirth = new DateTime(1957, 10, 30);
+            _gender = GenderEnum.Female;
+            _nationalId = Get.GetNationalNumber(_dateOfBirth, _gender == GenderEnum.Female);
+
+            _postCode = Get.GetPostcode();
+            _addressPeriod = "2 to 3 years";
+
+            _password = Get.GetPassword();
+
+            _accountNumber = "1234567";
+            _bankPeriod = "2 to 3 years";
+            _pin = "0000";
+
+            journey.Add(typeof(HomePageMobile), ApplyForLoan);
+            journey.Add(typeof(PersonalDetailsPageMobile), FillPersonalDetails);
+            journey.Add(typeof(AddressDetailsPageMobile), FillAddressDetails);
+            journey.Add(typeof(AccountDetailsPageMobile), FillAccountDetails);
+            journey.Add(typeof(PersonalBankAccountPageMobile), FillBankDetails);
+            journey.Add(typeof(ProcessingPageMobile), WaitForAcceptedPage);
+            journey.Add(typeof(AcceptedPageMobile), FillAcceptedPage);
+            journey.Add(typeof(DealDonePage), GoToMySummaryPage);
         }
 
-        public IL0MobileConsumerJourney ApplyForLoan(int amount, int duration)
+        protected override BaseL0Journey ApplyForLoan(bool submit = true)
         {
             var homePage = CurrentPage as HomePageMobile;
-            homePage.Sliders.HowMuch = amount.ToString();
-            homePage.Sliders.HowLong = duration.ToString();
+            homePage.Sliders.HowMuch = _amount.ToString();
+            homePage.Sliders.HowLong = _duration.ToString();
             CurrentPage = homePage.Sliders.Apply() as PersonalDetailsPageMobile;
             return this;
         }
 
-        public IL0MobileConsumerJourney FillPersonalDetails(string firstName = null, string lastName = null, string middleNameMask = null, string gender = null, string employerNameMask = null, string email = null, string mobilePhone = null, bool submit = true)
+        protected override BaseL0Journey FillPersonalDetails(bool submit = true)
         {
-            string employerName = employerNameMask ?? Get.GetMiddleName();
-            string middleName = middleNameMask ?? Get.GetMiddleName();
             var personalDetailsPage = CurrentPage as PersonalDetailsPageMobile;
-            personalDetailsPage.YourName.FirstName = firstName ?? FirstName;
-            personalDetailsPage.YourName.MiddleName = middleName;
-            personalDetailsPage.YourName.LastName = lastName ?? LastName;
-            personalDetailsPage.YourName.Title = "Mr";
-            personalDetailsPage.YourDetails.Number = NationalId.ToString();//"5710300020087";
-            personalDetailsPage.YourDetails.DateOfBirth = DateOfBirth.ToString("d/MMM/yyyy");
-            personalDetailsPage.YourDetails.Gender = gender ?? Gender;
+            personalDetailsPage.YourName.FirstName = _firstName;
+            personalDetailsPage.YourName.MiddleName = _middleName;
+            personalDetailsPage.YourName.LastName = _lastName;
+            personalDetailsPage.YourName.Title = _title;
+            personalDetailsPage.YourDetails.Number = _nationalId.ToString();//"5710300020087";
+            personalDetailsPage.YourDetails.DateOfBirth = _dateOfBirth.ToString("d/MMM/yyyy");
+            personalDetailsPage.YourDetails.Gender = _gender.ToString();
             personalDetailsPage.YourDetails.HomeStatus = "Owner Occupier";
             personalDetailsPage.YourDetails.HomeLanguage = "English";
             personalDetailsPage.YourDetails.NumberOfDependants = "0";
             personalDetailsPage.YourDetails.MaritalStatus = "Single";
             personalDetailsPage.EmploymentDetails.EmploymentStatus = "Employed Full Time";
             personalDetailsPage.EmploymentDetails.MonthlyIncome = "3000";
-            personalDetailsPage.EmploymentDetails.EmployerName = employerName;
+            personalDetailsPage.EmploymentDetails.EmployerName = _employerName;
             personalDetailsPage.EmploymentDetails.EmployerIndustry = "Accountancy";
             personalDetailsPage.EmploymentDetails.EmploymentPosition = "Administration";
             personalDetailsPage.EmploymentDetails.TimeWithEmployerYears = "9";
@@ -67,44 +84,41 @@ namespace Wonga.QA.Framework.Mobile.Journey
             personalDetailsPage.EmploymentDetails.SalaryPaidToBank = true;
             personalDetailsPage.EmploymentDetails.NextPayDate = DateTime.Now.Add(TimeSpan.FromDays(5)).ToString("d/MMM/yyyy");
             personalDetailsPage.EmploymentDetails.IncomeFrequency = "Monthly";
-            personalDetailsPage.ContactingYou.CellPhoneNumber = mobilePhone ?? Get.GetMobilePhone();
-            personalDetailsPage.ContactingYou.EmailAddress = email ?? Email;
-            personalDetailsPage.ContactingYou.ConfirmEmailAddress = email ?? Email;
+            personalDetailsPage.ContactingYou.CellPhoneNumber = _mobilePhone;
+            personalDetailsPage.ContactingYou.EmailAddress = _email;
+            personalDetailsPage.ContactingYou.ConfirmEmailAddress = _email;
             personalDetailsPage.PrivacyPolicy = true;
             personalDetailsPage.CanContact = "Yes";
-            personalDetailsPage.MarriedInCommunityProperty 
-                = "I am not married in community of property (I am single, married with antenuptial contract, divorced etc.)";
-
+            personalDetailsPage.MarriedInCommunityProperty =
+                "I am not married in community of property (I am single, married with antenuptial contract, divorced etc.)";
             if (submit)
             {
                 CurrentPage = personalDetailsPage.Submit() as AddressDetailsPageMobile;
             }
-
             return this;
         }
 
-        public IL0MobileConsumerJourney FillAddressDetails(string postcode = null, string addresPeriod = null, bool submit = true)
+        protected override BaseL0Journey FillAddressDetails(bool submit = true)
         {
             var addressPage = CurrentPage as AddressDetailsPageMobile;
             addressPage.HouseNumber = "25";
             addressPage.Street = "high road";
             addressPage.Town = "Kuku";
             addressPage.County = "Province";
-            addressPage.PostCode = postcode ?? Get.GetPostcode();
-            addressPage.AddressPeriod = addresPeriod ?? "2 to 3 years";
+            addressPage.PostCode = _postCode;
+            addressPage.AddressPeriod = _addressPeriod;
             if (submit)
             {
                 CurrentPage = addressPage.Next() as AccountDetailsPageMobile;
             }
-
             return this;
         }
 
-        public IL0MobileConsumerJourney FillAccountDetails(string password = null, bool submit = true)
+        protected override BaseL0Journey FillAccountDetails(bool submit = true)
         {
             var accountDetailsPage = CurrentPage as AccountDetailsPageMobile;
-            accountDetailsPage.AccountDetailsSection.Password = password ?? Get.GetPassword();
-            accountDetailsPage.AccountDetailsSection.PasswordConfirm = password ?? Get.GetPassword();
+            accountDetailsPage.AccountDetailsSection.Password = _password;
+            accountDetailsPage.AccountDetailsSection.PasswordConfirm = _password;
             accountDetailsPage.AccountDetailsSection.SecretQuestion = "Secret question";
             accountDetailsPage.AccountDetailsSection.SecretAnswer = "Secret answer";
             if (submit)
@@ -114,28 +128,22 @@ namespace Wonga.QA.Framework.Mobile.Journey
             return this;
         }
 
-        public IL0MobileConsumerJourney FillBankDetails(string accountNumber = null, string bankPeriod = null, string pin = null, bool submit = true)
+        protected override BaseL0Journey FillBankDetails(bool submit = true)
         {
             var bankDetailsPage = CurrentPage as PersonalBankAccountPageMobile;
             bankDetailsPage.BankAccountSection.BankName = "Capitec";
             bankDetailsPage.BankAccountSection.BankAccountType = "Current";
-            bankDetailsPage.BankAccountSection.AccountNumber = accountNumber ?? "1234567";
-            bankDetailsPage.BankAccountSection.BankPeriod = bankPeriod ?? "2 to 3 years";
-            bankDetailsPage.PinVerificationSection.Pin = pin ?? "0000";
+            bankDetailsPage.BankAccountSection.AccountNumber = _accountNumber;
+            bankDetailsPage.BankAccountSection.BankPeriod = _bankPeriod;
+            bankDetailsPage.PinVerificationSection.Pin = _pin;
             if (submit)
             {
                 CurrentPage = bankDetailsPage.Next() as ProcessingPageMobile;
             }
-
             return this;
         }
 
-        public IL0MobileConsumerJourney FillCardDetails(string cardNumber = null, string cardSecurity = null, string cardType = null, string expiryDate = null, string startDate = null, string pin = null, bool submit = true)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IL0MobileConsumerJourney WaitForAcceptedPage()
+        protected override BaseL0Journey WaitForAcceptedPage(bool submit = true)
         {
             var processingPage = CurrentPage as ProcessingPageMobile;
             CurrentPage = processingPage.WaitFor<AcceptedPageMobile>() as AcceptedPageMobile;
@@ -143,27 +151,27 @@ namespace Wonga.QA.Framework.Mobile.Journey
         }
 
 
-        public IL0MobileConsumerJourney WaitForDeclinedPage()
+        protected override BaseL0Journey WaitForDeclinedPage(bool submit = true)
         {
             var processingPage = CurrentPage as ProcessingPageMobile;
             CurrentPage = processingPage.WaitFor<DeclinedPageMobile>() as DeclinedPageMobile;
             return this;
         }
 
-
-        public IL0MobileConsumerJourney FillAcceptedPage()
+        protected override BaseL0Journey FillAcceptedPage(bool submit = true)
         {
             throw new NotImplementedException();
         }
 
-        public IL0MobileConsumerJourney GoToMySummaryPage()
+        protected override BaseL0Journey GoToMySummaryPage(bool submit = true)
         {
             throw new NotImplementedException();
         }
 
-        public IL0MobileConsumerJourney IgnoreAcceptingLoanAndReturnToHomePageAndLogin()
+        public override BaseL0Journey WithNationalId(string nationalId)
         {
-            throw new NotImplementedException();
+            _nationalId = nationalId;
+            return this;
         }
     }
 }

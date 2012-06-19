@@ -15,8 +15,6 @@ namespace Wonga.QA.Framework.UI
             switch (Config.AUT)
             {
                 case AUT.Za:
-                    if (Config.Ui.Browser.Equals(Config.UiConfig.BrowserType.FirefoxMobile))
-                        return new ZaMobileL0Journey(homePage);
                     return new ZaL0Journey(homePage);
                 case AUT.Ca:
                     return new CaL0Journey(homePage);
@@ -35,8 +33,6 @@ namespace Wonga.QA.Framework.UI
             switch (Config.AUT)
             {
                 case AUT.Za:
-                    if (Config.Ui.Browser.Equals(Config.UiConfig.BrowserType.FirefoxMobile))
-                        return new ZaMobileLnJourney(homePage);
                     return new ZaLnJourney(homePage);
                 case AUT.Ca:
                     return new CaLnJourney(homePage);
