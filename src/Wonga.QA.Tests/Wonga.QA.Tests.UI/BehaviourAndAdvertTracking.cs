@@ -76,7 +76,7 @@ namespace Wonga.QA.Tests.Ui
                 .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
 
             // Go to the first page:
-            var personalDetailsPage = journey.ApplyForLoan().CurrentPage as PersonalDetailsPage;
+            var personalDetailsPage = journey.Teleport<PersonalDetailsPage>() as PersonalDetailsPage;
 
             // Check that the page contains the wonga_doubleclick module v1.0 signature:
             Assert.IsTrue(personalDetailsPage.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
@@ -99,7 +99,7 @@ namespace Wonga.QA.Tests.Ui
             SourceDoesNotContain(doubleClickTokensBlackList);
 
             // Go to the second page:
-            var addressDetailsPage = journey.FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask)).CurrentPage as AddressDetailsPage;
+            var addressDetailsPage = journey.Teleport<AddressDetailsPage>() as AddressDetailsPage;
 
             // Check that the page contains the wonga_doubleclick module v1.0 signature:
             Assert.IsTrue(addressDetailsPage.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
@@ -123,7 +123,7 @@ namespace Wonga.QA.Tests.Ui
             SourceDoesNotContain(doubleClickTokensBlackList);
 
             // Go to the third page:
-            var accountDetailsPage = journey.FillAddressDetails().CurrentPage as AccountDetailsPage;
+            var accountDetailsPage = journey.Teleport<AccountDetailsPage>() as AccountDetailsPage;
 
             // Check that the page contains the wonga_doubleclick module v1.0 signature:
             Assert.IsTrue(accountDetailsPage.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
@@ -146,7 +146,7 @@ namespace Wonga.QA.Tests.Ui
             SourceDoesNotContain(doubleClickTokensBlackList);
 
             // Go to the fourth page:
-            var personalBankAccountPage = journey.FillAccountDetails().CurrentPage as PersonalBankAccountPage;
+            var personalBankAccountPage = journey.Teleport<PersonalBankAccountPage>() as PersonalBankAccountPage;
 
             // Check that the page contains the wonga_doubleclick module v1.0 signature:
             Assert.IsTrue(personalBankAccountPage.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
@@ -170,7 +170,7 @@ namespace Wonga.QA.Tests.Ui
             SourceDoesNotContain(doubleClickTokensBlackList);
 
             // Go to the fifth (processing) page:
-            var waitForAcceptedPage = journey.FillBankDetails().CurrentPage as ProcessingPage;
+            var waitForAcceptedPage = journey.Teleport<ProcessingPage>() as ProcessingPage;
 
             // Check that the page contains the wonga_doubleclick module v1.0 signature:
             Assert.IsTrue(waitForAcceptedPage.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
@@ -193,7 +193,7 @@ namespace Wonga.QA.Tests.Ui
             SourceDoesNotContain(doubleClickTokensBlackList);
 
             // Go to the sixth (accepted) page:
-            var acceptedPage = journey.WaitForAcceptedPage().CurrentPage as AcceptedPage;
+            var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
 
             // Check that the page contains the wonga_doubleclick module v1.0 signature:
             Assert.IsTrue(acceptedPage.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
@@ -216,7 +216,7 @@ namespace Wonga.QA.Tests.Ui
             SourceDoesNotContain(doubleClickTokensBlackList);
 
             // Complete the accept page:
-            var dealDonePage = journey.FillAcceptedPage().CurrentPage as DealDonePage;
+            var dealDonePage = journey.Teleport<DeclinedPage>() as DealDonePage;
 
             // Check that the page contains the wonga_doubleclick module v1.0 signature:
             Assert.IsTrue(dealDonePage.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));

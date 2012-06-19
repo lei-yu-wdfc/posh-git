@@ -89,12 +89,7 @@ namespace Wonga.QA.Tests.Ui
             string email = Get.RandomEmail();
             var journey = JourneyFactory.GetL0Journey(Client.Home())
                 .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email);
-            var mySummary = journey.ApplyForLoan()
-                                .FillPersonalDetails()
-                                .FillAddressDetails()
-                                .FillAccountDetails()
-                                .FillBankDetails()
-                                .WaitForAcceptedPage().CurrentPage as AcceptedPage;
+            var mySummary = journey.Teleport<AcceptedPage>() as AcceptedPage;
             Thread.Sleep(10000);
             var salesForceStartPage = Client.SalesForceStart();
             var salesForceHome = salesForceStartPage.LoginAs(Config.SalesforceUi.Username, Config.SalesforceUi.Password);
