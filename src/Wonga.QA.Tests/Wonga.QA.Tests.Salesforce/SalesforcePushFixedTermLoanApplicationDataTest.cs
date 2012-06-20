@@ -5,7 +5,7 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Db.Salesforce;
-using Wonga.QA.Framework.Msmq;
+using Wonga.QA.Framework.Msmq.Messages.Comms.InternalMessages.Salesforce;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Salesforce

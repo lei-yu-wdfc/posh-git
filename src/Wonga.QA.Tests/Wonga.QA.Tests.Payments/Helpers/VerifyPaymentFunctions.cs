@@ -8,6 +8,8 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Msmq;
+using Wonga.QA.Framework.Msmq.Enums.FileStorage.InternalMessages;
+using Wonga.QA.Framework.Msmq.Enums.Payments.Csapi.Commands;
 using Wonga.QA.Tests.Payments.Enums;
 
 namespace Wonga.QA.Tests.Payments.Helpers

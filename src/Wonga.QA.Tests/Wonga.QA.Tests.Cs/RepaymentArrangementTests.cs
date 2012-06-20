@@ -8,6 +8,9 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Cs;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Msmq;
+using Wonga.QA.Framework.Msmq.Enums.Payments.Ca;
+using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.SagaMessages;
+using Wonga.QA.Framework.Msmq.Messages.Risk;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
 

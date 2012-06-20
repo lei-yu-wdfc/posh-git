@@ -6,6 +6,11 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.BankGateway;
 using Wonga.QA.Framework.Db.Ops;
 using Wonga.QA.Framework.Msmq;
+using Wonga.QA.Framework.Msmq.Enums.Comms.Commands.Ca;
+using Wonga.QA.Framework.Msmq.Enums.Payments.Ca;
+using Wonga.QA.Framework.Msmq.Messages.BankGateway.InternalMessages.HSBC.Uk.FileWatcherMessages;
+using Wonga.QA.Framework.Msmq.Messages.Comms.Commands;
+using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.BankGateway

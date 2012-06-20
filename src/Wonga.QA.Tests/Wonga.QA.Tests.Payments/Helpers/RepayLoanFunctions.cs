@@ -6,6 +6,12 @@ using System.Threading;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Msmq;
+using Wonga.QA.Framework.Msmq.Enums.Payments.Ca;
+using Wonga.QA.Framework.Msmq.Messages.Ops.PublicMessages;
+using Wonga.QA.Framework.Msmq.Messages.Payments;
+using Wonga.QA.Framework.Msmq.Messages.Payments.Uk;
+using Wonga.QA.Framework.Msmq.Messages.PublicMessages.Payments;
+using Wonga.QA.Framework.Msmq.Messages.Risk;
 
 namespace Wonga.QA.Tests.Payments.Helpers
 {

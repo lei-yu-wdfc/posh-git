@@ -1,22 +1,15 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
-
-using Wonga.QA.Framework.Msmq;
+using Wonga.QA.Framework.Msmq.Enums.Payments.Ca;
+using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
-using AddBankAccountUkCommand = Wonga.QA.Framework.Msmq.AddBankAccountUkCommand;
-using CreateScheduledPaymentRequestCommand = Wonga.QA.Framework.Msmq.CreateScheduledPaymentRequestCommand;
-using CreateRepaymentArrangementCommand = Wonga.QA.Framework.Msmq.CreateRepaymentArrangementCommand;
-using PaymentFrequencyEnum = Wonga.QA.Framework.Msmq.PaymentFrequencyEnum;
-using PaymentTransactionEnum = Wonga.QA.Framework.Msmq.PaymentTransactionEnum;
-using PaymentTransactionScopeEnum = Wonga.QA.Framework.Msmq.PaymentTransactionScopeEnum;
-using SignApplicationCommand = Wonga.QA.Framework.Msmq.SignApplicationCommand;
+using PaymentTransactionEnum = Wonga.QA.Framework.Msmq.Enums.Payments.Csapi.Commands.PaymentTransactionEnum;
+using PaymentTransactionScopeEnum = Wonga.QA.Framework.Msmq.Enums.FileStorage.InternalMessages.PaymentTransactionScopeEnum;
 
 
 namespace Wonga.QA.Tests.Payments.Queries

@@ -14,7 +14,7 @@ using Wonga.QA.Framework.UI.Elements;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
-using CreateScheduledPaymentRequestCommand = Wonga.QA.Framework.Msmq.CreateScheduledPaymentRequestCommand;
+using CreateScheduledPaymentRequestCommand = Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages.CreateScheduledPaymentRequestCommand;
 using EmploymentStatusEnum = Wonga.QA.Framework.Api.EmploymentStatusEnum;
 
 namespace Wonga.QA.Tests.Ui
@@ -385,7 +385,7 @@ namespace Wonga.QA.Tests.Ui
             if (scenarioId == 11 || scenarioId == 12 || scenarioId == 13)
             {
                 // Send command to create scheduled payment request
-                Drive.Msmq.Payments.Send(new Framework.Msmq.CreateScheduledPaymentRequestCommand() { ApplicationId = application.Id, RepaymentRequestId = requestId1, });
+                Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = application.Id, RepaymentRequestId = requestId1, });
                 Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = application.Id, RepaymentRequestId = requestId2, });
             }
             // Login and open my summary page

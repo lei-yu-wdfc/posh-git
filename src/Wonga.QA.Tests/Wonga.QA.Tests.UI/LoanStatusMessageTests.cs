@@ -12,11 +12,10 @@ using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
-using Wonga.QA.Framework.Msmq;
-using CreateFixedTermLoanExtensionCommand = Wonga.QA.Framework.Msmq.CreateFixedTermLoanExtensionCommand;
-using CreateScheduledPaymentRequestCommand = Wonga.QA.Framework.Msmq.CreateScheduledPaymentRequestCommand;
-using EmploymentStatusEnum = Wonga.QA.Framework.Msmq.EmploymentStatusEnum;
-using SignFixedTermLoanExtensionCommand = Wonga.QA.Framework.Msmq.SignFixedTermLoanExtensionCommand;
+using CreateFixedTermLoanExtensionCommand = Wonga.QA.Framework.Msmq.Messages.Payments.CreateFixedTermLoanExtensionCommand;
+using CreateScheduledPaymentRequestCommand = Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages.CreateScheduledPaymentRequestCommand;
+using EmploymentStatusEnum = Wonga.QA.Framework.Msmq.Enums.Risk.EmploymentStatusEnum;
+using SignFixedTermLoanExtensionCommand = Wonga.QA.Framework.Msmq.Messages.Payments.SignFixedTermLoanExtensionCommand;
 
 namespace Wonga.QA.Tests.Ui
 {

@@ -5,6 +5,8 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.OpsSagasCa;
 using Wonga.QA.Framework.Mocks;
 using Wonga.QA.Framework.Msmq;
+using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages;
+using Wonga.QA.Framework.Msmq.Messages.Payments.PublicMessages;
 using Wonga.QA.Tests.BankGateway.Enums;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Enums;
