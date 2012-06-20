@@ -99,8 +99,9 @@ namespace Wonga.QA.Tests.Comms.Email
 				TopupId = fixedTermLoanTopupId,
 			});
 
+			
 			Assert.DoesNotThrow(() =>
-				Do.Until(() => !(emailTopupAgreementTab.FindAll(emailTopupAgreementTab.TopUpId == fixedTermLoanTopupId).ToList().Any())),
+				Do.Until(() => !emailTopupAgreementTab.FindAll(emailTopupAgreementTab.TopUpId == fixedTermLoanTopupId).Any()),
 					 "Email TopUp Agreement Saga hasn't completed.");
 			
 		}
