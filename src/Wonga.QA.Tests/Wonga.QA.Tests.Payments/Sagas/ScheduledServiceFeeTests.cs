@@ -263,7 +263,7 @@ namespace Wonga.QA.Tests.Payments.Sagas
 
 			var sfTrs = trs.FindAllBy(Type: "ServiceFee", ApplicationId: applicationId);
 			Stopwatch timeoutWatch = Stopwatch.StartNew();
-			while (sfTrs.Count() != postedOnDates.Count && timeoutWatch.Elapsed < TimeSpan.FromSeconds(5))
+			while (sfTrs.Count() != postedOnDates.Count && timeoutWatch.Elapsed < TimeSpan.FromSeconds(120))
 			{
 				Console.WriteLine("Waiting for transaction to be posted...");
 				Thread.Sleep(500);
