@@ -13,8 +13,10 @@ using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Framework.Mocks;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Framework.Db.Risk;
-using PaymentTransactionEnum = Wonga.QA.Framework.Msmq.PaymentTransactionEnum;
-using PaymentTransactionScopeEnum = Wonga.QA.Framework.Msmq.PaymentTransactionScopeEnum;
+using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages;
+using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.SagaMessages;
+using PaymentTransactionEnum =  Wonga.QA.Framework.Msmq.Enums.Payments.Csapi.Commands.PaymentTransactionEnum;
+using PaymentTransactionScopeEnum = Wonga.QA.Framework.Msmq.Enums.FileStorage.InternalMessages.PaymentTransactionScopeEnum;
 
 namespace Wonga.QA.Framework
 {

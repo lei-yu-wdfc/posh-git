@@ -4,10 +4,9 @@ using MbUnit.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
-using Wonga.QA.Framework.UI.UiElements.Pages.Wb;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Framework.Api;
-using EmploymentStatusEnum = Wonga.QA.Framework.Msmq.EmploymentStatusEnum;
+using EmploymentStatusEnum = Wonga.QA.Framework.Msmq.Enums.Risk.EmploymentStatusEnum;
 
 namespace Wonga.QA.Tests.Ui
 {
@@ -53,7 +52,7 @@ namespace Wonga.QA.Tests.Ui
 
         [Test, AUT(AUT.Uk), JIRA("UK-438", "UK-1823")]
         [Pending("Enable if we need to simulate different Employment statuses for declined loan")]
-        public void L0DeclinedForNotFullEmployedTest([EnumData(typeof(Framework.Msmq.EmploymentStatusEnum), ExcludeArray = new object[] { Framework.Msmq.EmploymentStatusEnum.EmployedFullTime })] EmploymentStatusEnum employmentStatus)
+        public void L0DeclinedForNotFullEmployedTest([EnumData(typeof(EmploymentStatusEnum), ExcludeArray = new object[] { EmploymentStatusEnum.EmployedFullTime })] EmploymentStatusEnum employmentStatus)
         {
             string email = Get.RandomEmail();
 

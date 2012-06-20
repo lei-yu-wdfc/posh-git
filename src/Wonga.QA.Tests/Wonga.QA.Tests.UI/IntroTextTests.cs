@@ -6,17 +6,12 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Db.Payments;
-using Wonga.QA.Framework.Db.Risk;
-using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
-using EmploymentStatusEnum = Wonga.QA.Framework.Msmq.EmploymentStatusEnum;
-using Wonga.QA.Framework.Helpers;
-using Wonga.QA.Framework.Db.Extensions;
-using CreateScheduledPaymentRequestCommand = Wonga.QA.Framework.Msmq.CreateScheduledPaymentRequestCommand;
+using EmploymentStatusEnum = Wonga.QA.Framework.Msmq.Enums.Risk.EmploymentStatusEnum;
+using CreateScheduledPaymentRequestCommand = Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages.CreateScheduledPaymentRequestCommand;
 
 
 namespace Wonga.QA.Tests.Ui

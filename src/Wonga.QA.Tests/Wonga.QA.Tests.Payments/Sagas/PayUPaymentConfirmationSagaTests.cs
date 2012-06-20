@@ -6,6 +6,9 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Msmq;
+using Wonga.QA.Framework.Msmq.Enums.PayU.InternalMessages;
+using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages;
+using Wonga.QA.Framework.Msmq.Messages.PublicMessages.Payments.Za;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments.Sagas

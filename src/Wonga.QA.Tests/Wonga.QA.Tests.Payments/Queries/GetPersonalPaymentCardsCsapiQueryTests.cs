@@ -7,6 +7,7 @@ using Wonga.QA.Framework.Cs;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Framework.Msmq;
+using Wonga.QA.Framework.Msmq.Enums.Payments.Ca;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments.Queries

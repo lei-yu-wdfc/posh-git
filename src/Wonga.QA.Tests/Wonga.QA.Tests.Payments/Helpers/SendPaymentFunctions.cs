@@ -3,6 +3,8 @@ using System.Linq;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Msmq;
+using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages;
+using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.SagaMessages;
 
 namespace Wonga.QA.Tests.Payments.Helpers
 {

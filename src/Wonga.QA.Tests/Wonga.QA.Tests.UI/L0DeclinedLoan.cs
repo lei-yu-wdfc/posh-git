@@ -1,21 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using MbUnit.Framework;
-using OpenQA.Selenium;
-using Wonga.QA.Framework;
-using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI;
-using Wonga.QA.Framework.UI.Mappings;
-using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
-using Wonga.QA.Framework.UI.UiElements.Pages.Wb;
 using Wonga.QA.Tests.Core;
-using Wonga.QA.Tests.Ui;
-using EmploymentStatusEnum = Wonga.QA.Framework.Msmq.EmploymentStatusEnum;
 
 namespace Wonga.QA.Tests.Ui
 {

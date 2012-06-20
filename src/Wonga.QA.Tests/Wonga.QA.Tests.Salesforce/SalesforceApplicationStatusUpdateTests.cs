@@ -9,6 +9,9 @@ using Wonga.QA.Framework.Db.OpsSagas;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Framework.Msmq;
+using Wonga.QA.Framework.Msmq.Enums.FileStorage.InternalMessages;
+using Wonga.QA.Framework.Msmq.Enums.Payments.Ca;
+using Wonga.QA.Framework.Msmq.Enums.Payments.Csapi.Commands;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Salesforce
@@ -80,7 +83,7 @@ namespace Wonga.QA.Tests.Salesforce
             Application application = CreateApplication(out customer);
             FixedTermLoanSagaEntity loanSagaEntity = null;
             Do.Until(() => loanSagaEntity = Drive.Db.OpsSagas.FixedTermLoanSagaEntities.SingleOrDefault(s => s.ApplicationGuid == application.Id));
-            Wonga.QA.Framework.Cs.CreateTransactionCommand createTransactionCsCommand = new Wonga.QA.Framework.Cs.CreateTransactionCommand()
+            CreateTransactionCommand createTransactionCsCommand = new CreateTransactionCommand()
                                                                         {
                                                                             Amount = application.LoanAmount * -2,
                                                                             ApplicationGuid = application.Id,

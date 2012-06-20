@@ -7,6 +7,7 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Msmq;
+using Wonga.QA.Framework.Msmq.Messages.BankGateway.InternalMessages.Easypay.Za;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments
