@@ -45,6 +45,7 @@
     <Compile Include="Checkpoints\CheckpointTooManyLoansAtAddressTest.cs" />
     <Compile Include="Checkpoints\CheckpointRepaymentPredictionPositiveTestsCa.cs" />
     <Compile Include="CloseApplicationTests.cs" />
+    <Compile Include="Commands\RiskSaveCustomerDetailsTests.cs" />
     <Compile Include="CustomerData.cs" />
     <Compile Include="Checkpoints\CheckpointReputationPredictionPositiveTests.cs" />
     <Compile Include="EidTests.cs" />
