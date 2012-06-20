@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="CustomRemoteWebDriver.cs" />
     <Compile Include="Journey\BaseL0Journey.cs" />
+    <Compile Include="Journey\BaseLnJourney.cs" />
     <Compile Include="Journey\CaL0Journey.cs" />
     <Compile Include="Journey\WbLnJourney.cs" />
     <Compile Include="Journey\PlL0Journey.cs" />
