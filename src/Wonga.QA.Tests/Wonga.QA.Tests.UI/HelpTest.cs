@@ -73,7 +73,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-166"), SmokeTest]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-166"), SmokeTest, Pending("ZA-1065")]
         public void JargonBusterLinkShouldNavigateThroughPageByClickingDifferentLettersFromAlphabet()
         {
             var page = Client.Home();
