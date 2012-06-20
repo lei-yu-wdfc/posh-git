@@ -35,6 +35,9 @@
   <ItemGroup>
     <Compile Include="Command.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="EnumGenerationResult.cs" />
+    <Compile Include="EnumGenerationStatus.cs" />
+    <Compile Include="EnumGenerator.cs" />
     <Compile Include="GeneratedEnumDefinition.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Origin.cs" />
