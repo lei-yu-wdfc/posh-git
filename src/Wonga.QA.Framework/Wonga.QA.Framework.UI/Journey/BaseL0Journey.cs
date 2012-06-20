@@ -35,6 +35,10 @@ namespace Wonga.QA.Framework.UI.Journey
 
         protected String _password;
 
+        protected String _bankName;
+        protected String _bankAccountType;
+        protected String _branchNumber;
+        protected String _sortCode;
         protected String _accountNumber;
         protected String _bankPeriod;
         protected String _pin;
@@ -253,6 +257,27 @@ namespace Wonga.QA.Framework.UI.Journey
         {
             _password = password;
             return this;
+        }
+
+        public virtual BaseL0Journey WithBankName(string bankName)
+        {
+            _bankName = bankName;
+            return this;
+        }
+
+        public virtual BaseL0Journey WithBankAccountType(string bankAccountType)
+        {
+            throw new NotImplementedException(message: "Used only on Za");
+        }
+
+        public virtual BaseL0Journey WithBranchNumber(string branchNumber)
+        {
+            throw new NotImplementedException(message: "Used only on Ca");
+        }
+
+        public virtual BaseL0Journey WithSortCode( string sortCode)
+        {
+            throw new NotImplementedException(message: "Used only on Pl and Uk");
         }
 
         public virtual BaseL0Journey WithAccountNumber(string accountNumber)

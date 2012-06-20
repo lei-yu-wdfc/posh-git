@@ -36,6 +36,8 @@ namespace Wonga.QA.Framework.UI
 
             _password = Get.GetPassword();
 
+            _bankName = "Bank of Montreal";
+            _branchNumber = "00011";
             _accountNumber = "3023423";
             _bankPeriod = "More than 4 years";
             _pin = "0000";
@@ -124,8 +126,8 @@ namespace Wonga.QA.Framework.UI
         protected override BaseL0Journey FillBankDetails(bool submit = true)
         {
             var bankDetailsPage = CurrentPage as PersonalBankAccountPage;
-            bankDetailsPage.BankAccountSection.BankName = "Bank of Montreal";
-            bankDetailsPage.BankAccountSection.BranchNumber = "00011";
+            bankDetailsPage.BankAccountSection.BankName = _bankName;
+            bankDetailsPage.BankAccountSection.BranchNumber = _branchNumber;
             bankDetailsPage.BankAccountSection.AccountNumber = _accountNumber;
             bankDetailsPage.BankAccountSection.BankPeriod = _bankPeriod;
             bankDetailsPage.PinVerificationSection.Pin = _pin;
@@ -170,5 +172,12 @@ namespace Wonga.QA.Framework.UI
             CurrentPage = dealDonePage.ContinueToMyAccount() as MySummaryPage;
             return this;
         }
+
+        public override BaseL0Journey WithBranchNumber(string branchNumber)
+        {
+            _branchNumber = branchNumber;
+            return this;
+        }
+
     }
 }

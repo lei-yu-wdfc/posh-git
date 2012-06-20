@@ -39,6 +39,8 @@ namespace Wonga.QA.Framework.UI
 
             _password = Get.GetPassword();
 
+            _bankName = "Capitec";
+            _bankAccountType = "Current";
             _accountNumber = "1234567";
             _bankPeriod = "2 to 3 years";
             _pin = "0000";
@@ -135,8 +137,8 @@ namespace Wonga.QA.Framework.UI
         protected override BaseL0Journey FillBankDetails(bool submit = true)
         {
             var bankDetailsPage = CurrentPage as PersonalBankAccountPage;
-            bankDetailsPage.BankAccountSection.BankName = "Capitec";
-            bankDetailsPage.BankAccountSection.BankAccountType = "Current";
+            bankDetailsPage.BankAccountSection.BankName = _bankName;
+            bankDetailsPage.BankAccountSection.BankAccountType = _bankAccountType;
             bankDetailsPage.BankAccountSection.AccountNumber = _accountNumber;
             bankDetailsPage.BankAccountSection.BankPeriod = _bankPeriod;
             bankDetailsPage.PinVerificationSection.Pin = _pin;
@@ -188,6 +190,12 @@ namespace Wonga.QA.Framework.UI
         public override BaseL0Journey WithNationalId(string nationalId)
         {
             _nationalId = nationalId;
+            return this;
+        }
+
+        public override BaseL0Journey WithBankAccountType(string bankAccountType)
+        {
+            _bankAccountType = bankAccountType;
             return this;
         }
     }
