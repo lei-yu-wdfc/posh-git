@@ -34,6 +34,8 @@ namespace Wonga.QA.Framework.UI.Journey
 
             _password = Get.GetPassword();
 
+            _bankName = "AIB";
+            _sortCode = "13-40-20";
             _accountNumber = "63849203";
             _bankPeriod = "3 to 4 years";
             _pin = "0000";
@@ -134,8 +136,8 @@ namespace Wonga.QA.Framework.UI.Journey
         protected override BaseL0Journey FillBankDetails(bool submit = true)
         {
             var bankDetailsPage = CurrentPage as PersonalBankAccountPage;
-            bankDetailsPage.BankAccountSection.BankName = "AIB";
-            bankDetailsPage.BankAccountSection.SortCode = "13-40-20";
+            bankDetailsPage.BankAccountSection.BankName = _bankName;
+            bankDetailsPage.BankAccountSection.SortCode = _sortCode;
             bankDetailsPage.BankAccountSection.AccountNumber = _accountNumber;
             bankDetailsPage.BankAccountSection.BankPeriod = _bankPeriod;
             if (submit)
@@ -211,6 +213,12 @@ namespace Wonga.QA.Framework.UI.Journey
         public override BaseL0Journey WithMotherMaidenName(string motherMaidenName)
         {
             _motherMaidenName = motherMaidenName;
+            return this;
+        }
+
+        public override BaseL0Journey WithSortCode(string sortCode)
+        {
+            _sortCode = sortCode;
             return this;
         }
 
