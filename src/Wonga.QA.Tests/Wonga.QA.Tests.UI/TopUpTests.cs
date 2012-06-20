@@ -12,7 +12,7 @@ namespace Wonga.QA.Tests.Ui
 {
     class TopUpTests : UiTest
     {
-        [Test, AUT(AUT.Uk), JIRA("UK-826", "UK-789", "UK-2016"), MultipleAsserts, Pending("Fails due to bug UK-2016")]
+        [Test, AUT(AUT.Uk), JIRA("UK-826", "UK-789", "UK-2016", "UKWEB-928"), MultipleAsserts, Pending("UKWEB-928: Top Up throws an exception on the Accept page")]
         public void TopUpMovingTopupSlidersLoanSummaryShouldBeCorrect()
         {
             string email = Get.RandomEmail();
