@@ -32,78 +32,35 @@ namespace Wonga.QA.Tests.Payments.Command
 				Assert.Inconclusive("Bankgateway is in test mode");
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2147")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2147"), Pending("ZA-2565")]
 		public void FlagApplicationToDca_ShouldMoveApplicationToDCA()
 		{
 			//Arrange
 			var customer = CustomerBuilder.New().Build();
 			var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
-			Thread.Sleep(delay);
-
-			var flagToDcaCommand = new Framework.Cs.FlagApplicationToDcaCommand
-			{
-				ApplicationId = app.Id
-			};
-
-			//Act
-			Drive.Cs.Commands.Post(flagToDcaCommand);
-
-			Thread.Sleep(delay);
-			//Assert
-            var debtCollection = Do.Until(() => _debtCollections.FindAll(_debtCollections.Applications.ExternalId == app.Id)
-                                                    .OrderByDescending(_debtCollections.CreatedOn)
-                                                    .FirstOrDefault());
-			Assert.IsNotNull(debtCollection);
-			Assert.AreEqual(true, debtCollection.MovedToAgency);
-
+			FlagDca(app.Id);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2147")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2147"), Pending("ZA-2565")]
 		[ExpectedException(typeof(ValidatorException), "Payments_FlagToDca_ApplicationDoesNotExist")]
-		public void FlagApplicationToDca_ForNonExitingApplication_ExpectValidationException()
+		public void FlagApplicationToDca_ForNonExistingApplication_ExpectValidationException()
 		{
-			//Arrange
-			var customer = CustomerBuilder.New().Build();
-			var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
-
-			Thread.Sleep(delay);
-
-			var flagToDcaCommand = new Framework.Cs.FlagApplicationToDcaCommand
-			{
-				ApplicationId = Guid.NewGuid()
-			};
-
-			//Act
-			Drive.Cs.Commands.Post(flagToDcaCommand);
-
+			FlagDca(Guid.NewGuid());
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2147")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2147"), Pending("ZA-2565")]
 		[ExpectedException(typeof(ValidatorException), "FlagApplicationToDca_ApplicationNotOpen")]
 		public void FlagApplicationToDca_ForClosedApplication_ExpectValidationException()
 		{
 			//Arrange
 			var customer = CustomerBuilder.New().Build();
-			var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+			var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().RepayOnDueDate();
 
-			//Close the Application
-			var loanApp = Do.Until(() => Drive.Data.Payments.Db.Applications.FindAllByExternalId(app.Id).Single());
-			loanApp.ClosedOn = DateTime.Now;
-			Drive.Data.Payments.Db.Applications.Update(loanApp);
-
-			Thread.Sleep(delay);
-
-			var flagToDcaCommand = new Framework.Cs.FlagApplicationToDcaCommand
-			{
-				ApplicationId = app.Id
-			};
-
-			//Act
-			Drive.Cs.Commands.Post(flagToDcaCommand);
+			FlagDca(app.Id);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2147")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2147"), Pending("ZA-2565")]
 		public void RevokeApplicationFromDca_ShouldMoveApplicationFromDCA()
 		{
 			//Arrange
@@ -133,7 +90,10 @@ namespace Wonga.QA.Tests.Payments.Command
 				SagaId = externalDebtCollectionSagaEntities.Id,
 			});
 
-			Thread.Sleep(delay);
+			//Wait for dca creation
+			Do.Until(() => _debtCollections.FindAll(_debtCollections.Applications.ExternalId == app.Id)
+							.OrderByDescending(_debtCollections.CreatedOn)
+							.FirstOrDefault());
 
 			var revokeFromDcaCommand = new Framework.Cs.RevokeApplicationFromDcaCommand
 			{
@@ -143,17 +103,15 @@ namespace Wonga.QA.Tests.Payments.Command
 			//Act
 			Drive.Cs.Commands.Post(revokeFromDcaCommand);
 
-			Thread.Sleep(delay);
+			//Thread.Sleep(delay);
 
-			var debtCollection = Do.Until(() => _debtCollections.FindAll(_debtCollections.Applications.ExternalId == app.Id)
-													.OrderByDescending(_debtCollections.CreatedOn)
-													.FirstOrDefault());
+			Do.Until(() => (bool)(_debtCollections.FindAll(_debtCollections.Applications.ExternalId == app.Id)
+									.OrderByDescending(_debtCollections.CreatedOn)
+									.FirstOrDefault()).MovedToAgency == false);
 
-			//Assert
-			Assert.AreEqual(false, debtCollection.MovedToAgency);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2147")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2147"), Pending("ZA-2565")]
 		[ExpectedException(typeof(ValidatorException), "Payments_RevokeFromDca_ApplicationDoesNotExist")]
 		public void RevokeApplicationFromDca_ForNonExitingApplication_ExpectValidationException()
 		{
@@ -184,7 +142,10 @@ namespace Wonga.QA.Tests.Payments.Command
 				SagaId = externalDebtCollectionSagaEntities.Id,
 			});
 
-			Thread.Sleep(delay);
+			//Wait for dca creation
+			Do.Until(() => _debtCollections.FindAll(_debtCollections.Applications.ExternalId == app.Id)
+							.OrderByDescending(_debtCollections.CreatedOn)
+							.FirstOrDefault());
 
 			var revokeFromDcaCommand = new Framework.Cs.RevokeApplicationFromDcaCommand
 			{
@@ -195,7 +156,7 @@ namespace Wonga.QA.Tests.Payments.Command
 			Drive.Cs.Commands.Post(revokeFromDcaCommand);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2147")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2147"), Pending("ZA-2565")]
 		[ExpectedException(typeof(ValidatorException), "RevokeApplicationFromDca_ApplicationNotOpen")]
 		public void RevokeApplicationFromDca_ForClosedApplication_ExpectValidationException()
 		{
@@ -204,35 +165,8 @@ namespace Wonga.QA.Tests.Payments.Command
 			var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).WithLoanAmount(100).
 				Build();
 
-			var fixedTermLoanSagaEntity = Do.Until(() => _fixedTermLoanSagas.FindAllByApplicationGuid(app.Id).Single());
-
-			new MsmqDriver().Payments.Send(new TimeoutMessage()
-			{
-				SagaId = fixedTermLoanSagaEntity.Id,
-			});
-
-			var scheduledPaymentSagaEntity = Do.Until(() => _schedulePaymentSagas.FindAllByApplicationGuid(app.Id).Single());
-
-			new MsmqDriver().Payments.Send(new TimeoutMessage()
-			{
-				SagaId = scheduledPaymentSagaEntity.Id,
-			});
-
-			//Force dca to timeout immmediately
-			var externalDebtCollectionSagaEntities = Do.Until(() => _externalDebtCollectionSagas.FindAllByApplicationId(app.Id).Single());
-
-			new MsmqDriver().Payments.Send(new TimeoutMessage()
-			{
-				SagaId = externalDebtCollectionSagaEntities.Id,
-			});
-
-			Thread.Sleep(delay);
-
-			//Close the Application
-			var loanApp = Do.Until(() => Drive.Data.Payments.Db.Applications.FindAllByExternalId(app.Id).Single());
-			loanApp.ClosedOn = DateTime.Now;
-			Drive.Data.Payments.Db.Applications.Update(loanApp);
-
+			FlagDca(app.Id);
+			app.RepayOnDueDate();
 
 			var revokeFromDcaCommand = new Framework.Cs.RevokeApplicationFromDcaCommand
 			{
@@ -242,5 +176,25 @@ namespace Wonga.QA.Tests.Payments.Command
 			//Act
 			Drive.Cs.Commands.Post(revokeFromDcaCommand);
 		}
+
+		#region Helpers
+
+		private void FlagDca(Guid applicationId)
+		{
+			var flagToDcaCommand = new Framework.Cs.FlagApplicationToDcaCommand
+			{
+				ApplicationId = applicationId
+			};
+
+			Drive.Cs.Commands.Post(flagToDcaCommand);
+
+			var debtCollection = Do.Until(() => _debtCollections.FindAll(_debtCollections.Applications.ExternalId == applicationId)
+													.OrderByDescending(_debtCollections.CreatedOn)
+													.FirstOrDefault());
+			Assert.IsNotNull(debtCollection);
+			Assert.AreEqual(true, debtCollection.MovedToAgency);
+		}
+
+		#endregion
 	}
 }

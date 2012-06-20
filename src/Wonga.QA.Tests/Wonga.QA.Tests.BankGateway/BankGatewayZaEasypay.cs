@@ -16,7 +16,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.BankGateway
 {
-	[TestFixture, AUT(AUT.Za), Parallelizable(TestScope.All)]
+	[TestFixture, AUT(AUT.Za), Parallelizable(TestScope.All), Pending("Bankgateway service is locking db, can't clean up test files")]
 	public class BankGatewayZaEasypay
 	{
 		private Application _application;
@@ -36,12 +36,8 @@ namespace Wonga.QA.Tests.BankGateway
 		[FixtureSetUp]
 		public void FixtureSetUp()
 		{
-			//Clear Test Data
-			_filesTable.DeleteAll(_filesTable.FileName == TEST_FILE1);
-			_acknowledgesTable.DeleteAll(_acknowledgesTable.FileName == TEST_FILE1);
-
-			_filesTable.DeleteAll(_filesTable.FileName == TEST_FILE2);
-			_acknowledgesTable.DeleteAll(_acknowledgesTable.FileName == TEST_FILE2);
+			DeleteEasypayTestFie(TEST_FILE1);
+			DeleteEasypayTestFie(TEST_FILE2);
 
 			//Make test run faster with min polling interval
 			var bankIntegration = _bankIntegrationsTable.FindByDescription(BANK_INT_DESC);
@@ -62,9 +58,12 @@ namespace Wonga.QA.Tests.BankGateway
 			bankIntegration.PollingInterval = _pollingInterval;
 
 			_bankIntegrationsTable.Update(bankIntegration);
+
+			DeleteEasypayTestFie(TEST_FILE1);
+			DeleteEasypayTestFie(TEST_FILE2);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2394"), Parallelizable(TestScope.All)]
+		[Test, AUT(AUT.Za), JIRA("ZA-2394"), Parallelizable(TestScope.All), Pending]
 		public void PartialRepaymentCreatesTransaction()
 		{
 			var app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == _application.Id);
@@ -89,7 +88,7 @@ namespace Wonga.QA.Tests.BankGateway
 			Assert.AreEqual("DirectBankPayment", transaction.Type);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2394"), Parallelizable(TestScope.All), DependsOn("PartialRepaymentCreatesTransaction")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2394"), Parallelizable(TestScope.All), DependsOn("PartialRepaymentCreatesTransaction"), Pending]
 		public void ProcessingFileCreatesAcknowledgements()
 		{
 			dynamic repaymentAccount = Drive.Data.Payments.Db.RepaymentAccount;
@@ -108,7 +107,7 @@ namespace Wonga.QA.Tests.BankGateway
 			Assert.AreEqual(repayNumber, acknowledgeTransaction[0].IncomingReference);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2394"), DependsOn("PartialRepaymentCreatesTransaction"), Parallelizable(TestScope.All)]
+		[Test, AUT(AUT.Za), JIRA("ZA-2394"), DependsOn("PartialRepaymentCreatesTransaction"), Parallelizable(TestScope.All), Pending]
 		public void FullRepaymentClosesLoan()
 		{
 			var app = Drive.Db.Payments.Applications.Single(a => a.ExternalId == _application.Id);
@@ -130,6 +129,17 @@ namespace Wonga.QA.Tests.BankGateway
 			_incomingBankGatewayFileTable.Insert(incomingBankGatewayFile);
 
 			Do.Until(() => _application.IsClosed);
+		}
+
+		#region Helpers
+
+		private void DeleteEasypayTestFie(string fileName)
+		{
+			if (_filesTable.FindAllByFileName(fileName).ToList().Count > 0)
+				_filesTable.DeleteAll(_filesTable.FileName == fileName);
+
+			if (_acknowledgesTable.FindAllByFileName(fileName).ToList().Count > 0)
+				_acknowledgesTable.DeleteAll(_acknowledgesTable.FileName == fileName);
 		}
 
 		private string CreateEasypayTestFile(DateTime valueDate, int fileSequence, decimal repayAmount, decimal fees, string repaymentNumber, string accountNumber)
@@ -198,6 +208,7 @@ namespace Wonga.QA.Tests.BankGateway
 																	);
 			return fileContent;
 		}
-
+		
+		#endregion
 	}
 }
