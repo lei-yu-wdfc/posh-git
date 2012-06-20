@@ -42,6 +42,7 @@
     <Compile Include="ClickTest.cs" />
     <Compile Include="Facebook\FacebookTests.cs" />
     <Compile Include="Facebook\L0JourneyTests.cs" />
+    <Compile Include="Region\Uk\MySummaryScenariosTests.cs" />
     <Compile Include="TimeoutTest.cs" />
     <Compile Include="ExtensionAgreementTest.cs" />
     <Compile Include="RepaymentTest.cs" />
@@ -53,11 +54,9 @@
     <Compile Include="ForgotPassword.cs" />
     <Compile Include="HelpTest.cs" />
     <Compile Include="HowItWorksTest.cs" />
-    <Compile Include="IntroTextTests.cs" />
     <Compile Include="L0AcceptedLoan.cs" />
     <Compile Include="L0JourneyTests.cs" />
     <Compile Include="LnJourneyTests.cs" />
-    <Compile Include="LoanStatusMessageTests.cs" />
     <Compile Include="LoginTest.cs" />
     <Compile Include="LogoutTest.cs" />
     <Compile Include="MyAccountTests.cs" />
@@ -71,7 +70,6 @@
     <Compile Include="SecondLoanTest.cs" />
     <Compile Include="SliderTests.cs" />
     <Compile Include="SurveyTest.cs" />
-    <Compile Include="TagCloudTests.cs" />
     <Compile Include="TopUpTests.cs" />
     <Compile Include="L0DeclinedLoan.cs" />
     <Compile Include="UiTest.cs" />
