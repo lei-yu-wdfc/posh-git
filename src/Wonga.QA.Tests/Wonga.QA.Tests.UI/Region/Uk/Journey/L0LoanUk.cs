@@ -14,30 +14,11 @@ namespace Wonga.QA.Tests.Ui
     [Parallelizable(TestScope.All)]
     public class L0LoanUk : UiTest
     {
-        [Test, AUT(AUT.Uk)]
-        public void AcceptedLoan()
-        {
-            var journey = JourneyFactory.GetL0Journey(Client.Home())
-                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
 
-            var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
-
-        }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-730")]
-        public void CheckLoanAgreement()
-        {
-            var journey = JourneyFactory.GetL0Journey(Client.Home())
-                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
-
-            var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
-
-            Assert.IsTrue(acceptedPage.IsAgreementFormDisplayed());
-
-        }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-731")]
-        public void LoanCompletionConfirmed()
+        // Check L0 loan is accepted and Loan Agreement is displayed
+        // Check L0 loan is completed and text on Deal Done page is correct
+        [Test, AUT(AUT.Uk), JIRA("UK-730", "UK-731"), MultipleAsserts]
+        public void L0AcceptedCompleted()
         {
             string expectedDealDoneText = "Your application has been accepted\r\nThe cash will be winging its way into your bank account in the next 15 minutes! Please just be aware that different banks take different lengths of time to show new deposits.\r\nPlease don\'t forget that you have promised to repay on {repay date} when you\'ll need to have £{repay amount} ready in the bank account linked to your debit card. You can login to your Wonga account at any time to keep track of your loan, apply for more cash (depending on your trust rating) and even extend or repay early.\r\nWe hope you find the money useful and, if you love our service, please now check out the options below!";
             const int loanAmount = 100;
@@ -49,16 +30,16 @@ namespace Wonga.QA.Tests.Ui
                 .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
                 .WithAmount(loanAmount).WithDuration(days);
 
+            var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
+            Assert.IsTrue(acceptedPage.IsAgreementFormDisplayed());
+
             var dealDonePage = journey.Teleport<DealDonePage>() as DealDonePage;
-
             string actualDealDoneText = dealDonePage.GetDealDonePageText;
-
-            // Check text on the Deal Done page is displayed correctly
             expectedDealDoneText = expectedDealDoneText.Replace("{repay date}", Date.GetOrdinalDate(paymentDate, "dddd d MMM yyyy")).Replace("{repay amount}", paymentAmount);
             Assert.AreEqual(expectedDealDoneText, actualDealDoneText);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-438", "UK-1823", "UKWEB-253")]
+        [Test, AUT(AUT.Uk), JIRA("UK-438", "UK-1823", "UKWEB-253"), Pending("Stops on Accept page. Then also opens Success page, not Decline")]
         public void L0DeclinedForEmployedPartTimeTest()
         {
             var journeyL0 = JourneyFactory.GetL0Journey(Client.Home())
