@@ -1,0 +1,18 @@
+using System;
+using System.Collections.Generic;
+using System.Xml.Serialization;
+
+using Wonga.QA.Framework.Msmq.Enums.PayU.InternalMessages;
+
+namespace Wonga.QA.Framework.Msmq.Messages.PayU.InternalMessages
+{
+    /// <summary> Wonga.PayU.InternalMessages.VerifyPayUTransactionResponseMessage </summary>
+    [XmlRoot("VerifyPayUTransactionResponseMessage", Namespace = "Wonga.PayU.InternalMessages", DataType = "")]
+    public partial class VerifyPayUTransactionResponseCommand : MsmqMessage<VerifyPayUTransactionResponseCommand>
+    {
+        public String PaymentReferenceNumber { get; set; }
+        public PayUTransactionResultEnum Result { get; set; }
+        public DateTime DateProcessed { get; set; }
+        public String RawResponse { get; set; }
+    }
+}
