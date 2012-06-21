@@ -14,6 +14,8 @@ namespace Wonga.QA.Framework.UI
         protected int _amount;
         protected int _duration;
 
+        protected String _mobilePhone ;
+
         protected String _firstName;
         protected String _lastName;
 
@@ -42,6 +44,12 @@ namespace Wonga.QA.Framework.UI
         {
             return this;
         }
+
+        protected virtual BaseLnJourney FillApplicationDetailsWithNewMobilePhone()
+        {
+            throw new NotImplementedException(message:"Used only on Uk");
+        }
+
         protected abstract BaseLnJourney WaitForAcceptedPage();
         protected abstract BaseLnJourney WaitForDeclinedPage();
         protected abstract BaseLnJourney FillAcceptedPage();
@@ -95,6 +103,12 @@ namespace Wonga.QA.Framework.UI
             journey.Add(typeof(ProcessingPage), WaitForDeclinedPage);
             return this;
         }
+
+       public virtual BaseLnJourney WithNewMobilePhone(string mobilePhone)
+       {
+           throw new NotImplementedException(message: "Used only on Uk");
+       }
+
         #endregion
     }
 }

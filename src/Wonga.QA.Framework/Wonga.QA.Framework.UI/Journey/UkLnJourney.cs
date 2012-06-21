@@ -17,6 +17,8 @@ namespace Wonga.QA.Framework.UI
             _amount = 200;
             _duration = 10;
 
+            _mobilePhone = Get.GetMobilePhone();
+
             journey.Add(typeof(HomePage), ApplyForLoan);
             journey.Add(typeof(ApplyPage), FillApplicationDetails);
             journey.Add(typeof(ProcessingPage), WaitForAcceptedPage);
@@ -42,10 +44,10 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public UkLnJourney FillApplicationDetailsWithNewMobilePhone()
+        protected override BaseLnJourney FillApplicationDetailsWithNewMobilePhone()
         {
             var applyPage = CurrentPage as ApplyPage;
-            applyPage.SetNewMobilePhone = Get.GetMobilePhone();
+            applyPage.SetNewMobilePhone = _mobilePhone;
             applyPage.ApplicationSection.SetPin = "0000";
             applyPage.ApplicationSection.SetSecurityCode = "000";
             applyPage.ApplicationSection.SetMinCash = "100";
@@ -78,6 +80,21 @@ namespace Wonga.QA.Framework.UI
         {
             var dealDonePage = CurrentPage as DealDonePage;
             CurrentPage = dealDonePage.ContinueToMyAccount() as MySummaryPage;
+            return this;
+        }
+
+        public override BaseLnJourney WithNewMobilePhone(string mobilePhone)
+        {
+            _mobilePhone = mobilePhone;
+
+            journey.Remove(typeof(ApplyPage));
+            journey.Remove(typeof(ProcessingPage));
+            journey.Remove(typeof(AcceptedPage));
+            journey.Remove(typeof(DealDonePage));
+            journey.Add(typeof(ApplyPage), FillApplicationDetailsWithNewMobilePhone);
+            journey.Add(typeof(ProcessingPage), WaitForAcceptedPage);
+            journey.Add(typeof(AcceptedPage), FillAcceptedPage);
+            journey.Add(typeof(DealDonePage), GoToMySummaryPage);
             return this;
         }
     }
