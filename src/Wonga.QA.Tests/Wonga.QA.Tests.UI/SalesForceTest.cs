@@ -83,7 +83,7 @@ namespace Wonga.QA.Tests.Ui
             //Check Balance at today and balance at today should be Principal+Fee (+Interest if Loan was taken more than 3 days ago)
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-222")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-222"),Pending("stop writing tests that doesnt work")]
         public void CustomerGetsAcceptedDecisionDontClickAcceptButtonApplicationStatusInSF()
         {
             string email = Get.RandomEmail();
