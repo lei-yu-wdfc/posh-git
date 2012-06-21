@@ -1,10 +1,16 @@
 ﻿using System;
-using Wonga.QA.Framework.Msmq;
+using Wonga.QA.Framework.Msmq.Enums.Payments.Ca;
+using Wonga.QA.Framework.Msmq.Messages.Comms.PublicMessages;
+using Wonga.QA.Framework.Msmq.Messages.Graydon.PublicMessages.events;
+using Wonga.QA.Framework.Msmq.Messages.Payments.PublicMessages;
+using Wonga.QA.Framework.Msmq.Messages.Risk;
+using Wonga.QA.Framework.Msmq.Messages.Risk.Commands;
+using RiskAddBankAccountCommand = Wonga.QA.Framework.Msmq.RiskAddBankAccountCommand;
 using RiskAddPaymentCardCommand = Wonga.QA.Framework.Msmq.RiskAddPaymentCardCommand;
-using RiskSaveCustomerAddressCommand = Wonga.QA.Framework.Msmq.RiskSaveCustomerAddressCommand;
-using RiskSaveCustomerDetailsCommand = Wonga.QA.Framework.Msmq.RiskSaveCustomerDetailsCommand;
-using SubmitApplicationBehaviourCommand = Wonga.QA.Framework.Msmq.SubmitApplicationBehaviourCommand;
-using SubmitNumberOfGuarantorsCommand = Wonga.QA.Framework.Msmq.SubmitNumberOfGuarantorsCommand;
+using RiskSaveCustomerAddressCommand = Wonga.QA.Framework.Msmq.Messages.Risk.RiskSaveCustomerAddressCommand;
+using RiskSaveCustomerDetailsCommand = Wonga.QA.Framework.Msmq.Messages.Risk.RiskSaveCustomerDetailsCommand;
+using SubmitApplicationBehaviourCommand = Wonga.QA.Framework.Msmq.Messages.Risk.SubmitApplicationBehaviourCommand;
+using SubmitNumberOfGuarantorsCommand = Wonga.QA.Framework.Msmq.Messages.Risk.SubmitNumberOfGuarantorsCommand;
 
 namespace Wonga.QA.ServiceTests.Risk
 {
