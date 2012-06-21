@@ -511,7 +511,11 @@ namespace Wonga.QA.Tests.Ui
             TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
             ApplicationOperations.RewindApplicationDates(application, daysShiftSpan);
 
-            Client.Login().LoginAs(email).RepayButtonClick();
+            var loginPage = Client.Login();
+            var myAccountPage = loginPage.LoginAs(email);
+            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+
+            mySummaryPage.RepayButtonClick();
             var requestPage = new RepayRequestPage(this.Client);
 
             //Branch point - Add Cv2 for each path and proceed
@@ -545,7 +549,11 @@ namespace Wonga.QA.Tests.Ui
             TimeSpan daysShiftSpan = TimeSpan.FromDays(daysShift);
             ApplicationOperations.RewindApplicationDates(application, daysShiftSpan);
 
-            Client.Login().LoginAs(email).RepayButtonClick();
+            var loginPage = Client.Login();
+            var myAccountPage = loginPage.LoginAs(email);
+            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+
+            mySummaryPage.RepayButtonClick();
             var requestPage = new RepayRequestPage(this.Client);
 
             //Set partial payment amount, test for correct values at same time
