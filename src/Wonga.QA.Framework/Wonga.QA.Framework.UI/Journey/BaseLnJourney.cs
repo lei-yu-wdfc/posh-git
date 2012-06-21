@@ -75,6 +75,18 @@ namespace Wonga.QA.Framework.UI
             throw new NotImplementedException(message: "Used only on Ca");
         }
 
+        public BaseLnJourney WithAmount(int amount)
+        {
+            _amount = amount;
+            return this;
+        }
+
+        public BaseLnJourney WithDuration(int duration)
+        {
+            _duration = duration;
+            return this;
+        }
+
         public virtual BaseLnJourney WithDeclineDecision()
         {
             journey.Remove(typeof(ProcessingPage));
