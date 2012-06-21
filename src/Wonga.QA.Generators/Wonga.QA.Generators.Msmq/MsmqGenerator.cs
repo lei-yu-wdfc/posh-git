@@ -20,12 +20,8 @@ namespace Wonga.QA.Generators.Msmq
 
         	bool errorsOccurred = false;
 
-            var binRootDirectories = new
-            {
-				Messages = Repo.Directory(MessagesDirectoryName),
-				Enums = Repo.Directory(EnumsDirectoryName)
-            };
-
+			var binRootDirectories = new GeneratorRepoDirectories(MessagesDirectoryName, null);
+            
 			var assemblies = new List<Assembly>();
         	var enumGenerator = new EnumGenerator();
 
@@ -42,7 +38,6 @@ namespace Wonga.QA.Generators.Msmq
                     continue;
                 assemblies.Add(assembly);
 
-                //TODO
                 Boolean cs = file.GetName().Split('.').Contains("Csapi", StringComparer.InvariantCultureIgnoreCase);
 
                 foreach (Type message in assembly.GetTypes().Where(t => t.IsMessage() && t.IsInstantiatable()))
@@ -60,7 +55,7 @@ namespace Wonga.QA.Generators.Msmq
 
 						String messageClassNamespace = string.Format("{0}.{1}.{2}", Config.Msmq.Project, MessagesDirectoryName, messageClassNamespaceRelativePath);
 
-						DirectoryInfo messageClassDirectory = Repo.Directory(messageClassSubfolderName, binRootDirectories.Messages);
+						DirectoryInfo messageClassDirectory = Repo.Directory(messageClassSubfolderName, binRootDirectories.ClassesDirectory);
 						FileInfo code = Repo.File(String.Format("{0}.cs", messageClassName), messageClassDirectory);
 
 						//TODO: should use the original namespace for the enum!!!!!
@@ -75,7 +70,7 @@ namespace Wonga.QA.Generators.Msmq
 						{
 							builder.AppendFormatLine("        public {0} {1} {{ get; set; }}", member.Value.GetDeclaration(), member.Key);
 
-							enumGenerator.GenerateAllEnumsUsedByClassMember(member.Value, generatedEnumNamespace, binRootDirectories.Enums, messageClassSubfolderName);
+							enumGenerator.GenerateAllEnumsUsedByClassMember(member.Value, generatedEnumNamespace, binRootDirectories.EnumsDirectory, messageClassSubfolderName);
 						}
 
 						builder.AppendLine("    }").AppendLine("}");
@@ -102,8 +97,8 @@ namespace Wonga.QA.Generators.Msmq
 				return;
         	}
 
-        	Repo.Inject(binRootDirectories.Messages, Config.Msmq.Folder, Config.Msmq.Project);
-			Repo.Inject(binRootDirectories.Enums, EnumsDirectoryName, Config.Msmq.Project);
+        	Repo.Inject(binRootDirectories.ClassesDirectory, Config.Msmq.Folder, Config.Msmq.Project);
+			Repo.Inject(binRootDirectories.EnumsDirectory, EnumsDirectoryName, Config.Msmq.Project);
         }
 
     	private static StringBuilder InitializeMessageClassDefinition(string messageClassName, Type message,

@@ -41,9 +41,12 @@
     <Compile Include="EnumGenerator.cs" />
     <Compile Include="GeneratedEnumDefinition.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="GeneratorRepoDirectories.cs" />
+    <Compile Include="IGenerateEnum.cs" />
     <Compile Include="Origin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repo.cs" />
+    <Compile Include="XmlSchemaClassGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

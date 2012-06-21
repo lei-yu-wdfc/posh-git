@@ -27,6 +27,7 @@ namespace Wonga.QA.Generators.Core
         public static String[] Suffixes { get; set; }
 
         public static Framework Api { get; set; }
+		public static Framework CsApi { get; set; }
         public static Framework Msmq { get; set; }
         public static Framework Db { get; set; }
         public static Framework Enums { get; set; }
@@ -50,6 +51,7 @@ namespace Wonga.QA.Generators.Core
             Suffixes = new[] { "Command", "Query", "Event", "Message", "Csapi" };
 
             Api = new Framework { Project = String.Format("{0}.Api", Framework.Solution), Base = "ApiRequest", Folder = "Requests" };
+			CsApi = new Framework { Project = String.Format("{0}.Cs", Framework.Solution), Base = "CsRequest", Folder = "Requests" };
             Msmq = new Framework { Project = String.Format("{0}.Msmq", Framework.Solution), Base = "MsmqMessage", Folder = "Messages" };
             Db = new Framework { Project = String.Format("{0}.Db", Framework.Solution), Base = "DbEntity", Folder = "Databases" };
             Enums = new Framework { Project = String.Format("{0}.Core", Framework.Solution), Folder = "Enums" };

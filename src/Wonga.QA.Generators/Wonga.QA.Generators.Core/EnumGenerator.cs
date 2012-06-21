@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Wonga.QA.Generators.Core
 {
-	public class EnumGenerator
+	public class EnumGenerator : IGenerateEnum
 	{
 		public const string DefaultEnumFullNameStartFilter = "Wonga";
 

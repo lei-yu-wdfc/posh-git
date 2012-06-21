@@ -92,6 +92,19 @@
     <Compile Include="Requests\SuspectFraudCommand.cs" />
     <Compile Include="Requests\TakePaymentManualCommand.cs" />
     <Compile Include="Requests\WriteOffApplicationCommand.cs" />
+    <Compile Include="Enums\CountryCodeEnum.cs" />
+    <Compile Include="Enums\CurrencyCodeEnum.cs" />
+    <Compile Include="Enums\EmploymentIndustryEnum.cs" />
+    <Compile Include="Enums\EmploymentPositionEnum.cs" />
+    <Compile Include="Enums\EmploymentStatusEnum.cs" />
+    <Compile Include="Enums\GenderEnum.cs" />
+    <Compile Include="Enums\IncomeFrequencyEnum.cs" />
+    <Compile Include="Enums\MaritalStatusEnum.cs" />
+    <Compile Include="Enums\OccupancyStatusEnum.cs" />
+    <Compile Include="Enums\PaymentFrequencyEnum.cs" />
+    <Compile Include="Enums\PaymentTransactionEnum.cs" />
+    <Compile Include="Enums\PaymentTransactionScopeEnum.cs" />
+    <Compile Include="Enums\TitleEnum.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
