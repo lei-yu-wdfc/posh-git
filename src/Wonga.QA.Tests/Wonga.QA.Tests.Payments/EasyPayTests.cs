@@ -42,7 +42,7 @@ namespace Wonga.QA.Tests.Payments
 			string easyPayNumber = GetEasyPayNumber(customer);
 			RepayWithEasyPay(easyPayNumber, null, DateTime.UtcNow.Date, balance);
 
-			Do.With.Timeout(1).Until(() => application.IsClosed);
+			Do.With.Timeout(2).Until(() => application.IsClosed);
 		}
 
 		[Test, AUT(AUT.Za), JIRA("ZA-2395") , ExpectedException(typeof(DoException))]
