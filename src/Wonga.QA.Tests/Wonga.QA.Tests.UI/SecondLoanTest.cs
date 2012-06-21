@@ -47,10 +47,8 @@ namespace Wonga.QA.Tests.Ui
             switch (Config.AUT)
             {
                 case AUT.Za:
-                    var pageZa = journey.ApplyForLoan(500, 20)
-                          .FillApplicationDetails()
-                          .WaitForAcceptedPage()
-                          .FillAcceptedPage().CurrentPage as DealDonePage;
+                    var pageZa = journey.WithAmount(500).WithDuration(20)
+                        .Teleport<DealDonePage>()as DealDonePage;
                     Assert.AreEqual("R660.45", pageZa.GetRapaymentAmount());
                     date = DateTime.Now.AddDays(20);
                     actualRepaymentDate = String.Format("{0:d MMMM yyyy}", date);
@@ -87,11 +85,8 @@ namespace Wonga.QA.Tests.Ui
                     break;
 
                 case AUT.Ca:
-                    var pageCa = journey.ApplyForLoan(200, 20)
-                           .SetName(name, surname)
-                           .FillApplicationDetails()
-                           .WaitForAcceptedPage()
-                           .FillAcceptedPage().CurrentPage as DealDonePage;
+                    var pageCa = journey.WithAmount(200).WithDuration(20)
+                        .Teleport<DealDonePage>() as DealDonePage;
                     Assert.AreEqual("$234.00", pageCa.GetRapaymentAmount());
                     date = DateTime.Now.AddDays(DateHelper.GetNumberOfDaysUntilStartOfLoanForCa()+20);
                     actualRepaymentDate = String.Format("{0:d MMMM yyyy}", date);

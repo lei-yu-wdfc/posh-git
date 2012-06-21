@@ -701,8 +701,7 @@ namespace Wonga.QA.Tests.Ui
 
             var journey = JourneyFactory.GetLnJourney(Client.Home());
 
-            var applyPage = journey.ApplyForLoan(200, 10)
-                                .CurrentPage as ApplyPage;
+            var applyPage = journey.Teleport<ApplyPage>() as ApplyPage;
 
             Assert.AreEqual(accountNumber.Remove(0, 3), applyPage.GetCurrentBankAccount);
 

@@ -66,12 +66,8 @@ namespace Wonga.QA.Tests.Ui.Prepaid
             application.RepayOnDueDate();
             loginPage.LoginAs(_eligibleCustomer.GetEmail());
 
-            var journey = JourneyFactory.GetLnJourney(Client.Home());
-            var page = ((UkLnJourney)journey.ApplyForLoan(200, 10))
-                            .FillApplicationDetailsWithNewMobilePhone()
-                            .WaitForAcceptedPage()
-                            .FillAcceptedPage()
-                           .CurrentPage as DealDonePage;
+            var journey = JourneyFactory.GetLnJourney(Client.Home()).WithNewMobilePhone();
+            var page = journey.Teleport<DealDonePage>() as DealDonePage;
 
             Assert.IsTrue(Client.Driver.PageSource.Contains(PROMOTION_CARD_TEXT));
             Assert.IsTrue(Client.Driver.PageSource.Contains(FOOTER_CARD_TEXT));
@@ -88,12 +84,8 @@ namespace Wonga.QA.Tests.Ui.Prepaid
             application.RepayOnDueDate();
             loginPage.LoginAs(_eligibleCustomer.GetEmail());
 
-            var journey = JourneyFactory.GetLnJourney(Client.Home());
-            var page = ((UkLnJourney)journey.ApplyForLoan(200, 10))
-                            .FillApplicationDetailsWithNewMobilePhone()
-                            .WaitForAcceptedPage()
-                            .FillAcceptedPage()
-                           .CurrentPage as DealDonePage;
+            var journey = JourneyFactory.GetLnJourney(Client.Home()).WithNewMobilePhone();
+            var page = journey.Teleport<DealDonePage>() as DealDonePage;
 
             Assert.IsFalse(Client.Driver.PageSource.Contains(PROMOTION_CARD_TEXT));
             Assert.IsFalse(Client.Driver.PageSource.Contains(FOOTER_CARD_TEXT));

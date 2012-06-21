@@ -7,6 +7,7 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI;
+using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
 
@@ -22,13 +23,8 @@ namespace Wonga.QA.Tests.Ui
             string email = CreateWbLnCustomer();
 
             loginPage.LoginAs(email);
-            var journey = JourneyFactory.GetLNJourneyWB(Client.Home());
-            journey.ApplyForLoan(5000, 15)
-                        .ApplyNow()
-                        .WaitForApplyTermsPage()
-                        .ApplyTerms()
-                        .FillAcceptedPage()
-                        .GoHomePage();
+            var journey = JourneyFactory.GetLnJourney(Client.Home()).WithAmount(5000).WithDuration(15);
+            var homePage = journey.Teleport<HomePage>() as HomePage;
         }
 
         [Test, AUT(AUT.Wb)]
@@ -44,10 +40,8 @@ namespace Wonga.QA.Tests.Ui
 
             loginPage.LoginAs(email);
 
-            var lNjourney = JourneyFactory.GetLNJourneyWB(Client.Home());
-            var declinedPage = lNjourney.ApplyForLoan(5000, 15)
-                                           .ApplyNow()
-                                           .WaitForDeclinedPage();
+            var lNjourney = JourneyFactory.GetLnJourney(Client.Home()).WithAmount(5000).WithDuration(15);
+            var declinedPage = lNjourney.Teleport<DeclinedPage>() as DeclinedPage;
         }
 
         public string CreateWbLnCustomer()
