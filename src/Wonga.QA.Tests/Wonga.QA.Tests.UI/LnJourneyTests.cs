@@ -353,7 +353,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca, AUT.Uk), SmokeTest]
+        [Test, AUT(AUT.Za, AUT.Ca, AUT.Uk), SmokeTest, Pending("Sorry, unrecognised email address or password., CustomerBuilder broken")]
         public void LnVerifyUrlsAreCorrect()
         {
             var loginPage = Client.Login();
