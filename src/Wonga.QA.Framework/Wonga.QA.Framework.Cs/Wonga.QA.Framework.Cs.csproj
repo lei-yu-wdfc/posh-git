@@ -49,9 +49,12 @@
     <Compile Include="Requests\ConfirmNotFraudCommand.cs" />
     <Compile Include="Requests\CreateRepaymentArrangementCommand.cs" />
     <Compile Include="Requests\CreateTransactionCommand.cs" />
+    <Compile Include="Requests\CsAdjustPrepaidCardAccountBalanceCommand.cs" />
     <Compile Include="Requests\CsExtendFixedTermLoanCommand.cs" />
     <Compile Include="Requests\CsGetAccountSummaryQuery.cs" />
+    <Compile Include="Requests\CsGetBankAccountsQuery.cs" />
     <Compile Include="Requests\CsGetCardPaymentStatusQuery.cs" />
+    <Compile Include="Requests\CsGetCreditBureauInfoQuery.cs" />
     <Compile Include="Requests\CsGetCurrentAddressQuery.cs" />
     <Compile Include="Requests\CsGetCustomerDetailsQuery.cs" />
     <Compile Include="Requests\CsGetEmploymentDetailsQuery.cs" />
@@ -63,6 +66,7 @@
     <Compile Include="Requests\CsRemoveManagementReviewCommand.cs" />
     <Compile Include="Requests\CsRepayWithExternalCardCommand.cs" />
     <Compile Include="Requests\CsRepayWithPaymentCardCommand.cs" />
+    <Compile Include="Requests\CsReportBankruptcyCommand.cs" />
     <Compile Include="Requests\CsReportComplaintCommand.cs" />
     <Compile Include="Requests\CsReportHardshipCommand.cs" />
     <Compile Include="Requests\CsReportManagementReviewCommand.cs" />
@@ -88,6 +92,19 @@
     <Compile Include="Requests\SuspectFraudCommand.cs" />
     <Compile Include="Requests\TakePaymentManualCommand.cs" />
     <Compile Include="Requests\WriteOffApplicationCommand.cs" />
+    <Compile Include="Enums\CountryCodeEnum.cs" />
+    <Compile Include="Enums\CurrencyCodeEnum.cs" />
+    <Compile Include="Enums\EmploymentIndustryEnum.cs" />
+    <Compile Include="Enums\EmploymentPositionEnum.cs" />
+    <Compile Include="Enums\EmploymentStatusEnum.cs" />
+    <Compile Include="Enums\GenderEnum.cs" />
+    <Compile Include="Enums\IncomeFrequencyEnum.cs" />
+    <Compile Include="Enums\MaritalStatusEnum.cs" />
+    <Compile Include="Enums\OccupancyStatusEnum.cs" />
+    <Compile Include="Enums\PaymentFrequencyEnum.cs" />
+    <Compile Include="Enums\PaymentTransactionEnum.cs" />
+    <Compile Include="Enums\PaymentTransactionScopeEnum.cs" />
+    <Compile Include="Enums\TitleEnum.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 
 
-namespace Wonga.QA.Framework.Msmq.Messages.Comms.PublicMessages
+namespace Wonga.QA.Framework.Msmq.Messages.PublicMessages.Comms.Instructions
 {
-    /// <summary> Wonga.Comms.PublicMessages.IWantToCreateAndStorePreAgreementDocResponse </summary>
-    [XmlRoot("IWantToCreateAndStorePreAgreementDocResponse", Namespace = "Wonga.Comms.PublicMessages", DataType = "")]
+    /// <summary> Wonga.PublicMessages.Comms.Instructions.IWantToCreateAndStorePreAgreementDocResponse </summary>
+    [XmlRoot("IWantToCreateAndStorePreAgreementDocResponse", Namespace = "Wonga.PublicMessages.Comms.Instructions", DataType = "")]
     public partial class IWantToCreateAndStorePreAgreementDocResponseEvent : MsmqMessage<IWantToCreateAndStorePreAgreementDocResponseEvent>
     {
         public Guid ApplicationId { get; set; }

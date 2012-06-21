@@ -148,6 +148,7 @@
     <Compile Include="Messages\Comms\Commands\SaveCustomerAddressCommand.cs" />
     <Compile Include="Messages\Comms\Commands\SaveCustomerDetailsCommand.cs" />
     <Compile Include="Messages\Comms\Commands\SaveExtensionReminderPreferencesCommand.cs" />
+    <Compile Include="Messages\Comms\Commands\SaveReviewDetailsCommand.cs" />
     <Compile Include="Messages\Comms\Commands\SendExtensionWindowOpenedReminderCommand.cs" />
     <Compile Include="Messages\Comms\Commands\SendPasswordResetEmailCommand.cs" />
     <Compile Include="Messages\Comms\Commands\SendVerificationEmailCommand.cs" />
@@ -425,8 +426,6 @@
     <Compile Include="Messages\Comms\PublicMessages\ITopUpAgreementProducedEvent.cs" />
     <Compile Include="Messages\Comms\PublicMessages\IWantToCreateAndStoreAFundsTransferDocumentEvent.cs" />
     <Compile Include="Messages\Comms\PublicMessages\IWantToCreateAndStoreAFundsTransferDocumentResponseEvent.cs" />
-    <Compile Include="Messages\Comms\PublicMessages\IWantToCreateAndStorePreAgreementDocEvent.cs" />
-    <Compile Include="Messages\Comms\PublicMessages\IWantToCreateAndStorePreAgreementDocResponseEvent.cs" />
     <Compile Include="Messages\Comms\PublicMessages\Ca\IConfirmationOfPadAuthorisationProducedCaEvent.cs" />
     <Compile Include="Messages\Comms\PublicMessages\Ca\IDirectDebitProducedCaEvent.cs" />
     <Compile Include="Messages\Comms\PublicMessages\Ca\ILoanAgreementCancellationNoticeProducedCaEvent.cs" />
@@ -932,6 +931,8 @@
     <Compile Include="Messages\PublicMessages\Comms\Instructions\IWantToCreateAndStoreExtensionSecciDocumentResponseEvent.cs" />
     <Compile Include="Messages\PublicMessages\Comms\Instructions\IWantToCreateAndStoreLoanAgreementDocumentEvent.cs" />
     <Compile Include="Messages\PublicMessages\Comms\Instructions\IWantToCreateAndStoreLoanAgreementDocumentResponseEvent.cs" />
+    <Compile Include="Messages\PublicMessages\Comms\Instructions\IWantToCreateAndStorePreAgreementDocEvent.cs" />
+    <Compile Include="Messages\PublicMessages\Comms\Instructions\IWantToCreateAndStorePreAgreementDocResponseEvent.cs" />
     <Compile Include="Messages\PublicMessages\Comms\Instructions\IWantToCreateAndStorePreTopUpDocumentEvent.cs" />
     <Compile Include="Messages\PublicMessages\Comms\Instructions\IWantToCreateAndStorePreTopUpDocumentResponseEvent.cs" />
     <Compile Include="Messages\PublicMessages\Comms\Instructions\IWantToCreateAndStoreRepaymentRequestSetUpEmailEvent.cs" />
@@ -1098,7 +1099,6 @@
     <Compile Include="Messages\Risk\CardPayment\ValidateCardRequestUkCommand.cs" />
     <Compile Include="Messages\Risk\CardPayment\ValidateCardResponseUkCommand.cs" />
     <Compile Include="Messages\Risk\Commands\RiskCreateBusinessFixedInstallmentLoanApplicationWbCommand.cs" />
-    <Compile Include="Messages\Risk\Commands\SaveEmploymentDetailsWbCommand.cs" />
     <Compile Include="Messages\Risk\Commands\VerifyMainBusinessApplicantWbCommand.cs" />
     <Compile Include="Messages\Risk\Commands\PL\RiskSaveCustomerDetailsCommand.cs" />
     <Compile Include="Messages\Risk\Commands\PL\SaveEmploymentDetailsCommand.cs" />

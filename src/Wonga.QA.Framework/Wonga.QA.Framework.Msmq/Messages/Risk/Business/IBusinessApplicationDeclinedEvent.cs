@@ -11,7 +11,6 @@ namespace Wonga.QA.Framework.Msmq.Messages.Risk.Business
     {
         public Guid OrganisationId { get; set; }
         public String FailedCheckpointName { get; set; }
-        public String DeclineAdviceKey { get; set; }
         public Guid ApplicationId { get; set; }
         public Guid AccountId { get; set; }
         public DateTime CreatedOn { get; set; }

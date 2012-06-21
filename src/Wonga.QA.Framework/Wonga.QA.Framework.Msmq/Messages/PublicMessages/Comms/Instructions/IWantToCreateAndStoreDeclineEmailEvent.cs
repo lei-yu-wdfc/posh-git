@@ -11,7 +11,6 @@ namespace Wonga.QA.Framework.Msmq.Messages.PublicMessages.Comms.Instructions
     {
         public Guid AccountId { get; set; }
         public Guid ApplicationId { get; set; }
-        public String DeclineAdviceUrl { get; set; }
         public Guid OriginatingSagaId { get; set; }
     }
 }
