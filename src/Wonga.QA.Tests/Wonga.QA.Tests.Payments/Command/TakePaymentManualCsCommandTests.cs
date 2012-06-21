@@ -5,11 +5,11 @@ using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Exceptions;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Cs;
-using Wonga.QA.Framework.Msmq.Enums.FileStorage.InternalMessages;
-using Wonga.QA.Framework.Msmq.Enums.Payments.Csapi.Commands;
 using Wonga.QA.Tests.Core;
 using SavePaymentCardBillingAddressCommand = Wonga.QA.Framework.Api.SavePaymentCardBillingAddressCommand;
-using Wonga.QA.Framework.Msmq;
+using CurrencyCodeEnum = Wonga.QA.Framework.Api.CurrencyCodeEnum;
+using PaymentTransactionEnum = Wonga.QA.Framework.Msmq.Enums.Payments.Csapi.Commands.PaymentTransactionEnum;
+using PaymentTransactionScopeEnum = Wonga.QA.Framework.Msmq.Enums.FileStorage.InternalMessages.PaymentTransactionScopeEnum;
 
 namespace Wonga.QA.Tests.Payments.Command
 {

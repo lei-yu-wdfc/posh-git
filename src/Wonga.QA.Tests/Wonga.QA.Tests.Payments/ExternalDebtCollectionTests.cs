@@ -5,17 +5,16 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api.Exceptions;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Cs;
-using Wonga.QA.Framework.Db.OpsSagasCa;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Msmq;
-using Wonga.QA.Framework.Msmq.Enums.FileStorage.InternalMessages;
 using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages;
 using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.SagaMessages;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
-using CloseApplicationSagaEntity = Wonga.QA.Framework.Db.OpsSagas.CloseApplicationSagaEntity;
 using System.Threading;
 using Wonga.QA.Framework.Db;
+using CloseApplicationSagaEntity = Wonga.QA.Framework.Db.OpsSagas.CloseApplicationSagaEntity;
+using PaymentTransactionScopeEnum = Wonga.QA.Framework.Msmq.Enums.FileStorage.InternalMessages.PaymentTransactionScopeEnum;
 
 namespace Wonga.QA.Tests.Payments
 {
