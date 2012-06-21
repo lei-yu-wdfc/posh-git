@@ -526,6 +526,11 @@ namespace Wonga.QA.Tests.Ui
             string totalToRepayOnPersonalDetails = personalDetailsPage.GetTotalToRepay;
             string repaymentDateOnPersonalDetails = personalDetailsPage.GetRepaymentDate;
 
+        	var month = repaymentDateOnPersonalDetails.Split(' ')[2];
+			var formattedMonth = month.Substring(0, 3);
+        	string expectedRepaymentDate = repaymentDateOnPersonalDetails.Replace(month, formattedMonth);
+
+
             var acceptedPage = journey.FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
                 .FillAddressDetails()
                 .FillAccountDetails()
@@ -534,7 +539,7 @@ namespace Wonga.QA.Tests.Ui
                 .CurrentPage as AcceptedPage;
 
             Assert.AreEqual(totalToRepayOnPersonalDetails, acceptedPage.GetTotalToRepay);
-            Assert.AreEqual(repaymentDateOnPersonalDetails, acceptedPage.GetRepaymentDate);
+            Assert.AreEqual(expectedRepaymentDate, acceptedPage.GetRepaymentDate);
 
             switch (Config.AUT)
             {
