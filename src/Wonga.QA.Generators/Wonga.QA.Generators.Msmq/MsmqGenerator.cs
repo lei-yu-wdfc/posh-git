@@ -18,6 +18,8 @@ namespace Wonga.QA.Generators.Msmq
             if (args.Any())
                 Config.Origin = args.Single();
 
+        	bool errorsOccurred = false;
+
             var binRootDirectories = new
             {
 				Messages = Repo.Directory(MessagesDirectoryName),
@@ -47,8 +49,6 @@ namespace Wonga.QA.Generators.Msmq
                 {
                     String messageClassName = String.Format("{0}{1}{2}{3}{4}{5}", message.GetClean(), GetCollision(message), file.GetProduct(), file.GetRegion(), cs ? "Cs" : null, message.GetSuffix());
 
-					enumGenerator.StartEnumGenerationForClass();
-
 					try
 					{
 						//now get a folder name to avoid collision
@@ -63,31 +63,26 @@ namespace Wonga.QA.Generators.Msmq
 						DirectoryInfo messageClassDirectory = Repo.Directory(messageClassSubfolderName, binRootDirectories.Messages);
 						FileInfo code = Repo.File(String.Format("{0}.cs", messageClassName), messageClassDirectory);
 
+						//TODO: should use the original namespace for the enum!!!!!
 						string generatedEnumNamespace = string.Format("{0}.{1}.{2}", Config.Msmq.Project, EnumsDirectoryName, messageClassNamespaceRelativePath);
 
 						// misses all the include directives
 						var builder = InitializeMessageClassDefinition(messageClassName, message, messageClassNamespace);
 
+						enumGenerator.StartEnumGenerationForClass(messageClassNamespace);
+					
 						foreach (KeyValuePair<String, Type> member in message.GetMessageMembers())
 						{
 							builder.AppendFormatLine("        public {0} {1} {{ get; set; }}", member.Value.GetDeclaration(), member.Key);
 
-							try
-							{
-								enumGenerator.GenerateAllEnumsUsedByClassMember(member.Value, generatedEnumNamespace, binRootDirectories.Enums, messageClassSubfolderName);
-							}
-							catch(Exception e)
-							{
-								Console.WriteLine("\t*** FAILED ENUM GENERATION FOR CLASS: {0}. {1}", messageClassName, e.Message);
-							}							
+							enumGenerator.GenerateAllEnumsUsedByClassMember(member.Value, generatedEnumNamespace, binRootDirectories.Enums, messageClassSubfolderName);
 						}
 
 						builder.AppendLine("    }").AppendLine("}");
 
 						//now insert all the include directives at the begining of the file!!!!
-						InsertUsingDirectivesOnMessageClassDefinition(builder, enumGenerator.CurrentClassGeneratedEnumNamespaces);
-
-
+						InsertUsingDirectivesOnMessageClassDefinition(builder, enumGenerator.GetEnumUsingDirectivesForCurrentClass());
+						
 						using (StreamWriter writer = code.CreateText())
 							writer.Write(builder);
 
@@ -95,17 +90,24 @@ namespace Wonga.QA.Generators.Msmq
 					}
 					catch(Exception e)
 					{
-						Console.WriteLine("\t*** FAILED GENERATION FOR MESSAGE: {0}. {1}", messageClassName, e.Message);
+						Console.Error.WriteLine("\t*** FAILED GENERATION FOR MESSAGE: {0}. {1}", messageClassName, e.Message);
+						errorsOccurred = true;
 					}
                 }
             }
 
-            Repo.Inject(binRootDirectories.Messages, Config.Msmq.Folder, Config.Msmq.Project);
-            Repo.Inject(binRootDirectories.Enums, "Enums", Config.Msmq.Project);
+        	if(errorsOccurred || enumGenerator.ErrorsOccurred)
+        	{
+				Console.Error.WriteLine("*** THERE WHERE ERRORS DURING GENERATION... NOT UPDATING QAF!!!!!");
+				return;
+        	}
+
+        	Repo.Inject(binRootDirectories.Messages, Config.Msmq.Folder, Config.Msmq.Project);
+			Repo.Inject(binRootDirectories.Enums, EnumsDirectoryName, Config.Msmq.Project);
         }
 
     	private static StringBuilder InitializeMessageClassDefinition(string messageClassName, Type message,
-    	                                                              string messageNamespace)
+    	                                                              string messageClassNamespace)
     	{
     		StringBuilder builder = new StringBuilder().AppendFormatLine(new[]
     		                                                             	{
@@ -117,7 +119,7 @@ namespace Wonga.QA.Generators.Msmq
     		                                                             		"    public partial class {5} : MsmqMessage<{5}>",
     		                                                             		"    {{"
     		                                                             	},
-    		                                                             messageNamespace,
+    		                                                             messageClassNamespace,
     		                                                             message.FullName,
     		                                                             message.Name.Quote(),
     		                                                             message.Namespace.Quote(),
@@ -126,21 +128,16 @@ namespace Wonga.QA.Generators.Msmq
     		return builder;
     	}
 
-    	private static void InsertUsingDirectivesOnMessageClassDefinition(StringBuilder builder, IEnumerable<string> messageGeneratedEnumNamespaces)
+		private static void InsertUsingDirectivesOnMessageClassDefinition(StringBuilder builder, string enumUsingDirectives)
     	{
     		StringBuilder usingDirectivesBuilder = new StringBuilder()
     			.AppendLine("using System;")
-				.AppendLine("using System.Collections.Generic;")
-				.AppendLine("using System.Xml.Serialization;")
-				.AppendLine("");
+    			.AppendLine("using System.Collections.Generic;")
+    			.AppendLine("using System.Xml.Serialization;")
+    			.AppendLine("")
+    			.Append(enumUsingDirectives);
 
-			foreach (string messageGeneratedEnumNamespace in messageGeneratedEnumNamespaces)
-    		{
-				usingDirectivesBuilder.AppendFormatLine("using {0};", messageGeneratedEnumNamespace);
-    		}
-    		usingDirectivesBuilder.AppendLine("");
-
-    		builder.Insert(0, usingDirectivesBuilder.ToString());
+			builder.Insert(0, usingDirectivesBuilder.ToString());
     	}
     	
         private static String GetCollision(Type type)

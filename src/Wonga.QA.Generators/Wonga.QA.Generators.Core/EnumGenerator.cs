@@ -8,31 +8,74 @@ namespace Wonga.QA.Generators.Core
 {
 	public class EnumGenerator
 	{
+		public const string DefaultEnumFullNameStartFilter = "Wonga";
+
 		private const string ValueGenerationStandardTemplate =	"        {0},";
 		private const string ValueGenerationIncludeConstantTemplate = "        {0} = {1},";
 		private const string DescriptionGenerationTemplate = "        [Description(\"{0}\")]";
 
 		private readonly Dictionary<String, GeneratedEnumDefinition>  _allGeneratedEnumDefinitions;
 
-		public List<string> CurrentClassGeneratedEnumNamespaces { get; private set; }
+		private string _currentClassGeneratedNamespace;
 
+		/// <summary>
+		/// returns the list of enums generated for the current class
+		/// </summary>
+		public List<GeneratedEnumDefinition> CurrentClassGeneratedEnums { get; private set; }
+
+		/// <summary>
+		/// if <code>true</code> generator ends imediatelly and throws exception
+		/// if <code>false</code> generator prints error and continues generation
+		/// </summary>
 		public bool ContinueOnError { get; private set; }
 
+		/// <summary>
+		/// defines the way in which the enums will be generated
+		/// </summary>
 		public EnumGenerationMode Mode { get; private set; }
 
-		public EnumGenerator(bool continueOnError = true, EnumGenerationMode mode = EnumGenerationMode.IncludeConstantValues)
+		/// <summary>
+		/// if any errors occurred during the generation process
+		/// </summary>
+		public bool ErrorsOccurred { get; private set; }
+
+		/// <summary>
+		/// will only generate enums whose full name begins with this filter
+		/// if empty or null no filter will be applied
+		/// </summary>
+		public string EnumFullNameStartFilter { get; private set; }
+
+		public EnumGenerator(bool continueOnError)
+			: this(EnumGenerationMode.IncludeConstantValues, DefaultEnumFullNameStartFilter, continueOnError)
+		{
+			
+		}
+
+		public EnumGenerator(EnumGenerationMode mode = EnumGenerationMode.IncludeConstantValues, string filter = DefaultEnumFullNameStartFilter, bool continueOnError = true)
 		{
 			ContinueOnError = continueOnError;
 			Mode = mode;
+			EnumFullNameStartFilter = filter;
 			_allGeneratedEnumDefinitions = new Dictionary<string, GeneratedEnumDefinition>();
-			CurrentClassGeneratedEnumNamespaces = new List<string>();
+			CurrentClassGeneratedEnums = new List<GeneratedEnumDefinition>();
 		}
 
-		public void StartEnumGenerationForClass()
+		/// <summary>
+		/// this method should be called when the generation process is started for a new class
+		/// </summary>
+		public void StartEnumGenerationForClass(string classGeneratedNamespace)
 		{
-			CurrentClassGeneratedEnumNamespaces = new List<string>();
+			CurrentClassGeneratedEnums = new List<GeneratedEnumDefinition>();
+			_currentClassGeneratedNamespace = classGeneratedNamespace;
 		}
-		
+
+		/// <summary>
+		/// generates all enumeration members of a class
+		/// </summary>
+		/// <param name="classMemberTypes">all the member types of the class</param>
+		/// <param name="generatedEnumNamespace">the new namespace for the generated enums</param>
+		/// <param name="enumRootDirectory">root directory to place the enum files</param>
+		/// <param name="subfolderName">subdirectory to place all the enums used by this class</param>
 		public void GenerateAllEnumsUsedByClass(IEnumerable<Type> classMemberTypes, string generatedEnumNamespace, DirectoryInfo enumRootDirectory, string subfolderName)
 		{
 			foreach (Type classMemberType in classMemberTypes)
@@ -41,6 +84,13 @@ namespace Wonga.QA.Generators.Core
 			}
 		}
 
+		/// <summary>
+		/// generates all enumeration used my a member of a class
+		/// </summary>
+		/// <param name="classMemberType">member type of the class</param>
+		/// <param name="generatedEnumNamespace">the new namespace for the generated enums</param>
+		/// <param name="enumRootDirectory">root directory to place the enum files</param>
+		/// <param name="subfolderName">subdirectory to place all the enums used by this class</param>
 		public void GenerateAllEnumsUsedByClassMember(Type classMemberType, string generatedEnumNamespace, DirectoryInfo enumRootDirectory, string subfolderName)
 		{
 			var messageMemberEnumTypes = GetCustomEnumTypesUsedByClassMember(classMemberType);
@@ -58,12 +108,12 @@ namespace Wonga.QA.Generators.Core
 
 						case EnumGenerationStatus.AlreadyGenerated:
 							
-							AddToCurrentClassGeneratedEnumNamespacesIfUnique(enumGenerationResult.EnumDefinition.GeneratedNamespace);
+							AddToCurrentClassGeneratedEnumsIfUnique(enumGenerationResult.EnumDefinition);
 							break;
 
 						case EnumGenerationStatus.NotGenerated:
 
-							AddToCurrentClassGeneratedEnumNamespacesIfUnique(enumGenerationResult.EnumDefinition.GeneratedNamespace);
+							AddToCurrentClassGeneratedEnumsIfUnique(enumGenerationResult.EnumDefinition);
 							GenerateEnum(messageMemberEnumType, enumGenerationResult.EnumDefinition.GeneratedNamespace, enumRootDirectory, subfolderName);
 							AddNewGeneratedEnumDefinition(enumGenerationResult);
 							break;
@@ -72,13 +122,30 @@ namespace Wonga.QA.Generators.Core
 				}
 				catch (Exception e)
 				{
-					Console.WriteLine("\t*** FAILED GENERATION FOR ENUM: {0}. {1}", messageMemberEnumType.GetName(), e.Message);
+					ErrorsOccurred = true;
+					Console.Error.WriteLine("\t*** FAILED GENERATION FOR ENUM: {0}. {1}", messageMemberEnumType.GetName(), e.Message);
 					if(!ContinueOnError)
 					{
 						throw;
 					}
 				}
 			}
+		}
+
+		public string GetEnumUsingDirectivesForCurrentClass()
+		{
+			var usingDirectivesBuilder = new StringBuilder();
+
+			foreach (string messageGeneratedEnumNamespace in EnumGenerationNamespacesForCurrentClass)
+			{
+				usingDirectivesBuilder.AppendFormatLine("using {0};", messageGeneratedEnumNamespace);
+			}
+			if (usingDirectivesBuilder.Length > 0)
+			{
+				usingDirectivesBuilder.AppendLine("");
+			}
+
+			return usingDirectivesBuilder.ToString();
 		}
 
 		private void AddNewGeneratedEnumDefinition(EnumGenerationResult enumGenerationResult)
@@ -89,27 +156,29 @@ namespace Wonga.QA.Generators.Core
 			    enumGenerationResult.EnumDefinition);
 		}
 
-		private void AddToCurrentClassGeneratedEnumNamespacesIfUnique(string generatedNamespace)
+		private void AddToCurrentClassGeneratedEnumsIfUnique(GeneratedEnumDefinition enumDefinition)
 		{
-			//do not have repeated enum definitions for each class
-			if (!CurrentClassGeneratedEnumNamespaces.Contains(generatedNamespace))
+			if (!CurrentClassGeneratedEnums.Any(currentEnum => currentEnum.GeneratedNamespace == enumDefinition.GeneratedNamespace))
 			{
-				CurrentClassGeneratedEnumNamespaces.Add(generatedNamespace);
+				CurrentClassGeneratedEnums.Add(enumDefinition);
 			}
 		}
 
-		//DO WE ACTUALLY NEED THIS... is enum should be enough....
-		private static IEnumerable<Type> GetCustomEnumTypesUsedByClassMember(Type classMemberType)
+		private IEnumerable<Type> GetCustomEnumTypesUsedByClassMember(Type classMemberType)
 		{
-			var messageEnumMembers = new List<Type>();
+			var enumMembers = new List<Type>();
 			if (classMemberType.IsEnum)
-				messageEnumMembers.Add(classMemberType);
+				enumMembers.Add(classMemberType);
 
+			//this is needed for nullable enums or generics of enums
 			if (classMemberType.IsGenericType)
-				messageEnumMembers.AddRange(classMemberType.GetGenericArguments().Where(a => a.IsEnum));
+				enumMembers.AddRange(classMemberType.GetGenericArguments().Where(a => a.IsEnum));
 
-			messageEnumMembers = messageEnumMembers.Where(t => t.FullName != null && t.FullName.StartsWith("Wonga")).ToList();
-			return messageEnumMembers;
+			if (!string.IsNullOrEmpty(EnumFullNameStartFilter))
+			{
+				enumMembers = enumMembers.Where(t => t.FullName != null && t.FullName.StartsWith(EnumFullNameStartFilter)).ToList();
+			}
+			return enumMembers;
 		}
 
 		private EnumGenerationResult GetEnumGenerationResult(Type enumType, string generatedEnumNamespace)
@@ -137,15 +206,7 @@ namespace Wonga.QA.Generators.Core
 			DirectoryInfo enumDirectory = Repo.Directory(subfolderName, rootEnumDirectory);
 			FileInfo fenum = Repo.File(String.Format("{0}.cs", enumName), enumDirectory);
 
-			StringBuilder enumBuilder = new StringBuilder().AppendFormatLine(new[]
-									                                        {
-									                                            "namespace {0}",
-									                                            "{{",
-									                                            "    public enum {1}",
-									                                            "    {{"
-									                                        },
-																		generatedEnumNamespace,
-																		enumName);
+			var enumBuilder = CreateEnumBuilder(generatedEnumNamespace, enumName);
 
 			AddAllEnumValues(enumBuilder, enumType);
 			
@@ -157,6 +218,33 @@ namespace Wonga.QA.Generators.Core
 				writer.Write(enumBuilder);
 
 			Console.WriteLine("\t{0} \u2192 {1}", enumType.Name, fenum.Name);
+		}
+
+		private StringBuilder CreateEnumBuilder(string generatedEnumNamespace, string enumName)
+		{
+			string[] enumBuilderTemplate =
+				(Mode & EnumGenerationMode.IncludeDescription) == EnumGenerationMode.IncludeDescription
+					? new[]
+					  	{
+					  		"using System.ComponentModel;",
+					  		"namespace {0}",
+					  		"{{",
+					  		"    public enum {1}",
+					  		"    {{"
+
+					  	}
+					: new[]
+					  	{
+					  		"namespace {0}",
+					  		"{{",
+					  		"    public enum {1}",
+					  		"    {{"
+					  	};
+
+			return new StringBuilder().AppendFormatLine(
+										enumBuilderTemplate,
+										generatedEnumNamespace,
+										enumName);
 		}
 
 		private void AddAllEnumValues(StringBuilder enumBuilder, Type enumType)
@@ -213,5 +301,18 @@ namespace Wonga.QA.Generators.Core
 
 			return value.ToString();
 		}
+
+		private IEnumerable<string> EnumGenerationNamespacesForCurrentClass
+		{
+			get
+			{
+				return
+					CurrentClassGeneratedEnums
+						.Where(e => e.GeneratedNamespace != _currentClassGeneratedNamespace)
+						.Select(e => e.GeneratedNamespace);
+			}
+		}
+		
+		
 	}
 }
