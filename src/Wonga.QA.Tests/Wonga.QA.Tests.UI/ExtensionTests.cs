@@ -31,8 +31,7 @@ namespace Wonga.QA.Tests.Ui
         //private string _repaymentDate;
         //private DateTime _actualDate;
 
-
-        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1627", "UK-1746"), Pending("Fails as cannot find Headers on Processing page")]
+        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1627", "UK-1746", "UKWEB-911"), Pending("UKWEB-911: Extension finishes with an error page")]
         public void ExtensionJourneyPass()
         {
             string email = Get.RandomEmail();
@@ -65,7 +64,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsFalse(dealDonePage.IsDealDonePageDateTokenPresent());
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1321", "UK-1522", "UK-1746"), Pending("Fails as cannot find Headers on Processing page")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1321", "UK-1522", "UK-1746")]
         public void ExtensionJourneyDecline()
         {
             string email = Get.RandomEmail();
@@ -96,7 +95,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1323", "UK-1523", "UK-1746"), Pending("Fails as cannot find Headers on Processing page")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1323", "UK-1523", "UK-1746")]
         public void ExtensionJourneyError()
         {
             string email = Get.RandomEmail();
@@ -123,7 +122,6 @@ namespace Wonga.QA.Tests.Ui
             var errorPage = extensionProcessingPage.WaitFor<ExtensionErrorPage>() as ExtensionErrorPage;
 
         }
-
 
         [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1739", "UK-2121")]
         [Row(100, 5, 1)]
@@ -191,7 +189,6 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual("£" + response.Values["TotalAmountDueOnExtensionDate"].ToArray()[extensionDays - 1], extensionRequestPage.TotalToRepay, "Total To Repay on Extension Date is not correct for Extension Days={0}", extensionDays); // Total to Repay on Extension Date
             Assert.AreEqual(Date.GetOrdinalDate(DateTime.Parse(response.Values["ExtensionDate"].ToArray()[extensionDays - 1]).Date, "d MMMM yyyy"), extensionRequestPage.RepaymentDate, "Extensions Date is not correct for Extension Days={0}", extensionDays); // Extension Date
         }
-
 
         [Test, AUT(AUT.Uk), JIRA("UK-427", "Uk-1862", "UK-2121", "UKWEB-304"), MultipleAsserts, Pending("UK-2262, UKWEB-304")]
         [Row(1, 2, 1)]
