@@ -18,11 +18,10 @@ namespace Wonga.QA.Generators.Api
     {
         public static void Main(String[] args)
         {
-            string[] ignore_list = new string[] { };
             if (args.Any())
                 Config.Origin = args.Single();
 
-            var bin = new
+			var binRootDirectories = new
             {
                 Requests = Repo.Directory("Requests"),
                 Code = Repo.Directory("Code"),
@@ -31,7 +30,7 @@ namespace Wonga.QA.Generators.Api
 
             ILookup<String, Type> requests = Origin.GetTypes().Where(t => t.IsRequest()).ToLookup(t => t.GetName());
 
-            Dictionary<String, String[]> enums = new Dictionary<String, String[]>();
+			Dictionary<String, String[]> generatedEnumDefinitions = new Dictionary<String, String[]>();
 
             foreach (FileInfo file in Origin.GetSchemas().Where(f => !f.IsCs()))
             {
@@ -47,7 +46,7 @@ namespace Wonga.QA.Generators.Api
 
                 elements.Where(e => e.SchemaType == null && e.SchemaTypeName == XmlQualifiedName.Empty).ForEach(e => e.SchemaType = new XmlSchemaComplexType());
 
-                DirectoryInfo code3 = Repo.Directory(file.GetName(), bin.Code);
+                DirectoryInfo code3 = Repo.Directory(file.GetName(), binRootDirectories.Code);
 
                 foreach (XmlSchemaElement element in elements)
                 {
@@ -73,7 +72,7 @@ namespace Wonga.QA.Generators.Api
                     Dictionary<String, Type> types = results.CompiledAssembly.GetTypes().ToDictionary(t => t.GetName());
 
                     String name1 = String.Format("{0}{1}{2}{3}", types[element.Name].GetClean(), file.GetProduct(), file.GetRegion(), requests[element.Name].First().GetSuffix());
-                    FileInfo code = Repo.File(String.Format("{0}.cs", name1), bin.Requests);
+                    FileInfo code = Repo.File(String.Format("{0}.cs", name1), binRootDirectories.Requests);
 
                     StringBuilder builder1 = new StringBuilder().AppendFormatLine(new[]{
                         "using System;",
@@ -97,20 +96,20 @@ namespace Wonga.QA.Generators.Api
 
                     Console.WriteLine("\t{0} \u2192 {1}", element.Name, code.Name);
 
+
+					//extract this logic to an enum generator!!!!
                     foreach (Type type in results.CompiledAssembly.GetTypes().Where(t => t.IsEnum))
                     {
                         String name = type.GetName().ToEnum().ToCamel();
                         String[] values = Enum.GetNames(type).Select(e => type.GetField(e).GetEnum()).Distinct().ToArray();
-                        if (ignore_list.Contains(name))
-                            continue;
-                        if (enums.ContainsKey(name))
-                            if (enums[name].SequenceEqual(values))
+                        if (generatedEnumDefinitions.ContainsKey(name))
+                            if (generatedEnumDefinitions[name].SequenceEqual(values))
                                 continue;
                             else
                                 throw new NotImplementedException();
-                        enums.Add(name, values);
+                        generatedEnumDefinitions.Add(name, values);
 
-                        FileInfo fenum = Repo.File(String.Format("{0}.cs", name), bin.Enums);
+                        FileInfo fenum = Repo.File(String.Format("{0}.cs", name), binRootDirectories.Enums);
 
                         StringBuilder builder = new StringBuilder().AppendFormatLine(new[]
                         {
@@ -121,6 +120,7 @@ namespace Wonga.QA.Generators.Api
                             "    {{"
                         }, Config.Api.Project, name);
 
+						//TODO: make this configurable on the enum generator!!!!
                         foreach (String value in values)
                         {
                             builder.AppendFormatLine("        [Description(\"{0}\")]", value);
@@ -137,8 +137,8 @@ namespace Wonga.QA.Generators.Api
                 }
             }
 
-            Repo.Inject(bin.Requests, Config.Api.Folder, Config.Api.Project);
-            Repo.Inject(bin.Enums, "Enums", Config.Api.Project);
+            Repo.Inject(binRootDirectories.Requests, Config.Api.Folder, Config.Api.Project);
+            Repo.Inject(binRootDirectories.Enums, "Enums", Config.Api.Project);
 
         }
     }

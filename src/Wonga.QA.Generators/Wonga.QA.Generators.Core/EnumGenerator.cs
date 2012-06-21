@@ -6,17 +6,24 @@ using System.Text;
 
 namespace Wonga.QA.Generators.Core
 {
-	public class EnumGenerator //: IGenerateEnums ????
+	public class EnumGenerator
 	{
+		private const string ValueGenerationStandardTemplate =	"        {0},";
+		private const string ValueGenerationIncludeConstantTemplate = "        {0} = {1},";
+		private const string DescriptionGenerationTemplate = "        [Description(\"{0}\")]";
+
 		private readonly Dictionary<String, GeneratedEnumDefinition>  _allGeneratedEnumDefinitions;
 
 		public List<string> CurrentClassGeneratedEnumNamespaces { get; private set; }
 
-		public bool ContinueOnError { get; set; }
+		public bool ContinueOnError { get; private set; }
 
-		public EnumGenerator(bool continueOnError = true)
+		public EnumGenerationMode Mode { get; private set; }
+
+		public EnumGenerator(bool continueOnError = true, EnumGenerationMode mode = EnumGenerationMode.IncludeConstantValues)
 		{
 			ContinueOnError = continueOnError;
+			Mode = mode;
 			_allGeneratedEnumDefinitions = new Dictionary<string, GeneratedEnumDefinition>();
 			CurrentClassGeneratedEnumNamespaces = new List<string>();
 		}
@@ -25,7 +32,7 @@ namespace Wonga.QA.Generators.Core
 		{
 			CurrentClassGeneratedEnumNamespaces = new List<string>();
 		}
-
+		
 		public void GenerateAllEnumsUsedByClass(IEnumerable<Type> classMemberTypes, string generatedEnumNamespace, DirectoryInfo enumRootDirectory, string subfolderName)
 		{
 			foreach (Type classMemberType in classMemberTypes)
@@ -123,14 +130,14 @@ namespace Wonga.QA.Generators.Core
 			return new EnumGenerationResult(EnumGenerationStatus.NotGenerated, enumDefinition);
 		}
 
-		private static void GenerateEnum(Type enumType, string generatedEnumNamespace, DirectoryInfo rootEnumDirectory, string subfolderName)
+		private void GenerateEnum(Type enumType, string generatedEnumNamespace, DirectoryInfo rootEnumDirectory, string subfolderName)
 		{
 			String enumName = enumType.GetName().ToEnum().ToCamel();
 
 			DirectoryInfo enumDirectory = Repo.Directory(subfolderName, rootEnumDirectory);
 			FileInfo fenum = Repo.File(String.Format("{0}.cs", enumName), enumDirectory);
 
-			StringBuilder builder1 = new StringBuilder().AppendFormatLine(new[]
+			StringBuilder enumBuilder = new StringBuilder().AppendFormatLine(new[]
 									                                        {
 									                                            "namespace {0}",
 									                                            "{{",
@@ -140,17 +147,71 @@ namespace Wonga.QA.Generators.Core
 																		generatedEnumNamespace,
 																		enumName);
 
-			foreach (Object value in Enum.GetValues(enumType))
-				builder1.AppendFormatLine("        {0} = {1},", value, (int)value);
-
-			builder1
+			AddAllEnumValues(enumBuilder, enumType);
+			
+			enumBuilder
 				.AppendLine("    }")
 				.AppendLine("}");
 
 			using (StreamWriter writer = fenum.CreateText())
-				writer.Write(builder1);
+				writer.Write(enumBuilder);
 
 			Console.WriteLine("\t{0} \u2192 {1}", enumType.Name, fenum.Name);
+		}
+
+		private void AddAllEnumValues(StringBuilder enumBuilder, Type enumType)
+		{
+			foreach (Object value in Enum.GetValues(enumType))
+			{
+				AddEnumValue(enumBuilder, enumType, value);
+			}
+		}
+
+		private void AddEnumValue(StringBuilder enumBuilder, Type enumType, Object value)
+		{
+			string valueLine = null;
+			string descriptionLine = null;
+			string enumValueName = Enum.GetName(enumType, value);
+
+			if(Mode == EnumGenerationMode.Standard)
+			{
+				valueLine = string.Format(ValueGenerationStandardTemplate, value);
+			}
+			else
+			{
+				if ((Mode & EnumGenerationMode.IncludeDescription) == EnumGenerationMode.IncludeDescription)
+				{
+					descriptionLine = string.Format(DescriptionGenerationTemplate, enumValueName);
+				}
+				if ((Mode & EnumGenerationMode.IncludeConstantValues) == EnumGenerationMode.IncludeConstantValues)
+				{
+					valueLine = string.Format(ValueGenerationIncludeConstantTemplate, GetEnumValueNameForMode(value, enumValueName), (int)value);
+				}
+				if ((Mode & EnumGenerationMode.UseNormalTypeName) == EnumGenerationMode.UseNormalTypeName)
+				{
+					valueLine = string.Format(ValueGenerationStandardTemplate, GetEnumValueNameForMode(value, enumValueName));
+				}
+			}
+
+			if(!string.IsNullOrEmpty(descriptionLine))
+			{
+				enumBuilder.AppendLine(descriptionLine);
+			}
+
+			if(!string.IsNullOrEmpty(valueLine))
+			{
+				enumBuilder.AppendLine(valueLine);
+			}
+		}
+
+		private string GetEnumValueNameForMode(object value, string valueName)
+		{
+			if ((Mode & EnumGenerationMode.UseNormalTypeName) == EnumGenerationMode.UseNormalTypeName)
+			{
+				return valueName.GetNormalTypeName();
+			}
+
+			return value.ToString();
 		}
 	}
 }

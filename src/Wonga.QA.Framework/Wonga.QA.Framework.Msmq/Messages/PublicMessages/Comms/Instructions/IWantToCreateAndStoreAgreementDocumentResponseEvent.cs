@@ -12,6 +12,6 @@ namespace Wonga.QA.Framework.Msmq.Messages.PublicMessages.Comms.Instructions
         public Guid ApplicationId { get; set; }
         public Guid AccountId { get; set; }
         public Guid FileId { get; set; }
-        public Guid OriginatingSagaId { get; set; }
+        public Guid SagaId { get; set; }
     }
 }

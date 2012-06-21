@@ -10,7 +10,6 @@ namespace Wonga.QA.Framework.Msmq.Messages.Risk
     public partial class IApplicationDeclinedEvent : MsmqMessage<IApplicationDeclinedEvent>
     {
         public String FailedCheckpointName { get; set; }
-        public String DeclineAdviceKey { get; set; }
         public Guid ApplicationId { get; set; }
         public Guid AccountId { get; set; }
         public DateTime CreatedOn { get; set; }
