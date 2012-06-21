@@ -80,23 +80,25 @@ namespace Wonga.QA.Generators.Core
 				if (!typesToGenerate.Contains(element.Name))
 					continue;
 
-				var results = GenerateClassFileForXmlSchemaElement(codeDirectory, element, schema);
+				var results = CompileGeneratedClassFileForXmlSchemaElement(codeDirectory, element, schema);
 				
 				Dictionary<String, Type> types = results.CompiledAssembly.GetTypes().ToDictionary(t => t.GetName());
 
 				String className = String.Format("{0}{1}{2}{3}", types[element.Name].GetClean(), xmlSchemaFile.GetProduct(),
 												 xmlSchemaFile.GetRegion(), typesToGenerate[element.Name].First().GetSuffix());
-				FileInfo code = Repo.File(String.Format("{0}.cs", className), BinRootDirectories.ClassesDirectory);
 
-				//TODO: BEGIN update these vars to split messages through different folders to avoid name collision
-				String classNamespace = Framework.Project;
-				String classFullName = String.Format("{0}.{1}", xmlSchemaFile.GetName(), element.Name);
-				//string generatedEnumNamespace = string.Format("{0}.{1}.{2}", Framework.Project, EnumsDirectoryName, EnumNamespaceRelativePath);
-				string generatedEnumNamespace = Framework.Project;
-				string enumSubfolderName = "";
-				//TODO: END update these vars to split messages through different folders to avoid name collision
+				string classNamespaceRelativePath = xmlSchemaFile.GetName().Replace("Wonga.", string.Empty);
 
-				var classBuilder = InitializeClassDefinition(className, element, classFullName, classNamespace);
+				string classSubfolderName = classNamespaceRelativePath.Replace(".", new string(Path.DirectorySeparatorChar, 1));
+
+				string classNamespace = string.Format("{0}.{1}.{2}", Framework.Project, Framework.Folder, classNamespaceRelativePath);
+
+				DirectoryInfo classDirectory = Repo.Directory(classSubfolderName, BinRootDirectories.ClassesDirectory);
+				FileInfo code = Repo.File(String.Format("{0}.cs", className), classDirectory);
+
+				//FileInfo code = Repo.File(String.Format("{0}.cs", className), BinRootDirectories.ClassesDirectory);
+
+				var classBuilder = InitializeClassDefinition(className, classNamespace, element.Name, xmlSchemaFile.GetName());
 
 				foreach (PropertyInfo property in types[element.Name].GetProperties().Where(p => !p.IsIgnore()))
 					classBuilder.AppendFormatLine("        public Object {0} {{ get; set; }}", property.GetName());
@@ -107,14 +109,20 @@ namespace Wonga.QA.Generators.Core
 
 				foreach (Type type in results.CompiledAssembly.GetTypes().Where(t => t.IsEnum))
 				{
+					/*
+					//TODO: this should be calculated inside the enum generator!!!!!???? but for api no enum has any namespace....
+					//string generatedEnumNamespace = string.Format("{0}.{1}.{2}", Framework.Project, EnumsDirectoryName, EnumNamespaceRelativePath);
+					string generatedEnumNamespace = string.Format("{0}.{1}.{2}", Framework.Project, BinRootDirectories.EnumsDirectoryName, classNamespaceRelativePath);
+					string enumSubfolderName = classSubfolderName;
+				
 					EnumGenerator.GenerateAllEnumsUsedByClassMember(
 									type, generatedEnumNamespace,
 									BinRootDirectories.EnumsDirectory, enumSubfolderName);
+					*/
+
+					EnumGenerator.GenerateAllEnumsUsedByClassMember(type, BinRootDirectories.EnumsDirectory);
 				}
-
-				//now insert all the include directives at the begining of the file!!!!
-				InsertUsingDirectivesOnClassDefinition(classBuilder, EnumGenerator.GetEnumUsingDirectivesForCurrentClass());
-
+				
 				using (StreamWriter writer = code.CreateText())
 					writer.Write(classBuilder);
 
@@ -122,7 +130,7 @@ namespace Wonga.QA.Generators.Core
 			}
 		}
 
-		private static CompilerResults GenerateClassFileForXmlSchemaElement(DirectoryInfo codeDirectory, XmlSchemaElement element, XmlSchema schema)
+		private static CompilerResults CompileGeneratedClassFileForXmlSchemaElement(DirectoryInfo codeDirectory, XmlSchemaElement element, XmlSchema schema)
 		{
 			var ns = new CodeNamespace();
 			var exporter = new XmlCodeExporter(ns);
@@ -148,11 +156,15 @@ namespace Wonga.QA.Generators.Core
 			return results;
 		}
 
-		private StringBuilder InitializeClassDefinition(string className, XmlSchemaElement element, string classFullName, string classNamespace)
+		private StringBuilder InitializeClassDefinition(string className, string classNamespace, string elementName, string schemaFileName)
 		{
+			//for API or CS all enums are added as objects so there is no need to add using directives later!!!
 			StringBuilder builder = new StringBuilder().AppendFormatLine(new[]
     		                                                              	{
-    		                                                              		"namespace {0}",
+																				"using System;",
+    		                                                              		"using System.Xml.Serialization;",
+																				"",
+																				"namespace {0}",
     		                                                              		"{{",
     		                                                              		"    /// <summary> {1} </summary>",
     		                                                              		"    [XmlRoot({2})]",
@@ -160,22 +172,11 @@ namespace Wonga.QA.Generators.Core
     		                                                              		"    {{",
     		                                                              	},
 																		  classNamespace,
-																		  classFullName,
-																		  element.Name.Quote(),
+																		  String.Format("{0}.{1}", schemaFileName, elementName),
+																		  elementName.Quote(),
 																		  className,
 																		  Framework.Base);
 			return builder;
-		}
-
-		private static void InsertUsingDirectivesOnClassDefinition(StringBuilder builder, string enumUsingDirectives)
-		{
-			StringBuilder usingDirectivesBuilder = new StringBuilder()
-				.AppendLine("using System;")
-				.AppendLine("using System.Xml.Serialization;")
-				.AppendLine("")
-				.Append(enumUsingDirectives);
-
-			builder.Insert(0, usingDirectivesBuilder.ToString());
 		}
 	}
 }

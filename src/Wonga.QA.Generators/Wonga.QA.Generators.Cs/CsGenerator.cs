@@ -1,30 +1,18 @@
 ﻿using System;
-using System.CodeDom;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Xml;
-using System.Xml.Schema;
-using System.Xml.Serialization;
-using Microsoft.CSharp;
 using Wonga.QA.Generators.Core;
 
 namespace Wonga.QA.Generators.Cs
 {
     public class CsGenerator
     {
-		public const string RequestsDirectoryName = "Requests";
-		public const string EnumsDirectoryName = "Enums";
-
-        public static void Main(String[] args)
+		public static void Main(String[] args)
         {
             if (args.Any())
                 Config.Origin = args.Single();
 
-			var binRootDirectories = new GeneratorRepoDirectories(RequestsDirectoryName);
+			var binRootDirectories = new GeneratorRepoDirectories(Config.CsApi.Folder);
 
 			var classGenerator = new XmlSchemaClassGenerator(Config.CsApi, binRootDirectories);
 
@@ -37,12 +25,12 @@ namespace Wonga.QA.Generators.Cs
 
 			if (classGenerator.ErrorsOccurred)
 			{
-				Console.Error.WriteLine("*** THERE WHERE ERRORS DURING GENERATION... NOT UPDATING QAF!!!!!");
+				Console.Error.WriteLine("*** THERE WERE ERRORS DURING GENERATION... NOT UPDATING QAF!!!!!");
 				return;
 			}
 
 			Repo.Inject(binRootDirectories.ClassesDirectory, Config.CsApi.Folder, Config.CsApi.Project);
-			Repo.Inject(binRootDirectories.EnumsDirectory, EnumsDirectoryName, Config.CsApi.Project);
+			Repo.Inject(binRootDirectories.EnumsDirectory, Config.Enums.Folder, Config.CsApi.Project);
         }
     }
 }

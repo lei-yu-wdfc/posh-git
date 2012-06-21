@@ -69,6 +69,7 @@ namespace Wonga.QA.Generators.Core
 			_currentClassGeneratedNamespace = classGeneratedNamespace;
 		}
 
+		//tODO: remove enum path stuff
 		/// <summary>
 		/// generates all enumeration members of a class
 		/// </summary>
@@ -84,6 +85,7 @@ namespace Wonga.QA.Generators.Core
 			}
 		}
 
+		//TODO: delete this!!!!
 		/// <summary>
 		/// generates all enumeration used my a member of a class
 		/// </summary>
@@ -125,6 +127,60 @@ namespace Wonga.QA.Generators.Core
 					ErrorsOccurred = true;
 					Console.Error.WriteLine("\t*** FAILED GENERATION FOR ENUM: {0}. {1}", messageMemberEnumType.GetName(), e.Message);
 					if(!ContinueOnError)
+					{
+						throw;
+					}
+				}
+			}
+		}
+
+		public void GenerateAllEnumsUsedByClassMember(Type classMemberType, DirectoryInfo enumRootDirectory)
+		{
+			var messageMemberEnumTypes = GetCustomEnumTypesUsedByClassMember(classMemberType);
+
+			foreach (Type messageMemberEnumType in messageMemberEnumTypes)
+			{
+				try
+				{
+
+					string enumNamespaceRelativePath = string.IsNullOrEmpty(messageMemberEnumType.Namespace)
+					                                   	? string.Empty
+					                                   	: messageMemberEnumType.Namespace.Replace("Wonga.", string.Empty);
+							
+					string enumSubfolderName = enumNamespaceRelativePath.Replace(".", new string(Path.DirectorySeparatorChar, 1));
+
+					//TODO: fix this!!!!! pass the FW ????? ON THE 2 PLACES
+					string generatedEnumNamespace =
+						string.IsNullOrEmpty(enumNamespaceRelativePath) 
+						? string.Format("{0}.{1}", Config.Api.Project, Config.Enums.Folder)
+						: string.Format("{0}.{1}.{2}", Config.Api.Project, Config.Enums.Folder, enumNamespaceRelativePath);
+					
+					EnumGenerationResult enumGenerationResult = GetEnumGenerationResult(messageMemberEnumType, generatedEnumNamespace);
+					switch (enumGenerationResult.Status)
+					{
+						case EnumGenerationStatus.UnableToGenerate:
+
+							throw new NotImplementedException(string.Format("Can not generate enumeration {0}", messageMemberEnumType.FullName));
+
+						case EnumGenerationStatus.AlreadyGenerated:
+
+							AddToCurrentClassGeneratedEnumsIfUnique(enumGenerationResult.EnumDefinition);
+							break;
+
+						case EnumGenerationStatus.NotGenerated:
+
+							AddToCurrentClassGeneratedEnumsIfUnique(enumGenerationResult.EnumDefinition);
+							GenerateEnum(messageMemberEnumType, enumGenerationResult.EnumDefinition.GeneratedNamespace, enumRootDirectory, enumSubfolderName);
+							AddNewGeneratedEnumDefinition(enumGenerationResult);
+							break;
+					}
+
+				}
+				catch (Exception e)
+				{
+					ErrorsOccurred = true;
+					Console.Error.WriteLine("\t*** FAILED GENERATION FOR ENUM: {0}. {1}", messageMemberEnumType.GetName(), e.Message);
+					if (!ContinueOnError)
 					{
 						throw;
 					}

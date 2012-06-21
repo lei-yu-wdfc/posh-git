@@ -10,17 +10,16 @@ namespace Wonga.QA.Generators.Msmq
 {
     public class MsmqGenerator
     {
-    	public const string MessagesDirectoryName = "Messages";
-		public const string EnumsDirectoryName = "Enums";
-
-        public static void Main(String[] args)
+    	public static void Main(String[] args)
         {
             if (args.Any())
                 Config.Origin = args.Single();
 
+			string messagesDirectoryName = Config.Msmq.Folder;
+        
         	bool errorsOccurred = false;
 
-			var binRootDirectories = new GeneratorRepoDirectories(MessagesDirectoryName, null);
+			var binRootDirectories = new GeneratorRepoDirectories(messagesDirectoryName, null);
             
 			var assemblies = new List<Assembly>();
         	var enumGenerator = new EnumGenerator();
@@ -53,13 +52,13 @@ namespace Wonga.QA.Generators.Msmq
 
 						string messageClassSubfolderName = messageClassNamespaceRelativePath.Replace(".", new string(Path.DirectorySeparatorChar, 1));
 
-						String messageClassNamespace = string.Format("{0}.{1}.{2}", Config.Msmq.Project, MessagesDirectoryName, messageClassNamespaceRelativePath);
+						String messageClassNamespace = string.Format("{0}.{1}.{2}", Config.Msmq.Project, messagesDirectoryName, messageClassNamespaceRelativePath);
 
 						DirectoryInfo messageClassDirectory = Repo.Directory(messageClassSubfolderName, binRootDirectories.ClassesDirectory);
 						FileInfo code = Repo.File(String.Format("{0}.cs", messageClassName), messageClassDirectory);
 
 						//TODO: should use the original namespace for the enum!!!!!
-						string generatedEnumNamespace = string.Format("{0}.{1}.{2}", Config.Msmq.Project, EnumsDirectoryName, messageClassNamespaceRelativePath);
+						string generatedEnumNamespace = string.Format("{0}.{1}.{2}", Config.Msmq.Project, Config.Enums.Folder, messageClassNamespaceRelativePath);
 
 						// misses all the include directives
 						var builder = InitializeMessageClassDefinition(messageClassName, message, messageClassNamespace);
@@ -93,12 +92,12 @@ namespace Wonga.QA.Generators.Msmq
 
         	if(errorsOccurred || enumGenerator.ErrorsOccurred)
         	{
-				Console.Error.WriteLine("*** THERE WHERE ERRORS DURING GENERATION... NOT UPDATING QAF!!!!!");
+				Console.Error.WriteLine("*** THERE WERE ERRORS DURING GENERATION... NOT UPDATING QAF!!!!!");
 				return;
         	}
 
         	Repo.Inject(binRootDirectories.ClassesDirectory, Config.Msmq.Folder, Config.Msmq.Project);
-			Repo.Inject(binRootDirectories.EnumsDirectory, EnumsDirectoryName, Config.Msmq.Project);
+			Repo.Inject(binRootDirectories.EnumsDirectory, Config.Enums.Folder, Config.Msmq.Project);
         }
 
     	private static StringBuilder InitializeMessageClassDefinition(string messageClassName, Type message,
