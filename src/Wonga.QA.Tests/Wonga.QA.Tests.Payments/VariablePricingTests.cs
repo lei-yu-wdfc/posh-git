@@ -24,14 +24,11 @@ namespace Wonga.QA.Tests.Payments
         private const ProvinceEnum Province = ProvinceEnum.ON;
 
         private List<VariableInterestRateDetailEntity> _originalRates;
-        private int _closeDelay;
 
         [SetUp]
         public void Setup()
         {
             _originalRates = GetPaymentFunctions.GetCurrentVariableInterestRates();
-            _closeDelay = ConfigurationFunctions.GetDelayBeforeApplicationClosed();
-            ConfigurationFunctions.SetDelayBeforeApplicationClosed(0);
         }
 
         [TearDown]
@@ -39,10 +36,9 @@ namespace Wonga.QA.Tests.Payments
         {
             SetPaymentFunctions.SetCurrentVariableInterestRates(_originalRates);
             ConfigurationFunctions.SetVariableInterestRateEnabled(true);
-            ConfigurationFunctions.SetDelayBeforeApplicationClosed(_closeDelay);
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1472"), Parallelizable]
+        [Test, AUT(AUT.Ca), JIRA("CA-1472"), Parallelizable, CoreTest]
         public void VerifyFixedTermLoanOfferCaQueryRates()
         {
             var response = GetPaymentFunctions.GetFixedTermLoanOfferCaQuery();
@@ -53,8 +49,21 @@ namespace Wonga.QA.Tests.Payments
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1472"), Parallelizable]
-        [Row(11), Row(10), Row(11), Row(15), Row(19), Row(30)]
+        [Row(11), Row(10), Row(11), Row(19), Row(30)]
         public void VerifyVariableInterestPostedOnLoanCreation(int loanTerm)
+        {
+            var customer = CustomerBuilder.New().ForProvince(Province).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
+            var applicationId = application.Id;
+
+            var actualRates = GetPaymentFunctions.GetInterestRatesForApplication(applicationId);
+            var expectedRates = GetPaymentFunctions.GetCurrentVariableInterestRates(loanTerm);
+            Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestRatesApplied(actualRates, expectedRates));
+        }
+
+        [Test, AUT(AUT.Ca), JIRA("CA-1472"), Parallelizable]
+        [Row(15), CoreTest]
+        public void VerifyVariableInterestPostedOnLoanCreationCore(int loanTerm)
         {
             var customer = CustomerBuilder.New().ForProvince(Province).Build();
             var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).Build();
@@ -84,9 +93,41 @@ namespace Wonga.QA.Tests.Payments
             Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestCharged(actualInterestAmountApplied, expectedInterestAmountApplied));
         }
 
+        [Test, AUT(AUT.Ca), JIRA("CA-1472"), Parallelizable, CoreTest]
+        [Row(15)]
+        public void VerifyInterestAmountChargedCore(int loanTerm)
+        {
+            const decimal loanAmount = 100;
+
+            var customer = CustomerBuilder.New().ForProvince(Province).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
+            var applicationId = application.Id;
+
+            application.RepayOnDueDate();
+
+            var actualInterestAmountApplied = GetPaymentFunctions.GetInterestAmountApplied(applicationId);
+            var expectedInterestAmountApplied = CalculateFunctionsCa.CalculateExpectedVariableInterestAmountAppliedCa(loanAmount, loanTerm);
+
+            Assert.IsTrue(VerifyPaymentFunctions.VerifyVariableInterestCharged(actualInterestAmountApplied, expectedInterestAmountApplied));
+        }
+
         [Test, AUT(AUT.Ca), JIRA("CA-1472"), Parallelizable]
-        [Row(9), Row(15)]
+        [Row(9)]
         public void VerifyLoanClosedAfterPaymentFullRecieved(int loanTerm)
+        {
+            const decimal loanAmount = 100;
+
+            var customer = CustomerBuilder.New().ForProvince(Province).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanTerm(loanTerm).WithLoanAmount(loanAmount).Build();
+
+            application.RepayOnDueDate();
+
+            Assert.IsTrue(application.IsClosed);
+        }
+
+        [Test, AUT(AUT.Ca), JIRA("CA-1472"), Parallelizable, CoreTest]
+        [Row(9), Row(15)]
+        public void VerifyLoanClosedAfterPaymentFullRecievedCore(int loanTerm)
         {
             const decimal loanAmount = 100;
 
@@ -182,7 +223,7 @@ namespace Wonga.QA.Tests.Payments
             Assert.IsTrue(Do.With.Timeout(1).Until(() => lNApplication.IsClosed));
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1472"), Parallelizable]
+        [Test, AUT(AUT.Ca), JIRA("CA-1472"), Parallelizable, CoreTest]
         public void VerifyMaxPercentageRateChargedOn30Days()
         {
             const int loanTerm = 30;
@@ -325,7 +366,7 @@ namespace Wonga.QA.Tests.Payments
        //     Assert.IsTrue(actualInterestAmoutApplied == expectedInterestAmountApplied);
        //}
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1472"), Parallelizable]
+        [Test, AUT(AUT.Ca), JIRA("CA-1472"), Parallelizable, CoreTest]
         [Row(15)]
         public void VerifyLoanGoesIntoArrears(int loanTerm)
         {
@@ -381,7 +422,7 @@ namespace Wonga.QA.Tests.Payments
             Assert.IsTrue(actualRates[actualRates.Count - 1].Mir == expectedArrearsRate);
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1472"), Parallelizable]
+        [Test, AUT(AUT.Ca), JIRA("CA-1472"), Parallelizable, CoreTest]
         [Row(17)]
         public void VerifyDefaultChargeAppliedToLoanInArrears(int loanTerm)
         {
@@ -528,7 +569,7 @@ namespace Wonga.QA.Tests.Payments
 
         //}
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1472"), Parallelizable]
+        [Test, AUT(AUT.Ca), JIRA("CA-1472"), Parallelizable, CoreTest]
         [Row(18, 4)]
         public void VerifyDefaultChargeNotAppliedToBcCustomer(int loanTerm, uint daysOverdue)
         {
