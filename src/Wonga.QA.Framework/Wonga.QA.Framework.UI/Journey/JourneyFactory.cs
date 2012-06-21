@@ -28,7 +28,7 @@ namespace Wonga.QA.Framework.UI
                     throw new NotImplementedException();
             }
         }
-        public static ILnConsumerJourney GetLnJourney(BasePage homePage)
+        public static BaseLnJourney GetLnJourney(BasePage homePage)
         {
             switch (Config.AUT)
             {
@@ -38,19 +38,11 @@ namespace Wonga.QA.Framework.UI
                     return new CaLnJourney(homePage);
                 case AUT.Uk:
                     return new UkLnJourney(homePage);
+                case AUT.Wb:
+                    return new WbLnJourney(homePage);
                 default:
                     throw new NotImplementedException();
             }
-        }
-
-     //   public static WbL0Journey GetL0JourneyWB(BasePage homePage)
-     //   {
-     //       return new WbL0Journey(homePage);
-     //   }
-
-        public static WbLnJourney GetLNJourneyWB(BasePage homePage)
-        {
-            return new WbLnJourney(homePage);
         }
     }
 }

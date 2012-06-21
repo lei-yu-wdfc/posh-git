@@ -63,7 +63,6 @@
     <Compile Include="Journey\CaL0Journey.cs" />
     <Compile Include="Journey\WbLnJourney.cs" />
     <Compile Include="Journey\PlL0Journey.cs" />
-    <Compile Include="Journey\ILnConsumerJourney.cs" />
     <Compile Include="Journey\JourneyFactory.cs" />
     <Compile Include="Journey\UkL0Journey.cs" />
     <Compile Include="Journey\UkLnJourney.cs" />
