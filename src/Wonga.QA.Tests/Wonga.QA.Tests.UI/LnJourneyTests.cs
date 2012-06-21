@@ -318,7 +318,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-302")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-302"), Pending("Sorry, unrecognised email address or password., CustomerBuilder broken")]
         public void LoggedCustomerWithoutLoanAppliesNewLoanChangesMobilePhoneAndClicksResendPinAndGoFarther()
         {
             string email = Get.RandomEmail();
