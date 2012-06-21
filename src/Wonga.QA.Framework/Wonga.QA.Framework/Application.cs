@@ -133,7 +133,7 @@ namespace Wonga.QA.Framework
 			Do.While(ca.Refresh);
 		}
 
-	    private dynamic WaitForDirectBankPaymentCreditTransaction()
+	    private TransactionEntity WaitForDirectBankPaymentCreditTransaction()
         {
             #region:find a way to fix this
             /*
@@ -177,18 +177,11 @@ namespace Wonga.QA.Framework
 
 */
             #endregion
-
-	        var appsTab = Drive.Data.Payments.Db.Applications;
-            var transTab = Drive.Data.Payments.Db.Transactions;
-            return Do.Until(() => appsTab.FindByExternalId(Id).Transactions.Where(
-				transTab.Scope == (int)PaymentTransactionScopeEnum.Credit && 
-				transTab.Type == Get.EnumToString(Config.AUT == AUT.Uk ? PaymentTransactionEnum.CardPayment : PaymentTransactionEnum.DirectBankPayment)));
-
-            //previous return Do.Until(() => Drive.Db.Payments.Applications.Single(
-            //    a => a.ExternalId == Id).Transactions.Single(
-            //        t =>
-            //        (PaymentTransactionScopeEnum) t.Scope == PaymentTransactionScopeEnum.Credit && t.Type == Get.EnumToString(
-            //            Config.AUT == AUT.Uk ? PaymentTransactionEnum.CardPayment : PaymentTransactionEnum.DirectBankPayment)));
+            return Do.Until(() => Drive.Db.Payments.Applications.Single(
+	            a => a.ExternalId == Id).Transactions.Single(
+	                t =>
+	                (PaymentTransactionScopeEnum) t.Scope == PaymentTransactionScopeEnum.Credit && t.Type == Get.EnumToString(
+	                    Config.AUT == AUT.Uk ? PaymentTransactionEnum.CardPayment : PaymentTransactionEnum.DirectBankPayment)));
 	    }
 
 	    public Application MakeDueToday()
@@ -231,7 +224,8 @@ namespace Wonga.QA.Framework
 
 		public virtual Application RewindApplicationFurther(uint daysInArrears)
 		{
-			ApplicationOperations.Rewind(Id, (int)daysInArrears);
+			Drive.Db.Rewind(Id, (int)daysInArrears);
+
 			return this;
 		}
 
@@ -293,7 +287,7 @@ namespace Wonga.QA.Framework
 				totalDays = totalDays - GetDaysInArrears();
 			}
 
-			ApplicationOperations.Rewind(Id, (int)totalDays);
+			Drive.Db.Rewind(Id, (int)totalDays);
 
 			return this;
 		}
@@ -435,11 +429,12 @@ namespace Wonga.QA.Framework
 			{
 				var utcNow = DateTime.UtcNow;
 
-                Int32 applicationid = Drive.Data.Payments.Db.Applications.FindByExternalId(Id).ApplicationId;
+				Int32 applicationid =
+					Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).ApplicationId;
 
-				var sp = Do.Until(() => Drive.Data.OpsSagas.Db.RepaymentSagaEntity.FindByApplicationId(applicationid));
+				RepaymentSagaEntity sp = Do.Until(() => Drive.Db.OpsSagas.RepaymentSagaEntities.Single(s => s.ApplicationId == applicationid));
                 Drive.Msmq.Payments.Send(new PaymentTakenCommand { SagaId = sp.Id, ValueDate = utcNow, CreatedOn = utcNow, ApplicationId = Id });
-                Do.While(() => Drive.Data.OpsSagas.Db.RepaymentSagaEntity.FindByApplicationId(applicationid));
+				Do.While(sp.Refresh);
 			}
 
             var transaction = WaitForDirectBankPaymentCreditTransaction();
@@ -452,17 +447,17 @@ namespace Wonga.QA.Framework
 
 	    public Application MoveToDebtCollectionAgency()
         {
-            var value =  Drive.Data.Ops.Db.ServiceConfiguration<string>("Payments.MoveToDcaDelayInMinutes");
-            var debtCollections = Drive.Data.Payments.Db.DebtCollections;
-            int daysToRewind = int.Parse(value)/60/24;
+            ServiceConfigurationEntity serviceConfiguration =  Drive.Db.Ops.ServiceConfigurations.Single(sc => sc.Key == "Payments.MoveToDcaDelayInMinutes");
 
-            ApplicationOperations.Rewind(Id, daysToRewind);
+            int daysToRewind = int.Parse(serviceConfiguration.Value)/60/24;
 
-            var entity = Do.Until(() => Drive.Data.OpsSagas.Db.ExternalDebtCollectionSagaEntity.FindByApplicationId(Id));
+            Drive.Db.Rewind(Id, daysToRewind);
+
+            var entity = Do.Until(() => Drive.Db.OpsSagasCa.ExternalDebtCollectionSagaEntities.Single(e => e.ApplicationId == Id));
             Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = entity.Id });
 
-            //previous Do.Until(() => Drive.Db.Payments.DebtCollections.Single(d => d.ApplicationEntity.ExternalId == Id && d.MovedToAgency));
-            Do.Until(() => debtCollections.Find(debtCollections.Application.ExternalId == Id && debtCollections.MovedToAgency));
+            Do.Until(() => Drive.Db.Payments.DebtCollections.Single(d => d.ApplicationEntity.ExternalId == Id && d.MovedToAgency));
+
             return this;
         }
 
@@ -487,8 +482,8 @@ namespace Wonga.QA.Framework
         public void MoveTransactionDates(int days)
         {
             var span = new TimeSpan(days, 0, 0, 0);
-            dynamic application = Drive.Data.Payments.Db.Applications.FindByExternalId(Id);
-            ApplicationOperations.MoveApplicationTransactionDates(application, span);
+            ApplicationEntity application = Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id);
+            Drive.Db.MoveApplicationTransactionDates(application, span);
         }
     }
 }
