@@ -133,8 +133,7 @@ namespace Wonga.QA.Framework.Mobile.UI.Elements
                 //return new EligibilityQuestionsPage(Page.Client); //migrationFixNeeded
                 return null;//migrationFixNeeded
             if (Config.AUT == AUT.Uk || Config.AUT == AUT.Za || Config.AUT == AUT.Ca || Config.AUT == AUT.Pl)
-                //return new PersonalDetailsPage(Page.Client);
-                return null; //migrationFixNeeded
+                return new PersonalDetailsPageMobile(Page.Client);
             return null;
         }
 
