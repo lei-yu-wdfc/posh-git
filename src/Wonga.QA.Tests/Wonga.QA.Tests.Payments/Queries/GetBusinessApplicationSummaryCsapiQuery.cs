@@ -4,6 +4,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Queries.Wb.Uk;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments.Queries
@@ -19,7 +20,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             var organisation = OrganisationBuilder.New(customer).Build();
             var app = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).WithLoanTerm(20).Build();
 
-            var response = Drive.Cs.Queries.Post(new Framework.Cs.GetBusinessApplicationSummaryWbUkQuery
+            var response = Drive.Cs.Queries.Post(new GetBusinessApplicationSummaryWbUkQuery
                                                         {
                                                             ApplicationGuid = app.Id
                                                         });
@@ -32,7 +33,7 @@ namespace Wonga.QA.Tests.Payments.Queries
         [Test, JIRA("SME-375"), AUT(AUT.Wb)]
         public void PaymentsShouldReturnNullWhenApplicationDoesNotExists()
         {
-            var response = Drive.Cs.Queries.Post(new Framework.Cs.GetBusinessApplicationSummaryWbUkQuery
+            var response = Drive.Cs.Queries.Post(new GetBusinessApplicationSummaryWbUkQuery
             {
                 ApplicationGuid = Guid.NewGuid()
             });

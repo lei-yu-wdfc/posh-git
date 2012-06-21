@@ -1,5 +1,5 @@
 using System.ComponentModel;
-namespace Wonga.QA.Framework.Cs
+namespace Wonga.QA.Framework.Cs.Enums
 {
     public enum IncomeFrequencyEnum
     {

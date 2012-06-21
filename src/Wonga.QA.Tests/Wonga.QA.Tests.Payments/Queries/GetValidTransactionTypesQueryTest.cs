@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using Gallio.Framework;
 using MbUnit.Framework;
-using MbUnit.Framework.ContractVerifiers;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Queries;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments.Queries
@@ -18,7 +18,7 @@ namespace Wonga.QA.Tests.Payments.Queries
         [Test, AUT(AUT.Wb), JIRA("SME-375")]
         public void ShouldReturnOnlyExpectedTransactionTypes()
         {
-            var response= Drive.Cs.Queries.Post(new Wonga.QA.Framework.Cs.GetValidTransactionTypesQuery());
+            var response= Drive.Cs.Queries.Post(new GetValidTransactionTypesQuery());
 
             Assert.AreEqual(9, response.Values["Type"].Count());
             Assert.Contains(response.Values["Type"], "CardPayment");

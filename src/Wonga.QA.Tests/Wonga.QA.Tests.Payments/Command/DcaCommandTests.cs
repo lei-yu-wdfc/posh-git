@@ -9,6 +9,7 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Exceptions;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Commands;
 using Wonga.QA.Framework.Db.Ops;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
@@ -95,7 +96,7 @@ namespace Wonga.QA.Tests.Payments.Command
 							.OrderByDescending(_debtCollections.CreatedOn)
 							.FirstOrDefault());
 
-			var revokeFromDcaCommand = new Framework.Cs.RevokeApplicationFromDcaCommand
+			var revokeFromDcaCommand = new RevokeApplicationFromDcaCommand
 			{
 				ApplicationId = app.Id
 			};
@@ -147,7 +148,7 @@ namespace Wonga.QA.Tests.Payments.Command
 							.OrderByDescending(_debtCollections.CreatedOn)
 							.FirstOrDefault());
 
-			var revokeFromDcaCommand = new Framework.Cs.RevokeApplicationFromDcaCommand
+			var revokeFromDcaCommand = new RevokeApplicationFromDcaCommand
 			{
 				ApplicationId = Guid.NewGuid()
 			};
@@ -168,7 +169,7 @@ namespace Wonga.QA.Tests.Payments.Command
 			FlagDca(app.Id);
 			app.RepayOnDueDate();
 
-			var revokeFromDcaCommand = new Framework.Cs.RevokeApplicationFromDcaCommand
+			var revokeFromDcaCommand = new RevokeApplicationFromDcaCommand
 			{
 				ApplicationId = app.Id
 			};
@@ -181,7 +182,7 @@ namespace Wonga.QA.Tests.Payments.Command
 
 		private void FlagDca(Guid applicationId)
 		{
-			var flagToDcaCommand = new Framework.Cs.FlagApplicationToDcaCommand
+			var flagToDcaCommand = new FlagApplicationToDcaCommand
 			{
 				ApplicationId = applicationId
 			};

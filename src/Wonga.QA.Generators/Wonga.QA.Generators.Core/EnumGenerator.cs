@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using QAFramework = Wonga.QA.Generators.Core.Config.Framework;
 
 namespace Wonga.QA.Generators.Core
 {
@@ -45,14 +46,20 @@ namespace Wonga.QA.Generators.Core
 		/// </summary>
 		public string EnumFullNameStartFilter { get; private set; }
 
-		public EnumGenerator(bool continueOnError)
-			: this(EnumGenerationMode.IncludeConstantValues, DefaultEnumFullNameStartFilter, continueOnError)
+		/// <summary>
+		/// target framework to which the enums will be generated
+		/// </summary>
+		public QAFramework TargetFramework { get; private set; }
+
+		public EnumGenerator(QAFramework targetFramework, bool continueOnError)
+			: this(targetFramework, EnumGenerationMode.IncludeConstantValues, DefaultEnumFullNameStartFilter, continueOnError)
 		{
 			
 		}
 
-		public EnumGenerator(EnumGenerationMode mode = EnumGenerationMode.IncludeConstantValues, string filter = DefaultEnumFullNameStartFilter, bool continueOnError = true)
+		public EnumGenerator(QAFramework targetFramework, EnumGenerationMode mode = EnumGenerationMode.IncludeConstantValues, string filter = DefaultEnumFullNameStartFilter, bool continueOnError = true)
 		{
+			TargetFramework = targetFramework;
 			ContinueOnError = continueOnError;
 			Mode = mode;
 			EnumFullNameStartFilter = filter;
@@ -152,8 +159,8 @@ namespace Wonga.QA.Generators.Core
 					//TODO: fix this!!!!! pass the FW ????? ON THE 2 PLACES
 					string generatedEnumNamespace =
 						string.IsNullOrEmpty(enumNamespaceRelativePath) 
-						? string.Format("{0}.{1}", Config.Api.Project, Config.Enums.Folder)
-						: string.Format("{0}.{1}.{2}", Config.Api.Project, Config.Enums.Folder, enumNamespaceRelativePath);
+						? string.Format("{0}.{1}", TargetFramework.Project, Config.Enums.Folder)
+						: string.Format("{0}.{1}.{2}", TargetFramework.Project, Config.Enums.Folder, enumNamespaceRelativePath);
 					
 					EnumGenerationResult enumGenerationResult = GetEnumGenerationResult(messageMemberEnumType, generatedEnumNamespace);
 					switch (enumGenerationResult.Status)

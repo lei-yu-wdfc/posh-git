@@ -4,6 +4,8 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Cs;
+using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Commands;
+using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Queries;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Framework.Msmq;
@@ -118,7 +120,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             PersonalPaymentCardEntity[] cards = customer.GetPersonalPaymentCards();
             Do.Until(() =>
                           {
-                              GetPersonalPaymentCardsQuery query = new GetPersonalPaymentCardsQuery() { AccountId = customer.Id };
+                              var query = new GetPersonalPaymentCardsQuery() { AccountId = customer.Id };
                               CsResponse response = Drive.Cs.Queries.Post(query);
                               if (response == null) return false;
                               if (response.Values["Account"].Any(v => v != customer.Id.ToString())) return false;

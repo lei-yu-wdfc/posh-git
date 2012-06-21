@@ -6,6 +6,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Cs;
+using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Commands;
 using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Framework.Db.Payments;

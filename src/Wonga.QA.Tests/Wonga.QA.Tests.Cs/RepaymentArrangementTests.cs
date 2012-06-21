@@ -6,6 +6,8 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api.Exceptions;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Cs;
+using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Commands;
+using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Queries;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Framework.Msmq.Enums.Payments.Ca;
@@ -223,7 +225,7 @@ namespace Wonga.QA.Tests.Cs
 
         private static void CreatePlan(Application application, Customer customer)
         {
-            Drive.Cs.Commands.Post(new Framework.Cs.CreateRepaymentArrangementCommand()
+            Drive.Cs.Commands.Post(new CreateRepaymentArrangementCommand()
             {
                 AccountId = customer.Id,
                 ApplicationId = application.Id,
@@ -257,7 +259,7 @@ namespace Wonga.QA.Tests.Cs
 
 		private static void CancelRepaymentArrangement(RepaymentArrangementEntity repaymentArrangement)
 		{
-			Drive.Cs.Commands.Post(new Framework.Cs.CancelRepaymentArrangementCommand()
+			Drive.Cs.Commands.Post(new CancelRepaymentArrangementCommand()
 			{
 				RepaymentArrangementId = repaymentArrangement.ExternalId
 			});

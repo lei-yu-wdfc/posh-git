@@ -9,6 +9,7 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Exceptions;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Commands;
 using Wonga.QA.Framework.Db.Ops;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
@@ -86,7 +87,7 @@ namespace Wonga.QA.Tests.Payments.Command
 			var customer = CustomerBuilder.New().Build();
 			var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
-			var generateRepaymentNumberCommand = new Framework.Cs.GenerateRepaymentNumberCommand
+			var generateRepaymentNumberCommand = new GenerateRepaymentNumberCommand
 			{
 				AccountId = app.AccountId
 			};
@@ -102,7 +103,7 @@ namespace Wonga.QA.Tests.Payments.Command
 		[ExpectedException(typeof(ValidatorException), "Payments_GenerateRepaymentNumber_AccountDoesNotExist")]
 		public void GenerateRepaymentNumber_ForNonExistingAccount_ExpectValidationException()
 		{
-			var generateRepaymentNumberCommand = new Framework.Cs.GenerateRepaymentNumberCommand
+			var generateRepaymentNumberCommand = new GenerateRepaymentNumberCommand
 			{
 				AccountId = Guid.NewGuid()
 			};

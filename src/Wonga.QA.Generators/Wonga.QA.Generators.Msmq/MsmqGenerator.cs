@@ -22,7 +22,7 @@ namespace Wonga.QA.Generators.Msmq
 			var binRootDirectories = new GeneratorRepoDirectories(messagesDirectoryName, null);
             
 			var assemblies = new List<Assembly>();
-        	var enumGenerator = new EnumGenerator();
+        	var enumGenerator = new EnumGenerator(Config.Msmq);
 
             foreach (FileInfo file in Origin.GetProjects().OrderBy(f => f.Name))
             {

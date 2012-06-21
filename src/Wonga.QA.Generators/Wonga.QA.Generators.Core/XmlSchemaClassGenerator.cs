@@ -37,7 +37,7 @@ namespace Wonga.QA.Generators.Core
 			Framework = framework;
 			BinRootDirectories = binRootDirectories;
 			ContinueOnError = continueOnError;
-			EnumGenerator = new EnumGenerator(EnumGenerationMode.UseNormalTypeNameWithDescription, null, continueOnError);
+			EnumGenerator = new EnumGenerator(framework, EnumGenerationMode.UseNormalTypeNameWithDescription, null, continueOnError);
 		}
 
 		public void GenerateXmlSchemaClassesFiles(FileInfo xmlSchemaFile, ILookup<String, Type> typesToGenerate)
