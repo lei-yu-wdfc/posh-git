@@ -1,7 +1,8 @@
 using System;
+using Wonga.QA.Framework.Api.Enums;
 using Wonga.QA.Framework.Core;
 
-namespace Wonga.QA.Framework.Api
+namespace Wonga.QA.Framework.Api.Requests.Payments.Commands.Za
 {
     public partial class AddBankAccountZaCommand
     {

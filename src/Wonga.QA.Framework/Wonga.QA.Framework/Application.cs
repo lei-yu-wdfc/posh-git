@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Api.Enums;
+using Wonga.QA.Framework.Api.Requests.Payments.Commands;
+using Wonga.QA.Framework.Api.Requests.Payments.Queries;
+using Wonga.QA.Framework.Api.Requests.Payments.Queries.Za;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Db.Extensions;
@@ -363,10 +367,10 @@ namespace Wonga.QA.Framework
 
 		public Application CreateRepaymentArrangement()
 		{
-			var cmd = new Api.CreateRepaymentArrangementCommand
+			var cmd = new CreateRepaymentArrangementCommand
 			{
 				ApplicationId = Id,
-				Frequency = Api.PaymentFrequencyEnum.Every4Weeks,
+				Frequency = PaymentFrequencyEnum.Every4Weeks,
 				RepaymentDates = new[] { DateTime.Today.AddDays(1), DateTime.Today.AddMonths(1) },
 				NumberOfMonths = 2
 			};

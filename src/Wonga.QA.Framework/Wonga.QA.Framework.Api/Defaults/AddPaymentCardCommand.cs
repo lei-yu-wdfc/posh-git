@@ -2,7 +2,7 @@ using System;
 using System.Xml.Serialization;
 using Wonga.QA.Framework.Core;
 
-namespace Wonga.QA.Framework.Api
+namespace Wonga.QA.Framework.Api.Requests.Payments.Commands
 {
     public partial class AddPaymentCardCommand
     {

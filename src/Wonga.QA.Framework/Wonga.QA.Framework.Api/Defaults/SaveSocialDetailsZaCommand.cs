@@ -1,8 +1,9 @@
+using Wonga.QA.Framework.Api.Enums;
 using Wonga.QA.Framework.Core;
 
-namespace Wonga.QA.Framework.Api
+namespace Wonga.QA.Framework.Api.Requests.Risk.Commands.Za
 {
-    public partial class SaveSocialDetailsCommand
+    public partial class SaveSocialDetailsZaCommand
     {
         public override void Default()
         {

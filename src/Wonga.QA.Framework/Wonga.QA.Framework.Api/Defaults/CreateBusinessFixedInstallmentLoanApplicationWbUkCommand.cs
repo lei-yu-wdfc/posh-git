@@ -1,6 +1,7 @@
-﻿using Wonga.QA.Framework.Core;
+﻿using Wonga.QA.Framework.Api.Enums;
+using Wonga.QA.Framework.Core;
 
-namespace Wonga.QA.Framework.Api
+namespace Wonga.QA.Framework.Api.Requests.Payments.Commands.Wb.Uk
 {
     public partial class CreateBusinessFixedInstallmentLoanApplicationWbUkCommand
     {

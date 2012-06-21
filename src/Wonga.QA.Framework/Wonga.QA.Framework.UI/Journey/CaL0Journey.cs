@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Api.Enums;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Journey;
 using Wonga.QA.Framework.UI.UiElements.Pages;

@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Wonga.QA.Framework.Api.Enums;
 using Wonga.QA.Framework.Core;
 
-namespace Wonga.QA.Framework.Api
+namespace Wonga.QA.Framework.Api.Requests.Risk.Commands.Za
 {
-	public partial class RiskSaveCustomerDetailsCommand
+	public partial class RiskSaveCustomerDetailsZaCommand
 	{
 		public override void Default()
 		{

@@ -1,6 +1,6 @@
 using Wonga.QA.Framework.Core;
 
-namespace Wonga.QA.Framework.Api
+namespace Wonga.QA.Framework.Api.Requests.Ops.Commands.Uk
 {
     public partial class SavePasswordRecoveryDetailsUkCommand
     {

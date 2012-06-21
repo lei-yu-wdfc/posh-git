@@ -47,6 +47,16 @@
     <Compile Include="Defaults\AddPrimaryOrganisationDirectorCommand.cs" />
     <Compile Include="Defaults\AddSecondaryOrganisationDirectorCommand.cs" />
     <Compile Include="Defaults\CompleteHomePhoneVerificationCaCommand.cs" />
+    <Compile Include="Defaults\SaveSocialDetailsUkCommand.cs" />
+    <Compile Include="Defaults\SaveSocialDetailsPlCommand.cs" />
+    <Compile Include="Defaults\SaveSocialDetailsZaCommand.cs" />
+    <Compile Include="Defaults\SaveEmploymentDetailsPlCommand.cs" />
+    <Compile Include="Defaults\RiskSaveCustomerDetailsPlCommand.cs" />
+    <Compile Include="Defaults\RiskSaveCustomerDetailsUkCommand.cs" />
+    <Compile Include="Defaults\RiskSaveCustomerDetailsZaCommand.cs" />
+    <Compile Include="Defaults\RiskSaveCustomerAddressPlCommand.cs" />
+    <Compile Include="Defaults\RiskSaveCustomerAddressUkCommand.cs" />
+    <Compile Include="Defaults\RiskSaveCustomerAddressZaCommand.cs" />
     <Compile Include="Defaults\RiskAddHomePhonePlCommand.cs" />
     <Compile Include="Defaults\RiskAddHomePhoneUkCommand.cs" />
     <Compile Include="Defaults\RiskAddHomePhoneZaCommand.cs" />
@@ -55,8 +65,8 @@
     <Compile Include="Defaults\RiskAddMobilePhoneZaCommand.cs" />
     <Compile Include="Defaults\RiskAddHomePhoneCaCommand.cs" />
     <Compile Include="Defaults\RiskAddMobilePhoneCaCommand.cs" />
-    <Compile Include="Defaults\RiskSaveCustomerAddressCommand.cs" />
-    <Compile Include="Defaults\RiskSaveCustomerDetailsCommand.cs" />
+    <Compile Include="Defaults\RiskSaveCustomerAddressCaCommand.cs" />
+    <Compile Include="Defaults\RiskSaveCustomerDetailsCaCommand.cs" />
     <Compile Include="Defaults\SavePasswordRecoveryDetailsUkCommand.cs" />
     <Compile Include="Defaults\SavePasswordRecoveryDetailsZaCommand.cs" />
     <Compile Include="Defaults\SavePasswordRecoveryDetailsCaCommand.cs" />
@@ -72,6 +82,7 @@
     <Compile Include="Defaults\SaveCustomerDetailsUkCommand.cs" />
     <Compile Include="Defaults\SaveEmploymentDetailsUkCommand.cs" />
     <Compile Include="Defaults\SaveOrganisationDetailsCommand.cs" />
+    <Compile Include="Defaults\SavePaymentCardBillingAddressCommand.cs" />
     <Compile Include="Defaults\SubmitNumberOfGuarantorsCommand.cs" />
     <Compile Include="Defaults\UpdateLoanTermWbUkCommand.cs" />
     <Compile Include="Defaults\VerifyHomePhoneCaCommand.cs" />
@@ -96,7 +107,7 @@
     <Compile Include="Defaults\SaveCustomerAddressZaCommand.cs" />
     <Compile Include="Defaults\SaveCustomerDetailsZaCommand.cs" />
     <Compile Include="Defaults\SaveEmploymentDetailsZaCommand.cs" />
-    <Compile Include="Defaults\SaveSocialDetailsCommand.cs" />
+    <Compile Include="Defaults\SaveSocialDetailsCaCommand.cs" />
     <Compile Include="Exceptions\ValidatorException.cs" />
     <Compile Include="Exceptions\NoDefaultException.cs" />
     <Compile Include="Exceptions\SchemaException.cs" />

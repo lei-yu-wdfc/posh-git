@@ -2,6 +2,11 @@
 using System.Globalization;
 using MbUnit.Framework;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Api.Enums;
+using Wonga.QA.Framework.Api.Requests.Comms.Commands;
+using Wonga.QA.Framework.Api.Requests.Comms.Commands.Uk;
+using Wonga.QA.Framework.Api.Requests.Payments.Commands;
+using Wonga.QA.Framework.Api.Requests.Payments.PrepaidCard.Commands;
 using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework
