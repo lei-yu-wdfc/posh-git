@@ -17,7 +17,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
             : base(client)
         {
             Sliders = new SlidersElement(this);
-            Tabs = new TabsElementMobile(this);
+            //Tabs = new TabsElementMobile(this);
         }
     }
 }
