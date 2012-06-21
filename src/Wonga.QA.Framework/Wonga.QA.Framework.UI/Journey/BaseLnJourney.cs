@@ -104,7 +104,7 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-       public virtual BaseLnJourney WithNewMobilePhone(string mobilePhone)
+       public virtual BaseLnJourney WithNewMobilePhone(string mobilePhone = null)
        {
            throw new NotImplementedException(message: "Used only on Uk");
        }

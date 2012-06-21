@@ -17,8 +17,6 @@ namespace Wonga.QA.Framework.UI
             _amount = 200;
             _duration = 10;
 
-            _mobilePhone = Get.GetMobilePhone();
-
             journey.Add(typeof(HomePage), ApplyForLoan);
             journey.Add(typeof(ApplyPage), FillApplicationDetails);
             journey.Add(typeof(ProcessingPage), WaitForAcceptedPage);
@@ -83,9 +81,9 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public override BaseLnJourney WithNewMobilePhone(string mobilePhone)
+        public override BaseLnJourney WithNewMobilePhone(string mobilePhone = null)
         {
-            _mobilePhone = mobilePhone;
+            _mobilePhone = mobilePhone ?? Get.GetMobilePhone();
 
             journey.Remove(typeof(ApplyPage));
             journey.Remove(typeof(ProcessingPage));
