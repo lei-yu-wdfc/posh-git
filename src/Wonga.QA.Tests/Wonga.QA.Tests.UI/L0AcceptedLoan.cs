@@ -20,7 +20,7 @@ namespace Wonga.QA.Tests.Ui
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home()); 
             var processingPage = journey.ApplyForLoan(200, 10)
-                                 .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask))
+                                 .FillPersonalDetails(employerNameMask: Get.EnumToString(RiskMask.TESTEmployedMask), firstName: "forenametest", lastName: "lastnametest")
                                  .FillAddressDetails()
                                  .FillAccountDetails()
                                  .FillBankDetails()

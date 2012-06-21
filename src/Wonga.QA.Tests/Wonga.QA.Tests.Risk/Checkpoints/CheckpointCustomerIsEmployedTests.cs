@@ -23,7 +23,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
         [JIRA("UKRISK-72"), Description("Scenario 1: Customer is uneploymend, application declined")]
         public void L0CustomerIsUnemployedThenApplicationDeclined()
         {
-            var customer = CustomerBuilder.New().WithEmployer(TestMask).WithEmployerStatus(EmploymentStatusEnum.Unemployed.ToString()).Build();
+            var customer = CustomerBuilder.New().WithEmployer(TestMask).WithEmployerStatus(EmploymentStatusEnum.Unemployed.ToString()).WithForename("Forename").WithSurname("Surname").Build();
             ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
         }
 

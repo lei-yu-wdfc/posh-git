@@ -285,10 +285,11 @@ namespace Wonga.QA.Tests.Ui
                     var pageZA = journeyZa.ApplyForLoan(200, 20).CurrentPage as ApplyPage;
                     pageZA.SetNewMobilePhone = phone;
                     pageZA.ResendPinClick();
-                    Thread.Sleep(5000);
-                    var smsZa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(phone.Replace("077", "2777")));
-                    Do.Until(
-                        () => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(phone.Replace("077", "2777")));
+
+            		var phoneInDbFormat = phone.Replace("077", "2777");
+
+                    var smsZa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(phoneInDbFormat));
+                    Do.Until(() => smsZa.Count() == 2);
                     Assert.AreEqual(2, smsZa.Count());
                     Console.WriteLine(smsZa.Count());
                     foreach (var sms in smsZa)
