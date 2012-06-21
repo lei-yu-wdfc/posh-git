@@ -123,15 +123,15 @@ namespace Wonga.QA.Framework
             return caScotiaMocksEnabled != null && (Config.AUT == AUT.Ca && Boolean.Parse(caScotiaMocksEnabled.Value));
         }
 
-	    private static void TimeoutCloseApplicationSaga(TransactionEntity transaction)
-	    {
-	        var closeAppSagaEntityTab = Drive.Data.OpsSagas.Db.CloseApplicationSagaEntity;
-	        CloseApplicationSagaEntity ca =
-	            Do.Until(
-                    () => closeAppSagaEntityTab.FindAll(closeAppSagaEntityTab.TransactionId == transaction.ExternalId).Single());
-	        Drive.Msmq.Payments.Send(new TimeoutMessage {SagaId = ca.Id});
-	        Do.While(ca.Refresh);
-	    }
+		private static void TimeoutCloseApplicationSaga(dynamic transaction)
+		{
+			var closeAppSagaEntityTab = Drive.Data.OpsSagas.Db.CloseApplicationSagaEntity;
+			CloseApplicationSagaEntity ca =
+				Do.Until(
+					() => closeAppSagaEntityTab.FindAll(closeAppSagaEntityTab.TransactionId == transaction.ExternalId).Single());
+			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ca.Id });
+			Do.While(ca.Refresh);
+		}
 
 	    private dynamic WaitForDirectBankPaymentCreditTransaction()
         {
@@ -180,8 +180,10 @@ namespace Wonga.QA.Framework
 
 	        var appsTab = Drive.Data.Payments.Db.Applications;
             var transTab = Drive.Data.Payments.Db.Transactions;
-            return Do.Until(() => appsTab.FindByExternalId(Id).Transactions.Where((PaymentTransactionScopeEnum)transTab.Scope  == PaymentTransactionScopeEnum.Credit && transTab.Type == Get.EnumToString(
-                        Config.AUT == AUT.Uk ? PaymentTransactionEnum.CardPayment : PaymentTransactionEnum.DirectBankPayment)));
+            return Do.Until(() => appsTab.FindByExternalId(Id).Transactions.Where(
+				transTab.Scope == (int)PaymentTransactionScopeEnum.Credit && 
+				transTab.Type == Get.EnumToString(Config.AUT == AUT.Uk ? PaymentTransactionEnum.CardPayment : PaymentTransactionEnum.DirectBankPayment)));
+
             //previous return Do.Until(() => Drive.Db.Payments.Applications.Single(
             //    a => a.ExternalId == Id).Transactions.Single(
             //        t =>
