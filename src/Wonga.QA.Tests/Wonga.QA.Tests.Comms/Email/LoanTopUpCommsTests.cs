@@ -3,11 +3,12 @@ using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Api.Requests.FileStorage.Queries;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Framework.Msmq.Messages.Payments.PublicMessages;
 using Wonga.QA.Tests.Core;
-using CreateFixedTermLoanTopupCommand = Wonga.QA.Framework.Api.CreateFixedTermLoanTopupCommand;
+using CreateFixedTermLoanTopupCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.CreateFixedTermLoanTopupCommand;
 
 namespace Wonga.QA.Tests.Comms.Email
 {

@@ -9,6 +9,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Exceptions;
+using Wonga.QA.Framework.Api.Requests.Payments.Commands.Za;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Ops;
 using Wonga.QA.Framework.Msmq;
@@ -49,7 +50,7 @@ namespace Wonga.QA.Tests.Payments.Command
 			var customer = CustomerBuilder.New().Build();
 			var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
-			var command = new Wonga.QA.Framework.Api.SaveIncomingPartnerPaymentRequestZaCommand
+			var command = new SaveIncomingPartnerPaymentRequestZaCommand
 			{
 				ApplicationId = app.Id,
 				 PaymentReference = merchantReferenceNumber,
@@ -78,7 +79,7 @@ namespace Wonga.QA.Tests.Payments.Command
 			var customer = CustomerBuilder.New().Build();
 			var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
-			var saveRequestcommand = new Wonga.QA.Framework.Api.SaveIncomingPartnerPaymentRequestZaCommand
+			var saveRequestcommand = new SaveIncomingPartnerPaymentRequestZaCommand
 			{
 				ApplicationId = app.Id,
 				PaymentReference = merchantReferenceNumber,
@@ -90,7 +91,7 @@ namespace Wonga.QA.Tests.Payments.Command
 
 			var incomingPartnerPayment = Do.Until(() => _incomingPartnerPaymentsDB.FindAll(_incomingPartnerPaymentsDB.PaymentReference == merchantReferenceNumber).FirstOrDefault());
 
-			var saveResponsecommand = new Wonga.QA.Framework.Api.SaveIncomingPartnerPaymentResponseZaCommand
+			var saveResponsecommand = new SaveIncomingPartnerPaymentResponseZaCommand
 			{
 				ApplicationId = app.Id,
 				PaymentReference = merchantReferenceNumber,
@@ -121,7 +122,7 @@ namespace Wonga.QA.Tests.Payments.Command
 			var customer = CustomerBuilder.New().Build();
 			var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
-			var saveRequestcommand = new Wonga.QA.Framework.Api.SaveIncomingPartnerPaymentRequestZaCommand
+			var saveRequestcommand = new SaveIncomingPartnerPaymentRequestZaCommand
 			{
 				ApplicationId = app.Id,
 				PaymentReference = merchantReferenceNumber,
@@ -133,7 +134,7 @@ namespace Wonga.QA.Tests.Payments.Command
 
 			var incomingPartnerPayment = Do.Until(() => _incomingPartnerPaymentsDB.FindAll(_incomingPartnerPaymentsDB.PaymentReference == merchantReferenceNumber).FirstOrDefault());
 
-			var saveResponsecommand = new Wonga.QA.Framework.Api.SaveIncomingPartnerPaymentResponseZaCommand
+			var saveResponsecommand = new SaveIncomingPartnerPaymentResponseZaCommand
 			{
 				ApplicationId = app.Id,
 				PaymentReference = merchantReferenceNumber,
@@ -169,7 +170,7 @@ namespace Wonga.QA.Tests.Payments.Command
 			var customer = CustomerBuilder.New().Build();
 			var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
-			var saveRequestcommand = new Wonga.QA.Framework.Api.SaveIncomingPartnerPaymentRequestZaCommand
+			var saveRequestcommand = new SaveIncomingPartnerPaymentRequestZaCommand
 			{
 				ApplicationId = app.Id,
 				PaymentReference = merchantReferenceNumber,
@@ -181,7 +182,7 @@ namespace Wonga.QA.Tests.Payments.Command
 
 			var incomingPartnerPayment = Do.Until(() => _incomingPartnerPaymentsDB.FindAll(_incomingPartnerPaymentsDB.PaymentReference == merchantReferenceNumber).FirstOrDefault());
 
-			var saveResponsecommand = new Wonga.QA.Framework.Api.SaveIncomingPartnerPaymentResponseZaCommand
+			var saveResponsecommand = new SaveIncomingPartnerPaymentResponseZaCommand
 			{
 				ApplicationId = app.Id,
 				PaymentReference = merchantReferenceNumber,
@@ -216,7 +217,7 @@ namespace Wonga.QA.Tests.Payments.Command
 			var customer = CustomerBuilder.New().Build();
 			var app = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
-			var command = new Wonga.QA.Framework.Api.SaveIncomingPartnerPaymentRequestZaCommand
+			var command = new SaveIncomingPartnerPaymentRequestZaCommand
 			{
 				ApplicationId = app.Id,
 				PaymentReference = merchantReferenceNumber,

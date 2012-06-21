@@ -3,17 +3,17 @@ using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Api.Requests.Payments.Queries.Wb.Uk;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Payments;
-using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
-using AddBankAccountUkCommand = Wonga.QA.Framework.Api.AddBankAccountUkCommand;
-using AddPaymentCardCommand = Wonga.QA.Framework.Api.AddPaymentCardCommand;
-using CreateBusinessFixedInstallmentLoanApplicationWbUkCommand = Wonga.QA.Framework.Api.CreateBusinessFixedInstallmentLoanApplicationWbUkCommand;
-using GenderEnum = Wonga.QA.Framework.Api.GenderEnum;
+using AddBankAccountUkCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.Uk.AddBankAccountUkCommand;
+using AddPaymentCardCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.AddPaymentCardCommand;
+using CreateBusinessFixedInstallmentLoanApplicationWbUkCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.Wb.Uk.CreateBusinessFixedInstallmentLoanApplicationWbUkCommand;
+using GenderEnum = Wonga.QA.Framework.Api.Enums.GenderEnum;
 using PaymentTransactionEnum = Wonga.QA.Framework.Msmq.Enums.Payments.Csapi.Commands.PaymentTransactionEnum;
 using PaymentTransactionScopeEnum = Wonga.QA.Framework.Msmq.Enums.FileStorage.InternalMessages.PaymentTransactionScopeEnum;
-using SignBusinessApplicationWbUkCommand = Wonga.QA.Framework.Api.SignBusinessApplicationWbUkCommand;
+using SignBusinessApplicationWbUkCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.Wb.Uk.SignBusinessApplicationWbUkCommand;
 
 namespace Wonga.QA.Tests.Payments
 {

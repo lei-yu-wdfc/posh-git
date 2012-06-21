@@ -5,6 +5,8 @@ using Gallio.Framework.Assertions;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Api.Requests.Payments.Queries;
+using Wonga.QA.Framework.Api.Requests.Payments.Queries.Uk;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Db.Payments;
@@ -117,7 +119,7 @@ namespace Wonga.QA.Tests.Ui
             requestPage.setSecurityCode("999");
             requestPage.SubmitButtonClick();
 
-            var extensionProcessingPage = new ExtensionProcessingPage(this.Client);
+            var extensionProcessingPage = new ExtensionProcessingPage(Client);
 
             var errorPage = extensionProcessingPage.WaitFor<ExtensionErrorPage>() as ExtensionErrorPage;
 
@@ -320,7 +322,7 @@ namespace Wonga.QA.Tests.Ui
             var interestAndFees = response.Values["InterestAndFeesAmount"].Single();
             var requestPage = mySummaryPage.TopupSliders.Apply();
             requestPage.SubmitButtonClick();
-            var processPage = new TopupProcessingPage(this.Client);
+            var processPage = new TopupProcessingPage(Client);
             var agreementPage = processPage.WaitForAgreementPage(Client);
             var dealDonePage = agreementPage.Accept();
             mySummaryPage = dealDonePage.ContinueToMyAccount() as MySummaryPage;

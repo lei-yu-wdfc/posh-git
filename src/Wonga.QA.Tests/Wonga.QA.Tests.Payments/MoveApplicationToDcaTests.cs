@@ -6,12 +6,10 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Db.Ops;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
-using CreateFixedTermLoanApplicationCommand = Wonga.QA.Framework.Api.CreateFixedTermLoanApplicationZaCommand;
+using CreateFixedTermLoanApplicationCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.Za.CreateFixedTermLoanApplicationZaCommand;
 using PaymentTransactionEnum = Wonga.QA.Framework.Msmq.Enums.Payments.Csapi.Commands.PaymentTransactionEnum;
-using SignApplicationCommand = Wonga.QA.Framework.Api.SignApplicationCommand;
 
 namespace Wonga.QA.Tests.Payments
 {

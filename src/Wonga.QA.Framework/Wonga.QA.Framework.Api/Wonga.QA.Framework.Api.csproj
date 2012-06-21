@@ -112,6 +112,9 @@
     <Compile Include="Exceptions\NoDefaultException.cs" />
     <Compile Include="Exceptions\SchemaException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requests\Marketing\Commands\SaveServerSideInitialTrackingDataCommand.cs" />
+    <Compile Include="Requests\Marketing\Commands\SaveServerSidePageTrackingDataCommand.cs" />
+    <Compile Include="Requests\Marketing\Commands\SaveServerSideTrackingDeviceCommand.cs" />
     <Compile Include="Temp\ApplicationDecisionStatusEnum.cs" />
     <Compile Include="Temp\RiskMask.cs" />
     <Compile Include="Requests\Address\Queries\Uk\GetAddressByDescriptorIdUkQuery.cs" />

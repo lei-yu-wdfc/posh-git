@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Api.Requests.FileStorage.Queries.Wb.Uk;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
 

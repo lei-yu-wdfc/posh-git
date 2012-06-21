@@ -5,6 +5,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Exceptions;
+using Wonga.QA.Framework.Api.Requests.Payments.Queries.Uk;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Framework.Msmq.Enums.Payments.Ca;
@@ -12,7 +13,7 @@ using Wonga.QA.Framework.Msmq.Enums.Payments.InternalMessages.Messages;
 using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
-using CreateFixedTermLoanApplicationCommand = Wonga.QA.Framework.Api.CreateFixedTermLoanApplicationUkCommand;
+using CreateFixedTermLoanApplicationCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.Uk.CreateFixedTermLoanApplicationUkCommand;
 using PaymentTransactionEnum = Wonga.QA.Framework.Msmq.Enums.Payments.Csapi.Commands.PaymentTransactionEnum;
 using PaymentTransactionScopeEnum = Wonga.QA.Framework.Msmq.Enums.FileStorage.InternalMessages.PaymentTransactionScopeEnum;
 

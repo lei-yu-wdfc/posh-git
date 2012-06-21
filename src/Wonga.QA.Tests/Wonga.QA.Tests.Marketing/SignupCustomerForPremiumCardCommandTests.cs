@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
-using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
+using Wonga.QA.Framework.Api.Requests.Payments.PrepaidCard.Commands;
 
 namespace Wonga.QA.Tests.Marketing
 {

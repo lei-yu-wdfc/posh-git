@@ -3,6 +3,7 @@ using System.Threading;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Api.Requests.Payments.Queries;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Elements;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;

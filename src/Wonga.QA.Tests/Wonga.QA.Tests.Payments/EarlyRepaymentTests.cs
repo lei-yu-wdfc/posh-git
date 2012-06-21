@@ -1,7 +1,7 @@
 ﻿using System;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
-using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Api.Enums;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;

@@ -4,6 +4,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Exceptions;
+using Wonga.QA.Framework.Api.Requests.Payments.Commands.Wb.Uk;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
 

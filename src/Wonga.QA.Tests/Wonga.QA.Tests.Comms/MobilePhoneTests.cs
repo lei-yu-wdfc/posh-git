@@ -5,6 +5,8 @@ using System.Text;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Api.Requests.Comms.Commands;
+using Wonga.QA.Framework.Api.Requests.Comms.Commands.Uk;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Comms;
 using Wonga.QA.Tests.Core;

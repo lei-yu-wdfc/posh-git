@@ -5,6 +5,7 @@ using System.Xml.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Api.Enums;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.BankGateway;
 using Wonga.QA.Framework.Mocks;

@@ -10,7 +10,7 @@ using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages;
 using Wonga.QA.Tests.Core;
 using PaymentTransactionEnum = Wonga.QA.Framework.Msmq.Enums.Payments.Csapi.Commands.PaymentTransactionEnum;
 using PaymentTransactionScopeEnum = Wonga.QA.Framework.Msmq.Enums.FileStorage.InternalMessages.PaymentTransactionScopeEnum;
-using UpdateLoanTermWbUkCommand = Wonga.QA.Framework.Api.UpdateLoanTermWbUkCommand;
+using UpdateLoanTermWbUkCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.Wb.Uk.UpdateLoanTermWbUkCommand;
 
 namespace Wonga.QA.Tests.Salesforce
 {

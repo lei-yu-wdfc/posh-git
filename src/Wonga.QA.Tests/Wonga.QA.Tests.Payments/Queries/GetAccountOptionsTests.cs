@@ -3,6 +3,7 @@ using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Api.Requests.Payments.Queries.Uk;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Msmq.Enums.Payments.Ca;
 using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages;

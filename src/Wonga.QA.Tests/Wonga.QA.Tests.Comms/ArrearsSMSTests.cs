@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
+using Wonga.QA.Framework.Api.Requests.Comms.Commands;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Comms.Helpers;
 using Wonga.QA.Tests.Core;
@@ -86,7 +87,7 @@ namespace Wonga.QA.Tests.Comms
             Assert.IsNotNull(mobileVerificationEntity.Pin);
 
             //Force the mobile phone number to be verified successfully..
-            Assert.DoesNotThrow(() => Drive.Api.Commands.Post(new Api.CompleteMobilePhoneVerificationCommand { Pin = mobileVerificationEntity.Pin, 
+            Assert.DoesNotThrow(() => Drive.Api.Commands.Post(new CompleteMobilePhoneVerificationCommand { Pin = mobileVerificationEntity.Pin, 
                                                                                                                VerificationId = mobileVerificationEntity.VerificationId }));
 
             Application loan = ApplicationBuilder.New(customer).Build();
