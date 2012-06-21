@@ -24,8 +24,8 @@ namespace Wonga.QA.Generators.Msmq
 				Enums = Repo.Directory(EnumsDirectoryName)
             };
 
-			var generatedEnumDefinitions = new Dictionary<String, GeneratedEnumDefinition>();
-            var assemblies = new List<Assembly>();
+			var assemblies = new List<Assembly>();
+        	var enumGenerator = new EnumGenerator();
 
             foreach (FileInfo file in Origin.GetProjects().OrderBy(f => f.Name))
             {
@@ -47,7 +47,7 @@ namespace Wonga.QA.Generators.Msmq
                 {
                     String messageClassName = String.Format("{0}{1}{2}{3}{4}{5}", message.GetClean(), GetCollision(message), file.GetProduct(), file.GetRegion(), cs ? "Cs" : null, message.GetSuffix());
 
-					var messageGeneratedEnumNamespaces = new List<string>();
+					enumGenerator.StartEnumGenerationForClass();
 
 					try
 					{
@@ -62,7 +62,9 @@ namespace Wonga.QA.Generators.Msmq
 
 						DirectoryInfo messageClassDirectory = Repo.Directory(messageClassSubfolderName, binRootDirectories.Messages);
 						FileInfo code = Repo.File(String.Format("{0}.cs", messageClassName), messageClassDirectory);
-						
+
+						string generatedEnumNamespace = string.Format("{0}.{1}.{2}", Config.Msmq.Project, EnumsDirectoryName, messageClassNamespaceRelativePath);
+
 						// misses all the include directives
 						var builder = InitializeMessageClassDefinition(messageClassName, message, messageClassNamespace);
 
@@ -70,42 +72,20 @@ namespace Wonga.QA.Generators.Msmq
 						{
 							builder.AppendFormatLine("        public {0} {1} {{ get; set; }}", member.Value.GetDeclaration(), member.Key);
 
-							var messageMemberEnumTypes = GetMessageMemberEnumTypes(member);
-
-							string generatedEnumNamespace = string.Format("{0}.{1}.{2}", Config.Msmq.Project, EnumsDirectoryName, messageClassNamespaceRelativePath);
-							foreach (Type messageMemberEnumType in messageMemberEnumTypes)
+							try
 							{
-								try
-								{
-									GeneratedEnumDefinition enumDefinition;
-									bool isEnumAlreadyGenerated = IsEnumAlreadyGenerated(generatedEnumDefinitions, messageMemberEnumType, generatedEnumNamespace, out enumDefinition);
-									if (enumDefinition != null)
-									{
-										//do not have repeated enum definitions for each class
-										if (!messageGeneratedEnumNamespaces.Contains(enumDefinition.GeneratedNamespace))
-										{
-											messageGeneratedEnumNamespaces.Add(enumDefinition.GeneratedNamespace);
-										}
-
-										if (!isEnumAlreadyGenerated)
-										{
-											GenerateEnum(messageMemberEnumType, binRootDirectories.Enums, enumDefinition.GeneratedNamespace, messageClassSubfolderName);
-											//add the new generated enum to the dictionaty
-											generatedEnumDefinitions.Add(enumDefinition.OriginalFullName, enumDefinition);
-										}
-									}
-								}
-								catch(Exception e)
-								{
-									Console.WriteLine("\t*** FAILED GENERATION FOR ENUM: {0}. {1}", messageMemberEnumType.GetName(), e.Message);
-								}
+								enumGenerator.GenerateAllEnumsUsedByClassMember(member.Value, generatedEnumNamespace, binRootDirectories.Enums, messageClassSubfolderName);
 							}
+							catch(Exception e)
+							{
+								Console.WriteLine("\t*** FAILED ENUM GENERATION FOR CLASS: {0}. {1}", messageClassName, e.Message);
+							}							
 						}
 
 						builder.AppendLine("    }").AppendLine("}");
 
 						//now insert all the include directives at the begining of the file!!!!
-						InsertUsingDirectivesOnMessageClassDefinition(builder, messageGeneratedEnumNamespaces);
+						InsertUsingDirectivesOnMessageClassDefinition(builder, enumGenerator.CurrentClassGeneratedEnumNamespaces);
 
 
 						using (StreamWriter writer = code.CreateText())
@@ -162,68 +142,7 @@ namespace Wonga.QA.Generators.Msmq
 
     		builder.Insert(0, usingDirectivesBuilder.ToString());
     	}
-
-    	private static List<Type> GetMessageMemberEnumTypes(KeyValuePair<string, Type> member)
-    	{
-    		var messageEnumMembers = new List<Type>();
-    		if (member.Value.IsEnum)
-    			messageEnumMembers.Add(member.Value);
-
-    		if (member.Value.IsGenericType)
-    			messageEnumMembers.AddRange(member.Value.GetGenericArguments().Where(a => a.IsEnum));
-			messageEnumMembers = messageEnumMembers.Where(t => t.FullName != null && t.FullName.StartsWith("Wonga")).ToList();
-    		return messageEnumMembers;
-    	}
-
-    	private static bool IsEnumAlreadyGenerated(Dictionary<string, GeneratedEnumDefinition> generatedEnumDefinitions, Type enumType, string generatedEnumNamespace, out GeneratedEnumDefinition enumDefinition)
-		{
-			enumDefinition = new GeneratedEnumDefinition(enumType, generatedEnumNamespace);
-
-    		if (generatedEnumDefinitions.ContainsKey(enumDefinition.OriginalFullName))
-    		{
-    			if (generatedEnumDefinitions[enumDefinition.OriginalFullName].ValueNames.SequenceEqual(enumDefinition.ValueNames))
-    			{
-					//use existing one
-    				enumDefinition = generatedEnumDefinitions[enumDefinition.OriginalFullName];
-    				return true;
-    			}
-    			
-				throw new NotImplementedException();
-    		}
-
-			return false;
-    	}
-
-    	private static void GenerateEnum(Type enumType, DirectoryInfo rootEnumDirectory, string enumNamespace, string subfolderName)
-		{
-			String enumName = enumType.GetName().ToEnum().ToCamel();
-
-			DirectoryInfo enumDirectory = Repo.Directory(subfolderName, rootEnumDirectory);
-			FileInfo fenum = Repo.File(String.Format("{0}.cs", enumName), enumDirectory);
-
-			StringBuilder builder1 = new StringBuilder().AppendFormatLine(new[]
-									                                        {
-									                                            "namespace {0}",
-									                                            "{{",
-									                                            "    public enum {1}",
-									                                            "    {{"
-									                                        },
-																		enumNamespace, //Config.Msmq.Project, 
-																		enumName);
-
-			foreach (Object value in Enum.GetValues(enumType))
-				builder1.AppendFormatLine("        {0} = {1},", value, (int)value);
-
-			builder1
-				.AppendLine("    }")
-				.AppendLine("}");
-
-			using (StreamWriter writer = fenum.CreateText())
-				writer.Write(builder1);
-
-			Console.WriteLine("\t{0} \u2192 {1}", enumType.Name, fenum.Name);
-		}
-
+    	
         private static String GetCollision(Type type)
         {
             switch (type.FullName)
