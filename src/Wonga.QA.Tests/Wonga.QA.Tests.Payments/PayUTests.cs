@@ -44,7 +44,7 @@ namespace Wonga.QA.Tests.Payments
 		[FixtureTearDown]
 		public void FixtureTearDown()
 		{
-			if( PayUMockValue == String.Empty)
+			if( string.IsNullOrEmpty(PayUMockValue))
 			{
 				Drive.Data.Ops.Db.DeleteByKey(PayUMockKey);
 			}
