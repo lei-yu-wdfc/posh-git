@@ -41,15 +41,11 @@ namespace Wonga.QA.Tests.Ui
             var homePage = Client.Home();
 
             var journey = JourneyFactory.GetLnJourney(homePage);
-            var applyPage = journey.ApplyForLoan(200, 10)
-                                .SetName(name, surname).CurrentPage as ApplyPage;
+            var applyPage = journey.Teleport<ApplyPage>() as ApplyPage;
             applyPage.SetNewMobilePhone = "0111111111";
             applyPage.ApplicationSection.SetPin = "0000";
             journey.CurrentPage = applyPage.Submit() as ProcessingPage;
-            mySummaryPage = journey.WaitForAcceptedPage()
-                                .FillAcceptedPage()
-                                .GoToMySummaryPage()
-                                .CurrentPage as MySummaryPage;
+            mySummaryPage = journey.Teleport<MySummaryPage>() as MySummaryPage;
             myPersonalDetails = mySummaryPage.Navigation.MyPersonalDetailsButtonClick();
             Assert.AreNotEqual(oldMobilePhone, myPersonalDetails.GetMobilePhone);
             Assert.AreEqual("0111111111", myPersonalDetails.GetMobilePhone);
@@ -78,7 +74,7 @@ namespace Wonga.QA.Tests.Ui
             application.RepayOnDueDate();
             var mySummaryPage = loginPage.LoginAs(email);
             var journey = JourneyFactory.GetLnJourney(Client.Home());
-            var applyPage = journey.ApplyForLoan(200, 10).CurrentPage as ApplyPage;
+            var applyPage = journey.Teleport<ApplyPage>() as ApplyPage;
 
             applyPage.SetNewMobilePhone = "0111111111";
             applyPage.ApplicationSection.SetPin = "1111";
@@ -111,16 +107,8 @@ namespace Wonga.QA.Tests.Ui
             application.RepayOnDueDate();
             loginPage.LoginAs(email);
 
-            var journey = JourneyFactory.GetLnJourney(Client.Home());
-            var page = journey.ApplyForLoan(200, 10)
-                           .SetName(name, surname)
-                           .FillApplicationDetails()
-                           .WaitForAcceptedPage()
-                           .FillAcceptedPage()
-                           .GoToMySummaryPage()
-                           .CurrentPage as MySummaryPage;
-
-
+            var journey = JourneyFactory.GetLnJourney(Client.Home()).WithFirstName(name).WithLastName(surname);
+            var page = journey.Teleport<MySummaryPage>() as MySummaryPage;
         }
 
         [Test, AUT(AUT.Za)]
@@ -139,12 +127,7 @@ namespace Wonga.QA.Tests.Ui
             loginPage.LoginAs(email);
 
             var journey = JourneyFactory.GetLnJourney(Client.Home());
-            var page = journey.ApplyForLoan(200, 10)
-                           .FillApplicationDetails()
-                           .WaitForAcceptedPage()
-                           .FillAcceptedPage()
-                           .GoToMySummaryPage()
-                           .CurrentPage as MySummaryPage;
+            var page = journey.Teleport<MySummaryPage>() as MySummaryPage;
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-1533", "UK-1902", "UKWEB-914")]
@@ -162,13 +145,8 @@ namespace Wonga.QA.Tests.Ui
             application.RepayOnDueDate();
             loginPage.LoginAs(email);
 
-            var journeyLn = JourneyFactory.GetLnJourney(Client.Home());
-            var page = ((UkLnJourney)journeyLn.ApplyForLoan(200, 10))
-                           .FillApplicationDetailsWithNewMobilePhone()
-                           .WaitForAcceptedPage()
-                           .FillAcceptedPage()
-                           .GoToMySummaryPage()
-                           .CurrentPage as MySummaryPage;
+            var journeyLn = JourneyFactory.GetLnJourney(Client.Home()).WithNewMobilePhone();
+            var page = journeyLn.Teleport<MySummaryPage>() as MySummaryPage;
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-886"), MultipleAsserts]
@@ -199,9 +177,7 @@ namespace Wonga.QA.Tests.Ui
 
             // Ln journey
             var journey = JourneyFactory.GetLnJourney(Client.Home());
-            var page = journey.ApplyForLoan(200, 10);
-
-            var applyPage = page.CurrentPage as ApplyPage;
+            var applyPage = journey.Teleport<ApplyPage>() as ApplyPage;
             applyPage.SetIncorrectMobilePhone = mobileNumber;
 
             Assert.IsTrue(applyPage.IsMobilePhonePopupCancelButtonEnabled(), "Cancel button is not enabled");
@@ -234,12 +210,7 @@ namespace Wonga.QA.Tests.Ui
 
             // Ln journey
             var journey = JourneyFactory.GetLnJourney(Client.Home());
-            var page = journey.ApplyForLoan(200, 10)
-                           .FillApplicationDetails()
-                           .WaitForAcceptedPage()
-                           .FillAcceptedPage()
-                           .GoToMySummaryPage()
-                           .CurrentPage as MySummaryPage;
+            var page = journey.Teleport<MySummaryPage>() as MySummaryPage;
         }
 
 
@@ -267,8 +238,8 @@ namespace Wonga.QA.Tests.Ui
             switch (Config.AUT)
             {
                 case AUT.Za:
-                    var journeyZa = JourneyFactory.GetLnJourney(Client.Home());
-                    var pageZA = journeyZa.ApplyForLoan(200, 20).CurrentPage as ApplyPage;
+                    var journeyZa = JourneyFactory.GetLnJourney(Client.Home()).WithAmount(200).WithDuration(20);
+                    var pageZA = journeyZa.Teleport<ApplyPage>() as ApplyPage;
                     pageZA.SetNewMobilePhone = phone;
                     pageZA.ResendPinClick();
                     Thread.Sleep(5000);
@@ -287,10 +258,8 @@ namespace Wonga.QA.Tests.Ui
                     Console.WriteLine(smsZa.Count());
                     break;
                 case AUT.Ca:
-                    var journeyCa = JourneyFactory.GetLnJourney(Client.Home());
-                    var pageCa = journeyCa.ApplyForLoan(200, 25)
-                        //.SetName(name, surname)
-                                   .CurrentPage as ApplyPage;
+                    var journeyCa = JourneyFactory.GetLnJourney(Client.Home()).WithAmount(200).WithDuration(25);
+                    var pageCa = journeyCa.Teleport<ApplyPage>() as ApplyPage;
                     pageCa.SetNewMobilePhone = phone;
                     pageCa.ResendPinClick();
                     var smsCa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(phone.Replace("077", "177")));
@@ -327,14 +296,14 @@ namespace Wonga.QA.Tests.Ui
             loginPage.LoginAs(email);
 
             var journey = JourneyFactory.GetLnJourney(Client.Home());
-            var applyPage = journey.ApplyForLoan(200, 20).CurrentPage as ApplyPage;
+            var applyPage = journey.Teleport<ApplyPage>() as ApplyPage;
             applyPage.SetNewMobilePhone = phone;
             applyPage.ResendPinClick();
             Thread.Sleep(2000);
             applyPage.CloseResendPinPopup();
             applyPage.ApplicationSection.SetPin = "0000";
             journey.CurrentPage = applyPage.Submit();
-            var mySummary = journey.WaitForAcceptedPage() as AcceptedPage;
+            var mySummary = journey.Teleport<AcceptedPage>() as AcceptedPage;
 
 
         }
@@ -358,18 +327,17 @@ namespace Wonga.QA.Tests.Ui
             application.RepayOnDueDate();
             var mySummaryPageAfterLogin = loginPage.LoginAs(email);
             var homePage = Client.Home();
-            var journey = JourneyFactory.GetLnJourney(homePage);
-            var applyPage = journey.ApplyForLoan(200, 10)
-                .SetName(name, surname).CurrentPage as ApplyPage;
+            var journey = JourneyFactory.GetLnJourney(homePage).WithFirstName(name).WithLastName(surname);
+            var applyPage = journey.Teleport<ApplyPage>() as ApplyPage;
             // Check the URL here is /apply-member
             Assert.Contains(Client.Driver.Url, "/apply-member?", "The apply page URL does not contain '/apply-member?'");
             journey.CurrentPage = applyPage.Submit() as ProcessingPage;
             // Check the URL here is /processing-member
             Assert.EndsWith(Client.Driver.Url, "/processing-member", "The processing page URL is not /processing-member.");
-            var mySummaryPage = journey.WaitForAcceptedPage();
+            var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
             // Check the URL here is /apply-accept-member
             Assert.EndsWith(Client.Driver.Url, "/apply-accept-member", "The accept page URL is not /apply-accept-member.");
-            var dealDonePage = journey.FillAcceptedPage();
+            var dealDonePage = journey.Teleport<DealDonePage>() as DealDonePage;
             // Check the URL here is /deal-done-member
             Assert.EndsWith(Client.Driver.Url, "/deal-done-member", "The deal done page URL is not /deal-done-member.");
         }

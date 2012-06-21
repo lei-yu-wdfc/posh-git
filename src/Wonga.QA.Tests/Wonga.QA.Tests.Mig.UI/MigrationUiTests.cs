@@ -36,12 +36,7 @@ namespace Wonga.QA.Tests.Migration
 
             // Take a loan 
             var journey = JourneyFactory.GetLnJourney(Client.Home());
-            var page = journey.ApplyForLoan(200, 10)
-                           .FillApplicationDetails()
-                           .WaitForAcceptedPage()
-                           .FillAcceptedPage()
-                           .GoToMySummaryPage()
-                           .CurrentPage as MySummaryPage;
+            var mySummary = journey.Teleport<MySummaryPage>() as MySummaryPage;
         }
 
         [Test, AUT(AUT.Za), Pending("in development, test environments still not ready")]

@@ -8,73 +8,84 @@ using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 
 namespace Wonga.QA.Framework.UI
 {
-    class CaLnJourney : ILnConsumerJourney
+    class CaLnJourney : BaseLnJourney
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public BasePage CurrentPage { get; set; }
-
         public CaLnJourney(BasePage homePage)
         {
             CurrentPage = homePage as HomePage;
-            FirstName = Get.GetName();
-            LastName = Get.RandomString(10);
+
+            _amount = 200;
+            _duration = 10;
+
+            _firstName = Get.GetName();
+            _lastName = Get.RandomString(10);
+
+            journey.Add(typeof(HomePage), ApplyForLoan);
+            journey.Add(typeof(ApplyPage), FillApplicationDetails);
+            journey.Add(typeof(ProcessingPage), WaitForAcceptedPage);
+            journey.Add(typeof(AcceptedPage), FillAcceptedPage);
+            journey.Add(typeof(DealDonePage), GoToMySummaryPage);
         }
 
-        public ILnConsumerJourney SetName(string forename, string surname)
-        {
-            FirstName = forename;
-            LastName = surname;
-            return this;
-        }
-
-        public ILnConsumerJourney ApplyForLoan(int amount, int duration)
+        protected override BaseLnJourney ApplyForLoan()
         {
             var homePage = CurrentPage as HomePage;
-            homePage.Sliders.HowMuch = amount.ToString();
-            homePage.Sliders.HowLong = duration.ToString();
+            homePage.Sliders.HowMuch = _amount.ToString();
+            homePage.Sliders.HowLong = _duration.ToString();
             CurrentPage = homePage.Sliders.ApplyLn() as ApplyPage;
-            // homePage.PopupSetProvince = "British Columbia";
-
-           // CurrentPage = homePage.PopupClickThisIsMyProvince() as ApplyPage;
             return this;
         }
 
-        public ILnConsumerJourney FillApplicationDetails()
+        protected override BaseLnJourney FillApplicationDetails()
         {
             var applyPage = CurrentPage as ApplyPage;
             CurrentPage = applyPage.Submit() as ProcessingPage;
             return this;
         }
 
-        public ILnConsumerJourney WaitForAcceptedPage()
+        protected override BaseLnJourney WaitForAcceptedPage()
         {
             var processingPage = CurrentPage as ProcessingPage;
             CurrentPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
             return this;
         }
 
-        public ILnConsumerJourney WaitForDeclinedPage()
+        protected override BaseLnJourney WaitForDeclinedPage()
         {
             var processingPage = CurrentPage as ProcessingPage;
             CurrentPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
             return this;
         }
 
-        public ILnConsumerJourney FillAcceptedPage()
+        protected override BaseLnJourney FillAcceptedPage()
         {
             var acceptedPage = CurrentPage as AcceptedPage;
             string date = String.Format("{0:d MMM yyyy}", DateTime.Today);
-            acceptedPage.SignConfirmCaLn(date, FirstName, LastName);
+            acceptedPage.SignConfirmCaLn(date, _firstName, _lastName);
             CurrentPage = acceptedPage.Submit() as DealDonePage;
             return this;
         }
 
-        public ILnConsumerJourney GoToMySummaryPage()
+        protected override BaseLnJourney GoToMySummaryPage()
         {
             var dealDonePage = CurrentPage as DealDonePage;
             CurrentPage = dealDonePage.ContinueToMyAccount() as MySummaryPage;
             return this;
         }
+
+        #region Builder
+
+        public override BaseLnJourney WithFirstName(string firstNme)
+        {
+            _firstName = firstNme;
+            return this;
+        }
+
+        public override BaseLnJourney WithLastName(string lastName)
+        {
+            _lastName = lastName;
+            return this;
+        }
+        #endregion
     }
 }

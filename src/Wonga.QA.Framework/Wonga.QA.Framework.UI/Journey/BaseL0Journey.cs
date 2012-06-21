@@ -7,7 +7,7 @@ using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 
-namespace Wonga.QA.Framework.UI.Journey
+namespace Wonga.QA.Framework.UI
 {
     public abstract class BaseL0Journey
     {

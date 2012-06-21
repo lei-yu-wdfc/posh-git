@@ -9,60 +9,69 @@ using Wonga.QA.Framework.UI.UiElements.Pages.Wb;
 
 namespace Wonga.QA.Framework.UI.Journey
 {
-    public class WbLnJourney
+    public class WbLnJourney : BaseLnJourney
     {
-        public BasePage CurrentPage { get; set; }
-
         public WbLnJourney(BasePage homePage)
         {
             CurrentPage = homePage as HomePage;
+
+            _amount = 5500;
+            _duration = 20;
+
+            journey.Add(typeof(HomePage), ApplyForLoan);
+            journey.Add(typeof(ApplyPage), FillApplicationDetails);
+            journey.Add(typeof(ProcessingPage), WaitForApplyTermsPage);
+            journey.Add(typeof(ApplyTermsPage), ApplyTerms);
+            journey.Add(typeof(AcceptedPage), FillAcceptedPage);
+            journey.Add(typeof(DealDonePage), GoHomePage);
         }
 
-        public WbLnJourney ApplyForLoan(int amount, int duration)
+        protected override BaseLnJourney ApplyForLoan()
         {
             var homePage = CurrentPage as HomePage;
-            homePage.Sliders.HowMuch = amount.ToString();
-            homePage.Sliders.HowLong = duration.ToString();
+            homePage.Sliders.HowMuch = _amount.ToString();
+            homePage.Sliders.HowLong = _duration.ToString();
             CurrentPage = homePage.Sliders.ApplyLn() as ApplyPage;
             return this;
         }
-        public WbLnJourney ApplyNow()
+
+        protected override BaseLnJourney FillApplicationDetails()
         {
             var applyPage = CurrentPage as ApplyPage;
             CurrentPage = applyPage.Submit() as ProcessingPage;
             return this;
         }
 
-        public WbLnJourney WaitForApplyTermsPage()
+        protected override BaseLnJourney WaitForApplyTermsPage()
         {
             var processingPage = CurrentPage as ProcessingPage;
             CurrentPage = processingPage.WaitFor<ApplyTermsPage>() as ApplyTermsPage;
             return this;
         }
 
-        
-        public WbLnJourney WaitForAcceptedPage()
+        protected override BaseLnJourney WaitForAcceptedPage()
         {
-            var processingPage = CurrentPage as ProcessingPage;
-            CurrentPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
-            return this;
+            throw new NotImplementedException(message: "Don't used on Wb");
+            // var processingPage = CurrentPage as ProcessingPage;
+            // CurrentPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
+            // return this;
         }
 
-        public WbLnJourney WaitForDeclinedPage()
+        protected override BaseLnJourney WaitForDeclinedPage()
         {
             var processingPage = CurrentPage as ProcessingPage;
             CurrentPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
             return this;
         }
 
-        public WbLnJourney ApplyTerms()
+        protected override BaseLnJourney ApplyTerms()
         {
             var applyTermsPage = CurrentPage as ApplyTermsPage;
             CurrentPage = applyTermsPage.Next();
             return this;
         }
 
-        public WbLnJourney FillAcceptedPage()
+        protected override BaseLnJourney FillAcceptedPage()
         {
             var acceptedPage = CurrentPage as AcceptedPage;
             acceptedPage.SignTermsMainApplicant();
@@ -71,11 +80,25 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        public WbLnJourney GoHomePage()
+        protected override BaseLnJourney GoHomePage()
         {
             var referPage = CurrentPage as ReferPage;
             CurrentPage = referPage.GoHome();
             return this;
         }
+
+        #region Builder
+
+        public override BaseLnJourney WithDeclineDecision()
+        {
+            journey.Remove(typeof(ProcessingPage));
+            journey.Remove(typeof (ApplyTermsPage));
+            journey.Remove(typeof(AcceptedPage));
+            journey.Remove(typeof(DealDonePage));
+            journey.Add(typeof(ProcessingPage), WaitForDeclinedPage);
+            return this;
+        }
+
+        #endregion
     }
 }

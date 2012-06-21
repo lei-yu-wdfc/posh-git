@@ -8,36 +8,32 @@ using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 
 namespace Wonga.QA.Framework.UI
 {
-    public class UkLnJourney : ILnConsumerJourney
+    public class UkLnJourney : BaseLnJourney
     {
-         public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public BasePage CurrentPage { get; set; }
-
         public UkLnJourney(BasePage homePage)
         {
             CurrentPage = homePage as HomePage;
-            FirstName = Get.GetName();
-            LastName = Get.RandomString(10);
+
+            _amount = 200;
+            _duration = 10;
+
+            journey.Add(typeof(HomePage), ApplyForLoan);
+            journey.Add(typeof(ApplyPage), FillApplicationDetails);
+            journey.Add(typeof(ProcessingPage), WaitForAcceptedPage);
+            journey.Add(typeof(AcceptedPage), FillAcceptedPage);
+            journey.Add(typeof(DealDonePage), GoToMySummaryPage);
         }
 
-        public ILnConsumerJourney SetName(string forename, string surname)
-        {
-            FirstName = forename;
-            LastName = surname;
-            return this;
-        }
-
-        public ILnConsumerJourney ApplyForLoan(int amount, int duration)
+        protected override BaseLnJourney ApplyForLoan()
         {
             var homePage = CurrentPage as HomePage;
-            homePage.Sliders.HowMuch = amount.ToString();
-            homePage.Sliders.HowLong = duration.ToString();
+            homePage.Sliders.HowMuch = _amount.ToString();
+            homePage.Sliders.HowLong = _duration.ToString();
             CurrentPage = homePage.Sliders.ApplyLn() as ApplyPage;
             return this;
         }
 
-        public ILnConsumerJourney FillApplicationDetails()
+        protected override BaseLnJourney FillApplicationDetails()
         {
             var applyPage = CurrentPage as ApplyPage;
             applyPage.ApplicationSection.SetSecurityCode = "000";
@@ -46,10 +42,10 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public ILnConsumerJourney FillApplicationDetailsWithNewMobilePhone()
+        protected override BaseLnJourney FillApplicationDetailsWithNewMobilePhone()
         {
             var applyPage = CurrentPage as ApplyPage;
-            applyPage.SetNewMobilePhone = Get.GetMobilePhone();
+            applyPage.SetNewMobilePhone = _mobilePhone;
             applyPage.ApplicationSection.SetPin = "0000";
             applyPage.ApplicationSection.SetSecurityCode = "000";
             applyPage.ApplicationSection.SetMinCash = "100";
@@ -57,31 +53,46 @@ namespace Wonga.QA.Framework.UI
             return this;
         }
 
-        public ILnConsumerJourney WaitForAcceptedPage()
+        protected override BaseLnJourney WaitForAcceptedPage()
         {
             var processingPage = CurrentPage as ProcessingPage;
             CurrentPage = processingPage.WaitFor<AcceptedPage>() as AcceptedPage;
             return this;
         }
 
-        public ILnConsumerJourney WaitForDeclinedPage()
+        protected override BaseLnJourney WaitForDeclinedPage()
         {
             var processingPage = CurrentPage as ProcessingPage;
             CurrentPage = processingPage.WaitFor<DeclinedPage>() as DeclinedPage;
             return this;
         }
 
-        public ILnConsumerJourney FillAcceptedPage()
+        protected override BaseLnJourney FillAcceptedPage()
         {
             var acceptedPage = CurrentPage as AcceptedPage;
             CurrentPage = acceptedPage.Submit() as DealDonePage;
             return this;
         }
 
-        public ILnConsumerJourney GoToMySummaryPage()
+        protected override BaseLnJourney GoToMySummaryPage()
         {
             var dealDonePage = CurrentPage as DealDonePage;
             CurrentPage = dealDonePage.ContinueToMyAccount() as MySummaryPage;
+            return this;
+        }
+
+        public override BaseLnJourney WithNewMobilePhone(string mobilePhone = null)
+        {
+            _mobilePhone = mobilePhone ?? Get.GetMobilePhone();
+
+            journey.Remove(typeof(ApplyPage));
+            journey.Remove(typeof(ProcessingPage));
+            journey.Remove(typeof(AcceptedPage));
+            journey.Remove(typeof(DealDonePage));
+            journey.Add(typeof(ApplyPage), FillApplicationDetailsWithNewMobilePhone);
+            journey.Add(typeof(ProcessingPage), WaitForAcceptedPage);
+            journey.Add(typeof(AcceptedPage), FillAcceptedPage);
+            journey.Add(typeof(DealDonePage), GoToMySummaryPage);
             return this;
         }
     }
