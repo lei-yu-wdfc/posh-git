@@ -61,9 +61,9 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(page.Client.Source().Contains("google-analytics.com/ga.js"), "Couldn't find 'google-analytics.com/ga.js' - verify that Google Analytics tag is being rendered correctly.");
             
             // Check that the wonga mobile tools module is doing its thing:
-            Assert.IsTrue(page.Client.Source().Contains("[desktop]"), "[desktop] (device type detection from wonga_mobile module) not found in page source: verify that the wonga_mobile module is enabled.");
-            Assert.IsFalse(page.Client.Source().Contains("[DeviceType]"), "[DeviceType] found in page source: verify that the wonga_mobile module is enabled.");
-            Assert.IsFalse(page.Client.Source().Contains("[DeviceGroup]"), "[DeviceType] found in page source: verify that the wonga_mobile module is enabled.");
+            Assert.IsTrue(page.Client.Source().Contains("[desktop - "), "'[desktop - ' (device type detection from wonga_mobile module) not found in page source: verify that the wonga_mobile module is enabled.");
+            Assert.IsFalse(page.Client.Source().Contains("[DeviceType]"), "'[DeviceType]' found in page source: verify that the wonga_mobile module is enabled.");
+            Assert.IsFalse(page.Client.Source().Contains("[DeviceGroup]"), "'[DeviceType]' found in page source: verify that the wonga_mobile module is enabled.");
 
             // Check that the page contains the wonga_doubleclick module v1.0 signature:
             Assert.IsTrue(page.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
