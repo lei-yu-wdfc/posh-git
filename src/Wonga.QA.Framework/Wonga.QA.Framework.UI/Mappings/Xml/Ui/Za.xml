@@ -230,7 +230,7 @@
     <EasypayPrintButton>div.easypay-website-link a</EasypayPrintButton>
     <!--  HowToUseEasyPayLink displays a modal popup with information -->
     <HowToUseEasyPayLink>a.easypay-how-to-use-link</HowToUseEasyPayLink>
-    <DebitOrderButton>div.repayment-option-manual a</DebitOrderButton>
+    <DebitOrderButton>div.repayment-option-manual a.button</DebitOrderButton>
     <!--  EasyPayLogo is contained inside a link to the print page -->
     <EasyPayLogo>div.easypay-logo a img.easypay-logo</EasyPayLogo>
     <!--  EasyPayLogoLink is a link to the print page -->
@@ -238,6 +238,7 @@
     <!--  ManualRepaymentButton is the main call-to-action for the manual NAEDO repayment
           method -->
     <ManualRepaymentButton>div.repayment-option-manual a.button</ManualRepaymentButton>
+    <RepayByDebitCardButton>div.repayment-option-payd a.button </RepayByDebitCardButton>
   </RepaymentOptionsPage>
 
   <MyAccountRepayManualPage>
@@ -319,5 +320,18 @@
     <DurationMinusButton>.wonga-duration-slider-wrapper .sliderminus</DurationMinusButton>
     <DurationPlusButton>.wonga-duration-slider-wrapper .sliderplus</DurationPlusButton>
   </PersonalDetailsPage>
+
+  <PayNowUsingDebitOrderPage>
+    <Form>#wonga-my-account-repay-manual-form</Form>
+    <EditRepaymentDate>div.form-input input#edit-repayment-date-friendly</EditRepaymentDate>
+    <AmountOnDueDate>div.form-input input#edit-amount-due-on-due-date</AmountOnDueDate>
+    <EditRepaymentAmount>div.form-input input#edit-repayment-amount</EditRepaymentAmount>
+    <RemainderToPay>div.form-input input#edit-remainder-to-repay</RemainderToPay>
+    <EditBankAccountMasked>div.form-input input#edit-bank-account-masked</EditBankAccountMasked>
+    <Captcha>.form-markup-wrapper>img</Captcha>
+    <EditCaptchaField>div.form-input input#edit-captcha-response</EditCaptchaField>
+    <CancelButton>div#button-edit-back #edit-back</CancelButton>
+    <Submit>div#button-edit-submit #edit-submit</Submit>
+  </PayNowUsingDebitOrderPage>
   
 </UiMap>

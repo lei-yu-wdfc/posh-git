@@ -8,6 +8,7 @@ using NHamcrest.Core;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Mappings;
+using Wonga.QA.Framework.UI.Ui.Pages.Common;
 
 namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
@@ -17,9 +18,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private readonly IWebElement _balanceToday;
         private readonly IWebElement _easypayNumber;
         private readonly IWebElement _easypayPrintButton;
+        private readonly IWebElement _repayByDebitCardButton;
         private readonly IWebElement _howToUseEasyPayLink;
         private readonly IWebElement _debitOrderButton;
-        private readonly IWebElement _manualRepaymentButton;
         
         public RepaymentOptionsPage(UiClient client) : base(client)
         {
@@ -32,7 +33,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                 _repaymentOptionsContainer.FindElement(By.CssSelector(UiMap.Get.RepaymentOptionsPage.HowToUseEasyPayLink));
             _debitOrderButton =
                 _repaymentOptionsContainer.FindElement(By.CssSelector(UiMap.Get.RepaymentOptionsPage.DebitOrderButton));
-            _manualRepaymentButton = _repaymentOptionsContainer.FindElement(By.CssSelector(UiMap.Get.RepaymentOptionsPage.ManualRepaymentButton));
+            _repayByDebitCardButton = _repaymentOptionsContainer.FindElement(By.CssSelector(UiMap.Get.RepaymentOptionsPage.RepayByDebitCardButton));
         }
 
         public String BalanceToday
@@ -68,14 +69,19 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             return new DebitOrderPage(Client);
         }
 
-        
-        public String ManualRepaymentButtonClick
+        public void RepayByDebitCard()
         {
-            get
-            {
-                _manualRepaymentButton.Click();
-                return null;
-            }
+            _repayByDebitCardButton.Click();
+            var repayNow = Do.Until(() => Client.Driver.FindElement(By.CssSelector("input#edit-submit")));
+            repayNow.Click();
+            Do.Until(() => Client.Driver.Url.StartsWith("https://secure.safeshop.co.za"));
+        }
+
+
+        public PayNowUsingDebitOrderPage PayByDebitOrderButtonButtonClick()
+        {
+            _debitOrderButton.Click();
+            return new PayNowUsingDebitOrderPage(Client);
         }
 
     }

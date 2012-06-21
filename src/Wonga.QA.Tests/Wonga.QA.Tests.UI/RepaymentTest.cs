@@ -23,25 +23,20 @@ namespace Wonga.QA.Tests.Ui
     [Parallelizable(TestScope.All)]
     public class RepaymentTest : UiTest
     {
-        [Test, AUT(AUT.Za), Pending("Incomplete. Sad times.")]
+        [Test, AUT(AUT.Za)]
         public void ZaManualNaedoRepayment()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.Home())
-                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            ApplicationBuilder.New(customer).Build();
+            var mySummaryPage = loginPage.LoginAs(email);
+            var repayPage = mySummaryPage.RepayClick();
 
-            // Take a loan for 20 days, accept it and go to the Summary page:
-            var summaryPage = journey.Teleport<MySummaryPage>() as MySummaryPage;
-            
-            // Click the "repay" link in My Account:
-            var repaymentOptionsPage = summaryPage.RepayClick();
-
-            // Note the balance today:
-            //var balanceToday = repaymentOptionsPage.BalanceToday();
-
-            //var manualRepayPage = repayPage.ManualRepaymentButtonClick();
+            repayPage.PayByDebitOrderButtonButtonClick();
         }
 
-        [Test, AUT(AUT.Za), Pending("Test is incomplete")]
+        [Test, AUT(AUT.Za)]
         public void ZaEasyPayRepayment()
         {
             var loginPage = Client.Login();
@@ -62,9 +57,6 @@ namespace Wonga.QA.Tests.Ui
 
             Assert.AreEqual(text, "Repay your wonga.com loan with EasyPay");
 
-            //var text = popUp.Text;
-            //Assert.IsTrue(text.Contains("Repay your wonga.com loan with EasyPay"));
-
             // Close the popup:
             Client.Driver.FindElement(By.CssSelector("#fancybox-close")).Click();
 
@@ -73,6 +65,20 @@ namespace Wonga.QA.Tests.Ui
             var actualString = Do.Until(() => popUpPrintPage.FindElement(By.CssSelector(UiMap.Get.EasypaymentNumberPrintPage.YourEasyPayNumber)).Text);
             Assert.IsTrue(actualString.StartsWith(">>>>>> "));
             Assert.IsTrue(actualString.EndsWith(expectedeasypayno));
+        }
+
+        [Test, AUT(AUT.Za)]
+        public void RepayByDebitCardTest()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            ApplicationBuilder.New(customer).Build();
+            var mySummaryPage = loginPage.LoginAs(email);
+            var repayPage = mySummaryPage.RepayClick();
+
+            repayPage.RepayByDebitCard();
+            
         }
     }
 }
