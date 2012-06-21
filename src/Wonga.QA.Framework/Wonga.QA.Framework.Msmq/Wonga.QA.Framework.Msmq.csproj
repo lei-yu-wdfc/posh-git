@@ -37,6 +37,10 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Messages\RiskAddBankAccountCommand.cs" />
+    <Compile Include="Messages\RiskAddHomePhoneCommand.cs" />
+    <Compile Include="Messages\RiskAddMobilePhoneCommand.cs" />
+    <Compile Include="Messages\RiskAddPaymentCardCommand.cs" />
     <Compile Include="MsmqDriver.cs" />
     <Compile Include="MsmqMessage.cs" />
     <Compile Include="MsmqQueue.cs" />
