@@ -6,7 +6,7 @@ using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Framework.Api;
-using EmploymentStatusEnum = Wonga.QA.Framework.Msmq.Enums.Risk.EmploymentStatusEnum;
+using EmploymentStatusEnum = Wonga.QA.Framework.Msmq.Enums.Integration.Risk.EmploymentStatusEnum;
 
 namespace Wonga.QA.Tests.Ui
 {
