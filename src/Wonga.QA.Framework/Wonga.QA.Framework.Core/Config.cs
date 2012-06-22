@@ -10,13 +10,6 @@ namespace Wonga.QA.Framework.Core
 {
     public enum AUT { Uk, Za, Ca, Wb, Pl }
     public enum SUT { Dev, WIP, UAT, RC, WIPRelease, RCRelease, Live, WIPHDS }
-    public enum Owner 
-    { 
-        [Description("mihail.podobivsky@wonga.com")] MihailPodobivsky, 
-        [Description("volodymyr.stelmakh@wonga.com")] VolodymyrStelmakh, 
-        [Description("kirill.polishyk@wonga.com")] KirillPolishyk,
-        [Description("petr.tarasenko@wonga.com")] PetrTarasenko
-    }
 
     public static class Config
     {
