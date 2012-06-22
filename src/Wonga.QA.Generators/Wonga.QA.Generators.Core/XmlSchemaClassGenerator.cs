@@ -62,6 +62,8 @@ namespace Wonga.QA.Generators.Core
 		{
 			Console.WriteLine(xmlSchemaFile.FullName);
 
+			var entityGenerator = new EntityGenerator(BinRootDirectories.ClassesDirectory, Framework.Project, Framework.Folder);
+
 			XmlSchema schema = xmlSchemaFile.GetSchema();
 
 			var set = new XmlSchemaSet();
@@ -87,23 +89,19 @@ namespace Wonga.QA.Generators.Core
 				String className = String.Format("{0}{1}{2}{3}", types[element.Name].GetClean(), xmlSchemaFile.GetProduct(),
 												 xmlSchemaFile.GetRegion(), typesToGenerate[element.Name].First().GetSuffix());
 
-				string classNamespaceRelativePath = xmlSchemaFile.GetName().Replace("Wonga.", string.Empty);
+				//will use the schema file name as the namespace
+				GeneratedEntityDefinition entityDefinition = entityGenerator.GenerateEntityDefinition(xmlSchemaFile.GetName());
 
-				string classSubfolderName = classNamespaceRelativePath.Replace(".", new string(Path.DirectorySeparatorChar, 1));
+				FileInfo code = Repo.File(String.Format("{0}.cs", className), entityDefinition.Directory);
 
-				string classNamespace = string.Format("{0}.{1}.{2}", Framework.Project, Framework.Folder, classNamespaceRelativePath);
-
-				DirectoryInfo classDirectory = Repo.Directory(classSubfolderName, BinRootDirectories.ClassesDirectory);
-				FileInfo code = Repo.File(String.Format("{0}.cs", className), classDirectory);
-
-				var classBuilder = InitializeClassDefinition(className, classNamespace, element.Name, xmlSchemaFile.GetName());
+				var classBuilder = InitializeClassDefinition(className, entityDefinition.Namespace, element.Name, xmlSchemaFile.GetName());
 
 				foreach (PropertyInfo property in types[element.Name].GetProperties().Where(p => !p.IsIgnore()))
 					classBuilder.AppendFormatLine("        public Object {0} {{ get; set; }}", property.GetName());
 
 				classBuilder.AppendLine("    }").AppendLine("}");
 
-				EnumGenerator.StartEnumGenerationForClass(classNamespace);
+				EnumGenerator.StartEnumGenerationForClass(entityDefinition.Namespace);
 
 				foreach (Type type in results.CompiledAssembly.GetTypes().Where(t => t.IsEnum))
 				{
