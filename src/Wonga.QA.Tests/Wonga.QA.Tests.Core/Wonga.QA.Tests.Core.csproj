@@ -36,9 +36,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AUTAttribute.cs" />
+    <Compile Include="OwnerAttribute.cs" />
     <Compile Include="Categories\CoreTestAttribute.cs" />
     <Compile Include="Categories\SandboxAttribute.cs" />
     <Compile Include="Categories\SmokeTestAttribute.cs" />
+    <Compile Include="Owners.cs" />
     <Compile Include="SUTAttribute.cs" />
     <Compile Include="FeatureSwitchAttribute.cs" />
     <Compile Include="JIRAAttribute.cs" />
