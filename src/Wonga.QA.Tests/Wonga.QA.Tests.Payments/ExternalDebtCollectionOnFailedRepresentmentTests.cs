@@ -2,7 +2,6 @@ using System;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Db.OpsSagasCa;
 using Wonga.QA.Framework.Mocks;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages;
@@ -10,9 +9,8 @@ using Wonga.QA.Framework.Msmq.Messages.Payments.PublicMessages;
 using Wonga.QA.Tests.BankGateway.Enums;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Enums;
-using Wonga.QA.Tests.Payments.Helpers;
 using Wonga.QA.Tests.Payments.Helpers.Ca;
-using IncomeFrequencyEnum = Wonga.QA.Framework.Api.IncomeFrequencyEnum;
+using IncomeFrequencyEnum = Wonga.QA.Framework.Api.Enums.IncomeFrequencyEnum;
 
 namespace Wonga.QA.Tests.Payments
 {

@@ -1,24 +1,24 @@
 using System.ComponentModel;
-namespace Wonga.QA.Framework.Api
+namespace Wonga.QA.Framework.Api.Enums
 {
     public enum EmploymentStatusPlEnum
     {
-        [Description("Umowa o pracę na czas nieokreślony")]
-        Umowa_o_pracę_na_czas_nieokreślony,
-        [Description("Umowa o pracę na czas określony")]
-        Umowa_o_pracę_na_czas_określony,
-        [Description("Umowa zlecenie/Umowa o dzieło")]
-        Umowa_zlecenieUmowa_o_dzieło,
-        [Description("Działalność gospodarcza")]
-        Działalność_gospodarcza,
+        [Description("Umowaopracęnaczasnieokreślony")]
+        Umowaopracęnaczasnieokreślony,
+        [Description("Umowaopracęnaczasokreślony")]
+        Umowaopracęnaczasokreślony,
+        [Description("UmowazlecenieUmowaodzieło")]
+        UmowazlecenieUmowaodzieło,
+        [Description("Działalnośćgospodarcza")]
+        Działalnośćgospodarcza,
         [Description("Student")]
         Student,
-        [Description("Pracownik Służb Mundurowych")]
-        Pracownik_Służb_Mundurowych,
-        [Description("Emeryt/Rencista")]
+        [Description("PracownikSłużbMundurowych")]
+        PracownikSłużbMundurowych,
+        [Description("EmerytRencista")]
         EmerytRencista,
-        [Description("Gospodyni domowa")]
-        Gospodyni_domowa,
+        [Description("Gospodynidomowa")]
+        Gospodynidomowa,
         [Description("Bezrobotny")]
         Bezrobotny,
     }

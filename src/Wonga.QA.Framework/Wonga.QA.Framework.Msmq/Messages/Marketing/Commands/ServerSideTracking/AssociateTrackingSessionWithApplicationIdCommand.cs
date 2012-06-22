@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-
 namespace Wonga.QA.Framework.Msmq.Messages.Marketing.Commands.ServerSideTracking
 {
     /// <summary> Wonga.Marketing.Commands.ServerSideTracking.AssociateTrackingSessionWithApplicationIdCommand </summary>

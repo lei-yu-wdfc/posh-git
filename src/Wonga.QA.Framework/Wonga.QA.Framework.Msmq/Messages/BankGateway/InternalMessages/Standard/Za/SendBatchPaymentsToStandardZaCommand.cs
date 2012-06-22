@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-
 namespace Wonga.QA.Framework.Msmq.Messages.BankGateway.InternalMessages.Standard.Za
 {
     /// <summary> Wonga.BankGateway.InternalMessages.Standard.Za.SendBatchPaymentsToStandardMessage </summary>

@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Api.Enums;
+using Wonga.QA.Framework.Api.Requests.Comms.ContactManagement.Commands;
+using Wonga.QA.Framework.Api.Requests.Payments.Commands.Wb.Uk;
+using Wonga.QA.Framework.Api.Requests.Risk.Commands;
+using Wonga.QA.Framework.Api.Requests.Risk.Commands.Wb.Uk;
+using Wonga.QA.Framework.Api.Requests.Risk.Queries;
 using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework

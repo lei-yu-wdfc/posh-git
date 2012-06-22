@@ -3,19 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Api.Requests.Payments.Queries;
+using Wonga.QA.Framework.Api.Requests.Payments.Queries.Za;
+using Wonga.QA.Framework.Api.Requests.Risk.Queries;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Data.Enums.Risk;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Helpers;
-using CreateFixedTermLoanApplicationUkCommand = Wonga.QA.Framework.Api.CreateFixedTermLoanApplicationUkCommand;
-using CreateFixedTermLoanApplicationCaCommand = Wonga.QA.Framework.Api.CreateFixedTermLoanApplicationCaCommand;
-using CreateFixedTermLoanApplicationZaCommand = Wonga.QA.Framework.Api.CreateFixedTermLoanApplicationZaCommand;
-using RiskCreateFixedTermLoanApplicationCommand = Wonga.QA.Framework.Api.RiskCreateFixedTermLoanApplicationCommand;
-using SignApplicationCommand = Wonga.QA.Framework.Api.SignApplicationCommand;
-using SubmitApplicationBehaviourCommand = Wonga.QA.Framework.Api.SubmitApplicationBehaviourCommand;
-using SubmitClientWatermarkCommand = Wonga.QA.Framework.Api.SubmitClientWatermarkCommand;
-using SubmitUidAnswersCommand = Wonga.QA.Framework.Api.SubmitUidAnswersCommand;
-using VerifyFixedTermLoanCommand = Wonga.QA.Framework.Api.VerifyFixedTermLoanCommand;
+using CreateFixedTermLoanApplicationUkCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.Uk.CreateFixedTermLoanApplicationUkCommand;
+using CreateFixedTermLoanApplicationCaCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.Ca.CreateFixedTermLoanApplicationCaCommand;
+using CreateFixedTermLoanApplicationZaCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.Za.CreateFixedTermLoanApplicationZaCommand;
+using RiskCreateFixedTermLoanApplicationCommand = Wonga.QA.Framework.Api.Requests.Risk.Commands.RiskCreateFixedTermLoanApplicationCommand;
+using SignApplicationCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.SignApplicationCommand;
+using SubmitApplicationBehaviourCommand = Wonga.QA.Framework.Api.Requests.Risk.Commands.SubmitApplicationBehaviourCommand;
+using SubmitClientWatermarkCommand = Wonga.QA.Framework.Api.Requests.Risk.Commands.SubmitClientWatermarkCommand;
+using SubmitUidAnswersCommand = Wonga.QA.Framework.Api.Requests.Risk.Commands.SubmitUidAnswersCommand;
+using VerifyFixedTermLoanCommand = Wonga.QA.Framework.Api.Requests.Risk.Commands.VerifyFixedTermLoanCommand;
 
 namespace Wonga.QA.Framework
 {

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-
 namespace Wonga.QA.Framework.Msmq.Messages.CallReport.Handlers.InternalMessages
 {
     /// <summary> Wonga.CallReport.Handlers.InternalMessages.CheckCallReportPassword </summary>

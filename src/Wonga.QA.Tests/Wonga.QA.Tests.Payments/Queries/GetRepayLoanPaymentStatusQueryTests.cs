@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Wonga.QA.Framework.Api.Requests.Payments.Commands;
+using Wonga.QA.Framework.Api.Requests.Payments.Queries.Uk;
 using Wonga.QA.Tests.Payments.Helpers;
 using MbUnit.Framework;
 using Wonga.QA.Framework;

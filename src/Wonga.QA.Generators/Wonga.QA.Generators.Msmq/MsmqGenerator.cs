@@ -10,20 +10,19 @@ namespace Wonga.QA.Generators.Msmq
 {
     public class MsmqGenerator
     {
-    	public const string MessagesDirectoryName = "Messages";
-		public const string EnumsDirectoryName = "Enums";
-
-        public static void Main(String[] args)
+    	public static void Main(String[] args)
         {
             if (args.Any())
                 Config.Origin = args.Single();
 
+			string messagesDirectoryName = Config.Msmq.Folder;
+        
         	bool errorsOccurred = false;
 
-			var binRootDirectories = new GeneratorRepoDirectories(MessagesDirectoryName, null);
+			var binRootDirectories = new GeneratorRepoDirectories(messagesDirectoryName, null);
             
 			var assemblies = new List<Assembly>();
-        	var enumGenerator = new EnumGenerator();
+        	var enumGenerator = new EnumGenerator(Config.Msmq);
 
             foreach (FileInfo file in Origin.GetProjects().OrderBy(f => f.Name))
             {
@@ -47,21 +46,22 @@ namespace Wonga.QA.Generators.Msmq
 					try
 					{
 						//now get a folder name to avoid collision
-						string messageClassNamespaceRelativePath = message.Namespace != null
-												? message.Namespace.Replace("Wonga.", string.Empty)
-												: "Default";
+						string messageClassNamespaceRelativePath = 
+							string.IsNullOrEmpty(message.Namespace)
+								? string.Empty
+								: message.Namespace.Replace("Wonga.", string.Empty);
 
 						string messageClassSubfolderName = messageClassNamespaceRelativePath.Replace(".", new string(Path.DirectorySeparatorChar, 1));
 
-						String messageClassNamespace = string.Format("{0}.{1}.{2}", Config.Msmq.Project, MessagesDirectoryName, messageClassNamespaceRelativePath);
+						String messageClassNamespace = 
+							string.IsNullOrEmpty(messageClassNamespaceRelativePath)
+								? string.Format("{0}.{1}", Config.Msmq.Project, messagesDirectoryName)
+								: string.Format("{0}.{1}.{2}", Config.Msmq.Project, messagesDirectoryName, messageClassNamespaceRelativePath);
 
 						DirectoryInfo messageClassDirectory = Repo.Directory(messageClassSubfolderName, binRootDirectories.ClassesDirectory);
 						FileInfo code = Repo.File(String.Format("{0}.cs", messageClassName), messageClassDirectory);
 
-						//TODO: should use the original namespace for the enum!!!!!
-						string generatedEnumNamespace = string.Format("{0}.{1}.{2}", Config.Msmq.Project, EnumsDirectoryName, messageClassNamespaceRelativePath);
-
-						// misses all the include directives
+						// no include directives (added at the end)
 						var builder = InitializeMessageClassDefinition(messageClassName, message, messageClassNamespace);
 
 						enumGenerator.StartEnumGenerationForClass(messageClassNamespace);
@@ -70,7 +70,7 @@ namespace Wonga.QA.Generators.Msmq
 						{
 							builder.AppendFormatLine("        public {0} {1} {{ get; set; }}", member.Value.GetDeclaration(), member.Key);
 
-							enumGenerator.GenerateAllEnumsUsedByClassMember(member.Value, generatedEnumNamespace, binRootDirectories.EnumsDirectory, messageClassSubfolderName);
+							enumGenerator.GenerateAllEnumsUsedByClassMember(member.Value, binRootDirectories.EnumsDirectory);
 						}
 
 						builder.AppendLine("    }").AppendLine("}");
@@ -93,12 +93,12 @@ namespace Wonga.QA.Generators.Msmq
 
         	if(errorsOccurred || enumGenerator.ErrorsOccurred)
         	{
-				Console.Error.WriteLine("*** THERE WHERE ERRORS DURING GENERATION... NOT UPDATING QAF!!!!!");
+				Console.Error.WriteLine("*** THERE WERE ERRORS DURING GENERATION... NOT UPDATING QAF!!!!!");
 				return;
         	}
 
         	Repo.Inject(binRootDirectories.ClassesDirectory, Config.Msmq.Folder, Config.Msmq.Project);
-			Repo.Inject(binRootDirectories.EnumsDirectory, EnumsDirectoryName, Config.Msmq.Project);
+			Repo.Inject(binRootDirectories.EnumsDirectory, Config.Enums.Folder, Config.Msmq.Project);
         }
 
     	private static StringBuilder InitializeMessageClassDefinition(string messageClassName, Type message,

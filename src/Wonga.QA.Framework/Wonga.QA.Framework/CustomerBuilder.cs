@@ -5,6 +5,23 @@ using System.Globalization;
 using System.Linq;
 using Simple.Data;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Api.Enums;
+using Wonga.QA.Framework.Api.Requests.Comms.Commands;
+using Wonga.QA.Framework.Api.Requests.Comms.Commands.Ca;
+using Wonga.QA.Framework.Api.Requests.Comms.Commands.Uk;
+using Wonga.QA.Framework.Api.Requests.Comms.Commands.Za;
+using Wonga.QA.Framework.Api.Requests.Ops.Commands;
+using Wonga.QA.Framework.Api.Requests.Ops.Commands.Ca;
+using Wonga.QA.Framework.Api.Requests.Ops.Commands.Uk;
+using Wonga.QA.Framework.Api.Requests.Ops.Commands.Za;
+using Wonga.QA.Framework.Api.Requests.Payments.Commands;
+using Wonga.QA.Framework.Api.Requests.Payments.Commands.Ca;
+using Wonga.QA.Framework.Api.Requests.Payments.Commands.Uk;
+using Wonga.QA.Framework.Api.Requests.Payments.Commands.Za;
+using Wonga.QA.Framework.Api.Requests.Risk.Commands;
+using Wonga.QA.Framework.Api.Requests.Risk.Commands.Ca;
+using Wonga.QA.Framework.Api.Requests.Risk.Commands.Uk;
+using Wonga.QA.Framework.Api.Requests.Risk.Commands.Za;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Db.Comms;
@@ -345,11 +362,6 @@ namespace Wonga.QA.Framework
                 CreateAccountCommand.New(r => { r.AccountId = _id;
                                                   r.Login = _email;
                 }),
-                SaveSocialDetailsCommand.New(r =>
-                                                 {
-                                                     r.AccountId = _id;
-                                                     r.Dependants = _numberOfDependants;
-                                                 }),
                 SaveContactPreferencesCommand.New(r => r.AccountId = _id),
             };
 
@@ -359,6 +371,11 @@ namespace Wonga.QA.Framework
                 case AUT.Za:
                     requests.AddRange(new ApiRequest[]
                     {
+						SaveSocialDetailsZaCommand.New(r =>
+                                                 {
+                                                     r.AccountId = _id;
+                                                     r.Dependants = _numberOfDependants;
+                                                 }),
                         SavePasswordRecoveryDetailsZaCommand.New(r => r.AccountId = _id),
                         SaveCustomerDetailsZaCommand.New(r =>
                         {
@@ -372,7 +389,7 @@ namespace Wonga.QA.Framework
                         	r.Gender = _gender;
                         	r.MaidenName = _gender == GenderEnum.Female ? _maidenName : null;
                         }),
-						RiskSaveCustomerDetailsCommand.New(r =>
+						RiskSaveCustomerDetailsZaCommand.New(r =>
 						{
                             r.AccountId = _id;
                         	r.Forename = _foreName;
@@ -395,7 +412,7 @@ namespace Wonga.QA.Framework
                             r.Town = _town;
                             r.County = _county;
                         } ),
-						RiskSaveCustomerAddressCommand.New(r =>
+						RiskSaveCustomerAddressZaCommand.New(r =>
 						{
 							r.AccountId = _id;
                             r.HouseNumber = _houseNumber;
@@ -442,6 +459,11 @@ namespace Wonga.QA.Framework
                 case AUT.Ca:
                     requests.AddRange(new ApiRequest[]
                     {
+						SaveSocialDetailsCaCommand.New(r =>
+                                                 {
+                                                     r.AccountId = _id;
+                                                     r.Dependants = _numberOfDependants;
+                                                 }),
                         SavePasswordRecoveryDetailsCaCommand.New(r => r.AccountId = _id),
                         SaveCustomerDetailsCaCommand.New(r => 
                         { 
@@ -455,7 +477,7 @@ namespace Wonga.QA.Framework
                             r.HomePhone = _homePhoneNumber;
                             r.Gender = _gender;
                         }),              
-         				RiskSaveCustomerDetailsCommand.New(r =>
+         				RiskSaveCustomerDetailsCaCommand.New(r =>
 						{
 							r.AccountId = _id;
 							r.Forename = _foreName;
@@ -478,7 +500,7 @@ namespace Wonga.QA.Framework
                                                                  r.County = _county;
 																 r.Province = _province;
                         } ),
-						RiskSaveCustomerAddressCommand.New(r =>
+						RiskSaveCustomerAddressCaCommand.New(r =>
 						{
 																r.AccountId = _id;
                                                                  r.HouseNumber = _houseNumber;
@@ -531,6 +553,11 @@ namespace Wonga.QA.Framework
                 case AUT.Wb:
                     requests.AddRange(new ApiRequest[]
                     {
+						SaveSocialDetailsUkCommand.New(r =>
+                                                 {
+                                                     r.AccountId = _id;
+                                                     r.Dependants = _numberOfDependants;
+                                                 }),
                         SaveCustomerDetailsUkCommand.New(r=>
                                                              {
                                                                  r.AccountId = _id; 
@@ -542,7 +569,7 @@ namespace Wonga.QA.Framework
                                                                  r.HomePhone = _homePhoneNumber;
                                                                  r.Gender = _gender;
                                                              }),
-						RiskSaveCustomerDetailsCommand.New(r =>
+						RiskSaveCustomerDetailsUkCommand.New(r =>
 						{
 																r.AccountId = _id; 
                                                                  r.MiddleName = _middleName;
@@ -565,7 +592,7 @@ namespace Wonga.QA.Framework
                                                                  r.Town = _town;
                                                                  r.County = _county;
                                                              }),
-						RiskSaveCustomerAddressCommand.New(r =>
+						RiskSaveCustomerAddressUkCommand.New(r =>
 						{
 						      r.AccountId = _id;
                                                                  r.HouseNumber = _houseNumber;
@@ -616,6 +643,12 @@ namespace Wonga.QA.Framework
                 case AUT.Uk:
                     requests.AddRange(new ApiRequest[]
 					{
+						SaveSocialDetailsUkCommand.New(r =>
+                                                 {
+                                                     r.AccountId = _id;
+                                                     r.Dependants = _numberOfDependants;
+                                                 }),
+                        
                         SavePasswordRecoveryDetailsUkCommand.New(r => r.AccountId = _id),
 						SaveCustomerDetailsUkCommand.New(r=>
 						                                     {
@@ -626,7 +659,7 @@ namespace Wonga.QA.Framework
 						                                         r.Email = _email;
 						                                         r.DateOfBirth = _dateOfBirth;
 						                                     }),
-						RiskSaveCustomerDetailsCommand.New(r =>
+						RiskSaveCustomerDetailsUkCommand.New(r =>
 						{
                                      r.AccountId = _id;
 						             r.Forename = _foreName;
@@ -647,7 +680,7 @@ namespace Wonga.QA.Framework
                                                                  r.Town = _town;
                                                                  r.County = _county;
 					                                         }),
-						RiskSaveCustomerAddressCommand.New(r =>
+						RiskSaveCustomerAddressUkCommand.New(r =>
 						{
 							                r.AccountId = _id;
                                                                  r.HouseNumber = _houseNumber;

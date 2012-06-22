@@ -1,5 +1,5 @@
 using System.ComponentModel;
-namespace Wonga.QA.Framework.Api
+namespace Wonga.QA.Framework.Api.Enums
 {
     public enum DeclineAdviceKeyEnum
     {

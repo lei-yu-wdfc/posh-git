@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-
 namespace Wonga.QA.Framework.Msmq.Messages.Comms.Commands.Za
 {
     /// <summary> Wonga.Comms.Commands.Za.SaveCustomerLeadMessage </summary>

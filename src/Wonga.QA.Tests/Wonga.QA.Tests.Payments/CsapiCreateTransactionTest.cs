@@ -7,10 +7,11 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Exceptions;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Msmq;
+using Wonga.QA.Framework.Cs.Enums;
+using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Commands;
 using Wonga.QA.Tests.Core;
-using PaymentTransactionEnum = Wonga.QA.Framework.Msmq.Enums.Payments.Csapi.Commands.PaymentTransactionEnum;
-using PaymentTransactionScopeEnum = Wonga.QA.Framework.Msmq.Enums.FileStorage.InternalMessages.PaymentTransactionScopeEnum;
+using PaymentTransactionEnum = Wonga.QA.Framework.Msmq.Enums.Integration.Payments.Enums.PaymentTransactionEnum;
+using PaymentTransactionScopeEnum = Wonga.QA.Framework.Msmq.Enums.Integration.Payments.Enums.PaymentTransactionScopeEnum;
 
 namespace Wonga.QA.Tests.Payments
 {
@@ -24,7 +25,7 @@ namespace Wonga.QA.Tests.Payments
             var organisation = OrganisationBuilder.New(customer).Build();
             var app = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
-            var createTransactionCommand = new Wonga.QA.Framework.Cs.CreateTransactionCommand
+            var createTransactionCommand = new CreateTransactionCommand
                                                {
                                                    Amount = 500.50m,
                                                    ApplicationGuid = app.Id,
@@ -51,7 +52,7 @@ namespace Wonga.QA.Tests.Payments
             var organisation = OrganisationBuilder.New(customer).Build();
             var app = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
-            var createTransactionCommand = new Wonga.QA.Framework.Cs.CreateTransactionCommand
+            var createTransactionCommand = new CreateTransactionCommand
             {
                 Amount = 500.50m,
                 ApplicationGuid = app.Id,
@@ -75,7 +76,7 @@ namespace Wonga.QA.Tests.Payments
             var organisation = OrganisationBuilder.New(customer).Build();
             var app = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
-            var createTransactionCommand = new Wonga.QA.Framework.Cs.CreateTransactionCommand
+            var createTransactionCommand = new CreateTransactionCommand
             {
                 Amount = 500.50m,
                 ApplicationGuid = app.Id,
@@ -103,7 +104,7 @@ namespace Wonga.QA.Tests.Payments
             var organisation = OrganisationBuilder.New(customer).Build();
             var app = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
-            var createTransactionCommand = new Wonga.QA.Framework.Cs.CreateTransactionCommand
+            var createTransactionCommand = new CreateTransactionCommand
             {
                 Amount = 500.50m,
                 ApplicationGuid = app.Id,
@@ -128,7 +129,7 @@ namespace Wonga.QA.Tests.Payments
             var customer = CustomerBuilder.New().Build();
             var app = ApplicationBuilder.New(customer).Build();
 
-            var createTransactionCommand = new Wonga.QA.Framework.Cs.CreateTransactionCommand
+            var createTransactionCommand = new CreateTransactionCommand
             {
                 Amount = -500.50m,
                 ApplicationGuid = app.Id,

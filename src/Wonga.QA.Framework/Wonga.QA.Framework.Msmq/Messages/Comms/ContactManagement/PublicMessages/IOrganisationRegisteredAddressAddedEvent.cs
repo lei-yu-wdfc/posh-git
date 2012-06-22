@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-
 namespace Wonga.QA.Framework.Msmq.Messages.Comms.ContactManagement.PublicMessages
 {
     /// <summary> Wonga.Comms.ContactManagement.PublicMessages.IOrganisationRegisteredAddressAdded </summary>

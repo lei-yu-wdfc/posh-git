@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-
 namespace Wonga.QA.Framework.Msmq.Messages.CallReport.Batch.Handlers.InternalMessages
 {
     /// <summary> Wonga.CallReport.Batch.Handlers.InternalMessages.UpdateScheduleMessage </summary>

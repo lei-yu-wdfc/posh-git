@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-using Wonga.QA.Framework.Msmq.Enums.Payments.InternalMessages.Events;
+using Wonga.QA.Framework.Msmq.Enums.Common.TimeZone;
 
 namespace Wonga.QA.Framework.Msmq.Messages.Timezone.PublicMessages
 {

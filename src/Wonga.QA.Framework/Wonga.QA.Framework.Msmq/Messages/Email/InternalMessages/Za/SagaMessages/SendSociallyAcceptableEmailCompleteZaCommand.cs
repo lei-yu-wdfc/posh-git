@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-
 namespace Wonga.QA.Framework.Msmq.Messages.Email.InternalMessages.Za.SagaMessages
 {
     /// <summary> Wonga.Email.InternalMessages.Za.SagaMessages.SendSociallyAcceptableEmailCompleteMessage </summary>

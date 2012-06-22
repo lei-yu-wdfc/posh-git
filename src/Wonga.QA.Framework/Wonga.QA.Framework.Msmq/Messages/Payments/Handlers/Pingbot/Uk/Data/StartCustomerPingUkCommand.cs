@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-
 namespace Wonga.QA.Framework.Msmq.Messages.Payments.Handlers.Pingbot.Uk.Data
 {
     /// <summary> Wonga.Payments.Handlers.Pingbot.Uk.Data.StartCustomerPingMessage </summary>

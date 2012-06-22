@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-
 namespace Wonga.QA.Framework.Msmq.Messages.Payments.Commands.PLater.Uk
 {
     /// <summary> Wonga.Payments.Commands.PLater.Uk.CreatePayLaterApplication </summary>

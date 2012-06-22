@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-
 namespace Wonga.QA.Framework.Msmq.Messages.Comms.Messages.Ca.Ontario
 {
     /// <summary> Wonga.Comms.Messages.Ca.Ontario.CreateLoanDocumentsForOn </summary>

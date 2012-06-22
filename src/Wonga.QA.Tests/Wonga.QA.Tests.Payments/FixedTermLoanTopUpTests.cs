@@ -7,6 +7,11 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Exceptions;
+using Wonga.QA.Framework.Api.Requests.FileStorage.Queries;
+using Wonga.QA.Framework.Api.Requests.Payments.Commands;
+using Wonga.QA.Framework.Api.Requests.Payments.Commands.Uk;
+using Wonga.QA.Framework.Api.Requests.Payments.Queries;
+using Wonga.QA.Framework.Api.Requests.Payments.Queries.Uk;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
 

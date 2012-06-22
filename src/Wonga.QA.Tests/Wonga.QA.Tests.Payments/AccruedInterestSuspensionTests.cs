@@ -2,8 +2,7 @@ using System;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Msmq;
-using Wonga.QA.Framework.Msmq.Enums.Payments.Csapi.Commands;
+using Wonga.QA.Framework.Msmq.Enums.Integration.Payments.Enums;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments

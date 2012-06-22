@@ -18,11 +18,9 @@ namespace Wonga.QA.Generators.Core
 
 		void StartEnumGenerationForClass(string classGeneratedNamespace);
 
-		void GenerateAllEnumsUsedByClass(IEnumerable<Type> classMemberTypes, string generatedEnumNamespace,
-		                                 DirectoryInfo enumRootDirectory, string subfolderName);
+		void GenerateAllEnumsUsedByClass(IEnumerable<Type> classMemberTypes, DirectoryInfo enumRootDirectory);
 
-		void GenerateAllEnumsUsedByClassMember(Type classMemberType, string generatedEnumNamespace,
-		                                       DirectoryInfo enumRootDirectory, string subfolderName);
+		void GenerateAllEnumsUsedByClassMember(Type classMemberType, DirectoryInfo enumRootDirectory);
 
 		string GetEnumUsingDirectivesForCurrentClass();
 	}

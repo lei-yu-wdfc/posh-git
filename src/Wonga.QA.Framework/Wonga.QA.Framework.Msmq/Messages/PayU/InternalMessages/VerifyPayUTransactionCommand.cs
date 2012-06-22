@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-
 namespace Wonga.QA.Framework.Msmq.Messages.PayU.InternalMessages
 {
     /// <summary> Wonga.PayU.InternalMessages.VerifyPayUTransactionMessage </summary>

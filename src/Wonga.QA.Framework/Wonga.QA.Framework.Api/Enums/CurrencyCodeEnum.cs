@@ -1,5 +1,5 @@
 using System.ComponentModel;
-namespace Wonga.QA.Framework.Api
+namespace Wonga.QA.Framework.Api.Enums
 {
     public enum CurrencyCodeEnum
     {
@@ -11,5 +11,7 @@ namespace Wonga.QA.Framework.Api
         GBP,
         [Description("ZAR")]
         ZAR,
+        [Description("PLN")]
+        PLN,
     }
 }

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-
 namespace Wonga.QA.Framework.Msmq.Messages.PublicMessages.Comms.Ca.Instructions.Ontario
 {
     /// <summary> Wonga.PublicMessages.Comms.Ca.Instructions.Ontario.IWantToGenerateAPreAuthorisedDebitDocument </summary>

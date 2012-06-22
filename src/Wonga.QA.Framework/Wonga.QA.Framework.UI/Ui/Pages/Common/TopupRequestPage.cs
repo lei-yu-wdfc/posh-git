@@ -3,6 +3,7 @@ using System.Linq;
 using MbUnit.Framework;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Api.Requests.Payments.Queries;
 using Wonga.QA.Framework.UI.Elements;
 using Wonga.QA.Framework.UI.Mappings;
 

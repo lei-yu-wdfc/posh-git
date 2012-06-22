@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-
 namespace Wonga.QA.Framework.Msmq.Messages.Graydon.Handlers.InternalMessages
 {
     /// <summary> Wonga.Graydon.Handlers.InternalMessages.GraydonReportReadyMessage </summary>

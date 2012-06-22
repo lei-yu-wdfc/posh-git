@@ -6,6 +6,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Queries;
 using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Enums;
@@ -25,7 +26,7 @@ namespace Wonga.QA.Tests.Payments.Queries
 
 			Do.Until(() => _transactions.GetCount(_transactions.Applications.ExternalId == app.Id));
 
-			var query = new Framework.Cs.GetTransactionsQuery
+			var query = new GetTransactionsQuery
 			{
 				ApplicationGuid = app.Id
 			};
@@ -69,7 +70,7 @@ namespace Wonga.QA.Tests.Payments.Queries
 
             Do.Until(() => Drive.Db.Payments.Transactions.Count(t => t.ApplicationEntity.ExternalId == app.Id));
 
-            var query = new Framework.Cs.GetTransactionsQuery
+            var query = new GetTransactionsQuery
                             {
                                 ApplicationGuid = app.Id
                             };
@@ -89,7 +90,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             var organisation = OrganisationBuilder.New(customer).Build();
             var app = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 
-            var query = new Framework.Cs.GetTransactionsQuery
+            var query = new GetTransactionsQuery
             {
                 ApplicationGuid = app.Id
             };

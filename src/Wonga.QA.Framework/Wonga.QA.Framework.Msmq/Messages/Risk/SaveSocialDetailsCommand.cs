@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-using Wonga.QA.Framework.Msmq.Enums.Risk;
-using Wonga.QA.Framework.Msmq.Enums.Risk.ApiCore.Commands;
+using Wonga.QA.Framework.Msmq.Enums.Integration.Risk;
 
 namespace Wonga.QA.Framework.Msmq.Messages.Risk
 {

@@ -3,16 +3,16 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Payments;
-using Wonga.QA.Framework.Msmq;
-using Wonga.QA.Framework.Msmq.Enums.Comms.Commands.Ca;
+using Wonga.QA.Framework.Msmq.Enums.Common.Enums;
+using Wonga.QA.Framework.Msmq.Enums.Integration.Comms.Enums;
 using Wonga.QA.Framework.Msmq.Messages.Comms.Commands;
 using Wonga.QA.Framework.Msmq.Messages.Ops.PublicMessages;
 using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages;
 using Wonga.QA.Framework.ThirdParties;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
-using AddPaymentCardCommand = Wonga.QA.Framework.Api.AddPaymentCardCommand;
-using CreateFixedTermLoanExtensionCommand = Wonga.QA.Framework.Api.CreateFixedTermLoanExtensionCommand;
+using AddPaymentCardCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.AddPaymentCardCommand;
+using CreateFixedTermLoanExtensionCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.CreateFixedTermLoanExtensionCommand;
 
 namespace Wonga.QA.Tests.Comms.Email
 {

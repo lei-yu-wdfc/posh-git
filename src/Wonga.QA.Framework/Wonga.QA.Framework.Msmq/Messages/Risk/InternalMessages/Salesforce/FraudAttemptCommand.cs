@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-
 namespace Wonga.QA.Framework.Msmq.Messages.Risk.InternalMessages.Salesforce
 {
     /// <summary> Wonga.Risk.InternalMessages.Salesforce.FraudAttemptMessage </summary>

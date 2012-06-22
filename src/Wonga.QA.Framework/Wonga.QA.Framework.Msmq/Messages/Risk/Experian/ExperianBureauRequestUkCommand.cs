@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-
 namespace Wonga.QA.Framework.Msmq.Messages.Risk.Experian
 {
     /// <summary> Wonga.Risk.Experian.ExperianBureauRequestMessage </summary>

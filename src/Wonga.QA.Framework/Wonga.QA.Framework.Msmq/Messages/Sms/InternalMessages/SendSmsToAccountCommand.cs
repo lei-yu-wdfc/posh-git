@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-
 namespace Wonga.QA.Framework.Msmq.Messages.Sms.InternalMessages
 {
     /// <summary> Wonga.Sms.InternalMessages.SendSmsToAccountMessage </summary>

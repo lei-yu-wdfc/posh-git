@@ -7,15 +7,12 @@ namespace Wonga.QA.Generators.Api
 {
     public class ApiGenerator
     {
-		public const string RequestsDirectoryName = "Requests";
-		public const string EnumsDirectoryName = "Enums";
-
-        public static void Main(String[] args)
+		public static void Main(String[] args)
         {
             if (args.Any())
                 Config.Origin = args.Single();
 
-			var binRootDirectories = new GeneratorRepoDirectories(RequestsDirectoryName);
+			var binRootDirectories = new GeneratorRepoDirectories(Config.Api.Folder);
 
 			var classGenerator = new XmlSchemaClassGenerator(Config.Api, binRootDirectories);
 
@@ -28,12 +25,12 @@ namespace Wonga.QA.Generators.Api
 
 			if (classGenerator.ErrorsOccurred)
 			{
-				Console.Error.WriteLine("*** THERE WHERE ERRORS DURING GENERATION... NOT UPDATING QAF!!!!!");
+				Console.Error.WriteLine("*** THERE WERE ERRORS DURING GENERATION... NOT UPDATING QAF!!!!!");
 				return;
 			}
 
 			Repo.Inject(binRootDirectories.ClassesDirectory, Config.Api.Folder, Config.Api.Project);
-			Repo.Inject(binRootDirectories.EnumsDirectory, EnumsDirectoryName, Config.Api.Project);
+			Repo.Inject(binRootDirectories.EnumsDirectory, Config.Enums.Folder, Config.Api.Project);
 
         }
     }

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-using Wonga.QA.Framework.Msmq.Enums.Risk.Workflow.Messages.business;
+using Wonga.QA.Framework.Msmq.Enums.Risk.Workflow;
 
 namespace Wonga.QA.Framework.Msmq.Messages.Risk.Workflow.Messages
 {

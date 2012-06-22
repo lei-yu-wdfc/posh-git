@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-
 namespace Wonga.QA.Framework.Msmq.Messages.Sms.InternalMessages.SagaMessages.HttpRequests
 {
     /// <summary> Wonga.Sms.InternalMessages.SagaMessages.HttpRequests.SuccessfullyMadeSmsProviderHttpRequestMessage </summary>

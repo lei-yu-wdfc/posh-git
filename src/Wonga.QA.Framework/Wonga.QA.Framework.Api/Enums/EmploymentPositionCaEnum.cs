@@ -1,5 +1,5 @@
 using System.ComponentModel;
-namespace Wonga.QA.Framework.Api
+namespace Wonga.QA.Framework.Api.Enums
 {
     public enum EmploymentPositionCaEnum
     {
@@ -25,6 +25,8 @@ namespace Wonga.QA.Framework.Api
         Other,
         [Description("Sales")]
         Sales,
+        [Description("Retail1")]
+        Retail1,
         [Description("Services")]
         Services,
         [Description("Teacher")]

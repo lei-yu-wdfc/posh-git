@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-using Wonga.QA.Framework.Msmq.Enums.Comms.Commands.Ca;
+using Wonga.QA.Framework.Msmq.Enums.Common.Enums;
 
 namespace Wonga.QA.Framework.Msmq.Messages.Comms.InternalMessages.Salesforce.Za
 {

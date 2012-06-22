@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-
 namespace Wonga.QA.Framework.Msmq.Messages.Risk.InternalMessages.Transunion
 {
     /// <summary> Wonga.Risk.InternalMessages.Transunion.TransunionRequestMessage </summary>

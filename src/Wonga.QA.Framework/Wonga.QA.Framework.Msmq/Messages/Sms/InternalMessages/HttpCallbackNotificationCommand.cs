@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-using Wonga.QA.Framework.Msmq.Enums.Sms.InternalMessages;
+using Wonga.QA.Framework.Msmq.Enums.Sms.Data;
 
 namespace Wonga.QA.Framework.Msmq.Messages.Sms.InternalMessages
 {

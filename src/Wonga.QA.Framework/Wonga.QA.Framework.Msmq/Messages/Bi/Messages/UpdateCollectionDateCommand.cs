@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-
 namespace Wonga.QA.Framework.Msmq.Messages.Bi.Messages
 {
     /// <summary> Wonga.Bi.Messages.UpdateCollectionDate </summary>

@@ -16,22 +16,24 @@ namespace Wonga.QA.Generators.Core
 		public DirectoryInfo EnumsDirectory { get; private set; }
 
 
+		public string ClassesDirectoryName { get; private set; }
+
+		public string CodeDirectoryName { get; private set; }
+
+		public string EnumsDirectoryName { get; private set; }
+
+
 		public GeneratorRepoDirectories(string classesDirectoryName, 
 										string codeDirectoryName = DefaultCodeDirectoryName, 
 										string enumsDirectoryName = DefaultEnumsDirectoryName)
-			:this(
-				Repo.Directory(classesDirectoryName),
-				SafeCreateRepoDirectory(codeDirectoryName),
-				SafeCreateRepoDirectory(enumsDirectoryName))
 		{
-			
-		}
+			ClassesDirectoryName = classesDirectoryName;
+			CodeDirectoryName = codeDirectoryName;
+			EnumsDirectoryName = enumsDirectoryName;
 
-		private GeneratorRepoDirectories(DirectoryInfo classesDirectory, DirectoryInfo codeDirectory, DirectoryInfo enumsDirectory)
-		{
-			ClassesDirectory = classesDirectory;
-			CodeDirectory = codeDirectory;
-			EnumsDirectory = enumsDirectory;
+			ClassesDirectory = Repo.Directory(ClassesDirectoryName);
+			CodeDirectory = SafeCreateRepoDirectory(CodeDirectoryName);
+			EnumsDirectory = SafeCreateRepoDirectory(EnumsDirectoryName);
 		}
 
 		private static DirectoryInfo SafeCreateRepoDirectory(string directoryName)

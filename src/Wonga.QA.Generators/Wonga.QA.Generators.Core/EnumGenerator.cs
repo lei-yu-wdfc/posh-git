@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using QAFramework = Wonga.QA.Generators.Core.Config.Framework;
 
 namespace Wonga.QA.Generators.Core
 {
@@ -45,14 +46,20 @@ namespace Wonga.QA.Generators.Core
 		/// </summary>
 		public string EnumFullNameStartFilter { get; private set; }
 
-		public EnumGenerator(bool continueOnError)
-			: this(EnumGenerationMode.IncludeConstantValues, DefaultEnumFullNameStartFilter, continueOnError)
+		/// <summary>
+		/// target framework to which the enums will be generated
+		/// </summary>
+		public QAFramework TargetFramework { get; private set; }
+
+		public EnumGenerator(QAFramework targetFramework, bool continueOnError)
+			: this(targetFramework, EnumGenerationMode.IncludeConstantValues, DefaultEnumFullNameStartFilter, continueOnError)
 		{
 			
 		}
 
-		public EnumGenerator(EnumGenerationMode mode = EnumGenerationMode.IncludeConstantValues, string filter = DefaultEnumFullNameStartFilter, bool continueOnError = true)
+		public EnumGenerator(QAFramework targetFramework, EnumGenerationMode mode = EnumGenerationMode.IncludeConstantValues, string filter = DefaultEnumFullNameStartFilter, bool continueOnError = true)
 		{
+			TargetFramework = targetFramework;
 			ContinueOnError = continueOnError;
 			Mode = mode;
 			EnumFullNameStartFilter = filter;
@@ -73,14 +80,12 @@ namespace Wonga.QA.Generators.Core
 		/// generates all enumeration members of a class
 		/// </summary>
 		/// <param name="classMemberTypes">all the member types of the class</param>
-		/// <param name="generatedEnumNamespace">the new namespace for the generated enums</param>
 		/// <param name="enumRootDirectory">root directory to place the enum files</param>
-		/// <param name="subfolderName">subdirectory to place all the enums used by this class</param>
-		public void GenerateAllEnumsUsedByClass(IEnumerable<Type> classMemberTypes, string generatedEnumNamespace, DirectoryInfo enumRootDirectory, string subfolderName)
+		public void GenerateAllEnumsUsedByClass(IEnumerable<Type> classMemberTypes, DirectoryInfo enumRootDirectory)
 		{
 			foreach (Type classMemberType in classMemberTypes)
 			{
-				GenerateAllEnumsUsedByClassMember(classMemberType, generatedEnumNamespace, enumRootDirectory, subfolderName);
+				GenerateAllEnumsUsedByClassMember(classMemberType, enumRootDirectory);
 			}
 		}
 
@@ -88,10 +93,8 @@ namespace Wonga.QA.Generators.Core
 		/// generates all enumeration used my a member of a class
 		/// </summary>
 		/// <param name="classMemberType">member type of the class</param>
-		/// <param name="generatedEnumNamespace">the new namespace for the generated enums</param>
 		/// <param name="enumRootDirectory">root directory to place the enum files</param>
-		/// <param name="subfolderName">subdirectory to place all the enums used by this class</param>
-		public void GenerateAllEnumsUsedByClassMember(Type classMemberType, string generatedEnumNamespace, DirectoryInfo enumRootDirectory, string subfolderName)
+		public void GenerateAllEnumsUsedByClassMember(Type classMemberType, DirectoryInfo enumRootDirectory)
 		{
 			var messageMemberEnumTypes = GetCustomEnumTypesUsedByClassMember(classMemberType);
 
@@ -99,6 +102,19 @@ namespace Wonga.QA.Generators.Core
 			{
 				try
 				{
+
+					string enumNamespaceRelativePath = 
+						string.IsNullOrEmpty(messageMemberEnumType.Namespace)
+							? string.Empty
+							: messageMemberEnumType.Namespace.Replace("Wonga.", string.Empty);
+							
+					string enumSubfolderName = enumNamespaceRelativePath.Replace(".", new string(Path.DirectorySeparatorChar, 1));
+
+					string generatedEnumNamespace =
+						string.IsNullOrEmpty(enumNamespaceRelativePath) 
+							? string.Format("{0}.{1}", TargetFramework.Project, Config.Enums.Folder)
+							: string.Format("{0}.{1}.{2}", TargetFramework.Project, Config.Enums.Folder, enumNamespaceRelativePath);
+					
 					EnumGenerationResult enumGenerationResult = GetEnumGenerationResult(messageMemberEnumType, generatedEnumNamespace);
 					switch (enumGenerationResult.Status)
 					{
@@ -107,24 +123,24 @@ namespace Wonga.QA.Generators.Core
 							throw new NotImplementedException(string.Format("Can not generate enumeration {0}", messageMemberEnumType.FullName));
 
 						case EnumGenerationStatus.AlreadyGenerated:
-							
+
 							AddToCurrentClassGeneratedEnumsIfUnique(enumGenerationResult.EnumDefinition);
 							break;
 
 						case EnumGenerationStatus.NotGenerated:
 
 							AddToCurrentClassGeneratedEnumsIfUnique(enumGenerationResult.EnumDefinition);
-							GenerateEnum(messageMemberEnumType, enumGenerationResult.EnumDefinition.GeneratedNamespace, enumRootDirectory, subfolderName);
+							GenerateEnum(messageMemberEnumType, enumGenerationResult.EnumDefinition.GeneratedNamespace, enumRootDirectory, enumSubfolderName);
 							AddNewGeneratedEnumDefinition(enumGenerationResult);
 							break;
 					}
-					
+
 				}
 				catch (Exception e)
 				{
 					ErrorsOccurred = true;
 					Console.Error.WriteLine("\t*** FAILED GENERATION FOR ENUM: {0}. {1}", messageMemberEnumType.GetName(), e.Message);
-					if(!ContinueOnError)
+					if (!ContinueOnError)
 					{
 						throw;
 					}
