@@ -61,9 +61,6 @@
     <Reference Include="Wonga.QA.Framework.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\bin\Wonga.QA.Framework.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Wonga.QA.Framework.Db">
-      <HintPath>..\..\..\bin\Wonga.QA.Framework.Db.dll</HintPath>
-    </Reference>
     <Reference Include="Wonga.QA.Framework.Msmq">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Msmq.dll</HintPath>
     </Reference>
