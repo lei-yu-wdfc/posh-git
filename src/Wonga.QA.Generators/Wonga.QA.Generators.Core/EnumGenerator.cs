@@ -96,26 +96,17 @@ namespace Wonga.QA.Generators.Core
 		/// <param name="enumRootDirectory">root directory to place the enum files</param>
 		public void GenerateAllEnumsUsedByClassMember(Type classMemberType, DirectoryInfo enumRootDirectory)
 		{
+			var entityGenerator = new EntityGenerator(enumRootDirectory, TargetFramework.Project, Config.Enums.Folder);
+
 			var messageMemberEnumTypes = GetCustomEnumTypesUsedByClassMember(classMemberType);
 
 			foreach (Type messageMemberEnumType in messageMemberEnumTypes)
 			{
 				try
 				{
+					GeneratedEntityDefinition generatedEntityDefinition = entityGenerator.GenerateEntityDefinition(messageMemberEnumType);
 
-					string enumNamespaceRelativePath = 
-						string.IsNullOrEmpty(messageMemberEnumType.Namespace)
-							? string.Empty
-							: messageMemberEnumType.Namespace.Replace("Wonga.", string.Empty);
-							
-					string enumSubfolderName = enumNamespaceRelativePath.Replace(".", new string(Path.DirectorySeparatorChar, 1));
-
-					string generatedEnumNamespace =
-						string.IsNullOrEmpty(enumNamespaceRelativePath) 
-							? string.Format("{0}.{1}", TargetFramework.Project, Config.Enums.Folder)
-							: string.Format("{0}.{1}.{2}", TargetFramework.Project, Config.Enums.Folder, enumNamespaceRelativePath);
-					
-					EnumGenerationResult enumGenerationResult = GetEnumGenerationResult(messageMemberEnumType, generatedEnumNamespace);
+					EnumGenerationResult enumGenerationResult = GetEnumGenerationResult(messageMemberEnumType, generatedEntityDefinition.Namespace);
 					switch (enumGenerationResult.Status)
 					{
 						case EnumGenerationStatus.UnableToGenerate:
@@ -130,7 +121,7 @@ namespace Wonga.QA.Generators.Core
 						case EnumGenerationStatus.NotGenerated:
 
 							AddToCurrentClassGeneratedEnumsIfUnique(enumGenerationResult.EnumDefinition);
-							GenerateEnum(messageMemberEnumType, enumGenerationResult.EnumDefinition.GeneratedNamespace, enumRootDirectory, enumSubfolderName);
+							GenerateEnum(messageMemberEnumType, enumGenerationResult.EnumDefinition.GeneratedNamespace, generatedEntityDefinition.Directory);
 							AddNewGeneratedEnumDefinition(enumGenerationResult);
 							break;
 					}
@@ -215,11 +206,10 @@ namespace Wonga.QA.Generators.Core
 			return new EnumGenerationResult(EnumGenerationStatus.NotGenerated, enumDefinition);
 		}
 
-		private void GenerateEnum(Type enumType, string generatedEnumNamespace, DirectoryInfo rootEnumDirectory, string subfolderName)
+		private void GenerateEnum(Type enumType, string generatedEnumNamespace, DirectoryInfo enumDirectory)
 		{
 			String enumName = enumType.GetName().ToEnum().ToCamel();
 
-			DirectoryInfo enumDirectory = Repo.Directory(subfolderName, rootEnumDirectory);
 			FileInfo fenum = Repo.File(String.Format("{0}.cs", enumName), enumDirectory);
 
 			var enumBuilder = CreateEnumBuilder(generatedEnumNamespace, enumName);

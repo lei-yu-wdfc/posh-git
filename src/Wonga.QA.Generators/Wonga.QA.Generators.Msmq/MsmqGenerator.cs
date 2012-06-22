@@ -23,6 +23,7 @@ namespace Wonga.QA.Generators.Msmq
             
 			var assemblies = new List<Assembly>();
         	var enumGenerator = new EnumGenerator(Config.Msmq);
+			var entityGenerator = new EntityGenerator(binRootDirectories.ClassesDirectory, Config.Msmq.Project, messagesDirectoryName);
 
             foreach (FileInfo file in Origin.GetProjects().OrderBy(f => f.Name))
             {
@@ -45,26 +46,14 @@ namespace Wonga.QA.Generators.Msmq
 
 					try
 					{
-						//now get a folder name to avoid collision
-						string messageClassNamespaceRelativePath = 
-							string.IsNullOrEmpty(message.Namespace)
-								? string.Empty
-								: message.Namespace.Replace("Wonga.", string.Empty);
+						GeneratedEntityDefinition generatedEntityDefinition = entityGenerator.GenerateEntityDefinition(message);
 
-						string messageClassSubfolderName = messageClassNamespaceRelativePath.Replace(".", new string(Path.DirectorySeparatorChar, 1));
-
-						String messageClassNamespace = 
-							string.IsNullOrEmpty(messageClassNamespaceRelativePath)
-								? string.Format("{0}.{1}", Config.Msmq.Project, messagesDirectoryName)
-								: string.Format("{0}.{1}.{2}", Config.Msmq.Project, messagesDirectoryName, messageClassNamespaceRelativePath);
-
-						DirectoryInfo messageClassDirectory = Repo.Directory(messageClassSubfolderName, binRootDirectories.ClassesDirectory);
-						FileInfo code = Repo.File(String.Format("{0}.cs", messageClassName), messageClassDirectory);
+						FileInfo code = Repo.File(String.Format("{0}.cs", messageClassName), generatedEntityDefinition.Directory);
 
 						// no include directives (added at the end)
-						var builder = InitializeMessageClassDefinition(messageClassName, message, messageClassNamespace);
+						var builder = InitializeMessageClassDefinition(messageClassName, message, generatedEntityDefinition.Namespace);
 
-						enumGenerator.StartEnumGenerationForClass(messageClassNamespace);
+						enumGenerator.StartEnumGenerationForClass(generatedEntityDefinition.Namespace);
 					
 						foreach (KeyValuePair<String, Type> member in message.GetMessageMembers())
 						{
