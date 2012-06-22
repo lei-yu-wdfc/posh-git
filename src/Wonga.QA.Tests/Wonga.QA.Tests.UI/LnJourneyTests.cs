@@ -56,7 +56,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual("0111111111", mobileFromDb);
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-198"), Pending()]
+        [Test, AUT(AUT.Za), JIRA("QA-198")]
         public void LnCustomerChangesMobilePhoneAndEntersInvalidPinShouldNotBeAbleToTakeLoan()
         {
             var loginPage = Client.Login();
@@ -243,10 +243,11 @@ namespace Wonga.QA.Tests.Ui
                     var pageZA = journeyZa.Teleport<ApplyPage>() as ApplyPage;
                     pageZA.SetNewMobilePhone = phone;
                     pageZA.ResendPinClick();
-                    Thread.Sleep(5000);
-                    var smsZa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(phone.Replace("077", "2777")));
-                    Do.Until(
-                        () => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(phone.Replace("077", "2777")));
+
+            		var phoneInDbFormat = phone.Replace("077", "2777");
+
+                    var smsZa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(phoneInDbFormat));
+                    Do.Until(() => smsZa.Count() == 2);
                     Assert.AreEqual(2, smsZa.Count());
                     Console.WriteLine(smsZa.Count());
                     foreach (var sms in smsZa)
@@ -274,7 +275,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-302")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-302"), Pending("Uses sleep()!")]
         public void LoggedCustomerWithoutLoanAppliesNewLoanChangesMobilePhoneAndClicksResendPinAndGoFarther()
         {
             string email = Get.RandomEmail();

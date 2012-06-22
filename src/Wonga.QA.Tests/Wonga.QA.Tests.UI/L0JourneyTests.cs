@@ -521,7 +521,7 @@ namespace Wonga.QA.Tests.Ui
             var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
 
             Assert.AreEqual(totalToRepayOnPersonalDetails, acceptedPage.GetTotalToRepay);
-            Assert.AreEqual(repaymentDateOnPersonalDetails, acceptedPage.GetRepaymentDate);
+            Assert.AreEqual(expectedRepaymentDate, acceptedPage.GetRepaymentDate);
 
             switch (Config.AUT)
             {
@@ -615,7 +615,7 @@ namespace Wonga.QA.Tests.Ui
             var dealDone = journey.Teleport<DealDonePage>() as DealDonePage;
         }
 
-        [Test, AUT(AUT.Za), JIRA("QA-170")] //Removed from smoke because of the problem with sliders update
+        [Test, AUT(AUT.Za), JIRA("QA-170"), SmokeTest] //Removed from smoke because of the problem with sliders update
         public void CustomerOnHowItWorksPageShouldBeAbleUseSlidersProperly()
         {
             //CA is out due to new wonga sliders being implemented on homepage only 
@@ -633,7 +633,7 @@ namespace Wonga.QA.Tests.Ui
             homePage.AssertThatIsWbHomePage();
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk), JIRA("QA-181"), Pending("ZA-2512")]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk), JIRA("QA-181"), Pending("ZA-2560")]
         public void L0JourneyCustomerOnCurrentAddressPageDoesNotEnterSomeRequiredFieldsWarningMessageDisplayed()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home())
@@ -1210,7 +1210,7 @@ namespace Wonga.QA.Tests.Ui
             addressPage.Next();
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-172"), Pending("CA code appearing in ZA - Michael Nowicki to fix")]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-172")]
         public void L0JourneyCustomerMakeALoanCheckOneLastStepPageValidDataDisplayed()
         {
             int _amountMax;
@@ -1357,7 +1357,7 @@ namespace Wonga.QA.Tests.Ui
             //Assert.IsTrue(e.Message.Contains("was Box must be ticked to proceed"));
         }
 
-        [Test, AUT(AUT.Za), Pending("Test is yet to be complete. Author: Ben Ifie")]
+        [Test, AUT(AUT.Za)]//Pending("Test is yet to be complete. Author: Ben Ifie")
         public void L0DropOff()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home())
@@ -1412,10 +1412,9 @@ namespace Wonga.QA.Tests.Ui
 
             var mail = Do.Until(() => Drive.Data.QaData.Db.Email.FindAllByEmailAddress(email)).FirstOrDefault();
             Console.WriteLine(mail.EmailId);
-            var mailTemplate = Do.Until(() => Drive.Data.QaData.Db.EmailToken.FindBy(EmailId: mail.EmailId, Key: "Loan_Agreement"));
+            var mailTemplate = Do.Until(() => Drive.Data.QaData.Db.EmailToken.FindBy(EmailId: mail.EmailId, Key: "Agreement_body"));
             Console.WriteLine(mailTemplate.Value.ToString());
             Assert.IsNotNull(mailTemplate);
-            Assert.IsTrue(mailTemplate.value.ToString().Contains("You promise to pay and will make one repayment of"));
         }
 
         [Test, AUT(AUT.Za), JIRA("QA-247")]

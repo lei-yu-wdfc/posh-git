@@ -68,7 +68,7 @@ namespace Wonga.QA.Framework
 		{
 			get { return _applicationsTab.FindAll(_applicationsTab.ExternalId == Id).Single().ClosedOn == null ? false : true; }
 		}
-
+		 
 		public Guid AccountId
 		{
             get { return _applicationsTab.FindAll(_applicationsTab.ExternalId == Id).Single().AccountId; }
@@ -340,6 +340,9 @@ namespace Wonga.QA.Framework
 
             Do.Until(() => _arrearsTab.FindAll(_arrearsTab.ApplicationId == application.ApplicationId).Single());
 
+			var arrearsDate = (DateTime)(Drive.Data.Payments.Db.Arrears.FindByApplicationId(application.ApplicationId)).CreatedOn;
+			Drive.Data.Payments.Db.Arrears.UpdateByApplicationId(ApplicationId: application.ApplicationId, CreatedOn: new DateTime(arrearsDate.Year, arrearsDate.Month, arrearsDate.Day));
+			
 			return this;
 		}
 

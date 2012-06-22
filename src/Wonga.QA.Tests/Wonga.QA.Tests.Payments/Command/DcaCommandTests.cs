@@ -17,14 +17,13 @@ using System.Threading;
 
 namespace Wonga.QA.Tests.Payments.Command
 {
-	[TestFixture, Parallelizable(TestScope.All)]
+	[TestFixture, Parallelizable(TestScope.Descendants)]
 	public class DcaCommandTests
 	{
 	    private dynamic _debtCollections = Drive.Data.Payments.Db.DebtCollection;
 	    private dynamic _fixedTermLoanSagas = Drive.Data.OpsSagas.Db.FixedTermLoanSagaEntity;
 	    private dynamic _externalDebtCollectionSagas = Drive.Data.OpsSagas.Db.ExternalDebtCollectionSagaEntity;
 	    private dynamic _schedulePaymentSagas = Drive.Data.OpsSagas.Db.ScheduledPaymentSagaEntity;
-		private const int delay = 15000;
         
 		[FixtureSetUp]
 		public void FixtureSetUp()

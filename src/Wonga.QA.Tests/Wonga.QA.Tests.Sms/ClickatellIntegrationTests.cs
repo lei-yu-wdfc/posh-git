@@ -10,6 +10,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Sms
 {
+	[TestFixture, Parallelizable(TestScope.Descendants)]
 	public class ClickatellIntegrationTests
 	{
 		private readonly dynamic _smsMessages = Drive.Data.Sms.Db.SmsMessages;

@@ -13,6 +13,7 @@ using Wonga.QA.Tests.Payments.Helpers;
 
 namespace Wonga.QA.Tests.Cs
 {
+	[TestFixture, Pending("ZA-2565")]
     public class GetScheduledPaymentsTests
     {
         private bool _bankGatewayTestModeOriginal;
@@ -30,7 +31,7 @@ namespace Wonga.QA.Tests.Cs
             ConfigurationFunctions.SetBankGatewayTestMode(_bankGatewayTestModeOriginal);
         }
 
-        [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
+		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Za), Pending("ZA-2565")]
         public void GetScheduledPaymentsTest()
         {
             Customer customer = CustomerBuilder.New().Build();

@@ -7,11 +7,11 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Api
 {
-    [Parallelizable(TestScope.All)]
-    public class ApiJourneys
-    {
+	[Parallelizable(TestScope.All)]
+    public class ApiJourneys //We test this functionality everywhere!
+	{
         [Test, AUT(AUT.Wb)]
-        public void WBApiL0JourneyAccepted()
+        public void WBL0JourneyAccepted()
         {
             Customer cust = CustomerBuilder.New().Build();
             Organisation comp = OrganisationBuilder.New(cust).Build();
@@ -19,7 +19,7 @@ namespace Wonga.QA.Tests.Api
         }
 
         [Test, AUT(AUT.Wb)]
-        public void WBApiDeclinedL0Accepted()
+        public void WBDeclinedL0Accepted()
         {
             Customer cust = CustomerBuilder.New().WithMiddleName("Middle").Build();
 
@@ -27,11 +27,11 @@ namespace Wonga.QA.Tests.Api
             ApplicationBuilder.New(cust, comp).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
         }
 
-        [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
-        public void ApiL0JourneyAccepted()
+		[Test, AUT(AUT.Ca, AUT.Uk)]
+        public void L0JourneyAccepted()
         {
             Customer cust = CustomerBuilder.New().Build();
-            ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Accepted).WithLoanAmount(200).Build();
+            ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
         }
 
 		[Test, AUT(AUT.Ca)]

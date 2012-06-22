@@ -471,6 +471,7 @@ namespace Wonga.QA.Tests.Ui
             int setDurationValue = minDurationValue - 1;
             var page = Client.Home();
             page.Sliders.HowLong = setDurationValue.ToString(CultureInfo.InvariantCulture);
+            page.Sliders.HowMuch = "200";
             Thread.Sleep(2000);
             Assert.AreEqual(minDurationValue.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
         }

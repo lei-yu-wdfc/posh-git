@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +14,6 @@ namespace Wonga.QA.Tests.Comms
 	[TestFixture, Parallelizable(TestScope.Descendants), CoreTest] //Can be only on level 3 because it changes configuration
 	class CollectionsChaseEmailTest
 	{
-		private bool _bankGatewayTestModeOriginal;
 		private static readonly dynamic EmailTable = Drive.Data.QaData.Db.Email;
 
 		private Application _application;
@@ -30,17 +29,11 @@ namespace Wonga.QA.Tests.Comms
 		[FixtureSetUp]
 		public void FixtureSetup()
 		{
-			_bankGatewayTestModeOriginal = ConfigurationFunctions.GetBankGatewayTestMode();
-			ConfigurationFunctions.SetBankGatewayTestMode(false);
+			if (Drive.Data.Ops.GetServiceConfiguration<bool>("BankGateway.IsTestMode"))
+				Assert.Inconclusive("Bankgateway is in test mode");
 
 			var customer = CustomerBuilder.New().Build();
 			_application = ApplicationBuilder.New(customer).Build();
-		}
-
-		[FixtureTearDown]
-		public void FixtureTearDown()
-		{
-			ConfigurationFunctions.SetBankGatewayTestMode(_bankGatewayTestModeOriginal);
 		}
 
 		[Test, AUT(AUT.Za), JIRA("QA-206")]

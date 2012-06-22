@@ -1,23 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <UiMap>
-	<LoginPage>
-		<ForgotPassword>#wonga-login-form div a</ForgotPassword>
-	</LoginPage>
-
-  <MyPaymentsPage>
-    <InvalidBankAccountWarning>#edit-account-number-za-wrapper .form-error .invalid</InvalidBankAccountWarning>
-    <PopupBankName>#edit-bank-name</PopupBankName>
-    <PopupBankAccountType>#edit-bank-account-type</PopupBankAccountType>
-    <PopupAccountNumber>#edit-account-number-za</PopupAccountNumber>
-    <PopupLengthOfTime>#edit-bank-period</PopupLengthOfTime>
-    <PopupAddBankAccountButton>#edit-submit</PopupAddBankAccountButton>
-    <PopupExeption>#wonga-my-account-edit-bank-form .messages.error ul li</PopupExeption>
-    <AccountNumber>.info.bank-account.bank-account-primary tbody tr:first-child + tr + tr + tr td b span</AccountNumber>
-    <PopupBankAccountException>#edit-account-number-za-wrapper div.form-error div.invalid </PopupBankAccountException>
-    <PopupSuccessTitle>#success</PopupSuccessTitle>
-    <!--#success-->
-  </MyPaymentsPage>
-
+	<MyPaymentsPage>
+		<InvalidBankAccountWarning>#edit-account-number-za-wrapper .form-error .invalid</InvalidBankAccountWarning>
+		<PopupBankName>#edit-bank-name</PopupBankName>
+		<PopupBankAccountType>#edit-bank-account-type</PopupBankAccountType>
+		<PopupAccountNumber>#edit-account-number-za</PopupAccountNumber>
+		<PopupLengthOfTime>#edit-bank-period</PopupLengthOfTime>
+		<PopupAddBankAccountButton>#edit-submit</PopupAddBankAccountButton>
+		<PopupExeption>#wonga-my-account-edit-bank-form div:first-child ul li</PopupExeption>
+		<AccountNumber>.info.bank-account.bank-account-primary tbody tr:first-child + tr + tr + tr td b span</AccountNumber>
+		<PopupBankAccountException>#edit-account-number-za-wrapper div.form-error div.invalid </PopupBankAccountException>
+    <PopupSuccessTitle>#success</PopupSuccessTitle><!--#success-->
+	</MyPaymentsPage>
+	
   <ContactingYouSection>
     <HomePhone>#edit-home-phone-za</HomePhone>
     <MobilePhone>#edit-mobile-phone-za</MobilePhone>
@@ -25,11 +20,15 @@
 
   <MobilePinVerificationSection>
     <Pin>#edit-pin-za</Pin>
-    <ResendPin>.resend-pin.mod</ResendPin>
-    <ResendPinMessage>#fancybox-content div</ResendPinMessage>
-    <ResendPinPopupClose>#fancybox-close</ResendPinPopupClose>
+	<ResendPin>.resend-pin.mod</ResendPin>
+<<<<<<< HEAD
+	<ResendPinMessage>#fancybox-content div</ResendPinMessage>  
+=======
+	<ResendPinMessage>#fancybox-content div div p</ResendPinMessage>
+	<ResendPinPopupClose>#fancybox-close</ResendPinPopupClose>	
+>>>>>>> master
   </MobilePinVerificationSection>
-
+  
   <EmploymentDetailsSection>
     <WorkPhone>#edit-work-phone-za</WorkPhone>
     <NextPaydayDateDay>#edit-next-payday-day</NextPaydayDateDay>
@@ -44,11 +43,11 @@
     <FormId>#lzero-personal-form .form-inner</FormId>
     <MarriedInCommunityProperty>input[type="radio"][name="married"]</MarriedInCommunityProperty>
   </PersonalDetailsPage>
-
-  <PersonalBankAccountPage>
+  
+  <PersonalBankAccountDetailsPage>
     <FormId>.wonga-apply-lzero-form</FormId>
-  </PersonalBankAccountPage>
-
+  </PersonalBankAccountDetailsPage>
+  
   <AccountDetailsPage>
     <FormId>.wonga-apply-lzero-form</FormId>
     <NextButton>#edit-submit</NextButton>
@@ -56,14 +55,14 @@
 
   <AccountDetailsSection>
     <Fieldset>#lzero-account-setup-form</Fieldset>
-    <PasswordErrorForm>#edit-password-wrapper .form-error .invalid</PasswordErrorForm>
+	  <PasswordErrorForm>#edit-password-wrapper .form-error .invalid</PasswordErrorForm>
     <PasswordConfirmErrorForm>#edit-password-confirm-wrapper .form-error .invalid</PasswordConfirmErrorForm>
   </AccountDetailsSection>
 
   <DealDonePage>
     <HeaderText>Your application has been accepted, you’re almost there!</HeaderText>
   </DealDonePage>
-
+  
   <AddressDetailsPage>
     <FormId>#lzero-address-form .form-inner</FormId>
     <District>#edit-district-za</District>
@@ -91,7 +90,7 @@
     <NameInLoanAgreement>#agreementscroll div:first-child+div table tr td:first-child+td+td+td</NameInLoanAgreement>
     <NameInDirectDebit>#directdebitcroll div:first-child p</NameInDirectDebit>
   </AcceptedPage>
-
+  
   <BankAccountSection>
     <Fieldset>#bank-1</Fieldset>
     <AccountNumber>#edit-account-number-za</AccountNumber>
@@ -119,7 +118,7 @@
     <EditPhoneHome>input#edit-home-phone-za</EditPhoneHome>
     <EditPhoneMobile>input#edit-mobile-phone-za</EditPhoneMobile>
     <EditPhonePin>input#edit-mobile-pin</EditPhonePin>
-    <EditPhoneErrorMessage>.messages.error ul li</EditPhoneErrorMessage>
+	<EditPhoneErrorMessage>.messages.error ul li</EditPhoneErrorMessage>
     <EditPasswordHeader>h1#change-your-password</EditPasswordHeader>
     <EditPasswordCurrent>input#edit-current-password</EditPasswordCurrent>
     <EditPasswordNew>input#edit-password</EditPasswordNew>
@@ -131,13 +130,6 @@
     <PopupErrorMessage>#fancybox-content div.messages.error ul li:first-child</PopupErrorMessage>
   </MyPersonalDetailsPage>
 
-  <PersonalDetailsPage>
-    <AmountMinusButton>.wonga-amount-slider-wrapper .sliderminus</AmountMinusButton>
-    <AmountPlusButton>.wonga-amount-slider-wrapper .sliderplus</AmountPlusButton>
-    <DurationMinusButton>.wonga-duration-slider-wrapper .sliderminus</DurationMinusButton>
-    <DurationPlusButton>.wonga-duration-slider-wrapper .sliderplus</DurationPlusButton>
-  </PersonalDetailsPage>
-  
   <ChangeMyAddressElement>
     <Title>#change-my-address</Title>
     <Flat>#edit-flat-za</Flat>
@@ -150,7 +142,7 @@
     <Postcode>#edit-postcode-za</Postcode>
     <PostcodeErrorForm>#edit-postcode-za-wrapper div.form-error div.invalid</PostcodeErrorForm>
   </ChangeMyAddressElement>
-
+  
   <AboutUsPage>
     <OurCustomers>#block-wonga-6 div div ul li:first-child + li a</OurCustomers>
     <ResponsibleLending>#block-wonga-6 div div ul li:first-child + li + li a</ResponsibleLending>
@@ -167,16 +159,14 @@
   </AboutUsPage>
 
   <MySummaryPage>
-   <TotalToRepay>#promise_balance_today</TotalToRepay>
-    <PromisedRepayAmount>#content-area p span</PromisedRepayAmount>
-    <PromisedRepayDate>#content-area p strong em</PromisedRepayDate>
+	 <PromisedRepayAmount>#content-area p span</PromisedRepayAmount>
+	 <PromisedRepayDate>#content-area p strong em</PromisedRepayDate>
     <ViewLoanDetailsButton>#cloud a.mod.details</ViewLoanDetailsButton>
     <!-- Loan details popup-->
-    <PopupForm>#fancybox-content</PopupForm>
-    <PopupMySummaryTitle>h1#my-summary</PopupMySummaryTitle>
-    <PopupSummaryDetailsTable>table#summary-details</PopupSummaryDetailsTable>
-    <RepayButton>#cloud ul a.repay</RepayButton>
-    <StatusText>div#content-area p</StatusText>
+   <PopupForm>#fancybox-content</PopupForm>
+   <PopupMySummaryTitle>h1#my-summary</PopupMySummaryTitle>
+   <PopupSummaryDetailsTable>table#summary-details</PopupSummaryDetailsTable>
+   <RepayButton>#cloud ul a.repay</RepayButton>
   </MySummaryPage>
 
   <HomePage>
@@ -192,7 +182,7 @@
   <ApplicationSection>
     <FormId>#wonga-apply-ln-form</FormId>
     <EditPin>#edit-mobile-pin</EditPin>
-    <ChangeMobileButton>#add-mobile-ln</ChangeMobileButton>
+    <ChangeMobileButton>#add-mobile-ln</ChangeMobileButton>  
   </ApplicationSection>
 
   <ApplyPage>
@@ -200,71 +190,21 @@
     <PopupSaveButton>#edit-submit[value='Save']</PopupSaveButton>
     <PopupCloseButton>#edit-submit[value='Close']</PopupCloseButton>
     <BankAccount>#edit-bank-account-masked</BankAccount>
-    <ResendPin>#pin-hold a</ResendPin>
-    <ResendPinPopupClose>#fancybox-close</ResendPinPopupClose>
-    <ResendPinPopupText>#fancybox-content div</ResendPinPopupText>
+	<ResendPin>#pin-hold a</ResendPin>
+	<ResendPinPopupClose>#fancybox-close</ResendPinPopupClose>
+	<ResendPinPopupText>#fancybox-content div</ResendPinPopupText>
   </ApplyPage>
 
   <FAQPage>
     <CouncilForDebtCollectorsLink>a[title='Council for Debt Collectors']</CouncilForDebtCollectorsLink>
   </FAQPage>
 
-  <!--  This is the list of repayment options a customer with an active loan sees when they
-        click the "Repay" link in their My Account summary page, or navigate to
-        /my-account/summary/repay -->
   <RepaymentOptionsPage>
     <RepaymentOptionsContainer>.repayment-options</RepaymentOptionsContainer>
-    <TotalRepayableOnPromiseDate>span.total_repayable_on_promise_date</TotalRepayableOnPromiseDate>
-    <BalanceToday>span.balance_today</BalanceToday>
-    <PromiseDate>span.promise_date</PromiseDate>
-    <!--  EasyPayNumberLink is the link you activate when you click on the EasyPay number
-          itself on the repayment options page -->
-    <EasyPayNumberLink>div.easypay-number-container a.easypay-number-and-print-icon</EasyPayNumberLink>
-    <!--  EasyPayNumber is the actual EasyPay number, which is in a span (normally inside
-          the EasyPayNumberLink, but it doesn't _have_ to be, so this selector is intentionally
-          flexible) -->
     <EasypayNumber>div.easypay-number-container span.easypay-number</EasypayNumber>
-    <!--  EasypayPrintButton is the main call-to-action Wonga button - this is shown when
-          we aren't supporting online payments through the EasyPay website (if we are, we
-          instead show a link button which takes customer to the EasyPay website) -->
     <EasypayPrintButton>div.easypay-website-link a</EasypayPrintButton>
-    <!--  HowToUseEasyPayLink displays a modal popup with information -->
-    <HowToUseEasyPayLink>a.easypay-how-to-use-link</HowToUseEasyPayLink>
-    <DebitOrderButton>div.repayment-option-manual a</DebitOrderButton>
-    <!--  EasyPayLogo is contained inside a link to the print page -->
-    <EasyPayLogo>div.easypay-logo a img.easypay-logo</EasyPayLogo>
-    <!--  EasyPayLogoLink is a link to the print page -->
-    <EasyPayLogoLink>div.easypay-logo a</EasyPayLogoLink> 
-    <!--  ManualRepaymentButton is the main call-to-action for the manual NAEDO repayment
-          method -->
-    <ManualRepaymentButton>div.repayment-option-manual a.button</ManualRepaymentButton>
   </RepaymentOptionsPage>
 
-  <MyAccountRepayManualPage>
-    <!-- This is the repayment date in hoomin-readable format, e.g. Friday 1st June 2012 (disabled) -->
-    <RepaymentDate>#edit-repayment-date-friendly</RepaymentDate>
-    <!-- This is how much will be due on the repayment date, e.g. 1601.19 (disabled) -->
-    <AmountDueOnDueDate>#edit-amount-due-on-due-date</AmountDueOnDueDate>
-    <!-- This is the amount that the customer will repay - the only editable field - must be a number,
-         and must be between 5.00 and the AmountDueOnDueDate -->
-    <RepaymentAmount>#edit-repayment-amount</RepaymentAmount>
-    <!-- This is the difference of AmountDueOnDueDate minus RepaymentAmount -->
-    <RemainderToRepay>#edit-remainder-to-repay</RemainderToRepay>
-    <!-- This is the bank account number for the account from which payment will be taken. Only the
-         last 4 digits will be shown - others will be replaced with the "*" symbol -->
-    <BankAccountMasked>#edit-bank-account-masked</BankAccountMasked>
-    <!-- This is the repayment amount, updated via JS, which forms part of the yellow "Please read me" 
-         Wonga box -->
-    <PleaseReadMeRepaymentAmount>#please_read_me_repayment_amount</PleaseReadMeRepaymentAmount>
-    <!-- This is the repayment amount, updated via JS, which is shown in the label next to the masked
-         bank account number field -->
-    <BankAccountMaskedLabelRepaymentAmount>#bank_account_masked_label_repayment_amount</BankAccountMaskedLabelRepaymentAmount>
-    <!-- This is the CAPTCHA input field - the user must complete this field to be able to complete
-         repayment -->
-    <Captcha>#edit-captcha-response</Captcha>
-    <Submit>#edit-submit</Submit>
-  </MyAccountRepayManualPage>
-  
   <EasypaymentNumberPrintPage>
     <YourEasyPayNumber>#easypaynumber_container #easypaynumber</YourEasyPayNumber>
   </EasypaymentNumberPrintPage>
@@ -272,52 +212,7 @@
   <MySummaryPageMobile>
     <MySummaryButton>.menu-block-0 .menu li:first-child>a</MySummaryButton>
     <MyPersonalDetailsButton>.menu-block-0 .menu li:first-child + li>a</MyPersonalDetailsButton>
-    <MyPaymentDetailsButton>.menu-block-0 .menu li:first-child + li + li>a</MyPaymentDetailsButton>
+    <MyPaymentDetailsButton>.menu-block-0 .menu li:first-child + li + li>a</MyPaymentDetailsButton>    
   </MySummaryPageMobile>
-
-  <DebitOrderPage>
-    <SubmitButton>#edit-submit</SubmitButton>
-  </DebitOrderPage>
-
-  <DebitOrderSuccessPage>
-    <BackToYourAccountButton>div#content a</BackToYourAccountButton>
-  </DebitOrderSuccessPage>
-
-  <SlidersElement>
-    <FormId>#wonga-sliders-form</FormId>
-    <AmountSlider>.wonga-amount-slider-wrapper .sliderbit</AmountSlider>
-    <DurationSlider>.wonga-duration-slider-wrapper .sliderbit</DurationSlider>
-    <LoanAmount>#edit-loan-amount</LoanAmount>
-    <LoanDuration>#edit-loan-duration</LoanDuration>
-    <SubmitButton>#edit-submit</SubmitButton>
-    <TotalAmount>span.loan-amount</TotalAmount>
-    <TotalFees>span.loan-fees</TotalFees>
-    <TotalToRepay>span.loan-total</TotalToRepay>
-    <RepaymentDate>span.repayment-date</RepaymentDate>
-    <AmountMinusButton>.wonga-amount-slider-wrapper .sliderminus</AmountMinusButton>
-    <AmountPlusButton>.wonga-amount-slider-wrapper .sliderplus</AmountPlusButton>
-    <DurationMinusButton>.wonga-duration-slider-wrapper .sliderminus</DurationMinusButton>
-    <DurationPlusButton>.wonga-duration-slider-wrapper .sliderplus</DurationPlusButton>
-  </SlidersElement>
-  
-  <PersonalDetailsPage>
-    <FormId>#wonga-apply-lzero-form</FormId>
-    <SlidersFormId>#wonga-alterable-loan-details-fieldset</SlidersFormId>
-    <CheckPrivacyPolicy>#edit-privacy</CheckPrivacyPolicy>
-    <PrivatePolicyErrorForm>#edit-privacy-wrapper div div</PrivatePolicyErrorForm>
-    <CheckCanContact>input[type="radio"][name="update_option"]</CheckCanContact>
-    <NextButton>#edit-submit</NextButton>
-    <SliderToggler>#slider-toggler</SliderToggler>
-    <TotalToRepay>span.loan-total</TotalToRepay>
-    <RepaymentDate>span.repayment-date</RepaymentDate>
-    <TotalAmount>span.loan-amount</TotalAmount>
-    <TotalFees>span.loan-fees</TotalFees>
-    <LoanAmount>#edit-loan-amount</LoanAmount>
-    <LoanDuration>#edit-loan-duration</LoanDuration>
-    <AmountMinusButton>.wonga-amount-slider-wrapper .sliderminus</AmountMinusButton>
-    <AmountPlusButton>.wonga-amount-slider-wrapper .sliderplus</AmountPlusButton>
-    <DurationMinusButton>.wonga-duration-slider-wrapper .sliderminus</DurationMinusButton>
-    <DurationPlusButton>.wonga-duration-slider-wrapper .sliderplus</DurationPlusButton>
-  </PersonalDetailsPage>
   
 </UiMap>

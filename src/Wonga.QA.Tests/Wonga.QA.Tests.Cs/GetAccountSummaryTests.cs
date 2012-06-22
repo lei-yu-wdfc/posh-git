@@ -11,10 +11,10 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Cs
 {
-    [TestFixture, Parallelizable(TestScope.All)]
+	[TestFixture, Parallelizable(TestScope.All), Pending("ZA-2565")]
     public class GetAccountSummaryTests
     {
-        [Test, AUT(AUT.Za), JIRA("ZA-2470")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2470"), Pending("ZA-2565")]
         public void GetTest()
         {
             var payDate = DateTime.Now.AddDays(15);

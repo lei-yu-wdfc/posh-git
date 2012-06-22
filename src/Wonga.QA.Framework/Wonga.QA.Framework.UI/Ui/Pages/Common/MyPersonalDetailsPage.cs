@@ -150,6 +150,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _editPhoneMobile = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.EditPhoneMobile)));
             _submitButton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.SubmitButton));
 
+            _editPhoneMobile.Click();
             _editPhoneMobile.Clear();
             _editPhoneMobile.SendKeys(mobilePhone);
 
@@ -190,7 +191,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public void WaitForSuccessPopup()
         {
-            Do.With.Timeout(2).Until(
+            Do.With.Timeout(3).Until(
                 () =>
                 Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.PopupSuccessTitle)).Displayed);
         }
@@ -204,7 +205,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public bool CommunicationClick()
         {
             _communication.Click();
-            Thread.Sleep(1000);
+            Thread.Sleep(10000);
             _communicationPrefs = Client.Driver.FindElements(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.CommunicationPrefs));
             return true;
         }

@@ -100,7 +100,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 
 		#endregion
 
-		[Test, AUT(AUT.Ca, AUT.Za), Pending("Pedro is working on a refactor") ]
+		[Test, AUT(AUT.Ca), Pending("Pedro is working on a refactor") ]
 		public void WorkflowCorrectCheckpointsUsedL0()
 		{
 			var customer = CustomerBuilder.New().WithEmployer("Wonga").Build();
@@ -113,7 +113,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 			Assert.AreElementsEqualIgnoringOrder(ExpectedCheckpointNamesL0, actualCheckpointNames);
 		}
 
-		[Test, AUT(AUT.Ca, AUT.Za), Pending("Pedro is working on a refactor")]
+		[Test, AUT(AUT.Ca), Pending("Pedro is working on a refactor")]
 		public void WorkflowCorrectCheckpointsUsedLn()
 		{
 			var customer = CustomerBuilder.New().Build();
