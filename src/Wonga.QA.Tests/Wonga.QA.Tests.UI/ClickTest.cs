@@ -22,6 +22,40 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
+        [Test, AUT(AUT.Ca, AUT.Za), SmokeTest]
+        public void VerifyClickExternalJsFileUrlIsPresentInScriptTag()
+        {
+            var homePage = Client.Home();
+
+            // Set the JS file URL without the protocol, and initialise the protocol var:
+            string wongaClickJsFileUrlWithoutProtocol = "click.wonga.com/scripts/click_min.js";
+
+            // @TODO: get the protocol programmatically:
+            string protolol = "";
+
+            // Get the right (assumed) protocol:
+            switch (Config.SUT)
+            {
+                case SUT.Live:
+                    {
+                        // Set the protocol to HTTPS:
+                        protolol = "https";
+                    }
+                    break;
+
+                default:
+                    {
+                        // Set the protocol to HTTP:
+                        protolol = "http";
+
+                    }
+                    break;
+            }
+
+            var fullClickUrl = protolol + "://" + wongaClickJsFileUrlWithoutProtocol;
+            Assert.IsTrue(homePage.Source.Contains(fullClickUrl), "Unable to find mention of the Wonga Click JS file's URL " + fullClickUrl + ". Please verify it is on the page. If the URL of the file has changed, please update this test.");
+        }
+
         [Test, AUT(AUT.Ca, AUT.Za), JIRA("CA-2326"), Ignore("Feature turned off for this release")]
         public void VerifyIsClickParamsSet()
         {
