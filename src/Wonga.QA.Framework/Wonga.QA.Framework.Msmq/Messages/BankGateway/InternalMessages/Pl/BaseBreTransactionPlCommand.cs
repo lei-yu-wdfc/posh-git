@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-
 namespace Wonga.QA.Framework.Msmq.Messages.BankGateway.InternalMessages.Pl
 {
     /// <summary> Wonga.BankGateway.InternalMessages.Pl.BaseBreTransactionMessage </summary>

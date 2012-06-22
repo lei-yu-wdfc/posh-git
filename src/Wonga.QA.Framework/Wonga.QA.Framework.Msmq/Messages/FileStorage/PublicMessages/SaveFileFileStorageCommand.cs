@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-
 namespace Wonga.QA.Framework.Msmq.Messages.FileStorage.PublicMessages
 {
     /// <summary> Wonga.FileStorage.PublicMessages.SaveFileMessage </summary>

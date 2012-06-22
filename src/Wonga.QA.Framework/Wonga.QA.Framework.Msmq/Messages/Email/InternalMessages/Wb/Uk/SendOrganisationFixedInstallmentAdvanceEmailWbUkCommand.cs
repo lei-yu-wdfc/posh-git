@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-
 namespace Wonga.QA.Framework.Msmq.Messages.Email.InternalMessages.Wb.Uk
 {
     /// <summary> Wonga.Email.InternalMessages.Wb.Uk.SendOrganisationFixedInstallmentAdvanceEmailMessage </summary>

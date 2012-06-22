@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-using Wonga.QA.Framework.Msmq.Enums.PublicMessages.Bi.CustomerManagement.Events;
+using Wonga.QA.Framework.Msmq.Enums.Integration.Bi.Enums;
 
 namespace Wonga.QA.Framework.Msmq.Messages.PublicMessages.Bi.CustomerManagement.Events
 {

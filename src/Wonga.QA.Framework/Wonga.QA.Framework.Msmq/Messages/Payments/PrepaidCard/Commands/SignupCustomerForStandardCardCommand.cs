@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-
 namespace Wonga.QA.Framework.Msmq.Messages.Payments.PrepaidCard.Commands
 {
     /// <summary> Wonga.Payments.PrepaidCard.Commands.SignupCustomerForStandardCardCommand </summary>

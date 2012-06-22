@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-using Wonga.QA.Framework.Msmq.Enums.Comms.Commands.Ca;
-using Wonga.QA.Framework.Msmq.Enums.PpsProvider.InternalMessages.SagaMessages;
+using Wonga.QA.Framework.Msmq.Enums.Integration.Comms.Enums;
+using Wonga.QA.Framework.Msmq.Enums.Common.Enums;
+using Wonga.QA.Framework.Msmq.Enums.Integration.PrepaidCard.DataEntity;
 
 namespace Wonga.QA.Framework.Msmq.Messages.PpsProvider.InternalMessages.SagaMessages
 {

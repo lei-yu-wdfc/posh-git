@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-
 namespace Wonga.QA.Framework.Msmq.Messages.Risk.BlackList
 {
     /// <summary> Wonga.Risk.BlackList.ConsumerBlackListResponseMessage </summary>

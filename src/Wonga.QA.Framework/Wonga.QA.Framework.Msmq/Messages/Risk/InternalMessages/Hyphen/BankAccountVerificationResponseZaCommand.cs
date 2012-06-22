@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-
 namespace Wonga.QA.Framework.Msmq.Messages.Risk.InternalMessages.Hyphen
 {
     /// <summary> Wonga.Risk.InternalMessages.Hyphen.BankAccountVerificationResponseMessage </summary>

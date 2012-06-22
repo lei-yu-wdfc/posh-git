@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-
 namespace Wonga.QA.Framework.Msmq.Messages.Comms.InternalMessages.Events.Ca
 {
     /// <summary> Wonga.Comms.InternalMessages.Events.Ca.IDirectDebitProducedInternal </summary>

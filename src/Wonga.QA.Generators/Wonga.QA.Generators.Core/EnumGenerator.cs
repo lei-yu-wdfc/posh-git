@@ -76,71 +76,24 @@ namespace Wonga.QA.Generators.Core
 			_currentClassGeneratedNamespace = classGeneratedNamespace;
 		}
 
-		//tODO: remove enum path stuff
 		/// <summary>
 		/// generates all enumeration members of a class
 		/// </summary>
 		/// <param name="classMemberTypes">all the member types of the class</param>
-		/// <param name="generatedEnumNamespace">the new namespace for the generated enums</param>
 		/// <param name="enumRootDirectory">root directory to place the enum files</param>
-		/// <param name="subfolderName">subdirectory to place all the enums used by this class</param>
-		public void GenerateAllEnumsUsedByClass(IEnumerable<Type> classMemberTypes, string generatedEnumNamespace, DirectoryInfo enumRootDirectory, string subfolderName)
+		public void GenerateAllEnumsUsedByClass(IEnumerable<Type> classMemberTypes, DirectoryInfo enumRootDirectory)
 		{
 			foreach (Type classMemberType in classMemberTypes)
 			{
-				GenerateAllEnumsUsedByClassMember(classMemberType, generatedEnumNamespace, enumRootDirectory, subfolderName);
+				GenerateAllEnumsUsedByClassMember(classMemberType, enumRootDirectory);
 			}
 		}
 
-		//TODO: delete this!!!!
 		/// <summary>
 		/// generates all enumeration used my a member of a class
 		/// </summary>
 		/// <param name="classMemberType">member type of the class</param>
-		/// <param name="generatedEnumNamespace">the new namespace for the generated enums</param>
 		/// <param name="enumRootDirectory">root directory to place the enum files</param>
-		/// <param name="subfolderName">subdirectory to place all the enums used by this class</param>
-		public void GenerateAllEnumsUsedByClassMember(Type classMemberType, string generatedEnumNamespace, DirectoryInfo enumRootDirectory, string subfolderName)
-		{
-			var messageMemberEnumTypes = GetCustomEnumTypesUsedByClassMember(classMemberType);
-
-			foreach (Type messageMemberEnumType in messageMemberEnumTypes)
-			{
-				try
-				{
-					EnumGenerationResult enumGenerationResult = GetEnumGenerationResult(messageMemberEnumType, generatedEnumNamespace);
-					switch (enumGenerationResult.Status)
-					{
-						case EnumGenerationStatus.UnableToGenerate:
-
-							throw new NotImplementedException(string.Format("Can not generate enumeration {0}", messageMemberEnumType.FullName));
-
-						case EnumGenerationStatus.AlreadyGenerated:
-							
-							AddToCurrentClassGeneratedEnumsIfUnique(enumGenerationResult.EnumDefinition);
-							break;
-
-						case EnumGenerationStatus.NotGenerated:
-
-							AddToCurrentClassGeneratedEnumsIfUnique(enumGenerationResult.EnumDefinition);
-							GenerateEnum(messageMemberEnumType, enumGenerationResult.EnumDefinition.GeneratedNamespace, enumRootDirectory, subfolderName);
-							AddNewGeneratedEnumDefinition(enumGenerationResult);
-							break;
-					}
-					
-				}
-				catch (Exception e)
-				{
-					ErrorsOccurred = true;
-					Console.Error.WriteLine("\t*** FAILED GENERATION FOR ENUM: {0}. {1}", messageMemberEnumType.GetName(), e.Message);
-					if(!ContinueOnError)
-					{
-						throw;
-					}
-				}
-			}
-		}
-
 		public void GenerateAllEnumsUsedByClassMember(Type classMemberType, DirectoryInfo enumRootDirectory)
 		{
 			var messageMemberEnumTypes = GetCustomEnumTypesUsedByClassMember(classMemberType);
@@ -156,7 +109,6 @@ namespace Wonga.QA.Generators.Core
 							
 					string enumSubfolderName = enumNamespaceRelativePath.Replace(".", new string(Path.DirectorySeparatorChar, 1));
 
-					//TODO: fix this!!!!! pass the FW ????? ON THE 2 PLACES
 					string generatedEnumNamespace =
 						string.IsNullOrEmpty(enumNamespaceRelativePath) 
 						? string.Format("{0}.{1}", TargetFramework.Project, Config.Enums.Folder)

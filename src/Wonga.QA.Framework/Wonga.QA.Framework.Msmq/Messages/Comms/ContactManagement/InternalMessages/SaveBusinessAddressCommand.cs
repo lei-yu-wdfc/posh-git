@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-using Wonga.QA.Framework.Msmq.Enums.Comms.Commands.Ca;
-using Wonga.QA.Framework.Msmq.Enums.Comms.ContactManagement.InternalMessages;
+using Wonga.QA.Framework.Msmq.Enums.Integration.Comms.Enums;
+using Wonga.QA.Framework.Msmq.Enums.Integration.ContactManagement.Enums;
 
 namespace Wonga.QA.Framework.Msmq.Messages.Comms.ContactManagement.InternalMessages
 {

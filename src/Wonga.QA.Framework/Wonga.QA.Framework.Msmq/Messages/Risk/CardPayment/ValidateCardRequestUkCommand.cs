@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-
 namespace Wonga.QA.Framework.Msmq.Messages.Risk.CardPayment
 {
     /// <summary> Wonga.Risk.CardPayment.ValidateCardRequestMessage </summary>

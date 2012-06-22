@@ -46,21 +46,27 @@ namespace Wonga.QA.Generators.Msmq
 					try
 					{
 						//now get a folder name to avoid collision
-						string messageClassNamespaceRelativePath = message.Namespace != null
-												? message.Namespace.Replace("Wonga.", string.Empty)
-												: "Default";
+						string messageClassNamespaceRelativePath = 
+							string.IsNullOrEmpty(message.Namespace)
+								? string.Empty
+								: message.Namespace.Replace("Wonga.", string.Empty);
 
 						string messageClassSubfolderName = messageClassNamespaceRelativePath.Replace(".", new string(Path.DirectorySeparatorChar, 1));
 
-						String messageClassNamespace = string.Format("{0}.{1}.{2}", Config.Msmq.Project, messagesDirectoryName, messageClassNamespaceRelativePath);
+						String messageClassNamespace = 
+							string.IsNullOrEmpty(messageClassNamespaceRelativePath)
+								? string.Format("{0}.{1}.{2}", Config.Msmq.Project, messagesDirectoryName, messageClassNamespaceRelativePath);
+					
+						string generatedEnumNamespace =
+						string.IsNullOrEmpty(enumNamespaceRelativePath)
+						? string.Format("{0}.{1}", TargetFramework.Project, Config.Enums.Folder)
+						: string.Format("{0}.{1}.{2}", TargetFramework.Project, Config.Enums.Folder, enumNamespaceRelativePath);
+					
 
 						DirectoryInfo messageClassDirectory = Repo.Directory(messageClassSubfolderName, binRootDirectories.ClassesDirectory);
 						FileInfo code = Repo.File(String.Format("{0}.cs", messageClassName), messageClassDirectory);
 
-						//TODO: should use the original namespace for the enum!!!!!
-						string generatedEnumNamespace = string.Format("{0}.{1}.{2}", Config.Msmq.Project, Config.Enums.Folder, messageClassNamespaceRelativePath);
-
-						// misses all the include directives
+						// no include directives (added at the end)
 						var builder = InitializeMessageClassDefinition(messageClassName, message, messageClassNamespace);
 
 						enumGenerator.StartEnumGenerationForClass(messageClassNamespace);
@@ -69,7 +75,8 @@ namespace Wonga.QA.Generators.Msmq
 						{
 							builder.AppendFormatLine("        public {0} {1} {{ get; set; }}", member.Value.GetDeclaration(), member.Key);
 
-							enumGenerator.GenerateAllEnumsUsedByClassMember(member.Value, generatedEnumNamespace, binRootDirectories.EnumsDirectory, messageClassSubfolderName);
+							//enumGenerator.GenerateAllEnumsUsedByClassMember(member.Value, generatedEnumNamespace, binRootDirectories.EnumsDirectory, messageClassSubfolderName);
+							enumGenerator.GenerateAllEnumsUsedByClassMember(member.Value, binRootDirectories.EnumsDirectory);
 						}
 
 						builder.AppendLine("    }").AppendLine("}");

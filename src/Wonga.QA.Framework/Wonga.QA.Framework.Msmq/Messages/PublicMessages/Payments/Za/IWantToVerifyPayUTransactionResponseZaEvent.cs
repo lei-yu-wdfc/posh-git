@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-using Wonga.QA.Framework.Msmq.Enums.PayU.InternalMessages;
+using Wonga.QA.Framework.Msmq.Enums.PublicMessages.Payments.Za.Enums;
 
 namespace Wonga.QA.Framework.Msmq.Messages.PublicMessages.Payments.Za
 {

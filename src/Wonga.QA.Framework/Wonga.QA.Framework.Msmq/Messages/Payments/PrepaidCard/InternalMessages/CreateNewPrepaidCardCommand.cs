@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-using Wonga.QA.Framework.Msmq.Enums.Payments.PrepaidCard.InternalMessages;
+using Wonga.QA.Framework.Msmq.Enums.Integration.PrepaidCard.DataEntity;
 
 namespace Wonga.QA.Framework.Msmq.Messages.Payments.PrepaidCard.InternalMessages
 {
