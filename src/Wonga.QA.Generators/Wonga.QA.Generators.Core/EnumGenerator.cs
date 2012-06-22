@@ -103,16 +103,17 @@ namespace Wonga.QA.Generators.Core
 				try
 				{
 
-					string enumNamespaceRelativePath = string.IsNullOrEmpty(messageMemberEnumType.Namespace)
-					                                   	? string.Empty
-					                                   	: messageMemberEnumType.Namespace.Replace("Wonga.", string.Empty);
+					string enumNamespaceRelativePath = 
+						string.IsNullOrEmpty(messageMemberEnumType.Namespace)
+							? string.Empty
+							: messageMemberEnumType.Namespace.Replace("Wonga.", string.Empty);
 							
 					string enumSubfolderName = enumNamespaceRelativePath.Replace(".", new string(Path.DirectorySeparatorChar, 1));
 
 					string generatedEnumNamespace =
 						string.IsNullOrEmpty(enumNamespaceRelativePath) 
-						? string.Format("{0}.{1}", TargetFramework.Project, Config.Enums.Folder)
-						: string.Format("{0}.{1}.{2}", TargetFramework.Project, Config.Enums.Folder, enumNamespaceRelativePath);
+							? string.Format("{0}.{1}", TargetFramework.Project, Config.Enums.Folder)
+							: string.Format("{0}.{1}.{2}", TargetFramework.Project, Config.Enums.Folder, enumNamespaceRelativePath);
 					
 					EnumGenerationResult enumGenerationResult = GetEnumGenerationResult(messageMemberEnumType, generatedEnumNamespace);
 					switch (enumGenerationResult.Status)

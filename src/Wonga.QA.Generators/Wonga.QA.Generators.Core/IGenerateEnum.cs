@@ -18,13 +18,7 @@ namespace Wonga.QA.Generators.Core
 
 		void StartEnumGenerationForClass(string classGeneratedNamespace);
 
-		[Obsolete("TODO: delete")]
-		void GenerateAllEnumsUsedByClass(IEnumerable<Type> classMemberTypes, string generatedEnumNamespace,
-		                                 DirectoryInfo enumRootDirectory, string subfolderName);
-
-		[Obsolete("TODO: delete")]
-		void GenerateAllEnumsUsedByClassMember(Type classMemberType, string generatedEnumNamespace,
-		                                       DirectoryInfo enumRootDirectory, string subfolderName);
+		void GenerateAllEnumsUsedByClass(IEnumerable<Type> classMemberTypes, DirectoryInfo enumRootDirectory);
 
 		void GenerateAllEnumsUsedByClassMember(Type classMemberType, DirectoryInfo enumRootDirectory);
 

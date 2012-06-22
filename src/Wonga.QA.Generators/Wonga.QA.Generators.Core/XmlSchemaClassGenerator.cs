@@ -96,8 +96,6 @@ namespace Wonga.QA.Generators.Core
 				DirectoryInfo classDirectory = Repo.Directory(classSubfolderName, BinRootDirectories.ClassesDirectory);
 				FileInfo code = Repo.File(String.Format("{0}.cs", className), classDirectory);
 
-				//FileInfo code = Repo.File(String.Format("{0}.cs", className), BinRootDirectories.ClassesDirectory);
-
 				var classBuilder = InitializeClassDefinition(className, classNamespace, element.Name, xmlSchemaFile.GetName());
 
 				foreach (PropertyInfo property in types[element.Name].GetProperties().Where(p => !p.IsIgnore()))
@@ -109,17 +107,8 @@ namespace Wonga.QA.Generators.Core
 
 				foreach (Type type in results.CompiledAssembly.GetTypes().Where(t => t.IsEnum))
 				{
-					/*
-					//TODO: this should be calculated inside the enum generator!!!!!???? but for api no enum has any namespace....
-					//string generatedEnumNamespace = string.Format("{0}.{1}.{2}", Framework.Project, EnumsDirectoryName, EnumNamespaceRelativePath);
-					string generatedEnumNamespace = string.Format("{0}.{1}.{2}", Framework.Project, BinRootDirectories.EnumsDirectoryName, classNamespaceRelativePath);
-					string enumSubfolderName = classSubfolderName;
-				
-					EnumGenerator.GenerateAllEnumsUsedByClassMember(
-									type, generatedEnumNamespace,
-									BinRootDirectories.EnumsDirectory, enumSubfolderName);
-					*/
-
+					//NOTE: the namespace of the enums generated from the xsd file is empty... 
+					//if that becomes a problem may be pass the ns of the class that uses them (and infer subfolder from there)...
 					EnumGenerator.GenerateAllEnumsUsedByClassMember(type, BinRootDirectories.EnumsDirectory);
 				}
 				

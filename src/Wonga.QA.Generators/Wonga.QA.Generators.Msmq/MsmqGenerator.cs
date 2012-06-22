@@ -55,13 +55,8 @@ namespace Wonga.QA.Generators.Msmq
 
 						String messageClassNamespace = 
 							string.IsNullOrEmpty(messageClassNamespaceRelativePath)
-								? string.Format("{0}.{1}.{2}", Config.Msmq.Project, messagesDirectoryName, messageClassNamespaceRelativePath);
-					
-						string generatedEnumNamespace =
-						string.IsNullOrEmpty(enumNamespaceRelativePath)
-						? string.Format("{0}.{1}", TargetFramework.Project, Config.Enums.Folder)
-						: string.Format("{0}.{1}.{2}", TargetFramework.Project, Config.Enums.Folder, enumNamespaceRelativePath);
-					
+								? string.Format("{0}.{1}", Config.Msmq.Project, messagesDirectoryName)
+								: string.Format("{0}.{1}.{2}", Config.Msmq.Project, messagesDirectoryName, messageClassNamespaceRelativePath);
 
 						DirectoryInfo messageClassDirectory = Repo.Directory(messageClassSubfolderName, binRootDirectories.ClassesDirectory);
 						FileInfo code = Repo.File(String.Format("{0}.cs", messageClassName), messageClassDirectory);
@@ -75,7 +70,6 @@ namespace Wonga.QA.Generators.Msmq
 						{
 							builder.AppendFormatLine("        public {0} {1} {{ get; set; }}", member.Value.GetDeclaration(), member.Key);
 
-							//enumGenerator.GenerateAllEnumsUsedByClassMember(member.Value, generatedEnumNamespace, binRootDirectories.EnumsDirectory, messageClassSubfolderName);
 							enumGenerator.GenerateAllEnumsUsedByClassMember(member.Value, binRootDirectories.EnumsDirectory);
 						}
 
