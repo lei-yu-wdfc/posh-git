@@ -186,6 +186,12 @@ namespace Wonga.QA.Framework.Core
                     Admin = new AdminConfig(String.Format("rc.admin.{0}.{1}", AUT, uiDomain));
                     SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.rc", "Allw0nga");
                     SalesforceApi = new SalesforceApiConfig("v3integration@wonga.com.rc");
+                    if (AUT == AUT.Za)
+                        Ui.SetDoubleClickCookiesURl(
+                            "http://ad-emea.doubleclick.net/clk;255259813;78967212;v?http://rc.za.wonga.com");
+                    if (AUT == AUT.Ca)
+                        Ui.SetDoubleClickCookiesURl(
+                            "http://ad-emea.doubleclick.net/clk;255259813;78967212;v?http://rc.ca.wonga.com");
                     break;
                 case SUT.RCRelease:
                     Api = new ApiConfig(String.Format("rc.release.api.{0}.wonga.com", AUT));
@@ -203,6 +209,12 @@ namespace Wonga.QA.Framework.Core
                     Admin = new AdminConfig(String.Format("rc.release.admin.{0}.{1}", AUT, uiDomain));
                     SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.rc", "Allw0nga");
                     SalesforceApi = new SalesforceApiConfig("v3integration@wonga.com.rc");
+                    if (AUT == AUT.Za)
+                        Ui.SetDoubleClickCookiesURl(
+                            "http://ad-emea.doubleclick.net/clk;255259813;78967212;v?http://rc.release.za.wonga.com");
+                    if (AUT == AUT.Ca)
+                        Ui.SetDoubleClickCookiesURl(
+                            "http://ad-emea.doubleclick.net/clk;255259813;78967212;v?http://rc.release.ca.wonga.com");
                     break;
                 case SUT.Live:
                     Ui.SetUri(AUT == AUT.Ca ? "www.wonga.ca" : 
@@ -547,6 +559,7 @@ namespace Wonga.QA.Framework.Core
 
             public string Url { get { return Home.AbsoluteUri; } }
             public Uri Home { get; set; }
+            public string DoubleClickCookiesHome { get; set; }
 
             /// <summary>
             /// Username for the selenium rc server
@@ -575,6 +588,11 @@ namespace Wonga.QA.Framework.Core
             internal void SetUri(string host)
             {
                 Home = new UriBuilder { Host = host }.Uri;
+            }
+
+            internal void SetDoubleClickCookiesURl(string url)
+            {
+                DoubleClickCookiesHome = url;
             }
 
             public bool RemoteMode { get; set; }
