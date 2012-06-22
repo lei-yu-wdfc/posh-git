@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using MbUnit.Framework;
@@ -44,7 +44,7 @@ namespace Wonga.QA.Tests.Payments
 					.Build();
 
 			var query =
-				new GetFixedTermLoanApplicationZaQuery {ApplicationId = application.Id};
+				new GetFixedTermLoanApplicationZaQuery { ApplicationId = application.Id };
 			var response = Drive.Api.Queries.Post(query);
 
 			Assert.AreEqual("174.10", response.Values["BalanceToday"].Single());
@@ -62,14 +62,14 @@ namespace Wonga.QA.Tests.Payments
 					.Build();
 
 			var query =
-				new GetFixedTermLoanApplicationZaQuery {ApplicationId = application.Id};
+				new GetFixedTermLoanApplicationZaQuery { ApplicationId = application.Id };
 			var response = Drive.Api.Queries.Post(query);
 
 			Assert.AreEqual("200.00", response.Values["BalanceNextDueDate"].Single());
 
 			//17.1 + 57 + 18.17
 			//18.17 calculated as follow: 57 - (getBal -loanCap)
-			Assert.AreEqual("92.27", response.Values["Fees"].Single()); 
+			Assert.AreEqual("92.27", response.Values["Fees"].Single());
 		}
 
 		private void SetUtcNow(string nowServiceConfigKey, DateTime dateTime)

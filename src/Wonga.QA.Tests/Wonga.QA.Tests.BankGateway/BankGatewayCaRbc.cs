@@ -12,7 +12,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.BankGateway
 {
-    [TestFixture]
+    [TestFixture, AUT(AUT.Ca)]
     [Parallelizable(TestScope.Self)]
     public class BankGatewayCaRbc
     {

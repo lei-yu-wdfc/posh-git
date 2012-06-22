@@ -20,12 +20,13 @@ namespace Wonga.QA.Tests.Comms.Email
     public class ExtensionLoanEmailTests
     {
         private LoanExtensionEntity _extension;
-        private readonly dynamic _applications = Drive.Data.Payments.Db.Applications;
-        private Guid _accountId;
-        private Guid _applicationId;
-
-        public ExtensionLoanEmailTests()
-        {
+		private readonly dynamic _applications = Drive.Data.Payments.Db.Applications;
+    	private Guid _accountId;
+    	private Guid _applicationId;
+		
+		[FixtureSetUp]
+		public void FixtureSetUp()
+		{
             _extension = CreateLoanAndExtend(); //run once for all tests.
         }
 

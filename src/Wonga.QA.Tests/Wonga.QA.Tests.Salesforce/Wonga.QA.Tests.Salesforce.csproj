@@ -36,7 +36,6 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="EasyPayNumberInSalesforceTests.cs" />
     <Compile Include="SalesforceActivityTests.cs" />
     <Compile Include="SalesforceApplicationStatusUpdateTests.cs" />
     <Compile Include="SalesforcePushBusinessBankAccountDetails.cs" />

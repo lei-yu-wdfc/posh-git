@@ -178,7 +178,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			}
 		}
 
-		[Test, AUT(AUT.Ca), JIRA("CA-1889")]
+		[Test, AUT(AUT.Ca), JIRA("CA-1889") ]
 		[Row(false, Order = 1)]
 		[Row(true, Order = 2)]
 		public void CheckpointReputationPredictionPositiveCheckL0ExecutionForReputationScoreCardUsageConfiguration(bool useScoreCard)

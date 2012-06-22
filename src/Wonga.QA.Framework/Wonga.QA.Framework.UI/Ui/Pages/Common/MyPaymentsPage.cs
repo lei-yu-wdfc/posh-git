@@ -78,6 +78,15 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _popupAddBankAccountButton.Click();
             Console.WriteLine("popup 1 is closed");
             
+            
+        }
+
+        public bool WaitBankAccountPopupClose()
+        {
+            var element = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.PopupBankAccountEdit));
+            Do.With.Timeout(3).While(() => element.Displayed);
+            Console.WriteLine("popup bank account is closed");
+            return true;
         }
 
         public bool IsInvalidBankAccountCauseWarning()

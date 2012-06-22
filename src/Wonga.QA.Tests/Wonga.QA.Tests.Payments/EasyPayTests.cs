@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -45,7 +45,7 @@ namespace Wonga.QA.Tests.Payments
 			Do.With.Timeout(1).Until(() => application.IsClosed);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2395") , ExpectedException(typeof(DoException))]
+		[Test, AUT(AUT.Za), JIRA("ZA-2395"), ExpectedException(typeof(DoException))]
 		public void RepayUsingEasyPayPartialRepaymentBeforeDueDateDoesntCloseApplication()
 		{
 			var customer = CustomerBuilder.New().Build();
@@ -72,13 +72,13 @@ namespace Wonga.QA.Tests.Payments
 		private static void RepayWithEasyPay(string easyPayNumber, string rawContent, DateTime actionDate, decimal amount)
 		{
 			Drive.Msmq.EasyPay.Send(new PaymentResponseDetailRecordZaCommand
-			                        	{
-			                        		ActionDate = actionDate,
-			                        		Amount = amount,
-			                        		RepaymentNumber = easyPayNumber,
-			                        		Filename = "TestFile",
-			                        		RawContent = rawContent
-			                        	});
+			{
+				ActionDate = actionDate,
+				Amount = amount,
+				RepaymentNumber = easyPayNumber,
+				Filename = "TestFile",
+				RawContent = rawContent
+			});
 		}
 
 		#endregion

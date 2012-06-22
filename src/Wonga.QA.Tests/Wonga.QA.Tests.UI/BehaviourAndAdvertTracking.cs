@@ -1,4 +1,4 @@
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using System.Diagnostics;
 using System;
 using System.Collections.Generic;
@@ -21,14 +21,128 @@ namespace Wonga.QA.Tests.Ui
 {
     [Parallelizable(TestScope.All)]
     class BehaviourAndAdvertTracking : UiTest
-    {
-        [Test, AUT(AUT.Za), JIRA("ZA-2115", "QA-301"), MultipleAsserts]
+	{
+		#region DoubleClickTags
+
+    	private static readonly List<KeyValuePair<string, string>> DcTagsHomePage =
+    		new List<KeyValuePair<string, string>>()
+    			{
+    				new KeyValuePair<string, string>("src", "3567941"),
+    				new KeyValuePair<string, string>("cat", "za_ho244"),
+    				new KeyValuePair<string, string>("type", "homepage"),
+    				new KeyValuePair<string, string>("paths", "<front>"),
+    				new KeyValuePair<string, string>("paths", "home"),
+    				new KeyValuePair<string, string>("paths", "homepages/*"),
+    				new KeyValuePair<string, string>("group_name", "Homepage"),
+    				new KeyValuePair<string, string>("activity_name", "ZA_Homepage"),
+    				new KeyValuePair<string, string>("activity_id", "995820"),
+    				new KeyValuePair<string, string>("html_override", "")
+    			};
+
+    	private static readonly List<KeyValuePair<string, string>> DcTagsPersonalDetailsPage = new List<KeyValuePair<string, string>>
+    			{
+    				new KeyValuePair<string, string>("src", "3567941"),
+					new KeyValuePair<string, string>("cat", "za_l0571"),
+					new KeyValuePair<string, string>("type", "za_l0"),
+					new KeyValuePair<string, string>("paths", "apply-details"),
+					new KeyValuePair<string, string>("group_name", "ZA_L0"),
+					new KeyValuePair<string, string>("activity_name", "ZA_L0_PersonalDetails"),
+					new KeyValuePair<string, string>("activity_id", "995827"),
+					new KeyValuePair<string, string>("html_override", "")
+    			};
+
+		private static readonly List<KeyValuePair<string, string>> DcTagsAddressDetailsPage = new List<KeyValuePair<string, string>>
+				{
+					new KeyValuePair<string, string>("src", "3567941"),
+					new KeyValuePair<string, string>("cat", "za_l0642"),
+					new KeyValuePair<string, string>("type", "za_l0"),
+					new KeyValuePair<string, string>("paths", "apply-address"),
+					new KeyValuePair<string, string>("group_name", "ZA_L0"),
+					new KeyValuePair<string, string>("activity_name", "ZA_L0_Address"),
+					new KeyValuePair<string, string>("activity_id", "995828"),
+					new KeyValuePair<string, string>("html_override", "")
+				};
+
+    	private static readonly List<KeyValuePair<string, string>> DcTagsAccountDetailsPage =
+    		new List<KeyValuePair<string, string>>()
+    			{
+    				new KeyValuePair<string, string>("src", "3567941"),
+    				new KeyValuePair<string, string>("cat", "za_l0281"),
+    				new KeyValuePair<string, string>("type", "za_l0"),
+    				new KeyValuePair<string, string>("paths", "apply-account"),
+    				new KeyValuePair<string, string>("group_name", "ZA_L0"),
+    				new KeyValuePair<string, string>("activity_name", "ZA_L0_Account"),
+    				new KeyValuePair<string, string>("activity_id", "995832"),
+    				new KeyValuePair<string, string>("html_override", "")
+    			};
+
+    	private static readonly List<KeyValuePair<string, string>> DcTagsPersonalBankAccountPage = new List<KeyValuePair<string, string>>
+    			{
+    				new KeyValuePair<string, string>("src", "3567941"),
+    				new KeyValuePair<string, string>("cat", "za_l0346"),
+    				new KeyValuePair<string, string>("type", "za_l0"),
+    				new KeyValuePair<string, string>("paths", "apply-bank"),
+    				new KeyValuePair<string, string>("group_name", "ZA_L0"),
+    				new KeyValuePair<string, string>("activity_name", "ZA_L0_Bank"),
+    				new KeyValuePair<string, string>("activity_id", "996615"),
+    				new KeyValuePair<string, string>("html_override", "")
+    			};
+
+    	private static readonly List<KeyValuePair<string, string>> DcTagsProcessingPage = new List<KeyValuePair<string, string>>
+    			{
+    				new KeyValuePair<string, string>("src", "3567941"),
+    				new KeyValuePair<string, string>("cat", "za_l0882"),
+    				new KeyValuePair<string, string>("type", "za_l0"),
+    				new KeyValuePair<string, string>("paths", "processing"),
+    				new KeyValuePair<string, string>("group_name", "ZA_L0"),
+    				new KeyValuePair<string, string>("activity_name", "ZA_L0_Processing"),
+    				new KeyValuePair<string, string>("activity_id", "996616"),
+    				new KeyValuePair<string, string>("html_override", "")
+    			};
+
+
+    	private static readonly List<KeyValuePair<string, string>> DcTagsAcceptedPage = new List<KeyValuePair<string, string>>
+    			{
+    				new KeyValuePair<string, string>("src", "3567941"),
+    				new KeyValuePair<string, string>("cat", "za_l0817"),
+    				new KeyValuePair<string, string>("type", "za_l0"),
+    				new KeyValuePair<string, string>("paths", "apply-accept"),
+    				new KeyValuePair<string, string>("group_name", "ZA_L0"),
+    				new KeyValuePair<string, string>("activity_name", "ZA_L0_Accept"),
+    				new KeyValuePair<string, string>("activity_id", "996618"),
+    				new KeyValuePair<string, string>("html_override", "")
+    			};
+
+    	private static readonly List<KeyValuePair<string, string>> DcTagsDealDonePage = new List<KeyValuePair<string, string>>
+    			{
+    				new KeyValuePair<string, string>("src", "3567941"),
+					new KeyValuePair<string, string>("cat", "za_l0643"),
+					new KeyValuePair<string, string>("type", "za_l0_s"),
+					new KeyValuePair<string, string>("paths", "deal-done"),
+					new KeyValuePair<string, string>("group_name", "ZA_L0_Sale"),
+					new KeyValuePair<string, string>("activity_name", "ZA_L0_DealDone"),
+					new KeyValuePair<string, string>("activity_id", "996620"),
+					new KeyValuePair<string, string>("html_override", "")
+    			};
+
+		private static readonly List<KeyValuePair<string, string>> DcTagsMyAccountPage = new List<KeyValuePair<string, string>>
+				{
+					new KeyValuePair<string, string>("src", "3567941"),
+					new KeyValuePair<string, string>("cat", "za_ln060"),
+					new KeyValuePair<string, string>("type", "za_ln"),
+					new KeyValuePair<string, string>("paths", "my-account"),
+					new KeyValuePair<string, string>("group_name", "ZA_Ln"),
+					new KeyValuePair<string, string>("activity_name", "ZA_Ln_MyAccount"),
+					new KeyValuePair<string, string>("activity_id", "996622"),
+					new KeyValuePair<string, string>("html_override", "")
+				};
+	
+			#endregion 
+
+		[Test, AUT(AUT.Za), JIRA("ZA-2115", "QA-301"), MultipleAsserts]
         public void L0VerifyDoubleclickTagsActiveOnL0Journey()
         {
             ////////////////////////////////////////////////////////////////
-            var doubleClickTokensList = new List<KeyValuePair<string, string>>();
-            var doubleClickTokensBlackList = new List<KeyValuePair<string, string>>();
-
             // Load the homepage:
             var page = Client.Home();
 
@@ -41,17 +155,8 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(page.Client.Source().Contains("https://www.googleadservices.com/pagead/conversion/1017715892/?value=0&label=RSVMCNSNnQIQtLmk5QM&guid=ON&script=0"));
 
             // Check that the page contains the correct doubleclick HTML comment identifiers for this AUT:
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("src", "3567941"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("cat", "za_ho244"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("type", "homepage"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "<front>"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "home"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "homepages/*"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("group_name", "Homepage"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_Homepage"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "995820"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
-            SourceContains(doubleClickTokensList);
+
+            SourceContains(DcTagsHomePage);
             SourceContains("u1: [");
             SourceDoesNotContain("u1: []");
             SourceContains("u2: [");
@@ -82,21 +187,12 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(personalDetailsPage.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
 
             // Check that the page contains the correct doubleclick HTML comment identifiers for this AUT:
-            doubleClickTokensList.Clear();
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("src", "3567941"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("cat", "za_l0571"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("type", "za_l0"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "apply-details"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("group_name", "ZA_L0"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_L0_PersonalDetails"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "995827"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
-            SourceContains(doubleClickTokensList);
+            SourceContains(DcTagsPersonalDetailsPage);
             SourceContains("u2: [");
+
             // Check that we don't have an empty u1 value (e.g. "u1: []"):
-            doubleClickTokensBlackList.Clear();
-            doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
-            SourceDoesNotContain(doubleClickTokensBlackList);
+			SourceDoesNotContain("u1: []");
+
 
             // Go to the second page:
             var addressDetailsPage = journey.Teleport<AddressDetailsPage>() as AddressDetailsPage;
@@ -105,22 +201,11 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(addressDetailsPage.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
 
             // Check that the page contains the correct doubleclick HTML comment identifiers for this AUT:
-            doubleClickTokensList.Clear();
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("src", "3567941"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("cat", "za_l0642"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("type", "za_l0"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "apply-address"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("group_name", "ZA_L0"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_L0_Address"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "995828"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
-            SourceContains(doubleClickTokensList);
+            SourceContains(DcTagsAddressDetailsPage);
             SourceContains("u2: [");
 
             // Check that we don't have an empty u1 value (e.g. "u1: []"):
-            doubleClickTokensBlackList.Clear();
-            doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
-            SourceDoesNotContain(doubleClickTokensBlackList);
+			SourceDoesNotContain("u1: []");
 
             // Go to the third page:
             var accountDetailsPage = journey.Teleport<AccountDetailsPage>() as AccountDetailsPage;
@@ -129,21 +214,11 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(accountDetailsPage.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
 
             // Check that the page contains the correct doubleclick HTML comment identifiers for this AUT:
-            doubleClickTokensList.Clear();
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("src", "3567941"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("cat", "za_l0281"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("type", "za_l0"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "apply-account"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("group_name", "ZA_L0"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_L0_Account"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "995832"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
-            SourceContains(doubleClickTokensList);
+            SourceContains(DcTagsAccountDetailsPage);
             SourceContains("u2: [");
+
             // Check that we don't have an empty u1 value (e.g. "u1: []"):
-            doubleClickTokensBlackList.Clear();
-            doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
-            SourceDoesNotContain(doubleClickTokensBlackList);
+			SourceDoesNotContain("u1: []");
 
             // Go to the fourth page:
             var personalBankAccountPage = journey.Teleport<PersonalBankAccountPage>() as PersonalBankAccountPage;
@@ -152,22 +227,10 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(personalBankAccountPage.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
 
             // Check that the page contains the correct doubleclick HTML comment identifiers for this AUT:
-            doubleClickTokensList.Clear();
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("src", "3567941"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("cat", "za_l0346"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("type", "za_l0"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "apply-bank"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("group_name", "ZA_L0"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_L0_Bank"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "996615"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
-            SourceContains(doubleClickTokensList);
+			SourceContains(DcTagsPersonalBankAccountPage);
             
-
             // Check that we don't have an empty u1 value (e.g. "u1: []"):
-            doubleClickTokensBlackList.Clear();
-            doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
-            SourceDoesNotContain(doubleClickTokensBlackList);
+			SourceDoesNotContain("u1: []");
 
             // Go to the fifth (processing) page:
             var waitForAcceptedPage = journey.Teleport<ProcessingPage>() as ProcessingPage;
@@ -176,21 +239,11 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(waitForAcceptedPage.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
 
             // Check that the page contains the correct doubleclick HTML comment identifiers for this AUT:
-            doubleClickTokensList.Clear();
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("src", "3567941"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("cat", "za_l0882"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("type", "za_l0"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "processing"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("group_name", "ZA_L0"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_L0_Processing"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "996616"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
-            SourceContains( doubleClickTokensList);
+            SourceContains( DcTagsProcessingPage);
             SourceContains("u2: [");
+
             // Check that we don't have an empty u1 value (e.g. "u1: []"):
-            doubleClickTokensBlackList.Clear();
-            doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
-            SourceDoesNotContain(doubleClickTokensBlackList);
+			SourceDoesNotContain("u1: []");
 
             // Go to the sixth (accepted) page:
             var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
@@ -199,21 +252,10 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(acceptedPage.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
 
             // Check that the page contains the correct doubleclick HTML comment identifiers for this AUT:
-            doubleClickTokensList.Clear();
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("src", "3567941"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("cat", "za_l0817"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("type", "za_l0"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "apply-accept"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("group_name", "ZA_L0"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_L0_Accept"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "996618"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
-            SourceContains(doubleClickTokensList);
+            SourceContains(DcTagsAcceptedPage);
             SourceContains("u2: [");
             // Check that we don't have an empty u1 value (e.g. "u1: []"):
-            doubleClickTokensBlackList.Clear();
-            doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
-            SourceDoesNotContain(doubleClickTokensBlackList);
+			SourceDoesNotContain("u1: []");
 
             // Complete the accept page:
             var dealDonePage = journey.Teleport<DeclinedPage>() as DealDonePage;
@@ -222,44 +264,23 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(dealDonePage.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
 
             // Check that the page contains the correct doubleclick HTML comment identifiers for this AUT:
-            doubleClickTokensList.Clear();
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("src", "3567941"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("cat", "za_l0643"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("type", "za_l0_s"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "deal-done"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("group_name", "ZA_L0_Sale"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_L0_DealDone"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "996620"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
-            SourceContains(doubleClickTokensList);
+
+            SourceContains(DcTagsDealDonePage);
             SourceContains("u2: [");
             // Check that we don't have an empty u1 value (e.g. "u1: []"):
-            doubleClickTokensBlackList.Clear();
-            doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
-            SourceDoesNotContain(doubleClickTokensBlackList);
+			SourceDoesNotContain("u1: []");
 
             // Go to the eigth (my-account) page:
             Client.Driver.Navigate().GoToUrl(Config.Ui.Home + "my-account");
 
             // Check that the page contains the wonga_doubleclick module v1.0 signature:
-            Assert.IsTrue(page.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
+            Assert.IsTrue(page.Client.Source().Contains("wonga_doubleclick-v6.x-1.0-"));
 
             // Check that the page contains the correct doubleclick HTML comment identifiers for this AUT:
-            doubleClickTokensList.Clear();
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("src", "3567941"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("cat", "za_ln060"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("type", "za_ln"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("paths", "my-account"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("group_name", "ZA_Ln"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_name", "ZA_Ln_MyAccount"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("activity_id", "996622"));
-            doubleClickTokensList.Add(new KeyValuePair<string, string>("html_override", ""));
-            SourceContains(doubleClickTokensList);
+            SourceContains(DcTagsMyAccountPage);
             SourceContains("u2: [");
             // Check that we don't have an empty u1 value (e.g. "u1: []"):
-            doubleClickTokensBlackList.Clear();
-            doubleClickTokensBlackList.Add(new KeyValuePair<string, string>("u1", ""));
-            SourceDoesNotContain(doubleClickTokensBlackList);
+			SourceDoesNotContain("u1: []");
         }
     }
 }
