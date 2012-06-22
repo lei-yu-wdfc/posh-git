@@ -344,5 +344,5 @@ namespace Wonga.QA.Tests.Ui
             Assert.EndsWith(Client.Driver.Url, "/deal-done-member", "The deal done page URL is not /deal-done-member.");
         }
 
-    }
+     }
 }

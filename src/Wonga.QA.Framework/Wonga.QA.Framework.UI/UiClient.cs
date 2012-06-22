@@ -118,6 +118,12 @@ namespace Wonga.QA.Framework.UI
             return new HomePage(this);
         }
 
+        public HomePage DoubleclickCookiesHome()
+        {
+            Driver.Navigate().GoToUrl(Config.Ui.DoubleClickCookiesHome);
+            return new HomePage(this);
+        }
+
         public HomePageMobile MobileHome()
         {
             Driver.Navigate().GoToUrl(Config.Ui.Home);
