@@ -15,6 +15,28 @@ namespace Wonga.QA.Tests.Core
         [Description("kirill.polishyk@wonga.com")]
         KirillPolishyk,
         [Description("petr.tarasenko@wonga.com")]
-        PetrTarasenko
+        PetrTarasenko,
+        [Description("konstantinos.konstantinidis@wonga.com")]
+        KonstasKonstantinidis,
+        [Description("ilya.kozhevnikov@wonga.com")]
+        IlyaKozhevnikov,
+        [Description("stan.desyatnikov@wonga.com")]
+        StanDesyatnikov,
+        [Description("ben.ifie@wonga.com")]
+        BenIfie,
+        [Description("muhammad.qureshi@wonga.com")]
+        MuhammadQureshi,
+        [Description("pavithran.vangiti@wonga.com")]
+        PavithranVangiti,
+        [Description("ethan.chiddicks@wonga.com")]
+        EthanChiddicks,
+        [Description("orizu.nwokeji@wonga.com")]
+        OrizuNwokeji,
+        [Description("michael.nowicki@wonga.com")]
+        MichaelNowicki,
+        [Description("charlie.barker@wonga.com")]
+        CharlieBarker,
+        [Description("alex.sloat@wonga.com")]
+        AlexSloat
     }
 }
