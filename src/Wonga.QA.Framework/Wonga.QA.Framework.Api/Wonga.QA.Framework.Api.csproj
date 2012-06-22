@@ -66,6 +66,7 @@
     <Compile Include="Defaults\RiskAddHomePhoneCaCommand.cs" />
     <Compile Include="Defaults\RiskAddMobilePhoneCaCommand.cs" />
     <Compile Include="Defaults\RiskSaveCustomerAddressCaCommand.cs" />
+    <Compile Include="Defaults\RiskCreateBusinessFixedInstallmentLoanApplicationWbUkCommand.cs" />
     <Compile Include="Defaults\RiskSaveCustomerDetailsCaCommand.cs" />
     <Compile Include="Defaults\SavePasswordRecoveryDetailsUkCommand.cs" />
     <Compile Include="Defaults\SavePasswordRecoveryDetailsZaCommand.cs" />

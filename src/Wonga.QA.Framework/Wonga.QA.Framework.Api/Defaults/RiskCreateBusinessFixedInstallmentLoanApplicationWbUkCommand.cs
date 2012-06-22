@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿
+using System;
+using Wonga.QA.Framework.Api.Enums;
 using Wonga.QA.Framework.Core;
 
-namespace Wonga.QA.Framework.Api
+namespace Wonga.QA.Framework.Api.Requests.Risk.Commands.Wb.Uk
 {
 	public partial class RiskCreateBusinessFixedInstallmentLoanApplicationWbUkCommand 
 	{
@@ -19,6 +18,7 @@ namespace Wonga.QA.Framework.Api
 			MainApplicantPaymentCardId = Get.GetId();
 			MainApplicantBankAccountId = Get.GetId();
 			OrganisationId = Get.GetId();
+			ApplicationDate = Get.GetApplicationDate();
 		}
 	}
 }
