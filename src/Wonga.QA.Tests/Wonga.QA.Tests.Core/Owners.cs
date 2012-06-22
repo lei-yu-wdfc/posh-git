@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
-namespace Wonga.QA.Framework.Core
+namespace Wonga.QA.Tests.Core
 {
     public enum Owner
     {

@@ -15,7 +15,6 @@ namespace Wonga.QA.Framework.Core
     {
         public static SUT SUT { get; set; }
         public static AUT AUT { get; set; }
-        public static Owner Author { get; set; }
         public static Boolean Proxy { get; set; }
 
         public static ApiConfig Api { get; set; }
