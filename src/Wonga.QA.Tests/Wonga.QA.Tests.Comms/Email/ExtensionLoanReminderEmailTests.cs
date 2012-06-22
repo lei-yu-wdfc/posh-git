@@ -4,14 +4,17 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Msmq;
+using Wonga.QA.Framework.Msmq.Messages.Comms.Commands;
+using Wonga.QA.Framework.Msmq.Messages.Ops.PublicMessages;
 using Wonga.QA.Framework.ThirdParties;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
-using AddPaymentCardCommand = Wonga.QA.Framework.Api.AddPaymentCardCommand;
-using CountryCodeEnum = Wonga.QA.Framework.Api.CountryCodeEnum;
-using CreateFixedTermLoanExtensionCommand = Wonga.QA.Framework.Api.CreateFixedTermLoanExtensionCommand;
-using GenderEnum = Wonga.QA.Framework.Api.GenderEnum;
-using TitleEnum = Wonga.QA.Framework.Api.TitleEnum;
+using AddPaymentCardCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.AddPaymentCardCommand;
+using CountryCodeEnum = Wonga.QA.Framework.Msmq.Enums.Integration.Comms.Enums.CountryCodeEnum;
+using CreateFixedTermLoanExtensionCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.CreateFixedTermLoanExtensionCommand;
+using GenderEnum = Wonga.QA.Framework.Msmq.Enums.Common.Enums.GenderEnum;
+using TitleEnum = Wonga.QA.Framework.Msmq.Enums.Integration.Comms.Enums.TitleEnum;
+
 
 namespace Wonga.QA.Tests.Comms.Email
 {
@@ -133,13 +136,13 @@ namespace Wonga.QA.Tests.Comms.Email
 			                      		DateOfBirth = Get.GetDoB(),
 			                      		Email = Get.RandomEmail(),
 			                      		Forename = Get.GetName(),
-			                      		Gender = Framework.Msmq.GenderEnum.Male,
+			                      		Gender = GenderEnum.Male,
 			                      		HomePhone = homePhone,
 			                      		MiddleName = Get.GetMiddleName(),
 			                      		MobilePhone = Get.GetMobilePhone(),
 			                      		//string.Format("07{0}", DateTime.UtcNow.Ticks.ToString().Substring(0, 8)),
 			                      		Surname = Get.GetName(),
-			                      		Title = Framework.Msmq.TitleEnum.Dr,
+			                      		Title = TitleEnum.Dr,
 			                      		WorkPhone = homePhone,
 			                      	});
 			Drive.Msmq.Comms.Send(new IAccountCreatedEvent {AccountId = accountId});
@@ -159,7 +162,7 @@ namespace Wonga.QA.Tests.Comms.Email
 			                      		AddressId = Guid.NewGuid(),
 			                      		AtAddressFrom = new DateTime(2000, 1, 1),
 			                      		ClientId = clientId,
-			                      		CountryCode = Framework.Msmq.CountryCodeEnum.Uk,
+			                      		CountryCode = CountryCodeEnum.Uk,
 			                      		Flat = "22",
 			                      		HouseName = "7",
 			                      		Postcode = "W7 3BX",
