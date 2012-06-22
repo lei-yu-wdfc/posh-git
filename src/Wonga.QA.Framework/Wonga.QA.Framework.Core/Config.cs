@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -9,11 +10,19 @@ namespace Wonga.QA.Framework.Core
 {
     public enum AUT { Uk, Za, Ca, Wb, Pl }
     public enum SUT { Dev, WIP, UAT, RC, WIPRelease, RCRelease, Live, WIPHDS }
+    public enum Owner 
+    { 
+        [Description("mihail.podobivsky@wonga.com")] MihailPodobivsky, 
+        [Description("volodymyr.stelmakh@wonga.com")] VolodymyrStelmakh, 
+        [Description("kirill.polishyk@wonga.com")] KirillPolishyk,
+        [Description("petr.tarasenko@wonga.com")] PetrTarasenko
+    }
 
     public static class Config
     {
         public static SUT SUT { get; set; }
         public static AUT AUT { get; set; }
+        public static Owner Author { get; set; }
         public static Boolean Proxy { get; set; }
 
         public static ApiConfig Api { get; set; }
