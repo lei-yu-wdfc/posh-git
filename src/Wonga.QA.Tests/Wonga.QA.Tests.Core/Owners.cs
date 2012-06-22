@@ -17,7 +17,7 @@ namespace Wonga.QA.Tests.Core
         [Description("petr.tarasenko@wonga.com")]
         PetrTarasenko,
         [Description("konstantinos.konstantinidis@wonga.com")]
-        KonstasKonstantinidis,
+        KonstantinosKonstantinidis,
         [Description("ilya.kozhevnikov@wonga.com")]
         IlyaKozhevnikov,
         [Description("stan.desyatnikov@wonga.com")]
