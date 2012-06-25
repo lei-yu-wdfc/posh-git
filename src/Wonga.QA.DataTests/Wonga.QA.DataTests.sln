@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.DataTests.Hds", "Wonga.QA.DataTests.Hds\Wonga.QA.DataTests.Hds.csproj", "{0021FA4B-F42F-4FFD-BE90-FF7F5B8FD420}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.DataTests.Hds.Payments", "Wonga.QA.DataTests.Hds\Wonga.QA.DataTests.Hds.Payments.csproj", "{0021FA4B-F42F-4FFD-BE90-FF7F5B8FD420}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.DataTests.Bi", "Wonga.QA.DataTests.Bi\Wonga.QA.DataTests.Bi.csproj", "{5052380A-72D4-4F00-96B0-B5E762E148ED}"
 EndProject

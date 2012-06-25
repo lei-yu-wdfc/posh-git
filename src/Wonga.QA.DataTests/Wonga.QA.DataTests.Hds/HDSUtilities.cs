@@ -15,10 +15,15 @@ namespace Wonga.QA.Tests.Hds
             BankAccountsBase
         }
 
-        internal static string CdcStagingAgentJob { get { return "UK_CDCStagingLoadPayments"; }}
-        internal static string HdsLoadAgentJob { get { return "DataInsight - UK_WongaHDSpaymentsLoad"; }}
-        internal static string HdsInitialLoadAgentJob { get { return "DataInsight - UK_WongaHDS_paymentsInitialLoad"; }}
-        internal static string HdsReconcileAgentJob { get { return "DataInsight - UK_WongaHDS_paymentsReconciliation"; } }
+       //internal static string CdcStagingAgentJob { get { return "UK_CDCStagingLoadPayments"; }}
+       //internal static string HdsLoadAgentJob { get { return "DataInsight - UK_WongaHDSpaymentsLoad"; } }
+       // internal static string HdsInitialLoadAgentJob { get { return "DataInsight - UK_WongaHDS_paymentsInitialLoad"; }}
+       // internal static string HdsReconcileAgentJob { get { return "DataInsight - UK_WongaHDS_paymentsReconciliation"; } }
+
+        internal static string CdcStagingAgentJob { get { return "UK_CDCStaging_PaymentsLoad"; } }
+        internal static string HdsLoadAgentJob { get { return "UK_WongaHDS_PaymentsLoad"; } }
+        internal static string HdsInitialLoadAgentJob { get { return "UK_WongaHDS_PaymentsInitialLoad"; } }
+        internal static string HdsReconcileAgentJob { get { return "UK_WongaHDS_PaymentsReconciliation"; } }
 
         /// <summary>
         /// Checks CDC Staging for record 
@@ -75,9 +80,18 @@ namespace Wonga.QA.Tests.Hds
 
             // wait for job to stop if running
             if (SQLServerAgentJobs.CheckJobStatus(jobName) != JobExecutionStatus.Idle) { SQLServerAgentJobs.WaitUntilJobRun(jobName, lastRunTime ?? DateTime.Now, waitTimeSecondsOverride); }
+            
         }
 
+         internal static void WaitUntilJobComplete(string jobName, int waitTimeSecondsOverride = 0)
+        {
+            // Find the last run time
+            DateTime? lastRunTime = SQLServerAgentJobs.GetJobLastRunDateTime(jobName);
 
+            // wait for job to stop if running
+            if (SQLServerAgentJobs.CheckJobStatus(jobName) != JobExecutionStatus.PerformingCompletionAction) { SQLServerAgentJobs.WaitUntilJobRun(jobName, lastRunTime ?? DateTime.Now, waitTimeSecondsOverride); }
+        }
+        
         /// <summary>
         /// Disables SQL Agent job
         /// </summary>
