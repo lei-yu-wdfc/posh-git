@@ -7,6 +7,7 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Framework.Data;
 
+
 namespace Wonga.QA.Tests.Hds
 {
     [TestFixture]
