@@ -112,7 +112,7 @@
     <NextButton>#edit-submit</NextButton>
   </PersonalBankAccountPageMobile>
 
-  <PersonalDetailsPageMobile>
+  <!--<PersonalDetailsPageMobile>
     <FormId>#wonga-apply-lzero-form</FormId>
     <SlidersFormId>#wonga-alterable-loan-details-fieldset</SlidersFormId>
     <CheckPrivacyPolicy>#edit-privacy</CheckPrivacyPolicy>
@@ -130,7 +130,7 @@
     <AmountPlusButton>#wonga-amount-slider-wrapper button.slider-plus</AmountPlusButton>
     <DurationMinusButton>#wonga-duration-slider-wrapper button.slider-minus</DurationMinusButton>
     <DurationPlusButton>#wonga-duration-slider-wrapper button.slider-plus</DurationPlusButton>
-  </PersonalDetailsPageMobile>
+  </PersonalDetailsPageMobile>-->
 
 
   <AccountDetailsSection>

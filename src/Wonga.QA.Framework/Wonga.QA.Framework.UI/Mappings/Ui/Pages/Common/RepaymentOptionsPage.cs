@@ -14,5 +14,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public string EasypayPrintButton { get; set; }
         public string DebitOrderButton { get; set; }
         public string ManualRepaymentButton { get; set; }
+        public string RepayByDebitCardButton { get; set; }
     }
 }

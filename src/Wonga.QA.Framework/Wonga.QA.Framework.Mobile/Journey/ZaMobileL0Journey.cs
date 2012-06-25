@@ -90,8 +90,8 @@ namespace Wonga.QA.Framework.Mobile.Journey
             personalDetailsPage.ContactingYou.ConfirmEmailAddress = _email;
             personalDetailsPage.PrivacyPolicy = true;
             personalDetailsPage.CanContact = "Yes";
-            personalDetailsPage.MarriedInCommunityProperty =
-                "I am not married in community of property (I am single, married with antenuptial contract, divorced etc.)";
+            personalDetailsPage.IAmNotMarriedInCommunityOfProperty(); //=
+            //    "I am not married in community of property (I am single, married with antenuptial contract, divorced etc.)";
             if (submit)
             {
                 CurrentPage = personalDetailsPage.Submit() as AddressDetailsPageMobile;

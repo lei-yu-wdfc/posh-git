@@ -16,9 +16,9 @@
   <DealDonePage>
     <HeaderText>Your application has been accepted, you’re almost there!</HeaderText>
   </DealDonePage>
-  
-  <DeclinedPage>
+
+  <DeclinedPageMobile>
     <HeaderText>Application declined</HeaderText>
-  </DeclinedPage>
+  </DeclinedPageMobile>
 
 </ContentMapMobile>
