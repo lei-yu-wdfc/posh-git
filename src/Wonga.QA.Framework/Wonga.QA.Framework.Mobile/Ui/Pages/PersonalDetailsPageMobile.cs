@@ -15,10 +15,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
         public EmploymentDetailsSection EmploymentDetails { get; set; }
         public YourDetailsSection YourDetails { get; set; }
         public ContactingYouSection ContactingYou { get; set; }
-     //   public ProvinceSection ProvinceSection { get; set; }
         public Boolean PrivacyPolicy { set { _privacy.Toggle(value); } }
-        //public Boolean BikVerification { set { _bikVeryfication.Toggle(value); } }
-        //public Boolean MarketingAcceptance { set { _marketingAcceptance.Toggle(value); } }
 
         public Object CanContact
         {
@@ -30,18 +27,29 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
                     _contact.SelectLabel((String)value);
             }
         }
-        public string MarriedInCommunityProperty
+        //public string MarriedInCommunityProperty
+        //{
+        //    set
+        //    {
+        //        _marriedInCommunityProperty.SelectLabel(value);
+        //    }
+        //}
+        public void IAmNotMarriedInCommunityOfProperty()
         {
-            set
-            {
-                _marriedInCommunityProperty.SelectLabel(value);
-            }
+            _notMarriedInCommunityProperty.Click();
+            
         }
-        //private readonly IWebElement _bikVeryfication;
-        //private readonly IWebElement _marketingAcceptance;
+
+        public void IAmMarriedInCommunityOfProperty()
+        {
+            _marriedInCommunityProperty.Click();
+
+        }
+
         private readonly IWebElement _form;
         private readonly IWebElement _slidersForm;
-        private readonly ReadOnlyCollection<IWebElement> _marriedInCommunityProperty;
+        private readonly IWebElement _notMarriedInCommunityProperty;
+        private readonly IWebElement _marriedInCommunityProperty;
         private readonly IWebElement _privacy;
         private readonly ReadOnlyCollection<IWebElement> _contact;
         private IWebElement _next;
@@ -62,16 +70,16 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
         public PersonalDetailsPageMobile(MobileUiClient client)
             : base(client)
         {
-            _form = Content.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPage.FormId));
+            _form = Content;
             if (!Config.AUT.Equals(AUT.Wb) || Config.Ui.Browser.Equals(Config.UiConfig.BrowserType.FirefoxMobile))
             {
                 //On WB you cannot edit your loan details on the Personal Details page
-                _slidersForm = Content.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPage.SlidersFormId));
+                _slidersForm = Content.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPageMobile.SlidersFormId));
 
             }
-            _privacy = _form.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPage.CheckPrivacyPolicy));
-            _contact = _form.FindElements(By.CssSelector(UiMapMobile.Get.PersonalDetailsPage.CheckCanContact));
-            _next = _form.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPage.NextButton));
+            _privacy = _form.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPageMobile.CheckPrivacyPolicy));
+            _contact = _form.FindElements(By.CssSelector(UiMapMobile.Get.PersonalDetailsPageMobile.CheckCanContact));
+            _next = _form.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPageMobile.NextButton));
 
 
 
@@ -82,40 +90,29 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
 
             switch (Config.AUT)
             {
-             //   case (AUT.Ca):
-             //       EmploymentDetails = new EmploymentDetailsSection(this);
-             //       ProvinceSection = new ProvinceSection(this);
-             //       break;
-             //   case (AUT.Uk):
-             //       EmploymentDetails = new EmploymentDetailsSection(this);
-             //       break;
-             //   case (AUT.Pl):
-             //       _bikVeryfication = _form.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPage.CheckBikVerification));
-             //       EmploymentDetails = new EmploymentDetailsSection(this);
-             //       _marketingAcceptance =
-             //_form.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPage.CheckMarketingAcceptance));
-             //       break;
                 case (AUT.Za):
                     EmploymentDetails = new EmploymentDetailsSection(this);
+                    _notMarriedInCommunityProperty =
+                        _form.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPageMobile.NotMarriedInCommunityProperty));
                     _marriedInCommunityProperty =
-                        _form.FindElements(By.CssSelector(UiMapMobile.Get.PersonalDetailsPage.MarriedInCommunityProperty));
+                        _form.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPageMobile.MarriedInCommunityProperty));
                     break;
             }
         }
 
         public void ClickSliderToggler()
         {
-            var sliderToggler = Client.Driver.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPage.SliderToggler));
+            var sliderToggler = Client.Driver.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPageMobile.SliderToggler));
             sliderToggler.Click();
             _amountSlider = _slidersForm.FindElement(By.CssSelector(UiMapMobile.Get.SlidersElement.AmountSlider));
             _durationSlider = _slidersForm.FindElement(By.CssSelector(UiMapMobile.Get.SlidersElement.DurationSlider));
-            _loanAmount = _slidersForm.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPage.LoanAmount));
-            _loanDuration = _slidersForm.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPage.LoanDuration));
-            _amountMinusButton = _slidersForm.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPage.AmountMinusButton));
-            _amountPlusButton = _slidersForm.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPage.AmountPlusButton));
+            _loanAmount = _slidersForm.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPageMobile.LoanAmount));
+            _loanDuration = _slidersForm.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPageMobile.LoanDuration));
+            _amountMinusButton = _slidersForm.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPageMobile.AmountMinusButton));
+            _amountPlusButton = _slidersForm.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPageMobile.AmountPlusButton));
             _durationMinusButton =
-                _slidersForm.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPage.DurationMinusButton));
-            _durationPlusButton = _slidersForm.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPage.DurationPlusButton));
+                _slidersForm.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPageMobile.DurationMinusButton));
+            _durationPlusButton = _slidersForm.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPageMobile.DurationPlusButton));
 
         }
         public int MoveAmountSlider
@@ -128,19 +125,19 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
         }
         public String GetTotalAmount
         {
-            get { _totalAmount = _slidersForm.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPage.TotalAmount)); return _totalAmount.Text; }
+            get { _totalAmount = _slidersForm.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPageMobile.TotalAmount)); return _totalAmount.Text; }
         }
         public String GetTotalFees
         {
-            get { _totalFees = _slidersForm.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPage.TotalFees)); return _totalFees.Text; }
+            get { _totalFees = _slidersForm.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPageMobile.TotalFees)); return _totalFees.Text; }
         }
         public String GetTotalToRepay
         {
-            get { _totalToRepay = _slidersForm.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPage.TotalToRepay)); return _totalToRepay.Text; }
+            get { _totalToRepay = _slidersForm.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPageMobile.TotalToRepay)); return _totalToRepay.Text; }
         }
         public String GetRepaymentDate
         {
-            get { _repaymentDate = _slidersForm.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPage.RepaymentDate)); return _repaymentDate.Text; }
+            get { _repaymentDate = _slidersForm.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPageMobile.RepaymentDate)); return _repaymentDate.Text; }
         }
         public String HowMuch
         {
@@ -182,13 +179,13 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
 
         public void PrivacyPolicyClick()
         {
-            Client.Driver.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPage.PrivacyPolicyLink)).Click();
+            Client.Driver.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPageMobile.PrivacyPolicyLink)).Click();
         }
 
         public List<string> GetHrefsOfLinksOnPrivacyPopup()
         {
             List<string> hrefs = new List<string>();
-            ReadOnlyCollection<IWebElement> links = Client.Driver.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPage.PrivacyPolicyPopup)).FindElements(By.TagName("a"));
+            ReadOnlyCollection<IWebElement> links = Client.Driver.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPageMobile.PrivacyPolicyPopup)).FindElements(By.TagName("a"));
             foreach (var link in links)
             {
                 string href = link.GetAttribute("href");

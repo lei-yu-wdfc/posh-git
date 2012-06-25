@@ -42,7 +42,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
         {
             set
             {
-                Client.Driver.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.HouseNumber)).SendValue(value);
+                Client.Driver.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.HouseNumber)).SendValue(value);
             }
         }
         public String District { set { _district.SendValue(value); } }
@@ -62,11 +62,11 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
             : base(client)
         {
 
-            _form = Content.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.FormId));
-            _postCode = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.Postcode));
-            _houseNumber = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.HouseNumber));
-            _addressPeriod = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.AddressPeriod));
-            _next = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.NextButton));
+            _form = Content.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.FormId));
+            _postCode = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.Postcode));
+            _houseNumber = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.HouseNumber));
+            _addressPeriod = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.AddressPeriod));
+            _next = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.NextButton));
 
             switch (Config.AUT)
             {
@@ -79,10 +79,10 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
                 //    _postCodeInForm = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.PostcodeInForm));
                 //    break;
                 case (AUT.Za):
-                    _county = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.County));
-                    _district = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.District));
-                    _street = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.Street));
-                    _town = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.Town));
+                    _county = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.County));
+                    _district = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.District));
+                    _street = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.Street));
+                    _town = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.Town));
                     break;
                 //case (AUT.Ca):
                 //    _street = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.Street));
@@ -117,7 +117,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
 
         public void GetAddressesDropDown()
         {
-            _addressOptions = _form.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.AddressOptions));
+            _addressOptions = _form.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.AddressOptions));
         }
 
         public BasePageMobile Next()
@@ -151,7 +151,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
             try
             {
                 _postCodeErrorForm =
-                           Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.PostcodeErrorForm)));
+                           Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.PostcodeErrorForm)));
                 string postCodeErrorFormClass = _postCodeErrorForm.GetAttribute("class");
 
                 if (postCodeErrorFormClass.Contains("invalid"))
@@ -172,7 +172,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
             _next.Click();
             try
             {
-                _houseNumberErrorForm = Client.Driver.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.HouseNumberErrorForm));
+                _houseNumberErrorForm = Client.Driver.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.HouseNumberErrorForm));
                 string houseNumberErrorFormClass = _houseNumberErrorForm.GetAttribute("class");
 
                 if (houseNumberErrorFormClass.Equals("invalid"))
@@ -193,7 +193,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
             try
             {
                 _streetErrorForm =
-                           _form.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.StreetErrorForm));
+                           _form.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.StreetErrorForm));
                 string streetErrorFormClass = _streetErrorForm.GetAttribute("class");
 
                 if (streetErrorFormClass.Contains("invalid"))
@@ -214,7 +214,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
             try
             {
                 _townErrorForm =
-                           _form.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.TownErrorForm));
+                           _form.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.TownErrorForm));
                 string townErrorFormClass = _townErrorForm.GetAttribute("class");
 
                 if (townErrorFormClass.Contains("invalid"))
@@ -234,7 +234,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
             try
             {
                 _countyErrorForm =
-                           _form.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.CountyErrorForm));
+                           _form.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.CountyErrorForm));
                 string countyErrorFormClass = _countyErrorForm.GetAttribute("class");
 
                 if (countyErrorFormClass.Contains("invalid"))
@@ -254,7 +254,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
             try
             {
                 _addressPeriodErrorForm =
-                           _form.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.AddressPeriodErrorForm));
+                           _form.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.AddressPeriodErrorForm));
                 string addressPeriodErrorFormClass = _addressPeriodErrorForm.GetAttribute("class");
 
                 if (addressPeriodErrorFormClass.Contains("invalid"))

@@ -14,6 +14,7 @@ namespace Wonga.QA.Framework.Mobile.Mappings.Pages
         public String PrivacyPolicyPopup { get; set; }
         public String CheckCanContact { get; set; }
         public String NextButton { get; set; }
+        public String NotMarriedInCommunityProperty { get; set; }
         public String MarriedInCommunityProperty { get; set; }
         public String SliderToggler { get; set; }
         public String TotalToRepay { get; set; }
@@ -29,7 +30,7 @@ namespace Wonga.QA.Framework.Mobile.Mappings.Pages
         public String GenderWarning { get; set; }
         public String DateOfBirthWarning { get; set; }
         public String PrivatePolicyErrorForm { get; set; }
-       public String CheckBikVerification { get; set; }
+        public String CheckBikVerification { get; set; }
         public String BikVerificationErrorForm { get; set; }
         public String CheckMarketingAcceptance { get; set; }
     }

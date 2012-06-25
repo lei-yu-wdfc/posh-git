@@ -53,8 +53,8 @@ namespace Wonga.QA.Framework.Mobile.Mappings.Ui
 
         #region Pages
 
-        public virtual AddressDetailsPageMobile AddressDetailsPage { get; set; }
-        public virtual PersonalDetailsPageMobile PersonalDetailsPage { get; set; }
+        public virtual AddressDetailsPageMobile AddressDetailsPageMobile { get; set; }
+        public virtual PersonalDetailsPageMobile PersonalDetailsPageMobile { get; set; }
         public virtual AccountDetailsPageMobile AccountDetailsPageMobile { get; set; }
         public virtual ExtensionAgreementPageMobile ExtensionAgreementPageMobile { get; set; }
         public virtual PersonalBankAccountPageMobile PersonalBankAccountPageMobile { get; set; }
