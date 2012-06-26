@@ -5,6 +5,7 @@ using System.Text;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Api.Requests.Risk.Commands.Uk;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
 
@@ -19,7 +20,7 @@ namespace Wonga.QA.Tests.Risk.Commands
 		[Test, AUT(AUT.Ca, AUT.Za)]
 		public void WhenCommandCalledThenTheMobilePhoneShouldBeUpdatedOnRiskSaveCustomerDetailsSagaEntity()
 		{
-			var command = RiskSaveCustomerDetailsCommand.New();
+            var command = RiskSaveCustomerDetailsUkCommand.New();
 
 			Guid accountId = (Guid)command.AccountId;
 			string mobilePhone = command.MobilePhone.ToString();
