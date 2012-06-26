@@ -7,33 +7,12 @@ namespace Wonga.QA.DataTests.Hds
     [TestFixture]
     class InitialLoadTests
     {
-        private bool _cdcStagingAgentJobWasDisabled;
-        private bool _hdsAgentJobWasEnabled;
-
-        [FixtureSetUp]
-        public void FixtureSetup()
-        {
-            _cdcStagingAgentJobWasDisabled = HdsUtilities.EnableJob(HdsUtilities.CdcStagingAgentJob);
-            _hdsAgentJobWasEnabled = HdsUtilities.DisableJob(HdsUtilities.HdsLoadAgentJob);            
-        }
-
-        [FixtureTearDown]
-        public void FixtureTearDown()
-        {
-            if (_cdcStagingAgentJobWasDisabled)
-            {
-                HdsUtilities.DisableJob(HdsUtilities.CdcStagingAgentJob);
-            }
-
-            if (_hdsAgentJobWasEnabled)
-            {
-                HdsUtilities.EnableJob(HdsUtilities.HdsLoadAgentJob);                
-            }
-        }
-
         [Test]
         public void RunInitialLoadAndConfirmThatItSucceeds()
         {
+            // disable HDS load
+            bool hdsAgentJobWasEnabled = HdsUtilities.DisableJob(HdsUtilities.HdsLoadAgentJob);
+
             // clear down HDS
             Drive.Data.Hds.Db.Payment.usp_ClearHdsTables();
 
@@ -43,6 +22,11 @@ namespace Wonga.QA.DataTests.Hds
             // check job succeeds
             Assert.IsTrue(jobSuccess);
 
+            // Reset HDS load
+            if (hdsAgentJobWasEnabled)
+            {
+                HdsUtilities.EnableJob(HdsUtilities.HdsLoadAgentJob);
+            }
         }
     }
 }
