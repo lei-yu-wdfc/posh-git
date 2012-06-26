@@ -21,18 +21,18 @@ namespace Wonga.QA.Tests.Ui
         [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-169"), SmokeTest]
         public void CustomerOnAboutUsPageShouldBeAbleChooseEveryLink()
 {
-            string homestr = Config.Ui.Home.ToString().Replace("http", "https");
-            string news = homestr + "blog";
-            string ourCustomers = homestr + "our-customers";
-            string responsibleLending = homestr + "our-commitment-responsible-lending";
-            string whyUseUs = homestr + "why-use-us";
+            string news = "blog";
+            string ourCustomers = "our-customers";
+            string responsibleLending = "our-commitment-responsible-lending";
+            string whyUseUs = "why-use-us";
           
             var aboutpage = Client.About();
             Assert.IsTrue(aboutpage.WereFastClickAndCheck());
             Assert.IsTrue(aboutpage.WereDifferentClickAndCheck());
             Assert.IsTrue(aboutpage.WereResponsibleClickAndCheck());
             Assert.IsTrue(aboutpage.WongaMomentsClickAndCheck());
-
+            
+            
             aboutpage.NewsClick();
             Assert.IsTrue(aboutpage.Url.Contains(news));
             aboutpage = Client.About();
