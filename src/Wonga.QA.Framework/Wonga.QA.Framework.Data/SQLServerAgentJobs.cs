@@ -15,7 +15,7 @@ namespace Wonga.QA.Framework.Data
     {
 
         /// <summary>
-        /// This will force execute a job if the job is enabled. Future enhancement to enable job if disabled
+        /// Executes a job and returns if the job was successful or not.
         /// </summary>
         /// <param name="jobName">The name of the SQL Server agent job to execute</param>
         /// <returns>Returns if job has run</returns>
@@ -26,17 +26,16 @@ namespace Wonga.QA.Framework.Data
             JobServer sqlServerAgent = srv.JobServer;
             Job specificJob = sqlServerAgent.Jobs[jobName];
 
-            if (specificJob.IsEnabled == true)
-            {
-                specificJob.Start();
-                while (specificJob.CurrentRunStatus != JobExecutionStatus.Suspended && specificJob.CurrentRunStatus != JobExecutionStatus.Idle)
-                {
-                    Thread.Sleep(5000);
-                }
+            DateTime lastRunDate = specificJob.LastRunDate;
+            specificJob.Start();
 
+            while (specificJob.LastRunDate == lastRunDate)
+            {
+                Thread.Sleep(1000);
+                specificJob.Refresh();
             }
-   
-            return false;
+
+            return specificJob.LastRunOutcome.Equals(CompletionResult.Succeeded);
         }
 
         /// <summary>

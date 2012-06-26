@@ -8,7 +8,7 @@ using Wonga.QA.Tests.Core;
 using Wonga.QA.Framework.Data;
 
 
-namespace Wonga.QA.Tests.Hds
+namespace Wonga.QA.DataTests.Hds
 {
     [TestFixture]
     public class SourceToHdsTest
