@@ -20,7 +20,7 @@ namespace Wonga.QA.Tests.Core
 
         protected override void DecorateTest(IPatternScope scope, ICodeElementInfo codeElement)
         {
-            AUTs.ForEach(aut => scope.TestBuilder.AddMetadata(MetadataKeys.Category, aut.ToString()));
+            AUTs.ForEach(aut => scope.TestBuilder.AddMetadata(MetadataKeys.AUT, aut.ToString()));
             scope.TestBuilder.TestActions.BeforeTestChain.Before(state =>
             {
                 if (!AUTs.Contains(Config.AUT))

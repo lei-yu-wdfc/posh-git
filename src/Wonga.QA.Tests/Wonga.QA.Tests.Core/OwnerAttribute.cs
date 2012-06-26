@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Gallio.Common.Reflection;
 using Gallio.Framework;
 using Gallio.Framework.Pattern;
-using Gallio.Model;
 using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Tests.Core
@@ -20,7 +19,8 @@ namespace Wonga.QA.Tests.Core
 
         protected override void DecorateTest(IPatternScope scope, ICodeElementInfo codeElement)
         {
-            Owners.ForEach(Owner => scope.TestBuilder.AddMetadata(MetadataKeys.Category, Owner.ToString()));
+            Owners.ForEach(Owner => scope.TestBuilder.AddMetadata(MetadataKeys.Owner, Owner.ToString()));
+            Owners.ForEach(Owner => scope.TestBuilder.AddMetadata(MetadataKeys.OwnerEmail, Get.EnumToString(Owner)));
         }
     }
 }
