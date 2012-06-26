@@ -86,6 +86,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		}
 
 		[Test, AUT(AUT.Uk, AUT.Za), JIRA("UK-1567"), DependsOn("LnIovationAllowIsAccepted")]
+        [Pending("We dont know yet how review is going to work.")]
 		public void LnIovationReviewIsAccepted()
 		{
 			var application = BuildApplication(_customer, ApplicationDecisionStatus.Accepted, IovationMockResponse.Review);

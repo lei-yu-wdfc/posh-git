@@ -50,6 +50,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
         [Test, AUT(AUT.Uk)]
         [JIRA("UK-849")]
+        [Pending("Implementation in progress")]
         public void DoNotRelendIsOn_L0ApplicationDeclined()
         {
             var customer = CustomerBuilder.New().WithEmployer(RiskMask.TESTDoNotRelend).Build();
@@ -64,6 +65,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
         [Test, AUT(AUT.Uk)]
         [JIRA("UK-849")]
+        [Pending("Implementation in progress")]
         public void DoNotRelendIsOn_LNApplicationDeclined()
         {
             var customer = CustomerBuilder.New().WithEmployer(RiskMask.TESTEmployedMask).Build();
