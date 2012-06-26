@@ -84,12 +84,17 @@ namespace Wonga.QA.Framework.UI
         public override BaseLnJourney WithNewMobilePhone(string mobilePhone = null)
         {
             _mobilePhone = mobilePhone ?? Get.GetMobilePhone();
+
             journey.Clear();
             journey.Add(typeof(HomePage), ApplyForLoan);
             journey.Add(typeof(ApplyPage), FillApplicationDetailsWithNewMobilePhone);
             journey.Add(typeof(ProcessingPage), WaitForAcceptedPage);
             journey.Add(typeof(AcceptedPage), FillAcceptedPage);
+
             journey.Add(typeof(DealDonePage), GoToMySummaryPage);
+            journey.Add(typeof(AcceptedPage), FillAcceptedPage);
+            journey.Add(typeof(ProcessingPage), WaitForAcceptedPage);
+            journey.Add(typeof(ApplyPage), FillApplicationDetailsWithNewMobilePhone);
             return this;
         }
     }
