@@ -11,7 +11,8 @@ using Wonga.QA.Framework.Mobile.Ui.Sections;
 namespace Wonga.QA.Framework.Mobile.Ui.Pages
 {
     public class PersonalBankAccountPageMobile : BasePageMobile
-    { private readonly IWebElement _form;
+    { 
+        private readonly IWebElement _form;
         private readonly IWebElement _next;
 
         public BankAccountSection BankAccountSection { get; set; }
@@ -38,8 +39,8 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
             switch(Config.AUT)
             {
                 //case(AUT.Wb):
-                //case (AUT.Uk):
-                //    return new PersonalDebitCardPage(Client);
+                case (AUT.Uk):
+                    return new PersonalDebitCardPageMobile(Client);
                 case(AUT.Za):
                 //case (AUT.Ca):
                     return new ProcessingPageMobile(Client);

@@ -9,12 +9,12 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
 {
     public class AddressDetailsPageMobile : BasePageMobile, IApplyPage
     {
-       // public AccountDetailsSection AccountDetailsSection { get; set; }
+        //public AccountDetailsSection AccountDetailsSection { get; set; }
         private readonly IWebElement _postCode;
-        //private readonly IWebElement _postCodeInForm;
-        //private readonly IWebElement _postCodeLookup;
+        private readonly IWebElement _postCodeInForm;
+        private readonly IWebElement _postCodeLookup;
         private readonly IWebElement _form;
-        //private readonly IWebElement _lookup;
+        private readonly IWebElement _lookup;
         private readonly IWebElement _next;
         private readonly IWebElement _district;
         private readonly IWebElement _county;
@@ -31,10 +31,10 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
         private IWebElement _townErrorForm;
         private IWebElement _countyErrorForm;
         private IWebElement _addressPeriodErrorForm;
-        //private IWebElement _addressOptionsWrapper;
-        //private IWebElement _postcodeValid;
+        private IWebElement _addressOptionsWrapper;
+        private IWebElement _postcodeValid;
 
-        //public String PostCodeLookup { set { _postCodeLookup.SendValue(value); } }
+        public String PostCodeLookup { set { _postCodeLookup.SendValue(value); } }
         public String PostCode { set { _postCode.SendValue(value); } }
         //public String PostcodeInForm { set { _postCodeInForm.SendValue(value); } }
         public String SelectedAddress { set { _addressOptions.SelectOption(value); } }
@@ -91,29 +91,29 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
                 //    AccountDetailsSection = new AccountDetailsSection(this);
 
                 //    break;
-                //case (AUT.Uk):
-                //    _postCodeInForm = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.PostcodeInForm));
-                //    _street = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.Street));
-                //    _town = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.Town));
-                //    _postCodeLookup = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.PostcodeLookup));
-                //    _lookup = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.LookupButton));
-                //    break;
+                case (AUT.Uk):
+                    _postCodeInForm = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.PostcodeInForm));
+                    _street = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.Street));
+                    _town = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.Town));
+                    _postCodeLookup = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.PostcodeLookup));
+                    _lookup = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.LookupButton));
+                    break;
             }
         }
 
-        //public void LookupByPostCode()
-        //{
-        //    _addressOptionsWrapper = _form.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.AddressOptionsWrapper));
-        //    Do.With.Interval(1).Until(ClickLookupAddress);
-        //    Do.Until(() => _addressOptionsWrapper.Displayed);
-        //}
+        public void LookupByPostCode()
+        {
+            _addressOptionsWrapper = _form.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.AddressOptionsWrapper));
+            Do.With.Interval(1).Until(ClickLookupAddress);
+            Do.Until(() => _addressOptionsWrapper.Displayed);
+        }
 
-        //private IWebElement ClickLookupAddress()
-        //{
-        //    _lookup.Click();
-        //    _postcodeValid = _form.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.PostcodeValid));
-        //    return _postcodeValid.FindElement(By.CssSelector(".success"));
-        //}
+        private IWebElement ClickLookupAddress()
+        {
+            _lookup.Click();
+            _postcodeValid = _form.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.PostcodeValid));
+            return _postcodeValid.FindElement(By.CssSelector(".success"));
+        }
 
         public void GetAddressesDropDown()
         {

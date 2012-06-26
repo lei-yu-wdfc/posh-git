@@ -63,6 +63,7 @@ namespace Wonga.QA.Framework.Mobile.Mappings.Ui
         public virtual DealDonePage DealDonePage { get; set; }
         public virtual MySummaryPageMobile MySummaryPage { get; set; }
         public virtual DeclinedPageMobile DeclinedPage { get; set; }
+        public virtual PersonalDebitCardPageMobile PersonalDebitCardPageMobile { get; set; }
         #endregion
 
         #region Sections
@@ -74,6 +75,7 @@ namespace Wonga.QA.Framework.Mobile.Mappings.Ui
         public virtual BankAccountSection BankAccountSection { get; set; }
         public virtual MobilePinVerificationSection MobilePinVerificationSection { get; set; }
         public virtual AccountDetailsSection AccountDetailsSection { get; set; }
+        public virtual DebitCardSection DebitCardSection { get; set;}
         #endregion
     }
 }
