@@ -56,7 +56,6 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(homePage.Source.Contains(fullClickUrl), "Unable to find mention of the Wonga Click JS file's URL " + fullClickUrl + ". Please verify it is on the page. If the URL of the file has changed, please update this test.");
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("CA-2326"), Ignore("Feature turned off for this release")]
         public void VerifyIsClickParamsSet()
         {
             var homePage = Client.Home();
