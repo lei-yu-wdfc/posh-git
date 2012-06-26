@@ -192,10 +192,10 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(Date.GetOrdinalDate(DateTime.Parse(response.Values["ExtensionDate"].ToArray()[extensionDays - 1]).Date, "d MMMM yyyy"), extensionRequestPage.RepaymentDate, "Extensions Date is not correct for Extension Days={0}", extensionDays); // Extension Date
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-427", "Uk-1862", "UK-2121", "UKWEB-304"), MultipleAsserts, Pending("UK-2262, UKWEB-304")]
+        [Test, AUT(AUT.Uk), JIRA("UK-427", "Uk-1862", "UK-2121", "UKWEB-304"), MultipleAsserts, Pending("UKWEB-304: Incorrect Future Interest and Fees in Extension afer N days after application")]
         [Row(1, 2, 1)]
-        [Row(1, 7, 1)] // UK-2262
-        [Row(10, 7, 6)] // UK-2262
+        [Row(1, 7, 1)] // UKWEB-304
+        [Row(10, 7, 6)] // UKWEB-304
         public void ExtensionRequestPageNDaysAfterLoanTakenTest(int loanAmount, int loanTerm, int daysAfterLoan)
         {
             ExtensionRequestPageNDaysAfterLoanTaken(loanAmount, loanTerm, daysAfterLoan);
@@ -237,7 +237,7 @@ namespace Wonga.QA.Tests.Ui
             var expectedTotalPayable = (application.LoanAmount + extensionFee) * (1 + Decimal.Round(newLoanTerm * interestPerDay, 2));
             var sFutureInterestAndFees = String.Format("£{0:0.00}", Decimal.Round((expectedTotalPayable - application.LoanAmount), 2));
             response = api.Queries.Post(new GetFixedTermLoanExtensionParametersQuery { AccountId = customer.Id });
-            var expectedRepaymentDate = Date.GetOrdinalDate(Convert.ToDateTime(response.Values["NextDueDate"].Single()).AddDays(extensionDays), "d MMM yyyy");
+            var expectedRepaymentDate = Date.GetOrdinalDate(Convert.ToDateTime(response.Values["NextDueDate"].Single()).AddDays(extensionDays), "d MMMM yyyy");
 
             // Log in
             var myAccountPage = Client.Login().LoginAs(email);
