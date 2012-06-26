@@ -5,9 +5,9 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Data;
 
-namespace Wonga.QA.Tests.Hds
+namespace Wonga.QA.DataTests.Hds
 {
-    static class HdsUtilities
+    internal static class HdsUtilities
     {
         internal enum PaymentEntity
         {
@@ -15,15 +15,30 @@ namespace Wonga.QA.Tests.Hds
             BankAccountsBase
         }
 
-       //internal static string CdcStagingAgentJob { get { return "UK_CDCStagingLoadPayments"; }}
-       //internal static string HdsLoadAgentJob { get { return "DataInsight - UK_WongaHDSpaymentsLoad"; } }
-       // internal static string HdsInitialLoadAgentJob { get { return "DataInsight - UK_WongaHDS_paymentsInitialLoad"; }}
-       // internal static string HdsReconcileAgentJob { get { return "DataInsight - UK_WongaHDS_paymentsReconciliation"; } }
+        //internal static string CdcStagingAgentJob { get { return "UK_CDCStagingLoadPayments"; }}
+        //internal static string HdsLoadAgentJob { get { return "DataInsight - UK_WongaHDSpaymentsLoad"; } }
+        // internal static string HdsInitialLoadAgentJob { get { return "DataInsight - UK_WongaHDS_paymentsInitialLoad"; }}
+        // internal static string HdsReconcileAgentJob { get { return "DataInsight - UK_WongaHDS_paymentsReconciliation"; } }
 
-        internal static string CdcStagingAgentJob { get { return "UK_CDCStaging_PaymentsLoad"; } }
-        internal static string HdsLoadAgentJob { get { return "UK_WongaHDS_PaymentsLoad"; } }
-        internal static string HdsInitialLoadAgentJob { get { return "UK_WongaHDS_PaymentsInitialLoad"; } }
-        internal static string HdsReconcileAgentJob { get { return "UK_WongaHDS_PaymentsReconciliation"; } }
+        internal static string CdcStagingAgentJob
+        {
+            get { return "UK_CDCStaging_PaymentsLoad"; }
+        }
+
+        internal static string HdsLoadAgentJob
+        {
+            get { return "UK_WongaHDS_PaymentsLoad"; }
+        }
+
+        internal static string HdsInitialLoadAgentJob
+        {
+            get { return "UK_WongaHDS_PaymentsInitialLoad"; }
+        }
+
+        internal static string HdsReconcileAgentJob
+        {
+            get { return "UK_WongaHDS_PaymentsReconciliation"; }
+        }
 
         /// <summary>
         /// Checks CDC Staging for record 
@@ -38,11 +53,14 @@ namespace Wonga.QA.Tests.Hds
             try
             {
                 // TODO: Extend to check a passed in entity, not just Application
-                var recordInCdcStaging = Do.Until(() => Drive.Data.Cdc.Db.Payment.Applications.FindBy(ExternalId: externalId));
+                var recordInCdcStaging =
+                    Do.Until(() => Drive.Data.Cdc.Db.Payment.Applications.FindBy(ExternalId: externalId));
             }
             catch (Exception e)
             {
-                throw new Exception(String.Format("Record not found in [{0}] in CDC Staging, Error = [{1}], Trace = [{2}].", entity, e.Message, e.ToString()));
+                throw new Exception(
+                    String.Format("Record not found in [{0}] in CDC Staging, Error = [{1}], Trace = [{2}].", entity,
+                                  e.Message, e.ToString()));
             }
         }
 
@@ -63,7 +81,8 @@ namespace Wonga.QA.Tests.Hds
             }
             catch (Exception e)
             {
-                throw new Exception(String.Format("Record not found in [{0}] in HDS, Error = [{1}], Trace = [{2}].", entity, e.Message, e.ToString()));
+                throw new Exception(String.Format("Record not found in [{0}] in HDS, Error = [{1}], Trace = [{2}].",
+                                                  entity, e.Message, e.ToString()));
             }
         }
 
@@ -79,19 +98,25 @@ namespace Wonga.QA.Tests.Hds
             DateTime? lastRunTime = SQLServerAgentJobs.GetJobLastRunDateTime(jobName);
 
             // wait for job to stop if running
-            if (SQLServerAgentJobs.CheckJobStatus(jobName) != JobExecutionStatus.Idle) { SQLServerAgentJobs.WaitUntilJobRun(jobName, lastRunTime ?? DateTime.Now, waitTimeSecondsOverride); }
-            
+            if (SQLServerAgentJobs.CheckJobStatus(jobName) != JobExecutionStatus.Idle)
+            {
+                SQLServerAgentJobs.WaitUntilJobRun(jobName, lastRunTime ?? DateTime.Now, waitTimeSecondsOverride);
+            }
+
         }
 
-         internal static void WaitUntilJobComplete(string jobName, int waitTimeSecondsOverride = 0)
+        internal static void WaitUntilJobComplete(string jobName, int waitTimeSecondsOverride = 0)
         {
             // Find the last run time
             DateTime? lastRunTime = SQLServerAgentJobs.GetJobLastRunDateTime(jobName);
 
             // wait for job to stop if running
-            if (SQLServerAgentJobs.CheckJobStatus(jobName) != JobExecutionStatus.PerformingCompletionAction) { SQLServerAgentJobs.WaitUntilJobRun(jobName, lastRunTime ?? DateTime.Now, waitTimeSecondsOverride); }
+            if (SQLServerAgentJobs.CheckJobStatus(jobName) != JobExecutionStatus.PerformingCompletionAction)
+            {
+                SQLServerAgentJobs.WaitUntilJobRun(jobName, lastRunTime ?? DateTime.Now, waitTimeSecondsOverride);
+            }
         }
-        
+
         /// <summary>
         /// Disables SQL Agent job
         /// </summary>
@@ -108,7 +133,7 @@ namespace Wonga.QA.Tests.Hds
 
                 jobWasEnabled = true;
             }
-            else 
+            else
             {
                 jobWasEnabled = false;
             }

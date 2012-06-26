@@ -6,7 +6,7 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Framework.Data;
-using Wonga.QA.Tests.Hds;
+using Wonga.QA.DataTests.Hds;
 using System.Threading;
 
 
