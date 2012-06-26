@@ -4,6 +4,7 @@ using Wonga.QA.Framework.Data;
 
 namespace Wonga.QA.DataTests.Hds
 {
+    [TestFixture]
     class InitialLoadTests
     {
         private bool _cdcStagingAgentJobWasDisabled;
@@ -43,6 +44,5 @@ namespace Wonga.QA.DataTests.Hds
             Assert.IsTrue(jobSuccess);
 
         }
-
     }
 }
