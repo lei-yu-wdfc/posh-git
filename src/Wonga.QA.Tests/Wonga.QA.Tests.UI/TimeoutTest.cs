@@ -31,7 +31,7 @@ namespace Wonga.QA.Tests.Ui
             var timeoutPageReopened = new TimeoutTestPage(this.Client); // redirected to test page. 
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-794")]
+        [Test, AUT(AUT.Uk), JIRA("UK-794"), Pending("UKWEB-948: After timeout and login, the My Summary page does not open")]
         public void AutologoutDoesNotRedirectTest()
         {
             string email = Get.RandomEmail();

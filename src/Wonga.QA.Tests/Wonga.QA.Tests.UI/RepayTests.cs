@@ -620,8 +620,8 @@ namespace Wonga.QA.Tests.Ui
             // Get the content from the Payment Taken Page
             string paymentTakenText = paymentTakenPage.ContentArea();
             //Thank you for resolving  this situation. We can’t promise your Wonga trust rating won’t have been affected, but we may consider helping you again in the future.
-            var testTitle = "Success! Your balance has been settled in full";
-            var testMessage = "Thank you for resolving  this situation. We can’t promise your Wonga trust rating won’t have been affected, but we may consider helping you again in the future.";
+            const string testTitle = "Success! Your balance has been settled in full";
+            const string testMessage = "Thank you for resolving this situation. We can’t promise your Wonga trust rating won’t have been affected, but we may consider helping you again in the future.";
 
             Assert.IsTrue(paymentTakenPage.Headers.Contains(testTitle), "Header is incorrect.");
             Assert.IsTrue(paymentTakenText.Contains(testMessage), "Content area text is incorrect.");
