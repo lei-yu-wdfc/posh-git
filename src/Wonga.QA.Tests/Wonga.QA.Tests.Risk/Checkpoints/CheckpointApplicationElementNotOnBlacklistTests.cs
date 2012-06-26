@@ -37,7 +37,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				case AUT.Uk:
 					{
 						var dateOfBirth = Get.GetDoB();
-						var bankAccountNumber = Get.RandomLong(10000000, 99999999).ToString();
+						var bankAccountNumber = Get.GetBankAccountNumber();
 
 						var customer = CustomerBuilder.New()
 							.WithEmployer(_testMask)
@@ -45,8 +45,9 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 							.WithBankAccountNumber(bankAccountNumber)
 							.Build();
 
-						var application = ApplicationBuilder.New(customer).Build();
+					    var application = ApplicationBuilder.New(customer).Build();
 						Assert.IsNotNull(application);
+                        
 
 						var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
 						Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
@@ -117,7 +118,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				.WithMobileNumber(mobilePhoneNumber).Build();
 
 			var formattedMobilePhoneNumber = GetInternationalFormattedPhoneNumber(mobilePhoneNumber);
-			BlacklistMobilePhoneNumber(formattedMobilePhoneNumber);
+			AddBlacklistMobilePhoneNumber(formattedMobilePhoneNumber);
 
 			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
@@ -126,12 +127,18 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[JIRA("UK-847")]
 		public void ApplicationElementIsOnBlackList_BankAccount_LoanIsDeclined()
 		{
-			var bankAccountNumber = Get.GetBankAccountNumber();
-			var customer = CustomerBuilder.New().WithEmployer(_testMask).WithBankAccountNumber(bankAccountNumber).Build();
+            var bankAccountNumber = Get.GetBankAccountNumber();
+            try
+            {
+                var customer = CustomerBuilder.New().WithEmployer(_testMask).WithBankAccountNumber(bankAccountNumber).Build();
+                AddBlacklistBankAccountNumber(bankAccountNumber);
+                ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+            }
 
-			BlacklistBankAccountNumber(bankAccountNumber);
-
-			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+            finally
+            {
+                CleanDbBlacklistFromBankAccount(bankAccountNumber);
+            }
 		}
 
 		[Test, AUT(AUT.Za, AUT.Uk)]
@@ -245,12 +252,12 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 		#region Helpers
 		
-		private void BlacklistBankAccountNumber(string bankAccountNumber)
+		private void AddBlacklistBankAccountNumber(string bankAccountNumber)
 		{
 			BlacklistTable.Insert(BankAccount: bankAccountNumber, ExternalId: Guid.NewGuid());
 		}
 
-		private void BlacklistMobilePhoneNumber(string mobilePhoneNumber)
+		private void AddBlacklistMobilePhoneNumber(string mobilePhoneNumber)
 		{
 			BlacklistTable.Insert(MobilePhone: mobilePhoneNumber, ExternalId: Guid.NewGuid());
 		}
@@ -266,6 +273,11 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		{
 			return mobilePhoneNumber[0] == '+';
 		}
+
+        private void CleanDbBlacklistFromBankAccount(string bankAccountNumber)
+        {
+            BlacklistTable.Delete(BankAccount: bankAccountNumber);
+        }
 		
 		#endregion
 	}
