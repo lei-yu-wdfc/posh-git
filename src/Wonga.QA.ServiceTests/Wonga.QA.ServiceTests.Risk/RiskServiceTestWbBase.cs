@@ -25,64 +25,23 @@ namespace Wonga.QA.ServiceTests.Risk
 
 		#region IDs
 
-		protected Guid MainApplicantAccountId { get; private set; }
-		protected Guid PaymentCardId { get; private set; }
-		protected Guid BankAccountId { get; private set; }
 		protected Guid BusinessPaymentCardId { get; private set; }
 		protected Guid BusinessBankAccountId { get; private set; }
-		protected Guid AddressId { get; private set; }
-		protected Guid VerificationId { get; private set; }
 		protected Guid OrganisationId { get; private set; }
 
 		protected override void GenerateIds()
 		{
 			base.GenerateIds();
-
-			MainApplicantAccountId = Guid.NewGuid();
-			Console.WriteLine("Main Applicant Account ID:" + MainApplicantAccountId);
-
 			OrganisationId = Guid.NewGuid();
-			PaymentCardId = Guid.NewGuid();
 			BusinessPaymentCardId = Guid.NewGuid();
-			BankAccountId = Guid.NewGuid();
 			BusinessBankAccountId = Guid.NewGuid();
-			AddressId = Guid.NewGuid();
-			VerificationId = Guid.NewGuid();
 		}
 		#endregion
-
-		#region 
-		protected virtual void SetupLegitCustomer(DateTime? dateOfBirth = null)
-		{
-			SetupKathleenAs(Messages.Get<RiskSaveCustomerDetailsCommand>(), Messages.Get<RiskSaveCustomerAddressCommand>(), dateOfBirth);
-		}
-
-		protected void SetupKathleenAs(RiskSaveCustomerDetailsCommand detailsCommand,
-		                               RiskSaveCustomerAddressCommand addressCommand,
-		                               DateTime? dateOfBirth = null)
-		{
-			detailsCommand.DateOfBirth = dateOfBirth ?? DateTime.Parse("24-Jan-1992");
-
-			detailsCommand.Forename = "kathleen";
-			detailsCommand.MiddleName = "nicole";
-			detailsCommand.Surname = "bridson";
-
-			addressCommand.HouseNumber = "6";
-			addressCommand.Street = "Green lane";
-			addressCommand.Town = "Shanklin";
-			addressCommand.Postcode = "BB12 0NL";
-		}
-		#endregion
-
-		protected void RunL0Journey()
-		{
-			SendAllMessages();
-		}
 
 		protected override void InitialiseCommands()
 		{
 			base.InitialiseCommands();
-
+			
 			Messages.Add<RiskSaveCustomerDetailsCommand>(
 				x =>
 					{
@@ -99,7 +58,7 @@ namespace Wonga.QA.ServiceTests.Risk
 				x =>
 					{
 						x.AccountId = MainApplicantAccountId;
-						AddressId = AddressId;
+						x.AddressId = AddressId;
 						x.HouseNumber = "1";
 						x.Postcode = "NW1 7SN";
 						x.Street = "Prince Albert Road";

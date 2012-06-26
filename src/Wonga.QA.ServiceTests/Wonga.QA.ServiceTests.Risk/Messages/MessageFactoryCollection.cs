@@ -15,7 +15,6 @@ namespace Wonga.QA.ServiceTests.Risk
 		public void Add<T>(Action<T> init) where T : MsmqMessage
 		{
 			_messageFactories.Add(new MessageFactory<T>(init));
-
 		}
 
 		public T Get<T>() where T : MsmqMessage

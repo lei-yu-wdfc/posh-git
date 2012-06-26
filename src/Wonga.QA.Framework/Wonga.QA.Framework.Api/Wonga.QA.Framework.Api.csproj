@@ -110,7 +110,6 @@
     <Compile Include="Defaults\SaveEmploymentDetailsZaCommand.cs" />
     <Compile Include="Defaults\SaveSocialDetailsCaCommand.cs" />
     <Compile Include="Exceptions\ValidatorException.cs" />
-    <Compile Include="Exceptions\NoDefaultException.cs" />
     <Compile Include="Exceptions\SchemaException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\Marketing\Commands\SaveServerSideInitialTrackingDataCommand.cs" />

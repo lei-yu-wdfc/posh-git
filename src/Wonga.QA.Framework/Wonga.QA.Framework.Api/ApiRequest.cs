@@ -3,18 +3,12 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Xml.Serialization;
-using Wonga.QA.Framework.Api.Exceptions;
 using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework.Api
 {
-    public abstract class ApiRequest
+    public abstract class ApiRequest:MessageBase
     {
-        public virtual void Default()
-        {
-            throw new NoDefaultException(this);
-        }
-
         public override String ToString()
         {
             String root = GetType().GetAttribute<XmlRootAttribute>().ElementName;
@@ -42,7 +36,9 @@ namespace Wonga.QA.Framework.Api
         }
     }
 
-    public abstract class ApiRequest<T> : ApiRequest where T : ApiRequest<T>, new()
+
+
+	public abstract class ApiRequest<T> : ApiRequest where T : ApiRequest<T>, new()
     {
         public static T New(Action<T> action = null)
         {

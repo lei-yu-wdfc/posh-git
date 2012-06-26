@@ -79,6 +79,7 @@
     <Compile Include="Messages\IMessageFactory.cs" />
     <Compile Include="Messages\MessageFactory.cs" />
     <Compile Include="Messages\MessageFactoryCollection.cs" />
+    <Compile Include="Preparation\ApplicationReadinessUkTests.cs" />
     <Compile Include="Preparation\ApplicationReadinessWbTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RiskServiceTestBase.cs" />

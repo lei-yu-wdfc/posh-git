@@ -7,7 +7,7 @@ using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework.Msmq
 {
-    public abstract class MsmqMessage
+    public abstract class MsmqMessage:MessageBase
     {
         public override string ToString()
         {
@@ -89,5 +89,12 @@ namespace Wonga.QA.Framework.Msmq
         }
     }
 
-    public abstract class MsmqMessage<T> : MsmqMessage where T : MsmqMessage<T> { }
+    public abstract class MsmqMessage<T> : MsmqMessage where T : MsmqMessage<T>
+    {
+		public void Initialise()
+		{
+			Default();
+		}
+
+    }
 }
