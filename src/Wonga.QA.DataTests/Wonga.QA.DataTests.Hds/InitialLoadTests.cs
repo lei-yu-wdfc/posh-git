@@ -1,15 +1,10 @@
-﻿using System;
-using System.Diagnostics;
-using MbUnit.Framework;
-using Microsoft.SqlServer.Management.Smo.Agent;
+﻿using MbUnit.Framework;
 using Wonga.QA.Framework;
-using Wonga.QA.Framework.Core;
-using Wonga.QA.Tests.Core;
 using Wonga.QA.Framework.Data;
 
 namespace Wonga.QA.DataTests.Hds
 {
-    class InitialLoad
+    class InitialLoadTests
     {
         private bool _cdcStagingAgentJobWasDisabled;
         private bool _hdsAgentJobWasEnabled;
