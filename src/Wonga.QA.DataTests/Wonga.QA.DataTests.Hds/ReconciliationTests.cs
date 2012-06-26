@@ -3,6 +3,7 @@ using Wonga.QA.Framework.Data;
 
 namespace Wonga.QA.DataTests.Hds
 {
+    [TestFixture]
     class ReconciliationTests
     {
         [Test]
