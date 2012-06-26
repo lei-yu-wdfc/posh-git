@@ -76,6 +76,7 @@
     <Compile Include="MoveApplicationToDcaTests.cs" />
     <Compile Include="NaedoRetryTests.cs" />
     <Compile Include="PadRepresentmentOptimization.cs" />
+    <Compile Include="PaymentsCollectionSuppression\BankruptcyCollectionSuppressionTests.cs" />
     <Compile Include="PaymentsCollectionSuppression\FraudPaymentsCollectionSuppressionTests.cs" />
     <Compile Include="Queries\CsGetLoanExtensionPaymentStatusQueryTests.cs" />
     <Compile Include="Queries\GetBusinessApplicationSummaryCsapiQuery.cs" />
