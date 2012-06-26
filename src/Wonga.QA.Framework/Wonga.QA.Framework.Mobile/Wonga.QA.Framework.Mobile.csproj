@@ -60,6 +60,7 @@
     <Compile Include="Journey\BaseL0Journey.cs" />
     <Compile Include="Journey\ILnConsumerJourney.cs" />
     <Compile Include="Journey\JourneyFactory.cs" />
+    <Compile Include="Journey\UkMobileL0Journey.cs" />
     <Compile Include="Journey\ZaMobileL0Journey.cs" />
     <Compile Include="Journey\ZaMobileLnJourney.cs" />
     <Compile Include="Mappings\Content\ContentMapMobile.cs" />
@@ -76,7 +77,9 @@
     <Compile Include="Mappings\Ui\Elements\LoginElement.cs" />
     <Compile Include="Mappings\Ui\Elements\TabsElement.cs" />
     <Compile Include="Mappings\Ui\Pages\DeclinedPageMobile.cs" />
+    <Compile Include="Mappings\Ui\Pages\PersonalDebitCardPageMobile.cs" />
     <Compile Include="Mappings\Ui\Sections\AccountDetailsSection.cs" />
+    <Compile Include="Mappings\Ui\Sections\DebitCardSection.cs" />
     <Compile Include="Ui\Elements\FAQElement.cs" />
     <Compile Include="Ui\Elements\HelpElement.cs" />
     <Compile Include="Ui\Elements\InternationalElement.cs" />
@@ -92,6 +95,7 @@
     <Compile Include="Mappings\Ui\Pages\MySummaryPageMobile.cs" />
     <Compile Include="Mappings\Ui\Pages\PersonalBankAccountPageMobile.cs" />
     <Compile Include="Mappings\Ui\Pages\PersonalDetailsPageMobile.cs" />
+    <Compile Include="Ui\Pages\PersonalDebitCardPageMobile.cs" />
     <Compile Include="Ui\Pages\ProcessingPageMobile.cs" />
     <Compile Include="Mappings\Ui\Sections\BankAccountSection.cs" />
     <Compile Include="Mappings\Ui\Sections\ContactingYouSection.cs" />
@@ -126,6 +130,7 @@
     <Compile Include="Ui\Sections\BaseSection.cs" />
     <Compile Include="Ui\Sections\ContactingYouSection.cs" />
     <Compile Include="Ui\Sections\BankAccountSection.cs" />
+    <Compile Include="Ui\Sections\DebitCardSection.cs" />
     <Compile Include="Ui\Sections\EmploymentDetailsSection.cs" />
     <Compile Include="Ui\Sections\MobilePinVerificationSection.cs" />
     <Compile Include="Ui\Sections\YourDetailsSection.cs" />

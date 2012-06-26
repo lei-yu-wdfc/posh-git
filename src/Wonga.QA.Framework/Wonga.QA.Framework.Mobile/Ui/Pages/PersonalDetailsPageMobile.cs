@@ -27,13 +27,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
                     _contact.SelectLabel((String)value);
             }
         }
-        //public string MarriedInCommunityProperty
-        //{
-        //    set
-        //    {
-        //        _marriedInCommunityProperty.SelectLabel(value);
-        //    }
-        //}
+
         public void IAmNotMarriedInCommunityOfProperty()
         {
             _notMarriedInCommunityProperty.Click();
@@ -96,6 +90,9 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
                         _form.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPageMobile.NotMarriedInCommunityProperty));
                     _marriedInCommunityProperty =
                         _form.FindElement(By.CssSelector(UiMapMobile.Get.PersonalDetailsPageMobile.MarriedInCommunityProperty));
+                    break;
+                case (AUT.Uk):
+                    EmploymentDetails = new EmploymentDetailsSection(this);
                     break;
             }
         }
