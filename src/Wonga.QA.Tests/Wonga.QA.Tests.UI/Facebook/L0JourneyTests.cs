@@ -24,7 +24,7 @@ namespace Wonga.QA.Tests.Ui.Facebook
     class L0JourneyTests : UiTest
     {
         [Test, AUT(AUT.Uk), Pending("Waiting on Facebook Environment Setup - AUT.UkFb")]
-        public void L0Journey()
+        public void FBL0Journey()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home())
                 .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
@@ -32,7 +32,7 @@ namespace Wonga.QA.Tests.Ui.Facebook
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-969", "UKWEB-250"), MultipleAsserts, Pending("Waiting on Facebook Environment Setup - AUT.UkFb")]
-        public void L0PreAgreementPartonAccountSetupPageTest()
+        public void FBL0PreAgreementPartonAccountSetupPageTest()
         {
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
