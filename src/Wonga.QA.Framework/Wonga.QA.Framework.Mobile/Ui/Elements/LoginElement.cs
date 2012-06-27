@@ -3,7 +3,7 @@ using OpenQA.Selenium;
 using Wonga.QA.Framework.Mobile.Mappings.Ui;
 using Wonga.QA.Framework.Mobile.Ui.Pages;
 
-namespace Wonga.QA.Framework.Mobile.UI.Elements
+namespace Wonga.QA.Framework.Mobile.Ui.Elements
 {
     //TODO finish this
     public class LoginElement : BaseElement

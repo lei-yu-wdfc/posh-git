@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Mobile.Mappings.Ui;
-using Wonga.QA.Framework.Mobile.UI.Elements;
 using Wonga.QA.Framework.Mobile.Ui.Pages;
 
 namespace Wonga.QA.Framework.Mobile.Ui.Elements

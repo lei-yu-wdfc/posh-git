@@ -76,7 +76,9 @@
     <Compile Include="Mappings\Ui\Elements\InternationalElement.cs" />
     <Compile Include="Mappings\Ui\Elements\LoginElement.cs" />
     <Compile Include="Mappings\Ui\Elements\TabsElement.cs" />
+    <Compile Include="Mappings\Ui\Pages\ApplyPageMobile.cs" />
     <Compile Include="Mappings\Ui\Pages\DeclinedPageMobile.cs" />
+    <Compile Include="Mappings\Ui\Pages\LoginPageMobile.cs" />
     <Compile Include="Mappings\Ui\Pages\PersonalDebitCardPageMobile.cs" />
     <Compile Include="Mappings\Ui\Sections\AccountDetailsSection.cs" />
     <Compile Include="Mappings\Ui\Sections\DebitCardSection.cs" />
@@ -95,6 +97,8 @@
     <Compile Include="Mappings\Ui\Pages\MySummaryPageMobile.cs" />
     <Compile Include="Mappings\Ui\Pages\PersonalBankAccountPageMobile.cs" />
     <Compile Include="Mappings\Ui\Pages\PersonalDetailsPageMobile.cs" />
+    <Compile Include="Ui\Pages\ApplyPageMobile.cs" />
+    <Compile Include="Ui\Pages\LoginPageMobile.cs" />
     <Compile Include="Ui\Pages\PersonalDebitCardPageMobile.cs" />
     <Compile Include="Ui\Pages\ProcessingPageMobile.cs" />
     <Compile Include="Mappings\Ui\Sections\BankAccountSection.cs" />
@@ -159,9 +163,18 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Mappings\Xml\Content\Uk\en.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mappings\Xml\Content\Za\en.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mappings\Xml\Ui\Uk.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

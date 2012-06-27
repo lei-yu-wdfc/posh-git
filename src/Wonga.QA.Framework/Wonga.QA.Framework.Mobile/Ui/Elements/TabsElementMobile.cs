@@ -6,12 +6,8 @@ using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Mobile.Mappings.Content;
 using Wonga.QA.Framework.Mobile.Mappings.Ui;
-using Wonga.QA.Framework.Mobile.UI.Elements;
 using Wonga.QA.Framework.Mobile.Ui.Pages;
 using Wonga.QA.Framework.Mobile.Mappings;
-//using Wonga.QA.Framework.UI.UiElements.Pages;
-//using Wonga.QA.Framework.UI.UiElements.Pages.Common;
-//using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
 
 namespace Wonga.QA.Framework.Mobile.Ui.Elements
 {

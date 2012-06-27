@@ -7,10 +7,9 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Mobile;
 using Wonga.QA.Framework.Mobile.Mappings.Content;
 using Wonga.QA.Framework.Mobile.Mappings.Ui;
-using Wonga.QA.Framework.Mobile.UI.Elements;
 using Wonga.QA.Framework.Mobile.Ui.Pages;
 
-namespace Wonga.QA.Framework.Mobile.UI.Elements
+namespace Wonga.QA.Framework.Mobile.Ui.Elements
 {
     public class HelpElement : BaseElement
     {
