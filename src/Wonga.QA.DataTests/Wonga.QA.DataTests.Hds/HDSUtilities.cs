@@ -20,24 +20,43 @@ namespace Wonga.QA.DataTests.Hds
         // internal static string HdsInitialLoadAgentJob { get { return "DataInsight - UK_WongaHDS_paymentsInitialLoad"; }}
         // internal static string HdsReconcileAgentJob { get { return "DataInsight - UK_WongaHDS_paymentsReconciliation"; } }
 
+        /// <summary>
+        /// Define or retrieve the Region
+        /// This will need to change when we have different set ups (like WB for ZA)
+        /// </summary>
+        internal static string Region { get { return Config.AUT == AUT.Wb ? "Uk" : Config.AUT.ToString(); } }
+        /// <summary>
+        /// Define or retreive the Product
+        /// </summary>
+        internal static string Product { get { return Config.AUT == AUT.Wb ? Config.AUT.ToString() : ""; } }
+
+        /// <summary>
+        /// Return the CDC Database Name
+        /// </summary>
+        internal static string CDCDatabaseName { get { return (Region.Length == 0 ? "" : Region + "_") + (Product.Length == 0 ? "" : Product + "_") + "CDCStaging"; } }
+
+        /// <summary>
+        /// Return the HDS database Name
+        /// </summary>
+        internal static string HDSDatabaseName { get { return (Region.Length == 0 ? "" : Region + "_") + (Product.Length == 0 ? "" : Product + "_") + "WongaHDS"; } }
         internal static string CdcStagingAgentJob
         {
-            get { return "UK_CDCStaging_PaymentsLoad"; }
+            get { return CDCDatabaseName + "_PaymentsLoad"; }
         }
 
         internal static string HdsLoadAgentJob
         {
-            get { return "UK_WongaHDS_PaymentsLoad"; }
+            get { return HDSDatabaseName + "_PaymentsLoad"; }
         }
 
         internal static string HdsInitialLoadAgentJob
         {
-            get { return "UK_WongaHDS_PaymentsInitialLoad"; }
+            get { return HDSDatabaseName + "_PaymentsInitialLoad"; }
         }
 
         internal static string HdsReconcileAgentJob
         {
-            get { return "UK_WongaHDS_PaymentsReconciliation"; }
+            get { return HDSDatabaseName + "_PaymentsReconciliation"; }
         }
 
         /// <summary>
