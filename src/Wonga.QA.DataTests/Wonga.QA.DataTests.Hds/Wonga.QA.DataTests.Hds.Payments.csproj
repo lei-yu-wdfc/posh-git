@@ -46,6 +46,7 @@
     <Compile Include="InitialLoadTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReconciliationTests.cs" />
+    <Compile Include="ServiceDBChangesTest.cs" />
     <Compile Include="SourceToHdsTest.cs" />
   </ItemGroup>
   <ItemGroup>
