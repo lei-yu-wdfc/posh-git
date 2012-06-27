@@ -55,12 +55,15 @@ namespace Wonga.QA.Framework.Data
                 Server srv = new Server(serverName);
                 Database db = srv.Databases[databaseName];
                 db.DefaultSchema = schemaName;
-
-                Table tbl = db.Tables[tableName];
-
-                tbl.Columns[columnToRemove].Drop();
-                tbl.Alter();
-
+                if (db.Tables.Contains(tableName))
+                {
+                    Table tbl = db.Tables[tableName];
+                    if (tbl.Columns.Contains(columnToRemove))
+                    {
+                        tbl.Columns[columnToRemove].Drop();
+                        tbl.Alter();
+                    }
+                }
             }
             catch (Exception e)
             {

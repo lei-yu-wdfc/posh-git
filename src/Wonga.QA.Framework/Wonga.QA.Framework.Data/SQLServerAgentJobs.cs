@@ -83,6 +83,24 @@ namespace Wonga.QA.Framework.Data
         }
 
         /// <summary>
+        /// Used to check current job last job step status
+        /// </summary>
+        /// <param name="serverName">Name of the server to connect to</param>
+        /// <param name="jobName">Name of the job to check the status of</param>
+        /// <returns>The SMO/Agent Job Execution status</returns>
+        public static Microsoft.SqlServer.Management.Smo.Agent.CompletionResult LastRunOutcome(string jobName)
+        {
+
+            Server srv = new Server(new DataDriver().NameOfHdsServer);
+
+            JobServer sqlServerAgent = srv.JobServer;
+            Job specificJob = sqlServerAgent.Jobs[jobName];
+
+            return specificJob.LastRunOutcome;
+
+        }
+
+        /// <summary>
         /// Check to see if the job has run after a particular time
         /// </summary>
         /// <param name="jobName">The name of the job to check</param>
