@@ -1,0 +1,36 @@
+<Project DefaultTargets="Default" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<UsingTask TaskName="Gallio" AssemblyFile="$(ProgramW6432)\Gallio\bin\Gallio.MsBuildTasks.dll" />
+	
+	<PropertyGroup>
+		<Framework>Wonga.QA.Framework</Framework>
+		<Tests>Wonga.QA.Tests</Tests>
+		<ServiceTests>Wonga.QA.ServiceTests</ServiceTests>
+		<DataTests>Wonga.QA.DataTests</DataTests>
+	</PropertyGroup>
+	
+	<PropertyGroup>
+		<Root>$(MSBuildProjectDirectory)\..</Root>
+		<Src>$(Root)\src</Src>
+		<Bin>$(Root)\bin</Bin>
+		<Lib>$(Root)\lib</Lib>
+	</PropertyGroup>	
+	
+	<Target Name="Config">
+		<Exec Command="SETX SUT $(SUT)" />
+		<Exec Command="SETX AUT $(AUT)" />
+	</Target>
+	
+	<Target Name="Build">
+		<ItemGroup>
+			<Projects Include="$(Src)\$(Framework)\$(Framework).sln" />
+			<Projects Include="$(Src)\$(Tests)\$(Tests).sln" />
+			<Projects Include="$(Src)\$(ServiceTests)\$(ServiceTests).sln" />
+			<Projects Include="$(Src)\$(DataTests)\$(DataTests).sln" />
+		</ItemGroup>
+		<MSBuild Projects="@(Projects)" StopOnFirstFailure="true"/>
+	</Target>
+	
+	<Target Name="PreGenerateSerializers">
+		<Exec Command="$(lib)\sgen\sgen.exe $(Bin)\Wonga.QA.Framework.Cs.dll /force" />
+	</Target>
+</Project>

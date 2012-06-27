@@ -8,15 +8,11 @@
 	<Target Name="Merge">
 		<ItemGroup>
 			<Exclude Include="$(Bin)\$(Tests).Core.dll" />
-			<Exclude Include="$(Bin)\$(Tests).Meta.dll" />
-			<Exclude Include="$(Bin)\$(Tests).Ui.dll" />
-			<Exclude Include="$(Bin)\$(Tests).Ui.Mobile.dll" />
-			<Exclude Include="$(Bin)\$(Tests).Ui.Admin.dll" />
 			<Command Include='"$(MSBuildProgramFiles32)\Microsoft\ILMerge\ILMerge.exe"' />
 			<Command Include="/targetplatform:v4,$(MSBuildToolsPath)" />
-			<Command Include="/out:$(Bin)\$(Tests).dll" />
+			<Command Include="/out:$(Bin)\$(ServiceTests).dll" />
 			<Command Include="$(Bin)\$(Tests).Core.dll" />
-			<Command Include="$(Bin)\$(Tests).*.dll" Exclude="@(Exclude)" />
+			<Command Include="$(Bin)\$(ServiceTests).*.dll" Exclude="@(Exclude)" />
 		</ItemGroup>
 		<Exec Command="@(Command, ' ')" />
 	</Target>
@@ -24,20 +20,19 @@
 	<Target Name="Test">
 		<ItemGroup>
 			<Split Include="$(Files.Split(';'))" />
-			<Files Include="$(Bin)\$(Tests).dll" Condition="'$(Files)'==''" />
-			<Files Include="$(Bin)\$(Tests).%(Split.Identity).dll" Condition="'$(Files)'!=''" />
+			<Files Include="$(Bin)\$(ServiceTests).dll" Condition="'$(Files)'==''" />
+			<Files Include="$(Bin)\$(ServiceTests).%(Split.Identity).dll" Condition="'$(Files)'!=''" />
 		</ItemGroup>
 		<Gallio
 			Filter="$(TestFilter)"
 			Files="@(Files)"
 			ReportTypes="xml"
-			ReportDirectory="$(Bin)\$(Tests).Report"
+			ReportDirectory="$(Bin)\$(ServiceTests).Report"
 		/>
 	</Target>
 	
 	<Target Name="Default">
 		<CallTarget Targets="Config;Build;Merge;PreGenerateSerializers" />
-		<MsBuild Condition="'$(Files)'==''" Projects="$(MSBuildProjectFullPath)" Targets="Test" Properties="Files=Meta" />
 		<CallTarget Targets="Test" />
 	</Target>
 </Project>
