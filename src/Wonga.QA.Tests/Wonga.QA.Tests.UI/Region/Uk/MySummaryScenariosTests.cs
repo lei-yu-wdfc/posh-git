@@ -93,6 +93,30 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
         {21, @"One last step to receive your cash.\n\nYour application has been approved! Now you just need to read and accept your new agreement and the loan conditions by clicking the ‘I accept’ button in the agreement below. You will then receive {£loan amount} in your account.\n\nWe’ll then collect {£xx.xx total repayable on due date} from your debit card on {repayment date in format 15th March 2011.}\n\nThanks for using Wonga!"},
 	    };
 
+        Dictionary<int, string> PromiseSummaryTexts = new Dictionary<int, string> 
+	    {
+	    {1, ""},
+        {2, "I promised to pay {£245} in {10} days ({10th May 2012})"},
+        {3, "I promised to pay {£245} in {10} days ({10th May 2012})"},
+        {4, "I promised to pay {£245} in {10} days ({10th May 2012})"},
+        {5, "I promised to pay {£245} in {10} days ({10th May 2012})"},
+        {6, "I promised to pay {£245} in {10} days ({10th May 2012})"},
+        {7, "I promised to pay {£245} in {10} days ({10th May 2012})"},
+        {8, ""},
+        {9, "I promised to pay {£456.34} today"},
+        {10, "I owe {£456.34} today"},
+        {11, "I owe {£456.34} today"},
+        {12, "I owe {£456.34} today"},
+        {13, "I owe {£456.34} today"},
+        {14, "My next repayment of {£25.00} is due on the {10th May 2012}"},
+        {15, "I owed a repayment of {£25.00} on the {10th May 2012}"},
+        {16, "I owe {£456.34} today"},
+        {17, ""},
+        {19, ""},
+        {20, ""},
+        {21, ""}
+	    };
+
         // L0 journey
         [Test, AUT(AUT.Uk), JIRA("UK-1614"), Pending("Fails due to bug UK-1614"), MultipleAsserts]
         public void MySummaryScenario1A()
@@ -119,7 +143,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             string actuallntroText = mySummaryPage.GetIntroText;
             string expectedIntroText = introTexts[1];
             expectedIntroText = expectedIntroText.Replace("{first name}", firstName).Replace("{500}", "400.00");
-            
+
             Assert.AreEqual(expectedIntroText, actuallntroText);
 
             Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
@@ -162,8 +186,8 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
         
         [Test, AUT(AUT.Uk), JIRA("UK-1737"), MultipleAsserts]
         [Row(2, 0)]
-        [Row(2, 1)]
-        [Row(2, 2)]
+        //[Row(2, 1)]
+        //[Row(2, 2)]
         public void MySummaryScenario02(int scenarioId, int dayShift) { MySummaryScenarios(scenarioId, dayShift); }
 
         [Test, AUT(AUT.Uk), MultipleAsserts]
@@ -593,9 +617,9 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
 
             CheckLoanStatusText(scenarioId, mySummaryPage, customer, application);
 
+            //Assert.Contains(mySummaryPage.GetPromiseSummaryText, expectedDueDateBalance.ToString("#"));
+
             //if (mySummaryPage.GetTagCloud.IndexOf("Repay") > 0) ChangeWantToRepayBox(customer, application);
-
-
         }
 
         // Create a customer for a scenario

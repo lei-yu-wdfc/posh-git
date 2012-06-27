@@ -275,6 +275,7 @@
     <TagCloud>#cloud</TagCloud>
     <LoanStatusMessage>.wonga-box-type-warning</LoanStatusMessage>
     <Promise>.summary-text .blue-text</Promise>
+    <PromiseText>.summary-text-align</PromiseText>
     <OptionsCloud>#cloud ul</OptionsCloud>
     <YouCan>.summary-text .you-can</YouCan>
     <IntroText>p.summary-intro-text</IntroText>

@@ -246,5 +246,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             get { return Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.StatusText)).Text; }
         }
 
+        public String GetPromiseSummaryText
+        {
+            get { return Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.PromiseText)).Text; }
+        }
     }
 }
