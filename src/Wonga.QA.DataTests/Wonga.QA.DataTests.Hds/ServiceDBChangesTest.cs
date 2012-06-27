@@ -56,37 +56,34 @@ namespace Wonga.QA.Tests.Hds
         [Description("Test for new column in ServiceDB -- SSIS Job Fails")]
         public void AddNewColumnInCDCStagingDB_HDSSSISJobFails()
         {
-            //String cdcdbname = Drive.Data.Cdc.Db();
-            //SMODatabaseAlterations.RemoveAColumn(Drive.Data.NameOfHdsServer, Drive.Data.Cdc.ToString(), "Payment", "Applications", "col5");
+            SMODatabaseAlterations.RemoveAColumn(Drive.Data.NameOfHdsServer, HdsUtilities.CDCDatabaseName, "Payment", "Applications", "col5");
 
-            //bool hdsStagingAgentJobWasDisabled = HdsUtilities.EnableJob(HdsUtilities.HdsLoadAgentJob);
+            bool hdsStagingAgentJobWasDisabled = HdsUtilities.EnableJob(HdsUtilities.HdsLoadAgentJob);
 
-            //HdsUtilities.WaitUntilJobRun(HdsUtilities.HdsLoadAgentJob);
-            //HdsUtilities.WaitUntilJobComplete(HdsUtilities.HdsLoadAgentJob);
+            HdsUtilities.WaitUntilJobRun(HdsUtilities.HdsLoadAgentJob);
+            HdsUtilities.WaitUntilJobComplete(HdsUtilities.HdsLoadAgentJob);
 
-            //Assert.AreEqual(CompletionResult.Succeeded,
-            //                SQLServerAgentJobs.LastRunOutcome(HdsUtilities.HdsLoadAgentJob));
+            Assert.AreEqual(CompletionResult.Succeeded,
+                            SQLServerAgentJobs.LastRunOutcome(HdsUtilities.HdsLoadAgentJob));
 
-            //SMODatabaseAlterations.AddAColumn(Drive.Data.NameOfHdsServer, Drive.Data.Cdc.Db.ToString(), "Payment", "Applications", "col5", DataType.BigInt);
-            ////
-            //// Start the CDC Staging load job and check data once finished
-            ////
-            //HdsUtilities.WaitUntilJobRun(HdsUtilities.HdsLoadAgentJob);
-            //HdsUtilities.WaitUntilJobComplete(HdsUtilities.HdsLoadAgentJob);
+            SMODatabaseAlterations.AddAColumn(Drive.Data.NameOfHdsServer, HdsUtilities.CDCDatabaseName, "Payment", "Applications", "col5", DataType.BigInt);
+            //
+            // Start the CDC Staging load job and check data once finished
+            //
+            HdsUtilities.WaitUntilJobRun(HdsUtilities.HdsLoadAgentJob);
+            HdsUtilities.WaitUntilJobComplete(HdsUtilities.HdsLoadAgentJob);
 
+            Assert.AreEqual(CompletionResult.Failed, SQLServerAgentJobs.LastRunOutcome(HdsUtilities.HdsLoadAgentJob));
 
+            SMODatabaseAlterations.RemoveAColumn(Drive.Data.NameOfHdsServer, HdsUtilities.CDCDatabaseName, "Payment", "Applications", "col5");
 
-            //Assert.AreEqual(CompletionResult.Failed, SQLServerAgentJobs.LastRunOutcome(HdsUtilities.HdsLoadAgentJob));
+            //
+            // Start the HDS load job and check data once finished
+            //
 
-            //SMODatabaseAlterations.RemoveAColumn(Drive.Data.NameOfHdsServer, Drive.Data.Cdc.Db.ToString(), "Payment", "Applications", "col5");
-
-            ////
-            //// Start the HDS load job and check data once finished
-            ////
-
-            //// reset jobs to original state
-            //if (hdsStagingAgentJobWasDisabled)
-            //{ HdsUtilities.DisableJob(HdsUtilities.HdsLoadAgentJob); }
+            // reset jobs to original state
+            if (hdsStagingAgentJobWasDisabled)
+            { HdsUtilities.DisableJob(HdsUtilities.HdsLoadAgentJob); }
         }
 
     }
