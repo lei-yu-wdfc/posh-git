@@ -15,6 +15,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.CallReport
 {
     [Parallelizable(TestScope.All)]
+    [AUT(AUT.Wb,AUT.Uk)]
     public class CheckpointsTests
     {
         private const String GoodCompanyRegNumber = "00000086";

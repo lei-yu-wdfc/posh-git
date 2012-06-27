@@ -20,6 +20,7 @@ using Wonga.QA.Framework.Mocks;
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
 	[TestFixture]
+    [AUT(AUT.Ca,AUT.Za)]
 	class CheckpointReputationPredictionPositiveTests
 	{
 		private const RiskMask TestMask = RiskMask.TESTReputationtPredictionPositive;
