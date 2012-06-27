@@ -31,8 +31,17 @@ namespace Wonga.QA.Tests.Migration
             //var test = v2db;
             //var accountsTab = Drive.Data.Ops.Db.Accounts;
 
-            Client.Login().LoginAs("qa.wonga.com+QB-WK-158-d540d574-0c66-4f42-b02a-aec5a9d2bde4@gmail.com","Passw0rd");
+            //Client.Login().LoginAs("qa.wonga.com+QB-WK-158-d540d574-0c66-4f42-b02a-aec5a9d2bde4@gmail.com","Passw0rd");
             
+            //var wongaWholeStaging = Drive.Data.WongaWholeStaging.Db.greyface.Users;
+            //var userPassword = wongaWholeStaging.Find(wongaWholeStaging.user_name == "claire_coe@lycos.co.uk").password;
+
+
+            var migHelper = new MigrationHelper();
+            
+            var migratedAccountLogin = migHelper.GetMigratedAccountLogin();
+            var migratedAccountLoginPassword = migHelper.GetMigratedAccountLoginPassword(migratedAccountLogin);
+
             // Likely we don't need to assert here because if mySummary object is not created successfully, an excption will be thrown
         }
 
