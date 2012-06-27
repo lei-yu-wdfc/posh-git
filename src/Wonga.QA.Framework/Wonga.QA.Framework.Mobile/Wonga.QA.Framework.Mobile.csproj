@@ -79,6 +79,7 @@
     <Compile Include="Mappings\Ui\Pages\ApplyPageMobile.cs" />
     <Compile Include="Mappings\Ui\Pages\DeclinedPageMobile.cs" />
     <Compile Include="Mappings\Ui\Pages\LoginPageMobile.cs" />
+    <Compile Include="Mappings\Ui\Pages\MyPersonalDetailsPageMobile.cs" />
     <Compile Include="Mappings\Ui\Pages\PersonalDebitCardPageMobile.cs" />
     <Compile Include="Mappings\Ui\Sections\AccountDetailsSection.cs" />
     <Compile Include="Mappings\Ui\Sections\DebitCardSection.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="Mappings\Ui\Pages\PersonalDetailsPageMobile.cs" />
     <Compile Include="Ui\Pages\ApplyPageMobile.cs" />
     <Compile Include="Ui\Pages\LoginPageMobile.cs" />
+    <Compile Include="Ui\Pages\MyPersonalDetailsPageMobile.cs" />
     <Compile Include="Ui\Pages\PersonalDebitCardPageMobile.cs" />
     <Compile Include="Ui\Pages\ProcessingPageMobile.cs" />
     <Compile Include="Mappings\Ui\Sections\BankAccountSection.cs" />

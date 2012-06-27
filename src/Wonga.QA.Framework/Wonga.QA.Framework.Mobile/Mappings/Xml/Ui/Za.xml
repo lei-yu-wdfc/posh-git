@@ -275,4 +275,11 @@
     <BankAccount>#edit-bank-account-masked-wrapper</BankAccount>
     <ApplyNowButton>#edit-submit</ApplyNowButton>
   </ApplyPageMobile>
+
+  <MyPersonalDetailsPageMobile>
+    <AddressLink>tr#address #address-link</AddressLink>
+    <PasswordLink>tr#password #password-link</PasswordLink>
+    <PhoneLink>tr#phone #phone-link</PhoneLink>
+    <CommunicationLink>tr#communication #communication-link</CommunicationLink>    
+  </MyPersonalDetailsPageMobile>
 </UiMapMobile>

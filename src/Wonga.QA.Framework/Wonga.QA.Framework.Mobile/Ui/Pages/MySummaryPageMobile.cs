@@ -33,5 +33,11 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
             SlidersElement.Submit.Click();
             return new ApplyPageMobile(Client);
         }
+
+        public MyPersonalDetailsPageMobile GoToMyPersonalDetailsPage()
+        {
+            _myPersonalDetailsButton.Click();
+            return new MyPersonalDetailsPageMobile(Client);
+        }
     }
 }

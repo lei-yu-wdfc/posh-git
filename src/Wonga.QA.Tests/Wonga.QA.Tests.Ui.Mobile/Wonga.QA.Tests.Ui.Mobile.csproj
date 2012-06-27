@@ -38,6 +38,7 @@
     <Compile Include="L0LoanMobile.cs" />
     <Compile Include="LnLoanMobile.cs" />
     <Compile Include="MenuContent.cs" />
+    <Compile Include="PasswordTests.cs" />
     <Compile Include="SlidersTest.cs" />
     <Compile Include="UiMobileTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

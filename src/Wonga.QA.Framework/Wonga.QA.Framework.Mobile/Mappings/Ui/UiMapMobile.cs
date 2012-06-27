@@ -63,6 +63,7 @@ namespace Wonga.QA.Framework.Mobile.Mappings.Ui
         public virtual PersonalDebitCardPageMobile PersonalDebitCardPageMobile { get; set; }
         public virtual LoginPageMobile LoginPageMobile { get; set; }
         public virtual ApplyPageMobile ApplyPageMobile { get; set; }
+        public virtual MyPersonalDetailsPageMobile MyPersonalDetailsPageMobile { get; set; }
         #endregion
 
         #region Sections
