@@ -18,7 +18,7 @@ namespace Wonga.QA.Framework.Mobile.Journey
 
             _submit = true;
 
-            _amount = 100;
+            _amount = 850;
             _duration = 20;
 
             _firstName = Get.GetName();
@@ -90,8 +90,7 @@ namespace Wonga.QA.Framework.Mobile.Journey
             personalDetailsPage.ContactingYou.ConfirmEmailAddress = _email;
             personalDetailsPage.PrivacyPolicy = true;
             personalDetailsPage.CanContact = "Yes";
-            personalDetailsPage.IAmNotMarriedInCommunityOfProperty(); //=
-            //    "I am not married in community of property (I am single, married with antenuptial contract, divorced etc.)";
+            personalDetailsPage.IAmNotMarriedInCommunityOfProperty();
             if (submit)
             {
                 CurrentPage = personalDetailsPage.Submit() as AddressDetailsPageMobile;

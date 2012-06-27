@@ -5,6 +5,7 @@ using System.Text;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Mobile.Journey;
 using Wonga.QA.Framework.Mobile.Ui.Pages;
+using Wonga.QA.Framework.UI;
 
 namespace Wonga.QA.Framework.Mobile
 {
@@ -16,6 +17,8 @@ namespace Wonga.QA.Framework.Mobile
             {
                 case AUT.Za:
                     return new ZaMobileL0Journey(homePage);
+                case AUT.Uk:
+                    return new UkMobileL0Journey(homePage);
                 default:
                     throw new NotImplementedException();
             }

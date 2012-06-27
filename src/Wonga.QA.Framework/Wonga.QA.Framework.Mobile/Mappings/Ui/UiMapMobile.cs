@@ -6,9 +6,6 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Mobile.Mappings.Elements;
 using Wonga.QA.Framework.Mobile.Mappings.Pages;
 using Wonga.QA.Framework.Mobile.Mappings.Sections;
-using Wonga.QA.Framework.Mobile.Mappings.Ui.Elements;
-using Wonga.QA.Framework.Mobile.Mappings.Ui.Pages;
-using Wonga.QA.Framework.Mobile.Mappings.Ui.Sections;
 using Wonga.QA.Framework.Mobile.Mappings.Xml;
 
 namespace Wonga.QA.Framework.Mobile.Mappings.Ui
@@ -64,6 +61,9 @@ namespace Wonga.QA.Framework.Mobile.Mappings.Ui
         public virtual MySummaryPageMobile MySummaryPage { get; set; }
         public virtual DeclinedPageMobile DeclinedPage { get; set; }
         public virtual PersonalDebitCardPageMobile PersonalDebitCardPageMobile { get; set; }
+        public virtual LoginPageMobile LoginPageMobile { get; set; }
+        public virtual ApplyPageMobile ApplyPageMobile { get; set; }
+        public virtual MyPersonalDetailsPageMobile MyPersonalDetailsPageMobile { get; set; }
         #endregion
 
         #region Sections

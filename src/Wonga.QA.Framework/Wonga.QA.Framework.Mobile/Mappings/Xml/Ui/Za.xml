@@ -262,4 +262,24 @@
     <RepayDate>#content-area em</RepayDate>
     <RepayAmount>.blue-text</RepayAmount>
   </DealDonePage>
+
+  <LoginPageMobile>
+    <EmailAddress>#edit-name</EmailAddress>
+    <Password>#edit-pass</Password>
+    <LoginButton>#edit-login</LoginButton>
+    <ForgotPassword>div.form-markup-wrapper a</ForgotPassword>
+  </LoginPageMobile>
+
+  <ApplyPageMobile>
+    <PhoneNumber>#edit-mobile-number-wrapper</PhoneNumber>
+    <BankAccount>#edit-bank-account-masked-wrapper</BankAccount>
+    <ApplyNowButton>#edit-submit</ApplyNowButton>
+  </ApplyPageMobile>
+
+  <MyPersonalDetailsPageMobile>
+    <AddressLink>tr#address #address-link</AddressLink>
+    <PasswordLink>tr#password #password-link</PasswordLink>
+    <PhoneLink>tr#phone #phone-link</PhoneLink>
+    <CommunicationLink>tr#communication #communication-link</CommunicationLink>    
+  </MyPersonalDetailsPageMobile>
 </UiMapMobile>

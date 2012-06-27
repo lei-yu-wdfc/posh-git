@@ -2,7 +2,7 @@
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Mobile.Ui.Pages;
 
-namespace Wonga.QA.Framework.Mobile.UI.Elements
+namespace Wonga.QA.Framework.Mobile.Ui.Elements
 {
     public abstract class BaseElement
     {

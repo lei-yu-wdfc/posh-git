@@ -8,13 +8,9 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Mobile.Mappings;
 using Wonga.QA.Framework.Mobile.Mappings.Ui;
 using Wonga.QA.Framework.Mobile.Ui.Pages;
-//using Wonga.QA.Framework.UI.UiElements.Pages;
-//using Wonga.QA.Framework.UI.UiElements.Pages.Common;
-//using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
-//using Wonga.QA.Framework.UI.Mappings;
-//using Wonga.QA.Framework.UI.UiElements.Pages.Wb;
 
-namespace Wonga.QA.Framework.Mobile.UI.Elements
+
+namespace Wonga.QA.Framework.Mobile.Ui.Elements
 {
     public class SlidersElement : BaseElement
     {
@@ -124,36 +120,38 @@ namespace Wonga.QA.Framework.Mobile.UI.Elements
             _durationPlusButton.Click();
         }
 
+        public IWebElement Submit
+        {
+
+            get { return _submit = _form.FindElement(By.CssSelector(UiMapMobile.Get.SlidersElement.SubmitButton)); }
+        }
+
 
         public IApplyPage Apply()
         {
             _submit = _form.FindElement(By.CssSelector(UiMapMobile.Get.SlidersElement.SubmitButton));
             _submit.Click();
-            if (Config.AUT == AUT.Wb)
-                //return new EligibilityQuestionsPage(Page.Client); //migrationFixNeeded
-                return null;//migrationFixNeeded
+            //if (Config.AUT == AUT.Wb)
+                //return new EligibilityQuestionsPage(Page.Client);
             if (Config.AUT == AUT.Uk || Config.AUT == AUT.Za || Config.AUT == AUT.Ca || Config.AUT == AUT.Pl)
                 return new PersonalDetailsPageMobile(Page.Client);
-            return null;
+            throw new NotImplementedException("Region case has not been handled");
         }
 
-        public IApplyPage ApplyLn()
+        public ApplyPageMobile ApplyLn()
         {
             _submit = _form.FindElement(By.CssSelector(UiMapMobile.Get.SlidersElement.SubmitButton));
             _submit.Click();
             switch (Config.AUT)
             {
 
-                case AUT.Wb:
+                //case AUT.Wb:
                 case AUT.Za:
-                case AUT.Uk:
-                case AUT.Ca:
-                    //return new ApplyPage(Page.Client); //migrationFixNeeded
-                    return null; //migrationFixNeeded
+                //case AUT.Uk:
+                //case AUT.Ca:
+                    return new ApplyPageMobile(Page.Client);
                 default:
                     throw new NotImplementedException();
-
-
             }
         }
         public bool IsSubmitButtonPresent()

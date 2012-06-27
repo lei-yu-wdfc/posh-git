@@ -62,11 +62,11 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
             : base(client)
         {
 
-            _form = Content.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.FormId));
-            _postCode = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.Postcode));
-            _houseNumber = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.HouseNumber));
-            _addressPeriod = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.AddressPeriod));
-            _next = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.NextButton));
+            _form = Content.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.FormId));
+            _postCode = _form.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.Postcode));
+            _houseNumber = _form.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.HouseNumber));
+            _addressPeriod = _form.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.AddressPeriod));
+            _next = _form.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.NextButton));
 
             switch (Config.AUT)
             {
@@ -79,10 +79,10 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
                 //    _postCodeInForm = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.PostcodeInForm));
                 //    break;
                 case (AUT.Za):
-                    _county = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.County));
-                    _district = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.District));
-                    _street = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.Street));
-                    _town = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.Town));
+                    _county = _form.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.County));
+                    _district = _form.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.District));
+                    _street = _form.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.Street));
+                    _town = _form.FindElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPageMobile.Town));
                     break;
                 //case (AUT.Ca):
                 //    _street = _form.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.AddressDetailsPage.Street));

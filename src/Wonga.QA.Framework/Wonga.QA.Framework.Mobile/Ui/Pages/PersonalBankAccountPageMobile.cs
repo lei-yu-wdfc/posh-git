@@ -5,7 +5,7 @@ using System.Text;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Mobile.Mappings.Ui;
-using Wonga.QA.Framework.Mobile.Mappings.Ui.Pages;
+using Wonga.QA.Framework.Mobile.Mappings.Pages;
 using Wonga.QA.Framework.Mobile.Ui.Sections;
 
 namespace Wonga.QA.Framework.Mobile.Ui.Pages

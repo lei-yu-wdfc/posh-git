@@ -43,7 +43,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
             Assert.That(Headers, Is.Not(Has.Item("Access denied")));
             Assert.That(Headers, Is.Not(Has.Item<String>(Starts.With("Error"))));
 
-            Content = Config.Ui.Browser.Equals(Config.UiConfig.BrowserType.FirefoxMobile) ? Do.Until(() => Client.Driver.FindElement(By.Id("content-content"))) : Do.Until(() => Client.Driver.FindElement(By.Id("content-area")));
+            Content = Client.Driver.FindElement(By.Id("content-content"));
 
         }
 
@@ -51,17 +51,19 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
         {
             if (typeof(T) == typeof(HomePageMobile))
                 return Do.With.Timeout(2).Until(() => new HomePageMobile(Client));
+            if (typeof(T) == typeof(LoginPageMobile))
+                return Do.With.Timeout(2).Until(() => new LoginPageMobile(Client));
             throw new NotImplementedException();
         }
 
         public bool IsWarningOccurred(string elementSelector, string warningSelector)
         {
-            IWebElement element = this.Client.Driver.FindElement(By.CssSelector(elementSelector));
+            IWebElement element = Client.Driver.FindElement(By.CssSelector(elementSelector));
             element.LostFocus();
             try
             {
                 IWebElement errorElement =
-                             this.Client.Driver.FindElement(By.CssSelector(warningSelector));
+                             Client.Driver.FindElement(By.CssSelector(warningSelector));
                 string firstNameErrorFormClass = errorElement.GetAttribute("class");
                 if (firstNameErrorFormClass.Equals("invalid"))
                 {
@@ -80,12 +82,12 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
 
         public bool IsSuccessTickOccured(string elementSelector, string warningSelector)
         {
-            IWebElement element = this.Client.Driver.FindElement(By.CssSelector(elementSelector));
+            IWebElement element = Client.Driver.FindElement(By.CssSelector(elementSelector));
             element.LostFocus();
             try
             {
                 IWebElement errorElement =
-                             this.Client.Driver.FindElement(By.CssSelector(warningSelector));
+                             Client.Driver.FindElement(By.CssSelector(warningSelector));
 
                 string firstNameErrorFormClass = errorElement.GetAttribute("class");
 

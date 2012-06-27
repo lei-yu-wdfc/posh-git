@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Wonga.QA.Framework.Mobile.UI.Elements;
 using Wonga.QA.Framework.Mobile.Ui.Elements;
 
 namespace Wonga.QA.Framework.Mobile.Ui.Pages
@@ -17,7 +16,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
             : base(client)
         {
             Sliders = new SlidersElement(this);
-            //Tabs = new TabsElementMobile(this);
+            Tabs = new TabsElementMobile(this);
         }
     }
 }

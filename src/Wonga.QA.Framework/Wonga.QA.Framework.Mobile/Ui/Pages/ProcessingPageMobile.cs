@@ -7,7 +7,7 @@ using Wonga.QA.Framework.Mobile.Ui.Pages;
 
 namespace Wonga.QA.Framework.Mobile.Ui.Pages
 {
-    class ProcessingPageMobile : BasePageMobile
+    public class ProcessingPageMobile : BasePageMobile
     {
         public ProcessingPageMobile(MobileUiClient client)
             : base(client)
