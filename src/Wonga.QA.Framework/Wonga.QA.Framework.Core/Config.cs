@@ -594,12 +594,15 @@ namespace Wonga.QA.Framework.Core
             {
                 Home = new UriBuilder { Host = host }.Uri;
             }
-
-            internal void SetDoubleClickCookiesURl(string url)
             internal void SetUri(string host, int portNumber)
             {
-                DoubleClickCookiesHome = url;
                 Home = new UriBuilder { Scheme = string.Empty, Host = host, Port = portNumber }.Uri;
+            }
+
+            internal void SetDoubleClickCookiesURl(string url)
+            {
+                DoubleClickCookiesHome = url;
+             
             }
 
             public bool RemoteMode { get; set; }
